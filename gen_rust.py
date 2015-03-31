@@ -283,20 +283,22 @@ class RustWrapperGenerator(object):
         return report.getvalue()
 
     def gen_func(self, ci, fi, prop_name=''):
-        self.moduleCppCode.write("// %s\n"%(fi))
         if not fi.ctype in type_mapping:
             msg = "can not map return value of %s\n"%(fi.ctype)
             self.skipped_func_list.append("%s\n%s"%(fi,msg))
-            self.moduleCppCode.write("//    " + msg)
+            return
+        if len(fi.args) > 0:
+            msg = "no arg mapping yet"
+            self.skipped_func_list.append("%s\n%s"%(fi,msg))
             return
         for a in fi.args:
             if not a.can_map():
                 msg = "can not map arg [%s]\n"%(a)
                 self.skipped_func_list.append("%s\n%s"%(fi,msg))
-                self.moduleCppCode.write("//    " + msg)
                 return
         self.ported_func_list.append(fi.__repr__())
 
+        self.moduleCppCode.write("// %s\n"%(fi))
         self.moduleCppCode.write("%s %s() {\n"%(type_mapping[fi.ctype]["ctype"], fi.c_name()));
         self.moduleCppCode.write("  return %s();\n"%(fi.cppname));
         self.moduleCppCode.write("}\n\n");
