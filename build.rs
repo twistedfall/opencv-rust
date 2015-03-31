@@ -23,7 +23,16 @@ fn main() {
     println!("Generating code in {:?}", out_dir);
 
     let modules = vec![
-        ("core", vec!["core/core.hpp"])
+        ("core", vec!["core/core.hpp" ]), // utility, base
+        ("imgproc", vec![   "imgproc/imgproc_c.h", "imgproc/types_c.h",
+                            "imgproc/imgproc.hpp" ]),
+        ("highgui", vec![   "highgui/cap_ios.h", "highgui/highgui.hpp",
+                            "highgui/highgui_c.h", "highgui/ios.h" ]),
+        ("photo", vec!["photo/photo_c.h", "photo/photo.hpp" ]),
+        ("video", vec![ "video/tracking.hpp", "video/video.hpp",
+                        "video/background_segm.hpp"]),
+        ("objdetect", vec![ "objdetect/objdetect.hpp" ]),
+        ("calib3d", vec![ "calib3d/calib3d.hpp"])
     ];
 
     let mut objects:Vec<PathBuf> = Vec::new();
