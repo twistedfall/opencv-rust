@@ -25,6 +25,14 @@ func_arg_fix = {
 }
 
 #
+#       TYPES MAPPING
+#
+
+type_mapping = {
+    u"int64": { u"ctype": "int64", u"rtype": "i64" }
+}
+
+#
 #       TEMPLATES
 #
 
@@ -129,11 +137,11 @@ class ArgInfo():
         if "/IO" in arg_tuple[3]:
             self.out = "IO"
 
-    def can_map():
-        return type_mapping.contains_key(self.cpptype)
+    def can_map(self):
+        return self.cpptype in type_mapping
 
     def __repr__(self):
-        return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.ctype,
+        return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.cpptype,
                                                                   p=" *" if self.pointer else "",
                                                                   name=self.name,
                                                                   defval=self.defval)
@@ -141,7 +149,7 @@ class ArgInfo():
 class FuncInfo(GeneralInfo):
     def __init__(self, decl, namespaces=[]): # [ funcname, return_ctype, [modifiers], [args] ]
         GeneralInfo.__init__(self, decl[0], namespaces)
-        self.cname = self.name.replace(".", "::")
+        self.cppname = self.name.replace(".", "::")
 #        self.jname = self.name
         self.isconstructor = self.name == self.classname
 #        if "[" in self.name:
@@ -153,12 +161,15 @@ class FuncInfo(GeneralInfo):
         self.ctype = re.sub(r"^CvTermCriteria", "TermCriteria", decl[1] or "")
         self.args = []
 #        func_fix_map = func_arg_fix.get(self.classname, {}).get(self.jname, {})
-#        for a in decl[3]:
+        for a in decl[3]:
 #            arg = a[:]
 #            arg_fix_map = func_fix_map.get(arg[1], {})
 #            arg[0] = arg_fix_map.get('ctype',  arg[0]) #fixing arg type
 #            arg[3] = arg_fix_map.get('attrib', arg[3]) #fixing arg attrib
-#            self.args.append(ArgInfo(arg))
+            self.args.append(ArgInfo(a))
+
+    def c_name(self):
+        return Template("${namespace}_$name").substitute(**self.__dict__)
 
     def __repr__(self):
         return Template("FUNC <$ctype $namespace.$classpath.$name $args>").substitute(**self.__dict__)
@@ -273,16 +284,24 @@ class RustWrapperGenerator(object):
 
     def gen_func(self, ci, fi, prop_name=''):
         self.moduleCppCode.write("// %s\n"%(fi))
-        self.moduleRustCode.write("// %s\n"%(fi))
-        can_do = true
-        for a in fi.args
-            can_do &&= a.can_map
-        if can_do:
-            self.ported_func_list += fi
-        else
-            self.skipped_func_list += fi
-            self.moduleCppCode.write("// skipped")
-            self.moduleRustCode.write("// skipped")
+        if not fi.ctype in type_mapping:
+            msg = "can not map return value of %s\n"%(fi.ctype)
+            self.skipped_func_list.append("%s\n%s"%(fi,msg))
+            self.moduleCppCode.write("//    " + msg)
+            return
+        for a in fi.args:
+            if not a.can_map():
+                msg = "can not map arg [%s]\n"%(a)
+                self.skipped_func_list.append("%s\n%s"%(fi,msg))
+                self.moduleCppCode.write("//    " + msg)
+                return
+        self.ported_func_list.append(fi.__repr__())
+
+        self.moduleCppCode.write("%s %s() {\n"%(type_mapping[fi.ctype]["ctype"], fi.c_name()));
+        self.moduleCppCode.write("  return %s();\n"%(fi.cppname));
+        self.moduleCppCode.write("}\n\n");
+
+        self.moduleRustCode.write("%s %s();\n"%(type_mapping[fi.ctype]["rtype"], fi.c_name()));
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:
