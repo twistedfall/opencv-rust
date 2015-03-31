@@ -1,0 +1,7 @@
+*.cpp
+*.log
+*.o
+*.txt
+*.pyc
+*.a
+gen_java.py
