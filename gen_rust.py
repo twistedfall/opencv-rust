@@ -303,24 +303,24 @@ class RustWrapperGenerator(object):
         self.moduleCppCode.write("  return %s();\n"%(fi.cppname));
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustCode.write("%s %s();\n"%(type_mapping[fi.ctype]["rtype"], fi.c_name()));
+        self.moduleRustCode.write("pub fn %s() -> %s;\n"%(fi.c_name(), type_mapping[fi.ctype]["rtype"]));
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:
         print("Usage:\n", \
             os.path.basename(sys.argv[0]), \
-            "<full path to hdr_parser.py> <module name> <C++ header> [<C++ header>...]")
+            "<full path to hdr_parser.py> <out_dir> <module name> <C++ header> [<C++ header>...]")
         print("Current args are: ", ", ".join(["'"+a+"'" for a in sys.argv]))
         exit(0)
 
-    dstdir = "."
     hdr_parser_path = os.path.abspath(sys.argv[1])
     if hdr_parser_path.endswith(".py"):
         hdr_parser_path = os.path.dirname(hdr_parser_path)
     sys.path.append(hdr_parser_path)
     import hdr_parser
-    module = sys.argv[2]
-    srcfiles = sys.argv[3:]
+    dstdir = sys.argv[2]
+    module = sys.argv[3]
+    srcfiles = sys.argv[4:]
     logging.basicConfig(filename='%s/%s.log' % (dstdir, module), format=None, filemode='w', level=logging.INFO)
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARNING)
