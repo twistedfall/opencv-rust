@@ -112,15 +112,15 @@ class GeneralInfo():
 class ArgInfo():
     def __init__(self, arg_tuple): # [ ctype, name, def val, [mod], argno ]
         self.pointer = False
-        ctype = arg_tuple[0]
-        if ctype.endswith("*"):
-            ctype = ctype[:-1]
+        cpptype = arg_tuple[0]
+        if cpptype.endswith("*"):
+            cpptype = cpptype[:-1]
             self.pointer = True
-        if ctype == 'vector_Point2d':
-            ctype = 'vector_Point2f'
-        elif ctype == 'vector_Point3d':
-            ctype = 'vector_Point3f'
-        self.ctype = ctype
+#        if cpptype == 'vector_Point2d':
+#            cpptype = 'vector_Point2f'
+#        elif cpptype == 'vector_Point3d':
+#            cpptype = 'vector_Point3f'
+        self.cpptype = cpptype
         self.name = arg_tuple[1]
         self.defval = arg_tuple[2]
         self.out = ""
@@ -128,6 +128,9 @@ class ArgInfo():
             self.out = "O"
         if "/IO" in arg_tuple[3]:
             self.out = "IO"
+
+    def can_map():
+        return type_mapping.contains_key(self.cpptype)
 
     def __repr__(self):
         return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.ctype,
@@ -271,6 +274,15 @@ class RustWrapperGenerator(object):
     def gen_func(self, ci, fi, prop_name=''):
         self.moduleCppCode.write("// %s\n"%(fi))
         self.moduleRustCode.write("// %s\n"%(fi))
+        can_do = true
+        for a in fi.args
+            can_do &&= a.can_map
+        if can_do:
+            self.ported_func_list += fi
+        else
+            self.skipped_func_list += fi
+            self.moduleCppCode.write("// skipped")
+            self.moduleRustCode.write("// skipped")
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:
