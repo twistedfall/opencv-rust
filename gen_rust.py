@@ -29,6 +29,7 @@ func_arg_fix = {
 #
 
 type_mapping = {
+    u"void"  : { u"ctype": "void", "rtype": "()" },
     u"bool"  : { u"ctype": "int", u"rtype": "bool" },
     u"int"   : { u"ctype": "int", u"rtype": "libc::c_uint" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
@@ -143,9 +144,6 @@ class ArgInfo():
             self.out = "O"
         if "/IO" in arg_tuple[3]:
             self.out = "IO"
-
-    def can_map(self):
-        return self.cpptype in type_mapping
 
     def __repr__(self):
         return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.cpptype,
@@ -290,32 +288,46 @@ class RustWrapperGenerator(object):
         return report.getvalue()
 
     def gen_func(self, ci, fi, prop_name=''):
+
         if not fi.cpptype in type_mapping:
             msg = "can not map return value of %s\n"%(fi.cpptype)
-            self.skipped_func_list.append("%s\n%s"%(fi,msg))
-            return
-        if len(fi.args) > 0:
-            msg = "no arg mapping yet"
-            self.skipped_func_list.append("%s\n%s"%(fi,msg))
+            self.skipped_func_list.append("%s\n   %s"%(fi,msg))
             return
         for a in fi.args:
-            if not a.can_map():
+            if not a.cpptype in type_mapping:
                 msg = "can not map arg [%s]\n"%(a)
-                self.skipped_func_list.append("%s\n%s"%(fi,msg))
+                self.skipped_func_list.append("%s\n   %s"%(fi,msg))
                 return
-        self.ported_func_list.append(fi.__repr__())
 
+        self.ported_func_list.append(fi.__repr__())
         rv = type_mapping[fi.cpptype];
         self.moduleCppCode.write("// %s\n"%(fi))
-        self.moduleCppCode.write("%s %s() {\n"%(rv["ctype"], fi.c_name()));
-        self.moduleCppCode.write("  %s cpp_return_value = %s();\n"%(fi.cpptype, fi.cppname));
-        if "return_cpp_to_c" in rv:
-            self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
+
+        decl_c_args = ""
+        call_cpp_args = ""
+        decl_rust_extern_args = ""
+        for a in fi.args:
+            atype = type_mapping[a.cpptype]
+            if not decl_c_args == "":
+                decl_c_args+=", "
+                call_cpp_args += ", "
+            decl_c_args += a.cpptype + " " + a.name
+            call_cpp_args += a.name
+            decl_rust_extern_args += a.name + ": " + atype["rtype"]
+
+        self.moduleCppCode.write("%s %s(%s) {\n"%(rv["ctype"], fi.c_name(), decl_c_args));
+        if fi.cpptype == "void":
+            self.moduleCppCode.write("  %s(%s);\n"%(fi.cppname, call_cpp_args));
         else:
-            self.moduleCppCode.write("  return cpp_return_value;\n");
+            self.moduleCppCode.write("  %s cpp_return_value = %s(%s);\n"%(fi.cpptype, fi.cppname,
+                call_cpp_args));
+            if "return_cpp_to_c" in rv:
+                self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
+            else:
+                self.moduleCppCode.write("  return cpp_return_value;\n");
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustCode.write("pub fn %s() -> %s;\n"%(fi.c_name(), rv["rtype"]));
+        self.moduleRustCode.write("pub fn %s(%s) -> %s;\n"%(fi.c_name(), decl_rust_extern_args, rv["rtype"]));
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:
