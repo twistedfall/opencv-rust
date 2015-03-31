@@ -6,9 +6,15 @@ extern crate libc;
 use std::ffi::CStr;
 
 #[test]
-fn test_trivial_call() {
+fn test_return_primitives() {
     let ticks = unsafe { opencv_sys::cv_getTickCount() };
     assert!(ticks > 10000);
+    let freq = unsafe { opencv_sys::cv_getTickFrequency() };
+    assert!(freq > 1000f64);
+    let cpus = unsafe { opencv_sys::cv_getNumberOfCPUs() };
+    assert!(cpus > 0);
+    let optims = unsafe { opencv_sys::cv_useOptimized() };
+    assert!(optims);
 }
 
 #[test]

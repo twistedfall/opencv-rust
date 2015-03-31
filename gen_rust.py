@@ -29,7 +29,10 @@ func_arg_fix = {
 #
 
 type_mapping = {
-    u"int64": { u"ctype": "int64", u"rtype": "i64" },
+    u"bool"  : { u"ctype": "int", u"rtype": "bool" },
+    u"int"   : { u"ctype": "int", u"rtype": "libc::c_uint" },
+    u"int64" : { u"ctype": "int64", u"rtype": "i64" },
+    u"double": { u"ctype": "double", u"rtype": "f64" },
     u"string": { u"ctype": "const char *", u"rtype": "*const c_char",
                  u"return_cpp_to_c": Template("return strdup($src.c_str());\n") }
 }
