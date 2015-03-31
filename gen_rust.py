@@ -8,6 +8,26 @@ if sys.version_info[0] >= 3:
 else:
     from cStringIO import StringIO
 
+#
+#       EXCEPTIONS TO AUTO GENERATION
+#
+
+ManualFuncs = { }
+
+class_ignore_list = (
+    #core
+#    "FileNode", "FileStorage", "KDTree", "KeyPoint", "DMatch",
+    #videoio
+#    "VideoWriter",
+)
+
+func_arg_fix = {
+}
+
+#
+#       TEMPLATES
+#
+
 T_CPP_MODULE = """
 //
 // This file is auto-generated, please don't edit!
@@ -37,17 +57,130 @@ $code
 #endif // HAVE_OPENCV_$M
 """
 
+T_RUST_MODULE = """
+//
+// This file is auto-generated, please don't edit!
+//
+
+extern "C" {
+
+$code
+
+} // extern "C"
+
+"""
+
+#
+#       AST-LIKE
+#
+
+class GeneralInfo():
+    def __init__(self, name, namespaces):
+        self.namespace, self.classpath, self.classname, self.name = self.parseName(name, namespaces)
+
+    def parseName(self, name, namespaces):
+        '''
+        input: full name and available namespaces
+        returns: (namespace, classpath, classname, name)
+        '''
+        name = name[name.find(" ")+1:].strip() # remove struct/class/const prefix
+        spaceName = ""
+        localName = name # <classes>.<name>
+        for namespace in sorted(namespaces, key=len, reverse=True):
+            if name.startswith(namespace + "."):
+                spaceName = namespace
+                localName = name.replace(namespace + ".", "")
+                break
+        pieces = localName.split(".")
+        if len(pieces) > 2: # <class>.<class>.<class>.<name>
+            return spaceName, ".".join(pieces[:-1]), pieces[-2], pieces[-1]
+        elif len(pieces) == 2: # <class>.<name>
+            return spaceName, pieces[0], pieces[0], pieces[1]
+        elif len(pieces) == 1: # <name>
+            return spaceName, "", "", pieces[0]
+        else:
+            return spaceName, "", "" # error?!
+
+    def fullName(self, isCPP=False):
+        result = ".".join([self.fullClass(), self.name])
+        return result if not isCPP else result.replace(".", "::")
+
+    def fullClass(self, isCPP=False):
+        result = ".".join([f for f in [self.namespace] + self.classpath.split(".") if len(f)>0])
+        return result if not isCPP else result.replace(".", "::")
+
+class ArgInfo():
+    def __init__(self, arg_tuple): # [ ctype, name, def val, [mod], argno ]
+        self.pointer = False
+        ctype = arg_tuple[0]
+        if ctype.endswith("*"):
+            ctype = ctype[:-1]
+            self.pointer = True
+        if ctype == 'vector_Point2d':
+            ctype = 'vector_Point2f'
+        elif ctype == 'vector_Point3d':
+            ctype = 'vector_Point3f'
+        self.ctype = ctype
+        self.name = arg_tuple[1]
+        self.defval = arg_tuple[2]
+        self.out = ""
+        if "/O" in arg_tuple[3]:
+            self.out = "O"
+        if "/IO" in arg_tuple[3]:
+            self.out = "IO"
+
+    def __repr__(self):
+        return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.ctype,
+                                                                  p=" *" if self.pointer else "",
+                                                                  name=self.name,
+                                                                  defval=self.defval)
+
+class FuncInfo(GeneralInfo):
+    def __init__(self, decl, namespaces=[]): # [ funcname, return_ctype, [modifiers], [args] ]
+        GeneralInfo.__init__(self, decl[0], namespaces)
+        self.cname = self.name.replace(".", "::")
+#        self.jname = self.name
+        self.isconstructor = self.name == self.classname
+#        if "[" in self.name:
+#            self.jname = "getelem"
+#        for m in decl[2]:
+#            if m.startswith("="):
+#                self.jname = m[1:]
+        self.static = ["","static"][ "/S" in decl[2] ]
+        self.ctype = re.sub(r"^CvTermCriteria", "TermCriteria", decl[1] or "")
+        self.args = []
+#        func_fix_map = func_arg_fix.get(self.classname, {}).get(self.jname, {})
+#        for a in decl[3]:
+#            arg = a[:]
+#            arg_fix_map = func_fix_map.get(arg[1], {})
+#            arg[0] = arg_fix_map.get('ctype',  arg[0]) #fixing arg type
+#            arg[3] = arg_fix_map.get('attrib', arg[3]) #fixing arg attrib
+#            self.args.append(ArgInfo(arg))
+
+    def __repr__(self):
+        return Template("FUNC <$ctype $namespace.$classpath.$name $args>").substitute(**self.__dict__)
+
+#
+#       GENERATOR
+#
+
 class RustWrapperGenerator(object):
     def __init__(self):
         self.clear()
 
     def clear(self):
         self.module = ""
+        self.Module = ""
         self.classes = { }
+        self.functions = [];
 #        self.classes = { "Mat" : ClassInfo([ 'class Mat', '', [], [] ], self.namespaces) }
         self.ported_func_list = []
         self.skipped_func_list = []
         self.def_args_hist = {} # { def_args_cnt : funcs_cnt }
+
+    def isWrapped(self, classname):
+        name = classname or self.Module
+        return name in self.classes
 
     def add_class(self, decl):
         pass
@@ -56,7 +189,21 @@ class RustWrapperGenerator(object):
         pass
 
     def add_func(self, decl):
-        pass
+        fi = FuncInfo(decl, namespaces=self.namespaces)
+        if fi.classname == "":
+            self.functions.append(fi)
+        elif fi.classname in class_ignore_list:
+            logging.info('ignored: %s', fi)
+        elif fi.classname in ManualFuncs and fi.jname in ManualFuncs[classname]:
+            logging.info('manual: %s', fi)
+        elif not self.isWrapped(fi.classname):
+            logging.info('not wrapped: %s', fi)
+        else:
+            self.getClass(fi.classname).addMethod(fi)
+            logging.info('ok: %s', fi)
+            # calc args with def val
+            cnt = len([a for a in fi.args if a.defval])
+            self.def_args_hist[cnt] = self.def_args_hist.get(cnt, 0) + 1
 
     def save(self, path, buf):
         f = open(path, "wt")
@@ -66,6 +213,7 @@ class RustWrapperGenerator(object):
     def gen(self, srcfiles, module, output_path):
         parser = hdr_parser.CppHeaderParser()
         self.module = module
+        self.Module = module.capitalize()
         includes = [];
 
         for hdr in srcfiles:
@@ -86,18 +234,24 @@ class RustWrapperGenerator(object):
                     self.add_func(decl)
 
         logging.info("\n\n===== Generating... =====")
-        moduleCppCode = StringIO()
+        self.moduleCppCode = StringIO()
+        self.moduleRustCode = StringIO()
+        for fi in self.functions:
+            self.gen_func(None, fi)
 
-        for ci in self.classes.values():
-            if ci.name == "Mat":
-                continue
-            ci.initCodeStreams(self.Module)
-            self.gen_class(ci)
+#        for ci in self.classes.values():
+#            if ci.name == "Mat":
+#                continue
+#            ci.initCodeStreams(self.Module)
+#            self.gen_class(ci)
 #            classJavaCode = ci.generateJavaCode(self.module, self.Module)
 #            self.save("%s/%s+%s.java" % (output_path, module, ci.jname), classJavaCode)
-            moduleCppCode.write(ci.generateCppCode())
-            ci.cleanupCodeStreams()
-        self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = moduleCppCode.getvalue(), includes = "\n".join(includes)))
+#            self.moduleCppCode.write(ci.generateCppCode())
+#            ci.cleanupCodeStreams(
+#)
+
+        self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
+        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue()))
         self.save(output_path+"/"+module+".txt", self.makeReport())
 
     def makeReport(self):
@@ -113,6 +267,10 @@ class RustWrapperGenerator(object):
         for i in self.def_args_hist.keys():
             report.write("\n%i def args - %i funcs" % (i, self.def_args_hist[i]))
         return report.getvalue()
+
+    def gen_func(self, ci, fi, prop_name=''):
+        self.moduleCppCode.write("// %s\n"%(fi))
+        self.moduleRustCode.write("// %s\n"%(fi))
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:

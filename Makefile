@@ -5,7 +5,6 @@ libopencvc.a: core.o
 	ar ru $@ $^
 	ranlib $@
 
-
 core.cpp: gen_rust.py
 	python gen_rust.py hdr_parser.py core \
         /usr/local/include/opencv2/core/core.hpp \
