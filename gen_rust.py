@@ -29,7 +29,9 @@ func_arg_fix = {
 #
 
 type_mapping = {
-    u"int64": { u"ctype": "int64", u"rtype": "i64" }
+    u"int64": { u"ctype": "int64", u"rtype": "i64" },
+    u"string": { u"ctype": "const char *", u"rtype": "*const c_char",
+                 u"return_cpp_to_c": Template("return strdup($src.c_str());\n") }
 }
 
 #
@@ -69,6 +71,8 @@ T_RUST_MODULE = """
 //
 // This file is auto-generated, please don't edit!
 //
+
+use libc::c_char;
 
 extern "C" {
 
@@ -158,7 +162,7 @@ class FuncInfo(GeneralInfo):
 #            if m.startswith("="):
 #                self.jname = m[1:]
         self.static = ["","static"][ "/S" in decl[2] ]
-        self.ctype = re.sub(r"^CvTermCriteria", "TermCriteria", decl[1] or "")
+        self.cpptype = re.sub(r"^CvTermCriteria", "TermCriteria", decl[1] or "")
         self.args = []
 #        func_fix_map = func_arg_fix.get(self.classname, {}).get(self.jname, {})
         for a in decl[3]:
@@ -172,7 +176,7 @@ class FuncInfo(GeneralInfo):
         return Template("${namespace}_$name").substitute(**self.__dict__)
 
     def __repr__(self):
-        return Template("FUNC <$ctype $namespace.$classpath.$name $args>").substitute(**self.__dict__)
+        return Template("FUNC <$cpptype $namespace.$classpath.$name $args>").substitute(**self.__dict__)
 
 #
 #       GENERATOR
@@ -283,8 +287,8 @@ class RustWrapperGenerator(object):
         return report.getvalue()
 
     def gen_func(self, ci, fi, prop_name=''):
-        if not fi.ctype in type_mapping:
-            msg = "can not map return value of %s\n"%(fi.ctype)
+        if not fi.cpptype in type_mapping:
+            msg = "can not map return value of %s\n"%(fi.cpptype)
             self.skipped_func_list.append("%s\n%s"%(fi,msg))
             return
         if len(fi.args) > 0:
@@ -298,12 +302,17 @@ class RustWrapperGenerator(object):
                 return
         self.ported_func_list.append(fi.__repr__())
 
+        rv = type_mapping[fi.cpptype];
         self.moduleCppCode.write("// %s\n"%(fi))
-        self.moduleCppCode.write("%s %s() {\n"%(type_mapping[fi.ctype]["ctype"], fi.c_name()));
-        self.moduleCppCode.write("  return %s();\n"%(fi.cppname));
+        self.moduleCppCode.write("%s %s() {\n"%(rv["ctype"], fi.c_name()));
+        self.moduleCppCode.write("  %s cpp_return_value = %s();\n"%(fi.cpptype, fi.cppname));
+        if "return_cpp_to_c" in rv:
+            self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
+        else:
+            self.moduleCppCode.write("  return cpp_return_value;\n");
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustCode.write("pub fn %s() -> %s;\n"%(fi.c_name(), type_mapping[fi.ctype]["rtype"]));
+        self.moduleRustCode.write("pub fn %s() -> %s;\n"%(fi.c_name(), rv["rtype"]));
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:
