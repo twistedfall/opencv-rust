@@ -33,9 +33,12 @@ type_mapping = {
     u"bool"  : { u"ctype": "int", u"rtype": "bool" },
     u"int"   : { u"ctype": "int", u"rtype": "libc::c_uint" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
+    u"float" : { u"ctype": "float", u"rtype": "f32" },
     u"double": { u"ctype": "double", u"rtype": "f64" },
     u"string": { u"ctype": "const char *", u"rtype": "*const c_char",
-                 u"return_cpp_to_c": Template("return strdup($src.c_str());\n") }
+                 u"return_cpp_to_c": Template("return strdup($src.c_str());\n") },
+
+    u"Mat"   : { "ctype" : "void*", "boxed" : True, "rtype": "cv::Mat" },
 }
 
 #
@@ -50,6 +53,7 @@ T_CPP_MODULE = """
 #define LOG_TAG "org.opencv.$m"
 
 #include "common.h"
+#include <iostream>
 
 #include "opencv2/opencv_modules.hpp"
 #ifdef HAVE_OPENCV_$M
@@ -57,10 +61,12 @@ T_CPP_MODULE = """
 #include <string>
 
 #include "opencv2/$m/$m.hpp"
+using namespace cv;
+
+typedef struct CScalar { double a; double b; double c; double d; } CScalar;
+typedef struct CPoint { int x; int y; } CPoint;
 
 $includes
-
-using namespace cv;
 
 extern "C" {
 
@@ -75,8 +81,6 @@ T_RUST_MODULE = """
 //
 // This file is auto-generated, please don't edit!
 //
-
-use libc::c_char;
 
 extern "C" {
 
@@ -172,9 +176,6 @@ class FuncInfo(GeneralInfo):
 #            arg[0] = arg_fix_map.get('ctype',  arg[0]) #fixing arg type
 #            arg[3] = arg_fix_map.get('attrib', arg[3]) #fixing arg attrib
             self.args.append(ArgInfo(a))
-
-    def c_name(self):
-        return Template("${namespace}_$name").substitute(**self.__dict__)
 
     def __repr__(self):
         return Template("FUNC <$cpptype $namespace.$classpath.$name $args>").substitute(**self.__dict__)
@@ -289,6 +290,10 @@ class RustWrapperGenerator(object):
 
     def gen_func(self, ci, fi, prop_name=''):
 
+        if fi.cppname == "()":
+            msg = "can not map operator() yet"
+            self.skipped_func_list.append("%s\n   %s"%(fi,msg))
+            return
         if not fi.cpptype in type_mapping:
             msg = "can not map return value of %s\n"%(fi.cpptype)
             self.skipped_func_list.append("%s\n   %s"%(fi,msg))
@@ -301,33 +306,52 @@ class RustWrapperGenerator(object):
 
         self.ported_func_list.append(fi.__repr__())
         rv = type_mapping[fi.cpptype];
+        self.moduleCppCode.write("// %s\n"%(fi.cppname))
         self.moduleCppCode.write("// %s\n"%(fi))
 
         decl_c_args = ""
         call_cpp_args = ""
         decl_rust_extern_args = ""
+        suffix = "_" if len(fi.args) > 0 else ""
         for a in fi.args:
             atype = type_mapping[a.cpptype]
             if not decl_c_args == "":
                 decl_c_args+=", "
                 call_cpp_args += ", "
-            decl_c_args += a.cpptype + " " + a.name
-            call_cpp_args += a.name
-            decl_rust_extern_args += a.name + ": " + atype["rtype"]
+                decl_rust_extern_args += ", "
+            suffix += a.cpptype[0].capitalize()
+            decl_c_args += atype["ctype"] + " " + a.name
+            if "boxed" in atype:
+                call_cpp_args += "*((%s*)%s)"%(a.cpptype, a.name)
+            elif "arg_c_to_cpp" in atype:
+                call_cpp_args += atype["arg_c_to_cpp"].substitute(src=a.name)
+            else:
+                call_cpp_args += a.name
+            rsname = a.name
+            if rsname in ["type"]:
+                rsname = "_" + rsname
+            decl_rust_extern_args += rsname + ": " + atype["rtype"]
 
-        self.moduleCppCode.write("%s %s(%s) {\n"%(rv["ctype"], fi.c_name(), decl_c_args));
-        if fi.cpptype == "void":
-            self.moduleCppCode.write("  %s(%s);\n"%(fi.cppname, call_cpp_args));
+        c_name = "cv_%s_%s%s"%(module, fi.cppname, suffix);
+
+        if "boxed" in type_mapping[fi.cpptype]:
+            self.moduleCppCode.write("%s* %s(%s) {\n"%(fi.cpptype, c_name, decl_c_args));
         else:
-            self.moduleCppCode.write("  %s cpp_return_value = %s(%s);\n"%(fi.cpptype, fi.cppname,
+            self.moduleCppCode.write("%s %s(%s) {\n"%(rv["ctype"], c_name, decl_c_args));
+        if fi.cpptype == "void":
+            self.moduleCppCode.write("  cv::%s(%s);\n"%(fi.cppname, call_cpp_args));
+        else:
+            self.moduleCppCode.write("  %s cpp_return_value = cv::%s(%s);\n"%(fi.cpptype, fi.cppname,
                 call_cpp_args));
-            if "return_cpp_to_c" in rv:
+            if "boxed" in rv:
+                self.moduleCppCode.write(" return new %s(cpp_return_value);\n"%( fi.cpptype));
+            elif "return_cpp_to_c" in rv:
                 self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
             else:
                 self.moduleCppCode.write("  return cpp_return_value;\n");
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustCode.write("pub fn %s(%s) -> %s;\n"%(fi.c_name(), decl_rust_extern_args, rv["rtype"]));
+        self.moduleRustCode.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"]));
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:

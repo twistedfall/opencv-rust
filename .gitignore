@@ -2,3 +2,4 @@
 gen_java.py
 Cargo.lock
 target
+*.jpg

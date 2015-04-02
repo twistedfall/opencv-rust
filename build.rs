@@ -4,8 +4,9 @@ extern crate pkg_config;
 
 use std::process::Command;
 use std::path::{ Path, PathBuf} ;
-use std::fs::PathExt;
+use std::fs::{ File, PathExt };
 use std::ffi::OsString;
+use std::io::Write;
 
 fn main() {
     let out_dir = std::env::var("OUT_DIR").unwrap();
@@ -37,7 +38,7 @@ fn main() {
 
     let mut objects:Vec<PathBuf> = Vec::new();
 
-    for ref module in modules {
+    for ref module in modules.iter() {
         let mut cpp = PathBuf::from(&out_dir);
         cpp.push(module.0);
         cpp.set_extension("cpp");
@@ -66,6 +67,14 @@ fn main() {
         objects.push(object);
     }
 
+    let mut object = PathBuf::from(&out_dir);
+    object.push("cv.o");
+    if !Command::new("c++")
+                .args(&["src/cv.cpp", "-c", "-o", object.to_str().unwrap(), "-I", "."])
+                .status().unwrap().success() {
+        panic!();
+    }
+    objects.push(object);
 
     if !Command::new("ar")
                         .args(&["crus", "libocvrs.a"])
@@ -73,6 +82,16 @@ fn main() {
                       .current_dir(Path::new(&out_dir))
                       .status().unwrap().success() {
         panic!();
+    }
+
+    let mut hub_filename = PathBuf::from(&out_dir);
+    hub_filename.push("hub.rs");
+    {
+        let mut hub = File::create(hub_filename).unwrap();
+        for ref module in modules {
+            write!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
+            write!(&mut hub, "\n").unwrap();
+        }
     }
 
     println!("cargo:rustc-link-search=native={}", out_dir);

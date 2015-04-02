@@ -2,4 +2,8 @@
 
 extern crate libc;
 
-include!(concat!(env!("OUT_DIR"), "/core.rs"));
+mod cv;
+
+use libc::c_char;
+
+include!(concat!(env!("OUT_DIR"), "/hub.rs"));
