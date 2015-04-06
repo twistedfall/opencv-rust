@@ -1,7 +1,8 @@
 extern crate pkg_config;
+extern crate gcc;
 
 use std::process::Command;
-use std::path::{ Path, PathBuf} ;
+use std::path::{ PathBuf} ;
 use std::fs::{ File, read_dir };
 use std::ffi::OsString;
 use std::io::Write;
@@ -35,7 +36,7 @@ fn main() {
         ("calib3d", vec![ "calib3d/calib3d.hpp"])
     ];
 
-    let mut objects:Vec<PathBuf> = Vec::new();
+    let mut gcc = gcc::Config::new();
 
     for ref module in modules.iter() {
         let mut cpp = PathBuf::from(&out_dir);
@@ -53,33 +54,10 @@ fn main() {
             panic!();
         }
 
-        let mut object = cpp.clone();
-        object.set_extension("o");
-
-        if !Command::new("c++")
-                    .args(&[cpp.to_str().unwrap(), "-c", "-o", object.to_str().unwrap(), "-I", "."])
-                    .status().unwrap().success() {
-            panic!();
-        }
-        objects.push(object);
+        gcc.file(cpp);
     }
 
-    let mut object = PathBuf::from(&out_dir);
-    object.push("cv.o");
-    if !Command::new("c++")
-                .args(&["src/cv.cpp", "-c", "-o", object.to_str().unwrap(), "-I", "."])
-                .status().unwrap().success() {
-        panic!();
-    }
-    objects.push(object);
-
-    if !Command::new("ar")
-                        .args(&["crus", "libocvrs.a"])
-                        .args(&(objects.iter().map(|p| p.clone().into_os_string()).collect::<Vec<OsString>>()))
-                      .current_dir(Path::new(&out_dir))
-                      .status().unwrap().success() {
-        panic!();
-    }
+    gcc.cpp(true).include(".").compile("libocvrs.a");
 
     let mut hub_filename = PathBuf::from(&out_dir);
     hub_filename.push("hub.rs");
@@ -90,10 +68,6 @@ fn main() {
             write!(&mut hub, "\n").unwrap();
         }
     }
-
-    println!("cargo:rustc-link-search=native={}", out_dir);
-    println!("cargo:rustc-link-lib=static=ocvrs");
     println!("cargo:rustc-link-lib=dylib=stdc++");
 
-//    pkg_config::Config::new().find("opencv").unwrap();
 }
