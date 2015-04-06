@@ -16,7 +16,7 @@ ManualFuncs = { }
 
 class_ignore_list = (
     #core
-#    "FileNode", "FileStorage", "KDTree", "KeyPoint", "DMatch",
+    "Algorithm", "FileNode", "FileStorage", "KDTree", "KeyPoint", "DMatch",
     #videoio
 #    "VideoWriter",
 )
@@ -31,11 +31,11 @@ func_arg_fix = {
 type_mapping = {
     u"void"  : { u"ctype": "void", "rtype": "()" },
     u"bool"  : { u"ctype": "int", u"rtype": "bool" },
-    u"int"   : { u"ctype": "int", u"rtype": "libc::c_uint" },
+    u"int"   : { u"ctype": "int", u"rtype": "u32" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
     u"double": { u"ctype": "double", u"rtype": "f64" },
-    u"string": { u"ctype": "const char *", u"rtype": "*const c_char",
+    u"string": { u"ctype": "const char *", u"rtype": "*const i8",
                  u"return_cpp_to_c": Template("return strdup($src.c_str());\n") },
 
     u"Mat"   : { "ctype" : "void*", "boxed" : True, "rtype": "cv::Mat" },
@@ -180,6 +180,40 @@ class FuncInfo(GeneralInfo):
     def __repr__(self):
         return Template("FUNC <$cpptype $namespace.$classpath.$name $args>").substitute(**self.__dict__)
 
+
+class ClassInfo(GeneralInfo):
+    def __init__(self, decl, namespaces=[]): # [ 'class/struct cname', ': base', [modlist] ]
+        GeneralInfo.__init__(self, decl[0], namespaces)
+        self.cname = self.name.replace(".", "::")
+        self.methods = []
+#        self.methods_suffixes = {}
+#        self.consts = [] # using a list to save the occurence order
+#        self.private_consts = []
+#        self.imports = set()
+#        self.props= []
+#        self.jname = self.name
+#        self.j_code = None # java code stream
+#        self.jn_code = None # jni code stream
+#        self.cpp_code = None # cpp code stream
+#        for m in decl[2]:
+#            if m.startswith("="):
+#                self.jname = m[1:]
+#        self.base = ''
+#        if decl[1]:
+            #self.base = re.sub(r"\b"+self.jname+r"\b", "", decl[1].replace(":", "")).strip()
+#            self.base = re.sub(r"^.*:", "", decl[1].split(",")[0]).strip().replace(self.jname, "")
+
+    def __repr__(self):
+        return Template("CLASS $namespace.$classpath.$name : $base").substitute(**self.__dict__)
+
+    def addMethod(self, fi):
+        self.methods.append(fi)
+
+    def getAllMethods(self):
+        result = []
+        result.extend([fi for fi in sorted(self.methods) if fi.isconstructor])
+        result.extend([fi for fi in sorted(self.methods) if not fi.isconstructor])
+        return result
 #
 #       GENERATOR
 #
@@ -198,26 +232,35 @@ class RustWrapperGenerator(object):
         self.skipped_func_list = []
         self.def_args_hist = {} # { def_args_cnt : funcs_cnt }
 
-    def isWrapped(self, classname):
-        name = classname or self.Module
-        return name in self.classes
+    def getClass(self, classname):
+        return self.classes[classname] # or self.Module]
+
+#    def isWrapped(self, classname):
+#        name = classname or self.Module
+#        return name in self.classes
 
     def add_class(self, decl):
-        pass
+        classinfo = ClassInfo(decl, namespaces=self.namespaces)
+        name = classinfo.name
+        if not name in class_ignore_list:
+            self.classes[name] = classinfo
 
     def add_const(self, decl): # [ "const cname", val, [], [] ]
         pass
 
     def add_func(self, decl):
         fi = FuncInfo(decl, namespaces=self.namespaces)
+        logging.info('XXX %s %s', fi.classname, fi.name)
         if fi.classname == "":
             self.functions.append(fi)
         elif fi.classname in class_ignore_list:
             logging.info('ignored: %s', fi)
         elif fi.classname in ManualFuncs and fi.jname in ManualFuncs[classname]:
             logging.info('manual: %s', fi)
-        elif not self.isWrapped(fi.classname):
-            logging.info('not wrapped: %s', fi)
+#        elif not self.isWrapped(fi.classname):
+#            logging.info('not wrapped: %s', fi)
+        elif fi.classname in class_ignore_list:
+            pass
         else:
             self.getClass(fi.classname).addMethod(fi)
             logging.info('ok: %s', fi)
@@ -259,11 +302,11 @@ class RustWrapperGenerator(object):
         for fi in self.functions:
             self.gen_func(None, fi)
 
-#        for ci in self.classes.values():
+        for ci in self.classes.values():
 #            if ci.name == "Mat":
 #                continue
 #            ci.initCodeStreams(self.Module)
-#            self.gen_class(ci)
+            self.gen_class(ci)
 #            classJavaCode = ci.generateJavaCode(self.module, self.Module)
 #            self.save("%s/%s+%s.java" % (output_path, module, ci.jname), classJavaCode)
 #            self.moduleCppCode.write(ci.generateCppCode())
@@ -289,7 +332,6 @@ class RustWrapperGenerator(object):
         return report.getvalue()
 
     def gen_func(self, ci, fi, prop_name=''):
-
         if fi.cppname == "()":
             msg = "can not map operator() yet"
             self.skipped_func_list.append("%s\n   %s"%(fi,msg))
@@ -313,10 +355,13 @@ class RustWrapperGenerator(object):
         call_cpp_args = ""
         decl_rust_extern_args = ""
         suffix = "_" if len(fi.args) > 0 else ""
+        if not ci == None and not fi.isconstructor:
+            decl_c_args += ci.name + " *instance"
         for a in fi.args:
             atype = type_mapping[a.cpptype]
             if not decl_c_args == "":
                 decl_c_args+=", "
+            if not call_cpp_args == "":
                 call_cpp_args += ", "
                 decl_rust_extern_args += ", "
             suffix += a.cpptype[0].capitalize()
@@ -332,16 +377,28 @@ class RustWrapperGenerator(object):
                 rsname = "_" + rsname
             decl_rust_extern_args += rsname + ": " + atype["rtype"]
 
-        c_name = "cv_%s_%s%s"%(module, fi.cppname, suffix);
+        if ci == None:
+            c_name = "cv_%s_%s%s"%(module, fi.cppname, suffix);
+        else:
+            c_name = "cv_%s_%s_%s%s"%(module, ci.name, fi.cppname, suffix);
 
+        # C function prototype
         if "boxed" in type_mapping[fi.cpptype]:
             self.moduleCppCode.write("%s* %s(%s) {\n"%(fi.cpptype, c_name, decl_c_args));
         else:
             self.moduleCppCode.write("%s %s(%s) {\n"%(rv["ctype"], c_name, decl_c_args));
-        if fi.cpptype == "void":
-            self.moduleCppCode.write("  cv::%s(%s);\n"%(fi.cppname, call_cpp_args));
+
+        # cpp call with prefix
+        if ci == None:
+            call_name = "cv::" + fi.cppname
         else:
-            self.moduleCppCode.write("  %s cpp_return_value = cv::%s(%s);\n"%(fi.cpptype, fi.cppname,
+            call_name = "instance->" + fi.cppname
+
+        # return value
+        if fi.cpptype == "void":
+            self.moduleCppCode.write("  %s(%s);\n"%(call_name, call_cpp_args));
+        else:
+            self.moduleCppCode.write("  %s cpp_return_value = %s(%s);\n"%(fi.cpptype, call_name,
                 call_cpp_args));
             if "boxed" in rv:
                 self.moduleCppCode.write(" return new %s(cpp_return_value);\n"%( fi.cpptype));
@@ -352,6 +409,12 @@ class RustWrapperGenerator(object):
         self.moduleCppCode.write("}\n\n");
 
         self.moduleRustCode.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"]));
+
+    def gen_class(self, ci):
+#        logging.info("%s", ci)
+        # methods
+        for fi in ci.getAllMethods():
+            self.gen_func(ci, fi)
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:

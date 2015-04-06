@@ -1,10 +1,8 @@
-#![feature(path_ext,convert)]
-
 extern crate pkg_config;
 
 use std::process::Command;
 use std::path::{ Path, PathBuf} ;
-use std::fs::{ File, PathExt };
+use std::fs::{ File, read_dir };
 use std::ffi::OsString;
 use std::io::Write;
 
@@ -16,7 +14,7 @@ fn main() {
         let mut path = PathBuf::from(p);
         path.push("opencv2");
         path
-    }).find( { |path| (*path).is_dir() });
+    }).find( { |path| read_dir(path).is_ok() });
     let actual_opencv = search_opencv
         .expect("Could not find opencv2 dir in pkg-config includes");
 
@@ -29,6 +27,7 @@ fn main() {
                             "imgproc/imgproc.hpp" ]),
         ("highgui", vec![   "highgui/cap_ios.h", "highgui/highgui.hpp",
                             "highgui/highgui_c.h", "highgui/ios.h" ]),
+        ("features2d", vec![ "features2d/features2d.hpp" ]),
         ("photo", vec!["photo/photo_c.h", "photo/photo.hpp" ]),
         ("video", vec![ "video/tracking.hpp", "video/video.hpp",
                         "video/background_segm.hpp"]),
@@ -56,8 +55,6 @@ fn main() {
 
         let mut object = cpp.clone();
         object.set_extension("o");
-        println!("{:?}",cpp);
-        println!("{:?}",object);
 
         if !Command::new("c++")
                     .args(&[cpp.to_str().unwrap(), "-c", "-o", object.to_str().unwrap(), "-I", "."])
