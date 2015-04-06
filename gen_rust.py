@@ -41,6 +41,8 @@ type_mapping = {
     u"Mat"   : { "ctype" : "void*", "boxed" : True, "rtype": "cv::Mat" },
 }
 
+boxed_classes = [ "Mat", "Subdiv2D" ]
+
 #
 #       TEMPLATES
 #
@@ -250,7 +252,6 @@ class RustWrapperGenerator(object):
 
     def add_func(self, decl):
         fi = FuncInfo(decl, namespaces=self.namespaces)
-        logging.info('XXX %s %s', fi.classname, fi.name)
         if fi.classname == "":
             self.functions.append(fi)
         elif fi.classname in class_ignore_list:
@@ -263,7 +264,6 @@ class RustWrapperGenerator(object):
             pass
         else:
             self.getClass(fi.classname).addMethod(fi)
-            logging.info('ok: %s', fi)
             # calc args with def val
             cnt = len([a for a in fi.args if a.defval])
             self.def_args_hist[cnt] = self.def_args_hist.get(cnt, 0) + 1
@@ -331,23 +331,45 @@ class RustWrapperGenerator(object):
             report.write("\n%i def args - %i funcs" % (i, self.def_args_hist[i]))
         return report.getvalue()
 
+    def is_boxed(self, type_name):
+        return type_name in boxed_classes
+
+    def is_mapped(self, type_name):
+        return self.is_boxed(type_name) or type_name in type_mapping
+
+    def map_type(self, type_name):
+        if self.is_boxed(type_name):
+            return { "ctype" : "void*", "rtype": "cv::%s"%(type_name) }
+        else:
+            return type_mapping[type_name]
+
     def gen_func(self, ci, fi, prop_name=''):
+        if fi.isconstructor:
+            rv_cpptype = ci.name;
+        else:
+            rv_cpptype = fi.cpptype;
+        if not ci == None and not self.is_mapped(ci.name):
+            msg = "unmapped class %s "%(ci.name)
+            self.skipped_func_list.append("%s\n   %s"%(fi,msg))
+            return
         if fi.cppname == "()":
             msg = "can not map operator() yet"
             self.skipped_func_list.append("%s\n   %s"%(fi,msg))
             return
-        if not fi.cpptype in type_mapping:
-            msg = "can not map return value of %s\n"%(fi.cpptype)
+        if not self.is_mapped(rv_cpptype):
+            msg = "can not map return value %s \n"%(rv_cpptype)
             self.skipped_func_list.append("%s\n   %s"%(fi,msg))
             return
         for a in fi.args:
-            if not a.cpptype in type_mapping:
+            if not self.is_mapped(a.cpptype):
                 msg = "can not map arg [%s]\n"%(a)
                 self.skipped_func_list.append("%s\n   %s"%(fi,msg))
                 return
 
+        rv = self.map_type(rv_cpptype)
+
         self.ported_func_list.append(fi.__repr__())
-        rv = type_mapping[fi.cpptype];
+
         self.moduleCppCode.write("// %s\n"%(fi.cppname))
         self.moduleCppCode.write("// %s\n"%(fi))
 
@@ -355,10 +377,10 @@ class RustWrapperGenerator(object):
         call_cpp_args = ""
         decl_rust_extern_args = ""
         suffix = "_" if len(fi.args) > 0 else ""
-        if not ci == None and not fi.isconstructor:
+        if not ci == None and not fi.isconstructor and self.is_boxed(ci.name):
             decl_c_args += ci.name + " *instance"
         for a in fi.args:
-            atype = type_mapping[a.cpptype]
+            atype = self.map_type(a.cpptype)
             if not decl_c_args == "":
                 decl_c_args+=", "
             if not call_cpp_args == "":
@@ -366,7 +388,7 @@ class RustWrapperGenerator(object):
                 decl_rust_extern_args += ", "
             suffix += a.cpptype[0].capitalize()
             decl_c_args += atype["ctype"] + " " + a.name
-            if "boxed" in atype:
+            if self.is_boxed(a.cpptype):
                 call_cpp_args += "*((%s*)%s)"%(a.cpptype, a.name)
             elif "arg_c_to_cpp" in atype:
                 call_cpp_args += atype["arg_c_to_cpp"].substitute(src=a.name)
@@ -383,7 +405,7 @@ class RustWrapperGenerator(object):
             c_name = "cv_%s_%s_%s%s"%(module, ci.name, fi.cppname, suffix);
 
         # C function prototype
-        if "boxed" in type_mapping[fi.cpptype]:
+        if self.is_boxed(fi.cpptype):
             self.moduleCppCode.write("%s* %s(%s) {\n"%(fi.cpptype, c_name, decl_c_args));
         else:
             self.moduleCppCode.write("%s %s(%s) {\n"%(rv["ctype"], c_name, decl_c_args));
@@ -391,6 +413,8 @@ class RustWrapperGenerator(object):
         # cpp call with prefix
         if ci == None:
             call_name = "cv::" + fi.cppname
+        elif fi.isconstructor and self.is_boxed(ci.name):
+            call_name = ci.name
         else:
             call_name = "instance->" + fi.cppname
 
@@ -398,10 +422,10 @@ class RustWrapperGenerator(object):
         if fi.cpptype == "void":
             self.moduleCppCode.write("  %s(%s);\n"%(call_name, call_cpp_args));
         else:
-            self.moduleCppCode.write("  %s cpp_return_value = %s(%s);\n"%(fi.cpptype, call_name,
+            self.moduleCppCode.write("  %s cpp_return_value = %s(%s);\n"%(rv_cpptype, call_name,
                 call_cpp_args));
-            if "boxed" in rv:
-                self.moduleCppCode.write(" return new %s(cpp_return_value);\n"%( fi.cpptype));
+            if self.is_boxed(rv_cpptype):
+                self.moduleCppCode.write(" return new %s(cpp_return_value);\n"%(rv_cpptype));
             elif "return_cpp_to_c" in rv:
                 self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
             else:
@@ -411,8 +435,10 @@ class RustWrapperGenerator(object):
         self.moduleRustCode.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"]));
 
     def gen_class(self, ci):
-#        logging.info("%s", ci)
         # methods
+        self.moduleCppCode.write("// ##############################################\n")
+        self.moduleCppCode.write("// ## CLASS : " + ci.name + "\n")
+        self.moduleCppCode.write("// ##############################################\n")
         for fi in ci.getAllMethods():
             self.gen_func(ci, fi)
 
