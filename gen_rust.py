@@ -37,11 +37,12 @@ type_mapping = {
     u"double": { u"ctype": "double", u"rtype": "f64" },
     u"string": { u"ctype": "const char *", u"rtype": "*const i8",
                  u"return_cpp_to_c": Template("return strdup($src.c_str());\n") },
-
-    u"Mat"   : { "ctype" : "void*", "boxed" : True, "rtype": "cv::Mat" },
 }
 
 boxed_classes = [ "Mat", "Subdiv2D" ]
+forced_boxed_classes = {
+    "core": [ "Mat" ]
+}
 
 #
 #       TEMPLATES
@@ -84,11 +85,17 @@ T_RUST_MODULE = """
 // This file is auto-generated, please don't edit!
 //
 
+use $m::*;
+
 extern "C" {
 
-$code
+$externs
 
 } // extern "C"
+
+mod $m {
+    $code
+}
 
 """
 
@@ -299,8 +306,14 @@ class RustWrapperGenerator(object):
         logging.info("\n\n===== Generating... =====")
         self.moduleCppCode = StringIO()
         self.moduleRustCode = StringIO()
+        self.moduleRustExterns = StringIO()
+
         for fi in self.functions:
             self.gen_func(None, fi)
+
+        if module in forced_boxed_classes:
+            for cb in forced_boxed_classes[module]:
+                self.gen_boxed_class(cb)
 
         for ci in self.classes.values():
 #            if ci.name == "Mat":
@@ -314,7 +327,7 @@ class RustWrapperGenerator(object):
 #)
 
         self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
-        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue()))
+        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue(), externs=self.moduleRustExterns.getvalue()))
         self.save(output_path+"/"+module+".txt", self.makeReport())
 
     def makeReport(self):
@@ -339,7 +352,7 @@ class RustWrapperGenerator(object):
 
     def map_type(self, type_name):
         if self.is_boxed(type_name):
-            return { "ctype" : "void*", "rtype": "cv::%s"%(type_name) }
+            return { "ctype" : "void*", "rtype": "%s"%(type_name) }
         else:
             return type_mapping[type_name]
 
@@ -432,13 +445,23 @@ class RustWrapperGenerator(object):
                 self.moduleCppCode.write("  return cpp_return_value;\n");
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustCode.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"]));
+        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"]));
+
+    def gen_boxed_class(self, name):
+        self.moduleRustExterns.write("pub fn cv_delete_%s(ptr : *mut i8);\n"%(name));
+
+        self.moduleRustCode.write("#[repr(C)] pub struct %s { ptr: *mut i8 }\n"%(name));
+        self.moduleRustCode.write("impl Drop for %s {\n"%(name));
+        self.moduleRustCode.write("  fn drop(&mut self) { unsafe { ::cv_delete_%s(self.ptr) }; }\n"%(name));
+        self.moduleRustCode.write("}\n")
+
+        self.moduleCppCode.write("void cv_delete_%s(void* instance) {\n"%(name));
+        self.moduleCppCode.write("  delete (cv::%s*) instance;\n"%(name));
+        self.moduleCppCode.write("}\n");
 
     def gen_class(self, ci):
-        # methods
-        self.moduleCppCode.write("// ##############################################\n")
-        self.moduleCppCode.write("// ## CLASS : " + ci.name + "\n")
-        self.moduleCppCode.write("// ##############################################\n")
+        if self.is_boxed(ci.name):
+            self.gen_boxed_class(ci.name)
         for fi in ci.getAllMethods():
             self.gen_func(ci, fi)
 
