@@ -35,7 +35,7 @@ type_mapping = {
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
     u"double": { u"ctype": "double", u"rtype": "f64" },
-    u"string": { u"ctype": "const char *", u"rtype": "*const i8",
+    u"string": { u"ctype": "const char *", u"rtype": "*const libc::types::os::arch::c95::c_char",
                  u"return_cpp_to_c": Template("return strdup($src.c_str());\n") },
 }
 

@@ -5,6 +5,9 @@ version = "0.0.1"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 build = "build.rs"
 
+[dependencies]
+libc = "*"
+
 [build-dependencies]
 pkg-config = "*"
 gcc = "*"

@@ -1,5 +1,3 @@
-#![feature(libc)]
-
 extern crate opencv_sys;
 extern crate libc;
 
