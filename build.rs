@@ -37,6 +37,11 @@ fn main() {
     ];
 
     let mut gcc = gcc::Config::new();
+    let mut types = PathBuf::from(&out_dir);
+    types.push("types.h");
+    {
+        File::create(types).unwrap();
+    }
 
     for ref module in modules.iter() {
         let mut cpp = PathBuf::from(&out_dir);
