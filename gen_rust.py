@@ -31,7 +31,10 @@ func_arg_fix = {
 type_mapping = {
     u"void"  : { u"ctype": "void", "rtype": "()" },
     u"bool"  : { u"ctype": "int", u"rtype": "bool" },
+    u"uchar" : { u"ctype": "unsigned char", u"rtype": "u8" },
+    u"short" : { u"ctype": "short", u"rtype": "u16" },
     u"int"   : { u"ctype": "int", u"rtype": "u32" },
+    u"size_t": { u"ctype": "size_t", u"rtype": "libc::types::os::arch::c95::size_t" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
     u"double": { u"ctype": "double", u"rtype": "f64" },
@@ -49,8 +52,17 @@ value_struct_types = {
     ("core", "Point2d") : (("x", "double"), ("y", "double")),
     ("core", "Point2f") : (("x", "float"), ("y", "float")),
     ("core", "Size") : (("width", "int"), ("height", "int")),
+    ("core", "Size2i") : (("width", "int"), ("height", "int")),
+    ("core", "Size2f") : (("width", "float"), ("height", "float")),
     ("core", "Rect") : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
+    ("core", "RotatedRect") : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
+    ("core", "TermCriteria") : (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
+    ("core", "Scalar") : (("data", "double[4]"),)
 }
+
+for s in [2,3,4,6]:
+    for t in [("uchar","b"),("short","s"),("int","i"),("double","d"),("float","f")]:
+        value_struct_types[("core","Vec%d%s"%(s,t[1]))] = ("data", "%s[%d]"%(t[0],s)),
 
 #
 #       TEMPLATES
@@ -410,13 +422,16 @@ class RustWrapperGenerator(object):
             or type_name.startswith("Ptr")
 
     def map_type(self, type_name):
-        if self.is_value(type_name) or self.is_simple(type_name):
+        if self.is_value(type_name):
             return {    "ctype" : "cv_struct_%s"%(type_name.replace("::","_")),
-                        "rtype": "%s"%(type_name) }
+                        "rtype": "%s"%(type_name.replace("::", "_")) }
+        elif self.is_simple(type_name):
+            return {    "ctype" : "cv_struct_%s"%(type_name.replace("::","_")),
+                        "rtype": "%s"%(type_name.replace("::", "_")) }
+        elif type_name in type_mapping:
+            return type_mapping[type_name]
         elif self.is_pointer(type_name):
             return { "ctype" : "void*", "rtype": "%s"%(type_name) }
-        else:
-            return type_mapping[type_name]
 
     def gen_func(self, ci, fi, prop_name=''):
         if fi.isconstructor:
@@ -564,24 +579,47 @@ class RustWrapperGenerator(object):
 
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(c[1]))
+        self.moduleRustCode.write("#[repr(C)]#[allow(dead_code)] pub struct %s {\n"%(c[1]))
         for field in value_struct_types[c]:
-            self.moduleCppTypes.write("    %s %s;\n"%(field[1], field[0]))
+            rsname = field[0]
+            if rsname in ["box", "type"]:
+                rsname = "_" + rsname
+            if "[" in field[1]:
+                bracket = field[1].index("[")
+                cppt = field[1][:bracket]
+                ct = self.map_type(cppt)["ctype"]
+                size = field[1][bracket+1:-1]
+                rst = self.map_type(cppt)["rtype"]
+                self.moduleCppTypes.write("    %s %s[%s];\n"%(ct, field[0], size))
+                self.moduleRustCode.write("    %s: [%s;%s],\n"%(rsname, rst, size))
+            else:
+                cppt = field[1]
+                ct = self.map_type(cppt)["ctype"]
+                rst = self.map_type(cppt)["rtype"]
+                self.moduleCppTypes.write("    %s %s;\n"%(ct, field[0]))
+                self.moduleRustCode.write("    %s: %s,\n"%(rsname, rst))
         self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(c[1]))
+        self.moduleRustCode.write("}\n")
 
     def gen_simple_class(self,ci):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(ci.nested_cname))
         self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(ci.nested_cname))
 
     def gen_boxed_class(self, name):
-        self.moduleRustExterns.write("pub fn cv_delete_%s(ptr : *mut i8);\n"%(name));
+        cname = name
+        cppname = name
+        if name in self.classes:
+            cname = self.classes[name].nested_cname
+            cppname = self.classes[name].nested_cppname
+        self.moduleRustExterns.write("pub fn cv_%s_delete_%s(ptr : *mut i8);\n"%(self.module,cname));
 
-        self.moduleRustCode.write("#[repr(C)] pub struct %s { ptr: *mut i8 }\n"%(name));
-        self.moduleRustCode.write("impl Drop for %s {\n"%(name));
-        self.moduleRustCode.write("  fn drop(&mut self) { unsafe { ::cv_delete_%s(self.ptr) }; }\n"%(name));
+        self.moduleRustCode.write("#[repr(C)]#[allow(dead_code)] pub struct %s { ptr: *mut i8 }\n"%(cname));
+        self.moduleRustCode.write("impl Drop for %s {\n"%(cname));
+        self.moduleRustCode.write("  fn drop(&mut self) { unsafe { ::cv_%s_delete_%s(self.ptr) }; }\n"%(self.module, cname));
         self.moduleRustCode.write("}\n")
 
-        self.moduleCppCode.write("void cv_delete_%s(void* instance) {\n"%(name));
-        self.moduleCppCode.write("  delete (cv::%s*) instance;\n"%(name));
+        self.moduleCppCode.write("void cv_%s_delete_%s(void* instance) {\n"%(self.module, cname));
+        self.moduleCppCode.write("  delete (cv::%s*) instance;\n"%(cppname));
         self.moduleCppCode.write("}\n");
 
     def gen_nested_class_decl(self, ci):
@@ -591,8 +629,8 @@ class RustWrapperGenerator(object):
     def gen_class(self, ci):
         if not self.is_mapped(ci.name):
             logging.info("Skip class %s", ci.name)
-        if self.is_boxed(ci.name):
-            self.gen_boxed_class(ci.name)
+        if self.is_pointer(ci.name):
+            self.gen_boxed_class(ci.nested_cppname)
         for fi in ci.getAllMethods():
             self.gen_func(ci, fi)
 

@@ -1,4 +1,4 @@
-#![allow(unused_imports)]
+#![allow(unused_imports,non_snake_case)]
 
 extern crate libc;
 
