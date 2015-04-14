@@ -4,6 +4,7 @@ use opencv_sys::*;
 
 use std::ffi::CString;
 
+#[allow(dead_code)]
 fn main() {
     unsafe {
         let name = CString::new("hello opencv!").unwrap();
