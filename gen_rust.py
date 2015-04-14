@@ -34,7 +34,7 @@ type_mapping = {
     u"uchar" : { u"ctype": "unsigned char", u"rtype": "u8" },
     u"short" : { u"ctype": "short", u"rtype": "u16" },
     u"int"   : { u"ctype": "int", u"rtype": "u32" },
-    u"size_t": { u"ctype": "size_t", u"rtype": "libc::types::os::arch::c95::size_t" },
+    u"size_t": { u"ctype": "std::size_t", u"rtype": "::libc::types::os::arch::c95::size_t" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
     u"double": { u"ctype": "double", u"rtype": "f64" },
@@ -214,6 +214,14 @@ class FuncInfo(GeneralInfo):
     def __repr__(self):
         return Template("FUNC <$cpptype $namespace.$classpath.$name $args>").substitute(**self.__dict__)
 
+class ClassPropInfo():
+    def __init__(self, decl): # [f_ctype, f_name, '', '/RW']
+        self.ctype = decl[0]
+        self.name = decl[1]
+        self.rw = "/RW" in decl[3]
+
+    def __repr__(self):
+        return Template("PROP $ctype $name").substitute(ctype=self.ctype, name=self.name)
 
 class ClassInfo(GeneralInfo):
     def __init__(self, decl, namespaces=[]): # [ 'class/struct cname', ': base', [modlist] ]
@@ -225,7 +233,6 @@ class ClassInfo(GeneralInfo):
 #        self.consts = [] # using a list to save the occurence order
 #        self.private_consts = []
 #        self.imports = set()
-#        self.props= []
 #        self.jname = self.name
 #        self.j_code = None # java code stream
 #        self.jn_code = None # jni code stream
@@ -243,6 +250,11 @@ class ClassInfo(GeneralInfo):
 #        if decl[1]:
             #self.base = re.sub(r"\b"+self.jname+r"\b", "", decl[1].replace(":", "")).strip()
 #            self.base = re.sub(r"^.*:", "", decl[1].split(",")[0]).strip().replace(self.jname, "")
+
+        # class props
+        self.props= []
+        for p in decl[3]:
+            self.props.append( ClassPropInfo(p) )
 
     def __repr__(self):
 #        return Template("CLASS $namespace.$classpath.$name : $base").substitute(**self.__dict__)
@@ -373,6 +385,7 @@ class RustWrapperGenerator(object):
 #)
 
         with open(output_path+"/types.h", "a") as f:
+            f.write("#include <cstddef>\n");
             f.write(self.moduleCppTypes.getvalue())
 
         self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
@@ -577,32 +590,39 @@ class RustWrapperGenerator(object):
 
         self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"]));
 
+    def gen_value_struct_field(self, name, typ):
+        rsname = name
+        if rsname in ["box", "type"]:
+            rsname = "_" + rsname
+        if "[" in typ:
+            bracket = typ.index("[")
+            cppt = typ[:bracket]
+            ct = self.map_type(cppt)["ctype"]
+            size = typ[bracket+1:-1]
+            rst = self.map_type(cppt)["rtype"]
+            self.moduleCppTypes.write("    %s %s[%s];\n"%(ct, name, size))
+            self.moduleRustCode.write("    %s: [%s;%s],\n"%(rsname, rst, size))
+        else:
+            cppt = typ
+            ct = self.map_type(cppt)["ctype"]
+            rst = self.map_type(cppt)["rtype"]
+            self.moduleCppTypes.write("    %s %s;\n"%(ct, name))
+            self.moduleRustCode.write("    %s: %s,\n"%(rsname, rst))
+
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(c[1]))
-        self.moduleRustCode.write("#[repr(C)]#[allow(dead_code)] pub struct %s {\n"%(c[1]))
+        self.moduleRustCode.write("#[repr(C)] pub struct %s {\n"%(c[1]))
         for field in value_struct_types[c]:
-            rsname = field[0]
-            if rsname in ["box", "type"]:
-                rsname = "_" + rsname
-            if "[" in field[1]:
-                bracket = field[1].index("[")
-                cppt = field[1][:bracket]
-                ct = self.map_type(cppt)["ctype"]
-                size = field[1][bracket+1:-1]
-                rst = self.map_type(cppt)["rtype"]
-                self.moduleCppTypes.write("    %s %s[%s];\n"%(ct, field[0], size))
-                self.moduleRustCode.write("    %s: [%s;%s],\n"%(rsname, rst, size))
-            else:
-                cppt = field[1]
-                ct = self.map_type(cppt)["ctype"]
-                rst = self.map_type(cppt)["rtype"]
-                self.moduleCppTypes.write("    %s %s;\n"%(ct, field[0]))
-                self.moduleRustCode.write("    %s: %s,\n"%(rsname, rst))
+            self.gen_value_struct_field(field[0], field[1])
         self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(c[1]))
         self.moduleRustCode.write("}\n")
 
     def gen_simple_class(self,ci):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(ci.nested_cname))
+        self.moduleRustCode.write("#[repr(C)] pub struct %s {\n"%(ci.nested_cname))
+        for p in ci.props:
+            self.gen_value_struct_field(p.name, p.ctype)
+        self.moduleRustCode.write("}\n")
         self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(ci.nested_cname))
 
     def gen_boxed_class(self, name):
@@ -627,9 +647,9 @@ class RustWrapperGenerator(object):
         #self.moduleCppCode.write("class %s;\n"%(ci.nested_cname));
 
     def gen_class(self, ci):
-        if not self.is_mapped(ci.name):
-            logging.info("Skip class %s", ci.name)
-        if self.is_pointer(ci.name):
+        if not self.is_mapped(ci.nested_cppname):
+            logging.info("Skip class %s", ci.nested_cppname)
+        if self.is_pointer(ci.nested_cppname):
             self.gen_boxed_class(ci.nested_cppname)
         for fi in ci.getAllMethods():
             self.gen_func(ci, fi)
