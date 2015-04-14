@@ -453,20 +453,20 @@ class RustWrapperGenerator(object):
             rv_cpptype = fi.cpptype;
         if not ci == None and not self.is_mapped(ci.name):
             msg = "unmapped class %s "%(ci.name)
-            self.skipped_func_list.append("%s\n   %s"%(fi,msg))
+            self.skipped_func_list.append("%s\n   %s\n"%(fi,msg))
             return
         if fi.cppname == "()":
-            msg = "can not map operator() yet "
-            self.skipped_func_list.append("%s\n   %s"%(fi,msg))
+            msg = "can not map operator() yet"
+            self.skipped_func_list.append("%s\n   %s\n"%(fi,msg))
             return
         if not self.is_mapped(rv_cpptype):
-            msg = "can not map return value %s \n"%(rv_cpptype)
-            self.skipped_func_list.append("%s\n   %s"%(fi,msg))
+            msg = "can not map return value %s"%(rv_cpptype)
+            self.skipped_func_list.append("%s\n   %s\n"%(fi,msg))
             return
         for a in fi.args:
             if not self.is_mapped(a.cpptype):
-                msg = "can not map arg [%s] "%(a)
-                self.skipped_func_list.append("%s\n   %s"%(fi,msg))
+                msg = "can not map arg [%s]"%(a)
+                self.skipped_func_list.append("%s\n   %s\n"%(fi,msg))
                 return
 
         rv = self.map_type(rv_cpptype)
