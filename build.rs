@@ -40,7 +40,8 @@ fn main() {
     let mut types = PathBuf::from(&out_dir);
     types.push("types.h");
     {
-        File::create(types).unwrap();
+        let mut types = File::create(types).unwrap();
+        write!(&mut types, "#include <cstddef>\n").unwrap();
     }
 
     for ref module in modules.iter() {
