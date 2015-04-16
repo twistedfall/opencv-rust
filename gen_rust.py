@@ -112,6 +112,7 @@ $externs
 } // extern "C"
 
 mod $m {
+    $module_import
     $code
 }
 
@@ -307,6 +308,7 @@ class RustWrapperGenerator(object):
 
     def gen(self, srcfiles, module, output_path):
         parser = hdr_parser.CppHeaderParser()
+        self.output_path = output_path
         self.module = module
         self.Module = module.capitalize()
         includes = [];
@@ -360,7 +362,7 @@ class RustWrapperGenerator(object):
             f.write(self.moduleCppTypes.getvalue())
 
         self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
-        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue(), externs=self.moduleRustExterns.getvalue()))
+        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue(), externs=self.moduleRustExterns.getvalue(), module_import = ("use core::*;\n" if not module == "core" else "")))
         self.save(output_path+"/"+module+".txt", self.makeReport())
 
     def makeReport(self):
@@ -419,17 +421,23 @@ class RustWrapperGenerator(object):
             primitives[type_name]["cpptype"] = type_name
             return primitives[type_name]
         elif self.is_vector(type_name):
-            return {    "ctype" : "void*",
+            h = {       "ctype" : "void*",
                         "cpptype": "vector<%s>"%(type_name.split("::")[-1]),
                         "rtype" : "VectorOf%s"%(type_name.split("::")[1]) }
+            self.gen_template_wrapper_rust_struct(h)
+            return h
         elif self.is_vector_of_vector(type_name):
-            return {    "ctype" : "void*",
+            h = {    "ctype" : "void*",
                         "cpptype": "vector< vector<%s> >"%(type_name.split("::")[-1]),
-                        "rtype" : "VectorOfVectorOf%s"%(type_name.split("::")[1]) }
+                        "rtype" : "VectorOfVectorOf%s"%(type_name.split("::")[2]) }
+            self.gen_template_wrapper_rust_struct(h)
+            return h
         elif self.is_ptr(type_name):
-            return {    "ctype" : "void*",
+            h = {    "ctype" : "void*",
                         "cpptype": "Ptr<%s>"%(type_name.split("::")[-1]),
                         "rtype" : "PtrOf%s"%(type_name.split("::")[1]) }
+            self.gen_template_wrapper_rust_struct(h)
+            return h
         else:
             return { "ctype" : "void*", "cpptype" : type_name, "rtype": "%s"%(type_name) }
 
@@ -460,6 +468,7 @@ class RustWrapperGenerator(object):
         self.moduleCppCode.write("// %s %s\n"%(fi.cppname,
             "(constructor)" if fi.isconstructor else "(method)"))
         self.moduleCppCode.write("// %s\n"%(fi))
+        self.moduleCppCode.write("// Return value: %s\n"%(rv))
 
         decl_c_args = "\n        "
         call_cpp_args = ""
@@ -578,8 +587,7 @@ class RustWrapperGenerator(object):
             self.moduleCppCode.write("  return cpp_return_value;\n");
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"]));
-
+        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"])); 
     def gen_value_struct_field(self, name, typ):
         rsname = name
         if rsname in ["box", "type"]:
@@ -615,6 +623,10 @@ class RustWrapperGenerator(object):
         self.moduleRustCode.write("}\n")
         self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(ci.nested_cname))
 
+    def gen_template_wrapper_rust_struct(self, typ):
+        with open(self.output_path+"/"+typ["rtype"]+".type.rs", "w") as f:
+            f.write("#[repr(C)]#[allow(dead_code)] pub struct %s { ptr: *mut i8 }\n"%(typ["rtype"]));
+
     def gen_boxed_class(self, name):
         cname = name
         cppname = name
@@ -637,8 +649,8 @@ class RustWrapperGenerator(object):
         #self.moduleCppCode.write("class %s;\n"%(ci.nested_cname));
 
     def gen_class(self, ci):
-#        if self.is_boxed(ci.nested_cppname):
-#            self.gen_boxed_class(ci.nested_cppname)
+        if self.is_boxed(ci.nested_cppname):
+            self.gen_boxed_class(ci.nested_cppname)
         for fi in ci.getAllMethods():
             self.gen_func(ci, fi)
 

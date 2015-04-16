@@ -1,8 +1,11 @@
 extern crate pkg_config;
+extern crate glob;
 extern crate gcc;
 
+use glob::glob;
 use std::process::Command;
-use std::path::{ PathBuf} ;
+use std::path::{ Path, PathBuf };
+use std::fs;
 use std::fs::{ File, read_dir };
 use std::ffi::OsString;
 use std::io::Write;
@@ -21,6 +24,10 @@ fn main() {
 
     println!("OpenCV lives in {:?}", actual_opencv);
     println!("Generating code in {:?}", out_dir);
+
+    for entry in glob(&(out_dir.clone() + "*.type.rs")).unwrap() {
+        fs::remove_file(entry.unwrap()).unwrap()
+    }
 
     let modules = vec![
         ("core", vec!["core/core.hpp" ]), // utility, base
@@ -71,6 +78,11 @@ fn main() {
         let mut hub = File::create(hub_filename).unwrap();
         for ref module in modules {
             write!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
+            write!(&mut hub, "\n").unwrap();
+        }
+        for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
+            write!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}"));"#,
+                entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
             write!(&mut hub, "\n").unwrap();
         }
     }
