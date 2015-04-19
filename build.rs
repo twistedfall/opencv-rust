@@ -98,6 +98,5 @@ fn main() {
             writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.externs.rs"));"#, module.0).unwrap();
         }
     }
-    println!("cargo:rustc-link-lib=dylib=stdc++");
-
+    println!("cargo:rustc-link-lib=ocvrs");
 }
