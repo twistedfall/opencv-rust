@@ -44,7 +44,7 @@ primitives = {
 
 # trait_classes = [ "Algorithm" ]
 
-forced_boxed_classes = { "core" : [ "Mat" ] }
+forced_boxed_classes = { }
 
 value_struct_types = {
     ("core", "Point") : (("x", "int"), ("y", "int")),
@@ -103,15 +103,10 @@ T_RUST_MODULE = """
 //
 
 
-use $m::*;
+use ::sys::$m::*;
 
-extern "C" {
-
-$externs
-
-} // extern "C"
-
-mod $m {
+pub mod $m {
+    use ::core::*;
     $module_import
     $code
 }
@@ -362,7 +357,12 @@ class RustWrapperGenerator(object):
             f.write(self.moduleCppTypes.getvalue())
 
         self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
-        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue(), externs=self.moduleRustExterns.getvalue(), module_import = ("use core::*;\n" if not module == "core" else "")))
+
+        with open(output_path+"/%s.externs.rs"%(module), "w") as f:
+            f.write("extern \"C\" {\n")
+            f.write(self.moduleRustExterns.getvalue())
+            f.write("}\n")
+        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue(), module_import = ("use ::sys::core::*;\n" if not module == "core" else "")))
         self.save(output_path+"/"+module+".txt", self.makeReport())
 
     def makeReport(self):
@@ -609,7 +609,7 @@ class RustWrapperGenerator(object):
 
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(c[1]))
-        self.moduleRustCode.write("#[repr(C)] pub struct %s {\n"%(c[1]))
+        self.moduleRustCode.write("#[repr(C)]#[derive(Debug)] pub struct %s {\n"%(c[1]))
         for field in value_struct_types[c]:
             self.gen_value_struct_field(field[0], field[1])
         self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(c[1]))
@@ -617,7 +617,7 @@ class RustWrapperGenerator(object):
 
     def gen_simple_class(self,ci):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(ci.nested_cname))
-        self.moduleRustCode.write("#[repr(C)] pub struct %s {\n"%(ci.nested_cname))
+        self.moduleRustCode.write("#[repr(C)]#[derive(Debug)] pub struct %s {\n"%(ci.nested_cname))
         for p in ci.props:
             self.gen_value_struct_field(p.name, p.ctype)
         self.moduleRustCode.write("}\n")

@@ -4,7 +4,7 @@ extern crate gcc;
 
 use glob::glob;
 use std::process::Command;
-use std::path::{ Path, PathBuf };
+use std::path::{ PathBuf };
 use std::fs;
 use std::fs::{ File, read_dir };
 use std::ffi::OsString;
@@ -70,20 +70,32 @@ fn main() {
         gcc.file(cpp);
     }
 
-    gcc.cpp(true).include(".").compile("libocvrs.a");
+    for entry in glob("native/*.cpp").unwrap() {
+        gcc.file(entry.unwrap());
+    }
+
+    gcc.cpp(true).include(".").include(&out_dir).compile("libocvrs.a");
 
     let mut hub_filename = PathBuf::from(&out_dir);
     hub_filename.push("hub.rs");
     {
         let mut hub = File::create(hub_filename).unwrap();
-        for ref module in modules {
-            write!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
-            write!(&mut hub, "\n").unwrap();
+        writeln!(&mut hub, "mod sys {{").unwrap();
+        for ref module in &modules {
+            writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
         }
+        writeln!(&mut hub, "  pub mod types {{").unwrap();
         for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
-            write!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}"));"#,
+            writeln!(&mut hub, r#"    include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
-            write!(&mut hub, "\n").unwrap();
+        }
+        writeln!(&mut hub, "  }}\n").unwrap();
+        writeln!(&mut hub, "}}\n").unwrap();
+        writeln!(&mut hub, r#"use sys::types::*;"#).unwrap();
+        writeln!(&mut hub, r#"use ::core::*;"#).unwrap();
+        for ref module in &modules {
+            writeln!(&mut hub, r#"use sys::{}::*;"#, module.0).unwrap();
+            writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.externs.rs"));"#, module.0).unwrap();
         }
     }
     println!("cargo:rustc-link-lib=dylib=stdc++");
