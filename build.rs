@@ -25,8 +25,10 @@ fn main() {
     println!("OpenCV lives in {:?}", actual_opencv);
     println!("Generating code in {:?}", out_dir);
 
-    for entry in glob(&(out_dir.clone() + "*.type.rs")).unwrap() {
-        fs::remove_file(entry.unwrap()).unwrap()
+    for pat in vec!["/*.type.rs","/*.type.h","/*.rv.rs"] {
+        for entry in glob(&(out_dir.clone() + pat)).unwrap() {
+            fs::remove_file(entry.unwrap()).unwrap()
+        }
     }
 
     let modules = vec![
@@ -70,6 +72,14 @@ fn main() {
         gcc.file(cpp);
     }
 
+    let mut return_types = PathBuf::from(&out_dir);
+    return_types.push("return_types.h");
+    let mut hub_return_types = File::create(return_types).unwrap();
+    for entry in glob(&(out_dir.clone() + "/cv_return_value_*.type.h")).unwrap() {
+        writeln!(&mut hub_return_types, r#"#include "{}""#,
+            entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
+    }
+
     for entry in glob("native/*.cpp").unwrap() {
         gcc.file(entry.unwrap());
     }
@@ -88,13 +98,25 @@ fn main() {
             writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
         }
         writeln!(&mut hub, "  pub mod types {{").unwrap();
+//        writeln!(&mut hub, "    use core::*;").unwrap();
         for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
             writeln!(&mut hub, r#"    include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
         }
         writeln!(&mut hub, "  }}\n").unwrap();
         writeln!(&mut hub, "}}\n").unwrap();
+        writeln!(&mut hub, "pub mod rv {{").unwrap();
+        writeln!(&mut hub, "  use sys::types::*;").unwrap();
+        for ref module in &modules {
+            writeln!(&mut hub, "  use sys::{}::*;", module.0).unwrap();
+        }
+        for entry in glob(&(out_dir.clone() + "/*.rv.rs")).unwrap() {
+            writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}"));"#,
+                entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
+        }
+        writeln!(&mut hub, "}}\n").unwrap();
         writeln!(&mut hub, r#"use sys::types::*;"#).unwrap();
+        writeln!(&mut hub, r#"use rv::*;"#).unwrap();
 //        writeln!(&mut hub, r#"use ::core::*;"#).unwrap();
         for ref module in &modules {
             writeln!(&mut hub, r#"use sys::{}::*;"#, module.0).unwrap();

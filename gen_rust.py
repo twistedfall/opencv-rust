@@ -90,9 +90,15 @@ T_CPP_MODULE = """
 
 #define LOG_TAG "org.opencv.$m"
 
+#include "stdint.h"
 #include "common.h"
+
+typedef int64_t int64;
+
 #include "types.h"
 #include <iostream>
+
+#include "return_types.h"
 
 #include "opencv2/opencv_modules.hpp"
 #ifdef HAVE_OPENCV_$M
@@ -477,7 +483,7 @@ class RustWrapperGenerator(object):
             return h
         elif self.is_string(type_name):
             return { "ctype" : "const char*", "cpptype" : "string",
-                "rtype": "*const libc::types::os::arch::c95::c_char",
+                "rtype": "*const ::libc::types::os::arch::c95::c_char",
                 "rrvtype": "String" }
         else:
             return { "ctype" : "void*", "cpptype" : type_name, "rctype": "*mut i8", "rtype": "%s"%(type_name) }
@@ -612,7 +618,10 @@ class RustWrapperGenerator(object):
 #        if self.is_boxed(rv_type):
 #            self.moduleCppCode.write("%s* %s(%s) {\n"%(rv_type, c_name, decl_c_args));
 #        else:
-        self.moduleCppCode.write("%s %s(%s) {\n"%(rv["ctype"], c_name, decl_c_args));
+        if fi.type == "void":
+            self.moduleCppCode.write("int %s(%s) {\n"%(c_name, decl_c_args));
+        else:
+            self.moduleCppCode.write("struct cv_return_value_%s %s(%s) {\n"%(rv["ctype"].replace(" ","_").replace(":","_").replace(" ","_").replace("*", "_"), c_name, decl_c_args));
 
         # cpp method call with prefix
         if ci == None:
@@ -638,42 +647,56 @@ class RustWrapperGenerator(object):
             self.moduleCppCode.write("  %s cpp_return_value = %s(%s);\n"%(rv["cpptype"], call_name,
                 call_cpp_args));
 
+        if not fi.type == "void":
+            self.gen_c_return_value_type(rv);
+
         # return value
         if fi.type == "void":
-            pass
+            self.moduleCppCode.write("  return 0;");
         elif self.is_string(rv_type):
-            self.moduleCppCode.write("  return strdup(cpp_return_value.c_str());");
+            self.moduleCppCode.write("  return { 0, strdup(cpp_return_value.c_str()) };");
         elif self.is_boxed(rv_type) and not fi.isconstructor:
-            self.moduleCppCode.write("  return new %s(cpp_return_value);\n"%(rv["cpptype"]));
+            self.moduleCppCode.write("  return { 0, new %s(cpp_return_value) };\n"%(rv["cpptype"]));
         elif self.is_boxed(rv_type) and fi.isconstructor:
-            self.moduleCppCode.write("  return cpp_return_value;\n")
+            self.moduleCppCode.write("  return { 0, cpp_return_value };\n")
         elif self.is_value(rv_type):
-            self.moduleCppCode.write("  return *reinterpret_cast<cv_struct_%s*>(&cpp_return_value);\n"%(rv_type.replace("::", "_")))
+            self.moduleCppCode.write("  return { 0, *reinterpret_cast<cv_struct_%s*>(&cpp_return_value) };\n"%(rv_type.replace("::", "_")))
         elif self.is_vector(rv_type):
-            self.moduleCppCode.write("  return (void*) new %s(cpp_return_value);\n"%(rv["cpptype"]));
+            self.moduleCppCode.write("  return { 0, (void*) new %s(cpp_return_value) };\n"%(rv["cpptype"]));
         elif "return_cpp_to_c" in rv:
             self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
         else:
-            self.moduleCppCode.write("  return cpp_return_value;\n");
+            self.moduleCppCode.write("  return { 0, cpp_return_value };\n");
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv.get("rctype") or rv["rtype"]))
+        if fi.type == "void":
+            rust_extern_rs = "u32"
+        else:
+            rust_extern_rs = "rv::cv_return_value_%s"%(rv["ctype"].replace("*","_").replace(" ","_").replace(":","_"))
+
+        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rust_extern_rs))
 
         rname = renamed_funcs.get(c_name) or fi.name
 
         if not ci == None:
             self.moduleRustCode.write("impl %s {\n"%(ci.name))
-        self.moduleRustCode.write("  pub fn %s(%s) -> %s {\n"%(rname,
+        self.moduleRustCode.write("  pub fn %s(%s) -> Result<%s,u32> {\n"%(rname,
                 decl_rust_args, rv.get("rrvtype") or rv.get("rtype")))
         self.moduleRustCode.write("    unsafe {\n")
-        self.moduleRustCode.write("      let rv = ::%s(%s);\n"%(c_name, call_rust_args))
+        self.moduleRustCode.write("      let _rv = ::%s(%s);\n"%(c_name, call_rust_args))
+        if not fi.type == "void":
+            self.moduleRustCode.write("      let _rv = _rv.result;\n");
         if(self.is_string(rv_type)):
-            self.moduleRustCode.write("      let v = CStr::from_ptr(rv).to_bytes().to_vec();\n");
-            self.moduleRustCode.write("      ::libc::free(rv as *mut ::libc::types::common::c95::c_void);\n");
-            self.moduleRustCode.write("      let rv:String = String::from_utf8(v).unwrap();\n");
+            self.moduleRustCode.write("      let v = CStr::from_ptr(_rv).to_bytes().to_vec();\n");
+            self.moduleRustCode.write("      ::libc::free(_rv as *mut ::libc::types::common::c95::c_void);\n");
+            self.moduleRustCode.write("      let _rv:String = String::from_utf8(v).unwrap();\n");
         elif self.is_boxed(rv_type):
-            self.moduleRustCode.write("      let rv = %s{ ptr: rv };\n"%(rv["rtype"], ))
-        self.moduleRustCode.write("      return rv;\n")
+            self.moduleRustCode.write("      let _rv = %s{ ptr: _rv };\n"%(rv["rtype"], ))
+        elif fi.type == "bool":
+            self.moduleRustCode.write("      let _rv = _rv!=0;\n")
+        elif fi.type == "void":
+            self.moduleRustCode.write("      let _rv = ();\n")
+        self.moduleRustCode.write("      return Ok(_rv);\n")
         self.moduleRustCode.write("    }\n");
         self.moduleRustCode.write("  }\n")
         if not ci == None:
@@ -717,6 +740,19 @@ class RustWrapperGenerator(object):
     def gen_template_wrapper_rust_struct(self, typ):
         with open(self.output_path+"/"+typ["rtype"]+".type.rs", "w") as f:
             f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut i8 }\n"%(typ["rtype"]));
+
+    def gen_c_return_value_type(self, typ):
+        with open(self.output_path+"/cv_return_value_"+typ["ctype"].replace("*","_").replace(" ","_").replace(":","_")+".type.h", "w") as f:
+            f.write("struct cv_return_value_%s {\n"%(typ["ctype"].replace("*","_").replace(" ","_").replace(":","_")));
+            f.write("   int error_code;\n");
+            f.write("   %s result;\n"%(typ["ctype"]));
+            f.write("};\n");
+        with open(self.output_path+"/cv_return_value_"+typ["ctype"].replace("*","_").replace(" ","_").replace(":","_")+".rv.rs", "w") as f:
+            f.write("/* %s\n*/\n"%(typ))
+            f.write("#[repr(C)] pub struct cv_return_value_%s {\n"%(typ["ctype"].replace("*","_").replace(" ","_").replace(":","_")));
+            f.write("   pub error_code:u32,\n");
+            f.write("   pub result: %s,\n"%(typ.get("rctype") or typ["rtype"]));
+            f.write("}\n");
 
     def gen_boxed_class(self, name):
         cname = name
