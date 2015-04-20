@@ -2,8 +2,6 @@ extern crate opencv;
 
 use opencv::highgui;
 
-use std::ffi::CString;
-
 #[allow(dead_code)]
 fn main() {
     let image = highgui::imread("jarres.jpg", 0);
