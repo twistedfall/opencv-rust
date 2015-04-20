@@ -623,6 +623,7 @@ class RustWrapperGenerator(object):
         else:
             self.moduleCppCode.write("struct cv_return_value_%s %s(%s) {\n"%(rv["ctype"].replace(" ","_").replace(":","_").replace(" ","_").replace("*", "_"), c_name, decl_c_args));
 
+        self.moduleCppCode.write("  try {\n");
         # cpp method call with prefix
         if ci == None:
             call_name = "cv::" + fi.cppname
@@ -652,7 +653,7 @@ class RustWrapperGenerator(object):
 
         # return value
         if fi.type == "void":
-            self.moduleCppCode.write("  return 0;");
+            self.moduleCppCode.write("  return 0;\n");
         elif self.is_string(rv_type):
             self.moduleCppCode.write("  return { 0, strdup(cpp_return_value.c_str()) };");
         elif self.is_boxed(rv_type) and not fi.isconstructor:
@@ -667,6 +668,14 @@ class RustWrapperGenerator(object):
             self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
         else:
             self.moduleCppCode.write("  return { 0, cpp_return_value };\n");
+
+        self.moduleCppCode.write("} catch (...) {\n");
+        if fi.type == "void":
+            self.moduleCppCode.write("    return -1;\n");
+        else:
+            self.moduleCppCode.write("    return { -1, 0 };\n");
+        self.moduleCppCode.write("}\n");
+
         self.moduleCppCode.write("}\n\n");
 
         if fi.type == "void":
@@ -684,19 +693,25 @@ class RustWrapperGenerator(object):
                 decl_rust_args, rv.get("rrvtype") or rv.get("rtype")))
         self.moduleRustCode.write("    unsafe {\n")
         self.moduleRustCode.write("      let _rv = ::%s(%s);\n"%(c_name, call_rust_args))
-        if not fi.type == "void":
-            self.moduleRustCode.write("      let _rv = _rv.result;\n");
-        if(self.is_string(rv_type)):
-            self.moduleRustCode.write("      let v = CStr::from_ptr(_rv).to_bytes().to_vec();\n");
-            self.moduleRustCode.write("      ::libc::free(_rv as *mut ::libc::types::common::c95::c_void);\n");
-            self.moduleRustCode.write("      let _rv:String = String::from_utf8(v).unwrap();\n");
+        if fi.type == "void":
+            self.moduleRustCode.write("      let err = _rv;\n")
+        else:
+            self.moduleRustCode.write("      let err = _rv.error_code;\n")
+        self.moduleRustCode.write("      if err != 0 {\n")
+        self.moduleRustCode.write("          return Err(err)\n")
+        self.moduleRustCode.write("      }\n");
+        if fi.type == "void":
+            self.moduleRustCode.write("      Ok(())\n");
+        elif(self.is_string(rv_type)):
+            self.moduleRustCode.write("      let v = CStr::from_ptr(_rv.result).to_bytes().to_vec();\n");
+            self.moduleRustCode.write("      ::libc::free(_rv.result as *mut ::libc::types::common::c95::c_void);\n");
+            self.moduleRustCode.write("      Ok(String::from_utf8(v).unwrap())\n");
         elif self.is_boxed(rv_type):
-            self.moduleRustCode.write("      let _rv = %s{ ptr: _rv };\n"%(rv["rtype"], ))
+            self.moduleRustCode.write("      Ok(%s{ ptr: _rv.result })\n"%(rv["rtype"], ))
         elif fi.type == "bool":
-            self.moduleRustCode.write("      let _rv = _rv!=0;\n")
-        elif fi.type == "void":
-            self.moduleRustCode.write("      let _rv = ();\n")
-        self.moduleRustCode.write("      return Ok(_rv);\n")
+            self.moduleRustCode.write("      Ok(_rv.result!=0)\n")
+        else:
+            self.moduleRustCode.write("      Ok(_rv.result)\n")
         self.moduleRustCode.write("    }\n");
         self.moduleRustCode.write("  }\n")
         if not ci == None:
@@ -713,13 +728,13 @@ class RustWrapperGenerator(object):
             size = typ[bracket+1:-1]
             rst = self.map_type(cppt)["rtype"]
             self.moduleCppTypes.write("    %s %s[%s];\n"%(ct, name, size))
-            self.moduleRustCode.write("    %s: [%s;%s],\n"%(rsname, rst, size))
+            self.moduleRustCode.write("    pub %s: [%s;%s],\n"%(rsname, rst, size))
         else:
             cppt = typ
             ct = self.map_type(cppt)["ctype"]
             rst = self.map_type(cppt)["rtype"]
             self.moduleCppTypes.write("    %s %s;\n"%(ct, name))
-            self.moduleRustCode.write("    %s: %s,\n"%(rsname, rst))
+            self.moduleRustCode.write("    pub %s: %s,\n"%(rsname, rst))
 
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(c[1]))
