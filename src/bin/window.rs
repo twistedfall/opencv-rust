@@ -1,17 +1,13 @@
-extern crate opencv_sys;
+extern crate opencv;
 
-use opencv_sys::*;
+use opencv::highgui;
 
 use std::ffi::CString;
 
 #[allow(dead_code)]
 fn main() {
-    unsafe {
-        let name = CString::new("hello opencv!").unwrap();
-        let filename = CString::new("jarres.jpg").unwrap();
-        let image = cv_highgui_imread_SI(filename.as_ptr(), 0);
-        cv_highgui_namedWindow_SI(name.as_ptr(), 0);
-        cv_highgui_imshow_SM(name.as_ptr(), image);
-        let _ = cv_highgui_waitKey_I(10000);
-    }
+    let image = highgui::imread("jarres.jpg", 0);
+    highgui::namedWindow("hello opencv!", 0);
+    highgui::imshow("hello opencv!", &image);
+    highgui::waitKey(10000);
 }

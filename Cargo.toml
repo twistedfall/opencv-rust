@@ -1,6 +1,6 @@
 [package]
 
-name = "opencv-sys"
+name = "opencv"
 version = "0.0.1"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 build = "build.rs"
