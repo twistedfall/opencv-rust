@@ -80,7 +80,7 @@ fn main() {
     hub_filename.push("hub.rs");
     {
         let mut hub = File::create(hub_filename).unwrap();
-        writeln!(&mut hub, "mod sys {{").unwrap();
+        writeln!(&mut hub, "pub mod sys {{").unwrap();
         for ref module in &modules {
             writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
         }
@@ -92,7 +92,7 @@ fn main() {
         writeln!(&mut hub, "  }}\n").unwrap();
         writeln!(&mut hub, "}}\n").unwrap();
         writeln!(&mut hub, r#"use sys::types::*;"#).unwrap();
-        writeln!(&mut hub, r#"use ::core::*;"#).unwrap();
+//        writeln!(&mut hub, r#"use ::core::*;"#).unwrap();
         for ref module in &modules {
             writeln!(&mut hub, r#"use sys::{}::*;"#, module.0).unwrap();
             writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.externs.rs"));"#, module.0).unwrap();

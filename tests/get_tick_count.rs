@@ -28,3 +28,9 @@ fn test_return_string() {
         libc::free(bi as *mut libc::types::common::c95::c_void);
      };
 }
+
+#[test]
+fn test_return_string_hl() {
+    let info = opencv_sys::sys::core::getBuildInformation();
+    assert!(info.contains("\nGeneral configuration for OpenCV"));
+}

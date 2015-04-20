@@ -12,11 +12,29 @@ else:
 #       EXCEPTIONS TO AUTO GENERATION
 #
 
-ManualFuncs = { }
+ManualFuncs = {
+    "core" : [
+         [ "class cv.Mat" , "", [], [] ],
+#         [ "cv.Mat.create", "Mat", [], [] ],
+         [ "cv.Mat.depth", "int", [], [] ],
+         [ "cv.Mat.size", "Size2i", [], [] ],
+    ]
+}
+
+renamed_funcs = {   "cv_core_divide_MMMDI": "divide_mat",
+                    "cv_core_norm_MMIM":"norm_dist",
+                    "cv_core_ellipse_MPSDDDSIII": "ellipse_tilted",
+                    "cv_features2d_DescriptorMatcher_match_MMVM" : "matches",
+                    "cv_features2d_DescriptorMatcher_match_MVV" : "matches",
+                    "cv_imgproc_integral_MMMI" : "integral_squares",
+                    "cv_imgproc_integral_MMMMI" : "integral_squares_tilted",
+                    "cv_imgproc_distanceTransform_MMMIII" : "distance_tranform_labels",
+                    "cv_video_calcOpticalFlowSF_MMMIIIDDIDDDIDDD" : "calc_optical_flow_full",
+        }
 
 class_ignore_list = (
     #core
-    "FileNode", "FileStorage", "KDTree", "IndexParams"
+    "FileNode", "FileStorage", "KDTree", "IndexParams", "Params"
     #videoio
 #    "VideoWriter",
 )
@@ -37,9 +55,7 @@ primitives = {
     u"size_t": { u"ctype": "std::size_t", u"rtype": "::libc::types::os::arch::c95::size_t" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
-    u"double": { u"ctype": "double", u"rtype": "f64" },
-    u"string": { u"ctype": "const char *", u"rtype": "*const libc::types::os::arch::c95::c_char",
-                 u"return_cpp_to_c": Template("return strdup($src.c_str());\n") },
+    u"double": { u"ctype": "double", u"rtype": "f64" }
 }
 
 # trait_classes = [ "Algorithm" ]
@@ -106,7 +122,10 @@ T_RUST_MODULE = """
 use ::sys::$m::*;
 
 pub mod $m {
-    use ::core::*;
+//    use ::core::*;
+    use sys::types::*;
+    use std::ffi::{ CStr, CString };
+    use std::mem::transmute;
     $module_import
     $code
 }
@@ -164,6 +183,8 @@ class ArgInfo():
         if type.endswith("*"):
             type = type[:-1]
             self.pointer = True
+        if type == "String":
+            type = "string"
         self.ctype = type
         self.type = make_cpp_type(type)
         self.name = arg_tuple[1]
@@ -301,6 +322,15 @@ class RustWrapperGenerator(object):
         f.write(buf)
         f.close()
 
+    def add_decl(self, decl):
+        name = decl[0]
+        if name.startswith("struct") or name.startswith("class"):
+            self.add_class(decl)
+        elif name.startswith("const"):
+            self.add_const(decl)
+        else: # function
+            self.add_func(decl)
+
     def gen(self, srcfiles, module, output_path):
         parser = hdr_parser.CppHeaderParser()
         self.output_path = output_path
@@ -317,13 +347,12 @@ class RustWrapperGenerator(object):
                 includes.append('#include "' + hdr + '"')
             for decl in decls:
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
-                name = decl[0]
-                if name.startswith("struct") or name.startswith("class"):
-                    self.add_class(decl)
-                elif name.startswith("const"):
-                    self.add_const(decl)
-                else: # function
-                    self.add_func(decl)
+                self.add_decl(decl)
+
+        if module in ManualFuncs:
+            for decl in ManualFuncs[self.module]:
+                logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
+                self.add_decl(decl)
 
         logging.info("\n\n===== Generating... =====")
         self.moduleCppTypes = StringIO()
@@ -379,6 +408,9 @@ class RustWrapperGenerator(object):
             report.write("\n%i def args - %i funcs" % (i, self.def_args_hist[i]))
         return report.getvalue()
 
+    def is_string(self, type_name):
+        return type_name == "string"
+
     def is_primitive(self, type_name):
         return type_name in primitives
 
@@ -406,7 +438,8 @@ class RustWrapperGenerator(object):
         return type_name.split("::")[-1] in class_ignore_list
 
     def is_boxed(self, type_name):
-        return not (self.is_value(type_name) or self.is_simple(type_name) or self.is_primitive(type_name))
+        return not (self.is_value(type_name) or self.is_simple(type_name)
+            or self.is_primitive(type_name) or self.is_string(type_name))
 
     def map_type(self, type_name):
         if self.is_value(type_name):
@@ -416,30 +449,38 @@ class RustWrapperGenerator(object):
         elif self.is_simple(type_name):
             return {    "ctype" : "cv_struct_%s"%(type_name.replace("::","_")),
                         "cpptype": type_name,
-                        "rtype" : "%s"%(type_name.replace("::", "_")) }
+                        "rtype" : "%s"%(type_name.replace("::", "_")),
+                    }
         elif self.is_primitive(type_name):
             primitives[type_name]["cpptype"] = type_name
             return primitives[type_name]
         elif self.is_vector(type_name):
             h = {       "ctype" : "void*",
                         "cpptype": "vector<%s>"%(type_name.split("::")[-1]),
+                        "rctype" : "*mut i8",
                         "rtype" : "VectorOf%s"%(type_name.split("::")[1]) }
             self.gen_template_wrapper_rust_struct(h)
             return h
         elif self.is_vector_of_vector(type_name):
             h = {    "ctype" : "void*",
+                        "rctype" : "*mut i8",
                         "cpptype": "vector< vector<%s> >"%(type_name.split("::")[-1]),
                         "rtype" : "VectorOfVectorOf%s"%(type_name.split("::")[2]) }
             self.gen_template_wrapper_rust_struct(h)
             return h
         elif self.is_ptr(type_name):
             h = {    "ctype" : "void*",
+                        "rctype" : "*mut i8",
                         "cpptype": "Ptr<%s>"%(type_name.split("::")[-1]),
                         "rtype" : "PtrOf%s"%(type_name.split("::")[1]) }
             self.gen_template_wrapper_rust_struct(h)
             return h
+        elif self.is_string(type_name):
+            return { "ctype" : "const char*", "cpptype" : "string",
+                "rtype": "*const libc::types::os::arch::c95::c_char",
+                "rrvtype": "String" }
         else:
-            return { "ctype" : "void*", "cpptype" : type_name, "rtype": "%s"%(type_name) }
+            return { "ctype" : "void*", "cpptype" : type_name, "rctype": "*mut i8", "rtype": "%s"%(type_name) }
 
     def gen_vector_struct_for(self, name):
         struct_name = "cv_vector_of_"+name
@@ -473,6 +514,8 @@ class RustWrapperGenerator(object):
         decl_c_args = "\n        "
         call_cpp_args = ""
         decl_rust_extern_args = ""
+        decl_rust_args = ""
+        call_rust_args = ""
         suffix = "_" if len(fi.args) > 0 else ""
         if not ci == None and not fi.isconstructor:
             decl_c_args += self.map_type(ci.name)["ctype"] + " instance"
@@ -483,7 +526,13 @@ class RustWrapperGenerator(object):
             if not call_cpp_args == "":
                 call_cpp_args += ", "
                 decl_rust_extern_args += ", "
+                decl_rust_args += ", "
+                call_rust_args += ", "
             suffix += a.type[0].capitalize()
+
+            rsname = a.name
+            if rsname in ["type","box"]:
+                rsname = "_" + rsname
 
             rw = a.out == "O" or a.out == "IO"
 
@@ -503,14 +552,36 @@ class RustWrapperGenerator(object):
             decl_c_args += "\n        */ "
 
             arg_decl_star = not self.is_boxed(a.type) and rw
-            if arg_decl_star:
+            if self.is_string(a.type):
+                decl_c_args += "const char *" + a.name
+            elif arg_decl_star:
                 decl_c_args += atype["ctype"] + " *" + a.name
             else:
                 decl_c_args += atype["ctype"] + " " + a.name
 
+            if self.is_string(a.type):
+                decl_rust_args += "%s:&str"%(rsname)
+            elif self.is_primitive(a.type) or self.is_value(a.type) \
+                    or self.is_simple(a.type):
+                decl_rust_args += rsname + ":" + atype["rtype"]
+            elif rw:
+                decl_rust_args += rsname + ":&mut " + atype["rtype"]
+            else:
+                decl_rust_args += rsname + ":& " + atype["rtype"]
+
+            if self.is_boxed(a.type) or self.is_vector(a.type) \
+                    or self.is_vector_of_vector(a.type) or self.is_ptr(a.type):
+                call_rust_args += "%s.ptr"%(rsname)
+            elif self.is_string(a.type):
+                call_rust_args += "CString::new(%s).unwrap().as_ptr()"%(rsname)
+            else:
+                call_rust_args += "%s"%(rsname)
+
             if self.is_boxed(a.type) or self.is_vector(a.type) \
                     or self.is_vector_of_vector(a.type) or self.is_ptr(a.type):
                 call_cpp_args += "*((%s*)%s)"%(atype["cpptype"], a.name)
+            elif a.type == "string":
+                call_cpp_args += a.name
             elif "arg_c_to_cpp" in atype:
                 call_cpp_args += atype["arg_c_to_cpp"].substitute(src=a.name)
             elif self.is_value(a.type) or (a.type in self.classes and self.classes[a.type].simple):
@@ -530,10 +601,7 @@ class RustWrapperGenerator(object):
                 else:
                     call_cpp_args += "*" + a.name
 
-            rsname = a.name
-            if rsname in ["type","box"]:
-                rsname = "_" + rsname
-            decl_rust_extern_args += rsname + ": " + atype["rtype"]
+            decl_rust_extern_args += rsname + ": " + (atype.get("rctype") or atype["rtype"])
 
         if ci == None:
             c_name = "cv_%s_%s%s"%(module, fi.cppname, suffix);
@@ -573,6 +641,8 @@ class RustWrapperGenerator(object):
         # return value
         if fi.type == "void":
             pass
+        elif self.is_string(rv_type):
+            self.moduleCppCode.write("  return strdup(cpp_return_value.c_str());");
         elif self.is_boxed(rv_type) and not fi.isconstructor:
             self.moduleCppCode.write("  return new %s(cpp_return_value);\n"%(rv["cpptype"]));
         elif self.is_boxed(rv_type) and fi.isconstructor:
@@ -587,7 +657,28 @@ class RustWrapperGenerator(object):
             self.moduleCppCode.write("  return cpp_return_value;\n");
         self.moduleCppCode.write("}\n\n");
 
-        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv["rtype"])); 
+        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rv.get("rctype") or rv["rtype"]))
+
+        rname = renamed_funcs.get(c_name) or fi.name
+
+        if not ci == None:
+            self.moduleRustCode.write("impl %s {\n"%(ci.name))
+        self.moduleRustCode.write("  pub fn %s(%s) -> %s {\n"%(rname,
+                decl_rust_args, rv.get("rrvtype") or rv.get("rtype")))
+        self.moduleRustCode.write("    unsafe {\n")
+        self.moduleRustCode.write("      let rv = ::%s(%s);\n"%(c_name, call_rust_args))
+        if(self.is_string(rv_type)):
+            self.moduleRustCode.write("      let v = CStr::from_ptr(rv).to_bytes().to_vec();\n");
+            self.moduleRustCode.write("      ::libc::free(rv as *mut ::libc::types::common::c95::c_void);\n");
+            self.moduleRustCode.write("      let rv:String = String::from_utf8(v).unwrap();\n");
+        elif self.is_boxed(rv_type):
+            self.moduleRustCode.write("      let rv = %s{ ptr: rv };\n"%(rv["rtype"], ))
+        self.moduleRustCode.write("      return rv;\n")
+        self.moduleRustCode.write("    }\n");
+        self.moduleRustCode.write("  }\n")
+        if not ci == None:
+            self.moduleRustCode.write("}\n")
+
     def gen_value_struct_field(self, name, typ):
         rsname = name
         if rsname in ["box", "type"]:
@@ -625,7 +716,7 @@ class RustWrapperGenerator(object):
 
     def gen_template_wrapper_rust_struct(self, typ):
         with open(self.output_path+"/"+typ["rtype"]+".type.rs", "w") as f:
-            f.write("#[repr(C)]#[allow(dead_code)] pub struct %s { ptr: *mut i8 }\n"%(typ["rtype"]));
+            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut i8 }\n"%(typ["rtype"]));
 
     def gen_boxed_class(self, name):
         cname = name
@@ -635,7 +726,7 @@ class RustWrapperGenerator(object):
             cppname = self.classes[name].nested_cppname
         self.moduleRustExterns.write("pub fn cv_%s_delete_%s(ptr : *mut i8);\n"%(self.module,cname));
 
-        self.moduleRustCode.write("#[repr(C)]#[allow(dead_code)] pub struct %s { ptr: *mut i8 }\n"%(cname));
+        self.moduleRustCode.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut i8 }\n"%(cname));
         self.moduleRustCode.write("impl Drop for %s {\n"%(cname));
         self.moduleRustCode.write("  fn drop(&mut self) { unsafe { ::cv_%s_delete_%s(self.ptr) }; }\n"%(self.module, cname));
         self.moduleRustCode.write("}\n")
