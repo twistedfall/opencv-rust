@@ -93,7 +93,12 @@ fn main() {
     {
         let mut hub = File::create(hub_filename).unwrap();
         for ref module in &modules {
-            writeln!(&mut hub, r#"  pub use sys::{};"#, module.0).unwrap();
+            let mut m = PathBuf::from("src");
+            m.push(module.0);
+            m.set_extension("rs");
+            if ! fs::metadata(m.as_path()).is_ok() {
+                writeln!(&mut hub, r#"  pub use sys::{};"#, module.0).unwrap();
+            }
         }
         writeln!(&mut hub, "pub mod sys {{").unwrap();
         for ref module in &modules {

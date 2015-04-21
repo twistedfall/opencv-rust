@@ -18,8 +18,9 @@ ManualFuncs = {
          [ "cv.Mat.Mat", "Mat", [], [] ],
          [ "cv.Mat.Mat", "Mat", [],
             [ [ "int", "rows" ], [ "int", "cols" ], [ "int" , "type" ] ] ],
-         [ "cv.Mat.depth", "int", [], [] ],
-         [ "cv.Mat.size", "Size", [], [] ],
+         [ "cv.Mat.depth", "int", ["/Const"], [] ],
+         [ "cv.Mat.channels", "int", ["/Const"], [] ],
+         [ "cv.Mat.size", "Size", ["/Const"], [] ],
     ]
 }
 
@@ -267,6 +268,7 @@ class FuncInfo(GeneralInfo):
             self.args.append(ArgInfo(a))
         if self.isconstructor:
             self.name = "new"
+        self.const = "/Const" in decl[2]
 
     def __repr__(self):
         return Template("FUNC <$type $namespace.$classpath.$name $args>").substitute(**self.__dict__)
@@ -546,8 +548,9 @@ class RustWrapperGenerator(object):
 
         self.ported_func_list.append(fi.__repr__())
 
-        self.moduleCppCode.write("// %s %s\n"%(fi.cppname,
-            "(constructor)" if fi.isconstructor else "(method)"))
+        self.moduleCppCode.write("// %s %s %s\n"%(fi.cppname,
+            "(constructor)" if fi.isconstructor else "(method)",
+            "(const)" if fi.const else "(mut)"))
         self.moduleCppCode.write("// %s\n"%(fi))
         self.moduleCppCode.write("// Return value: %s\n"%(rv))
 
@@ -559,8 +562,12 @@ class RustWrapperGenerator(object):
         suffix = "_" if len(fi.args) > 0 else ""
         if not ci == None and not fi.isconstructor:
             decl_c_args += self.map_type(ci.name)["ctype"] + " instance"
-            decl_rust_extern_args = "instance: *mut c_void"
-            decl_rust_args = "&mut self"
+            if fi.const:
+                decl_rust_extern_args = "instance: *const c_void"
+                decl_rust_args = "&self"
+            else:
+                decl_rust_extern_args = "instance: *mut c_void"
+                decl_rust_args = "&mut self"
             call_rust_args = "self.ptr"
         for a in fi.args:
             atype = self.map_type(a.type)
