@@ -68,6 +68,15 @@ class_ignore_list = (
 #    "VideoWriter",
 )
 
+const_ignore_list = (
+    "CV_EXPORTS_W", "CV_EXPORTS_W_SIMPLE", "CV_EXPORTS_W_MAP", "CV_MAKE_TYPE",
+    "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
+    "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
+    "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_LOG2",
+    "CV_TYPE_NAME_IMAGE", 
+
+)
+
 func_arg_fix = {
 }
 
@@ -160,11 +169,25 @@ pub mod $m {
     use std::ffi::{ CStr, CString };
     use std::mem::transmute;
     use libc::types::common::c95::c_void;
+    
     $module_import
     $code
 }
 
 """
+
+const_private_list = (
+    "CV_MOP_.+",
+    "CV_INTER_.+",
+    "CV_THRESH_.+",
+    "CV_INPAINT_.+",
+    "CV_RETR_.+",
+    "CV_CHAIN_APPROX_.+",
+    "OPPONENTEXTRACTOR",
+    "GRIDDETECTOR",
+    "PYRAMIDDETECTOR",
+    "DYNAMICDETECTOR",
+)
 
 #
 #       AST-LIKE
@@ -295,6 +318,8 @@ class ClassInfo(GeneralInfo):
             self.nested = True
         self.nested_cppname = "::".join(decl[0].split(".")[1:])
         self.nested_cname = "_".join(decl[0].split(".")[1:])
+        self.consts = []
+        self.private_consts = []
 
         # class props
         self.props= []
@@ -313,6 +338,40 @@ class ClassInfo(GeneralInfo):
         result.extend([fi for fi in sorted(self.methods) if fi.isconstructor])
         result.extend([fi for fi in sorted(self.methods) if not fi.isconstructor])
         return result
+
+    def getConst(self, name):
+        for cand in self.consts + self.private_consts:
+            if cand.name == name:
+                return cand
+        return None
+
+    def addConst(self, constinfo):
+        # choose right list (public or private)
+        consts = self.consts
+        for c in const_private_list:
+            if re.match(c, constinfo.name):
+                consts = self.private_consts
+                break
+        consts.append(constinfo)
+
+class ConstInfo(GeneralInfo):
+    def __init__(self, decl, addedManually=False, namespaces=[]):
+        GeneralInfo.__init__(self, decl[0], namespaces)
+        self.cname = self.name.replace(".", "::")
+        self.value = decl[1]
+        self.addedManually = addedManually
+
+    def __repr__(self):
+        return Template("CONST $name=$value$manual").substitute(name=self.name,
+                                                                 value=self.value,
+                                                                 manual="(manual)" if self.addedManually else "")
+
+    def isIgnored(self):
+        for c in const_ignore_list:
+            if re.match(c, self.name):
+                return True
+        return False
+
 #
 #       GENERATOR
 #
@@ -330,6 +389,7 @@ class RustWrapperGenerator(object):
         self.ported_func_list = []
         self.skipped_func_list = []
         self.def_args_hist = {} # { def_args_cnt : funcs_cnt }
+        self.consts = []
 
     def getClass(self, classname):
         return self.classes[classname] # or self.Module]
@@ -340,8 +400,32 @@ class RustWrapperGenerator(object):
         if not self.is_ignored(name):
             self.classes[name] = classinfo
 
+    def get_const(self, name):
+        for c in self.consts:
+            if c.cname == name:
+                return c
+        return None
+
     def add_const(self, decl): # [ "const cname", val, [], [] ]
-        pass
+        constinfo = ConstInfo(decl, namespaces=self.namespaces)
+        if constinfo.isIgnored():
+            logging.info('ignored: %s', constinfo)
+        elif constinfo.classname == "" or constinfo.classname == "cv":
+            if not self.get_const(constinfo.name):
+                self.consts.append(constinfo)
+        elif not constinfo.classname in self.classes:
+            logging.info('class not found: %s', constinfo.classname)
+        else:
+            ci = self.getClass(constinfo.classname)
+            duplicate = ci.getConst(constinfo.name)
+            if duplicate:
+                if duplicate.addedManually:
+                    logging.info('manual: %s', constinfo)
+                else:
+                    logging.warning('duplicated: %s', constinfo)
+            else:
+                ci.addConst(constinfo)
+                logging.info('ok: %s', constinfo)
 
     def add_func(self, decl):
         fi = FuncInfo(decl, namespaces=self.namespaces)
@@ -399,8 +483,23 @@ class RustWrapperGenerator(object):
         logging.info("\n\n===== Generating... =====")
         self.moduleCppTypes = StringIO()
         self.moduleCppCode = StringIO()
+        self.moduleCppConsts = StringIO()
         self.moduleRustCode = StringIO()
         self.moduleRustExterns = StringIO()
+
+        for ci in self.consts:
+            self.moduleRustCode.write("// %s [%s] [%s]\n"%(ci, ci.cname, ci.value))
+            if ci.value.startswith('"'):
+                self.moduleRustCode.write("pub const %s:&'static str = %s;\n"%(ci.cname, ci.value))
+            elif re.match("^(-?[0-9]+|0x[0-9A-F]+)$", ci.value):
+                self.moduleRustCode.write("pub const %s:i32 = %s;\n"%(ci.cname, ci.value))
+            else:
+                self.moduleCppConsts.write(
+                    """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(ci.name, ci.name)
+                )
+        self.moduleRustCode.write(
+            """include!(concat!(env!("OUT_DIR"), "/%s.consts.rs"));\n"""%(self.module)
+        )
 
         for ci in self.classes.values():
             if ci.nested:
@@ -426,6 +525,15 @@ class RustWrapperGenerator(object):
 
         with open(output_path+"/types.h", "a") as f:
             f.write(self.moduleCppTypes.getvalue())
+
+        with open(output_path+"/" + self.module + ".consts.cpp", "w") as f:
+            f.write("""#include <cstdio>\n""")
+            f.write("""#include "opencv2/opencv_modules.hpp"\n""")
+            f.write("""#include "opencv2/%s/%s.hpp"\n"""%(module,module))
+            f.write("""using namespace cv;\n""")
+            f.write("int main(int argc, char**argv) {\n");
+            f.write(self.moduleCppConsts.getvalue())
+            f.write("}\n");
 
         self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
 

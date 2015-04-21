@@ -764,6 +764,9 @@ class CppHeaderParser(object):
             if state == DIRECTIVE:
                 if not l.endswith("\\"):
                     state = SCAN
+                define = re.match(r"#define +([A-Z_][A-Z0-9_]+) +(.+)$", l)
+                if define:
+                    decls.append(["const cv." + define.group(1), define.group(2), [], []])
                 continue
 
             if state == COMMENT:

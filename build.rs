@@ -32,8 +32,8 @@ fn main() {
     }
 
     let modules = vec![
-        ("core", vec!["core/core.hpp" ]), // utility, base
-        ("imgproc", vec![   "imgproc/imgproc_c.h", "imgproc/types_c.h",
+        ("core", vec!["core/types_c.h", "core/core.hpp" ]), // utility, base
+        ("imgproc", vec![ "imgproc/types_c.h", "imgproc/imgproc_c.h",
                             "imgproc/imgproc.hpp" ]),
         ("highgui", vec![   "highgui/cap_ios.h", "highgui/highgui.hpp",
                             "highgui/highgui_c.h", "highgui/ios.h" ]),
@@ -87,6 +87,18 @@ fn main() {
     gcc.cpp(true).include(".").include(&out_dir)
         .flag("-Wno-c++11-extensions")
         .compile("libocvrs.a");
+
+    for ref module in &modules {
+        let e = Command::new("sh").current_dir(&out_dir).arg("-c").arg(
+            format!("g++ `pkg-config --cflags --libs opencv` {}.consts.cpp -o {}.consts",
+                module.0, module.0)
+        ).status().unwrap();
+        assert!(e.success());
+        let e = Command::new("sh").current_dir(&out_dir).arg("-c").arg(
+            format!("./{}.consts > {}.consts.rs", module.0, module.0)
+        ).status().unwrap();
+        assert!(e.success());
+    }
 
     let mut hub_filename = PathBuf::from(&out_dir);
     hub_filename.push("hub.rs");
