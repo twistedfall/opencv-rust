@@ -80,7 +80,7 @@ primitives = {
     u"bool"  : { u"ctype": "int", u"rtype": "bool" },
     u"uchar" : { u"ctype": "unsigned char", u"rtype": "u8" },
     u"short" : { u"ctype": "short", u"rtype": "u16" },
-    u"int"   : { u"ctype": "int", u"rtype": "u32" },
+    u"int"   : { u"ctype": "int", u"rtype": "i32" },
     u"size_t": { u"ctype": "std::size_t", u"rtype": "::libc::types::os::arch::c95::size_t" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
