@@ -84,7 +84,9 @@ fn main() {
         gcc.file(entry.unwrap());
     }
 
-    gcc.cpp(true).include(".").include(&out_dir).compile("libocvrs.a");
+    gcc.cpp(true).include(".").include(&out_dir)
+        .flag("-Wno-c++11-extensions")
+        .compile("libocvrs.a");
 
     let mut hub_filename = PathBuf::from(&out_dir);
     hub_filename.push("hub.rs");
