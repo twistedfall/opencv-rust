@@ -15,22 +15,50 @@ else:
 ManualFuncs = {
     "core" : [
          [ "class cv.Mat" , "", [], [] ],
-#         [ "cv.Mat.create", "Mat", [], [] ],
+         [ "cv.Mat.Mat", "Mat", [], [] ],
+         [ "cv.Mat.Mat", "Mat", [],
+            [ [ "int", "rows" ], [ "int", "cols" ], [ "int" , "type" ] ] ],
          [ "cv.Mat.depth", "int", [], [] ],
-         [ "cv.Mat.size", "Size2i", [], [] ],
+         [ "cv.Mat.size", "Size", [], [] ],
     ]
 }
 
-renamed_funcs = {   "cv_core_divide_MMMDI": "divide_mat",
-                    "cv_core_norm_MMIM":"norm_dist",
-                    "cv_core_ellipse_MPSDDDSIII": "ellipse_tilted",
-                    "cv_features2d_DescriptorMatcher_match_MMVM" : "matches",
-                    "cv_features2d_DescriptorMatcher_match_MVV" : "matches",
-                    "cv_imgproc_integral_MMMI" : "integral_squares",
-                    "cv_imgproc_integral_MMMMI" : "integral_squares_tilted",
-                    "cv_imgproc_distanceTransform_MMMIII" : "distance_tranform_labels",
-                    "cv_video_calcOpticalFlowSF_MMMIIIDDIDDDIDDD" : "calc_optical_flow_full",
-        }
+renamed_funcs = {
+    "cv_core_divide_MMMDI": "divide_mat",
+    "cv_core_norm_MMIM":"norm_dist",
+    "cv_core_ellipse_MPSDDDSIII": "ellipse_tilted",
+    "cv_core_Mat_Mat_III": "for_rows_and_cols",
+    "cv_calib3d_StereoSGBM_StereoSGBM_IIIIIIIIIIB": "for_params",
+    "cv_calib3d_StereoBM_StereoBM_III": "for_params",
+    "cv_features2d_BOWKMeansTrainer_cluster_M": "cluster_with_desc",
+    "cv_features2d_BOWTrainer_cluster_M": "cluster_with_desc",
+    "cv_features2d_DescriptorMatcher_match_MMVM" : "matches",
+    "cv_features2d_DescriptorMatcher_match_MVV" : "matches",
+    "cv_features2d_KeyPoint_KeyPoint_FFFFFII" : "for_params",
+    "cv_features2d_DMatch_DMatch_IIF" : "for_params",
+    "cv_features2d_DMatch_DMatch_IIIF" : "for_image",
+    "cv_features2d_DescriptorMatcher_knnMatch_MMVIMB" : "knnTrainMatch",
+    "cv_features2d_DescriptorMatcher_match_MMVM": "trainAndMatch",
+    "cv_features2d_BRISK_BRISK_VVFFV" : "for_pattern",
+    "cv_highgui_VideoWriter_VideoWriter_SIDSB" : "for_params",
+    "cv_highgui_VideoCapture_VideoCapture_S" : "for_file",
+    "cv_highgui_VideoCapture_VideoCapture_I" : "for_fd",
+    "cv_highgui_VideoCapture_open_S" : "open_file",
+    "cv_highgui_VideoCapture_open_I" : "open_fd",
+    "cv_imgproc_integral_MMMI" : "integral_squares",
+    "cv_imgproc_integral_MMMMI" : "integral_squares_tilted",
+    "cv_imgproc_distanceTransform_MMMIII" : "distance_tranform_labels",
+    "cv_imgproc_Subdiv2D_Subdiv2D_R" : "for_rect",
+    "cv_imgproc_Subdiv2D_insert_V" : "insert_multi",
+    "cv_objdetect_HOGDescriptor_HOGDescriptor_S": "for_file",
+    "cv_objdetect_HOGDescriptor_HOGDescriptor_SSSSIIDIDBI": "for_params",
+    "cv_objdetect_CascadeClassifier_detectMultiScale_MVVVDIISSB" : "detectMultiScaleFull",
+    "cv_objdetect_CascadeClassifier_CascadeClassifier_S": "for_file",
+    "cv_video_calcOpticalFlowSF_MMMIIIDDIDDDIDDD" : "calc_optical_flow_full",
+    "cv_video_KalmanFilter_KalmanFilter_IIII" : "for_params",
+    "cv_video_BackgroundSubtractorMOG_BackgroundSubtractorMOG_IIDD" : "for_params", 
+    "cv_video_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_IFB" : "for_params", 
+}
 
 class_ignore_list = (
     #core
@@ -67,7 +95,6 @@ value_struct_types = {
     ("core", "Point2d") : (("x", "double"), ("y", "double")),
     ("core", "Point2f") : (("x", "float"), ("y", "float")),
     ("core", "Size") : (("width", "int"), ("height", "int")),
-    ("core", "Size2i") : (("width", "int"), ("height", "int")),
     ("core", "Size2f") : (("width", "float"), ("height", "float")),
     ("core", "Rect") : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
     ("core", "RotatedRect") : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
@@ -128,10 +155,10 @@ T_RUST_MODULE = """
 use ::sys::$m::*;
 
 pub mod $m {
-//    use ::core::*;
     use sys::types::*;
     use std::ffi::{ CStr, CString };
     use std::mem::transmute;
+    use libc::types::common::c95::c_void;
     $module_import
     $code
 }
@@ -191,21 +218,24 @@ class ArgInfo():
             self.pointer = True
         if type == "String":
             type = "string"
+        if type == "Size2i":
+            type = "Size"
         self.ctype = type
         self.type = make_cpp_type(type)
         self.name = arg_tuple[1]
-        self.defval = arg_tuple[2]
+#        self.defval = arg_tuple[2]
         self.out = ""
-        if "/O" in arg_tuple[3]:
+        if len(arg_tuple) > 3 and "/O" in arg_tuple[3]:
             self.out = "O"
-        if "/IO" in arg_tuple[3]:
+        if len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
             self.out = "IO"
 
     def __repr__(self):
         return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.type,
                                                                   p=" *" if self.pointer else "",
                                                                   name=self.name,
-                                                                  defval=self.defval)
+                                                                  defval="" #self.defval
+                                                                )
 
 class FuncInfo(GeneralInfo):
     def __init__(self, decl, namespaces=[]): # [ funcname, return_ctype, [modifiers], [args] ]
@@ -222,6 +252,8 @@ class FuncInfo(GeneralInfo):
             self.type = "::".join(decl[0].split(".")[1:-1])
         else:
             self.type = make_cpp_type(decl[1])
+        if self.type == "Size2i":
+            self.type = "Size"
         self.cppname = self.name.replace(".", "::")
         self.cname = "_".join(decl[0].split(".")[1:])
         self.args = []
@@ -233,6 +265,8 @@ class FuncInfo(GeneralInfo):
 #            arg[0] = arg_fix_map.get('ctype',  arg[0]) #fixing arg type
 #            arg[3] = arg_fix_map.get('attrib', arg[3]) #fixing arg attrib
             self.args.append(ArgInfo(a))
+        if self.isconstructor:
+            self.name = "new"
 
     def __repr__(self):
         return Template("FUNC <$type $namespace.$classpath.$name $args>").substitute(**self.__dict__)
@@ -320,8 +354,8 @@ class RustWrapperGenerator(object):
         else:
             self.getClass(fi.class_nested_cppname).addMethod(fi)
             # calc args with def val
-            cnt = len([a for a in fi.args if a.defval])
-            self.def_args_hist[cnt] = self.def_args_hist.get(cnt, 0) + 1
+#            cnt = len([a for a in fi.args if a.defval])
+#            self.def_args_hist[cnt] = self.def_args_hist.get(cnt, 0) + 1
 
     def save(self, path, buf):
         f = open(path, "wt")
@@ -463,20 +497,20 @@ class RustWrapperGenerator(object):
         elif self.is_vector(type_name):
             h = {       "ctype" : "void*",
                         "cpptype": "vector<%s>"%(type_name.split("::")[-1]),
-                        "rctype" : "*mut i8",
+                        "rctype" : "*mut c_void",
                         "rtype" : "VectorOf%s"%(type_name.split("::")[1]) }
             self.gen_template_wrapper_rust_struct(h)
             return h
         elif self.is_vector_of_vector(type_name):
             h = {    "ctype" : "void*",
-                        "rctype" : "*mut i8",
+                        "rctype" : "*mut c_void",
                         "cpptype": "vector< vector<%s> >"%(type_name.split("::")[-1]),
                         "rtype" : "VectorOfVectorOf%s"%(type_name.split("::")[2]) }
             self.gen_template_wrapper_rust_struct(h)
             return h
         elif self.is_ptr(type_name):
             h = {    "ctype" : "void*",
-                        "rctype" : "*mut i8",
+                        "rctype" : "*mut c_void",
                         "cpptype": "Ptr<%s>"%(type_name.split("::")[-1]),
                         "rtype" : "PtrOf%s"%(type_name.split("::")[1]) }
             self.gen_template_wrapper_rust_struct(h)
@@ -486,7 +520,7 @@ class RustWrapperGenerator(object):
                 "rtype": "*const ::libc::types::os::arch::c95::c_char",
                 "rrvtype": "String" }
         else:
-            return { "ctype" : "void*", "cpptype" : type_name, "rctype": "*mut i8", "rtype": "%s"%(type_name) }
+            return { "ctype" : "void*", "cpptype" : type_name, "rctype": "*mut c_void", "rtype": "%s"%(type_name) }
 
     def gen_vector_struct_for(self, name):
         struct_name = "cv_vector_of_"+name
@@ -525,12 +559,16 @@ class RustWrapperGenerator(object):
         suffix = "_" if len(fi.args) > 0 else ""
         if not ci == None and not fi.isconstructor:
             decl_c_args += self.map_type(ci.name)["ctype"] + " instance"
+            decl_rust_extern_args = "instance: *mut c_void"
+            decl_rust_args = "&mut self"
+            call_rust_args = "self.ptr"
         for a in fi.args:
             atype = self.map_type(a.type)
             if not decl_c_args.strip() == "":
                 decl_c_args+=",\n        "
             if not call_cpp_args == "":
                 call_cpp_args += ", "
+            if not decl_rust_extern_args == "":
                 decl_rust_extern_args += ", "
                 decl_rust_args += ", "
                 call_rust_args += ", "
@@ -678,22 +716,20 @@ class RustWrapperGenerator(object):
 
         rname = renamed_funcs.get(c_name) or fi.name
 
-        if not ci == None:
-            self.moduleRustCode.write("impl %s {\n"%(ci.name))
         self.moduleRustCode.write("  pub fn %s(%s) -> Result<%s,String> {\n"%(rname,
                 decl_rust_args, rv.get("rrvtype") or rv.get("rtype")))
         self.moduleRustCode.write("    unsafe {\n")
         self.moduleRustCode.write("      let rv = ::%s(%s);\n"%(c_name, call_rust_args))
         self.moduleRustCode.write("      if rv.error_msg as i32 != 0i32 {\n")
         self.moduleRustCode.write("          let v = CStr::from_ptr(rv.error_msg).to_bytes().to_vec();\n");
-        self.moduleRustCode.write("          ::libc::free(rv.error_msg as *mut ::libc::types::common::c95::c_void);\n")
+        self.moduleRustCode.write("          ::libc::free(rv.error_msg as *mut c_void);\n")
         self.moduleRustCode.write("          return Err(String::from_utf8(v).unwrap())\n")
         self.moduleRustCode.write("      }\n");
         if fi.type == "void":
             self.moduleRustCode.write("      Ok(())\n");
         elif(self.is_string(rv_type)):
             self.moduleRustCode.write("      let v = CStr::from_ptr(rv.result).to_bytes().to_vec();\n");
-            self.moduleRustCode.write("      ::libc::free(rv.result as *mut ::libc::types::common::c95::c_void);\n");
+            self.moduleRustCode.write("      ::libc::free(rv.result as *mut c_void);\n");
             self.moduleRustCode.write("      Ok(String::from_utf8(v).unwrap())\n");
         elif self.is_boxed(rv_type):
             self.moduleRustCode.write("      Ok(%s{ ptr: rv.result })\n"%(rv["rtype"], ))
@@ -703,8 +739,6 @@ class RustWrapperGenerator(object):
             self.moduleRustCode.write("      Ok(rv.result)\n")
         self.moduleRustCode.write("    }\n");
         self.moduleRustCode.write("  }\n")
-        if not ci == None:
-            self.moduleRustCode.write("}\n")
 
     def gen_value_struct_field(self, name, typ):
         rsname = name
@@ -727,7 +761,7 @@ class RustWrapperGenerator(object):
 
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(c[1]))
-        self.moduleRustCode.write("#[repr(C)]#[derive(Debug)] pub struct %s {\n"%(c[1]))
+        self.moduleRustCode.write("#[repr(C)]#[derive(Debug,PartialEq)] pub struct %s {\n"%(c[1]))
         for field in value_struct_types[c]:
             self.gen_value_struct_field(field[0], field[1])
         self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(c[1]))
@@ -735,7 +769,7 @@ class RustWrapperGenerator(object):
 
     def gen_simple_class(self,ci):
         self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(ci.nested_cname))
-        self.moduleRustCode.write("#[repr(C)]#[derive(Debug)] pub struct %s {\n"%(ci.nested_cname))
+        self.moduleRustCode.write("#[repr(C)]#[derive(Debug,PartialEq)] pub struct %s {\n"%(ci.nested_cname))
         for p in ci.props:
             self.gen_value_struct_field(p.name, p.ctype)
         self.moduleRustCode.write("}\n")
@@ -743,7 +777,7 @@ class RustWrapperGenerator(object):
 
     def gen_template_wrapper_rust_struct(self, typ):
         with open(self.output_path+"/"+typ["rtype"]+".type.rs", "w") as f:
-            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut i8 }\n"%(typ["rtype"]));
+            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(typ["rtype"]));
 
     def gen_c_return_value_type(self, typ):
         with open(self.output_path+"/cv_return_value_"+typ["ctype"].replace("*","_").replace(" ","_").replace(":","_")+".type.h", "w") as f:
@@ -769,9 +803,9 @@ class RustWrapperGenerator(object):
         if name in self.classes:
             cname = self.classes[name].nested_cname
             cppname = self.classes[name].nested_cppname
-        self.moduleRustExterns.write("pub fn cv_%s_delete_%s(ptr : *mut i8);\n"%(self.module,cname));
+        self.moduleRustExterns.write("pub fn cv_%s_delete_%s(ptr : *mut c_void);\n"%(self.module,cname));
 
-        self.moduleRustCode.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut i8 }\n"%(cname));
+        self.moduleRustCode.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(cname));
         self.moduleRustCode.write("impl Drop for %s {\n"%(cname));
         self.moduleRustCode.write("  fn drop(&mut self) { unsafe { ::cv_%s_delete_%s(self.ptr) }; }\n"%(self.module, cname));
         self.moduleRustCode.write("}\n")
@@ -787,8 +821,10 @@ class RustWrapperGenerator(object):
     def gen_class(self, ci):
         if self.is_boxed(ci.nested_cppname):
             self.gen_boxed_class(ci.nested_cppname)
+        self.moduleRustCode.write("impl %s {\n"%(ci.name))
         for fi in ci.getAllMethods():
             self.gen_func(ci, fi)
+        self.moduleRustCode.write("}\n");
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:

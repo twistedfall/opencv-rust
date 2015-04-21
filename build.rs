@@ -100,7 +100,7 @@ fn main() {
             writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
         }
         writeln!(&mut hub, "  pub mod types {{").unwrap();
-//        writeln!(&mut hub, "    use core::*;").unwrap();
+        writeln!(&mut hub, "    use libc::types::common::c95::c_void;").unwrap();
         for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
             writeln!(&mut hub, r#"    include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
@@ -108,6 +108,7 @@ fn main() {
         writeln!(&mut hub, "  }}\n").unwrap();
         writeln!(&mut hub, "}}\n").unwrap();
         writeln!(&mut hub, "pub mod rv {{").unwrap();
+        writeln!(&mut hub, "  use libc::types::common::c95::c_void;").unwrap();
         writeln!(&mut hub, "  use sys::types::*;").unwrap();
         for ref module in &modules {
             writeln!(&mut hub, "  use sys::{}::*;", module.0).unwrap();
@@ -119,7 +120,7 @@ fn main() {
         writeln!(&mut hub, "}}\n").unwrap();
         writeln!(&mut hub, r#"use sys::types::*;"#).unwrap();
         writeln!(&mut hub, r#"use rv::*;"#).unwrap();
-//        writeln!(&mut hub, r#"use ::core::*;"#).unwrap();
+        writeln!(&mut hub, r#"use libc::types::common::c95::c_void;"#).unwrap();
         for ref module in &modules {
             writeln!(&mut hub, r#"use sys::{}::*;"#, module.0).unwrap();
             writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.externs.rs"));"#, module.0).unwrap();
