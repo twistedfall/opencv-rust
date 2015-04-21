@@ -18,9 +18,9 @@ ManualFuncs = {
          [ "cv.Mat.Mat", "Mat", [], [] ],
          [ "cv.Mat.Mat", "Mat", [],
             [ [ "int", "rows" ], [ "int", "cols" ], [ "int" , "type" ] ] ],
-         [ "cv.Mat.depth", "int", ["/Const"], [] ],
-         [ "cv.Mat.channels", "int", ["/Const"], [] ],
-         [ "cv.Mat.size", "Size", ["/Const"], [] ],
+         [ "cv.Mat.depth", "int", ["/C"], [] ],
+         [ "cv.Mat.channels", "int", ["/C"], [] ],
+         [ "cv.Mat.size", "Size", ["/C"], [] ],
     ]
 }
 
@@ -268,7 +268,7 @@ class FuncInfo(GeneralInfo):
             self.args.append(ArgInfo(a))
         if self.isconstructor:
             self.name = "new"
-        self.const = "/Const" in decl[2]
+        self.const = "/C" in decl[2]
 
     def __repr__(self):
         return Template("FUNC <$type $namespace.$classpath.$name $args>").substitute(**self.__dict__)
@@ -483,6 +483,15 @@ class RustWrapperGenerator(object):
         return not (self.is_value(type_name) or self.is_simple(type_name)
             or self.is_primitive(type_name) or self.is_string(type_name))
 
+    def is_trait(self, ci):
+        if self.is_value(ci.name):
+            return False
+        for fi in sorted(ci.methods):
+            if fi.isconstructor:
+                return False
+        return True
+
+
     def map_type(self, type_name):
         if self.is_value(type_name):
             return {    "ctype"  : "cv_struct_%s"%(type_name.replace("::","_")),
@@ -529,7 +538,7 @@ class RustWrapperGenerator(object):
         self.defined_in_types_h.appand(struct_name)
         self.moduleCppTypes.write
 
-    def gen_func(self, ci, fi, prop_name=''):
+    def gen_func(self, ci, fi, mode="define"):
         if fi.isconstructor:
             rv_type = ci.nested_cppname
         else:
@@ -719,33 +728,38 @@ class RustWrapperGenerator(object):
 
         rust_extern_rs = "rv::cv_return_value_%s"%(rv["ctype"].replace("*","_").replace(" ","_").replace(":","_"))
 
-        self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rust_extern_rs))
+        if mode == "define":
+            self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rust_extern_rs))
 
         rname = renamed_funcs.get(c_name) or fi.name
 
-        self.moduleRustCode.write("  pub fn %s(%s) -> Result<%s,String> {\n"%(rname,
-                decl_rust_args, rv.get("rrvtype") or rv.get("rtype")))
-        self.moduleRustCode.write("    unsafe {\n")
-        self.moduleRustCode.write("      let rv = ::%s(%s);\n"%(c_name, call_rust_args))
-        self.moduleRustCode.write("      if rv.error_msg as i32 != 0i32 {\n")
-        self.moduleRustCode.write("          let v = CStr::from_ptr(rv.error_msg).to_bytes().to_vec();\n");
-        self.moduleRustCode.write("          ::libc::free(rv.error_msg as *mut c_void);\n")
-        self.moduleRustCode.write("          return Err(String::from_utf8(v).unwrap())\n")
-        self.moduleRustCode.write("      }\n");
-        if fi.type == "void":
-            self.moduleRustCode.write("      Ok(())\n");
-        elif(self.is_string(rv_type)):
-            self.moduleRustCode.write("      let v = CStr::from_ptr(rv.result).to_bytes().to_vec();\n");
-            self.moduleRustCode.write("      ::libc::free(rv.result as *mut c_void);\n");
-            self.moduleRustCode.write("      Ok(String::from_utf8(v).unwrap())\n");
-        elif self.is_boxed(rv_type):
-            self.moduleRustCode.write("      Ok(%s{ ptr: rv.result })\n"%(rv["rtype"], ))
-        elif fi.type == "bool":
-            self.moduleRustCode.write("      Ok(rv.result!=0)\n")
+        if mode == "decl":
+            self.moduleRustCode.write("  fn %s(%s) -> Result<%s,String>;\n"%(rname,
+                    decl_rust_args, rv.get("rrvtype") or rv.get("rtype")));
         else:
-            self.moduleRustCode.write("      Ok(rv.result)\n")
-        self.moduleRustCode.write("    }\n");
-        self.moduleRustCode.write("  }\n")
+            self.moduleRustCode.write("  pub fn %s(%s) -> Result<%s,String> {\n"%(rname,
+                    decl_rust_args, rv.get("rrvtype") or rv.get("rtype")))
+            self.moduleRustCode.write("    unsafe {\n")
+            self.moduleRustCode.write("      let rv = ::%s(%s);\n"%(c_name, call_rust_args))
+            self.moduleRustCode.write("      if rv.error_msg as i32 != 0i32 {\n")
+            self.moduleRustCode.write("          let v = CStr::from_ptr(rv.error_msg).to_bytes().to_vec();\n");
+            self.moduleRustCode.write("          ::libc::free(rv.error_msg as *mut c_void);\n")
+            self.moduleRustCode.write("          return Err(String::from_utf8(v).unwrap())\n")
+            self.moduleRustCode.write("      }\n");
+            if fi.type == "void":
+                self.moduleRustCode.write("      Ok(())\n");
+            elif(self.is_string(rv_type)):
+                self.moduleRustCode.write("      let v = CStr::from_ptr(rv.result).to_bytes().to_vec();\n");
+                self.moduleRustCode.write("      ::libc::free(rv.result as *mut c_void);\n");
+                self.moduleRustCode.write("      Ok(String::from_utf8(v).unwrap())\n");
+            elif self.is_boxed(rv_type):
+                self.moduleRustCode.write("      Ok(%s{ ptr: rv.result })\n"%(rv["rtype"], ))
+            elif fi.type == "bool":
+                self.moduleRustCode.write("      Ok(rv.result!=0)\n")
+            else:
+                self.moduleRustCode.write("      Ok(rv.result)\n")
+            self.moduleRustCode.write("    }\n");
+            self.moduleRustCode.write("  }\n")
 
     def gen_value_struct_field(self, name, typ):
         rsname = name
@@ -826,12 +840,18 @@ class RustWrapperGenerator(object):
         #self.moduleCppCode.write("class %s;\n"%(ci.nested_cname));
 
     def gen_class(self, ci):
-        if self.is_boxed(ci.nested_cppname):
-            self.gen_boxed_class(ci.nested_cppname)
-        self.moduleRustCode.write("impl %s {\n"%(ci.name))
-        for fi in ci.getAllMethods():
-            self.gen_func(ci, fi)
-        self.moduleRustCode.write("}\n");
+        if self.is_trait(ci):
+            self.moduleRustCode.write("pub trait %s {\n"%(ci.name))
+            for fi in ci.getAllMethods():
+                self.gen_func(ci, fi, "decl")
+            self.moduleRustCode.write("} // trait %s\n"%(ci.name))
+        else:
+            if self.is_boxed(ci.nested_cppname):
+                self.gen_boxed_class(ci.nested_cppname)
+            self.moduleRustCode.write("impl %s {\n"%(ci.name))
+            for fi in ci.getAllMethods():
+                self.gen_func(ci, fi)
+            self.moduleRustCode.write("}\n");
 
 if __name__ == "__main__":
     if len(sys.argv) < 4:

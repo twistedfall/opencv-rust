@@ -442,7 +442,6 @@ class CppHeaderParser(object):
         # constructor/destructor case
         if bool(re.match(r'^(\w+::)*(?P<x>\w+)::~?(?P=x)$', decl_start)):
             decl_start = "void " + decl_start
-
         rettype, funcname, modlist, argno = self.parse_arg(decl_start, -1)
 
         if argno >= 0:
@@ -559,6 +558,8 @@ class CppHeaderParser(object):
 
         if static_method:
             func_modlist.append("/S")
+        if decl_str.endswith("const"):
+            func_modlist.append("/C")
 
         return [funcname, rettype, func_modlist, args]
 
