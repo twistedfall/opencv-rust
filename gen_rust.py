@@ -43,7 +43,7 @@ renamed_funcs = {
     "cv_features2d_BRISK_BRISK_VVFFV" : "for_pattern",
     "cv_highgui_VideoWriter_VideoWriter_SIDSB" : "for_params",
     "cv_highgui_VideoCapture_VideoCapture_S" : "for_file",
-    "cv_highgui_VideoCapture_VideoCapture_I" : "for_fd",
+    "cv_highgui_VideoCapture_VideoCapture_I" : "for_device",
     "cv_highgui_VideoCapture_open_S" : "open_file",
     "cv_highgui_VideoCapture_open_I" : "open_fd",
     "cv_imgproc_integral_MMMI" : "integral_squares",
