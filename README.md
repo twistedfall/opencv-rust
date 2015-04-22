@@ -15,6 +15,7 @@ Stuff that work (with examples):
 * conversions
 * orb detection (and probably description too)
 
+Notes for my later self:
 * Are there any other modules that should be added to the list ? Can I disco them ?
 * Working with cv 2 here. What about version 3 ?
 * Safe high-level Rust interface could be nicer
