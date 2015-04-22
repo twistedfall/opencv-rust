@@ -247,7 +247,9 @@ class ArgInfo():
         self.ctype = type
         self.type = make_cpp_type(type)
         self.name = arg_tuple[1]
-#        self.defval = arg_tuple[2]
+        self.defval = ""
+        if len(arg_tuple) > 2:
+            self.defval = arg_tuple[2]
         self.out = ""
         if len(arg_tuple) > 3 and "/O" in arg_tuple[3]:
             self.out = "O"
@@ -676,6 +678,7 @@ class RustWrapperGenerator(object):
         decl_rust_extern_args = ""
         decl_rust_args = ""
         call_rust_args = ""
+        rust_args_default_doc = ""
         suffix = "_" if len(fi.args) > 0 else ""
         if not ci == None and not fi.isconstructor:
             decl_c_args += self.map_type(ci.name)["ctype"] + " instance"
@@ -701,6 +704,10 @@ class RustWrapperGenerator(object):
             rsname = a.name
             if rsname in ["type","box"]:
                 rsname = "_" + rsname
+
+            if a.defval != "":
+                rust_args_default_doc += \
+                    "  /// * %s: default %s\n"%(rsname, a.defval)
 
             rw = a.out == "O" or a.out == "IO"
 
@@ -836,11 +843,14 @@ class RustWrapperGenerator(object):
 
         rust_extern_rs = "rv::cv_return_value_%s"%(rv["ctype"].replace("*","_").replace(" ","_").replace(":","_"))
 
+        # rust's extern C
         if mode == "define":
             self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rust_extern_rs))
 
         rname = renamed_funcs.get(c_name) or fi.name
 
+        # rust safe wrapper
+        self.moduleRustCode.write(rust_args_default_doc);
         if mode == "decl":
             self.moduleRustCode.write("  fn %s(%s) -> Result<%s,String>;\n"%(rname,
                     decl_rust_args, rv.get("rrvtype") or rv.get("rtype")));
