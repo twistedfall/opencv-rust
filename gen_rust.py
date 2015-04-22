@@ -320,8 +320,8 @@ class ClassInfo(GeneralInfo):
             self.nested = True
         self.nested_cppname = "::".join(decl[0].split(".")[1:])
         self.nested_cname = "_".join(decl[0].split(".")[1:])
-        self.consts = []
-        self.private_consts = []
+#        self.consts = []
+#        self.private_consts = []
 
         # class props
         self.props= []
@@ -341,24 +341,14 @@ class ClassInfo(GeneralInfo):
         result.extend([fi for fi in sorted(self.methods) if not fi.isconstructor])
         return result
 
-    def getConst(self, name):
-        for cand in self.consts + self.private_consts:
-            if cand.name == name:
-                return cand
-        return None
-
-    def addConst(self, constinfo):
-        # choose right list (public or private)
-        consts = self.consts
-        for c in const_private_list:
-            if re.match(c, constinfo.name):
-                consts = self.private_consts
-                break
-        consts.append(constinfo)
-
 class ConstInfo(GeneralInfo):
     def __init__(self, decl, addedManually=False, namespaces=[]):
         GeneralInfo.__init__(self, decl[0], namespaces)
+        self.fullname = decl[0].split(" ")[1]
+        if len(self.fullname.split(".")) > 1:
+            self.rustname = "_".join(self.fullname.split(".")[1:])
+        else:
+            self.rustname = self.fullname
         self.cname = self.name.replace(".", "::")
         self.value = decl[1]
         self.addedManually = addedManually
@@ -412,22 +402,8 @@ class RustWrapperGenerator(object):
         constinfo = ConstInfo(decl, namespaces=self.namespaces)
         if constinfo.isIgnored():
             logging.info('ignored: %s', constinfo)
-        elif constinfo.classname == "" or constinfo.classname == "cv":
-            if not self.get_const(constinfo.name):
-                self.consts.append(constinfo)
-        elif not constinfo.classname in self.classes:
-            logging.info('class not found: %s', constinfo.classname)
-        else:
-            ci = self.getClass(constinfo.classname)
-            duplicate = ci.getConst(constinfo.name)
-            if duplicate:
-                if duplicate.addedManually:
-                    logging.info('manual: %s', constinfo)
-                else:
-                    logging.warning('duplicated: %s', constinfo)
-            else:
-                ci.addConst(constinfo)
-                logging.info('ok: %s', constinfo)
+        elif not self.get_const(constinfo.name):
+            self.consts.append(constinfo)
 
     def add_func(self, decl):
         fi = FuncInfo(decl, namespaces=self.namespaces)
@@ -490,14 +466,15 @@ class RustWrapperGenerator(object):
         self.moduleRustExterns = StringIO()
 
         for ci in self.consts:
-            self.moduleRustCode.write("// %s [%s] [%s]\n"%(ci, ci.cname, ci.value))
+            self.moduleRustCode.write("// %s [%s] [%s] [%s]\n"%(ci.fullname, ci.cname, ci.value, ci.rustname))
             if ci.value.startswith('"'):
-                self.moduleRustCode.write("pub const %s:&'static str = %s;\n"%(ci.cname, ci.value))
+                self.moduleRustCode.write("pub const %s:&'static str = %s;\n"%(ci.rustname, ci.value))
             elif re.match("^(-?[0-9]+|0x[0-9A-F]+)$", ci.value):
-                self.moduleRustCode.write("pub const %s:i32 = %s;\n"%(ci.cname, ci.value))
-            else:
+                self.moduleRustCode.write("pub const %s:i32 = %s;\n"%(ci.rustname, ci.value))
+            elif len(ci.fullname.split(".")) <= 2:
+                # only use C-constant dumping for unnested const
                 self.moduleCppConsts.write(
-                    """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(ci.name, ci.name)
+                    """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(ci.rustname, ci.name)
                 )
         self.moduleRustCode.write(
             """include!(concat!(env!("OUT_DIR"), "/%s.consts.rs"));\n"""%(self.module)
