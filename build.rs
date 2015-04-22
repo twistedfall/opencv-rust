@@ -83,6 +83,9 @@ fn main() {
     for entry in glob("native/*.cpp").unwrap() {
         gcc.file(entry.unwrap());
     }
+    for entry in glob(&(out_dir.clone() + "/*.type.cpp")).unwrap() {
+        gcc.file(entry.unwrap());
+    }
 
     gcc.cpp(true).include(".").include(&out_dir)
         .flag("-Wno-c++11-extensions")
