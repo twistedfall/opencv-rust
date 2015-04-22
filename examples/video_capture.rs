@@ -8,7 +8,7 @@ fn run() -> Result<(),String> {
     try!(highgui::namedWindow(window,1));
     let mut cam = try!(highgui::VideoCapture::for_device(0));
     loop {
-        let mut frame = try!(core::Mat::new());
+        let mut frame = core::mat();
         try!(cam.read(&mut frame));
         if try!(frame.size()).width > 0 {
             try!(highgui::imshow(window, &mut frame));
