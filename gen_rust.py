@@ -289,6 +289,19 @@ class FuncInfo(GeneralInfo):
             self.name = "new"
         self.const = "/C" in decl[2]
 
+        # register self to class or generator
+        if self.class_nested_cppname == "":
+            gen.functions.append(self)
+        elif gen.is_ignored(self.class_nested_cppname):
+            logging.info('ignored: %s', self)
+        elif self.class_nested_cppname in ManualFuncs:
+            logging.info('manual: %s', self)
+        elif gen.is_ignored(self.class_nested_cppname):
+            pass
+        else:
+            self.ci = gen.getClass(self.class_nested_cppname)
+            self.ci.addMethod(self)
+
     def __repr__(self):
         return Template("FUNC <$type $namespace.$classpath.$name $args>").substitute(**self.__dict__)
 
@@ -345,6 +358,12 @@ class ConstInfo(GeneralInfo):
         self.cname = self.name.replace(".", "::")
         self.value = decl[1]
         self.addedManually = addedManually
+
+        # register
+        if self.isIgnored():
+            logging.info('ignored: %s', self)
+        elif not gen.get_const(self.name):
+            gen.consts.append(self)
 
     def __repr__(self):
         return Template("CONST $name=$value$manual").substitute(name=self.name,
@@ -407,26 +426,6 @@ class RustWrapperGenerator(object):
                 return c
         return None
 
-    def add_const(self, decl): # [ "const cname", val, [], [] ]
-        constinfo = ConstInfo(self, decl, namespaces=self.namespaces)
-        if constinfo.isIgnored():
-            logging.info('ignored: %s', constinfo)
-        elif not self.get_const(constinfo.name):
-            self.consts.append(constinfo)
-
-    def add_func(self, decl):
-        fi = FuncInfo(self, decl, namespaces=self.namespaces)
-        if fi.class_nested_cppname == "":
-            self.functions.append(fi)
-        elif self.is_ignored(fi.class_nested_cppname):
-            logging.info('ignored: %s', fi)
-        elif fi.class_nested_cppname in ManualFuncs and fi.jname in ManualFuncs[classname]:
-            logging.info('manual: %s', fi)
-        elif self.is_ignored(fi.class_nested_cppname):
-            pass
-        else:
-            self.getClass(fi.class_nested_cppname).addMethod(fi)
-
     def save(self, path, buf):
         f = open(path, "wt")
         f.write(buf)
@@ -437,9 +436,9 @@ class RustWrapperGenerator(object):
         if name.startswith("struct") or name.startswith("class"):
             self.add_class(decl)
         elif name.startswith("const"):
-            self.add_const(decl)
+            ConstInfo(self, decl, namespaces=self.namespaces)
         else: # function
-            self.add_func(decl)
+            FuncInfo(self, decl, namespaces=self.namespaces)
 
     def gen(self, srcfiles, module, output_path):
         parser = hdr_parser.CppHeaderParser()
