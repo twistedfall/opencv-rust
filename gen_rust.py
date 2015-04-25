@@ -221,14 +221,6 @@ class GeneralInfo():
         else:
             return spaceName, "", "" # error?!
 
-    def fullName(self, isCPP=False):
-        result = ".".join([self.fullClass(), self.name])
-        return result if not isCPP else result.replace(".", "::")
-
-    def fullClass(self, isCPP=False):
-        result = ".".join([f for f in [self.namespace] + self.classpath.split(".") if len(f)>0])
-        return result if not isCPP else result.replace(".", "::")
-
 def make_cpp_type(t):
     if(t == "size_t"):
         return t
@@ -299,8 +291,8 @@ class FuncInfo(GeneralInfo):
         elif gen.is_ignored(self.class_nested_cppname):
             pass
         else:
-            self.ci = gen.getClass(self.class_nested_cppname)
-            self.ci.addMethod(self)
+            self.ci = gen.get_class(self.class_nested_cppname)
+            self.ci.add_method(self)
 
     def __repr__(self):
         return Template("FUNC <$type $namespace.$classpath.$name $args>").substitute(**self.__dict__)
@@ -334,11 +326,15 @@ class ClassInfo(GeneralInfo):
         for p in decl[3]:
             self.props.append( ClassPropInfo(p) )
 
+        # register
+        if not gen.is_ignored(self.nested_cppname):
+            gen.classes[self.nested_cppname] = self
+
     def __repr__(self):
 #        return Template("CLASS $namespace.$classpath.$name : $base").substitute(**self.__dict__)
         return Template("CLASS $namespace.$classpath.$name").substitute(**self.__dict__)
 
-    def addMethod(self, fi):
+    def add_method(self, fi):
         self.methods.append(fi)
 
     def getAllMethods(self):
@@ -405,20 +401,13 @@ class RustWrapperGenerator(object):
         self.Module = ""
         self.classes = { }
         self.functions = [];
-#        self.classes = { "Mat" : ClassInfo([ 'class Mat', '', [], [] ], self.namespaces) }
         self.ported_func_list = []
         self.skipped_func_list = []
         self.def_args_hist = {} # { def_args_cnt : funcs_cnt }
         self.consts = []
 
-    def getClass(self, classname):
+    def get_class(self, classname):
         return self.classes[classname] # or self.Module]
-
-    def add_class(self, decl):
-        classinfo = ClassInfo(self, decl, namespaces=self.namespaces)
-        name = classinfo.nested_cppname
-        if not self.is_ignored(name):
-            self.classes[name] = classinfo
 
     def get_const(self, name):
         for c in self.consts:
@@ -426,18 +415,13 @@ class RustWrapperGenerator(object):
                 return c
         return None
 
-    def save(self, path, buf):
-        f = open(path, "wt")
-        f.write(buf)
-        f.close()
-
     def add_decl(self, decl):
         name = decl[0]
         if name.startswith("struct") or name.startswith("class"):
-            self.add_class(decl)
+            ClassInfo(self, decl, namespaces=self.namespaces)
         elif name.startswith("const"):
             ConstInfo(self, decl, namespaces=self.namespaces)
-        else: # function
+        else:
             FuncInfo(self, decl, namespaces=self.namespaces)
 
     def gen(self, srcfiles, module, output_path):
@@ -516,14 +500,19 @@ class RustWrapperGenerator(object):
             f.write(self.moduleCppConsts.getvalue())
             f.write("}\n");
 
-        self.save(output_path+"/"+module+".cpp", Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
+        with open(output_path+"/"+module+".cpp", "w") as f:
+            f.write(Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
 
         with open(output_path+"/%s.externs.rs"%(module), "w") as f:
             f.write("extern \"C\" {\n")
             f.write(self.moduleRustExterns.getvalue())
             f.write("}\n")
-        self.save(output_path+"/"+module+".rs", Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue(), module_import = ("use ::sys::core::*;\n" if not module == "core" else "")))
-        self.save(output_path+"/"+module+".txt", self.makeReport())
+
+        with open(output_path+"/"+module+".rs", "w") as f:
+            f.write(Template(T_RUST_MODULE).substitute(m = module, M = module.upper(), code = self.moduleRustCode.getvalue(), module_import = ("use ::sys::core::*;\n" if not module == "core" else "")))
+
+        with open(output_path+"/"+module+".txt", "w") as f:
+            f.write(self.makeReport())
 
     def makeReport(self):
         '''
@@ -974,7 +963,7 @@ class RustWrapperGenerator(object):
                 fn as_ptr(&self) -> *mut c_void { self.ptr }
             }
         """).substitute(cname=cname, module=self.module))
-        ci = self.getClass(name)
+        ci = self.get_class(name)
         if ci.base:
             self.moduleRustCode.write(Template("""
                 impl $base for $cname {
