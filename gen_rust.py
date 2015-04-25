@@ -194,7 +194,8 @@ const_private_list = (
 #
 
 class GeneralInfo():
-    def __init__(self, name, namespaces):
+    def __init__(self, gen, name, namespaces):
+        self.gen = gen
         self.namespace, self.classpath, self.classname, self.name = self.parseName(name, namespaces)
 
     def parseName(self, name, namespaces):
@@ -264,12 +265,9 @@ class ArgInfo():
                                                                 )
 
 class FuncInfo(GeneralInfo):
-    def __init__(self, decl, namespaces=[]): # [ funcname, return_ctype, [modifiers], [args] ]
-        GeneralInfo.__init__(self, decl[0], namespaces)
-#        self.jname = self.name
+    def __init__(self, gen, decl, namespaces=[]): # [ funcname, return_ctype, [modifiers], [args] ]
+        GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.isconstructor = self.name == self.classname
-#        if "[" in self.name:
-#            self.jname = "getelem"
         self.overridename = self.name
         for m in decl[2]:
             if m.startswith("="):
@@ -285,12 +283,7 @@ class FuncInfo(GeneralInfo):
         self.cname = "_".join(decl[0].split(".")[1:])
         self.args = []
         self.class_nested_cppname = "::".join(decl[0].split(".")[1:-1])
-#        func_fix_map = func_arg_fix.get(self.classname, {}).get(self.jname, {})
         for a in decl[3]:
-#            arg = a[:]
-#            arg_fix_map = func_fix_map.get(arg[1], {})
-#            arg[0] = arg_fix_map.get('ctype',  arg[0]) #fixing arg type
-#            arg[3] = arg_fix_map.get('attrib', arg[3]) #fixing arg attrib
             self.args.append(ArgInfo(a))
         if self.isconstructor:
             self.name = "new"
@@ -309,8 +302,8 @@ class ClassPropInfo():
         return Template("PROP $ctype $name").substitute(ctype=self.ctype, name=self.name)
 
 class ClassInfo(GeneralInfo):
-    def __init__(self, decl, namespaces=[]): # [ 'class/struct cname', ': base', [modlist] ]
-        GeneralInfo.__init__(self, decl[0], namespaces)
+    def __init__(self, gen, decl, namespaces=[]): # [ 'class/struct cname', ': base', [modlist] ]
+        GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.methods = []
         self.simple = False
         self.nested = False
@@ -342,8 +335,8 @@ class ClassInfo(GeneralInfo):
         return result
 
 class ConstInfo(GeneralInfo):
-    def __init__(self, decl, addedManually=False, namespaces=[]):
-        GeneralInfo.__init__(self, decl[0], namespaces)
+    def __init__(self, gen, decl, addedManually=False, namespaces=[]):
+        GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.fullname = decl[0].split(" ")[1]
         if len(self.fullname.split(".")) > 1:
             self.rustname = "_".join(self.fullname.split(".")[1:])
@@ -363,6 +356,22 @@ class ConstInfo(GeneralInfo):
             if re.match(c, self.name):
                 return True
         return False
+
+    def gen_rust(self):
+        io = StringIO()
+        io.write("// %s [%s] [%s] [%s]\n"%(self.fullname, self.cname, self.value, self.rustname))
+        if self.value.startswith('"'):
+            io.write("pub const %s:&'static str = %s;\n"%(self.rustname, self.value))
+        elif re.match("^(-?[0-9]+|0x[0-9A-F]+)$", self.value):
+            io.write("pub const %s:i32 = %s;\n"%(self.rustname, self.value))
+        return io.getvalue()
+
+    def gen_cpp_for_complex(self):
+        # only use C-constant dumping for unnested const
+        if len(self.fullname.split(".")) > 2:
+            return ""
+        else:
+            return """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(self.rustname, self.name)
 
 #
 #       GENERATOR
@@ -387,7 +396,7 @@ class RustWrapperGenerator(object):
         return self.classes[classname] # or self.Module]
 
     def add_class(self, decl):
-        classinfo = ClassInfo(decl, namespaces=self.namespaces)
+        classinfo = ClassInfo(self, decl, namespaces=self.namespaces)
         name = classinfo.nested_cppname
         if not self.is_ignored(name):
             self.classes[name] = classinfo
@@ -399,14 +408,14 @@ class RustWrapperGenerator(object):
         return None
 
     def add_const(self, decl): # [ "const cname", val, [], [] ]
-        constinfo = ConstInfo(decl, namespaces=self.namespaces)
+        constinfo = ConstInfo(self, decl, namespaces=self.namespaces)
         if constinfo.isIgnored():
             logging.info('ignored: %s', constinfo)
         elif not self.get_const(constinfo.name):
             self.consts.append(constinfo)
 
     def add_func(self, decl):
-        fi = FuncInfo(decl, namespaces=self.namespaces)
+        fi = FuncInfo(self, decl, namespaces=self.namespaces)
         if fi.class_nested_cppname == "":
             self.functions.append(fi)
         elif self.is_ignored(fi.class_nested_cppname):
@@ -417,9 +426,6 @@ class RustWrapperGenerator(object):
             pass
         else:
             self.getClass(fi.class_nested_cppname).addMethod(fi)
-            # calc args with def val
-#            cnt = len([a for a in fi.args if a.defval])
-#            self.def_args_hist[cnt] = self.def_args_hist.get(cnt, 0) + 1
 
     def save(self, path, buf):
         f = open(path, "wt")
@@ -465,20 +471,17 @@ class RustWrapperGenerator(object):
         self.moduleRustCode = StringIO()
         self.moduleRustExterns = StringIO()
 
-        for ci in self.consts:
-            self.moduleRustCode.write("// %s [%s] [%s] [%s]\n"%(ci.fullname, ci.cname, ci.value, ci.rustname))
-            if ci.value.startswith('"'):
-                self.moduleRustCode.write("pub const %s:&'static str = %s;\n"%(ci.rustname, ci.value))
-            elif re.match("^(-?[0-9]+|0x[0-9A-F]+)$", ci.value):
-                self.moduleRustCode.write("pub const %s:i32 = %s;\n"%(ci.rustname, ci.value))
-            elif len(ci.fullname.split(".")) <= 2:
-                # only use C-constant dumping for unnested const
-                self.moduleCppConsts.write(
-                    """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(ci.rustname, ci.name)
-                )
-        self.moduleRustCode.write(
-            """include!(concat!(env!("OUT_DIR"), "/%s.consts.rs"));\n"""%(self.module)
-        )
+        for co in self.consts:
+            rust = co.gen_rust()
+            if rust:
+                self.moduleRustCode.write(rust)
+            else:
+                self.moduleCppConsts.write(co.gen_cpp_for_complex())
+
+        if self.moduleCppConsts.getvalue != "":
+            self.moduleRustCode.write(
+                """include!(concat!(env!("OUT_DIR"), "/%s.consts.rs"));\n"""%(self.module)
+            )
 
         for ci in self.classes.values():
             if ci.nested:
