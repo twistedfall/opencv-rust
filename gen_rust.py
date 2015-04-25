@@ -249,6 +249,13 @@ class ArgInfo():
         if len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
             self.out = "IO"
 
+    def rsname(self):
+        rsname = self.name
+        if rsname in ["type","box"]:
+            rsname = "_" + rsname
+        return rsname
+
+
     def __repr__(self):
         return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.type,
                                                                   p=" *" if self.pointer else "",
@@ -261,6 +268,7 @@ class FuncInfo(GeneralInfo):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.isconstructor = self.name == self.classname
         self.overridename = self.name
+        self.ci = None
         for m in decl[2]:
             if m.startswith("="):
                 self.overridename = m[1:]
@@ -293,6 +301,61 @@ class FuncInfo(GeneralInfo):
         else:
             self.ci = gen.get_class(self.class_nested_cppname)
             self.ci.add_method(self)
+
+    def rv_header_type(self):
+        return self.ci.nested_cppname if self.isconstructor else self.type
+
+    def rv_type(self):
+        return self.gen.map_type(self.rv_header_type())
+
+    def reason_to_skip(self):
+        if self.overridename == "operator ()":
+            msg = "can not map operator () yet"
+            return msg
+
+        for a in self.args:
+            if self.gen.is_ignored(a.type):
+                msg = "can not map type %s yet"%(a.type)
+                return msg
+
+        return None
+
+    def gen_cpp_prelude(self):
+        io = StringIO()
+        io.write("// %s %s %s\n"%(self.cppname,
+            "(constructor)" if self.isconstructor else "(method)",
+            "(const)" if self.const else "(mut)"))
+        io.write("// %s\n"%(self))
+        io.write("// Return value: %s\n"%(self.rv_type()))
+        return io.getvalue()
+
+    def c_name(self):
+        if len(self.args) > 0:
+            suffix = "_" + "".join(map(lambda a:a.type[0].capitalize(), self.args))
+        else:
+            suffix = ""
+        if self.ci == None:
+            return "cv_%s_%s%s"%(self.gen.module, self.overridename, suffix);
+        else:
+            return "cv_%s_%s_%s%s"%(self.gen.module, self.ci.nested_cname, self.overridename, suffix);
+
+    # "const", "mut", or None
+    def instance(self):
+        if not self.ci == None and not self.isconstructor:
+            return "const" if self.const else "mut"
+        return None
+
+    def gen_rust_extern(self):
+        rust_extern_rs = "rv::cv_return_value_%s"%(self.rv_type()["ctype"].replace("*","_").replace(" ","_").replace(":","_"))
+
+        args = []
+        if self.instance():
+            args.append("instance: *%s c_void"%(self.instance()))
+        for a in self.args:
+            atype = self.gen.map_type(a.type)
+            args.append(a.rsname() + ": " + (atype.get("rctype") or atype["rtype"]))
+
+        return "pub fn %s(%s) -> %s;\n"%(self.c_name(), ", ".join(args), rust_extern_rs)
 
     def __repr__(self):
         return Template("FUNC <$type $namespace.$classpath.$name $args>").substitute(**self.__dict__)
@@ -373,13 +436,11 @@ class ConstInfo(GeneralInfo):
         return False
 
     def gen_rust(self):
-        io = StringIO()
-        io.write("// %s [%s] [%s] [%s]\n"%(self.fullname, self.cname, self.value, self.rustname))
         if self.value.startswith('"'):
-            io.write("pub const %s:&'static str = %s;\n"%(self.rustname, self.value))
+            return "pub const %s:&'static str = %s;\n"%(self.rustname, self.value)
         elif re.match("^(-?[0-9]+|0x[0-9A-F]+)$", self.value):
-            io.write("pub const %s:i32 = %s;\n"%(self.rustname, self.value))
-        return io.getvalue()
+            return "pub const %s:i32 = %s;\n"%(self.rustname, self.value)
+        return None
 
     def gen_cpp_for_complex(self):
         # only use C-constant dumping for unnested const
@@ -617,45 +678,27 @@ class RustWrapperGenerator(object):
         self.moduleCppTypes.write
 
     def gen_func(self, ci, fi, mode="define"):
-        if fi.isconstructor:
-            rv_type = ci.nested_cppname
-        else:
-            rv_type = fi.type;
-        if fi.overridename == "operator ()":
-            msg = "can not map operator () yet"
-            self.skipped_func_list.append("%s\n   %s\n"%(fi,msg))
+        reason = fi.reason_to_skip()
+        if reason:
+            self.skipped_func_list.append("%s\n   %s\n"%(fi,reason))
             return
-
-        for a in fi.args:
-            if self.is_ignored(a.type):
-                msg = "can not map type %s yet"%(a.type)
-                self.skipped_func_list.append("%s\n   %s\n"%(fi,msg))
-                return
-
-        rv = self.map_type(rv_type)
-
         self.ported_func_list.append(fi.__repr__())
 
-        self.moduleCppCode.write("// %s %s %s\n"%(fi.cppname,
-            "(constructor)" if fi.isconstructor else "(method)",
-            "(const)" if fi.const else "(mut)"))
-        self.moduleCppCode.write("// %s\n"%(fi))
-        self.moduleCppCode.write("// Return value: %s\n"%(rv))
+        rv_header_type = fi.rv_header_type()
+        rv = self.map_type(rv_header_type)
+
+        self.moduleCppCode.write(fi.gen_cpp_prelude())
 
         decl_c_args = "\n        "
         call_cpp_args = ""
-        decl_rust_extern_args = ""
         decl_rust_args = ""
         call_rust_args = ""
         rust_args_default_doc = ""
-        suffix = "_" if len(fi.args) > 0 else ""
         if not ci == None and not fi.isconstructor:
             decl_c_args += self.map_type(ci.name)["ctype"] + " instance"
             if fi.const:
-                decl_rust_extern_args = "instance: *const c_void"
                 decl_rust_args = "&self"
             else:
-                decl_rust_extern_args = "instance: *mut c_void"
                 decl_rust_args = "&mut self"
             call_rust_args = "self.as_ptr()"
         for a in fi.args:
@@ -664,19 +707,13 @@ class RustWrapperGenerator(object):
                 decl_c_args+=",\n        "
             if not call_cpp_args == "":
                 call_cpp_args += ", "
-            if not decl_rust_extern_args == "":
-                decl_rust_extern_args += ", "
+            if not decl_rust_args == "":
                 decl_rust_args += ", "
                 call_rust_args += ", "
-            suffix += a.type[0].capitalize()
-
-            rsname = a.name
-            if rsname in ["type","box"]:
-                rsname = "_" + rsname
 
             if a.defval != "":
                 rust_args_default_doc += \
-                    "  /// * %s: default %s\n"%(rsname, a.defval)
+                    "  /// * %s: default %s\n"%(a.rsname(), a.defval)
 
             rw = a.out == "O" or a.out == "IO"
 
@@ -704,22 +741,22 @@ class RustWrapperGenerator(object):
                 decl_c_args += atype["ctype"] + " " + a.name
 
             if self.is_string(a.type):
-                decl_rust_args += "%s:&str"%(rsname)
+                decl_rust_args += "%s:&str"%(a.rsname())
             elif self.is_primitive(a.type) or self.is_value(a.type) \
                     or self.is_simple(a.type):
-                decl_rust_args += rsname + ":" + atype["rtype"]
+                decl_rust_args += a.rsname() + ":" + atype["rtype"]
             elif rw:
-                decl_rust_args += rsname + ":&mut " + atype["rtype"]
+                decl_rust_args += a.rsname() + ":&mut " + atype["rtype"]
             else:
-                decl_rust_args += rsname + ":& " + atype["rtype"]
+                decl_rust_args += a.rsname() + ":& " + atype["rtype"]
 
             if self.is_boxed(a.type) or self.is_vector(a.type) \
                     or self.is_vector_of_vector(a.type) or self.is_ptr(a.type):
-                call_rust_args += "%s.ptr"%(rsname)
+                call_rust_args += "%s.ptr"%(a.rsname())
             elif self.is_string(a.type):
-                call_rust_args += "CString::new(%s).unwrap().as_ptr()"%(rsname)
+                call_rust_args += "CString::new(%s).unwrap().as_ptr()"%(a.rsname())
             else:
-                call_rust_args += "%s"%(rsname)
+                call_rust_args += "%s"%(a.rsname())
 
             if self.is_boxed(a.type) or self.is_vector(a.type) \
                     or self.is_vector_of_vector(a.type) or self.is_ptr(a.type):
@@ -745,15 +782,9 @@ class RustWrapperGenerator(object):
                 else:
                     call_cpp_args += "*" + a.name
 
-            decl_rust_extern_args += rsname + ": " + (atype.get("rctype") or atype["rtype"])
-
-        if ci == None:
-            c_name = "cv_%s_%s%s"%(module, fi.overridename, suffix);
-        else:
-            c_name = "cv_%s_%s_%s%s"%(module, ci.nested_cname, fi.overridename, suffix);
 
         # C function prototype
-        self.moduleCppCode.write("struct cv_return_value_%s %s(%s) {\n"%(rv["ctype"].replace(" ","_").replace(":","_").replace(" ","_").replace("*", "_"), c_name, decl_c_args));
+        self.moduleCppCode.write("struct cv_return_value_%s %s(%s) {\n"%(rv["ctype"].replace(" ","_").replace(":","_").replace(" ","_").replace("*", "_"), fi.c_name(), decl_c_args));
 
         self.moduleCppCode.write("  try {\n");
         # cpp method call with prefix
@@ -769,9 +800,9 @@ class RustWrapperGenerator(object):
         # actual call
         if fi.type == "void":
             self.moduleCppCode.write("  %s(%s);\n"%(call_name, call_cpp_args))
-#        elif self.is_ptr(rv_type):
+#        elif self.is_ptr(rv_header_type):
 #            self.moduleCppCode.write("  %s cpp_return_value = %s(%s);\n"%(rv["cpptype"], call_cpp_args));
-        elif fi.isconstructor and self.is_boxed(rv_type):
+        elif fi.isconstructor and self.is_boxed(rv_header_type):
             self.moduleCppCode.write("  %s* cpp_return_value = new %s(%s);\n"%(rv["cpptype"], call_name,
                 call_cpp_args));
         elif fi.isconstructor and call_cpp_args != "":
@@ -787,15 +818,15 @@ class RustWrapperGenerator(object):
         # return value
         if fi.type == "void":
             self.moduleCppCode.write("  return { NULL, 0 };\n");
-        elif self.is_string(rv_type):
+        elif self.is_string(rv_header_type):
             self.moduleCppCode.write("  return { NULL, strdup(cpp_return_value.c_str()) };");
-        elif self.is_boxed(rv_type) and not fi.isconstructor:
+        elif self.is_boxed(rv_header_type) and not fi.isconstructor:
             self.moduleCppCode.write("  return { NULL, new %s(cpp_return_value) };\n"%(rv["cpptype"]));
-        elif self.is_boxed(rv_type) and fi.isconstructor:
+        elif self.is_boxed(rv_header_type) and fi.isconstructor:
             self.moduleCppCode.write("  return { NULL, cpp_return_value };\n")
-        elif self.is_value(rv_type):
-            self.moduleCppCode.write("  return { NULL, *reinterpret_cast<cv_struct_%s*>(&cpp_return_value) };\n"%(rv_type.replace("::", "_")))
-        elif self.is_vector(rv_type):
+        elif self.is_value(rv_header_type):
+            self.moduleCppCode.write("  return { NULL, *reinterpret_cast<cv_struct_%s*>(&cpp_return_value) };\n"%(rv_header_type.replace("::", "_")))
+        elif self.is_vector(rv_header_type):
             self.moduleCppCode.write("  return { NULL, (void*) new %s(cpp_return_value) };\n"%(rv["cpptype"]));
         elif "return_cpp_to_c" in rv:
             self.moduleCppCode.write(rv["return_cpp_to_c"].substitute(src="cpp_return_value"));
@@ -812,13 +843,11 @@ class RustWrapperGenerator(object):
 
         self.moduleCppCode.write("}\n\n");
 
-        rust_extern_rs = "rv::cv_return_value_%s"%(rv["ctype"].replace("*","_").replace(" ","_").replace(":","_"))
 
         # rust's extern C
-        if mode == "define" or mode == "trait": 
-            self.moduleRustExterns.write("pub fn %s(%s) -> %s;\n"%(c_name, decl_rust_extern_args, rust_extern_rs))
+        self.moduleRustExterns.write(fi.gen_rust_extern())
 
-        rname = renamed_funcs.get(c_name) or ("new" if fi.isconstructor else fi.overridename)
+        rname = renamed_funcs.get(fi.c_name()) or ("new" if fi.isconstructor else fi.overridename)
 
         # rust safe wrapper
         self.moduleRustCode.write(rust_args_default_doc);
@@ -830,7 +859,7 @@ class RustWrapperGenerator(object):
         self.moduleRustCode.write("  %s fn %s(%s) -> Result<%s,String> {\n"%(pub, rname,
                 decl_rust_args, rv.get("rrvtype") or rv.get("rtype")))
         self.moduleRustCode.write("    unsafe {\n")
-        self.moduleRustCode.write("      let rv = ::%s(%s);\n"%(c_name, call_rust_args))
+        self.moduleRustCode.write("      let rv = ::%s(%s);\n"%(fi.c_name(), call_rust_args))
         self.moduleRustCode.write("      if rv.error_msg as i32 != 0i32 {\n")
         self.moduleRustCode.write("          let v = CStr::from_ptr(rv.error_msg).to_bytes().to_vec();\n");
         self.moduleRustCode.write("          ::libc::free(rv.error_msg as *mut c_void);\n")
@@ -838,11 +867,11 @@ class RustWrapperGenerator(object):
         self.moduleRustCode.write("      }\n");
         if fi.type == "void":
             self.moduleRustCode.write("      Ok(())\n");
-        elif(self.is_string(rv_type)):
+        elif(self.is_string(rv_header_type)):
             self.moduleRustCode.write("      let v = CStr::from_ptr(rv.result).to_bytes().to_vec();\n");
             self.moduleRustCode.write("      ::libc::free(rv.result as *mut c_void);\n");
             self.moduleRustCode.write("      Ok(String::from_utf8(v).unwrap())\n");
-        elif self.is_boxed(rv_type):
+        elif self.is_boxed(rv_header_type):
             self.moduleRustCode.write("      Ok(%s{ ptr: rv.result })\n"%(rv["rtype"], ))
         elif fi.type == "bool":
             self.moduleRustCode.write("      Ok(rv.result!=0)\n")
