@@ -461,7 +461,6 @@ class ClassInfo(GeneralInfo):
 
         # register
         if not gen.is_ignored(self.nested_cppname):
-            print("REGISTER " + self.name)
             gen.classes[self.name] = self
 
     def __repr__(self):
@@ -791,7 +790,7 @@ class RustWrapperGenerator(object):
         self.defined_in_types_h.appand(struct_name)
         self.moduleCppTypes.write
 
-    def gen_func(self, ci, fi, mode="define"):
+    def gen_func(self, ci, fi):
         reason = fi.reason_to_skip()
         if reason:
             self.skipped_func_list.append("%s\n   %s\n"%(fi,reason))
@@ -921,13 +920,8 @@ class RustWrapperGenerator(object):
         # rust's extern C
         self.moduleRustExterns.write(fi.gen_rust_extern())
 
-
         # rust safe wrapper
         self.moduleRustCode.write(fi.gen_rustdoc_default_args())
-#        if mode == "decl":
-#            self.moduleRustCode.write("  fn %s(%s) -> Result<%s,String>;\n"%(rname,
-#                    decl_rust_args, rv.get("rrvtype") or rv.get("rtype")));
-#        else:
         self.moduleRustCode.write(fi.gen_rust_wrapper())
 
     def gen_value_struct_field(self, name, typ):
@@ -1022,13 +1016,11 @@ class RustWrapperGenerator(object):
 
     def gen_class(self, ci):
         t = self.get_type_info(ci.nested_cppname)
-        self.moduleRustCode.write("// XXXYYY t: %s\n"%(t))
-        self.moduleRustCode.write("// XXXYYY ci: %s\n"%(ci))
         if t.is_trait:
             self.moduleRustCode.write("pub trait %s {\n"%(ci.name))
             self.moduleRustCode.write("  fn as_ptr(&self) -> *mut c_void;\n")
             for fi in ci.getAllMethods():
-                self.gen_func(ci, fi, "trait")
+                self.gen_func(ci, fi)
             self.moduleRustCode.write("} // trait %s\n"%(ci.name))
         else:
             if t.is_boxed:
