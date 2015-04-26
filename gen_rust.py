@@ -550,7 +550,7 @@ class TypeInfo():
                 self.is_value = True
         self.is_boxed = not (self.is_value or self.is_simple
             or self.is_primitive or self.is_string)
-        self.is_trait = not(self.is_value) and not(self.is_simple) and not (self.class_info and self.class_info.has_constructor())
+        self.is_trait = self.class_info and not(self.is_value) and not(self.is_simple) and not  self.class_info.has_constructor()
 
         typeid_underscore = typeid.replace("::","_")
         if self.is_value or self.is_simple:
@@ -734,7 +734,7 @@ class RustWrapperGenerator(object):
                 self.gen_simple_class(c)
 
         for fi in self.functions:
-            self.gen_func(None, fi)
+            self.gen_func(fi)
 
         if module in forced_boxed_classes:
             for cb in forced_boxed_classes[module]:
@@ -790,7 +790,7 @@ class RustWrapperGenerator(object):
         self.defined_in_types_h.appand(struct_name)
         self.moduleCppTypes.write
 
-    def gen_func(self, ci, fi):
+    def gen_func(self, fi):
         reason = fi.reason_to_skip()
         if reason:
             self.skipped_func_list.append("%s\n   %s\n"%(fi,reason))
@@ -804,8 +804,8 @@ class RustWrapperGenerator(object):
 
         decl_c_args = "\n        "
         call_cpp_args = ""
-        if not ci == None and not fi.isconstructor:
-            decl_c_args += self.get_type_info(ci.name).ctype + " instance"
+        if not fi.ci == None and not fi.isconstructor:
+            decl_c_args += self.get_type_info(fi.ci.name).ctype + " instance"
         for a in fi.args:
             atype = self.get_type_info(a.type)
             if not decl_c_args.strip() == "":
@@ -815,19 +815,7 @@ class RustWrapperGenerator(object):
 
             rw = a.out == "O" or a.out == "IO"
 
-            decl_c_args += "/* "
-            decl_c_args += a.__repr__() + "\n        "
-            if a.type in self.classes:
-                decl_c_args += "%s\n        "%(self.classes[a.type])
-            else:
-                decl_c_args += "%s is not a class of this module\n        "%(a.type)
-            if rw:
-                decl_c_args += "rw "
-            if atype.is_boxed:
-                decl_c_args += "boxed "
-            if atype.is_simple:
-                decl_c_args += "simple "
-            decl_c_args += "\n        */ "
+            decl_c_args += "/* \n       %s */ "%(atype)
 
             arg_decl_star = not atype.is_boxed and rw
             if atype.is_string:
@@ -865,14 +853,14 @@ class RustWrapperGenerator(object):
 
         self.moduleCppCode.write("  try {\n");
         # cpp method call with prefix
-        if ci == None:
+        if fi.ci == None:
             call_name = "cv::" + fi.cppname
-        elif fi.isconstructor and ci.type_info().is_boxed:
-            call_name = ci.nested_cppname
+        elif fi.isconstructor and fi.ci.type_info().is_boxed:
+            call_name = fi.ci.nested_cppname
         elif fi.cppname == "()":
-            call_name = "(*((%s*) instance))"%(self.get_type_info(ci.name).cpptype)
+            call_name = "(*((%s*) instance))"%(self.get_type_info(fi.ci.name).cpptype)
         else:
-            call_name = "((%s*) instance)->%s"%(self.get_type_info(ci.name).cpptype, fi.cppname)
+            call_name = "((%s*) instance)->%s"%(self.get_type_info(fi.ci.name).cpptype, fi.cppname)
 
         # actual call
         if fi.type == "void":
@@ -915,7 +903,6 @@ class RustWrapperGenerator(object):
         self.moduleCppCode.write("}\n");
 
         self.moduleCppCode.write("}\n\n");
-
 
         # rust's extern C
         self.moduleRustExterns.write(fi.gen_rust_extern())
@@ -1020,14 +1007,14 @@ class RustWrapperGenerator(object):
             self.moduleRustCode.write("pub trait %s {\n"%(ci.name))
             self.moduleRustCode.write("  fn as_ptr(&self) -> *mut c_void;\n")
             for fi in ci.getAllMethods():
-                self.gen_func(ci, fi)
+                self.gen_func(fi)
             self.moduleRustCode.write("} // trait %s\n"%(ci.name))
         else:
             if t.is_boxed:
                 self.gen_boxed_class(ci.nested_cppname)
             self.moduleRustCode.write("impl %s {\n"%(ci.name))
             for fi in ci.getAllMethods():
-                self.gen_func(ci, fi)
+                self.gen_func(fi)
             self.moduleRustCode.write("}\n");
 
 if __name__ == "__main__":
