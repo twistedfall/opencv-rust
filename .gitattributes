@@ -1,1 +1,2 @@
 *.py linguist-vendored
+*.rs linguist-language=Rust
