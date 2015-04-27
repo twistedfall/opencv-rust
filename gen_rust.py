@@ -227,7 +227,8 @@ def make_cpp_type(t):
     return t.replace("_", "::")
 
 class ArgInfo():
-    def __init__(self, arg_tuple): # [ ctype, name, def val, [mod], argno ]
+    def __init__(self, gen, arg_tuple): # [ ctype, name, def val, [mod], argno ]
+        self.gen = gen
         self.pointer = False
         type = arg_tuple[0]
         if type.endswith("*"):
@@ -241,6 +242,7 @@ class ArgInfo():
         self.type = make_cpp_type(type)
         self.name = arg_tuple[1]
         self.defval = ""
+        self.typeinfo = None
         if len(arg_tuple) > 2:
             self.defval = arg_tuple[2]
         self.out = ""
@@ -255,6 +257,10 @@ class ArgInfo():
             rsname = "_" + rsname
         return rsname
 
+    def type_info(self):
+        if self.typeinfo == None:
+            self.typeinfo = self.gen.get_type_info(self.type)
+        return self.typeinfo
 
     def __repr__(self):
         return Template("ARG $ctype$p $name=$defval").substitute(ctype=self.type,
@@ -284,7 +290,7 @@ class FuncInfo(GeneralInfo):
         self.args = []
         self.class_nested_cppname = "::".join(decl[0].split(".")[1:-1])
         for a in decl[3]:
-            self.args.append(ArgInfo(a))
+            self.args.append(ArgInfo(gen, a))
         if self.isconstructor:
             self.name = "new"
         self.const = "/C" in decl[2]
@@ -326,6 +332,8 @@ class FuncInfo(GeneralInfo):
             "(constructor)" if self.isconstructor else "(method)",
             "(const)" if self.const else "(mut)"))
         io.write("// %s\n"%(self))
+        for a in self.args:
+            io.write("// Arg %s %s =%s\n"%(a.name, a.type_info(), a.defval))
         io.write("// Return value: %s\n"%(self.rv_type()))
         return io.getvalue()
 
@@ -352,7 +360,7 @@ class FuncInfo(GeneralInfo):
         if self.instance():
             args.append("instance: *%s c_void"%(self.instance()))
         for a in self.args:
-            atype = self.gen.get_type_info(a.type)
+            atype = a.type_info()
             args.append(a.rsname() + ": " + (atype.rctype or atype.rtype))
 
         return "pub fn %s(%s) -> %s;\n"%(self.c_name(), ", ".join(args), rust_extern_rs)
@@ -360,7 +368,7 @@ class FuncInfo(GeneralInfo):
     def gen_rustdoc_default_args(self):
         rust_args_default_doc = ""
         for a in self.args:
-            atype = self.gen.get_type_info(a.type)
+            atype = a.type_info()
             if a.defval != "":
                 rust_args_default_doc += \
                     "  /// * %s: default %s\n"%(a.rsname(), a.defval)
@@ -377,7 +385,7 @@ class FuncInfo(GeneralInfo):
             call_args.append("self.as_ptr()")
 
         for a in self.args:
-            atype = self.gen.get_type_info(a.type)
+            atype = a.type_info()
             rtype = atype.rtype
 
             if atype.is_string:
@@ -807,7 +815,7 @@ class RustWrapperGenerator(object):
         if not fi.ci == None and not fi.isconstructor:
             decl_c_args += self.get_type_info(fi.ci.name).ctype + " instance"
         for a in fi.args:
-            atype = self.get_type_info(a.type)
+            atype = a.type_info()
             if not decl_c_args.strip() == "":
                 decl_c_args+=",\n        "
             if not call_cpp_args == "":
@@ -815,7 +823,6 @@ class RustWrapperGenerator(object):
 
             rw = a.out == "O" or a.out == "IO"
 
-            decl_c_args += "/* \n       %s */ "%(atype)
 
             arg_decl_star = not atype.is_boxed and rw
             if atype.is_string:
