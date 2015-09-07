@@ -19,8 +19,15 @@ ManualFuncs = {
          [ "cv.Mat.Mat", "Mat", [],
             [ [ "int", "rows" ], [ "int", "cols" ], [ "int" , "type" ] ] ],
          [ "cv.Mat.depth", "int", ["/C"], [] ],
+         [ "cv.Mat.type", "int", ["/C"], [] ],
          [ "cv.Mat.channels", "int", ["/C"], [] ],
          [ "cv.Mat.size", "Size", ["/C"], [] ],
+         [ "cv.Mat.elemSize", "size_t", ["/C"], [] ],
+         [ "cv.Mat.isContinuous", "bool", ["/C"], [] ],
+         [ "cv.Mat.clone", "Mat", ["/C"], [] ],
+         [ "cv.Mat.copyTo", "void", ["/C"], [["Mat", "OutputArray"]] ],
+         [ "cv.Mat.convertTo", "void", ["/C"], [ ["Mat", "OutputArray"], ["int", "rtype"], ["double", "scale"]] ],
+         [ "cv.Mat.ptr", "uchar*", ["/C"], [["int", "Row"]] ],
     ]
 }
 
@@ -29,6 +36,7 @@ renamed_funcs = {
     "cv_core_norm_MMIM":"norm_dist",
     "cv_core_ellipse_MPSDDDSIII": "ellipse_tilted",
     "cv_core_Mat_Mat_III": "for_rows_and_cols",
+    "cv_core_Mat_type": "cv_type",
     "cv_calib3d_StereoSGBM_StereoSGBM_IIIIIIIIIIB": "for_params",
     "cv_calib3d_StereoBM_StereoBM_III": "for_params",
     "cv_features2d_BOWKMeansTrainer_cluster_M": "cluster_with_desc",
@@ -93,7 +101,8 @@ primitives = {
     u"size_t": { u"ctype": "std::size_t", u"rtype": "::libc::types::os::arch::c95::size_t" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
-    u"double": { u"ctype": "double", u"rtype": "f64" }
+    u"double": { u"ctype": "double", u"rtype": "f64" },
+    u"uchar*": { u"ctype": "unsigned char*", u"rtype": "*mut u8" }
 }
 
 # trait_classes = [ "Algorithm" ]
