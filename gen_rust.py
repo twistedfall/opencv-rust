@@ -972,13 +972,18 @@ class RustWrapperGenerator(object):
                 ctype="int" if typ.ctype == "void" else typ.ctype
             ))
         with open(self.output_path+"/cv_return_value_"+typ.ctype.replace("*","_").replace(" ","_").replace(":","_")+".rv.rs", "w") as f:
-            f.write(Template("""#[repr(C)] pub struct cv_return_value_$sane {
-               pub error_msg: *const ::libc::types::os::arch::c95::c_char,
-               pub result: $rtype
-            }\n""").substitute(
-                sane=typ.ctype.replace("*","_").replace(" ","_").replace(":","_"),
-                rtype=typ.rctype or typ.rtype
-            ))
+            if typ.ctype == "void":
+                f.write("""#[repr(C)] pub struct cv_return_value_void {
+                   pub error_msg: *const ::libc::types::os::arch::c95::c_char,
+                }\n""")
+            else:
+                f.write(Template("""#[repr(C)] pub struct cv_return_value_$sane {
+                   pub error_msg: *const ::libc::types::os::arch::c95::c_char,
+                   pub result: $rtype
+                }\n""").substitute(
+                    sane=typ.ctype.replace("*","_").replace(" ","_").replace(":","_"),
+                    rtype=typ.rctype or typ.rtype
+                ))
 
     def gen_boxed_class(self, name):
         cname = name
