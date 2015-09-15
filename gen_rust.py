@@ -205,12 +205,13 @@ const_private_list = (
 class GeneralInfo():
     def __init__(self, gen, name, namespaces):
         self.gen = gen
-        self.namespace, self.classpath, self.classname, self.name = self.parseName(name, namespaces)
+        self.fullname, self.namespace, self.classpath, self.classname, self.name = self.parseName(name, namespaces)
 
     def parseName(self, name, namespaces):
         '''
         input: full name and available namespaces
-        returns: (namespace, classpath, classname, name)
+        returns: (fullname, namespace, classpath, classname, name)
+            fullname clean of prefix like "const, class, ..."
         '''
         name = name[name.find(" ")+1:].strip() # remove struct/class/const prefix
         spaceName = ""
@@ -222,13 +223,13 @@ class GeneralInfo():
                 break
         pieces = localName.split(".")
         if len(pieces) > 2: # <class>.<class>.<class>.<name>
-            return spaceName, ".".join(pieces[:-1]), pieces[-2], pieces[-1]
+            return name, spaceName, ".".join(pieces[:-1]), pieces[-2], pieces[-1]
         elif len(pieces) == 2: # <class>.<name>
-            return spaceName, pieces[0], pieces[0], pieces[1]
+            return name, spaceName, pieces[0], pieces[0], pieces[1]
         elif len(pieces) == 1: # <name>
-            return spaceName, "", "", pieces[0]
+            return name, spaceName, "", "", pieces[0]
         else:
-            return spaceName, "", "" # error?!
+            return name, spaceName, "", "" # error?!
 
 def make_cpp_type(t):
     if(t == "size_t"):
@@ -505,7 +506,6 @@ class ClassInfo(GeneralInfo):
 class ConstInfo(GeneralInfo):
     def __init__(self, gen, decl, addedManually=False, namespaces=[]):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
-        self.fullname = decl[0].split(" ")[1]
         if len(self.fullname.split(".")) > 1:
             self.rustname = "_".join(self.fullname.split(".")[1:])
         else:
