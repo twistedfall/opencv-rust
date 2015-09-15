@@ -723,7 +723,7 @@ class RustWrapperGenerator(object):
         includes = [];
 
         for hdr in srcfiles:
-            decls = parser.parse(hdr)
+            decls = parser.parse(hdr, True)
             self.namespaces = parser.namespaces
             logging.info("\n\n===== Header: %s =====", hdr)
             logging.info("Namespaces: %s", parser.namespaces)
