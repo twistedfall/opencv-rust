@@ -71,7 +71,7 @@ renamed_funcs = {
 
 class_ignore_list = (
     #core
-    "FileNode", "FileStorage", "KDTree", "IndexParams", "Params"
+    "FileNode", "FileStorage", "KDTree", "IndexParams", "Params",
     #videoio
 #    "VideoWriter",
 )
@@ -618,6 +618,9 @@ class TypeInfo():
         if self.is_trait: r.append("(trait)")
         return self.typeid + " " + "".join(r)
 
+    def target(self):
+        return self.gen.get_type_info(self.typeid[8:]);
+
 
     def gen_template_wrapper_rust_struct(self):
         with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
@@ -628,6 +631,7 @@ class TypeInfo():
                         fn cv_new_$rtype() -> *mut c_void;
                         fn cv_delete_$rtype(ptr:*mut c_void) -> ();
                         fn cv_${rtype}_len(ptr:*mut c_void) -> i32;
+                        fn cv_${rtype}_data(ptr:*mut c_void) -> *mut c_void;
                     }
                     impl $rtype {
                         pub fn new() -> $rtype {
@@ -637,23 +641,38 @@ class TypeInfo():
                             unsafe { return cv_${rtype}_len(self.ptr); }
                         }
                     }
+                    impl ::std::ops::Deref for $rtype {
+                        type Target = [$output_rtype];
+                        fn deref(&self) -> &[$output_rtype] {
+                            unsafe {
+                                let length = cv_${rtype}_len(self.ptr) as usize;
+                                let data = cv_${rtype}_data(self.ptr);
+                                ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
+                            }
+                        }
+                    }
                     impl Drop for $rtype {
                         fn drop(&mut self) {
                             unsafe { cv_delete_$rtype(self.ptr) };
                         }
-                    }\n""").substitute(rtype=self.rtype))
+                    }\n""").substitute(rtype=self.rtype, output_rtype=self.target().rtype))
         if self.rtype.startswith("VectorOf"):
             with open(self.gen.output_path+"/"+self.rtype+".type.cpp", "w") as f:
                 f.write(Template("""
                     #include "opencv2/opencv_modules.hpp"
                     #include "opencv2/$module/$module.hpp"
+                    #include "types.h"
                     using namespace cv;
                     extern "C" { 
                         void* cv_new_$rtype() { return new std::$cpptype(); }
                         void cv_delete_$rtype(void* ptr) { delete (($cpptype*) ptr); }
                         int cv_${rtype}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
+                        $output_ctype* cv_${rtype}_data(void* ptr) {
+                            return ($output_ctype*) ((($cpptype*) ptr)->data());
+                        }
                     }\n""").substitute(
-                rtype=self.rtype, cpptype=self.cpptype, module=self.gen.module))
+                rtype=self.rtype, cpptype=self.cpptype, module=self.gen.module,
+                output_ctype=self.target().ctype))
 
 #
 #       GENERATOR
@@ -690,7 +709,7 @@ class RustWrapperGenerator(object):
     def add_decl(self, decl):
         name = decl[0]
         if name.startswith("struct") or name.startswith("class"):
-            ClassInfo(self, decl, namespaces=self.namespaces)
+            ci = ClassInfo(self, decl, namespaces=self.namespaces)
         elif name.startswith("const"):
             ConstInfo(self, decl, namespaces=self.namespaces)
         else:

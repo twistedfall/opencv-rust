@@ -121,6 +121,9 @@ fn main() {
         }
         writeln!(&mut hub, "  pub mod types {{").unwrap();
         writeln!(&mut hub, "    use libc::types::common::c95::c_void;").unwrap();
+        for ref module in &modules {
+            writeln!(&mut hub, "    use sys::{}::*;", module.0).unwrap();
+        }
         for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
             writeln!(&mut hub, r#"    include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
