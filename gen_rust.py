@@ -664,144 +664,164 @@ class ConstInfo(GeneralInfo):
         else:
             return """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(self.rustname, self.name)
 
-class TypeInfo():
+class TypeInfo(GeneralInfo):
     def __init__(self, gen, typeid):
-        self.gen = gen
         self.typeid = typeid
+        self.is_string = False
+        self.is_primitive = False
 
-        self.is_string = typeid == "string"
-        self.is_primitive = typeid in primitives
-        self.is_ptr = typeid.startswith("Ptr::")
-        self.is_vector_of_vector = typeid.startswith("vector::vector::")
-        self.is_vector = typeid.startswith("vector::")
+class StringTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid):
+        self.is_string = True
 
-        self.inner_type = typeid.split("::")[-1].replace("*","").replace("&","").replace("const ", "").replace("struct ", "").replace("class ", "")
-        self.is_ignored = self.inner_type in class_ignore_list
+class PrimitiveTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid):
+        self.is_primitive = True
 
-        print("type: %s, %s ignored: %s"%(typeid, self.inner_type, self.is_ignored))
-
-        self.class_info = None
-        if typeid in self.gen.classes:
-            self.class_info = self.gen.classes[typeid]
-        self.is_simple = self.class_info and self.class_info.simple
-        self.is_value = self.is_simple
-        for k in value_struct_types:
-            if k[1] == typeid:
-                self.is_value = True
-        self.is_boxed = not (self.is_value or self.is_simple
-            or self.is_primitive or self.is_string)
-        self.is_trait = self.class_info and not(self.is_value) and not(self.is_simple) and not  self.class_info.has_constructor()
-
-        self.qualified_cpp_type = typeid
-
-        typeid_underscore = typeid.replace("::","_")
-        if self.is_value or self.is_simple:
-            self.cpptype = typeid
-            self.ctype = "cv_struct_" + typeid_underscore
-            self.rtype = self.rctype = self.rrvtype = typeid_underscore
-        elif self.is_primitive:
-            self.cpptype = typeid
-            self.ctype = primitives[typeid]["ctype"]
-            self.rtype = self.rctype = self.rrvtype = primitives[typeid]["rtype"]
-        elif self.is_vector_of_vector:
-            self.ctype = "void*"
-            self.rctype = "*mut c_void"
-            self.cpptype = "vector< vector<%s> >"%(typeid.split("::")[-1])
-            self.rtype = self.rrvtype = "VectorOfVectorOf%s"%(typeid.split("::")[2])
-            self.gen_template_wrapper_rust_struct()
-        elif self.is_vector:
-            self.ctype = "void*"
-            self.cpptype = "vector<%s>"%(typeid.qualified_cpp_type)
-            self.rctype = "*mut c_void"
-            self.rtype = self.rrvtype = "VectorOf%s"%(typeid.split("::")[1])
-            self.gen_template_wrapper_rust_struct()
-        elif self.is_ptr:
-            self.ctype = "void*"
-            self.rctype = "*mut c_void"
-            self.cpptype = "Ptr<%s>"%(typeid.split("::")[-1])
-            self.rtype = self.rrvtype = "PtrOf%s"%(typeid.split("::")[1])
-            self.gen_template_wrapper_rust_struct()
-        elif self.is_string:
-            self.ctype = "const char*"
-            self.cpptype = "string"
-            self.rtype = self.rctype = "*const ::libc::types::os::arch::c95::c_char"
-            self.rrvtype = "String"
-        else:
-            self.ctype = "void*"
-            self.cpptype = self.rtype = self.rrvtype = typeid
-            self.rctype = "*mut c_void"
-
-    def __repr__(self):
-        r = [ ]
-        if self.is_string: r.append("(string)")
-        if self.is_primitive: r.append("(prim)")
-        if self.is_simple: r.append("(simple)")
-        if self.is_value: r.append("(value)")
-        if self.is_vector: r.append("(vector)")
-        if self.is_vector_of_vector: r.append("(vector_of_vector)")
-        if self.is_ptr: r.append("(ptr)")
-        if self.is_trait: r.append("(trait)")
-        if self.is_ignored: r.append("(ignored)")
-        return "[" + self.typeid + "] " + "".join(r)
-
-    def __str__(self):
-        return self.__repr__()
-
-    def target(self):
-        return self.gen.get_type_info(self.typeid[8:]);
+def parse_type(gen, typeid)
+    def __init__(self, gen, typeid):
+        if typeid == "string":
+            return StringTypeInfo(typeid)
+        elif typeid in primitives
+            return PrimitiveTypeInfo(typeid)
 
 
-    def gen_template_wrapper_rust_struct(self):
-        with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
-            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(self.rtype));
-            if self.rtype.startswith("VectorOf"):
-                f.write(Template("""
-                    extern "C" {
-                        fn cv_new_$rtype() -> *mut c_void;
-                        fn cv_delete_$rtype(ptr:*mut c_void) -> ();
-                        fn cv_${rtype}_len(ptr:*mut c_void) -> i32;
-                        fn cv_${rtype}_data(ptr:*mut c_void) -> *mut c_void;
-                    }
-                    impl $rtype {
-                        pub fn new() -> $rtype {
-                            unsafe { return $rtype { ptr:cv_new_$rtype() } };
-                        }
-                        pub fn len(&self) -> i32 {
-                            unsafe { return cv_${rtype}_len(self.ptr); }
-                        }
-                    }
-                    impl ::std::ops::Deref for $rtype {
-                        type Target = [$output_rtype];
-                        fn deref(&self) -> &[$output_rtype] {
-                            unsafe {
-                                let length = cv_${rtype}_len(self.ptr) as usize;
-                                let data = cv_${rtype}_data(self.ptr);
-                                ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
-                            }
-                        }
-                    }
-                    impl Drop for $rtype {
-                        fn drop(&mut self) {
-                            unsafe { cv_delete_$rtype(self.ptr) };
-                        }
-                    }\n""").substitute(rtype=self.rtype, output_rtype=self.target().rtype))
-        if self.rtype.startswith("VectorOf"):
-            with open(self.gen.output_path+"/"+self.rtype+".type.cpp", "w") as f:
-                f.write(Template("""
-                    #include "opencv2/opencv_modules.hpp"
-                    #include "opencv2/$module/$module.hpp"
-                    #include "types.h"
-                    using namespace cv;
-                    extern "C" { 
-                        void* cv_new_$rtype() { return new std::$cpptype(); }
-                        void cv_delete_$rtype(void* ptr) { delete (($cpptype*) ptr); }
-                        int cv_${rtype}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
-                        $output_ctype* cv_${rtype}_data(void* ptr) {
-                            return ($output_ctype*) ((($cpptype*) ptr)->data());
-                        }
-                    }\n""").substitute(
-                rtype=self.rtype, cpptype=self.cpptype, module=self.gen.module,
-                output_ctype=self.target().ctype))
+
+#    def __init__(self, gen, typeid):
+#        self.typeid = typeid
+#
+#        self.is_string = typeid == "string"
+#        self.is_primitive = typeid in primitives
+#        self.is_ptr = typeid.startswith("Ptr::")
+#        self.is_vector_of_vector = typeid.startswith("vector::vector::")
+#        self.is_vector = typeid.startswith("vector::")
+#
+#        self.inner_type = typeid.split("::")[-1].replace("*","").replace("&","").replace("const ", "").replace("struct ", "").replace("class ", "")
+#        self.is_ignored = self.inner_type in class_ignore_list
+#
+#        print("type: %s, %s ignored: %s"%(typeid, self.inner_type, self.is_ignored))
+#
+#        self.class_info = None
+#        if typeid in self.gen.classes:
+#            self.class_info = self.gen.classes[typeid]
+#        self.is_simple = self.class_info and self.class_info.simple
+#        self.is_value = self.is_simple
+#        for k in value_struct_types:
+#            if k[1] == typeid:
+#                self.is_value = True
+#        self.is_boxed = not (self.is_value or self.is_simple
+#            or self.is_primitive or self.is_string)
+#        self.is_trait = self.class_info and not(self.is_value) and not(self.is_simple) and not  self.class_info.has_constructor()
+#
+#        self.qualified_cpp_type = typeid
+#
+#        typeid_underscore = typeid.replace("::","_")
+#        if self.is_value or self.is_simple:
+#            self.cpptype = typeid
+#            self.ctype = "cv_struct_" + typeid_underscore
+#            self.rtype = self.rctype = self.rrvtype = typeid_underscore
+#        elif self.is_primitive:
+#            self.cpptype = typeid
+#            self.ctype = primitives[typeid]["ctype"]
+#            self.rtype = self.rctype = self.rrvtype = primitives[typeid]["rtype"]
+#        elif self.is_vector_of_vector:
+#            self.ctype = "void*"
+#            self.rctype = "*mut c_void"
+#            self.cpptype = "vector< vector<%s> >"%(typeid.split("::")[-1])
+#            self.rtype = self.rrvtype = "VectorOfVectorOf%s"%(typeid.split("::")[2])
+#            self.gen_template_wrapper_rust_struct()
+#        elif self.is_vector:
+#            self.ctype = "void*"
+#            self.cpptype = "vector<%s>"%(typeid.qualified_cpp_type)
+#            self.rctype = "*mut c_void"
+#            self.rtype = self.rrvtype = "VectorOf%s"%(typeid.split("::")[1])
+#            self.gen_template_wrapper_rust_struct()
+#        elif self.is_ptr:
+#            self.ctype = "void*"
+#            self.rctype = "*mut c_void"
+#            self.cpptype = "Ptr<%s>"%(typeid.split("::")[-1])
+#            self.rtype = self.rrvtype = "PtrOf%s"%(typeid.split("::")[1])
+#            self.gen_template_wrapper_rust_struct()
+#        elif self.is_string:
+#            self.ctype = "const char*"
+#            self.cpptype = "string"
+#            self.rtype = self.rctype = "*const ::libc::types::os::arch::c95::c_char"
+#            self.rrvtype = "String"
+#        else:
+#            self.ctype = "void*"
+#            self.cpptype = self.rtype = self.rrvtype = typeid
+#            self.rctype = "*mut c_void"
+#
+#    def __repr__(self):
+#        r = [ ]
+#        if self.is_string: r.append("(string)")
+#        if self.is_primitive: r.append("(prim)")
+#        if self.is_simple: r.append("(simple)")
+#        if self.is_value: r.append("(value)")
+#        if self.is_vector: r.append("(vector)")
+#        if self.is_vector_of_vector: r.append("(vector_of_vector)")
+#        if self.is_ptr: r.append("(ptr)")
+#        if self.is_trait: r.append("(trait)")
+#        if self.is_ignored: r.append("(ignored)")
+#        return "[" + self.typeid + "] " + "".join(r)
+#
+#    def __str__(self):
+#        return self.__repr__()
+#
+#    def target(self):
+#        return self.gen.get_type_info(self.typeid[8:]);
+#
+#    def gen_template_wrapper_rust_struct(self):
+#        with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
+#            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(self.rtype));
+#            if self.rtype.startswith("VectorOf"):
+#                f.write(Template("""
+#                    extern "C" {
+#                        fn cv_new_$rtype() -> *mut c_void;
+#                        fn cv_delete_$rtype(ptr:*mut c_void) -> ();
+#                        fn cv_${rtype}_len(ptr:*mut c_void) -> i32;
+#                        fn cv_${rtype}_data(ptr:*mut c_void) -> *mut c_void;
+#                    }
+#                    impl $rtype {
+#                        pub fn new() -> $rtype {
+#                            unsafe { return $rtype { ptr:cv_new_$rtype() } };
+#                        }
+#                        pub fn len(&self) -> i32 {
+#                            unsafe { return cv_${rtype}_len(self.ptr); }
+#                        }
+#                    }
+#                    impl ::std::ops::Deref for $rtype {
+#                        type Target = [$output_rtype];
+#                        fn deref(&self) -> &[$output_rtype] {
+#                            unsafe {
+#                                let length = cv_${rtype}_len(self.ptr) as usize;
+#                                let data = cv_${rtype}_data(self.ptr);
+#                                ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
+#                            }
+#                        }
+#                    }
+#                    impl Drop for $rtype {
+#                        fn drop(&mut self) {
+#                            unsafe { cv_delete_$rtype(self.ptr) };
+#                        }
+#                    }\n""").substitute(rtype=self.rtype, output_rtype=self.target().rtype))
+#        if self.rtype.startswith("VectorOf"):
+#            with open(self.gen.output_path+"/"+self.rtype+".type.cpp", "w") as f:
+#                f.write(Template("""
+#                    #include "opencv2/opencv_modules.hpp"
+#                    #include "opencv2/$module/$module.hpp"
+#                    #include "types.h"
+#                    using namespace cv;
+#                    extern "C" { 
+#                        void* cv_new_$rtype() { return new std::$cpptype(); }
+#                        void cv_delete_$rtype(void* ptr) { delete (($cpptype*) ptr); }
+#                        int cv_${rtype}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
+#                        $output_ctype* cv_${rtype}_data(void* ptr) {
+#                            return ($output_ctype*) ((($cpptype*) ptr)->data());
+#                        }
+#                    }\n""").substitute(
+#                rtype=self.rtype, cpptype=self.cpptype, module=self.gen.module,
+#                output_ctype=self.target().ctype))
 
 #
 #       GENERATOR
