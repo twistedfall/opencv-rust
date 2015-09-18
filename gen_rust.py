@@ -71,9 +71,52 @@ renamed_funcs = {
 
 class_ignore_list = (
     #core
-    "FileNode", "FileStorage", "KDTree", "IndexParams", "Params",
+    "CvMat", "CvArr",
+    "FileNode", "FileStorage", "FileNodeIterator",
+    "KDTree", "IndexParams", "Params", "CvAttrList", "WString",
+    "Exception", "ErrorCallback",
+    "RNG", # maybe
+    "TLSDataContainer",
+    "NAryMatIterator",
+    "MatConstIterator",
+    "CommandLineParser",
+    "_InputArray", "_OutputArray",
+    "OutputArrayOfArrays", "InputArrayOfArrays", # FIXME ?
+    "MatAllocator",
+    "SparseMat",
+    "Algorithm",
     #videoio
 #    "VideoWriter",
+    # imgproc
+    "Vertex", "QuadEdge",
+    "GeneralizedHough",
+    "BaseColumnFilter", "BaseRowFilter", "BaseFilter", # abstract
+    "Subdiv2D", # lots of protected stuff exported (may work now)
+    # features
+    "GenericDescriptorMatcher", # abstract
+    "DescriptorCollection", "KeyPointCollection", # nested
+    "BOWTrainer", # abstract
+)
+
+func_ignore_list = (
+    "cv.glob", "cv.fastFree", "cv.getBuildInformation", "cv.scalarToRawData", "cv.noArray", "()", "cv.Mat.MSize.operator[]",
+    "const int*", "=", "==", "!=", "--", "++", "*", ">>", "<<", "<", ">", "operator==",
+    "cv.Mat.MStep.operator[]",
+    "cv.swap",
+    "cv.minMaxLoc", "cv.minMaxIdx", # return prims by pointer
+    "cv.merge", # pointer to array of matrix
+    "cv.split",
+    "cv.mixChannels", "cv.insertChannel",
+    "cv.hconcat", "cv.vconcat", "cv.repeat", # maybe: repeat(*((const Mat&*)src), ny, nx)
+    "cv.min", "cv.max", "cv.exp", "cv.log", "cv.fastAtan2", # return prims by pointer (may be make to work)
+    "cv.magnitude", "cv.patchNaNs", "cv.setIdentity", "cv.completeSymm", "cv.calcCovarMatrix",
+    "cv.fillConvexPoly", "cv.fillPoly", "cv.polylines", # Point**
+    "cv.getTextSize", # return prim by ptr
+    "cv.SparseMat.Hdr.clear",
+    "cv.PCA.computeVar", # what ?
+    "cvSetPreprocessFuncWin32_", "cvSetPostprocessFuncWin32_",
+    # features
+    "cv.BOWImgDescriptorExtractor.getVocabulary",
 )
 
 const_ignore_list = (
@@ -118,7 +161,8 @@ value_struct_types = {
     ("core", "Rect") : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
     ("core", "RotatedRect") : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
     ("core", "TermCriteria") : (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
-    ("core", "Scalar") : (("data", "double[4]"),)
+    ("core", "Scalar") : (("data", "double[4]"),),
+    ("core", "CvRNG") : (("data", "int64"),)
 }
 
 for s in [2,3,4,6]:
@@ -152,7 +196,8 @@ typedef int64_t int64;
 #include <string>
 
 #include "opencv2/$m/$m.hpp"
-using namespace cv;
+
+$namespaces
 
 $includes
 
@@ -248,6 +293,12 @@ class ArgInfo():
             type = "string"
         if type == "Size2i":
             type = "Size"
+        if type == "InputArray":
+            type = "Mat"
+        if type == "OutputArray":
+            type = "Mat"
+        if type == "InputOutputArray":
+            type = "Mat"
         self.ctype = type
         self.type = make_cpp_type(type)
         self.name = arg_tuple[1]
@@ -284,6 +335,7 @@ class FuncInfo(GeneralInfo):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.isconstructor = self.name == self.classname
         self.overridename = self.name
+        self.discriminator = 0
         self.ci = None
         for m in decl[2]:
             if m.startswith("="):
@@ -298,16 +350,22 @@ class FuncInfo(GeneralInfo):
         self.cppname = self.name.replace(".", "::")
         self.cname = "_".join(decl[0].split(".")[1:])
         self.args = []
-        self.class_nested_cppname = "::".join(decl[0].split(".")[1:-1])
+#        self.class_nested_cppname = "::".join(decl[0].split(".")[1:-1])
+#        self.class_nested_cppname = "::".join(decl[0].split(".")[1+self.namespace.count("."):-1])
+        path = self.fullname.split(".")
+        self.class_type_id = ".".join(path[0:-1])
+        self.class_nested_cppname = "::".join(decl[0].split(".")[1+self.namespace.count("."):-1])
         for a in decl[3]:
             self.args.append(ArgInfo(gen, a))
         if self.isconstructor:
             self.name = "new"
         self.const = "/C" in decl[2]
+        logging.info("fullname:%s namespace:%s class_nested_cppname:%s cppname:%s cname:%s name:%s",
+            self.fullname, self.namespace, self.class_nested_cppname, self.cppname, self.cname, self.name)
 
         # register self to class or generator
         if self.class_nested_cppname == "":
-            gen.functions.append(self)
+            gen.register_function(self)
         elif gen.is_ignored(self.class_nested_cppname):
             logging.info('ignored: %s', self)
         elif self.class_nested_cppname in ManualFuncs:
@@ -315,41 +373,90 @@ class FuncInfo(GeneralInfo):
         elif gen.is_ignored(self.class_nested_cppname):
             pass
         else:
-            self.ci = gen.get_class(self.class_nested_cppname)
-            self.ci.add_method(self)
+            self.ci = gen.get_class(self.class_type_id)
+            if self.ci:
+                self.ci.add_method(self)
+            else:
+                print("Processing %s"%(decl))
+                print("Namespaces %s"%(namespaces))
+                print("Namespace %s"%(self.namespace))
+                print("Name %s"%(self.name))
+                print("Class type id %s"%(self.class_type_id))
+                print("Could not find class for name " + self.class_nested_cppname) 
+                panic()
+#                gen.functions.append(self)
 
     def rv_header_type(self):
-        return self.ci.nested_cppname if self.isconstructor else self.type
+        if self.isconstructor:
+            if self.ci:
+                return self.ci.nested_cppname
+            else:
+                return None
+        else:
+            return self.type
 
     def rv_type(self):
         return self.gen.get_type_info(self.rv_header_type())
 
     def reason_to_skip(self):
         if self.overridename == "operator ()":
-            msg = "can not map operator () yet"
-            return msg
+            return "can not map operator () yet"
+
+        for f in func_ignore_list:
+            if self.fullname.endswith(f):
+                return "manual ignore"
+
+        if not self.rv_header_type():
+            return "rv_header_type returns None. not good."
+
+        if self.gen.is_ignored(self.rv_header_type()):
+            return "return value type is ignored"
+
+        if self.rv_header_type().endswith("&"):
+            return "returning reference not supported"
+
+        if self.rv_type().class_info and self.rv_type().class_info.hidden:
+            return "returns a non public type"
 
         for a in self.args:
+            if a.pointer and self.gen.get_type_info(a.type).is_primitive:
+                return "returning primitive by pointer is not supported (FIXME ?)"
+            if a.pointer and a.type.endswith("*"):
+                return "** not supported yet"
+            if a.type.endswith("]"):
+                return "passing raw arrays will wait (FIXME ?)"
+            if a.type == "const char" and a.pointer:
+                return "const char* is a mess"
+            if a.type == "...":
+                return "variadic will have to wait"
+            if self.gen.get_type_info(a.type).class_info and self.gen.get_type_info(a.type).class_info.hidden:
+                return "protected"
             if self.gen.is_ignored(a.type):
-                msg = "can not map type %s yet"%(a.type)
-                return msg
+                return "can not map type %s yet"%(a.type)
 
         return None
 
     def gen_cpp_prelude(self):
         io = StringIO()
-        io.write("// %s %s %s\n"%(self.cppname,
+        io.write("// %s %s %s\n"%(self.fullname,
             "(constructor)" if self.isconstructor else "(method)",
             "(const)" if self.const else "(mut)"))
         io.write("// %s\n"%(self))
         for a in self.args:
-            io.write("// Arg %s %s =%s\n"%(a.name, a.type_info(), a.defval))
+            boxed = ignored = ptr = ""
+            if a.type_info().is_boxed:
+                boxed = "(boxed)"
+            if self.gen.is_ignored(a.type_info()):
+                ignored = "(ignored)"
+            if a.pointer:
+                ptr = "(ptr)"
+            io.write("// Arg %s %s %s =%s %s%s\n"%(a.name, ptr, a.type_info(), a.defval, boxed, ignored))
         io.write("// Return value: %s\n"%(self.rv_type()))
         return io.getvalue()
 
     def c_name(self):
-        if len(self.args) > 0:
-            suffix = "_" + "".join(map(lambda a:a.type[0].capitalize(), self.args))
+        if self.discriminator != 0:
+            suffix = "_%d"%(self.discriminator)
         else:
             suffix = ""
         if self.ci == None:
@@ -460,17 +567,22 @@ class ClassPropInfo():
 class ClassInfo(GeneralInfo):
     def __init__(self, gen, decl, namespaces=[]): # [ 'class/struct cname', ': base', [modlist] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
-        self.methods = []
+        self.methods = {}
         self.simple = False
         self.nested = False
+        self.hidden = False
         for m in decl[2]:
             if m == "/Simple" or m == "/Map" :
                 self.simple = True
+            if m == "/Hidden":
+                self.hidden = True
         if len(decl[0].split(".")) > 2:
             self.nested = True
         self.nested_cppname = "::".join(decl[0].split(".")[1:])
         self.nested_cname = "_".join(decl[0].split(".")[1:])
         self.base = decl[1].split(" ")[1].split("::")[1] if len(decl)>1 and len(decl[1])>1 else ""
+
+        self.qualified_cpp_type = "::".join(decl[0].split(".")[1:])
 
         # class props
         self.props= []
@@ -479,14 +591,20 @@ class ClassInfo(GeneralInfo):
 
         # register
         if not gen.is_ignored(self.nested_cppname):
-            gen.classes[self.name] = self
+            logging.info("Register class as %s", self.fullname)
+            gen.classes[self.fullname] = self
+        else:
+            logging.info("Ignore class %s", self.nested_cppname)
 
     def __repr__(self):
 #        return Template("CLASS $namespace.$classpath.$name : $base").substitute(**self.__dict__)
         return Template("CLASS $namespace.$classpath.$name simple:$simple").substitute(**self.__dict__)
 
     def add_method(self, fi):
-        self.methods.append(fi)
+        if self.methods.get(fi.name) is None:
+            self.methods[fi.name] = []
+        fi.discriminator = len(self.methods[fi.name])
+        self.methods[fi.name].append(fi)
 
     def getAllMethods(self):
         result = []
@@ -495,9 +613,10 @@ class ClassInfo(GeneralInfo):
         return result
 
     def has_constructor(self):
-        for fi in self.methods:
-            if fi.isconstructor:
-                return True
+        for fis in self.methods.values():
+            for fi in fis:
+                if fi.isconstructor:
+                    return True
         return False
 
     def type_info(self):
@@ -555,7 +674,11 @@ class TypeInfo():
         self.is_ptr = typeid.startswith("Ptr::")
         self.is_vector_of_vector = typeid.startswith("vector::vector::")
         self.is_vector = typeid.startswith("vector::")
-        self.is_ignored = typeid.split("::")[-1] in class_ignore_list
+
+        self.inner_type = typeid.split("::")[-1].replace("*","").replace("&","").replace("const ", "").replace("struct ", "").replace("class ", "")
+        self.is_ignored = self.inner_type in class_ignore_list
+
+        print("type: %s, %s ignored: %s"%(typeid, self.inner_type, self.is_ignored))
 
         self.class_info = None
         if typeid in self.gen.classes:
@@ -568,6 +691,8 @@ class TypeInfo():
         self.is_boxed = not (self.is_value or self.is_simple
             or self.is_primitive or self.is_string)
         self.is_trait = self.class_info and not(self.is_value) and not(self.is_simple) and not  self.class_info.has_constructor()
+
+        self.qualified_cpp_type = typeid
 
         typeid_underscore = typeid.replace("::","_")
         if self.is_value or self.is_simple:
@@ -586,7 +711,7 @@ class TypeInfo():
             self.gen_template_wrapper_rust_struct()
         elif self.is_vector:
             self.ctype = "void*"
-            self.cpptype = "vector<%s>"%(typeid.split("::")[-1])
+            self.cpptype = "vector<%s>"%(typeid.qualified_cpp_type)
             self.rctype = "*mut c_void"
             self.rtype = self.rrvtype = "VectorOf%s"%(typeid.split("::")[1])
             self.gen_template_wrapper_rust_struct()
@@ -616,7 +741,11 @@ class TypeInfo():
         if self.is_vector_of_vector: r.append("(vector_of_vector)")
         if self.is_ptr: r.append("(ptr)")
         if self.is_trait: r.append("(trait)")
-        return self.typeid + " " + "".join(r)
+        if self.is_ignored: r.append("(ignored)")
+        return "[" + self.typeid + "] " + "".join(r)
+
+    def __str__(self):
+        return self.__repr__()
 
     def target(self):
         return self.gen.get_type_info(self.typeid[8:]);
@@ -686,14 +815,20 @@ class RustWrapperGenerator(object):
         self.module = ""
         self.Module = ""
         self.classes = { }
-        self.functions = [];
+        self.functions = { };
         self.ported_func_list = []
         self.skipped_func_list = []
         self.consts = []
         self.type_infos = {}
 
     def get_class(self, classname):
-        return self.classes[classname]
+        c = self.classes.get(classname)
+        if c:
+            return c
+        for c in self.classes.values():
+            if c.fullname.endswith(classname):
+                return c
+        return None
 
     def get_type_info(self, typeid):
         if not typeid in self.type_infos:
@@ -713,7 +848,14 @@ class RustWrapperGenerator(object):
         elif name.startswith("const"):
             ConstInfo(self, decl, namespaces=self.namespaces)
         else:
-            FuncInfo(self, decl, namespaces=self.namespaces)
+            if not "/H" in decl[2]:
+                FuncInfo(self, decl, namespaces=self.namespaces)
+
+    def register_function(self, f):
+        if self.functions.get(f.cname) is None:
+            self.functions[f.cname] = []
+        f.discriminator = len(self.functions[f.cname])
+        self.functions[f.cname].append(f)
 
     def gen(self, srcfiles, module, output_path):
         parser = hdr_parser.CppHeaderParser()
@@ -723,7 +865,7 @@ class RustWrapperGenerator(object):
         includes = [];
 
         for hdr in srcfiles:
-            decls = parser.parse(hdr, True)
+            decls = parser.parse(hdr, False)
             self.namespaces = parser.namespaces
             logging.info("\n\n===== Header: %s =====", hdr)
             logging.info("Namespaces: %s", parser.namespaces)
@@ -769,15 +911,17 @@ class RustWrapperGenerator(object):
             if c.simple:
                 self.gen_simple_class(c)
 
-        for fi in self.functions:
-            self.gen_func(fi)
+        for fis in self.functions.values():
+            for fi in fis:
+                self.gen_func(fi)
 
         if module in forced_boxed_classes:
             for cb in forced_boxed_classes[module]:
                 self.gen_boxed_class(cb)
 
         for ci in self.classes.values():
-            self.gen_class(ci)
+            if not ci.hidden:
+                self.gen_class(ci)
 
         with open(output_path+"/types.h", "a") as f:
             f.write(self.moduleCppTypes.getvalue())
@@ -791,8 +935,12 @@ class RustWrapperGenerator(object):
             f.write(self.moduleCppConsts.getvalue())
             f.write("}\n");
 
+        namespaces = ""
+        for namespace in self.namespaces:
+            if namespace != "":
+                namespaces += "using namespace %s;\n"%(namespace.replace(".", "::"))
         with open(output_path+"/"+module+".cpp", "w") as f:
-            f.write(Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes)))
+            f.write(Template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes), namespaces=namespaces))
 
         with open(output_path+"/%s.externs.rs"%(module), "w") as f:
             f.write("extern \"C\" {\n")
@@ -810,15 +958,23 @@ class RustWrapperGenerator(object):
         Returns string with generator report
         '''
         report = StringIO()
-        total_count = len(self.ported_func_list)+ len(self.skipped_func_list)
-        report.write("PORTED FUNCs LIST (%i of %i):\n\n" % (len(self.ported_func_list), total_count))
-        report.write("\n".join(self.ported_func_list))
-        report.write("\n\nSKIPPED FUNCs LIST (%i of %i):\n\n" % (len(self.skipped_func_list), total_count))
-        report.write("".join(self.skipped_func_list))
+        total_count = len(self.ported_func_list)+len(self.skipped_func_list)
+        report.write("FOUND FUNCs: %i\n\n" % (total_count))
+        report.write("PORTED FUNCs: %i\n\n" % (len(self.ported_func_list)))
+        for f in self.ported_func_list:
+            report.write("PORTED: " + f + "\n")
+        if len(self.skipped_func_list) > 0:
+            report.write("\n\nSKIPPED FUNCs: %i\n\n" % (len(self.skipped_func_list)))
+            for f in self.skipped_func_list:
+                report.write("SKIPPED: " + f + "\n")
         return report.getvalue()
 
     def is_ignored(self, type_name):
-        return type_name.split("::")[-1] in class_ignore_list
+        if isinstance(type_name, TypeInfo):
+            info = type_name
+        else:
+            info = self.get_type_info(type_name)
+        return info.is_ignored or self.get_type_info(info.inner_type).is_ignored
 
 
     def gen_vector_struct_for(self, name):
@@ -844,13 +1000,13 @@ class RustWrapperGenerator(object):
             decl_c_args += self.get_type_info(fi.ci.name).ctype + " instance"
         for a in fi.args:
             atype = a.type_info()
+
             if not decl_c_args.strip() == "":
                 decl_c_args+=",\n        "
             if not call_cpp_args == "":
                 call_cpp_args += ", "
 
             rw = a.out == "O" or a.out == "IO"
-
 
             arg_decl_star = not atype.is_boxed and rw
             if atype.is_string:
@@ -862,7 +1018,10 @@ class RustWrapperGenerator(object):
 
             if atype.is_boxed or atype.is_vector \
                     or atype.is_vector_of_vector or atype.is_ptr:
-                call_cpp_args += "*((%s*)%s)"%(atype.cpptype, a.name)
+                if a.pointer:
+                    call_cpp_args += "((%s*)%s)"%(atype.cpptype.replace("&",""), a.name)
+                else:
+                    call_cpp_args += "*((%s*)%s)"%(atype.cpptype.replace("&",""), a.name)
             elif atype.is_string:
                 call_cpp_args += a.name
             elif atype.is_value or atype.is_simple:
@@ -888,14 +1047,18 @@ class RustWrapperGenerator(object):
 
         self.moduleCppCode.write("  try {\n");
         # cpp method call with prefix
-        if fi.ci == None:
-            call_name = "cv::" + fi.cppname
+        if fi.ci == None and (fi.cppname.startswith("cv") or fi.cppname.startswith("CV")):
+            call_name = fi.cppname
+        elif fi.ci == None:
+            call_name = fi.fullname.replace(".", "::")
         elif fi.isconstructor and fi.ci.type_info().is_boxed:
             call_name = fi.ci.nested_cppname
         elif fi.cppname == "()":
-            call_name = "(*((%s*) instance))"%(self.get_type_info(fi.ci.name).cpptype)
+            call_name = "(*((%s*) instance))"%(fi.ci.qualified_cpp_type)
+        elif self.get_type_info(fi.ci.name).is_boxed:
+            call_name = "((%s*) instance)->%s"%(fi.ci.qualified_cpp_type, fi.cppname)
         else:
-            call_name = "((%s*) instance)->%s"%(self.get_type_info(fi.ci.name).cpptype, fi.cppname)
+            call_name = "((%s*) &instance)->%s"%(fi.ci.qualified_cpp_type, fi.cppname)
 
         # actual call
         if fi.type == "void":
@@ -1005,11 +1168,19 @@ class RustWrapperGenerator(object):
                 ))
 
     def gen_boxed_class(self, name):
+        ci = self.get_class(name)
+        if not ci:
+            return
         cname = name
         cppname = name
         if name in self.classes:
             cname = self.classes[name].nested_cname
             cppname = self.classes[name].nested_cppname
+
+        self.moduleCppCode.write("// boxed class: %s\n"%(ci))
+        self.moduleCppCode.write("void cv_%s_delete_%s(void* instance) {\n"%(self.module, cname));
+        self.moduleCppCode.write("  delete (%s*) instance;\n"%(cppname));
+        self.moduleCppCode.write("}\n");
         self.moduleRustExterns.write("pub fn cv_%s_delete_%s(ptr : *mut c_void);\n"%(self.module,cname));
 
         self.moduleRustCode.write(Template("""
@@ -1026,16 +1197,12 @@ class RustWrapperGenerator(object):
                 fn as_ptr(&self) -> *mut c_void { self.ptr }
             }
         """).substitute(cname=cname, module=self.module))
-        ci = self.get_class(name)
-        if ci.base:
+        if ci and ci.base:
             self.moduleRustCode.write(Template("""
                 impl $base for $cname {
                     fn as_ptr(&self) -> *mut c_void { self.ptr }
                 }
         """).substitute(cname=cname, base=ci.base))
-        self.moduleCppCode.write("void cv_%s_delete_%s(void* instance) {\n"%(self.module, cname));
-        self.moduleCppCode.write("  delete (cv::%s*) instance;\n"%(cppname));
-        self.moduleCppCode.write("}\n");
 
     def gen_nested_class_decl(self, ci):
         pass
@@ -1043,18 +1210,24 @@ class RustWrapperGenerator(object):
 
     def gen_class(self, ci):
         t = self.get_type_info(ci.nested_cppname)
+        logging.info("Generating %s", ci)
+        if ci.namespace == "":
+            logging.info("Not namespaced. Skipped %s", ci)
+            return
         if t.is_trait:
             self.moduleRustCode.write("pub trait %s {\n"%(ci.name))
             self.moduleRustCode.write("  fn as_ptr(&self) -> *mut c_void;\n")
-            for fi in ci.getAllMethods():
-                self.gen_func(fi)
+            for fis in ci.methods.values():
+                for fi in fis:
+                    self.gen_func(fi)
             self.moduleRustCode.write("} // trait %s\n"%(ci.name))
         else:
             if t.is_boxed:
                 self.gen_boxed_class(ci.nested_cppname)
             self.moduleRustCode.write("impl %s {\n"%(ci.name))
-            for fi in ci.getAllMethods():
-                self.gen_func(fi)
+            for fis in ci.methods.values():
+                for fi in fis:
+                    self.gen_func(fi)
             self.moduleRustCode.write("}\n");
 
 if __name__ == "__main__":

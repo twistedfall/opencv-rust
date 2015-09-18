@@ -37,6 +37,7 @@ class CppHeaderParser(object):
         self.PROCESS_FLAG = 2
         self.PUBLIC_SECTION = 3
         self.CLASS_DECL = 4
+        self.ACTUAL_PUBLIC_SECTION = 5
 
         self.namespaces = set()
 
@@ -241,6 +242,8 @@ class CppHeaderParser(object):
         if "CV_EXPORTS_W_SIMPLE" in l:
             l = l.replace("CV_EXPORTS_W_SIMPLE", "")
             modlist.append("/Simple")
+        if not bool(self.block_stack[-1][self.ACTUAL_PUBLIC_SECTION]):
+            modlist.append("/Hidden")
         npos = l.find("CV_EXPORTS_AS")
         if npos >= 0:
             macro_arg, npos3 = self.get_macro_arg(l, npos)
@@ -364,6 +367,8 @@ class CppHeaderParser(object):
             decl[2].append("/A")
         if bool(re.match(r".*\)\s*const(\s*=\s*0)?", decl_str)):
             decl[2].append("/C")
+        if not bool(self.block_stack[-1][self.ACTUAL_PUBLIC_SECTION]):
+            decl[2].append("/H")
         if "virtual" in decl_str:
             print(decl_str)
         return decl
@@ -622,6 +627,7 @@ class CppHeaderParser(object):
                     break
                 w = stmt[:colon_pos].strip()
                 if w in ["public", "protected", "private"]:
+                    stack_top[self.ACTUAL_PUBLIC_SECTION] = w=="public"
                     if w == "public" or (not self.wrap_mode and w == "protected"):
                         stack_top[self.PUBLIC_SECTION] = True
                     else:
@@ -746,7 +752,7 @@ class CppHeaderParser(object):
 
         state = SCAN
 
-        self.block_stack = [["file", hname, True, True, None]]
+        self.block_stack = [["file", hname, True, True, None, True]]
         block_head = ""
         self.lineno = 0
         self.wrap_mode = wmode
@@ -845,7 +851,7 @@ class CppHeaderParser(object):
                         public_section = False
                     else:
                         public_section = True
-                    self.block_stack.append([stmt_type, name, parse_flag, public_section, decl])
+                    self.block_stack.append([stmt_type, name, parse_flag, public_section, decl, public_section])
 
                 if token == "}":
                     if not self.block_stack:

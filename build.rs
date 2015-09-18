@@ -25,6 +25,11 @@ fn main() {
     println!("OpenCV lives in {:?}", actual_opencv);
     println!("Generating code in {:?}", out_dir);
 
+    let mut gcc = gcc::Config::new();
+    for path in opencv.include_paths {
+        gcc.include(path);
+    }
+
     for pat in vec!["/*.type.rs","/*.type.h","/*.rv.rs"] {
         for entry in glob(&(out_dir.clone() + pat)).unwrap() {
             fs::remove_file(entry.unwrap()).unwrap()
@@ -35,8 +40,11 @@ fn main() {
         ("core", vec!["core/types_c.h", "core/core.hpp" ]), // utility, base
         ("imgproc", vec![ "imgproc/types_c.h", "imgproc/imgproc_c.h",
                             "imgproc/imgproc.hpp" ]),
-        ("highgui", vec![   "highgui/cap_ios.h", "highgui/highgui.hpp",
-                            "highgui/highgui_c.h", "highgui/ios.h" ]),
+        ("highgui", vec![   "highgui/cap_ios.h", 
+                            "highgui/highgui.hpp",
+                            "highgui/highgui_c.h",
+                            //"highgui/ios.h"
+                        ]),
         ("features2d", vec![ "features2d/features2d.hpp" ]),
         ("photo", vec!["photo/photo_c.h", "photo/photo.hpp" ]),
         ("video", vec![ "video/tracking.hpp", "video/video.hpp",
@@ -45,7 +53,6 @@ fn main() {
         ("calib3d", vec![ "calib3d/calib3d.hpp"])
     ];
 
-    let mut gcc = gcc::Config::new();
     let mut types = PathBuf::from(&out_dir);
     types.push("types.h");
     {
