@@ -65,8 +65,8 @@ renamed_funcs = {
     "cv_objdetect_CascadeClassifier_CascadeClassifier_S": "for_file",
     "cv_video_calcOpticalFlowSF_MMMIIIDDIDDDIDDD" : "calc_optical_flow_full",
     "cv_video_KalmanFilter_KalmanFilter_IIII" : "for_params",
-    "cv_video_BackgroundSubtractorMOG_BackgroundSubtractorMOG_IIDD" : "for_params", 
-    "cv_video_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_IFB" : "for_params", 
+    "cv_video_BackgroundSubtractorMOG_BackgroundSubtractorMOG_IIDD" : "for_params",
+    "cv_video_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_IFB" : "for_params",
 }
 
 class_ignore_list = (
@@ -81,7 +81,7 @@ const_ignore_list = (
     "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
     "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
     "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_LOG2",
-    "CV_TYPE_NAME_IMAGE", 
+    "CV_TYPE_NAME_IMAGE",
 
 )
 
@@ -178,7 +178,7 @@ pub mod $m {
     use std::ffi::{ CStr, CString };
     use std::mem::transmute;
     use libc::types::common::c95::c_void;
-    
+
     $module_import
     $code
 }
@@ -581,14 +581,26 @@ class TypeInfo():
         elif self.is_vector_of_vector:
             self.ctype = "void*"
             self.rctype = "*mut c_void"
-            self.cpptype = "vector< vector<%s> >"%(typeid.split("::")[-1])
-            self.rtype = self.rrvtype = "VectorOfVectorOf%s"%(typeid.split("::")[2])
+            self.cppelemtype = "vector<%s>"%(typeid.split("::")[-1])
+            self.cpptype = "vector< %s >"%(self.cppelemtype)
+            self.relemtype = "VectorOf%s"%(typeid.split("::")[2])
+            self.rtype = self.rrvtype = "VectorOf%s"%(self.relemtype)
             self.gen_template_wrapper_rust_struct()
         elif self.is_vector:
             self.ctype = "void*"
-            self.cpptype = "vector<%s>"%(typeid.split("::")[-1])
+            self.cppelemtype = typeid.split("::")[-1]
+            self.cpptype = "vector<%s>"%(self.cppelemtype)
             self.rctype = "*mut c_void"
-            self.rtype = self.rrvtype = "VectorOf%s"%(typeid.split("::")[1])
+            self.relemtype = typeid.split("::")[1]
+            self.rtype = self.rrvtype = "VectorOf%s"%(self.relemtype)
+            if self.relemtype == "string":
+                self.relemtype = "String"
+            elif self.relemtype[0].islower():
+                self.relemtype = "c_%s"%(self.relemtype)
+            elif self.relemtype in ('KeyPoint', 'DMatch'):
+                self.relemtype = "features2d::%s"%(self.relemtype)
+            else:
+                self.relemtype = "core::%s"%(self.relemtype)
             self.gen_template_wrapper_rust_struct()
         elif self.is_ptr:
             self.ctype = "void*"
@@ -599,7 +611,7 @@ class TypeInfo():
         elif self.is_string:
             self.ctype = "const char*"
             self.cpptype = "string"
-            self.rtype = self.rctype = "*const ::libc::types::os::arch::c95::c_char"
+            self.rtype = self.rctype = "*const ::libc::c_char"
             self.rrvtype = "String"
         else:
             self.ctype = "void*"
@@ -623,37 +635,63 @@ class TypeInfo():
         with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
             f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(self.rtype));
             if self.rtype.startswith("VectorOf"):
+                if self.rtype.startswith("VectorOfstring"):
+                    rrawelemtype = "*mut c_char"
+                    rconv = "CStr::from_ptr(elem).to_string_lossy().into_owned()"
+                else:
+                    rrawelemtype = self.relemtype
+                    rconv = "elem"
                 f.write(Template("""
                     extern "C" {
                         fn cv_new_$rtype() -> *mut c_void;
                         fn cv_delete_$rtype(ptr:*mut c_void) -> ();
                         fn cv_${rtype}_len(ptr:*mut c_void) -> i32;
+                        fn cv_${rtype}_at(ptr:*mut c_void, index: c_int, elem:*mut $rrawelemtype);
                     }
                     impl $rtype {
                         pub fn new() -> $rtype {
                             unsafe { return $rtype { ptr:cv_new_$rtype() } };
                         }
-                        pub fn len(&self) -> i32 {
-                            unsafe { return cv_${rtype}_len(self.ptr); }
+                        pub fn into_vec(self: $rtype) -> Vec<$relemtype> {
+                            unsafe {
+                                let mut result = Vec::with_capacity(cv_${rtype}_len(self.ptr) as usize);
+                                for index in 0..result.capacity() {
+                                    let mut elem: $rrawelemtype = uninitialized();
+                                    cv_${rtype}_at(self.ptr, index as i32, &mut elem);
+                                    result.push($rconv);
+                                }
+                                return result
+                            }
                         }
                     }
                     impl Drop for $rtype {
                         fn drop(&mut self) {
                             unsafe { cv_delete_$rtype(self.ptr) };
                         }
-                    }\n""").substitute(rtype=self.rtype))
+                    }\n""").substitute(rtype=self.rtype, relemtype=self.relemtype,
+                                       rrawelemtype=rrawelemtype, rconv=rconv))
         if self.rtype.startswith("VectorOf"):
             with open(self.gen.output_path+"/"+self.rtype+".type.cpp", "w") as f:
+                if self.rtype.startswith("VectorOfstring"):
+                    cppelemtype = "const char*"
+                    cppconv = ".c_str()"
+                else:
+                    cppelemtype = self.cppelemtype
+                    cppconv = ""
                 f.write(Template("""
                     #include "opencv2/opencv_modules.hpp"
                     #include "opencv2/$module/$module.hpp"
                     using namespace cv;
-                    extern "C" { 
+                    extern "C" {
                         void* cv_new_$rtype() { return new std::$cpptype(); }
                         void cv_delete_$rtype(void* ptr) { delete (($cpptype*) ptr); }
                         int cv_${rtype}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
+                        void cv_${rtype}_at(void* ptr, int index, $cppelemtype* elem) {
+                            *elem = (*(($cpptype*) ptr))[index]$cppconv;
+                        }
                     }\n""").substitute(
-                rtype=self.rtype, cpptype=self.cpptype, module=self.gen.module))
+                rtype=self.rtype, cpptype=self.cpptype, cppelemtype=cppelemtype,
+                cppconv=cppconv, module=self.gen.module))
 
 #
 #       GENERATOR
@@ -991,7 +1029,7 @@ class RustWrapperGenerator(object):
         self.moduleRustCode.write(Template("""
             #[allow(dead_code)]
             pub struct $cname {
-                pub ptr: *mut c_void 
+                pub ptr: *mut c_void
             }
             impl Drop for $cname {
                 fn drop(&mut self) {

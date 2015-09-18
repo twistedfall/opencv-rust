@@ -114,7 +114,7 @@ fn main() {
             m.push(module.0);
             m.set_extension("rs");
             if ! fs::metadata(m.as_path()).is_ok() {
-                writeln!(&mut hub, r#"  pub use sys::{};"#, module.0).unwrap();
+                writeln!(&mut hub, r#"pub use sys::{};"#, module.0).unwrap();
             }
         }
         writeln!(&mut hub, "pub mod sys {{").unwrap();
@@ -122,7 +122,10 @@ fn main() {
             writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
         }
         writeln!(&mut hub, "  pub mod types {{").unwrap();
-        writeln!(&mut hub, "    use libc::types::common::c95::c_void;").unwrap();
+        writeln!(&mut hub, "    use libc::{{c_void, c_int, c_char, c_uchar, c_float, c_double}};").unwrap();
+        writeln!(&mut hub, "    use {{core, features2d}};").unwrap();
+        writeln!(&mut hub, "    use std::ffi::CStr;").unwrap();
+        writeln!(&mut hub, "    use std::mem::uninitialized;").unwrap();
         for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
             writeln!(&mut hub, r#"    include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
