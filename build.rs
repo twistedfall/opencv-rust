@@ -14,7 +14,9 @@ fn main() {
     let out_dir = std::env::var("OUT_DIR").unwrap();
 
     let opencv = pkg_config::Config::new().find("opencv").unwrap();
-    let search_opencv = opencv.include_paths.iter().map( |p| {
+    let mut include_paths = opencv.include_paths;
+    include_paths.push(PathBuf::from("/usr/include"));
+    let search_opencv = include_paths.iter().map( |p| {
         let mut path = PathBuf::from(p);
         path.push("opencv2");
         path
