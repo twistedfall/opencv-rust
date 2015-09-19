@@ -71,9 +71,16 @@ renamed_funcs = {
 
 class_ignore_list = (
     #core
-    "CvMat", "CvArr",
-    "FileNode", "FileStorage", "FileNodeIterator",
-    "KDTree", "IndexParams", "Params", "CvAttrList", "WString",
+    "CvMat", "CvArr", "CvSeq", "CvPoint.*", "CvRect", "CvTermCriteria", # have c++ equiv
+    "CvSize", "CvSlice", "CvScalar",
+    "cv::Param",
+    "cv::Mat::MStep",
+    "cv::Mat::MSize",
+    "cv::Mutex",
+    "Ipl.*",
+    "BinaryFunc", "ConvertData", "ConvertScaleData",
+    "FileNode", "FileStorage", "cv::FileNodeIterator",
+    "cv::KDTree", "IndexParams", "Params", "CvAttrList", "WString",
     "Exception", "ErrorCallback",
     "RNG", # maybe
     "TLSDataContainer",
@@ -83,7 +90,7 @@ class_ignore_list = (
     "_InputArray", "_OutputArray",
     "OutputArrayOfArrays", "InputArrayOfArrays", # FIXME ?
     "MatAllocator",
-    "SparseMat",
+    "cv::SparseMat",
     "Algorithm",
     #videoio
 #    "VideoWriter",
@@ -99,7 +106,8 @@ class_ignore_list = (
 )
 
 func_ignore_list = (
-    "cv.glob", "cv.fastFree", "cv.getBuildInformation", "cv.scalarToRawData", "cv.noArray", "()", "cv.Mat.MSize.operator[]",
+    "cv.glob", "cv.fastFree", "cv.fastMalloc",
+    "cv.getBuildInformation", "cv.scalarToRawData", "cv.noArray", "()", "cv.Mat.MSize.operator[]",
     "const int*", "=", "==", "!=", "--", "++", "*", ">>", "<<", "<", ">", "operator==",
     "cv.Mat.MStep.operator[]",
     "cv.swap",
@@ -139,8 +147,10 @@ primitives = {
     u"void"  : { u"ctype": "void", "rtype": "()" },
     u"bool"  : { u"ctype": "int", u"rtype": "bool" },
     u"uchar" : { u"ctype": "unsigned char", u"rtype": "u8" },
+    u"char"  : { u"ctype": "char", u"rtype": "i8" },
     u"short" : { u"ctype": "short", u"rtype": "u16" },
     u"int"   : { u"ctype": "int", u"rtype": "i32" },
+    u"uint"  : { u"ctype": "unsigned int", u"rtype": "u32" },
     u"size_t": { u"ctype": "std::size_t", u"rtype": "::libc::types::os::arch::c95::size_t" },
     u"int64" : { u"ctype": "int64", u"rtype": "i64" },
     u"float" : { u"ctype": "float", u"rtype": "f32" },
@@ -153,21 +163,21 @@ primitives = {
 forced_boxed_classes = { }
 
 value_struct_types = {
-    ("core", "Point") : (("x", "int"), ("y", "int")),
-    ("core", "Point2d") : (("x", "double"), ("y", "double")),
-    ("core", "Point2f") : (("x", "float"), ("y", "float")),
-    ("core", "Size") : (("width", "int"), ("height", "int")),
-    ("core", "Size2f") : (("width", "float"), ("height", "float")),
-    ("core", "Rect") : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
-    ("core", "RotatedRect") : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
-    ("core", "TermCriteria") : (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
-    ("core", "Scalar") : (("data", "double[4]"),),
-    ("core", "CvRNG") : (("data", "int64"),)
+    "cv::Point" : (("x", "int"), ("y", "int")),
+    "cv::Point2d" : (("x", "double"), ("y", "double")),
+    "cv::Point2f" : (("x", "float"), ("y", "float")),
+    "cv::Size" : (("width", "int"), ("height", "int")),
+    "cv::Size2f" : (("width", "float"), ("height", "float")),
+    "cv::Rect" : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
+    "cv::RotatedRect" : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
+    "cv::TermCriteria" : (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
+    "cv::Scalar" : (("data", "double[4]"),),
+    "CvRNG" : (("data", "int64"),)
 }
 
 for s in [2,3,4,6]:
     for t in [("uchar","b"),("short","s"),("int","i"),("double","d"),("float","f")]:
-        value_struct_types[("core","Vec%d%s"%(s,t[1]))] = ("data", "%s[%d]"%(t[0],s)),
+        value_struct_types["Vec%d%s"%(s,t[1])] = ("data", "%s[%d]"%(t[0],s)),
 
 #
 #       TEMPLATES
@@ -360,31 +370,15 @@ class FuncInfo(GeneralInfo):
         if self.isconstructor:
             self.name = "new"
         self.const = "/C" in decl[2]
-        logging.info("fullname:%s namespace:%s class_nested_cppname:%s cppname:%s cname:%s name:%s",
-            self.fullname, self.namespace, self.class_nested_cppname, self.cppname, self.cname, self.name)
+        logging.info("fullname:%s namespace:%s class_nested_cppname:%s cppname:%s cname:%s name:%s const:%s",
+            self.fullname, self.namespace, self.class_nested_cppname, self.cppname, self.cname, self.name, self.const)
 
         # register self to class or generator
         if self.class_nested_cppname == "":
             gen.register_function(self)
-        elif gen.is_ignored(self.class_nested_cppname):
-            logging.info('ignored: %s', self)
-        elif self.class_nested_cppname in ManualFuncs:
-            logging.info('manual: %s', self)
-        elif gen.is_ignored(self.class_nested_cppname):
-            pass
         else:
             self.ci = gen.get_class(self.class_type_id)
-            if self.ci:
-                self.ci.add_method(self)
-            else:
-                print("Processing %s"%(decl))
-                print("Namespaces %s"%(namespaces))
-                print("Namespace %s"%(self.namespace))
-                print("Name %s"%(self.name))
-                print("Class type id %s"%(self.class_type_id))
-                print("Could not find class for name " + self.class_nested_cppname) 
-                panic()
-#                gen.functions.append(self)
+            self.ci.add_method(self)
 
     def rv_header_type(self):
         if self.isconstructor:
@@ -409,17 +403,24 @@ class FuncInfo(GeneralInfo):
         if not self.rv_header_type():
             return "rv_header_type returns None. not good."
 
-        if self.gen.is_ignored(self.rv_header_type()):
+        if not self.gen.get_type_info(self.rv_header_type()):
+            return "return value type is unknown"
+
+        if self.rv_type().is_ignored:
             return "return value type is ignored"
 
         if self.rv_header_type().endswith("&"):
             return "returning reference not supported"
 
-        if self.rv_type().class_info and self.rv_type().class_info.hidden:
+        if self.rv_type().is_hidden:
             return "returns a non public type"
 
         for a in self.args:
-            if a.pointer and self.gen.get_type_info(a.type).is_primitive:
+            if not self.gen.get_type_info(a.type):
+                return "arg type %s for %s could not be found"%(a.type, a.name)
+            if self.gen.get_type_info(a.type).is_ignored:
+                return "can not map type %s yet"%(a.type)
+            if a.pointer and self.gen.get_type_info(a.type).is_by_value:
                 return "returning primitive by pointer is not supported (FIXME ?)"
             if a.pointer and a.type.endswith("*"):
                 return "** not supported yet"
@@ -429,10 +430,8 @@ class FuncInfo(GeneralInfo):
                 return "const char* is a mess"
             if a.type == "...":
                 return "variadic will have to wait"
-            if self.gen.get_type_info(a.type).class_info and self.gen.get_type_info(a.type).class_info.hidden:
+            if self.gen.get_type_info(a.type).is_hidden:
                 return "protected"
-            if self.gen.is_ignored(a.type):
-                return "can not map type %s yet"%(a.type)
 
         return None
 
@@ -443,14 +442,15 @@ class FuncInfo(GeneralInfo):
             "(const)" if self.const else "(mut)"))
         io.write("// %s\n"%(self))
         for a in self.args:
+            typ = a.type_info()
             boxed = ignored = ptr = ""
-            if a.type_info().is_boxed:
+            if isinstance(typ, BoxedClassTypeInfo):
                 boxed = "(boxed)"
-            if self.gen.is_ignored(a.type_info()):
+            if typ.is_ignored:
                 ignored = "(ignored)"
             if a.pointer:
                 ptr = "(ptr)"
-            io.write("// Arg %s %s %s =%s %s%s\n"%(a.name, ptr, a.type_info(), a.defval, boxed, ignored))
+            io.write("// Arg %s %s %s =%s %s%s\n"%(a.name, ptr, typ, a.defval, boxed, ignored))
         io.write("// Return value: %s\n"%(self.rv_type()))
         return io.getvalue()
 
@@ -505,19 +505,18 @@ class FuncInfo(GeneralInfo):
             atype = a.type_info()
             rtype = atype.rtype
 
-            if atype.is_string:
+            if isinstance(atype,StringTypeInfo):
                 args.append("%s:&str"%(a.rsname()))
-            elif atype.is_primitive or atype.is_value or atype.is_simple:
+            elif atype.is_by_value:
                 args.append(a.rsname() + ":" + rtype)
             elif a.out == "O" or a.out == "IO":
                 args.append(a.rsname() + ":&mut " + rtype)
             else:
                 args.append(a.rsname() + ":& " + rtype)
 
-            if atype.is_boxed or atype.is_vector \
-                    or atype.is_vector_of_vector or atype.is_ptr:
+            if isinstance(atype, BoxedClassTypeInfo) or atype.is_by_ptr:
                 call_args.append("%s.ptr"%(a.rsname()))
-            elif atype.is_string:
+            elif isinstance(atype,StringTypeInfo):
                 call_args.append("CString::new(%s).unwrap().as_ptr()"%(a.rsname()))
             else:
                 call_args.append("%s"%(a.rsname()))
@@ -537,11 +536,11 @@ class FuncInfo(GeneralInfo):
         io.write("      }\n");
         if self.type == "void":
             io.write("      Ok(())\n");
-        elif self.rv_type().is_string:
+        elif isinstance(self.rv_type(), StringTypeInfo):
             io.write("      let v = CStr::from_ptr(rv.result).to_bytes().to_vec();\n");
             io.write("      ::libc::free(rv.result as *mut c_void);\n");
             io.write("      Ok(String::from_utf8(v).unwrap())\n");
-        elif self.rv_type().is_boxed:
+        elif isinstance(self.rv_type(), BoxedClassTypeInfo):
             io.write("      Ok(%s{ ptr: rv.result })\n"%(self.rv_type().rtype))
         elif self.type == "bool":
             io.write("      Ok(rv.result!=0)\n")
@@ -569,20 +568,21 @@ class ClassInfo(GeneralInfo):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.methods = {}
         self.simple = False
-        self.nested = False
-        self.hidden = False
+        self.is_hidden = False
         for m in decl[2]:
             if m == "/Simple" or m == "/Map" :
                 self.simple = True
             if m == "/Hidden":
-                self.hidden = True
-        if len(decl[0].split(".")) > 2:
-            self.nested = True
-        self.nested_cppname = "::".join(decl[0].split(".")[1:])
-        self.nested_cname = "_".join(decl[0].split(".")[1:])
-        self.base = decl[1].split(" ")[1].split("::")[1] if len(decl)>1 and len(decl[1])>1 else ""
+                self.is_hidden = True
 
-        self.qualified_cpp_type = "::".join(decl[0].split(".")[1:])
+        name = decl[0].replace("struct ", "").replace("class ","").replace("const ","")
+        self.nested_cppname = name.replace(".", "::")
+        self.nested_cname = name.replace(".", "_")
+
+        self.nested = len(self.nested_cppname) > 2
+
+        self.base = decl[1].split(" ")[1].split("::")[1] if len(decl)>1 and len(decl[1])>1 else ""
+        self.qualified_cpp_type = "::".join(decl[0].split("."))
 
         # class props
         self.props= []
@@ -590,11 +590,10 @@ class ClassInfo(GeneralInfo):
             self.props.append( ClassPropInfo(p) )
 
         # register
-        if not gen.is_ignored(self.nested_cppname):
-            logging.info("Register class as %s", self.fullname)
-            gen.classes[self.fullname] = self
-        else:
-            logging.info("Ignore class %s", self.nested_cppname)
+        logging.info("Register class as %s (%s)", self.qualified_cpp_type, decl)
+        gen.classes[self.qualified_cpp_type] = self
+
+        self.is_ignored = self.gen.class_is_ignored(self.qualified_cpp_type)
 
     def __repr__(self):
 #        return Template("CLASS $namespace.$classpath.$name : $base").substitute(**self.__dict__)
@@ -664,26 +663,189 @@ class ConstInfo(GeneralInfo):
         else:
             return """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(self.rustname, self.name)
 
-class TypeInfo(GeneralInfo):
+class TypeInfo:
     def __init__(self, gen, typeid):
         self.typeid = typeid
-        self.is_string = False
-        self.is_primitive = False
+        self.gen = gen
+        self.is_hidden = False
+        self.is_ignored = gen.class_is_ignored(typeid)
+        print("IGNORING %s ? %s"%(typeid, self.is_ignored))
+        self.is_by_ptr = False
+        self.is_by_value = False
+        self.is_trait = False # FIXME
 
 class StringTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        self.is_string = True
+        TypeInfo.__init__(self,gen,typeid)
+        self.ctype = "const char*"
+        self.cpptype = "string"
+        self.rtype = self.rctype = "*const ::libc::types::os::arch::c95::c_char"
+        self.rrvtype = "String"
+
+    def __str__(self):
+        return "string"
+
+class IgnoredTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid):
+        TypeInfo.__init__(self,gen,typeid)
+        self.is_ignored = True
+        self.ctype = self.cpptype = self.rtype = self.rctype = self.rrvtype = ""
+
+    def __str__(self):
+        return "Ignored(%s)"%(self.typeid)
 
 class PrimitiveTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        self.is_primitive = True
+        TypeInfo.__init__(self,gen,typeid)
+        self.is_by_value = True
+        self.ctype = primitives[typeid]["ctype"]
+        self.cpptype = typeid
+        self.rtype = self.rctype = self.rrvtype = typeid
 
-def parse_type(gen, typeid)
+    def __str__(self):
+        return self.rtype
+
+class EmptyTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        if typeid == "string":
-            return StringTypeInfo(typeid)
-        elif typeid in primitives
-            return PrimitiveTypeInfo(typeid)
+        TypeInfo.__init__(self,gen,typeid)
+
+class SimpleClassTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid):
+        TypeInfo.__init__(self,gen,typeid)
+        self.is_by_value = True
+        self.cpptype = typeid
+        self.rtype = self.rctype = self.rrvtype = typeid.replace("::","_")
+        self.ctype = "cv_struct_" + self.rctype
+        self.is_trait = False # FIXME
+
+class BoxedClassTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid):
+        TypeInfo.__init__(self,gen,typeid)
+        self.ctype = "void*"
+        self.cpptype = self.rtype = self.rrvtype = typeid
+        self.rctype = "*mut c_void"
+        self.is_by_ptr = True
+        self.is_trait = False # FIXME
+
+    def __str__(self):
+        return "Boxed[%s]"%(self.typeid)
+
+class VectorTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid, inner):
+        TypeInfo.__init__(self,gen,typeid)
+        self.is_by_ptr = True
+        self.inner = inner
+        self.ctype = "void*"
+        self.cpptype = "vector<%s>"%(inner.cpptype)
+        self.rctype = "*mut c_void"
+        self.rtype = self.rrvtype = "VectorOf"+inner.rtype
+        self.gen_template_wrapper_rust_struct()
+
+    def gen_template_wrapper_rust_struct(self):
+        with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
+            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(self.rtype));
+            f.write(Template("""
+                extern "C" {
+                    fn cv_new_$rtype() -> *mut c_void;
+                    fn cv_delete_$rtype(ptr:*mut c_void) -> ();
+                    fn cv_${rtype}_len(ptr:*mut c_void) -> i32;
+                    fn cv_${rtype}_data(ptr:*mut c_void) -> *mut c_void;
+                }
+                impl $rtype {
+                    pub fn new() -> $rtype {
+                        unsafe { return $rtype { ptr:cv_new_$rtype() } };
+                    }
+                    pub fn len(&self) -> i32 {
+                        unsafe { return cv_${rtype}_len(self.ptr); }
+                    }
+                }
+                impl ::std::ops::Deref for $rtype {
+                    type Target = [$output_rtype];
+                    fn deref(&self) -> &[$output_rtype] {
+                        unsafe {
+                            let length = cv_${rtype}_len(self.ptr) as usize;
+                            let data = cv_${rtype}_data(self.ptr);
+                            ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
+                        }
+                    }
+                }
+                impl Drop for $rtype {
+                    fn drop(&mut self) {
+                        unsafe { cv_delete_$rtype(self.ptr) };
+                    }
+                }\n""").substitute(rtype=self.rtype, output_rtype=self.inner.rtype))
+        with open(self.gen.output_path+"/"+self.rtype+".type.cpp", "w") as f:
+            f.write(Template("""
+                #include "opencv2/opencv_modules.hpp"
+                #include "opencv2/$module/$module.hpp"
+                #include "types.h"
+                using namespace cv;
+                extern "C" { 
+                    void* cv_new_$rtype() { return new std::$cpptype(); }
+                    void cv_delete_$rtype(void* ptr) { delete (($cpptype*) ptr); }
+                    int cv_${rtype}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
+                    $output_ctype* cv_${rtype}_data(void* ptr) {
+                        return ($output_ctype*) ((($cpptype*) ptr)->data());
+                    }
+                }\n""").substitute(
+            rtype=self.rtype, cpptype=self.cpptype, module=self.gen.module,
+            output_ctype=self.inner.ctype))
+
+class SmartPtrTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid, inner):
+        TypeInfo.__init__(self,gen,typeid)
+        self.is_by_ptr = True
+        self.inner = inner
+        self.ctype = "void*"
+        self.rctype = "*mut c_void"
+        self.cpptype = "Ptr<%s>"%(inner.cpptype)
+        self.rtype = self.rrvtype = "PtrOf" + inner.rtype
+        self.gen_template_wrapper_rust_struct()
+
+    def gen_template_wrapper_rust_struct(self):
+        with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
+            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(self.rtype));
+
+    def __str__(self):
+        return "SmartPtr[%s]"%(self.inner)
+
+class ReferenceTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid, inner):
+        TypeInfo.__init__(self,gen,typeid)
+        self.inner = inner
+        self.is_ignored = True
+
+def parse_type(gen, typeid):
+    print("building type: " + typeid)
+    t = do_parse_type(gen, typeid)
+    print("   \-> %s"%(t))
+    return t
+
+def do_parse_type(gen, typeid):
+    typeid = typeid.strip()
+    if typeid == "unsigned":
+        typeid = "uint"
+    typeid = typeid.replace("const ", "")
+    if typeid.endswith("&"):
+        return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
+    elif typeid == "string":
+        return StringTypeInfo(gen,typeid)
+    elif typeid in primitives:
+        return PrimitiveTypeInfo(gen, typeid)
+    elif typeid == "":
+        return EmptyTypeInfo(gen, typeid)
+    elif typeid.startswith("Ptr<"):
+        return SmartPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1]))
+    elif typeid.startswith("vector<"):
+        return VectorTypeInfo(gen, typeid, gen.get_type_info(typeid[7:-1]))
+    elif gen.get_value_struct(typeid):
+        return SimpleClassTypeInfo(gen, gen.get_value_struct(typeid))
+    elif gen.class_is_ignored(typeid):
+        return IgnoredTypeInfo(gen,typeid)
+    else:
+        ci = gen.get_class(typeid)
+        if ci:
+            return BoxedClassTypeInfo(gen, ci.qualified_cpp_type)
 
 
 
@@ -739,8 +901,8 @@ def parse_type(gen, typeid)
 #        elif self.is_ptr:
 #            self.ctype = "void*"
 #            self.rctype = "*mut c_void"
-#            self.cpptype = "Ptr<%s>"%(typeid.split("::")[-1])
-#            self.rtype = self.rrvtype = "PtrOf%s"%(typeid.split("::")[1])
+#            self.cpptype = "ptr<%s>"%(typeid.split("::")[-1])
+#            self.rtype = self.rrvtype = "ptrof%s"%(typeid.split("::")[1])
 #            self.gen_template_wrapper_rust_struct()
 #        elif self.is_string:
 #            self.ctype = "const char*"
@@ -831,6 +993,7 @@ class RustWrapperGenerator(object):
     def __init__(self):
         self.clear()
 
+
     def clear(self):
         self.module = ""
         self.Module = ""
@@ -850,9 +1013,18 @@ class RustWrapperGenerator(object):
                 return c
         return None
 
+    def get_value_struct(self, classname):
+        c = value_struct_types.get(classname)
+        if c:
+            return classname
+        for c in value_struct_types.keys():
+            if c.endswith(classname):
+                return c
+        return None
+
     def get_type_info(self, typeid):
         if not typeid in self.type_infos:
-            self.type_infos[typeid] = TypeInfo(self, typeid)
+            self.type_infos[typeid] = parse_type(self, typeid)
         return self.type_infos[typeid]
 
     def get_const(self, name):
@@ -864,7 +1036,7 @@ class RustWrapperGenerator(object):
     def add_decl(self, decl):
         name = decl[0]
         if name.startswith("struct") or name.startswith("class"):
-            ci = ClassInfo(self, decl, namespaces=self.namespaces)
+            ClassInfo(self, decl, namespaces=self.namespaces)
         elif name.startswith("const"):
             ConstInfo(self, decl, namespaces=self.namespaces)
         else:
@@ -884,6 +1056,13 @@ class RustWrapperGenerator(object):
         self.Module = module.capitalize()
         includes = [];
 
+        self.namespaces = parser.namespaces
+
+        if module in ManualFuncs:
+            for decl in ManualFuncs[self.module]:
+                logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
+                self.add_decl(decl)
+
         for hdr in srcfiles:
             decls = parser.parse(hdr, False)
             self.namespaces = parser.namespaces
@@ -893,11 +1072,6 @@ class RustWrapperGenerator(object):
                 includes.append('#include "' + hdr + '"')
             for decl in decls:
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
-                self.add_decl(decl)
-
-        if module in ManualFuncs:
-            for decl in ManualFuncs[self.module]:
-                logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                 self.add_decl(decl)
 
         logging.info("\n\n===== Generating... =====")
@@ -923,8 +1097,8 @@ class RustWrapperGenerator(object):
             if ci.nested:
                 self.gen_nested_class_decl(ci)
 
-        for c in value_struct_types:
-            if c[0] == module:
+        if module == "core":
+            for c in value_struct_types:
                 self.gen_value_struct(c)
 
         for c in self.classes.values():
@@ -940,7 +1114,7 @@ class RustWrapperGenerator(object):
                 self.gen_boxed_class(cb)
 
         for ci in self.classes.values():
-            if not ci.hidden:
+            if not ci.is_hidden:
                 self.gen_class(ci)
 
         with open(output_path+"/types.h", "a") as f:
@@ -989,13 +1163,11 @@ class RustWrapperGenerator(object):
                 report.write("SKIPPED: " + f + "\n")
         return report.getvalue()
 
-    def is_ignored(self, type_name):
-        if isinstance(type_name, TypeInfo):
-            info = type_name
-        else:
-            info = self.get_type_info(type_name)
-        return info.is_ignored or self.get_type_info(info.inner_type).is_ignored
-
+    def class_is_ignored(self, type_name):
+        for c in class_ignore_list:
+            if re.match(c, type_name):
+                return True
+        return False
 
     def gen_vector_struct_for(self, name):
         struct_name = "cv_vector_of_"+name
@@ -1003,8 +1175,10 @@ class RustWrapperGenerator(object):
         self.moduleCppTypes.write
 
     def gen_func(self, fi):
+        logging.info("Generating %s"%(fi))
         reason = fi.reason_to_skip()
         if reason:
+            logging.info("  ignored: " + reason)
             self.skipped_func_list.append("%s\n   %s\n"%(fi,reason))
             return
         self.ported_func_list.append(fi.__repr__())
@@ -1028,23 +1202,22 @@ class RustWrapperGenerator(object):
 
             rw = a.out == "O" or a.out == "IO"
 
-            arg_decl_star = not atype.is_boxed and rw
-            if atype.is_string:
+            arg_decl_star = not isinstance(atype, BoxedClassTypeInfo) and rw
+            if isinstance(atype, StringTypeInfo):
                 decl_c_args += "const char *" + a.name
             elif arg_decl_star:
                 decl_c_args += atype.ctype + " *" + a.name
             else:
                 decl_c_args += atype.ctype + " " + a.name
 
-            if atype.is_boxed or atype.is_vector \
-                    or atype.is_vector_of_vector or atype.is_ptr:
+            if atype.is_by_ptr:
                 if a.pointer:
                     call_cpp_args += "((%s*)%s)"%(atype.cpptype.replace("&",""), a.name)
                 else:
                     call_cpp_args += "*((%s*)%s)"%(atype.cpptype.replace("&",""), a.name)
-            elif atype.is_string:
+            elif isinstance(atype, StringTypeInfo):
                 call_cpp_args += a.name
-            elif atype.is_value or atype.is_simple:
+            elif atype.is_by_value:
                 if arg_decl_star and a.pointer:
                     call_cpp_args += "reinterpret_cast<" + atype.cpptype + "*>(" +  a.name + ")"
                 elif arg_decl_star and not a.pointer:
@@ -1071,11 +1244,11 @@ class RustWrapperGenerator(object):
             call_name = fi.cppname
         elif fi.ci == None:
             call_name = fi.fullname.replace(".", "::")
-        elif fi.isconstructor and fi.ci.type_info().is_boxed:
+        elif fi.isconstructor and isinstance(fi.ci.type_info(), BoxedClassTypeInfo):
             call_name = fi.ci.nested_cppname
         elif fi.cppname == "()":
             call_name = "(*((%s*) instance))"%(fi.ci.qualified_cpp_type)
-        elif self.get_type_info(fi.ci.name).is_boxed:
+        elif isinstance(self.get_type_info(fi.ci.name), BoxedClassTypeInfo):
             call_name = "((%s*) instance)->%s"%(fi.ci.qualified_cpp_type, fi.cppname)
         else:
             call_name = "((%s*) &instance)->%s"%(fi.ci.qualified_cpp_type, fi.cppname)
@@ -1083,7 +1256,7 @@ class RustWrapperGenerator(object):
         # actual call
         if fi.type == "void":
             self.moduleCppCode.write("  %s(%s);\n"%(call_name, call_cpp_args))
-        elif fi.isconstructor and rv_info.is_boxed:
+        elif fi.isconstructor and isinstance(rv_info, BoxedClassTypeInfo):
             self.moduleCppCode.write("  %s* cpp_return_value = new %s(%s);\n"%(rv_info.cpptype, call_name,
                 call_cpp_args));
         elif fi.isconstructor and call_cpp_args != "":
@@ -1099,17 +1272,17 @@ class RustWrapperGenerator(object):
         # return value
         if fi.type == "void":
             self.moduleCppCode.write("  return { NULL, 0 };\n");
-        elif rv_info.is_string:
+        elif isinstance(rv_info, StringTypeInfo):
             self.moduleCppCode.write("  return { NULL, strdup(cpp_return_value.c_str()) };");
-        elif rv_info.is_boxed and not fi.isconstructor:
+        elif isinstance(rv_info, BoxedClassTypeInfo) and not fi.isconstructor:
             self.moduleCppCode.write("  return { NULL, new %s(cpp_return_value) };\n"%(rv_info.cpptype));
-        elif rv_info.is_boxed and fi.isconstructor:
+        elif isinstance(rv_info, BoxedClassTypeInfo) and fi.isconstructor:
             self.moduleCppCode.write("  return { NULL, cpp_return_value };\n")
-        elif rv_info.is_value:
+        elif isinstance(rv_info, SimpleClassTypeInfo):
             self.moduleCppCode.write("  return { NULL, *reinterpret_cast<cv_struct_%s*>(&cpp_return_value) };\n"%(rv_header_type.replace("::", "_")))
-        elif rv_info.is_vector:
+        elif isinstance(rv_info, VectorTypeInfo):
             self.moduleCppCode.write("  return { NULL, (void*) new %s(cpp_return_value) };\n"%(rv.info.cpptype));
-        else:
+        else: # prim
             self.moduleCppCode.write("  return { NULL, cpp_return_value };\n");
 
         self.moduleCppCode.write("} catch (cv::Exception& e) {\n");
@@ -1142,18 +1315,16 @@ class RustWrapperGenerator(object):
             self.moduleCppTypes.write("    %s %s[%s];\n"%(ct, name, size))
             self.moduleRustCode.write("    pub %s: [%s;%s],\n"%(rsname, rst, size))
         else:
-            cppt = typ
-            ct = self.get_type_info(cppt).ctype
-            rst = self.get_type_info(cppt).rtype
-            self.moduleCppTypes.write("    %s %s;\n"%(ct, name))
-            self.moduleRustCode.write("    pub %s: %s,\n"%(rsname, rst))
+            typ = self.get_type_info(typ)
+            self.moduleCppTypes.write("    %s %s;\n"%(typ.ctype, name))
+            self.moduleRustCode.write("    pub %s: %s,\n"%(rsname, typ.rtype))
 
     def gen_value_struct(self, c):
-        self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(c[1]))
-        self.moduleRustCode.write("#[repr(C)]#[derive(Debug,PartialEq)] pub struct %s {\n"%(c[1]))
+        self.moduleCppTypes.write("typedef struct cv_struct_%s {\n"%(c.replace("::","_")))
+        self.moduleRustCode.write("#[repr(C)]#[derive(Debug,PartialEq)] pub struct %s {\n"%(c.replace("::","_")))
         for field in value_struct_types[c]:
             self.gen_value_struct_field(field[0], field[1])
-        self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(c[1]))
+        self.moduleCppTypes.write("} cv_struct_%s;\n\n"%(c.replace("::", "_")))
         self.moduleRustCode.write("}\n")
 
     def gen_simple_class(self,ci):
@@ -1229,7 +1400,13 @@ class RustWrapperGenerator(object):
         #self.moduleCppCode.write("class %s;\n"%(ci.nested_cname));
 
     def gen_class(self, ci):
+        if ci.is_ignored:
+            logging.info("Manual ignore class %s", ci)
+            return
         t = self.get_type_info(ci.nested_cppname)
+        if not t:
+            logging.info("Ignore class %s (not found)", ci)
+            return
         logging.info("Generating %s", ci)
         if ci.namespace == "":
             logging.info("Not namespaced. Skipped %s", ci)
@@ -1242,7 +1419,7 @@ class RustWrapperGenerator(object):
                     self.gen_func(fi)
             self.moduleRustCode.write("} // trait %s\n"%(ci.name))
         else:
-            if t.is_boxed:
+            if isinstance(t, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.nested_cppname)
             self.moduleRustCode.write("impl %s {\n"%(ci.name))
             for fis in ci.methods.values():
