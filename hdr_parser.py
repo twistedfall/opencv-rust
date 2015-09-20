@@ -357,6 +357,7 @@ class CppHeaderParser(object):
                     aname = aname[:bidx]
                 decl[3].append([atype, aname, defval, []])
 
+        decl[2].append("/NW")
         if static_method:
             decl[2].append("/S")
         if virtual_method:
@@ -369,8 +370,6 @@ class CppHeaderParser(object):
             decl[2].append("/C")
         if not bool(self.block_stack[-1][self.ACTUAL_PUBLIC_SECTION]):
             decl[2].append("/H")
-        if "virtual" in decl_str:
-            print(decl_str)
         return decl
 
     def parse_func_decl(self, decl_str):
@@ -384,7 +383,6 @@ class CppHeaderParser(object):
         Returns the function declaration entry:
         [<func name>, <return value C-type>, <list of modifiers>, <list of arguments>] (see above)
         """
-
         if self.wrap_mode:
             if not (("CV_EXPORTS_AS" in decl_str) or ("CV_EXPORTS_W" in decl_str) or \
                 ("CV_WRAP" in decl_str) or ("CV_WRAP_AS" in decl_str)):
@@ -565,6 +563,8 @@ class CppHeaderParser(object):
             func_modlist.append("/S")
         if decl_str.endswith("const"):
             func_modlist.append("/C")
+
+        func_modlist.append("/NW")
 
         return [funcname, rettype, func_modlist, args]
 
@@ -772,7 +772,7 @@ class CppHeaderParser(object):
                     state = SCAN
                 define = re.match(r"#define +([A-Z_][A-Z0-9_]+) +(.+)$", l)
                 if define:
-                    decls.append(["const cv." + define.group(1), define.group(2), [], []])
+                    decls.append(["const " + define.group(1), define.group(2), [], []])
                 continue
 
             if state == COMMENT:
