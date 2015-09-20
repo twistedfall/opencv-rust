@@ -33,6 +33,18 @@ ManualFuncs = {
     ]
 }
 
+cross_modules_deps = {
+    "imgproc" : [
+        [ "class cv.Algorithm", "", ["/Hidden"], [] ],
+    ],
+    "features2d" : [
+        [ "class cv.Algorithm", "", ["/Hidden"], [] ],
+    ],
+    "video" : [
+        [ "class cv.Algorithm", "", ["/Hidden"], [] ],
+    ],
+}
+
 renamed_funcs = {
     "cv_core_cv_divide_MMMDI": "divide_mat",
     "cv_core_cv_norm_MMIM":"norm_dist",
@@ -104,9 +116,7 @@ class_ignore_list = (
     "cv::BaseColumnFilter", "cv::BaseRowFilter", "cv::BaseFilter", # abstract
     "Subdiv2D", # lots of protected stuff exported (may work now)
     # features
-    "cv::GenericDescriptorMatcher", # abstract
     "DescriptorCollection", "KeyPointCollection", # nested
-    "cv::BOWTrainer", # abstract
 )
 
 func_ignore_list = (
@@ -162,26 +172,24 @@ primitives = {
     u"uchar*": { u"ctype": "unsigned char*", u"rtype": "*mut u8" }
 }
 
-# trait_classes = [ "Algorithm" ]
-
-forced_boxed_classes = { }
+forced_trait_classes = [ "cv::Algorithm", "cv::BackgroundSubtractor" ]
 
 value_struct_types = {
-    "cv::Point" : (("x", "int"), ("y", "int")),
-    "cv::Point2d" : (("x", "double"), ("y", "double")),
-    "cv::Point2f" : (("x", "float"), ("y", "float")),
-    "cv::Size" : (("width", "int"), ("height", "int")),
-    "cv::Size2f" : (("width", "float"), ("height", "float")),
-    "cv::Rect" : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
-    "cv::RotatedRect" : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
-    "cv::TermCriteria" : (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
-    "cv::Scalar" : (("data", "double[4]"),),
+    "Point" : (("x", "int"), ("y", "int")),
+    "Point2d" : (("x", "double"), ("y", "double")),
+    "Point2f" : (("x", "float"), ("y", "float")),
+    "Size" : (("width", "int"), ("height", "int")),
+    "Size2f" : (("width", "float"), ("height", "float")),
+    "Rect" : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
+#    "RotatedRect" : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
+#    "TermCriteria" : (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
+    "Scalar" : (("data", "double[4]"),),
     "CvRNG" : (("data", "int64"),)
 }
 
 for s in [2,3,4,6]:
     for t in [("uchar","b"),("short","s"),("int","i"),("double","d"),("float","f")]:
-        value_struct_types["cv::Vec%d%s"%(s,t[1])] = ("data", "%s[%d]"%(t[0],s)),
+        value_struct_types["Vec%d%s"%(s,t[1])] = ("data", "%s[%d]"%(t[0],s)),
 
 #
 #       TEMPLATES
@@ -255,6 +263,7 @@ const_private_list = (
     "PYRAMIDDETECTOR",
     "DYNAMICDETECTOR",
 )
+
 
 #
 #       AST-LIKE
@@ -343,6 +352,8 @@ class FuncInfo(GeneralInfo):
             self.ci = gen.get_class(self.classname)
             if not self.ci:
                 raise NameError("class not found: " + self.classname)
+            if "/A" in decl[2]:
+                self.ci.is_trait = True
             if self.classname == self.name:
                 self.kind = self.KIND_CONSTRUCTOR
                 self.name = "new"
@@ -369,12 +380,16 @@ class FuncInfo(GeneralInfo):
 
         self.cname = self.cppname = self.name
 
+        self.is_ignored = "/H" in decl[2] or "/A" in decl[2]
         if self.name.startswith("~"):
             logging.info("ignore destructor %s %s in %s"%(self.kind, self.name, self.ci))
-            return
+            self.is_ignored = True
 
         if self.name.startswith("operator"):
             logging.info("ignore %s %s in %s"%(self.kind, self.name, self.ci))
+            self.is_ignored = True
+
+        if self.is_ignored:
             return
 
         # register self to class or generator
@@ -414,6 +429,9 @@ class FuncInfo(GeneralInfo):
 
         if self.rv_type().is_ignored:
             return "return value type is ignored"
+
+        if self.kind == self.KIND_CONSTRUCTOR and self.ci.is_trait:
+            return "skip constructor of abstract class"
 
         for a in self.args:
             if a.type.is_ignored:
@@ -522,15 +540,19 @@ class FuncInfo(GeneralInfo):
         io.write("        ::libc::free(rv.error_msg as *mut c_void);\n")
         io.write("        return Err(String::from_utf8(v).unwrap())\n")
         io.write("    }\n");
-        if self.type == "void":
+        if self.type.typeid == "void":
             io.write("    Ok(())\n");
         elif isinstance(self.rv_type(), StringTypeInfo):
             io.write("    let v = CStr::from_ptr(rv.result).to_bytes().to_vec();\n");
             io.write("    ::libc::free(rv.result as *mut c_void);\n");
             io.write("    Ok(String::from_utf8(v).unwrap())\n");
+        elif isinstance(self.rv_type(), SmartPtrTypeInfo):
+            io.write("    Ok(%s{ ptr: rv.result })\n"%(self.rv_type().rtype))
+        elif isinstance(self.rv_type(), VectorTypeInfo):
+            io.write("    Ok(%s{ ptr: rv.result })\n"%(self.rv_type().rtype))
         elif isinstance(self.rv_type(), BoxedClassTypeInfo):
             io.write("    Ok(%s{ ptr: rv.result })\n"%(self.rv_type().rtype))
-        elif self.type == "bool":
+        elif self.type.typeid == "bool":
             io.write("    Ok(rv.result!=0)\n")
         else:
             io.write("    Ok(rv.result)\n")
@@ -564,6 +586,7 @@ class ClassInfo(GeneralInfo):
         self.methods = {}
         self.simple = False
         self.is_ignored = False
+        self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
         for m in decl[2]:
             if m == "/Simple" or m == "/Map" :
@@ -716,7 +739,7 @@ class SimpleClassTypeInfo(TypeInfo):
         self.cpptype = typeid
         self.rtype = self.rctype = self.rrvtype = typeid.replace("::","_")
         self.ctype = "struct_" + self.rctype
-        self.is_trait = False # FIXME
+        self.is_trait = False
 
     def __str__(self):
         return "SimpleClass(%s)"%(self.cpptype)
@@ -730,7 +753,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.rtype = self.rrvtype = self.ci.classname
         self.rctype = "*mut c_void"
         self.is_by_ptr = True
-        self.is_trait = False # FIXME
+        self.is_trait = typeid in forced_trait_classes or self.ci.is_trait
         self.is_ignored = self.ci.is_ignored
 
     def __str__(self):
@@ -806,16 +829,17 @@ class SmartPtrTypeInfo(TypeInfo):
         TypeInfo.__init__(self,gen,typeid)
         self.is_by_ptr = True
         self.inner = inner
-        self.is_ignored = self.inner.is_ignored
+        self.is_ignored = self.inner.is_ignored or self.inner.is_trait
         if not self.is_ignored:
             self.ctype = "void*"
             self.rctype = "*mut c_void"
             self.cpptype = "Ptr<%s>"%(self.inner.cpptype)
+            self.cpptype = self.inner.cpptype
             self.rtype = self.rrvtype = "PtrOf" + inner.rtype
             self.gen_template_wrapper_rust_struct()
 
     def gen_template_wrapper_rust_struct(self):
-        with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
+        with open(self.gen.output_path+"/PtrOf"+self.rtype+".type.rs", "w") as f:
             f.write("// safe rust wrapper for %s\n"%(self))
             f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(self.rtype));
 
@@ -845,6 +869,9 @@ class ReferenceTypeInfo(TypeInfo):
         TypeInfo.__init__(self,gen,typeid)
         self.inner = inner
         self.is_ignored = True
+
+    def __str__(self):
+        return "Ref[%s]"%(self.typeid)
 
 def parse_type(gen, typeid):
     typeid = typeid.strip()
@@ -901,12 +928,10 @@ class RustWrapperGenerator(object):
         self.type_infos = {}
 
     def get_class(self, classname):
-        print("lookup class "+classname)
         c = self.classes.get(classname)
         if c:
             return c
         for c in self.classes.values():
-            print("  might be "+c.fullname)
             if c.fullname.endswith("::"+classname):
                 return c
         return None
@@ -940,8 +965,7 @@ class RustWrapperGenerator(object):
         elif name.startswith("const"):
             ConstInfo(self, decl, namespaces=self.namespaces)
         else:
-            if not "/H" in decl[2]:
-                FuncInfo(self, decl, namespaces=self.namespaces)
+            FuncInfo(self, decl, namespaces=self.namespaces)
 
     def register_function(self, f):
         if self.functions.get(f.cname) is None:
@@ -963,6 +987,10 @@ class RustWrapperGenerator(object):
             for decl in ManualFuncs[self.module]:
                 logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                 self.add_decl(decl)
+
+        if module in cross_modules_deps:
+            for d in cross_modules_deps[module]:
+                self.add_decl(d)
 
         for hdr in srcfiles:
             decls = parser.parse(hdr, False)
@@ -1010,11 +1038,12 @@ class RustWrapperGenerator(object):
 
         for fis in sorted(self.functions.values(), key=lambda fis: fis[0].fullname):
             for fi in fis:
-                self.gen_func(fi)
+                if not fi.is_ignored:
+                    self.gen_func(fi)
 
-        if module in forced_boxed_classes:
-            for cb in sorted(forced_boxed_classes[module]):
-                self.gen_boxed_class(cb)
+#        if module in forced_boxed_classes:
+#            for cb in sorted(forced_boxed_classes[module]):
+#                self.gen_boxed_class(cb)
 
         for ci in sorted(self.classes.values(), key=lambda ci:ci.fullname):
             if not ci.is_ignored:
@@ -1155,8 +1184,11 @@ class RustWrapperGenerator(object):
         # actual call
         if fi.type.ctype == "void":
             self.moduleCppCode.write("  %s(%s);\n"%(call_name, call_cpp_args))
-        elif fi.isconstructor() and isinstance(fi.rv_type(), BoxedClassTypeInfo):
+        elif fi.isconstructor() and (isinstance(fi.rv_type(), BoxedClassTypeInfo)):
             self.moduleCppCode.write("  %s* cpp_return_value = new %s(%s);\n"%(fi.rv_type().cpptype, call_name,
+                call_cpp_args));
+        elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
+            self.moduleCppCode.write("  %s* cpp_return_value = %s(%s);\n"%(fi.rv_type().cpptype, call_name,
                 call_cpp_args));
         elif fi.isconstructor() and call_cpp_args != "":
             self.moduleCppCode.write("  %s cpp_return_value(%s);\n"%(fi.rv_type().cpptype, call_cpp_args));
@@ -1176,6 +1208,8 @@ class RustWrapperGenerator(object):
         elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and not fi.isconstructor():
             self.moduleCppCode.write("  return { NULL, new %s(cpp_return_value) };\n"%(fi.rv_type().cpptype));
         elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and fi.isconstructor():
+            self.moduleCppCode.write("  return { NULL, cpp_return_value };\n")
+        elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
             self.moduleCppCode.write("  return { NULL, cpp_return_value };\n")
         elif isinstance(fi.rv_type(), SimpleClassTypeInfo):
             self.moduleCppCode.write("  return { NULL, *reinterpret_cast<%s*>(&cpp_return_value) };\n"%(fi.rv_type().ctype))
@@ -1219,8 +1253,8 @@ class RustWrapperGenerator(object):
 
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct struct_%s {\n"%(c.replace("::","_")))
-        self.moduleSafeRust.write("// manually defined value struct %s\n"%(c))
-        self.moduleSafeRust.write("#[repr(C)]#[derive(Debug,PartialEq)]\npub struct %s {\n"%(c.replace("::","_")))
+        self.moduleSafeRust.write("// manually defined value struct %s\n"%(c.split("::")[-1]))
+        self.moduleSafeRust.write("#[repr(C)]#[derive(Debug,PartialEq)]\npub struct %s {\n"%(c.split("::")[-1]))
         for field in value_struct_types[c]:
             self.gen_value_struct_field(field[0], field[1])
         self.moduleCppTypes.write("} struct_%s;\n\n"%(c.replace("::", "_")))
