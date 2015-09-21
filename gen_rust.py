@@ -43,6 +43,9 @@ cross_modules_deps = {
     "video" : [
         [ "class cv.Algorithm", "", ["/Hidden"], [] ],
     ],
+    "highgui" : [
+        [ "class cv.Mat", "", ["/Ghost"], [] ],
+    ],
 }
 
 renamed_funcs = {
@@ -425,7 +428,7 @@ class FuncInfo(GeneralInfo):
             return "rv_header_type returns None. this is an error. (class not found ?)"
 
         if self.type.is_ignored:
-            return "class is ignored"
+            return "return type class %s is ignored"%(self.type)
 
         if self.rv_type().is_ignored:
             return "return value type is ignored"
@@ -503,10 +506,10 @@ class FuncInfo(GeneralInfo):
         call_args = []
         if self.instance() == "const":
             args.append("&self")
-            call_args.append("self.as_ptr()")
+            call_args.append("self.as_raw_ptr()")
         elif self.instance() == "mut":
             args.append("&mut self")
-            call_args.append("self.as_ptr()")
+            call_args.append("self.as_raw_ptr()")
 
         for a in self.args:
             if isinstance(a.type,StringTypeInfo):
@@ -519,7 +522,7 @@ class FuncInfo(GeneralInfo):
                 args.append(a.rsname() + ":& " + a.type.rtype)
 
             if isinstance(a.type, BoxedClassTypeInfo) or a.type.is_by_ptr:
-                call_args.append("%s.ptr"%(a.rsname()))
+                call_args.append("%s.as_raw_ptr()"%(a.rsname()))
             elif isinstance(a.type,StringTypeInfo):
                 call_args.append("CString::new(%s).unwrap().as_ptr()"%(a.rsname()))
             else:
@@ -584,8 +587,7 @@ class ClassInfo(GeneralInfo):
     def __init__(self, gen, decl, namespaces=[]): # [ 'class/struct cname', ': base', [modlist] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.methods = {}
-        self.simple = False
-        self.is_ignored = False
+        self.simple = self.is_ignored = self.is_ghost = False
         self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
         for m in decl[2]:
@@ -593,6 +595,8 @@ class ClassInfo(GeneralInfo):
                 self.simple = True
             if m == "/Hidden":
                 self.is_ignored = True
+            if m == "/Ghost":
+                self.is_ghost = True
         if self.classpath and gen.get_class(self.classpath).is_ignored:
             self.is_ignored = True
 
@@ -742,7 +746,7 @@ class SimpleClassTypeInfo(TypeInfo):
         self.is_trait = False
 
     def __str__(self):
-        return "SimpleClass(%s)"%(self.cpptype)
+        return "%s (value)"%(self.cpptype)
 
 class BoxedClassTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
@@ -757,7 +761,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.is_ignored = self.ci.is_ignored
 
     def __str__(self):
-        return "Boxed[%s]"%(self.typeid)
+        return "%s (boxed)"%(self.typeid)
 
 class VectorTypeInfo(TypeInfo):
     def __init__(self, gen, typeid, inner):
@@ -790,6 +794,9 @@ class VectorTypeInfo(TypeInfo):
                     }
                     pub fn len(&self) -> i32 {
                         unsafe { return cv_${rtype}_len(self.ptr); }
+                    }
+                    pub unsafe fn as_raw_ptr(&self) -> *mut c_void {
+                        self.ptr
                     }
                 }
                 impl ::std::ops::Deref for $rtype {
@@ -839,9 +846,18 @@ class SmartPtrTypeInfo(TypeInfo):
             self.gen_template_wrapper_rust_struct()
 
     def gen_template_wrapper_rust_struct(self):
-        with open(self.gen.output_path+"/PtrOf"+self.rtype+".type.rs", "w") as f:
-            f.write("// safe rust wrapper for %s\n"%(self))
-            f.write("#[allow(dead_code)] pub struct %s { pub ptr: *mut c_void }\n"%(self.rtype));
+        with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
+            f.write(template("""
+                // safe rust wrapper for $rtype
+                #[allow(dead_code)]
+                pub struct $rtype {
+                    pub ptr: *mut c_void
+                }
+                impl $rtype {
+                    pub unsafe fn as_raw_ptr(&self) -> *mut c_void {
+                        self.ptr
+                    }
+                }\n""").substitute(rtype=self.rtype, output_rtype=self.inner.rtype))
 
     def __str__(self):
         return "SmartPtr[%s]"%(self.inner)
@@ -864,23 +880,32 @@ class UnknownTypeInfo(TypeInfo):
     def __str__(self):
         return "Unknown[%s]"%(self.typeid)
 
-class ReferenceTypeInfo(TypeInfo):
-    def __init__(self, gen, typeid, inner):
-        TypeInfo.__init__(self,gen,typeid)
-        self.inner = inner
-        self.is_ignored = True
-
-    def __str__(self):
-        return "Ref[%s]"%(self.typeid)
+#class ReferenceTypeInfo(TypeInfo):
+#    def __init__(self, gen, typeid, inner):
+#        TypeInfo.__init__(self,gen,typeid)
+#        self.inner = inner
+#        self.is_ignored = self.inner.is_ignored
+#        if not self.inner.is_ignored:
+#            self.cpptype = self.inner.cpptype
+#            self.ctype = self.inner.ctype
+#            self.rtype = self.inner.rtype
+#            self.rctype = self.inner.rctype
+#            self.rrvtype = self.inner.rrvtype
+#            self.is_by_value = self.inner.is_by_value
+#
+#    def __str__(self):
+#        return "Ref[%s]"%(self.inner)
 
 def parse_type(gen, typeid):
     typeid = typeid.strip()
     if typeid == "unsigned":
         typeid = "uint"
     typeid = typeid.replace("const ", "").replace("..", ".")
+#    if typeid.endswith("&"):
+ #       return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     if typeid.endswith("&"):
-        return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
-    elif typeid.endswith("*"):
+        typeid = typeid[0:-1]
+    if typeid.endswith("*"):
         return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     elif typeid == "string":
         return StringTypeInfo(gen,typeid)
@@ -1046,7 +1071,7 @@ class RustWrapperGenerator(object):
 #                self.gen_boxed_class(cb)
 
         for ci in sorted(self.classes.values(), key=lambda ci:ci.fullname):
-            if not ci.is_ignored:
+            if not ci.is_ignored and not ci.is_ghost:
                 self.gen_class(ci)
 
         with open(output_path+"/types.h", "a") as f:
@@ -1138,7 +1163,9 @@ class RustWrapperGenerator(object):
             else:
                 decl_c_args += a.type.ctype + " " + a.name
 
-            if a.type.is_by_ptr:
+            if isinstance(a.type, SmartPtrTypeInfo):
+                call_cpp_args += "reinterpret_cast<" + a.type.cpptype + " *>(" +  a.name + ")"
+            elif a.type.is_by_ptr:
                 if a.pointer:
                     call_cpp_args += "((%s*)%s)"%(a.type.cpptype.replace("&",""), a.name)
                 else:
@@ -1320,7 +1347,7 @@ class RustWrapperGenerator(object):
                 }
             }
             impl $name {
-                fn as_ptr(&self) -> *mut c_void { self.ptr }
+                pub fn as_raw_ptr(&self) -> *mut c_void { self.ptr }
             }
         """).substitute(help=ci.__repr__(), cname=cname, name=ci.name, module=self.module))
         if ci and len(ci.bases):
@@ -1330,7 +1357,7 @@ class RustWrapperGenerator(object):
                 print("base:%s cibase:%s"%(base, cibase))
                 self.moduleSafeRust.write(template("""
                     impl $base for $rust_name {
-                        fn as_ptr(&self) -> *mut c_void { self.ptr }
+                        fn as_raw_ptr(&self) -> *mut c_void { self.ptr }
                     }
                 """).substitute(rust_name=ci.name, base=cibase.name))
 
@@ -1352,7 +1379,7 @@ class RustWrapperGenerator(object):
             return
         if t.is_trait:
             self.moduleSafeRust.write("pub trait %s {\n"%(ci.name))
-            self.moduleSafeRust.write("  fn as_ptr(&self) -> *mut c_void;\n")
+            self.moduleSafeRust.write("  fn as_raw_ptr(&self) -> *mut c_void;\n")
             for fis in ci.methods.values():
                 for fi in fis:
                     self.gen_func(fi)
