@@ -44,6 +44,14 @@ renamed_funcs = {
     "cv_StereoBM_StereoBM_int_preset_int_ndisparities_int_SADWindowSize": "new",
     "cv_StereoSGBM_StereoSGBM": "default",
     "cv_StereoSGBM_StereoSGBM_int_minDisparity_int_numDisparities_int_SADWindowSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_bool_fullDP": "new",
+    "cv_findFundamentalMat_InputArray_points1_InputArray_points2_int_method_double_param1_double_param2_OutputArray_mask" : "-",
+    "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_OutputArray_mask_int_method_double_ransacReprojThreshold": "find_homography",
+    "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_int_method_double_ransacReprojThreshold_OutputArray_mask": "find_homography_1",
+    "cv_fisheye_distortPoints_InputArray_undistorted_OutputArray_distorted_InputArray_K_InputArray_D_double_alpha": "distort_points",
+    "cv_fisheye_projectPoints_InputArray_objectPoints_OutputArray_imagePoints_InputArray_rvec_InputArray_tvec_InputArray_K_InputArray_D_double_alpha_OutputArray_jacobian": "fisheye_project_points",
+    "cv_fisheye_undistortImage_InputArray_distorted_OutputArray_undistorted_InputArray_K_InputArray_D_InputArray_Knew_Size_new_size": "fisheye_undistort_image",
+    "cv_fisheye_undistortPoints_InputArray_distorted_OutputArray_undistorted_InputArray_K_InputArray_D_InputArray_R_InputArray_P": "fisheye_undistort_points",
+    "cv_projectPoints_InputArray_objectPoints_InputArray_rvec_InputArray_tvec_InputArray_cameraMatrix_InputArray_distCoeffs_OutputArray_imagePoints_OutputArray_jacobian_double_aspectRatio" : "project_points",
     # core
     "cv_Algorithm_set_string_name_Mat_value": "set_mat",
     "cv_Algorithm_set_string_name_VectorOfMat_value": "set_VectorOfMat",
@@ -51,6 +59,12 @@ renamed_funcs = {
     "cv_Algorithm_set_string_name_double_value": "set_double",
     "cv_Algorithm_set_string_name_int_value": "set_int",
     "cv_Algorithm_set_string_name_string_value": "set_string",
+    "cv_Algorithm_setInt_string_name_int_value" : "-",
+    "cv_Algorithm_setDouble_string_name_double_value" : "-",
+    "cv_Algorithm_setBool_string_name_bool_value" : "-",
+    "cv_Algorithm_setString_string_name_string_value" : "-",
+    "cv_Algorithm_setMat_string_name_Mat_value" : "-",
+    "cv_Algorithm_setMatVector_string_name_VectorOfMat_value" : "-",
     "cv_Mat_Mat": "new",
     "cv_Mat_Mat_Mat_m": "copy",
     "cv_Mat_Mat_Mat_m_Range_ranges": "ranges",
@@ -62,6 +76,7 @@ renamed_funcs = {
     "cv_Mat_Mat_int_rows_int_cols_int_type_Scalar_s": "new_rows_cols_with_default",
     "cv_Mat_colRange_Range_r": "colrange",
     "cv_Mat_colRange_int_startcol_int_endcol": "colbounds",
+    "cv_Mat_copyTo_OutputArray_m_InputArray_mask": "copy_to_masked",
     "cv_Mat_create_Size_size_int_type": "-",
     "cv_Mat_create_int_rows_int_cols_int_type": "-",
     "cv_Mat_diag_Mat_d": "diag_new_mat",
@@ -72,28 +87,41 @@ renamed_funcs = {
     "cv_Mat_rowRange_int_startrow_int_endrow": "rowbounds",
     "cv_Mat_type": "typ",
     "cv_PCA_PCA": "default",
-    "cv_PCA_PCA_Mat_data_Mat_mean_int_flags_double_retainedVariance": "new_mat_variance",
-    "cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents": "new_mat_max",
+    "cv_PCA_PCA_InputArray_data_InputArray_mean_int_flags_double_retainedVariance": "new_mat_variance",
+    "cv_PCA_PCA_InputArray_data_InputArray_mean_int_flags_int_maxComponents": "new_mat_max",
+    "cv_PCA_backProject_InputArray_vec_OutputArray_result": "back_project_to",
+    "cv_PCA_project_InputArray_vec_OutputArray_result": "project_to",
     "cv_Range_Range": "default",
     "cv_Range_Range_int__start_int__end": "new",
     "cv_RotatedRect_RotatedRect": "default",
     "cv_RotatedRect_RotatedRect_Point2f_center_Size2f_size_float_angle": "new",
     "cv_TermCriteria_TermCriteria": "default",
     "cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon": "new",
+    "cv_calcCovarMatrix_InputArray_samples_OutputArray_covar_OutputArray_mean_int_flags_int_ctype": "-",
     "cv_clipLine_Size_imgSize_Point_pt1_Point_pt2": "clip_line_size",
     "cv_clipLine_Rect_imgRect_Point_pt1_Point_pt2": "clip_line",
+    "cv_divide_double_scale_InputArray_src2_OutputArray_dst_int_dtype": "divide",
+    "cv_divide_InputArray_src1_InputArray_src2_OutputArray_dst_double_scale_int_dtype": "divide_mat",
     "cv_ellipse_Mat_img_Point_center_Size_axes_double_angle_double_startAngle_double_endAngle_Scalar_color_int_thickness_int_lineType_int_shift": "ellipse",
     "cv_ellipse_Mat_img_RotatedRect_box_Scalar_color_int_thickness_int_lineType": "ellipse_new_rotated_rect",
+    "cv_eigen_InputArray_src_OutputArray_eigenvalues_int_lowindex_int_highindex" : "eigen_indexes",
+    "cv_eigen_InputArray_src_bool_computeEigenvectors_OutputArray_eigenvalues_OutputArray_eigenvectors": "eigen",
+    "cv_eigen_InputArray_src_OutputArray_eigenvalues_OutputArray_eigenvectors_int_lowindex_int_highindex": "eigen_vectors",
+    "cv_hconcat_Mat_src_size_t_nsrc_OutputArray_dst" : "-",
     "cv_max_Mat_src1_Mat_src2_Mat_dst": "max_mat_mat",
     "cv_max_Mat_src1_double_src2_Mat_dst": "max_mat",
+    "cv_merge_Mat_mv_size_t_count_OutputArray_dst": "-",
     "cv_min_Mat_src1_Mat_src2_Mat_dst": "min_mat_mat",
     "cv_min_Mat_src1_double_src2_Mat_dst": "min_mat",
-    "cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask": "norm_with_type",
-    "cv_norm_Mat_src1_int_normType_Mat_mask": "norm",
+    "cv_norm_InputArray_src1_InputArray_src2_int_normType_InputArray_mask": "norm_with_type",
+    "cv_norm_InputArray_src1_int_normType_InputArray_mask": "norm",
     "cv_rectangle_Mat_img_Point_pt1_Point_pt2_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle_new_points",
     "cv_rectangle_Mat_img_Rect_rec_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle",
+    "cv_repeat_InputArray_src_int_ny_int_nx_OutputArray_dst": "repeat_to",
+    "cv_repeat_Mat_src_int_ny_int_nx": "repeat",
     "cv_split_Mat_m_VectorOfMat_mv": "split",
     "cv_split_Mat_src_Mat_mvbegin": "split_at",
+    "cv_vconcat_Mat_src_size_t_nsrc_OutputArray_dst" : "-",
     # features2d
     "cv_BOWKMeansTrainer_cluster": "default",
     "cv_BOWKMeansTrainer_cluster_Mat_descriptors": "new",
@@ -129,25 +157,35 @@ renamed_funcs = {
     "cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfVectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfVectorOfchar_matchesMask_int_flags": "draw_vector_matches",
     # highgui
     "cv_VideoCapture_VideoCapture": "default",
-    "cv_VideoCapture_VideoCapture_int_device": "new_device",
-    "cv_VideoCapture_VideoCapture_string_filename": "new_filename",
+    "cv_VideoCapture_VideoCapture_int_device": "device",
+    "cv_VideoCapture_VideoCapture_string_filename": "filename",
     "cv_VideoCapture_open_int_device": "open_device",
     "cv_VideoCapture_open_string_filename": "open_filename",
     "cv_VideoWriter_VideoWriter": "default",
     "cv_VideoWriter_VideoWriter_string_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor": "new",
     "cv_imdecode_Mat_buf_int_flags": "decode",
     "cv_imdecode_Mat_buf_int_flags_Mat_dst": "decode_to",
+    "cv_imdecode_InputArray_buf_int_flags": "-",
+    "cv_imdecode_InputArray_buf_int_flags_Mat_dst": "-",
     # imgproc
     "cv_FilterEngine_start_Mat_src_Rect_srcRoi_bool_isolated_int_maxBufRows": "start_mat",
     "cv_FilterEngine_start_Size_wholeSize_Rect_roi_int_maxBufRows": "start_size",
+    "cv_GeneralizedHough_detect_InputArray_image_OutputArray_positions_OutputArray_votes_int_cannyThreshold": "detect",
+    "cv_GeneralizedHough_detect_InputArray_edges_InputArray_dx_InputArray_dy_OutputArray_positions_OutputArray_votes": "detect_edges",
     "cv_GeneralizedHough_setTemplate_Mat_edges_Mat_dx_Mat_dy_Point_templCenter": "set_template_edges",
     "cv_GeneralizedHough_setTemplate_Mat_templ_int_cannyThreshold_Point_templCenter": "set_template_templ",
+    "cv_GeneralizedHough_setTemplate_InputArray_templ_int_cannyThreshold_Point_templCenter" : "-",
     "cv_Moments_Moments": "default",
     "cv_Moments_Moments_double_m00_double_m10_double_m01_double_m20_double_m11_double_m02_double_m30_double_m21_double_m12_double_m03": "new",
     "cv_Subdiv2D_Subdiv2D": "default",
     "cv_Subdiv2D_Subdiv2D_Rect_rect": "new",
     "cv_Subdiv2D_insert_Point2f_pt": "insert",
     "cv_Subdiv2D_insert_VectorOfPoint2f_ptvec": "insert_n",
+    "cv_distanceTransform_InputArray_src_OutputArray_dst_OutputArray_labels_int_distanceType_int_maskSize_int_labelType": "distance_transform_labels",
+    "cv_distanceTransform_InputArray_src_OutputArray_dst_int_distanceType_int_maskSize": "distance_transform",
+    "cv_integral_InputArray_src_OutputArray_sum_OutputArray_sqsum_OutputArray_tilted_int_sdepth" : "integral_tilted",
+    "cv_integral_InputArray_src_OutputArray_sum_OutputArray_sqsum_int_sdepth": "integral_sq",
+    "cv_integral_InputArray_src_OutputArray_sum_int_sdepth": "integral",
     # objdetect": "",
     "cv_CascadeClassifier_CascadeClassifier": "default",
     "cv_CascadeClassifier_CascadeClassifier_string_filename": "new",
@@ -223,14 +261,15 @@ class_ignore_list = (
     "DescriptorCollection", "KeyPointCollection", # nested
 )
 
-remapped_types = {
+aliases_types = {
     "unsigned" : "uint",
     "InputArray" : "cv::Mat",
+    "OutputArray" : "cv::Mat",
 }
 
 func_ignore_list = (
     "cv.glob", "cv.fastFree", "cv.fastMalloc",
-    "cv.getBuildInformation", "cv.scalarToRawData", "cv.noArray", "()", "cv.Mat.MSize.operator[]",
+    "cv.getBuildInformation", "cv.scalarToRawData", "cv::noArray", "()", "cv.Mat.MSize.operator[]",
     "const int*", "=", "==", "!=", "--", "++", "*", ">>", "<<", "<", ">", "operator==", "operator()",
     "cv.Mat.MStep.operator[]",
     "cv.swap",
@@ -255,8 +294,7 @@ const_ignore_list = (
     "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
     "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
     "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_LOG2",
-    "CV_TYPE_NAME_IMAGE", 
-
+    "CV_TYPE_NAME_IMAGE",
 )
 
 #
@@ -579,7 +617,10 @@ class FuncInfo(GeneralInfo):
     def r_name(self):
         if renamed_funcs.get(self.identifier):
             return renamed_funcs[self.identifier]
-        return "new" if self.isconstructor() else self.name
+        name = "new" if self.isconstructor() else self.name
+
+        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
     # "const", "mut", or None
     def instance(self):
@@ -654,7 +695,7 @@ class FuncInfo(GeneralInfo):
         elif isinstance(self.rv_type(), BoxedClassTypeInfo):
             io.write("    Ok(%s{ ptr: rv.result })\n"%(self.rv_type().rtype))
         elif self.type.typeid == "bool":
-            io.write("    Ok(rv.result!=0)\n")
+            io.write("    Ok(rv.result != 0)\n")
         else:
             io.write("    Ok(rv.result)\n")
         io.write("  }\n");
@@ -848,8 +889,8 @@ class SimpleClassTypeInfo(TypeInfo):
         return "%s (value)"%(self.cpptype)
 
 class BoxedClassTypeInfo(TypeInfo):
-    def __init__(self, gen, typeid):
-        TypeInfo.__init__(self,gen,typeid)
+    def __init__(self, gen, typeid, alias):
+        TypeInfo.__init__(self, gen, typeid)
         self.ci = gen.get_class(typeid)
         self.ctype = "void*"
         self.cpptype = self.ci.nested_cppname
@@ -858,7 +899,10 @@ class BoxedClassTypeInfo(TypeInfo):
         self.is_by_ptr = True
         self.is_trait = typeid in forced_trait_classes or self.ci.is_trait
         self.is_ignored = self.ci.is_ignored
-        self.alias = self.ci.name
+        if alias:
+            self.alias = alias
+        else:
+            self.alias = self.ci.name
 
     def __str__(self):
         return "%s (boxed)"%(self.typeid)
@@ -932,6 +976,9 @@ class VectorTypeInfo(TypeInfo):
             rtype=self.rtype, cpptype=self.cpptype, module=self.gen.module,
             output_ctype=self.inner.ctype))
 
+    def __str__(self):
+        return "Vector[%s]"%(self.inner)
+
 class SmartPtrTypeInfo(TypeInfo):
     def __init__(self, gen, typeid, inner):
         TypeInfo.__init__(self,gen,typeid)
@@ -1000,8 +1047,6 @@ class UnknownTypeInfo(TypeInfo):
 
 def parse_type(gen, typeid):
     typeid = typeid.strip()
-    if typeid in remapped_types:
-        typeid = remapped_types[typeid]
     typeid = typeid.replace("const ", "").replace("..", ".")
 #    if typeid.endswith("&"):
  #       return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
@@ -1027,7 +1072,12 @@ def parse_type(gen, typeid):
     else:
         ci = gen.get_class(typeid)
         if ci:
-            return BoxedClassTypeInfo(gen, ci.nested_cppname)
+            return BoxedClassTypeInfo(gen, ci.nested_cppname, None)
+        actual = aliases_types.get(typeid)
+        if actual:
+            ci = gen.get_class(actual)
+            if ci:
+                return BoxedClassTypeInfo(gen, ci.nested_cppname, typeid)
     return UnknownTypeInfo(gen, typeid)
 
 #
@@ -1324,7 +1374,7 @@ class RustWrapperGenerator(object):
 
         # return value
         if fi.type.ctype == "void":
-            self.moduleCppCode.write("  return { NULL, 0 };\n");
+            self.moduleCppCode.write("  return { NULL };\n");
         elif isinstance(fi.rv_type(), StringTypeInfo):
             self.moduleCppCode.write("  return { NULL, strdup(cpp_return_value.c_str()) };");
         elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and not fi.isconstructor():
@@ -1342,10 +1392,16 @@ class RustWrapperGenerator(object):
 
         self.moduleCppCode.write("} catch (cv::Exception& e) {\n");
         self.moduleCppCode.write("    char* msg = strdup(e.what());\n");
-        self.moduleCppCode.write("    return { msg, 0 };\n");
+        if fi.type.ctype == "void":
+            self.moduleCppCode.write("    return { msg };\n");
+        else:
+            self.moduleCppCode.write("    return { msg, 0 };\n");
         self.moduleCppCode.write("} catch (...) {\n");
         self.moduleCppCode.write("    char* msg = strdup(\"unspecified error in OpenCV guts\");\n");
-        self.moduleCppCode.write("    return { msg, 0 };\n");
+        if fi.type.ctype == "void":
+            self.moduleCppCode.write("    return { msg };\n");
+        else:
+            self.moduleCppCode.write("    return { msg, 0 };\n");
         self.moduleCppCode.write("}\n");
 
         self.moduleCppCode.write("}\n\n");
@@ -1392,15 +1448,20 @@ class RustWrapperGenerator(object):
         self.moduleCppTypes.write("} struct_%s;\n\n"%(ci.nested_cname))
 
     def gen_c_return_value_type(self, typ):
-        with open(self.output_path+"/cv_return_value_"+typ.ctype.replace("*","_").replace(" ","_").replace(":","_")+".type.h", "w") as f:
-            f.write(template("""struct cv_return_value_$sane {
-               char* error_msg;
-               $ctype result;
-            };\n""").substitute(
-                sane=typ.ctype.replace("*","_").replace(" ","_").replace(":","_"),
-                ctype="int" if typ.ctype == "void" else typ.ctype
-            ))
-        with open(self.output_path+"/cv_return_value_"+typ.ctype.replace("*","_").replace(" ","_").replace(":","_")+".rv.rs", "w") as f:
+        sane = typ.ctype.replace("*","_").replace(" ","_").replace(":","_")
+        if typ.cpptype == "bool":
+            return
+        with open(self.output_path+"/cv_return_value_"+sane+".type.h", "w") as f:
+            if typ.ctype == "void":
+                f.write(template("""struct cv_return_value_$sane {
+                   char* error_msg;
+                };\n""").substitute( sane=sane, ctype=typ.ctype))
+            else:
+                f.write(template("""struct cv_return_value_$sane {
+                   char* error_msg;
+                   $ctype result;
+                };\n""").substitute( sane=sane, ctype=typ.ctype))
+        with open(self.output_path+"/cv_return_value_"+sane+".rv.rs", "w") as f:
             if typ.ctype == "void":
                 f.write("""#[repr(C)]\npub struct cv_return_value_void {
                    pub error_msg: *const ::libc::types::os::arch::c95::c_char,
@@ -1409,10 +1470,7 @@ class RustWrapperGenerator(object):
                 f.write(template("""#[repr(C)]\npub struct cv_return_value_$sane {
                    pub error_msg: *const ::libc::types::os::arch::c95::c_char,
                    pub result: $rtype
-                }\n""").substitute(
-                    sane=typ.ctype.replace("*","_").replace(" ","_").replace(":","_"),
-                    rtype=typ.rctype or typ.rtype
-                ))
+                }\n""").substitute( sane=sane, rtype=typ.rctype or typ.rtype))
 
     def gen_boxed_class(self, name):
         ci = self.get_class(name)
