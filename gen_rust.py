@@ -33,60 +33,161 @@ ManualFuncs = {
     ]
 }
 
-cross_modules_deps = {
-    "imgproc" : [
-        [ "class cv.Algorithm", "", ["/Hidden"], [] ],
-    ],
-    "features2d" : [
-        [ "class cv.Algorithm", "", ["/Hidden"], [] ],
-    ],
-    "video" : [
-        [ "class cv.Algorithm", "", ["/Hidden"], [] ],
-    ],
-    "highgui" : [
+cross_modules_deps = [
         [ "class cv.Mat", "", ["/Ghost"], [] ],
-    ],
-}
+        [ "class cv.Algorithm", "", ["/Ghost"], [] ],
+]
 
 renamed_funcs = {
-    "cv_core_cv_divide_MMMDI": "divide_mat",
-    "cv_core_cv_norm_MMIM":"norm_dist",
-    "cv_core_cv_ellipse_MPSDDDSIII": "ellipse_tilted",
-    "cv_core_cv_Mat_Mat_III": "for_rows_and_cols",
-    "cv_core_cv_Mat_type": "cv_type",
-    "cv_calib3d_cv_StereoSGBM_StereoSGBM_IIIIIIIIIIB": "for_params",
-    "cv_calib3d_cv_StereoBM_StereoBM_III": "for_params",
-    "cv_features2d_cv_BOWKMeansTrainer_cluster_M": "cluster_with_desc",
-    "cv_features2d_cv_BOWTrainer_cluster_M": "cluster_with_desc",
-    "cv_features2d_cv_DescriptorMatcher_match_MMVM" : "matches",
-    "cv_features2d_cv_DescriptorMatcher_match_MVV" : "matches",
-    "cv_features2d_cv_KeyPoint_KeyPoint_FFFFFII" : "for_params",
-    "cv_features2d_cv_DMatch_DMatch_IIF" : "for_params",
-    "cv_features2d_cv_DMatch_DMatch_IIIF" : "for_image",
-    "cv_features2d_cv_DescriptorMatcher_knnMatch_MMVIMB" : "knnTrainMatch",
-    "cv_features2d_cv_DescriptorMatcher_match_MMVM": "trainAndMatch",
-    "cv_features2d_cv_BRISK_BRISK_VVFFV" : "for_pattern",
-    "cv_highgui_cv_VideoWriter_VideoWriter_SIDSB" : "for_params",
-    "cv_highgui_cv_VideoCapture_VideoCapture_S" : "for_file",
-    "cv_highgui_cv_VideoCapture_VideoCapture_I" : "for_device",
-    "cv_highgui_cv_VideoCapture_open_S" : "open_file",
-    "cv_highgui_cv_VideoCapture_open_I" : "open_fd",
-    "cv_imgproc_cv_integral_MMMI" : "integral_squares",
-    "cv_imgproc_cv_integral_MMMMI" : "integral_squares_tilted",
-    "cv_imgproc_cv_distanceTransform_MMMIII" : "distance_tranform_labels",
-    "cv_imgproc_cv_Subdiv2D_Subdiv2D_R" : "for_rect",
-    "cv_imgproc_cv_Subdiv2D_insert_V" : "insert_multi",
-    "cv_objdetect_cv_HOGDescriptor_HOGDescriptor_S": "for_file",
-    "cv_objdetect_cv_HOGDescriptor_HOGDescriptor_SSSSIIDIDBI": "for_params",
-    "cv_objdetect_cv_CascadeClassifier_detectMultiScale_MVVVDIISSB" : "detectMultiScaleFull",
-    "cv_objdetect_cv_CascadeClassifier_CascadeClassifier_S": "for_file",
-    "cv_video_cv_calcOpticalFlowSF_MMMIIIDDIDDDIDDD" : "calc_optical_flow_full",
-    "cv_video_cv_KalmanFilter_KalmanFilter_IIII" : "for_params",
-    "cv_video_cv_BackgroundSubtractorMOG_BackgroundSubtractorMOG_IIDD" : "for_params",
-    "cv_video_cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_IFB" : "for_params",
+    # calib3D
+    "cv_StereoBM_StereoBM": "default",
+    "cv_StereoBM_StereoBM_int_preset_int_ndisparities_int_SADWindowSize": "new",
+    "cv_StereoSGBM_StereoSGBM": "default",
+    "cv_StereoSGBM_StereoSGBM_int_minDisparity_int_numDisparities_int_SADWindowSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_bool_fullDP": "new",
+    # core
+    "cv_Algorithm_set_string_name_Mat_value": "set_mat",
+    "cv_Algorithm_set_string_name_VectorOfMat_value": "set_VectorOfMat",
+    "cv_Algorithm_set_string_name_bool_value": "set_bool",
+    "cv_Algorithm_set_string_name_double_value": "set_double",
+    "cv_Algorithm_set_string_name_int_value": "set_int",
+    "cv_Algorithm_set_string_name_string_value": "set_string",
+    "cv_Mat_Mat": "new",
+    "cv_Mat_Mat_Mat_m": "copy",
+    "cv_Mat_Mat_Mat_m_Range_ranges": "ranges",
+    "cv_Mat_Mat_Mat_m_Range_rowRange_Range_colRange": "rowscols",
+    "cv_Mat_Mat_Mat_m_Rect_roi": "rect",
+    "cv_Mat_Mat_Size_size_int_type": "new_size",
+    "cv_Mat_Mat_Size_size_int_type_Scalar_s": "new_size_with_default",
+    "cv_Mat_Mat_int_rows_int_cols_int_type": "new_rows_cols",
+    "cv_Mat_Mat_int_rows_int_cols_int_type_Scalar_s": "new_rows_cols_with_default",
+    "cv_Mat_colRange_Range_r": "colrange",
+    "cv_Mat_colRange_int_startcol_int_endcol": "colbounds",
+    "cv_Mat_create_Size_size_int_type": "-",
+    "cv_Mat_create_int_rows_int_cols_int_type": "-",
+    "cv_Mat_diag_Mat_d": "diag_new_mat",
+    "cv_Mat_diag_int_d": "diag",
+    "cv_Mat_resize_size_t_sz": "resize",
+    "cv_Mat_resize_size_t_sz_Scalar_s": "resize_with_default",
+    "cv_Mat_rowRange_Range_r": "rowRange",
+    "cv_Mat_rowRange_int_startrow_int_endrow": "rowbounds",
+    "cv_Mat_type": "typ",
+    "cv_PCA_PCA": "default",
+    "cv_PCA_PCA_Mat_data_Mat_mean_int_flags_double_retainedVariance": "new_mat_variance",
+    "cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents": "new_mat_max",
+    "cv_Range_Range": "default",
+    "cv_Range_Range_int__start_int__end": "new",
+    "cv_RotatedRect_RotatedRect": "default",
+    "cv_RotatedRect_RotatedRect_Point2f_center_Size2f_size_float_angle": "new",
+    "cv_TermCriteria_TermCriteria": "default",
+    "cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon": "new",
+    "cv_clipLine_Size_imgSize_Point_pt1_Point_pt2": "clip_line_size",
+    "cv_clipLine_Rect_imgRect_Point_pt1_Point_pt2": "clip_line",
+    "cv_ellipse_Mat_img_Point_center_Size_axes_double_angle_double_startAngle_double_endAngle_Scalar_color_int_thickness_int_lineType_int_shift": "ellipse",
+    "cv_ellipse_Mat_img_RotatedRect_box_Scalar_color_int_thickness_int_lineType": "ellipse_new_rotated_rect",
+    "cv_max_Mat_src1_Mat_src2_Mat_dst": "max_mat_mat",
+    "cv_max_Mat_src1_double_src2_Mat_dst": "max_mat",
+    "cv_min_Mat_src1_Mat_src2_Mat_dst": "min_mat_mat",
+    "cv_min_Mat_src1_double_src2_Mat_dst": "min_mat",
+    "cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask": "norm_with_type",
+    "cv_norm_Mat_src1_int_normType_Mat_mask": "norm",
+    "cv_rectangle_Mat_img_Point_pt1_Point_pt2_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle_new_points",
+    "cv_rectangle_Mat_img_Rect_rec_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle",
+    "cv_split_Mat_m_VectorOfMat_mv": "split",
+    "cv_split_Mat_src_Mat_mvbegin": "split_at",
+    # features2d
+    "cv_BOWKMeansTrainer_cluster": "default",
+    "cv_BOWKMeansTrainer_cluster_Mat_descriptors": "new",
+    "cv_DMatch_DMatch": "default",
+    "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance": "new",
+    "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance": "new_index",
+    "cv_DescriptorExtractor_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_descriptors": "compute",
+    "cv_DescriptorExtractor_compute_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_descriptors": "compute_n",
+    "cv_DescriptorMatcher_knnMatch_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_int_k_Mat_mask_bool_compactResult": "knn_train_matches",
+    "cv_DescriptorMatcher_knnMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_int_k_VectorOfMat_masks_bool_compactResult": "knn_matches",
+    "cv_DescriptorMatcher_match_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfDMatch_matches_Mat_mask": "train_matches",
+    "cv_DescriptorMatcher_match_Mat_queryDescriptors_VectorOfDMatch_matches_VectorOfMat_masks": "matches",
+    "cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_Mat_mask_bool_compactResult": "train_radius_matches",
+    "cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_VectorOfMat_masks_bool_compactResult": "radius_matches",
+    "cv_FREAK_FREAK_FREAK_rhs": "copy",
+    "cv_FREAK_FREAK_bool_orientationNormalized_bool_scaleNormalized_float_patternScale_int_nOctaves_VectorOfint_selectedPairs": "new",
+    "cv_FeatureDetector_detect_Mat_image_VectorOfKeyPoint_keypoints_Mat_mask": "detect",
+    "cv_FeatureDetector_detect_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_masks": "detect_n",
+    "cv_GenericDescriptorMatcher_classify_Mat_queryImage_VectorOfKeyPoint_queryKeypoints": "classify",
+    "cv_GenericDescriptorMatcher_classify_Mat_queryImage_VectorOfKeyPoint_queryKeypoints_Mat_trainImage_VectorOfKeyPoint_trainKeypoints": "train_classify",
+    "cv_GenericDescriptorMatcher_knnMatch_Mat_queryImage_VectorOfKeyPoint_queryKeypoints_Mat_trainImage_VectorOfKeyPoint_trainKeypoints_VectorOfVectorOfDMatch_matches_int_k_Mat_mask_bool_compactResult": "train_classify_matches",
+    "cv_GenericDescriptorMatcher_knnMatch_Mat_queryImage_VectorOfKeyPoint_queryKeypoints_VectorOfVectorOfDMatch_matches_int_k_VectorOfMat_masks_bool_compactResult": "knn_matches",
+    "cv_GenericDescriptorMatcher_match_Mat_queryImage_VectorOfKeyPoint_queryKeypoints_Mat_trainImage_VectorOfKeyPoint_trainKeypoints_VectorOfDMatch_matches_Mat_mask": "train_matches",
+    "cv_GenericDescriptorMatcher_match_Mat_queryImage_VectorOfKeyPoint_queryKeypoints_VectorOfDMatch_matches_VectorOfMat_masks": "matches",
+    "cv_GenericDescriptorMatcher_radiusMatch_Mat_queryImage_VectorOfKeyPoint_queryKeypoints_Mat_trainImage_VectorOfKeyPoint_trainKeypoints_VectorOfVectorOfDMatch_matches_float_maxDistance_Mat_mask_bool_compactResult": "train_radius_matches",
+    "cv_GenericDescriptorMatcher_radiusMatch_Mat_queryImage_VectorOfKeyPoint_queryKeypoints_VectorOfVectorOfDMatch_matches_float_maxDistance_VectorOfMat_masks_bool_compactResult": "radius_matches",
+    "cv_KeyPoint_KeyPoint": "default",
+    "cv_KeyPoint_KeyPoint_Point2f__pt_float__size_float__angle_float__response_int__octave_int__class_id": "new_point",
+    "cv_KeyPoint_KeyPoint_float_x_float_y_float__size_float__angle_float__response_int__octave_int__class_id": "new_coords",
+    "cv_KeyPoint_convert_VectorOfKeyPoint_keypoints_VectorOfPoint2f_points2f_VectorOfint_keypointIndexes": "convert_from",
+    "cv_KeyPoint_convert_VectorOfPoint2f_points2f_VectorOfKeyPoint_keypoints_float_size_float_response_int_octave_int_class_id": "convert_to",
+    "cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfchar_matchesMask_int_flags": "draw_matches",
+    "cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfVectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfVectorOfchar_matchesMask_int_flags": "draw_vector_matches",
+    # highgui
+    "cv_VideoCapture_VideoCapture": "default",
+    "cv_VideoCapture_VideoCapture_int_device": "new_device",
+    "cv_VideoCapture_VideoCapture_string_filename": "new_filename",
+    "cv_VideoCapture_open_int_device": "open_device",
+    "cv_VideoCapture_open_string_filename": "open_filename",
+    "cv_VideoWriter_VideoWriter": "default",
+    "cv_VideoWriter_VideoWriter_string_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor": "new",
+    "cv_imdecode_Mat_buf_int_flags": "decode",
+    "cv_imdecode_Mat_buf_int_flags_Mat_dst": "decode_to",
+    # imgproc
+    "cv_FilterEngine_start_Mat_src_Rect_srcRoi_bool_isolated_int_maxBufRows": "start_mat",
+    "cv_FilterEngine_start_Size_wholeSize_Rect_roi_int_maxBufRows": "start_size",
+    "cv_GeneralizedHough_setTemplate_Mat_edges_Mat_dx_Mat_dy_Point_templCenter": "set_template_edges",
+    "cv_GeneralizedHough_setTemplate_Mat_templ_int_cannyThreshold_Point_templCenter": "set_template_templ",
+    "cv_Moments_Moments": "default",
+    "cv_Moments_Moments_double_m00_double_m10_double_m01_double_m20_double_m11_double_m02_double_m30_double_m21_double_m12_double_m03": "new",
+    "cv_Subdiv2D_Subdiv2D": "default",
+    "cv_Subdiv2D_Subdiv2D_Rect_rect": "new",
+    "cv_Subdiv2D_insert_Point2f_pt": "insert",
+    "cv_Subdiv2D_insert_VectorOfPoint2f_ptvec": "insert_n",
+    # objdetect": "",
+    "cv_CascadeClassifier_CascadeClassifier": "default",
+    "cv_CascadeClassifier_CascadeClassifier_string_filename": "new",
+    "cv_CascadeClassifier_detectMultiScale_Mat_image_VectorOfRect_objects_VectorOfint_rejectLevels_VectorOfdouble_levelWeights_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize_bool_outputRejectLevels": "detect_multi_scale_levels",
+    "cv_CascadeClassifier_detectMultiScale_Mat_image_VectorOfRect_objects_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize": "detect_multi_scale",
+    "cv_HOGDescriptor_HOGDescriptor": "default",
+    "cv_HOGDescriptor_HOGDescriptor_HOGDescriptor_d": "copy",
+    "cv_HOGDescriptor_HOGDescriptor_Size__winSize_Size__blockSize_Size__blockStride_Size__cellSize_int__nbins_int__derivAperture_double__winSigma_int__histogramNormType_double__L2HysThreshold_bool__gammaCorrection_int__nlevels": "new",
+    "cv_HOGDescriptor_detectMultiScale_Mat_img_VectorOfRect_foundLocations_VectorOfdouble_foundWeights_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale",
+    "cv_HOGDescriptor_detectMultiScale_Mat_img_VectorOfRect_foundLocations_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale_weights",
+    "cv_HOGDescriptor_detect_Mat_img_VectorOfPoint_foundLocations_VectorOfdouble_weights_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect_weights",
+    "cv_HOGDescriptor_detect_Mat_img_VectorOfPoint_foundLocations_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect",
+    "cv_LatentSvmDetector_LatentSvmDetector": "default",
+    "cv_LatentSvmDetector_LatentSvmDetector_VectorOfstring_filenames_VectorOfstring_classNames": "new",
+    "cv_LatentSvmDetector_ObjectDetection_ObjectDetection": "default",
+    "cv_LatentSvmDetector_ObjectDetection_ObjectDetection_Rect_rect_float_score_int_classID": "new",
+    "cv_groupRectangles_VectorOfRect_rectList_VectorOfint_rejectLevels_VectorOfdouble_levelWeights_int_groupThreshold_double_eps": "group_rectangles_weights_rejects",
+    "cv_groupRectangles_VectorOfRect_rectList_VectorOfint_weights_int_groupThreshold_double_eps": "group_rectangle_weights",
+    "cv_groupRectangles_VectorOfRect_rectList_int_groupThreshold_double_eps": "group_rectangle",
+    "cv_groupRectangles_VectorOfRect_rectList_int_groupThreshold_double_eps_VectorOfint_weights_VectorOfdouble_levelWeights": "group_rectangle_levelweights",
+    "cv_linemod_ColorGradient_ColorGradient": "default",
+    "cv_linemod_ColorGradient_ColorGradient_float_weak_threshold_size_t_num_features_float_strong_threshold": "new",
+    "cv_linemod_DepthNormal_DepthNormal": "default",
+    "cv_linemod_DepthNormal_DepthNormal_int_distance_threshold_int_difference_threshold_size_t_num_features_int_extract_threshold": "new",
+    "cv_linemod_Feature_Feature": "default",
+    "cv_linemod_Feature_Feature_int__x_int__y_int__label": "-",
+    "cv_linemod_Feature_Feature_int_x_int_y_int_label": "new",
+    # video": "",
+    "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2": "default",
+    "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_int_history_float_varThreshold_bool_bShadowDetection": "new",
+    "cv_BackgroundSubtractorMOG_BackgroundSubtractorMOG": "default",
+    "cv_BackgroundSubtractorMOG_BackgroundSubtractorMOG_int_history_int_nmixtures_double_backgroundRatio_double_noiseSigma": "new",
+    "cv_KalmanFilter_KalmanFilter": "default",
+    "cv_KalmanFilter_KalmanFilter_int_dynamParams_int_measureParams_int_controlParams_int_type": "new",
+    "cv_calcOpticalFlowSF_Mat_from_Mat_to_Mat_flow_int_layers_int_averaging_block_size_int_max_flow": "new",
+    "cv_calcOpticalFlowSF_Mat_from_Mat_to_Mat_flow_int_layers_int_averaging_block_size_int_max_flow_double_sigma_dist_double_sigma_color_int_postprocess_window_double_sigma_dist_fix_double_sigma_color_fix_double_occ_thr_int_upscale_averaging_radius_double_upscale_sigma_dist_double_upscale_sigma_color_double_speed_up_thr": "new_sigmas",
 }
 
 class_ignore_list = (
+    "WString",
     #core
     "CvMat", "CvArr", "CvSeq", "CvPoint.*", "CvRect", "CvTermCriteria", # have c++ equiv
     "CvSize", "CvSlice", "CvScalar",
@@ -157,9 +258,6 @@ const_ignore_list = (
     "CV_TYPE_NAME_IMAGE", 
 
 )
-
-func_arg_fix = {
-}
 
 #
 #       TYPES MAPPING
@@ -322,6 +420,8 @@ class ArgInfo():
             self.pointer = True
         self.type = self.gen.get_type_info(type)
         self.name = arg_tuple[1]
+        if not self.name:
+            self.name = "unamed_arg"
         self.defval = ""
         self.typeinfo = None
         if len(arg_tuple) > 2:
@@ -374,15 +474,14 @@ class FuncInfo(GeneralInfo):
             self.ci = None
             self.type = gen.get_type_info(decl[1])
 
+        self.identifier = self.fullname.replace("::", "_")
+
         self.args = []
-
-        self.overridename = self.name
-        for m in decl[2]:
-            if m.startswith("="):
-                self.overridename = m[1:]
-
         for a in decl[3]:
-            self.args.append(ArgInfo(gen, a))
+            ai = ArgInfo(gen, a)
+            self.args.append(ai)
+            self.identifier += "_" + ai.type.alias + "_" + ai.name
+
         self.const = "/C" in decl[2]
         self.static = ["","static"][ "/S" in decl[2] ]
 
@@ -401,7 +500,6 @@ class FuncInfo(GeneralInfo):
             return
 
         # register self to class or generator
-        self.discriminator = 0
         if self.kind == self.KIND_FUNCTION:
             logging.info("register %s %s"%(self.kind, self.name))
             gen.register_function(self)
@@ -422,12 +520,15 @@ class FuncInfo(GeneralInfo):
             return self.type
 
     def reason_to_skip(self):
-        if self.overridename == "operator ()":
-            return "can not map operator () yet"
+        if self.name.startswith("operator"):
+            return "can not map %s yet"%(self.name)
 
         for f in func_ignore_list:
             if self.fullname.endswith(f):
                 return "manual ignore"
+
+        if renamed_funcs.get(self.identifier) == "-":
+            return "ignored by renamed table"
 
         if not self.rv_type():
             return "rv_header_type returns None. this is an error. (class not found ?)"
@@ -459,6 +560,7 @@ class FuncInfo(GeneralInfo):
 
     def gen_cpp_prelude(self):
         io = StringIO()
+        io.write("// %s\n"%(self.identifier))
         io.write("// parsed: %s\n"%(self.fullname))
         io.write("// as:     %s\n"%(self))
         for a in self.args:
@@ -472,22 +574,12 @@ class FuncInfo(GeneralInfo):
         return io.getvalue()
 
     def c_name(self):
-        if self.discriminator != 0:
-            suffix = "_%d"%(self.discriminator)
-        else:
-            suffix = ""
-        if self.ci == None:
-            return "cv_%s_%s%s"%(self.gen.module, self.overridename, suffix);
-        else:
-            return "cv_%s_%s_%s%s"%(self.gen.module, self.ci.nested_cname, self.overridename, suffix);
+        return "cv_%s_%s"%(self.gen.module, self.identifier.replace("::",""))
 
     def r_name(self):
-        if self.discriminator != 0:
-            suffix = "_%d"%(self.discriminator)
-        else:
-            suffix = ""
-        rname = renamed_funcs.get(self.c_name()) or ("new" if self.isconstructor() else self.overridename)
-        return rname + suffix
+        if renamed_funcs.get(self.identifier):
+            return renamed_funcs[self.identifier]
+        return "new" if self.isconstructor() else self.name
 
     # "const", "mut", or None
     def instance(self):
@@ -537,6 +629,7 @@ class FuncInfo(GeneralInfo):
 
         io = StringIO()
         io.write("/// %s\n"%(self))
+        io.write("// identifier: %s\n"%(self.identifier))
         for a in self.args:
             if a.defval != "":
                 io.write("/// * %s: default %s\n"%(a.rsname(), a.defval))
@@ -591,7 +684,7 @@ class ClassPropInfo():
 class ClassInfo(GeneralInfo):
     def __init__(self, gen, decl, namespaces=[]): # [ 'class/struct cname', ': base', [modlist] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
-        self.methods = {}
+        self.methods = []
         self.simple = self.is_ignored = self.is_ghost = False
         self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
@@ -633,10 +726,7 @@ class ClassInfo(GeneralInfo):
         return self.nested_cppname
 
     def add_method(self, fi):
-        if self.methods.get(fi.name) is None:
-            self.methods[fi.name] = []
-        fi.discriminator = len(self.methods[fi.name])
-        self.methods[fi.name].append(fi)
+        self.methods.append(fi)
 
     def getAllMethods(self):
         result = []
@@ -705,6 +795,7 @@ class TypeInfo:
         self.is_by_ptr = False
         self.is_by_value = False
         self.is_trait = False # FIXME
+        self.alias = "XX"
 
 class StringTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
@@ -713,6 +804,7 @@ class StringTypeInfo(TypeInfo):
         self.cpptype = "string"
         self.rtype = self.rctype = "*const ::libc::types::os::arch::c95::c_char"
         self.rrvtype = "String"
+        self.alias = "string"
 
     def __str__(self):
         return "string"
@@ -732,6 +824,7 @@ class PrimitiveTypeInfo(TypeInfo):
         self.ctype = primitives[typeid]["ctype"]
         self.cpptype = typeid
         self.rtype = self.rctype = self.rrvtype = primitives[typeid]["rtype"]
+        self.alias = typeid
 
     def __str__(self):
         return "Primitive(%s)"%(self.cpptype)
@@ -749,6 +842,7 @@ class SimpleClassTypeInfo(TypeInfo):
         self.rtype = self.rctype = self.rrvtype = typeid.replace("::","_")
         self.ctype = "struct_" + self.rctype
         self.is_trait = False
+        self.alias = self.rctype
 
     def __str__(self):
         return "%s (value)"%(self.cpptype)
@@ -764,6 +858,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.is_by_ptr = True
         self.is_trait = typeid in forced_trait_classes or self.ci.is_trait
         self.is_ignored = self.ci.is_ignored
+        self.alias = self.ci.name
 
     def __str__(self):
         return "%s (boxed)"%(self.typeid)
@@ -780,6 +875,7 @@ class VectorTypeInfo(TypeInfo):
             self.rctype = "*mut c_void"
             self.rtype = self.rrvtype = "VectorOf"+inner.rrvtype
             self.gen_template_wrapper_rust_struct()
+            self.alias = "VectorOf"+inner.alias
 
     def gen_template_wrapper_rust_struct(self):
         with open(self.gen.output_path+"/"+self.rtype+".type.rs", "w") as f:
@@ -872,6 +968,7 @@ class RawPtrTypeInfo(TypeInfo):
         TypeInfo.__init__(self,gen,typeid)
         self.inner = inner
         self.is_ignored = True
+        self.alias = inner.alias
 
     def __str__(self):
         return "RawPtr[%s]"%(self.inner)
@@ -927,8 +1024,6 @@ def parse_type(gen, typeid):
         return VectorTypeInfo(gen, typeid, inner)
     elif gen.get_value_struct(typeid):
         return SimpleClassTypeInfo(gen, gen.get_value_struct(typeid))
-    elif gen.class_is_ignored(typeid):
-        return IgnoredTypeInfo(gen,typeid)
     else:
         ci = gen.get_class(typeid)
         if ci:
@@ -951,7 +1046,7 @@ class RustWrapperGenerator(object):
         self.module = ""
         self.Module = ""
         self.classes = { }
-        self.functions = { };
+        self.functions = [];
         self.ported_func_list = []
         self.skipped_func_list = []
         self.consts = []
@@ -998,10 +1093,7 @@ class RustWrapperGenerator(object):
             FuncInfo(self, decl, namespaces=self.namespaces)
 
     def register_function(self, f):
-        if self.functions.get(f.cname) is None:
-            self.functions[f.cname] = []
-        f.discriminator = len(self.functions[f.cname])
-        self.functions[f.cname].append(f)
+        self.functions.append(f)
 
     def gen(self, srcfiles, module, output_path):
         parser = hdr_parser.CppHeaderParser()
@@ -1018,9 +1110,8 @@ class RustWrapperGenerator(object):
                 logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                 self.add_decl(decl)
 
-        if module in cross_modules_deps:
-            for d in cross_modules_deps[module]:
-                self.add_decl(d)
+        for d in cross_modules_deps:
+            self.add_decl(d)
 
         for hdr in srcfiles:
             decls = parser.parse(hdr, False)
@@ -1066,10 +1157,9 @@ class RustWrapperGenerator(object):
             if c.simple and not c.is_ignored:
                 self.gen_simple_class(c)
 
-        for fis in sorted(self.functions.values(), key=lambda fis: fis[0].fullname):
-            for fi in fis:
-                if not fi.is_ignored:
-                    self.gen_func(fi)
+        for fi in sorted(self.functions, key=lambda fi: fi.identifier):
+            if not fi.is_ignored:
+                self.gen_func(fi)
 
 #        if module in forced_boxed_classes:
 #            for cb in sorted(forced_boxed_classes[module]):
@@ -1385,17 +1475,15 @@ class RustWrapperGenerator(object):
         if t.is_trait:
             self.moduleSafeRust.write("pub trait %s {\n"%(ci.name))
             self.moduleSafeRust.write("  fn as_raw_ptr(&self) -> *mut c_void;\n")
-            for fis in ci.methods.values():
-                for fi in fis:
-                    self.gen_func(fi)
+            for fi in ci.methods:
+                self.gen_func(fi)
             self.moduleSafeRust.write("} // trait %s\n"%(ci.name))
         else:
             if isinstance(t, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.nested_cppname)
             self.moduleSafeRust.write("impl %s {\n\n"%(ci.name))
-            for fis in ci.methods.values():
-                for fi in fis:
-                    self.gen_func(fi)
+            for fi in ci.methods:
+                self.gen_func(fi)
             self.moduleSafeRust.write("}\n");
 
 if __name__ == "__main__":
