@@ -122,6 +122,11 @@ class_ignore_list = (
     "DescriptorCollection", "KeyPointCollection", # nested
 )
 
+remapped_types = {
+    "unsigned" : "uint",
+    "InputArray" : "cv::Mat",
+}
+
 func_ignore_list = (
     "cv.glob", "cv.fastFree", "cv.fastMalloc",
     "cv.getBuildInformation", "cv.scalarToRawData", "cv.noArray", "()", "cv.Mat.MSize.operator[]",
@@ -898,8 +903,8 @@ class UnknownTypeInfo(TypeInfo):
 
 def parse_type(gen, typeid):
     typeid = typeid.strip()
-    if typeid == "unsigned":
-        typeid = "uint"
+    if typeid in remapped_types:
+        typeid = remapped_types[typeid]
     typeid = typeid.replace("const ", "").replace("..", ".")
 #    if typeid.endswith("&"):
  #       return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
