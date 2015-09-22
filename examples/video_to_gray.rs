@@ -7,7 +7,7 @@ use opencv::imgproc;
 fn run() -> Result<(),String> {
     let window = "video capture";
     try!(highgui::named_window(window,1));
-    let mut cam = try!(highgui::VideoCapture::for_device(0));
+    let mut cam = try!(highgui::VideoCapture::device(1));
     loop {
         let mut frame = core::mat();
         try!(cam.read(&mut frame));

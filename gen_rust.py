@@ -16,20 +16,19 @@ else:
 
 ManualFuncs = {
     "core" : [
-         [ "class cv.Mat" , "", [], [] ],
-         [ "cv.Mat.Mat", "Mat", [], [] ],
-         [ "cv.Mat.Mat", "Mat", [],
-            [ [ "int", "rows" ], [ "int", "cols" ], [ "int" , "type" ] ] ],
-         [ "cv.Mat.depth", "int", ["/C"], [] ],
-         [ "cv.Mat.type", "int", ["/C"], [] ],
-         [ "cv.Mat.channels", "int", ["/C"], [] ],
+#         [ "cv.Mat.Mat", "Mat", [], [] ],
+#         [ "cv.Mat.Mat", "Mat", [],
+#            [ [ "int", "rows" ], [ "int", "cols" ], [ "int" , "type" ] ] ],
+#         [ "cv.Mat.depth", "int", ["/C"], [] ],
+#         [ "cv.Mat.type", "int", ["/C"], [] ],
+#         [ "cv.Mat.channels", "int", ["/C"], [] ],
          [ "cv.Mat.size", "Size", ["/C"], [] ],
-         [ "cv.Mat.elemSize", "size_t", ["/C"], [] ],
-         [ "cv.Mat.isContinuous", "bool", ["/C"], [] ],
-         [ "cv.Mat.clone", "Mat", ["/C"], [] ],
-         [ "cv.Mat.copyTo", "void", ["/C"], [["Mat", "OutputArray"]] ],
-         [ "cv.Mat.convertTo", "void", ["/C"], [ ["Mat", "OutputArray"], ["int", "rtype"], ["double", "scale"]] ],
-         [ "cv.Mat.ptr", "uchar*", ["/C"], [["int", "Row"]] ],
+#         [ "cv.Mat.elemSize", "size_t", ["/C"], [] ],
+#         [ "cv.Mat.isContinuous", "bool", ["/C"], [] ],
+#         [ "cv.Mat.clone", "Mat", ["/C"], [] ],
+#         [ "cv.Mat.copyTo", "void", ["/C"], [["Mat", "OutputArray"]] ],
+#         [ "cv.Mat.convertTo", "void", ["/C"], [ ["Mat", "OutputArray"], ["int", "rtype"], ["double", "scale"]] ],
+#         [ "cv.Mat.ptr", "uchar*", ["/C"], [["int", "Row"]] ],
     ]
 }
 
@@ -115,7 +114,7 @@ renamed_funcs = {
     "cv_min_Mat_src1_double_src2_Mat_dst": "min_mat",
     "cv_norm_InputArray_src1_InputArray_src2_int_normType_InputArray_mask": "norm_with_type",
     "cv_norm_InputArray_src1_int_normType_InputArray_mask": "norm",
-    "cv_rectangle_Mat_img_Point_pt1_Point_pt2_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle_new_points",
+    "cv_rectangle_Mat_img_Point_pt1_Point_pt2_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle_points",
     "cv_rectangle_Mat_img_Rect_rec_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle",
     "cv_repeat_InputArray_src_int_ny_int_nx_OutputArray_dst": "repeat_to",
     "cv_repeat_Mat_src_int_ny_int_nx": "repeat",
@@ -1155,11 +1154,6 @@ class RustWrapperGenerator(object):
         self.namespaces = parser.namespaces
         self.namespaces.add("cv")
 
-        if module in ManualFuncs:
-            for decl in ManualFuncs[self.module]:
-                logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
-                self.add_decl(decl)
-
         for d in cross_modules_deps:
             self.add_decl(d)
 
@@ -1173,6 +1167,12 @@ class RustWrapperGenerator(object):
             for decl in decls:
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
                 self.add_decl(decl)
+
+        if module in ManualFuncs:
+            for decl in ManualFuncs[self.module]:
+                logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
+                self.add_decl(decl)
+
 
         logging.info("\n\n===== Generating... =====")
         self.moduleCppTypes = StringIO()
@@ -1432,7 +1432,7 @@ class RustWrapperGenerator(object):
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct struct_%s {\n"%(c.replace("::","_")))
         self.moduleSafeRust.write("// manually defined value struct %s\n"%(c.split("::")[-1]))
-        self.moduleSafeRust.write("#[repr(C)]#[derive(Debug,PartialEq)]\npub struct %s {\n"%(c.split("::")[-1]))
+        self.moduleSafeRust.write("#[repr(C)]#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s {\n"%(c.split("::")[-1]))
         for field in value_struct_types[c]:
             self.gen_value_struct_field(field[0], field[1])
         self.moduleCppTypes.write("} struct_%s;\n\n"%(c.replace("::", "_")))
@@ -1441,7 +1441,7 @@ class RustWrapperGenerator(object):
     def gen_simple_class(self,ci):
         self.moduleCppTypes.write("typedef struct struct_%s {\n"%(ci.nested_cname))
         self.moduleSafeRust.write("// simple class from headers %s\n"%(ci))
-        self.moduleSafeRust.write("#[repr(C)]#[derive(Debug,PartialEq)] pub struct %s {\n"%(ci.nested_cname))
+        self.moduleSafeRust.write("#[repr(C)]#[derive(Copy,Clone,Debug,PartialEq)] pub struct %s {\n"%(ci.nested_cname))
         for p in ci.props:
             self.gen_value_struct_field(p.name, p.ctype)
         self.moduleSafeRust.write("}\n")
