@@ -16,19 +16,7 @@ else:
 
 ManualFuncs = {
     "core" : [
-#         [ "cv.Mat.Mat", "Mat", [], [] ],
-#         [ "cv.Mat.Mat", "Mat", [],
-#            [ [ "int", "rows" ], [ "int", "cols" ], [ "int" , "type" ] ] ],
-#         [ "cv.Mat.depth", "int", ["/C"], [] ],
-#         [ "cv.Mat.type", "int", ["/C"], [] ],
-#         [ "cv.Mat.channels", "int", ["/C"], [] ],
          [ "cv.Mat.size", "Size", ["/C"], [] ],
-#         [ "cv.Mat.elemSize", "size_t", ["/C"], [] ],
-#         [ "cv.Mat.isContinuous", "bool", ["/C"], [] ],
-#         [ "cv.Mat.clone", "Mat", ["/C"], [] ],
-#         [ "cv.Mat.copyTo", "void", ["/C"], [["Mat", "OutputArray"]] ],
-#         [ "cv.Mat.convertTo", "void", ["/C"], [ ["Mat", "OutputArray"], ["int", "rtype"], ["double", "scale"]] ],
-#         [ "cv.Mat.ptr", "uchar*", ["/C"], [["int", "Row"]] ],
     ]
 }
 
