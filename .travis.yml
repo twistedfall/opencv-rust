@@ -36,9 +36,9 @@ before_script:
   - pwd
   - "if [ ! -e /tmp/opencv ] ; then cd /tmp ; wget https://github.com/Itseez/opencv/archive/2.4.11.zip ; unzip 2.4.11.zip ; mv opencv-2.4.11 opencv ; cd /tmp/opencv ; mkdir release install; cd release ; cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/install .. ; make install ; fi"
   - cd /home/travis/build/kali/opencv-rust
+  - tree /tmp/opencv/
   - pkg-config --cflags opencv
   - pkg-config --libs opencv
-  - tree /tmp/opencv/
 
 cache:
   directories:
