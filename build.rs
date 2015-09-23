@@ -13,7 +13,7 @@ use std::io::Write;
 fn main() {
     let out_dir = std::env::var("OUT_DIR").unwrap();
 
-    let opencv = pkg_config::Config::new().find("opencv").unwrap();
+    let opencv = pkg_config::Config::new().statik(true).find("opencv").unwrap();
     let mut search_paths = opencv.include_paths.clone();
     search_paths.push(PathBuf::from("/usr/include"));
     let search_opencv = search_paths.iter().map( |p| {
@@ -28,6 +28,7 @@ fn main() {
     println!("Generating code in {:?}", out_dir);
 
     let mut gcc = gcc::Config::new();
+    gcc.flag("-std=c++11");
     for path in opencv.include_paths {
         gcc.include(path);
     }
@@ -104,8 +105,9 @@ fn main() {
     }
 
     gcc.cpp(true).include(".").include(&out_dir)
-        .flag("-Wno-c++11-extensions")
-        .compile("libocvrs.a");
+        .flag("-Wno-c++11-extensions");
+
+    gcc.compile("libocvrs.a");
 
     for ref module in &modules {
         let e = Command::new("sh").current_dir(&out_dir).arg("-c").arg(
