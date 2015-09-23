@@ -30,10 +30,8 @@ fn main() {
         gcc.include(path);
     }
 
-    for pat in vec!["/*.type.rs","/*.type.h","/*.rv.rs"] {
-        for entry in glob(&(out_dir.clone() + pat)).unwrap() {
-            fs::remove_file(entry.unwrap()).unwrap()
-        }
+    for entry in glob(&(out_dir.clone() + "/*")).unwrap() {
+        fs::remove_file(entry.unwrap()).unwrap()
     }
 
     let modules = vec![
@@ -52,6 +50,15 @@ fn main() {
         ("objdetect", vec![ "objdetect/objdetect.hpp" ]),
         ("calib3d", vec![ "calib3d/calib3d.hpp"])
     ];
+
+    let mut types = PathBuf::from(&out_dir);
+    types.push("common_opencv.h");
+    {
+        let mut types = File::create(types).unwrap();
+        for ref m in modules.iter() {
+            write!(&mut types, "#include <opencv2/{}/{}.hpp>\n", m.0, m.0).unwrap();
+        }
+    }
 
     let mut types = PathBuf::from(&out_dir);
     types.push("types.h");
@@ -115,46 +122,22 @@ fn main() {
     {
         let mut hub = File::create(hub_filename).unwrap();
         for ref module in &modules {
-            let mut m = PathBuf::from("src");
-            m.push(module.0);
-            m.set_extension("rs");
-            if ! fs::metadata(m.as_path()).is_ok() {
-                writeln!(&mut hub, r#"  pub use sys::{};"#, module.0).unwrap();
-            }
-        }
-        writeln!(&mut hub, "pub mod sys {{").unwrap();
-        for ref module in &modules {
-            writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
-        }
-        writeln!(&mut hub, "  pub mod types {{").unwrap();
-        writeln!(&mut hub, "    use libc::types::common::c95::c_void;").unwrap();
-        for ref module in &modules {
-            writeln!(&mut hub, "    use sys::{}::*;", module.0).unwrap();
+            writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
         }
         for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
-            writeln!(&mut hub, r#"    include!(concat!(env!("OUT_DIR"), "/{}"));"#,
+            writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
         }
-        writeln!(&mut hub, "  }}\n").unwrap();
-        writeln!(&mut hub, "}}\n").unwrap();
-        writeln!(&mut hub, "pub mod rv {{").unwrap();
-        writeln!(&mut hub, "  use libc::types::common::c95::c_void;").unwrap();
-        writeln!(&mut hub, "  use sys::types::*;").unwrap();
-        for ref module in &modules {
-            writeln!(&mut hub, "  use sys::{}::*;", module.0).unwrap();
-        }
+        writeln!(&mut hub, "pub mod sys {{").unwrap();
+        writeln!(&mut hub, "  use libc::{{ c_void, c_char, size_t }};").unwrap();
         for entry in glob(&(out_dir.clone() + "/*.rv.rs")).unwrap() {
             writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
         }
-        writeln!(&mut hub, "}}\n").unwrap();
-        writeln!(&mut hub, r#"use sys::types::*;"#).unwrap();
-        writeln!(&mut hub, r#"use rv::*;"#).unwrap();
-        writeln!(&mut hub, r#"use libc::types::common::c95::c_void;"#).unwrap();
         for ref module in &modules {
-            writeln!(&mut hub, r#"use sys::{}::*;"#, module.0).unwrap();
-            writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.externs.rs"));"#, module.0).unwrap();
+            writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}.externs.rs"));"#, module.0).unwrap();
         }
+        writeln!(&mut hub, "}}\n").unwrap();
     }
     println!("cargo:rustc-link-lib=ocvrs");
 }

@@ -2,7 +2,13 @@
 #![allow(non_upper_case_globals,overflowing_literals)]
 #![allow(non_camel_case_types)]
 extern crate libc;
-pub mod core;
+
+use std::ffi::{ CStr, CString };
+use libc::{ c_void, c_char, size_t };
+
+pub fn mat() -> ::Mat {
+    ::Mat::new().unwrap()
+}
 
 include!(concat!(env!("OUT_DIR"), "/hub.rs"));
 

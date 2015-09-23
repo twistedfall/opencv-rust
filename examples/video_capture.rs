@@ -1,19 +1,16 @@
-extern crate opencv;
-
-use opencv::core;
-use opencv::highgui;
+extern crate opencv as cv;
 
 fn run() -> Result<(),String> {
     let window = "video capture";
-    try!(highgui::named_window(window,1));
-    let mut cam = try!(highgui::VideoCapture::device(1));
+    try!(cv::named_window(window,1));
+    let mut cam = try!(cv::VideoCapture::device(1));
     loop {
-        let mut frame = core::mat();
+        let mut frame = try!(cv::Mat::new());
         try!(cam.read(&mut frame));
         if try!(frame.size()).width > 0 {
-            try!(highgui::imshow(window, &mut frame));
+            try!(cv::imshow(window, &mut frame));
         }
-        if try!(highgui::wait_key(10)) > 0 {
+        if try!(cv::wait_key(10)) > 0 {
             break;
         }
     }
