@@ -1,4 +1,4 @@
-language:rust
+language: rust
 
 before_install:
   - sudo apt-get update -qq
