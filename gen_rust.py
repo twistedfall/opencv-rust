@@ -616,14 +616,14 @@ class FuncInfo(GeneralInfo):
                 call_args.append("self")
             else:
                 args.append("&self")
-                call_args.append("self.as_raw_ptr()")
+                call_args.append("self.as_raw_%s()"%(self.ci.type_info().rust_local))
         elif self.mutability() == "mut":
             if self.ci.type_info().is_by_value:
                 args.append("self")
                 call_args.append("self")
             else:
                 args.append("&mut self")
-                call_args.append("self.as_raw_ptr()")
+                call_args.append("self.as_raw_%s()"%(self.ci.type_info().rust_local))
 
         for a in self.args:
             if isinstance(a.type,StringTypeInfo):
@@ -636,7 +636,7 @@ class FuncInfo(GeneralInfo):
                 args.append(a.rsname() + ":& " + a.type.rust_full)
 
             if isinstance(a.type, BoxedClassTypeInfo) or a.type.is_by_ptr:
-                call_args.append("%s.as_raw_ptr()"%(a.rsname()))
+                call_args.append("%s.as_raw_%s()"%(a.rsname(), a.type.rust_local))
             elif isinstance(a.type,StringTypeInfo):
                 call_args.append("CString::new(%s).unwrap().as_ptr()"%(a.rsname()))
             else:
@@ -932,7 +932,7 @@ class VectorTypeInfo(TypeInfo):
                     pub fn len(&self) -> i32 {
                         unsafe { return cv_${sane}_len(self.ptr); }
                     }
-                    pub unsafe fn as_raw_ptr(&self) -> *mut c_void {
+                    pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
                         self.ptr
                     }
                 }
@@ -990,7 +990,7 @@ class SmartPtrTypeInfo(TypeInfo):
                     pub ptr: *mut c_void
                 }
                 impl $rust_local {
-                    pub unsafe fn as_raw_ptr(&self) -> *mut c_void {
+                    pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
                         self.ptr
                     }
                 }\n""").substitute(rust_local=self.rust_local, output_rust_local=self.inner.rust_local))
@@ -1508,22 +1508,31 @@ class RustWrapperGenerator(object):
                 }
             }
             impl $rust_local {
-                pub fn as_raw_ptr(&self) -> *mut c_void { self.ptr }
+                pub fn as_raw_$rust_local(&self) -> *mut c_void { self.ptr }
             }
             """).substitute(typ.__dict__))
 
-        if len(ci.bases):
-            for base in ci.bases:
-                cibase = self.get_class(base).type_info()
-                self.moduleSafeRust.write(template("""
-                    impl $base for $rust_name {
-                        fn as_raw_ptr(&self) -> *mut c_void { self.ptr }
-                    }
-                """).substitute(rust_name=typ.rust_local, base=cibase.rust_local))
+        bases = self.all_bases(name)
+        for base in bases:
+            cibase = self.get_class(base).type_info()
+            self.moduleSafeRust.write(template("""
+                impl $base for $rust_name {
+                    fn as_raw_$base(&self) -> *mut c_void { self.ptr }
+                }
+            """).substitute(rust_name=typ.rust_local, base=cibase.rust_local))
 
     def gen_nested_class_decl(self, ci):
         pass
         #self.moduleCppCode.write("class %s;\n"%(ci.nested_cname));
+
+    # all your bases...
+    def all_bases(self, name):
+        bases = set()
+        ci = self.get_class(name)
+        for b in ci.bases:
+            bases.add(b)
+            bases = bases.union(self.all_bases(b))
+        return bases
 
     def gen_class(self, ci):
         if ci.is_ignored:
@@ -1537,12 +1546,26 @@ class RustWrapperGenerator(object):
             logging.info("Not namespaced. Skipped %s", ci)
             return
         if t.is_trait:
+            if len(ci.bases):
+                bases = map(lambda b: self.get_type_info(b).rust_local, ci.bases)
+                bases = " : " + " + ".join(bases)
+            else:
+                bases = ""
             logging.info("Generating impl for trait %s", ci)
-            self.moduleSafeRust.write("pub trait %s {\n"%(t.rust_local))
-            self.moduleSafeRust.write("  fn as_raw_ptr(&self) -> *mut c_void;\n")
+            self.moduleSafeRust.write("// Generating impl for trait %s\n"%(ci))
+            self.moduleSafeRust.write("pub trait %s%s {\n"%(t.rust_local, bases))
+            self.moduleSafeRust.write("  fn as_raw_%s(&self) -> *mut c_void;\n"%(t.rust_local))
             for fi in ci.methods:
                 self.gen_func(fi)
-            self.moduleSafeRust.write("}");
+            self.moduleSafeRust.write("}\n\n");
+#            if len(ci.bases):
+#                for base in ci.bases:
+#                    cibase = self.get_class(base).type_info()
+#                    self.moduleSafeRust.write(template("""
+#                        impl $base for $rust_name {
+#                            fn as_raw_ptr(&self) -> *mut c_void { self.as_row_ptr() }
+#                        }
+#                    """).substitute(rust_name=t.rust_local, base=cibase.rust_local))
         else:
             logging.info("Generating box for struct %s", ci)
             if isinstance(t, BoxedClassTypeInfo):

@@ -1,5 +1,7 @@
 extern crate opencv as cv;
 
+use cv::FeatureDetector;
+
 fn run() -> Result<(),String> {
     let window = "video capture";
     try!(cv::named_window(window,1));
@@ -15,7 +17,7 @@ fn run() -> Result<(),String> {
             let mut kps = cv::VectorOfKeyPoint::new();
             let mut desc = try!(cv::Mat::new());
             let mask = try!(cv::Mat::new());
-            try!(orb.detect(&gray, &mask, &mut kps, &mut desc, false));
+//            try!(orb.detect_and_compute(&gray, &mask, &mut kps, &mut desc, false));
             let mut display = try!(cv::Mat::new());
             try!(cv::draw_keypoints(&gray, &kps, &mut display,
                 cv::Scalar { data:[-1f64;4] }, cv::DrawMatchesFlags_DEFAULT));
