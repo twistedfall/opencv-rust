@@ -144,5 +144,4 @@ fn main() {
         writeln!(&mut hub, "}}\n").unwrap();
     }
     println!("cargo:rustc-link-lib=ocvrs");
-    panic!();
 }
