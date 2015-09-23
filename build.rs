@@ -13,7 +13,7 @@ use std::io::Write;
 fn main() {
     let out_dir = std::env::var("OUT_DIR").unwrap();
 
-    let opencv = pkg_config::Config::new().statik(true).find("opencv").unwrap();
+    let opencv = pkg_config::Config::new().find("opencv").unwrap();
     let mut search_paths = opencv.include_paths.clone();
     search_paths.push(PathBuf::from("/usr/include"));
     let search_opencv = search_paths.iter().map( |p| {
@@ -144,4 +144,5 @@ fn main() {
         writeln!(&mut hub, "}}\n").unwrap();
     }
     println!("cargo:rustc-link-lib=ocvrs");
+    panic!();
 }
