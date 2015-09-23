@@ -25,10 +25,15 @@ addons:
       - libjasper-dev
       - libdc1394-22-dev
       - tree
+      - clang
+
+env:
+  CXX: clang
+  CC: clang
 
 before_script:
-  - cd /tmp ; wget https://github.com/Itseez/opencv/archive/2.4.11.zip ; unzip 2.4.11.zip ; mv opencv-2.4.11 opencv
-  - cd /tmp/opencv ; mkdir release ; cd release ; cmake -D CMAKE_BUILD_TYPE=RELEASE .. ; make -j ; tree .
+  - "cd /tmp ; wget https://github.com/Itseez/opencv/archive/2.4.11.zip ; unzip 2.4.11.zip ; mv opencv-2.4.11 opencv"
+  - "cd /tmp/opencv ; mkdir release ; cd release ; cmake -D CMAKE_BUILD_TYPE=RELEASE .. ; make -j && tree ."
 
 rust:
   - stable
