@@ -30,10 +30,15 @@ addons:
 env:
   CXX: clang
   CC: clang
+  PKG_CONFIG_PATH: /tmp/opencv/release/unix-install
 
 before_script:
+  - pushd
   - "cd /tmp ; wget https://github.com/Itseez/opencv/archive/2.4.11.zip ; unzip 2.4.11.zip ; mv opencv-2.4.11 opencv"
   - "cd /tmp/opencv ; mkdir release install; cd release ; cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/install .. ; make install ; tree"
+  - pkg-config --cflags opencv
+  - pkg-config --libs opencv
+  - popd
 
 rust:
   - stable
