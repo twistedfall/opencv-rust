@@ -2,7 +2,8 @@ language: rust
 
 before_install:
   - sudo apt-get update -qq
-  - sudo apt-get install -y libopencv-dev
+  - sudo apt-get install -y curl sudo build-essential wget unzip
+  - curl https://raw.githubusercontent.com/jayrambhia/Install-OpenCV/master/Ubuntu/2.4/opencv2_4_10.sh | sh
 
 rust:
   - stable
