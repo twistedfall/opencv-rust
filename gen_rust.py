@@ -1390,13 +1390,19 @@ class RustWrapperGenerator(object):
         if fi.type.ctype == "void":
             self.moduleCppCode.write("    return { msg };\n");
         else:
-            self.moduleCppCode.write("    return { msg, 0 };\n");
+            self.moduleCppCode.write("    struct cv_return_value_%s ret;\n"%(fi.rv_type().c_sane));
+            self.moduleCppCode.write("    memset(&ret, 0x00, sizeof(ret));\n");
+            self.moduleCppCode.write("    ret.error_msg = msg;\n");
+            self.moduleCppCode.write("    return ret;\n");
         self.moduleCppCode.write("} catch (...) {\n");
         self.moduleCppCode.write("    char* msg = strdup(\"unspecified error in OpenCV guts\");\n");
         if fi.type.ctype == "void":
             self.moduleCppCode.write("    return { msg };\n");
         else:
-            self.moduleCppCode.write("    return { msg, 0 };\n");
+            self.moduleCppCode.write("    struct cv_return_value_%s ret;\n"%(fi.rv_type().c_sane));
+            self.moduleCppCode.write("    memset(&ret, 0x00, sizeof(ret));\n");
+            self.moduleCppCode.write("    ret.error_msg = msg;\n");
+            self.moduleCppCode.write("    return ret;\n");
         self.moduleCppCode.write("}\n");
 
         self.moduleCppCode.write("}\n\n");

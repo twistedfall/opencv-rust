@@ -25,19 +25,30 @@ addons:
       - libjasper-dev
       - libdc1394-22-dev
       - tree
-      - clang
 
 env:
-  CXX: clang
-  CC: clang
-  PKG_CONFIG_PATH: /tmp/opencv/release/unix-install
+  matrix:
+    - CV=2.4.11
 
 before_script:
-  - "if [ ! -e /tmp/opencv/install ] ; then cd /tmp ; rm -rf opencv ; wget https://github.com/Itseez/opencv/archive/2.4.11.zip ; unzip -q 2.4.11.zip ; mv opencv-2.4.11 opencv ; cd /tmp/opencv ; mkdir release install; cd release ; cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/install .. ; make install ; fi"
+  - |
+    if [ ! -e /tmp/opencv/opencv-$CV/release/unix-install ]
+    then
+      cd /tmp/opencv
+      rm -rf opencv-$CV
+      wget https://github.com/Itseez/opencv/archive/$CV.zip
+      unzip -q $CV.zip
+      cd opencv-$CV
+      mkdir release install
+      cd release
+      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install ..
+      make install
+    fi
   - cd /home/travis/build/kali/opencv-rust
-  - tree /tmp/opencv/
+  - export PKG_CONFIG_PATH=/tmp/opencv/opencv-$CV/release/unix-install
   - pkg-config --cflags opencv
   - pkg-config --libs opencv
+  - gcc --version
 
 cache:
   directories:
@@ -51,3 +62,6 @@ rust:
 matrix:
   allow_failures:
     - rust: nightly
+#  include:
+#    - rust: stable
+#      env: CV=2.4.10

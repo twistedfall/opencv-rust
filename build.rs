@@ -28,7 +28,7 @@ fn main() {
     println!("Generating code in {:?}", out_dir);
 
     let mut gcc = gcc::Config::new();
-    gcc.flag("-std=c++11");
+    gcc.flag("-std=c++0x");
     for path in opencv.include_paths {
         gcc.include(path);
     }
@@ -111,7 +111,7 @@ fn main() {
 
     for ref module in &modules {
         let e = Command::new("sh").current_dir(&out_dir).arg("-c").arg(
-            format!("g++ `pkg-config --cflags --libs opencv` {}.consts.cpp -o {}.consts",
+            format!("g++ {}.consts.cpp -o {}.consts `pkg-config --cflags --libs opencv`",
                 module.0, module.0)
         ).status().unwrap();
         assert!(e.success());
