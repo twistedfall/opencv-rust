@@ -53,7 +53,7 @@ before_script:
 after_success:
   - echo $TRAVIS_RUST_VERSION
   - |
-    if [ "$CV" = 2.4.11 -a "TRAVIS_RUST_VERSION" = "stable" ]
+    if [ "$CV" = 2.4.11 -a "$TRAVIS_RUST_VERSION" = "stable" ]
     then
       cargo doc
       curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
