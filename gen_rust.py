@@ -605,7 +605,7 @@ class FuncInfo(GeneralInfo):
         for a in self.args:
             args.append(a.rsname() + ": " + a.type.rust_extern)
 
-        return "pub fn %s(%s) -> %s;\n"%(self.c_name(), ", ".join(args), rust_extern_rs)
+        return "#[doc(hidden)] pub fn %s(%s) -> %s;\n"%(self.c_name(), ", ".join(args), rust_extern_rs)
 
     def gen_safe_rust(self):
         args = []
