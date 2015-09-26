@@ -659,7 +659,7 @@ class FuncInfo(GeneralInfo):
         for a in self.args:
             if a.defval != "":
                 if first:
-                    io.write("/// default value for arguments:\n")
+                    io.write("///\n/// default value for arguments:\n")
                 io.write("///   - %s: default %s\n"%(a.rsname(), a.defval))
                 first = False
         io.write("%sfn %s(%s) -> Result<%s,String> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
@@ -718,6 +718,10 @@ class ClassInfo(GeneralInfo):
         self.is_simple = self.is_ignored = self.is_ghost = False
         self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
+        if len(decl) > 4:
+            self.comment = decl[4].encode("ascii", "ignore")
+        else:
+            self.comment = ""
         for m in decl[2]:
             if m == "/Simple" or m == "/Map" :
                 self.is_simple = True
@@ -1017,6 +1021,7 @@ class SmartPtrTypeInfo(TypeInfo):
 
     def gen_template_wrapper_rust_struct(self):
         with open(self.gen.output_path+"/"+self.rust_local+".type.rs", "w") as f:
+            f.write(re.sub("^", "/// ", self.gen.get_class(self.cpptype).comment.strip(), 0, re.M)+"\n")
             f.write(template("""
                 // safe rust wrapper for $rust_local
                 #[allow(dead_code)]
@@ -1481,11 +1486,15 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write("}\n\n")
 
     def gen_simple_class(self,ci):
-        self.moduleCppTypes.write("typedef struct %s {\n"%(ci.type_info().c_sane))
+        if len(ci.comment):
+            self.moduleSafeRust.write(re.sub("^", "/// ", ci.comment.strip(), 0, re.M)+"\n")
+        else:
+            self.moduleSafeRust.write("/// " + ci.classname+"\n")
         self.moduleSafeRust.write("#[repr(C)]\n#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s {\n"%(ci.type_info().rust_local))
+        self.moduleCppTypes.write("typedef struct %s {\n"%(ci.type_info().c_sane))
         for p in ci.props:
             self.gen_value_struct_field(p.name, p.ctype)
-        self.moduleSafeRust.write("}\n")
+        self.moduleSafeRust.write("}\n\n")
         self.moduleCppTypes.write("} %s;\n\n"%(ci.type_info().c_sane))
 
     def gen_c_return_value_type(self, typ):
