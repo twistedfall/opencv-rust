@@ -126,13 +126,13 @@ fn main() {
     {
         let mut hub = File::create(hub_filename).unwrap();
         for ref module in &modules {
-            writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}.rs"));"#, module.0).unwrap();
+            writeln!(&mut hub, r#"pub mod {};"#, module.0).unwrap();
         }
         for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
             writeln!(&mut hub, r#"include!(concat!(env!("OUT_DIR"), "/{}"));"#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()).unwrap();
         }
-        writeln!(&mut hub, "pub mod sys {{").unwrap();
+        writeln!(&mut hub, "#[doc(hidden)] pub mod sys {{").unwrap();
         writeln!(&mut hub, "  use libc::{{ c_void, c_char, size_t }};").unwrap();
         for entry in glob(&(out_dir.clone() + "/*.rv.rs")).unwrap() {
             writeln!(&mut hub, r#"  include!(concat!(env!("OUT_DIR"), "/{}"));"#,

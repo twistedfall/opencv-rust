@@ -6,9 +6,9 @@ extern crate libc;
 use std::ffi::{ CStr, CString };
 use libc::{ c_void, c_char, size_t };
 
-pub fn mat() -> ::Mat {
-    ::Mat::new().unwrap()
-}
-
 include!(concat!(env!("OUT_DIR"), "/hub.rs"));
+
+pub fn mat() -> ::core::Mat {
+    ::core::Mat::new().unwrap()
+}
 
