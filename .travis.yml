@@ -50,6 +50,10 @@ before_script:
   - pkg-config --libs opencv
   - gcc --version
 
+after_success:
+  - cargo doc
+  - curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
+
 cache:
   directories:
     - /tmp/opencv
