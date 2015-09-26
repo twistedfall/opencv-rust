@@ -10,12 +10,14 @@ fn test_primitives() {
     assert!(freq > 1000f64);
     let cpus = core::get_number_of_cp_us().unwrap();
     assert!(cpus > 0);
+/*
     core::set_use_optimized(true).unwrap();
     let optims = core::use_optimized().unwrap();
     assert!(optims);
     core::set_use_optimized(false).unwrap();
     let optims = core::use_optimized().unwrap();
     assert!(!optims);
+*/
 }
 
 #[test]
