@@ -652,11 +652,16 @@ class FuncInfo(GeneralInfo):
         pub = "" if self.ci and self.ci.type_info().is_trait else "pub "
 
         io = StringIO()
-        io.write("/// %s\n"%(self.comment))
         io.write("// identifier: %s\n"%(self.identifier))
+        if len(self.comment):
+            io.write(re.sub("^", "/// ", self.comment.strip(), 0, re.M)+"\n")
+        first = True
         for a in self.args:
             if a.defval != "":
-                io.write("/// * %s: default %s\n"%(a.rsname(), a.defval))
+                if first:
+                    io.write("/// default value for arguments:\n")
+                io.write("///   - %s: default %s\n"%(a.rsname(), a.defval))
+                first = False
         io.write("%sfn %s(%s) -> Result<%s,String> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
         io.write("  unsafe {\n")
         io.write("    let rv = ::sys::%s(%s);\n"%(self.c_name(), ", ".join(call_args)))
