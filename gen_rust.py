@@ -481,6 +481,11 @@ class FuncInfo(GeneralInfo):
 
         self.identifier = self.fullname.replace("::", "_")
 
+        if len(decl) > 4:
+            self.comment = decl[4].encode("ascii", "ignore")
+        else:
+            self.comment = ""
+
         self.args = []
         for a in decl[3]:
             ai = ArgInfo(gen, a)
@@ -647,7 +652,7 @@ class FuncInfo(GeneralInfo):
         pub = "" if self.ci and self.ci.type_info().is_trait else "pub "
 
         io = StringIO()
-        io.write("/// %s\n"%(self))
+        io.write("/// %s\n"%(self.comment))
         io.write("// identifier: %s\n"%(self.identifier))
         for a in self.args:
             if a.defval != "":

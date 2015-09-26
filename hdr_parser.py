@@ -300,7 +300,8 @@ class CppHeaderParser(object):
             apos = fdecl.find("(", apos+1)
 
         fname = "cv." + fname.replace("::", ".")
-        decl = [fname, rettype, [], []]
+        decl = [fname, rettype, [], [], self.comment]
+        self.comment = ""
 
         # inline constructor implementation
         implmatch = re.match(r"(\(.*?\))\s*:\s*(\w+\(.*?\),?\s*)+", fdecl[apos:])
@@ -566,7 +567,9 @@ class CppHeaderParser(object):
 
         func_modlist.append("/NW")
 
-        return [funcname, rettype, func_modlist, args]
+        comment = self.comment
+        self.comment = ""
+        return [funcname, rettype, func_modlist, args, comment]
 
     def get_dotted_name(self, name):
         """
@@ -757,6 +760,8 @@ class CppHeaderParser(object):
         self.lineno = 0
         self.wrap_mode = wmode
 
+        self.comment = ""
+
         for l0 in linelist:
             self.lineno += 1
             #print self.lineno
@@ -787,10 +792,15 @@ class CppHeaderParser(object):
                 sys.exit(-1)
 
             while 1:
-                token, pos = self.find_next_token(l, [";", "\"", "{", "}", "//", "/*"])
+                token, pos = self.find_next_token(l, [";", "\"", "{", "}", "//!", "//", "/*"])
 
                 if not token:
                     block_head += " " + l
+                    break
+
+                if token == "//!":
+                    block_head += " " + l[:pos]
+                    self.comment = l[pos+3:]
                     break
 
                 if token == "//":
