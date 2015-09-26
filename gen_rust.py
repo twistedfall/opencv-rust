@@ -932,7 +932,7 @@ class VectorTypeInfo(TypeInfo):
             self.c_sane = "void_X"
             self.cpptype = "vector<%s >"%(inner.cpptype)
             self.sane = self.rust_local = "VectorOf"+inner.sane
-            self.rust_full = "::" + self.rust_local
+            self.rust_full = "::types::" + self.rust_local
             self.rust_extern = "*mut c_void"
             self.inner_rust_full = inner.rust_full
             self.gen_template_wrapper_rust_struct()
@@ -1002,7 +1002,7 @@ class SmartPtrTypeInfo(TypeInfo):
             self.rust_extern = "*mut c_void"
             self.cpptype = self.inner.cpptype
             self.rust_local = self.sane = "PtrOf" + inner.sane
-            self.rust_full = "::" + self.rust_local
+            self.rust_full = "::types::" + self.rust_local
             self.gen_template_wrapper_rust_struct()
 
     def gen_template_wrapper_rust_struct(self):

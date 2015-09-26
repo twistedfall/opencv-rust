@@ -22,7 +22,7 @@ fn run() -> Result<(),String> {
         let mut reduced = try!(core::Mat::new());
         try!(imgproc::resize(&gray, &mut reduced, core::Size{width:0,height:0},
             0.25f64, 0.25f64, imgproc::INTER_LINEAR));
-        let mut faces = ::opencv::VectorOfRect::new();
+        let mut faces = ::opencv::types::VectorOfRect::new();
         try!(face.detect_multi_scale(&reduced, &mut faces, 1.1, 2,
             objdetect::CV_HAAR_SCALE_IMAGE,
             core::Size{ width:30, height:30 },

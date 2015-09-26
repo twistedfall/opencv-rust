@@ -18,7 +18,7 @@ fn run() -> Result<(),String> {
         if try!(frame.size()).width > 0 {
             let mut gray = try!(core::Mat::new());
             try!(imgproc::cvt_color(&frame, &mut gray, imgproc::CV_BGR2GRAY, 0));
-            let mut kps = opencv::VectorOfKeyPoint::new();
+            let mut kps = opencv::types::VectorOfKeyPoint::new();
             let mut desc = try!(core::Mat::new());
             let mask = try!(core::Mat::new());
 //            try!(orb.detect_and_compute(&gray, &mask, &mut kps, &mut desc, false));
