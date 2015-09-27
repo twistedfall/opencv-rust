@@ -68,3 +68,5 @@ the OpenCV generators, but is now so far from the initial stuff that I
 consider it an original work. 
 
 The license for the original work is [WTFPL](http://www.wtfpl.net/).
+
+Special thanks to [ttacon](https://github.com/ttacon) for yielding the crate name.
