@@ -1,6 +1,11 @@
 [package]
-
 name = "opencv"
+description = "Rust bindings for OpenCV"
+documentation = "http://www.poumeyrol.fr/doc/opencv-rust/opencv/index.html"
+repository = "https://github.com/kali/opencv-rust"
+readme = "README.md"
+keywords = [ "opencv", "vision" ]
+license = "WTFPL"
 version = "0.0.1"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 build = "build.rs"
