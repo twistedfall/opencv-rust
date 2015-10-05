@@ -19,9 +19,9 @@ fn run() -> Result<(),String> {
             let mut gray = try!(core::Mat::new());
             try!(imgproc::cvt_color(&frame, &mut gray, imgproc::CV_BGR2GRAY, 0));
             let mut kps = opencv::types::VectorOfKeyPoint::new();
-            let mut desc = try!(core::Mat::new());
+//            let mut desc = try!(core::Mat::new());
             let mask = try!(core::Mat::new());
-//            try!(orb.detect_and_compute(&gray, &mask, &mut kps, &mut desc, false));
+            try!(orb.detect(&gray, &mut kps, &mask));
             let mut display = try!(core::Mat::new());
             try!(features2d::draw_keypoints(&gray, &kps, &mut display,
                 core::Scalar { data:[-1f64;4] }, features2d::DrawMatchesFlags_DEFAULT));
