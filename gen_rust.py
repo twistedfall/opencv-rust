@@ -490,7 +490,7 @@ class FuncInfo(GeneralInfo):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self._r_name = None
 
-        if self.classname:
+        if self.classname and not self.classname.startswith("operator"):
             self.ci = gen.get_class(self.classname)
             if not self.ci:
                 raise NameError("class not found: " + self.classname)
@@ -536,7 +536,7 @@ class FuncInfo(GeneralInfo):
             logging.info("ignore destructor %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
 
-        if self.name.startswith("operator"):
+        if self.name.startswith("operator") or self.fullname.startswith("operator "):
             logging.info("ignore %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
 

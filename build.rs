@@ -52,6 +52,7 @@ fn main() {
         fs::remove_file(entry.unwrap()).unwrap()
     }
 
+/*
     let modules = vec![
         ("core", vec!["core/types_c.h", "core/core.hpp"]), // utility, base
         (
@@ -84,13 +85,27 @@ fn main() {
         ("objdetect", vec!["objdetect/objdetect.hpp"]),
         ("calib3d", vec!["calib3d/calib3d.hpp"]),
     ];
+*/
+
+    let opencv_path_as_string = actual_opencv.to_str().unwrap().to_string();
+    let modules = glob(&(opencv_path_as_string.clone()+"/*.hpp")).unwrap().map(|entry| {
+        let entry = entry.unwrap();
+        let mut files = vec!(entry.to_str().unwrap().to_string());
+
+        let module = entry.file_stem().unwrap().to_str().unwrap().to_string();
+
+        files.extend(glob(&(opencv_path_as_string.clone()+"/"+&*module+"/**/*.hpp")).unwrap().map(|file|
+            file.unwrap().to_str().unwrap().to_string()
+        ));
+        (module, files)
+    }).collect::<Vec<(String,Vec<String>)>>();
 
     let mut types = PathBuf::from(&out_dir);
     types.push("common_opencv.h");
     {
         let mut types = File::create(types).unwrap();
         for ref m in modules.iter() {
-            write!(&mut types, "#include <opencv2/{}/{}.hpp>\n", m.0, m.0).unwrap();
+            write!(&mut types, "#include <opencv2/{}/{}.hpp>\n", &*m.0, &*m.0).unwrap();
         }
     }
 
@@ -103,11 +118,11 @@ fn main() {
 
     for ref module in modules.iter() {
         let mut cpp = PathBuf::from(&out_dir);
-        cpp.push(module.0);
+        cpp.push(&*module.0);
         cpp.set_extension("cpp");
 
         if !Command::new("python2.7")
-            .args(&["gen_rust.py", "hdr_parser.py", &*out_dir, module.0])
+            .args(&["gen_rust.py", "hdr_parser.py", &*out_dir, &*module.0])
             .args(
                 &(module
                     .1
