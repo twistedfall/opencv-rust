@@ -10,6 +10,22 @@ version = "0.2.0"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 build = "build.rs"
 
+[[bin]]
+name = "capture"
+path = "examples/video_capture.rs"
+
+[[bin]]
+name = "facedetect"
+path = "examples/video_facedetect.rs"
+
+[[bin]]
+name = "features"
+path = "examples/video_features.rs"
+
+[[bin]]
+name = "to_gray"
+path = "examples/video_to_gray.rs"
+
 [dependencies]
 libc = "*"
 
