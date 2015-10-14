@@ -306,6 +306,7 @@ class CppHeaderParser(object):
         implmatch = re.match(r"(\(.*?\))\s*:\s*(\w+\(.*?\),?\s*)+", fdecl[apos:])
         if bool(implmatch):
             fdecl = fdecl[:apos] + implmatch.group(1)
+            decl[2].append("/I")
 
         args0str = fdecl[apos+1:fdecl.rfind(")")].strip()
 

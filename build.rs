@@ -94,18 +94,40 @@ fn main() {
 
         let module = entry.file_stem().unwrap().to_str().unwrap().to_string();
 
-        files.extend(glob(&(opencv_path_as_string.clone()+"/"+&*module+"/**/*.hpp")).unwrap().map(|file|
-            file.unwrap().to_str().unwrap().to_string()
-        ));
+        files.extend(glob(&(opencv_path_as_string.clone()+"/"+&*module+"/**/*.h*")).unwrap()
+            .map(|file| file.unwrap().to_str().unwrap().to_string())
+            .filter(|f|
+                    !f.ends_with("cvstd.hpp")
+                &&  !f.ends_with("cvstd.inl.hpp")
+                &&  !f.ends_with("ocl.hpp")
+                &&  !f.ends_with("operations.hpp")
+                &&  !f.ends_with("persistence.hpp")
+                &&  !f.ends_with("ippasync.hpp")
+                &&  !f.ends_with("core/ocl_genbase.hpp")
+                &&  !f.ends_with("core/opengl.hpp")
+                &&  !f.ends_with("core/mat.inl.hpp")
+                &&  !f.ends_with("ios.h")
+                &&  !f.contains("cuda")
+                &&  !f.contains("eigen")
+                &&  !f.contains("/detail/")
+                &&  !f.contains("private")
+                &&  !f.contains("/superres/")
+            ));
         (module, files)
-    }).collect::<Vec<(String,Vec<String>)>>();
+    })
+    .filter(|module|    module.0 != "flann"
+                    &&  module.0 != "opencv_modules"
+                    &&  module.0 != "opencv"
+                    &&  module.0 != "hal"
+    )
+    .collect::<Vec<(String,Vec<String>)>>();
 
     let mut types = PathBuf::from(&out_dir);
     types.push("common_opencv.h");
     {
         let mut types = File::create(types).unwrap();
         for ref m in modules.iter() {
-            write!(&mut types, "#include <opencv2/{}/{}.hpp>\n", &*m.0, &*m.0).unwrap();
+            write!(&mut types, "#include <opencv2/{}.hpp>\n", &*m.0).unwrap();
         }
     }
 

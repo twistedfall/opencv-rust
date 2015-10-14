@@ -2,6 +2,7 @@ import sys, re, os.path
 import logging
 import textwrap
 
+from sets import Set
 from pprint import pformat
 from string import Template
 
@@ -29,6 +30,8 @@ cross_modules_deps = {
     "core" : [
         [ "class cv.Mat", "", ["/Ghost"], [] ],
         [ "class cv.Algorithm", "", ["/Ghost"], [] ],
+        [ "class cv.DMatch", "", ["/Ghost"], [] ],
+        [ "class cv.KeyPoint", "", ["/Ghost"], [] ],
         [ "class cv.RotatedRect", "", ["/Ghost"], [] ],
         [ "class cv.TermCriteria", "", ["/Ghost"], [] ],
     ]
@@ -42,7 +45,8 @@ renamed_funcs = {
     "cv_StereoSGBM_StereoSGBM_int_minDisparity_int_numDisparities_int_SADWindowSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_bool_fullDP": "new",
     "cv_findFundamentalMat_InputArray_points1_InputArray_points2_int_method_double_param1_double_param2_OutputArray_mask" : "-",
     "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_OutputArray_mask_int_method_double_ransacReprojThreshold": "find_homography",
-    "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_int_method_double_ransacReprojThreshold_OutputArray_mask": "find_homography_1",
+    "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_int_method_double_ransacReprojThreshold_OutputArray_mask": "find_homography_1", # disappears in 3.0
+    "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_int_method_double_ransacReprojThreshold_OutputArray_mask_int_maxIters_double_confidence" : "find_homography_full",
     "cv_fisheye_distortPoints_InputArray_undistorted_OutputArray_distorted_InputArray_K_InputArray_D_double_alpha": "distort_points",
     "cv_fisheye_projectPoints_InputArray_objectPoints_OutputArray_imagePoints_InputArray_rvec_InputArray_tvec_InputArray_K_InputArray_D_double_alpha_OutputArray_jacobian": "fisheye_project_points",
     "cv_fisheye_undistortImage_InputArray_distorted_OutputArray_undistorted_InputArray_K_InputArray_D_InputArray_Knew_Size_new_size": "fisheye_undistort_image",
@@ -61,6 +65,7 @@ renamed_funcs = {
     "cv_Algorithm_setString_String_name_String_value" : "-",
     "cv_Algorithm_setMat_String_name_Mat_value" : "-",
     "cv_Algorithm_setMatVector_String_name_VectorOfMat_value" : "-",
+    "cv_MatExpr_type" : "typ",
     "cv_Mat_Mat": "new",
     "cv_Mat_Mat_Mat_m": "copy",
     "cv_Mat_Mat_Mat_m_Range_ranges": "ranges",
@@ -90,15 +95,25 @@ renamed_funcs = {
     "cv_PCA_PCA_InputArray_data_InputArray_mean_int_flags_int_maxComponents": "new_mat_max",
     "cv_PCA_backProject_InputArray_vec_OutputArray_result": "back_project_to",
     "cv_PCA_project_InputArray_vec_OutputArray_result": "project_to",
+    "cv_PCACompute_InputArray_data_InputOutputArray_mean_OutputArray_eigenvectors_double_retainedVariance" : "pca_compute_variance",
+    "cv_PCACompute_InputArray_data_InputOutputArray_mean_OutputArray_eigenvectors_int_maxComponents" : "pca_compute",
     "cv_Range_Range": "default",
     "cv_Range_Range_int__start_int__end": "new",
     "cv_RotatedRect_RotatedRect": "default",
     "cv_RotatedRect_RotatedRect_Point2f_center_Size2f_size_float_angle": "new",
+    "cv_RotatedRect_RotatedRect_Point2f_point1_Point2f_point2_Point2f_point3": "for_points",
     "cv_TermCriteria_TermCriteria": "default",
     "cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon": "new",
-    "cv_calcCovarMatrix_InputArray_samples_OutputArray_covar_OutputArray_mean_int_flags_int_ctype": "-",
+    "cv_UMat_type": "typ",
+    "cv_UMat_copyTo_OutputArray_m": "copy_to",
+    "cv_UMat_copyTo_OutputArray_m_InputArray_mask": "copy_to_masked",
+    "cv_calcCovarMatrix_InputArray_samples_OutputArray_covar_OutputArray_mean_int_flags_int_ctype": "calc_covar_matrix_arrays", # 2.x
+    "cv_calcCovarMatrix_InputArray_samples_OutputArray_covar_InputOutputArray_mean_int_flags_int_ctype" : "calc_covar_matrix_arrays", # 3.x
+    "cv_calcCovarMatrix_Mat_samples_int_nsamples_Mat_covar_Mat_mean_int_flags_int_ctype" : "calc_covar_matrix",
     "cv_clipLine_Size_imgSize_Point_pt1_Point_pt2": "clip_line_size",
     "cv_clipLine_Rect_imgRect_Point_pt1_Point_pt2": "clip_line",
+    "cv_cv_abs_short_x" : "-",
+    "cv_cv_abs_uchar_x" : "-",
     "cv_divide_double_scale_InputArray_src2_OutputArray_dst_int_dtype": "divide",
     "cv_divide_InputArray_src1_InputArray_src2_OutputArray_dst_double_scale_int_dtype": "divide_mat",
     "cv_ellipse_Mat_img_Point_center_Size_axes_double_angle_double_startAngle_double_endAngle_Scalar_color_int_thickness_int_lineType_int_shift": "ellipse",
@@ -114,17 +129,23 @@ renamed_funcs = {
     "cv_min_Mat_src1_double_src2_Mat_dst": "min_mat",
     "cv_norm_InputArray_src1_InputArray_src2_int_normType_InputArray_mask": "norm_with_type",
     "cv_norm_InputArray_src1_int_normType_InputArray_mask": "norm",
-    "cv_rectangle_Mat_img_Point_pt1_Point_pt2_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle_points",
+    "cv_rectangle_Mat_img_Point_pt1_Point_pt2_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle_points", # 2.0
+    "cv_rectangle_InputOutputArray_img_Point_pt1_Point_pt2_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle_points", # 3.0
     "cv_rectangle_Mat_img_Rect_rec_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle",
     "cv_repeat_InputArray_src_int_ny_int_nx_OutputArray_dst": "repeat_to",
     "cv_repeat_Mat_src_int_ny_int_nx": "repeat",
+    "cv_size_t" : "-",
     "cv_split_Mat_m_VectorOfMat_mv": "split",
     "cv_split_Mat_src_Mat_mvbegin": "split_at",
     "cv_vconcat_Mat_src_size_t_nsrc_OutputArray_dst" : "-",
     # features2d
+    "cv_AGAST_InputArray_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression": "AGAST",
+    "cv_AGAST_InputArray_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type": "AGAST_with_type",
     "cv_BOWKMeansTrainer_cluster": "default",
     "cv_BOWKMeansTrainer_cluster_Mat_descriptors": "new",
     "cv_BOWKMeansTrainer_BOWKMeansTrainer_int_clusterCount_TermCriteria_termcrit_int_attempts_int_flags": "new_with_criteria",
+    "cv_BOWImgDescriptorExtractor_compute_InputArray_keypointDescriptors_OutputArray_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters": "compute",
+    "cv_BOWImgDescriptorExtractor_compute_InputArray_image_VectorOfKeyPoint_keypoints_OutputArray_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters_Mat_descriptors": "compute_desc",
     "cv_DMatch_DMatch": "default",
     "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance": "new",
     "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance": "new_index",
@@ -134,10 +155,13 @@ renamed_funcs = {
     "cv_DescriptorMatcher_knnMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_int_k_VectorOfMat_masks_bool_compactResult": "knn_matches",
     "cv_DescriptorMatcher_match_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfDMatch_matches_Mat_mask": "train_matches",
     "cv_DescriptorMatcher_match_Mat_queryDescriptors_VectorOfDMatch_matches_VectorOfMat_masks": "matches",
+    "cv_DescriptorMatcher_match_InputArray_queryDescriptors_InputArray_trainDescriptors_VectorOfDMatch_matches_InputArray_mask": "matches",
     "cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_Mat_mask_bool_compactResult": "train_radius_matches",
     "cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_VectorOfMat_masks_bool_compactResult": "radius_matches",
     "cv_FREAK_FREAK_FREAK_rhs": "copy",
     "cv_FREAK_FREAK_bool_orientationNormalized_bool_scaleNormalized_float_patternScale_int_nOctaves_VectorOfint_selectedPairs": "new",
+    "cv_FAST_InputArray_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression" : "FAST",
+    "cv_FAST_InputArray_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type": "FAST_with_type",
     "cv_FeatureDetector_detect_Mat_image_VectorOfKeyPoint_keypoints_Mat_mask": "detect",
     "cv_FeatureDetector_detect_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_masks": "detect_n",
     "cv_GenericDescriptorMatcher_classify_Mat_queryImage_VectorOfKeyPoint_queryKeypoints": "classify",
@@ -153,8 +177,15 @@ renamed_funcs = {
     "cv_KeyPoint_KeyPoint_float_x_float_y_float__size_float__angle_float__response_int__octave_int__class_id": "new_coords",
     "cv_KeyPoint_convert_VectorOfKeyPoint_keypoints_VectorOfPoint2f_points2f_VectorOfint_keypointIndexes": "convert_from",
     "cv_KeyPoint_convert_VectorOfPoint2f_points2f_VectorOfKeyPoint_keypoints_float_size_float_response_int_octave_int_class_id": "convert_to",
+    "cv_MatStep_MatStep": "default",
+    "cv_MatStep_MatStep_size_t_s": "new",
     "cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfchar_matchesMask_int_flags": "draw_matches",
+    "cv_drawMatches_InputArray_img1_VectorOfKeyPoint_keypoints1_InputArray_img2_VectorOfKeyPoint_keypoints2_VectorOfDMatch_matches1to2_InputOutputArray_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfchar_matchesMask_int_flags": "draw_matches",
     "cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfVectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfVectorOfchar_matchesMask_int_flags": "draw_vector_matches",
+    "cv_drawMatches_InputArray_img1_VectorOfKeyPoint_keypoints1_InputArray_img2_VectorOfKeyPoint_keypoints2_VectorOfVectorOfDMatch_matches1to2_InputOutputArray_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfVectorOfchar_matchesMask_int_flags": "draw_vector_matches",
+    "cv_setImpl_int_flags": "-",
+    "cv_setUseCollection_bool_flag": "-",
+    "cv_useCollection" : "-",
     # highgui
     "cv_VideoCapture_VideoCapture": "default",
     "cv_VideoCapture_VideoCapture_int_device": "device",
@@ -183,19 +214,27 @@ renamed_funcs = {
     "cv_Subdiv2D_insert_VectorOfPoint2f_ptvec": "insert_n",
     "cv_distanceTransform_InputArray_src_OutputArray_dst_OutputArray_labels_int_distanceType_int_maskSize_int_labelType": "distance_transform_labels",
     "cv_distanceTransform_InputArray_src_OutputArray_dst_int_distanceType_int_maskSize": "distance_transform",
+    "cv_integral_InputArray_src_OutputArray_sum_OutputArray_sqsum_OutputArray_tilted_int_sdepth_int_sqdepth": "integral_titled_sq",
     "cv_integral_InputArray_src_OutputArray_sum_OutputArray_sqsum_OutputArray_tilted_int_sdepth" : "integral_tilted",
+    "cv_integral_InputArray_src_OutputArray_sum_OutputArray_sqsum_int_sdepth_int_sqdepth": "integral_sq_depth",
     "cv_integral_InputArray_src_OutputArray_sum_OutputArray_sqsum_int_sdepth": "integral_sq",
     "cv_integral_InputArray_src_OutputArray_sum_int_sdepth": "integral",
+    # ml
+    "cv_ml_ParamGrid_ParamGrid_double__minVal_double__maxVal_double__logStep": "for_range",
     # objdetect": "",
     "cv_CascadeClassifier_CascadeClassifier": "default",
     "cv_CascadeClassifier_CascadeClassifier_string_filename": "new",
     "cv_CascadeClassifier_detectMultiScale_Mat_image_VectorOfRect_objects_VectorOfint_rejectLevels_VectorOfdouble_levelWeights_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize_bool_outputRejectLevels": "detect_multi_scale_levels",
+    "cv_CascadeClassifier_detectMultiScale_InputArray_image_VectorOfRect_objects_VectorOfint_numDetections_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize": "detect_multi_scale_num",
+    "cv_CascadeClassifier_detectMultiScale_InputArray_image_VectorOfRect_objects_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize": "detect_multi_scale",
     "cv_CascadeClassifier_detectMultiScale_Mat_image_VectorOfRect_objects_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize": "detect_multi_scale",
+    "cv_CascadeClassifier_detectMultiScale_InputArray_image_VectorOfRect_objects_VectorOfint_rejectLevels_VectorOfdouble_levelWeights_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize_bool_outputRejectLevels": "detect_multi_scale_reject",
     "cv_HOGDescriptor_HOGDescriptor": "default",
     "cv_HOGDescriptor_HOGDescriptor_HOGDescriptor_d": "copy",
     "cv_HOGDescriptor_HOGDescriptor_Size__winSize_Size__blockSize_Size__blockStride_Size__cellSize_int__nbins_int__derivAperture_double__winSigma_int__histogramNormType_double__L2HysThreshold_bool__gammaCorrection_int__nlevels": "new",
     "cv_HOGDescriptor_detectMultiScale_Mat_img_VectorOfRect_foundLocations_VectorOfdouble_foundWeights_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale",
     "cv_HOGDescriptor_detectMultiScale_Mat_img_VectorOfRect_foundLocations_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale_weights",
+    "cv_HOGDescriptor_detectMultiScale_InputArray_img_VectorOfRect_foundLocations_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale_weights",
     "cv_HOGDescriptor_detect_Mat_img_VectorOfPoint_foundLocations_VectorOfdouble_weights_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect_weights",
     "cv_HOGDescriptor_detect_Mat_img_VectorOfPoint_foundLocations_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect",
     "cv_LatentSvmDetector_LatentSvmDetector": "default",
@@ -213,7 +252,11 @@ renamed_funcs = {
     "cv_linemod_Feature_Feature": "default",
     "cv_linemod_Feature_Feature_int__x_int__y_int__label": "-",
     "cv_linemod_Feature_Feature_int_x_int_y_int_label": "new",
-    # video": "",
+    # photo
+    "cv_fastNlMeansDenoisingColored_InputArray_src_OutputArray_dst_float_h_float_hColor_int_templateWindowSize_int_searchWindowSize": "fast_nl_means_denoising_color",
+    "cv_fastNlMeansDenoising_InputArray_src_OutputArray_dst_VectorOffloat_h_int_templateWindowSize_int_searchWindowSize_int_normType": "fast_nl_means_denoising_vec",
+    "cv_fastNlMeansDenoising_InputArray_src_OutputArray_dst_float_h_int_templateWindowSize_int_searchWindowSize": "fast_nl_means_denoising_window",
+    # video
     "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2": "default",
     "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_int_history_float_varThreshold_bool_bShadowDetection": "new",
     "cv_BackgroundSubtractorMOG_BackgroundSubtractorMOG": "default",
@@ -222,6 +265,8 @@ renamed_funcs = {
     "cv_KalmanFilter_KalmanFilter_int_dynamParams_int_measureParams_int_controlParams_int_type": "new",
     "cv_calcOpticalFlowSF_Mat_from_Mat_to_Mat_flow_int_layers_int_averaging_block_size_int_max_flow": "new",
     "cv_calcOpticalFlowSF_Mat_from_Mat_to_Mat_flow_int_layers_int_averaging_block_size_int_max_flow_double_sigma_dist_double_sigma_color_int_postprocess_window_double_sigma_dist_fix_double_sigma_color_fix_double_occ_thr_int_upscale_averaging_radius_double_upscale_sigma_dist_double_upscale_sigma_color_double_speed_up_thr": "new_sigmas",
+    # videostab
+    "cv_videostab_GaussianMotionFilter_GaussianMotionFilter_int__radius_float__stdev" : "-",
 }
 
 class_ignore_list = (
@@ -245,7 +290,7 @@ class_ignore_list = (
     "NAryMatIterator",
     "cv::MatConstIterator",
     "cv::CommandLineParser",
-    "cv::_InputArray", "cv::_OutputArray",
+    "cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray",
     "cv::MatAllocator",
     "cv::SparseMat",
     "cv::AlgorithmInfo",
@@ -258,6 +303,13 @@ class_ignore_list = (
     "Subdiv2D", # lots of protected stuff exported (may work now)
     # features
     "DescriptorCollection", "KeyPointCollection", # nested
+    # stitching
+    "cv::CylindricalWarperGpu", "cv::PlaneWarperGpu", "cv::SphericalWarperGpu",
+    # videostab
+    "cv::videostab::DensePyrLkOptFlowEstimatorGpu",
+    "cv::videostab::KeypointBasedMotionEstimatorGpu",
+    "cv::videostab::MoreAccurateMotionWobbleSuppressorGpu",
+    "cv::videostab::SparsePyrLkOptFlowEstimatorGpu",
 )
 
 aliases_types = {
@@ -268,6 +320,9 @@ aliases_types = {
     "OutputArrayOfArrays" : "vector<cv::Mat>",
     "InputOutputArrayOfArrays" : "vector<cv::Mat>",
     "InputOutputArray" : "cv::Mat",
+    "_InputArray" : "cv::Mat",
+    "_OutputArray" : "cv::Mat",
+    "_InputOutputArray" : "cv::Mat",
 }
 
 func_ignore_list = (
@@ -275,6 +330,7 @@ func_ignore_list = (
     "cv.getBuildInformation", "cv.scalarToRawData", "cv::noArray", "()", "cv.Mat.MSize.operator[]",
     "const int*", "=", "==", "!=", "--", "++", "*", ">>", "<<", "<", ">", "operator==", "operator()",
     "cv.Mat.MStep.operator[]",
+    "cv.abs"
     "cv.swap",
     "cv.minMaxLoc", "cv.minMaxIdx", # return prims by pointer
     "cv.merge", # pointer to array of matrix
@@ -304,6 +360,10 @@ const_ignore_list = (
     "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
     "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_LOG2",
     "CV_TYPE_NAME_IMAGE",
+    "CV_SUPPRESS_DEPRECATED_START",
+    "CV_SUPPRESS_DEPRECATED_END",
+    "__CV_BEGIN__", "__CV_END__", "__CV_EXIT__",
+    "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN",
 )
 
 #
@@ -367,17 +427,13 @@ T_CPP_MODULE = """
 typedef int64_t int64;
 
 #include <iostream>
-
-
 #include "opencv2/opencv_modules.hpp"
-
-
 #include <string>
-
 #include "common_opencv.h"
 
 using namespace cv;
 #include "types.h"
+$includes
 
 
 extern "C" {
@@ -531,7 +587,7 @@ class FuncInfo(GeneralInfo):
 
         self.cname = self.cppname = self.name
 
-        self.is_ignored = "/H" in decl[2] or "/A" in decl[2]
+        self.is_ignored = "/H" in decl[2] or "/A" in decl[2] or "/I" in decl[2]
         if self.name.startswith("~"):
             logging.info("ignore destructor %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
@@ -545,10 +601,10 @@ class FuncInfo(GeneralInfo):
 
         # register self to class or generator
         if self.kind == self.KIND_FUNCTION:
-            logging.info("register %s %s"%(self.kind, self.name))
+            logging.info("register %s %s (%s)"%(self.kind, self.name, self.identifier))
             gen.register_function(self)
         else:
-            logging.info("register %s %s in %s"%(self.kind, self.name, self.ci))
+            logging.info("register %s %s in %s (%s)"%(self.kind, self.name, self.ci, self.identifier))
             self.ci.add_method(self)
 
     def isconstructor(self):
@@ -564,6 +620,9 @@ class FuncInfo(GeneralInfo):
             return self.type
 
     def reason_to_skip(self):
+        if self.identifier in self.gen.generated:
+            return "already there"
+
         if self.name.startswith("operator"):
             return "can not map %s yet"%(self.name)
 
@@ -647,7 +706,7 @@ class FuncInfo(GeneralInfo):
         rust_extern_rs = "cv_return_value_%s"%(self.rv_type().c_sane)
 
         args = []
-        if self.mutability():
+        if not self.static and self.mutability():
             if self.ci.type_info().is_by_value:
                 args.append("instance: %s"%(self.ci.type_info().rust_full))
             else:
@@ -660,14 +719,14 @@ class FuncInfo(GeneralInfo):
     def gen_safe_rust(self):
         args = []
         call_args = []
-        if self.mutability() == "const":
+        if not self.static and self.mutability() == "const":
             if self.ci.type_info().is_by_value:
                 args.append("self")
                 call_args.append("self")
             else:
                 args.append("&self")
                 call_args.append("self.as_raw_%s()"%(self.ci.type_info().rust_local))
-        elif self.mutability() == "mut":
+        elif not self.static and self.mutability() == "mut":
             if self.ci.type_info().is_by_value:
                 args.append("self")
                 call_args.append("self")
@@ -784,6 +843,11 @@ class ClassInfo(GeneralInfo):
         else:
             self.bases = []
 
+        for base in self.bases:
+            typ = self.gen.get_class(base)
+            if typ:
+                self.gen.get_class(base).is_trait = True
+
         # class props
         self.props= []
         for p in decl[3]:
@@ -888,6 +952,8 @@ class ConstInfo(GeneralInfo):
         # only use C-constant dumping for unnested const
         if len(self.fullname.split(".")) > 2:
             return ""
+        elif self.fullname == "CV_VERSION":
+            return """    printf("pub static %s:&'static str = \\"%%s\\";\\n", %s);\n"""%(self.rustname, self.fullname)
         else:
             return """    printf("pub const %s:i32 = 0x%%x;\\n", %s);\n"""%(self.rustname, self.fullname)
 
@@ -906,7 +972,7 @@ class StringTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
         TypeInfo.__init__(self,gen,typeid)
         self.ctype = "const char*"
-        self.cpptype = "string"
+        self.cpptype = "String"
         self.rust_full = "String"
         self.rust_local = "*const c_char"
         self.rust_extern = "*const c_char"
@@ -1014,7 +1080,7 @@ class VectorTypeInfo(TypeInfo):
             self.ctype = "void*"
             self.c_sane = "void_X"
             self.inner_cpptype = inner.cpptype
-            self.cpptype = "vector<%s >"%(inner.cpptype)
+            self.cpptype = "std::vector<%s >"%(inner.cpptype)
             self.sane = self.rust_local = "VectorOf"+inner.sane
             self.rust_full = "::types::" + self.rust_local
             self.rust_extern = "*mut c_void"
@@ -1023,6 +1089,12 @@ class VectorTypeInfo(TypeInfo):
 
     def gen_template_wrapper_rust_struct(self):
         with open(self.gen.output_path+"/"+self.sane+".type.rs", "w") as f:
+            if self.inner.typeid != "bool":
+                f.write(template("""
+                extern "C" {
+                    fn cv_${sane}_data(ptr:*mut c_void) -> *mut c_void;
+                }
+                """).substitute(self.__dict__))
             f.write(template("""
                 extern "C" {
                     fn cv_new_$sane() -> *mut c_void;
@@ -1091,20 +1163,23 @@ class VectorTypeInfo(TypeInfo):
                             return mut_data
                         }
                     }
-                    impl ::std::ops::Deref for $rust_local {
-                        type Target = [$inner_rust_full];
-                        fn deref(&self) -> &[$inner_rust_full] {
-                            unsafe {
-                                let length = cv_${sane}_len(self.ptr) as usize;
-                                let data = cv_${sane}_data(self.ptr);
-                                ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
-                            }
-                        }
-                    }
                     """).substitute(self.__dict__))
+                if self.inner.typeid != "bool":
+                    f.write(template("""
+                       impl ::std::ops::Deref for $rust_local {
+                           type Target = [$inner_rust_full];
+                           fn deref(&self) -> &[$inner_rust_full] {
+                               unsafe {
+                                   let length = cv_${sane}_len(self.ptr) as usize;
+                                   let data = cv_${sane}_data(self.ptr);
+                                   ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
+                               }
+                           }
+                       }
+                   """).substitute(self.__dict__))
         with open(self.gen.output_path+"/"+self.sane+".type.cpp", "w") as f:
             externs = template("""
-                void* cv_new_$sane() { return new std::$cpptype(); }
+                void* cv_new_$sane() { return new $cpptype(); }
                 void cv_delete_$sane(void* ptr) { delete (($cpptype*) ptr); }
                 void cv_push_$sane(void* ptr, void* ptr2) {
                     $inner_cpptype* val = ($inner_cpptype*)ptr2;
@@ -1123,11 +1198,14 @@ class VectorTypeInfo(TypeInfo):
                     return new $inner_cpptype(val);
                 }
                 int cv_${sane}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
-                $ctype* cv_${sane}_data(void* ptr) {
-                    return ($ctype*) ((($cpptype*) ptr)->data());
-                }
                 """).substitute(self.__dict__)
-            f.write(template(T_CPP_MODULE).substitute(code=externs))
+            if self.inner.typeid != "bool":
+                externs += template("""
+                    $ctype* cv_${sane}_data(void* ptr) {
+                        return ($ctype*) ((($cpptype*) ptr)->data());
+                    }
+                """).substitute(self.__dict__)
+            f.write(template(T_CPP_MODULE).substitute(code=externs, includes=""))
 
     def __str__(self):
         return "Vector[%s]"%(self.inner)
@@ -1143,24 +1221,41 @@ class SmartPtrTypeInfo(TypeInfo):
             self.c_sane = "void_X"
             self.rust_extern = "*mut c_void"
             self.cpptype = self.inner.cpptype
+            self.outer_cpptype = "Ptr<"+self.inner.cpptype+">"
             self.rust_local = self.sane = "PtrOf" + inner.sane
             self.rust_full = "::types::" + self.rust_local
+            self.inner_rust_full = inner.rust_full
             self.gen_template_wrapper_rust_struct()
 
     def gen_template_wrapper_rust_struct(self):
         with open(self.gen.output_path+"/"+self.rust_local+".type.rs", "w") as f:
             f.write(re.sub("^", "/// ", self.gen.get_class(self.cpptype).comment.strip(), 0, re.M)+"\n")
             f.write(template("""
-                // safe rust wrapper for $rust_local
                 #[allow(dead_code)]
                 pub struct $rust_local {
                     pub ptr: *mut c_void
+                }
+                extern "C" {
+                    fn cv_${sane}_get(ptr:*mut c_void) -> *mut c_void;
                 }
                 impl $rust_full {
                     pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
                         self.ptr
                     }
+                }
+                impl ::std::ops::Deref for $rust_full {
+                    type Target = $inner_rust_full;
+                    fn deref<'a>(&'a self) -> &'a $inner_rust_full {
+                        unsafe { ::std::mem::transmute(cv_${sane}_get(self.ptr)) }
+                    }
                 }\n""").substitute(self.__dict__))
+        with open(self.gen.output_path+"/"+self.sane+".type.cpp", "w") as f:
+            code = template("""
+                void* cv_${sane}_get(void* ptr) {
+                    return (($outer_cpptype*)ptr)->get();
+                }
+            """).substitute(self.__dict__)
+            f.write(template(T_CPP_MODULE).substitute(code=code, includes=""))
 
     def __str__(self):
         return "SmartPtr[%s]"%(self.inner)
@@ -1203,6 +1298,8 @@ class UnknownTypeInfo(TypeInfo):
 def parse_type(gen, typeid):
     typeid = typeid.strip()
     typeid = typeid.replace("const ", "").replace("..", ".")
+    if typeid == "":
+        typeid = "void"
     # if typeid.endswith("&"):
     #     return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     if typeid.endswith("&"):
@@ -1211,16 +1308,22 @@ def parse_type(gen, typeid):
         return PrimitiveTypeInfo(gen, typeid)
     elif typeid.endswith("*"):
         return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
-    elif typeid == "string":
+    elif typeid == "string" or typeid == "String":
         return StringTypeInfo(gen,typeid)
     elif typeid == "":
-        return EmptyTypeInfo(gen, typeid)
+        raise NameError("empty type detected")
     elif typeid.startswith("Ptr<"):
         return SmartPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1]))
+#        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1]))
     elif typeid.startswith("vector<"):
         inner = gen.get_type_info(typeid[7:-1])
         if not inner:
             raise NameError("inner type `%s' not found"%(typeid[7:-1]))
+        return VectorTypeInfo(gen, typeid, inner)
+    elif typeid.startswith("std::vector<"):
+        inner = gen.get_type_info(typeid[12:-1])
+        if not inner:
+            raise NameError("inner type `%s' not found"%(typeid[12:-1]))
         return VectorTypeInfo(gen, typeid, inner)
     elif gen.get_value_struct(typeid):
         return ValueStructTypeInfo(gen, gen.get_value_struct(typeid))
@@ -1265,6 +1368,7 @@ class RustWrapperGenerator(object):
         self.skipped_func_list = []
         self.consts = []
         self.type_infos = {}
+        self.generated = set()
 
     def get_class(self, classname):
         c = self.classes.get(classname)
@@ -1296,6 +1400,8 @@ class RustWrapperGenerator(object):
         return None
 
     def add_decl(self, decl):
+        if decl[0] == "cv.String.String" or decl[0] == 'cv.Exception.~Exception':
+            return
         if decl[0] == "cv.Algorithm":
             decl[0] = "cv.Algorithm.Algorithm"
         name = decl[0]
@@ -1328,10 +1434,9 @@ class RustWrapperGenerator(object):
         for hdr in srcfiles:
             decls = parser.parse(hdr, False)
             self.namespaces = map(lambda n:n.replace(".", "::"), parser.namespaces)
-            logging.info("\n\n===== Header: %s =====", hdr)
+            logging.info("\n\n=============== Header: %s ================\n\n", hdr)
             logging.info("Namespaces: %s", parser.namespaces)
-            if decls:
-                includes.append('#include "' + hdr + '"')
+            includes.append('#include "' + hdr + '"')
             for decl in decls:
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
                 self.add_decl(decl)
@@ -1397,7 +1502,9 @@ class RustWrapperGenerator(object):
         with open(output_path+"/" + self.module + ".consts.cpp", "w") as f:
             f.write("""#include <cstdio>\n""")
             f.write("""#include "opencv2/opencv_modules.hpp"\n""")
-            f.write("""#include "opencv2/%s/%s.hpp"\n"""%(module,module))
+            f.write("""#include "opencv2/%s.hpp"\n"""%(module))
+            for include in includes:
+                f.write(include+"\n")
             f.write("""using namespace cv;\n""")
             f.write("int main(int argc, char**argv) {\n");
             f.write(self.moduleCppConsts.getvalue())
@@ -1455,19 +1562,20 @@ class RustWrapperGenerator(object):
                     return
             else:
                 self.generated_functions.append(fi)
-        logging.info("Generating func %s"%(fi))
+        logging.info("Generating func %s"%(fi.identifier))
         reason = fi.reason_to_skip()
         if reason:
             logging.info("  ignored: " + reason)
             self.skipped_func_list.append("%s\n   %s\n"%(fi,reason))
             return
         self.ported_func_list.append(fi.__repr__())
+        self.generated.add(fi.identifier)
 
         self.moduleCppCode.write(fi.gen_cpp_prelude())
 
         decl_c_args = "\n        "
         call_cpp_args = ""
-        if fi.ci is not None and not fi.isconstructor():
+        if fi.ci is not None and not fi.isconstructor() and not fi.static:
             decl_c_args += fi.ci.type_info().ctype + " instance"
         for a in fi.args:
 
@@ -1520,7 +1628,7 @@ class RustWrapperGenerator(object):
         # cpp method call with prefix
         if fi.ci == None and (fi.cppname.startswith("cv") or fi.cppname.startswith("CV")):
             call_name = fi.cppname
-        elif fi.ci == None:
+        elif fi.ci == None or fi.static:
             call_name = fi.fullname.replace(".", "::")
         elif fi.isconstructor() and isinstance(fi.ci.type_info(), BoxedClassTypeInfo):
             call_name = fi.ci.nested_cppname
@@ -1792,7 +1900,6 @@ class RustWrapperGenerator(object):
 #                        }
 #                    """).substitute(rust_name=t.rust_local, base=cibase.rust_local))
         else:
-            logging.info("Generating box for struct %s", ci)
             if isinstance(t, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.nested_cppname)
             logging.info("Generating impl for struct %s", ci)
