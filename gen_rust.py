@@ -751,7 +751,7 @@ class FuncInfo(GeneralInfo):
             else:
                 call_args.append("%s"%(a.rsname()))
 
-        pub = "" if self.ci and self.ci.type_info().is_trait else "pub "
+        pub = "" if self.ci and self.ci.type_info().is_trait and not self.static else "pub "
 
         io = StringIO()
         io.write("// identifier: %s\n"%(self.identifier))
@@ -968,6 +968,9 @@ class TypeInfo:
         self.is_trait = False # FIXME
         self.sane = "XX"
 
+    def gen_wrapper(self):
+        pass
+
 class StringTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
         TypeInfo.__init__(self,gen,typeid)
@@ -1085,9 +1088,8 @@ class VectorTypeInfo(TypeInfo):
             self.rust_full = "::types::" + self.rust_local
             self.rust_extern = "*mut c_void"
             self.inner_rust_full = inner.rust_full
-            self.gen_template_wrapper_rust_struct()
 
-    def gen_template_wrapper_rust_struct(self):
+    def gen_wrapper(self):
         with open(self.gen.output_path+"/"+self.sane+".type.rs", "w") as f:
             if self.inner.typeid != "bool":
                 f.write(template("""
@@ -1225,9 +1227,9 @@ class SmartPtrTypeInfo(TypeInfo):
             self.rust_local = self.sane = "PtrOf" + inner.sane
             self.rust_full = "::types::" + self.rust_local
             self.inner_rust_full = inner.rust_full
-            self.gen_template_wrapper_rust_struct()
+            self.inner_local = inner.rust_local
 
-    def gen_template_wrapper_rust_struct(self):
+    def gen_wrapper(self):
         with open(self.gen.output_path+"/"+self.rust_local+".type.rs", "w") as f:
             f.write(re.sub("^", "/// ", self.gen.get_class(self.cpptype).comment.strip(), 0, re.M)+"\n")
             f.write(template("""
@@ -1237,22 +1239,37 @@ class SmartPtrTypeInfo(TypeInfo):
                 }
                 extern "C" {
                     fn cv_${sane}_get(ptr:*mut c_void) -> *mut c_void;
+                    fn cv_delete_$sane(ptr:*mut c_void);
                 }
                 impl $rust_full {
                     pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
                         self.ptr
                     }
                 }
-                impl ::std::ops::Deref for $rust_full {
-                    type Target = $inner_rust_full;
-                    fn deref<'a>(&'a self) -> &'a $inner_rust_full {
-                        unsafe { ::std::mem::transmute(cv_${sane}_get(self.ptr)) }
+                impl Drop for $rust_full {
+                    fn drop(&mut self) {
+                        unsafe { cv_delete_$sane(self.ptr) };
                     }
-                }\n""").substitute(self.__dict__))
+                }
+                """).substitute(self.__dict__))
+            if self.inner.ci.is_trait:
+                bases = self.gen.all_bases(self.inner.ci.name)
+                for base in bases:
+                    cibase = self.gen.get_type_info(base)
+                    f.write(template("""
+                        impl $base_full for $rust_name {
+                            fn as_raw_$base_local(&self) -> *mut c_void { 
+                                unsafe { cv_${sane}_get(self.ptr) }
+                            }
+                        }
+                    """).substitute(rust_name=self.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full, sane=self.sane))
         with open(self.gen.output_path+"/"+self.sane+".type.cpp", "w") as f:
             code = template("""
                 void* cv_${sane}_get(void* ptr) {
                     return (($outer_cpptype*)ptr)->get();
+                }
+                void  cv_delete_$sane(void* ptr) {
+                    delete ($outer_cpptype*) ptr;
                 }
             """).substitute(self.__dict__)
             f.write(template(T_CPP_MODULE).substitute(code=code, includes=""))
@@ -1480,6 +1497,10 @@ class RustWrapperGenerator(object):
             for c in sorted(value_struct_types, key= lambda c: c[0]):
                 self.gen_value_struct(c)
 
+        for t in self.type_infos.values():
+            if not t.is_ignored:
+                t.gen_wrapper()
+
         for c in self.classes.values():
             if c.is_simple and not c.is_ignored:
                 self.gen_simple_class(c)
@@ -1660,10 +1681,10 @@ class RustWrapperGenerator(object):
                 call_cpp_args));
         elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
             if fi.fake_attrgetter:
-                self.moduleCppCode.write("  %s* cpp_return_value = %s;\n"%(fi.rv_type().cpptype, call_name));
+                self.moduleCppCode.write("  Ptr<%s> *cpp_return_value = new Ptr<%s>;\n"%(fi.rv_type().cpptype, call_name));
             else:
-                self.moduleCppCode.write("  %s* cpp_return_value = %s(%s);\n"%(fi.rv_type().cpptype, call_name,
-                    call_cpp_args));
+               self.moduleCppCode.write("  Ptr<%s> *cpp_return_value = new Ptr<%s>(%s(%s));\n"%(fi.rv_type().cpptype, fi.rv_type().cpptype, call_name,
+                   call_cpp_args));
         elif fi.isconstructor() and call_cpp_args != "":
             self.moduleCppCode.write("  %s cpp_return_value(%s);\n"%(fi.rv_type().cpptype, call_cpp_args));
         elif fi.isconstructor():
@@ -1889,16 +1910,14 @@ class RustWrapperGenerator(object):
             self.moduleSafeRust.write("pub trait %s%s {\n"%(t.rust_local, bases))
             self.moduleSafeRust.write("  fn as_raw_%s(&self) -> *mut c_void;\n"%(t.rust_local))
             for fi in ci.methods:
-                self.gen_func(fi)
+                if not fi.static:
+                    self.gen_func(fi)
+            self.moduleSafeRust.write("}\n");
+            self.moduleSafeRust.write("impl<'a> %s + 'a {\n\n"%(t.rust_local))
+            for fi in ci.methods:
+                if fi.static:
+                    self.gen_func(fi)
             self.moduleSafeRust.write("}\n\n");
-#            if len(ci.bases):
-#                for base in ci.bases:
-#                    cibase = self.get_class(base).type_info()
-#                    self.moduleSafeRust.write(template("""
-#                        impl $base for $rust_name {
-#                            fn as_raw_ptr(&self) -> *mut c_void { self.as_row_ptr() }
-#                        }
-#                    """).substitute(rust_name=t.rust_local, base=cibase.rust_local))
         else:
             if isinstance(t, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.nested_cppname)

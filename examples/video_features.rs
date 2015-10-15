@@ -5,7 +5,7 @@ use opencv::imgproc;
 use opencv::features2d;
 use opencv::videoio;
 
-// use opencv::features2d::FeatureDetector;
+use opencv::features2d::Feature2D;
 
 fn run() -> Result<(), String> {
     let window = "video capture";
