@@ -40,6 +40,7 @@ class CppHeaderParser(object):
         self.ACTUAL_PUBLIC_SECTION = 5
 
         self.namespaces = set()
+        self.comment = None
 
     def batch_replace(self, s, pairs):
         for before, after in pairs:
@@ -678,6 +679,7 @@ class CppHeaderParser(object):
                 if len(stmt_list) < 2:
                     stmt_list.append("<unnamed>")
                 return stmt_list[0], stmt_list[1], True, None
+
             if stmt.startswith("extern") and "\"C\"" in stmt:
                 return "namespace", "", True, None
 
@@ -800,7 +802,7 @@ class CppHeaderParser(object):
                 sys.exit(-1)
 
             while 1:
-                token, pos = self.find_next_token(l, [";", "\"", "{", "}", "//!", "//", "/*!", "/** ", "/*"])
+                token, pos = self.find_next_token(l, [";", "\"", "{", "}", "//!", "//", "/*!", "/**", "/*"])
 
                 if not token:
                     block_head += " " + l
@@ -815,7 +817,7 @@ class CppHeaderParser(object):
                     block_head += " " + l[:pos]
                     break
 
-                if token == "/*!" or token == "/** ":
+                if token == "/*!" or token == "/**":
                     block_head += " " + l[:pos]
                     pos = l.find("*/", pos+3)
                     if pos < 0:
@@ -866,7 +868,6 @@ class CppHeaderParser(object):
                     # even if stack_top[PUBLIC_SECTION] is False, we still try to process the statement,
                     # since it can start with "public:"
                     stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, comment)
-                    comment = ""
                     if decl:
                         if stmt_type == "enum":
                             for d in decl:
@@ -876,6 +877,8 @@ class CppHeaderParser(object):
                     if stmt_type == "namespace":
                         chunks = [block[1] for block in self.block_stack if block[0] == 'namespace'] + [name]
                         self.namespaces.add('.'.join(chunks))
+                        if self.comment == None:
+                            self.comment = comment
                 else:
                     stmt_type, name, parse_flag = "block", "", False
 

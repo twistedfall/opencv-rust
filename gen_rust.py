@@ -755,14 +755,13 @@ class FuncInfo(GeneralInfo):
 
         io = StringIO()
         io.write("// identifier: %s\n"%(self.identifier))
-        if len(self.comment):
-            io.write(re.sub("^", "/// ", self.comment.strip(), 0, re.M)+"\n")
+        io.write(self.gen.reformat_doc(self.comment))
         first = True
         for a in self.args:
             if a.defval != "":
                 if first:
-                    io.write("///\n/// default value for arguments:\n")
-                io.write("///   - %s: default %s\n"%(a.rsname(), a.defval))
+                    io.write("///\n/// ## C++ default parameters:\n")
+                io.write("/// * %s: %s\n"%(a.rsname(), a.defval))
                 first = False
         io.write("%sfn %s(%s) -> Result<%s,String> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
         io.write("  unsafe {\n")
@@ -819,10 +818,9 @@ class ClassInfo(GeneralInfo):
         self.is_simple = self.is_ignored = self.is_ghost = False
         self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
+        self.comment = ""
         if len(decl) > 4:
             self.comment = decl[4].encode("ascii", "ignore")
-        else:
-            self.comment = ""
         for m in decl[2]:
             if m == "/Simple" or m == "/Map" :
                 self.is_simple = True
@@ -1099,15 +1097,15 @@ class VectorTypeInfo(TypeInfo):
                 """).substitute(self.__dict__))
             f.write(template("""
                 extern "C" {
-                    fn cv_new_$sane() -> *mut c_void;
-                    fn cv_delete_$sane(ptr:*mut c_void) -> ();
-                    fn cv_push_$sane(ptr:*mut c_void, ptr2: *const c_void) -> ();
-                    fn cv_${sane}_len(ptr:*mut c_void) -> i32;
-                    fn cv_${sane}_get(ptr:*mut c_void, number: *const i32) -> *mut c_void;
-                    fn cv_${sane}_data(ptr:*mut c_void) -> *mut c_void;
+                   #[doc(hidden)] fn cv_new_$sane() -> *mut c_void;
+                   #[doc(hidden)] fn cv_delete_$sane(ptr:*mut c_void) -> ();
+                   #[doc(hidden)] fn cv_push_$sane(ptr:*mut c_void, ptr2: *const c_void) -> ();
+                   #[doc(hidden)] fn cv_${sane}_len(ptr:*mut c_void) -> i32;
+                   #[doc(hidden)] fn cv_${sane}_get(ptr:*mut c_void, number: *const i32) -> *mut c_void;
+                   #[doc(hidden)] fn cv_${sane}_data(ptr:*mut c_void) -> *mut c_void;
                 }
                 #[allow(dead_code)] pub struct $rust_local {
-                    pub ptr: *mut c_void
+                    #[doc(hidden)] pub ptr: *mut c_void
                 }
                 impl $rust_full {
                     pub fn new() -> $rust_local {
@@ -1116,7 +1114,7 @@ class VectorTypeInfo(TypeInfo):
                     pub fn len(&self) -> i32 {
                         unsafe { return cv_${sane}_len(self.ptr); }
                     }
-                    pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
+                    #[doc(hidden)] pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
                         self.ptr
                     }
 
@@ -1231,18 +1229,17 @@ class SmartPtrTypeInfo(TypeInfo):
 
     def gen_wrapper(self):
         with open(self.gen.output_path+"/"+self.rust_local+".type.rs", "w") as f:
-            f.write(re.sub("^", "/// ", self.gen.get_class(self.cpptype).comment.strip(), 0, re.M)+"\n")
             f.write(template("""
                 #[allow(dead_code)]
                 pub struct $rust_local {
-                    pub ptr: *mut c_void
+                    #[doc(hidden)] pub ptr: *mut c_void
                 }
                 extern "C" {
-                    fn cv_${sane}_get(ptr:*mut c_void) -> *mut c_void;
-                    fn cv_delete_$sane(ptr:*mut c_void);
+                    #[doc(hidden)] fn cv_${sane}_get(ptr:*mut c_void) -> *mut c_void;
+                    #[doc(hidden)] fn cv_delete_$sane(ptr:*mut c_void);
                 }
                 impl $rust_full {
-                    pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
+                    #[doc(hidden)] pub unsafe fn as_raw_$rust_local(&self) -> *mut c_void {
                         self.ptr
                     }
                 }
@@ -1258,7 +1255,7 @@ class SmartPtrTypeInfo(TypeInfo):
                     cibase = self.gen.get_type_info(base)
                     f.write(template("""
                         impl $base_full for $rust_name {
-                            fn as_raw_$base_local(&self) -> *mut c_void { 
+                            #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { 
                                 unsafe { cv_${sane}_get(self.ptr) }
                             }
                         }
@@ -1453,6 +1450,7 @@ class RustWrapperGenerator(object):
             self.namespaces = map(lambda n:n.replace(".", "::"), parser.namespaces)
             logging.info("\n\n=============== Header: %s ================\n\n", hdr)
             logging.info("Namespaces: %s", parser.namespaces)
+            logging.info("Comment: %s", parser.comment)
             includes.append('#include "' + hdr + '"')
             for decl in decls:
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
@@ -1470,6 +1468,9 @@ class RustWrapperGenerator(object):
         self.moduleCppConsts = StringIO()
         self.moduleSafeRust = StringIO()
         self.moduleRustExterns = StringIO()
+
+        self.moduleSafeRust.write('//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n')
+        self.moduleSafeRust.write(self.reformat_doc(parser.comment).replace("///", "//!"))
 
         self.moduleSafeRust.write(template("""
             use libc::{ c_void, c_char, size_t };
@@ -1786,10 +1787,7 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write("}\n\n")
 
     def gen_simple_class(self,ci):
-        if len(ci.comment):
-            self.moduleSafeRust.write(re.sub("^", "/// ", ci.comment.strip(), 0, re.M)+"\n")
-        else:
-            self.moduleSafeRust.write("/// " + ci.classname+"\n")
+        self.moduleSafeRust.write(self.reformat_doc(ci.comment))
         self.moduleSafeRust.write("#[repr(C)]\n#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s {\n"%(ci.type_info().rust_local))
         self.moduleCppTypes.write("typedef struct %s {\n"%(ci.type_info().c_sane))
         for p in ci.props:
@@ -1850,11 +1848,12 @@ class RustWrapperGenerator(object):
 
         self.moduleRustExterns.write("pub fn cv_delete_%s(ptr : *mut c_void);\n"%(typ.sane));
 
+        self.moduleSafeRust.write("// boxed class %s\n"%(typ.typeid))
+        self.moduleSafeRust.write(self.reformat_doc(ci.comment))
         self.moduleSafeRust.write(template("""
-            // boxed class $typeid
             #[allow(dead_code)]
             pub struct $rust_local {
-                pub ptr: *mut c_void
+                #[doc(hidden)] pub ptr: *mut c_void
             }
             impl Drop for $rust_full {
                 fn drop(&mut self) {
@@ -1862,7 +1861,7 @@ class RustWrapperGenerator(object):
                 }
             }
             impl $rust_full {
-                pub fn as_raw_$rust_local(&self) -> *mut c_void { self.ptr }
+                #[doc(hidden)] pub fn as_raw_$rust_local(&self) -> *mut c_void { self.ptr }
             }
             """).substitute(typ.__dict__))
 
@@ -1871,7 +1870,7 @@ class RustWrapperGenerator(object):
             cibase = self.get_class(base).type_info()
             self.moduleSafeRust.write(template("""
                 impl $base_full for $rust_name {
-                    fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
+                    #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
                 }
             """).substitute(rust_name=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
 
@@ -1907,8 +1906,9 @@ class RustWrapperGenerator(object):
                 bases = ""
             logging.info("Generating impl for trait %s", ci)
             self.moduleSafeRust.write("// Generating impl for trait %s\n"%(ci))
+            self.moduleSafeRust.write(self.reformat_doc(ci.comment.strip()))
             self.moduleSafeRust.write("pub trait %s%s {\n"%(t.rust_local, bases))
-            self.moduleSafeRust.write("  fn as_raw_%s(&self) -> *mut c_void;\n"%(t.rust_local))
+            self.moduleSafeRust.write("  #[doc(hidden)] fn as_raw_%s(&self) -> *mut c_void;\n"%(t.rust_local))
             for fi in ci.methods:
                 if not fi.static:
                     self.gen_func(fi)
@@ -1926,6 +1926,24 @@ class RustWrapperGenerator(object):
             for fi in ci.methods:
                 self.gen_func(fi)
             self.moduleSafeRust.write("}\n");
+
+    def reformat_doc(self, text):
+        text = text.strip()
+        if len(text) == 0:
+            return ""
+        text = text.replace("@brief","").replace("@note","\nNote: ")
+        text = text.replace("@code", "```ignore").replace("@endcode", "```\n")
+        text = text.replace("@param", "## Parameters\n@param", 1)
+        text = re.sub(".*\*\*\*\*\*", "", text, 0, re.M)
+        text = re.sub("@defgroup [^ ]+ (.*)", "\\1\n\n# \\1", text)
+        text = re.sub("^@param ([^ ]+) (.*)", "* \\1: \\2", text, 0, re.M)
+        text = re.sub("^-  (.*)", "*  \\1", text, 0, re.M)
+        text = re.sub("\\\\f\[", "<div lang='latex'>", text, 0, re.M)
+        text = re.sub("\\\\f\]", "</div>", text, 0, re.M)
+        text = re.sub("\\\\f\$(.*?)\\\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
+        text = re.sub("^", "/// ", text + "\n", 0, re.M) + "\n"
+        return text
+
 
 def main():
     if len(sys.argv) < 4:
