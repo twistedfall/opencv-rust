@@ -43,7 +43,7 @@ before_script:
       cd opencv-$CV
       mkdir release install
       cd release
-      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install ..
+      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install -D WITH_FFMPEG=OFF ..
       make install
     fi
   - cd /home/travis/build/kali/opencv-rust
