@@ -27,9 +27,10 @@ addons:
       - tree
 
 env:
+  global:
+    - DOC=3.0.0
   matrix:
-    - CV=2.4.11
-    - CV=2.4.12
+    - CV=3.0.0
 
 before_script:
   - |
@@ -54,7 +55,7 @@ before_script:
 after_success:
   - echo $TRAVIS_RUST_VERSION
   - |
-    if [ "$CV" = 2.4.12 -a "$TRAVIS_RUST_VERSION" = "1.8.0" ]
+    if [ "$CV" = "$DOC" -a "$TRAVIS_RUST_VERSION" = "stable" ]
     then
       cargo doc
       curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
