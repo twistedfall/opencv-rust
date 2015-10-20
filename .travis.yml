@@ -36,6 +36,7 @@ before_script:
   - |
     if [ ! -e /tmp/opencv/opencv-$CV/release/unix-install ]
     then
+      mkdir -p /tmp/opencv
       cd /tmp/opencv
       rm -rf opencv-$CV
       wget https://github.com/Itseez/opencv/archive/$CV.zip
@@ -43,7 +44,7 @@ before_script:
       cd opencv-$CV
       mkdir release install
       cd release
-      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install -D WITH_FFMPEG=OFF -D WITH_IPP=OFF ..
+      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install -D WITH_FFMPEG=OFF ..
       make install
     fi
   - cd /home/travis/build/kali/opencv-rust
@@ -61,9 +62,9 @@ after_success:
       curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
     fi
 
-cache:
-  directories:
-    - /tmp/opencv
+#cache:
+#  directories:
+#    - /tmp/opencv
 
 rust:
   - stable
