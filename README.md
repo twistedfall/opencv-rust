@@ -1,6 +1,6 @@
 ## Rust OpenCV bindings
 
-![Buid status](https://travis-ci.org/kali/opencv-rust.svg)
+[![Build Status](https://travis-ci.org/kali/opencv-rust.svg?branch=cv3)](https://travis-ci.org/kali/opencv-rust)
 
 This is my shot at generating Rust bindings for OpenCV.
 
