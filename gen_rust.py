@@ -944,6 +944,7 @@ class VectorTypeInfo(TypeInfo):
         if not self.is_ignored:
             self.ctype = "void*"
             self.c_sane = "void_X"
+            self.inner_cpptype = inner.cpptype
             self.cpptype = "vector<%s >"%(inner.cpptype)
             self.sane = self.rust_local = "VectorOf"+inner.sane
             self.rust_full = "::types::" + self.rust_local
@@ -957,6 +958,7 @@ class VectorTypeInfo(TypeInfo):
                 extern "C" {
                     fn cv_new_$sane() -> *mut c_void;
                     fn cv_delete_$sane(ptr:*mut c_void) -> ();
+                    fn cv_push_$sane(ptr:*mut c_void, ptr2: *const c_void) -> ();
                     fn cv_${sane}_len(ptr:*mut c_void) -> i32;
                     fn cv_${sane}_data(ptr:*mut c_void) -> *mut c_void;
                 }
@@ -974,26 +976,48 @@ class VectorTypeInfo(TypeInfo):
                         self.ptr
                     }
                 }
-                impl ::std::ops::Deref for $rust_local {
-                    type Target = [$inner_rust_full];
-                    fn deref(&self) -> &[$inner_rust_full] {
-                        unsafe {
-                            let length = cv_${sane}_len(self.ptr) as usize;
-                            let data = cv_${sane}_data(self.ptr);
-                            ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
-                        }
-                    }
-                }
                 impl Drop for $rust_local {
                     fn drop(&mut self) {
                         unsafe { cv_delete_$sane(self.ptr) };
                     }
                 }
                 """).substitute(self.__dict__))
+        if isinstance(self.inner, BoxedClassTypeInfo) or self.inner.is_by_ptr:
+            with open(self.gen.output_path+"/"+self.sane+".type.rs", "a") as f:
+                f.write(template("""
+                    impl $rust_full {
+                        pub fn push(&mut self, val: $inner_rust_full) {
+                            unsafe { cv_push_$sane(self.ptr, val.ptr) }
+                        }
+                    }
+                    """).substitute(self.__dict__))
+        else:
+            with open(self.gen.output_path+"/"+self.sane+".type.rs", "a") as f:
+                f.write(template("""
+                    impl $rust_full {
+                        pub fn push(&mut self, val: $inner_rust_full) {
+                            unsafe { cv_push_$sane(self.ptr, &val as *const _ as *const _) }
+                        }
+                    }
+                    impl ::std::ops::Deref for $rust_local {
+                        type Target = [$inner_rust_full];
+                        fn deref(&self) -> &[$inner_rust_full] {
+                            unsafe {
+                                let length = cv_${sane}_len(self.ptr) as usize;
+                                let data = cv_${sane}_data(self.ptr);
+                                ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
+                            }
+                        }
+                    }
+                    """).substitute(self.__dict__))
         with open(self.gen.output_path+"/"+self.sane+".type.cpp", "w") as f:
             externs = template("""
                 void* cv_new_$sane() { return new std::$cpptype(); }
                 void cv_delete_$sane(void* ptr) { delete (($cpptype*) ptr); }
+                void cv_push_$sane(void* ptr, void* ptr2) {
+                    $inner_cpptype* val = ($inner_cpptype*)ptr2;
+                    (($cpptype*) ptr)->push_back(*val);
+                }
                 int cv_${sane}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
                 $ctype* cv_${sane}_data(void* ptr) {
                     return ($ctype*) ((($cpptype*) ptr)->data());
