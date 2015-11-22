@@ -75,7 +75,7 @@ fn main() {
         cpp.push(module.0);
         cpp.set_extension("cpp");
 
-        if !Command::new("python")
+        if !Command::new("python2.7")
                             .args(&["gen_rust.py", "hdr_parser.py", &*out_dir, module.0])
                             .args(&(module.1.iter().map(|p| {
                                 let mut path = actual_opencv.clone();
