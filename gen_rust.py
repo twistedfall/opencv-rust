@@ -1546,7 +1546,7 @@ class RustWrapperGenerator(object):
                     // $typeid
                     #[repr(C)]
                     pub struct cv_return_value_void {
-                        pub error_msg: *const ::libc::types::os::arch::c95::c_char,
+                        pub error_msg: *const c_char,
                     }
                     """).substitute(typ.__dict__))
             else:
@@ -1554,7 +1554,7 @@ class RustWrapperGenerator(object):
                     // $typeid
                     #[repr(C)]
                     pub struct cv_return_value_$c_sane {
-                        pub error_msg: *const ::libc::types::os::arch::c95::c_char,
+                        pub error_msg: *const c_char,
                         pub result: $rust_extern
                     }
                     """).substitute(typ.__dict__))

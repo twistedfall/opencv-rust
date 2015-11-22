@@ -27,7 +27,7 @@ name = "to_gray"
 path = "examples/video_to_gray.rs"
 
 [dependencies]
-libc = "*"
+libc = "0.2"
 
 [build-dependencies]
 pkg-config = "*"
