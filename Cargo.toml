@@ -30,6 +30,6 @@ path = "examples/video_to_gray.rs"
 libc = "0.2"
 
 [build-dependencies]
-pkg-config = "*"
-gcc = "*"
-glob = "*"
+pkg-config = "0.3"
+gcc = "0.3"
+glob = "0.2"
