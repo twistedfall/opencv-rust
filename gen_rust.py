@@ -292,7 +292,7 @@ const_ignore_list = (
 
 primitives = {
     u"void"  : { u"ctype": "void", "rust_local": "()" },
-    u"bool"  : { u"ctype": "int", u"rust_local": "bool" },
+    u"bool"  : { u"ctype": "char", u"rust_local": "bool" },
     u"uchar" : { u"ctype": "unsigned char", u"rust_local": "u8" },
     u"char"  : { u"ctype": "char", u"rust_local": "i8" },
     u"short" : { u"ctype": "short", u"rust_local": "u16" },
@@ -682,8 +682,6 @@ class FuncInfo(GeneralInfo):
             io.write("    Ok(%s{ ptr: rv.result })\n"%(self.rv_type().rust_full))
         elif isinstance(self.rv_type(), BoxedClassTypeInfo):
             io.write("    Ok(%s{ ptr: rv.result })\n"%(self.rv_type().rust_full))
-        elif self.type.typeid == "bool":
-            io.write("    Ok(rv.result != 0)\n")
         else:
             io.write("    Ok(rv.result)\n")
         io.write("  }\n");
@@ -1522,8 +1520,6 @@ class RustWrapperGenerator(object):
         self.moduleCppTypes.write("} %s;\n\n"%(ci.type_info().c_sane))
 
     def gen_c_return_value_type(self, typ):
-        if typ.cpptype == "bool":
-            return
         with open(self.output_path+"/cv_return_value_"+typ.c_sane+".type.h", "w") as f:
             if typ.ctype == "void":
                 f.write(template("""
