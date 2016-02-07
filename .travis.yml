@@ -1,5 +1,6 @@
 language: rust
-sudo: false
+sudo: true
+dist: trusty
 
 addons:
   apt:
