@@ -43,6 +43,8 @@ renamed_funcs = {
     "cv_StereoBM_StereoBM_int_preset_int_ndisparities_int_SADWindowSize": "new",
     "cv_StereoSGBM_StereoSGBM": "default",
     "cv_StereoSGBM_StereoSGBM_int_minDisparity_int_numDisparities_int_SADWindowSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_bool_fullDP": "new",
+    "cv_findEssentialMat_InputArray_points1_InputArray_points2_InputArray_cameraMatrix_int_method_double_prob_double_threshold_OutputArray_mask": "find_essential_map_matrix",
+    "cv_findEssentialMat_InputArray_points1_InputArray_points2_double_focal_Point2d_pp_int_method_double_prob_double_threshold_OutputArray_mask": "find_essential_mat",
     "cv_findFundamentalMat_InputArray_points1_InputArray_points2_int_method_double_param1_double_param2_OutputArray_mask" : "-",
     "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_OutputArray_mask_int_method_double_ransacReprojThreshold": "find_homography",
     "cv_findHomography_InputArray_srcPoints_InputArray_dstPoints_int_method_double_ransacReprojThreshold_OutputArray_mask": "find_homography_1", # disappears in 3.0
@@ -52,6 +54,8 @@ renamed_funcs = {
     "cv_fisheye_undistortImage_InputArray_distorted_OutputArray_undistorted_InputArray_K_InputArray_D_InputArray_Knew_Size_new_size": "fisheye_undistort_image",
     "cv_fisheye_undistortPoints_InputArray_distorted_OutputArray_undistorted_InputArray_K_InputArray_D_InputArray_R_InputArray_P": "fisheye_undistort_points",
     "cv_projectPoints_InputArray_objectPoints_InputArray_rvec_InputArray_tvec_InputArray_cameraMatrix_InputArray_distCoeffs_OutputArray_imagePoints_OutputArray_jacobian_double_aspectRatio" : "project_points",
+    "cv_recoverPose_InputArray_E_InputArray_points1_InputArray_points2_InputArray_cameraMatrix_OutputArray_R_OutputArray_t_InputOutputArray_mask": "recover_pose_matrix",
+    "cv_recoverPose_InputArray_E_InputArray_points1_InputArray_points2_OutputArray_R_OutputArray_t_double_focal_Point2d_pp_InputOutputArray_mask": "recover_pose",
     # core
     "cv_Algorithm_set_String_name_Mat_value": "set_mat",
     "cv_Algorithm_set_String_name_VectorOfMat_value": "set_VectorOfMat",
@@ -188,10 +192,13 @@ renamed_funcs = {
     "cv_useCollection" : "-",
     # highgui
     "cv_VideoCapture_VideoCapture": "default",
-    "cv_VideoCapture_VideoCapture_int_device": "device",
+    "cv_VideoCapture_VideoCapture_int_index": "index",
     "cv_VideoCapture_VideoCapture_string_filename": "filename",
+    "cv_VideoCapture_VideoCapture_String_filename_int_apiPreference": "filename_api",
     "cv_VideoCapture_open_int_device": "open_device",
+    "cv_VideoCapture_open_int_index": "open_index",
     "cv_VideoCapture_open_string_filename": "open_filename",
+    "cv_VideoCapture_open_String_filename_int_apiPreference": "open_filename_api",
     "cv_VideoWriter_VideoWriter": "default",
     "cv_VideoWriter_VideoWriter_string_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor": "new",
     "cv_imdecode_Mat_buf_int_flags": "decode",
@@ -330,7 +337,7 @@ func_ignore_list = (
     "cv.getBuildInformation", "cv.scalarToRawData", "cv::noArray", "()", "cv.Mat.MSize.operator[]",
     "const int*", "=", "==", "!=", "--", "++", "*", ">>", "<<", "<", ">", "operator==", "operator()",
     "cv.Mat.MStep.operator[]",
-    "cv.abs"
+    "cv.abs", "cvCeil", "cvFloor", "cvIsInf", "cvIsNaN", "cvRound",
     "cv.swap",
     "cv.minMaxLoc", "cv.minMaxIdx", # return prims by pointer
     "cv.merge", # pointer to array of matrix
@@ -754,7 +761,6 @@ class FuncInfo(GeneralInfo):
         pub = "" if self.ci and self.ci.type_info().is_trait and not self.static else "pub "
 
         io = StringIO()
-        io.write("// identifier: %s\n"%(self.identifier))
         io.write(self.gen.reformat_doc(self.comment))
         first = True
         for a in self.args:
@@ -764,6 +770,7 @@ class FuncInfo(GeneralInfo):
                 io.write("/// * %s: %s\n"%(a.rsname(), a.defval))
                 first = False
         io.write("%sfn %s(%s) -> Result<%s,String> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
+        io.write("// identifier: %s\n"%(self.identifier))
         io.write("  unsafe {\n")
         io.write("    let rv = ::sys::%s(%s);\n"%(self.c_name(), ", ".join(call_args)))
         io.write("    if rv.error_msg as i32 != 0i32 {\n")

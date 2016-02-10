@@ -26,6 +26,9 @@ fn main() {
         .find({ |path| read_dir(path).is_ok() });
     let actual_opencv = search_opencv.expect("Could not find opencv2 dir in pkg-config includes");
 
+    // add 3rdparty lib dit. pkgconfig forgets it somehow.
+    println!("cargo:rustc-link-search=native={}/share/OpenCV/3rdparty/lib", pkg_config::Config::get_variable("opencv", "prefix").unwrap());
+
     println!("OpenCV lives in {:?}", actual_opencv);
     println!("Generating code in {:?}", out_dir);
     println!("cargo:rerun-if-changed=gen_rust.py");
@@ -106,6 +109,9 @@ fn main() {
                 &&  !f.ends_with("core/ocl_genbase.hpp")
                 &&  !f.ends_with("core/opengl.hpp")
                 &&  !f.ends_with("core/mat.inl.hpp")
+                &&  !f.ends_with("core/hal/intrin_cpp.hpp")
+                &&  !f.ends_with("core/hal/intrin_sse.hpp")
+                &&  !f.ends_with("core/hal/intrin_neon.hpp")
                 &&  !f.ends_with("ios.h")
                 &&  !f.contains("cuda")
                 &&  !f.contains("eigen")
@@ -118,6 +124,7 @@ fn main() {
     .filter(|module|    module.0 != "flann"
                     &&  module.0 != "opencv_modules"
                     &&  module.0 != "opencv"
+                    &&  module.0 != "ippicv"
                     &&  module.0 != "hal"
     )
     .collect::<Vec<(String,Vec<String>)>>();
@@ -196,7 +203,7 @@ fn main() {
             .current_dir(&out_dir)
             .arg("-c")
             .arg(format!(
-                "g++ {}.consts.cpp -o {}.consts `pkg-config --cflags --libs opencv`",
+                "g++ {}.consts.cpp -o {}.consts `pkg-config --cflags --libs opencv` -L`pkg-config --variable=prefix opencv`/share/OpenCV/3rdparty/lib",
                 module.0, module.0
             ))
             .status()

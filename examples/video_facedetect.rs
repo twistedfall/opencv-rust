@@ -9,11 +9,11 @@ fn run() -> Result<(), String> {
     let window = "video capture";
     let xml = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml";
     try!(highgui::named_window(window, 1));
-    let mut cam = try!(videoio::VideoCapture::device(1));
+    let mut cam = try!(videoio::VideoCapture::index(1));
     let opened = try!(videoio::VideoCapture::is_opened(&cam));
     if !opened {
         println!("Using different camera");
-        cam = try!(videoio::VideoCapture::device(0));
+        cam = try!(videoio::VideoCapture::index(0));
     }
     let mut face = try!(objdetect::CascadeClassifier::new(xml));
     loop {
