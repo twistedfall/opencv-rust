@@ -29,9 +29,9 @@ addons:
 
 env:
   global:
-    - DOC=3.0.1
+    - DOC=3.1.0
   matrix:
-    - CV=3.0.1
+    - CV=3.1.0
 
 before_script:
   - |
