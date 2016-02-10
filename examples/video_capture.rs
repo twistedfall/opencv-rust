@@ -7,6 +7,11 @@ fn run() -> Result<(),String> {
     let window = "video capture";
     try!(highgui::named_window(window,1));
     let mut cam = try!(highgui::VideoCapture::device(1));
+    let opened = try!(highgui::VideoCapture::is_opened(&cam));
+    if ! opened {
+        println!("Using different camera");
+        cam = try!(highgui::VideoCapture::device(0));
+    }
     loop {
         let mut frame = try!(core::Mat::new());
         try!(cam.read(&mut frame));
