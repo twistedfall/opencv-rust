@@ -265,6 +265,9 @@ fn main() {
         writeln!(&mut hub, "}}\n").unwrap();
     }
     println!("cargo:rustc-link-lib=ocvrs");
+    println!("cargo:rustc-link-lib=tiff");
+    println!("cargo:rustc-link-lib=jpeg");
+    println!("cargo:rustc-link-lib=png");
     for lib in third_party_libs {
         println!("cargo:rustc-link-lib={}", lib);
     }
