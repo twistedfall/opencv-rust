@@ -48,6 +48,7 @@ before_script:
       cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install -D WITH_FFMPEG=OFF ..
       make install
     fi
+  - tree /tmp/opencv/opencv-$CV/release
   - cd /home/travis/build/kali/opencv-rust
   - export PKG_CONFIG_PATH=/tmp/opencv/opencv-$CV/release/unix-install
   - pkg-config --cflags opencv
