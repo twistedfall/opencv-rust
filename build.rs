@@ -265,9 +265,14 @@ fn main() {
         writeln!(&mut hub, "}}\n").unwrap();
     }
     println!("cargo:rustc-link-lib=ocvrs");
+
+    // opencv will embark these as .a when they are not available, or
+    // use the one from the system
+    // in all cases they are not put in pkg-config --libs
     println!("cargo:rustc-link-lib=tiff");
     println!("cargo:rustc-link-lib=jpeg");
     println!("cargo:rustc-link-lib=png");
+    println!("cargo:rustc-link-lib=zlib");
     for lib in third_party_libs {
         println!("cargo:rustc-link-lib={}", lib);
     }
