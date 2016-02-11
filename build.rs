@@ -267,7 +267,7 @@ fn main() {
     // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
     fn lookup_lib(third_party_dir:&str, search: &str) {
         for prefix in vec![ "lib", "liblib" ] {
-            for path in vec![ third_party_dir, "/usr/lib", "/usr/local/lib" ] {
+            for path in vec![ third_party_dir, "/usr/lib", "/usr/local/lib", "/usr/lib/x86_64-linux-gnu/" ] {
                 for ext in vec!(".a", ".dylib", ".so") {
                     let name = prefix.to_string() + search;
                     let filename = path.to_string() + "/" + &*name + ext;
