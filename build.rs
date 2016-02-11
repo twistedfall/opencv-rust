@@ -29,11 +29,6 @@ fn main() {
     // add 3rdparty lib dit. pkgconfig forgets it somehow.
     let third_party_dir = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::Config::get_variable("opencv", "prefix").unwrap());
     println!("cargo:rustc-link-search=native={}", third_party_dir);
-    let third_party_libs = glob(&(third_party_dir.clone()+"/*.a")).unwrap().map(|f| {
-        let f = f.unwrap();
-        let s = f.file_stem().unwrap().to_str();
-        s.unwrap()[3..].to_string()
-    }).collect::<Vec<String>>();
 
     println!("OpenCV lives in {:?}", actual_opencv);
     println!("Generating code in {:?}", out_dir);
@@ -269,13 +264,30 @@ fn main() {
     // now, this is a nightmare.
     // opencv will embark these as .a when they are not available, or
     // use the one from the system
-    // in all cases they are not put in pkg-config --libs
-    println!("cargo:rustc-link-lib=tiff");
-    println!("cargo:rustc-link-lib=jpeg");
-    println!("cargo:rustc-link-lib=png");
-    for lib in third_party_libs {
-        println!("cargo:rustc-link-lib={}", lib);
+    // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
+    fn lookup_lib(third_party_dir:&str, search: &str) {
+        for prefix in vec![ "lib", "liblib" ] {
+            for path in vec![ third_party_dir, "/usr/lib", "/usr/local/lib" ] {
+                for ext in vec!(".a", ".dylib", ".so") {
+                    let name = prefix.to_string() + search;
+                    let filename = path.to_string() + "/" + &*name + ext;
+                    if fs::metadata(filename.clone()).is_ok() {
+                        println!("cargo:rustc-link-lib={}", &name[3..]);
+                        return
+                    }
+                }
+            }
+        }
     }
+
+    lookup_lib(&*third_party_dir, "IlmImf");
+    lookup_lib(&*third_party_dir, "tiff");
+    lookup_lib(&*third_party_dir, "ippicv");
+    lookup_lib(&*third_party_dir, "jpeg");
+    lookup_lib(&*third_party_dir, "png");
+    lookup_lib(&*third_party_dir, "jasper");
+    lookup_lib(&*third_party_dir, "webp");
 
     println!("cargo:rustc-link-lib=z");
 }
+
