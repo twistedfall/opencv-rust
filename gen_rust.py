@@ -70,6 +70,9 @@ renamed_funcs = {
     "cv_Mat_create_int_rows_int_cols_int_type": "-",
     "cv_Mat_diag_Mat_d": "diag_new_mat",
     "cv_Mat_diag_int_d": "diag",
+    "cv_Mat_ptr_int_i0": "ptr0",
+    "cv_Mat_ptr_int_i0_int_i1": "ptr1",
+    "cv_Mat_ptr_int_i0_int_i1_int_i2": "ptr2",
     "cv_Mat_resize_size_t_sz": "resize",
     "cv_Mat_resize_size_t_sz_Scalar_s": "resize_with_default",
     "cv_Mat_rowRange_Range_r": "rowRange",
@@ -276,6 +279,12 @@ func_ignore_list = (
     "cvSetPreprocessFuncWin32_", "cvSetPostprocessFuncWin32_",
     # features
     "cv.BOWImgDescriptorExtractor.getVocabulary",
+)
+
+# Each element should be a function that takes the FuncInfo and returns a boolean indicating whether to ignore the
+# FuncInfo. The FuncInfo will be ignored when the function returns true.
+func_ignore_filters = (
+    lambda func_info: func_info.fullname.endswith("cv::Mat::ptr") and func_info.const,
 )
 
 const_ignore_list = (
@@ -535,7 +544,10 @@ class FuncInfo(GeneralInfo):
 
         for f in func_ignore_list:
             if self.fullname.endswith(f):
-                return "manual ignore"
+                return "manual ignore from list"
+
+        if any(filter_func(self) for filter_func in func_ignore_filters):
+            return "manual ignore from filter"
 
         if renamed_funcs.get(self.identifier) == "-":
             return "ignored by renamed table"
@@ -1101,12 +1113,12 @@ def parse_type(gen, typeid):
  #       return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     if typeid.endswith("&"):
         typeid = typeid[0:-1]
-    if typeid.endswith("*"):
+    if typeid in primitives:
+        return PrimitiveTypeInfo(gen, typeid)
+    elif typeid.endswith("*"):
         return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     elif typeid == "string":
         return StringTypeInfo(gen,typeid)
-    elif typeid in primitives:
-        return PrimitiveTypeInfo(gen, typeid)
     elif typeid == "":
         return EmptyTypeInfo(gen, typeid)
     elif typeid.startswith("Ptr<"):
@@ -1352,7 +1364,7 @@ class RustWrapperGenerator(object):
 
         decl_c_args = "\n        "
         call_cpp_args = ""
-        if not fi.ci == None and not fi.isconstructor():
+        if fi.ci is not None and not fi.isconstructor():
             decl_c_args += fi.ci.type_info().ctype + " instance"
         for a in fi.args:
 
