@@ -41,7 +41,7 @@ fn main() {
         ("core", vec!["core/types_c.h", "core/core.hpp" ]), // utility, base
         ("imgproc", vec![ "imgproc/types_c.h", "imgproc/imgproc_c.h",
                             "imgproc/imgproc.hpp" ]),
-        ("highgui", vec![   "highgui/cap_ios.h", 
+        ("highgui", vec![   "highgui/cap_ios.h",
                             "highgui/highgui.hpp",
                             "highgui/highgui_c.h",
                             //"highgui/ios.h"
