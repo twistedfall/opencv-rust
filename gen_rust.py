@@ -24,6 +24,8 @@ cross_modules_deps = {
     "core" : [
         [ "class cv.Mat", "", ["/Ghost"], [] ],
         [ "class cv.Algorithm", "", ["/Ghost"], [] ],
+        [ "class cv.RotatedRect", "", ["/Ghost"], [] ],
+        [ "class cv.TermCriteria", "", ["/Ghost"], [] ],
     ]
 }
 
@@ -117,6 +119,7 @@ renamed_funcs = {
     # features2d
     "cv_BOWKMeansTrainer_cluster": "default",
     "cv_BOWKMeansTrainer_cluster_Mat_descriptors": "new",
+    "cv_BOWKMeansTrainer_BOWKMeansTrainer_int_clusterCount_TermCriteria_termcrit_int_attempts_int_flags": "new_with_criteria",
     "cv_DMatch_DMatch": "default",
     "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance": "new",
     "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance": "new_index",
