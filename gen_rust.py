@@ -1,3 +1,4 @@
+# coding: utf-8 
 import sys, re, os.path
 import logging
 import textwrap
@@ -205,7 +206,9 @@ renamed_funcs = {
     "cv_imdecode_Mat_buf_int_flags_Mat_dst": "decode_to",
     "cv_imdecode_InputArray_buf_int_flags": "-",
     "cv_imdecode_InputArray_buf_int_flags_Mat_dst": "-",
+    "cv_addText_Mat_img_String_text_Point_org_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing" : "-",
     # imgproc
+    "cv_Canny_InputArray_image_OutputArray_edges_double_threshold1_double_threshold2_int_apertureSize_bool_L2gradient": "-",
     "cv_FilterEngine_start_Mat_src_Rect_srcRoi_bool_isolated_int_maxBufRows": "start_mat",
     "cv_FilterEngine_start_Size_wholeSize_Rect_roi_int_maxBufRows": "start_size",
     "cv_GeneralizedHough_detect_InputArray_image_OutputArray_positions_OutputArray_votes_int_cannyThreshold": "detect",
@@ -219,6 +222,8 @@ renamed_funcs = {
     "cv_Subdiv2D_Subdiv2D_Rect_rect": "new",
     "cv_Subdiv2D_insert_Point2f_pt": "insert",
     "cv_Subdiv2D_insert_VectorOfPoint2f_ptvec": "insert_n",
+    "cv_connectedComponentsWithStats_InputArray_image_OutputArray_labels_OutputArray_stats_OutputArray_centroids_int_connectivity_int_ltype_int_ccltype": "-",
+    "cv_connectedComponents_InputArray_image_OutputArray_labels_int_connectivity_int_ltype_int_ccltype": "-",
     "cv_distanceTransform_InputArray_src_OutputArray_dst_OutputArray_labels_int_distanceType_int_maskSize_int_labelType": "distance_transform_labels",
     "cv_distanceTransform_InputArray_src_OutputArray_dst_int_distanceType_int_maskSize": "distance_transform",
     "cv_integral_InputArray_src_OutputArray_sum_OutputArray_sqsum_OutputArray_tilted_int_sdepth_int_sqdepth": "integral_titled_sq",
@@ -293,6 +298,7 @@ class_ignore_list = (
     "cv::Exception", "cv::ErrorCallback",
     "cv::RNG.*", # maybe
     "cv::SVD",
+    "cv::hal",
     "cv::TLSDataContainer",
     "NAryMatIterator",
     "cv::MatConstIterator",
@@ -1476,8 +1482,8 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust = StringIO()
         self.moduleRustExterns = StringIO()
 
-        self.moduleSafeRust.write('//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n')
-        self.moduleSafeRust.write(self.reformat_doc(parser.comment).replace("///", "//!"))
+        self.moduleSafeRust.write('//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n'.encode("utf-8"))
+        self.moduleSafeRust.write(self.reformat_doc(parser.comment).encode("utf-8").replace("///", "//!"))
 
         self.moduleSafeRust.write(template("""
             use libc::{ c_void, c_char, size_t };

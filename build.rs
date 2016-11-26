@@ -11,6 +11,8 @@ use std::path::PathBuf;
 use std::process::Command;
 
 fn main() {
+    println!("cargo:rerun-if-changed=build.rs");
+    println!("cargo:rerun-if-changed=gen_rust.py");
     let out_dir = std::env::var("OUT_DIR").unwrap();
 
     let opencv = pkg_config::Config::new().cargo_metadata(false).probe("opencv").unwrap();
