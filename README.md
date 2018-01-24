@@ -67,6 +67,6 @@ gen_rust is initially a copy of gen_java, also from
 the OpenCV generators, but is now so far from the initial stuff that I
 consider it an original work. 
 
-The license for the original work is [WTFPL](http://www.wtfpl.net/).
+The license for the original work is [MIT](https://opensource.org/licenses/MIT).
 
 Special thanks to [ttacon](https://github.com/ttacon) for yielding the crate name.
