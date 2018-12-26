@@ -3,12 +3,12 @@ extern crate opencv;
 use opencv::core;
 use opencv::highgui;
 
-fn run() -> Result<(),String> {
+fn run() -> Result<(), String> {
     let window = "video capture";
-    try!(highgui::named_window(window,1));
+    try!(highgui::named_window(window, 1));
     let mut cam = try!(highgui::VideoCapture::device(1));
     let opened = try!(highgui::VideoCapture::is_opened(&cam));
-    if ! opened {
+    if !opened {
         println!("Using different camera");
         cam = try!(highgui::VideoCapture::device(0));
     }
