@@ -13,7 +13,7 @@ use std::process::Command;
 fn main() {
     let out_dir = std::env::var("OUT_DIR").unwrap();
 
-    let opencv = pkg_config::Config::new().find("opencv").unwrap();
+    let opencv = pkg_config::Config::new().cargo_metadata(false).probe("opencv").unwrap();
     let mut search_paths = opencv.include_paths.clone();
     search_paths.push(PathBuf::from("/usr/include"));
     let search_opencv = search_paths
@@ -30,6 +30,16 @@ fn main() {
     println!("Generating code in {:?}", out_dir);
     println!("cargo:rerun-if-changed=gen_rust.py");
     println!("cargo:rerun-if-changed=hdr_parser.py");
+
+    for path in opencv.link_paths {
+        println!("cargo:rustc-link-search=native={}", path.to_str().unwrap());
+    }
+
+    for lib in opencv.libs {
+        if lib != "stdc++" {
+            println!("cargo:rustc-link-lib={}", lib);
+        }
+    }
 
     let mut gcc = cc::Build::new();
     gcc.cpp(true);
@@ -142,8 +152,6 @@ fn main() {
         .include(&out_dir)
         .flag("-Wno-c++11-extensions");
 
-    gcc.compile("libocvrs.a");
-
     for ref module in &modules {
         let e = Command::new("sh")
             .current_dir(&out_dir)
@@ -163,6 +171,8 @@ fn main() {
             .unwrap();
         assert!(e.success());
     }
+
+    gcc.compile("ocvrs");
 
     let mut hub_filename = PathBuf::from(&out_dir);
     hub_filename.push("hub.rs");
@@ -202,5 +212,8 @@ fn main() {
         }
         writeln!(&mut hub, "}}\n").unwrap();
     }
+    /*
     println!("cargo:rustc-link-lib=ocvrs");
+    println!("cargo:rustc-link-lib=stdc++");
+    */
 }
