@@ -6,7 +6,7 @@ repository = "https://github.com/kali/opencv-rust"
 readme = "README.md"
 keywords = [ "opencv", "vision" ]
 license = "WTFPL"
-version = "0.2.3"
+version = "0.2.4"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 build = "build.rs"
 
