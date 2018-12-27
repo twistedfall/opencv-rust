@@ -1,5 +1,5 @@
-extern crate opencv;
 extern crate libc;
+extern crate opencv;
 use opencv::core;
 
 #[test]
