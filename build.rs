@@ -125,6 +125,8 @@ fn main() {
         {
             panic!();
         }
+        let _ = fs::remove_file("gen_rust.pyc");
+        let _ = fs::remove_file("hdr_parser.pyc");
 
         gcc.file(cpp);
     }
