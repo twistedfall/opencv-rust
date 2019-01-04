@@ -1,9 +1,9 @@
 use std::time;
 
 use opencv::{core, imgcodecs, imgproc, Result};
-#[cfg(not(feature = "opencv-41"))]
+#[cfg(not(feature = "opencv-4"))]
 use opencv::core::ACCESS_READ;
-#[cfg(feature = "opencv-41")]
+#[cfg(feature = "opencv-4")]
 use opencv::core::AccessFlag::ACCESS_READ;
 
 fn main() -> Result<()> {

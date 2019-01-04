@@ -1,3 +1,7 @@
+* 0.29
+  * default features now target OpenCV 4.2.0 (instead of OpenCV 3.4.x). Feature `opencv-42` was renamed to
+    `opencv-4`. Bindings were bumped to OpenCV 4.2.0 and 3.4.9.
+
 * 0.28
   * dnn::BackendNode constructor as well as stitching::createStitcher and stitching::createStitcherScans are no
     longer generated for the OpenCV version where they are not available, fixing the linking issues

@@ -17,8 +17,8 @@
 //! ---------------------------------
 //!
 //! To obtatin a binary descriptor representing a certain line detected from a certain octave of an
-//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
-//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
+//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
+//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
 //! rectangular region centered at it and called *line support region (LSR)*. Such region is divided
 //! into a set of bands ![inline formula](https://latex.codecogs.com/png.latex?%5C%7BB_1%2C%20B_2%2C%20...%2C%20B_m%5C%7D), whose length equals the one of line.
 //!
@@ -121,7 +121,7 @@ pub struct KeyLine {
 /// Lines extraction methodology
 /// ----------------------------
 ///
-/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_EDL) . The
+/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_EDL) . The
 /// extraction starts with a Gaussian pyramid generated from an original image, downsampled N-1 times,
 /// blurred N times, to obtain N layers (one for each octave), with layer 0 corresponding to input
 /// image. Then, from each layer (octave) in the pyramid, lines are extracted using LSD algorithm.
@@ -233,7 +233,7 @@ impl BinaryDescriptor {
     /// * parameters: configuration parameters BinaryDescriptor::Params
     ///
     /// If no argument is provided, constructor sets default values (see comments in the code snippet in
-    /// previous section). Default values are strongly reccomended.
+    /// previous section). Default values are strongly recommended.
     ///
     /// ## C++ default parameters
     /// * parameters: BinaryDescriptor::Params()
@@ -424,7 +424,7 @@ impl BinaryDescriptor_Params {
 /// Multi-Index Hashing
 /// -------------------
 ///
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+/// The theory described in this section is based on [MIH](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 /// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 /// has been divided into. Thus, given a query code, all the entries close to it at least in one
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for

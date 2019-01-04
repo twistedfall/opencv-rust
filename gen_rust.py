@@ -3572,7 +3572,7 @@ class RustWrapperGenerator(object):
                     logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                     self.add_decl(m, decl)
 
-        if opencv_version.startswith("4.1."):
+        if opencv_version.startswith("4."):
             func_rename["cv_createStitcher_bool"] = "-"
             func_rename["cv_createStitcherScans_bool"] = "-"
 

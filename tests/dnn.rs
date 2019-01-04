@@ -11,7 +11,7 @@ use opencv::{
     types::VectorOfMat,
 };
 
-#[cfg(all(feature = "opencv-41", not(target_env = "msvc")))]
+#[cfg(all(feature = "opencv-4", not(target_env = "msvc")))]
 use opencv::dnn::NetTrait;
 
 #[test]

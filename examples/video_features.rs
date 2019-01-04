@@ -34,9 +34,9 @@ fn run() -> opencv::Result<()> {
             let mask = core::Mat::default()?;
             orb.detect(&gray, &mut kps, &mask)?;
             let mut display = core::Mat::default()?;
-            #[cfg(not(feature = "opencv-41"))]
+            #[cfg(not(feature = "opencv-4"))]
             let default_draw_matches_flags = features2d::DrawMatchesFlags_DEFAULT;
-            #[cfg(feature = "opencv-41")]
+            #[cfg(feature = "opencv-4")]
             let default_draw_matches_flags = features2d::DrawMatchesFlags::DEFAULT;
             features2d::draw_keypoints(
                 &gray,

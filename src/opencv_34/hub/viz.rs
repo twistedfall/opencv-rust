@@ -375,20 +375,20 @@ impl Color {
         unsafe { sys::cv_viz_Color_green() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn cyan() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_cyan() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
     pub fn red() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_red() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn magenta() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_magenta() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    pub fn cyan() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_cyan() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn yellow() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_yellow() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn magenta() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_magenta() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn white() -> Result<crate::viz::Color> {
@@ -399,16 +399,16 @@ impl Color {
         unsafe { sys::cv_viz_Color_gray() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
+    pub fn silver() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_silver() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
     pub fn mlab() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_mlab() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn navy() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_navy() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
-    pub fn olive() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_olive() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn maroon() -> Result<crate::viz::Color> {
@@ -419,12 +419,24 @@ impl Color {
         unsafe { sys::cv_viz_Color_teal() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn rose() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_rose() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    pub fn olive() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_olive() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn purple() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_purple() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn azure() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_azure() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn chartreuse() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_chartreuse() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn rose() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_rose() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn lime() -> Result<crate::viz::Color> {
@@ -435,68 +447,56 @@ impl Color {
         unsafe { sys::cv_viz_Color_gold() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn brown() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_brown() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
     pub fn orange() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_orange() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
-    pub fn chartreuse() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_chartreuse() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn orange_red() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_orange_red() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn purple() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_purple() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
     pub fn indigo() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_indigo() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn pink() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_pink() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
-    pub fn cherry() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_cherry() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
-    pub fn bluberry() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_bluberry() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
-    pub fn raspberry() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_raspberry() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
-    pub fn silver() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_silver() }.into_result().map(|ptr| crate::viz::Color { ptr })
-    }
-    
-    pub fn violet() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_violet() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    pub fn brown() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_brown() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn apricot() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_apricot() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn turquoise() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_turquoise() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    pub fn pink() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_pink() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn raspberry() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_raspberry() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn cherry() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_cherry() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn violet() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_violet() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn amethyst() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_amethyst() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    }
+    
+    pub fn bluberry() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_bluberry() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn celestial_blue() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_celestial_blue() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn amethyst() -> Result<crate::viz::Color> {
-        unsafe { sys::cv_viz_Color_amethyst() }.into_result().map(|ptr| crate::viz::Color { ptr })
+    pub fn turquoise() -> Result<crate::viz::Color> {
+        unsafe { sys::cv_viz_Color_turquoise() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     pub fn not_set() -> Result<crate::viz::Color> {
@@ -1009,7 +1009,7 @@ impl crate::viz::Widget3DTrait for WCameraPosition {
 impl WCameraPosition {
     /// Creates camera coordinate frame at the origin.
     ///
-    /// ![Camera coordinate frame](https://docs.opencv.org/3.4.8/images/cpw1.png)
+    /// ![Camera coordinate frame](https://docs.opencv.org/3.4.9/images/cpw1.png)
     ///
     /// ## C++ default parameters
     /// * scale: 1.0
@@ -1025,7 +1025,7 @@ impl WCameraPosition {
     ///
     /// Creates viewing frustum of the camera based on its field of view fov.
     ///
-    /// ![Camera viewing frustum](https://docs.opencv.org/3.4.8/images/cpw2.png)
+    /// ![Camera viewing frustum](https://docs.opencv.org/3.4.9/images/cpw2.png)
     ///
     /// ## C++ default parameters
     /// * scale: 1.0
@@ -1045,7 +1045,7 @@ impl WCameraPosition {
     /// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
     /// the far end plane.
     ///
-    /// ![Camera viewing frustum with image](https://docs.opencv.org/3.4.8/images/cpw3.png)
+    /// ![Camera viewing frustum with image](https://docs.opencv.org/3.4.9/images/cpw3.png)
     ///
     /// ## C++ default parameters
     /// * scale: 1.0
@@ -1459,7 +1459,7 @@ impl WCube {
     /// * wire_frame: If true, cube is represented as wireframe.
     /// * color: Color of the cube.
     ///
-    /// ![Cube Widget](https://docs.opencv.org/3.4.8/images/cube_widget.png)
+    /// ![Cube Widget](https://docs.opencv.org/3.4.9/images/cube_widget.png)
     ///
     /// ## C++ default parameters
     /// * min_point: Vec3d::all(-0.5)

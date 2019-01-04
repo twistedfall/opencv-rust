@@ -548,7 +548,7 @@ impl EigenFaceRecognizer {
 /// int num_components = 10;
 /// double threshold = 10.0;
 /// // Then if you want to have a cv::FaceRecognizer with a confidence threshold,
-/// // create the concrete implementation with the appropiate parameters:
+/// // create the concrete implementation with the appropriate parameters:
 /// Ptr<FaceRecognizer> model = EigenFaceRecognizer::create(num_components, threshold);
 /// ```
 ///
@@ -1260,7 +1260,7 @@ impl FacemarkLBF_Params {
 ///
 /// The typical pipeline for facemark detection is listed as follows:
 /// - (Non-mandatory) Set a user defined face detection using FacemarkTrain::setFaceDetector.
-/// The facemark algorithms are desgined to fit the facial points into a face.
+/// The facemark algorithms are designed to fit the facial points into a face.
 /// Therefore, the face information should be provided to the facemark algorithm.
 /// Some algorithms might provides a default face recognition function.
 /// However, the users might prefer to use their own face detector to obtains the best possible detection result.
@@ -1577,7 +1577,7 @@ impl dyn LBPHFaceRecognizer + '_ {
 /// useful for authentication with (cancellable) biometrical features.
 /// (does not need many positives to train (10-50), and no negatives at all, also robust to noise/salting)
 ///
-/// see also: [Savvides04](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_Savvides04)
+/// see also: [Savvides04](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Savvides04)
 ///
 /// this implementation is largely based on: https://code.google.com/archive/p/pam-face-authentication (GSOC 2009)
 ///

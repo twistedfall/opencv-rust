@@ -20,12 +20,12 @@ documentation](https://docs.opencv.org/master/) as well.
 The following OpenCV versions are supported at the moment:
 * 3.2
 * 3.4
-* 4.1
+* 4.2
 
 You can choose the target OpenCV version with the following Cargo features:
 * `opencv-32`
-* `opencv-34` (default)
-* `opencv-41`
+* `opencv-34`
+* `opencv-4` (default)
 
 If you need support for `contrib` modules, also enable `contrib` feature.
 
@@ -36,17 +36,17 @@ files or `-dev` packages.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.28"
+opencv = "0.29"
 ```
 
 Select OpenCV version if different from default in Cargo.toml:
 ```toml
-opencv = {version = "0.28", default-features = false, features = ["opencv-41"]}
+opencv = {version = "0.29", default-features = false, features = ["opencv-34"]}
 ```
 
 And enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.28", default-features = false, features = ["opencv-41", "contrib"]}
+opencv = {version = "0.29", features = ["contrib"]}
 ```
 
 Import prelude
@@ -78,8 +78,8 @@ Also refer to the corresponding [issue #6](https://github.com/twistedfall/opencv
 * `opencv-32` - build against OpenCV 3.2.0, this feature is aimed primarily on stable Debian and
   Ubuntu users who can install OpenCV from the repository without having to compile it from the
   source
-* `opencv-34` (default) - build against OpenCV 3.4.x
-* `opencv-41` - build against OpenCV 4.1.x
+* `opencv-34` - build against OpenCV 3.4.x
+* `opencv-4` (default) - build against OpenCV 4.x
 * `contrib` - enable the usage of OpenCV contrib modules for corresponding OpenCV version
 * `buildtime-bindgen` - regenerate all bindings, should only be used during the crate development
   or when building on Windows or Mac OS X, with this feature enabled the bundled headers are no
@@ -118,7 +118,7 @@ of the crate's API as you would treat one of C++, use `clone()` when needed.
 
 The following external dependencies are required:
 - python3
-- OpenCV 3.2.0, 3.4.8 or 4.1.2
+- OpenCV 3.2.0, 3.4.9 or 4.2.0
 
 OpenCV is a complicated dependency with a lot of different
 configurations that can break this crate since it relies on fragile

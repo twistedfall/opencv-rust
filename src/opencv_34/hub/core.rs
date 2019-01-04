@@ -244,10 +244,10 @@ pub const CV_MAJOR_VERSION: i32 = 3;
 pub const CV_MAT_CONT_FLAG_SHIFT: i32 = 14;
 pub const CV_MINOR_VERSION: i32 = 4;
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
-pub const CV_SUBMINOR_VERSION: i32 = 8;
+pub const CV_SUBMINOR_VERSION: i32 = 9;
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
-pub const CV_VERSION_REVISION: i32 = 8;
+pub const CV_VERSION_REVISION: i32 = 9;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const DCT_INVERSE: i32 = 1;
 pub const DCT_ROWS: i32 = 4;
@@ -3279,7 +3279,7 @@ pub fn norm_l2_sqr(a: &f32, b: &f32, n: i32) -> Result<f32> {
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C_%7BL_2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.8/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.9/NormTypes_OneArray_1-2-INF.png)
 ///
 /// When the mask parameter is specified and it is not empty, the norm is
 ///
@@ -3346,7 +3346,7 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C_%7BL_2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.8/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.9/NormTypes_OneArray_1-2-INF.png)
 ///
 /// When the mask parameter is specified and it is not empty, the norm is
 ///
@@ -4618,6 +4618,23 @@ pub fn use_optimized() -> Result<bool> {
     unsafe { sys::cv_useOptimized() }.into_result()
 }
 
+pub fn dump_bool(argument: bool) -> Result<String> {
+    unsafe { sys::cv_utils_dumpBool_bool(argument) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+pub fn dump_c_string(argument: &str) -> Result<String> {
+    string_arg!(argument);
+    unsafe { sys::cv_utils_dumpCString_const_char_X(argument.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+pub fn dump_double(argument: f64) -> Result<String> {
+    unsafe { sys::cv_utils_dumpDouble_double(argument) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+pub fn dump_float(argument: f32) -> Result<String> {
+    unsafe { sys::cv_utils_dumpFloat_float(argument) }.into_result().map(crate::templ::receive_string_mut)
+}
+
 pub fn dump_input_array_of_arrays(argument: &dyn core::ToInputArray) -> Result<String> {
     input_array_arg!(argument);
     unsafe { sys::cv_utils_dumpInputArrayOfArrays__InputArray(argument.as_raw__InputArray()) }.into_result().map(crate::templ::receive_string_mut)
@@ -4636,6 +4653,14 @@ pub fn dump_input_output_array_of_arrays(argument: &mut dyn core::ToInputOutputA
 pub fn dump_input_output_array(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
     input_output_array_arg!(argument);
     unsafe { sys::cv_utils_dumpInputOutputArray__InputOutputArray(argument.as_raw__InputOutputArray()) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+pub fn dump_int(argument: i32) -> Result<String> {
+    unsafe { sys::cv_utils_dumpInt_int(argument) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+pub fn dump_size_t(argument: size_t) -> Result<String> {
+    unsafe { sys::cv_utils_dumpSizeT_size_t(argument) }.into_result().map(crate::templ::receive_string_mut)
 }
 
 pub fn get_thread_id() -> Result<i32> {
@@ -8835,7 +8860,7 @@ impl Range {
 ///
 /// The sample below demonstrates how to use RotatedRect:
 /// @snippet snippets/core_various.cpp RotatedRect_demo
-/// ![image](https://docs.opencv.org/3.4.8/rotatedrect.png)
+/// ![image](https://docs.opencv.org/3.4.9/rotatedrect.png)
 ///
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
@@ -12021,7 +12046,7 @@ pub const CV_MAT_CONT_FLAG: i32 = 0x4000; // 16384
 pub const CV_MAT_DEPTH_MASK: i32 = 0x7; // 7
 pub const CV_MAT_TYPE_MASK: i32 = 0xfff; // 4095
 pub const CV_SUBMAT_FLAG: i32 = 0x8000; // 32768
-pub static CV_VERSION: &'static str = "3.4.8";
+pub static CV_VERSION: &'static str = "3.4.9";
 pub const Device_TYPE_DGPU: i32 = 0x10004; // 65540
 pub const Device_TYPE_IGPU: i32 = 0x20004; // 131076
 pub const FileStorage_WRITE_BASE64: i32 = 0x41; // 65

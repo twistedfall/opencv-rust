@@ -575,27 +575,27 @@ impl CustomPattern {
     /// ## C++ default parameters
     /// * use_extrinsic_guess: false
     /// * flags: SOLVEPNP_ITERATIVE
-    pub fn find_rt(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
+    pub fn find_rt(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
         input_array_arg!(object_points);
         input_array_arg!(image_points);
         input_array_arg!(camera_matrix);
         input_array_arg!(dist_coeffs);
-        output_array_arg!(rvec);
-        output_array_arg!(tvec);
-        unsafe { sys::cv_ccalib_CustomPattern_findRt__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_bool_int(self.as_raw_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, flags) }.into_result()
+        input_output_array_arg!(rvec);
+        input_output_array_arg!(tvec);
+        unsafe { sys::cv_ccalib_CustomPattern_findRt__InputArray__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray_bool_int(self.as_raw_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, flags) }.into_result()
     }
     
     ///
     /// ## C++ default parameters
     /// * use_extrinsic_guess: false
     /// * flags: SOLVEPNP_ITERATIVE
-    pub fn find_rt_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
+    pub fn find_rt_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
         input_array_arg!(image);
         input_array_arg!(camera_matrix);
         input_array_arg!(dist_coeffs);
-        output_array_arg!(rvec);
-        output_array_arg!(tvec);
-        unsafe { sys::cv_ccalib_CustomPattern_findRt__InputArray__InputArray__InputArray__OutputArray__OutputArray_bool_int(self.as_raw_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, flags) }.into_result()
+        input_output_array_arg!(rvec);
+        input_output_array_arg!(tvec);
+        unsafe { sys::cv_ccalib_CustomPattern_findRt__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray_bool_int(self.as_raw_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, flags) }.into_result()
     }
     
     /// <
@@ -609,15 +609,15 @@ impl CustomPattern {
     /// * min_inliers_count: 100
     /// * inliers: noArray()
     /// * flags: SOLVEPNP_ITERATIVE
-    pub fn find_rt_ransac(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
+    pub fn find_rt_ransac(&mut self, object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
         input_array_arg!(object_points);
         input_array_arg!(image_points);
         input_array_arg!(camera_matrix);
         input_array_arg!(dist_coeffs);
-        output_array_arg!(rvec);
-        output_array_arg!(tvec);
+        input_output_array_arg!(rvec);
+        input_output_array_arg!(tvec);
         output_array_arg!(inliers);
-        unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_bool_int_float_int__OutputArray_int(self.as_raw_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags) }.into_result()
+        unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC__InputArray__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray_bool_int_float_int__OutputArray_int(self.as_raw_CustomPattern(), object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags) }.into_result()
     }
     
     ///
@@ -628,14 +628,14 @@ impl CustomPattern {
     /// * min_inliers_count: 100
     /// * inliers: noArray()
     /// * flags: SOLVEPNP_ITERATIVE
-    pub fn find_rt_ransac_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
+    pub fn find_rt_ransac_1(&mut self, image: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, min_inliers_count: i32, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
         input_array_arg!(image);
         input_array_arg!(camera_matrix);
         input_array_arg!(dist_coeffs);
-        output_array_arg!(rvec);
-        output_array_arg!(tvec);
+        input_output_array_arg!(rvec);
+        input_output_array_arg!(tvec);
         output_array_arg!(inliers);
-        unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC__InputArray__InputArray__InputArray__OutputArray__OutputArray_bool_int_float_int__OutputArray_int(self.as_raw_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags) }.into_result()
+        unsafe { sys::cv_ccalib_CustomPattern_findRtRANSAC__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray_bool_int_float_int__OutputArray_int(self.as_raw_CustomPattern(), image.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, min_inliers_count, inliers.as_raw__OutputArray(), flags) }.into_result()
     }
     
     /// <

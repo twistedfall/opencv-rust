@@ -36,9 +36,9 @@ fn help() {
 static WINDOW_TITLE: &str = "Perspective Transformation Demo";
 static LABELS: [&str; 4] = ["TL", "TR", "BR", "BL"];
 
-#[cfg(not(feature = "opencv-41"))]
+#[cfg(not(feature = "opencv-4"))]
 use self::core::LINE_8;
-#[cfg(feature = "opencv-41")]
+#[cfg(feature = "opencv-4")]
 use self::imgproc::LINE_8;
 
 fn main() -> Result<(), Box<dyn Error>> {

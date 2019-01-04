@@ -10639,6 +10639,29 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfMaxUnpoolLayer {}
     
+    pub struct PtrOfMishLayer {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfMishLayer {
+        #[inline(always)] pub fn as_raw_PtrOfMishLayer(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfMishLayer {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::dnn::MishLayer>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfMishLayer {}
+    
     pub struct PtrOfNormalizeBBoxLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11103,6 +11126,29 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfSplitLayer {}
     
+    pub struct PtrOfSwishLayer {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfSwishLayer {
+        #[inline(always)] pub fn as_raw_PtrOfSwishLayer(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfSwishLayer {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::dnn::SwishLayer>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfSwishLayer {}
+    
     pub struct PtrOfTanHLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11125,6 +11171,195 @@ mod dnn_types {
     }
     
     unsafe impl Send for PtrOfTanHLayer {}
+    
+    pub struct VectorOfPtrOfBackendNode {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl VectorOfPtrOfBackendNode {
+        #[inline(always)] pub fn as_raw_VectorOfPtrOfBackendNode(&self) -> *mut c_void { self.ptr }
+    
+        #[inline]
+        pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+            crate::templ::VectorRefIterator::new(self)
+        }
+    }
+    
+    impl Drop for VectorOfPtrOfBackendNode {
+        #[inline]
+        fn drop(&mut self) {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*"] {
+                delete vec;
+            })
+        }
+    }
+    
+    impl IntoIterator for VectorOfPtrOfBackendNode {
+        type Item = types::PtrOfBackendNode;
+        type IntoIter = crate::templ::VectorIterator<Self>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            Self::IntoIter::new(self)
+        }
+    }
+    
+    impl<'i> IntoIterator for &'i VectorOfPtrOfBackendNode {
+        type Item = types::PtrOfBackendNode;
+        type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfPtrOfBackendNode>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            self.iter()
+        }
+    }
+    
+    impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendNode {
+        type Storage = types::PtrOfBackendNode;
+    
+        #[inline]
+        fn new() -> Self {
+            Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+                return new std::vector<Ptr<cv::dnn::BackendNode>>();
+            })}
+        }
+    
+        #[inline]
+        fn len(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::BackendNode>>*"] -> size_t as "size_t" {
+                return vec->size();
+            })
+        }
+    
+        #[inline]
+        fn is_empty(&self) -> bool {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::BackendNode>>*"] -> bool as "bool" {
+                return vec->empty();
+            })
+        }
+    
+        #[inline]
+        fn capacity(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::BackendNode>>*"] -> size_t as "size_t" {
+                return vec->capacity();
+            })
+        }
+    
+        #[inline]
+        fn shrink_to_fit(&mut self) {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*"] {
+                vec->shrink_to_fit();
+            })
+        }                
+    
+        #[inline]
+        fn reserve(&mut self, additional: size_t) {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*", additional as "size_t"] {
+                vec->reserve(vec->size() + additional);
+            })
+        }
+    
+        #[inline]
+        fn remove(&mut self, index: size_t) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*", index as "size_t"] {
+                vec->erase(vec->begin() + index);
+            });
+            Ok(())
+        }
+    
+        #[inline]
+        fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
+            let len = self.len();
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+            if index1 != index2 {
+                let vec = self.as_raw_VectorOfPtrOfBackendNode();
+                cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*", index1 as "size_t", index2 as "size_t"] {
+                    swap((*vec)[index1], (*vec)[index2]);
+                });
+            }
+            Ok(())
+        }
+    
+        #[inline]
+        fn clear(&mut self) {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*"] {
+                vec->clear();
+            })
+        }
+    
+        type Arg = types::PtrOfBackendNode;
+        
+        #[inline]
+        fn push(&mut self, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            let val = val.as_raw_PtrOfBackendNode();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*", val as "Ptr<cv::dnn::BackendNode>*"] {
+                vec->push_back(*val);
+            })
+        }
+        
+        #[inline]
+        fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            let val = val.as_raw_PtrOfBackendNode();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*", index as "size_t", val as "Ptr<cv::dnn::BackendNode>*"] {
+                vec->insert(vec->begin() + index, *val);
+            });
+            Ok(())
+        }
+        
+        #[inline]
+        fn get(&self, index: size_t) -> Result<Self::Storage> {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::BackendNode>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new Ptr<cv::dnn::BackendNode>(vec->at(index)) };
+                } VEC_CATCH(cv_return_value_void_X)
+            }).into_result().map(|ptr| types::PtrOfBackendNode { ptr })
+        }
+        
+        #[inline]
+        unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            types::PtrOfBackendNode { ptr: cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::BackendNode>>*", index as "size_t"] -> *mut c_void as "void*" {
+                return new Ptr<cv::dnn::BackendNode>((*vec)[index]);
+            })}
+        }
+        
+        #[inline]
+        fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            let val = val.ptr;
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*", index as "size_t", val as "Ptr<cv::dnn::BackendNode>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                try {
+                    vec->at(index) = *val;
+                    return { Error::Code::StsOk, NULL };
+                } VEC_CATCH(cv_return_value_void)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPtrOfBackendNode();
+            let val = val.ptr;
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendNode>>*", index as "size_t", val as "Ptr<cv::dnn::BackendNode>*"] {
+                (*vec)[index] = *val;
+            })
+        }
+    }
+    
+    unsafe impl Send for VectorOfPtrOfBackendNode {}
     
     pub struct VectorOfPtrOfBackendWrapper {
         pub(crate) ptr: *mut c_void

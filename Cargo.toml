@@ -6,7 +6,7 @@ repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
 keywords = [ "opencv", "vision" ]
 license = "MIT"
-version = "0.28.0"
+version = "0.29.0"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
 build = "build.rs"
@@ -43,12 +43,12 @@ vcpkg = "0.2"
 matches = "0.1"
 
 [features]
-default = ["opencv-34"]
+default = ["opencv-4"]
 buildtime-bindgen = []
 force-3rd-party-libs-discovery = []
 opencv-32 = []
 opencv-34 = []
-opencv-41 = []
+opencv-4 = []
 contrib = []
 docs-only = []
 

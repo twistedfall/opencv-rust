@@ -27,9 +27,9 @@ fn vec() -> Result<()> {
     p1.at_row_mut::<i32>(2)?.copy_from_slice(&[9, 9]);
     ps.push(p1);
     assert_eq!(ps.len(), 1);
-    #[cfg(not(feature = "opencv-41"))]
+    #[cfg(not(feature = "opencv-4"))]
     use self::core::LINE_8;
-    #[cfg(feature = "opencv-41")]
+    #[cfg(feature = "opencv-4")]
     use self::imgproc::LINE_8;
     imgproc::fill_poly(&mut m, &ps, Scalar::new(127., 127., 127., 0.), LINE_8, 0, Point::default())?;
     assert_eq!(*m.at_2d::<Vec3b>(0, 0)?, Vec3b::from([127, 127, 127]));

@@ -118,6 +118,8 @@ pub const CAP_PROP_BRIGHTNESS: i32 = 10;
 pub const CAP_PROP_BUFFERSIZE: i32 = 38;
 /// Video input or Channel Number (only for those cameras that support)
 pub const CAP_PROP_CHANNEL: i32 = 43;
+/// (read-only) codec's pixel format. 4-character code - see VideoWriter::fourcc . Subset of [AV_PIX_FMT_*](https://github.com/FFmpeg/FFmpeg/blob/master/libavcodec/raw.c) or -1 if unknown
+pub const CAP_PROP_CODEC_PIXEL_FORMAT: i32 = 46;
 /// Contrast of the image (only for cameras).
 pub const CAP_PROP_CONTRAST: i32 = 11;
 /// Boolean flags indicating whether images should be converted to RGB.
@@ -134,7 +136,7 @@ pub const CAP_PROP_EXPOSURE: i32 = 15;
 /// Camera exposure program.
 pub const CAP_PROP_EXPOSUREPROGRAM: i32 = 17009;
 pub const CAP_PROP_FOCUS: i32 = 28;
-/// Format of the %Mat objects returned by VideoCapture::retrieve().
+/// Format of the %Mat objects (see Mat::type()) returned by VideoCapture::retrieve().
 pub const CAP_PROP_FORMAT: i32 = 8;
 /// 4-character code of codec. see VideoWriter::fourcc .
 pub const CAP_PROP_FOURCC: i32 = 6;

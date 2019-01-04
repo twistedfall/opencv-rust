@@ -10,9 +10,9 @@
 //! - Detection of ChArUco diamond markers
 //! The samples directory includes easy examples of how to use the module.
 //!
-//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_Aruco2014).
+//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Aruco2014).
 //!
-//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 //!
 //! ## See also
 //! S. Garrido-Jurado, R. Muñoz-Salinas, F. J. Madrid-Cuevas, and M. J. Marín-Jiménez. 2014.

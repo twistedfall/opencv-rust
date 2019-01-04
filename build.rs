@@ -23,11 +23,11 @@ static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| HashSet::from_it
     "core",
     #[cfg(not(feature = "opencv-32"))]
     "dnn",
-    #[cfg(feature = "opencv-41")]
+    #[cfg(feature = "opencv-4")]
     "dnn_superres",
     "features2d",
     "flann",
-    #[cfg(feature = "opencv-41")]
+    #[cfg(feature = "opencv-4")]
     "gapi",
     "highgui",
     "imgcodecs",
@@ -180,7 +180,7 @@ impl Library {
                 } else {
                     "opencv".into()
                 })
-        } else if cfg!(feature = "opencv-41") {
+        } else if cfg!(feature = "opencv-4") {
             env::var("OPENCV_PACKAGE_NAME")
                 .or_else(|_| env::var("OPENCV_PKGCONFIG_NAME"))
                 .map(|x| Cow::Owned(x))
@@ -316,8 +316,8 @@ fn check_matching_version(version: &str) -> Result<()> {
         Err(format!("OpenCV version: {} must be from 3.2 branch because of the feature: opencv-32", version).into())
     } else if cfg!(feature = "opencv-34") && !VersionReq::parse("~3.4")?.matches(&Version::parse(version)?) {
         Err(format!("OpenCV version: {} must be from 3.4 branch because of the feature: opencv-34", version).into())
-    } else if cfg!(feature = "opencv-41") && !VersionReq::parse("~4.1")?.matches(&Version::parse(version)?) {
-        Err(format!("OpenCV version: {} must be from 4.1 branch because of the feature: opencv-41", version).into())
+    } else if cfg!(feature = "opencv-4") && !VersionReq::parse("~4")?.matches(&Version::parse(version)?) {
+        Err(format!("OpenCV version: {} must be from 4.x branch because of the feature: opencv-4", version).into())
     } else {
         Ok(())
     }
@@ -330,8 +330,8 @@ fn get_versioned_hub_dir() -> PathBuf {
         hub_dir.push("opencv_32");
     } else if cfg!(feature = "opencv-34") {
         hub_dir.push("opencv_34");
-    } else if cfg!(feature = "opencv-41") {
-        hub_dir.push("opencv_41");
+    } else if cfg!(feature = "opencv-4") {
+        hub_dir.push("opencv_4");
     }
     hub_dir
 }
@@ -557,6 +557,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     {
         let mut types = File::create(out_dir.join("common_opencv.h"))?;
         writeln!(&mut types, "#define CERES_FOUND true")?; // for sfm module
+        writeln!(&mut types, "#define CV_COLLECT_IMPL_DATA")?; // for sfm module
         if cfg!(feature = "opencv-32") { // for opencl support
             writeln!(&mut types, "#define HAVE_OPENCV_OCL true")?;
         }
@@ -571,7 +572,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
                 }
                 "dnn" => {
                     // include it manually, otherwise it's not included
-                    if cfg!(feature = "opencv-41") {
+                    if cfg!(feature = "opencv-4") {
                         writeln!(&mut types, "#include <opencv2/{}/version.hpp>", m.0)?;
                     }
                     writeln!(&mut types, "#include <opencv2/{}/all_layers.hpp>", m.0)?;
@@ -595,9 +596,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     let version = if cfg!(feature = "opencv-32") {
         "3.2.0"
     } else if cfg!(feature = "opencv-34") {
-        "3.4.8"
-    } else if cfg!(feature = "opencv-41") {
-        "4.1.2"
+        "3.4.9"
+    } else if cfg!(feature = "opencv-4") {
+        "4.2.0"
     } else {
         unreachable!();
     };
@@ -832,9 +833,9 @@ fn cleanup(opencv_dir: &PathBuf) -> Result<()> {
 }
 
 fn main() -> Result<()> {
-    let features = [cfg!(feature = "opencv-32"), cfg!(feature = "opencv-34"), cfg!(feature = "opencv-41")].iter().map(|&x| i32::from(x)).sum::<i32>();
+    let features = [cfg!(feature = "opencv-32"), cfg!(feature = "opencv-34"), cfg!(feature = "opencv-4")].iter().map(|&x| i32::from(x)).sum::<i32>();
     if features != 1 {
-        panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
+        panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-4");
     }
     let opencv = if cfg!(feature = "docs-only") {
         Library::probe_from_paths("opencv", "", "", "")?
@@ -853,8 +854,8 @@ fn main() -> Result<()> {
                 manifest_dir.join("headers/3.2")
             } else if cfg!(feature = "opencv-34") {
                 manifest_dir.join("headers/3.4")
-            } else if cfg!(feature = "opencv-41") {
-                manifest_dir.join("headers/4.1")
+            } else if cfg!(feature = "opencv-4") {
+                manifest_dir.join("headers/4")
             } else {
                 panic!("Please select one OpenCV major version using one of the opencv-* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
             }

@@ -11,6 +11,7 @@ pub mod ccalib;
 #[cfg(feature = "contrib")]
 pub mod cvv;
 pub mod dnn;
+pub mod dnn_superres;
 #[cfg(feature = "contrib")]
 pub mod dpm;
 #[cfg(feature = "contrib")]
@@ -38,13 +39,16 @@ pub mod photo;
 pub mod plot;
 #[cfg(feature = "contrib")]
 pub mod sfm;
+#[cfg(feature = "contrib")]
 pub mod shape;
 pub mod stitching;
 #[cfg(feature = "contrib")]
 pub mod structured_light;
+#[cfg(feature = "contrib")]
 pub mod superres;
 pub mod video;
 pub mod videoio;
+#[cfg(feature = "contrib")]
 pub mod videostab;
 pub mod viz;
 #[cfg(feature = "contrib")]

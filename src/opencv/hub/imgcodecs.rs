@@ -36,6 +36,8 @@ pub const IMREAD_UNCHANGED: i32 = -1;
 pub const IMWRITE_EXR_TYPE_FLOAT: i32 = 2;
 /// store as HALF (FP16)
 pub const IMWRITE_EXR_TYPE_HALF: i32 = 1;
+/// For JPEG2000, use to specify the target compression rate (multiplied by 1000). The value can be from 0 to 1000. Default is 1000.
+pub const IMWRITE_JPEG2000_COMPRESSION_X1000: i32 = 272;
 /// Separate chroma quality level, 0 - 100, default is 0 - don't use.
 pub const IMWRITE_JPEG_CHROMA_QUALITY: i32 = 6;
 /// Separate luma quality level, 0 - 100, default is 0 - don't use.
@@ -76,14 +78,32 @@ pub const IMWRITE_PNG_STRATEGY_RLE: i32 = 3;
 pub const IMWRITE_PXM_BINARY: i32 = 32;
 /// For TIFF, use to specify the image compression scheme. See libtiff for integer constants corresponding to compression formats. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
 pub const IMWRITE_TIFF_COMPRESSION: i32 = 259;
-/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values.
+/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values
 pub const IMWRITE_TIFF_RESUNIT: i32 = 256;
-/// For TIFF, use to specify the X direction DPI.
+/// For TIFF, use to specify the X direction DPI
 pub const IMWRITE_TIFF_XDPI: i32 = 257;
-/// For TIFF, use to specify the Y direction DPI.
+/// For TIFF, use to specify the Y direction DPI
 pub const IMWRITE_TIFF_YDPI: i32 = 258;
 /// For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
 pub const IMWRITE_WEBP_QUALITY: i32 = 64;
+
+/// Returns true if the specified image can be decoded by OpenCV
+///
+/// ## Parameters
+/// * filename: File name of the image
+pub fn have_image_reader(filename: &str) -> Result<bool> {
+    string_arg!(filename);
+    unsafe { sys::cv_haveImageReader_String(filename.as_ptr()) }.into_result()
+}
+
+/// Returns true if an image with the specified filename can be encoded by OpenCV
+///
+/// ## Parameters
+/// * filename: File name of the image
+pub fn have_image_writer(filename: &str) -> Result<bool> {
+    string_arg!(filename);
+    unsafe { sys::cv_haveImageWriter_String(filename.as_ptr()) }.into_result()
+}
 
 /// Reads an image from a buffer in memory.
 ///
@@ -161,6 +181,7 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut types::Vector
 /// *   Portable Network Graphics - \*.png (see the *Note* section)
 /// *   WebP - \*.webp (see the *Note* section)
 /// *   Portable image format - \*.pbm, \*.pgm, \*.ppm \*.pxm, \*.pnm (always supported)
+/// *   PFM files - \*.pfm (see the *Note* section)
 /// *   Sun rasters - \*.sr, \*.ras (always supported)
 /// *   TIFF files - \*.tiff, \*.tif (see the *Note* section)
 /// *   OpenEXR Image files - \*.exr (see the *Note* section)
@@ -188,6 +209,7 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut types::Vector
 /// [Vector](http://www.gdal.org/ogr_formats.html).
 /// *   If EXIF information are embedded in the image file, the EXIF orientation will be taken into account
 /// and thus the image will be rotated accordingly except if the flag @ref IMREAD_IGNORE_ORIENTATION is passed.
+/// *   Use the IMREAD_UNCHANGED flag to keep the floating point values from PFM image.
 /// *   By default number of pixels must be less than 2^30. Limit can be set using system
 /// variable OPENCV_IO_MAX_IMAGE_PIXELS
 ///
@@ -227,8 +249,9 @@ pub fn imreadmulti(filename: &str, mats: &mut types::VectorOfMat, flags: i32) ->
 /// can be saved using this function, with these exceptions:
 ///
 /// - 16-bit unsigned (CV_16U) images can be saved in the case of PNG, JPEG 2000, and TIFF formats
-/// - 32-bit float (CV_32F) images can be saved in TIFF, OpenEXR, and Radiance HDR formats; 3-channel
-/// (CV_32FC3) TIFF images will be saved using the LogLuv high dynamic range encoding (4 bytes per pixel)
+/// - 32-bit float (CV_32F) images can be saved in PFM, TIFF, OpenEXR, and Radiance HDR formats;
+/// 3-channel (CV_32FC3) TIFF images will be saved using the LogLuv high dynamic range encoding
+/// (4 bytes per pixel)
 /// - PNG images with an alpha channel can be saved using this function. To do this, create
 /// 8-bit (or 16-bit) 4-channel image BGRA, where the alpha channel goes last. Fully transparent pixels
 /// should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535 (see the code sample below).

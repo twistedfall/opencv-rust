@@ -12,14 +12,18 @@ use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
+pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &'static str = "NGRAPH";
+pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NN_BUILDER_API: &'static str = "NN_BUILDER";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_2: &'static str = "Myriad2";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_X: &'static str = "MyriadX";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_UNSPECIFIED: &'static str = "";
 pub const DNN_BACKEND_DEFAULT: i32 = 0;
-pub const DNN_BACKEND_HALIDE: i32 = 1;
-/// Intel's Inference Engine computational backend.
-pub const DNN_BACKEND_INFERENCE_ENGINE: i32 = 2;
-pub const DNN_BACKEND_OPENCV: i32 = 3;
+pub const DNN_BACKEND_HALIDE: i32 = 0+1;
+/// Intel's Inference Engine computational backend
+pub const DNN_BACKEND_INFERENCE_ENGINE: i32 = 0+2;
+pub const DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: i32 = 1000000;
+pub const DNN_BACKEND_INFERENCE_ENGINE_NN_BUILDER_2019: i32 = 1000000+1;
+pub const DNN_BACKEND_OPENCV: i32 = 0+3;
 pub const DNN_TARGET_CPU: i32 = 0;
 /// FPGA device with CPU fallbacks using Inference Engine's Heterogeneous plugin.
 pub const DNN_TARGET_FPGA: i32 = 4;
@@ -34,9 +38,11 @@ pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 pub enum Backend {
     DNN_BACKEND_DEFAULT = DNN_BACKEND_DEFAULT as isize,
     DNN_BACKEND_HALIDE = DNN_BACKEND_HALIDE as isize,
-    /// Intel's Inference Engine computational backend.
+    /// Intel's Inference Engine computational backend
     DNN_BACKEND_INFERENCE_ENGINE = DNN_BACKEND_INFERENCE_ENGINE as isize,
     DNN_BACKEND_OPENCV = DNN_BACKEND_OPENCV as isize,
+    DNN_BACKEND_INFERENCE_ENGINE_NGRAPH = DNN_BACKEND_INFERENCE_ENGINE_NGRAPH as isize,
+    DNN_BACKEND_INFERENCE_ENGINE_NN_BUILDER_2019 = DNN_BACKEND_INFERENCE_ENGINE_NN_BUILDER_2019 as isize,
 }
 
 /// Enum of target devices for computations.
@@ -193,6 +199,15 @@ pub fn get_available_targets(be: crate::dnn::Backend) -> Result<types::VectorOfT
     unsafe { sys::cv_dnn_getAvailableTargets_Backend(be) }.into_result().map(|ptr| types::VectorOfTarget { ptr })
 }
 
+/// Returns Inference Engine internal backend API.
+///
+/// See values of `CV_DNN_BACKEND_INFERENCE_ENGINE_*` macros.
+///
+/// Default value is controlled through `OPENCV_DNN_BACKEND_INFERENCE_ENGINE_TYPE` runtime parameter (environment variable).
+pub fn get_inference_engine_backend_type() -> Result<String> {
+    unsafe { sys::cv_dnn_getInferenceEngineBackendType() }.into_result().map(crate::templ::receive_string_mut)
+}
+
 /// Returns Inference Engine VPU type.
 ///
 /// See values of `CV_DNN_INFERENCE_ENGINE_VPU_TYPE_*` macros.
@@ -325,6 +340,32 @@ pub fn read_net_from_model_optimizer(xml: &str, bin: &str) -> Result<crate::dnn:
     string_arg!(xml);
     string_arg!(bin);
     unsafe { sys::cv_dnn_readNetFromModelOptimizer_String_String(xml.as_ptr(), bin.as_ptr()) }.into_result().map(|ptr| crate::dnn::Net { ptr })
+}
+
+/// Load a network from Intel's Model Optimizer intermediate representation.
+/// ## Parameters
+/// * bufferModelConfig: Buffer contains XML configuration with network's topology.
+/// * bufferWeights: Buffer contains binary data with trained weights.
+/// ## Returns
+/// Net object.
+///  Networks imported from Intel's Model Optimizer are launched in Intel's Inference Engine
+///  backend.
+pub fn read_net_from_model_optimizer_1(buffer_model_config: &types::VectorOfuchar, buffer_weights: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
+    unsafe { sys::cv_dnn_readNetFromModelOptimizer_VectorOfuchar_VectorOfuchar(buffer_model_config.as_raw_VectorOfuchar(), buffer_weights.as_raw_VectorOfuchar()) }.into_result().map(|ptr| crate::dnn::Net { ptr })
+}
+
+/// Load a network from Intel's Model Optimizer intermediate representation.
+/// ## Parameters
+/// * bufferModelConfigPtr: Pointer to buffer which contains XML configuration with network's topology.
+/// * bufferModelConfigSize: Binary size of XML configuration data.
+/// * bufferWeightsPtr: Pointer to buffer which contains binary data with trained weights.
+/// * bufferWeightsSize: Binary size of trained weights data.
+/// ## Returns
+/// Net object.
+///  Networks imported from Intel's Model Optimizer are launched in Intel's Inference Engine
+///  backend.
+pub fn read_net_from_model_optimizer_2(buffer_model_config_ptr: &u8, buffer_model_config_size: size_t, buffer_weights_ptr: &u8, buffer_weights_size: size_t) -> Result<crate::dnn::Net> {
+    unsafe { sys::cv_dnn_readNetFromModelOptimizer_const_uchar_X_size_t_const_uchar_X_size_t(buffer_model_config_ptr, buffer_model_config_size, buffer_weights_ptr, buffer_weights_size) }.into_result().map(|ptr| crate::dnn::Net { ptr })
 }
 
 /// Reads a network model <a href="https://onnx.ai/">ONNX</a>.
@@ -523,6 +564,17 @@ pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<core::Mat> {
 /// Inference Engine's Myriad plugin.
 pub fn reset_myriad_device() -> Result<()> {
     unsafe { sys::cv_dnn_resetMyriadDevice() }.into_result()
+}
+
+/// Specify Inference Engine internal backend API.
+///
+/// See values of `CV_DNN_BACKEND_INFERENCE_ENGINE_*` macros.
+///
+/// ## Returns
+/// previous value of internal backend API
+pub fn set_inference_engine_backend_type(new_backend_type: &str) -> Result<String> {
+    string_arg!(new_backend_type);
+    unsafe { sys::cv_dnn_setInferenceEngineBackendType_String(new_backend_type.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
 pub fn shape(mat: &core::Mat) -> Result<types::VectorOfint> {
@@ -1367,6 +1419,12 @@ impl ELULayer {
 }
 
 // boxed class cv::dnn::EltwiseLayer
+/// Element wise operation on inputs
+///
+/// Extra optional parameters:
+/// - "operation" as string. Values are "sum" (default), "prod", "max", "div"
+/// - "coeff" as float array. Specify weights of inputs for SUM operation
+/// - "output_channels_mode" as string. Values are "same" (default, all input must have the same layout), "input_0", "input_0_truncate", "max_input_channels"
 pub struct EltwiseLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
@@ -1777,6 +1835,10 @@ pub trait LayerTrait: core::AlgorithmTrait {
         unsafe { sys::cv_dnn_Layer_initInfEngine_VectorOfPtrOfBackendWrapper(self.as_raw_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper()) }.into_result().map(|ptr| types::PtrOfBackendNode { ptr })
     }
     
+    fn init_ngraph(&mut self, inputs: &types::VectorOfPtrOfBackendWrapper, nodes: &types::VectorOfPtrOfBackendNode) -> Result<types::PtrOfBackendNode> {
+        unsafe { sys::cv_dnn_Layer_initNgraph_VectorOfPtrOfBackendWrapper_VectorOfPtrOfBackendNode(self.as_raw_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper(), nodes.as_raw_VectorOfPtrOfBackendNode()) }.into_result().map(|ptr| types::PtrOfBackendNode { ptr })
+    }
+    
     /// Implement layers fusing.
     /// ## Parameters
     /// * node: Backend node of bottom layer.
@@ -2070,6 +2132,46 @@ impl MaxUnpoolLayer {
     
 }
 
+// boxed class cv::dnn::MishLayer
+pub struct MishLayer {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for MishLayer {
+    fn drop(&mut self) {
+        unsafe { sys::cv_MishLayer_delete(self.ptr) };
+    }
+}
+
+impl MishLayer {
+    #[inline(always)] pub fn as_raw_MishLayer(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for MishLayer {}
+
+impl core::AlgorithmTrait for MishLayer {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::ActivationLayer for MishLayer {
+    #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::LayerTrait for MishLayer {
+    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+}
+
+impl MishLayer {
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfMishLayer> {
+        unsafe { sys::cv_dnn_MishLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfMishLayer { ptr })
+    }
+    
+}
+
 // boxed class cv::dnn::Net
 /// This class allows to create and manipulate comprehensive artificial neural networks.
 ///
@@ -2106,7 +2208,7 @@ impl Net {
         unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| crate::dnn::Net { ptr })
     }
     
-    /// Create a network from Intel's Model Optimizer intermediate representation.
+    /// Create a network from Intel's Model Optimizer intermediate representation (IR).
     /// ## Parameters
     /// * xml: XML configuration file with network's topology.
     /// * bin: Binary file with trained weights.
@@ -2116,6 +2218,28 @@ impl Net {
         string_arg!(xml);
         string_arg!(bin);
         unsafe { sys::cv_dnn_Net_readFromModelOptimizer_String_String(xml.as_ptr(), bin.as_ptr()) }.into_result().map(|ptr| crate::dnn::Net { ptr })
+    }
+    
+    /// Create a network from Intel's Model Optimizer in-memory buffers with intermediate representation (IR).
+    /// ## Parameters
+    /// * bufferModelConfig: buffer with model's configuration.
+    /// * bufferWeights: buffer with model's trained weights.
+    /// ## Returns
+    /// Net object.
+    pub fn read_from_model_optimizer_1(buffer_model_config: &types::VectorOfuchar, buffer_weights: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
+        unsafe { sys::cv_dnn_Net_readFromModelOptimizer_VectorOfuchar_VectorOfuchar(buffer_model_config.as_raw_VectorOfuchar(), buffer_weights.as_raw_VectorOfuchar()) }.into_result().map(|ptr| crate::dnn::Net { ptr })
+    }
+    
+    /// Create a network from Intel's Model Optimizer in-memory buffers with intermediate representation (IR).
+    /// ## Parameters
+    /// * bufferModelConfigPtr: buffer pointer of model's configuration.
+    /// * bufferModelConfigSize: buffer size of model's configuration.
+    /// * bufferWeightsPtr: buffer pointer of model's trained weights.
+    /// * bufferWeightsSize: buffer size of model's trained weights.
+    /// ## Returns
+    /// Net object.
+    pub fn read_from_model_optimizer_2(buffer_model_config_ptr: &u8, buffer_model_config_size: size_t, buffer_weights_ptr: &u8, buffer_weights_size: size_t) -> Result<crate::dnn::Net> {
+        unsafe { sys::cv_dnn_Net_readFromModelOptimizer_const_uchar_X_size_t_const_uchar_X_size_t(buffer_model_config_ptr, buffer_model_config_size, buffer_weights_ptr, buffer_weights_size) }.into_result().map(|ptr| crate::dnn::Net { ptr })
     }
     
     /// Returns true if there are no layers in the network.
@@ -3319,6 +3443,46 @@ impl crate::dnn::LayerTrait for SplitLayer {
 impl SplitLayer {
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfSplitLayer> {
         unsafe { sys::cv_dnn_SplitLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfSplitLayer { ptr })
+    }
+    
+}
+
+// boxed class cv::dnn::SwishLayer
+pub struct SwishLayer {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for SwishLayer {
+    fn drop(&mut self) {
+        unsafe { sys::cv_SwishLayer_delete(self.ptr) };
+    }
+}
+
+impl SwishLayer {
+    #[inline(always)] pub fn as_raw_SwishLayer(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for SwishLayer {}
+
+impl core::AlgorithmTrait for SwishLayer {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::ActivationLayer for SwishLayer {
+    #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::LayerTrait for SwishLayer {
+    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+}
+
+impl SwishLayer {
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfSwishLayer> {
+        unsafe { sys::cv_dnn_SwishLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfSwishLayer { ptr })
     }
     
 }
