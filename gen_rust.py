@@ -363,12 +363,18 @@ const_ignore_list = (
     "CV_EXPORTS_W", "CV_EXPORTS_W_SIMPLE", "CV_EXPORTS_W_MAP", "CV_MAKE_TYPE",
     "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
     "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
-    "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_LOG2",
+    "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_2PI", "CV_LOG2",
     "CV_TYPE_NAME_IMAGE",
     "CV_SUPPRESS_DEPRECATED_START",
     "CV_SUPPRESS_DEPRECATED_END",
     "__CV_BEGIN__", "__CV_END__", "__CV_EXIT__",
     "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN",
+    "CV_TRY", "CV_CATCH_ALL",
+    "CV__DEBUG_NS_BEGIN", "CV__DEBUG_NS_END",
+    "UINT64_1",
+    "CV_STRUCT_INITIALIZER", "CV__ENABLE_C_API_CTORS",
+    "VSX_IMPL_MULH_P16", "VSX_IMPL_MULH_P8",
+    "CV__DNN_EXPERIMENTAL_NS_BEGIN", "CV__DNN_EXPERIMENTAL_NS_END",
 )
 
 #
@@ -981,6 +987,8 @@ class ConstInfo(GeneralInfo):
             return ""
         elif self.fullname == "CV_VERSION":
             return """    printf("pub static %s: &'static str = \\"%%s\\";\\n", %s);\n""" % (self.rustname, self.fullname)
+        elif self.fullname in ("MLN10", "RELATIVE_ERROR_FACTOR"):
+            return """    printf("pub const %s: f64 = %%f;\\n", %s);\n""" % (self.rustname, self.fullname)
         else:
             return """    printf("pub const %s: i32 = 0x%%x;\\n", %s);\n""" % (self.rustname, self.fullname)
 
