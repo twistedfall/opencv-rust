@@ -579,8 +579,8 @@ class FuncInfo(GeneralInfo):
 
         self.identifier = self.fullname.replace("::", "_")
 
-        if len(decl) > 4:
-            self.comment = decl[4].encode("ascii", "ignore")
+        if len(decl) > 5:
+            self.comment = decl[5].encode("ascii", "ignore")
         else:
             self.comment = ""
 
@@ -596,7 +596,7 @@ class FuncInfo(GeneralInfo):
         self.fake_attrgetter = "/ATTRGETTER" in decl[2]
         self.struct_attrname = None
         if self.fake_attrgetter:
-            self.struct_attrname = decl[5]
+            self.struct_attrname = decl[6]
 
         self.cname = self.cppname = self.name
 
@@ -832,8 +832,8 @@ class ClassInfo(GeneralInfo):
         self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
         self.comment = ""
-        if len(decl) > 4:
-            self.comment = decl[4].encode("ascii", "ignore")
+        if len(decl) > 5:
+            self.comment = decl[5].encode("ascii", "ignore")
         for m in decl[2]:
             if m == "/Simple" or m == "/Map" :
                 self.is_simple = True
@@ -896,6 +896,7 @@ class ClassInfo(GeneralInfo):
                 field_type,
                 ['/ATTRGETTER'],
                 [],
+                None,
                 u'returns the {struct_field} attr of {field_type} type\n'.format(
                     struct_field=struct_field,
                     field_type=field_type,
