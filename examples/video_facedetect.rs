@@ -20,7 +20,7 @@ fn run() -> Result<(), String> {
         let mut frame = try!(core::Mat::new());
         try!(cam.read(&mut frame));
         if try!(frame.size()).width == 0 {
-            ::std::thread::sleep_ms(50);
+            ::std::thread::sleep(::std::time::Duration::from_secs(50));
             continue;
         }
         let mut gray = try!(core::Mat::new());
