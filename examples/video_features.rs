@@ -24,7 +24,8 @@ fn run() -> opencv::Result<()> {
         0,
         2,
         features2d::ORB_HARRIS_SCORE,
-        31
+        31,
+        20
     )?;
     loop {
         let mut frame = core::Mat::new()?;

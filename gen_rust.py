@@ -33,7 +33,7 @@ cross_modules_deps = {
     )
 }
 
-renamed_funcs = {
+renamed_funcs = {  # todo check if any "new" is required
     # calib3D
     # "cv_StereoBM_StereoBM": "default",
     # "cv_StereoBM_StereoBM_int_preset_int_ndisparities_int_SADWindowSize": "new",
