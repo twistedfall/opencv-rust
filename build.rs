@@ -1,19 +1,19 @@
-extern crate cc;
-extern crate glob;
-extern crate pkg_config;
-
-use glob::glob;
 use std::ffi::OsString;
-use std::fs;
-use std::fs::{read_dir, File};
+use std::{fs, io};
+use std::fs::{File, read_dir};
 use std::io::Write;
 use std::path::PathBuf;
 use std::process::Command;
 
+use glob::glob;
+
 fn main() {
     println!("cargo:rerun-if-changed=build.rs");
     println!("cargo:rerun-if-changed=gen_rust.py");
-    let out_dir = std::env::var("OUT_DIR").unwrap();
+    let out_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap());
+    let out_dir_as_str = out_dir.to_str().unwrap();
+    let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src");
+    let module_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src/hub");
 
     let opencv = pkg_config::Config::new().cargo_metadata(false).probe("opencv").unwrap();
     let mut search_paths = opencv.include_paths.clone();
@@ -32,8 +32,8 @@ fn main() {
     let third_party_dir = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::Config::get_variable("opencv", "prefix").unwrap());
     println!("cargo:rustc-link-search=native={}", third_party_dir);
 
-    println!("OpenCV lives in {:?}", actual_opencv);
-    println!("Generating code in {:?}", out_dir);
+    println!("OpenCV lives in {}", opencv_dir.display());
+    println!("Generating code in {}", out_dir_as_str);
     println!("cargo:rerun-if-changed=gen_rust.py");
     println!("cargo:rerun-if-changed=hdr_parser.py");
 
@@ -54,7 +54,7 @@ fn main() {
         gcc.include(path);
     }
 
-    for entry in glob(&(out_dir.clone() + "/*")).unwrap() {
+    for entry in glob(&format!("{}/*", out_dir_as_str)).unwrap() {
         fs::remove_file(entry.unwrap()).unwrap()
     }
 
@@ -132,29 +132,29 @@ fn main() {
     )
     .collect::<Vec<(String,Vec<String>)>>();
 
-    let mut types = PathBuf::from(&out_dir);
-    types.push("common_opencv.h");
     {
-        let mut types = File::create(types).unwrap();
-        for ref m in modules.iter() {
-            write!(&mut types, "#include <opencv2/{}.hpp>\n", &*m.0).unwrap();
+        let mut types = File::create(out_dir.join("common_opencv.h")).unwrap();
+        for m in &modules {
+            write!(&mut types, "#include <opencv2/{}.hpp>\n", m.0).unwrap();
+            if m.0 == "dnn" {
+                // include it manually, otherwise it's not included
+                write!(&mut types, "#include <opencv2/{}/all_layers.hpp>\n", m.0).unwrap();
+            }
         }
     }
 
-    let mut types = PathBuf::from(&out_dir);
-    types.push("types.h");
     {
-        let mut types = File::create(types).unwrap();
+        let mut types = File::create(out_dir.join("types.h")).unwrap();
         write!(&mut types, "#include <cstddef>\n").unwrap();
     }
 
-    for ref module in modules.iter() {
-        let mut cpp = PathBuf::from(&out_dir);
+    for module in &modules {
+        let mut cpp = out_dir.clone();
         cpp.push(&*module.0);
         cpp.set_extension("cpp");
 
         if !Command::new("python2.7")
-            .args(&["gen_rust.py", "hdr_parser.py", &*out_dir, &*module.0])
+            .args(&["gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0])
             .args(
                 &(module
                     .1
@@ -172,36 +172,8 @@ fn main() {
         {
             panic!();
         }
-        let _ = fs::remove_file("gen_rust.pyc");
-        let _ = fs::remove_file("hdr_parser.pyc");
 
         gcc.file(cpp);
-    }
-
-    let mut return_types = PathBuf::from(&out_dir);
-    return_types.push("return_types.h");
-    let mut hub_return_types = File::create(return_types).unwrap();
-    for entry in glob(&(out_dir.clone() + "/cv_return_value_*.type.h")).unwrap() {
-        writeln!(
-            &mut hub_return_types,
-            r#"#include "{}""#,
-            entry.unwrap().file_name().unwrap().to_str().unwrap()
-        )
-        .unwrap();
-    }
-
-    for entry in glob("native/*.cpp").unwrap() {
-        gcc.file(entry.unwrap());
-    }
-    for entry in glob(&(out_dir.clone() + "/*.type.cpp")).unwrap() {
-        gcc.file(entry.unwrap());
-    }
-
-    gcc.include(".")
-        .include(&out_dir)
-        .flag("-Wno-c++11-extensions");
-
-    for ref module in &modules {
         let e = Command::new("sh")
             .current_dir(&out_dir)
             .arg("-c")
@@ -215,53 +187,84 @@ fn main() {
         let e = Command::new("sh")
             .current_dir(&out_dir)
             .arg("-c")
-            .arg(format!("./{}.consts > {}.consts.rs", module.0, module.0))
+            .arg(format!("./{}.consts >> {}.rs", module.0, module.0))
             .status()
             .unwrap();
         assert!(e.success());
+        let _ = fs::remove_file(out_dir.join(format!("{}.consts", module.0)));
+        let _ = fs::remove_file(out_dir.join(format!("{}.consts.cpp", module.0)));
     }
+    let _ = fs::remove_file("gen_rust.pyc");
+    let _ = fs::remove_file("hdr_parser.pyc");
+
+    {
+        let mut hub_return_types = File::create(out_dir.join("return_types.h")).unwrap();
+        for entry in glob(&format!("{}/cv_return_value_*.type.h", out_dir_as_str)).unwrap() {
+            writeln!(
+                &mut hub_return_types,
+                r#"#include "{}""#,
+                entry.unwrap().file_name().unwrap().to_str().unwrap()
+            )
+               .unwrap();
+        }
+    }
+
+    for entry in glob("native/*.cpp").unwrap() {
+        gcc.file(entry.unwrap());
+    }
+    for entry in glob(&format!("{}/*.type.cpp", out_dir_as_str)).unwrap() {
+        gcc.file(entry.unwrap());
+    }
+
+    gcc.include(".")
+        .include(&out_dir);
 
     gcc.compile("ocvrs");
 
-    let mut hub_filename = PathBuf::from(&out_dir);
-    hub_filename.push("hub.rs");
+    if !module_dir.exists() {
+        fs::create_dir(&module_dir).unwrap();
+    }
+
+    for entry in glob(&format!("{}/*", module_dir.to_str().unwrap())).unwrap() {
+        let _ = fs::remove_file(entry.unwrap());
+    }
+
     {
-        let mut hub = File::create(hub_filename).unwrap();
+        let mut hub = File::create(hub_dir.join("hub.rs")).unwrap();
         for ref module in &modules {
             writeln!(&mut hub, r#"pub mod {};"#, module.0).unwrap();
+            fs::rename(out_dir.join(format!("{}.rs", module.0)), module_dir.join(format!("{}.rs", module.0))).unwrap();
         }
-        writeln!(&mut hub, r#"pub mod types {{"#).unwrap();
-        writeln!(&mut hub, "  use libc::{{ c_void, c_char, size_t }};").unwrap();
-        for entry in glob(&(out_dir.clone() + "/*.type.rs")).unwrap() {
-            writeln!(
-                &mut hub,
-                r#"  include!(concat!(env!("OUT_DIR"), "/{}"));"#,
-                entry.unwrap().file_name().unwrap().to_str().unwrap()
-            )
-            .unwrap();
-        }
-        writeln!(&mut hub, r#"}}"#).unwrap();
-        writeln!(&mut hub, "#[doc(hidden)] pub mod sys {{").unwrap();
-        writeln!(&mut hub, "  use libc::{{ c_void, c_char, size_t }};").unwrap();
-        for entry in glob(&(out_dir.clone() + "/*.rv.rs")).unwrap() {
-            writeln!(
-                &mut hub,
-                r#"  include!(concat!(env!("OUT_DIR"), "/{}"));"#,
-                entry.unwrap().file_name().unwrap().to_str().unwrap()
-            )
-            .unwrap();
-        }
-        for ref module in &modules {
-            writeln!(
-                &mut hub,
-                r#"  include!(concat!(env!("OUT_DIR"), "/{}.externs.rs"));"#,
-                module.0
-            )
-            .unwrap();
-        }
-        writeln!(&mut hub, "}}\n").unwrap();
+        writeln!(&mut hub, "pub mod types;").unwrap();
+        writeln!(&mut hub, "#[doc(hidden)] pub mod sys;").unwrap();
     }
-    println!("cargo:rustc-link-lib=ocvrs");
+
+    {
+        let mut types = File::create(module_dir.join("types.rs")).unwrap();
+        writeln!(&mut types, "use libc::{{c_void, c_char, size_t}};").unwrap();
+        writeln!(&mut types, "use crate::{{core, types}};").unwrap();
+        for entry in glob(&format!("{}/*.type.rs", out_dir_as_str)).unwrap() {
+            let entry = entry.unwrap();
+            io::copy(&mut File::open(&entry).unwrap(), &mut types).unwrap();
+            let _ = fs::remove_file(entry);
+        }
+    }
+
+    {
+        let mut sys = File::create(module_dir.join("sys.rs")).unwrap();
+        writeln!(&mut sys, "use libc::{{c_void, c_char, size_t}};").unwrap();
+        writeln!(&mut sys, "use crate::{{core}};").unwrap();
+        for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str)).unwrap() {
+            let entry = entry.unwrap();
+            io::copy(&mut File::open(&entry).unwrap(), &mut sys).unwrap();
+            let _ = fs::remove_file(entry);
+        }
+        for module in &modules {
+            let path = out_dir.join(format!("{}.externs.rs", module.0));
+            io::copy(&mut File::open(&path).unwrap(), &mut sys).unwrap();
+            let _ = fs::remove_file(path);
+        }
+    }
 
     // now, this is a nightmare.
     // opencv will embark these as .a when they are not available, or

@@ -417,6 +417,8 @@ for s in [2,3,4,6]:
     for t in [("uchar","b"),("short","s"),("int","i"),("double","d"),("float","f")]:
         value_struct_types["Vec%d%s"%(s,t[1])] = ("data", "%s[%d]"%(t[0],s)),
 
+static_modules = ("sys", "types", "core")
+
 #
 #       TEMPLATES
 #
@@ -779,7 +781,7 @@ class FuncInfo(GeneralInfo):
         io.write("%sfn %s(%s) -> Result<%s,String> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
         io.write("// identifier: %s\n"%(self.identifier))
         io.write("  unsafe {\n")
-        io.write("    let rv = ::sys::%s(%s);\n"%(self.c_name(), ", ".join(call_args)))
+        io.write("    let rv = sys::%s(%s);\n"%(self.c_name(), ", ".join(call_args)))
         io.write("    if rv.error_msg as i32 != 0i32 {\n")
         io.write("      let v = CStr::from_ptr(rv.error_msg).to_bytes().to_vec();\n")
         io.write("      ::libc::free(rv.error_msg as *mut c_void);\n")
@@ -1053,7 +1055,7 @@ class SimpleClassTypeInfo(TypeInfo):
         self.rust_local = typeid.replace("cv::","").replace("::", "_")
         self.sane = self.rust_local
         if self.ci:
-            self.rust_full = "::" + self.ci.module + "::" + self.rust_local
+            self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
             self.ctype = "c_" + self.rust_local
             self.c_sane = self.ctype
             self.rust_extern = self.rust_full
@@ -1077,7 +1079,7 @@ class ValueStructTypeInfo(TypeInfo):
         self.cpptype = typeid
         self.rust_local = typeid.replace("cv::","")
         self.sane = self.rust_local
-        self.rust_full = "::core::" + self.rust_local
+        self.rust_full = "core::" + self.rust_local
         self.ctype = "c_" + self.rust_local
         self.c_sane = self.ctype
         self.rust_extern = self.rust_full
@@ -1099,7 +1101,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.cpptype = self.ci.nested_cppname
         self.rust_extern = "*mut c_void"
         self.rust_local = typeid.replace("cv::","").replace("::", "_")
-        self.rust_full = "::" + self.ci.module + "::" + self.rust_local
+        self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
         self.is_by_ptr = True
         self.is_trait = typeid in forced_trait_classes or self.ci.is_trait
         self.ctype = "void*"
@@ -1126,12 +1128,12 @@ class VectorTypeInfo(TypeInfo):
             self.inner_cpptype = inner.cpptype
             self.cpptype = "std::vector<%s>" % (inner.cpptype)
             self.sane = self.rust_local = "VectorOf"+inner.sane
-            self.rust_full = "::types::" + self.rust_local
+            self.rust_full = "types::" + self.rust_local
             self.rust_extern = "*mut c_void"
             self.inner_rust_full = inner.rust_full
 
     def gen_wrapper(self):
-        with open(self.gen.output_path + "/" + self.sane + ".type.rs", "w") as f:
+        with open(self.gen.rust_dir + "/" + self.sane + ".type.rs", "w") as f:
             if self.inner.typeid != "bool":
                 f.write(template("""
                 extern "C" {
@@ -1169,7 +1171,7 @@ class VectorTypeInfo(TypeInfo):
                 }
                 """).substitute(self.__dict__))
         if isinstance(self.inner, BoxedClassTypeInfo) or self.inner.is_by_ptr:
-            with open(self.gen.output_path + "/" + self.sane + ".type.rs", "a") as f:
+            with open(self.gen.rust_dir + "/" + self.sane + ".type.rs", "a") as f:
                 f.write(template("""
                     // BoxedClassTypeInfo
                     impl $rust_full {
@@ -1194,7 +1196,7 @@ class VectorTypeInfo(TypeInfo):
                     }
                     """).substitute(self.__dict__))
         else:
-            with open(self.gen.output_path+"/"+self.sane+".type.rs", "a") as f:
+            with open(self.gen.rust_dir + "/" + self.sane + ".type.rs", "a") as f:
                 f.write(template("""
                     impl $rust_full {
                         pub fn push(&mut self, val: $inner_rust_full) {
@@ -1220,7 +1222,7 @@ class VectorTypeInfo(TypeInfo):
                            }
                        }
                    """).substitute(self.__dict__))
-        with open(self.gen.output_path+"/"+self.sane+".type.cpp", "w") as f:
+        with open(self.gen.cpp_dir + "/" + self.sane + ".type.cpp", "w") as f:
             externs = template("""
                 void* cv_new_$sane() { return new $cpptype(); }
                 void cv_delete_$sane(void* ptr) { delete (($cpptype*) ptr); }
@@ -1272,12 +1274,12 @@ class SmartPtrTypeInfo(TypeInfo):
             self.cpptype = self.inner.cpptype
             self.outer_cpptype = "Ptr<"+self.inner.cpptype+">"
             self.rust_local = self.sane = "PtrOf" + inner.sane
-            self.rust_full = "::types::" + self.rust_local
+            self.rust_full = "types::" + self.rust_local
             self.inner_rust_full = inner.rust_full
             self.inner_local = inner.rust_local
 
     def gen_wrapper(self):
-        with open(self.gen.output_path + "/" + self.rust_local + ".type.rs", "w") as f:
+        with open(self.gen.rust_dir + "/" + self.rust_local + ".type.rs", "w") as f:
             f.write(template("""
                 #[allow(dead_code)]
                 pub struct $rust_local {
@@ -1309,7 +1311,7 @@ class SmartPtrTypeInfo(TypeInfo):
                             }
                         }
                     """).substitute(rust_name=self.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full, sane=self.sane))
-        with open(self.gen.output_path+"/"+self.sane+".type.cpp", "w") as f:
+        with open(self.gen.cpp_dir + "/" + self.sane + ".type.cpp", "w") as f:
             code = template("""
                 void* cv_${sane}_get(void* ptr) {
                     return (($outer_cpptype*)ptr)->get();
@@ -1495,13 +1497,21 @@ class RustWrapperGenerator(object):
     def register_function(self, f):
         self.functions.append(f)
 
-    def gen(self, srcfiles, module, output_path):
-        parser = hdr_parser.CppHeaderParser()
-        self.output_path = output_path
+    def gen(self, srcfiles, module, cpp_dir, rust_dir):
+        """
+        :param srcfiles:
+        :type module: str
+        :type cpp_dir: str
+        :type rust_dir: str
+        :return:
+        """
+        self.cpp_dir = cpp_dir
+        self.rust_dir = rust_dir
         self.module = module
         includes = []
 
-        self.namespaces = parser.namespaces
+        parser = hdr_parser.CppHeaderParser()
+        self.namespaces = set(x for x in parser.namespaces)
         self.namespaces.add("cv")
 
         for m in cross_modules_deps:
@@ -1541,6 +1551,7 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write(template("""
             use libc::{c_void, c_char, size_t};
             use std::ffi::{CStr, CString};
+            use crate::{core, sys, types};
         """).substitute())
         for co in sorted(self.consts, key=lambda c: c.rustname):
             rust = co.gen_rust()
@@ -1550,11 +1561,6 @@ class RustWrapperGenerator(object):
                 self.moduleCppConsts.write(co.gen_cpp_for_complex())
 
         self.moduleSafeRust.write("\n")
-
-        if self.moduleCppConsts.getvalue != "":
-            self.moduleSafeRust.write(
-                """include!(concat!(env!("OUT_DIR"), "/%s.consts.rs"));\n\n"""%(self.module)
-            )
 
         for ci in sorted(self.classes.values(), key=lambda ci: ci.fullname):
             if ci.classpath:
@@ -1584,10 +1590,10 @@ class RustWrapperGenerator(object):
             if not ci.is_ignored and not ci.is_ghost:
                 self.gen_class(ci)
 
-        with open(output_path + "/types.h", "a") as f:
+        with open(cpp_dir + "/types.h", "a") as f:
             f.write(self.moduleCppTypes.getvalue())
 
-        with open(output_path + "/" + self.module + ".consts.cpp", "w") as f:
+        with open(cpp_dir + "/" + self.module + ".consts.cpp", "w") as f:
             f.write("""#include <cstdio>\n""")
             f.write("""#include "opencv2/opencv_modules.hpp"\n""")
             f.write("""#include "opencv2/%s.hpp"\n"""%(module))
@@ -1602,18 +1608,18 @@ class RustWrapperGenerator(object):
         for namespace in self.namespaces:
             if namespace != "":
                 namespaces += "using namespace %s;\n"%(namespace.replace(".", "::"))
-        with open(output_path + "/" + module + ".cpp", "w") as f:
+        with open(cpp_dir + "/" + module + ".cpp", "w") as f:
             f.write(template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes), namespaces=namespaces))
 
-        with open(output_path + "/%s.externs.rs" % (module), "w") as f:
+        with open(rust_dir + "/%s.externs.rs" % (module), "w") as f:
             f.write("extern \"C\" {\n")
             f.write(self.moduleRustExterns.getvalue())
             f.write("}\n")
 
-        with open(output_path + "/" + module + ".rs", "w") as f:
+        with open(rust_dir + "/" + module + ".rs", "w") as f:
             f.write(self.moduleSafeRust.getvalue())
 
-        with open(output_path + "/" + module + ".txt", "w") as f:
+        with open(cpp_dir + "/" + module + ".txt", "w") as f:
             f.write(self.makeReport())
 
     def makeReport(self):
@@ -1864,7 +1870,7 @@ class RustWrapperGenerator(object):
         self.moduleCppTypes.write("} %s;\n\n" % (ci.type_info().c_sane))
 
     def gen_c_return_value_type(self, typ):
-        with open(self.output_path + "/cv_return_value_" + typ.c_sane + ".type.h", "w") as f:
+        with open(self.cpp_dir + "/cv_return_value_" + typ.c_sane + ".type.h", "w") as f:
             if typ.ctype == "void":
                 f.write(template("""
                     // $typeid
@@ -1880,7 +1886,7 @@ class RustWrapperGenerator(object):
                         $ctype result;
                     };
                     """).substitute(typ.__dict__))
-        with open(self.output_path + "/cv_return_value_" + typ.c_sane + ".rv.rs", "w") as f:
+        with open(self.rust_dir + "/cv_return_value_" + typ.c_sane + ".rv.rs", "w") as f:
             if typ.ctype == "void":
                 f.write(template("""
                     // $typeid
@@ -1925,7 +1931,7 @@ class RustWrapperGenerator(object):
             }
             impl Drop for $rust_full {
                 fn drop(&mut self) {
-                    unsafe { ::sys::cv_delete_$sane(self.ptr) };
+                    unsafe { sys::cv_delete_$sane(self.ptr) };
                 }
             }
             impl $rust_full {
@@ -2014,22 +2020,24 @@ class RustWrapperGenerator(object):
 
 
 def main():
-    dstdir = sys.argv[2]
-    module = sys.argv[3]
-    srcfiles = sys.argv[4:]
-    logging.basicConfig(filename='%s/%s.log' % (dstdir, module), format=None, filemode='w', level=logging.INFO)
+    cpp_dir = sys.argv[2]
+    rust_dir = sys.argv[3]
+    module = sys.argv[4]
+    srcfiles = sys.argv[5:]
+    logging.basicConfig(filename='%s/%s.log' % (cpp_dir, module), format=None, filemode='w', level=logging.INFO)
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARNING)
     logging.getLogger().addHandler(handler)
     print("Generating module '" + module + "' from headers:\n\t" + "\n\t".join(srcfiles))
     generator = RustWrapperGenerator()
-    generator.gen(srcfiles, module, dstdir)
+    generator.gen(srcfiles, module, cpp_dir, rust_dir)
+
 
 if __name__ == "__main__":
-    if len(sys.argv) < 4:
+    if len(sys.argv) < 5:
         print("Usage:\n", \
               os.path.basename(sys.argv[0]), \
-              "<full path to hdr_parser.py> <out_dir> <module name> <C++ header> [<C++ header>...]")
+              "<full path to hdr_parser.py> <cpp_out_dir> <rust_out_dir> <module name> <C++ header> [<C++ header>...]")
         print("Current args are: ", ", ".join(["'"+a+"'" for a in sys.argv]))
         exit(0)
 

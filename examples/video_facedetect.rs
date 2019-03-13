@@ -8,30 +8,30 @@ use opencv::videoio;
 fn run() -> Result<(), String> {
     let window = "video capture";
     let xml = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml";
-    try!(highgui::named_window(window, 1));
-    let mut cam = try!(videoio::VideoCapture::index(1));
-    let opened = try!(videoio::VideoCapture::is_opened(&cam));
+    highgui::named_window(window, 1)?;
+    let mut cam = videoio::VideoCapture::index(1)?;
+    let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
         println!("Using different camera");
-        cam = try!(videoio::VideoCapture::index(0));
+        cam = videoio::VideoCapture::index(0)?;
     }
-    let mut face = try!(objdetect::CascadeClassifier::new(xml));
+    let mut face = objdetect::CascadeClassifier::new(xml)?;
     loop {
-        let mut frame = try!(core::Mat::new());
-        try!(cam.read(&mut frame));
-        if try!(frame.size()).width == 0 {
+        let mut frame = core::Mat::new()?;
+        cam.read(&mut frame)?;
+        if frame.size()?.width == 0 {
             ::std::thread::sleep(::std::time::Duration::from_secs(50));
             continue;
         }
-        let mut gray = try!(core::Mat::new());
-        try!(imgproc::cvt_color(
+        let mut gray = core::Mat::new()?;
+        imgproc::cvt_color(
             &frame,
             &mut gray,
             imgproc::COLOR_BGR2GRAY,
             0
-        ));
-        let mut reduced = try!(core::Mat::new());
-        try!(imgproc::resize(
+        )?;
+        let mut reduced = core::Mat::new()?;
+        imgproc::resize(
             &gray,
             &mut reduced,
             core::Size {
@@ -41,9 +41,9 @@ fn run() -> Result<(), String> {
             0.25f64,
             0.25f64,
             imgproc::INTER_LINEAR
-        ));
+        )?;
         let mut faces = ::opencv::types::VectorOfRect::new();
-        try!(face.detect_multi_scale(
+        face.detect_multi_scale(
             &reduced,
             &mut faces,
             1.1,
@@ -57,7 +57,7 @@ fn run() -> Result<(), String> {
                 width: 0,
                 height: 0
             }
-        ));
+        )?;
         println!("faces: {}", faces.len());
         for face in faces.iter() {
             println!("face {:?}", face);
@@ -67,7 +67,7 @@ fn run() -> Result<(), String> {
                 width: face.width * 4,
                 height: face.height * 4,
             };
-            try!(imgproc::rectangle(
+            imgproc::rectangle(
                 &frame,
                 scaled_face,
                 core::Scalar {
@@ -76,10 +76,10 @@ fn run() -> Result<(), String> {
                 1,
                 8,
                 0
-            ));
+            )?;
         }
-        try!(highgui::imshow(window, &frame));
-        if try!(highgui::wait_key(10)) > 0 {
+        highgui::imshow(window, &frame)?;
+        if highgui::wait_key(10)? > 0 {
             break;
         }
     }
