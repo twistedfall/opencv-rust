@@ -473,6 +473,14 @@ const_private_list = (
 
 
 #
+#       Helpers
+#
+
+def camel_case_to_snake_case(name):
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+#
 #       AST-LIKE
 #
 
@@ -545,7 +553,7 @@ class ArgInfo():
         rsname = self.name
         if rsname in ["type","box"]:
             rsname = "_" + rsname
-        return rsname
+        return camel_case_to_snake_case(rsname)
 
 
     def __repr__(self):
@@ -711,8 +719,7 @@ class FuncInfo(GeneralInfo):
             return renamed_funcs[self.identifier]
         name = "new" if self.isconstructor() else self.name
 
-        s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-        return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+        return camel_case_to_snake_case(name)
 
     def set_r_name(self, value):
         self._r_name = value
