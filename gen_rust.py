@@ -649,7 +649,7 @@ class FuncInfo(GeneralInfo):
 
         self.cname = self.cppname = self.name
 
-        self.is_ignored = "/H" in decl[2] or "/A" in decl[2] or "/I" in decl[2]
+        self.is_ignored = "/H" in decl[2] or "/I" in decl[2]
         if self.name.startswith("~"):
             logging.info("ignore destructor %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
@@ -1316,7 +1316,7 @@ class SmartPtrTypeInfo(TypeInfo):
         TypeInfo.__init__(self, gen, typeid)
         self.is_by_ptr = True
         self.inner = inner
-        self.is_ignored = self.inner.is_ignored or self.inner.is_trait
+        self.is_ignored = self.inner.is_ignored
         if not self.is_ignored:
             self.ctype = "void*"
             self.c_sane = "void_X"
@@ -1351,7 +1351,7 @@ class SmartPtrTypeInfo(TypeInfo):
                 }
                 """).substitute(self.__dict__))
             if not isinstance(self.inner, PrimitiveTypeInfo) and self.inner.ci.is_trait:
-                bases = self.gen.all_bases(self.inner.ci.name)
+                bases = self.gen.all_bases(self.inner.ci.name).union(set((self.inner.typeid,)))
                 for base in bases:
                     cibase = self.gen.get_type_info(base)
                     f.write(template("""
