@@ -783,6 +783,7 @@ class FuncInfo(GeneralInfo):
     def gen_safe_rust(self):
         args = []
         call_args = []
+        cstring_args = []
         if not self.static and self.mutability() == "const":
             if self.ci.type_info().is_by_value:
                 args.append("self")
@@ -811,7 +812,8 @@ class FuncInfo(GeneralInfo):
             if isinstance(a.type, BoxedClassTypeInfo) or a.type.is_by_ptr:
                 call_args.append("%s.as_raw_%s()"%(a.rsname(), a.type.rust_local))
             elif isinstance(a.type,StringTypeInfo):
-                call_args.append("CString::new(%s).unwrap().as_ptr()"%(a.rsname()))
+                cstring_args.append("    let %s = CString::new(%s).unwrap();\n" % (a.rsname(), a.rsname()))
+                call_args.append("%s.as_ptr() as _" % (a.rsname()))
             else:
                 call_args.append("%s"%(a.rsname()))
 
@@ -829,6 +831,7 @@ class FuncInfo(GeneralInfo):
         io.write("%sfn %s(%s) -> Result<%s,String> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
         io.write("// identifier: %s\n"%(self.identifier))
         io.write("  unsafe {\n")
+        io.writelines(cstring_args)
         io.write("    let rv = sys::%s(%s);\n"%(self.c_name(), ", ".join(call_args)))
         io.write("    if rv.error_msg as i32 != 0i32 {\n")
         io.write("      let v = CStr::from_ptr(rv.error_msg).to_bytes().to_vec();\n")
@@ -1751,7 +1754,7 @@ class RustWrapperGenerator(object):
                 else:
                     call_cpp_args += "*((%s*)%s)"%(a.type.cpptype.replace("&",""), a.name)
             elif isinstance(a.type, StringTypeInfo):
-                call_cpp_args += a.name
+                call_cpp_args += "%s(%s)" % (a.type.cpptype, a.name)
             elif a.type.is_by_value:
                 if arg_decl_star and a.pointer:
                     call_cpp_args += "reinterpret_cast<" + a.type.cpptype + "*>(" +  a.name + ")"
