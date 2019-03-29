@@ -575,7 +575,7 @@ class FuncInfo(GeneralInfo):
     KIND_METHOD      = "(method)"
     KIND_CONSTRUCTOR = "(constructor)"
 
-    def __init__(self, gen, decl, namespaces=[]): # [ funcname, return_ctype, [modifiers], [args] ]
+    def __init__(self, gen, decl, namespaces=frozenset()):  # [ funcname, return_ctype, [modifiers], [args] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self._r_name = None
 
@@ -845,7 +845,7 @@ class ClassPropInfo():
 
 
 class ClassInfo(GeneralInfo):
-    def __init__(self, gen, decl, namespaces=[]):  # [ 'class/struct cname', ': base', [modlist] ]
+    def __init__(self, gen, decl, namespaces):  # [ 'class/struct cname', ': base', [modlist] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.methods = []
         self.namespaces = namespaces
@@ -932,7 +932,7 @@ class ClassInfo(GeneralInfo):
                 ),
                 struct_field,
             ]
-            self.add_method(FuncInfo(self.gen, field_decl, namespaces=self.namespaces))
+            self.add_method(FuncInfo(self.gen, field_decl, frozenset(self.namespaces)))
 
     def add_method(self, fi):
         self.methods.append(fi)
@@ -958,7 +958,7 @@ class ClassInfo(GeneralInfo):
 
 
 class ConstInfo(GeneralInfo):
-    def __init__(self, gen, decl, added_manually=False, namespaces=[]):
+    def __init__(self, gen, decl, namespaces, added_manually=False):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         if len(self.fullname.split("::")) > 1:
             self.rustname = "_".join(self.fullname.split("::")[1:])
@@ -1511,11 +1511,11 @@ class RustWrapperGenerator(object):
             decl[0] = "cv.Algorithm.Algorithm"
         name = decl[0]
         if name.startswith("struct") or name.startswith("class"):
-            ClassInfo(self, decl, namespaces=self.namespaces)
+            ClassInfo(self, decl, frozenset(self.namespaces))
         elif name.startswith("const"):
-            ConstInfo(self, decl, namespaces=self.namespaces)
+            ConstInfo(self, decl, frozenset(self.namespaces))
         else:
-            FuncInfo(self, decl, namespaces=self.namespaces)
+            FuncInfo(self, decl, frozenset(self.namespaces))
 
     def register_function(self, f):
         self.functions.append(f)
@@ -1546,7 +1546,7 @@ class RustWrapperGenerator(object):
 
         for hdr in srcfiles:
             decls = parser.parse(hdr, False)
-            self.namespaces = map(lambda n:n.replace(".", "::"), parser.namespaces)
+            self.namespaces = set(str(x.replace(".", "::")) for x in parser.namespaces)
             logging.info("\n\n=============== Header: %s ================\n\n", hdr)
             logging.info("Namespaces: %s", parser.namespaces)
             logging.info("Comment: %s", parser.comment)
