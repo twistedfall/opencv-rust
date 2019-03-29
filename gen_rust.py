@@ -506,9 +506,26 @@ def bump_counter(name):
         counter = 0
     return "{}{}".format(base_name, counter + 1)
 
+
+def split_known_namespace(name, namespaces):
+    """
+    :type name: str
+    :type namespaces: iterable
+    :rtype: (str, str)
+    """
+    if "::" in name:
+        for namespace in sorted(namespaces, key=len, reverse=True):
+            namespace_colon = namespace + "::"
+            if name.startswith(namespace_colon):
+                return namespace, name[len(namespace_colon):]
+        return "", name
+    else:
+        return "", name
+
 #
 #       AST-LIKE
 #
+
 
 class GeneralInfo():
     def __init__(self, gen, name, namespaces):
@@ -530,14 +547,8 @@ class GeneralInfo():
         returns: (fullname, namespace, classpath, classname, name)
             fullname clean of prefix like "const, class, ..."
         """
-        name = name.replace("const ", "").replace("struct " , "").replace("class ","").replace(".", "::")
-        space_name = ""
-        local_name = name  # <classes>.<name>
-        for namespace in sorted(namespaces, key=len, reverse=True):
-            if name.startswith(namespace + "::"):
-                space_name = namespace
-                local_name = name.replace(namespace + "::", "")
-                break
+        name = name.replace("const ", "").replace("struct ", "").replace("class ", "").replace(".", "::")
+        space_name, local_name = split_known_namespace(name, namespaces)
         pieces = local_name.split("::")
         if len(pieces) > 2:  # <class>.<class>.<class>.<name>
             return name, space_name, "::".join(pieces[:-1]), pieces[-2], pieces[-1]
@@ -978,10 +989,8 @@ class ClassInfo(GeneralInfo):
 class ConstInfo(GeneralInfo):
     def __init__(self, gen, decl, namespaces, added_manually=False):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
-        if len(self.fullname.split("::")) > 1:
-            self.rustname = "_".join(self.fullname.split("::")[1:])
-        else:
-            self.rustname = self.fullname
+        _, self.rustname = split_known_namespace(self.fullname, namespaces)
+        self.rustname = self.rustname.replace("::", "_")
         self.cname = self.name.replace(".", "::")
         self.value = decl[1]
         self.added_manually = added_manually
@@ -1137,7 +1146,8 @@ class BoxedClassTypeInfo(TypeInfo):
         self.ci = gen.get_class(typeid)
         self.cpptype = self.ci.fullname
         self.rust_extern = "*mut c_void"
-        self.rust_local = typeid.replace("cv::","").replace("::", "_")
+        _, self.rust_local = split_known_namespace(typeid, gen.namespaces)
+        self.rust_local = self.rust_local.replace("::", "_")
         self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
         self.is_by_ptr = True
         self.is_trait = typeid in forced_trait_classes or self.ci.is_trait
