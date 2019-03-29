@@ -647,7 +647,7 @@ class FuncInfo(GeneralInfo):
         """
         if self.isconstructor():
             if self.ci:
-                return self.gen.get_type_info(self.ci.nested_cppname)
+                return self.gen.get_type_info(self.ci.fullname)
             else:
                 return None
         else:
@@ -866,9 +866,7 @@ class ClassInfo(GeneralInfo):
         if self.classpath and gen.get_class(self.classpath).is_ignored:
             self.is_ignored = True
 
-        name = decl[0].replace("struct ", "").replace("class ","").replace("const ","")
-        self.nested_cppname = name.replace(".", "::")
-        self.nested_cname = name.replace(".", "_")
+        self.nested_cname = self.fullname.replace("::", "_")
 
         self.bases = decl[1][1:].strip()
         if len(self.bases):
@@ -886,13 +884,13 @@ class ClassInfo(GeneralInfo):
         for p in decl[3]:
             self.props.append(ClassPropInfo(p))
 
-        self.is_ignored = self.is_ignored or self.gen.class_is_ignored(self.nested_cppname)
+        self.is_ignored = self.is_ignored or self.gen.class_is_ignored(self.fullname)
 
         # register
-        logging.info("register class %s (%s)%s%s", self.nested_cppname, decl,
+        logging.info("register class %s (%s)%s%s", self.fullname, decl,
             " [ignored]" if self.is_ignored else "",
             " impl:"+",".join(self.bases) if len(self.bases) else "")
-        gen.classes[self.nested_cppname] = self
+        gen.classes[self.fullname] = self
         self.add_unpack_methods()
 
     def __repr__(self):
@@ -954,7 +952,7 @@ class ClassInfo(GeneralInfo):
         """
         :rtype: TypeInfo
         """
-        return self.gen.get_type_info(self.nested_cppname)
+        return self.gen.get_type_info(self.fullname)
 
 
 class ConstInfo(GeneralInfo):
@@ -1117,7 +1115,7 @@ class BoxedClassTypeInfo(TypeInfo):
         """
         TypeInfo.__init__(self, gen, typeid)
         self.ci = gen.get_class(typeid)
-        self.cpptype = self.ci.nested_cppname
+        self.cpptype = self.ci.fullname
         self.rust_extern = "*mut c_void"
         self.rust_local = typeid.replace("cv::","").replace("::", "_")
         self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
@@ -1427,17 +1425,17 @@ def parse_type(gen, typeid):
         ci = gen.get_class(typeid)
         if ci and not ci.is_ignored:
             if ci.is_simple:
-                return SimpleClassTypeInfo(gen, ci.nested_cppname)
+                return SimpleClassTypeInfo(gen, ci.fullname)
             else:
-                return BoxedClassTypeInfo(gen, ci.nested_cppname, None)
+                return BoxedClassTypeInfo(gen, ci.fullname, None)
         actual = aliases_types.get(typeid)
         if actual:
             ci = gen.get_class(actual)
             if ci:
                 if ci.is_simple:
-                    return SimpleClassTypeInfo(gen, ci.nested_cppname)
+                    return SimpleClassTypeInfo(gen, ci.fullname)
                 else:
-                    return BoxedClassTypeInfo(gen, ci.nested_cppname, None)
+                    return BoxedClassTypeInfo(gen, ci.fullname, None)
             return parse_type(gen, actual)
     return UnknownTypeInfo(gen, typeid)
 
@@ -1752,9 +1750,9 @@ class RustWrapperGenerator(object):
         elif fi.ci == None or fi.static:
             call_name = fi.fullname.replace(".", "::")
         elif fi.isconstructor() and isinstance(fi.ci.type_info(), BoxedClassTypeInfo):
-            call_name = fi.ci.nested_cppname
+            call_name = fi.ci.fullname
         elif fi.cppname == "()":
-            call_name = "(*((%s*) instance))"%(fi.ci.nested_cppname)
+            call_name = "(*((%s*) instance))" % (fi.ci.fullname)
         elif fi.fake_attrgetter:
             if isinstance(fi.type, PrimitiveTypeInfo):
                 call_name = "(({typename}*) instance)->{attrname}".format(
@@ -1769,9 +1767,9 @@ class RustWrapperGenerator(object):
                 )
 
         elif isinstance(self.get_type_info(fi.ci.name), BoxedClassTypeInfo):
-            call_name = "((%s*) instance)->%s"%(fi.ci.nested_cppname, fi.cppname)
+            call_name = "((%s*) instance)->%s" % (fi.ci.fullname, fi.cppname)
         else:
-            call_name = "((%s*) &instance)->%s"%(fi.ci.nested_cppname, fi.cppname)
+            call_name = "((%s*) &instance)->%s" % (fi.ci.fullname, fi.cppname)
 
         # actual call
         if fi.type.ctype == "void":
@@ -2031,7 +2029,7 @@ class RustWrapperGenerator(object):
             self.moduleSafeRust.write("}\n\n")
         else:
             if isinstance(t, BoxedClassTypeInfo):
-                self.gen_boxed_class(ci.nested_cppname)
+                self.gen_boxed_class(ci.fullname)
             logging.info("Generating impl for struct %s", ci)
             self.moduleSafeRust.write("impl %s {\n\n" % (t.rust_local))
             for fi in ci.methods:
