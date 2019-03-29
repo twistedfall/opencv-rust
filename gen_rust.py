@@ -488,6 +488,24 @@ def camel_case_to_snake_case(name):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
 
+
+def bump_counter(name):
+    """
+    :type name: str
+    :rtype: str
+    """
+    pos = len(name) - 1
+    for pos in xrange(len(name) - 1, 0, -1):
+        if not name[pos].isdigit():
+            break
+    base_name = name[:pos + 1]
+    try:
+        counter = int(name[pos + 1:])
+    except ValueError:
+        base_name += "_"
+        counter = 0
+    return "{}{}".format(base_name, counter + 1)
+
 #
 #       AST-LIKE
 #
@@ -607,6 +625,8 @@ class FuncInfo(GeneralInfo):
         self.args = []
         for arg in decl[3]:
             ai = ArgInfo(gen, arg)
+            while any(True for x in self.args if x.name == ai.name):
+                ai.name = bump_counter(ai.name)
             self.args.append(ai)
             self.identifier += "_" + ai.type.sane + "_" + ai.name
 
