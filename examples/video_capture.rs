@@ -4,7 +4,7 @@ use opencv::core;
 use opencv::highgui;
 use opencv::videoio;
 
-fn run() -> Result<(), String> {
+fn run() -> opencv::Result<()> {
     let window = "video capture";
     highgui::named_window(window, 1)?;
     let mut cam = videoio::VideoCapture::index(1)?;

@@ -828,30 +828,31 @@ class FuncInfo(GeneralInfo):
                     io.write("///\n/// ## C++ default parameters:\n")
                 io.write("/// * %s: %s\n"%(a.rsname(), a.defval))
                 first = False
-        io.write("%sfn %s(%s) -> Result<%s,String> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
+        io.write("%sfn %s(%s) -> Result<%s> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
         io.write("// identifier: %s\n"%(self.identifier))
         io.write("  unsafe {\n")
         io.writelines(cstring_args)
         io.write("    let rv = sys::%s(%s);\n"%(self.c_name(), ", ".join(call_args)))
-        io.write("    if rv.error_msg as i32 != 0i32 {\n")
-        io.write("      let v = CStr::from_ptr(rv.error_msg).to_bytes().to_vec();\n")
-        io.write("      ::libc::free(rv.error_msg as *mut c_void);\n")
-        io.write("      return Err(String::from_utf8(v).unwrap())\n")
-        io.write("    }\n")
+        io.write("    if !rv.error_msg.is_null() {\n")
+        io.write("      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();\n")
+        io.write("      ::libc::free(rv.error_msg as _);\n")
+        io.write("      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })\n")
+        io.write("    } else {\n")
         if self.type.typeid == "void":
-            io.write("    Ok(())\n")
+            io.write("      Ok(())\n")
         elif isinstance(self.rv_type(), StringTypeInfo):
-            io.write("    let v = CStr::from_ptr(rv.result).to_bytes().to_vec();\n")
-            io.write("    ::libc::free(rv.result as *mut c_void);\n")
-            io.write("    Ok(String::from_utf8(v).unwrap())\n")
+            io.write("      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();\n")
+            io.write("      ::libc::free(rv.result as _);\n")
+            io.write("      Ok(String::from_utf8(v).unwrap())\n")
         elif isinstance(self.rv_type(), SmartPtrTypeInfo):
-            io.write("    Ok(%s { ptr: rv.result })\n"%(self.rv_type().rust_full))
+            io.write("      Ok(%s { ptr: rv.result })\n" % (self.rv_type().rust_full))
         elif isinstance(self.rv_type(), VectorTypeInfo):
-            io.write("    Ok(%s { ptr: rv.result })\n"%(self.rv_type().rust_full))
+            io.write("      Ok(%s { ptr: rv.result })\n" % (self.rv_type().rust_full))
         elif isinstance(self.rv_type(), BoxedClassTypeInfo):
-            io.write("    Ok(%s { ptr: rv.result })\n"%(self.rv_type().rust_full))
+            io.write("      Ok(%s { ptr: rv.result })\n" % (self.rv_type().rust_full))
         else:
-            io.write("    Ok(rv.result)\n")
+            io.write("      Ok(rv.result)\n")
+        io.write("    }\n")
         io.write("  }\n")
         io.write("}\n\n")
 
@@ -1606,6 +1607,7 @@ class RustWrapperGenerator(object):
             use libc::{c_void, c_char, size_t};
             use std::ffi::{CStr, CString};
             use crate::{core, sys, types};
+            use crate::{Error, Result};
         """).substitute())
         for co in sorted(self.consts, key=lambda c: c.rustname):
             rust = co.gen_rust()
@@ -1829,38 +1831,40 @@ class RustWrapperGenerator(object):
 
         # return value
         if fi.type.ctype == "void":
-            self.moduleCppCode.write("    return { NULL };\n")
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL };\n")
         elif isinstance(fi.rv_type(), StringTypeInfo):
-            self.moduleCppCode.write("    return { NULL, strdup(cpp_return_value.c_str()) };")
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, strdup(cpp_return_value.c_str()) };")
         elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and not fi.isconstructor():
-            self.moduleCppCode.write("    return { NULL, new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
         elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and fi.isconstructor():
-            self.moduleCppCode.write("    return { NULL, cpp_return_value };\n")
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
         elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
-            self.moduleCppCode.write("    return { NULL, cpp_return_value };\n")
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
         elif fi.rv_type().is_by_value:
-            self.moduleCppCode.write("    return { NULL, *reinterpret_cast<%s*>(&cpp_return_value) };\n"%(fi.rv_type().ctype))
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, *reinterpret_cast<%s*>(&cpp_return_value) };\n"%(fi.rv_type().ctype))
         elif isinstance(fi.rv_type(), VectorTypeInfo):
-            self.moduleCppCode.write("    return { NULL, (void*) new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, (void*) new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
         else: # prim
-            self.moduleCppCode.write("    return { NULL, cpp_return_value };\n")
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
 
         self.moduleCppCode.write("  } catch (cv::Exception& e) {\n")
         self.moduleCppCode.write("    char* msg = strdup(e.what());\n")
         if fi.type.ctype == "void":
-            self.moduleCppCode.write("    return { msg };\n")
+            self.moduleCppCode.write("    return { e.code, msg };\n")
         else:
             self.moduleCppCode.write("    struct cv_return_value_%s ret;\n" % (fi.rv_type().c_sane))
             self.moduleCppCode.write("    memset(&ret, 0x00, sizeof(ret));\n")
+            self.moduleCppCode.write("    ret.error_code = e.code;\n")
             self.moduleCppCode.write("    ret.error_msg = msg;\n")
             self.moduleCppCode.write("    return ret;\n")
         self.moduleCppCode.write("  } catch (...) {\n")
         self.moduleCppCode.write("    char* msg = strdup(\"unspecified error in OpenCV guts\");\n")
         if fi.type.ctype == "void":
-            self.moduleCppCode.write("    return { msg };\n")
+            self.moduleCppCode.write("    return { -99999, msg };\n")
         else:
             self.moduleCppCode.write("    struct cv_return_value_%s ret;\n" % (fi.rv_type().c_sane))
             self.moduleCppCode.write("    memset(&ret, 0x00, sizeof(ret));\n")
+            self.moduleCppCode.write("    ret.error_code = -99999;\n")
             self.moduleCppCode.write("    ret.error_msg = msg;\n")
             self.moduleCppCode.write("    return ret;\n")
         self.moduleCppCode.write("  }\n")
@@ -1943,6 +1947,7 @@ class RustWrapperGenerator(object):
                 f.write(template("""
                     // $typeid
                     struct cv_return_value_$c_sane {
+                        int error_code;
                         char* error_msg;
                     };
                     """).substitute(typ.__dict__))
@@ -1950,6 +1955,7 @@ class RustWrapperGenerator(object):
                 f.write(template("""
                     // $typeid
                     struct cv_return_value_$c_sane {
+                        int error_code;
                         char* error_msg;
                         $ctype result;
                     };
@@ -1960,6 +1966,7 @@ class RustWrapperGenerator(object):
                     // $typeid
                     #[repr(C)]
                     pub struct cv_return_value_void {
+                        pub error_code: i32,
                         pub error_msg: *const c_char,
                     }
                     """).substitute(typ.__dict__))
@@ -1968,6 +1975,7 @@ class RustWrapperGenerator(object):
                     // $typeid
                     #[repr(C)]
                     pub struct cv_return_value_$c_sane {
+                        pub error_code: i32,
                         pub error_msg: *const c_char,
                         pub result: $rust_extern
                     }

@@ -5,7 +5,7 @@ use opencv::imgproc;
 use opencv::objdetect;
 use opencv::videoio;
 
-fn run() -> Result<(), String> {
+fn run() -> opencv::Result<()> {
     let window = "video capture";
     let xml = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml";
     highgui::named_window(window, 1)?;
