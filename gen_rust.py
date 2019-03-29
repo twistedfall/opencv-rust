@@ -422,6 +422,14 @@ boxed_type_fields = {
     }
 }
 
+reserved_rename = {
+    "type": "_type",
+    "box": "_box",
+    "ref": "_ref",
+    "in": "_in",
+    "use": "_use",
+}
+
 static_modules = ("sys", "types", "core")
 
 #
@@ -550,10 +558,7 @@ class ArgInfo():
             self.out = "IO"
 
     def rsname(self):
-        rsname = self.name
-        if rsname in ["type","box"]:
-            rsname = "_" + rsname
-        return camel_case_to_snake_case(rsname)
+        return camel_case_to_snake_case(reserved_rename.get(self.name, self.name))
 
 
     def __repr__(self):
@@ -1855,9 +1860,7 @@ class RustWrapperGenerator(object):
     def gen_value_struct_field(self, name, typ, is_simple_struct=False):
         if name == "*":
             name = "data"
-        rsname = name
-        if rsname in ["box", "type"]:
-            rsname = "_" + rsname
+        rsname = reserved_rename.get(name, name)
         if "[" in typ:
             bracket = typ.index("[")
             cppt = typ[:bracket]
