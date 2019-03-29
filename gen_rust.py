@@ -581,9 +581,9 @@ class ArgInfo():
         if len(arg_tuple) > 2:
             self.defval = arg_tuple[2]
         self.out = ""
-        if len(arg_tuple) > 3 and "/O" in arg_tuple[3]:
+        if arg_tuple[0] in ("OutputArray", "OutputArrayOfArrays") or len(arg_tuple) > 3 and "/O" in arg_tuple[3]:
             self.out = "O"
-        if len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
+        if arg_tuple[0] in ("InputOutputArray", "InputOutputArrayOfArrays") or len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
             self.out = "IO"
 
     def rsname(self):
