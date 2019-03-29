@@ -1181,6 +1181,9 @@ class VectorTypeInfo(TypeInfo):
             self.ctype = "void*"
             self.c_sane = "void_X"
             self.inner_cpptype = inner.cpptype
+            if isinstance(self.inner, SmartPtrTypeInfo):
+                self.outer_cpptype = "std::vector<%s>" % (self.inner.outer_cpptype)
+                self.inner_outer_cpptype = self.inner.outer_cpptype
             self.cpptype = "std::vector<%s>" % (inner.cpptype)
             self.sane = self.rust_local = "VectorOf"+inner.sane
             self.rust_full = "types::" + self.rust_local
@@ -1192,7 +1195,7 @@ class VectorTypeInfo(TypeInfo):
             if self.inner.typeid != "bool":
                 f.write(template("""
                 extern "C" {
-                    fn cv_${sane}_data(ptr:*mut c_void) -> *mut c_void;
+                    #[doc(hidden)] fn cv_${sane}_data(ptr:*mut c_void) -> *mut c_void;
                 }
                 """).substitute(self.__dict__))
             f.write(template("""
@@ -1201,8 +1204,7 @@ class VectorTypeInfo(TypeInfo):
                    #[doc(hidden)] fn cv_delete_$sane(ptr:*mut c_void) -> ();
                    #[doc(hidden)] fn cv_push_$sane(ptr:*mut c_void, ptr2: *const c_void) -> ();
                    #[doc(hidden)] fn cv_${sane}_len(ptr:*mut c_void) -> i32;
-                   #[doc(hidden)] fn cv_${sane}_get(ptr:*mut c_void, number: *const i32) -> *mut c_void;
-                   #[doc(hidden)] fn cv_${sane}_data(ptr:*mut c_void) -> *mut c_void;
+                   #[doc(hidden)] fn cv_${sane}_get(ptr:*mut c_void, index: i32) -> *mut c_void;
                 }
                 #[allow(dead_code)] pub struct $rust_local {
                     #[doc(hidden)] pub ptr: *mut c_void
@@ -1225,40 +1227,31 @@ class VectorTypeInfo(TypeInfo):
                     }
                 }
                 """).substitute(self.__dict__))
-        if isinstance(self.inner, BoxedClassTypeInfo) or self.inner.is_by_ptr:
-            with open(self.gen.rust_dir + "/" + self.sane + ".type.rs", "a") as f:
+        with open(self.gen.rust_dir + "/" + self.sane + ".type.rs", "a") as f:
+            if isinstance(self.inner, BoxedClassTypeInfo) or self.inner.is_by_ptr:
                 f.write(template("""
                     // BoxedClassTypeInfo
                     impl $rust_full {
                         pub fn push(&mut self, val: $inner_rust_full) {
                             unsafe { cv_push_$sane(self.ptr, val.ptr) }
                         }
-                        pub fn get(&self, number: &i32) -> $inner_rust_full {
-                            let raw_pointer: *mut c_void = unsafe {cv_${sane}_get(self.ptr, number as *const _)};
+                        pub fn get(&self, index: i32) -> $inner_rust_full {
+                            let raw_pointer: *mut c_void = unsafe {cv_${sane}_get(self.ptr, index)};
                             return $inner_rust_full{ ptr: raw_pointer}
                         }
-                        pub fn as_vec(&self) -> Vec<$inner_rust_full> {
-                            let mut result_vec: Vec<$inner_rust_full> = Vec::new();
-                            let len_of_vec = self.len();
-                            for i in 0..len_of_vec {
-                                result_vec.push(
-                                    self.get(&i)
-                                )
-                            };
-                            let items = result_vec;
-                            return items
+                        pub fn to_vec(&self) -> Vec<$inner_rust_full> {
+                            (0..self.len()).map(|x| self.get(x)).collect()
                         }
                     }
                     """).substitute(self.__dict__))
-        else:
-            with open(self.gen.rust_dir + "/" + self.sane + ".type.rs", "a") as f:
+            else:
                 f.write(template("""
                     impl $rust_full {
                         pub fn push(&mut self, val: $inner_rust_full) {
                             unsafe { cv_push_$sane(self.ptr, &val as *const _ as *const _) }
                         }
-                        pub fn get(&self, number: &i32) -> &mut $inner_rust_full {
-                            let raw_pointer: *mut c_void = unsafe {cv_${sane}_get(self.ptr, number as *const _)};
+                        pub fn get(&self, index: i32) -> &mut $inner_rust_full {
+                            let raw_pointer: *mut c_void = unsafe {cv_${sane}_get(self.ptr, index)};
                             let mut_data: &mut $inner_rust_full = unsafe { &mut *(raw_pointer as *mut $inner_rust_full )};
                             return mut_data
                         }
@@ -1278,31 +1271,68 @@ class VectorTypeInfo(TypeInfo):
                        }
                    """).substitute(self.__dict__))
         with open(self.gen.cpp_dir + "/" + self.sane + ".type.cpp", "w") as f:
-            externs = template("""
-                void* cv_new_$sane() { return new $cpptype(); }
-                void cv_delete_$sane(void* ptr) { delete (($cpptype*) ptr); }
-                void cv_push_$sane(void* ptr, void* ptr2) {
-                    $inner_cpptype* val = ($inner_cpptype*)ptr2;
-                    (($cpptype*) ptr)->push_back(*val);
-                }
-                $inner_cpptype* cv_${sane}_front_item(void* ptr) {
-                    $inner_cpptype val = (($cpptype*) ptr) -> front();
-                    return new $inner_cpptype(val);
-                }
-                $inner_cpptype* cv_${sane}_back_item(void* ptr) {
-                    $inner_cpptype val = (($cpptype*) ptr) -> back();
-                    return new $inner_cpptype(val);
-                }
-                $inner_cpptype* cv_${sane}_get(void* ptr, int* number) {
-                    $inner_cpptype val = (($cpptype*) ptr) -> data()[*number];
-                    return new $inner_cpptype(val);
-                }
-                int cv_${sane}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
+            if isinstance(self.inner, SmartPtrTypeInfo):
+                externs = template("""
+                    void* cv_new_$sane() { return new $outer_cpptype(); }
+                    void cv_delete_$sane(void* ptr) { delete (($outer_cpptype*) ptr); }
+                    void cv_push_$sane(void* ptr, void* ptr2) {
+                        $inner_outer_cpptype* val = ($inner_outer_cpptype*)ptr2;
+                        (($outer_cpptype*) ptr)->push_back(*val);
+                    }
+                    $inner_outer_cpptype* cv_${sane}_front_item(void* ptr) {
+                        $inner_outer_cpptype val = (($outer_cpptype*) ptr)->front();
+                        return new $inner_outer_cpptype(val);
+                    }
+                    $inner_outer_cpptype* cv_${sane}_back_item(void* ptr) {
+                        $inner_outer_cpptype val = (($outer_cpptype*) ptr)->back();
+                        return new $inner_outer_cpptype(val);
+                    }
+                    int cv_${sane}_len(void* ptr) { return (($outer_cpptype*) ptr)->size(); }
                 """).substitute(self.__dict__)
+            else:
+                externs = template("""
+                    void* cv_new_$sane() { return new $cpptype(); }
+                    void cv_delete_$sane(void* ptr) { delete (($cpptype*) ptr); }
+                    void cv_push_$sane(void* ptr, void* ptr2) {
+                        $inner_cpptype* val = ($inner_cpptype*)ptr2;
+                        (($cpptype*) ptr)->push_back(*val);
+                    }
+                    $inner_cpptype* cv_${sane}_front_item(void* ptr) {
+                        $inner_cpptype val = (($cpptype*) ptr)->front();
+                        return new $inner_cpptype(val);
+                    }
+                    $inner_cpptype* cv_${sane}_back_item(void* ptr) {
+                        $inner_cpptype val = (($cpptype*) ptr)->back();
+                        return new $inner_cpptype(val);
+                    }
+                    int cv_${sane}_len(void* ptr) { return (($cpptype*) ptr)->size(); }
+                    """).substitute(self.__dict__)
             if self.inner.typeid != "bool":
+                if isinstance(self.inner, SmartPtrTypeInfo):
+                    externs += template("""
+                        $inner_outer_cpptype* cv_${sane}_get(void* ptr, int index) {
+                            $inner_outer_cpptype val = (($outer_cpptype*) ptr)->data()[index];
+                            return new $inner_outer_cpptype(val);
+                        }
+                        $ctype* cv_${sane}_data(void* ptr) {
+                            return ($ctype*) ((($outer_cpptype*) ptr)->data());
+                        }
+                    """).substitute(self.__dict__)
+                else:
+                    externs += template("""
+                        $inner_cpptype* cv_${sane}_get(void* ptr, int index) {
+                            $inner_cpptype val = (($cpptype*) ptr)->data()[index];
+                            return new $inner_cpptype(val);
+                        }
+                        $ctype* cv_${sane}_data(void* ptr) {
+                            return ($ctype*) ((($cpptype*) ptr)->data());
+                        }
+                    """).substitute(self.__dict__)
+            else:
                 externs += template("""
-                    $ctype* cv_${sane}_data(void* ptr) {
-                        return ($ctype*) ((($cpptype*) ptr)->data());
+                    $inner_cpptype* cv_${sane}_get(void* ptr, int index) {
+                        $inner_cpptype val = (*(($cpptype*) ptr))[index];
+                        return new $inner_cpptype(val);
                     }
                 """).substitute(self.__dict__)
             f.write(template(T_CPP_MODULE).substitute(code=externs, includes=""))
@@ -1758,6 +1788,8 @@ class RustWrapperGenerator(object):
             elif a.type.is_by_ptr:
                 if a.pointer:
                     call_cpp_args += "((%s*)%s)"%(a.type.cpptype.replace("&",""), a.name)
+                elif isinstance(a.type, VectorTypeInfo) and isinstance(a.type.inner, SmartPtrTypeInfo):
+                    call_cpp_args += "*((%s*)%s)"%(a.type.outer_cpptype.replace("&",""), a.name)
                 else:
                     call_cpp_args += "*((%s*)%s)"%(a.type.cpptype.replace("&",""), a.name)
             elif isinstance(a.type, StringTypeInfo):
