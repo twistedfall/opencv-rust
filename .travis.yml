@@ -1,5 +1,6 @@
 language: rust
-sudo: false
+sudo: true
+dist: trusty
 
 addons:
   apt:
@@ -27,14 +28,16 @@ addons:
       - tree
 
 env:
+  global:
+    - DOC=3.1.0
   matrix:
-    - CV=2.4.11
-    - CV=2.4.12
+    - CV=3.1.0
 
 before_script:
   - |
     if [ ! -e /tmp/opencv/opencv-$CV/release/unix-install ]
     then
+      mkdir -p /tmp/opencv
       cd /tmp/opencv
       rm -rf opencv-$CV
       wget https://github.com/Itseez/opencv/archive/$CV.zip
@@ -42,9 +45,10 @@ before_script:
       cd opencv-$CV
       mkdir release install
       cd release
-      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install ..
+      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install -D WITH_FFMPEG=OFF ..
       make install
     fi
+  - tree /tmp/opencv/opencv-$CV/release
   - cd /home/travis/build/kali/opencv-rust
   - export PKG_CONFIG_PATH=/tmp/opencv/opencv-$CV/release/unix-install
   - pkg-config --cflags opencv
@@ -54,15 +58,15 @@ before_script:
 after_success:
   - echo $TRAVIS_RUST_VERSION
   - |
-    if [ "$CV" = 2.4.12 -a "$TRAVIS_RUST_VERSION" = "1.8.0" ]
+    if [ "$CV" = "$DOC" -a "$TRAVIS_RUST_VERSION" = "stable" ]
     then
       cargo doc
       curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
     fi
 
-cache:
-  directories:
-    - /tmp/opencv
+#cache:
+#  directories:
+#    - /tmp/opencv
 
 rust:
   - stable

@@ -1,0 +1,18 @@
+pub mod core;
+pub mod calib3d;
+pub mod dnn;
+pub mod features2d;
+pub mod highgui;
+pub mod imgcodecs;
+pub mod imgproc;
+pub mod ml;
+pub mod objdetect;
+pub mod photo;
+pub mod shape;
+pub mod stitching;
+pub mod superres;
+pub mod video;
+pub mod videoio;
+pub mod videostab;
+pub mod types;
+#[doc(hidden)] pub mod sys;

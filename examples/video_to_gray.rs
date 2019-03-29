@@ -3,30 +3,31 @@ extern crate opencv;
 use opencv::core;
 use opencv::highgui;
 use opencv::imgproc;
+use opencv::videoio;
 
-fn run() -> Result<(), String> {
+fn run() -> opencv::Result<()> {
     let window = "video capture";
-    try!(highgui::named_window(window, 1));
-    let mut cam = try!(highgui::VideoCapture::device(1));
-    let opened = try!(highgui::VideoCapture::is_opened(&cam));
+    highgui::named_window(window, 1)?;
+    let mut cam = videoio::VideoCapture::index(1)?;
+    let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
         println!("Using different camera");
-        cam = try!(highgui::VideoCapture::device(0));
+        cam = videoio::VideoCapture::index(0)?;
     }
     loop {
-        let mut frame = try!(core::Mat::new());
-        try!(cam.read(&mut frame));
-        if try!(frame.size()).width > 0 {
-            let mut gray = try!(core::Mat::new());
-            try!(imgproc::cvt_color(
+        let mut frame = core::Mat::new()?;
+        cam.read(&mut frame)?;
+        if frame.size()?.width > 0 {
+            let mut gray = core::Mat::new()?;
+            imgproc::cvt_color(
                 &frame,
                 &mut gray,
-                imgproc::CV_BGR2GRAY,
+                imgproc::COLOR_BGR2GRAY,
                 0
-            ));
-            try!(highgui::imshow(window, &gray));
+            )?;
+            highgui::imshow(window, &gray)?;
         }
-        if try!(highgui::wait_key(10)) > 0 {
+        if highgui::wait_key(10)? > 0 {
             break;
         }
     }

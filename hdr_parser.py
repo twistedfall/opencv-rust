@@ -17,21 +17,24 @@ opencv_hdr_list = [
 "../../objdetect/include/opencv2/objdetect.hpp",
 "../../imgcodecs/include/opencv2/imgcodecs.hpp",
 "../../videoio/include/opencv2/videoio.hpp",
-"../../highgui/include/opencv2/highgui.hpp"
+"../../highgui/include/opencv2/highgui.hpp",
 ]
 
 """
-Each declaration is [funcname, return_value_type /* in C, not in Python */, <list_of_modifiers>, <list_of_arguments>],
+Each declaration is [funcname, return_value_type /* in C, not in Python */, <list_of_modifiers>, <list_of_arguments>, original_return_type, docstring],
 where each element of <list_of_arguments> is 4-element list itself:
 [argtype, argname, default_value /* or "" if none */, <list_of_modifiers>]
 where the list of modifiers is yet another nested list of strings
    (currently recognized are "/O" for output argument, "/S" for static (i.e. class) methods
    and "/A value" for the plain C arrays with counters)
+original_return_type is None if the original_return_type is the same as return_value_type
 """
 
 class CppHeaderParser(object):
 
-    def __init__(self):
+    def __init__(self, generate_umat_decls=False):
+        self._generate_umat_decls = generate_umat_decls
+
         self.BLOCK_TYPE = 0
         self.BLOCK_NAME = 1
         self.PROCESS_FLAG = 2
@@ -40,6 +43,7 @@ class CppHeaderParser(object):
         self.ACTUAL_PUBLIC_SECTION = 5
 
         self.namespaces = set()
+        self.comment = None
 
     def batch_replace(self, s, pairs):
         for before, after in pairs:
@@ -65,6 +69,16 @@ class CppHeaderParser(object):
                     break
 
         return arg_str[npos2+1:npos3].strip(), npos3
+
+    def is_spaced_type_def(self, built_type, token):
+        if built_type == "unsigned" and (token == "long" or token == "int" or token == "short" or token == "char"):
+            return True
+        if built_type == "long" and token == "long":
+            return True
+        if built_type == "unsigned long" and token == "long":
+            return True
+        return False
+
 
     def parse_arg(self, arg_str, argno):
         """
@@ -102,6 +116,14 @@ class CppHeaderParser(object):
 
             modlist.append("/CA " + macro_arg)
             arg_str = arg_str[:npos] + arg_str[npos3+1:]
+
+        npos = arg_str.find("const")
+        if npos >= 0:
+            modlist.append("/C")
+
+        npos = arg_str.find("&")
+        if npos >= 0:
+            modlist.append("/Ref")
 
         arg_str = arg_str.strip()
         word_start = 0
@@ -165,10 +187,12 @@ class CppHeaderParser(object):
                 angle_stack[-1] += 1
             elif arg_type == "struct":
                 arg_type += " " + w
-            elif arg_type and arg_type != "~":
+            elif arg_type and arg_type != "~" and not self.is_spaced_type_def(arg_type, w):
                 arg_name = " ".join(word_list[wi:])
                 break
             else:
+                if arg_type:
+                    arg_type += " "
                 arg_type += w
             prev_w = w
 
@@ -225,7 +249,7 @@ class CppHeaderParser(object):
             else:
                 prev_val_delta = 0
                 prev_val = val = pv[1].strip()
-            decl.append(["const " + self.get_dotted_name(pv[0].strip()), val, [], []])
+            decl.append(["const " + self.get_dotted_name(pv[0].strip()), val, [], [], None, ""])
         return decl
 
     def parse_class_decl(self, decl_str):
@@ -251,13 +275,13 @@ class CppHeaderParser(object):
             l = l[:npos] + l[npos3+1:]
 
         l = self.batch_replace(l, [("CV_EXPORTS_W", ""), ("CV_EXPORTS", ""), ("public virtual ", " "), ("public ", " "), ("::", ".")]).strip()
-        ll = re.split(r'\s*[,:]?\s*', l)
+        ll = re.split(r'\s+|\s*[,:]\s*', l)
         ll = [le for le in ll if le]
         classname = ll[1]
         bases = ll[2:]
         return classname, bases, modlist
 
-    def parse_func_decl_no_wrap(self, decl_str, static_method, comment):
+    def parse_func_decl_no_wrap(self, decl_str, static_method=False, docstring=""):
         decl_str = (decl_str or "").strip()
         virtual_method = False
         explicit_method = False
@@ -300,12 +324,13 @@ class CppHeaderParser(object):
             apos = fdecl.find("(", apos+1)
 
         fname = "cv." + fname.replace("::", ".")
-        decl = [fname, rettype, [], [], comment]
+        decl = [fname, rettype, [], [], None, docstring]
 
         # inline constructor implementation
         implmatch = re.match(r"(\(.*?\))\s*:\s*(\w+\(.*?\),?\s*)+", fdecl[apos:])
         if bool(implmatch):
             fdecl = fdecl[:apos] + implmatch.group(1)
+            decl[2].append("/I")
 
         args0str = fdecl[apos+1:fdecl.rfind(")")].strip()
 
@@ -370,9 +395,11 @@ class CppHeaderParser(object):
             decl[2].append("/C")
         if not bool(self.block_stack[-1][self.ACTUAL_PUBLIC_SECTION]):
             decl[2].append("/H")
+        if "virtual" in decl_str:
+            print(decl_str)
         return decl
 
-    def parse_func_decl(self, decl_str, comment):
+    def parse_func_decl(self, decl_str, use_umat=False, docstring=""):
         """
         Parses the function or method declaration in the form:
         [([CV_EXPORTS] <rettype>) | CVAPI(rettype)]
@@ -381,8 +408,9 @@ class CppHeaderParser(object):
             [const] {; | <function_body>}
 
         Returns the function declaration entry:
-        [<func name>, <return value C-type>, <list of modifiers>, <list of arguments>] (see above)
+        [<func name>, <return value C-type>, <list of modifiers>, <list of arguments>, <original return type>, <docstring>] (see above)
         """
+
         if self.wrap_mode:
             if not (("CV_EXPORTS_AS" in decl_str) or ("CV_EXPORTS_W" in decl_str) or \
                 ("CV_WRAP" in decl_str) or ("CV_WRAP_AS" in decl_str)):
@@ -406,11 +434,26 @@ class CppHeaderParser(object):
             func_modlist.append("="+arg)
             decl_str = decl_str[:npos] + decl_str[npos3+1:]
 
+        virtual_method = False
+        pure_virtual_method = False
+        const_method = False
+
         # filter off some common prefixes, which are meaningless for Python wrappers.
         # note that we do not strip "static" prefix, which does matter;
         # it means class methods, not instance methods
-        decl_str = self.batch_replace(decl_str, [("virtual", ""), ("static inline", ""), ("inline", ""),\
-            ("CV_EXPORTS_W", ""), ("CV_EXPORTS", ""), ("CV_CDECL", ""), ("CV_WRAP ", " "), ("CV_INLINE", "")]).strip()
+        decl_str = self.batch_replace(decl_str, [("static inline", ""), ("inline", ""),\
+            ("CV_EXPORTS_W", ""), ("CV_EXPORTS", ""), ("CV_CDECL", ""), ("CV_WRAP ", " "), ("CV_INLINE", ""),
+            ("CV_DEPRECATED", ""), ("CV_DEPRECATED_EXTERNAL", "")]).strip()
+
+
+        if decl_str.strip().startswith('virtual'):
+            virtual_method = True
+
+        decl_str = decl_str.replace('virtual' , '')
+
+        end_tokens = decl_str[decl_str.rfind(')'):].split()
+        const_method = 'const' in end_tokens
+        pure_virtual_method = '=' in end_tokens and '0' in end_tokens
 
         static_method = False
         context = top[0]
@@ -445,7 +488,14 @@ class CppHeaderParser(object):
         # constructor/destructor case
         if bool(re.match(r'^(\w+::)*(?P<x>\w+)::~?(?P=x)$', decl_start)):
             decl_start = "void " + decl_start
+
         rettype, funcname, modlist, argno = self.parse_arg(decl_start, -1)
+
+        # determine original return type, hack for return types with underscore
+        original_type = None
+        i = decl_start.rfind(funcname)
+        if i > 0:
+            original_type = decl_start[:i].replace("&", "").replace("const", "").strip()
 
         if argno >= 0:
             classname = top[1]
@@ -478,7 +528,7 @@ class CppHeaderParser(object):
         funcname = self.get_dotted_name(funcname)
 
         if not self.wrap_mode:
-            decl = self.parse_func_decl_no_wrap(decl_str, static_method, comment)
+            decl = self.parse_func_decl_no_wrap(decl_str, static_method, docstring)
             decl[0] = funcname
             return decl
 
@@ -533,40 +583,50 @@ class CppHeaderParser(object):
                         a = a[:eqpos].strip()
                     arg_type, arg_name, modlist, argno = self.parse_arg(a, argno)
                     if self.wrap_mode:
+                        mat = "UMat" if use_umat else "Mat"
+
+                        # TODO: Vectors should contain UMat, but this is not very easy to support and not very needed
+                        vector_mat = "vector_{}".format("Mat")
+                        vector_mat_template = "vector<{}>".format("Mat")
+
                         if arg_type == "InputArray":
-                            arg_type = "Mat"
+                            arg_type = mat
                         elif arg_type == "InputOutputArray":
-                            arg_type = "Mat"
+                            arg_type = mat
                             modlist.append("/IO")
                         elif arg_type == "OutputArray":
-                            arg_type = "Mat"
+                            arg_type = mat
                             modlist.append("/O")
                         elif arg_type == "InputArrayOfArrays":
-                            arg_type = "vector_Mat"
+                            arg_type = vector_mat
                         elif arg_type == "InputOutputArrayOfArrays":
-                            arg_type = "vector_Mat"
+                            arg_type = vector_mat
                             modlist.append("/IO")
                         elif arg_type == "OutputArrayOfArrays":
-                            arg_type = "vector_Mat"
+                            arg_type = vector_mat
                             modlist.append("/O")
-                        defval = self.batch_replace(defval, [("InputArrayOfArrays", "vector<Mat>"),
-                                                             ("InputOutputArrayOfArrays", "vector<Mat>"),
-                                                             ("OutputArrayOfArrays", "vector<Mat>"),
-                                                             ("InputArray", "Mat"),
-                                                             ("InputOutputArray", "Mat"),
-                                                             ("OutputArray", "Mat"),
+                        defval = self.batch_replace(defval, [("InputArrayOfArrays", vector_mat_template),
+                                                             ("InputOutputArrayOfArrays", vector_mat_template),
+                                                             ("OutputArrayOfArrays", vector_mat_template),
+                                                             ("InputArray", mat),
+                                                             ("InputOutputArray", mat),
+                                                             ("OutputArray", mat),
                                                              ("noArray", arg_type)]).strip()
                     args.append([arg_type, arg_name, defval, modlist])
                 npos = arg_start-1
 
         if static_method:
             func_modlist.append("/S")
-        if decl_str.endswith("const"):
+        if const_method:
             func_modlist.append("/C")
+        if virtual_method:
+            func_modlist.append("/V")
+        if pure_virtual_method:
+            func_modlist.append("/PV")
 
         func_modlist.append("/NW")
 
-        return [funcname, rettype, func_modlist, args, comment]
+        return [funcname, rettype, func_modlist, args, original_type, docstring]
 
     def get_dotted_name(self, name):
         """
@@ -601,7 +661,7 @@ class CppHeaderParser(object):
             n = "cv.Algorithm"
         return n
 
-    def parse_stmt(self, stmt, end_token, comment):
+    def parse_stmt(self, stmt, end_token, use_umat=False, docstring=""):
         """
         parses the statement (ending with ';' or '}') or a block head (ending with '{')
 
@@ -649,7 +709,7 @@ class CppHeaderParser(object):
                     exit(1)
                 if classname.startswith("_Ipl"):
                     classname = classname[1:]
-                decl = [stmt_type + " " + self.get_dotted_name(classname), "", modlist, [], comment]
+                decl = [stmt_type + " " + self.get_dotted_name(classname), "", modlist, [], None, docstring]
                 if bases:
                     decl[1] = ": " + ", ".join([self.get_dotted_name(b).replace(".","::") for b in bases])
                 return stmt_type, classname, True, decl
@@ -664,7 +724,7 @@ class CppHeaderParser(object):
                         exit(1)
                     decl = []
                     if ("CV_EXPORTS_W" in stmt) or ("CV_EXPORTS_AS" in stmt) or (not self.wrap_mode):# and ("CV_EXPORTS" in stmt)):
-                        decl = [stmt_type + " " + self.get_dotted_name(classname), "", modlist, [], comment]
+                        decl = [stmt_type + " " + self.get_dotted_name(classname), "", modlist, [], None, docstring]
                         if bases:
                             decl[1] = ": " + ", ".join([self.get_dotted_name(b).replace(".","::") for b in bases])
                     return stmt_type, classname, True, decl
@@ -694,7 +754,7 @@ class CppHeaderParser(object):
             # since we filtered off the other places where '(' can normally occur:
             #   - code blocks
             #   - function pointer typedef's
-            decl = self.parse_func_decl(stmt, comment)
+            decl = self.parse_func_decl(stmt, use_umat=use_umat, docstring=docstring)
             # we return parse_flag == False to prevent the parser to look inside function/method bodies
             # (except for tracking the nested blocks)
             return stmt_type, "", False, decl
@@ -721,7 +781,7 @@ class CppHeaderParser(object):
     def find_next_token(self, s, tlist, p=0):
         """
         Finds the next token from the 'tlist' in the input 's', starting from position 'p'.
-        Returns the first occured token and its position, or ("", len(s)) when no token is found
+        Returns the first occurred token and its position, or ("", len(s)) when no token is found
         """
         token = ""
         tpos = len(s)
@@ -748,21 +808,20 @@ class CppHeaderParser(object):
         # states:
         SCAN = 0 # outside of a comment or preprocessor directive
         COMMENT = 1 # inside a multi-line comment
-        STRUCTURED_COMMENT = 2 # inside a multi-line structured comment
-        DIRECTIVE = 3 # inside a multi-line preprocessor directive
+        DIRECTIVE = 2 # inside a multi-line preprocessor directive
+        DOCSTRING = 3 # inside a multi-line docstring
 
         state = SCAN
 
         self.block_stack = [["file", hname, True, True, None, True]]
         block_head = ""
+        docstring = ""
         self.lineno = 0
         self.wrap_mode = wmode
 
-        comment = ""
-
         for l0 in linelist:
             self.lineno += 1
-            #print self.lineno
+            #print(state, self.lineno, l0)
 
             l = l0.strip()
 
@@ -775,17 +834,8 @@ class CppHeaderParser(object):
                     state = SCAN
                 define = re.match(r"#define +([A-Z_][A-Z0-9_]+) +(.+)$", l)
                 if define:
-                    decls.append(["const " + define.group(1), define.group(2), [], [], comment])
+                    decls.append(["const " + define.group(1), define.group(2), [], [], docstring])
                 continue
-
-            if state == STRUCTURED_COMMENT:
-                pos = l.find("*/")
-                if pos < 0:
-                    comment += l + "\n"
-                    continue
-                comment += l[:pos]
-                l = l[pos+2:]
-                state = SCAN
 
             if state == COMMENT:
                 pos = l.find("*/")
@@ -794,47 +844,51 @@ class CppHeaderParser(object):
                 l = l[pos+2:]
                 state = SCAN
 
+            if state == DOCSTRING:
+                pos = l.find("*/")
+                if pos < 0:
+                    docstring += l + "\n"
+                    continue
+                docstring += l[:pos] + "\n"
+                l = l[pos+2:]
+                state = SCAN
+
+            if l.startswith('CV__'): # just ignore this lines
+                #print('IGNORE: ' + l)
+                state = SCAN
+                continue
+
             if state != SCAN:
-                print("Error at %d: invlid state = %d" % (self.lineno, state))
+                print("Error at %d: invalid state = %d" % (self.lineno, state))
                 sys.exit(-1)
 
             while 1:
-                token, pos = self.find_next_token(l, [";", "\"", "{", "}", "//!", "//", "/*!", "/** ", "/*"])
+                token, pos = self.find_next_token(l, [";", "\"", "{", "}", "//", "/*"])
 
                 if not token:
                     block_head += " " + l
-                    break
-
-                if token == "//!":
-                    block_head += " " + l[:pos]
-                    comment += l[3:].strip() + "\n"
                     break
 
                 if token == "//":
                     block_head += " " + l[:pos]
                     break
 
-                if token == "/*!" or token == "/** ":
-                    block_head += " " + l[:pos]
-                    pos = l.find("*/", pos+3)
-                    if pos < 0:
-                        s = l[3:].strip()
-                        if len(s):
-                            comment = s + "\n"
-                        else:
-                            comment = ""
-                        state = STRUCTURED_COMMENT
-                        break
-                    l = l[pos+2:]
-                    continue
-
                 if token == "/*":
                     block_head += " " + l[:pos]
-                    pos = l.find("*/", pos+2)
-                    if pos < 0:
+                    end_pos = l.find("*/", pos+2)
+                    if len(l) > pos + 2 and l[pos+2] == "*":
+                        # '/**', it's a docstring
+                        if end_pos < 0:
+                            state = DOCSTRING
+                            docstring = l[pos+3:] + "\n"
+                            break
+                        else:
+                            docstring = l[pos+3:end_pos]
+
+                    elif end_pos < 0:
                         state = COMMENT
                         break
-                    l = l[pos+2:]
+                    l = l[end_pos+2:]
                     continue
 
                 if token == "\"":
@@ -854,6 +908,7 @@ class CppHeaderParser(object):
 
                 stmt = (block_head + " " + l[:pos]).strip()
                 stmt = " ".join(stmt.split()) # normalize the statement
+                #print(stmt)
                 stack_top = self.block_stack[-1]
 
                 if stmt.startswith("@"):
@@ -864,17 +919,29 @@ class CppHeaderParser(object):
                 if stack_top[self.PROCESS_FLAG]:
                     # even if stack_top[PUBLIC_SECTION] is False, we still try to process the statement,
                     # since it can start with "public:"
-                    stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, comment)
-                    comment = ""
+                    docstring = docstring.strip()
+                    stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, docstring=docstring)
                     if decl:
                         if stmt_type == "enum":
                             for d in decl:
                                 decls.append(d)
                         else:
                             decls.append(decl)
+
+                            if self._generate_umat_decls:
+                                # If function takes as one of arguments Mat or vector<Mat> - we want to create the
+                                # same declaration working with UMat (this is important for T-Api access)
+                                args = decl[3]
+                                has_mat = len(list(filter(lambda x: x[0] in {"Mat", "vector_Mat"}, args))) > 0
+                                if has_mat:
+                                    _, _, _, umat_decl = self.parse_stmt(stmt, token, use_umat=True, docstring=docstring)
+                                    decls.append(umat_decl)
+                        docstring = ""
                     if stmt_type == "namespace":
                         chunks = [block[1] for block in self.block_stack if block[0] == 'namespace'] + [name]
                         self.namespaces.add('.'.join(chunks))
+                        if self.comment == None:
+                            self.comment = docstring
                 else:
                     stmt_type, name, parse_flag = "block", "", False
 
@@ -903,6 +970,8 @@ class CppHeaderParser(object):
         """
         for d in decls:
             print(d[0], d[1], ";".join(d[2]))
+            # Uncomment below line to see docstrings
+            # print('"""\n' + d[5] + '\n"""')
             for a in d[3]:
                 print("   ", a[0], a[1], a[2], end="")
                 if a[3]:
@@ -911,7 +980,7 @@ class CppHeaderParser(object):
                     print()
 
 if __name__ == '__main__':
-    parser = CppHeaderParser()
+    parser = CppHeaderParser(generate_umat_decls=True)
     decls = []
     for hname in opencv_hdr_list:
         decls += parser.parse(hname)
