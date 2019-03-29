@@ -1,56 +1,84 @@
-use std::ffi::OsString;
-use std::{fs, io};
-use std::fs::{File, read_dir};
-use std::io::Write;
-use std::path::PathBuf;
-use std::process::Command;
+use std::{ffi::OsString, fs::{self, File, read_dir}, io, io::Write, path::PathBuf, process::Command};
+use std::collections::HashSet;
+use std::iter::FromIterator;
 
 use glob::glob;
 
-fn main() {
-    println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rerun-if-changed=gen_rust.py");
-    let out_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap());
-    let out_dir_as_str = out_dir.to_str().unwrap();
-    let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src");
-    let module_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src/hub");
-
-    let opencv = pkg_config::Config::new().cargo_metadata(false).probe("opencv").unwrap();
-    let mut search_paths = opencv.include_paths.clone();
-    search_paths.push(PathBuf::from("/usr/include"));
-    let search_opencv = search_paths
-        .iter()
-        .map(|p| {
-            let mut path = PathBuf::from(p);
-            path.push("opencv2");
-            path
-        })
-        .find({ |path| read_dir(path).is_ok() });
-    let actual_opencv = search_opencv.expect("Could not find opencv2 dir in pkg-config includes");
+fn link_wrapper() -> pkg_config::Library {
+    let opencv = pkg_config::Config::new().probe("opencv").unwrap();
 
     // add 3rdparty lib dit. pkgconfig forgets it somehow.
     let third_party_dir = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::Config::get_variable("opencv", "prefix").unwrap());
     println!("cargo:rustc-link-search=native={}", third_party_dir);
 
-    println!("OpenCV lives in {}", opencv_dir.display());
-    println!("Generating code in {}", out_dir_as_str);
-    println!("cargo:rerun-if-changed=gen_rust.py");
-    println!("cargo:rerun-if-changed=hdr_parser.py");
-
-    for path in opencv.link_paths {
+    for path in &opencv.link_paths {
         println!("cargo:rustc-link-search=native={}", path.to_str().unwrap());
     }
 
-    for lib in opencv.libs {
-        if lib != "stdc++" {
-            println!("cargo:rustc-link-lib={}", lib);
+    // now, this is a nightmare.
+    // opencv will embark these as .a when they are not available, or
+    // use the one from the system
+    // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
+    fn lookup_lib(third_party_dir: &str, search: &str) {
+        for prefix in &["lib", "liblib"] {
+            for &path in vec![third_party_dir].iter().chain(&["/usr/lib", "/usr/local/lib", "/usr/lib/x86_64-linux-gnu/"]) {
+                for ext in &[".a", ".dylib", ".so"] {
+                    let name = format!("{}{}", prefix, search);
+                    let filename = PathBuf::from(format!("{}/{}{}", path, name, ext));
+                    if filename.exists() {
+                        println!("cargo:rustc-link-lib={}", &name[3..]);
+                        return;
+                    }
+                }
+            }
         }
     }
 
+    let third_party_deps = [
+        "IlmImf",
+        "tiff",
+        "ippicv",
+        "jpeg",
+        "png",
+        "jasper",
+        "webp",
+        "z",
+    ];
+    third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dir, x));
+
+    opencv
+}
+
+fn build_wrapper(opencv: pkg_config::Library) {
+    println!("cargo:rerun-if-changed=hdr_parser.py");
+    println!("cargo:rerun-if-changed=gen_rust.py");
+
+    let out_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap());
+    let out_dir_as_str = out_dir.to_str().unwrap();
+    let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src");
+    let module_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src/hub");
+
+    let search_opencv = opencv.include_paths
+        .iter()
+        .chain(&[PathBuf::from("/usr/include")])
+        .map(|p| {
+            let mut path = PathBuf::from(p);
+            path.push("opencv2");
+            path
+        })
+        .find(|path| read_dir(path).is_ok());
+    let opencv_dir = search_opencv.expect("Could not find opencv2 dir in pkg-config includes");
+
+    println!("OpenCV lives in {}", opencv_dir.display());
+    println!("Generating code in {}", out_dir_as_str);
+
     let mut gcc = cc::Build::new();
-    gcc.cpp(true);
-    gcc.flag("-std=c++0x");
-    for path in opencv.include_paths {
+    gcc.cpp(true)
+        .flag("-std=c++0x")
+        .flag("-Wno-deprecated-declarations")
+        .flag("-fno-strict-aliasing");
+//        .flag("-Wno-c++11-extensions");
+    for path in &opencv.include_paths {
         gcc.include(path);
     }
 
@@ -58,79 +86,79 @@ fn main() {
         fs::remove_file(entry.unwrap()).unwrap()
     }
 
-/*
-    let modules = vec![
-        ("core", vec!["core/types_c.h", "core/core.hpp"]), // utility, base
-        (
-            "imgproc",
-            vec![
-                "imgproc/types_c.h",
-                "imgproc/imgproc_c.h",
-                "imgproc/imgproc.hpp",
-            ],
-        ),
-        (
-            "highgui",
-            vec![
-                "highgui/cap_ios.h",
-                "highgui/highgui.hpp",
-                "highgui/highgui_c.h",
-                //"highgui/ios.h"
-            ],
-        ),
-        ("features2d", vec!["features2d/features2d.hpp"]),
-        ("photo", vec!["photo/photo_c.h", "photo/photo.hpp"]),
-        (
-            "video",
-            vec![
-                "video/tracking.hpp",
-                "video/video.hpp",
-                "video/background_segm.hpp",
-            ],
-        ),
-        ("objdetect", vec!["objdetect/objdetect.hpp"]),
-        ("calib3d", vec!["calib3d/calib3d.hpp"]),
+    let opencv_dir_as_string = opencv_dir.to_string_lossy();
+    let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
+        "aruco",
+        "bgsegm",
+        "hal",
+        "hfs",
+        "flann",
+        "ippicv",
+        "opencv",
+        "opencv_modules",
+        "optflow",
+        "rgbd",
+        "stereo",
+        "surface_matching",
+        "tracking",
+        "ximgproc",
+        "xobjdetect",
+        "xphoto",
+    ].iter().map(|x| *x));
+    let ignore_header_suffix = [
+        ".details.hpp",
+        ".inl.hpp",
+        "_inl.hpp",
+        "_winrt.hpp",
+        "core/cv_cpu_dispatch.h",
+        "core/hal/intrin.hpp",
+        "core/hal/intrin_avx.hpp",
+        "core/hal/intrin_cpp.hpp",
+        "core/hal/intrin_forward.hpp",
+        "core/hal/intrin_neon.hpp",
+        "core/hal/intrin_sse.hpp",
+        "core/hal/intrin_sse_em.hpp",
+        "core/hal/intrin_vsx.hpp",
+        "core/ocl_genbase.hpp",
+        "core/opengl.hpp",
+        "cvstd.hpp",
+        "ios.h",
+        "ippasync.hpp",
+        "ocl.hpp",
+        "operations.hpp",
+        "persistence.hpp",
+        "utils/trace.hpp",
     ];
-*/
+    let ignore_header_substring = [
+        "/detail/",
+        "/superres/",
+        "core/opencl/",
+        "cuda",
+        "eigen",
+        "private",
+    ];
+    let mut modules = glob(&format!("{}/*.hpp", opencv_dir_as_string)).unwrap()
+        .map(|entry| {
+             let entry = entry.unwrap();
+             let mut files = vec!(entry.to_str().unwrap().to_string());
 
-    let opencv_path_as_string = actual_opencv.to_str().unwrap().to_string();
-    let modules = glob(&(opencv_path_as_string.clone()+"/*.hpp")).unwrap().map(|entry| {
-        let entry = entry.unwrap();
-        let mut files = vec!(entry.to_str().unwrap().to_string());
+             let module = entry.file_stem().unwrap().to_string_lossy();
 
-        let module = entry.file_stem().unwrap().to_str().unwrap().to_string();
+             files.extend(
+                 glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
+                 .map(|file| file.unwrap().to_string_lossy().into_owned())
+                 .filter(|f| !ignore_header_suffix.iter().any(|&x| f.ends_with(x)) && !ignore_header_substring.iter().any(|&x| f.contains(x)))
+             );
+             (module.into_owned(), files)
+         })
+        .filter(|module| !ignore_modules.contains(&module.0.as_ref()))
+        .collect::<Vec<(String,Vec<String>)>>();
 
-        files.extend(glob(&(opencv_path_as_string.clone()+"/"+&*module+"/**/*.h*")).unwrap()
-            .map(|file| file.unwrap().to_str().unwrap().to_string())
-            .filter(|f|
-                    !f.ends_with("cvstd.hpp")
-                &&  !f.ends_with("cvstd.inl.hpp")
-                &&  !f.ends_with("ocl.hpp")
-                &&  !f.ends_with("operations.hpp")
-                &&  !f.ends_with("persistence.hpp")
-                &&  !f.ends_with("ippasync.hpp")
-                &&  !f.ends_with("core/ocl_genbase.hpp")
-                &&  !f.ends_with("core/opengl.hpp")
-                &&  !f.ends_with("core/mat.inl.hpp")
-                &&  !f.ends_with("core/hal/intrin_cpp.hpp")
-                &&  !f.ends_with("core/hal/intrin_sse.hpp")
-                &&  !f.ends_with("core/hal/intrin_neon.hpp")
-                &&  !f.ends_with("ios.h")
-                &&  !f.contains("cuda")
-                &&  !f.contains("eigen")
-                &&  !f.contains("/detail/")
-                &&  !f.contains("private")
-                &&  !f.contains("/superres/")
-            ));
-        (module, files)
-    })
-    .filter(|module|    module.0 != "flann"
-                    &&  module.0 != "opencv_modules"
-                    &&  module.0 != "opencv"
-                    &&  module.0 != "ippicv"
-                    &&  module.0 != "hal"
-    )
-    .collect::<Vec<(String,Vec<String>)>>();
+    if let Some(core_idx) = modules.iter().position(|x| x.0 == "core") {
+        if core_idx != 0 {
+            modules.swap(0, core_idx);
+        }
+    }
 
     {
         let mut types = File::create(out_dir.join("common_opencv.h")).unwrap();
@@ -160,7 +188,7 @@ fn main() {
                     .1
                     .iter()
                     .map(|p| {
-                        let mut path = actual_opencv.clone();
+                        let mut path = opencv_dir.clone();
                         path.push(p);
                         path.into_os_string()
                     })
@@ -265,34 +293,8 @@ fn main() {
             let _ = fs::remove_file(path);
         }
     }
-
-    // now, this is a nightmare.
-    // opencv will embark these as .a when they are not available, or
-    // use the one from the system
-    // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
-    fn lookup_lib(third_party_dir:&str, search: &str) {
-        for prefix in vec![ "lib", "liblib" ] {
-            for path in vec![ third_party_dir, "/usr/lib", "/usr/local/lib", "/usr/lib/x86_64-linux-gnu/" ] {
-                for ext in vec!(".a", ".dylib", ".so") {
-                    let name = prefix.to_string() + search;
-                    let filename = path.to_string() + "/" + &*name + ext;
-                    if fs::metadata(filename.clone()).is_ok() {
-                        println!("cargo:rustc-link-lib={}", &name[3..]);
-                        return
-                    }
-                }
-            }
-        }
-    }
-
-    lookup_lib(&*third_party_dir, "IlmImf");
-    lookup_lib(&*third_party_dir, "tiff");
-    lookup_lib(&*third_party_dir, "ippicv");
-    lookup_lib(&*third_party_dir, "jpeg");
-    lookup_lib(&*third_party_dir, "png");
-    lookup_lib(&*third_party_dir, "jasper");
-    lookup_lib(&*third_party_dir, "webp");
-
-    println!("cargo:rustc-link-lib=z");
 }
 
+fn main() {
+    build_wrapper(link_wrapper());
+}
