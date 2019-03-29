@@ -1,3 +1,6 @@
+Quick update: this crate has been updated to work with OpenCV 3.4.5, some of
+the following doc is outdated:
+
 ## Rust OpenCV bindings
 
 [![Build Status](https://travis-ci.org/kali/opencv-rust.svg?branch=cv2)](https://travis-ci.org/kali/opencv-rust)
