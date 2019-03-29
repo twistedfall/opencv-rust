@@ -1933,6 +1933,7 @@ class RustWrapperGenerator(object):
         if name == "*":
             name = "data"
         rsname = reserved_rename.get(name, name)
+        visibility = "" if rsname == "__rust_private" else "pub "
         if "[" in typ:
             bracket = typ.index("[")
             cppt = typ[:bracket]
@@ -1941,16 +1942,16 @@ class RustWrapperGenerator(object):
             rst = self.get_type_info(cppt).rust_full
             self.moduleCppTypes.write("    %s %s[%s];\n"%(ct, name, size))
             if is_simple_struct:
-                self.moduleSafeRust.write("pub [%s; %s], " % (rst, size))
+                self.moduleSafeRust.write("%s[%s; %s], " % (visibility, rst, size))
             else:
-                self.moduleSafeRust.write("    pub %s: [%s;%s],\n" % (rsname, rst, size))
+                self.moduleSafeRust.write("    %s%s: [%s; %s],\n" % (visibility, rsname, rst, size))
         else:
             typ = self.get_type_info(typ)
             self.moduleCppTypes.write("    %s %s;\n"%(typ.ctype, name))
             if is_simple_struct:
-                self.moduleSafeRust.write("%s, " % (typ.rust_full))
+                self.moduleSafeRust.write("%s %s, " % (visibility, typ.rust_full))
             else:
-                self.moduleSafeRust.write("    pub %s: %s,\n" % (rsname, typ.rust_full))
+                self.moduleSafeRust.write("    %s%s: %s,\n"%(visibility, rsname, typ.rust_full))
 
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct c_%s {\n"%(c.replace("::","_")))
@@ -1973,8 +1974,11 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write(self.reformat_doc(ci.comment))
         self.moduleSafeRust.write("#[repr(C)]\n#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s {\n" % (ci.type_info().rust_local))
         self.moduleCppTypes.write("typedef struct %s {\n" % (ci.type_info().c_sane))
-        for p in ci.props:
-            self.gen_value_struct_field(p.name, p.ctype)
+        if len(ci.props) > 0:
+	         for p in ci.props:
+		          self.gen_value_struct_field(p.name, p.ctype)
+        else:
+	         self.gen_value_struct_field("__rust_private", "unsigned char[0]")
         self.moduleSafeRust.write("}\n\n")
         self.moduleCppTypes.write("} %s;\n\n" % (ci.type_info().c_sane))
 
