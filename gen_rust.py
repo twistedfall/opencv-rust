@@ -611,7 +611,11 @@ class FuncInfo(GeneralInfo):
         if self.classname and not self.classname.startswith("operator"):
             self.ci = gen.get_class(self.classname)
             if not self.ci:
-                raise NameError("class not found: " + self.classname)
+                if self.classname == "std":
+                    self.is_ignored = True
+                    return
+                else:
+                    raise NameError("class not found: " + self.classname)
             if "/A" in decl[2]:
                 self.ci.is_trait = True
             if self.classname == self.name:
@@ -903,9 +907,9 @@ class ClassInfo(GeneralInfo):
 
         self.nested_cname = self.fullname.replace("::", "_")
 
-        self.bases = decl[1][1:].strip()
-        if len(self.bases):
-            self.bases = map(lambda x:x.strip(), self.bases.split(","))
+        bases = decl[1][1:].strip()
+        if len(bases):
+            self.bases = [x for x in set(x.strip() for x in bases.split(",")) if x != self.fullname]
         else:
             self.bases = []
 
@@ -1355,13 +1359,14 @@ class SmartPtrTypeInfo(TypeInfo):
                 bases = self.gen.all_bases(self.inner.ci.name).union(set((self.inner.typeid,)))
                 for base in bases:
                     cibase = self.gen.get_type_info(base)
-                    f.write(template("""
-                        impl $base_full for $rust_name {
-                            #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { 
-                                unsafe { cv_${sane}_get(self.ptr) }
+                    if not isinstance(cibase, UnknownTypeInfo):
+                        f.write(template("""
+                            impl $base_full for $rust_name {
+                                #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { 
+                                    unsafe { cv_${sane}_get(self.ptr) }
+                                }
                             }
-                        }
-                    """).substitute(rust_name=self.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full, sane=self.sane))
+                        """).substitute(rust_name=self.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full, sane=self.sane))
         with open(self.gen.cpp_dir + "/" + self.sane + ".type.cpp", "w") as f:
             code = template("""
                 void* cv_${sane}_get(void* ptr) {
@@ -2017,12 +2022,14 @@ class RustWrapperGenerator(object):
 
         bases = self.all_bases(name)
         for base in bases:
-            cibase = self.get_class(base).type_info()
-            self.moduleSafeRust.write(template("""
-                impl $base_full for $rust_name {
-                    #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
-                }
-            """).substitute(rust_name=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
+            cibase = self.get_class(base)
+            if cibase is not None:
+                cibase = cibase.type_info()
+                self.moduleSafeRust.write(template("""
+                    impl $base_full for $rust_name {
+                        #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
+                    }
+                """).substitute(rust_name=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
 
     def gen_nested_class_decl(self, ci):
         pass
@@ -2032,9 +2039,10 @@ class RustWrapperGenerator(object):
     def all_bases(self, name):
         bases = set()
         ci = self.get_class(name)
-        for b in ci.bases:
-            bases.add(b)
-            bases = bases.union(self.all_bases(b))
+        if ci is not None:
+            for b in ci.bases:
+                bases.add(b)
+                bases = bases.union(self.all_bases(b))
         return bases
 
     def gen_class(self, ci):
@@ -2050,7 +2058,7 @@ class RustWrapperGenerator(object):
             return
         if t.is_trait:
             if len(ci.bases):
-                bases = map(lambda b: self.get_type_info(b).rust_full, ci.bases)
+                bases = (x.rust_full for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
                 bases = " : " + " + ".join(bases)
             else:
                 bases = ""
