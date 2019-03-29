@@ -694,7 +694,7 @@ class FuncInfo(GeneralInfo):
         return io.getvalue()
 
     def c_name(self):
-        return "cv_%s_%s" % (self.gen.module, self.identifier.replace("::", ""))
+        return "cv_%s_%s" % (self.gen.module, self.identifier.replace("::", "").replace(" ", "_"))
 
     def r_name(self):
         if self._r_name is not None:
@@ -1028,7 +1028,7 @@ class PrimitiveTypeInfo(TypeInfo):
         self.ctype = primitives[typeid]["ctype"]
         self.cpptype = typeid
         self.rust_extern = self.rust_full = self.rust_local = primitives[typeid]["rust_local"]
-        self.sane = typeid
+        self.sane = typeid.replace(" ", "_")
         self.c_sane = self.ctype.replace(" ", "_").replace("*", "X").replace("::", "_")
 
     def __str__(self):

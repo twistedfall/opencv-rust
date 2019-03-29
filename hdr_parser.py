@@ -70,6 +70,16 @@ class CppHeaderParser(object):
 
         return arg_str[npos2+1:npos3].strip(), npos3
 
+    def is_spaced_type_def(self, built_type, token):
+        if built_type == "unsigned" and (token == "long" or token == "int" or token == "short" or token == "char"):
+            return True
+        if built_type == "long" and token == "long":
+            return True
+        if built_type == "unsigned long" and token == "long":
+            return True
+        return False
+
+
     def parse_arg(self, arg_str, argno):
         """
         Parses <arg_type> [arg_name]
@@ -177,10 +187,12 @@ class CppHeaderParser(object):
                 angle_stack[-1] += 1
             elif arg_type == "struct":
                 arg_type += " " + w
-            elif arg_type and arg_type != "~":
+            elif arg_type and arg_type != "~" and not self.is_spaced_type_def(arg_type, w):
                 arg_name = " ".join(word_list[wi:])
                 break
             else:
+                if arg_type:
+                    arg_type += " "
                 arg_type += w
             prev_w = w
 
