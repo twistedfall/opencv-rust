@@ -2089,17 +2089,19 @@ class RustWrapperGenerator(object):
         text = text.strip()
         if len(text) == 0:
             return ""
-        text = text.replace("@brief","").replace("@note","\nNote: ")
+        text = re.sub(r"^\s*\*$", "", text, 0, re.M)
+        text = re.sub(r"^\* ", "", text, 0, re.M)
+        text = text.replace("@brief", "").replace("@note", "\nNote:")
         text = text.replace("@code", "```ignore").replace("@endcode", "```\n")
-        text = text.replace("@param", "## Parameters\n@param", 1)
-        text = re.sub(".*\*\*\*\*\*", "", text, 0, re.M)
+        text = re.sub("^(.*?@param)", "## Parameters\n\\1", text, 1, re.M)
+        text = re.sub(r".*\*\*\*\*\*", "", text, 0, re.M)
         text = re.sub("@defgroup [^ ]+ (.*)", "\\1\n\n# \\1", text)
-        text = re.sub("^@param ([^ ]+) (.*)", "* \\1: \\2", text, 0, re.M)
+        text = re.sub("^.*?@param ([^ ]+) (.*)", "* \\1: \\2", text, 0, re.M)
         text = re.sub("^-  (.*)", "*  \\1", text, 0, re.M)
         text = re.sub("\\\\f\[", "<div lang='latex'>", text, 0, re.M)
         text = re.sub("\\\\f\]", "</div>", text, 0, re.M)
-        text = re.sub("\\\\f\$(.*?)\\\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
-        text = re.sub("^", "/// ", text + "\n", 0, re.M) + "\n"
+        text = re.sub(r"\\f\$(.*?)\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
+        text = re.sub("^", "/// ", text.strip(), 0, re.M) + "\n"
         return text
 
 
