@@ -70,9 +70,7 @@ fn run() -> Result<(), String> {
             imgproc::rectangle(
                 &frame,
                 scaled_face,
-                core::Scalar {
-                    data: [0f64, -1f64, -1f64, -1f64]
-                },
+                core::Scalar ([0f64, -1f64, -1f64, -1f64]),
                 1,
                 8,
                 0

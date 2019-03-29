@@ -25,10 +25,11 @@ cross_modules_deps = {
     "core": (
         ["class cv.Mat", "", ["/Ghost"], []],
         ["class cv.Algorithm", "", ["/Ghost"], []],
-        ["class cv.DMatch", "", ["/Ghost"], []],
-        ["class cv.KeyPoint", "", ["/Ghost"], []],
+        ["class cv.DMatch", "", ["/Ghost", "/Simple"], []],
+        ["class cv.KeyPoint", "", ["/Ghost", "/Simple"], []],
         ["class cv.RotatedRect", "", ["/Ghost"], []],
         ["class cv.TermCriteria", "", ["/Ghost"], []],
+        ["class cv.Range", "", ["/Ghost"], []],
     )
 }
 
@@ -328,6 +329,7 @@ aliases_types = {
     "_InputArray": "cv::Mat",
     "_OutputArray": "cv::Mat",
     "_InputOutputArray": "cv::Mat",
+    "_Range": "cv::Range",
 }
 
 func_ignore_list = (
@@ -382,34 +384,61 @@ const_ignore_list = (
 #
 
 primitives = {
-    u"void"  : { u"ctype": "void", "rust_local": "()" },
-    u"bool"  : { u"ctype": "char", u"rust_local": "bool" },
-    u"uchar" : { u"ctype": "unsigned char", u"rust_local": "u8" },
-    u"char"  : { u"ctype": "char", u"rust_local": "i8" },
-    u"short" : { u"ctype": "short", u"rust_local": "u16" },
-    u"int"   : { u"ctype": "int", u"rust_local": "i32" },
-    u"uint"  : { u"ctype": "unsigned int", u"rust_local": "u32" },
-    u"size_t": { u"ctype": "std::size_t", u"rust_local": "size_t" },
-    u"int64" : { u"ctype": "int64", u"rust_local": "i64" },
-    u"float" : { u"ctype": "float", u"rust_local": "f32" },
-    u"double": { u"ctype": "double", u"rust_local": "f64" },
-    u"uchar*": { u"ctype": "unsigned char*", u"rust_local": "*mut u8" }
+    u"void": {u"ctype": "void", "rust_local": "()"},
+
+    u"bool": {u"ctype": "char", u"rust_local": "bool"},
+
+    u"char": {u"ctype": "char", u"rust_local": "i8"},
+    u"schar": {u"ctype": "char", u"rust_local": "i8"},
+    u"uchar": {u"ctype": "unsigned char", u"rust_local": "u8"},
+    u"unsigned char": {u"ctype": "unsigned char", u"rust_local": "u8"},
+    u"uchar*": {u"ctype": "unsigned char*", u"rust_local": "*mut u8"},
+
+    u"short": {u"ctype": "short", u"rust_local": "i16"},
+    u"ushort": {u"ctype": "unsigned short", u"rust_local": "u16"},
+
+    u"int": {u"ctype": "int", u"rust_local": "i32"},
+    u"uint": {u"ctype": "unsigned int", u"rust_local": "u32"},
+    u"unsigned int": {u"ctype": "unsigned int", u"rust_local": "u32"},
+    u"uint32_t": {u"ctype": "uint32_t", u"rust_local": "u32"},
+
+    u"size_t": {u"ctype": "std::size_t", u"rust_local": "size_t"},
+
+    u"int64": {u"ctype": "int64", u"rust_local": "i64"},
+    u"uint64": {u"ctype": "uint64", u"rust_local": "u64"},
+    u"unsigned long long": {u"ctype": "unsigned long long", u"rust_local": "u64"},
+    u"int64_t": {u"ctype": "int64_t", u"rust_local": "i64"},
+    u"uint64_t": {u"ctype": "uint64_t", u"rust_local": "u64"},
+
+    u"float": {u"ctype": "float", u"rust_local": "f32"},
+    u"double": {u"ctype": "double", u"rust_local": "f64"},
 }
 
-forced_trait_classes = [ "cv::Algorithm", "cv::BackgroundSubtractor" ]
+forced_trait_classes = ("cv::Algorithm", "cv::BackgroundSubtractor", "cv::dnn::Layer")
 
 value_struct_types = {
-    "Point" : (("x", "int"), ("y", "int")),
-    "Point2d" : (("x", "double"), ("y", "double")),
-    "Point2f" : (("x", "float"), ("y", "float")),
-    "Size" : (("width", "int"), ("height", "int")),
-    "Size2f" : (("width", "float"), ("height", "float")),
-    "Rect" : (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
-#    "RotatedRect" : (("x", "float"), ("y", "float"), ("width", "float"),("height", "float"), ("angle", "float")),
-#    "TermCriteria" : (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
-    "Scalar" : (("data", "double[4]"),),
-    "CvRNG" : (("data", "int64"),)
+    "Point2i": (("x", "int"), ("y", "int")),
+    "Point2l": (("x", "int64"), ("y", "int64")),
+    "Point2f": (("x", "float"), ("y", "float")),
+    "Point2d": (("x", "double"), ("y", "double")),
+    "Point": (("x", "int"), ("y", "int")),
+    "Size2i": (("width", "int"), ("height", "int")),
+    "Size2l": (("width", "int64"), ("height", "int64")),
+    "Size2f": (("width", "float"), ("height", "float")),
+    "Size2d": (("width", "double"), ("height", "double")),
+    "Size": (("width", "int"), ("height", "int")),
+    "Rect2i": (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
+    "Rect2f": (("x", "float"), ("y", "float"), ("width", "float"), ("height", "float")),
+    "Rect2d": (("x", "double"), ("y", "double"), ("width", "double"), ("height", "double")),
+    "Rect": (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
+    # "TermCriteria": (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
+    "Scalar": (("*", "double[4]"),),
+    "CvRNG": (("data", "int64"),)
 }
+
+for s in (2, 3, 4, 6):
+    for t in (("uchar", "b"), ("short", "s"), ("int", "i"), ("double", "d"), ("float", "f")):
+        value_struct_types["Vec%d%s" % (s,t[1])] = ("data", "%s[%d]" % (t[0],s)),
 
 boxed_type_fields = {
     "RotatedRect": {
@@ -418,10 +447,6 @@ boxed_type_fields = {
         "angle": "float",
     }
 }
-
-for s in [2,3,4,6]:
-    for t in [("uchar","b"),("short","s"),("int","i"),("double","d"),("float","f")]:
-        value_struct_types["Vec%d%s"%(s,t[1])] = ("data", "%s[%d]"%(t[0],s)),
 
 static_modules = ("sys", "types", "core")
 
@@ -1308,7 +1333,7 @@ class SmartPtrTypeInfo(TypeInfo):
                     }
                 }
                 """).substitute(self.__dict__))
-            if self.inner.ci.is_trait:
+            if not isinstance(self.inner, PrimitiveTypeInfo) and self.inner.ci.is_trait:
                 bases = self.gen.all_bases(self.inner.ci.name)
                 for base in bases:
                     cibase = self.gen.get_type_info(base)
@@ -1378,18 +1403,21 @@ def parse_type(gen, typeid):
     :type typeid: str
     :rtype: TypeInfo
     """
-    typeid = typeid.strip()
-    typeid = typeid.replace("const ", "").replace("..", ".")
+    typeid = typeid.strip()\
+        .replace("const ", "")\
+        .replace("..", ".")
     if typeid == "":
         typeid = "void"
     # if typeid.endswith("&"):
     #     return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     if typeid.endswith("&"):
-        typeid = typeid[0:-1]
+        typeid = typeid[0:-1].strip()
     if typeid in primitives:
         return PrimitiveTypeInfo(gen, typeid)
     elif typeid.endswith("*"):
         return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
+    elif typeid.endswith("[]"):
+        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-2]))
     elif typeid == "string" or typeid == "String":
         return StringTypeInfo(gen,typeid)
     elif typeid == "":
@@ -1411,14 +1439,14 @@ def parse_type(gen, typeid):
         return ValueStructTypeInfo(gen, gen.get_value_struct(typeid))
     else:
         ci = gen.get_class(typeid)
-        if ci:
+        if ci and not ci.is_ignored:
             if ci.is_simple:
                 return SimpleClassTypeInfo(gen, ci.nested_cppname)
             else:
                 return BoxedClassTypeInfo(gen, ci.nested_cppname, None)
         actual = aliases_types.get(typeid)
         if actual:
-            ci = gen.get_class(typeid)
+            ci = gen.get_class(actual)
             if ci:
                 if ci.is_simple:
                     return SimpleClassTypeInfo(gen, ci.nested_cppname)
@@ -1479,6 +1507,7 @@ class RustWrapperGenerator(object):
         :type typeid: str
         :rtype: TypeInfo
         """
+        typeid = typeid.strip()
         if typeid not in self.type_infos:
             self.type_infos[typeid] = parse_type(self, typeid)
         return self.type_infos[typeid]
@@ -1583,7 +1612,7 @@ class RustWrapperGenerator(object):
                 t.gen_wrapper()
 
         for c in self.classes.values():
-            if c.is_simple and not c.is_ignored:
+            if c.is_simple and not c.is_ignored and not c.is_ghost:
                 self.gen_simple_class(c)
 
         for fi in sorted(self.functions, key=lambda fi: fi.identifier):
@@ -1842,7 +1871,9 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write(fi.gen_safe_rust())
         self.func_names.add(classname + '===' + fi.r_name())
 
-    def gen_value_struct_field(self, name, typ):
+    def gen_value_struct_field(self, name, typ, is_simple_struct=False):
+        if name == "*":
+            name = "data"
         rsname = name
         if rsname in ["box", "type"]:
             rsname = "_" + rsname
@@ -1853,20 +1884,34 @@ class RustWrapperGenerator(object):
             size = typ[bracket+1:-1]
             rst = self.get_type_info(cppt).rust_full
             self.moduleCppTypes.write("    %s %s[%s];\n"%(ct, name, size))
-            self.moduleSafeRust.write("    pub %s: [%s;%s],\n" % (rsname, rst, size))
+            if is_simple_struct:
+                self.moduleSafeRust.write("pub [%s; %s], " % (rst, size))
+            else:
+                self.moduleSafeRust.write("    pub %s: [%s;%s],\n" % (rsname, rst, size))
         else:
             typ = self.get_type_info(typ)
             self.moduleCppTypes.write("    %s %s;\n"%(typ.ctype, name))
-            self.moduleSafeRust.write("    pub %s: %s,\n" % (rsname, typ.rust_full))
+            if is_simple_struct:
+                self.moduleSafeRust.write("%s, " % (typ.rust_full))
+            else:
+                self.moduleSafeRust.write("    pub %s: %s,\n" % (rsname, typ.rust_full))
 
     def gen_value_struct(self, c):
         self.moduleCppTypes.write("typedef struct c_%s {\n"%(c.replace("::","_")))
         self.moduleSafeRust.write("// manually defined value struct %s\n" % (c.split("::")[-1]))
-        self.moduleSafeRust.write("#[repr(C)]\n#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s {\n" % (c.split("::")[-1]))
+        self.moduleSafeRust.write("#[repr(C)]\n#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s" % (c.split("::")[-1]))
+        is_simple_struct = len(value_struct_types[c]) == 1 and value_struct_types[c][0][0] == "*"
+        if is_simple_struct:
+	        self.moduleSafeRust.write(" (")
+        else:
+	        self.moduleSafeRust.write(" {\n")
         for field in value_struct_types[c]:
-            self.gen_value_struct_field(field[0], field[1])
+	        self.gen_value_struct_field(field[0], field[1], is_simple_struct)
         self.moduleCppTypes.write("} c_%s;\n\n" % (c.replace("::", "_")))
-        self.moduleSafeRust.write("}\n\n")
+        if is_simple_struct:
+	        self.moduleSafeRust.write(");\n\n")
+        else:
+	        self.moduleSafeRust.write("}\n\n")
 
     def gen_simple_class(self,ci):
         self.moduleSafeRust.write(self.reformat_doc(ci.comment))

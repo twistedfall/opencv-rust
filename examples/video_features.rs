@@ -46,7 +46,7 @@ fn run() -> Result<(), String> {
                 &gray,
                 &kps,
                 &mut display,
-                core::Scalar { data: [-1f64; 4] },
+                core::Scalar ([-1f64; 4]),
                 features2d::DrawMatchesFlags_DEFAULT
             )?;
             highgui::imshow(window, &display)?;
