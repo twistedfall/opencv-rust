@@ -1,5 +1,6 @@
 use std::{ffi::OsString, fs::{self, File, read_dir}, io, io::Write, path::PathBuf, process::Command};
 use std::collections::HashSet;
+use std::fs::OpenOptions;
 use std::iter::FromIterator;
 
 use glob::glob;
@@ -56,7 +57,8 @@ fn build_wrapper(opencv: pkg_config::Library) {
     let out_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap());
     let out_dir_as_str = out_dir.to_str().unwrap();
     let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src");
-    let module_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src/hub");
+    let module_dir = hub_dir.join("hub");
+    let manual_dir = module_dir.join("manual");
 
     let search_opencv = opencv.include_paths
         .iter()
@@ -255,15 +257,28 @@ fn build_wrapper(opencv: pkg_config::Library) {
             fs::create_dir(&module_dir).unwrap();
         }
 
-        for entry in glob(&format!("{}/*", module_dir.to_str().unwrap())).unwrap() {
+        for entry in glob(&format!("{}/*.rs", module_dir.to_str().unwrap())).unwrap() {
             let _ = fs::remove_file(entry.unwrap());
         }
 
         {
             let mut hub = File::create(hub_dir.join("hub.rs")).unwrap();
+            let mut manual_writen = false;
             for ref module in &modules {
                 writeln!(&mut hub, r#"pub mod {};"#, module.0).unwrap();
-                fs::rename(out_dir.join(format!("{}.rs", module.0)), module_dir.join(format!("{}.rs", module.0))).unwrap();
+                let module_filename = format!("{}.rs", module.0);
+                let target_file = module_dir.join(&module_filename);
+                fs::rename(out_dir.join(&module_filename), &target_file).unwrap();
+                if manual_dir.join(&module_filename).exists() {
+                    if !manual_writen {
+                        writeln!(&mut hub, "mod manual;").unwrap();
+                        manual_writen = true;
+                    }
+                    let mut m = OpenOptions::new().create(true).append(true).open(&module_dir.join("manual.rs")).unwrap();
+                    writeln!(&mut m, "pub mod {};", module.0).unwrap();
+                    let mut f = OpenOptions::new().append(true).open(&target_file).unwrap();
+                    writeln!(&mut f, "pub use crate::hub::manual::{}::*;", module.0).unwrap();
+                }
             }
             writeln!(&mut hub, "pub mod types;").unwrap();
             writeln!(&mut hub, "#[doc(hidden)] pub mod sys;").unwrap();
@@ -290,6 +305,11 @@ fn build_wrapper(opencv: pkg_config::Library) {
             for module in &modules {
                 let path = out_dir.join(format!("{}.externs.rs", module.0));
                 io::copy(&mut File::open(&path).unwrap(), &mut sys).unwrap();
+            }
+            if manual_dir.join("sys.rs").exists() {
+                writeln!(&mut sys, "pub use crate::hub::manual::sys::*;").unwrap();
+                let mut m = OpenOptions::new().create(true).append(true).open(&module_dir.join("manual.rs")).unwrap();
+                writeln!(&mut m, "pub mod sys;").unwrap();
             }
         }
     }
