@@ -202,24 +202,26 @@ fn build_wrapper(opencv: pkg_config::Library) {
         }
 
         gcc.file(cpp);
-        let e = Command::new("sh")
-            .current_dir(&out_dir)
-            .arg("-c")
-            .arg(format!(
-                "g++ {}.consts.cpp -o {}.consts `pkg-config --cflags --libs opencv` -L`pkg-config --variable=prefix opencv`/share/OpenCV/3rdparty/lib",
-                module.0, module.0
-            ))
-            .status()
-            .unwrap();
-        assert!(e.success());
-        let e = Command::new("sh")
-            .current_dir(&out_dir)
-            .arg("-c")
-            .arg(format!("./{}.consts >> {}.rs", module.0, module.0))
-            .status()
-            .unwrap();
-        assert!(e.success());
-        let _ = fs::remove_file(out_dir.join(format!("{}.consts", module.0)));
+        if cfg!(feature = "buildtime_bindgen") {
+            let e = Command::new("sh")
+               .current_dir(&out_dir)
+               .arg("-c")
+               .arg(format!(
+                   "g++ {}.consts.cpp -o {}.consts `pkg-config --cflags --libs opencv` -L`pkg-config --variable=prefix opencv`/share/OpenCV/3rdparty/lib",
+                   module.0, module.0
+               ))
+               .status()
+               .unwrap();
+            assert!(e.success());
+            let e = Command::new("sh")
+               .current_dir(&out_dir)
+               .arg("-c")
+               .arg(format!("./{}.consts >> {}.rs", module.0, module.0))
+               .status()
+               .unwrap();
+            assert!(e.success());
+            let _ = fs::remove_file(out_dir.join(format!("{}.consts", module.0)));
+        }
         let _ = fs::remove_file(out_dir.join(format!("{}.consts.cpp", module.0)));
     }
     let _ = fs::remove_file("gen_rust.pyc");
@@ -232,8 +234,7 @@ fn build_wrapper(opencv: pkg_config::Library) {
                 &mut hub_return_types,
                 r#"#include "{}""#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()
-            )
-               .unwrap();
+            ).unwrap();
         }
     }
 
@@ -249,49 +250,51 @@ fn build_wrapper(opencv: pkg_config::Library) {
 
     gcc.compile("ocvrs");
 
-    if !module_dir.exists() {
-        fs::create_dir(&module_dir).unwrap();
-    }
+    if cfg!(feature = "buildtime_bindgen") {
+        if !module_dir.exists() {
+            fs::create_dir(&module_dir).unwrap();
+        }
 
-    for entry in glob(&format!("{}/*", module_dir.to_str().unwrap())).unwrap() {
+        for entry in glob(&format!("{}/*", module_dir.to_str().unwrap())).unwrap() {
+            let _ = fs::remove_file(entry.unwrap());
+        }
+
+        {
+            let mut hub = File::create(hub_dir.join("hub.rs")).unwrap();
+            for ref module in &modules {
+                writeln!(&mut hub, r#"pub mod {};"#, module.0).unwrap();
+                fs::rename(out_dir.join(format!("{}.rs", module.0)), module_dir.join(format!("{}.rs", module.0))).unwrap();
+            }
+            writeln!(&mut hub, "pub mod types;").unwrap();
+            writeln!(&mut hub, "#[doc(hidden)] pub mod sys;").unwrap();
+        }
+
+        {
+            let mut types = File::create(module_dir.join("types.rs")).unwrap();
+            writeln!(&mut types, "use libc::{{c_void, c_char, size_t}};").unwrap();
+            writeln!(&mut types, "use crate::{{core, types}};").unwrap();
+            for entry in glob(&format!("{}/*.type.rs", out_dir_as_str)).unwrap() {
+                let entry = entry.unwrap();
+                io::copy(&mut File::open(&entry).unwrap(), &mut types).unwrap();
+            }
+        }
+
+        {
+            let mut sys = File::create(module_dir.join("sys.rs")).unwrap();
+            writeln!(&mut sys, "use libc::{{c_void, c_char, size_t}};").unwrap();
+            writeln!(&mut sys, "use crate::{{core}};").unwrap();
+            for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str)).unwrap() {
+                let entry = entry.unwrap();
+                io::copy(&mut File::open(&entry).unwrap(), &mut sys).unwrap();
+            }
+            for module in &modules {
+                let path = out_dir.join(format!("{}.externs.rs", module.0));
+                io::copy(&mut File::open(&path).unwrap(), &mut sys).unwrap();
+            }
+        }
+    }
+    for entry in glob(&format!("{}/*.rs", out_dir_as_str)).unwrap() {
         let _ = fs::remove_file(entry.unwrap());
-    }
-
-    {
-        let mut hub = File::create(hub_dir.join("hub.rs")).unwrap();
-        for ref module in &modules {
-            writeln!(&mut hub, r#"pub mod {};"#, module.0).unwrap();
-            fs::rename(out_dir.join(format!("{}.rs", module.0)), module_dir.join(format!("{}.rs", module.0))).unwrap();
-        }
-        writeln!(&mut hub, "pub mod types;").unwrap();
-        writeln!(&mut hub, "#[doc(hidden)] pub mod sys;").unwrap();
-    }
-
-    {
-        let mut types = File::create(module_dir.join("types.rs")).unwrap();
-        writeln!(&mut types, "use libc::{{c_void, c_char, size_t}};").unwrap();
-        writeln!(&mut types, "use crate::{{core, types}};").unwrap();
-        for entry in glob(&format!("{}/*.type.rs", out_dir_as_str)).unwrap() {
-            let entry = entry.unwrap();
-            io::copy(&mut File::open(&entry).unwrap(), &mut types).unwrap();
-            let _ = fs::remove_file(entry);
-        }
-    }
-
-    {
-        let mut sys = File::create(module_dir.join("sys.rs")).unwrap();
-        writeln!(&mut sys, "use libc::{{c_void, c_char, size_t}};").unwrap();
-        writeln!(&mut sys, "use crate::{{core}};").unwrap();
-        for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str)).unwrap() {
-            let entry = entry.unwrap();
-            io::copy(&mut File::open(&entry).unwrap(), &mut sys).unwrap();
-            let _ = fs::remove_file(entry);
-        }
-        for module in &modules {
-            let path = out_dir.join(format!("{}.externs.rs", module.0));
-            io::copy(&mut File::open(&path).unwrap(), &mut sys).unwrap();
-            let _ = fs::remove_file(path);
-        }
     }
 }
 
