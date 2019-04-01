@@ -534,7 +534,7 @@ def split_known_namespace(name, namespaces):
 #
 
 
-class GeneralInfo():
+class GeneralInfo:
     def __init__(self, gen, name, namespaces):
         """
         :type gen: RustWrapperGenerator
@@ -567,7 +567,7 @@ class GeneralInfo():
             return name, space_name, "", ""  # error?!
 
 
-class ArgInfo():
+class ArgInfo:
     def __init__(self, gen, arg_tuple):  # [ ctype, name, def val, [mod], argno ]
         """
         :type gen: RustWrapperGenerator
@@ -653,7 +653,7 @@ class FuncInfo(GeneralInfo):
             while any(True for x in self.args if x.name == ai.name):
                 ai.name = bump_counter(ai.name)
             self.args.append(ai)
-            self.identifier += "_" + ai.type.sane + "_" + ai.name
+            self.identifier += "_" + ai.type.safe_id + "_" + ai.name
 
         self.const = "/C" in decl[2]
         self.static = ["", "static"]["/S" in decl[2]]
@@ -774,9 +774,9 @@ class FuncInfo(GeneralInfo):
     def set_r_name(self, value):
         self._r_name = value
 
-    # "const", "mut", or None
+    # "const", "mut", or ""
     def mutability(self):
-        if not self.ci == None and not self.isconstructor():
+        if self.ci is not None and not self.isconstructor():
             return "const" if self.const else "mut"
         return ""
 
@@ -786,13 +786,13 @@ class FuncInfo(GeneralInfo):
         args = []
         if not self.static and self.mutability():
             if self.ci.type_info().is_by_value:
-                args.append("instance: %s"%(self.ci.type_info().rust_full))
+                args.append("instance: %s" % (self.ci.type_info().rust_full))
             else:
-                args.append("instance: *%s c_void"%(self.mutability()))
+                args.append("instance: *%s c_void" % (self.mutability()))
         for a in self.args:
             args.append(a.rsname() + ": " + a.type.rust_extern)
 
-        return "#[doc(hidden)] pub fn %s(%s) -> %s;\n"%(self.c_name(), ", ".join(args), rust_extern_rs)
+        return "#[doc(hidden)] pub fn %s(%s) -> %s;\n" % (self.c_name(), ", ".join(args), rust_extern_rs)
 
     def gen_safe_rust(self):
         args = []
@@ -814,8 +814,8 @@ class FuncInfo(GeneralInfo):
                 call_args.append("self.as_raw_%s()"%(self.ci.type_info().rust_local))
 
         for a in self.args:
-            if isinstance(a.type,StringTypeInfo):
-                args.append("%s:&str"%(a.rsname()))
+            if isinstance(a.type, StringTypeInfo):
+                args.append("%s:&str" % (a.rsname()))
             elif a.type.is_by_value:
                 args.append(a.rsname() + ": " + a.type.rust_full)
             elif a.out == "O" or a.out == "IO":
@@ -824,12 +824,12 @@ class FuncInfo(GeneralInfo):
                 args.append(a.rsname() + ": &" + a.type.rust_full)
 
             if isinstance(a.type, BoxedClassTypeInfo) or a.type.is_by_ptr:
-                call_args.append("%s.as_raw_%s()"%(a.rsname(), a.type.rust_local))
+                call_args.append("%s.as_raw_%s()" % (a.rsname(), a.type.rust_local))
             elif isinstance(a.type,StringTypeInfo):
                 cstring_args.append("    let %s = CString::new(%s).unwrap();\n" % (a.rsname(), a.rsname()))
                 call_args.append("%s.as_ptr() as _" % (a.rsname()))
             else:
-                call_args.append("%s"%(a.rsname()))
+                call_args.append("%s" % (a.rsname()))
 
         pub = "" if self.ci and self.ci.type_info().is_trait and not self.static else "pub "
 
@@ -840,13 +840,13 @@ class FuncInfo(GeneralInfo):
             if a.defval != "":
                 if first:
                     io.write("///\n/// ## C++ default parameters:\n")
-                io.write("/// * %s: %s\n"%(a.rsname(), a.defval))
+                io.write("/// * %s: %s\n" % (a.rsname(), a.defval))
                 first = False
         io.write("%sfn %s(%s) -> Result<%s> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
         io.write("// identifier: %s\n"%(self.identifier))
         io.write("  unsafe {\n")
         io.writelines(cstring_args)
-        io.write("    let rv = sys::%s(%s);\n"%(self.c_name(), ", ".join(call_args)))
+        io.write("    let rv = sys::%s(%s);\n" % (self.c_name(), ", ".join(call_args)))
         io.write("    if !rv.error_msg.is_null() {\n")
         io.write("      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();\n")
         io.write("      ::libc::free(rv.error_msg as _);\n")
@@ -883,7 +883,7 @@ class FuncInfo(GeneralInfo):
             return "%s %s %s . %s"%(self.fullname, self.kind, self.ci, self.name)
 
 
-class ClassPropInfo():
+class ClassPropInfo:
     def __init__(self, decl):  # [f_ctype, f_name, '', '/RW']
         self.ctype = decl[0]
         self.name = decl[1]
@@ -896,7 +896,7 @@ class ClassPropInfo():
 class ClassInfo(GeneralInfo):
     def __init__(self, gen, decl, namespaces):  # [ 'class/struct cname', ': base', [modlist] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
-        self.methods = []
+        self.methods = []  # type: list[FuncInfo]
         self.namespaces = namespaces
         self.module = self.gen.module
         self.is_simple = self.is_ignored = self.is_ghost = False
@@ -984,12 +984,14 @@ class ClassInfo(GeneralInfo):
     def add_method(self, fi):
         self.methods.append(fi)
 
-    def getAllMethods(self):
+    # fixme, unused
+    def get_all_methods(self):
         result = []
         result.extend([fi for fi in sorted(self.methods) if fi.isconstructor()])
         result.extend([fi for fi in sorted(self.methods) if not fi.isconstructor()])
         return result
 
+    # fixme, unused
     def has_constructor(self):
         for fis in self.methods.values():
             for fi in fis:
@@ -1070,7 +1072,11 @@ class TypeInfo:
 
 class StringTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        TypeInfo.__init__(self,gen,typeid)
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
         self.ctype = "const char*"
         self.cpptype = "String"
         self.rust_full = "String"
@@ -1085,7 +1091,11 @@ class StringTypeInfo(TypeInfo):
 
 class IgnoredTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        TypeInfo.__init__(self,gen,typeid)
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
         self.is_ignored = True
 
     def __str__(self):
@@ -1094,7 +1104,11 @@ class IgnoredTypeInfo(TypeInfo):
 
 class PrimitiveTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        TypeInfo.__init__(self,gen,typeid)
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
         self.is_by_value = True
         primitive = primitives[self.typeid]
         self.ctype = primitive["ctype"]
@@ -1104,25 +1118,33 @@ class PrimitiveTypeInfo(TypeInfo):
         self.c_sane = self.ctype.replace(" ", "_").replace("*", "X").replace("::", "_")
 
     def __str__(self):
-        return "Primitive(%s)"%(self.cpptype)
+        return "Primitive(%s)" % (self.cpptype)
 
 
 class EmptyTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        TypeInfo.__init__(self,gen,typeid)
-        self.ctype = self.cpptype = self.rust_local = self.rust_extern = self.rust_extern = "void"
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
+        self.ctype = self.cpptype = self.rust_local = self.rust_extern = "void"
 
 
 class SimpleClassTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        TypeInfo.__init__(self,gen,typeid)
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
 
         self.is_by_value = True
         self.ci = gen.get_class(self.typeid)
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
         self.cpptype = self.typeid
-        self.rust_local = self.typeid.replace("cv::","").replace("::", "_")
+        self.rust_local = self.typeid.replace("cv::", "").replace("::", "_")
         self.sane = self.rust_local
         if self.ci:
             self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
@@ -1141,17 +1163,17 @@ class ValueStructTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        TypeInfo.__init__(self,gen,typeid)
+        TypeInfo.__init__(self, gen, typeid)
         self.is_by_value = True
         self.ci = gen.get_class(self.typeid)
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
         self.cpptype = self.typeid
-        self.rust_local = self.typeid.replace("cv::","")
+        self.rust_local = self.typeid.replace("cv::", "")
         self.sane = self.rust_local
         self.rust_full = "core::" + self.rust_local
         self.ctype = "c_" + self.rust_local
-        self.c_sane = self.ctype
+        self.c_safe_id = self.ctype
         self.rust_extern = self.rust_full
         self.is_trait = False
 
@@ -1189,7 +1211,11 @@ class BoxedClassTypeInfo(TypeInfo):
 
 class VectorTypeInfo(TypeInfo):
     def __init__(self, gen, typeid, inner):
-        TypeInfo.__init__(self,gen,typeid)
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
         self.is_by_ptr = True
         self.inner = inner
         self.is_ignored = inner.is_ignored
@@ -1354,7 +1380,7 @@ class VectorTypeInfo(TypeInfo):
             f.write(template(T_CPP_MODULE).substitute(code=externs, includes=""))
 
     def __str__(self):
-        return "Vector[%s]"%(self.inner)
+        return "Vector[%s]" % (self.inner)
 
 
 class SmartPtrTypeInfo(TypeInfo):
@@ -1425,28 +1451,36 @@ class SmartPtrTypeInfo(TypeInfo):
             f.write(template(T_CPP_MODULE).substitute(code=code, includes=""))
 
     def __str__(self):
-        return "SmartPtr[%s]"%(self.inner)
+        return "SmartPtr[%s]" % (self.inner)
 
 
 class RawPtrTypeInfo(TypeInfo):
     def __init__(self, gen, typeid, inner):
-        TypeInfo.__init__(self,gen,typeid)
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
         self.inner = inner
         self.is_ignored = True
         self.sane = inner.sane
 
     def __str__(self):
-        return "RawPtr[%s]"%(self.inner)
+        return "RawPtr[%s]" % (self.inner)
 
 
 class UnknownTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
-        TypeInfo.__init__(self,gen,typeid)
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        TypeInfo.__init__(self, gen, typeid)
         self.is_ignored = True
         logging.info("Registering an unknown type: %s", self.typeid)
 
     def __str__(self):
-        return "Unknown[%s]"%(self.typeid)
+        return "Unknown[%s]" % (self.typeid)
 
 
 #class ReferenceTypeInfo(TypeInfo):
@@ -1585,6 +1619,10 @@ class RustWrapperGenerator(object):
         return self.type_infos[typeid]
 
     def get_const(self, name):
+        """
+        :type name: str
+        :rtype: ConstInfo
+        """
         for c in self.consts:
             if c.cname == name:
                 return c
@@ -1595,7 +1633,7 @@ class RustWrapperGenerator(object):
             return
         if decl[0] == "cv.Algorithm":
             decl[0] = "cv.Algorithm.Algorithm"
-        name = decl[0]
+        name = decl[0]  # type: str
         if name.startswith("struct") or name.startswith("class"):
             ClassInfo(self, decl, frozenset(self.namespaces))
         elif name.startswith("const"):
@@ -1730,9 +1768,9 @@ class RustWrapperGenerator(object):
             f.write(self.moduleSafeRust.getvalue())
 
         with open(cpp_dir + "/" + module + ".txt", "w") as f:
-            f.write(self.makeReport())
+            f.write(self.make_report())
 
-    def makeReport(self):
+    def make_report(self):
         """
         Returns string with generator report
         """
@@ -1830,15 +1868,14 @@ class RustWrapperGenerator(object):
                 else:
                     call_cpp_args += "*" + a.name
 
-
         # C function prototype
         self.moduleCppCode.write("struct cv_return_value_%s %s(%s) {\n" % (fi.rv_type().c_sane, fi.c_name(), decl_c_args))
 
         self.moduleCppCode.write("  try {\n")
         # cpp method call with prefix
-        if fi.ci == None and (fi.cppname.startswith("cv") or fi.cppname.startswith("CV")):
+        if fi.ci is None and (fi.cppname.startswith("cv") or fi.cppname.startswith("CV")):
             call_name = fi.cppname
-        elif fi.ci == None or fi.static:
+        elif fi.ci is None or fi.static:
             call_name = fi.fullname.replace(".", "::")
         elif fi.isconstructor() and isinstance(fi.ci.type_info(), BoxedClassTypeInfo):
             call_name = fi.ci.fullname
@@ -1864,7 +1901,7 @@ class RustWrapperGenerator(object):
 
         # actual call
         if fi.type.ctype == "void":
-            self.moduleCppCode.write("    %s(%s);\n"%(call_name, call_cpp_args))
+            self.moduleCppCode.write("    %s(%s);\n" % (call_name, call_cpp_args))
         elif fi.isconstructor() and (isinstance(fi.rv_type(), BoxedClassTypeInfo)):
             self.moduleCppCode.write("    %s* cpp_return_value = new %s(%s);\n" % (fi.rv_type().cpptype, call_name, call_cpp_args))
         elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
@@ -1889,7 +1926,7 @@ class RustWrapperGenerator(object):
         if fi.type.ctype == "void":
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL };\n")
         elif isinstance(fi.rv_type(), StringTypeInfo):
-            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, strdup(cpp_return_value.c_str()) };")
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, strdup(cpp_return_value.c_str()) };\n")
         elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and not fi.isconstructor():
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
         elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and fi.isconstructor():
@@ -1899,7 +1936,7 @@ class RustWrapperGenerator(object):
         elif fi.rv_type().is_by_value:
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, *reinterpret_cast<%s*>(&cpp_return_value) };\n"%(fi.rv_type().ctype))
         elif isinstance(fi.rv_type(), VectorTypeInfo):
-            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, (void*) new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
+            self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, (void *)new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
         else: # prim
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
 
@@ -1975,26 +2012,26 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write("#[repr(C)]\n#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s" % (c.split("::")[-1]))
         is_simple_struct = len(value_struct_types[c]) == 1 and value_struct_types[c][0][0] == "*"
         if is_simple_struct:
-	        self.moduleSafeRust.write(" (")
+            self.moduleSafeRust.write(" (")
         else:
-	        self.moduleSafeRust.write(" {\n")
+            self.moduleSafeRust.write(" {\n")
         for field in value_struct_types[c]:
-	        self.gen_value_struct_field(field[0], field[1], is_simple_struct)
+            self.gen_value_struct_field(field[0], field[1], is_simple_struct)
         self.moduleCppTypes.write("} c_%s;\n\n" % (c.replace("::", "_")))
         if is_simple_struct:
-	        self.moduleSafeRust.write(");\n\n")
+            self.moduleSafeRust.write(");\n\n")
         else:
-	        self.moduleSafeRust.write("}\n\n")
+            self.moduleSafeRust.write("}\n\n")
 
     def gen_simple_class(self,ci):
         self.moduleSafeRust.write(self.reformat_doc(ci.comment))
         self.moduleSafeRust.write("#[repr(C)]\n#[derive(Copy,Clone,Debug,PartialEq)]\npub struct %s {\n" % (ci.type_info().rust_local))
         self.moduleCppTypes.write("typedef struct %s {\n" % (ci.type_info().c_sane))
         if len(ci.props) > 0:
-	         for p in ci.props:
-		          self.gen_value_struct_field(p.name, p.ctype)
+             for p in ci.props:
+                  self.gen_value_struct_field(p.name, p.ctype)
         else:
-	         self.gen_value_struct_field("__rust_private", "unsigned char[0]")
+             self.gen_value_struct_field("__rust_private", "unsigned char[0]")
         self.moduleSafeRust.write("}\n\n")
         self.moduleCppTypes.write("} %s;\n\n" % (ci.type_info().c_sane))
 
@@ -2078,10 +2115,10 @@ class RustWrapperGenerator(object):
             if cibase is not None:
                 cibase = cibase.type_info()
                 self.moduleSafeRust.write(template("""
-                    impl $base_full for $rust_name {
+                    impl $base_full for ${rust_local} {
                         #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
                     }
-                """).substitute(rust_name=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
+                """).substitute(rust_local=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
 
     def gen_nested_class_decl(self, ci):
         pass
@@ -2098,6 +2135,10 @@ class RustWrapperGenerator(object):
         return bases
 
     def gen_class(self, ci):
+        """
+        :type ci: ClassInfo
+        :rtype: str
+        """
         if ci.is_ignored:
             logging.info("Manual ignore class %s", ci)
             return
