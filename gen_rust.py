@@ -12,6 +12,17 @@ if sys.version_info[0] >= 3:
 else:
     from cStringIO import StringIO
 
+
+def template(text):
+    """
+    :type text: str
+    :rtype: Template
+    """
+    if len(text) > 0 and text[0] == "\n":
+        text = text[1:]
+    return Template(textwrap.dedent(text))
+
+
 #
 #       EXCEPTIONS TO AUTO GENERATION
 #
@@ -443,7 +454,7 @@ static_modules = ("sys", "types", "core")
 #       TEMPLATES
 #
 
-T_CPP_MODULE = """
+T_CPP_MODULE = template("""
 //
 // This file is auto-generated, please don't edit!
 //
@@ -471,7 +482,7 @@ $code
 
 } // extern "C"
 
-"""
+""")
 
 const_private_list = (
     "CV_MOP_.+",
@@ -1398,7 +1409,7 @@ class VectorTypeInfo(TypeInfo):
                         return new $inner_cpptype(val);
                     }
                 """).substitute(self.__dict__)
-            f.write(template(T_CPP_MODULE).substitute(code=externs, includes=""))
+            f.write(T_CPP_MODULE.substitute(code=externs, includes=""))
 
     def __str__(self):
         return "Vector[%s]" % (self.inner)
@@ -1469,7 +1480,7 @@ class SmartPtrTypeInfo(TypeInfo):
                     delete ($outer_cpptype*) ptr;
                 }
             """).substitute(self.__dict__)
-            f.write(template(T_CPP_MODULE).substitute(code=code, includes=""))
+            f.write(T_CPP_MODULE.substitute(code=code, includes=""))
 
     def __str__(self):
         return "SmartPtr[%s]" % (self.inner)
@@ -1585,10 +1596,6 @@ def parse_type(gen, typeid):
 #
 #       GENERATOR
 #
-
-
-def template(text):
-    return Template(textwrap.dedent(text))
 
 
 class RustWrapperGenerator(object):
@@ -1778,7 +1785,7 @@ class RustWrapperGenerator(object):
             if namespace != "":
                 namespaces += "using namespace %s;\n"%(namespace.replace(".", "::"))
         with open(cpp_dir + "/" + module + ".cpp", "w") as f:
-            f.write(template(T_CPP_MODULE).substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes), namespaces=namespaces))
+            f.write(T_CPP_MODULE.substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes), namespaces=namespaces))
 
         with open(rust_dir + "/%s.externs.rs" % (module), "w") as f:
             f.write("extern \"C\" {\n")
