@@ -448,7 +448,7 @@ reserved_rename = {
     "use": "_use",
 }
 
-static_modules = ("sys", "types", "core")
+static_modules = ("core", "sys", "types")
 
 #
 #       TEMPLATES
@@ -1684,8 +1684,7 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write(template("""
             use libc::{c_void, c_char, size_t};
             use std::ffi::{CStr, CString};
-            use crate::{core, sys, types};
-            use crate::{Error, Result};
+            use crate::{Error, Result, """ + ", ".join(static_modules) + """};
         """).substitute())
         for co in sorted(self.consts, key=lambda c: c.rustname):
             rust = co.gen_rust()
