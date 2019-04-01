@@ -583,6 +583,7 @@ class ArgInfo:
         self.name = arg_tuple[1]
         if not self.name:
             self.name = "unnamed_arg"
+        self.rsname = camel_case_to_snake_case(reserved_rename.get(self.name, self.name))
         self.defval = ""
         self.typeinfo = None
         if len(arg_tuple) > 2:
@@ -592,10 +593,6 @@ class ArgInfo:
             self.out = "O"
         if arg_tuple[0] in ("InputOutputArray", "InputOutputArrayOfArrays") or len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
             self.out = "IO"
-
-    def rsname(self):
-        return camel_case_to_snake_case(reserved_rename.get(self.name, self.name))
-
 
     def __repr__(self):
         return template("ARG $ctype$p $name=$defval").substitute(ctype=self.type,
@@ -652,8 +649,9 @@ class FuncInfo(GeneralInfo):
             ai = ArgInfo(gen, arg)
             while any(True for x in self.args if x.name == ai.name):
                 ai.name = bump_counter(ai.name)
+                ai.rsname = camel_case_to_snake_case(reserved_rename.get(ai.name, ai.name))
             self.args.append(ai)
-            self.identifier += "_" + ai.type.safe_id + "_" + ai.name
+            self.identifier += "_" + ai.type.sane + "_" + ai.name
 
         self.const = "/C" in decl[2]
         self.static = ["", "static"]["/S" in decl[2]]
@@ -790,7 +788,7 @@ class FuncInfo(GeneralInfo):
             else:
                 args.append("instance: *%s c_void" % (self.mutability()))
         for a in self.args:
-            args.append(a.rsname() + ": " + a.type.rust_extern)
+            args.append(a.rsname + ": " + a.type.rust_extern)
 
         return "#[doc(hidden)] pub fn %s(%s) -> %s;\n" % (self.c_name(), ", ".join(args), rust_extern_rs)
 
@@ -815,21 +813,21 @@ class FuncInfo(GeneralInfo):
 
         for a in self.args:
             if isinstance(a.type, StringTypeInfo):
-                args.append("%s:&str" % (a.rsname()))
+                args.append("%s:&str" % (a.rsname))
             elif a.type.is_by_value:
-                args.append(a.rsname() + ": " + a.type.rust_full)
+                args.append(a.rsname + ": " + a.type.rust_full)
             elif a.out == "O" or a.out == "IO":
-                args.append(a.rsname() + ": &mut " + a.type.rust_full)
+                args.append(a.rsname + ": &mut " + a.type.rust_full)
             else:
-                args.append(a.rsname() + ": &" + a.type.rust_full)
+                args.append(a.rsname + ": &" + a.type.rust_full)
 
             if isinstance(a.type, BoxedClassTypeInfo) or a.type.is_by_ptr:
-                call_args.append("%s.as_raw_%s()" % (a.rsname(), a.type.rust_local))
+                call_args.append("%s.as_raw_%s()" % (a.rsname, a.type.rust_local))
             elif isinstance(a.type,StringTypeInfo):
-                cstring_args.append("    let %s = CString::new(%s).unwrap();\n" % (a.rsname(), a.rsname()))
-                call_args.append("%s.as_ptr() as _" % (a.rsname()))
+                cstring_args.append("    let %s = CString::new(%s).unwrap();\n" % (a.rsname, a.rsname))
+                call_args.append("%s.as_ptr() as _" % (a.rsname))
             else:
-                call_args.append("%s" % (a.rsname()))
+                call_args.append("%s" % (a.rsname))
 
         pub = "" if self.ci and self.ci.type_info().is_trait and not self.static else "pub "
 
@@ -840,7 +838,7 @@ class FuncInfo(GeneralInfo):
             if a.defval != "":
                 if first:
                     io.write("///\n/// ## C++ default parameters:\n")
-                io.write("/// * %s: %s\n" % (a.rsname(), a.defval))
+                io.write("/// * %s: %s\n" % (a.rsname, a.defval))
                 first = False
         io.write("%sfn %s(%s) -> Result<%s> {\n"%(pub, self.r_name(), ", ".join(args), self.rv_type().rust_full))
         io.write("// identifier: %s\n"%(self.identifier))
@@ -1173,7 +1171,7 @@ class ValueStructTypeInfo(TypeInfo):
         self.sane = self.rust_local
         self.rust_full = "core::" + self.rust_local
         self.ctype = "c_" + self.rust_local
-        self.c_safe_id = self.ctype
+        self.c_sane = self.ctype
         self.rust_extern = self.rust_full
         self.is_trait = False
 
