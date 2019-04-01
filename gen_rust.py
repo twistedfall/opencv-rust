@@ -993,21 +993,6 @@ class ClassInfo(GeneralInfo):
     def add_method(self, fi):
         self.methods.append(fi)
 
-    # fixme, unused
-    def get_all_methods(self):
-        result = []
-        result.extend([fi for fi in sorted(self.methods) if fi.isconstructor()])
-        result.extend([fi for fi in sorted(self.methods) if not fi.isconstructor()])
-        return result
-
-    # fixme, unused
-    def has_constructor(self):
-        for fis in self.methods.values():
-            for fi in fis:
-                if fi.isconstructor():
-                    return True
-        return False
-
     def type_info(self):
         """
         :rtype: TypeInfo
@@ -1159,16 +1144,6 @@ class PrimitiveTypeInfo(TypeInfo):
 
     def __str__(self):
         return "Primitive(%s)" % (self.cpptype)
-
-
-class EmptyTypeInfo(TypeInfo):
-    def __init__(self, gen, typeid):
-        """
-        :type gen: RustWrapperGenerator
-        :type typeid: str
-        """
-        TypeInfo.__init__(self, gen, typeid)
-        self.ctype = self.cpptype = self.rust_local = self.rust_extern = "void"
 
 
 class SimpleClassTypeInfo(TypeInfo):
@@ -1515,23 +1490,6 @@ class UnknownTypeInfo(TypeInfo):
         return "Unknown[%s]" % (self.typeid)
 
 
-#class ReferenceTypeInfo(TypeInfo):
-#    def __init__(self, gen, typeid, inner):
-#        TypeInfo.__init__(self,gen,typeid)
-#        self.inner = inner
-#        self.is_ignored = self.inner.is_ignored
-#        if not self.inner.is_ignored:
-#            self.cpptype = self.inner.cpptype
-#            self.ctype = self.inner.ctype
-#            self.rust_local = self.inner.rust_local
-#            self.rust_extern = self.inner.rust_extern
-#            self.rust_extern = self.inner.rust_extern
-#            self.is_by_value = self.inner.is_by_value
-#
-#    def __str__(self):
-#        return "Ref[%s]"%(self.inner)
-
-
 def parse_type(gen, typeid):
     """
     :type gen: RustWrapperGenerator
@@ -1737,10 +1695,6 @@ class RustWrapperGenerator(object):
                 self.moduleCppConsts.write(co.gen_cpp_for_complex())
 
         self.moduleSafeRust.write("\n")
-
-        for ci in sorted(self.classes.values(), key=lambda ci: ci.fullname):
-            if ci.classpath:
-                self.gen_nested_class_decl(ci)
 
         if module == "core":
             for c in sorted(value_struct_types, key=lambda c: c[0]):
@@ -2145,10 +2099,6 @@ class RustWrapperGenerator(object):
                         #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
                     }
                 """).substitute(rust_local=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
-
-    def gen_nested_class_decl(self, ci):
-        pass
-        # self.moduleCppCode.write("class %s;\n"%(ci.nested_cname))
 
     # all your bases...
     def all_bases(self, name):
