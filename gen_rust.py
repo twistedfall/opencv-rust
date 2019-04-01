@@ -1047,7 +1047,11 @@ class ConstInfo(GeneralInfo):
 
 class TypeInfo:
     def __init__(self, gen, typeid):
-        self.typeid = typeid
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        self.typeid = typeid  # e.g. "vector<cv::Mat>", "std::vector<int>", "float"
         self.gen = gen
         self.is_ignored = False
         self.is_by_ptr = False
@@ -1087,10 +1091,11 @@ class PrimitiveTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
         TypeInfo.__init__(self,gen,typeid)
         self.is_by_value = True
-        self.ctype = primitives[typeid]["ctype"]
-        self.cpptype = typeid
-        self.rust_extern = self.rust_full = self.rust_local = primitives[typeid]["rust_local"]
-        self.sane = typeid.replace(" ", "_")
+        primitive = primitives[self.typeid]
+        self.ctype = primitive["ctype"]
+        self.cpptype = self.typeid
+        self.rust_extern = self.rust_full = self.rust_local = primitive["rust_local"]
+        self.sane = self.typeid.replace(" ", "_")
         self.c_sane = self.ctype.replace(" ", "_").replace("*", "X").replace("::", "_")
 
     def __str__(self):
@@ -1108,11 +1113,11 @@ class SimpleClassTypeInfo(TypeInfo):
         TypeInfo.__init__(self,gen,typeid)
 
         self.is_by_value = True
-        self.ci = gen.get_class(typeid)
+        self.ci = gen.get_class(self.typeid)
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
-        self.cpptype = typeid
-        self.rust_local = typeid.replace("cv::","").replace("::", "_")
+        self.cpptype = self.typeid
+        self.rust_local = self.typeid.replace("cv::","").replace("::", "_")
         self.sane = self.rust_local
         if self.ci:
             self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
@@ -1133,11 +1138,11 @@ class ValueStructTypeInfo(TypeInfo):
         """
         TypeInfo.__init__(self,gen,typeid)
         self.is_by_value = True
-        self.ci = gen.get_class(typeid)
+        self.ci = gen.get_class(self.typeid)
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
-        self.cpptype = typeid
-        self.rust_local = typeid.replace("cv::","")
+        self.cpptype = self.typeid
+        self.rust_local = self.typeid.replace("cv::","")
         self.sane = self.rust_local
         self.rust_full = "core::" + self.rust_local
         self.ctype = "c_" + self.rust_local
@@ -1157,14 +1162,14 @@ class BoxedClassTypeInfo(TypeInfo):
         :type alias: str
         """
         TypeInfo.__init__(self, gen, typeid)
-        self.ci = gen.get_class(typeid)
+        self.ci = gen.get_class(self.typeid)
         self.cpptype = self.ci.fullname
         self.rust_extern = "*mut c_void"
-        _, self.rust_local = split_known_namespace(typeid, gen.namespaces)
+        _, self.rust_local = split_known_namespace(self.typeid, gen.namespaces)
         self.rust_local = self.rust_local.replace("::", "_")
         self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
         self.is_by_ptr = True
-        self.is_trait = typeid in forced_trait_classes or self.ci.is_trait
+        self.is_trait = self.typeid in forced_trait_classes or self.ci.is_trait
         self.ctype = "void*"
         self.c_sane = "void_X"
         self.is_ignored = self.ci.is_ignored
@@ -1433,7 +1438,7 @@ class UnknownTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
         TypeInfo.__init__(self,gen,typeid)
         self.is_ignored = True
-        logging.info("Registering an unknown type: %s", typeid)
+        logging.info("Registering an unknown type: %s", self.typeid)
 
     def __str__(self):
         return "Unknown[%s]"%(self.typeid)
@@ -1462,37 +1467,37 @@ def parse_type(gen, typeid):
     :type typeid: str
     :rtype: TypeInfo
     """
-    typeid = typeid.strip()\
-        .replace("const ", "")\
+    typeid = typeid.strip() \
+        .replace("const ", "") \
         .replace("..", ".")
     if typeid == "":
         typeid = "void"
     # if typeid.endswith("&"):
     #     return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     if typeid.endswith("&"):
-        typeid = typeid[0:-1].strip()
+        typeid = typeid[:-1].strip()
     if typeid in primitives:
         return PrimitiveTypeInfo(gen, typeid)
     elif typeid.endswith("*"):
-        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
+        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[:-1].strip()))
     elif typeid.endswith("[]"):
-        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-2]))
+        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[:-2].strip()))
     elif typeid == "string" or typeid == "String":
-        return StringTypeInfo(gen,typeid)
+        return StringTypeInfo(gen, typeid)
     elif typeid == "":
         raise NameError("empty type detected")
     elif typeid.startswith("Ptr<"):
-        return SmartPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1]))
+        return SmartPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1].strip()))
 #        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1]))
     elif typeid.startswith("vector<"):
-        inner = gen.get_type_info(typeid[7:-1])
+        inner = gen.get_type_info(typeid[7:-1].strip())
         if not inner:
-            raise NameError("inner type `%s' not found"%(typeid[7:-1]))
+            raise NameError("inner type `%s' not found" % (typeid[7:-1].strip()))
         return VectorTypeInfo(gen, typeid, inner)
     elif typeid.startswith("std::vector<"):
-        inner = gen.get_type_info(typeid[12:-1])
+        inner = gen.get_type_info(typeid[12:-1].strip())
         if not inner:
-            raise NameError("inner type `%s' not found"%(typeid[12:-1]))
+            raise NameError("inner type `%s' not found" % (typeid[12:-1].strip()))
         return VectorTypeInfo(gen, typeid, inner)
     elif gen.get_value_struct(typeid):
         return ValueStructTypeInfo(gen, gen.get_value_struct(typeid))
