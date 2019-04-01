@@ -1005,13 +1005,20 @@ class ClassInfo(GeneralInfo):
 
 
 class ConstInfo(GeneralInfo):
-    def __init__(self, gen, decl, namespaces, added_manually=False):
+    def __init__(self, gen, decl, namespaces):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         _, self.rustname = split_known_namespace(self.fullname, namespaces)
         self.rustname = self.rustname.replace("::", "_")
         self.cname = self.name.replace(".", "::")
         self.value = decl[1]
-        self.added_manually = added_manually
+
+        self.templates = {
+            "rust_string": template("${doccomment}pub const ${name}: &'static str = ${value};\n"),
+            "rust_int": template("${doccomment}pub const ${name}: i32 = ${value};\n"),
+            "cpp_string": template("""    printf("pub static ${name}: &'static str = \\"%s\\";\\n", ${full_name});\n"""),
+            "cpp_double": template("""    printf("pub const ${name}: f64 = %f;\\n", ${full_name});\n"""),
+            "cpp_int": template("""    printf("pub const ${name}: i32 = 0x%x; // %i\\n", ${full_name}, ${full_name});\n"""),
+        }
 
         # register
         if self.is_ignored():
@@ -1020,9 +1027,7 @@ class ConstInfo(GeneralInfo):
             gen.consts.append(self)
 
     def __repr__(self):
-        return template("CONST $name=$value$manual").substitute(name=self.name,
-                                                                value=self.value,
-                                                                manual="(manual)" if self.added_manually else "")
+        return template("CONST $name=$value").substitute(name=self.name, value=self.value)
 
     def is_ignored(self):
         for c in const_ignore_list:
@@ -1031,22 +1036,38 @@ class ConstInfo(GeneralInfo):
         return False
 
     def gen_rust(self):
-        if self.value.startswith('"'):
-            return "pub const %s: &'static str = %s;\n" % (self.rustname, self.value)
-        elif re.match("^(-?[0-9]+|0x[0-9A-F]+)$", self.value):
-            return "pub const %s: i32 = %s;\n" % (self.rustname, self.value)
-        return None
+        name = self.rustname
+        value = self.value
+        while True:
+            doccomment = ""
+            m = re.match(r"^(.+?)\s*(?://\s*(.+)|/\*+\s*(.+?)\s*\*+/)$", value)  # xxx // comment OR xxx /** comment **/
+            if m:
+                value = m.group(1)
+                doccomment = "/// {}\n".format(m.group(3) if m.group(2) is None else m.group(2))
+            if value.startswith('"'):
+                return self.templates["rust_string"].substitute(doccomment=doccomment, name=name, value=value)
+            elif re.match(r"^(-?[0-9]+|0x[0-9A-Fa-f]+)$", value):  # decimal or hexadecimal
+                return self.templates["rust_int"].substitute(doccomment=doccomment, name=name, value=value)
+            elif re.match(r"^\(?\s*(\d+\s*<<\s*\d+)\s*\)?$", value):  # (1 << 24)
+                return self.templates["rust_int"].substitute(doccomment=doccomment, name=name, value=value)
+            elif re.match(r"^\s*(\d+\s*\+\s*\d+)\s*$", value):  # 0 + 3
+                return self.templates["rust_int"].substitute(doccomment=doccomment, name=name, value=value)
+            ref_const = self.gen.get_const(value)
+            if ref_const is not None:
+                value = ref_const.value
+                continue
+            return None
 
     def gen_cpp_for_complex(self):
         # only use C-constant dumping for unnested const
         if len(self.fullname.split(".")) > 2:
             return ""
         elif self.fullname == "CV_VERSION":
-            return """    printf("pub static %s: &'static str = \\"%%s\\";\\n", %s);\n""" % (self.rustname, self.fullname)
+            return self.templates["cpp_string"].substitute(name=self.rustname, full_name=self.fullname)
         elif self.fullname in ("MLN10", "RELATIVE_ERROR_FACTOR"):
-            return """    printf("pub const %s: f64 = %%f;\\n", %s);\n""" % (self.rustname, self.fullname)
+            return self.templates["cpp_double"].substitute(name=self.rustname, full_name=self.fullname)
         else:
-            return """    printf("pub const %s: i32 = 0x%%x;\\n", %s);\n""" % (self.rustname, self.fullname)
+            return self.templates["cpp_int"].substitute(name=self.rustname, full_name=self.fullname)
 
 
 class TypeInfo:
