@@ -739,7 +739,7 @@ class FuncInfo(GeneralInfo):
         for a in self.args:
             if a.type.is_ignored:
                 return "can not map type %s yet"%(a.type)
-            if a.pointer and a.type.is_by_value:
+            if a.pointer and not a.type.is_by_ptr:
                 return "returning primitive by pointer is not supported (FIXME ?)"
             if a.pointer and a.type.typeid.endswith("*"):
                 return "** not supported yet"
@@ -794,10 +794,10 @@ class FuncInfo(GeneralInfo):
 
         args = []
         if not self.is_static and self.mutability():
-            if self.ci.type_info().is_by_value:
-                args.append("instance: %s" % (self.ci.type_info().rust_full))
-            else:
+            if self.ci.type_info().is_by_ptr:
                 args.append("instance: *%s c_void" % (self.mutability()))
+            else:
+                args.append("instance: %s" % (self.ci.type_info().rust_full))
         for a in self.args:
             args.append(a.rsname + ": " + a.type.rust_extern)
 
@@ -807,25 +807,21 @@ class FuncInfo(GeneralInfo):
         args = []
         call_args = []
         cstring_args = []
-        if not self.is_static and self.mutability() == "const":
-            if self.ci.type_info().is_by_value:
+        if not self.is_static and self.ci is not None and not self.is_constructor():
+            if self.ci.type_info().is_by_ptr:
+                if self.is_const:
+                    args.append("&self")
+                else:
+                    args.append("&mut self")
+                call_args.append("self.as_raw_%s()" % (self.ci.type_info().rust_local))
+            else:
                 args.append("self")
                 call_args.append("self")
-            else:
-                args.append("&self")
-                call_args.append("self.as_raw_%s()"%(self.ci.type_info().rust_local))
-        elif not self.is_static and self.mutability() == "mut":
-            if self.ci.type_info().is_by_value:
-                args.append("self")
-                call_args.append("self")
-            else:
-                args.append("&mut self")
-                call_args.append("self.as_raw_%s()"%(self.ci.type_info().rust_local))
 
         for a in self.args:
             if isinstance(a.type, StringTypeInfo):
                 args.append("%s:&str" % (a.rsname))
-            elif a.type.is_by_value:
+            elif not a.type.is_by_ptr:
                 args.append(a.rsname + ": " + a.type.rust_full)
             elif a.out == "O" or a.out == "IO":
                 args.append(a.rsname + ": &mut " + a.type.rust_full)
@@ -1076,8 +1072,9 @@ class TypeInfo:
         self.typeid = typeid.replace("const ", "")  # e.g. "vector<cv::Mat>", "std::vector<int>", "float"
         self.gen = gen
         self.is_ignored = False  # don't generate
-        self.is_by_ptr = False  # types that contain ptr field to actual heap allocated data (e.g. BoxedClass, Vector, SmartPtr)
-        self.is_by_value = False  # types that are getting passed by value (e.g. Primitive, SimpleClass)
+        # False: types that contain ptr field to actual heap allocated data (e.g. BoxedClass, Vector, SmartPtr)
+        # True: types that are getting passed by value (e.g. Primitive, SimpleClass)
+        self.is_by_ptr = False
         self.is_trait = False  # don't generate struct, generate trait (abstract classes and classes inside forced_trait_classes)
 
         self.ctype = ""
@@ -1135,7 +1132,6 @@ class PrimitiveTypeInfo(TypeInfo):
         :type typeid: str
         """
         TypeInfo.__init__(self, gen, typeid)
-        self.is_by_value = True
         primitive = primitives[self.typeid]
         self.ctype = primitive["ctype"]
         self.rust_extern = self.rust_full = self.rust_local = primitive["rust_local"]
@@ -1154,7 +1150,6 @@ class SimpleClassTypeInfo(TypeInfo):
         """
         TypeInfo.__init__(self, gen, typeid)
 
-        self.is_by_value = True
         self.ci = gen.get_class(self.typeid)
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
@@ -1176,7 +1171,6 @@ class ValueStructTypeInfo(TypeInfo):
         :type typeid: str
         """
         TypeInfo.__init__(self, gen, typeid)
-        self.is_by_value = True
         self.ci = gen.get_class(self.typeid)
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
@@ -1830,7 +1824,7 @@ class RustWrapperGenerator(object):
                     call_cpp_args += "*((%s*)%s)"%(a.type.cpptype.replace("&",""), a.name)
             elif isinstance(a.type, StringTypeInfo):
                 call_cpp_args += "%s(%s)" % (a.type.cpptype, a.name)
-            elif a.type.is_by_value:
+            elif not a.type.is_by_ptr:
                 if arg_decl_star and a.pointer:
                     call_cpp_args += "reinterpret_cast<" + a.type.cpptype + "*>(" +  a.name + ")"
                 elif arg_decl_star and not a.pointer:
@@ -1912,7 +1906,7 @@ class RustWrapperGenerator(object):
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
         elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
-        elif fi.rv_type().is_by_value:
+        elif not fi.rv_type().is_by_ptr:
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, *reinterpret_cast<%s*>(&cpp_return_value) };\n"%(fi.rv_type().ctype))
         elif isinstance(fi.rv_type(), VectorTypeInfo):
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, (void *)new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
