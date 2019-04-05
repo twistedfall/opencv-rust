@@ -647,10 +647,10 @@ class FuncInfo(GeneralInfo):
 
         self.identifier = self.fullname.replace("::", "_")
 
-        if len(decl) > 5:
-            self.comment = decl[5].encode("ascii", "ignore")
-        else:
-            self.comment = ""
+        self.is_const = "/C" in decl[2]
+        self.is_static = "/S" in decl[2]
+        self.is_ignored = "/H" in decl[2] or "/I" in decl[2]
+        self.fake_attrgetter = "/ATTRGETTER" in decl[2]
 
         if self.is_const:
             self.identifier += "_const"
@@ -664,15 +664,15 @@ class FuncInfo(GeneralInfo):
             self.args.append(ai)
             self.identifier += "_" + ai.type.rust_safe_id + "_" + ai.name
 
-        self.const = "/C" in decl[2]
-        self.static = ["", "static"]["/S" in decl[2]]
+        if len(decl) > 5:
+            self.comment = decl[5].encode("ascii", "ignore")
+        else:
+            self.comment = ""
 
-        self.fake_attrgetter = "/ATTRGETTER" in decl[2]
         self.struct_attrname = decl[6] if self.fake_attrgetter else None
 
         self.cname = self.cppname = self.name
 
-        self.is_ignored = "/H" in decl[2] or "/I" in decl[2]
         if self.name.startswith("~"):
             logging.info("ignore destructor %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
@@ -692,14 +692,14 @@ class FuncInfo(GeneralInfo):
             logging.info("register %s %s in %s (%s)"%(self.kind, self.name, self.ci, self.identifier))
             self.ci.add_method(self)
 
-    def isconstructor(self):
+    def is_constructor(self):
         return self.kind == self.KIND_CONSTRUCTOR
 
     def rv_type(self):
         """
         :rtype: TypeInfo
         """
-        if self.isconstructor():
+        if self.is_constructor():
             if self.ci:
                 return self.gen.get_type_info(self.ci.fullname)
             else:
@@ -776,7 +776,7 @@ class FuncInfo(GeneralInfo):
 
         if renamed_funcs.get(self.identifier):
             return renamed_funcs[self.identifier]
-        name = "new" if self.isconstructor() else self.name
+        name = "new" if self.is_constructor() else self.name
 
         return camel_case_to_snake_case(name)
 
@@ -785,15 +785,15 @@ class FuncInfo(GeneralInfo):
 
     # "const", "mut", or ""
     def mutability(self):
-        if self.ci is not None and not self.isconstructor():
-            return "const" if self.const else "mut"
+        if self.ci is not None and not self.is_constructor():
+            return "const" if self.is_const else "mut"
         return ""
 
     def gen_rust_extern(self):
         rust_extern_rs = "cv_return_value_%s" % (self.rv_type().c_safe_id)
 
         args = []
-        if not self.static and self.mutability():
+        if not self.is_static and self.mutability():
             if self.ci.type_info().is_by_value:
                 args.append("instance: %s" % (self.ci.type_info().rust_full))
             else:
@@ -807,14 +807,14 @@ class FuncInfo(GeneralInfo):
         args = []
         call_args = []
         cstring_args = []
-        if not self.static and self.mutability() == "const":
+        if not self.is_static and self.mutability() == "const":
             if self.ci.type_info().is_by_value:
                 args.append("self")
                 call_args.append("self")
             else:
                 args.append("&self")
                 call_args.append("self.as_raw_%s()"%(self.ci.type_info().rust_local))
-        elif not self.static and self.mutability() == "mut":
+        elif not self.is_static and self.mutability() == "mut":
             if self.ci.type_info().is_by_value:
                 args.append("self")
                 call_args.append("self")
@@ -840,7 +840,7 @@ class FuncInfo(GeneralInfo):
             else:
                 call_args.append("%s" % (a.rsname))
 
-        pub = "" if self.ci and self.ci.type_info().is_trait and not self.static else "pub "
+        pub = "" if self.ci and self.ci.type_info().is_trait and not self.is_static else "pub "
 
         io = StringIO()
         io.write(self.gen.reformat_doc(self.comment))
@@ -1802,7 +1802,7 @@ class RustWrapperGenerator(object):
 
         decl_c_args = "\n        "
         call_cpp_args = ""
-        if fi.ci is not None and not fi.isconstructor() and not fi.static:
+        if fi.ci is not None and not fi.is_constructor() and not fi.is_static:
             decl_c_args += fi.ci.type_info().ctype + " instance"
         for a in fi.args:
 
@@ -1854,9 +1854,9 @@ class RustWrapperGenerator(object):
         # cpp method call with prefix
         if fi.ci is None and (fi.cppname.startswith("cv") or fi.cppname.startswith("CV")):
             call_name = fi.cppname
-        elif fi.ci is None or fi.static:
+        elif fi.ci is None or fi.is_static:
             call_name = fi.fullname.replace(".", "::")
-        elif fi.isconstructor() and isinstance(fi.ci.type_info(), BoxedClassTypeInfo):
+        elif fi.is_constructor() and isinstance(fi.ci.type_info(), BoxedClassTypeInfo):
             call_name = fi.ci.fullname
         elif fi.cppname == "()":
             call_name = "(*((%s*) instance))" % (fi.ci.fullname)
@@ -1881,7 +1881,7 @@ class RustWrapperGenerator(object):
         # actual call
         if fi.type.ctype == "void":
             self.moduleCppCode.write("    %s(%s);\n" % (call_name, call_cpp_args))
-        elif fi.isconstructor() and (isinstance(fi.rv_type(), BoxedClassTypeInfo)):
+        elif fi.is_constructor() and (isinstance(fi.rv_type(), BoxedClassTypeInfo)):
             self.moduleCppCode.write("    %s* cpp_return_value = new %s(%s);\n" % (fi.rv_type().cpptype, call_name, call_cpp_args))
         elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
             if fi.fake_attrgetter:
@@ -1889,9 +1889,9 @@ class RustWrapperGenerator(object):
             else:
                 self.moduleCppCode.write(
                     "    Ptr<%s> *cpp_return_value = new Ptr<%s>(%s(%s));\n" % (fi.rv_type().cpptype, fi.rv_type().cpptype, call_name, call_cpp_args))
-        elif fi.isconstructor() and call_cpp_args != "":
+        elif fi.is_constructor() and call_cpp_args != "":
             self.moduleCppCode.write("    %s cpp_return_value(%s);\n" % (fi.rv_type().cpptype, call_cpp_args))
-        elif fi.isconstructor():
+        elif fi.is_constructor():
             self.moduleCppCode.write("    %s cpp_return_value;\n" % (fi.rv_type().cpptype))
         else:
             if fi.fake_attrgetter:
@@ -1906,9 +1906,9 @@ class RustWrapperGenerator(object):
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL };\n")
         elif isinstance(fi.rv_type(), StringTypeInfo):
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, strdup(cpp_return_value.c_str()) };\n")
-        elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and not fi.isconstructor():
+        elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and not fi.is_constructor():
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, new %s(cpp_return_value) };\n" % (fi.rv_type().cpptype))
-        elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and fi.isconstructor():
+        elif isinstance(fi.rv_type(), BoxedClassTypeInfo) and fi.is_constructor():
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
         elif isinstance(fi.rv_type(), SmartPtrTypeInfo):
             self.moduleCppCode.write("    return { Error::Code::StsOk, NULL, cpp_return_value };\n")
@@ -2136,12 +2136,12 @@ class RustWrapperGenerator(object):
             self.moduleSafeRust.write("pub trait %s%s {\n" % (t.rust_local, bases))
             self.moduleSafeRust.write("  #[doc(hidden)] fn as_raw_%s(&self) -> *mut c_void;\n" % (t.rust_local))
             for fi in ci.methods:
-                if not fi.static:
+                if not fi.is_static:
                     self.gen_func(fi)
             self.moduleSafeRust.write("}\n")
             self.moduleSafeRust.write("impl<'a> %s + 'a {\n\n" % (t.rust_local))
             for fi in ci.methods:
-                if fi.static:
+                if fi.is_static:
                     self.gen_func(fi)
             self.moduleSafeRust.write("}\n\n")
         else:
