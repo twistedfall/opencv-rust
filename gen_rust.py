@@ -778,7 +778,7 @@ class FuncInfo(GeneralInfo):
             return renamed_funcs[self.identifier]
         name = "new" if self.is_constructor() else self.name
 
-        return camel_case_to_snake_case(name)
+        return camel_case_to_snake_case(reserved_rename.get(name, name))
 
     def set_r_name(self, value):
         self._r_name = value
