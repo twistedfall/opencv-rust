@@ -1,3 +1,5 @@
+pub use self::mat::*;
+
 macro_rules! valid_types {
     ($trait: ident, $($rust_type: ty),+) => {
         // todo, make sealed
@@ -8,3 +10,5 @@ macro_rules! valid_types {
         )+
     };
 }
+
+mod mat;

@@ -125,6 +125,11 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_Mat_ptr_const_int_row_int_col": "ptr_2d",
     "cv_Mat_ptr_int_i0_int_i1_int_i2": "ptr_3d_mut",
     "cv_Mat_ptr_const_int_i0_int_i1_int_i2": "ptr_3d",
+    "cv_Mat_at_int_i0": "at_mut",
+    "cv_Mat_at_int_row_int_col": "at_2d_mut",
+    "cv_Mat_at_const_int_row_int_col": "at_2d",
+    "cv_Mat_at_int_i0_int_i1_int_i2": "at_3d_mut",
+    "cv_Mat_at_const_int_i0_int_i1_int_i2": "at_3d",
     "cv_Mat_resize_size_t_sz": "resize",
     "cv_Mat_resize_size_t_sz_Scalar_s": "resize_with_default",
     "cv_Mat_rowRange_const_Range_r": "row_range",
@@ -296,7 +301,37 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_dnn_Dict_ptr_const_String_key": "ptr",
 }
 
-func_manual_implementation = {}
+_templ_const = template("""
+// identifier: ${identifier}
+${doc_comment}${visibility}fn ${r_name}<T: core::ValidMatElement>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
+            
+""")
+_templ_mut = template("""
+// identifier: ${identifier}
+${doc_comment}${visibility}fn ${r_name}<T: core::ValidMatElement>(${args}) -> Result<&mut T> { ${pre_call_args}self._${r_name}(${forward_args}) }
+
+""")
+
+func_manual_implementation = {
+    "cv_Mat_at_int_i0": {
+        "rust_safe": _templ_mut,
+    },
+    "cv_Mat_at_const_int_i0": {
+        "rust_safe": _templ_const,
+    },
+    "cv_Mat_at_int_i0_int_i1_int_i2": {
+        "rust_safe": _templ_mut,
+    },
+    "cv_Mat_at_const_int_i0_int_i1_int_i2":  {
+        "rust_safe": _templ_const,
+    },
+    "cv_Mat_at_int_row_int_col": {
+        "rust_safe": _templ_mut,
+    },
+    "cv_Mat_at_const_int_row_int_col": {
+        "rust_safe": _templ_const,
+    },
+}
 
 class_ignore_list = (
     # core
