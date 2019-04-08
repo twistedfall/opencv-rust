@@ -1084,7 +1084,7 @@ class TypeInfo:
         _, self.rust_local = split_known_namespace(self.typeid, gen.namespaces)
         self.rust_local = self.rust_local.replace("::", "_")  # only the type name for Rust without module path
         self.rust_safe_id = self.rust_local  # rust safe type identifier used for file and function names
-        self.rust_full = ""  # full module path (with modules/super::) to Rust type
+        self.rust_full = ""  # full module path (with modules/crate::) to Rust type
         self.rust_extern = ""  # type used on the boundary between Rust and C (e.g. in return wrappers)
 
         self.inner = None  # inner type for container types
@@ -1154,7 +1154,7 @@ class SimpleClassTypeInfo(TypeInfo):
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
         if self.ci:
-            self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
+            self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
             self.ctype = "c_" + self.rust_local
             self.c_safe_id = self.ctype
             self.rust_extern = self.rust_full
@@ -1195,7 +1195,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.ci = gen.get_class(self.typeid)
         self.cpptype = self.ci.fullname
         self.rust_extern = "*mut c_void"
-        self.rust_full = ("super::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
+        self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
         self.is_by_ptr = True
         self.is_trait = self.typeid in forced_trait_classes or self.ci.is_trait
         self.ctype = "void*"
