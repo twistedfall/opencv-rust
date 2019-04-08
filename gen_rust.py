@@ -57,6 +57,7 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_fisheye_undistortPoints_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_R_Mat_P": "fisheye_undistort_points",
     "cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask": "recover_pose_matrix",
     # core
+    "cvAlloc_size_t_size": "-",
     # "cv_Algorithm_set_String_name_Mat_value": "set_mat",
     # "cv_Algorithm_set_String_name_VectorOfMat_value": "set_VectorOfMat",
     # "cv_Algorithm_set_String_name_bool_value": "set_bool",
@@ -345,12 +346,6 @@ func_ignore_list = (
     "cv.BOWImgDescriptorExtractor.getVocabulary",
 )
 
-# Each element should be a function that takes the FuncInfo and returns a boolean indicating whether to ignore the
-# FuncInfo. The FuncInfo will be ignored when the function returns true.
-func_ignore_filters = (
-    lambda func_info: func_info.fullname.endswith("cv::Mat::ptr") and func_info.const,
-)
-
 # regular expressions to ignore matching constant names
 const_ignore_list = (
     "^CV_EXPORTS_W", "CV_MAKE_TYPE",
@@ -384,7 +379,6 @@ primitives = {
     u"schar": {u"ctype": "char", u"rust_local": "i8"},
     u"uchar": {u"ctype": "unsigned char", u"rust_local": "u8"},
     u"unsigned char": {u"ctype": "unsigned char", u"rust_local": "u8"},
-    u"uchar*": {u"ctype": "unsigned char*", u"rust_local": "*mut u8"},
 
     u"short": {u"ctype": "short", u"rust_local": "i16"},
     u"ushort": {u"ctype": "unsigned short", u"rust_local": "u16"},
@@ -717,9 +711,6 @@ class FuncInfo(GeneralInfo):
         for f in func_ignore_list:
             if self.fullname.endswith(f):
                 return "manual ignore from list"
-
-        if any(filter_func(self) for filter_func in func_ignore_filters):
-            return "manual ignore from filter"
 
         if renamed_funcs.get(self.identifier) == "-":
             return "ignored by renamed table"
@@ -1086,6 +1077,7 @@ class TypeInfo:
         self.rust_safe_id = self.rust_local  # rust safe type identifier used for file and function names
         self.rust_full = ""  # full module path (with modules/crate::) to Rust type
         self.rust_extern = ""  # type used on the boundary between Rust and C (e.g. in return wrappers)
+        self.rust_lifetimes = ""  # for reference types it's the definition of lifetimes that need to be present in function
 
         self.inner = None  # inner type for container types
 
@@ -1219,7 +1211,10 @@ class VectorTypeInfo(TypeInfo):
         TypeInfo.__init__(self, gen, typeid)
         self.is_by_ptr = True
         self.inner = inner
-        self.is_ignored = inner.is_ignored
+        if isinstance(self.inner, RawPtrTypeInfo):  # fixme, lifetimes required
+            self.is_ignored = True
+        else:
+            self.is_ignored = inner.is_ignored
         if not self.is_ignored:
             self.ctype = "void*"
             self.c_safe_id = "void_X"
@@ -1463,8 +1458,25 @@ class RawPtrTypeInfo(TypeInfo):
         """
         TypeInfo.__init__(self, gen, typeid)
         self.inner = inner
-        self.is_ignored = True
-        self.rust_safe_id = inner.rust_safe_id
+        if isinstance(inner, PrimitiveTypeInfo) and inner.ctype != "void":  # fixme remove void
+            self.rust_lifetimes = "'b"
+            self.rust_safe_id = inner.rust_safe_id + "_X"
+            self.c_safe_id = inner.c_safe_id + "_X"
+            self.cpptype = inner.cpptype + "*"
+            self.ctype = inner.cpptype + "*"
+            self.is_by_ptr = True
+            if self.is_const:
+                self.rust_safe_id = "const_" + self.rust_safe_id
+                self.c_safe_id = "const_" + self.c_safe_id
+                self.cpptype = "const " + self.cpptype
+                self.ctype = "const " + self.ctype
+                self.rust_full = "&{} {}".format(self.rust_lifetimes, inner.rust_full)
+                self.rust_extern = "*const {}".format(self.inner.rust_extern)
+            else:
+                self.rust_full = "&{} mut {}".format(self.rust_lifetimes, inner.rust_full)
+                self.rust_extern = "*mut {}".format(self.inner.rust_extern)
+        else:
+            self.is_ignored = True
 
     def __str__(self):
         return "RawPtr[%s]" % (self.inner)
