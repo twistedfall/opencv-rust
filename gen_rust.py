@@ -2163,6 +2163,8 @@ class RustWrapperGenerator(object):
         text = re.sub("\\\\f\[", "<div lang='latex'>", text, 0, re.M)
         text = re.sub("\\\\f\]", "</div>", text, 0, re.M)
         text = re.sub(r"\\f\$(.*?)\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
+        # catch sequences of 4 indents and reduce them to avoid cargo test running them as code
+        text = re.sub(r"^((\s{1,5})\2{3})(\S)", r"\2\3", text, 0, re.M)
         text = re.sub("^", "/// ", text.strip(), 0, re.M) + "\n"
         return text
 
