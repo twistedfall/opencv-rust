@@ -58,7 +58,7 @@ renamed_funcs = {  # todo check if any "new" is required
     # "cv_Algorithm_setString_String_name_String_value" : "-",
     # "cv_Algorithm_setMat_String_name_Mat_value" : "-",
     # "cv_Algorithm_setMatVector_String_name_VectorOfMat_value" : "-",
-    "cv_MatExpr_type" : "typ",
+    "cv_MatExpr_type_const": "typ",
     "cv_Mat_Mat": "new",
     "cv_Mat_Mat_Mat_m": "copy",
     "cv_Mat_Mat_Mat_m_Range_ranges": "ranges",
@@ -68,26 +68,29 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_Mat_Mat_Size_size_int_type_Scalar_s": "new_size_with_default",
     "cv_Mat_Mat_int_rows_int_cols_int_type": "new_rows_cols",
     "cv_Mat_Mat_int_rows_int_cols_int_type_Scalar_s": "new_rows_cols_with_default",
-    "cv_Mat_colRange_Range_r": "colrange",
-    "cv_Mat_colRange_int_startcol_int_endcol": "colbounds",
-    "cv_Mat_copyTo_Mat_m_Mat_mask": "copy_to_masked",
+    "cv_Mat_colRange_const_Range_r": "colrange",
+    "cv_Mat_colRange_const_int_startcol_int_endcol": "colbounds",
+    "cv_Mat_copyTo_const_Mat_m_Mat_mask": "copy_to_masked",
     "cv_Mat_create_Size_size_int_type": "-",
     "cv_Mat_create_int_rows_int_cols_int_type": "-",
     "cv_Mat_diag_Mat_d": "diag_new_mat",
-    "cv_Mat_diag_int_d": "diag",
-    "cv_Mat_ptr_int_i0": "ptr_row",
-    "cv_Mat_ptr_int_row_int_col": "ptr_2d",
-    "cv_Mat_ptr_int_i0_int_i1_int_i2": "ptr_3d",
+    "cv_Mat_diag_const_int_d": "diag",
+    "cv_Mat_ptr_int_i0": "ptr_mut",
+    "cv_Mat_ptr_const_int_i0": "ptr",
+    "cv_Mat_ptr_int_row_int_col": "ptr_2d_mut",
+    "cv_Mat_ptr_const_int_row_int_col": "ptr_2d",
+    "cv_Mat_ptr_int_i0_int_i1_int_i2": "ptr_3d_mut",
+    "cv_Mat_ptr_const_int_i0_int_i1_int_i2": "ptr_3d",
     "cv_Mat_resize_size_t_sz": "resize",
     "cv_Mat_resize_size_t_sz_Scalar_s": "resize_with_default",
-    "cv_Mat_rowRange_Range_r": "rowRange",
-    "cv_Mat_rowRange_int_startrow_int_endrow": "rowbounds",
-    "cv_Mat_type": "typ",
+    "cv_Mat_rowRange_const_Range_r": "row_range",
+    "cv_Mat_rowRange_const_int_startrow_int_endrow": "rowbounds",
+    "cv_Mat_type_const": "typ",
     "cv_PCA_PCA": "default",
     "cv_PCA_PCA_Mat_data_Mat_mean_int_flags_double_retainedVariance": "new_mat_variance",
     "cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents": "new_mat_max",
-    "cv_PCA_backProject_Mat_vec_Mat_result": "back_project_to",
-    "cv_PCA_project_Mat_vec_Mat_result": "project_to",
+    "cv_PCA_backProject_const_Mat_vec_Mat_result": "back_project_to",
+    "cv_PCA_project_const_Mat_vec_Mat_result": "project_to",
     "cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_double_retainedVariance": "pca_compute_variance",
     "cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_int_maxComponents": "pca_compute",
     "cv_Range_Range": "default",
@@ -97,9 +100,9 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_RotatedRect_RotatedRect_Point2f_point1_Point2f_point2_Point2f_point3": "for_points",
     "cv_TermCriteria_TermCriteria": "default",
     "cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon": "new",
-    "cv_UMat_type": "typ",
-    "cv_UMat_copyTo_Mat_m": "copy_to",
-    "cv_UMat_copyTo_Mat_m_Mat_mask": "copy_to_masked",
+    "cv_UMat_type_const": "typ",
+    "cv_UMat_copyTo_const_Mat_m": "copy_to",
+    "cv_UMat_copyTo_const_Mat_m_Mat_mask": "copy_to_masked",
     "cv_calcCovarMatrix_Mat_samples_Mat_covar_Mat_mean_int_flags_int_ctype": "calc_covar_matrix_arrays",
     "cv_calcCovarMatrix_Mat_samples_int_nsamples_Mat_covar_Mat_mean_int_flags_int_ctype": "calc_covar_matrix",
     "cv_clipLine_Size_imgSize_Point_pt1_Point_pt2": "clip_line_size",
@@ -117,7 +120,6 @@ renamed_funcs = {  # todo check if any "new" is required
     # "cv_eigen_Mat_src_Mat_eigenvalues_Mat_eigenvectors_int_lowindex_int_highindex": "eigen_vectors", ?
     "cv_hconcat_Mat_src_size_t_nsrc_Mat_dst": "-",
     "cv_max_Mat_src1_Mat_src2_Mat_dst": "max_mat_mat",
-    "cv_max_Mat_src1_double_src2_Mat_dst": "max_mat",
     "cv_merge_Mat_mv_size_t_count_Mat_dst": "-",
     "cv_min_Mat_src1_Mat_src2_Mat_dst": "min_mat_mat",
     "cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask": "norm_with_type",
@@ -132,8 +134,8 @@ renamed_funcs = {  # todo check if any "new" is required
     # features2d
     "cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression": "AGAST",
     "cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type": "AGAST_with_type",
-    "cv_BOWKMeansTrainer_cluster": "default",
-    "cv_BOWKMeansTrainer_cluster_Mat_descriptors": "new",
+    "cv_BOWKMeansTrainer_cluster_const": "default",
+    "cv_BOWKMeansTrainer_cluster_const_Mat_descriptors": "new",
     "cv_BOWKMeansTrainer_BOWKMeansTrainer_int_clusterCount_TermCriteria_termcrit_int_attempts_int_flags": "new_with_criteria",
     "cv_BOWImgDescriptorExtractor_compute_Mat_keypointDescriptors_Mat_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters": "compute",
     "cv_BOWImgDescriptorExtractor_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters_Mat_descriptors": "compute_desc",
@@ -142,11 +144,11 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance": "new_index",
     # "cv_DescriptorExtractor_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_descriptors": "compute",
     # "cv_DescriptorExtractor_compute_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_descriptors": "compute_n",
-    "cv_DescriptorMatcher_knnMatch_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_int_k_Mat_mask_bool_compactResult": "knn_train_matches",
+    "cv_DescriptorMatcher_knnMatch_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_int_k_Mat_mask_bool_compactResult": "knn_train_matches",
     "cv_DescriptorMatcher_knnMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_int_k_VectorOfMat_masks_bool_compactResult": "knn_matches",
     "cv_DescriptorMatcher_match_Mat_queryDescriptors_VectorOfDMatch_matches_VectorOfMat_masks": "matches",
-    "cv_DescriptorMatcher_match_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfDMatch_matches_Mat_mask": "train_matches",
-    "cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_Mat_mask_bool_compactResult": "train_radius_matches",
+    "cv_DescriptorMatcher_match_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfDMatch_matches_Mat_mask": "train_matches",
+    "cv_DescriptorMatcher_radiusMatch_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_Mat_mask_bool_compactResult": "train_radius_matches",
     "cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_VectorOfMat_masks_bool_compactResult": "radius_matches",
     # "cv_FREAK_FREAK_FREAK_rhs": "copy",
     # "cv_FREAK_FREAK_bool_orientationNormalized_bool_scaleNormalized_float_patternScale_int_nOctaves_VectorOfint_selectedPairs": "new",
@@ -196,10 +198,10 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_CascadeClassifier_detectMultiScale_Mat_image_VectorOfRect_objects_VectorOfint_numDetections_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize": "detect_multi_scale_num",
     "cv_CascadeClassifier_detectMultiScale_Mat_image_VectorOfRect_objects_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize": "detect_multi_scale",
     "cv_HOGDescriptor_HOGDescriptor_HOGDescriptor_d": "copy",
-    "cv_HOGDescriptor_detectMultiScale_Mat_img_VectorOfRect_foundLocations_VectorOfdouble_foundWeights_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale",
-    "cv_HOGDescriptor_detectMultiScale_Mat_img_VectorOfRect_foundLocations_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale_weights",
-    "cv_HOGDescriptor_detect_Mat_img_VectorOfPoint_foundLocations_VectorOfdouble_weights_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect_weights",
-    "cv_HOGDescriptor_detect_Mat_img_VectorOfPoint_foundLocations_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect",
+    "cv_HOGDescriptor_detectMultiScale_const_Mat_img_VectorOfRect_foundLocations_VectorOfdouble_foundWeights_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale",
+    "cv_HOGDescriptor_detectMultiScale_const_Mat_img_VectorOfRect_foundLocations_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale_weights",
+    "cv_HOGDescriptor_detect_const_Mat_img_VectorOfPoint_foundLocations_VectorOfdouble_weights_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect_weights",
+    "cv_HOGDescriptor_detect_const_Mat_img_VectorOfPoint_foundLocations_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect",
     "cv_groupRectangles_VectorOfRect_rectList_VectorOfint_rejectLevels_VectorOfdouble_levelWeights_int_groupThreshold_double_eps": "group_rectangles_weights_rejects",
     "cv_groupRectangles_VectorOfRect_rectList_VectorOfint_weights_int_groupThreshold_double_eps": "group_rectangle_weights",
     "cv_groupRectangles_VectorOfRect_rectList_int_groupThreshold_double_eps": "group_rectangle",
@@ -239,15 +241,14 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_VideoCapture_open_String_filename": "open_filename",
     "cv_VideoCapture_open_String_filename_int_apiPreference": "open_filename_api",
     "cv_VideoWriter_VideoWriter": "default",
-    # line_descriptor
-    "cv_line_descriptor_BinaryDescriptorMatcher_match_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfDMatch_matches_Mat_mask": "train_matches",
-    "cv_line_descriptor_BinaryDescriptorMatcher_match_Mat_queryDescriptors_VectorOfDMatch_matches_VectorOfMat_masks": "matches",
     # utility
     "cv_getImpl_VectorOfint_impl_VectorOfString_funName": "-",
     # dnn
     "cv_dnn_<unnamed>_is_neg_int_i": "-",
     "cv_dnn_NMSBoxes_VectorOfRotatedRect_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k": "nms_boxes_rotated",
     "cv_dnn_NMSBoxes_VectorOfRect2d_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k": "nms_boxes_rotated_f64",
+    "cv_dnn_Dict_ptr_String_key": "ptr_mut",
+    "cv_dnn_Dict_ptr_const_String_key": "ptr",
 }
 
 class_ignore_list = (
@@ -642,6 +643,9 @@ class FuncInfo(GeneralInfo):
             self.comment = decl[5].encode("ascii", "ignore")
         else:
             self.comment = ""
+
+        if self.is_const:
+            self.identifier += "_const"
 
         self.args = []
         for arg in decl[3]:
@@ -1051,7 +1055,8 @@ class TypeInfo:
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        self.typeid = typeid  # e.g. "vector<cv::Mat>", "std::vector<int>", "float"
+        self.is_const = typeid.startswith("const ")  # type has C++ const modifier
+        self.typeid = typeid.replace("const ", "")  # e.g. "vector<cv::Mat>", "std::vector<int>", "float"
         self.gen = gen
         self.is_ignored = False
         self.is_by_ptr = False
@@ -1467,38 +1472,41 @@ def parse_type(gen, typeid):
     :type typeid: str
     :rtype: TypeInfo
     """
-    typeid = typeid.strip() \
-        .replace("const ", "") \
-        .replace("..", ".")
+    typeid = typeid.strip()
+    full_typeid = typeid
+    if full_typeid.startswith("const "):
+        typeid = full_typeid[6:]
     if typeid == "":
         typeid = "void"
+        full_typeid = "void"
     # if typeid.endswith("&"):
     #     return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
     if typeid.endswith("&"):
         typeid = typeid[:-1].strip()
+        full_typeid = full_typeid[:-1].strip()
     if typeid in primitives:
-        return PrimitiveTypeInfo(gen, typeid)
+        return PrimitiveTypeInfo(gen, full_typeid)
     elif typeid.endswith("*"):
-        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[:-1].strip()))
+        return RawPtrTypeInfo(gen, full_typeid, gen.get_type_info(typeid[:-1].strip()))
     elif typeid.endswith("[]"):
-        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[:-2].strip()))
+        return RawPtrTypeInfo(gen, full_typeid, gen.get_type_info(typeid[:-2].strip()))
     elif typeid == "string" or typeid == "String":
-        return StringTypeInfo(gen, typeid)
+        return StringTypeInfo(gen, full_typeid)
     elif typeid == "":
         raise NameError("empty type detected")
     elif typeid.startswith("Ptr<"):
-        return SmartPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1].strip()))
-#        return RawPtrTypeInfo(gen, typeid, gen.get_type_info(typeid[4:-1]))
+        return SmartPtrTypeInfo(gen, full_typeid, gen.get_type_info(typeid[4:-1].strip()))
+    #        return RawPtrTypeInfo(gen, full_typeid, gen.get_type_info(typeid[4:-1]))
     elif typeid.startswith("vector<"):
         inner = gen.get_type_info(typeid[7:-1].strip())
         if not inner:
             raise NameError("inner type `%s' not found" % (typeid[7:-1].strip()))
-        return VectorTypeInfo(gen, typeid, inner)
+        return VectorTypeInfo(gen, full_typeid, inner)
     elif typeid.startswith("std::vector<"):
         inner = gen.get_type_info(typeid[12:-1].strip())
         if not inner:
             raise NameError("inner type `%s' not found" % (typeid[12:-1].strip()))
-        return VectorTypeInfo(gen, typeid, inner)
+        return VectorTypeInfo(gen, full_typeid, inner)
     elif gen.get_value_struct(typeid):
         return ValueStructTypeInfo(gen, gen.get_value_struct(typeid))
     else:
@@ -1517,7 +1525,7 @@ def parse_type(gen, typeid):
                 else:
                     return BoxedClassTypeInfo(gen, ci.fullname, None)
             return parse_type(gen, actual)
-    return UnknownTypeInfo(gen, typeid)
+    return UnknownTypeInfo(gen, full_typeid)
 
 #
 #       GENERATOR
