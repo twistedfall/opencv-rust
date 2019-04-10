@@ -6,6 +6,12 @@ pub struct Error {
 	pub message: String,
 }
 
+impl Error {
+	pub fn new(code: i32, message: String) -> Self {
+		Self { code, message }
+	}
+}
+
 impl fmt::Display for Error {
 	fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 		write!(f, "{} (code: {})", self.message, self.code)
