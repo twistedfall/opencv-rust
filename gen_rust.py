@@ -264,6 +264,8 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_dnn_Dict_ptr_const_String_key": "ptr",
 }
 
+func_manual_implementation = {}
+
 class_ignore_list = (
     #core
     "CvMat", "CvArr", "CvSeq", "CvPoint.*", "CvRect", "CvTermCriteria", # have c++ equiv
@@ -687,6 +689,17 @@ class FuncInfo(GeneralInfo):
             logging.info("register %s %s in %s (%s)"%(self.kind, self.name, self.ci, self.identifier))
             self.ci.add_method(self)
 
+    def _get_manual_implementation(self, section, template_vars):
+        if self.identifier in func_manual_implementation:
+            templ = func_manual_implementation[self.identifier]
+            if section in templ:
+                if templ[section] == "~":
+                    return None
+                return templ[section].substitute(template_vars)
+            else:
+                return ""
+        return None
+
     def is_constructor(self):
         return self.kind == self.KIND_CONSTRUCTOR
 
@@ -705,6 +718,9 @@ class FuncInfo(GeneralInfo):
     def reason_to_skip(self):
         if self.identifier in self.gen.generated:
             return "already there"
+
+        if self.identifier in func_manual_implementation:
+            return None
 
         if self.name.startswith("operator"):
             return "can not map %s yet"%(self.name)
