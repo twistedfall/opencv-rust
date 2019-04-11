@@ -1702,7 +1702,7 @@ class RustWrapperGenerator(object):
         self.moduleRustExterns = StringIO()
 
         self.moduleSafeRust.write('//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n'.encode("utf-8"))
-        self.moduleSafeRust.write(self.reformat_doc(parser.comment).encode("utf-8").replace("///", "//!"))
+        self.moduleSafeRust.write(self.reformat_doc(parser.comment, "//!"))
 
         self.moduleSafeRust.write(template("""
             use libc::{c_void, c_char, size_t};
@@ -2176,7 +2176,7 @@ class RustWrapperGenerator(object):
                 self.gen_func(fi)
             self.moduleSafeRust.write("}\n")
 
-    def reformat_doc(self, text):
+    def reformat_doc(self, text, comment_prefix="///"):
         text = text.strip()
         if len(text) == 0:
             return ""
@@ -2194,8 +2194,8 @@ class RustWrapperGenerator(object):
         text = re.sub(r"\\f\$(.*?)\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
         # catch sequences of 4 indents and reduce them to avoid cargo test running them as code
         text = re.sub(r"^((\s{1,5})\2{3})(\S)", r"\2\3", text, 0, re.M)
-        text = re.sub("^", "/// ", text.strip(), 0, re.M) + "\n"
-        return text
+        text = re.sub("^", comment_prefix + " ", text.strip(), 0, re.M) + "\n"
+        return text.encode("utf-8")
 
 
 def main():
