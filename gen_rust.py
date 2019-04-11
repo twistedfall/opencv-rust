@@ -26,13 +26,10 @@ def template(text):
 #
 #       EXCEPTIONS TO AUTO GENERATION
 #
-ManualFuncs = {
-    "core": (
-        ["cv.Mat.size", "Size", ["/C"], []],
-    )
-}
 
-cross_modules_deps = {
+
+# decls to inject before doing header parsing
+decls_manual_pre = {
     "core": (
         ["class cv.Mat", "", ["/Ghost"], []],
         ["class cv.Algorithm", "", ["/Ghost"], []],
@@ -41,6 +38,14 @@ cross_modules_deps = {
         ["class cv.RotatedRect", "", ["/Ghost"], []],
         ["class cv.TermCriteria", "", ["/Ghost"], []],
         ["class cv.Range", "", ["/Ghost"], []],
+    )
+}
+
+# decls to inject after doing header parsing
+decls_manual_post = {
+    "core": (
+        ["cv.Mat.size", "Size", ["/C"], []],
+        ["cv.Mat.step", "size_t", ["/C"], []],
     )
 }
 
@@ -1670,10 +1675,11 @@ class RustWrapperGenerator(object):
         self.namespaces = set(x for x in parser.namespaces)
         self.namespaces.add("cv")
 
-        for m in cross_modules_deps:
-            self.module = m
-            for d in cross_modules_deps[m]:
-                self.add_decl(d)
+        for module, decls in decls_manual_pre.iteritems():
+            self.module = module
+            for decl in decls:
+                logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
+                self.add_decl(decl)
 
         self.module = module
 
@@ -1688,11 +1694,10 @@ class RustWrapperGenerator(object):
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
                 self.add_decl(decl)
 
-        if module in ManualFuncs:
-            for decl in ManualFuncs[self.module]:
+        for module, decls in decls_manual_post.iteritems():
+            for decl in decls:
                 logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                 self.add_decl(decl)
-
 
         logging.info("\n\n===== Generating... =====")
         self.moduleCppTypes = StringIO()
