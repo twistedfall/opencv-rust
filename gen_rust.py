@@ -603,9 +603,10 @@ class FuncInfo(GeneralInfo):
     KIND_METHOD      = "(method)"
     KIND_CONSTRUCTOR = "(constructor)"
 
-    def __init__(self, gen, decl, namespaces=frozenset()):  # [ funcname, return_ctype, [modifiers], [args] ]
+    def __init__(self, gen, module, decl, namespaces=frozenset()):  # [ funcname, return_ctype, [modifiers], [args] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self._r_name = None
+        self.module = module
 
         if self.classname and not self.classname.startswith("operator"):
             self.ci = gen.get_class(self.classname)
@@ -767,7 +768,7 @@ class FuncInfo(GeneralInfo):
         return io.getvalue()
 
     def c_name(self):
-        return "cv_%s_%s" % (self.gen.module, self.identifier.replace("::", "").replace(" ", "_"))
+        return "cv_%s_%s" % (self.module, self.identifier.replace("::", "").replace(" ", "_"))
 
     def r_name(self):
         if self._r_name is not None:
@@ -898,11 +899,11 @@ class ClassPropInfo:
 
 
 class ClassInfo(GeneralInfo):
-    def __init__(self, gen, decl, namespaces):  # [ 'class/struct cname', ': base', [modlist] ]
+    def __init__(self, gen, module, decl, namespaces):  # [ 'class/struct cname', ': base', [modlist] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.methods = []  # type: list[FuncInfo]
         self.namespaces = namespaces
-        self.module = self.gen.module
+        self.module = module
         self.is_simple = self.is_ignored = self.is_ghost = False
         self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
@@ -916,7 +917,7 @@ class ClassInfo(GeneralInfo):
                 self.is_ignored = True
             if m == "/Ghost":
                 self.is_ghost = True
-        if self.classpath and gen.get_class(self.classpath).is_ignored:
+        if self.classpath and self.gen.get_class(self.classpath).is_ignored:
             self.is_ignored = True
 
         self.nested_cname = self.fullname.replace("::", "_")
@@ -943,7 +944,7 @@ class ClassInfo(GeneralInfo):
         logging.info("register class %s (%s)%s%s", self.fullname, decl,
             " [ignored]" if self.is_ignored else "",
             " impl:"+",".join(self.bases) if len(self.bases) else "")
-        gen.classes[self.fullname] = self
+        self.gen.classes[self.fullname] = self
         self.add_unpack_methods()
 
     def __repr__(self):
@@ -983,7 +984,7 @@ class ClassInfo(GeneralInfo):
                 ),
                 struct_field,
             ]
-            self.add_method(FuncInfo(self.gen, field_decl, frozenset(self.namespaces)))
+            self.add_method(FuncInfo(self.gen, self.module, field_decl, frozenset(self.namespaces)))
 
     def add_method(self, fi):
         self.methods.append(fi)
@@ -1574,7 +1575,6 @@ class RustWrapperGenerator(object):
     def __init__(self):
         self.cpp_dir = ""
         self.rust_dir = ""
-        self.module = ""
         self.classes = {}
         self.functions = []
         self.ported_func_list = []
@@ -1628,18 +1628,18 @@ class RustWrapperGenerator(object):
                 return c
         return None
 
-    def add_decl(self, decl):
+    def add_decl(self, module, decl):
         if decl[0] == "cv.String.String" or decl[0] == 'cv.Exception.~Exception':
             return
         if decl[0] == "cv.Algorithm":
             decl[0] = "cv.Algorithm.Algorithm"
         name = decl[0]  # type: str
         if name.startswith("struct") or name.startswith("class"):
-            ClassInfo(self, decl, frozenset(self.namespaces))
+            ClassInfo(self, module, decl, frozenset(self.namespaces))
         elif name.startswith("const"):
             ConstInfo(self, decl, frozenset(self.namespaces))
         else:
-            FuncInfo(self, decl, frozenset(self.namespaces))
+            FuncInfo(self, module, decl, frozenset(self.namespaces))
 
     def register_function(self, f):
         self.functions.append(f)
@@ -1654,20 +1654,16 @@ class RustWrapperGenerator(object):
         """
         self.cpp_dir = cpp_dir
         self.rust_dir = rust_dir
-        self.module = module
         includes = []
 
         parser = hdr_parser.CppHeaderParser()
         self.namespaces = set(x for x in parser.namespaces)
         self.namespaces.add("cv")
 
-        for module, decls in decls_manual_pre.iteritems():
-            self.module = module
+        for m, decls in decls_manual_pre.iteritems():
             for decl in decls:
                 logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
-                self.add_decl(decl)
-
-        self.module = module
+                self.add_decl(m, decl)
 
         for hdr in srcfiles:
             decls = parser.parse(hdr, False)
@@ -1678,12 +1674,12 @@ class RustWrapperGenerator(object):
             includes.append('#include "' + hdr + '"')
             for decl in decls:
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
-                self.add_decl(decl)
+                self.add_decl(module, decl)
 
-        for module, decls in decls_manual_post.iteritems():
+        for m, decls in decls_manual_post.iteritems():
             for decl in decls:
                 logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
-                self.add_decl(decl)
+                self.add_decl(m, decl)
 
         logging.info("\n\n===== Generating... =====")
         self.moduleCppTypes = StringIO()
@@ -1736,7 +1732,7 @@ class RustWrapperGenerator(object):
         with open(cpp_dir + "/types.h", "a") as f:
             f.write(self.moduleCppTypes.getvalue())
 
-        with open(cpp_dir + "/" + self.module + ".consts.cpp", "w") as f:
+        with open(cpp_dir + "/" + module + ".consts.cpp", "w") as f:
             f.write("""#include <cstdio>\n""")
             f.write("""#include "opencv2/opencv_modules.hpp"\n""")
             f.write("""#include "opencv2/%s.hpp"\n"""%(module))
