@@ -272,18 +272,12 @@ renamed_funcs = {  # todo check if any "new" is required
 func_manual_implementation = {}
 
 class_ignore_list = (
-    #core
-    "CvMat", "CvArr", "CvSeq", "CvPoint.*", "CvRect", "CvTermCriteria", # have c++ equiv
-    "CvSize", "CvSlice", "CvScalar",
-    "Cv[A-Z].*",
-    "cv::Param",
+    # core
+    "Cv[A-Z]",
     "cv::Mat::MStep",
     "cv::Mat::MSize",
-    "cv::Mutex",
     "Ipl.*",
     "BinaryFunc", "ConvertData", "ConvertScaleData",
-    "cv::FileNode", "cv::FileStorage", "cv::FileNodeIterator",
-    "cv::KDTree", "IndexParams", "Params", "CvAttrList",
     "cv::Exception", "cv::ErrorCallback",
     "cv::RNG.*", # maybe
     "cv::SVD",
@@ -291,19 +285,7 @@ class_ignore_list = (
     "cv::TLSDataContainer",
     "NAryMatIterator",
     "cv::MatConstIterator",
-    "cv::CommandLineParser",
     "cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray",
-    "cv::MatAllocator",
-    "cv::SparseMat",
-    "cv::AlgorithmInfo",
-    #videoio
-    #    "VideoWriter",
-    # imgproc
-    "Vertex", "QuadEdge",
-    "GeneralizedHough",
-    "Subdiv2D", # lots of protected stuff exported (may work now)
-    # features
-    "DescriptorCollection",  # nested
     # stitching
     "cv::CylindricalWarperGpu", "cv::PlaneWarperGpu", "cv::SphericalWarperGpu",
     # videostab
@@ -356,7 +338,7 @@ func_ignore_list = (
 
 # regular expressions to ignore matching constant names
 const_ignore_list = (
-    "^CV_EXPORTS_W", "CV_MAKE_TYPE",
+    "CV_EXPORTS_W", "CV_MAKE_TYPE",
     "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
     "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
     "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_2PI", "CV_LOG2",
@@ -366,12 +348,12 @@ const_ignore_list = (
     "__CV_BEGIN__", "__CV_END__", "__CV_EXIT__",
     "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN",
     "CV_TRY", "CV_CATCH_ALL",
-    "^CV__DEBUG_NS_",
+    "CV__DEBUG_NS_",
     "UINT64_1",
     "CV_STRUCT_INITIALIZER", "CV__ENABLE_C_API_CTORS",
-    "^VSX_IMPL_MULH_",
-    "^CV__DNN_EXPERIMENTAL_NS_",
-    "^CV_Sts",
+    "VSX_IMPL_MULH_",
+    "CV__DNN_EXPERIMENTAL_NS_",
+    "CV_Sts",
 )
 
 #
