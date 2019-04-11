@@ -2097,7 +2097,7 @@ class RustWrapperGenerator(object):
             }
             """).substitute(typ.__dict__))
 
-        self.moduleRustExterns.write("pub fn cv_delete_%s(ptr : *mut c_void);\n" % (typ.rust_safe_id))
+        self.moduleRustExterns.write("pub fn cv_delete_%s(ptr : *mut c_void);\n" % (typ.rust_local))
 
         self.moduleSafeRust.write("// boxed class %s\n"%(typ.typeid))
         self.moduleSafeRust.write(self.reformat_doc(ci.comment))
@@ -2108,11 +2108,11 @@ class RustWrapperGenerator(object):
             }
             impl Drop for $rust_full {
                 fn drop(&mut self) {
-                    unsafe { sys::cv_delete_${rust_safe_id}(self.ptr) };
+                    unsafe { sys::cv_delete_${rust_local}(self.ptr) };
                 }
             }
             impl $rust_full {
-                #[doc(hidden)] pub fn as_raw_$rust_local(&self) -> *mut c_void { self.ptr }
+                #[doc(hidden)] pub fn as_raw_${rust_local}(&self) -> *mut c_void { self.ptr }
             }
             """).substitute(typ.__dict__))
 
