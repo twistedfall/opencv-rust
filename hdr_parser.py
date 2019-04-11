@@ -156,10 +156,9 @@ class CppHeaderParser(object):
         #print self.lineno, ":\t", word_list
 
         # pass 2: decrypt the list
-        wi = -1
         prev_w = ""
-        for w in word_list:
-            wi += 1
+        word_list_iter = iter(enumerate(word_list))
+        for wi, w in word_list_iter:
             if w == "*":
                 if prev_w == "char" and not isarray:
                     arg_type = arg_type[:-len("char")] + "c_string"
@@ -167,6 +166,14 @@ class CppHeaderParser(object):
                     arg_type += w
                 continue
             elif w == "<":
+                if arg_type == "template":
+                    arg_type = ""
+                    try:
+                        while next(word_list_iter)[1] != ">":
+                            pass
+                    except StopIteration:
+                        pass
+                    continue
                 arg_type += "_"
                 angle_stack.append(0)
             elif w == "," or w == '>':
@@ -696,8 +703,12 @@ class CppHeaderParser(object):
                 break
 
         # do not process hidden class members and template classes/functions
-        if not stack_top[self.PUBLIC_SECTION] or stmt.startswith("template"):
+        if not stack_top[self.PUBLIC_SECTION]:
             return stmt_type, "", False, None
+
+        if stmt.startswith("template"):
+            if "class" in stmt or "struct" in stmt or re.search(r"<.*,.*>", stmt):
+                return stmt_type, "", False, None
 
         if end_token == "{":
             if not self.wrap_mode and stmt.startswith("typedef struct"):

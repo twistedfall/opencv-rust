@@ -610,7 +610,7 @@ class FuncInfo(GeneralInfo):
         if self.classname and not self.classname.startswith("operator"):
             self.ci = gen.get_class(self.classname)
             if not self.ci:
-                if self.classname == "std":
+                if self.classname == "std" or "<" in self.classname:
                     self.is_ignored = True
                     return
                 else:
