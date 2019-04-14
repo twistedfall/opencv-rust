@@ -62,6 +62,13 @@ decls_manual_pre = {
         ["class cv.RotatedRect", "", ["/Ghost"], []],
         ["class cv.TermCriteria", "", ["/Ghost"], []],
         ["class cv.Range", "", ["/Ghost"], []],
+        # ["class cv.MouseCallback", "", ["/Callback"], [
+        #     ["int", "event", ""],
+        #     ["int", "x", ""],
+        #     ["int", "y", ""],
+        #     ["int", "flags", ""],
+        #     ["void*", "userdata", ""],
+        # ]],
     )
 }
 
@@ -1039,7 +1046,7 @@ class ClassInfo(GeneralInfo):
         self.methods = []  # type: list[FuncInfo]
         self.namespaces = namespaces
         self.module = module
-        self.is_simple = self.is_ignored = self.is_ghost = False
+        self.is_simple = self.is_ignored = self.is_ghost = self.is_callback = False
         self.is_trait = self.fullname in forced_trait_classes
         self.classname = self.name
         self.comment = ""
@@ -1052,6 +1059,8 @@ class ClassInfo(GeneralInfo):
                 self.is_ignored = True
             if m == "/Ghost":
                 self.is_ghost = True
+            if m == "/Callback":
+                self.is_callback = True
         if self.classpath and self.gen.get_class(self.classpath).is_ignored:
             self.is_ignored = True
 
@@ -1071,7 +1080,10 @@ class ClassInfo(GeneralInfo):
         # class props
         self.props = []
         for p in decl[3]:
-            self.props.append(ClassPropInfo(p))
+            if self.is_callback:
+                self.props.append(ArgInfo(self.gen, p))
+            else:
+                self.props.append(ClassPropInfo(p))
 
         self.is_ignored = self.is_ignored or self.gen.class_is_ignored(self.fullname)
 
