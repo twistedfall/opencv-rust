@@ -631,9 +631,13 @@ class FuncInfo(GeneralInfo):
 
         self.identifier = self.fullname.replace("::", "_")
 
+        self.is_ignored = "/H" in decl[2] or "/I" in decl[2]
+
+        if self.is_ignored:
+            return
+
         self.is_const = "/C" in decl[2]
         self.is_static = "/S" in decl[2]
-        self.is_ignored = "/H" in decl[2] or "/I" in decl[2]
         self.fake_attrgetter = "/ATTRGETTER" in decl[2]
 
         if self.is_const:
