@@ -1,6 +1,7 @@
 pub use self::mat::*;
 pub use self::point::*;
 pub use self::rect::*;
+pub use self::scalar::*;
 pub use self::size::*;
 
 macro_rules! valid_types {
@@ -17,4 +18,5 @@ macro_rules! valid_types {
 mod mat;
 mod point;
 mod rect;
+mod scalar;
 mod size;
