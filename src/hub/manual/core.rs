@@ -1,6 +1,7 @@
 pub use self::mat::*;
 pub use self::point::*;
 pub use self::rect::*;
+pub use self::size::*;
 
 macro_rules! valid_types {
     ($trait: ident, $($rust_type: ty),+) => {
@@ -16,3 +17,4 @@ macro_rules! valid_types {
 mod mat;
 mod point;
 mod rect;
+mod size;
