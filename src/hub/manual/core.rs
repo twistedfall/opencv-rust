@@ -3,6 +3,7 @@ pub use self::point::*;
 pub use self::rect::*;
 pub use self::scalar::*;
 pub use self::size::*;
+pub use self::vec::*;
 
 macro_rules! valid_types {
     ($trait: ident, $($rust_type: ty),+) => {
@@ -20,3 +21,4 @@ mod point;
 mod rect;
 mod scalar;
 mod size;
+mod vec;
