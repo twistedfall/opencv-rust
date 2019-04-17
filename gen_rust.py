@@ -677,7 +677,6 @@ class FuncInfo(GeneralInfo):
 
     def __init__(self, gen, module, decl, namespaces=frozenset()):  # [ funcname, return_ctype, [modifiers], [args] ]
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
-        self._r_name = None
         self.module = module
 
         if self.classname and not self.classname.startswith("operator"):
@@ -822,17 +821,11 @@ class FuncInfo(GeneralInfo):
         return "cv_%s_%s" % (self.module, self.identifier.replace("::", "").replace(" ", "_"))
 
     def r_name(self):
-        if self._r_name is not None:
-            return self._r_name
-
         if renamed_funcs.get(self.identifier):
             return renamed_funcs[self.identifier]
         name = "new" if self.is_constructor() else self.name
 
         return camel_case_to_snake_case(reserved_rename.get(name, name))
-
-    def set_r_name(self, value):
-        self._r_name = value
 
     def gen_cpp(self):
         decl_cpp_args = []
@@ -2292,9 +2285,12 @@ class RustWrapperGenerator(object):
         # If duplicate functions have the same call arguments, we skip duplicate function.
         rust_func_name = fi.r_name()
         classname = "" if fi.kind == fi.KIND_FUNCTION else fi.classname
+        renamed = False
         while classname + '::' + rust_func_name in self.func_names:
             rust_func_name = bump_counter(rust_func_name)
-        fi.set_r_name(rust_func_name)
+            renamed = True
+        if renamed:
+            renamed_funcs[fi.identifier] = rust_func_name
 
         # rust safe wrapper
         self.moduleSafeRust.write(fi.gen_safe_rust())
