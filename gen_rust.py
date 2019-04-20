@@ -1632,11 +1632,10 @@ class SimpleClassTypeInfo(TypeInfo):
 
 
 class BoxedClassTypeInfo(TypeInfo):
-    def __init__(self, gen, typeid, alias):
+    def __init__(self, gen, typeid):
         """
         :type gen: RustWrapperGenerator
         :type typeid: str
-        :type alias: str
         """
         super(BoxedClassTypeInfo, self).__init__(gen, typeid)
         self.ci = gen.get_class(self.typeid)
@@ -1648,10 +1647,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.ctype = "void*"
         self.c_safe_id = "void_X"
         self.is_ignored = self.ci.is_ignored
-        if alias:
-            self.rust_safe_id = alias
-        else:
-            self.rust_safe_id = self.ci.name
+        self.rust_safe_id = self.ci.name
 
     def cpp_arg_func_decl(self, var_name, is_const=True):
         return super(BoxedClassTypeInfo, self).cpp_arg_func_decl(var_name, True)
@@ -2114,7 +2110,7 @@ def parse_type(gen, typeid):
             if ci.is_simple:
                 return SimpleClassTypeInfo(gen, ci.fullname)
             else:
-                return BoxedClassTypeInfo(gen, ci.fullname, None)
+                return BoxedClassTypeInfo(gen, ci.fullname)
         actual = type_replace.get(typeid)
         if actual:
             ci = gen.get_class(actual)
@@ -2122,7 +2118,7 @@ def parse_type(gen, typeid):
                 if ci.is_simple:
                     return SimpleClassTypeInfo(gen, ci.fullname)
                 else:
-                    return BoxedClassTypeInfo(gen, ci.fullname, None)
+                    return BoxedClassTypeInfo(gen, ci.fullname)
             return parse_type(gen, actual)
     return UnknownTypeInfo(gen, full_typeid)
 
