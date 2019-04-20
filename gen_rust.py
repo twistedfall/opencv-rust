@@ -48,6 +48,23 @@ def combine_dicts(src, add):
     out.update(add)
     return out
 
+
+def classes_equal(first, second):
+    """
+    :type first: str
+    :type second: str
+    :rtype: bool
+    """
+    first = first.strip()
+    second = second.strip()
+    if first == second:
+        return True
+    if not first.startswith("::") and second.endswith("::" + first):
+        return True
+    if not second.startswith("::") and first.endswith("::" + second):
+        return True
+    return False
+
 #
 #       EXCEPTIONS TO AUTO GENERATION
 #
@@ -2188,7 +2205,7 @@ class RustWrapperGenerator(object):
         if c:
             return c
         for c in self.classes.values():
-            if c.fullname.endswith("::"+classname):
+            if classes_equal(classname, c.fullname):
                 return c
         return None
 
