@@ -432,33 +432,40 @@ const_ignore_list = (
 #
 
 primitives = {
-    u"void": {u"ctype": "void", "rust_local": "()"},
+    "void": {"ctype": "void", "rust_local": "()"},
 
-    u"bool": {u"ctype": "bool", u"rust_local": "bool"},
+    "bool": {"ctype": "bool", "rust_local": "bool"},
 
-    u"char": {u"ctype": "char", u"rust_local": "i8"},
-    u"schar": {u"ctype": "char", u"rust_local": "i8"},
-    u"uchar": {u"ctype": "unsigned char", u"rust_local": "u8"},
-    u"unsigned char": {u"ctype": "unsigned char", u"rust_local": "u8"},
+    "char": {"ctype": "char", "rust_local": "i8"},
+    "schar": {"ctype": "char", "rust_local": "i8"},
+    "signed char": {"ctype": "char", "rust_local": "i8"},
+    "uchar": {"ctype": "unsigned char", "rust_local": "u8"},
+    "unsigned char": {"ctype": "unsigned char", "rust_local": "u8"},
 
-    u"short": {u"ctype": "short", u"rust_local": "i16"},
-    u"ushort": {u"ctype": "unsigned short", u"rust_local": "u16"},
+    "short": {"ctype": "short", "rust_local": "i16"},
+    "signed short": {"ctype": "short", "rust_local": "i16"},
+    "ushort": {"ctype": "unsigned short", "rust_local": "u16"},
+    "unsigned short": {"ctype": "unsigned short", "rust_local": "u16"},
 
-    u"int": {u"ctype": "int", u"rust_local": "i32"},
-    u"uint": {u"ctype": "unsigned int", u"rust_local": "u32"},
-    u"unsigned int": {u"ctype": "unsigned int", u"rust_local": "u32"},
-    u"uint32_t": {u"ctype": "uint32_t", u"rust_local": "u32"},
+    "int": {"ctype": "int", "rust_local": "i32"},
+    "signed int": {"ctype": "int", "rust_local": "i32"},
+    "uint": {"ctype": "unsigned int", "rust_local": "u32"},
+    "unsigned int": {"ctype": "unsigned int", "rust_local": "u32"},
+    "uint32_t": {"ctype": "uint32_t", "rust_local": "u32"},
 
-    u"size_t": {u"ctype": "std::size_t", u"rust_local": "size_t"},
+    "size_t": {"ctype": "std::size_t", "rust_local": "size_t"},
 
-    u"int64": {u"ctype": "int64", u"rust_local": "i64"},
-    u"uint64": {u"ctype": "uint64", u"rust_local": "u64"},
-    u"unsigned long long": {u"ctype": "unsigned long long", u"rust_local": "u64"},
-    u"int64_t": {u"ctype": "int64_t", u"rust_local": "i64"},
-    u"uint64_t": {u"ctype": "uint64_t", u"rust_local": "u64"},
+    "int64": {"ctype": "int64", "rust_local": "i64"},
+    "__int64": {"ctype": "int64", "rust_local": "i64"},
+    "signed __int64": {"ctype": "int64", "rust_local": "i64"},
+    "uint64": {"ctype": "uint64", "rust_local": "u64"},
+    "unsigned __int64": {"ctype": "uint64", "rust_local": "u64"},
+    "unsigned long long": {"ctype": "unsigned long long", "rust_local": "u64"},
+    "int64_t": {"ctype": "int64_t", "rust_local": "i64"},
+    "uint64_t": {"ctype": "uint64_t", "rust_local": "u64"},
 
-    u"float": {u"ctype": "float", u"rust_local": "f32"},
-    u"double": {u"ctype": "double", u"rust_local": "f64"},
+    "float": {"ctype": "float", "rust_local": "f32"},
+    "double": {"ctype": "double", "rust_local": "f64"},
 }
 
 forced_trait_classes = ("cv::Algorithm", "cv::BackgroundSubtractor", "cv::dnn::Layer")
