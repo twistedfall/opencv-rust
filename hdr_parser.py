@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 from __future__ import print_function
-import os, sys, re, string, io
+
+import io
+import re
+import sys
 
 # the list only for debugging. The real list, used in the real OpenCV build, is specified in CMakeLists.txt
 opencv_hdr_list = [
@@ -43,7 +46,7 @@ class CppHeaderParser(object):
         self.ACTUAL_PUBLIC_SECTION = 5
 
         self.namespaces = set()
-        self.comment = None
+        self.module_comment = {}
 
     def batch_replace(self, s, pairs):
         for before, after in pairs:
@@ -861,6 +864,9 @@ class CppHeaderParser(object):
                     docstring += l + "\n"
                     continue
                 docstring += l[:pos] + "\n"
+                m = re.search(r"@defgroup\s+(\w+)\b", docstring)
+                if m:
+                    self.module_comment[m.group(1)] = docstring
                 l = l[pos+2:]
                 state = SCAN
 
@@ -951,8 +957,6 @@ class CppHeaderParser(object):
                     if stmt_type == "namespace":
                         chunks = [block[1] for block in self.block_stack if block[0] == 'namespace'] + [name]
                         self.namespaces.add('.'.join(chunks))
-                        if self.comment == None:
-                            self.comment = docstring
                 else:
                     stmt_type, name, parse_flag = "block", "", False
 

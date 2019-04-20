@@ -2181,7 +2181,7 @@ class RustWrapperGenerator(object):
             self.namespaces = set(str(x.replace(".", "::")) for x in parser.namespaces)
             logging.info("\n\n=============== Header: %s ================\n\n", hdr)
             logging.info("Namespaces: %s", parser.namespaces)
-            logging.info("Comment: %s", parser.comment)
+            logging.info("Comment: %s", parser.module_comment)
             includes.append('#include "' + hdr + '"')
             for decl in decls:
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
@@ -2200,7 +2200,7 @@ class RustWrapperGenerator(object):
         self.moduleRustExterns = StringIO()
 
         self.moduleSafeRust.write('//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n'.encode("utf-8"))
-        self.moduleSafeRust.write(self.reformat_doc(parser.comment, "//!"))
+        self.moduleSafeRust.write(self.reformat_doc(parser.module_comment.get(module, ""), "//!"))
 
         self.moduleSafeRust.write(template("""
             use std::os::raw::{c_char, c_void};
