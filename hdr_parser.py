@@ -671,6 +671,28 @@ class CppHeaderParser(object):
             n = "cv.Algorithm"
         return n
 
+    def parse_typedef(self, decl_str, docstring=""):
+        # callback, e.g. typedef int (CV_CDECL* CvCmpFunc)(const void* a, const void* b, void* userdata )
+        m = re.match(r"typedef\s+(.+?)\s*\(\s*.*\*\s*(\w+?)\s*\)\s*\(\s*(.+?)\s*\)\s*$", decl_str)
+        if m:
+            args = []
+            for x in (x.strip() for x in m.group(3).split(",")):
+                ma = re.match(r"\s*(.+)\s+(\w+)\s*$", x)  # type with name, e.g. const void* a
+                if ma:
+                    args.append([ma.group(1), ma.group(2)])
+                else:
+                    ma = re.match(r"\s*(.+)\s*$", x)  # type w/o name, e.g. const void*
+                    if ma:
+                        args.append([ma.group(1), ""])
+                    else:
+                        return None
+            return ["callback {}".format(self.get_dotted_name(m.group(2))), m.group(1), "", args, None, docstring]
+        # type alias, e.g. typedef Affine3<float> Affine3f
+        m = re.match(r"typedef\s+(.+)\s+(\w+)$", decl_str)
+        if m:
+            return ["typedef {}".format(self.get_dotted_name(m.group(2))), m.group(1), "", [], None, docstring]
+        return None
+
     def parse_stmt(self, stmt, end_token, use_umat=False, docstring=""):
         """
         parses the statement (ending with ';' or '}') or a block head (ending with '{')
@@ -759,8 +781,10 @@ class CppHeaderParser(object):
             return "enum", "", False, decl
 
         if end_token == ";" and stmt.startswith("typedef"):
-            # TODO: handle typedef's more intelligently
-            return stmt_type, "", False, None
+            decl = self.parse_typedef(stmt, docstring)
+            if decl is None:
+                return stmt_type, "", False, None
+            return "typedef", "", False, decl
 
         paren_pos = stmt.find("(")
         if paren_pos >= 0:

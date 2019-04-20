@@ -662,7 +662,13 @@ class GeneralInfo:
         returns: (fullname, namespace, classpath, classname, name)
             fullname clean of prefix like "const, class, ..."
         """
-        name = name.replace("const ", "").replace("struct ", "").replace("class ", "").replace(".", "::")
+        name = name \
+            .replace("const ", "") \
+            .replace("struct ", "") \
+            .replace("class ", "") \
+            .replace("typedef ", "") \
+            .replace("callback ", "") \
+            .replace(".", "::")
         space_name, local_name = split_known_namespace(name, namespaces)
         pieces = local_name.split("::")
         if len(pieces) > 2:  # <class>.<class>.<class>.<name>
@@ -760,6 +766,12 @@ class FuncInfo(GeneralInfo):
     }
 
     def __init__(self, gen, module, decl, namespaces=frozenset()):  # [ funcname, return_ctype, [modifiers], [args] ]
+        """
+        :type gen: RustWrapperGenerator
+        :type module: str
+        :type decl: list
+        :type namespaces: frozenset
+        """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.module = module
 
@@ -1084,6 +1096,12 @@ class ClassPropInfo:
 
 class ClassInfo(GeneralInfo):
     def __init__(self, gen, module, decl, namespaces):  # [ 'class/struct cname', ': base', [modlist] ]
+        """
+        :type gen: RustWrapperGenerator
+        :type module: str
+        :type decl: list
+        :type namespaces: frozenset
+        """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.methods = []  # type: list[FuncInfo]
         self.namespaces = namespaces
@@ -1208,6 +1226,11 @@ class ConstInfo(GeneralInfo):
     }
 
     def __init__(self, gen, decl, namespaces):
+        """
+        :type gen: RustWrapperGenerator
+        :type decl: list
+        :type namespaces: frozenset
+        """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         _, self.rustname = split_known_namespace(self.fullname, namespaces)
         self.rustname = self.rustname.replace("::", "_")
@@ -1262,6 +1285,37 @@ class ConstInfo(GeneralInfo):
             return ConstInfo.TEMPLATES["cpp_double"].substitute(name=self.rustname, full_name=self.fullname)
         else:
             return ConstInfo.TEMPLATES["cpp_int"].substitute(name=self.rustname, full_name=self.fullname)
+
+
+class TypedefInfo(GeneralInfo):
+    def __init__(self, gen, decl, namespaces):
+        """
+        :type gen: RustWrapperGenerator
+        :type decl: list
+        :type namespaces: frozenset
+        """
+        GeneralInfo.__init__(self, gen, decl[0], namespaces)
+        self.alias = decl[1]
+        self.comment = ""
+        if len(decl) > 5:
+            self.comment = decl[5].encode("ascii", "ignore")
+
+    def typ(self):
+        return self.gen.get_type_info(self.name)
+
+    def alias_typ(self):
+        return self.gen.get_type_info(self.alias)
+
+
+class CallbackInfo(GeneralInfo):
+    def __init__(self, gen, decl, namespaces):
+        """
+        :type gen: RustWrapperGenerator
+        :type decl: list
+        :type namespaces: frozenset
+        """
+        GeneralInfo.__init__(self, gen, decl[0], namespaces)
+        pass
 
 
 class TypeInfo(object):
@@ -2142,6 +2196,10 @@ class RustWrapperGenerator(object):
                 return c
         return None
 
+    def set_type_info(self, typeid, type_info):
+        typeid = typeid.strip()
+        self.type_infos[typeid] = type_info
+
     def get_type_info(self, typeid):
         """
         :type typeid: str
@@ -2172,6 +2230,10 @@ class RustWrapperGenerator(object):
             ClassInfo(self, module, decl, frozenset(self.namespaces))
         elif name.startswith("const"):
             ConstInfo(self, decl, frozenset(self.namespaces))
+        elif name.startswith("typedef"):
+            TypedefInfo(self, decl, frozenset(self.namespaces))
+        elif name.startswith("callback"):
+            CallbackInfo(self, decl, frozenset(self.namespaces))
         else:
             FuncInfo(self, module, decl, frozenset(self.namespaces))
 
