@@ -461,40 +461,40 @@ const_ignore_list = (
 #
 
 primitives = {
-    "void": {"ctype": "void", "rust_local": "()"},
+    "void": {"cpp_extern": "void", "rust_local": "()"},
 
-    "bool": {"ctype": "bool", "rust_local": "bool"},
+    "bool": {"cpp_extern": "bool", "rust_local": "bool"},
 
-    "char": {"ctype": "char", "rust_local": "i8"},
-    "schar": {"ctype": "char", "rust_local": "i8"},
-    "signed char": {"ctype": "char", "rust_local": "i8"},
-    "uchar": {"ctype": "unsigned char", "rust_local": "u8"},
-    "unsigned char": {"ctype": "unsigned char", "rust_local": "u8"},
+    "char": {"cpp_extern": "char", "rust_local": "i8"},
+    "schar": {"cpp_extern": "char", "rust_local": "i8"},
+    "signed char": {"cpp_extern": "char", "rust_local": "i8"},
+    "uchar": {"cpp_extern": "unsigned char", "rust_local": "u8"},
+    "unsigned char": {"cpp_extern": "unsigned char", "rust_local": "u8"},
 
-    "short": {"ctype": "short", "rust_local": "i16"},
-    "signed short": {"ctype": "short", "rust_local": "i16"},
-    "ushort": {"ctype": "unsigned short", "rust_local": "u16"},
-    "unsigned short": {"ctype": "unsigned short", "rust_local": "u16"},
+    "short": {"cpp_extern": "short", "rust_local": "i16"},
+    "signed short": {"cpp_extern": "short", "rust_local": "i16"},
+    "ushort": {"cpp_extern": "unsigned short", "rust_local": "u16"},
+    "unsigned short": {"cpp_extern": "unsigned short", "rust_local": "u16"},
 
-    "int": {"ctype": "int", "rust_local": "i32"},
-    "signed int": {"ctype": "int", "rust_local": "i32"},
-    "uint": {"ctype": "unsigned int", "rust_local": "u32"},
-    "unsigned int": {"ctype": "unsigned int", "rust_local": "u32"},
-    "uint32_t": {"ctype": "uint32_t", "rust_local": "u32"},
+    "int": {"cpp_extern": "int", "rust_local": "i32"},
+    "signed int": {"cpp_extern": "int", "rust_local": "i32"},
+    "uint": {"cpp_extern": "unsigned int", "rust_local": "u32"},
+    "unsigned int": {"cpp_extern": "unsigned int", "rust_local": "u32"},
+    "uint32_t": {"cpp_extern": "uint32_t", "rust_local": "u32"},
 
-    "size_t": {"ctype": "std::size_t", "rust_local": "size_t"},
+    "size_t": {"cpp_extern": "std::size_t", "rust_local": "size_t"},
 
-    "int64": {"ctype": "int64", "rust_local": "i64"},
-    "__int64": {"ctype": "int64", "rust_local": "i64"},
-    "signed __int64": {"ctype": "int64", "rust_local": "i64"},
-    "uint64": {"ctype": "uint64", "rust_local": "u64"},
-    "unsigned __int64": {"ctype": "uint64", "rust_local": "u64"},
-    "unsigned long long": {"ctype": "unsigned long long", "rust_local": "u64"},
-    "int64_t": {"ctype": "int64_t", "rust_local": "i64"},
-    "uint64_t": {"ctype": "uint64_t", "rust_local": "u64"},
+    "int64": {"cpp_extern": "int64", "rust_local": "i64"},
+    "__int64": {"cpp_extern": "int64", "rust_local": "i64"},
+    "signed __int64": {"cpp_extern": "int64", "rust_local": "i64"},
+    "uint64": {"cpp_extern": "uint64", "rust_local": "u64"},
+    "unsigned __int64": {"cpp_extern": "uint64", "rust_local": "u64"},
+    "unsigned long long": {"cpp_extern": "unsigned long long", "rust_local": "u64"},
+    "int64_t": {"cpp_extern": "int64_t", "rust_local": "i64"},
+    "uint64_t": {"cpp_extern": "uint64_t", "rust_local": "u64"},
 
-    "float": {"ctype": "float", "rust_local": "f32"},
-    "double": {"ctype": "double", "rust_local": "f64"},
+    "float": {"cpp_extern": "float", "rust_local": "f32"},
+    "double": {"cpp_extern": "double", "rust_local": "f64"},
 }
 
 type_manual_declaration = {}
@@ -945,7 +945,7 @@ class FuncInfo(GeneralInfo):
         args = ""
         if self.is_instance_method():
             # fixme? add RawPtr handling
-            decl_cpp_args.append(self.ci.type_info().ctype + " instance")
+            decl_cpp_args.append(self.ci.type_info().cpp_extern + " instance")
 
         call_cpp_args = []
         for a in self.args:
@@ -1350,7 +1350,7 @@ class TypeInfo(object):
         self.is_by_ptr = False
         self.is_trait = False  # don't generate struct, generate trait (abstract classes and classes inside forced_trait_classes)
 
-        self.ctype = ""  # fixme rename to cpp_extern
+        self.cpp_extern = ""  # cpp type used on the boundary between Rust and C (e.g. in return wrappers)
         self.cpptype = self.typeid
         self.c_safe_id = "XX"  # c safe type identifier used for file names and return wrappers
 
@@ -1358,7 +1358,7 @@ class TypeInfo(object):
         self.rust_local = self.rust_local.replace("::", "_")  # only the type name for Rust without module path
         self.rust_safe_id = self.rust_local  # rust safe type identifier used for file and function names
         self.rust_full = ""  # full module path (with modules/crate::) to Rust type
-        self.rust_extern = ""  # type used on the boundary between Rust and C (e.g. in return wrappers)
+        self.rust_extern = ""  # Rust type used on the boundary between Rust and C (e.g. in return wrappers)
         # self.rust_lifetimes = ""  # for reference types it's the definition of lifetimes that need to be present in function
 
         self.inner = None  # type: TypeInfo  # inner type for container types
@@ -1377,7 +1377,7 @@ class TypeInfo(object):
                 struct ${return_wrapper_type} {
                     int error_code;
                     char* error_msg;
-                    ${ctype} result;
+                    ${cpp_extern} result;
                 };
             """),
 
@@ -1406,9 +1406,9 @@ class TypeInfo(object):
             "return_wrapper_type": self.rust_cpp_return_wrapper_type(),
         })
         with open("{}/{}.type.h".format(cpp_dir, template_vars["return_wrapper_type"]), "w") as f:
-            f.write(self.base_templates["cpp_void" if self.ctype == "void" else "cpp_non_void"].substitute(template_vars))
+            f.write(self.base_templates["cpp_void" if self.cpp_extern == "void" else "cpp_non_void"].substitute(template_vars))
         with open("{}/{}.rv.rs".format(rust_dir, template_vars["return_wrapper_type"]), "w") as f:
-            f.write(self.base_templates["rust_void" if self.ctype == "void" else "rust_non_void"].substitute(template_vars))
+            f.write(self.base_templates["rust_void" if self.cpp_extern == "void" else "rust_non_void"].substitute(template_vars))
 
     def rust_arg_forward(self, var_name, is_const=True):
         """
@@ -1496,8 +1496,8 @@ class TypeInfo(object):
         :rtype: str
         """
         if is_const:
-            return "{} {}".format(self.ctype, var_name)
-        return "{}* {}".format(self.ctype, var_name)
+            return "{} {}".format(self.cpp_extern, var_name)
+        return "{}* {}".format(self.cpp_extern, var_name)
 
     def cpp_arg_func_call(self, var_name, is_const=True):
         """
@@ -1532,7 +1532,7 @@ class TypeInfo(object):
     def cpp_method_return(self, is_constructor):
         if self.is_by_ptr:
             return "return { Error::Code::StsOk, NULL, ret };"
-        return "return {{ Error::Code::StsOk, NULL, *reinterpret_cast<{}*>(&ret) }};".format(self.ctype)
+        return "return {{ Error::Code::StsOk, NULL, *reinterpret_cast<{}*>(&ret) }};".format(self.cpp_extern)
 
     def rust_cpp_return_wrapper_type(self):
         """
@@ -1548,7 +1548,7 @@ class StringTypeInfo(TypeInfo):
         :type typeid: str
         """
         super(StringTypeInfo, self).__init__(gen, typeid)
-        self.ctype = "const char*"
+        self.cpp_extern = "const char*"
         self.cpptype = "String"
         self.rust_full = "String"
         if self.is_const:
@@ -1601,10 +1601,10 @@ class PrimitiveTypeInfo(TypeInfo):
         """
         super(PrimitiveTypeInfo, self).__init__(gen, typeid)
         primitive = primitives[self.typeid]
-        self.ctype = primitive["ctype"]
+        self.cpp_extern = primitive["cpp_extern"]
         self.rust_extern = self.rust_full = self.rust_local = primitive["rust_local"]
         self.rust_safe_id = self.typeid.replace(" ", "_")
-        self.c_safe_id = self.ctype.replace(" ", "_").replace("*", "X").replace("::", "_")
+        self.c_safe_id = self.cpp_extern.replace(" ", "_").replace("*", "X").replace("::", "_")
 
     def cpp_arg_func_call(self, var_name, is_const=True):
         return var_name
@@ -1636,11 +1636,11 @@ class SimpleClassTypeInfo(TypeInfo):
         if self.ci:
             self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
             if self.ci.get_manual_declaration_template("rust") is None:
-                self.ctype = self.ci.fullname
+                self.cpp_extern = self.ci.fullname
                 self.c_safe_id = self.rust_local
             else:
-                self.ctype = "{}Wrapper".format(self.ci.name)
-                self.c_safe_id = self.ctype
+                self.cpp_extern = "{}Wrapper".format(self.ci.name)
+                self.c_safe_id = self.cpp_extern
             self.rust_extern = self.rust_full
             self.is_trait = False
 
@@ -1661,7 +1661,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
         self.is_by_ptr = True
         self.is_trait = self.typeid in forced_trait_classes or self.ci.is_trait
-        self.ctype = "void*"
+        self.cpp_extern = "void*"
         self.c_safe_id = "void_X"
         self.is_ignored = self.ci.is_ignored
         self.rust_safe_id = self.ci.name
@@ -1811,8 +1811,8 @@ class VectorTypeInfo(TypeInfo):
                     return new ${inner_cpptype}(val);
                 }
                 
-                ${ctype}* cv_${rust_safe_id}_data(void* ptr) {
-                    return reinterpret_cast<${ctype}*>(reinterpret_cast<${cpptype}*>(ptr)->data());
+                ${cpp_extern}* cv_${rust_safe_id}_data(void* ptr) {
+                    return reinterpret_cast<${cpp_extern}*>(reinterpret_cast<${cpptype}*>(ptr)->data());
                 }
             """),
 
@@ -1831,7 +1831,7 @@ class VectorTypeInfo(TypeInfo):
         else:
             self.is_ignored = inner.is_ignored
         if not self.is_ignored:
-            self.ctype = "void*"
+            self.cpp_extern = "void*"
             self.c_safe_id = "void_X"
             self.inner_cpptype = inner.cpptype
             if isinstance(self.inner, SmartPtrTypeInfo):
@@ -1916,10 +1916,10 @@ class SmartPtrTypeInfo(TypeInfo):
             """),
 
         "cpp_externs": template("""
-                void* cv_${rust_safe_id}_get(${ctype} ptr) {
+                void* cv_${rust_safe_id}_get(${cpp_extern} ptr) {
                     return reinterpret_cast<${outer_cpptype}*>(ptr)->get();
                 }
-                void  cv_delete_${rust_safe_id}(${ctype} ptr) {
+                void  cv_delete_${rust_safe_id}(${cpp_extern} ptr) {
                     delete reinterpret_cast<${outer_cpptype}*>(ptr);
                 }
             """),
@@ -1936,7 +1936,7 @@ class SmartPtrTypeInfo(TypeInfo):
         self.inner = inner
         self.is_ignored = self.inner.is_ignored
         if not self.is_ignored:
-            self.ctype = "void*"
+            self.cpp_extern = "void*"
             self.c_safe_id = "void_X"
             self.rust_extern = "*mut c_void"
             self.cpptype = self.inner.cpptype
@@ -1991,7 +1991,7 @@ class RawPtrTypeInfo(TypeInfo):
                 self.is_by_ptr = self.inner.is_by_ptr
                 self.c_safe_id = self.inner.c_safe_id
                 self.cpptype = self.inner.cpptype
-                self.ctype = self.inner.ctype
+                self.cpp_extern = self.inner.cpp_extern
                 self.rust_safe_id = self.inner.rust_safe_id
                 self.rust_local = self.inner.rust_local
                 self.rust_full = self.inner.rust_full
@@ -2003,7 +2003,7 @@ class RawPtrTypeInfo(TypeInfo):
                 self.rust_safe_id = self.inner.rust_safe_id + "_X"
                 self.c_safe_id = self.inner.c_safe_id + "_X"
                 self.cpptype = self.inner.cpptype + "*"
-                self.ctype = self.inner.cpptype + "*"
+                self.cpp_extern = self.inner.cpptype + "*"
                 # self.is_by_ptr = True
                 self.rust_full = "&"
                 self.rust_extern = "*"
@@ -2024,7 +2024,7 @@ class RawPtrTypeInfo(TypeInfo):
             if self.is_const:
                 self.c_safe_id = "const_" + self.c_safe_id
                 self.cpptype = "const " + self.cpptype
-                self.ctype = "const " + self.ctype
+                self.cpp_extern = "const " + self.cpp_extern
                 self.rust_safe_id = "const_" + self.rust_safe_id
 
     def is_string(self):
@@ -2176,9 +2176,9 @@ class RustWrapperGenerator(object):
 
             "rust_field_non_array": template("""${visibility}${rsname}: ${rust_full},\n"""),
 
-            "cpp_field_array": template("""${ctype} ${name}[${size}];\n"""),
+            "cpp_field_array": template("""${cpp_extern} ${name}[${size}];\n"""),
 
-            "cpp_field_non_array": template("""${ctype} ${name};\n"""),
+            "cpp_field_non_array": template("""${cpp_extern} ${name};\n"""),
         },
     }
 
@@ -2445,11 +2445,11 @@ class RustWrapperGenerator(object):
             bracket = typ.index("[")
             size = typ[bracket+1:-1]
             typ = self.get_type_info(typ[:bracket])
-            out_cpp = templates["cpp_field_array"].substitute(ctype=typ.ctype, name=name, size=size)
+            out_cpp = templates["cpp_field_array"].substitute(cpp_extern=typ.cpp_extern, name=name, size=size)
             out_rust = templates["rust_field_array"].substitute(visibility=visibility, rsname=rsname, rust_full=typ.rust_full, size=size)
         else:
             typ = self.get_type_info(typ)
-            out_cpp = templates["cpp_field_non_array"].substitute(ctype=typ.ctype, name=name)
+            out_cpp = templates["cpp_field_non_array"].substitute(cpp_extern=typ.cpp_extern, name=name)
             out_rust = templates["rust_field_non_array"].substitute(visibility=visibility, rsname=rsname, rust_full=typ.rust_full)
         return out_rust, out_cpp
 
