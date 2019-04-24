@@ -792,12 +792,12 @@ class FuncInfo(GeneralInfo):
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.module = module
 
+        self.is_ignored = False
         if self.classname and not self.classname.startswith("operator"):
             self.ci = gen.get_class(self.classname)
             if not self.ci:
                 if self.classname == "std" or "<" in self.classname:
                     self.is_ignored = True
-                    return
                 else:
                     raise NameError("class not found: " + self.classname)
             if "/A" in decl[2]:
@@ -816,10 +816,7 @@ class FuncInfo(GeneralInfo):
 
         self.identifier = self.fullname.replace("::", "_")
 
-        self.is_ignored = "/H" in decl[2] or "/I" in decl[2]
-
-        if self.is_ignored:
-            return
+        self.is_ignored = self.is_ignored or "/H" in decl[2] or "/I" in decl[2]
 
         self.is_const = "/C" in decl[2]
         self.is_static = "/S" in decl[2]
@@ -853,17 +850,6 @@ class FuncInfo(GeneralInfo):
         if self.name.startswith("operator") or self.fullname.startswith("operator "):
             logging.info("ignore %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
-
-        if self.is_ignored:
-            return
-
-        # register self to class or generator
-        if self.kind == self.KIND_FUNCTION:
-            logging.info("register %s %s (%s)"%(self.kind, self.name, self.identifier))
-            gen.register_function(self)
-        else:
-            logging.info("register %s %s in %s (%s)"%(self.kind, self.name, self.ci, self.identifier))
-            self.ci.add_method(self)
 
     def _get_manual_implementation(self, section, template_vars):
         if self.identifier in func_manual_implementation:
@@ -1164,13 +1150,6 @@ class ClassInfo(GeneralInfo):
 
         self.is_ignored = self.is_ignored or self.gen.class_is_ignored(self.fullname)
 
-        # register
-        logging.info("register class %s (%s)%s%s", self.fullname, decl,
-            " [ignored]" if self.is_ignored else "",
-            " impl:"+",".join(self.bases) if len(self.bases) else "")
-        self.gen.classes[self.fullname] = self
-        self.add_unpack_methods()
-
     def __repr__(self):
         attrs = []
         if self.is_simple:
@@ -1186,31 +1165,8 @@ class ClassInfo(GeneralInfo):
         else:
             return "{} ({})".format(self.fullname, ", ".join(attrs))
 
-    def add_unpack_methods(self):
-        """
-        This method is used to create methods, what allows you to access to simple types inside
-        complex structures. For instance, RotatedRect items contains Point2f, Size and angle instances,
-        this method creates attribute getters get_point, get_size, get_angle.
-        """
-        for struct_field, field_type in boxed_type_fields.get(self.classname, {}).items():
-            field_decl = [
-                u'{classname}.get_{struct_field}'.format(
-                    classname=self.classname,
-                    struct_field=struct_field,
-                ),
-                field_type,
-                ['/ATTRGETTER'],
-                [],
-                None,
-                u'returns the {struct_field} attr of {field_type} type\n'.format(
-                    struct_field=struct_field,
-                    field_type=field_type,
-                ),
-                struct_field,
-            ]
-            self.add_method(FuncInfo(self.gen, self.module, field_decl, frozenset(self.namespaces)))
-
     def add_method(self, fi):
+        logging.info("register %s %s in %s (%s)"%(fi.kind, fi.name, fi.ci, fi.identifier))
         self.methods.append(fi)
 
     def type_info(self):
@@ -1253,12 +1209,6 @@ class ConstInfo(GeneralInfo):
         self.rustname = self.rustname.replace("::", "_")
         self.cname = self.name.replace(".", "::")
         self.value = decl[1]
-
-        # register
-        if self.is_ignored():
-            logging.info('ignored: %s', self)
-        elif not gen.get_const(self.name):
-            gen.consts.append(self)
 
     def __repr__(self):
         return template("CONST $name=$value").substitute(name=self.name, value=self.value)
@@ -2240,17 +2190,73 @@ class RustWrapperGenerator(object):
             decl[0] = "cv.Algorithm.Algorithm"
         name = decl[0]  # type: str
         if name.startswith("struct") or name.startswith("class"):
-            ClassInfo(self, module, decl, frozenset(self.namespaces))
+            self.add_class_decl(module, decl)
         elif name.startswith("const"):
-            ConstInfo(self, decl, frozenset(self.namespaces))
+            self.add_const_decl(module, decl)
         elif name.startswith("typedef"):
-            TypedefInfo(self, decl, frozenset(self.namespaces))
+            self.add_typedef_decl(module, decl)
         elif name.startswith("callback"):
-            CallbackInfo(self, decl, frozenset(self.namespaces))
+            self.add_callback_decl(module, decl)
         else:
-            FuncInfo(self, module, decl, frozenset(self.namespaces))
+            self.add_func_decl(module, decl)
+
+    def add_class_decl(self, module, decl):
+        item = ClassInfo(self, module, decl, frozenset(self.namespaces))
+        # register
+        logging.info("register class %s (%s)%s%s", item.fullname, decl,
+                     " [ignored]" if item.is_ignored else "",
+                     " impl:"+",".join(item.bases) if len(item.bases) else "")
+        self.classes[item.fullname] = item
+        """
+        This is used to create methods, what allows you to access to simple types inside
+        complex structures. For instance, RotatedRect items contains Point2f, Size and angle instances,
+        this method creates attribute getters get_point, get_size, get_angle.
+        """
+        for struct_field, field_type in boxed_type_fields.get(item.classname, {}).items():
+            field_decl = [
+                u'{classname}.get_{struct_field}'.format(
+                    classname=item.classname,
+                    struct_field=struct_field,
+                ),
+                field_type,
+                ['/ATTRGETTER'],
+                [],
+                None,
+                u'returns the {struct_field} attr of {field_type} type\n'.format(
+                    struct_field=struct_field,
+                    field_type=field_type,
+                ),
+                struct_field,
+            ]
+            item.add_method(FuncInfo(self, module, field_decl, frozenset(self.namespaces)))
+
+    def add_const_decl(self, _module, decl):
+        item = ConstInfo(self, decl, frozenset(self.namespaces))
+        # register
+        if item.is_ignored():
+            logging.info('ignored: %s', item)
+        elif not self.get_const(item.name):
+            self.consts.append(item)
+
+    def add_typedef_decl(self, _module, decl):
+        item = TypedefInfo(self, decl, frozenset(self.namespaces))
+        if not isinstance(item.alias_typ(), UnknownTypeInfo) and isinstance(item.typ(), UnknownTypeInfo):
+            self.set_type_info(item.name, item.alias_typ())
+
+    def add_callback_decl(self, _module, decl):
+        item = CallbackInfo(self, decl, frozenset(self.namespaces))
+
+    def add_func_decl(self, module, decl):
+        item = FuncInfo(self, module, decl, frozenset(self.namespaces))
+        if not item.is_ignored:
+            # register self to class or generator
+            if item.kind == item.KIND_FUNCTION:
+                self.register_function(item)
+            else:
+                item.ci.add_method(item)
 
     def register_function(self, f):
+        logging.info("register %s %s (%s)"%(f.kind, f.name, f.identifier))
         self.functions.append(f)
 
     def gen(self, srcfiles, module, cpp_dir, rust_dir):
