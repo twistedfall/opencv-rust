@@ -1,9 +1,22 @@
 //! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+//! Video Analysis
+//! 
+//! # Video Analysis
+//! @{
+//! Motion Analysis
+//! 
+//! # Motion Analysis
+//! Object Tracking
+//! 
+//! # Object Tracking
+//! C API
+//! 
+//! # C API
+//! @}
+use std::os::raw::{c_char, c_void};
+use libc::size_t;
+use crate::{Error, Result, core, sys, types};
 
-use libc::{c_void, c_char, size_t};
-use std::ffi::{CStr, CString};
-use crate::{core, sys, types};
-use crate::{Error, Result};
 pub const CV_LKFLOW_GET_MIN_EIGENVALS: i32 = 8;
 pub const CV_LKFLOW_INITIAL_GUESSES: i32 = 4;
 pub const CV_LKFLOW_PYR_A_READY: i32 = 1;
@@ -16,6 +29,7 @@ pub const OPTFLOW_FARNEBACK_GAUSSIAN: i32 = 256;
 pub const OPTFLOW_LK_GET_MIN_EIGENVALS: i32 = 8;
 pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 
+// identifier: cv_CamShift_Mat_probImage_Rect_window_TermCriteria_criteria
 /// Finds an object center, size, and orientation.
 /// 
 /// ## Parameters
@@ -36,19 +50,10 @@ pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 /// *   (Python) A sample explaining the camshift tracking algorithm can be found at
 /// opencv_source_code/samples/python/camshift.py
 pub fn cam_shift(prob_image: &core::Mat, window: core::Rect, criteria: &core::TermCriteria) -> Result<core::RotatedRect> {
-// identifier: cv_CamShift_Mat_probImage_Rect_window_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_video_cv_CamShift_Mat_probImage_Rect_window_TermCriteria_criteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::RotatedRect { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_video_cv_CamShift_Mat_probImage_Rect_window_TermCriteria_criteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result().map(|x| core::RotatedRect { ptr: x })
 }
 
+// identifier: cv_buildOpticalFlowPyramid_Mat_img_VectorOfMat_pyramid_Size_winSize_int_maxLevel_bool_withDerivatives_int_pyrBorder_int_derivBorder_bool_tryReuseInputImage
 /// Constructs the image pyramid which can be passed to calcOpticalFlowPyrLK.
 /// 
 /// ## Parameters
@@ -71,19 +76,10 @@ pub fn cam_shift(prob_image: &core::Mat, window: core::Rect, criteria: &core::Te
 /// * deriv_border: BORDER_CONSTANT
 /// * try_reuse_input_image: true
 pub fn build_optical_flow_pyramid(img: &core::Mat, pyramid: &mut types::VectorOfMat, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
-// identifier: cv_buildOpticalFlowPyramid_Mat_img_VectorOfMat_pyramid_Size_winSize_int_maxLevel_bool_withDerivatives_int_pyrBorder_int_derivBorder_bool_tryReuseInputImage
-  unsafe {
-    let rv = sys::cv_video_cv_buildOpticalFlowPyramid_Mat_img_VectorOfMat_pyramid_Size_winSize_int_maxLevel_bool_withDerivatives_int_pyrBorder_int_derivBorder_bool_tryReuseInputImage(img.as_raw_Mat(), pyramid.as_raw_VectorOfMat(), win_size, max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_video_cv_buildOpticalFlowPyramid_Mat_img_VectorOfMat_pyramid_Size_winSize_int_maxLevel_bool_withDerivatives_int_pyrBorder_int_derivBorder_bool_tryReuseInputImage(img.as_raw_Mat(), pyramid.as_raw_VectorOfMat(), win_size, max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image) }.into_result()
 }
 
+// identifier: cv_calcOpticalFlowFarneback_Mat_prev_Mat_next_Mat_flow_double_pyr_scale_int_levels_int_winsize_int_iterations_int_poly_n_double_poly_sigma_int_flags
 /// Computes a dense optical flow using the Gunnar Farneback's algorithm.
 /// 
 /// ## Parameters
@@ -124,19 +120,10 @@ pub fn build_optical_flow_pyramid(img: &core::Mat, pyramid: &mut types::VectorOf
 /// *   (Python) An example using the optical flow algorithm described by Gunnar Farneback can be
 /// found at opencv_source_code/samples/python/opt_flow.py
 pub fn calc_optical_flow_farneback(prev: &core::Mat, next: &core::Mat, flow: &mut core::Mat, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<()> {
-// identifier: cv_calcOpticalFlowFarneback_Mat_prev_Mat_next_Mat_flow_double_pyr_scale_int_levels_int_winsize_int_iterations_int_poly_n_double_poly_sigma_int_flags
-  unsafe {
-    let rv = sys::cv_video_cv_calcOpticalFlowFarneback_Mat_prev_Mat_next_Mat_flow_double_pyr_scale_int_levels_int_winsize_int_iterations_int_poly_n_double_poly_sigma_int_flags(prev.as_raw_Mat(), next.as_raw_Mat(), flow.as_raw_Mat(), pyr_scale, levels, winsize, iterations, poly_n, poly_sigma, flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_video_cv_calcOpticalFlowFarneback_Mat_prev_Mat_next_Mat_flow_double_pyr_scale_int_levels_int_winsize_int_iterations_int_poly_n_double_poly_sigma_int_flags(prev.as_raw_Mat(), next.as_raw_Mat(), flow.as_raw_Mat(), pyr_scale, levels, winsize, iterations, poly_n, poly_sigma, flags) }.into_result()
 }
 
+// identifier: cv_calcOpticalFlowPyrLK_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err_Size_winSize_int_maxLevel_TermCriteria_criteria_int_flags_double_minEigThreshold
 /// Calculates an optical flow for a sparse feature set using the iterative Lucas-Kanade method with
 /// pyramids.
 /// 
@@ -193,19 +180,10 @@ pub fn calc_optical_flow_farneback(prev: &core::Mat, next: &core::Mat, flow: &mu
 /// * flags: 0
 /// * min_eig_threshold: 1e-4
 pub fn calc_optical_flow_pyr_lk(prev_img: &core::Mat, next_img: &core::Mat, prev_pts: &core::Mat, next_pts: &mut core::Mat, status: &mut core::Mat, err: &mut core::Mat, win_size: core::Size, max_level: i32, criteria: &core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<()> {
-// identifier: cv_calcOpticalFlowPyrLK_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err_Size_winSize_int_maxLevel_TermCriteria_criteria_int_flags_double_minEigThreshold
-  unsafe {
-    let rv = sys::cv_video_cv_calcOpticalFlowPyrLK_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err_Size_winSize_int_maxLevel_TermCriteria_criteria_int_flags_double_minEigThreshold(prev_img.as_raw_Mat(), next_img.as_raw_Mat(), prev_pts.as_raw_Mat(), next_pts.as_raw_Mat(), status.as_raw_Mat(), err.as_raw_Mat(), win_size, max_level, criteria.as_raw_TermCriteria(), flags, min_eig_threshold);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_video_cv_calcOpticalFlowPyrLK_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err_Size_winSize_int_maxLevel_TermCriteria_criteria_int_flags_double_minEigThreshold(prev_img.as_raw_Mat(), next_img.as_raw_Mat(), prev_pts.as_raw_Mat(), next_pts.as_raw_Mat(), status.as_raw_Mat(), err.as_raw_Mat(), win_size, max_level, criteria.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result()
 }
 
+// identifier: cv_createBackgroundSubtractorKNN_int_history_double_dist2Threshold_bool_detectShadows
 /// Creates KNN Background Subtractor
 /// 
 /// ## Parameters
@@ -220,19 +198,10 @@ pub fn calc_optical_flow_pyr_lk(prev_img: &core::Mat, next_img: &core::Mat, prev
 /// * dist2_threshold: 400.0
 /// * detect_shadows: true
 pub fn create_background_subtractor_knn(history: i32, dist2_threshold: f64, detect_shadows: bool) -> Result<types::PtrOfBackgroundSubtractorKNN> {
-// identifier: cv_createBackgroundSubtractorKNN_int_history_double_dist2Threshold_bool_detectShadows
-  unsafe {
-    let rv = sys::cv_video_cv_createBackgroundSubtractorKNN_int_history_double_dist2Threshold_bool_detectShadows(history, dist2_threshold, detect_shadows);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(types::PtrOfBackgroundSubtractorKNN { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_video_cv_createBackgroundSubtractorKNN_int_history_double_dist2Threshold_bool_detectShadows(history, dist2_threshold, detect_shadows) }.into_result().map(|x| types::PtrOfBackgroundSubtractorKNN { ptr: x })
 }
 
+// identifier: cv_createBackgroundSubtractorMOG2_int_history_double_varThreshold_bool_detectShadows
 /// Creates MOG2 Background Subtractor
 /// 
 /// ## Parameters
@@ -248,34 +217,16 @@ pub fn create_background_subtractor_knn(history: i32, dist2_threshold: f64, dete
 /// * var_threshold: 16
 /// * detect_shadows: true
 pub fn create_background_subtractor_mog2(history: i32, var_threshold: f64, detect_shadows: bool) -> Result<types::PtrOfBackgroundSubtractorMOG2> {
-// identifier: cv_createBackgroundSubtractorMOG2_int_history_double_varThreshold_bool_detectShadows
-  unsafe {
-    let rv = sys::cv_video_cv_createBackgroundSubtractorMOG2_int_history_double_varThreshold_bool_detectShadows(history, var_threshold, detect_shadows);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(types::PtrOfBackgroundSubtractorMOG2 { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_video_cv_createBackgroundSubtractorMOG2_int_history_double_varThreshold_bool_detectShadows(history, var_threshold, detect_shadows) }.into_result().map(|x| types::PtrOfBackgroundSubtractorMOG2 { ptr: x })
 }
 
+// identifier: cv_createOptFlow_DualTVL1
 /// Creates instance of cv::DenseOpticalFlow
 pub fn create_opt_flow__dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
-// identifier: cv_createOptFlow_DualTVL1
-  unsafe {
-    let rv = sys::cv_video_cv_createOptFlow_DualTVL1();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(types::PtrOfDualTVL1OpticalFlow { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_video_cv_createOptFlow_DualTVL1() }.into_result().map(|x| types::PtrOfDualTVL1OpticalFlow { ptr: x })
 }
 
+// identifier: cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine
 /// Computes an optimal affine transformation between two 2D point sets.
 /// 
 /// ## Parameters
@@ -304,33 +255,15 @@ pub fn create_opt_flow__dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
 /// @sa
 /// estimateAffine2D, estimateAffinePartial2D, getAffineTransform, getPerspectiveTransform, findHomography
 pub fn estimate_rigid_transform(src: &core::Mat, dst: &core::Mat, full_affine: bool) -> Result<core::Mat> {
-// identifier: cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine
-  unsafe {
-    let rv = sys::cv_video_cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_video_cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-pub fn estimate_rigid_transform_v0(src: &core::Mat, dst: &core::Mat, full_affine: bool, ransac_max_iters: i32, ransac_good_ratio: f64, ransac_size0: i32) -> Result<core::Mat> {
 // identifier: cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine_int_ransacMaxIters_double_ransacGoodRatio_int_ransacSize0
-  unsafe {
-    let rv = sys::cv_video_cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine_int_ransacMaxIters_double_ransacGoodRatio_int_ransacSize0(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine, ransac_max_iters, ransac_good_ratio, ransac_size0);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+pub fn estimate_rigid_transform_1(src: &core::Mat, dst: &core::Mat, full_affine: bool, ransac_max_iters: i32, ransac_good_ratio: f64, ransac_size0: i32) -> Result<core::Mat> {
+    unsafe { sys::cv_video_cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine_int_ransacMaxIters_double_ransacGoodRatio_int_ransacSize0(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine, ransac_max_iters, ransac_good_ratio, ransac_size0) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask
 /// Finds the geometric transform (warp) between two images in terms of the ECC criterion @cite EP08 .
 /// 
 /// ## Parameters
@@ -387,19 +320,10 @@ pub fn estimate_rigid_transform_v0(src: &core::Mat, dst: &core::Mat, full_affine
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 50, 0.001)
 /// * input_mask: noArray()
 pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, warp_matrix: &mut core::Mat, motion_type: i32, criteria: &core::TermCriteria, input_mask: &core::Mat) -> Result<f64> {
-// identifier: cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask
-  unsafe {
-    let rv = sys::cv_video_cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask(template_image.as_raw_Mat(), input_image.as_raw_Mat(), warp_matrix.as_raw_Mat(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_video_cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask(template_image.as_raw_Mat(), input_image.as_raw_Mat(), warp_matrix.as_raw_Mat(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_meanShift_Mat_probImage_Rect_window_TermCriteria_criteria
 /// Finds an object on a back projection image.
 /// 
 /// ## Parameters
@@ -419,17 +343,7 @@ pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, w
 /// with findContours , throwing away contours with small area ( contourArea ), and rendering the
 /// remaining contours with drawContours.
 pub fn mean_shift(prob_image: &core::Mat, window: core::Rect, criteria: &core::TermCriteria) -> Result<i32> {
-// identifier: cv_meanShift_Mat_probImage_Rect_window_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_video_cv_meanShift_Mat_probImage_Rect_window_TermCriteria_criteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_video_cv_meanShift_Mat_probImage_Rect_window_TermCriteria_criteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 // Generating impl for trait cv::BackgroundSubtractor (trait)
@@ -438,56 +352,39 @@ pub fn mean_shift(prob_image: &core::Mat, window: core::Rect, criteria: &core::T
 /// The class is only used to define the common interface for the whole family of background/foreground
 /// segmentation algorithms.
 pub trait BackgroundSubtractor : core::Algorithm {
-  #[doc(hidden)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void;
-  /// Computes a foreground mask.
-  /// 
-  /// ## Parameters
-  /// * image: Next video frame.
-  /// * fgmask: The output foreground mask as an 8-bit binary image.
-  /// * learningRate: The value between 0 and 1 that indicates how fast the background model is
-  /// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
-  /// rate. 0 means that the background model is not updated at all, 1 means that the background model
-  /// is completely reinitialized from the last frame.
-  ///
-  /// ## C++ default parameters:
-  /// * learning_rate: -1
-  fn apply(&mut self, image: &core::Mat, fgmask: &mut core::Mat, learning_rate: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractor_apply_Mat_image_Mat_fgmask_double_learningRate
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractor_apply_Mat_image_Mat_fgmask_double_learningRate(self.as_raw_BackgroundSubtractor(), image.as_raw_Mat(), fgmask.as_raw_Mat(), learning_rate);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    #[doc(hidden)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void;
+    // identifier: cv_BackgroundSubtractor_apply_Mat_image_Mat_fgmask_double_learningRate
+    /// Computes a foreground mask.
+    /// 
+    /// ## Parameters
+    /// * image: Next video frame.
+    /// * fgmask: The output foreground mask as an 8-bit binary image.
+    /// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+    /// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+    /// rate. 0 means that the background model is not updated at all, 1 means that the background model
+    /// is completely reinitialized from the last frame.
+    ///
+    /// ## C++ default parameters:
+    /// * learning_rate: -1
+    fn apply(&mut self, image: &core::Mat, fgmask: &mut core::Mat, learning_rate: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractor_apply_Mat_image_Mat_fgmask_double_learningRate(self.as_raw_BackgroundSubtractor(), image.as_raw_Mat(), fgmask.as_raw_Mat(), learning_rate) }.into_result()
     }
-  }
-
-  /// Computes a background image.
-  /// 
-  /// ## Parameters
-  /// * backgroundImage: The output background image.
-  /// 
-  /// 
-  /// Note: Sometimes the background image can be very blurry, as it contain the average background
-  /// statistics.
-  fn get_background_image(&self, background_image: &mut core::Mat) -> Result<()> {
-  // identifier: cv_BackgroundSubtractor_getBackgroundImage_Mat_backgroundImage
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractor_getBackgroundImage_Mat_backgroundImage(self.as_raw_BackgroundSubtractor(), background_image.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractor_getBackgroundImage_const_Mat_backgroundImage
+    /// Computes a background image.
+    /// 
+    /// ## Parameters
+    /// * backgroundImage: The output background image.
+    /// 
+    /// 
+    /// Note: Sometimes the background image can be very blurry, as it contain the average background
+    /// statistics.
+    fn get_background_image(&self, background_image: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractor_getBackgroundImage_const_Mat_backgroundImage(self.as_raw_BackgroundSubtractor(), background_image.as_raw_Mat()) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> BackgroundSubtractor + 'a {
 
 }
@@ -497,238 +394,113 @@ impl<'a> BackgroundSubtractor + 'a {
 /// 
 /// The class implements the K-nearest neighbours background subtraction described in @cite Zivkovic2006 .
 /// Very efficient if number of foreground pixels is low.
-pub trait BackgroundSubtractorKNN : super::video::BackgroundSubtractor {
-  #[doc(hidden)] fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
-  /// Returns the number of last frames that affect the background model
-  fn get_history(&self) -> Result<i32> {
-  // identifier: cv_BackgroundSubtractorKNN_getHistory
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_getHistory(self.as_raw_BackgroundSubtractorKNN());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+pub trait BackgroundSubtractorKNN : crate::video::BackgroundSubtractor {
+    #[doc(hidden)] fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
+    // identifier: cv_BackgroundSubtractorKNN_getHistory_const
+    /// Returns the number of last frames that affect the background model
+    fn get_history(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_getHistory_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
     }
-  }
-
-  /// Sets the number of last frames that affect the background model
-  fn set_history(&mut self, history: i32) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorKNN_setHistory_int_history
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_setHistory_int_history(self.as_raw_BackgroundSubtractorKNN(), history);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_setHistory_int_history
+    /// Sets the number of last frames that affect the background model
+    fn set_history(&mut self, history: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_setHistory_int_history(self.as_raw_BackgroundSubtractorKNN(), history) }.into_result()
     }
-  }
-
-  /// Returns the number of data samples in the background model
-  fn get_n_samples(&self) -> Result<i32> {
-  // identifier: cv_BackgroundSubtractorKNN_getNSamples
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_getNSamples(self.as_raw_BackgroundSubtractorKNN());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_getNSamples_const
+    /// Returns the number of data samples in the background model
+    fn get_n_samples(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_getNSamples_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
     }
-  }
-
-  /// Sets the number of data samples in the background model.
-  /// 
-  /// The model needs to be reinitalized to reserve memory.
-  fn set_n_samples(&mut self, _n_n: i32) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorKNN_setNSamples_int__nN
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_setNSamples_int__nN(self.as_raw_BackgroundSubtractorKNN(), _n_n);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_setNSamples_int__nN
+    /// Sets the number of data samples in the background model.
+    /// 
+    /// The model needs to be reinitalized to reserve memory.
+    fn set_n_samples(&mut self, _n_n: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_setNSamples_int__nN(self.as_raw_BackgroundSubtractorKNN(), _n_n) }.into_result()
     }
-  }
-
-  /// Returns the threshold on the squared distance between the pixel and the sample
-  /// 
-  /// The threshold on the squared distance between the pixel and the sample to decide whether a pixel is
-  /// close to a data sample.
-  fn get_dist2_threshold(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorKNN_getDist2Threshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_getDist2Threshold(self.as_raw_BackgroundSubtractorKNN());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_getDist2Threshold_const
+    /// Returns the threshold on the squared distance between the pixel and the sample
+    /// 
+    /// The threshold on the squared distance between the pixel and the sample to decide whether a pixel is
+    /// close to a data sample.
+    fn get_dist2_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_getDist2Threshold_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
     }
-  }
-
-  /// Sets the threshold on the squared distance
-  fn set_dist2_threshold(&mut self, _dist2_threshold: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorKNN_setDist2Threshold_double__dist2Threshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_setDist2Threshold_double__dist2Threshold(self.as_raw_BackgroundSubtractorKNN(), _dist2_threshold);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_setDist2Threshold_double__dist2Threshold
+    /// Sets the threshold on the squared distance
+    fn set_dist2_threshold(&mut self, _dist2_threshold: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_setDist2Threshold_double__dist2Threshold(self.as_raw_BackgroundSubtractorKNN(), _dist2_threshold) }.into_result()
     }
-  }
-
-  /// Returns the number of neighbours, the k in the kNN.
-  /// 
-  /// K is the number of samples that need to be within dist2Threshold in order to decide that that
-  /// pixel is matching the kNN background model.
-  fn getk_nn_samples(&self) -> Result<i32> {
-  // identifier: cv_BackgroundSubtractorKNN_getkNNSamples
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_getkNNSamples(self.as_raw_BackgroundSubtractorKNN());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_getkNNSamples_const
+    /// Returns the number of neighbours, the k in the kNN.
+    /// 
+    /// K is the number of samples that need to be within dist2Threshold in order to decide that that
+    /// pixel is matching the kNN background model.
+    fn getk_nn_samples(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_getkNNSamples_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
     }
-  }
-
-  /// Sets the k in the kNN. How many nearest neighbours need to match.
-  fn setk_nn_samples(&mut self, _nk_nn: i32) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorKNN_setkNNSamples_int__nkNN
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_setkNNSamples_int__nkNN(self.as_raw_BackgroundSubtractorKNN(), _nk_nn);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_setkNNSamples_int__nkNN
+    /// Sets the k in the kNN. How many nearest neighbours need to match.
+    fn setk_nn_samples(&mut self, _nk_nn: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_setkNNSamples_int__nkNN(self.as_raw_BackgroundSubtractorKNN(), _nk_nn) }.into_result()
     }
-  }
-
-  /// Returns the shadow detection flag
-  /// 
-  /// If true, the algorithm detects shadows and marks them. See createBackgroundSubtractorKNN for
-  /// details.
-  fn get_detect_shadows(&self) -> Result<bool> {
-  // identifier: cv_BackgroundSubtractorKNN_getDetectShadows
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_getDetectShadows(self.as_raw_BackgroundSubtractorKNN());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_getDetectShadows_const
+    /// Returns the shadow detection flag
+    /// 
+    /// If true, the algorithm detects shadows and marks them. See createBackgroundSubtractorKNN for
+    /// details.
+    fn get_detect_shadows(&self) -> Result<bool> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_getDetectShadows_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
     }
-  }
-
-  /// Enables or disables shadow detection
-  fn set_detect_shadows(&mut self, detect_shadows: bool) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorKNN_setDetectShadows_bool_detectShadows
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_setDetectShadows_bool_detectShadows(self.as_raw_BackgroundSubtractorKNN(), detect_shadows);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_setDetectShadows_bool_detectShadows
+    /// Enables or disables shadow detection
+    fn set_detect_shadows(&mut self, detect_shadows: bool) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_setDetectShadows_bool_detectShadows(self.as_raw_BackgroundSubtractorKNN(), detect_shadows) }.into_result()
     }
-  }
-
-  /// Returns the shadow value
-  /// 
-  /// Shadow value is the value used to mark shadows in the foreground mask. Default value is 127. Value 0
-  /// in the mask always means background, 255 means foreground.
-  fn get_shadow_value(&self) -> Result<i32> {
-  // identifier: cv_BackgroundSubtractorKNN_getShadowValue
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_getShadowValue(self.as_raw_BackgroundSubtractorKNN());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_getShadowValue_const
+    /// Returns the shadow value
+    /// 
+    /// Shadow value is the value used to mark shadows in the foreground mask. Default value is 127. Value 0
+    /// in the mask always means background, 255 means foreground.
+    fn get_shadow_value(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_getShadowValue_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
     }
-  }
-
-  /// Sets the shadow value
-  fn set_shadow_value(&mut self, value: i32) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorKNN_setShadowValue_int_value
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_setShadowValue_int_value(self.as_raw_BackgroundSubtractorKNN(), value);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_setShadowValue_int_value
+    /// Sets the shadow value
+    fn set_shadow_value(&mut self, value: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_setShadowValue_int_value(self.as_raw_BackgroundSubtractorKNN(), value) }.into_result()
     }
-  }
-
-  /// Returns the shadow threshold
-  /// 
-  /// A shadow is detected if pixel is a darker version of the background. The shadow threshold (Tau in
-  /// the paper) is a threshold defining how much darker the shadow can be. Tau= 0.5 means that if a pixel
-  /// is more than twice darker then it is not shadow. See Prati, Mikic, Trivedi and Cucchiara,
-  /// *Detecting Moving Shadows...*, IEEE PAMI,2003.
-  fn get_shadow_threshold(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorKNN_getShadowThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_getShadowThreshold(self.as_raw_BackgroundSubtractorKNN());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_getShadowThreshold_const
+    /// Returns the shadow threshold
+    /// 
+    /// A shadow is detected if pixel is a darker version of the background. The shadow threshold (Tau in
+    /// the paper) is a threshold defining how much darker the shadow can be. Tau= 0.5 means that if a pixel
+    /// is more than twice darker then it is not shadow. See Prati, Mikic, Trivedi and Cucchiara,
+    /// *Detecting Moving Shadows...*, IEEE PAMI,2003.
+    fn get_shadow_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_getShadowThreshold_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
     }
-  }
-
-  /// Sets the shadow threshold
-  fn set_shadow_threshold(&mut self, threshold: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorKNN_setShadowThreshold_double_threshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorKNN_setShadowThreshold_double_threshold(self.as_raw_BackgroundSubtractorKNN(), threshold);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorKNN_setShadowThreshold_double_threshold
+    /// Sets the shadow threshold
+    fn set_shadow_threshold(&mut self, threshold: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorKNN_setShadowThreshold_double_threshold(self.as_raw_BackgroundSubtractorKNN(), threshold) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> BackgroundSubtractorKNN + 'a {
 
 }
@@ -738,464 +510,223 @@ impl<'a> BackgroundSubtractorKNN + 'a {
 /// 
 /// The class implements the Gaussian mixture model background subtraction described in @cite Zivkovic2004
 /// and @cite Zivkovic2006 .
-pub trait BackgroundSubtractorMOG2 : super::video::BackgroundSubtractor {
-  #[doc(hidden)] fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
-  /// Returns the number of last frames that affect the background model
-  fn get_history(&self) -> Result<i32> {
-  // identifier: cv_BackgroundSubtractorMOG2_getHistory
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getHistory(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+pub trait BackgroundSubtractorMOG2 : crate::video::BackgroundSubtractor {
+    #[doc(hidden)] fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
+    // identifier: cv_BackgroundSubtractorMOG2_getHistory_const
+    /// Returns the number of last frames that affect the background model
+    fn get_history(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getHistory_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the number of last frames that affect the background model
-  fn set_history(&mut self, history: i32) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setHistory_int_history
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setHistory_int_history(self.as_raw_BackgroundSubtractorMOG2(), history);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setHistory_int_history
+    /// Sets the number of last frames that affect the background model
+    fn set_history(&mut self, history: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setHistory_int_history(self.as_raw_BackgroundSubtractorMOG2(), history) }.into_result()
     }
-  }
-
-  /// Returns the number of gaussian components in the background model
-  fn get_n_mixtures(&self) -> Result<i32> {
-  // identifier: cv_BackgroundSubtractorMOG2_getNMixtures
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getNMixtures(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getNMixtures_const
+    /// Returns the number of gaussian components in the background model
+    fn get_n_mixtures(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getNMixtures_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the number of gaussian components in the background model.
-  /// 
-  /// The model needs to be reinitalized to reserve memory.
-  fn set_n_mixtures(&mut self, nmixtures: i32) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setNMixtures_int_nmixtures
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setNMixtures_int_nmixtures(self.as_raw_BackgroundSubtractorMOG2(), nmixtures);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setNMixtures_int_nmixtures
+    /// Sets the number of gaussian components in the background model.
+    /// 
+    /// The model needs to be reinitalized to reserve memory.
+    fn set_n_mixtures(&mut self, nmixtures: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setNMixtures_int_nmixtures(self.as_raw_BackgroundSubtractorMOG2(), nmixtures) }.into_result()
     }
-  }
-
-  /// Returns the "background ratio" parameter of the algorithm
-  /// 
-  /// If a foreground pixel keeps semi-constant value for about backgroundRatio\*history frames, it's
-  /// considered background and added to the model as a center of a new component. It corresponds to TB
-  /// parameter in the paper.
-  fn get_background_ratio(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getBackgroundRatio
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getBackgroundRatio(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getBackgroundRatio_const
+    /// Returns the "background ratio" parameter of the algorithm
+    /// 
+    /// If a foreground pixel keeps semi-constant value for about backgroundRatio\*history frames, it's
+    /// considered background and added to the model as a center of a new component. It corresponds to TB
+    /// parameter in the paper.
+    fn get_background_ratio(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getBackgroundRatio_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the "background ratio" parameter of the algorithm
-  fn set_background_ratio(&mut self, ratio: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setBackgroundRatio_double_ratio
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setBackgroundRatio_double_ratio(self.as_raw_BackgroundSubtractorMOG2(), ratio);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setBackgroundRatio_double_ratio
+    /// Sets the "background ratio" parameter of the algorithm
+    fn set_background_ratio(&mut self, ratio: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setBackgroundRatio_double_ratio(self.as_raw_BackgroundSubtractorMOG2(), ratio) }.into_result()
     }
-  }
-
-  /// Returns the variance threshold for the pixel-model match
-  /// 
-  /// The main threshold on the squared Mahalanobis distance to decide if the sample is well described by
-  /// the background model or not. Related to Cthr from the paper.
-  fn get_var_threshold(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getVarThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getVarThreshold(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getVarThreshold_const
+    /// Returns the variance threshold for the pixel-model match
+    /// 
+    /// The main threshold on the squared Mahalanobis distance to decide if the sample is well described by
+    /// the background model or not. Related to Cthr from the paper.
+    fn get_var_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getVarThreshold_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the variance threshold for the pixel-model match
-  fn set_var_threshold(&mut self, var_threshold: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setVarThreshold_double_varThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setVarThreshold_double_varThreshold(self.as_raw_BackgroundSubtractorMOG2(), var_threshold);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setVarThreshold_double_varThreshold
+    /// Sets the variance threshold for the pixel-model match
+    fn set_var_threshold(&mut self, var_threshold: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setVarThreshold_double_varThreshold(self.as_raw_BackgroundSubtractorMOG2(), var_threshold) }.into_result()
     }
-  }
-
-  /// Returns the variance threshold for the pixel-model match used for new mixture component generation
-  /// 
-  /// Threshold for the squared Mahalanobis distance that helps decide when a sample is close to the
-  /// existing components (corresponds to Tg in the paper). If a pixel is not close to any component, it
-  /// is considered foreground or added as a new component. 3 sigma =\> Tg=3\*3=9 is default. A smaller Tg
-  /// value generates more components. A higher Tg value may result in a small number of components but
-  /// they can grow too large.
-  fn get_var_threshold_gen(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getVarThresholdGen
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getVarThresholdGen(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getVarThresholdGen_const
+    /// Returns the variance threshold for the pixel-model match used for new mixture component generation
+    /// 
+    /// Threshold for the squared Mahalanobis distance that helps decide when a sample is close to the
+    /// existing components (corresponds to Tg in the paper). If a pixel is not close to any component, it
+    /// is considered foreground or added as a new component. 3 sigma =\> Tg=3\*3=9 is default. A smaller Tg
+    /// value generates more components. A higher Tg value may result in a small number of components but
+    /// they can grow too large.
+    fn get_var_threshold_gen(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getVarThresholdGen_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the variance threshold for the pixel-model match used for new mixture component generation
-  fn set_var_threshold_gen(&mut self, var_threshold_gen: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setVarThresholdGen_double_varThresholdGen
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setVarThresholdGen_double_varThresholdGen(self.as_raw_BackgroundSubtractorMOG2(), var_threshold_gen);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setVarThresholdGen_double_varThresholdGen
+    /// Sets the variance threshold for the pixel-model match used for new mixture component generation
+    fn set_var_threshold_gen(&mut self, var_threshold_gen: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setVarThresholdGen_double_varThresholdGen(self.as_raw_BackgroundSubtractorMOG2(), var_threshold_gen) }.into_result()
     }
-  }
-
-  /// Returns the initial variance of each gaussian component
-  fn get_var_init(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getVarInit
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getVarInit(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getVarInit_const
+    /// Returns the initial variance of each gaussian component
+    fn get_var_init(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getVarInit_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the initial variance of each gaussian component
-  fn set_var_init(&mut self, var_init: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setVarInit_double_varInit
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setVarInit_double_varInit(self.as_raw_BackgroundSubtractorMOG2(), var_init);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setVarInit_double_varInit
+    /// Sets the initial variance of each gaussian component
+    fn set_var_init(&mut self, var_init: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setVarInit_double_varInit(self.as_raw_BackgroundSubtractorMOG2(), var_init) }.into_result()
     }
-  }
-
-  fn get_var_min(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getVarMin
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getVarMin(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getVarMin_const
+    fn get_var_min(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getVarMin_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  fn set_var_min(&mut self, var_min: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setVarMin_double_varMin
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setVarMin_double_varMin(self.as_raw_BackgroundSubtractorMOG2(), var_min);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setVarMin_double_varMin
+    fn set_var_min(&mut self, var_min: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setVarMin_double_varMin(self.as_raw_BackgroundSubtractorMOG2(), var_min) }.into_result()
     }
-  }
-
-  fn get_var_max(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getVarMax
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getVarMax(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getVarMax_const
+    fn get_var_max(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getVarMax_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  fn set_var_max(&mut self, var_max: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setVarMax_double_varMax
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setVarMax_double_varMax(self.as_raw_BackgroundSubtractorMOG2(), var_max);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setVarMax_double_varMax
+    fn set_var_max(&mut self, var_max: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setVarMax_double_varMax(self.as_raw_BackgroundSubtractorMOG2(), var_max) }.into_result()
     }
-  }
-
-  /// Returns the complexity reduction threshold
-  /// 
-  /// This parameter defines the number of samples needed to accept to prove the component exists. CT=0.05
-  /// is a default value for all the samples. By setting CT=0 you get an algorithm very similar to the
-  /// standard Stauffer&Grimson algorithm.
-  fn get_complexity_reduction_threshold(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getComplexityReductionThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getComplexityReductionThreshold(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getComplexityReductionThreshold_const
+    /// Returns the complexity reduction threshold
+    /// 
+    /// This parameter defines the number of samples needed to accept to prove the component exists. CT=0.05
+    /// is a default value for all the samples. By setting CT=0 you get an algorithm very similar to the
+    /// standard Stauffer&Grimson algorithm.
+    fn get_complexity_reduction_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getComplexityReductionThreshold_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the complexity reduction threshold
-  fn set_complexity_reduction_threshold(&mut self, ct: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setComplexityReductionThreshold_double_ct
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setComplexityReductionThreshold_double_ct(self.as_raw_BackgroundSubtractorMOG2(), ct);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setComplexityReductionThreshold_double_ct
+    /// Sets the complexity reduction threshold
+    fn set_complexity_reduction_threshold(&mut self, ct: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setComplexityReductionThreshold_double_ct(self.as_raw_BackgroundSubtractorMOG2(), ct) }.into_result()
     }
-  }
-
-  /// Returns the shadow detection flag
-  /// 
-  /// If true, the algorithm detects shadows and marks them. See createBackgroundSubtractorMOG2 for
-  /// details.
-  fn get_detect_shadows(&self) -> Result<bool> {
-  // identifier: cv_BackgroundSubtractorMOG2_getDetectShadows
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getDetectShadows(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getDetectShadows_const
+    /// Returns the shadow detection flag
+    /// 
+    /// If true, the algorithm detects shadows and marks them. See createBackgroundSubtractorMOG2 for
+    /// details.
+    fn get_detect_shadows(&self) -> Result<bool> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getDetectShadows_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Enables or disables shadow detection
-  fn set_detect_shadows(&mut self, detect_shadows: bool) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setDetectShadows_bool_detectShadows
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setDetectShadows_bool_detectShadows(self.as_raw_BackgroundSubtractorMOG2(), detect_shadows);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setDetectShadows_bool_detectShadows
+    /// Enables or disables shadow detection
+    fn set_detect_shadows(&mut self, detect_shadows: bool) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setDetectShadows_bool_detectShadows(self.as_raw_BackgroundSubtractorMOG2(), detect_shadows) }.into_result()
     }
-  }
-
-  /// Returns the shadow value
-  /// 
-  /// Shadow value is the value used to mark shadows in the foreground mask. Default value is 127. Value 0
-  /// in the mask always means background, 255 means foreground.
-  fn get_shadow_value(&self) -> Result<i32> {
-  // identifier: cv_BackgroundSubtractorMOG2_getShadowValue
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getShadowValue(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getShadowValue_const
+    /// Returns the shadow value
+    /// 
+    /// Shadow value is the value used to mark shadows in the foreground mask. Default value is 127. Value 0
+    /// in the mask always means background, 255 means foreground.
+    fn get_shadow_value(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getShadowValue_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the shadow value
-  fn set_shadow_value(&mut self, value: i32) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setShadowValue_int_value
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setShadowValue_int_value(self.as_raw_BackgroundSubtractorMOG2(), value);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setShadowValue_int_value
+    /// Sets the shadow value
+    fn set_shadow_value(&mut self, value: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setShadowValue_int_value(self.as_raw_BackgroundSubtractorMOG2(), value) }.into_result()
     }
-  }
-
-  /// Returns the shadow threshold
-  /// 
-  /// A shadow is detected if pixel is a darker version of the background. The shadow threshold (Tau in
-  /// the paper) is a threshold defining how much darker the shadow can be. Tau= 0.5 means that if a pixel
-  /// is more than twice darker then it is not shadow. See Prati, Mikic, Trivedi and Cucchiara,
-  /// *Detecting Moving Shadows...*, IEEE PAMI,2003.
-  fn get_shadow_threshold(&self) -> Result<f64> {
-  // identifier: cv_BackgroundSubtractorMOG2_getShadowThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_getShadowThreshold(self.as_raw_BackgroundSubtractorMOG2());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_getShadowThreshold_const
+    /// Returns the shadow threshold
+    /// 
+    /// A shadow is detected if pixel is a darker version of the background. The shadow threshold (Tau in
+    /// the paper) is a threshold defining how much darker the shadow can be. Tau= 0.5 means that if a pixel
+    /// is more than twice darker then it is not shadow. See Prati, Mikic, Trivedi and Cucchiara,
+    /// *Detecting Moving Shadows...*, IEEE PAMI,2003.
+    fn get_shadow_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_getShadowThreshold_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
     }
-  }
-
-  /// Sets the shadow threshold
-  fn set_shadow_threshold(&mut self, threshold: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_setShadowThreshold_double_threshold
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_setShadowThreshold_double_threshold(self.as_raw_BackgroundSubtractorMOG2(), threshold);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_setShadowThreshold_double_threshold
+    /// Sets the shadow threshold
+    fn set_shadow_threshold(&mut self, threshold: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_setShadowThreshold_double_threshold(self.as_raw_BackgroundSubtractorMOG2(), threshold) }.into_result()
     }
-  }
-
-  /// Computes a foreground mask.
-  /// 
-  /// ## Parameters
-  /// * image: Next video frame. Floating point frame will be used without scaling and should be in range <span lang='latex'>[0,255]</span>.
-  /// * fgmask: The output foreground mask as an 8-bit binary image.
-  /// * learningRate: The value between 0 and 1 that indicates how fast the background model is
-  /// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
-  /// rate. 0 means that the background model is not updated at all, 1 means that the background model
-  /// is completely reinitialized from the last frame.
-  ///
-  /// ## C++ default parameters:
-  /// * learning_rate: -1
-  fn apply(&mut self, image: &core::Mat, fgmask: &mut core::Mat, learning_rate: f64) -> Result<()> {
-  // identifier: cv_BackgroundSubtractorMOG2_apply_Mat_image_Mat_fgmask_double_learningRate
-    unsafe {
-      let rv = sys::cv_video_cv_BackgroundSubtractorMOG2_apply_Mat_image_Mat_fgmask_double_learningRate(self.as_raw_BackgroundSubtractorMOG2(), image.as_raw_Mat(), fgmask.as_raw_Mat(), learning_rate);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BackgroundSubtractorMOG2_apply_Mat_image_Mat_fgmask_double_learningRate
+    /// Computes a foreground mask.
+    /// 
+    /// ## Parameters
+    /// * image: Next video frame. Floating point frame will be used without scaling and should be in range <span lang='latex'>[0,255]</span>.
+    /// * fgmask: The output foreground mask as an 8-bit binary image.
+    /// * learningRate: The value between 0 and 1 that indicates how fast the background model is
+    /// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning
+    /// rate. 0 means that the background model is not updated at all, 1 means that the background model
+    /// is completely reinitialized from the last frame.
+    ///
+    /// ## C++ default parameters:
+    /// * learning_rate: -1
+    fn apply(&mut self, image: &core::Mat, fgmask: &mut core::Mat, learning_rate: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_BackgroundSubtractorMOG2_apply_Mat_image_Mat_fgmask_double_learningRate(self.as_raw_BackgroundSubtractorMOG2(), image.as_raw_Mat(), fgmask.as_raw_Mat(), learning_rate) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> BackgroundSubtractorMOG2 + 'a {
 
 }
 
 // Generating impl for trait cv::DenseOpticalFlow (trait)
 pub trait DenseOpticalFlow : core::Algorithm {
-  #[doc(hidden)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
-  /// Calculates an optical flow.
-  /// 
-  /// ## Parameters
-  /// * I0: first 8-bit single-channel input image.
-  /// * I1: second input image of the same size and the same type as prev.
-  /// * flow: computed flow image that has the same size as prev and type CV_32FC2.
-  fn calc(&mut self, i0: &core::Mat, i1: &core::Mat, flow: &mut core::Mat) -> Result<()> {
-  // identifier: cv_DenseOpticalFlow_calc_Mat_I0_Mat_I1_Mat_flow
-    unsafe {
-      let rv = sys::cv_video_cv_DenseOpticalFlow_calc_Mat_I0_Mat_I1_Mat_flow(self.as_raw_DenseOpticalFlow(), i0.as_raw_Mat(), i1.as_raw_Mat(), flow.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    #[doc(hidden)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
+    // identifier: cv_DenseOpticalFlow_calc_Mat_I0_Mat_I1_Mat_flow
+    /// Calculates an optical flow.
+    /// 
+    /// ## Parameters
+    /// * I0: first 8-bit single-channel input image.
+    /// * I1: second input image of the same size and the same type as prev.
+    /// * flow: computed flow image that has the same size as prev and type CV_32FC2.
+    fn calc(&mut self, i0: &core::Mat, i1: &core::Mat, flow: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_video_cv_DenseOpticalFlow_calc_Mat_I0_Mat_I1_Mat_flow(self.as_raw_DenseOpticalFlow(), i0.as_raw_Mat(), i1.as_raw_Mat(), flow.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Releases all inner buffers.
-  fn collect_garbage(&mut self) -> Result<()> {
-  // identifier: cv_DenseOpticalFlow_collectGarbage
-    unsafe {
-      let rv = sys::cv_video_cv_DenseOpticalFlow_collectGarbage(self.as_raw_DenseOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DenseOpticalFlow_collectGarbage
+    /// Releases all inner buffers.
+    fn collect_garbage(&mut self) -> Result<()> {
+        unsafe { sys::cv_video_cv_DenseOpticalFlow_collectGarbage(self.as_raw_DenseOpticalFlow()) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> DenseOpticalFlow + 'a {
 
 }
@@ -1242,657 +773,281 @@ impl<'a> DenseOpticalFlow + 'a {
 /// 
 /// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
 /// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
-pub trait DualTVL1OpticalFlow : super::video::DenseOpticalFlow {
-  #[doc(hidden)] fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void;
-  /// @see setTau
-  fn get_tau(&self) -> Result<f64> {
-  // identifier: cv_DualTVL1OpticalFlow_getTau
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getTau(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+pub trait DualTVL1OpticalFlow : crate::video::DenseOpticalFlow {
+    #[doc(hidden)] fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void;
+    // identifier: cv_DualTVL1OpticalFlow_getTau_const
+    /// @see setTau
+    fn get_tau(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getTau_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getTau @see getTau
-  fn set_tau(&mut self, val: f64) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setTau_double_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setTau_double_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setTau_double_val
+    /// @copybrief getTau @see getTau
+    fn set_tau(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setTau_double_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setLambda
-  fn get_lambda(&self) -> Result<f64> {
-  // identifier: cv_DualTVL1OpticalFlow_getLambda
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getLambda(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getLambda_const
+    /// @see setLambda
+    fn get_lambda(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getLambda_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getLambda @see getLambda
-  fn set_lambda(&mut self, val: f64) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setLambda_double_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setLambda_double_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setLambda_double_val
+    /// @copybrief getLambda @see getLambda
+    fn set_lambda(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setLambda_double_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setTheta
-  fn get_theta(&self) -> Result<f64> {
-  // identifier: cv_DualTVL1OpticalFlow_getTheta
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getTheta(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getTheta_const
+    /// @see setTheta
+    fn get_theta(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getTheta_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getTheta @see getTheta
-  fn set_theta(&mut self, val: f64) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setTheta_double_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setTheta_double_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setTheta_double_val
+    /// @copybrief getTheta @see getTheta
+    fn set_theta(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setTheta_double_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setGamma
-  fn get_gamma(&self) -> Result<f64> {
-  // identifier: cv_DualTVL1OpticalFlow_getGamma
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getGamma(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getGamma_const
+    /// @see setGamma
+    fn get_gamma(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getGamma_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getGamma @see getGamma
-  fn set_gamma(&mut self, val: f64) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setGamma_double_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setGamma_double_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setGamma_double_val
+    /// @copybrief getGamma @see getGamma
+    fn set_gamma(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setGamma_double_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setScalesNumber
-  fn get_scales_number(&self) -> Result<i32> {
-  // identifier: cv_DualTVL1OpticalFlow_getScalesNumber
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getScalesNumber(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getScalesNumber_const
+    /// @see setScalesNumber
+    fn get_scales_number(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getScalesNumber_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getScalesNumber @see getScalesNumber
-  fn set_scales_number(&mut self, val: i32) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setScalesNumber_int_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setScalesNumber_int_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setScalesNumber_int_val
+    /// @copybrief getScalesNumber @see getScalesNumber
+    fn set_scales_number(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setScalesNumber_int_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setWarpingsNumber
-  fn get_warpings_number(&self) -> Result<i32> {
-  // identifier: cv_DualTVL1OpticalFlow_getWarpingsNumber
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getWarpingsNumber(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getWarpingsNumber_const
+    /// @see setWarpingsNumber
+    fn get_warpings_number(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getWarpingsNumber_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getWarpingsNumber @see getWarpingsNumber
-  fn set_warpings_number(&mut self, val: i32) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setWarpingsNumber_int_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setWarpingsNumber_int_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setWarpingsNumber_int_val
+    /// @copybrief getWarpingsNumber @see getWarpingsNumber
+    fn set_warpings_number(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setWarpingsNumber_int_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setEpsilon
-  fn get_epsilon(&self) -> Result<f64> {
-  // identifier: cv_DualTVL1OpticalFlow_getEpsilon
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getEpsilon(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getEpsilon_const
+    /// @see setEpsilon
+    fn get_epsilon(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getEpsilon_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getEpsilon @see getEpsilon
-  fn set_epsilon(&mut self, val: f64) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setEpsilon_double_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setEpsilon_double_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setEpsilon_double_val
+    /// @copybrief getEpsilon @see getEpsilon
+    fn set_epsilon(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setEpsilon_double_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setInnerIterations
-  fn get_inner_iterations(&self) -> Result<i32> {
-  // identifier: cv_DualTVL1OpticalFlow_getInnerIterations
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getInnerIterations(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getInnerIterations_const
+    /// @see setInnerIterations
+    fn get_inner_iterations(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getInnerIterations_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getInnerIterations @see getInnerIterations
-  fn set_inner_iterations(&mut self, val: i32) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setInnerIterations_int_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setInnerIterations_int_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setInnerIterations_int_val
+    /// @copybrief getInnerIterations @see getInnerIterations
+    fn set_inner_iterations(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setInnerIterations_int_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setOuterIterations
-  fn get_outer_iterations(&self) -> Result<i32> {
-  // identifier: cv_DualTVL1OpticalFlow_getOuterIterations
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getOuterIterations(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getOuterIterations_const
+    /// @see setOuterIterations
+    fn get_outer_iterations(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getOuterIterations_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getOuterIterations @see getOuterIterations
-  fn set_outer_iterations(&mut self, val: i32) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setOuterIterations_int_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setOuterIterations_int_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setOuterIterations_int_val
+    /// @copybrief getOuterIterations @see getOuterIterations
+    fn set_outer_iterations(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setOuterIterations_int_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setUseInitialFlow
-  fn get_use_initial_flow(&self) -> Result<bool> {
-  // identifier: cv_DualTVL1OpticalFlow_getUseInitialFlow
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getUseInitialFlow(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getUseInitialFlow_const
+    /// @see setUseInitialFlow
+    fn get_use_initial_flow(&self) -> Result<bool> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getUseInitialFlow_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getUseInitialFlow @see getUseInitialFlow
-  fn set_use_initial_flow(&mut self, val: bool) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setUseInitialFlow_bool_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setUseInitialFlow_bool_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setUseInitialFlow_bool_val
+    /// @copybrief getUseInitialFlow @see getUseInitialFlow
+    fn set_use_initial_flow(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setUseInitialFlow_bool_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setScaleStep
-  fn get_scale_step(&self) -> Result<f64> {
-  // identifier: cv_DualTVL1OpticalFlow_getScaleStep
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getScaleStep(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getScaleStep_const
+    /// @see setScaleStep
+    fn get_scale_step(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getScaleStep_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getScaleStep @see getScaleStep
-  fn set_scale_step(&mut self, val: f64) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setScaleStep_double_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setScaleStep_double_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setScaleStep_double_val
+    /// @copybrief getScaleStep @see getScaleStep
+    fn set_scale_step(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setScaleStep_double_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
-  /// @see setMedianFiltering
-  fn get_median_filtering(&self) -> Result<i32> {
-  // identifier: cv_DualTVL1OpticalFlow_getMedianFiltering
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_getMedianFiltering(self.as_raw_DualTVL1OpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_getMedianFiltering_const
+    /// @see setMedianFiltering
+    fn get_median_filtering(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_getMedianFiltering_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
     }
-  }
-
-  /// @copybrief getMedianFiltering @see getMedianFiltering
-  fn set_median_filtering(&mut self, val: i32) -> Result<()> {
-  // identifier: cv_DualTVL1OpticalFlow_setMedianFiltering_int_val
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_setMedianFiltering_int_val(self.as_raw_DualTVL1OpticalFlow(), val);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DualTVL1OpticalFlow_setMedianFiltering_int_val
+    /// @copybrief getMedianFiltering @see getMedianFiltering
+    fn set_median_filtering(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_setMedianFiltering_int_val(self.as_raw_DualTVL1OpticalFlow(), val) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> DualTVL1OpticalFlow + 'a {
 
-  /// Creates instance of cv::DualTVL1OpticalFlow
-  ///
-  /// ## C++ default parameters:
-  /// * tau: 0.25
-  /// * lambda: 0.15
-  /// * theta: 0.3
-  /// * nscales: 5
-  /// * warps: 5
-  /// * epsilon: 0.01
-  /// * innner_iterations: 30
-  /// * outer_iterations: 10
-  /// * scale_step: 0.8
-  /// * gamma: 0.0
-  /// * median_filtering: 5
-  /// * use_initial_flow: false
-  pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<types::PtrOfDualTVL1OpticalFlow> {
-  // identifier: cv_DualTVL1OpticalFlow_create_double_tau_double_lambda_double_theta_int_nscales_int_warps_double_epsilon_int_innnerIterations_int_outerIterations_double_scaleStep_double_gamma_int_medianFiltering_bool_useInitialFlow
-    unsafe {
-      let rv = sys::cv_video_cv_DualTVL1OpticalFlow_create_double_tau_double_lambda_double_theta_int_nscales_int_warps_double_epsilon_int_innnerIterations_int_outerIterations_double_scaleStep_double_gamma_int_medianFiltering_bool_useInitialFlow(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfDualTVL1OpticalFlow { ptr: rv.result })
-      }
+    // identifier: cv_DualTVL1OpticalFlow_create_double_tau_double_lambda_double_theta_int_nscales_int_warps_double_epsilon_int_innnerIterations_int_outerIterations_double_scaleStep_double_gamma_int_medianFiltering_bool_useInitialFlow
+    /// Creates instance of cv::DualTVL1OpticalFlow
+    ///
+    /// ## C++ default parameters:
+    /// * tau: 0.25
+    /// * lambda: 0.15
+    /// * theta: 0.3
+    /// * nscales: 5
+    /// * warps: 5
+    /// * epsilon: 0.01
+    /// * innner_iterations: 30
+    /// * outer_iterations: 10
+    /// * scale_step: 0.8
+    /// * gamma: 0.0
+    /// * median_filtering: 5
+    /// * use_initial_flow: false
+    pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<types::PtrOfDualTVL1OpticalFlow> {
+        unsafe { sys::cv_video_cv_DualTVL1OpticalFlow_create_double_tau_double_lambda_double_theta_int_nscales_int_warps_double_epsilon_int_innnerIterations_int_outerIterations_double_scaleStep_double_gamma_int_medianFiltering_bool_useInitialFlow(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow) }.into_result().map(|x| types::PtrOfDualTVL1OpticalFlow { ptr: x })
     }
-  }
-
+    
 }
 
 // Generating impl for trait cv::FarnebackOpticalFlow (trait)
 /// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
-pub trait FarnebackOpticalFlow : super::video::DenseOpticalFlow {
-  #[doc(hidden)] fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
-  fn get_num_levels(&self) -> Result<i32> {
-  // identifier: cv_FarnebackOpticalFlow_getNumLevels
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getNumLevels(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+pub trait FarnebackOpticalFlow : crate::video::DenseOpticalFlow {
+    #[doc(hidden)] fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
+    // identifier: cv_FarnebackOpticalFlow_getNumLevels_const
+    fn get_num_levels(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_num_levels(&mut self, num_levels: i32) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setNumLevels_int_numLevels
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setNumLevels_int_numLevels(self.as_raw_FarnebackOpticalFlow(), num_levels);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setNumLevels_int_numLevels
+    fn set_num_levels(&mut self, num_levels: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setNumLevels_int_numLevels(self.as_raw_FarnebackOpticalFlow(), num_levels) }.into_result()
     }
-  }
-
-  fn get_pyr_scale(&self) -> Result<f64> {
-  // identifier: cv_FarnebackOpticalFlow_getPyrScale
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getPyrScale(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_getPyrScale_const
+    fn get_pyr_scale(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getPyrScale_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_pyr_scale(&mut self, pyr_scale: f64) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setPyrScale_double_pyrScale
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setPyrScale_double_pyrScale(self.as_raw_FarnebackOpticalFlow(), pyr_scale);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setPyrScale_double_pyrScale
+    fn set_pyr_scale(&mut self, pyr_scale: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setPyrScale_double_pyrScale(self.as_raw_FarnebackOpticalFlow(), pyr_scale) }.into_result()
     }
-  }
-
-  fn get_fast_pyramids(&self) -> Result<bool> {
-  // identifier: cv_FarnebackOpticalFlow_getFastPyramids
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getFastPyramids(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_getFastPyramids_const
+    fn get_fast_pyramids(&self) -> Result<bool> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getFastPyramids_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_fast_pyramids(&mut self, fast_pyramids: bool) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setFastPyramids_bool_fastPyramids
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setFastPyramids_bool_fastPyramids(self.as_raw_FarnebackOpticalFlow(), fast_pyramids);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setFastPyramids_bool_fastPyramids
+    fn set_fast_pyramids(&mut self, fast_pyramids: bool) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setFastPyramids_bool_fastPyramids(self.as_raw_FarnebackOpticalFlow(), fast_pyramids) }.into_result()
     }
-  }
-
-  fn get_win_size(&self) -> Result<i32> {
-  // identifier: cv_FarnebackOpticalFlow_getWinSize
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getWinSize(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_getWinSize_const
+    fn get_win_size(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getWinSize_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_win_size(&mut self, win_size: i32) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setWinSize_int_winSize
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setWinSize_int_winSize(self.as_raw_FarnebackOpticalFlow(), win_size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setWinSize_int_winSize
+    fn set_win_size(&mut self, win_size: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setWinSize_int_winSize(self.as_raw_FarnebackOpticalFlow(), win_size) }.into_result()
     }
-  }
-
-  fn get_num_iters(&self) -> Result<i32> {
-  // identifier: cv_FarnebackOpticalFlow_getNumIters
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getNumIters(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_getNumIters_const
+    fn get_num_iters(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getNumIters_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_num_iters(&mut self, num_iters: i32) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setNumIters_int_numIters
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setNumIters_int_numIters(self.as_raw_FarnebackOpticalFlow(), num_iters);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setNumIters_int_numIters
+    fn set_num_iters(&mut self, num_iters: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setNumIters_int_numIters(self.as_raw_FarnebackOpticalFlow(), num_iters) }.into_result()
     }
-  }
-
-  fn get_poly_n(&self) -> Result<i32> {
-  // identifier: cv_FarnebackOpticalFlow_getPolyN
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getPolyN(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_getPolyN_const
+    fn get_poly_n(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getPolyN_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_poly_n(&mut self, poly_n: i32) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setPolyN_int_polyN
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setPolyN_int_polyN(self.as_raw_FarnebackOpticalFlow(), poly_n);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setPolyN_int_polyN
+    fn set_poly_n(&mut self, poly_n: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setPolyN_int_polyN(self.as_raw_FarnebackOpticalFlow(), poly_n) }.into_result()
     }
-  }
-
-  fn get_poly_sigma(&self) -> Result<f64> {
-  // identifier: cv_FarnebackOpticalFlow_getPolySigma
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getPolySigma(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_getPolySigma_const
+    fn get_poly_sigma(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getPolySigma_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_poly_sigma(&mut self, poly_sigma: f64) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setPolySigma_double_polySigma
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setPolySigma_double_polySigma(self.as_raw_FarnebackOpticalFlow(), poly_sigma);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setPolySigma_double_polySigma
+    fn set_poly_sigma(&mut self, poly_sigma: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setPolySigma_double_polySigma(self.as_raw_FarnebackOpticalFlow(), poly_sigma) }.into_result()
     }
-  }
-
-  fn get_flags(&self) -> Result<i32> {
-  // identifier: cv_FarnebackOpticalFlow_getFlags
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_getFlags(self.as_raw_FarnebackOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_getFlags_const
+    fn get_flags(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_getFlags_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_flags(&mut self, flags: i32) -> Result<()> {
-  // identifier: cv_FarnebackOpticalFlow_setFlags_int_flags
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_setFlags_int_flags(self.as_raw_FarnebackOpticalFlow(), flags);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_FarnebackOpticalFlow_setFlags_int_flags
+    fn set_flags(&mut self, flags: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_setFlags_int_flags(self.as_raw_FarnebackOpticalFlow(), flags) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> FarnebackOpticalFlow + 'a {
 
-  ///
-  /// ## C++ default parameters:
-  /// * num_levels: 5
-  /// * pyr_scale: 0.5
-  /// * fast_pyramids: false
-  /// * win_size: 13
-  /// * num_iters: 10
-  /// * poly_n: 5
-  /// * poly_sigma: 1.1
-  /// * flags: 0
-  pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<types::PtrOfFarnebackOpticalFlow> {
-  // identifier: cv_FarnebackOpticalFlow_create_int_numLevels_double_pyrScale_bool_fastPyramids_int_winSize_int_numIters_int_polyN_double_polySigma_int_flags
-    unsafe {
-      let rv = sys::cv_video_cv_FarnebackOpticalFlow_create_int_numLevels_double_pyrScale_bool_fastPyramids_int_winSize_int_numIters_int_polyN_double_polySigma_int_flags(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfFarnebackOpticalFlow { ptr: rv.result })
-      }
+    // identifier: cv_FarnebackOpticalFlow_create_int_numLevels_double_pyrScale_bool_fastPyramids_int_winSize_int_numIters_int_polyN_double_polySigma_int_flags
+    ///
+    /// ## C++ default parameters:
+    /// * num_levels: 5
+    /// * pyr_scale: 0.5
+    /// * fast_pyramids: false
+    /// * win_size: 13
+    /// * num_iters: 10
+    /// * poly_n: 5
+    /// * poly_sigma: 1.1
+    /// * flags: 0
+    pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<types::PtrOfFarnebackOpticalFlow> {
+        unsafe { sys::cv_video_cv_FarnebackOpticalFlow_create_int_numLevels_double_pyrScale_bool_fastPyramids_int_winSize_int_numIters_int_polyN_double_polySigma_int_flags(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags) }.into_result().map(|x| types::PtrOfFarnebackOpticalFlow { ptr: x })
     }
-  }
-
+    
 }
 
 // boxed class cv::KalmanFilter
@@ -1904,156 +1059,104 @@ impl<'a> FarnebackOpticalFlow + 'a {
 /// 
 /// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
 /// with cvReleaseKalman(&kalmanFilter)
-
 #[allow(dead_code)]
 pub struct KalmanFilter {
     #[doc(hidden)] pub ptr: *mut c_void
 }
-impl Drop for super::video::KalmanFilter {
+impl Drop for crate::video::KalmanFilter {
     fn drop(&mut self) {
         unsafe { sys::cv_delete_KalmanFilter(self.ptr) };
     }
 }
-impl super::video::KalmanFilter {
+impl crate::video::KalmanFilter {
     #[doc(hidden)] pub fn as_raw_KalmanFilter(&self) -> *mut c_void { self.ptr }
 }
+
 impl KalmanFilter {
 
-  pub fn default() -> Result<super::video::KalmanFilter> {
-  // identifier: cv_KalmanFilter_KalmanFilter
-    unsafe {
-      let rv = sys::cv_video_cv_KalmanFilter_KalmanFilter();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::video::KalmanFilter { ptr: rv.result })
-      }
+    // identifier: cv_KalmanFilter_KalmanFilter
+    pub fn default() -> Result<crate::video::KalmanFilter> {
+        unsafe { sys::cv_video_cv_KalmanFilter_KalmanFilter() }.into_result().map(|x| crate::video::KalmanFilter { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * dynamParams: Dimensionality of the state.
-  /// * measureParams: Dimensionality of the measurement.
-  /// * controlParams: Dimensionality of the control vector.
-  /// * type: Type of the created matrices that should be CV_32F or CV_64F.
-  ///
-  /// ## C++ default parameters:
-  /// * control_params: 0
-  /// * _type: CV_32F
-  pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, _type: i32) -> Result<super::video::KalmanFilter> {
-  // identifier: cv_KalmanFilter_KalmanFilter_int_dynamParams_int_measureParams_int_controlParams_int_type
-    unsafe {
-      let rv = sys::cv_video_cv_KalmanFilter_KalmanFilter_int_dynamParams_int_measureParams_int_controlParams_int_type(dynam_params, measure_params, control_params, _type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::video::KalmanFilter { ptr: rv.result })
-      }
+    
+    // identifier: cv_KalmanFilter_KalmanFilter_int_dynamParams_int_measureParams_int_controlParams_int_type
+    /// @overload
+    /// ## Parameters
+    /// * dynamParams: Dimensionality of the state.
+    /// * measureParams: Dimensionality of the measurement.
+    /// * controlParams: Dimensionality of the control vector.
+    /// * type: Type of the created matrices that should be CV_32F or CV_64F.
+    ///
+    /// ## C++ default parameters:
+    /// * control_params: 0
+    /// * _type: CV_32F
+    pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, _type: i32) -> Result<crate::video::KalmanFilter> {
+        unsafe { sys::cv_video_cv_KalmanFilter_KalmanFilter_int_dynamParams_int_measureParams_int_controlParams_int_type(dynam_params, measure_params, control_params, _type) }.into_result().map(|x| crate::video::KalmanFilter { ptr: x })
     }
-  }
-
-  /// Re-initializes Kalman filter. The previous content is destroyed.
-  /// 
-  /// ## Parameters
-  /// * dynamParams: Dimensionality of the state.
-  /// * measureParams: Dimensionality of the measurement.
-  /// * controlParams: Dimensionality of the control vector.
-  /// * type: Type of the created matrices that should be CV_32F or CV_64F.
-  ///
-  /// ## C++ default parameters:
-  /// * control_params: 0
-  /// * _type: CV_32F
-  pub fn init(&mut self, dynam_params: i32, measure_params: i32, control_params: i32, _type: i32) -> Result<()> {
-  // identifier: cv_KalmanFilter_init_int_dynamParams_int_measureParams_int_controlParams_int_type
-    unsafe {
-      let rv = sys::cv_video_cv_KalmanFilter_init_int_dynamParams_int_measureParams_int_controlParams_int_type(self.as_raw_KalmanFilter(), dynam_params, measure_params, control_params, _type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_KalmanFilter_init_int_dynamParams_int_measureParams_int_controlParams_int_type
+    /// Re-initializes Kalman filter. The previous content is destroyed.
+    /// 
+    /// ## Parameters
+    /// * dynamParams: Dimensionality of the state.
+    /// * measureParams: Dimensionality of the measurement.
+    /// * controlParams: Dimensionality of the control vector.
+    /// * type: Type of the created matrices that should be CV_32F or CV_64F.
+    ///
+    /// ## C++ default parameters:
+    /// * control_params: 0
+    /// * _type: CV_32F
+    pub fn init(&mut self, dynam_params: i32, measure_params: i32, control_params: i32, _type: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_KalmanFilter_init_int_dynamParams_int_measureParams_int_controlParams_int_type(self.as_raw_KalmanFilter(), dynam_params, measure_params, control_params, _type) }.into_result()
     }
-  }
-
-  /// Computes a predicted state.
-  /// 
-  /// ## Parameters
-  /// * control: The optional input control
-  ///
-  /// ## C++ default parameters:
-  /// * control: Mat()
-  pub fn predict(&mut self, control: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_KalmanFilter_predict_Mat_control
-    unsafe {
-      let rv = sys::cv_video_cv_KalmanFilter_predict_Mat_control(self.as_raw_KalmanFilter(), control.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_KalmanFilter_predict_Mat_control
+    /// Computes a predicted state.
+    /// 
+    /// ## Parameters
+    /// * control: The optional input control
+    ///
+    /// ## C++ default parameters:
+    /// * control: Mat()
+    pub fn predict(&mut self, control: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_video_cv_KalmanFilter_predict_Mat_control(self.as_raw_KalmanFilter(), control.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Updates the predicted state from the measurement.
-  /// 
-  /// ## Parameters
-  /// * measurement: The measured system parameters
-  pub fn correct(&mut self, measurement: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_KalmanFilter_correct_Mat_measurement
-    unsafe {
-      let rv = sys::cv_video_cv_KalmanFilter_correct_Mat_measurement(self.as_raw_KalmanFilter(), measurement.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_KalmanFilter_correct_Mat_measurement
+    /// Updates the predicted state from the measurement.
+    /// 
+    /// ## Parameters
+    /// * measurement: The measured system parameters
+    pub fn correct(&mut self, measurement: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_video_cv_KalmanFilter_correct_Mat_measurement(self.as_raw_KalmanFilter(), measurement.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
+    
 }
+
 // Generating impl for trait cv::SparseOpticalFlow (trait)
 /// Base interface for sparse optical flow algorithms.
 pub trait SparseOpticalFlow : core::Algorithm {
-  #[doc(hidden)] fn as_raw_SparseOpticalFlow(&self) -> *mut c_void;
-  /// Calculates a sparse optical flow.
-  /// 
-  /// ## Parameters
-  /// * prevImg: First input image.
-  /// * nextImg: Second input image of the same size and the same type as prevImg.
-  /// * prevPts: Vector of 2D points for which the flow needs to be found.
-  /// * nextPts: Output vector of 2D points containing the calculated new positions of input features in the second image.
-  /// * status: Output status vector. Each element of the vector is set to 1 if the
-  /// flow for the corresponding features has been found. Otherwise, it is set to 0.
-  /// * err: Optional output vector that contains error response for each point (inverse confidence).
-  ///
-  /// ## C++ default parameters:
-  /// * err: cv::noArray()
-  fn calc(&mut self, prev_img: &core::Mat, next_img: &core::Mat, prev_pts: &core::Mat, next_pts: &mut core::Mat, status: &mut core::Mat, err: &mut core::Mat) -> Result<()> {
-  // identifier: cv_SparseOpticalFlow_calc_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err
-    unsafe {
-      let rv = sys::cv_video_cv_SparseOpticalFlow_calc_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err(self.as_raw_SparseOpticalFlow(), prev_img.as_raw_Mat(), next_img.as_raw_Mat(), prev_pts.as_raw_Mat(), next_pts.as_raw_Mat(), status.as_raw_Mat(), err.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    #[doc(hidden)] fn as_raw_SparseOpticalFlow(&self) -> *mut c_void;
+    // identifier: cv_SparseOpticalFlow_calc_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err
+    /// Calculates a sparse optical flow.
+    /// 
+    /// ## Parameters
+    /// * prevImg: First input image.
+    /// * nextImg: Second input image of the same size and the same type as prevImg.
+    /// * prevPts: Vector of 2D points for which the flow needs to be found.
+    /// * nextPts: Output vector of 2D points containing the calculated new positions of input features in the second image.
+    /// * status: Output status vector. Each element of the vector is set to 1 if the
+    /// flow for the corresponding features has been found. Otherwise, it is set to 0.
+    /// * err: Optional output vector that contains error response for each point (inverse confidence).
+    ///
+    /// ## C++ default parameters:
+    /// * err: cv::noArray()
+    fn calc(&mut self, prev_img: &core::Mat, next_img: &core::Mat, prev_pts: &core::Mat, next_pts: &mut core::Mat, status: &mut core::Mat, err: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_video_cv_SparseOpticalFlow_calc_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err(self.as_raw_SparseOpticalFlow(), prev_img.as_raw_Mat(), next_img.as_raw_Mat(), prev_pts.as_raw_Mat(), next_pts.as_raw_Mat(), status.as_raw_Mat(), err.as_raw_Mat()) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> SparseOpticalFlow + 'a {
 
 }
@@ -2065,171 +1168,73 @@ impl<'a> SparseOpticalFlow + 'a {
 /// iterative Lucas-Kanade method with pyramids.
 /// 
 /// @sa calcOpticalFlowPyrLK
-pub trait SparsePyrLKOpticalFlow : super::video::SparseOpticalFlow {
-  #[doc(hidden)] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void;
-  fn get_win_size(&self) -> Result<core::Size> {
-  // identifier: cv_SparsePyrLKOpticalFlow_getWinSize
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_getWinSize(self.as_raw_SparsePyrLKOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+pub trait SparsePyrLKOpticalFlow : crate::video::SparseOpticalFlow {
+    #[doc(hidden)] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void;
+    // identifier: cv_SparsePyrLKOpticalFlow_getWinSize_const
+    fn get_win_size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
-  // identifier: cv_SparsePyrLKOpticalFlow_setWinSize_Size_winSize
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_setWinSize_Size_winSize(self.as_raw_SparsePyrLKOpticalFlow(), win_size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_setWinSize_Size_winSize
+    fn set_win_size(&mut self, win_size: core::Size) -> Result<()> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_setWinSize_Size_winSize(self.as_raw_SparsePyrLKOpticalFlow(), win_size) }.into_result()
     }
-  }
-
-  fn get_max_level(&self) -> Result<i32> {
-  // identifier: cv_SparsePyrLKOpticalFlow_getMaxLevel
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_getMaxLevel(self.as_raw_SparsePyrLKOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_getMaxLevel_const
+    fn get_max_level(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_getMaxLevel_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_max_level(&mut self, max_level: i32) -> Result<()> {
-  // identifier: cv_SparsePyrLKOpticalFlow_setMaxLevel_int_maxLevel
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_setMaxLevel_int_maxLevel(self.as_raw_SparsePyrLKOpticalFlow(), max_level);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_setMaxLevel_int_maxLevel
+    fn set_max_level(&mut self, max_level: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_setMaxLevel_int_maxLevel(self.as_raw_SparsePyrLKOpticalFlow(), max_level) }.into_result()
     }
-  }
-
-  fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-  // identifier: cv_SparsePyrLKOpticalFlow_getTermCriteria
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_getTermCriteria(self.as_raw_SparsePyrLKOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::TermCriteria { ptr: rv.result })
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_getTermCriteria_const
+    fn get_term_criteria(&self) -> Result<core::TermCriteria> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_getTermCriteria_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result().map(|x| core::TermCriteria { ptr: x })
     }
-  }
-
-  fn set_term_criteria(&mut self, crit: &core::TermCriteria) -> Result<()> {
-  // identifier: cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteria_crit
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteria_crit(self.as_raw_SparsePyrLKOpticalFlow(), crit.as_raw_TermCriteria());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteria_crit
+    fn set_term_criteria(&mut self, crit: &core::TermCriteria) -> Result<()> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteria_crit(self.as_raw_SparsePyrLKOpticalFlow(), crit.as_raw_TermCriteria()) }.into_result()
     }
-  }
-
-  fn get_flags(&self) -> Result<i32> {
-  // identifier: cv_SparsePyrLKOpticalFlow_getFlags
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_getFlags(self.as_raw_SparsePyrLKOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_getFlags_const
+    fn get_flags(&self) -> Result<i32> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_getFlags_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_flags(&mut self, flags: i32) -> Result<()> {
-  // identifier: cv_SparsePyrLKOpticalFlow_setFlags_int_flags
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_setFlags_int_flags(self.as_raw_SparsePyrLKOpticalFlow(), flags);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_setFlags_int_flags
+    fn set_flags(&mut self, flags: i32) -> Result<()> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_setFlags_int_flags(self.as_raw_SparsePyrLKOpticalFlow(), flags) }.into_result()
     }
-  }
-
-  fn get_min_eig_threshold(&self) -> Result<f64> {
-  // identifier: cv_SparsePyrLKOpticalFlow_getMinEigThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_getMinEigThreshold(self.as_raw_SparsePyrLKOpticalFlow());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_getMinEigThreshold_const
+    fn get_min_eig_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_getMinEigThreshold_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result()
     }
-  }
-
-  fn set_min_eig_threshold(&mut self, min_eig_threshold: f64) -> Result<()> {
-  // identifier: cv_SparsePyrLKOpticalFlow_setMinEigThreshold_double_minEigThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_setMinEigThreshold_double_minEigThreshold(self.as_raw_SparsePyrLKOpticalFlow(), min_eig_threshold);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_SparsePyrLKOpticalFlow_setMinEigThreshold_double_minEigThreshold
+    fn set_min_eig_threshold(&mut self, min_eig_threshold: f64) -> Result<()> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_setMinEigThreshold_double_minEigThreshold(self.as_raw_SparsePyrLKOpticalFlow(), min_eig_threshold) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> SparsePyrLKOpticalFlow + 'a {
 
-  ///
-  /// ## C++ default parameters:
-  /// * win_size: Size(21, 21)
-  /// * max_level: 3
-  /// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.01)
-  /// * flags: 0
-  /// * min_eig_threshold: 1e-4
-  pub fn create(win_size: core::Size, max_level: i32, crit: &core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<types::PtrOfSparsePyrLKOpticalFlow> {
-  // identifier: cv_SparsePyrLKOpticalFlow_create_Size_winSize_int_maxLevel_TermCriteria_crit_int_flags_double_minEigThreshold
-    unsafe {
-      let rv = sys::cv_video_cv_SparsePyrLKOpticalFlow_create_Size_winSize_int_maxLevel_TermCriteria_crit_int_flags_double_minEigThreshold(win_size, max_level, crit.as_raw_TermCriteria(), flags, min_eig_threshold);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfSparsePyrLKOpticalFlow { ptr: rv.result })
-      }
+    // identifier: cv_SparsePyrLKOpticalFlow_create_Size_winSize_int_maxLevel_TermCriteria_crit_int_flags_double_minEigThreshold
+    ///
+    /// ## C++ default parameters:
+    /// * win_size: Size(21, 21)
+    /// * max_level: 3
+    /// * crit: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.01)
+    /// * flags: 0
+    /// * min_eig_threshold: 1e-4
+    pub fn create(win_size: core::Size, max_level: i32, crit: &core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<types::PtrOfSparsePyrLKOpticalFlow> {
+        unsafe { sys::cv_video_cv_SparsePyrLKOpticalFlow_create_Size_winSize_int_maxLevel_TermCriteria_crit_int_flags_double_minEigThreshold(win_size, max_level, crit.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result().map(|x| types::PtrOfSparsePyrLKOpticalFlow { ptr: x })
     }
-  }
-
+    
 }
 

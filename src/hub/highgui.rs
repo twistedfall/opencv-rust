@@ -128,11 +128,10 @@
 //! 
 //! # C API
 //! @}
+use std::os::raw::{c_char, c_void};
+use libc::size_t;
+use crate::{Error, Result, core, sys, types};
 
-use libc::{c_void, c_char, size_t};
-use std::ffi::{CStr, CString};
-use crate::{core, sys, types};
-use crate::{Error, Result};
 pub const CV_CHECKBOX: i32 = 1;
 pub const CV_EVENT_FLAG_ALTKEY: i32 = 32;
 pub const CV_EVENT_FLAG_CTRLKEY: i32 = 8;
@@ -193,6 +192,7 @@ pub const EVENT_MOUSEWHEEL: i32 = 10;
 pub const EVENT_RBUTTONDBLCLK: i32 = 8;
 pub const EVENT_RBUTTONDOWN: i32 = 2;
 pub const EVENT_RBUTTONUP: i32 = 5;
+pub const HG_AUTOSIZE: i32 = 0x00000001;
 pub const QT_CHECKBOX: i32 = 1;
 pub const QT_FONT_BLACK: i32 = 87;
 pub const QT_FONT_BOLD: i32 = 75;
@@ -219,65 +219,221 @@ pub const WND_PROP_FULLSCREEN: i32 = 0;
 pub const WND_PROP_OPENGL: i32 = 3;
 pub const WND_PROP_VISIBLE: i32 = 4;
 
-pub fn cv_destroy_all_windows() -> Result<()> {
+/// Callback function for mouse events. see cv::setMouseCallback
+/// ## Parameters
+/// * event: one of the cv::MouseEventTypes constants.
+/// * x: The x-coordinate of the mouse event.
+/// * y: The y-coordinate of the mouse event.
+/// * flags: one of the cv::MouseEventFlags constants.
+/// * userdata: The optional parameter.
+pub type MouseCallbackExtern = Option<extern "C" fn(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void)>;
+/// Callback function for mouse events. see cv::setMouseCallback
+/// ## Parameters
+/// * event: one of the cv::MouseEventTypes constants.
+/// * x: The x-coordinate of the mouse event.
+/// * y: The y-coordinate of the mouse event.
+/// * flags: one of the cv::MouseEventFlags constants.
+/// * userdata: The optional parameter.
+pub type MouseCallback = dyn FnMut(i32, i32, i32, i32) + Send + Sync + 'static;
+
+/// Callback function for Trackbar see cv::createTrackbar
+/// ## Parameters
+/// * pos: current position of the specified trackbar.
+/// * userdata: The optional parameter.
+pub type TrackbarCallbackExtern = Option<extern "C" fn(pos: i32, userdata: *mut c_void)>;
+/// Callback function for Trackbar see cv::createTrackbar
+/// ## Parameters
+/// * pos: current position of the specified trackbar.
+/// * userdata: The optional parameter.
+pub type TrackbarCallback = dyn FnMut(i32) + Send + Sync + 'static;
+
+/// Callback function defined to be called every frame. See cv::setOpenGlDrawCallback
+/// ## Parameters
+/// * userdata: The optional parameter.
+pub type OpenGlDrawCallbackExtern = Option<extern "C" fn(userdata: *mut c_void)>;
+/// Callback function defined to be called every frame. See cv::setOpenGlDrawCallback
+/// ## Parameters
+/// * userdata: The optional parameter.
+pub type OpenGlDrawCallback = dyn FnMut() + Send + Sync + 'static;
+
+/// Callback function for a button created by cv::createButton
+/// ## Parameters
+/// * state: current state of the button. It could be -1 for a push button, 0 or 1 for a check/radio box button.
+/// * userdata: The optional parameter.
+pub type ButtonCallbackExtern = Option<extern "C" fn(state: i32, userdata: *mut c_void)>;
+/// Callback function for a button created by cv::createButton
+/// ## Parameters
+/// * state: current state of the button. It could be -1 for a push button, 0 or 1 for a check/radio box button.
+/// * userdata: The optional parameter.
+pub type ButtonCallback = dyn FnMut(i32) + Send + Sync + 'static;
+
+pub type CvButtonCallbackExtern = Option<extern "C" fn(state: i32, userdata: *mut c_void)>;
+pub type CvButtonCallback = dyn FnMut(i32) + Send + Sync + 'static;
+
+pub type CvTrackbarCallbackExtern = Option<extern "C" fn(pos: i32)>;
+pub type CvTrackbarCallback = dyn FnMut(i32) + Send + Sync + 'static;
+
+pub type CvTrackbarCallback2Extern = Option<extern "C" fn(pos: i32, userdata: *mut c_void)>;
+pub type CvTrackbarCallback2 = dyn FnMut(i32) + Send + Sync + 'static;
+
+pub type CvMouseCallbackExtern = Option<extern "C" fn(event: i32, x: i32, y: i32, flags: i32, param: *mut c_void)>;
+pub type CvMouseCallback = dyn FnMut(i32, i32, i32, i32, &mut c_void) + Send + Sync + 'static;
+
+pub type CvOpenGlDrawCallbackExtern = Option<extern "C" fn(userdata: *mut c_void)>;
+pub type CvOpenGlDrawCallback = dyn FnMut() + Send + Sync + 'static;
+
 // identifier: cvDestroyAllWindows
-  unsafe {
-    let rv = sys::cv_highgui_cvDestroyAllWindows();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn cv_destroy_all_windows() -> Result<()> {
+    unsafe { sys::cv_highgui_cvDestroyAllWindows() }.into_result()
 }
 
-pub fn cv_start_window_thread() -> Result<i32> {
+// identifier: cvDestroyWindow_const_char_X_name
+pub fn cv_destroy_window(name: &str) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvDestroyWindow_const_char_X_name(name.as_ptr()) }.into_result()
+}
+
+// identifier: cvDisplayOverlay_const_char_X_name_const_char_X_text_int_delayms
+///
+/// ## C++ default parameters:
+/// * delayms: 0
+pub fn cv_display_overlay(name: &str, text: &str, delayms: i32) -> Result<()> {
+    string_arg!(name);
+    string_arg!(text);
+    unsafe { sys::cv_highgui_cvDisplayOverlay_const_char_X_name_const_char_X_text_int_delayms(name.as_ptr(), text.as_ptr(), delayms) }.into_result()
+}
+
+// identifier: cvDisplayStatusBar_const_char_X_name_const_char_X_text_int_delayms
+///
+/// ## C++ default parameters:
+/// * delayms: 0
+pub fn cv_display_status_bar(name: &str, text: &str, delayms: i32) -> Result<()> {
+    string_arg!(name);
+    string_arg!(text);
+    unsafe { sys::cv_highgui_cvDisplayStatusBar_const_char_X_name_const_char_X_text_int_delayms(name.as_ptr(), text.as_ptr(), delayms) }.into_result()
+}
+
+// identifier: cvGetTrackbarPos_const_char_X_trackbar_name_const_char_X_window_name
+pub fn cv_get_trackbar_pos(trackbar_name: &str, window_name: &str) -> Result<i32> {
+    string_arg!(trackbar_name);
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cvGetTrackbarPos_const_char_X_trackbar_name_const_char_X_window_name(trackbar_name.as_ptr(), window_name.as_ptr()) }.into_result()
+}
+
+// identifier: cvGetWindowHandle_const_char_X_name
+pub fn cv_get_window_handle(name: &str) -> Result<&mut c_void> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvGetWindowHandle_const_char_X_name(name.as_ptr()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+}
+
+// identifier: cvGetWindowImageRect_const_char_X_name
+pub fn cv_get_window_image_rect(name: &str) -> Result<core::Rect> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvGetWindowImageRect_const_char_X_name(name.as_ptr()) }.into_result()
+}
+
+// identifier: cvGetWindowName_void_X_window_handle
+pub fn cv_get_window_name(window_handle: &mut c_void) -> Result<String> {
+    unsafe { sys::cv_highgui_cvGetWindowName_void_X_window_handle(window_handle) }.into_result().map(crate::templ::receive_string)
+}
+
+// identifier: cvGetWindowProperty_const_char_X_name_int_prop_id
+pub fn cv_get_window_property(name: &str, prop_id: i32) -> Result<f64> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvGetWindowProperty_const_char_X_name_int_prop_id(name.as_ptr(), prop_id) }.into_result()
+}
+
+// identifier: cvLoadWindowParameters_const_char_X_name
+pub fn cv_load_window_parameters(name: &str) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvLoadWindowParameters_const_char_X_name(name.as_ptr()) }.into_result()
+}
+
+// identifier: cvMoveWindow_const_char_X_name_int_x_int_y
+pub fn cv_move_window(name: &str, x: i32, y: i32) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvMoveWindow_const_char_X_name_int_x_int_y(name.as_ptr(), x, y) }.into_result()
+}
+
+// identifier: cvNamedWindow_const_char_X_name_int_flags
+///
+/// ## C++ default parameters:
+/// * flags: CV_WINDOW_AUTOSIZE
+pub fn cv_named_window(name: &str, flags: i32) -> Result<i32> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvNamedWindow_const_char_X_name_int_flags(name.as_ptr(), flags) }.into_result()
+}
+
+// identifier: cvResizeWindow_const_char_X_name_int_width_int_height
+pub fn cv_resize_window(name: &str, width: i32, height: i32) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvResizeWindow_const_char_X_name_int_width_int_height(name.as_ptr(), width, height) }.into_result()
+}
+
+// identifier: cvSaveWindowParameters_const_char_X_name
+pub fn cv_save_window_parameters(name: &str) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvSaveWindowParameters_const_char_X_name(name.as_ptr()) }.into_result()
+}
+
+// identifier: cvSetOpenGlContext_const_char_X_window_name
+pub fn cv_set_open_gl_context(window_name: &str) -> Result<()> {
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cvSetOpenGlContext_const_char_X_window_name(window_name.as_ptr()) }.into_result()
+}
+
+// identifier: cvSetTrackbarMax_const_char_X_trackbar_name_const_char_X_window_name_int_maxval
+pub fn cv_set_trackbar_max(trackbar_name: &str, window_name: &str, maxval: i32) -> Result<()> {
+    string_arg!(trackbar_name);
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cvSetTrackbarMax_const_char_X_trackbar_name_const_char_X_window_name_int_maxval(trackbar_name.as_ptr(), window_name.as_ptr(), maxval) }.into_result()
+}
+
+// identifier: cvSetTrackbarMin_const_char_X_trackbar_name_const_char_X_window_name_int_minval
+pub fn cv_set_trackbar_min(trackbar_name: &str, window_name: &str, minval: i32) -> Result<()> {
+    string_arg!(trackbar_name);
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cvSetTrackbarMin_const_char_X_trackbar_name_const_char_X_window_name_int_minval(trackbar_name.as_ptr(), window_name.as_ptr(), minval) }.into_result()
+}
+
+// identifier: cvSetTrackbarPos_const_char_X_trackbar_name_const_char_X_window_name_int_pos
+pub fn cv_set_trackbar_pos(trackbar_name: &str, window_name: &str, pos: i32) -> Result<()> {
+    string_arg!(trackbar_name);
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cvSetTrackbarPos_const_char_X_trackbar_name_const_char_X_window_name_int_pos(trackbar_name.as_ptr(), window_name.as_ptr(), pos) }.into_result()
+}
+
+// identifier: cvSetWindowProperty_const_char_X_name_int_prop_id_double_prop_value
+pub fn cv_set_window_property(name: &str, prop_id: i32, prop_value: f64) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_highgui_cvSetWindowProperty_const_char_X_name_int_prop_id_double_prop_value(name.as_ptr(), prop_id, prop_value) }.into_result()
+}
+
 // identifier: cvStartWindowThread
-  unsafe {
-    let rv = sys::cv_highgui_cvStartWindowThread();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_start_window_thread() -> Result<i32> {
+    unsafe { sys::cv_highgui_cvStartWindowThread() }.into_result()
 }
 
-pub fn cv_stop_loop() -> Result<()> {
 // identifier: cvStopLoop
-  unsafe {
-    let rv = sys::cv_highgui_cvStopLoop();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn cv_stop_loop() -> Result<()> {
+    unsafe { sys::cv_highgui_cvStopLoop() }.into_result()
 }
 
+// identifier: cvUpdateWindow_const_char_X_window_name
+pub fn cv_update_window(window_name: &str) -> Result<()> {
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cvUpdateWindow_const_char_X_window_name(window_name.as_ptr()) }.into_result()
+}
+
+// identifier: cvWaitKey_int_delay
 ///
 /// ## C++ default parameters:
 /// * delay: 0
 pub fn cv_wait_key(delay: i32) -> Result<i32> {
-// identifier: cvWaitKey_int_delay
-  unsafe {
-    let rv = sys::cv_highgui_cvWaitKey_int_delay(delay);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_highgui_cvWaitKey_int_delay(delay) }.into_result()
 }
 
+// identifier: cv_addText_Mat_img_String_text_Point_org_QtFont_font
 /// Draws a text on the image.
 /// 
 /// The function addText draws *text* on the image *img* using a specific font *font* (see example cv::fontQt
@@ -288,21 +444,12 @@ pub fn cv_wait_key(delay: i32) -> Result<i32> {
 /// * text: Text to write on an image.
 /// * org: Point(x,y) where the text should start on an image.
 /// * font: Font to use to draw a text.
-pub fn add_text(img: &core::Mat, text:&str, org: core::Point, font: &super::highgui::QtFont) -> Result<()> {
-// identifier: cv_addText_Mat_img_String_text_Point_org_QtFont_font
-  unsafe {
-    let text = CString::new(text).unwrap();
-    let rv = sys::cv_highgui_cv_addText_Mat_img_String_text_Point_org_QtFont_font(img.as_raw_Mat(), text.as_ptr() as _, org, font.as_raw_QtFont());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn add_text(img: &core::Mat, text: &str, org: core::Point, font: &crate::highgui::QtFont) -> Result<()> {
+    string_arg!(text);
+    unsafe { sys::cv_highgui_cv_addText_Mat_img_String_text_Point_org_QtFont_font(img.as_raw_Mat(), text.as_ptr(), org, font.as_raw_QtFont()) }.into_result()
 }
 
+// identifier: cv_addText_Mat_img_String_text_Point_org_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing
 /// Draws a text on the image.
 /// 
 /// ## Parameters
@@ -324,60 +471,111 @@ pub fn add_text(img: &core::Mat, text:&str, org: core::Point, font: &super::high
 /// * weight: QT_FONT_NORMAL
 /// * style: QT_STYLE_NORMAL
 /// * spacing: 0
-pub fn add_text_v0(img: &core::Mat, text:&str, org: core::Point, name_font:&str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<()> {
-// identifier: cv_addText_Mat_img_String_text_Point_org_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing
-  unsafe {
-    let text = CString::new(text).unwrap();
-    let name_font = CString::new(name_font).unwrap();
-    let rv = sys::cv_highgui_cv_addText_Mat_img_String_text_Point_org_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing(img.as_raw_Mat(), text.as_ptr() as _, org, name_font.as_ptr() as _, point_size, color, weight, style, spacing);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn add_text_1(img: &core::Mat, text: &str, org: core::Point, name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<()> {
+    string_arg!(text);
+    string_arg!(name_font);
+    unsafe { sys::cv_highgui_cv_addText_Mat_img_String_text_Point_org_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing(img.as_raw_Mat(), text.as_ptr(), org, name_font.as_ptr(), point_size, color, weight, style, spacing) }.into_result()
 }
 
+// identifier: cv_createButton_String_bar_name_ButtonCallback_on_change_void_X_userdata_int_type_bool_initial_button_state
+/// Attaches a button to the control panel.
+/// 
+/// The function createButton attaches a button to the control panel. Each button is added to a
+/// buttonbar to the right of the last button. A new buttonbar is created if nothing was attached to the
+/// control panel before, or if the last element attached to the control panel was a trackbar or if the
+/// QT_NEW_BUTTONBAR flag is added to the type.
+/// 
+/// See below various examples of the cv::createButton function call: :
+/// ```ignore
+/// createButton(NULL,callbackButton);//create a push button "button 0", that will call callbackButton.
+/// createButton("button2",callbackButton,NULL,QT_CHECKBOX,0);
+/// createButton("button3",callbackButton,&value);
+/// createButton("button5",callbackButton1,NULL,QT_RADIOBOX);
+/// createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON,1);
+/// createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON|QT_NEW_BUTTONBAR);// create a push button in a new row
+/// ```
+/// 
+/// 
+/// ## Parameters
+/// @param  bar_name Name of the button.
+/// * on_change: Pointer to the function to be called every time the button changes its state.
+/// This function should be prototyped as void Foo(int state,\*void); . *state* is the current state
+/// of the button. It could be -1 for a push button, 0 or 1 for a check/radio box button.
+/// * userdata: Pointer passed to the callback function.
+/// * type: Optional type of the button. Available types are: (cv::QtButtonTypes)
+/// * initial_button_state: Default state of the button. Use for checkbox and radiobox. Its
+/// value could be 0 or 1. (__Optional__)
+///
+/// ## C++ default parameters:
+/// * userdata: 0
+/// * _type: QT_PUSH_BUTTON
+/// * initial_button_state: false
+pub fn create_button(bar_name: &str, on_change: Option<Box<crate::highgui::ButtonCallback>>, _type: i32, initial_button_state: bool) -> Result<i32> {
+    string_arg!(bar_name);
+    callback_arg!(on_change(state: i32, userdata: *mut c_void) via userdata => (state: i32));
+    unsafe { sys::cv_highgui_cv_createButton_String_bar_name_ButtonCallback_on_change_void_X_userdata_int_type_bool_initial_button_state(bar_name.as_ptr(), on_change, userdata, _type, initial_button_state) }.into_result()
+}
+
+// identifier: cv_createTrackbar_String_trackbarname_String_winname_int_X_value_int_count_TrackbarCallback_onChange_void_X_userdata
+/// Creates a trackbar and attaches it to the specified window.
+/// 
+/// The function createTrackbar creates a trackbar (a slider or range control) with the specified name
+/// and range, assigns a variable value to be a position synchronized with the trackbar and specifies
+/// the callback function onChange to be called on the trackbar position change. The created trackbar is
+/// displayed in the specified window winname.
+/// 
+/// 
+/// Note:
+/// 
+/// [__Qt Backend Only__] winname can be empty (or NULL) if the trackbar should be attached to the
+/// control panel.
+/// 
+/// Clicking the label of each trackbar enables editing the trackbar values manually.
+/// 
+/// ## Parameters
+/// * trackbarname: Name of the created trackbar.
+/// * winname: Name of the window that will be used as a parent of the created trackbar.
+/// * value: Optional pointer to an integer variable whose value reflects the position of the
+/// slider. Upon creation, the slider position is defined by this variable.
+/// * count: Maximal position of the slider. The minimal position is always 0.
+/// * onChange: Pointer to the function to be called every time the slider changes position. This
+/// function should be prototyped as void Foo(int,void\*); , where the first parameter is the trackbar
+/// position and the second parameter is the user data (see the next parameter). If the callback is
+/// the NULL pointer, no callbacks are called, but only value is updated.
+/// * userdata: User data that is passed as is to the callback. It can be used to handle trackbar
+/// events without using global variables.
+///
+/// ## C++ default parameters:
+/// * on_change: 0
+/// * userdata: 0
+pub fn create_trackbar(trackbarname: &str, winname: &str, value: &mut i32, count: i32, on_change: Option<Box<crate::highgui::TrackbarCallback>>) -> Result<i32> {
+    string_arg!(trackbarname);
+    string_arg!(winname);
+    callback_arg!(on_change(pos: i32, userdata: *mut c_void) via userdata => (pos: i32));
+    unsafe { sys::cv_highgui_cv_createTrackbar_String_trackbarname_String_winname_int_X_value_int_count_TrackbarCallback_onChange_void_X_userdata(trackbarname.as_ptr(), winname.as_ptr(), value, count, on_change, userdata) }.into_result()
+}
+
+// identifier: cv_destroyAllWindows
 /// Destroys all of the HighGUI windows.
 /// 
 /// The function destroyAllWindows destroys all of the opened HighGUI windows.
 pub fn destroy_all_windows() -> Result<()> {
-// identifier: cv_destroyAllWindows
-  unsafe {
-    let rv = sys::cv_highgui_cv_destroyAllWindows();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_highgui_cv_destroyAllWindows() }.into_result()
 }
 
+// identifier: cv_destroyWindow_String_winname
 /// Destroys the specified window.
 /// 
 /// The function destroyWindow destroys the window with the given name.
 /// 
 /// ## Parameters
 /// * winname: Name of the window to be destroyed.
-pub fn destroy_window(winname:&str) -> Result<()> {
-// identifier: cv_destroyWindow_String_winname
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_destroyWindow_String_winname(winname.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn destroy_window(winname: &str) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_destroyWindow_String_winname(winname.as_ptr()) }.into_result()
 }
 
+// identifier: cv_displayOverlay_String_winname_String_text_int_delayms
 /// Displays a text on a window image as an overlay for a specified duration.
 /// 
 /// The function displayOverlay displays useful information/tips on top of the window for a certain
@@ -393,22 +591,13 @@ pub fn destroy_window(winname:&str) -> Result<()> {
 ///
 /// ## C++ default parameters:
 /// * delayms: 0
-pub fn display_overlay(winname:&str, text:&str, delayms: i32) -> Result<()> {
-// identifier: cv_displayOverlay_String_winname_String_text_int_delayms
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let text = CString::new(text).unwrap();
-    let rv = sys::cv_highgui_cv_displayOverlay_String_winname_String_text_int_delayms(winname.as_ptr() as _, text.as_ptr() as _, delayms);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn display_overlay(winname: &str, text: &str, delayms: i32) -> Result<()> {
+    string_arg!(winname);
+    string_arg!(text);
+    unsafe { sys::cv_highgui_cv_displayOverlay_String_winname_String_text_int_delayms(winname.as_ptr(), text.as_ptr(), delayms) }.into_result()
 }
 
+// identifier: cv_displayStatusBar_String_winname_String_text_int_delayms
 /// Displays a text on the window statusbar during the specified period of time.
 /// 
 /// The function displayStatusBar displays useful information/tips on top of the window for a certain
@@ -424,22 +613,13 @@ pub fn display_overlay(winname:&str, text:&str, delayms: i32) -> Result<()> {
 ///
 /// ## C++ default parameters:
 /// * delayms: 0
-pub fn display_status_bar(winname:&str, text:&str, delayms: i32) -> Result<()> {
-// identifier: cv_displayStatusBar_String_winname_String_text_int_delayms
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let text = CString::new(text).unwrap();
-    let rv = sys::cv_highgui_cv_displayStatusBar_String_winname_String_text_int_delayms(winname.as_ptr() as _, text.as_ptr() as _, delayms);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()> {
+    string_arg!(winname);
+    string_arg!(text);
+    unsafe { sys::cv_highgui_cv_displayStatusBar_String_winname_String_text_int_delayms(winname.as_ptr(), text.as_ptr(), delayms) }.into_result()
 }
 
+// identifier: cv_fontQt_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing
 /// Creates the font to draw a text on an image.
 /// 
 /// The function fontQt creates a cv::QtFont object. This cv::QtFont is not compatible with putText .
@@ -468,21 +648,12 @@ pub fn display_status_bar(winname:&str, text:&str, delayms: i32) -> Result<()> {
 /// * weight: QT_FONT_NORMAL
 /// * style: QT_STYLE_NORMAL
 /// * spacing: 0
-pub fn font_qt(name_font:&str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<super::highgui::QtFont> {
-// identifier: cv_fontQt_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing
-  unsafe {
-    let name_font = CString::new(name_font).unwrap();
-    let rv = sys::cv_highgui_cv_fontQt_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing(name_font.as_ptr() as _, point_size, color, weight, style, spacing);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(super::highgui::QtFont { ptr: rv.result })
-    }
-  }
+pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<crate::highgui::QtFont> {
+    string_arg!(name_font);
+    unsafe { sys::cv_highgui_cv_fontQt_String_nameFont_int_pointSize_Scalar_color_int_weight_int_style_int_spacing(name_font.as_ptr(), point_size, color, weight, style, spacing) }.into_result().map(|x| crate::highgui::QtFont { ptr: x })
 }
 
+// identifier: cv_getMouseWheelDelta_int_flags
 /// Gets the mouse-wheel motion delta, when handling mouse-wheel events cv::EVENT_MOUSEWHEEL and
 /// cv::EVENT_MOUSEHWHEEL.
 /// 
@@ -505,19 +676,10 @@ pub fn font_qt(name_font:&str, point_size: i32, color: core::Scalar, weight: i32
 /// ## Parameters
 /// * flags: The mouse callback flags parameter.
 pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
-// identifier: cv_getMouseWheelDelta_int_flags
-  unsafe {
-    let rv = sys::cv_highgui_cv_getMouseWheelDelta_int_flags(flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_highgui_cv_getMouseWheelDelta_int_flags(flags) }.into_result()
 }
 
+// identifier: cv_getTrackbarPos_String_trackbarname_String_winname
 /// Returns the trackbar position.
 /// 
 /// The function returns the current position of the specified trackbar.
@@ -531,22 +693,13 @@ pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
 /// ## Parameters
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of the trackbar.
-pub fn get_trackbar_pos(trackbarname:&str, winname:&str) -> Result<i32> {
-// identifier: cv_getTrackbarPos_String_trackbarname_String_winname
-  unsafe {
-    let trackbarname = CString::new(trackbarname).unwrap();
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_getTrackbarPos_String_trackbarname_String_winname(trackbarname.as_ptr() as _, winname.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_trackbar_pos(trackbarname: &str, winname: &str) -> Result<i32> {
+    string_arg!(trackbarname);
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_getTrackbarPos_String_trackbarname_String_winname(trackbarname.as_ptr(), winname.as_ptr()) }.into_result()
 }
 
+// identifier: cv_getWindowImageRect_String_winname
 /// Provides rectangle of image in the window.
 /// 
 /// The function getWindowImageRect returns the client screen coordinates, width and height of the image rendering area.
@@ -555,21 +708,12 @@ pub fn get_trackbar_pos(trackbarname:&str, winname:&str) -> Result<i32> {
 /// * winname: Name of the window.
 /// 
 /// @sa resizeWindow moveWindow
-pub fn get_window_image_rect(winname:&str) -> Result<core::Rect> {
-// identifier: cv_getWindowImageRect_String_winname
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_getWindowImageRect_String_winname(winname.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_window_image_rect(winname: &str) -> Result<core::Rect> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_getWindowImageRect_String_winname(winname.as_ptr()) }.into_result()
 }
 
+// identifier: cv_getWindowProperty_String_winname_int_prop_id
 /// Provides parameters of a window.
 /// 
 /// The function getWindowProperty returns properties of a window.
@@ -579,21 +723,12 @@ pub fn get_window_image_rect(winname:&str) -> Result<core::Rect> {
 /// * prop_id: Window property to retrieve. The following operation flags are available: (cv::WindowPropertyFlags)
 /// 
 /// @sa setWindowProperty
-pub fn get_window_property(winname:&str, prop_id: i32) -> Result<f64> {
-// identifier: cv_getWindowProperty_String_winname_int_prop_id
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_getWindowProperty_String_winname_int_prop_id(winname.as_ptr() as _, prop_id);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_getWindowProperty_String_winname_int_prop_id(winname.as_ptr(), prop_id) }.into_result()
 }
 
+// identifier: cv_imshow_String_winname_Mat_mat
 /// Displays an image in the specified window.
 /// 
 /// The function imshow displays an image in the specified window. If the window was created with the
@@ -630,21 +765,12 @@ pub fn get_window_property(winname:&str, prop_id: i32) -> Result<f64> {
 /// ## Parameters
 /// * winname: Name of the window.
 /// * mat: Image to be shown.
-pub fn imshow(winname:&str, mat: &core::Mat) -> Result<()> {
-// identifier: cv_imshow_String_winname_Mat_mat
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_imshow_String_winname_Mat_mat(winname.as_ptr() as _, mat.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn imshow(winname: &str, mat: &core::Mat) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_imshow_String_winname_Mat_mat(winname.as_ptr(), mat.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_loadWindowParameters_String_windowName
 /// Loads parameters of the specified window.
 /// 
 /// The function loadWindowParameters loads size, location, flags, trackbars value, zoom and panning
@@ -652,42 +778,24 @@ pub fn imshow(winname:&str, mat: &core::Mat) -> Result<()> {
 /// 
 /// ## Parameters
 /// * windowName: Name of the window.
-pub fn load_window_parameters(window_name:&str) -> Result<()> {
-// identifier: cv_loadWindowParameters_String_windowName
-  unsafe {
-    let window_name = CString::new(window_name).unwrap();
-    let rv = sys::cv_highgui_cv_loadWindowParameters_String_windowName(window_name.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn load_window_parameters(window_name: &str) -> Result<()> {
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cv_loadWindowParameters_String_windowName(window_name.as_ptr()) }.into_result()
 }
 
+// identifier: cv_moveWindow_String_winname_int_x_int_y
 /// Moves window to the specified position
 /// 
 /// ## Parameters
 /// * winname: Name of the window.
 /// * x: The new x-coordinate of the window.
 /// * y: The new y-coordinate of the window.
-pub fn move_window(winname:&str, x: i32, y: i32) -> Result<()> {
-// identifier: cv_moveWindow_String_winname_int_x_int_y
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_moveWindow_String_winname_int_x_int_y(winname.as_ptr() as _, x, y);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_moveWindow_String_winname_int_x_int_y(winname.as_ptr(), x, y) }.into_result()
 }
 
+// identifier: cv_namedWindow_String_winname_int_flags
 /// Creates a window.
 /// 
 /// The function namedWindow creates a window that can be used as a placeholder for images and
@@ -718,21 +826,22 @@ pub fn move_window(winname:&str, x: i32, y: i32) -> Result<()> {
 ///
 /// ## C++ default parameters:
 /// * flags: WINDOW_AUTOSIZE
-pub fn named_window(winname:&str, flags: i32) -> Result<()> {
-// identifier: cv_namedWindow_String_winname_int_flags
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_namedWindow_String_winname_int_flags(winname.as_ptr() as _, flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn named_window(winname: &str, flags: i32) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_namedWindow_String_winname_int_flags(winname.as_ptr(), flags) }.into_result()
 }
 
+// identifier: cv_resizeWindow_String_winname_Size_size
+/// @overload
+/// ## Parameters
+/// * winname: Window name.
+/// * size: The new window size.
+pub fn resize_window(winname: &str, size: core::Size) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_resizeWindow_String_winname_Size_size(winname.as_ptr(), size) }.into_result()
+}
+
+// identifier: cv_resizeWindow_String_winname_int_width_int_height
 /// Resizes window to the specified size
 /// 
 /// 
@@ -745,21 +854,12 @@ pub fn named_window(winname:&str, flags: i32) -> Result<()> {
 /// * winname: Window name.
 /// * width: The new window width.
 /// * height: The new window height.
-pub fn resize_window(winname:&str, width: i32, height: i32) -> Result<()> {
-// identifier: cv_resizeWindow_String_winname_int_width_int_height
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_resizeWindow_String_winname_int_width_int_height(winname.as_ptr() as _, width, height);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn resize_window_1(winname: &str, width: i32, height: i32) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_resizeWindow_String_winname_int_width_int_height(winname.as_ptr(), width, height) }.into_result()
 }
 
+// identifier: cv_saveWindowParameters_String_windowName
 /// Saves parameters of the specified window.
 /// 
 /// The function saveWindowParameters saves size, location, flags, trackbars value, zoom and panning
@@ -767,40 +867,22 @@ pub fn resize_window(winname:&str, width: i32, height: i32) -> Result<()> {
 /// 
 /// ## Parameters
 /// * windowName: Name of the window.
-pub fn save_window_parameters(window_name:&str) -> Result<()> {
-// identifier: cv_saveWindowParameters_String_windowName
-  unsafe {
-    let window_name = CString::new(window_name).unwrap();
-    let rv = sys::cv_highgui_cv_saveWindowParameters_String_windowName(window_name.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn save_window_parameters(window_name: &str) -> Result<()> {
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cv_saveWindowParameters_String_windowName(window_name.as_ptr()) }.into_result()
 }
 
+// identifier: cv_selectROI_Mat_img_bool_showCrosshair_bool_fromCenter
 /// @overload
 ///
 /// ## C++ default parameters:
 /// * show_crosshair: true
 /// * from_center: false
 pub fn select_roi(img: &core::Mat, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
-// identifier: cv_selectROI_Mat_img_bool_showCrosshair_bool_fromCenter
-  unsafe {
-    let rv = sys::cv_highgui_cv_selectROI_Mat_img_bool_showCrosshair_bool_fromCenter(img.as_raw_Mat(), show_crosshair, from_center);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_highgui_cv_selectROI_Mat_img_bool_showCrosshair_bool_fromCenter(img.as_raw_Mat(), show_crosshair, from_center) }.into_result()
 }
 
+// identifier: cv_selectROI_String_windowName_Mat_img_bool_showCrosshair_bool_fromCenter
 /// Selects ROI on the given image.
 /// Function creates a window and allows user to select a ROI using mouse.
 /// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
@@ -820,21 +902,12 @@ pub fn select_roi(img: &core::Mat, show_crosshair: bool, from_center: bool) -> R
 /// ## C++ default parameters:
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_roi_v0(window_name:&str, img: &core::Mat, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
-// identifier: cv_selectROI_String_windowName_Mat_img_bool_showCrosshair_bool_fromCenter
-  unsafe {
-    let window_name = CString::new(window_name).unwrap();
-    let rv = sys::cv_highgui_cv_selectROI_String_windowName_Mat_img_bool_showCrosshair_bool_fromCenter(window_name.as_ptr() as _, img.as_raw_Mat(), show_crosshair, from_center);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn select_roi_1(window_name: &str, img: &core::Mat, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cv_selectROI_String_windowName_Mat_img_bool_showCrosshair_bool_fromCenter(window_name.as_ptr(), img.as_raw_Mat(), show_crosshair, from_center) }.into_result()
 }
 
+// identifier: cv_selectROIs_String_windowName_Mat_img_VectorOfRect_boundingBoxes_bool_showCrosshair_bool_fromCenter
 /// Selects ROIs on the given image.
 /// Function creates a window and allows user to select a ROIs using mouse.
 /// Controls: use `space` or `enter` to finish current selection and start a new one,
@@ -855,40 +928,89 @@ pub fn select_roi_v0(window_name:&str, img: &core::Mat, show_crosshair: bool, fr
 /// ## C++ default parameters:
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_ro_is(window_name:&str, img: &core::Mat, bounding_boxes: &types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
-// identifier: cv_selectROIs_String_windowName_Mat_img_VectorOfRect_boundingBoxes_bool_showCrosshair_bool_fromCenter
-  unsafe {
-    let window_name = CString::new(window_name).unwrap();
-    let rv = sys::cv_highgui_cv_selectROIs_String_windowName_Mat_img_VectorOfRect_boundingBoxes_bool_showCrosshair_bool_fromCenter(window_name.as_ptr() as _, img.as_raw_Mat(), bounding_boxes.as_raw_VectorOfRect(), show_crosshair, from_center);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn select_ro_is(window_name: &str, img: &core::Mat, bounding_boxes: &types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
+    string_arg!(window_name);
+    unsafe { sys::cv_highgui_cv_selectROIs_String_windowName_Mat_img_VectorOfRect_boundingBoxes_bool_showCrosshair_bool_fromCenter(window_name.as_ptr(), img.as_raw_Mat(), bounding_boxes.as_raw_VectorOfRect(), show_crosshair, from_center) }.into_result()
 }
 
+// identifier: cv_setMouseCallback_String_winname_MouseCallback_onMouse_void_X_userdata
+/// Sets mouse handler for the specified window
+/// 
+/// ## Parameters
+/// * winname: Name of the window.
+/// * onMouse: Callback function for mouse events. See OpenCV samples on how to specify and use the callback.
+/// * userdata: The optional parameter passed to the callback.
+///
+/// ## C++ default parameters:
+/// * userdata: 0
+pub fn set_mouse_callback(winname: &str, on_mouse: Option<Box<crate::highgui::MouseCallback>>) -> Result<()> {
+    string_arg!(winname);
+    callback_arg!(on_mouse(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void) via userdata => (event: i32, x: i32, y: i32, flags: i32));
+    unsafe { sys::cv_highgui_cv_setMouseCallback_String_winname_MouseCallback_onMouse_void_X_userdata(winname.as_ptr(), on_mouse, userdata) }.into_result()
+}
+
+// identifier: cv_setOpenGlContext_String_winname
 /// Sets the specified window as current OpenGL context.
 /// 
 /// ## Parameters
 /// * winname: Name of the window.
-pub fn set_open_gl_context(winname:&str) -> Result<()> {
-// identifier: cv_setOpenGlContext_String_winname
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_setOpenGlContext_String_winname(winname.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_open_gl_context(winname: &str) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_setOpenGlContext_String_winname(winname.as_ptr()) }.into_result()
 }
 
+// identifier: cv_setOpenGlDrawCallback_String_winname_OpenGlDrawCallback_onOpenGlDraw_void_X_userdata
+/// Sets a callback function to be called to draw on top of displayed image.
+/// 
+/// The function setOpenGlDrawCallback can be used to draw 3D data on the window. See the example of
+/// callback function below:
+/// ```ignore
+/// void on_opengl(void* param)
+/// {
+/// glLoadIdentity();
+/// 
+/// glTranslated(0.0, 0.0, -1.0);
+/// 
+/// glRotatef( 55, 1, 0, 0 );
+/// glRotatef( 45, 0, 1, 0 );
+/// glRotatef( 0, 0, 0, 1 );
+/// 
+/// static const int coords[6][4][3] = {
+/// { { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 } },
+/// { { +1, +1, -1 }, { -1, +1, -1 }, { -1, +1, +1 }, { +1, +1, +1 } },
+/// { { +1, -1, +1 }, { +1, -1, -1 }, { +1, +1, -1 }, { +1, +1, +1 } },
+/// { { -1, -1, -1 }, { -1, -1, +1 }, { -1, +1, +1 }, { -1, +1, -1 } },
+/// { { +1, -1, +1 }, { -1, -1, +1 }, { -1, -1, -1 }, { +1, -1, -1 } },
+/// { { -1, -1, +1 }, { +1, -1, +1 }, { +1, +1, +1 }, { -1, +1, +1 } }
+/// };
+/// 
+/// for (int i = 0; i < 6; ++i) {
+/// glColor3ub( i*20, 100+i*10, i*42 );
+/// glBegin(GL_QUADS);
+/// for (int j = 0; j < 4; ++j) {
+/// glVertex3d(0.2 * coords[i][j][0], 0.2 * coords[i][j][1], 0.2 * coords[i][j][2]);
+/// }
+/// glEnd();
+/// }
+/// }
+/// ```
+/// 
+/// 
+/// ## Parameters
+/// * winname: Name of the window.
+/// * onOpenGlDraw: Pointer to the function to be called every frame. This function should be
+/// prototyped as void Foo(void\*) .
+/// * userdata: Pointer passed to the callback function.(__Optional__)
+///
+/// ## C++ default parameters:
+/// * userdata: 0
+pub fn set_open_gl_draw_callback(winname: &str, on_open_gl_draw: Option<Box<crate::highgui::OpenGlDrawCallback>>) -> Result<()> {
+    string_arg!(winname);
+    callback_arg!(on_open_gl_draw(userdata: *mut c_void) via userdata => ());
+    unsafe { sys::cv_highgui_cv_setOpenGlDrawCallback_String_winname_OpenGlDrawCallback_onOpenGlDraw_void_X_userdata(winname.as_ptr(), on_open_gl_draw, userdata) }.into_result()
+}
+
+// identifier: cv_setTrackbarMax_String_trackbarname_String_winname_int_maxval
 /// Sets the trackbar maximum position.
 /// 
 /// The function sets the maximum position of the specified trackbar in the specified window.
@@ -903,22 +1025,13 @@ pub fn set_open_gl_context(winname:&str) -> Result<()> {
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of trackbar.
 /// * maxval: New maximum position.
-pub fn set_trackbar_max(trackbarname:&str, winname:&str, maxval: i32) -> Result<()> {
-// identifier: cv_setTrackbarMax_String_trackbarname_String_winname_int_maxval
-  unsafe {
-    let trackbarname = CString::new(trackbarname).unwrap();
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_setTrackbarMax_String_trackbarname_String_winname_int_maxval(trackbarname.as_ptr() as _, winname.as_ptr() as _, maxval);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_trackbar_max(trackbarname: &str, winname: &str, maxval: i32) -> Result<()> {
+    string_arg!(trackbarname);
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_setTrackbarMax_String_trackbarname_String_winname_int_maxval(trackbarname.as_ptr(), winname.as_ptr(), maxval) }.into_result()
 }
 
+// identifier: cv_setTrackbarMin_String_trackbarname_String_winname_int_minval
 /// Sets the trackbar minimum position.
 /// 
 /// The function sets the minimum position of the specified trackbar in the specified window.
@@ -933,22 +1046,13 @@ pub fn set_trackbar_max(trackbarname:&str, winname:&str, maxval: i32) -> Result<
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of trackbar.
 /// * minval: New minimum position.
-pub fn set_trackbar_min(trackbarname:&str, winname:&str, minval: i32) -> Result<()> {
-// identifier: cv_setTrackbarMin_String_trackbarname_String_winname_int_minval
-  unsafe {
-    let trackbarname = CString::new(trackbarname).unwrap();
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_setTrackbarMin_String_trackbarname_String_winname_int_minval(trackbarname.as_ptr() as _, winname.as_ptr() as _, minval);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_trackbar_min(trackbarname: &str, winname: &str, minval: i32) -> Result<()> {
+    string_arg!(trackbarname);
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_setTrackbarMin_String_trackbarname_String_winname_int_minval(trackbarname.as_ptr(), winname.as_ptr(), minval) }.into_result()
 }
 
+// identifier: cv_setTrackbarPos_String_trackbarname_String_winname_int_pos
 /// Sets the trackbar position.
 /// 
 /// The function sets the position of the specified trackbar in the specified window.
@@ -963,22 +1067,13 @@ pub fn set_trackbar_min(trackbarname:&str, winname:&str, minval: i32) -> Result<
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of trackbar.
 /// * pos: New position.
-pub fn set_trackbar_pos(trackbarname:&str, winname:&str, pos: i32) -> Result<()> {
-// identifier: cv_setTrackbarPos_String_trackbarname_String_winname_int_pos
-  unsafe {
-    let trackbarname = CString::new(trackbarname).unwrap();
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_setTrackbarPos_String_trackbarname_String_winname_int_pos(trackbarname.as_ptr() as _, winname.as_ptr() as _, pos);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_trackbar_pos(trackbarname: &str, winname: &str, pos: i32) -> Result<()> {
+    string_arg!(trackbarname);
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_setTrackbarPos_String_trackbarname_String_winname_int_pos(trackbarname.as_ptr(), winname.as_ptr(), pos) }.into_result()
 }
 
+// identifier: cv_setWindowProperty_String_winname_int_prop_id_double_prop_value
 /// Changes parameters of a window dynamically.
 /// 
 /// The function setWindowProperty enables changing properties of a window.
@@ -987,88 +1082,43 @@ pub fn set_trackbar_pos(trackbarname:&str, winname:&str, pos: i32) -> Result<()>
 /// * winname: Name of the window.
 /// * prop_id: Window property to edit. The supported operation flags are: (cv::WindowPropertyFlags)
 /// * prop_value: New value of the window property. The supported flags are: (cv::WindowFlags)
-pub fn set_window_property(winname:&str, prop_id: i32, prop_value: f64) -> Result<()> {
-// identifier: cv_setWindowProperty_String_winname_int_prop_id_double_prop_value
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_setWindowProperty_String_winname_int_prop_id_double_prop_value(winname.as_ptr() as _, prop_id, prop_value);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_window_property(winname: &str, prop_id: i32, prop_value: f64) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_setWindowProperty_String_winname_int_prop_id_double_prop_value(winname.as_ptr(), prop_id, prop_value) }.into_result()
 }
 
+// identifier: cv_setWindowTitle_String_winname_String_title
 /// Updates window title
 /// ## Parameters
 /// * winname: Name of the window.
 /// * title: New title.
-pub fn set_window_title(winname:&str, title:&str) -> Result<()> {
-// identifier: cv_setWindowTitle_String_winname_String_title
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let title = CString::new(title).unwrap();
-    let rv = sys::cv_highgui_cv_setWindowTitle_String_winname_String_title(winname.as_ptr() as _, title.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_window_title(winname: &str, title: &str) -> Result<()> {
+    string_arg!(winname);
+    string_arg!(title);
+    unsafe { sys::cv_highgui_cv_setWindowTitle_String_winname_String_title(winname.as_ptr(), title.as_ptr()) }.into_result()
 }
 
-pub fn start_window_thread() -> Result<i32> {
 // identifier: cv_startWindowThread
-  unsafe {
-    let rv = sys::cv_highgui_cv_startWindowThread();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn start_window_thread() -> Result<i32> {
+    unsafe { sys::cv_highgui_cv_startWindowThread() }.into_result()
 }
 
-pub fn stop_loop() -> Result<()> {
 // identifier: cv_stopLoop
-  unsafe {
-    let rv = sys::cv_highgui_cv_stopLoop();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn stop_loop() -> Result<()> {
+    unsafe { sys::cv_highgui_cv_stopLoop() }.into_result()
 }
 
+// identifier: cv_updateWindow_String_winname
 /// Force window to redraw its context and call draw callback ( See cv::setOpenGlDrawCallback ).
 /// 
 /// ## Parameters
 /// * winname: Name of the window.
-pub fn update_window(winname:&str) -> Result<()> {
-// identifier: cv_updateWindow_String_winname
-  unsafe {
-    let winname = CString::new(winname).unwrap();
-    let rv = sys::cv_highgui_cv_updateWindow_String_winname(winname.as_ptr() as _);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn update_window(winname: &str) -> Result<()> {
+    string_arg!(winname);
+    unsafe { sys::cv_highgui_cv_updateWindow_String_winname(winname.as_ptr()) }.into_result()
 }
 
+// identifier: cv_waitKeyEx_int_delay
 /// Similar to #waitKey, but returns full key code.
 /// 
 /// 
@@ -1079,19 +1129,10 @@ pub fn update_window(winname:&str) -> Result<()> {
 /// ## C++ default parameters:
 /// * delay: 0
 pub fn wait_key_ex(delay: i32) -> Result<i32> {
-// identifier: cv_waitKeyEx_int_delay
-  unsafe {
-    let rv = sys::cv_highgui_cv_waitKeyEx_int_delay(delay);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_highgui_cv_waitKeyEx_int_delay(delay) }.into_result()
 }
 
+// identifier: cv_waitKey_int_delay
 /// Waits for a pressed key.
 /// 
 /// The function waitKey waits for a key event infinitely (when <span lang='latex'>\texttt{delay}\leq 0</span> ) or for delay
@@ -1119,35 +1160,21 @@ pub fn wait_key_ex(delay: i32) -> Result<i32> {
 /// ## C++ default parameters:
 /// * delay: 0
 pub fn wait_key(delay: i32) -> Result<i32> {
-// identifier: cv_waitKey_int_delay
-  unsafe {
-    let rv = sys::cv_highgui_cv_waitKey_int_delay(delay);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_highgui_cv_waitKey_int_delay(delay) }.into_result()
 }
 
 // boxed class cv::QtFont
 /// QtFont available only for Qt. See cv::fontQt
-
 #[allow(dead_code)]
 pub struct QtFont {
     #[doc(hidden)] pub ptr: *mut c_void
 }
-impl Drop for super::highgui::QtFont {
+impl Drop for crate::highgui::QtFont {
     fn drop(&mut self) {
         unsafe { sys::cv_delete_QtFont(self.ptr) };
     }
 }
-impl super::highgui::QtFont {
+impl crate::highgui::QtFont {
     #[doc(hidden)] pub fn as_raw_QtFont(&self) -> *mut c_void { self.ptr }
 }
-impl QtFont {
 
-}
-pub const HG_AUTOSIZE: i32 = 0x1;

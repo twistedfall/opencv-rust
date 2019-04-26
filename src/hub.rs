@@ -1,4 +1,5 @@
 pub mod core;
+mod manual;
 pub mod calib3d;
 pub mod dnn;
 pub mod features2d;

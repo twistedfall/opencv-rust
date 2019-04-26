@@ -10,11 +10,10 @@
 //! 
 //! # iOS glue
 //! @}
+use std::os::raw::{c_char, c_void};
+use libc::size_t;
+use crate::{Error, Result, core, sys, types};
 
-use libc::{c_void, c_char, size_t};
-use std::ffi::{CStr, CString};
-use crate::{core, sys, types};
-use crate::{Error, Result};
 pub const CV_CVTIMG_FLIP: i32 = 1;
 pub const CV_CVTIMG_SWAP_RB: i32 = 2;
 pub const CV_IMWRITE_EXR_TYPE: i32 = 48;
@@ -89,6 +88,19 @@ pub const IMWRITE_TIFF_XDPI: i32 = 257;
 pub const IMWRITE_TIFF_YDPI: i32 = 258;
 pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 
+// identifier: cvHaveImageReader_const_char_X_filename
+pub fn cv_have_image_reader(filename: &str) -> Result<i32> {
+    string_arg!(filename);
+    unsafe { sys::cv_imgcodecs_cvHaveImageReader_const_char_X_filename(filename.as_ptr()) }.into_result()
+}
+
+// identifier: cvHaveImageWriter_const_char_X_filename
+pub fn cv_have_image_writer(filename: &str) -> Result<i32> {
+    string_arg!(filename);
+    unsafe { sys::cv_imgcodecs_cvHaveImageWriter_const_char_X_filename(filename.as_ptr()) }.into_result()
+}
+
+// identifier: cv_imdecode_Mat_buf_int_flags
 /// Reads an image from a buffer in memory.
 /// 
 /// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
@@ -102,19 +114,10 @@ pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 /// * buf: Input array or vector of bytes.
 /// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 pub fn decode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
-// identifier: cv_imdecode_Mat_buf_int_flags
-  unsafe {
-    let rv = sys::cv_imgcodecs_cv_imdecode_Mat_buf_int_flags(buf.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_imgcodecs_cv_imdecode_Mat_buf_int_flags(buf.as_raw_Mat(), flags) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_imdecode_Mat_buf_int_flags_Mat_dst
 /// @overload
 /// ## Parameters
 /// * buf
@@ -122,19 +125,10 @@ pub fn decode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
 /// * dst: The optional output placeholder for the decoded matrix. It can save the image
 /// reallocations when the function is called repeatedly for images of the same size.
 pub fn decode_to(buf: &core::Mat, flags: i32, dst: &core::Mat) -> Result<core::Mat> {
-// identifier: cv_imdecode_Mat_buf_int_flags_Mat_dst
-  unsafe {
-    let rv = sys::cv_imgcodecs_cv_imdecode_Mat_buf_int_flags_Mat_dst(buf.as_raw_Mat(), flags, dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_imgcodecs_cv_imdecode_Mat_buf_int_flags_Mat_dst(buf.as_raw_Mat(), flags, dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_imencode_String_ext_Mat_img_VectorOfuchar_buf_VectorOfint_params
 /// Encodes an image into a memory buffer.
 /// 
 /// The function imencode compresses the image and stores it in the memory buffer that is resized to fit the
@@ -148,21 +142,12 @@ pub fn decode_to(buf: &core::Mat, flags: i32, dst: &core::Mat) -> Result<core::M
 ///
 /// ## C++ default parameters:
 /// * params: std::vector<int>()
-pub fn imencode(ext:&str, img: &core::Mat, buf: &types::VectorOfuchar, params: &types::VectorOfint) -> Result<bool> {
-// identifier: cv_imencode_String_ext_Mat_img_VectorOfuchar_buf_VectorOfint_params
-  unsafe {
-    let ext = CString::new(ext).unwrap();
-    let rv = sys::cv_imgcodecs_cv_imencode_String_ext_Mat_img_VectorOfuchar_buf_VectorOfint_params(ext.as_ptr() as _, img.as_raw_Mat(), buf.as_raw_VectorOfuchar(), params.as_raw_VectorOfint());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn imencode(ext: &str, img: &core::Mat, buf: &types::VectorOfuchar, params: &types::VectorOfint) -> Result<bool> {
+    string_arg!(ext);
+    unsafe { sys::cv_imgcodecs_cv_imencode_String_ext_Mat_img_VectorOfuchar_buf_VectorOfint_params(ext.as_ptr(), img.as_raw_Mat(), buf.as_raw_VectorOfuchar(), params.as_raw_VectorOfint()) }.into_result()
 }
 
+// identifier: cv_imread_String_filename_int_flags
 /// Loads an image from a file.
 /// 
 /// @anchor imread
@@ -215,21 +200,12 @@ pub fn imencode(ext:&str, img: &core::Mat, buf: &types::VectorOfuchar, params: &
 ///
 /// ## C++ default parameters:
 /// * flags: IMREAD_COLOR
-pub fn imread(filename:&str, flags: i32) -> Result<core::Mat> {
-// identifier: cv_imread_String_filename_int_flags
-  unsafe {
-    let filename = CString::new(filename).unwrap();
-    let rv = sys::cv_imgcodecs_cv_imread_String_filename_int_flags(filename.as_ptr() as _, flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
+    string_arg!(filename);
+    unsafe { sys::cv_imgcodecs_cv_imread_String_filename_int_flags(filename.as_ptr(), flags) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_imreadmulti_String_filename_VectorOfMat_mats_int_flags
 /// Loads a multi-page image from a file.
 /// 
 /// The function imreadmulti loads a multi-page image from the specified file into a vector of Mat objects.
@@ -241,21 +217,12 @@ pub fn imread(filename:&str, flags: i32) -> Result<core::Mat> {
 ///
 /// ## C++ default parameters:
 /// * flags: IMREAD_ANYCOLOR
-pub fn imreadmulti(filename:&str, mats: &types::VectorOfMat, flags: i32) -> Result<bool> {
-// identifier: cv_imreadmulti_String_filename_VectorOfMat_mats_int_flags
-  unsafe {
-    let filename = CString::new(filename).unwrap();
-    let rv = sys::cv_imgcodecs_cv_imreadmulti_String_filename_VectorOfMat_mats_int_flags(filename.as_ptr() as _, mats.as_raw_VectorOfMat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn imreadmulti(filename: &str, mats: &types::VectorOfMat, flags: i32) -> Result<bool> {
+    string_arg!(filename);
+    unsafe { sys::cv_imgcodecs_cv_imreadmulti_String_filename_VectorOfMat_mats_int_flags(filename.as_ptr(), mats.as_raw_VectorOfMat(), flags) }.into_result()
 }
 
+// identifier: cv_imwrite_String_filename_Mat_img_VectorOfint_params
 /// Saves an image to a specified file.
 /// 
 /// The function imwrite saves the image to the specified file. The image format is chosen based on the
@@ -284,19 +251,9 @@ pub fn imreadmulti(filename:&str, mats: &types::VectorOfMat, flags: i32) -> Resu
 ///
 /// ## C++ default parameters:
 /// * params: std::vector<int>()
-pub fn imwrite(filename:&str, img: &core::Mat, params: &types::VectorOfint) -> Result<bool> {
-// identifier: cv_imwrite_String_filename_Mat_img_VectorOfint_params
-  unsafe {
-    let filename = CString::new(filename).unwrap();
-    let rv = sys::cv_imgcodecs_cv_imwrite_String_filename_Mat_img_VectorOfint_params(filename.as_ptr() as _, img.as_raw_Mat(), params.as_raw_VectorOfint());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn imwrite(filename: &str, img: &core::Mat, params: &types::VectorOfint) -> Result<bool> {
+    string_arg!(filename);
+    unsafe { sys::cv_imgcodecs_cv_imwrite_String_filename_Mat_img_VectorOfint_params(filename.as_ptr(), img.as_raw_Mat(), params.as_raw_VectorOfint()) }.into_result()
 }
 
-pub const IMWRITE_EXR_TYPE: i32 = 0x30;
+pub const IMWRITE_EXR_TYPE: i32 = 0x30; // 48

@@ -176,11 +176,10 @@
 //! # C API
 //! 
 //! @}
+use std::os::raw::{c_char, c_void};
+use libc::size_t;
+use crate::{Error, Result, core, sys, types};
 
-use libc::{c_void, c_char, size_t};
-use std::ffi::{CStr, CString};
-use crate::{core, sys, types};
-use crate::{Error, Result};
 pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;
 pub const CALIB_CB_ASYMMETRIC_GRID: i32 = 2;
 pub const CALIB_CB_CLUSTERING: i32 = 4;
@@ -188,6 +187,7 @@ pub const CALIB_CB_FAST_CHECK: i32 = 8;
 pub const CALIB_CB_FILTER_QUADS: i32 = 4;
 pub const CALIB_CB_NORMALIZE_IMAGE: i32 = 2;
 pub const CALIB_CB_SYMMETRIC_GRID: i32 = 1;
+pub const CALIB_CHECK_COND: i32 = 1 << 2;
 pub const CALIB_FIX_ASPECT_RATIO: i32 = 0x00002;
 pub const CALIB_FIX_FOCAL_LENGTH: i32 = 0x00010;
 pub const CALIB_FIX_INTRINSIC: i32 = 0x00100;
@@ -199,13 +199,17 @@ pub const CALIB_FIX_K5: i32 = 0x01000;
 pub const CALIB_FIX_K6: i32 = 0x02000;
 pub const CALIB_FIX_PRINCIPAL_POINT: i32 = 0x00004;
 pub const CALIB_FIX_S1_S2_S3_S4: i32 = 0x10000;
+pub const CALIB_FIX_SKEW: i32 = 1 << 3;
 pub const CALIB_FIX_TANGENT_DIST: i32 = 0x200000;
 pub const CALIB_FIX_TAUX_TAUY: i32 = 0x80000;
 pub const CALIB_RATIONAL_MODEL: i32 = 0x04000;
+pub const CALIB_RECOMPUTE_EXTRINSIC: i32 = 1 << 1;
 pub const CALIB_SAME_FOCAL_LENGTH: i32 = 0x00200;
 pub const CALIB_THIN_PRISM_MODEL: i32 = 0x08000;
 pub const CALIB_TILTED_MODEL: i32 = 0x40000;
+pub const CALIB_USE_EXTRINSIC_GUESS: i32 = (1 << 22);
 pub const CALIB_USE_INTRINSIC_GUESS: i32 = 0x00001;
+pub const CALIB_USE_LU: i32 = (1 << 17);
 pub const CALIB_USE_QR: i32 = 0x100000;
 pub const CALIB_ZERO_DISPARITY: i32 = 0x00400;
 pub const CALIB_ZERO_TANGENT_DIST: i32 = 0x00008;
@@ -238,6 +242,10 @@ pub const CV_DLS: i32 = 3;
 pub const CV_EPNP: i32 = 1;
 pub const CV_FM_7POINT: i32 = 1;
 pub const CV_FM_8POINT: i32 = 2;
+pub const CV_FM_LMEDS: i32 = 4;
+pub const CV_FM_LMEDS_ONLY: i32 = 4;
+pub const CV_FM_RANSAC: i32 = 8;
+pub const CV_FM_RANSAC_ONLY: i32 = 8;
 pub const CV_ITERATIVE: i32 = 0;
 pub const CV_LMEDS: i32 = 4;
 pub const CV_P3P: i32 = 2;
@@ -264,6 +272,7 @@ pub const SOLVEPNP_AP3P: i32 = 5;
 pub const SOLVEPNP_DLS: i32 = 3;
 pub const SOLVEPNP_EPNP: i32 = 1;
 pub const SOLVEPNP_ITERATIVE: i32 = 0;
+pub const SOLVEPNP_MAX_COUNT: i32 = 5+1;
 pub const SOLVEPNP_P3P: i32 = 2;
 pub const SOLVEPNP_UPNP: i32 = 4;
 pub const StereoBM_PREFILTER_NORMALIZED_RESPONSE: i32 = 0;
@@ -274,45 +283,39 @@ pub const StereoSGBM_MODE_HH4: i32 = 3;
 pub const StereoSGBM_MODE_SGBM: i32 = 0;
 pub const StereoSGBM_MODE_SGBM_3WAY: i32 = 2;
 
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct CirclesGridFinderParameters2 {
-    pub squareSize: f32,
-    pub maxRectifiedDistance: f32,
-}
 
 #[repr(C)]
 #[derive(Copy,Clone,Debug,PartialEq)]
 pub struct CirclesGridFinderParameters {
-    pub densityNeighborhoodSize: core::Size2f,
-    pub minDensity: f32,
-    pub kmeansAttempts: i32,
-    pub minDistanceToAddKeypoint: i32,
-    pub keypointScale: i32,
-    pub minGraphConfidence: f32,
-    pub vertexGain: f32,
-    pub vertexPenalty: f32,
-    pub existingVertexGain: f32,
-    pub edgeGain: f32,
-    pub edgePenalty: f32,
-    pub convexHullFactor: f32,
-    pub minRNGEdgeSwitchDist: f32,
+    pub density_neighborhood_size: core::Size2f,
+    pub min_density: f32,
+    pub kmeans_attempts: i32,
+    pub min_distance_to_add_keypoint: i32,
+    pub keypoint_scale: i32,
+    pub min_graph_confidence: f32,
+    pub vertex_gain: f32,
+    pub vertex_penalty: f32,
+    pub existing_vertex_gain: f32,
+    pub edge_gain: f32,
+    pub edge_penalty: f32,
+    pub convex_hull_factor: f32,
+    pub min_rng_edge_switch_dist: f32,
 }
 
-pub fn cv_ransac_update_num_iters(p: f64, err_prob: f64, model_points: i32, max_iters: i32) -> Result<i32> {
+
+#[repr(C)]
+#[derive(Copy,Clone,Debug,PartialEq)]
+pub struct CirclesGridFinderParameters2 {
+    pub square_size: f32,
+    pub max_rectified_distance: f32,
+}
+
 // identifier: cvRANSACUpdateNumIters_double_p_double_err_prob_int_model_points_int_max_iters
-  unsafe {
-    let rv = sys::cv_calib3d_cvRANSACUpdateNumIters_double_p_double_err_prob_int_model_points_int_max_iters(p, err_prob, model_points, max_iters);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_ransac_update_num_iters(p: f64, err_prob: f64, model_points: i32, max_iters: i32) -> Result<i32> {
+    unsafe { sys::cv_calib3d_cvRANSACUpdateNumIters_double_p_double_err_prob_int_model_points_int_max_iters(p, err_prob, model_points, max_iters) }.into_result()
 }
 
+// identifier: cv_RQDecomp3x3_Mat_src_Mat_mtxR_Mat_mtxQ_Mat_Qx_Mat_Qy_Mat_Qz
 /// Computes an RQ decomposition of 3x3 matrices.
 /// 
 /// ## Parameters
@@ -338,19 +341,10 @@ pub fn cv_ransac_update_num_iters(p: f64, err_prob: f64, model_points: i32, max_
 /// * qy: noArray()
 /// * qz: noArray()
 pub fn rq_decomp3x3(src: &core::Mat, mtx_r: &mut core::Mat, mtx_q: &mut core::Mat, qx: &mut core::Mat, qy: &mut core::Mat, qz: &mut core::Mat) -> Result<core::Vec3d> {
-// identifier: cv_RQDecomp3x3_Mat_src_Mat_mtxR_Mat_mtxQ_Mat_Qx_Mat_Qy_Mat_Qz
-  unsafe {
-    let rv = sys::cv_calib3d_cv_RQDecomp3x3_Mat_src_Mat_mtxR_Mat_mtxQ_Mat_Qx_Mat_Qy_Mat_Qz(src.as_raw_Mat(), mtx_r.as_raw_Mat(), mtx_q.as_raw_Mat(), qx.as_raw_Mat(), qy.as_raw_Mat(), qz.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_RQDecomp3x3_Mat_src_Mat_mtxR_Mat_mtxQ_Mat_Qx_Mat_Qy_Mat_Qz(src.as_raw_Mat(), mtx_r.as_raw_Mat(), mtx_q.as_raw_Mat(), qx.as_raw_Mat(), qy.as_raw_Mat(), qz.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_Rodrigues_Mat_src_Mat_dst_Mat_jacobian
 /// Converts a rotation matrix to a rotation vector or vice versa.
 /// 
 /// ## Parameters
@@ -372,19 +366,10 @@ pub fn rq_decomp3x3(src: &core::Mat, mtx_r: &mut core::Mat, mtx_q: &mut core::Ma
 /// ## C++ default parameters:
 /// * jacobian: noArray()
 pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat) -> Result<()> {
-// identifier: cv_Rodrigues_Mat_src_Mat_dst_Mat_jacobian
-  unsafe {
-    let rv = sys::cv_calib3d_cv_Rodrigues_Mat_src_Mat_dst_Mat_jacobian(src.as_raw_Mat(), dst.as_raw_Mat(), jacobian.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_Rodrigues_Mat_src_Mat_dst_Mat_jacobian(src.as_raw_Mat(), dst.as_raw_Mat(), jacobian.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_Mat_stdDeviationsIntrinsics_Mat_stdDeviationsExtrinsics_Mat_perViewErrors_int_flags_TermCriteria_criteria
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 /// 
 /// ## Parameters
@@ -504,19 +489,10 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 /// * flags: 0
 /// * criteria: TermCriteria( TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON)
 pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, camera_matrix: &mut core::Mat, dist_coeffs: &mut core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, std_deviations_intrinsics: &mut core::Mat, std_deviations_extrinsics: &mut core::Mat, per_view_errors: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-// identifier: cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_Mat_stdDeviationsIntrinsics_Mat_stdDeviationsExtrinsics_Mat_perViewErrors_int_flags_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_calib3d_cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_Mat_stdDeviationsIntrinsics_Mat_stdDeviationsExtrinsics_Mat_perViewErrors_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), std_deviations_intrinsics.as_raw_Mat(), std_deviations_extrinsics.as_raw_Mat(), per_view_errors.as_raw_Mat(), flags, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_Mat_stdDeviationsIntrinsics_Mat_stdDeviationsExtrinsics_Mat_perViewErrors_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), std_deviations_intrinsics.as_raw_Mat(), std_deviations_extrinsics.as_raw_Mat(), per_view_errors.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
+// identifier: cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria
 /// @overload double calibrateCamera( InputArrayOfArrays objectPoints,
 /// InputArrayOfArrays imagePoints, Size imageSize,
 /// InputOutputArray cameraMatrix, InputOutputArray distCoeffs,
@@ -528,20 +504,11 @@ pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types
 /// ## C++ default parameters:
 /// * flags: 0
 /// * criteria: TermCriteria( TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON)
-pub fn calibrate_camera_v0(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, camera_matrix: &mut core::Mat, dist_coeffs: &mut core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-// identifier: cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_calib3d_cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn calibrate_camera_1(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, camera_matrix: &mut core::Mat, dist_coeffs: &mut core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    unsafe { sys::cv_calib3d_cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
+// identifier: cv_calibrationMatrixValues_Mat_cameraMatrix_Size_imageSize_double_apertureWidth_double_apertureHeight_double_fovx_double_fovy_double_focalLength_Point2d_principalPoint_double_aspectRatio
 /// Computes useful camera characteristics from the camera matrix.
 /// 
 /// ## Parameters
@@ -564,19 +531,10 @@ pub fn calibrate_camera_v0(object_points: &types::VectorOfMat, image_points: &ty
 /// Do keep in mind that the unity measure 'mm' stands for whatever unit of measure one chooses for
 /// the chessboard pitch (it can thus be any value).
 pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: f64, fovy: f64, focal_length: f64, principal_point: core::Point2d, aspect_ratio: f64) -> Result<()> {
-// identifier: cv_calibrationMatrixValues_Mat_cameraMatrix_Size_imageSize_double_apertureWidth_double_apertureHeight_double_fovx_double_fovy_double_focalLength_Point2d_principalPoint_double_aspectRatio
-  unsafe {
-    let rv = sys::cv_calib3d_cv_calibrationMatrixValues_Mat_cameraMatrix_Size_imageSize_double_apertureWidth_double_apertureHeight_double_fovx_double_fovy_double_focalLength_Point2d_principalPoint_double_aspectRatio(camera_matrix.as_raw_Mat(), image_size, aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_calibrationMatrixValues_Mat_cameraMatrix_Size_imageSize_double_apertureWidth_double_apertureHeight_double_fovx_double_fovy_double_focalLength_Point2d_principalPoint_double_aspectRatio(camera_matrix.as_raw_Mat(), image_size, aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio) }.into_result()
 }
 
+// identifier: cv_composeRT_Mat_rvec1_Mat_tvec1_Mat_rvec2_Mat_tvec2_Mat_rvec3_Mat_tvec3_Mat_dr3dr1_Mat_dr3dt1_Mat_dr3dr2_Mat_dr3dt2_Mat_dt3dr1_Mat_dt3dt1_Mat_dt3dr2_Mat_dt3dt2
 /// Combines two rotation-and-shift transformations.
 /// 
 /// ## Parameters
@@ -618,19 +576,10 @@ pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Si
 /// * dt3dr2: noArray()
 /// * dt3dt2: noArray()
 pub fn compose_rt(rvec1: &core::Mat, tvec1: &core::Mat, rvec2: &core::Mat, tvec2: &core::Mat, rvec3: &mut core::Mat, tvec3: &mut core::Mat, dr3dr1: &mut core::Mat, dr3dt1: &mut core::Mat, dr3dr2: &mut core::Mat, dr3dt2: &mut core::Mat, dt3dr1: &mut core::Mat, dt3dt1: &mut core::Mat, dt3dr2: &mut core::Mat, dt3dt2: &mut core::Mat) -> Result<()> {
-// identifier: cv_composeRT_Mat_rvec1_Mat_tvec1_Mat_rvec2_Mat_tvec2_Mat_rvec3_Mat_tvec3_Mat_dr3dr1_Mat_dr3dt1_Mat_dr3dr2_Mat_dr3dt2_Mat_dt3dr1_Mat_dt3dt1_Mat_dt3dr2_Mat_dt3dt2
-  unsafe {
-    let rv = sys::cv_calib3d_cv_composeRT_Mat_rvec1_Mat_tvec1_Mat_rvec2_Mat_tvec2_Mat_rvec3_Mat_tvec3_Mat_dr3dr1_Mat_dr3dt1_Mat_dr3dr2_Mat_dr3dt2_Mat_dt3dr1_Mat_dt3dt1_Mat_dt3dr2_Mat_dt3dt2(rvec1.as_raw_Mat(), tvec1.as_raw_Mat(), rvec2.as_raw_Mat(), tvec2.as_raw_Mat(), rvec3.as_raw_Mat(), tvec3.as_raw_Mat(), dr3dr1.as_raw_Mat(), dr3dt1.as_raw_Mat(), dr3dr2.as_raw_Mat(), dr3dt2.as_raw_Mat(), dt3dr1.as_raw_Mat(), dt3dt1.as_raw_Mat(), dt3dr2.as_raw_Mat(), dt3dt2.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_composeRT_Mat_rvec1_Mat_tvec1_Mat_rvec2_Mat_tvec2_Mat_rvec3_Mat_tvec3_Mat_dr3dr1_Mat_dr3dt1_Mat_dr3dr2_Mat_dr3dt2_Mat_dt3dr1_Mat_dt3dt1_Mat_dt3dr2_Mat_dt3dt2(rvec1.as_raw_Mat(), tvec1.as_raw_Mat(), rvec2.as_raw_Mat(), tvec2.as_raw_Mat(), rvec3.as_raw_Mat(), tvec3.as_raw_Mat(), dr3dr1.as_raw_Mat(), dr3dt1.as_raw_Mat(), dr3dr2.as_raw_Mat(), dr3dt2.as_raw_Mat(), dt3dr1.as_raw_Mat(), dt3dt1.as_raw_Mat(), dt3dr2.as_raw_Mat(), dt3dt2.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_computeCorrespondEpilines_Mat_points_int_whichImage_Mat_F_Mat_lines
 /// For points in an image of a stereo pair, computes the corresponding epilines in the other image.
 /// 
 /// ## Parameters
@@ -655,19 +604,10 @@ pub fn compose_rt(rvec1: &core::Mat, tvec1: &core::Mat, rvec2: &core::Mat, tvec2
 /// 
 /// Line coefficients are defined up to a scale. They are normalized so that <span lang='latex'>a_i^2+b_i^2=1</span> .
 pub fn compute_correspond_epilines(points: &core::Mat, which_image: i32, f: &core::Mat, lines: &mut core::Mat) -> Result<()> {
-// identifier: cv_computeCorrespondEpilines_Mat_points_int_whichImage_Mat_F_Mat_lines
-  unsafe {
-    let rv = sys::cv_calib3d_cv_computeCorrespondEpilines_Mat_points_int_whichImage_Mat_F_Mat_lines(points.as_raw_Mat(), which_image, f.as_raw_Mat(), lines.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_computeCorrespondEpilines_Mat_points_int_whichImage_Mat_F_Mat_lines(points.as_raw_Mat(), which_image, f.as_raw_Mat(), lines.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_convertPointsFromHomogeneous_Mat_src_Mat_dst
 /// Converts points from homogeneous to Euclidean space.
 /// 
 /// ## Parameters
@@ -678,19 +618,10 @@ pub fn compute_correspond_epilines(points: &core::Mat, which_image: i32, f: &cor
 /// each point (x1, x2, ... x(n-1), xn) is converted to (x1/xn, x2/xn, ..., x(n-1)/xn). When xn=0, the
 /// output point coordinates will be (0,0,0,...).
 pub fn convert_points_from_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_convertPointsFromHomogeneous_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_calib3d_cv_convertPointsFromHomogeneous_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_convertPointsFromHomogeneous_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_convertPointsHomogeneous_Mat_src_Mat_dst
 /// Converts points to/from homogeneous coordinates.
 /// 
 /// ## Parameters
@@ -703,19 +634,10 @@ pub fn convert_points_from_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> 
 /// 
 /// Note: The function is obsolete. Use one of the previous two functions instead.
 pub fn convert_points_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_convertPointsHomogeneous_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_calib3d_cv_convertPointsHomogeneous_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_convertPointsHomogeneous_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_convertPointsToHomogeneous_Mat_src_Mat_dst
 /// Converts points from Euclidean to homogeneous space.
 /// 
 /// ## Parameters
@@ -725,19 +647,10 @@ pub fn convert_points_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Resul
 /// The function converts points from Euclidean to homogeneous space by appending 1's to the tuple of
 /// point coordinates. That is, each point (x1, x2, ..., xn) is converted to (x1, x2, ..., xn, 1).
 pub fn convert_points_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_convertPointsToHomogeneous_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_calib3d_cv_convertPointsToHomogeneous_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_convertPointsToHomogeneous_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_correctMatches_Mat_F_Mat_points1_Mat_points2_Mat_newPoints1_Mat_newPoints2
 /// Refines coordinates of corresponding points.
 /// 
 /// ## Parameters
@@ -754,19 +667,10 @@ pub fn convert_points_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Re
 /// geometric distance between points <span lang='latex'>a</span> and <span lang='latex'>b</span> ) subject to the epipolar constraint
 /// <span lang='latex'>newPoints2^T * F * newPoints1 = 0</span> .
 pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, new_points1: &mut core::Mat, new_points2: &mut core::Mat) -> Result<()> {
-// identifier: cv_correctMatches_Mat_F_Mat_points1_Mat_points2_Mat_newPoints1_Mat_newPoints2
-  unsafe {
-    let rv = sys::cv_calib3d_cv_correctMatches_Mat_F_Mat_points1_Mat_points2_Mat_newPoints1_Mat_newPoints2(f.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), new_points1.as_raw_Mat(), new_points2.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_correctMatches_Mat_F_Mat_points1_Mat_points2_Mat_newPoints1_Mat_newPoints2(f.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), new_points1.as_raw_Mat(), new_points2.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_decomposeEssentialMat_Mat_E_Mat_R1_Mat_R2_Mat_t
 /// Decompose an essential matrix to possible rotations and translation.
 /// 
 /// ## Parameters
@@ -779,19 +683,10 @@ pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, 
 /// possible poses exists for a given E. They are <span lang='latex'>[R_1, t]</span>, <span lang='latex'>[R_1, -t]</span>, <span lang='latex'>[R_2, t]</span>, <span lang='latex'>[R_2, -t]</span>. By
 /// decomposing E, you can only get the direction of the translation, so the function returns unit t.
 pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
-// identifier: cv_decomposeEssentialMat_Mat_E_Mat_R1_Mat_R2_Mat_t
-  unsafe {
-    let rv = sys::cv_calib3d_cv_decomposeEssentialMat_Mat_E_Mat_R1_Mat_R2_Mat_t(e.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), t.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_decomposeEssentialMat_Mat_E_Mat_R1_Mat_R2_Mat_t(e.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_decomposeHomographyMat_Mat_H_Mat_K_VectorOfMat_rotations_VectorOfMat_translations_VectorOfMat_normals
 /// Decompose a homography matrix to rotation(s), translation(s) and plane normal(s).
 /// 
 /// ## Parameters
@@ -807,19 +702,10 @@ pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core:
 /// invalidated if point correspondences are available by applying positive depth constraint (all points
 /// must be in front of the camera). The decomposition method is described in detail in @cite Malis .
 pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut types::VectorOfMat, translations: &mut types::VectorOfMat, normals: &mut types::VectorOfMat) -> Result<i32> {
-// identifier: cv_decomposeHomographyMat_Mat_H_Mat_K_VectorOfMat_rotations_VectorOfMat_translations_VectorOfMat_normals
-  unsafe {
-    let rv = sys::cv_calib3d_cv_decomposeHomographyMat_Mat_H_Mat_K_VectorOfMat_rotations_VectorOfMat_translations_VectorOfMat_normals(h.as_raw_Mat(), k.as_raw_Mat(), rotations.as_raw_VectorOfMat(), translations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_decomposeHomographyMat_Mat_H_Mat_K_VectorOfMat_rotations_VectorOfMat_translations_VectorOfMat_normals(h.as_raw_Mat(), k.as_raw_Mat(), rotations.as_raw_VectorOfMat(), translations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat()) }.into_result()
 }
 
+// identifier: cv_decomposeProjectionMatrix_Mat_projMatrix_Mat_cameraMatrix_Mat_rotMatrix_Mat_transVect_Mat_rotMatrixX_Mat_rotMatrixY_Mat_rotMatrixZ_Mat_eulerAngles
 /// Decomposes a projection matrix into a rotation matrix and a camera matrix.
 /// 
 /// ## Parameters
@@ -849,19 +735,10 @@ pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut ty
 /// * rot_matrix_z: noArray()
 /// * euler_angles: noArray()
 pub fn decompose_projection_matrix(proj_matrix: &core::Mat, camera_matrix: &mut core::Mat, rot_matrix: &mut core::Mat, trans_vect: &mut core::Mat, rot_matrix_x: &mut core::Mat, rot_matrix_y: &mut core::Mat, rot_matrix_z: &mut core::Mat, euler_angles: &mut core::Mat) -> Result<()> {
-// identifier: cv_decomposeProjectionMatrix_Mat_projMatrix_Mat_cameraMatrix_Mat_rotMatrix_Mat_transVect_Mat_rotMatrixX_Mat_rotMatrixY_Mat_rotMatrixZ_Mat_eulerAngles
-  unsafe {
-    let rv = sys::cv_calib3d_cv_decomposeProjectionMatrix_Mat_projMatrix_Mat_cameraMatrix_Mat_rotMatrix_Mat_transVect_Mat_rotMatrixX_Mat_rotMatrixY_Mat_rotMatrixZ_Mat_eulerAngles(proj_matrix.as_raw_Mat(), camera_matrix.as_raw_Mat(), rot_matrix.as_raw_Mat(), trans_vect.as_raw_Mat(), rot_matrix_x.as_raw_Mat(), rot_matrix_y.as_raw_Mat(), rot_matrix_z.as_raw_Mat(), euler_angles.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_decomposeProjectionMatrix_Mat_projMatrix_Mat_cameraMatrix_Mat_rotMatrix_Mat_transVect_Mat_rotMatrixX_Mat_rotMatrixY_Mat_rotMatrixZ_Mat_eulerAngles(proj_matrix.as_raw_Mat(), camera_matrix.as_raw_Mat(), rot_matrix.as_raw_Mat(), trans_vect.as_raw_Mat(), rot_matrix_x.as_raw_Mat(), rot_matrix_y.as_raw_Mat(), rot_matrix_z.as_raw_Mat(), euler_angles.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_drawChessboardCorners_Mat_image_Size_patternSize_Mat_corners_bool_patternWasFound
 /// Renders the detected chessboard corners.
 /// 
 /// ## Parameters
@@ -875,19 +752,10 @@ pub fn decompose_projection_matrix(proj_matrix: &core::Mat, camera_matrix: &mut 
 /// The function draws individual chessboard corners detected either as red circles if the board was not
 /// found, or as colored corners connected with lines if the board was found.
 pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, corners: &core::Mat, pattern_was_found: bool) -> Result<()> {
-// identifier: cv_drawChessboardCorners_Mat_image_Size_patternSize_Mat_corners_bool_patternWasFound
-  unsafe {
-    let rv = sys::cv_calib3d_cv_drawChessboardCorners_Mat_image_Size_patternSize_Mat_corners_bool_patternWasFound(image.as_raw_Mat(), pattern_size, corners.as_raw_Mat(), pattern_was_found);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_drawChessboardCorners_Mat_image_Size_patternSize_Mat_corners_bool_patternWasFound(image.as_raw_Mat(), pattern_size, corners.as_raw_Mat(), pattern_was_found) }.into_result()
 }
 
+// identifier: cv_drawFrameAxes_Mat_image_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_float_length_int_thickness
 /// Draw axes of the world/object coordinate system from pose estimation. @sa solvePnP
 /// 
 /// ## Parameters
@@ -909,19 +777,10 @@ pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, 
 /// ## C++ default parameters:
 /// * thickness: 3
 pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &core::Mat, tvec: &core::Mat, length: f32, thickness: i32) -> Result<()> {
-// identifier: cv_drawFrameAxes_Mat_image_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_float_length_int_thickness
-  unsafe {
-    let rv = sys::cv_calib3d_cv_drawFrameAxes_Mat_image_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_float_length_int_thickness(image.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), length, thickness);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_drawFrameAxes_Mat_image_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_float_length_int_thickness(image.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), length, thickness) }.into_result()
 }
 
+// identifier: cv_estimateAffine2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters
 /// Computes an optimal affine transformation between two 2D point sets.
 /// 
 /// It computes
@@ -994,19 +853,10 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// * confidence: 0.99
 /// * refine_iters: 10
 pub fn estimate_affine2_d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-// identifier: cv_estimateAffine2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters
-  unsafe {
-    let rv = sys::cv_calib3d_cv_estimateAffine2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_estimateAffine2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_estimateAffine3D_Mat_src_Mat_dst_Mat_out_Mat_inliers_double_ransacThreshold_double_confidence
 /// Computes an optimal affine transformation between two 3D point sets.
 /// 
 /// It computes
@@ -1060,19 +910,10 @@ pub fn estimate_affine2_d(from: &core::Mat, to: &core::Mat, inliers: &mut core::
 /// * ransac_threshold: 3
 /// * confidence: 0.99
 pub fn estimate_affine3_d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat, inliers: &mut core::Mat, ransac_threshold: f64, confidence: f64) -> Result<i32> {
-// identifier: cv_estimateAffine3D_Mat_src_Mat_dst_Mat_out_Mat_inliers_double_ransacThreshold_double_confidence
-  unsafe {
-    let rv = sys::cv_calib3d_cv_estimateAffine3D_Mat_src_Mat_dst_Mat_out_Mat_inliers_double_ransacThreshold_double_confidence(src.as_raw_Mat(), dst.as_raw_Mat(), out.as_raw_Mat(), inliers.as_raw_Mat(), ransac_threshold, confidence);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_estimateAffine3D_Mat_src_Mat_dst_Mat_out_Mat_inliers_double_ransacThreshold_double_confidence(src.as_raw_Mat(), dst.as_raw_Mat(), out.as_raw_Mat(), inliers.as_raw_Mat(), ransac_threshold, confidence) }.into_result()
 }
 
+// identifier: cv_estimateAffinePartial2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters
 /// Computes an optimal limited affine transformation with 4 degrees of freedom between
 /// two 2D point sets.
 /// 
@@ -1126,19 +967,10 @@ pub fn estimate_affine3_d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 /// * confidence: 0.99
 /// * refine_iters: 10
 pub fn estimate_affine_partial2_d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-// identifier: cv_estimateAffinePartial2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters
-  unsafe {
-    let rv = sys::cv_calib3d_cv_estimateAffinePartial2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_estimateAffinePartial2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_filterHomographyDecompByVisibleRefpoints_VectorOfMat_rotations_VectorOfMat_normals_Mat_beforePoints_Mat_afterPoints_Mat_possibleSolutions_Mat_pointsMask
 /// Filters homography decompositions based on additional information.
 /// 
 /// ## Parameters
@@ -1160,19 +992,10 @@ pub fn estimate_affine_partial2_d(from: &core::Mat, to: &core::Mat, inliers: &mu
 /// ## C++ default parameters:
 /// * points_mask: noArray()
 pub fn filter_homography_decomp_by_visible_refpoints(rotations: &types::VectorOfMat, normals: &types::VectorOfMat, before_points: &core::Mat, after_points: &core::Mat, possible_solutions: &mut core::Mat, points_mask: &core::Mat) -> Result<()> {
-// identifier: cv_filterHomographyDecompByVisibleRefpoints_VectorOfMat_rotations_VectorOfMat_normals_Mat_beforePoints_Mat_afterPoints_Mat_possibleSolutions_Mat_pointsMask
-  unsafe {
-    let rv = sys::cv_calib3d_cv_filterHomographyDecompByVisibleRefpoints_VectorOfMat_rotations_VectorOfMat_normals_Mat_beforePoints_Mat_afterPoints_Mat_possibleSolutions_Mat_pointsMask(rotations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat(), before_points.as_raw_Mat(), after_points.as_raw_Mat(), possible_solutions.as_raw_Mat(), points_mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_filterHomographyDecompByVisibleRefpoints_VectorOfMat_rotations_VectorOfMat_normals_Mat_beforePoints_Mat_afterPoints_Mat_possibleSolutions_Mat_pointsMask(rotations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat(), before_points.as_raw_Mat(), after_points.as_raw_Mat(), possible_solutions.as_raw_Mat(), points_mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_filterSpeckles_Mat_img_double_newVal_int_maxSpeckleSize_double_maxDiff_Mat_buf
 /// Filters off small noise blobs (speckles) in the disparity map
 /// 
 /// ## Parameters
@@ -1189,33 +1012,15 @@ pub fn filter_homography_decomp_by_visible_refpoints(rotations: &types::VectorOf
 /// ## C++ default parameters:
 /// * buf: noArray()
 pub fn filter_speckles(img: &mut core::Mat, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: &mut core::Mat) -> Result<()> {
-// identifier: cv_filterSpeckles_Mat_img_double_newVal_int_maxSpeckleSize_double_maxDiff_Mat_buf
-  unsafe {
-    let rv = sys::cv_calib3d_cv_filterSpeckles_Mat_img_double_newVal_int_maxSpeckleSize_double_maxDiff_Mat_buf(img.as_raw_Mat(), new_val, max_speckle_size, max_diff, buf.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_filterSpeckles_Mat_img_double_newVal_int_maxSpeckleSize_double_maxDiff_Mat_buf(img.as_raw_Mat(), new_val, max_speckle_size, max_diff, buf.as_raw_Mat()) }.into_result()
 }
 
-pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region_size: core::Size) -> Result<bool> {
 // identifier: cv_find4QuadCornerSubpix_Mat_img_Mat_corners_Size_region_size
-  unsafe {
-    let rv = sys::cv_calib3d_cv_find4QuadCornerSubpix_Mat_img_Mat_corners_Size_region_size(img.as_raw_Mat(), corners.as_raw_Mat(), region_size);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region_size: core::Size) -> Result<bool> {
+    unsafe { sys::cv_calib3d_cv_find4QuadCornerSubpix_Mat_img_Mat_corners_Size_region_size(img.as_raw_Mat(), corners.as_raw_Mat(), region_size) }.into_result()
 }
 
+// identifier: cv_findChessboardCorners_Mat_image_Size_patternSize_Mat_corners_int_flags
 /// Finds the positions of internal corners of the chessboard.
 /// 
 /// ## Parameters
@@ -1271,19 +1076,10 @@ pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region
 /// ## C++ default parameters:
 /// * flags: CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE
 pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corners: &mut core::Mat, flags: i32) -> Result<bool> {
-// identifier: cv_findChessboardCorners_Mat_image_Size_patternSize_Mat_corners_int_flags
-  unsafe {
-    let rv = sys::cv_calib3d_cv_findChessboardCorners_Mat_image_Size_patternSize_Mat_corners_int_flags(image.as_raw_Mat(), pattern_size, corners.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_findChessboardCorners_Mat_image_Size_patternSize_Mat_corners_int_flags(image.as_raw_Mat(), pattern_size, corners.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_findEssentialMat_Mat_points1_Mat_points2_Mat_cameraMatrix_int_method_double_prob_double_threshold_Mat_mask
 /// Calculates an essential matrix from the corresponding points in two images.
 /// 
 /// ## Parameters
@@ -1320,19 +1116,10 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 /// * threshold: 1.0
 /// * mask: noArray()
 pub fn find_essential_map_matrix(points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, method: i32, prob: f64, threshold: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-// identifier: cv_findEssentialMat_Mat_points1_Mat_points2_Mat_cameraMatrix_int_method_double_prob_double_threshold_Mat_mask
-  unsafe {
-    let rv = sys::cv_calib3d_cv_findEssentialMat_Mat_points1_Mat_points2_Mat_cameraMatrix_int_method_double_prob_double_threshold_Mat_mask(points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), method, prob, threshold, mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_findEssentialMat_Mat_points1_Mat_points2_Mat_cameraMatrix_int_method_double_prob_double_threshold_Mat_mask(points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_findEssentialMat_Mat_points1_Mat_points2_double_focal_Point2d_pp_int_method_double_prob_double_threshold_Mat_mask
 /// @overload
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
@@ -1371,19 +1158,10 @@ pub fn find_essential_map_matrix(points1: &core::Mat, points2: &core::Mat, camer
 /// * threshold: 1.0
 /// * mask: noArray()
 pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-// identifier: cv_findEssentialMat_Mat_points1_Mat_points2_double_focal_Point2d_pp_int_method_double_prob_double_threshold_Mat_mask
-  unsafe {
-    let rv = sys::cv_calib3d_cv_findEssentialMat_Mat_points1_Mat_points2_double_focal_Point2d_pp_int_method_double_prob_double_threshold_Mat_mask(points1.as_raw_Mat(), points2.as_raw_Mat(), focal, pp, method, prob, threshold, mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_findEssentialMat_Mat_points1_Mat_points2_double_focal_Point2d_pp_int_method_double_prob_double_threshold_Mat_mask(points1.as_raw_Mat(), points2.as_raw_Mat(), focal, pp, method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_findFundamentalMat_Mat_points1_Mat_points2_Mat_mask_int_method_double_ransacReprojThreshold_double_confidence
 /// @overload
 ///
 /// ## C++ default parameters:
@@ -1391,19 +1169,10 @@ pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, 
 /// * ransac_reproj_threshold: 3.
 /// * confidence: 0.99
 pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
-// identifier: cv_findFundamentalMat_Mat_points1_Mat_points2_Mat_mask_int_method_double_ransacReprojThreshold_double_confidence
-  unsafe {
-    let rv = sys::cv_calib3d_cv_findFundamentalMat_Mat_points1_Mat_points2_Mat_mask_int_method_double_ransacReprojThreshold_double_confidence(points1.as_raw_Mat(), points2.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold, confidence);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_findFundamentalMat_Mat_points1_Mat_points2_Mat_mask_int_method_double_ransacReprojThreshold_double_confidence(points1.as_raw_Mat(), points2.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold, confidence) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_findFundamentalMat_Mat_points1_Mat_points2_int_method_double_ransacReprojThreshold_double_confidence_Mat_mask
 /// Calculates a fundamental matrix from the corresponding points in two images.
 /// 
 /// ## Parameters
@@ -1460,39 +1229,21 @@ pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut
 /// * ransac_reproj_threshold: 3.
 /// * confidence: 0.99
 /// * mask: noArray()
-pub fn find_fundamental_mat_v0(points1: &core::Mat, points2: &core::Mat, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-// identifier: cv_findFundamentalMat_Mat_points1_Mat_points2_int_method_double_ransacReprojThreshold_double_confidence_Mat_mask
-  unsafe {
-    let rv = sys::cv_calib3d_cv_findFundamentalMat_Mat_points1_Mat_points2_int_method_double_ransacReprojThreshold_double_confidence_Mat_mask(points1.as_raw_Mat(), points2.as_raw_Mat(), method, ransac_reproj_threshold, confidence, mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+pub fn find_fundamental_mat_1(points1: &core::Mat, points2: &core::Mat, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: &mut core::Mat) -> Result<core::Mat> {
+    unsafe { sys::cv_calib3d_cv_findFundamentalMat_Mat_points1_Mat_points2_int_method_double_ransacReprojThreshold_double_confidence_Mat_mask(points1.as_raw_Mat(), points2.as_raw_Mat(), method, ransac_reproj_threshold, confidence, mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_findHomography_Mat_srcPoints_Mat_dstPoints_Mat_mask_int_method_double_ransacReprojThreshold
 /// @overload
 ///
 /// ## C++ default parameters:
 /// * method: 0
 /// * ransac_reproj_threshold: 3
 pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mut core::Mat, method: i32, ransac_reproj_threshold: f64) -> Result<core::Mat> {
-// identifier: cv_findHomography_Mat_srcPoints_Mat_dstPoints_Mat_mask_int_method_double_ransacReprojThreshold
-  unsafe {
-    let rv = sys::cv_calib3d_cv_findHomography_Mat_srcPoints_Mat_dstPoints_Mat_mask_int_method_double_ransacReprojThreshold(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_findHomography_Mat_srcPoints_Mat_dstPoints_Mat_mask_int_method_double_ransacReprojThreshold(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_findHomography_Mat_srcPoints_Mat_dstPoints_int_method_double_ransacReprojThreshold_Mat_mask_int_maxIters_double_confidence
 /// Finds a perspective transformation between two planes.
 /// 
 /// ## Parameters
@@ -1560,19 +1311,10 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 /// * max_iters: 2000
 /// * confidence: 0.995
 pub fn find_homography_full(src_points: &core::Mat, dst_points: &core::Mat, method: i32, ransac_reproj_threshold: f64, mask: &mut core::Mat, max_iters: i32, confidence: f64) -> Result<core::Mat> {
-// identifier: cv_findHomography_Mat_srcPoints_Mat_dstPoints_int_method_double_ransacReprojThreshold_Mat_mask_int_maxIters_double_confidence
-  unsafe {
-    let rv = sys::cv_calib3d_cv_findHomography_Mat_srcPoints_Mat_dstPoints_int_method_double_ransacReprojThreshold_Mat_mask_int_maxIters_double_confidence(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), method, ransac_reproj_threshold, mask.as_raw_Mat(), max_iters, confidence);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_findHomography_Mat_srcPoints_Mat_dstPoints_int_method_double_ransacReprojThreshold_Mat_mask_int_maxIters_double_confidence(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), method, ransac_reproj_threshold, mask.as_raw_Mat(), max_iters, confidence) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_fisheye_calibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_image_size_Mat_K_Mat_D_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria
 /// Performs camera calibaration
 /// 
 /// ## Parameters
@@ -1611,19 +1353,10 @@ pub fn find_homography_full(src_points: &core::Mat, dst_points: &core::Mat, meth
 /// * flags: 0
 /// * criteria: TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 100, DBL_EPSILON)
 pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, k: &mut core::Mat, d: &mut core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-// identifier: cv_fisheye_calibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_image_size_Mat_K_Mat_D_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_calibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_image_size_Mat_K_Mat_D_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, k.as_raw_Mat(), d.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_calibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_image_size_Mat_K_Mat_D_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, k.as_raw_Mat(), d.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
+// identifier: cv_fisheye_distortPoints_Mat_undistorted_Mat_distorted_Mat_K_Mat_D_double_alpha
 /// Distorts 2D points using fisheye model.
 /// 
 /// ## Parameters
@@ -1641,19 +1374,10 @@ pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::Vecto
 /// ## C++ default parameters:
 /// * alpha: 0
 pub fn distort_points(undistorted: &core::Mat, distorted: &mut core::Mat, k: &core::Mat, d: &core::Mat, alpha: f64) -> Result<()> {
-// identifier: cv_fisheye_distortPoints_Mat_undistorted_Mat_distorted_Mat_K_Mat_D_double_alpha
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_distortPoints_Mat_undistorted_Mat_distorted_Mat_K_Mat_D_double_alpha(undistorted.as_raw_Mat(), distorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), alpha);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_distortPoints_Mat_undistorted_Mat_distorted_Mat_K_Mat_D_double_alpha(undistorted.as_raw_Mat(), distorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), alpha) }.into_result()
 }
 
+// identifier: cv_fisheye_estimateNewCameraMatrixForUndistortRectify_Mat_K_Mat_D_Size_image_size_Mat_R_Mat_P_double_balance_Size_new_size_double_fov_scale
 /// Estimates new camera matrix for undistortion or rectification.
 /// 
 /// ## Parameters
@@ -1673,38 +1397,39 @@ pub fn distort_points(undistorted: &core::Mat, distorted: &mut core::Mat, k: &co
 /// * new_size: Size()
 /// * fov_scale: 1.0
 pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &core::Mat, d: &core::Mat, image_size: core::Size, r: &core::Mat, p: &mut core::Mat, balance: f64, new_size: core::Size, fov_scale: f64) -> Result<()> {
-// identifier: cv_fisheye_estimateNewCameraMatrixForUndistortRectify_Mat_K_Mat_D_Size_image_size_Mat_R_Mat_P_double_balance_Size_new_size_double_fov_scale
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_estimateNewCameraMatrixForUndistortRectify_Mat_K_Mat_D_Size_image_size_Mat_R_Mat_P_double_balance_Size_new_size_double_fov_scale(k.as_raw_Mat(), d.as_raw_Mat(), image_size, r.as_raw_Mat(), p.as_raw_Mat(), balance, new_size, fov_scale);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_estimateNewCameraMatrixForUndistortRectify_Mat_K_Mat_D_Size_image_size_Mat_R_Mat_P_double_balance_Size_new_size_double_fov_scale(k.as_raw_Mat(), d.as_raw_Mat(), image_size, r.as_raw_Mat(), p.as_raw_Mat(), balance, new_size, fov_scale) }.into_result()
 }
 
+// identifier: cv_fisheye_initUndistortRectifyMap_Mat_K_Mat_D_Mat_R_Mat_P_Size_size_int_m1type_Mat_map1_Mat_map2
+/// Computes undistortion and rectification maps for image transform by cv::remap(). If D is empty zero
+/// distortion is used, if R or P is empty identity matrixes are used.
+/// 
+/// ## Parameters
+/// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
+/// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
+/// * R: Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3
+/// 1-channel or 1x1 3-channel
+/// * P: New camera matrix (3x3) or new projection matrix (3x4)
+/// * size: Undistorted image size.
+/// * m1type: Type of the first output map that can be CV_32FC1 or CV_16SC2 . See convertMaps()
+/// for details.
+/// * map1: The first output map.
+/// * map2: The second output map.
+pub fn init_undistort_rectify_map(k: &core::Mat, d: &core::Mat, r: &core::Mat, p: &core::Mat, size: core::Size, m1type: i32, map1: &mut core::Mat, map2: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_calib3d_cv_fisheye_initUndistortRectifyMap_Mat_K_Mat_D_Mat_R_Mat_P_Size_size_int_m1type_Mat_map1_Mat_map2(k.as_raw_Mat(), d.as_raw_Mat(), r.as_raw_Mat(), p.as_raw_Mat(), size, m1type, map1.as_raw_Mat(), map2.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_fisheye_projectPoints_Mat_objectPoints_Mat_imagePoints_Mat_rvec_Mat_tvec_Mat_K_Mat_D_double_alpha_Mat_jacobian
 /// @overload
 ///
 /// ## C++ default parameters:
 /// * alpha: 0
 /// * jacobian: noArray()
 pub fn fisheye_project_points(object_points: &core::Mat, image_points: &mut core::Mat, rvec: &core::Mat, tvec: &core::Mat, k: &core::Mat, d: &core::Mat, alpha: f64, jacobian: &mut core::Mat) -> Result<()> {
-// identifier: cv_fisheye_projectPoints_Mat_objectPoints_Mat_imagePoints_Mat_rvec_Mat_tvec_Mat_K_Mat_D_double_alpha_Mat_jacobian
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_projectPoints_Mat_objectPoints_Mat_imagePoints_Mat_rvec_Mat_tvec_Mat_K_Mat_D_double_alpha_Mat_jacobian(object_points.as_raw_Mat(), image_points.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), alpha, jacobian.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_projectPoints_Mat_objectPoints_Mat_imagePoints_Mat_rvec_Mat_tvec_Mat_K_Mat_D_double_alpha_Mat_jacobian(object_points.as_raw_Mat(), image_points.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), alpha, jacobian.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_fisheye_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_T_int_flags_TermCriteria_criteria
 /// Performs stereo calibration
 /// 
 /// ## Parameters
@@ -1742,19 +1467,10 @@ pub fn fisheye_project_points(object_points: &core::Mat, image_points: &mut core
 /// * flags: fisheye::CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 100, DBL_EPSILON)
 pub fn stereo_calibrate(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, k1: &mut core::Mat, d1: &mut core::Mat, k2: &mut core::Mat, d2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-// identifier: cv_fisheye_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_T_int_flags_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_T_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), k1.as_raw_Mat(), d1.as_raw_Mat(), k2.as_raw_Mat(), d2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), flags, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_T_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), k1.as_raw_Mat(), d1.as_raw_Mat(), k2.as_raw_Mat(), d2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
+// identifier: cv_fisheye_stereoRectify_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_tvec_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_Size_newImageSize_double_balance_double_fov_scale
 /// Stereo rectification for fisheye camera model
 /// 
 /// ## Parameters
@@ -1791,19 +1507,10 @@ pub fn stereo_calibrate(object_points: &types::VectorOfMat, image_points1: &type
 /// * balance: 0.0
 /// * fov_scale: 1.0
 pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core::Mat, image_size: core::Size, r: &core::Mat, tvec: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, q: &mut core::Mat, flags: i32, new_image_size: core::Size, balance: f64, fov_scale: f64) -> Result<()> {
-// identifier: cv_fisheye_stereoRectify_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_tvec_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_Size_newImageSize_double_balance_double_fov_scale
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_stereoRectify_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_tvec_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_Size_newImageSize_double_balance_double_fov_scale(k1.as_raw_Mat(), d1.as_raw_Mat(), k2.as_raw_Mat(), d2.as_raw_Mat(), image_size, r.as_raw_Mat(), tvec.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), q.as_raw_Mat(), flags, new_image_size, balance, fov_scale);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_stereoRectify_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_tvec_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_Size_newImageSize_double_balance_double_fov_scale(k1.as_raw_Mat(), d1.as_raw_Mat(), k2.as_raw_Mat(), d2.as_raw_Mat(), image_size, r.as_raw_Mat(), tvec.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), q.as_raw_Mat(), flags, new_image_size, balance, fov_scale) }.into_result()
 }
 
+// identifier: cv_fisheye_undistortImage_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_Knew_Size_new_size
 /// Transforms an image to compensate for fisheye lens distortion.
 /// 
 /// ## Parameters
@@ -1837,19 +1544,10 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 /// * knew: cv::noArray()
 /// * new_size: Size()
 pub fn fisheye_undistort_image(distorted: &core::Mat, undistorted: &mut core::Mat, k: &core::Mat, d: &core::Mat, knew: &core::Mat, new_size: core::Size) -> Result<()> {
-// identifier: cv_fisheye_undistortImage_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_Knew_Size_new_size
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_undistortImage_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_Knew_Size_new_size(distorted.as_raw_Mat(), undistorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), knew.as_raw_Mat(), new_size);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_undistortImage_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_Knew_Size_new_size(distorted.as_raw_Mat(), undistorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), knew.as_raw_Mat(), new_size) }.into_result()
 }
 
+// identifier: cv_fisheye_undistortPoints_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_R_Mat_P
 /// Undistorts 2D points using fisheye model
 /// 
 /// ## Parameters
@@ -1866,33 +1564,52 @@ pub fn fisheye_undistort_image(distorted: &core::Mat, undistorted: &mut core::Ma
 /// * r: noArray()
 /// * p: noArray()
 pub fn fisheye_undistort_points(distorted: &core::Mat, undistorted: &mut core::Mat, k: &core::Mat, d: &core::Mat, r: &core::Mat, p: &core::Mat) -> Result<()> {
-// identifier: cv_fisheye_undistortPoints_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_R_Mat_P
-  unsafe {
-    let rv = sys::cv_calib3d_cv_fisheye_undistortPoints_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_R_Mat_P(distorted.as_raw_Mat(), undistorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), r.as_raw_Mat(), p.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_fisheye_undistortPoints_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_R_Mat_P(distorted.as_raw_Mat(), undistorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), r.as_raw_Mat(), p.as_raw_Mat()) }.into_result()
 }
 
-pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity: i32, number_of_disparities: i32, sad_window_size: i32) -> Result<core::Rect> {
+// identifier: cv_getOptimalNewCameraMatrix_Mat_cameraMatrix_Mat_distCoeffs_Size_imageSize_double_alpha_Size_newImgSize_Rect_X_validPixROI_bool_centerPrincipalPoint
+/// Returns the new camera matrix based on the free scaling parameter.
+/// 
+/// ## Parameters
+/// * cameraMatrix: Input camera matrix.
+/// * distCoeffs: Input vector of distortion coefficients
+/// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
+/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// assumed.
+/// * imageSize: Original image size.
+/// * alpha: Free scaling parameter between 0 (when all the pixels in the undistorted image are
+/// valid) and 1 (when all the source image pixels are retained in the undistorted image). See
+/// stereoRectify for details.
+/// * newImgSize: Image size after rectification. By default, it is set to imageSize .
+/// * validPixROI: Optional output rectangle that outlines all-good-pixels region in the
+/// undistorted image. See roi1, roi2 description in stereoRectify .
+/// * centerPrincipalPoint: Optional flag that indicates whether in the new camera matrix the
+/// principal point should be at the image center or not. By default, the principal point is chosen to
+/// best fit a subset of the source image (determined by alpha) to the corrected image.
+/// @return new_camera_matrix Output new camera matrix.
+/// 
+/// The function computes and returns the optimal new camera matrix based on the free scaling parameter.
+/// By varying this parameter, you may retrieve only sensible pixels alpha=0 , keep all the original
+/// image pixels if there is valuable information in the corners alpha=1 , or get something in between.
+/// When alpha\>0 , the undistorted result is likely to have some black pixels corresponding to
+/// "virtual" pixels outside of the captured distorted image. The original camera matrix, distortion
+/// coefficients, the computed new camera matrix, and newImageSize should be passed to
+/// initUndistortRectifyMap to produce the maps for remap .
+///
+/// ## C++ default parameters:
+/// * new_img_size: Size()
+/// * valid_pix_roi: 0
+/// * center_principal_point: false
+pub fn get_optimal_new_camera_matrix(camera_matrix: &core::Mat, dist_coeffs: &core::Mat, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: &mut core::Rect, center_principal_point: bool) -> Result<core::Mat> {
+    unsafe { sys::cv_calib3d_cv_getOptimalNewCameraMatrix_Mat_cameraMatrix_Mat_distCoeffs_Size_imageSize_double_alpha_Size_newImgSize_Rect_X_validPixROI_bool_centerPrincipalPoint(camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_size, alpha, new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|x| core::Mat { ptr: x })
+}
+
 // identifier: cv_getValidDisparityROI_Rect_roi1_Rect_roi2_int_minDisparity_int_numberOfDisparities_int_SADWindowSize
-  unsafe {
-    let rv = sys::cv_calib3d_cv_getValidDisparityROI_Rect_roi1_Rect_roi2_int_minDisparity_int_numberOfDisparities_int_SADWindowSize(roi1, roi2, min_disparity, number_of_disparities, sad_window_size);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity: i32, number_of_disparities: i32, sad_window_size: i32) -> Result<core::Rect> {
+    unsafe { sys::cv_calib3d_cv_getValidDisparityROI_Rect_roi1_Rect_roi2_int_minDisparity_int_numberOfDisparities_int_SADWindowSize(roi1, roi2, min_disparity, number_of_disparities, sad_window_size) }.into_result()
 }
 
+// identifier: cv_initCameraMatrix2D_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_double_aspectRatio
 /// Finds an initial camera matrix from 3D-2D point correspondences.
 /// 
 /// ## Parameters
@@ -1912,19 +1629,10 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 /// ## C++ default parameters:
 /// * aspect_ratio: 1.0
 pub fn init_camera_matrix2_d(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
-// identifier: cv_initCameraMatrix2D_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_double_aspectRatio
-  unsafe {
-    let rv = sys::cv_calib3d_cv_initCameraMatrix2D_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_double_aspectRatio(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, aspect_ratio);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_initCameraMatrix2D_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_double_aspectRatio(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, aspect_ratio) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_matMulDeriv_Mat_A_Mat_B_Mat_dABdA_Mat_dABdB
 /// Computes partial derivatives of the matrix product for each multiplied matrix.
 /// 
 /// ## Parameters
@@ -1939,19 +1647,10 @@ pub fn init_camera_matrix2_d(object_points: &types::VectorOfMat, image_points: &
 /// the elements of each of the two input matrices. The function is used to compute the Jacobian
 /// matrices in stereoCalibrate but can also be used in any other similar optimization function.
 pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a_bd_b: &mut core::Mat) -> Result<()> {
-// identifier: cv_matMulDeriv_Mat_A_Mat_B_Mat_dABdA_Mat_dABdB
-  unsafe {
-    let rv = sys::cv_calib3d_cv_matMulDeriv_Mat_A_Mat_B_Mat_dABdA_Mat_dABdB(a.as_raw_Mat(), b.as_raw_Mat(), d_a_bd_a.as_raw_Mat(), d_a_bd_b.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_matMulDeriv_Mat_A_Mat_B_Mat_dABdA_Mat_dABdB(a.as_raw_Mat(), b.as_raw_Mat(), d_a_bd_a.as_raw_Mat(), d_a_bd_b.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_projectPoints_Mat_objectPoints_Mat_rvec_Mat_tvec_Mat_cameraMatrix_Mat_distCoeffs_Mat_imagePoints_Mat_jacobian_double_aspectRatio
 /// Projects 3D points to an image plane.
 /// 
 /// ## Parameters
@@ -1990,19 +1689,10 @@ pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a
 /// * jacobian: noArray()
 /// * aspect_ratio: 0
 pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, image_points: &mut core::Mat, jacobian: &mut core::Mat, aspect_ratio: f64) -> Result<()> {
-// identifier: cv_projectPoints_Mat_objectPoints_Mat_rvec_Mat_tvec_Mat_cameraMatrix_Mat_distCoeffs_Mat_imagePoints_Mat_jacobian_double_aspectRatio
-  unsafe {
-    let rv = sys::cv_calib3d_cv_projectPoints_Mat_objectPoints_Mat_rvec_Mat_tvec_Mat_cameraMatrix_Mat_distCoeffs_Mat_imagePoints_Mat_jacobian_double_aspectRatio(object_points.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_points.as_raw_Mat(), jacobian.as_raw_Mat(), aspect_ratio);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_projectPoints_Mat_objectPoints_Mat_rvec_Mat_tvec_Mat_cameraMatrix_Mat_distCoeffs_Mat_imagePoints_Mat_jacobian_double_aspectRatio(object_points.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_points.as_raw_Mat(), jacobian.as_raw_Mat(), aspect_ratio) }.into_result()
 }
 
+// identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_R_Mat_t_double_focal_Point2d_pp_Mat_mask
 /// @overload
 /// ## Parameters
 /// * E: The input essential matrix.
@@ -2034,19 +1724,10 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 /// * pp: Point2d(0, 0)
 /// * mask: noArray()
 pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, focal: f64, pp: core::Point2d, mask: &mut core::Mat) -> Result<i32> {
-// identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_R_Mat_t_double_focal_Point2d_pp_Mat_mask
-  unsafe {
-    let rv = sys::cv_calib3d_cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_R_Mat_t_double_focal_Point2d_pp_Mat_mask(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), focal, pp, mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_R_Mat_t_double_focal_Point2d_pp_Mat_mask(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), focal, pp, mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask
 /// Recover relative camera rotation and translation from an estimated essential matrix and the
 /// corresponding points in two images, using cheirality check. Returns the number of inliers which pass
 /// the check.
@@ -2096,19 +1777,10 @@ pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: 
 /// ## C++ default parameters:
 /// * mask: noArray()
 pub fn recover_pose_matrix(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, mask: &mut core::Mat) -> Result<i32> {
-// identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask
-  unsafe {
-    let rv = sys::cv_calib3d_cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_double_distanceThresh_Mat_mask_Mat_triangulatedPoints
 /// @overload
 /// ## Parameters
 /// * E: The input essential matrix.
@@ -2130,20 +1802,16 @@ pub fn recover_pose_matrix(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// ## C++ default parameters:
 /// * mask: noArray()
 /// * triangulated_points: noArray()
-pub fn recover_pose_v0(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, distance_thresh: f64, mask: &mut core::Mat, triangulated_points: &mut core::Mat) -> Result<i32> {
-// identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_double_distanceThresh_Mat_mask_Mat_triangulatedPoints
-  unsafe {
-    let rv = sys::cv_calib3d_cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_double_distanceThresh_Mat_mask_Mat_triangulatedPoints(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), distance_thresh, mask.as_raw_Mat(), triangulated_points.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn recover_pose_1(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, distance_thresh: f64, mask: &mut core::Mat, triangulated_points: &mut core::Mat) -> Result<i32> {
+    unsafe { sys::cv_calib3d_cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_double_distanceThresh_Mat_mask_Mat_triangulatedPoints(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), distance_thresh, mask.as_raw_Mat(), triangulated_points.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_rectify3Collinear_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Mat_cameraMatrix3_Mat_distCoeffs3_VectorOfMat_imgpt1_VectorOfMat_imgpt3_Size_imageSize_Mat_R12_Mat_T12_Mat_R13_Mat_T13_Mat_R1_Mat_R2_Mat_R3_Mat_P1_Mat_P2_Mat_P3_Mat_Q_double_alpha_Size_newImgSize_Rect_X_roi1_Rect_X_roi2_int_flags
+pub fn rectify3_collinear(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, camera_matrix2: &core::Mat, dist_coeffs2: &core::Mat, camera_matrix3: &core::Mat, dist_coeffs3: &core::Mat, imgpt1: &types::VectorOfMat, imgpt3: &types::VectorOfMat, image_size: core::Size, r12: &core::Mat, t12: &core::Mat, r13: &core::Mat, t13: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, r3: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, p3: &mut core::Mat, q: &mut core::Mat, alpha: f64, new_img_size: core::Size, roi1: &mut core::Rect, roi2: &mut core::Rect, flags: i32) -> Result<f32> {
+    unsafe { sys::cv_calib3d_cv_rectify3Collinear_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Mat_cameraMatrix3_Mat_distCoeffs3_VectorOfMat_imgpt1_VectorOfMat_imgpt3_Size_imageSize_Mat_R12_Mat_T12_Mat_R13_Mat_T13_Mat_R1_Mat_R2_Mat_R3_Mat_P1_Mat_P2_Mat_P3_Mat_Q_double_alpha_Size_newImgSize_Rect_X_roi1_Rect_X_roi2_int_flags(camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), camera_matrix3.as_raw_Mat(), dist_coeffs3.as_raw_Mat(), imgpt1.as_raw_VectorOfMat(), imgpt3.as_raw_VectorOfMat(), image_size, r12.as_raw_Mat(), t12.as_raw_Mat(), r13.as_raw_Mat(), t13.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), r3.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), p3.as_raw_Mat(), q.as_raw_Mat(), alpha, new_img_size, roi1, roi2, flags) }.into_result()
+}
+
+// identifier: cv_reprojectImageTo3D_Mat_disparity_Mat__3dImage_Mat_Q_bool_handleMissingValues_int_ddepth
 /// Reprojects a disparity image to 3D space.
 /// 
 /// ## Parameters
@@ -2175,19 +1843,10 @@ pub fn recover_pose_v0(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, 
 /// * handle_missing_values: false
 /// * ddepth: -1
 pub fn reproject_image_to3_d(disparity: &core::Mat, _3d_image: &mut core::Mat, q: &core::Mat, handle_missing_values: bool, ddepth: i32) -> Result<()> {
-// identifier: cv_reprojectImageTo3D_Mat_disparity_Mat__3dImage_Mat_Q_bool_handleMissingValues_int_ddepth
-  unsafe {
-    let rv = sys::cv_calib3d_cv_reprojectImageTo3D_Mat_disparity_Mat__3dImage_Mat_Q_bool_handleMissingValues_int_ddepth(disparity.as_raw_Mat(), _3d_image.as_raw_Mat(), q.as_raw_Mat(), handle_missing_values, ddepth);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_reprojectImageTo3D_Mat_disparity_Mat__3dImage_Mat_Q_bool_handleMissingValues_int_ddepth(disparity.as_raw_Mat(), _3d_image.as_raw_Mat(), q.as_raw_Mat(), handle_missing_values, ddepth) }.into_result()
 }
 
+// identifier: cv_sampsonDistance_Mat_pt1_Mat_pt2_Mat_F
 /// Calculates the Sampson Distance between two points.
 /// 
 /// The function cv::sampsonDistance calculates and returns the first order approximation of the geometric error as:
@@ -2206,19 +1865,10 @@ pub fn reproject_image_to3_d(disparity: &core::Mat, _3d_image: &mut core::Mat, q
 /// * F: fundamental matrix
 /// @return The computed Sampson distance.
 pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Result<f64> {
-// identifier: cv_sampsonDistance_Mat_pt1_Mat_pt2_Mat_F
-  unsafe {
-    let rv = sys::cv_calib3d_cv_sampsonDistance_Mat_pt1_Mat_pt2_Mat_F(pt1.as_raw_Mat(), pt2.as_raw_Mat(), f.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_sampsonDistance_Mat_pt1_Mat_pt2_Mat_F(pt1.as_raw_Mat(), pt2.as_raw_Mat(), f.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_solveP3P_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags
 /// Finds an object pose from 3 3D-2D point correspondences.
 /// 
 /// ## Parameters
@@ -2243,19 +1893,10 @@ pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Resu
 /// The function estimates the object pose given 3 object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients.
 pub fn solve_p3_p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32) -> Result<i32> {
-// identifier: cv_solveP3P_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags
-  unsafe {
-    let rv = sys::cv_calib3d_cv_solveP3P_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_solveP3P_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags) }.into_result()
 }
 
+// identifier: cv_solvePnPRansac_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_iterationsCount_float_reprojectionError_double_confidence_Mat_inliers_int_flags
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
 /// 
 /// ## Parameters
@@ -2308,19 +1949,10 @@ pub fn solve_p3_p(object_points: &core::Mat, image_points: &core::Mat, camera_ma
 /// * inliers: noArray()
 /// * flags: SOLVEPNP_ITERATIVE
 pub fn solve_pn_p_ransac(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut core::Mat, flags: i32) -> Result<bool> {
-// identifier: cv_solvePnPRansac_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_iterationsCount_float_reprojectionError_double_confidence_Mat_inliers_int_flags
-  unsafe {
-    let rv = sys::cv_calib3d_cv_solvePnPRansac_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_iterationsCount_float_reprojectionError_double_confidence_Mat_inliers_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_solvePnPRansac_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_iterationsCount_float_reprojectionError_double_confidence_Mat_inliers_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_solvePnP_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_flags
 /// Finds an object pose from 3D-2D point correspondences.
 /// 
 /// ## Parameters
@@ -2484,19 +2116,10 @@ pub fn solve_pn_p_ransac(object_points: &core::Mat, image_points: &core::Mat, ca
 /// * use_extrinsic_guess: false
 /// * flags: SOLVEPNP_ITERATIVE
 pub fn solve_pn_p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
-// identifier: cv_solvePnP_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_flags
-  unsafe {
-    let rv = sys::cv_calib3d_cv_solvePnP_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_solvePnP_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, flags) }.into_result()
 }
 
+// identifier: cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_Mat_perViewErrors_int_flags_TermCriteria_criteria
 /// Calibrates the stereo camera.
 /// 
 /// ## Parameters
@@ -2596,38 +2219,20 @@ pub fn solve_pn_p(object_points: &core::Mat, image_points: &core::Mat, camera_ma
 /// ## C++ default parameters:
 /// * flags: CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6)
-pub fn stereo_calibrate_v0(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, per_view_errors: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-// identifier: cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_Mat_perViewErrors_int_flags_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_calib3d_cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_Mat_perViewErrors_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), per_view_errors.as_raw_Mat(), flags, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn stereo_calibrate_1(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, per_view_errors: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    unsafe { sys::cv_calib3d_cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_Mat_perViewErrors_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), per_view_errors.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
+// identifier: cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_int_flags_TermCriteria_criteria
 ///
 /// ## C++ default parameters:
 /// * flags: CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6)
-pub fn stereo_calibrate_v1(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-// identifier: cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_int_flags_TermCriteria_criteria
-  unsafe {
-    let rv = sys::cv_calib3d_cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), flags, criteria.as_raw_TermCriteria());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn stereo_calibrate_2(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    unsafe { sys::cv_calib3d_cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_int_flags_TermCriteria_criteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
+// identifier: cv_stereoRectifyUncalibrated_Mat_points1_Mat_points2_Mat_F_Size_imgSize_Mat_H1_Mat_H2_double_threshold
 /// Computes a rectification transform for an uncalibrated stereo camera.
 /// 
 /// ## Parameters
@@ -2662,19 +2267,101 @@ pub fn stereo_calibrate_v1(object_points: &types::VectorOfMat, image_points1: &t
 /// ## C++ default parameters:
 /// * threshold: 5
 pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: &core::Mat, img_size: core::Size, h1: &mut core::Mat, h2: &mut core::Mat, threshold: f64) -> Result<bool> {
-// identifier: cv_stereoRectifyUncalibrated_Mat_points1_Mat_points2_Mat_F_Size_imgSize_Mat_H1_Mat_H2_double_threshold
-  unsafe {
-    let rv = sys::cv_calib3d_cv_stereoRectifyUncalibrated_Mat_points1_Mat_points2_Mat_F_Size_imgSize_Mat_H1_Mat_H2_double_threshold(points1.as_raw_Mat(), points2.as_raw_Mat(), f.as_raw_Mat(), img_size, h1.as_raw_Mat(), h2.as_raw_Mat(), threshold);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_stereoRectifyUncalibrated_Mat_points1_Mat_points2_Mat_F_Size_imgSize_Mat_H1_Mat_H2_double_threshold(points1.as_raw_Mat(), points2.as_raw_Mat(), f.as_raw_Mat(), img_size, h1.as_raw_Mat(), h2.as_raw_Mat(), threshold) }.into_result()
 }
 
+// identifier: cv_stereoRectify_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_double_alpha_Size_newImageSize_Rect_X_validPixROI1_Rect_X_validPixROI2
+/// Computes rectification transforms for each head of a calibrated stereo camera.
+/// 
+/// ## Parameters
+/// * cameraMatrix1: First camera matrix.
+/// * distCoeffs1: First camera distortion parameters.
+/// * cameraMatrix2: Second camera matrix.
+/// * distCoeffs2: Second camera distortion parameters.
+/// * imageSize: Size of the image used for stereo calibration.
+/// * R: Rotation matrix between the coordinate systems of the first and the second cameras.
+/// * T: Translation vector between coordinate systems of the cameras.
+/// * R1: Output 3x3 rectification transform (rotation matrix) for the first camera.
+/// * R2: Output 3x3 rectification transform (rotation matrix) for the second camera.
+/// * P1: Output 3x4 projection matrix in the new (rectified) coordinate systems for the first
+/// camera.
+/// * P2: Output 3x4 projection matrix in the new (rectified) coordinate systems for the second
+/// camera.
+/// * Q: Output <span lang='latex'>4 \times 4</span> disparity-to-depth mapping matrix (see reprojectImageTo3D ).
+/// * flags: Operation flags that may be zero or CALIB_ZERO_DISPARITY . If the flag is set,
+/// the function makes the principal points of each camera have the same pixel coordinates in the
+/// rectified views. And if the flag is not set, the function may still shift the images in the
+/// horizontal or vertical direction (depending on the orientation of epipolar lines) to maximize the
+/// useful image area.
+/// * alpha: Free scaling parameter. If it is -1 or absent, the function performs the default
+/// scaling. Otherwise, the parameter should be between 0 and 1. alpha=0 means that the rectified
+/// images are zoomed and shifted so that only valid pixels are visible (no black areas after
+/// rectification). alpha=1 means that the rectified image is decimated and shifted so that all the
+/// pixels from the original images from the cameras are retained in the rectified images (no source
+/// image pixels are lost). Obviously, any intermediate value yields an intermediate result between
+/// those two extreme cases.
+/// * newImageSize: New image resolution after rectification. The same size should be passed to
+/// initUndistortRectifyMap (see the stereo_calib.cpp sample in OpenCV samples directory). When (0,0)
+/// is passed (default), it is set to the original imageSize . Setting it to larger value can help you
+/// preserve details in the original image, especially when there is a big radial distortion.
+/// * validPixROI1: Optional output rectangles inside the rectified images where all the pixels
+/// are valid. If alpha=0 , the ROIs cover the whole images. Otherwise, they are likely to be smaller
+/// (see the picture below).
+/// * validPixROI2: Optional output rectangles inside the rectified images where all the pixels
+/// are valid. If alpha=0 , the ROIs cover the whole images. Otherwise, they are likely to be smaller
+/// (see the picture below).
+/// 
+/// The function computes the rotation matrices for each camera that (virtually) make both camera image
+/// planes the same plane. Consequently, this makes all the epipolar lines parallel and thus simplifies
+/// the dense stereo correspondence problem. The function takes the matrices computed by stereoCalibrate
+/// as input. As output, it provides two rotation matrices and also two projection matrices in the new
+/// coordinates. The function distinguishes the following two cases:
+/// 
+/// *   **Horizontal stereo**: the first and the second camera views are shifted relative to each other
+/// mainly along the x axis (with possible small vertical shift). In the rectified images, the
+/// corresponding epipolar lines in the left and right cameras are horizontal and have the same
+/// y-coordinate. P1 and P2 look like:
+/// 
+/// <div lang='latex'>\texttt{P1} = \begin{bmatrix} f & 0 & cx_1 & 0 \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}</div>
+/// 
+/// <div lang='latex'>\texttt{P2} = \begin{bmatrix} f & 0 & cx_2 & T_x*f \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} ,</div>
+/// 
+/// where <span lang='latex'>T_x</span> is a horizontal shift between the cameras and <span lang='latex'>cx_1=cx_2</span> if
+/// CALIB_ZERO_DISPARITY is set.
+/// 
+/// *   **Vertical stereo**: the first and the second camera views are shifted relative to each other
+/// mainly in vertical direction (and probably a bit in the horizontal direction too). The epipolar
+/// lines in the rectified images are vertical and have the same x-coordinate. P1 and P2 look like:
+/// 
+/// <div lang='latex'>\texttt{P1} = \begin{bmatrix} f & 0 & cx & 0 \\ 0 & f & cy_1 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}</div>
+/// 
+/// <div lang='latex'>\texttt{P2} = \begin{bmatrix} f & 0 & cx & 0 \\ 0 & f & cy_2 & T_y*f \\ 0 & 0 & 1 & 0 \end{bmatrix} ,</div>
+/// 
+/// where <span lang='latex'>T_y</span> is a vertical shift between the cameras and <span lang='latex'>cy_1=cy_2</span> if CALIB_ZERO_DISPARITY is
+/// set.
+/// 
+/// As you can see, the first three columns of P1 and P2 will effectively be the new "rectified" camera
+/// matrices. The matrices, together with R1 and R2 , can then be passed to initUndistortRectifyMap to
+/// initialize the rectification map for each camera.
+/// 
+/// See below the screenshot from the stereo_calib.cpp sample. Some red horizontal lines pass through
+/// the corresponding image regions. This means that the images are well rectified, which is what most
+/// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
+/// their interiors are all valid pixels.
+/// 
+/// ![image](pics/stereo_undistort.jpg)
+///
+/// ## C++ default parameters:
+/// * flags: CALIB_ZERO_DISPARITY
+/// * alpha: -1
+/// * new_image_size: Size()
+/// * valid_pix_roi1: 0
+/// * valid_pix_roi2: 0
+pub fn stereo_rectify_1(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, camera_matrix2: &core::Mat, dist_coeffs2: &core::Mat, image_size: core::Size, r: &core::Mat, t: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, q: &mut core::Mat, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
+    unsafe { sys::cv_calib3d_cv_stereoRectify_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_double_alpha_Size_newImageSize_Rect_X_validPixROI1_Rect_X_validPixROI2(camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), q.as_raw_Mat(), flags, alpha, new_image_size, valid_pix_roi1, valid_pix_roi2) }.into_result()
+}
+
+// identifier: cv_triangulatePoints_Mat_projMatr1_Mat_projMatr2_Mat_projPoints1_Mat_projPoints2_Mat_points4D
 /// Reconstructs points by triangulation.
 /// 
 /// ## Parameters
@@ -2696,516 +2383,222 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 /// @sa
 /// reprojectImageTo3D
 pub fn triangulate_points(proj_matr1: &core::Mat, proj_matr2: &core::Mat, proj_points1: &core::Mat, proj_points2: &core::Mat, points4_d: &mut core::Mat) -> Result<()> {
-// identifier: cv_triangulatePoints_Mat_projMatr1_Mat_projMatr2_Mat_projPoints1_Mat_projPoints2_Mat_points4D
-  unsafe {
-    let rv = sys::cv_calib3d_cv_triangulatePoints_Mat_projMatr1_Mat_projMatr2_Mat_projPoints1_Mat_projPoints2_Mat_points4D(proj_matr1.as_raw_Mat(), proj_matr2.as_raw_Mat(), proj_points1.as_raw_Mat(), proj_points2.as_raw_Mat(), points4_d.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_triangulatePoints_Mat_projMatr1_Mat_projMatr2_Mat_projPoints1_Mat_projPoints2_Mat_points4D(proj_matr1.as_raw_Mat(), proj_matr2.as_raw_Mat(), proj_points1.as_raw_Mat(), proj_points2.as_raw_Mat(), points4_d.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_validateDisparity_Mat_disparity_Mat_cost_int_minDisparity_int_numberOfDisparities_int_disp12MaxDisp
 ///
 /// ## C++ default parameters:
 /// * disp12_max_disp: 1
 pub fn validate_disparity(disparity: &mut core::Mat, cost: &core::Mat, min_disparity: i32, number_of_disparities: i32, disp12_max_disp: i32) -> Result<()> {
-// identifier: cv_validateDisparity_Mat_disparity_Mat_cost_int_minDisparity_int_numberOfDisparities_int_disp12MaxDisp
-  unsafe {
-    let rv = sys::cv_calib3d_cv_validateDisparity_Mat_disparity_Mat_cost_int_minDisparity_int_numberOfDisparities_int_disp12MaxDisp(disparity.as_raw_Mat(), cost.as_raw_Mat(), min_disparity, number_of_disparities, disp12_max_disp);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_calib3d_cv_validateDisparity_Mat_disparity_Mat_cost_int_minDisparity_int_numberOfDisparities_int_disp12MaxDisp(disparity.as_raw_Mat(), cost.as_raw_Mat(), min_disparity, number_of_disparities, disp12_max_disp) }.into_result()
 }
 
 impl CirclesGridFinderParameters {
 
 }
+
 impl CirclesGridFinderParameters2 {
 
-  pub fn new() -> Result<super::calib3d::CirclesGridFinderParameters2> {
-  // identifier: cv_CirclesGridFinderParameters2_CirclesGridFinderParameters2
-    unsafe {
-      let rv = sys::cv_calib3d_cv_CirclesGridFinderParameters2_CirclesGridFinderParameters2();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    // identifier: cv_CirclesGridFinderParameters2_CirclesGridFinderParameters2
+    pub fn new() -> Result<crate::calib3d::CirclesGridFinderParameters2> {
+        unsafe { sys::cv_calib3d_cv_CirclesGridFinderParameters2_CirclesGridFinderParameters2() }.into_result()
     }
-  }
-
+    
 }
+
 // Generating impl for trait cv::StereoBM (trait)
 /// Class for computing stereo correspondence using the block matching algorithm, introduced and
 /// contributed to OpenCV by K. Konolige.
-pub trait StereoBM : super::calib3d::StereoMatcher {
-  #[doc(hidden)] fn as_raw_StereoBM(&self) -> *mut c_void;
-  fn get_pre_filter_type(&self) -> Result<i32> {
-  // identifier: cv_StereoBM_getPreFilterType
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getPreFilterType(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+pub trait StereoBM : crate::calib3d::StereoMatcher {
+    #[doc(hidden)] fn as_raw_StereoBM(&self) -> *mut c_void;
+    // identifier: cv_StereoBM_getPreFilterType_const
+    fn get_pre_filter_type(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getPreFilterType_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_pre_filter_type(&mut self, pre_filter_type: i32) -> Result<()> {
-  // identifier: cv_StereoBM_setPreFilterType_int_preFilterType
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setPreFilterType_int_preFilterType(self.as_raw_StereoBM(), pre_filter_type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setPreFilterType_int_preFilterType
+    fn set_pre_filter_type(&mut self, pre_filter_type: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setPreFilterType_int_preFilterType(self.as_raw_StereoBM(), pre_filter_type) }.into_result()
     }
-  }
-
-  fn get_pre_filter_size(&self) -> Result<i32> {
-  // identifier: cv_StereoBM_getPreFilterSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getPreFilterSize(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoBM_getPreFilterSize_const
+    fn get_pre_filter_size(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getPreFilterSize_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_pre_filter_size(&mut self, pre_filter_size: i32) -> Result<()> {
-  // identifier: cv_StereoBM_setPreFilterSize_int_preFilterSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setPreFilterSize_int_preFilterSize(self.as_raw_StereoBM(), pre_filter_size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setPreFilterSize_int_preFilterSize
+    fn set_pre_filter_size(&mut self, pre_filter_size: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setPreFilterSize_int_preFilterSize(self.as_raw_StereoBM(), pre_filter_size) }.into_result()
     }
-  }
-
-  fn get_pre_filter_cap(&self) -> Result<i32> {
-  // identifier: cv_StereoBM_getPreFilterCap
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getPreFilterCap(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoBM_getPreFilterCap_const
+    fn get_pre_filter_cap(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getPreFilterCap_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-  // identifier: cv_StereoBM_setPreFilterCap_int_preFilterCap
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setPreFilterCap_int_preFilterCap(self.as_raw_StereoBM(), pre_filter_cap);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setPreFilterCap_int_preFilterCap
+    fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setPreFilterCap_int_preFilterCap(self.as_raw_StereoBM(), pre_filter_cap) }.into_result()
     }
-  }
-
-  fn get_texture_threshold(&self) -> Result<i32> {
-  // identifier: cv_StereoBM_getTextureThreshold
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getTextureThreshold(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoBM_getTextureThreshold_const
+    fn get_texture_threshold(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getTextureThreshold_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_texture_threshold(&mut self, texture_threshold: i32) -> Result<()> {
-  // identifier: cv_StereoBM_setTextureThreshold_int_textureThreshold
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setTextureThreshold_int_textureThreshold(self.as_raw_StereoBM(), texture_threshold);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setTextureThreshold_int_textureThreshold
+    fn set_texture_threshold(&mut self, texture_threshold: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setTextureThreshold_int_textureThreshold(self.as_raw_StereoBM(), texture_threshold) }.into_result()
     }
-  }
-
-  fn get_uniqueness_ratio(&self) -> Result<i32> {
-  // identifier: cv_StereoBM_getUniquenessRatio
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getUniquenessRatio(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoBM_getUniquenessRatio_const
+    fn get_uniqueness_ratio(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getUniquenessRatio_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-  // identifier: cv_StereoBM_setUniquenessRatio_int_uniquenessRatio
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setUniquenessRatio_int_uniquenessRatio(self.as_raw_StereoBM(), uniqueness_ratio);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setUniquenessRatio_int_uniquenessRatio
+    fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setUniquenessRatio_int_uniquenessRatio(self.as_raw_StereoBM(), uniqueness_ratio) }.into_result()
     }
-  }
-
-  fn get_smaller_block_size(&self) -> Result<i32> {
-  // identifier: cv_StereoBM_getSmallerBlockSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getSmallerBlockSize(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoBM_getSmallerBlockSize_const
+    fn get_smaller_block_size(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getSmallerBlockSize_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_smaller_block_size(&mut self, block_size: i32) -> Result<()> {
-  // identifier: cv_StereoBM_setSmallerBlockSize_int_blockSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setSmallerBlockSize_int_blockSize(self.as_raw_StereoBM(), block_size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setSmallerBlockSize_int_blockSize
+    fn set_smaller_block_size(&mut self, block_size: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setSmallerBlockSize_int_blockSize(self.as_raw_StereoBM(), block_size) }.into_result()
     }
-  }
-
-  fn get_roi1(&self) -> Result<core::Rect> {
-  // identifier: cv_StereoBM_getROI1
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getROI1(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoBM_getROI1_const
+    fn get_roi1(&self) -> Result<core::Rect> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getROI1_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
-  // identifier: cv_StereoBM_setROI1_Rect_roi1
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setROI1_Rect_roi1(self.as_raw_StereoBM(), roi1);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setROI1_Rect_roi1
+    fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setROI1_Rect_roi1(self.as_raw_StereoBM(), roi1) }.into_result()
     }
-  }
-
-  fn get_roi2(&self) -> Result<core::Rect> {
-  // identifier: cv_StereoBM_getROI2
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_getROI2(self.as_raw_StereoBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoBM_getROI2_const
+    fn get_roi2(&self) -> Result<core::Rect> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_getROI2_const(self.as_raw_StereoBM()) }.into_result()
     }
-  }
-
-  fn set_roi2(&mut self, roi2: core::Rect) -> Result<()> {
-  // identifier: cv_StereoBM_setROI2_Rect_roi2
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_setROI2_Rect_roi2(self.as_raw_StereoBM(), roi2);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoBM_setROI2_Rect_roi2
+    fn set_roi2(&mut self, roi2: core::Rect) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_setROI2_Rect_roi2(self.as_raw_StereoBM(), roi2) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> StereoBM + 'a {
 
-  /// Creates StereoBM object
-  /// 
-  /// ## Parameters
-  /// * numDisparities: the disparity search range. For each pixel algorithm will find the best
-  /// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
-  /// shifted by changing the minimum disparity.
-  /// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
-  /// (as the block is centered at the current pixel). Larger block size implies smoother, though less
-  /// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
-  /// chance for algorithm to find a wrong correspondence.
-  /// 
-  /// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
-  /// a specific stereo pair.
-  ///
-  /// ## C++ default parameters:
-  /// * num_disparities: 0
-  /// * block_size: 21
-  pub fn create(num_disparities: i32, block_size: i32) -> Result<types::PtrOfStereoBM> {
-  // identifier: cv_StereoBM_create_int_numDisparities_int_blockSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoBM_create_int_numDisparities_int_blockSize(num_disparities, block_size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfStereoBM { ptr: rv.result })
-      }
+    // identifier: cv_StereoBM_create_int_numDisparities_int_blockSize
+    /// Creates StereoBM object
+    /// 
+    /// ## Parameters
+    /// * numDisparities: the disparity search range. For each pixel algorithm will find the best
+    /// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
+    /// shifted by changing the minimum disparity.
+    /// * blockSize: the linear size of the blocks compared by the algorithm. The size should be odd
+    /// (as the block is centered at the current pixel). Larger block size implies smoother, though less
+    /// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
+    /// chance for algorithm to find a wrong correspondence.
+    /// 
+    /// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
+    /// a specific stereo pair.
+    ///
+    /// ## C++ default parameters:
+    /// * num_disparities: 0
+    /// * block_size: 21
+    pub fn create(num_disparities: i32, block_size: i32) -> Result<types::PtrOfStereoBM> {
+        unsafe { sys::cv_calib3d_cv_StereoBM_create_int_numDisparities_int_blockSize(num_disparities, block_size) }.into_result().map(|x| types::PtrOfStereoBM { ptr: x })
     }
-  }
-
+    
 }
 
 // Generating impl for trait cv::StereoMatcher (trait)
 /// The base class for stereo correspondence algorithms.
 pub trait StereoMatcher : core::Algorithm {
-  #[doc(hidden)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
-  /// Computes disparity map for the specified stereo pair
-  /// 
-  /// ## Parameters
-  /// * left: Left 8-bit single-channel image.
-  /// * right: Right image of the same size and the same type as the left one.
-  /// * disparity: Output disparity map. It has the same size as the input images. Some algorithms,
-  /// like StereoBM or StereoSGBM compute 16-bit fixed-point disparity map (where each disparity value
-  /// has 4 fractional bits), whereas other algorithms output 32-bit floating-point disparity map.
-  fn compute(&mut self, left: &core::Mat, right: &core::Mat, disparity: &mut core::Mat) -> Result<()> {
-  // identifier: cv_StereoMatcher_compute_Mat_left_Mat_right_Mat_disparity
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_compute_Mat_left_Mat_right_Mat_disparity(self.as_raw_StereoMatcher(), left.as_raw_Mat(), right.as_raw_Mat(), disparity.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    #[doc(hidden)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
+    // identifier: cv_StereoMatcher_compute_Mat_left_Mat_right_Mat_disparity
+    /// Computes disparity map for the specified stereo pair
+    /// 
+    /// ## Parameters
+    /// * left: Left 8-bit single-channel image.
+    /// * right: Right image of the same size and the same type as the left one.
+    /// * disparity: Output disparity map. It has the same size as the input images. Some algorithms,
+    /// like StereoBM or StereoSGBM compute 16-bit fixed-point disparity map (where each disparity value
+    /// has 4 fractional bits), whereas other algorithms output 32-bit floating-point disparity map.
+    fn compute(&mut self, left: &core::Mat, right: &core::Mat, disparity: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_compute_Mat_left_Mat_right_Mat_disparity(self.as_raw_StereoMatcher(), left.as_raw_Mat(), right.as_raw_Mat(), disparity.as_raw_Mat()) }.into_result()
     }
-  }
-
-  fn get_min_disparity(&self) -> Result<i32> {
-  // identifier: cv_StereoMatcher_getMinDisparity
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_getMinDisparity(self.as_raw_StereoMatcher());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoMatcher_getMinDisparity_const
+    fn get_min_disparity(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_getMinDisparity_const(self.as_raw_StereoMatcher()) }.into_result()
     }
-  }
-
-  fn set_min_disparity(&mut self, min_disparity: i32) -> Result<()> {
-  // identifier: cv_StereoMatcher_setMinDisparity_int_minDisparity
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_setMinDisparity_int_minDisparity(self.as_raw_StereoMatcher(), min_disparity);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoMatcher_setMinDisparity_int_minDisparity
+    fn set_min_disparity(&mut self, min_disparity: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_setMinDisparity_int_minDisparity(self.as_raw_StereoMatcher(), min_disparity) }.into_result()
     }
-  }
-
-  fn get_num_disparities(&self) -> Result<i32> {
-  // identifier: cv_StereoMatcher_getNumDisparities
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_getNumDisparities(self.as_raw_StereoMatcher());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoMatcher_getNumDisparities_const
+    fn get_num_disparities(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_getNumDisparities_const(self.as_raw_StereoMatcher()) }.into_result()
     }
-  }
-
-  fn set_num_disparities(&mut self, num_disparities: i32) -> Result<()> {
-  // identifier: cv_StereoMatcher_setNumDisparities_int_numDisparities
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_setNumDisparities_int_numDisparities(self.as_raw_StereoMatcher(), num_disparities);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoMatcher_setNumDisparities_int_numDisparities
+    fn set_num_disparities(&mut self, num_disparities: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_setNumDisparities_int_numDisparities(self.as_raw_StereoMatcher(), num_disparities) }.into_result()
     }
-  }
-
-  fn get_block_size(&self) -> Result<i32> {
-  // identifier: cv_StereoMatcher_getBlockSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_getBlockSize(self.as_raw_StereoMatcher());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoMatcher_getBlockSize_const
+    fn get_block_size(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_getBlockSize_const(self.as_raw_StereoMatcher()) }.into_result()
     }
-  }
-
-  fn set_block_size(&mut self, block_size: i32) -> Result<()> {
-  // identifier: cv_StereoMatcher_setBlockSize_int_blockSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_setBlockSize_int_blockSize(self.as_raw_StereoMatcher(), block_size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoMatcher_setBlockSize_int_blockSize
+    fn set_block_size(&mut self, block_size: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_setBlockSize_int_blockSize(self.as_raw_StereoMatcher(), block_size) }.into_result()
     }
-  }
-
-  fn get_speckle_window_size(&self) -> Result<i32> {
-  // identifier: cv_StereoMatcher_getSpeckleWindowSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_getSpeckleWindowSize(self.as_raw_StereoMatcher());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoMatcher_getSpeckleWindowSize_const
+    fn get_speckle_window_size(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_getSpeckleWindowSize_const(self.as_raw_StereoMatcher()) }.into_result()
     }
-  }
-
-  fn set_speckle_window_size(&mut self, speckle_window_size: i32) -> Result<()> {
-  // identifier: cv_StereoMatcher_setSpeckleWindowSize_int_speckleWindowSize
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_setSpeckleWindowSize_int_speckleWindowSize(self.as_raw_StereoMatcher(), speckle_window_size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoMatcher_setSpeckleWindowSize_int_speckleWindowSize
+    fn set_speckle_window_size(&mut self, speckle_window_size: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_setSpeckleWindowSize_int_speckleWindowSize(self.as_raw_StereoMatcher(), speckle_window_size) }.into_result()
     }
-  }
-
-  fn get_speckle_range(&self) -> Result<i32> {
-  // identifier: cv_StereoMatcher_getSpeckleRange
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_getSpeckleRange(self.as_raw_StereoMatcher());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoMatcher_getSpeckleRange_const
+    fn get_speckle_range(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_getSpeckleRange_const(self.as_raw_StereoMatcher()) }.into_result()
     }
-  }
-
-  fn set_speckle_range(&mut self, speckle_range: i32) -> Result<()> {
-  // identifier: cv_StereoMatcher_setSpeckleRange_int_speckleRange
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_setSpeckleRange_int_speckleRange(self.as_raw_StereoMatcher(), speckle_range);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoMatcher_setSpeckleRange_int_speckleRange
+    fn set_speckle_range(&mut self, speckle_range: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_setSpeckleRange_int_speckleRange(self.as_raw_StereoMatcher(), speckle_range) }.into_result()
     }
-  }
-
-  fn get_disp12_max_diff(&self) -> Result<i32> {
-  // identifier: cv_StereoMatcher_getDisp12MaxDiff
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_getDisp12MaxDiff(self.as_raw_StereoMatcher());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoMatcher_getDisp12MaxDiff_const
+    fn get_disp12_max_diff(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_getDisp12MaxDiff_const(self.as_raw_StereoMatcher()) }.into_result()
     }
-  }
-
-  fn set_disp12_max_diff(&mut self, disp12_max_diff: i32) -> Result<()> {
-  // identifier: cv_StereoMatcher_setDisp12MaxDiff_int_disp12MaxDiff
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoMatcher_setDisp12MaxDiff_int_disp12MaxDiff(self.as_raw_StereoMatcher(), disp12_max_diff);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoMatcher_setDisp12MaxDiff_int_disp12MaxDiff
+    fn set_disp12_max_diff(&mut self, disp12_max_diff: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoMatcher_setDisp12MaxDiff_int_disp12MaxDiff(self.as_raw_StereoMatcher(), disp12_max_diff) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> StereoMatcher + 'a {
 
 }
@@ -3229,225 +2622,117 @@ impl<'a> StereoMatcher + 'a {
 /// Note:
 /// *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
 /// at opencv_source_code/samples/python/stereo_match.py
-pub trait StereoSGBM : super::calib3d::StereoMatcher {
-  #[doc(hidden)] fn as_raw_StereoSGBM(&self) -> *mut c_void;
-  fn get_pre_filter_cap(&self) -> Result<i32> {
-  // identifier: cv_StereoSGBM_getPreFilterCap
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_getPreFilterCap(self.as_raw_StereoSGBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+pub trait StereoSGBM : crate::calib3d::StereoMatcher {
+    #[doc(hidden)] fn as_raw_StereoSGBM(&self) -> *mut c_void;
+    // identifier: cv_StereoSGBM_getPreFilterCap_const
+    fn get_pre_filter_cap(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM()) }.into_result()
     }
-  }
-
-  fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-  // identifier: cv_StereoSGBM_setPreFilterCap_int_preFilterCap
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_setPreFilterCap_int_preFilterCap(self.as_raw_StereoSGBM(), pre_filter_cap);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoSGBM_setPreFilterCap_int_preFilterCap
+    fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_setPreFilterCap_int_preFilterCap(self.as_raw_StereoSGBM(), pre_filter_cap) }.into_result()
     }
-  }
-
-  fn get_uniqueness_ratio(&self) -> Result<i32> {
-  // identifier: cv_StereoSGBM_getUniquenessRatio
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_getUniquenessRatio(self.as_raw_StereoSGBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoSGBM_getUniquenessRatio_const
+    fn get_uniqueness_ratio(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_getUniquenessRatio_const(self.as_raw_StereoSGBM()) }.into_result()
     }
-  }
-
-  fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-  // identifier: cv_StereoSGBM_setUniquenessRatio_int_uniquenessRatio
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_setUniquenessRatio_int_uniquenessRatio(self.as_raw_StereoSGBM(), uniqueness_ratio);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoSGBM_setUniquenessRatio_int_uniquenessRatio
+    fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_setUniquenessRatio_int_uniquenessRatio(self.as_raw_StereoSGBM(), uniqueness_ratio) }.into_result()
     }
-  }
-
-  fn get_p1(&self) -> Result<i32> {
-  // identifier: cv_StereoSGBM_getP1
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_getP1(self.as_raw_StereoSGBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoSGBM_getP1_const
+    fn get_p1(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_getP1_const(self.as_raw_StereoSGBM()) }.into_result()
     }
-  }
-
-  fn set_p1(&mut self, p1: i32) -> Result<()> {
-  // identifier: cv_StereoSGBM_setP1_int_P1
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_setP1_int_P1(self.as_raw_StereoSGBM(), p1);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoSGBM_setP1_int_P1
+    fn set_p1(&mut self, p1: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_setP1_int_P1(self.as_raw_StereoSGBM(), p1) }.into_result()
     }
-  }
-
-  fn get_p2(&self) -> Result<i32> {
-  // identifier: cv_StereoSGBM_getP2
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_getP2(self.as_raw_StereoSGBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoSGBM_getP2_const
+    fn get_p2(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_getP2_const(self.as_raw_StereoSGBM()) }.into_result()
     }
-  }
-
-  fn set_p2(&mut self, p2: i32) -> Result<()> {
-  // identifier: cv_StereoSGBM_setP2_int_P2
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_setP2_int_P2(self.as_raw_StereoSGBM(), p2);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoSGBM_setP2_int_P2
+    fn set_p2(&mut self, p2: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_setP2_int_P2(self.as_raw_StereoSGBM(), p2) }.into_result()
     }
-  }
-
-  fn get_mode(&self) -> Result<i32> {
-  // identifier: cv_StereoSGBM_getMode
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_getMode(self.as_raw_StereoSGBM());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_StereoSGBM_getMode_const
+    fn get_mode(&self) -> Result<i32> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_getMode_const(self.as_raw_StereoSGBM()) }.into_result()
     }
-  }
-
-  fn set_mode(&mut self, mode: i32) -> Result<()> {
-  // identifier: cv_StereoSGBM_setMode_int_mode
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_setMode_int_mode(self.as_raw_StereoSGBM(), mode);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_StereoSGBM_setMode_int_mode
+    fn set_mode(&mut self, mode: i32) -> Result<()> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_setMode_int_mode(self.as_raw_StereoSGBM(), mode) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> StereoSGBM + 'a {
 
-  /// Creates StereoSGBM object
-  /// 
-  /// ## Parameters
-  /// * minDisparity: Minimum possible disparity value. Normally, it is zero but sometimes
-  /// rectification algorithms can shift images, so this parameter needs to be adjusted accordingly.
-  /// * numDisparities: Maximum disparity minus minimum disparity. The value is always greater than
-  /// zero. In the current implementation, this parameter must be divisible by 16.
-  /// * blockSize: Matched block size. It must be an odd number \>=1 . Normally, it should be
-  /// somewhere in the 3..11 range.
-  /// * P1: The first parameter controlling the disparity smoothness. See below.
-  /// * P2: The second parameter controlling the disparity smoothness. The larger the values are,
-  /// the smoother the disparity is. P1 is the penalty on the disparity change by plus or minus 1
-  /// between neighbor pixels. P2 is the penalty on the disparity change by more than 1 between neighbor
-  /// pixels. The algorithm requires P2 \> P1 . See stereo_match.cpp sample where some reasonably good
-  /// P1 and P2 values are shown (like 8\*number_of_image_channels\*SADWindowSize\*SADWindowSize and
-  /// 32\*number_of_image_channels\*SADWindowSize\*SADWindowSize , respectively).
-  /// * disp12MaxDiff: Maximum allowed difference (in integer pixel units) in the left-right
-  /// disparity check. Set it to a non-positive value to disable the check.
-  /// * preFilterCap: Truncation value for the prefiltered image pixels. The algorithm first
-  /// computes x-derivative at each pixel and clips its value by [-preFilterCap, preFilterCap] interval.
-  /// The result values are passed to the Birchfield-Tomasi pixel cost function.
-  /// * uniquenessRatio: Margin in percentage by which the best (minimum) computed cost function
-  /// value should "win" the second best value to consider the found match correct. Normally, a value
-  /// within the 5-15 range is good enough.
-  /// * speckleWindowSize: Maximum size of smooth disparity regions to consider their noise speckles
-  /// and invalidate. Set it to 0 to disable speckle filtering. Otherwise, set it somewhere in the
-  /// 50-200 range.
-  /// * speckleRange: Maximum disparity variation within each connected component. If you do speckle
-  /// filtering, set the parameter to a positive value, it will be implicitly multiplied by 16.
-  /// Normally, 1 or 2 is good enough.
-  /// * mode: Set it to StereoSGBM::MODE_HH to run the full-scale two-pass dynamic programming
-  /// algorithm. It will consume O(W\*H\*numDisparities) bytes, which is large for 640x480 stereo and
-  /// huge for HD-size pictures. By default, it is set to false .
-  /// 
-  /// The first constructor initializes StereoSGBM with all the default parameters. So, you only have to
-  /// set StereoSGBM::numDisparities at minimum. The second constructor enables you to set each parameter
-  /// to a custom value.
-  ///
-  /// ## C++ default parameters:
-  /// * min_disparity: 0
-  /// * num_disparities: 16
-  /// * block_size: 3
-  /// * p1: 0
-  /// * p2: 0
-  /// * disp12_max_diff: 0
-  /// * pre_filter_cap: 0
-  /// * uniqueness_ratio: 0
-  /// * speckle_window_size: 0
-  /// * speckle_range: 0
-  /// * mode: StereoSGBM::MODE_SGBM
-  pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<types::PtrOfStereoSGBM> {
-  // identifier: cv_StereoSGBM_create_int_minDisparity_int_numDisparities_int_blockSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_int_mode
-    unsafe {
-      let rv = sys::cv_calib3d_cv_StereoSGBM_create_int_minDisparity_int_numDisparities_int_blockSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_int_mode(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfStereoSGBM { ptr: rv.result })
-      }
+    // identifier: cv_StereoSGBM_create_int_minDisparity_int_numDisparities_int_blockSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_int_mode
+    /// Creates StereoSGBM object
+    /// 
+    /// ## Parameters
+    /// * minDisparity: Minimum possible disparity value. Normally, it is zero but sometimes
+    /// rectification algorithms can shift images, so this parameter needs to be adjusted accordingly.
+    /// * numDisparities: Maximum disparity minus minimum disparity. The value is always greater than
+    /// zero. In the current implementation, this parameter must be divisible by 16.
+    /// * blockSize: Matched block size. It must be an odd number \>=1 . Normally, it should be
+    /// somewhere in the 3..11 range.
+    /// * P1: The first parameter controlling the disparity smoothness. See below.
+    /// * P2: The second parameter controlling the disparity smoothness. The larger the values are,
+    /// the smoother the disparity is. P1 is the penalty on the disparity change by plus or minus 1
+    /// between neighbor pixels. P2 is the penalty on the disparity change by more than 1 between neighbor
+    /// pixels. The algorithm requires P2 \> P1 . See stereo_match.cpp sample where some reasonably good
+    /// P1 and P2 values are shown (like 8\*number_of_image_channels\*SADWindowSize\*SADWindowSize and
+    /// 32\*number_of_image_channels\*SADWindowSize\*SADWindowSize , respectively).
+    /// * disp12MaxDiff: Maximum allowed difference (in integer pixel units) in the left-right
+    /// disparity check. Set it to a non-positive value to disable the check.
+    /// * preFilterCap: Truncation value for the prefiltered image pixels. The algorithm first
+    /// computes x-derivative at each pixel and clips its value by [-preFilterCap, preFilterCap] interval.
+    /// The result values are passed to the Birchfield-Tomasi pixel cost function.
+    /// * uniquenessRatio: Margin in percentage by which the best (minimum) computed cost function
+    /// value should "win" the second best value to consider the found match correct. Normally, a value
+    /// within the 5-15 range is good enough.
+    /// * speckleWindowSize: Maximum size of smooth disparity regions to consider their noise speckles
+    /// and invalidate. Set it to 0 to disable speckle filtering. Otherwise, set it somewhere in the
+    /// 50-200 range.
+    /// * speckleRange: Maximum disparity variation within each connected component. If you do speckle
+    /// filtering, set the parameter to a positive value, it will be implicitly multiplied by 16.
+    /// Normally, 1 or 2 is good enough.
+    /// * mode: Set it to StereoSGBM::MODE_HH to run the full-scale two-pass dynamic programming
+    /// algorithm. It will consume O(W\*H\*numDisparities) bytes, which is large for 640x480 stereo and
+    /// huge for HD-size pictures. By default, it is set to false .
+    /// 
+    /// The first constructor initializes StereoSGBM with all the default parameters. So, you only have to
+    /// set StereoSGBM::numDisparities at minimum. The second constructor enables you to set each parameter
+    /// to a custom value.
+    ///
+    /// ## C++ default parameters:
+    /// * min_disparity: 0
+    /// * num_disparities: 16
+    /// * block_size: 3
+    /// * p1: 0
+    /// * p2: 0
+    /// * disp12_max_diff: 0
+    /// * pre_filter_cap: 0
+    /// * uniqueness_ratio: 0
+    /// * speckle_window_size: 0
+    /// * speckle_range: 0
+    /// * mode: StereoSGBM::MODE_SGBM
+    pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<types::PtrOfStereoSGBM> {
+        unsafe { sys::cv_calib3d_cv_StereoSGBM_create_int_minDisparity_int_numDisparities_int_blockSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_int_mode(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode) }.into_result().map(|x| types::PtrOfStereoSGBM { ptr: x })
     }
-  }
-
+    
 }
 
-pub const CALIB_CHECK_COND: i32 = 0x4;
-pub const CALIB_FIX_SKEW: i32 = 0x8;
-pub const CALIB_RECOMPUTE_EXTRINSIC: i32 = 0x2;
-pub const CALIB_USE_EXTRINSIC_GUESS: i32 = 0x400000;
-pub const CALIB_USE_LU: i32 = 0x20000;
-pub const CV_FM_LMEDS: i32 = 0x4;
-pub const CV_FM_LMEDS_ONLY: i32 = 0x4;
-pub const CV_FM_RANSAC: i32 = 0x8;
-pub const CV_FM_RANSAC_ONLY: i32 = 0x8;
-pub const SOLVEPNP_MAX_COUNT: i32 = 0x6;
-pub const StereoMatcher_DISP_SCALE: i32 = 0x10;
+pub const StereoMatcher_DISP_SCALE: i32 = 0x10; // 16

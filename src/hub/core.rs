@@ -81,14 +81,20 @@
 //! @}
 //! @}
 //! @}
+use std::os::raw::{c_char, c_void};
+use libc::size_t;
+use crate::{Error, Result, core, sys, types};
 
-use libc::{c_void, c_char, size_t};
-use std::ffi::{CStr, CString};
-use crate::{core, sys, types};
-use crate::{Error, Result};
+pub const ACCESS_FAST: i32 = 1<<26;
+pub const ACCESS_MASK: i32 = 3<<24;
+pub const ACCESS_READ: i32 = 1<<24;
+pub const ACCESS_RW: i32 = 3<<24;
+pub const ACCESS_WRITE: i32 = 1<<25;
 pub const BORDER_CONSTANT: i32 = 0;
+pub const BORDER_DEFAULT: i32 = 4;
 pub const BORDER_ISOLATED: i32 = 16;
 pub const BORDER_REFLECT: i32 = 2;
+pub const BORDER_REFLECT101: i32 = 4;
 pub const BORDER_REFLECT_101: i32 = 4;
 pub const BORDER_REPLICATE: i32 = 1;
 pub const BORDER_TRANSPARENT: i32 = 5;
@@ -155,6 +161,8 @@ pub const CV_32S: i32 = 4;
 pub const CV_64F: i32 = 6;
 pub const CV_8S: i32 = 1;
 pub const CV_8U: i32 = 0;
+pub const CV_AUTOSTEP: i32 = 0x7fffffff;
+pub const CV_AUTO_STEP: i32 = 0x7fffffff;
 pub const CV_BACK: i32 = 0;
 pub const CV_BadAlign: i32 = -21;
 pub const CV_BadAlphaChannel: i32 = -18;
@@ -199,6 +207,8 @@ pub const CV_CPU_AVX_512DQ: i32 = 16;
 pub const CV_CPU_AVX_512ER: i32 = 17;
 pub const CV_CPU_AVX_512F: i32 = 13;
 pub const CV_CPU_AVX_512IFMA: i32 = 18;
+/// deprecated
+pub const CV_CPU_AVX_512IFMA512: i32 = 18;
 pub const CV_CPU_AVX_512PF: i32 = 19;
 pub const CV_CPU_AVX_512VBMI: i32 = 20;
 pub const CV_CPU_AVX_512VL: i32 = 21;
@@ -219,6 +229,12 @@ pub const CV_CPU_VSX3: i32 = 201;
 pub const CV_DIFF: i32 = 16;
 pub const CV_DXT_FORWARD: i32 = 0;
 pub const CV_DXT_INVERSE: i32 = 1;
+/// < conjugate the second argument of cvMulSpectrums
+pub const CV_DXT_MUL_CONJ: i32 = 8;
+/// < transform each row individually
+pub const CV_DXT_ROWS: i32 = 4;
+/// < divide result by size of array
+pub const CV_DXT_SCALE: i32 = 2;
 pub const CV_FRONT: i32 = 1;
 pub const CV_GEMM_A_T: i32 = 1;
 pub const CV_GEMM_B_T: i32 = 2;
@@ -229,8 +245,11 @@ pub const CV_GRAPH_BACKTRACKING: i32 = 64;
 pub const CV_GRAPH_BACK_EDGE: i32 = 4;
 pub const CV_GRAPH_CROSS_EDGE: i32 = 16;
 pub const CV_GRAPH_FORWARD_EDGE: i32 = 8;
+pub const CV_GRAPH_FORWARD_EDGE_FLAG: i32 = (1 << 28);
+pub const CV_GRAPH_ITEM_VISITED_FLAG: i32 = (1 << 30);
 pub const CV_GRAPH_NEW_TREE: i32 = 32;
 pub const CV_GRAPH_OVER: i32 = -1;
+pub const CV_GRAPH_SEARCH_TREE_NODE_FLAG: i32 = (1 << 29);
 pub const CV_GRAPH_TREE_EDGE: i32 = 2;
 pub const CV_GRAPH_VERTEX: i32 = 1;
 pub const CV_GpuApiCallError: i32 = -217;
@@ -270,30 +289,56 @@ pub const CV_HAL_SVD_SHORT_UV: i32 = 2;
 pub const CV_HARDWARE_MAX_FEATURE: i32 = 512;
 pub const CV_HIST_ARRAY: i32 = 0;
 pub const CV_HIST_MAGIC_VAL: i32 = 0x42450000;
+pub const CV_HIST_RANGES_FLAG: i32 = (1 << 11);
 pub const CV_HIST_SPARSE: i32 = 1;
+pub const CV_HIST_TREE: i32 = 1;
 pub const CV_HIST_UNIFORM: i32 = 1;
+pub const CV_HIST_UNIFORM_FLAG: i32 = (1 << 10);
 pub const CV_HeaderIsNull: i32 = -9;
 pub const CV_KMEANS_USE_INITIAL_LABELS: i32 = 1;
 pub const CV_L1: i32 = 2;
 pub const CV_L2: i32 = 4;
+/// !< Debug message. Disabled in the "Release" build.
+pub const CV_LOG_LEVEL_DEBUG: i32 = 5;
+/// !< Error message
+pub const CV_LOG_LEVEL_ERROR: i32 = 2;
+/// !< Fatal (critical) error (unrecoverable internal error)
+pub const CV_LOG_LEVEL_FATAL: i32 = 1;
+/// !< Info message
+pub const CV_LOG_LEVEL_INFO: i32 = 4;
+/// !< for using in setLogLevel() call
+pub const CV_LOG_LEVEL_SILENT: i32 = 0;
+/// !< Verbose (trace) messages. Requires verbosity level. Disabled in the "Release" build.
+pub const CV_LOG_LEVEL_VERBOSE: i32 = 6;
+/// !< Warning message
+pub const CV_LOG_LEVEL_WARN: i32 = 3;
 pub const CV_LU: i32 = 0;
 pub const CV_MAGIC_MASK: i32 = 0xFFFF0000;
+pub const CV_MAJOR_VERSION: i32 = 3;
 pub const CV_MATND_MAGIC_VAL: i32 = 0x42430000;
 pub const CV_MAT_CONT_FLAG_SHIFT: i32 = 14;
 pub const CV_MAT_MAGIC_VAL: i32 = 0x42420000;
 pub const CV_MAX_ARR: i32 = 10;
 pub const CV_MAX_DIM: i32 = 32;
 pub const CV_MINMAX: i32 = 32;
+pub const CV_MINOR_VERSION: i32 = 4;
 pub const CV_MaskIsTiled: i32 = -26;
 pub const CV_NODE_EMPTY: i32 = 32;
+pub const CV_NODE_FLOAT: i32 = 2;
+/// <Used only for writing structures in YAML format.
+pub const CV_NODE_FLOW: i32 = 8;
 pub const CV_NODE_INT: i32 = 1;
+pub const CV_NODE_INTEGER: i32 = 1;
 pub const CV_NODE_MAP: i32 = 6;
 pub const CV_NODE_NAMED: i32 = 64;
 pub const CV_NODE_NONE: i32 = 0;
 pub const CV_NODE_REAL: i32 = 2;
+/// < not used
+pub const CV_NODE_REF: i32 = 4;
 pub const CV_NODE_SEQ: i32 = 5;
 pub const CV_NODE_SEQ_SIMPLE: i32 = 256;
 pub const CV_NODE_STR: i32 = 3;
+pub const CV_NODE_STRING: i32 = 3;
 pub const CV_NODE_TYPE_MASK: i32 = 7;
 pub const CV_NODE_USER: i32 = 16;
 pub const CV_NORMAL: i32 = 16;
@@ -319,7 +364,17 @@ pub const CV_REDUCE_MIN: i32 = 3;
 pub const CV_REDUCE_SUM: i32 = 0;
 pub const CV_RELATIVE: i32 = 8;
 pub const CV_SEQ_ELTYPE_BITS: i32 = 12;
+/// < connected component
+pub const CV_SEQ_ELTYPE_CONNECTED_COMP: i32 = 0;
 pub const CV_SEQ_ELTYPE_GENERIC: i32 = 0;
+/// < &next_o, &next_d, &vtx_o, &vtx_d
+pub const CV_SEQ_ELTYPE_GRAPH_EDGE: i32 = 0;
+/// < first_edge, &(x,y)
+pub const CV_SEQ_ELTYPE_GRAPH_VERTEX: i32 = 0;
+pub const CV_SEQ_ELTYPE_PPOINT: i32 = 7;
+pub const CV_SEQ_ELTYPE_PTR: i32 = 7;
+/// < vertex of the binary tree
+pub const CV_SEQ_ELTYPE_TRIAN_ATR: i32 = 0;
 pub const CV_SEQ_KIND_BITS: i32 = 2;
 pub const CV_SEQ_MAGIC_VAL: i32 = 0x42990000;
 pub const CV_SET_MAGIC_VAL: i32 = 0x42980000;
@@ -332,49 +387,25 @@ pub const CV_STORAGE_APPEND: i32 = 2;
 pub const CV_STORAGE_BASE64: i32 = 64;
 pub const CV_STORAGE_FORMAT_AUTO: i32 = 0;
 pub const CV_STORAGE_FORMAT_JSON: i32 = 24;
+pub const CV_STORAGE_FORMAT_MASK: i32 = (7<<3);
 pub const CV_STORAGE_FORMAT_XML: i32 = 8;
 pub const CV_STORAGE_FORMAT_YAML: i32 = 16;
 pub const CV_STORAGE_MAGIC_VAL: i32 = 0x42890000;
 pub const CV_STORAGE_MEMORY: i32 = 4;
 pub const CV_STORAGE_READ: i32 = 0;
 pub const CV_STORAGE_WRITE: i32 = 1;
+pub const CV_STORAGE_WRITE_BINARY: i32 = 1;
+pub const CV_STORAGE_WRITE_TEXT: i32 = 1;
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
+pub const CV_SUBMINOR_VERSION: i32 = 5;
 pub const CV_SVD: i32 = 1;
 pub const CV_SVD_MODIFY_A: i32 = 1;
 pub const CV_SVD_SYM: i32 = 2;
 pub const CV_SVD_U_T: i32 = 2;
 pub const CV_SVD_V_T: i32 = 4;
-pub const CV_StsAssert: i32 = -215;
-pub const CV_StsAutoTrace: i32 = -8;
-pub const CV_StsBackTrace: i32 = -1;
-pub const CV_StsBadArg: i32 = -5;
-pub const CV_StsBadFlag: i32 = -206;
-pub const CV_StsBadFunc: i32 = -6;
-pub const CV_StsBadMask: i32 = -208;
-pub const CV_StsBadMemBlock: i32 = -214;
-pub const CV_StsBadPoint: i32 = -207;
-pub const CV_StsBadSize: i32 = -201;
-pub const CV_StsDivByZero: i32 = -202;
-pub const CV_StsError: i32 = -2;
-pub const CV_StsFilterOffsetErr: i32 = -31;
-pub const CV_StsFilterStructContentErr: i32 = -29;
-pub const CV_StsInplaceNotSupported: i32 = -203;
-pub const CV_StsInternal: i32 = -3;
-pub const CV_StsKernelStructContentErr: i32 = -30;
-pub const CV_StsNoConv: i32 = -7;
-pub const CV_StsNoMem: i32 = -4;
-pub const CV_StsNotImplemented: i32 = -213;
-pub const CV_StsNullPtr: i32 = -27;
-pub const CV_StsObjectNotFound: i32 = -204;
-pub const CV_StsOk: i32 = 0;
-pub const CV_StsOutOfRange: i32 = -211;
-pub const CV_StsParseError: i32 = -212;
-pub const CV_StsUnmatchedFormats: i32 = -205;
-pub const CV_StsUnmatchedSizes: i32 = -209;
-pub const CV_StsUnsupportedFormat: i32 = -210;
-pub const CV_StsVecLengthErr: i32 = -28;
 pub const CV_TERMCRIT_EPS: i32 = 2;
 pub const CV_TERMCRIT_ITER: i32 = 1;
+pub const CV_TERMCRIT_NUMBER: i32 = 1;
 pub const CV_TYPE_NAME_GRAPH: &'static str = "opencv-graph";
 pub const CV_TYPE_NAME_MAT: &'static str = "opencv-matrix";
 pub const CV_TYPE_NAME_MATND: &'static str = "opencv-nd-matrix";
@@ -386,6 +417,8 @@ pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
 pub const CV_VERSION_REVISION: i32 = 5;
 pub const CV_VERSION_STATUS: &'static str = "";
+pub const DCT_INVERSE: i32 = 1;
+pub const DCT_ROWS: i32 = 4;
 pub const DECOMP_CHOLESKY: i32 = 3;
 pub const DECOMP_EIG: i32 = 2;
 pub const DECOMP_LU: i32 = 0;
@@ -422,12 +455,17 @@ pub const GEMM_2_T: i32 = 2;
 pub const GEMM_3_T: i32 = 4;
 pub const GpuApiCallError: i32 = -217;
 pub const GpuNotSupported: i32 = -216;
+pub const Hamming_normType: i32 = 6;
 pub const HeaderIsNull: i32 = -9;
+pub const IMPL_IPP: i32 = 0+1;
+pub const IMPL_OPENCL: i32 = 0+2;
 pub const IMPL_PLAIN: i32 = 0;
 pub const IPL_ALIGN_16BYTES: i32 = 16;
 pub const IPL_ALIGN_32BYTES: i32 = 32;
 pub const IPL_ALIGN_4BYTES: i32 = 4;
 pub const IPL_ALIGN_8BYTES: i32 = 8;
+pub const IPL_ALIGN_DWORD: i32 = 4;
+pub const IPL_ALIGN_QWORD: i32 = 8;
 pub const IPL_BORDER_CONSTANT: i32 = 0;
 pub const IPL_BORDER_REFLECT: i32 = 2;
 pub const IPL_BORDER_REFLECT_101: i32 = 4;
@@ -518,6 +556,7 @@ pub const SVD_FULL_UV: i32 = 4;
 pub const SVD_MODIFY_A: i32 = 1;
 pub const SVD_NO_UV: i32 = 2;
 pub const SparseMat_HASH_BIT: i32 = 0x80000000;
+pub const SparseMat_HASH_SCALE: i32 = 0x5bd1e995;
 pub const SparseMat_MAX_DIM: i32 = 32;
 pub const StsAssert: i32 = -215;
 pub const StsAutoTrace: i32 = -8;
@@ -555,9 +594,13 @@ pub const TEST_GT: i32 = 6;
 pub const TEST_LE: i32 = 3;
 pub const TEST_LT: i32 = 4;
 pub const TEST_NE: i32 = 2;
+pub const TYPE_FUN: i32 = 0+3;
 pub const TYPE_GENERAL: i32 = 0;
+pub const TYPE_MARKER: i32 = 0+1;
+pub const TYPE_WRAPPER: i32 = 0+2;
 pub const TermCriteria_COUNT: i32 = 1;
 pub const TermCriteria_EPS: i32 = 2;
+pub const TermCriteria_MAX_ITER: i32 = 1;
 pub const UMatData_ASYNC_CLEANUP: i32 = 128;
 pub const UMatData_COPY_ON_MAP: i32 = 1;
 pub const UMatData_DEVICE_COPY_OBSOLETE: i32 = 4;
@@ -566,279 +609,101 @@ pub const UMatData_HOST_COPY_OBSOLETE: i32 = 2;
 pub const UMatData_TEMP_COPIED_UMAT: i32 = 24;
 pub const UMatData_TEMP_UMAT: i32 = 8;
 pub const UMatData_USER_ALLOCATED: i32 = 32;
+pub const USAGE_ALLOCATE_DEVICE_MEMORY: i32 = 1 << 1;
+pub const USAGE_ALLOCATE_HOST_MEMORY: i32 = 1 << 0;
+pub const USAGE_ALLOCATE_SHARED_MEMORY: i32 = 1 << 2;
 pub const USAGE_DEFAULT: i32 = 0;
 pub const _InputArray_KIND_SHIFT: i32 = 16;
+pub const __UMAT_USAGE_FLAGS_32BIT: i32 = 0x7fffffff;
 
-// manually defined value struct CvRNG
+/// a < b ? -1 : a > b ? 1 : 0
+pub type CvCmpFuncExtern = Option<extern "C" fn(a: *const c_void, b: *const c_void, userdata: *mut c_void)>;
+/// a < b ? -1 : a > b ? 1 : 0
+pub type CvCmpFunc = dyn FnMut(&c_void, &c_void) + Send + Sync + 'static;
+
+pub type Cv_iplCreateROIExtern = Option<extern "C" fn(unnamed_arg: i32, unnamed_arg_1: i32, unnamed_arg_2: i32, unnamed_arg_3: i32, unnamed_arg_4: i32)>;
+pub type Cv_iplCreateROI = dyn FnMut(i32, i32, i32, i32, i32) + Send + Sync + 'static;
+
+pub type CvErrorCallbackExtern = Option<extern "C" fn(status: i32, func_name: *const c_char, err_msg: *const c_char, file_name: *const c_char, line: i32, userdata: *mut c_void)>;
+pub type CvErrorCallback = dyn FnMut(i32, String, String, String, i32) + Send + Sync + 'static;
+
+/// < map (collection of named file nodes)
+pub type CvIsInstanceFuncExtern = Option<extern "C" fn(struct_ptr: *const c_void)>;
+/// < map (collection of named file nodes)
+pub type CvIsInstanceFunc = dyn FnMut(&c_void) + Send + Sync + 'static;
+
+pub type CvCloneFuncExtern = Option<extern "C" fn(struct_ptr: *const c_void)>;
+pub type CvCloneFunc = dyn FnMut(&c_void) + Send + Sync + 'static;
+
+pub type Vec8i = core::Vec8<i32>;
+pub type Vec6d = core::Vec6<f64>;
+pub type Vec6f = core::Vec6<f32>;
+pub type Vec6i = core::Vec6<i32>;
+pub type Vec4d = core::Vec4<f64>;
+pub type Vec4f = core::Vec4<f32>;
+pub type Vec4i = core::Vec4<i32>;
+pub type Vec4w = core::Vec4<u16>;
+pub type Vec4s = core::Vec4<i16>;
+pub type Vec4b = core::Vec4<u8>;
+pub type Vec3d = core::Vec3<f64>;
+pub type Vec3f = core::Vec3<f32>;
+pub type Vec3i = core::Vec3<i32>;
+pub type Vec3w = core::Vec3<u16>;
+pub type Vec3s = core::Vec3<i16>;
+pub type Vec3b = core::Vec3<u8>;
+pub type Vec2d = core::Vec2<f64>;
+pub type Size2d = core::Size_<f64>;
+pub type Point2d = core::Point_<f64>;
+pub type Rect2d = core::Rect_<f64>;
+pub type Vec2f = core::Vec2<f32>;
+pub type Size2f = core::Size_<f32>;
+pub type Point2f = core::Point_<f32>;
+pub type Rect2f = core::Rect_<f32>;
+pub type Size2l = core::Size_<i64>;
+pub type Point2l = core::Point_<i64>;
+pub type Vec2i = core::Vec2<i32>;
+pub type Size2i = core::Size_<i32>;
+pub type Point2i = core::Point_<i32>;
+pub type Rect2i = core::Rect_<i32>;
+pub type Size = core::Size_<i32>;
+pub type Point = core::Point_<i32>;
+pub type Rect = core::Rect_<i32>;
+pub type Vec2w = core::Vec2<u16>;
+pub type Vec2s = core::Vec2<i16>;
+pub type Vec2b = core::Vec2<u8>;
+pub type Scalar = core::Scalar_<f64>;
+/// Class for matching keypoint descriptors
+/// 
+/// query descriptor index, train descriptor index, train image index, and distance between
+/// descriptors.
 #[repr(C)]
 #[derive(Copy,Clone,Debug,PartialEq)]
-pub struct CvRNG {
-    pub data: i64,
+pub struct DMatch {
+    pub query_idx: i32,
+    pub train_idx: i32,
+    pub img_idx: i32,
+    pub distance: f32,
 }
 
-// manually defined value struct Point2i
+/// Data structure for salient point detectors.
+/// 
+/// The class instance stores a keypoint, i.e. a point feature found by one of many available keypoint
+/// detectors, such as Harris corner detector, #FAST, %StarDetector, %SURF, %SIFT etc.
+/// 
+/// The keypoint is characterized by the 2D position, scale (proportional to the diameter of the
+/// neighborhood that needs to be taken into account), orientation and some other parameters. The
+/// keypoint neighborhood is then analyzed by another algorithm that builds a descriptor (usually
+/// represented as a feature vector). The keypoints representing the same object in different images
+/// can then be matched using %KDTree or another method.
 #[repr(C)]
 #[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Point2i {
-    pub x: i32,
-    pub y: i32,
-}
-
-// manually defined value struct Point2l
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Point2l {
-    pub x: i64,
-    pub y: i64,
-}
-
-// manually defined value struct Point2f
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Point2f {
-    pub x: f32,
-    pub y: f32,
-}
-
-// manually defined value struct Point2d
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Point2d {
-    pub x: f64,
-    pub y: f64,
-}
-
-// manually defined value struct Point
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Point {
-    pub x: i32,
-    pub y: i32,
-}
-
-// manually defined value struct Rect2f
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Rect2f {
-    pub x: f32,
-    pub y: f32,
-    pub width: f32,
-    pub height: f32,
-}
-
-// manually defined value struct Rect2d
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Rect2d {
-    pub x: f64,
-    pub y: f64,
-    pub width: f64,
-    pub height: f64,
-}
-
-// manually defined value struct Rect2i
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Rect2i {
-    pub x: i32,
-    pub y: i32,
-    pub width: i32,
-    pub height: i32,
-}
-
-// manually defined value struct Rect
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Rect {
-    pub x: i32,
-    pub y: i32,
-    pub width: i32,
-    pub height: i32,
-}
-
-// manually defined value struct Size2l
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Size2l {
-    pub width: i64,
-    pub height: i64,
-}
-
-// manually defined value struct Size2f
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Size2f {
-    pub width: f32,
-    pub height: f32,
-}
-
-// manually defined value struct Size2d
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Size2d {
-    pub width: f64,
-    pub height: f64,
-}
-
-// manually defined value struct Size2i
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Size2i {
-    pub width: i32,
-    pub height: i32,
-}
-
-// manually defined value struct Scalar
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Scalar (pub [f64; 4], );
-
-// manually defined value struct Size
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Size {
-    pub width: i32,
-    pub height: i32,
-}
-
-// manually defined value struct Vec4f
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec4f {
-    pub data: [f32; 4],
-}
-
-// manually defined value struct Vec4d
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec4d {
-    pub data: [f64; 4],
-}
-
-// manually defined value struct Vec4b
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec4b {
-    pub data: [u8; 4],
-}
-
-// manually defined value struct Vec3s
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec3s {
-    pub data: [i16; 3],
-}
-
-// manually defined value struct Vec4i
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec4i {
-    pub data: [i32; 4],
-}
-
-// manually defined value struct Vec4s
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec4s {
-    pub data: [i16; 4],
-}
-
-// manually defined value struct Vec2s
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec2s {
-    pub data: [i16; 2],
-}
-
-// manually defined value struct Vec6s
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec6s {
-    pub data: [i16; 6],
-}
-
-// manually defined value struct Vec3d
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec3d {
-    pub data: [f64; 3],
-}
-
-// manually defined value struct Vec6i
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec6i {
-    pub data: [i32; 6],
-}
-
-// manually defined value struct Vec2d
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec2d {
-    pub data: [f64; 2],
-}
-
-// manually defined value struct Vec2f
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec2f {
-    pub data: [f32; 2],
-}
-
-// manually defined value struct Vec2b
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec2b {
-    pub data: [u8; 2],
-}
-
-// manually defined value struct Vec2i
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec2i {
-    pub data: [i32; 2],
-}
-
-// manually defined value struct Vec6d
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec6d {
-    pub data: [f64; 6],
-}
-
-// manually defined value struct Vec6f
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec6f {
-    pub data: [f32; 6],
-}
-
-// manually defined value struct Vec6b
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec6b {
-    pub data: [u8; 6],
-}
-
-// manually defined value struct Vec3f
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec3f {
-    pub data: [f32; 3],
-}
-
-// manually defined value struct Vec3b
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec3b {
-    pub data: [u8; 3],
-}
-
-// manually defined value struct Vec3i
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct Vec3i {
-    pub data: [i32; 3],
+pub struct KeyPoint {
+    pub pt: core::Point2f,
+    pub size: f32,
+    pub angle: f32,
+    pub response: f32,
+    pub octave: i32,
+    pub class_id: i32,
 }
 
 /// struct returned by cv::moments
@@ -903,219 +768,127 @@ pub struct Moments {
     pub nu03: f64,
 }
 
-/// Data structure for salient point detectors.
-/// 
-/// The class instance stores a keypoint, i.e. a point feature found by one of many available keypoint
-/// detectors, such as Harris corner detector, #FAST, %StarDetector, %SURF, %SIFT etc.
-/// 
-/// The keypoint is characterized by the 2D position, scale (proportional to the diameter of the
-/// neighborhood that needs to be taken into account), orientation and some other parameters. The
-/// keypoint neighborhood is then analyzed by another algorithm that builds a descriptor (usually
-/// represented as a feature vector). The keypoints representing the same object in different images
-/// can then be matched using %KDTree or another method.
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct KeyPoint {
-    pub pt: core::Point2f,
-    pub size: f32,
-    pub angle: f32,
-    pub response: f32,
-    pub octave: i32,
-    pub class_id: i32,
-}
-
-/// Class for matching keypoint descriptors
-/// 
-/// query descriptor index, train descriptor index, train image index, and distance between
-/// descriptors.
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct DMatch {
-    pub queryIdx: i32,
-    pub trainIdx: i32,
-    pub imgIdx: i32,
-    pub distance: f32,
-}
-
+// identifier: cvCbrt_float_value
 /// Fast cubic root calculation
 pub fn cv_cbrt(value: f32) -> Result<f32> {
-// identifier: cvCbrt_float_value
-  unsafe {
-    let rv = sys::cv_core_cvCbrt_float_value(value);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvCbrt_float_value(value) }.into_result()
 }
 
+// identifier: cvChangeSeqBlock_void_X_reader_int_direction
+/// 
+pub fn cv_change_seq_block(reader: &mut c_void, direction: i32) -> Result<()> {
+    unsafe { sys::cv_core_cvChangeSeqBlock_void_X_reader_int_direction(reader, direction) }.into_result()
+}
+
+// identifier: cvCheckHardwareSupport_int_feature
 /// 
 pub fn cv_check_hardware_support(feature: i32) -> Result<i32> {
-// identifier: cvCheckHardwareSupport_int_feature
-  unsafe {
-    let rv = sys::cv_core_cvCheckHardwareSupport_int_feature(feature);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvCheckHardwareSupport_int_feature(feature) }.into_result()
 }
 
+// identifier: cvErrorFromIppStatus_int_ipp_status
 /// Maps IPP error codes to the counterparts from OpenCV
 pub fn cv_error_from_ipp_status(ipp_status: i32) -> Result<i32> {
-// identifier: cvErrorFromIppStatus_int_ipp_status
-  unsafe {
-    let rv = sys::cv_core_cvErrorFromIppStatus_int_ipp_status(ipp_status);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvErrorFromIppStatus_int_ipp_status(ipp_status) }.into_result()
 }
 
+// identifier: cvErrorStr_int_status
+/// Retrieves textual description of the error given its code
+pub fn cv_error_str(status: i32) -> Result<String> {
+    unsafe { sys::cv_core_cvErrorStr_int_status(status) }.into_result().map(crate::templ::receive_string)
+}
+
+// identifier: cvError_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line
+/// Sets error status and performs some additional actions (displaying message box,
+/// writing message to stderr, terminating application etc.)
+/// depending on the current error mode
+pub fn cv_error(status: i32, func_name: &str, err_msg: &str, file_name: &str, line: i32) -> Result<()> {
+    string_arg!(func_name);
+    string_arg!(err_msg);
+    string_arg!(file_name);
+    unsafe { sys::cv_core_cvError_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line(status, func_name.as_ptr(), err_msg.as_ptr(), file_name.as_ptr(), line) }.into_result()
+}
+
+// identifier: cvFastArctan_float_y_float_x
 /// Fast arctangent calculation
 pub fn cv_fast_arctan(y: f32, x: f32) -> Result<f32> {
-// identifier: cvFastArctan_float_y_float_x
-  unsafe {
-    let rv = sys::cv_core_cvFastArctan_float_y_float_x(y, x);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvFastArctan_float_y_float_x(y, x) }.into_result()
 }
 
+// identifier: cvGetErrMode
 /// Retrieves current error processing mode
 pub fn cv_get_err_mode() -> Result<i32> {
-// identifier: cvGetErrMode
-  unsafe {
-    let rv = sys::cv_core_cvGetErrMode();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvGetErrMode() }.into_result()
 }
 
+// identifier: cvGetErrStatus
 /// Get current OpenCV error status
 pub fn cv_get_err_status() -> Result<i32> {
-// identifier: cvGetErrStatus
-  unsafe {
-    let rv = sys::cv_core_cvGetErrStatus();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvGetErrStatus() }.into_result()
 }
 
+// identifier: cvGetNumThreads
 /// retrieve/set the number of threads used in OpenMP implementations
 pub fn cv_get_num_threads() -> Result<i32> {
-// identifier: cvGetNumThreads
-  unsafe {
-    let rv = sys::cv_core_cvGetNumThreads();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvGetNumThreads() }.into_result()
 }
 
+// identifier: cvGetOptimalDFTSize_int_size0
 /// Finds optimal DFT vector size >= size0
 pub fn cv_get_optimal_dft_size(size0: i32) -> Result<i32> {
-// identifier: cvGetOptimalDFTSize_int_size0
-  unsafe {
-    let rv = sys::cv_core_cvGetOptimalDFTSize_int_size0(size0);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvGetOptimalDFTSize_int_size0(size0) }.into_result()
 }
 
+// identifier: cvGetThreadNum
 /// get index of the thread being executed
 pub fn cv_get_thread_num() -> Result<i32> {
-// identifier: cvGetThreadNum
-  unsafe {
-    let rv = sys::cv_core_cvGetThreadNum();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvGetThreadNum() }.into_result()
 }
 
+// identifier: cvGetTickCount
 /// helper functions for RNG initialization and accurate time measurement:
 /// uses internal clock counter on x86
 pub fn cv_get_tick_count() -> Result<i64> {
-// identifier: cvGetTickCount
-  unsafe {
-    let rv = sys::cv_core_cvGetTickCount();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvGetTickCount() }.into_result()
 }
 
-pub fn cv_get_tick_frequency() -> Result<f64> {
 // identifier: cvGetTickFrequency
-  unsafe {
-    let rv = sys::cv_core_cvGetTickFrequency();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_get_tick_frequency() -> Result<f64> {
+    unsafe { sys::cv_core_cvGetTickFrequency() }.into_result()
 }
 
-pub fn cv_ipl_depth(_type: i32) -> Result<i32> {
+// identifier: cvGuiBoxReport_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line_void_X_userdata
+/// Output to MessageBox(WIN32)
+pub fn cv_gui_box_report(status: i32, func_name: &str, err_msg: &str, file_name: &str, line: i32, userdata: &mut c_void) -> Result<i32> {
+    string_arg!(func_name);
+    string_arg!(err_msg);
+    string_arg!(file_name);
+    unsafe { sys::cv_core_cvGuiBoxReport_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line_void_X_userdata(status, func_name.as_ptr(), err_msg.as_ptr(), file_name.as_ptr(), line, userdata) }.into_result()
+}
+
+// identifier: cvInsertNodeIntoTree_void_X_node_void_X_parent_void_X_frame
+/// Inserts sequence into tree with specified "parent" sequence.
+/// If parent is equal to frame (e.g. the most external contour),
+/// then added contour will have null pointer to parent.
+pub fn cv_insert_node_into_tree(node: &mut c_void, parent: &mut c_void, frame: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cvInsertNodeIntoTree_void_X_node_void_X_parent_void_X_frame(node, parent, frame) }.into_result()
+}
+
 // identifier: cvIplDepth_int_type
-  unsafe {
-    let rv = sys::cv_core_cvIplDepth_int_type(_type);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_ipl_depth(_type: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cvIplDepth_int_type(_type) }.into_result()
 }
 
+// identifier: cvNulDevReport_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line_void_X_userdata
+/// Output nothing
+pub fn cv_nul_dev_report(status: i32, func_name: &str, err_msg: &str, file_name: &str, line: i32, userdata: &mut c_void) -> Result<i32> {
+    string_arg!(func_name);
+    string_arg!(err_msg);
+    string_arg!(file_name);
+    unsafe { sys::cv_core_cvNulDevReport_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line_void_X_userdata(status, func_name.as_ptr(), err_msg.as_ptr(), file_name.as_ptr(), line, userdata) }.into_result()
+}
+
+// identifier: cvRNG_int64_seed
 /// Initializes a random number generator state.
 /// 
 /// The function initializes a random number generator and returns the state. The pointer to the state
@@ -1127,126 +900,94 @@ pub fn cv_ipl_depth(_type: i32) -> Result<i32> {
 ///
 /// ## C++ default parameters:
 /// * seed: -1
-pub fn cv_rng(seed: i64) -> Result<core::CvRNG> {
-// identifier: cvRNG_int64_seed
-  unsafe {
-    let rv = sys::cv_core_cvRNG_int64_seed(seed);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_rng(seed: i64) -> Result<u64> {
+    unsafe { sys::cv_core_cvRNG_int64_seed(seed) }.into_result()
 }
 
+// identifier: cvRemoveNodeFromTree_void_X_node_void_X_frame
+/// Removes contour from tree (together with the contour children).
+pub fn cv_remove_node_from_tree(node: &mut c_void, frame: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cvRemoveNodeFromTree_void_X_node_void_X_frame(node, frame) }.into_result()
+}
+
+// identifier: cvRound64_softdouble_a
 /// Rounds a number to nearest even long long integer
 pub fn cv_round64(a: &core::softdouble) -> Result<i64> {
-// identifier: cvRound64_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cvRound64_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvRound64_softdouble_a(a.as_raw_softdouble()) }.into_result()
 }
 
+// identifier: cvSetErrMode_int_mode
 /// Sets error processing mode, returns previously used mode
 pub fn cv_set_err_mode(mode: i32) -> Result<i32> {
-// identifier: cvSetErrMode_int_mode
-  unsafe {
-    let rv = sys::cv_core_cvSetErrMode_int_mode(mode);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvSetErrMode_int_mode(mode) }.into_result()
 }
 
+// identifier: cvSetErrStatus_int_status
 /// Sets error status silently
 pub fn cv_set_err_status(status: i32) -> Result<()> {
-// identifier: cvSetErrStatus_int_status
-  unsafe {
-    let rv = sys::cv_core_cvSetErrStatus_int_status(status);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cvSetErrStatus_int_status(status) }.into_result()
 }
 
+// identifier: cvSetNumThreads_int_threads
 ///
 /// ## C++ default parameters:
 /// * threads: 0
 pub fn cv_set_num_threads(threads: i32) -> Result<()> {
-// identifier: cvSetNumThreads_int_threads
-  unsafe {
-    let rv = sys::cv_core_cvSetNumThreads_int_threads(threads);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cvSetNumThreads_int_threads(threads) }.into_result()
 }
 
-pub fn cv_trunc(a: &core::softdouble) -> Result<i32> {
+// identifier: cvStdErrReport_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line_void_X_userdata
+/// Output to console(fprintf(stderr,...))
+pub fn cv_std_err_report(status: i32, func_name: &str, err_msg: &str, file_name: &str, line: i32, userdata: &mut c_void) -> Result<i32> {
+    string_arg!(func_name);
+    string_arg!(err_msg);
+    string_arg!(file_name);
+    unsafe { sys::cv_core_cvStdErrReport_int_status_const_char_X_func_name_const_char_X_err_msg_const_char_X_file_name_int_line_void_X_userdata(status, func_name.as_ptr(), err_msg.as_ptr(), file_name.as_ptr(), line, userdata) }.into_result()
+}
+
 // identifier: cvTrunc_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cvTrunc_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_trunc(a: &core::softdouble) -> Result<i32> {
+    unsafe { sys::cv_core_cvTrunc_softdouble_a(a.as_raw_softdouble()) }.into_result()
 }
 
-/// Truncates number to integer with minimum magnitude
-pub fn cv_trunc_v0(a: &core::softfloat) -> Result<i32> {
 // identifier: cvTrunc_softfloat_a
-  unsafe {
-    let rv = sys::cv_core_cvTrunc_softfloat_a(a.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+/// Truncates number to integer with minimum magnitude
+pub fn cv_trunc_1(a: &core::softfloat) -> Result<i32> {
+    unsafe { sys::cv_core_cvTrunc_softfloat_a(a.as_raw_softfloat()) }.into_result()
 }
 
+// identifier: cvUnregisterType_const_char_X_type_name
+/// Unregisters the type.
+/// 
+/// The function unregisters a type with a specified name. If the name is unknown, it is possible to
+/// locate the type info by an instance of the type using cvTypeOf or by iterating the type list,
+/// starting from cvFirstType, and then calling cvUnregisterType(info-\>typeName).
+/// ## Parameters
+/// * type_name: Name of an unregistered type
+pub fn cv_unregister_type(type_name: &str) -> Result<()> {
+    string_arg!(type_name);
+    unsafe { sys::cv_core_cvUnregisterType_const_char_X_type_name(type_name.as_ptr()) }.into_result()
+}
+
+// identifier: cvUseOptimized_int_on_off
 /// Loads optimized functions from IPP, MKL etc. or switches back to pure C code
 pub fn cv_use_optimized(on_off: i32) -> Result<i32> {
-// identifier: cvUseOptimized_int_on_off
-  unsafe {
-    let rv = sys::cv_core_cvUseOptimized_int_on_off(on_off);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cvUseOptimized_int_on_off(on_off) }.into_result()
 }
 
+// identifier: cv_Cholesky_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n
+/// proxy for hal::Cholesky
+pub fn cholesky(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<bool> {
+    unsafe { sys::cv_core_cv_Cholesky_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_Cholesky_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n
+/// proxy for hal::Cholesky
+pub fn cholesky_1(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<bool> {
+    unsafe { sys::cv_core_cv_Cholesky_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_LUT_Mat_src_Mat_lut_Mat_dst
 /// Performs a look-up table transform of an array.
 /// 
 /// The function LUT fills the output array with values from the look-up table. Indices of the entries
@@ -1262,19 +1003,22 @@ pub fn cv_use_optimized(on_off: i32) -> Result<i32> {
 /// * dst: output array of the same size and number of channels as src, and the same depth as lut.
 /// @sa  convertScaleAbs, Mat::convertTo
 pub fn lut(src: &core::Mat, lut: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_LUT_Mat_src_Mat_lut_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_LUT_Mat_src_Mat_lut_Mat_dst(src.as_raw_Mat(), lut.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_LUT_Mat_src_Mat_lut_Mat_dst(src.as_raw_Mat(), lut.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_LU_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n
+/// proxy for hal::LU
+pub fn lu(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_LU_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_LU_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n
+/// proxy for hal::LU
+pub fn lu_1(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_LU_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_Mahalanobis_Mat_v1_Mat_v2_Mat_icovar
 /// Calculates the Mahalanobis distance between two vectors.
 /// 
 /// The function cv::Mahalanobis calculates and returns the weighted distance between two vectors:
@@ -1286,115 +1030,52 @@ pub fn lut(src: &core::Mat, lut: &core::Mat, dst: &mut core::Mat) -> Result<()> 
 /// * v2: second 1D input vector.
 /// * icovar: inverse covariance matrix.
 pub fn mahalanobis(v1: &core::Mat, v2: &core::Mat, icovar: &core::Mat) -> Result<f64> {
-// identifier: cv_Mahalanobis_Mat_v1_Mat_v2_Mat_icovar
-  unsafe {
-    let rv = sys::cv_core_cv_Mahalanobis_Mat_v1_Mat_v2_Mat_icovar(v1.as_raw_Mat(), v2.as_raw_Mat(), icovar.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_Mahalanobis_Mat_v1_Mat_v2_Mat_icovar(v1.as_raw_Mat(), v2.as_raw_Mat(), icovar.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_PCABackProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result
 /// wrap PCA::backProject
 pub fn pca_back_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat, result: &mut core::Mat) -> Result<()> {
-// identifier: cv_PCABackProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result
-  unsafe {
-    let rv = sys::cv_core_cv_PCABackProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), result.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_PCABackProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_double_retainedVariance
 /// wrap PCA::operator() and add eigenvalues output parameter
 pub fn pca_compute(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, eigenvalues: &mut core::Mat, retained_variance: f64) -> Result<()> {
-// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_double_retainedVariance
-  unsafe {
-    let rv = sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_double_retainedVariance(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), eigenvalues.as_raw_Mat(), retained_variance);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_double_retainedVariance(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), eigenvalues.as_raw_Mat(), retained_variance) }.into_result()
 }
 
+// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_int_maxComponents
 /// wrap PCA::operator() and add eigenvalues output parameter
 ///
 /// ## C++ default parameters:
 /// * max_components: 0
-pub fn pca_compute_v0(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, eigenvalues: &mut core::Mat, max_components: i32) -> Result<()> {
-// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_int_maxComponents
-  unsafe {
-    let rv = sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_int_maxComponents(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), eigenvalues.as_raw_Mat(), max_components);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn pca_compute_1(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, eigenvalues: &mut core::Mat, max_components: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_Mat_eigenvalues_int_maxComponents(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), eigenvalues.as_raw_Mat(), max_components) }.into_result()
 }
 
+// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_double_retainedVariance
 /// wrap PCA::operator()
 pub fn pca_compute_variance(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, retained_variance: f64) -> Result<()> {
-// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_double_retainedVariance
-  unsafe {
-    let rv = sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_double_retainedVariance(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), retained_variance);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_double_retainedVariance(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), retained_variance) }.into_result()
 }
 
+// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_int_maxComponents
 /// wrap PCA::operator()
 ///
 /// ## C++ default parameters:
 /// * max_components: 0
-pub fn pca_compute_v1(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, max_components: i32) -> Result<()> {
-// identifier: cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_int_maxComponents
-  unsafe {
-    let rv = sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_int_maxComponents(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), max_components);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn pca_compute_2(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, max_components: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_PCACompute_Mat_data_Mat_mean_Mat_eigenvectors_int_maxComponents(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), max_components) }.into_result()
 }
 
+// identifier: cv_PCAProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result
 /// wrap PCA::project
 pub fn pca_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat, result: &mut core::Mat) -> Result<()> {
-// identifier: cv_PCAProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result
-  unsafe {
-    let rv = sys::cv_core_cv_PCAProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), result.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_PCAProject_Mat_data_Mat_mean_Mat_eigenvectors_Mat_result(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_PSNR_Mat_src1_Mat_src2
 /// Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
 /// 
 /// This function calculates the Peak Signal-to-Noise Ratio (PSNR) image quality metric in decibels (dB), between two input arrays src1 and src2. Arrays must have depth CV_8U.
@@ -1411,81 +1092,36 @@ pub fn pca_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat,
 /// * src1: first input array.
 /// * src2: second input array of the same size as src1.
 pub fn psnr(src1: &core::Mat, src2: &core::Mat) -> Result<f64> {
-// identifier: cv_PSNR_Mat_src1_Mat_src2
-  unsafe {
-    let rv = sys::cv_core_cv_PSNR_Mat_src1_Mat_src2(src1.as_raw_Mat(), src2.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_PSNR_Mat_src1_Mat_src2(src1.as_raw_Mat(), src2.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_SVBackSubst_Mat_w_Mat_u_Mat_vt_Mat_rhs_Mat_dst
 /// wrap SVD::backSubst
 pub fn sv_back_subst(w: &core::Mat, u: &core::Mat, vt: &core::Mat, rhs: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_SVBackSubst_Mat_w_Mat_u_Mat_vt_Mat_rhs_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_SVBackSubst_Mat_w_Mat_u_Mat_vt_Mat_rhs_Mat_dst(w.as_raw_Mat(), u.as_raw_Mat(), vt.as_raw_Mat(), rhs.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_SVBackSubst_Mat_w_Mat_u_Mat_vt_Mat_rhs_Mat_dst(w.as_raw_Mat(), u.as_raw_Mat(), vt.as_raw_Mat(), rhs.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_SVDecomp_Mat_src_Mat_w_Mat_u_Mat_vt_int_flags
 /// wrap SVD::compute
 ///
 /// ## C++ default parameters:
 /// * flags: 0
 pub fn sv_decomp(src: &core::Mat, w: &mut core::Mat, u: &mut core::Mat, vt: &mut core::Mat, flags: i32) -> Result<()> {
-// identifier: cv_SVDecomp_Mat_src_Mat_w_Mat_u_Mat_vt_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_SVDecomp_Mat_src_Mat_w_Mat_u_Mat_vt_int_flags(src.as_raw_Mat(), w.as_raw_Mat(), u.as_raw_Mat(), vt.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_SVDecomp_Mat_src_Mat_w_Mat_u_Mat_vt_int_flags(src.as_raw_Mat(), w.as_raw_Mat(), u.as_raw_Mat(), vt.as_raw_Mat(), flags) }.into_result()
 }
 
-pub fn abs(a: &core::softdouble) -> Result<core::softdouble> {
 // identifier: cv_abs_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cv_abs_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn abs(a: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_abs_softdouble_a(a.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
-/// Absolute value
-pub fn abs_v0(a: &core::softfloat) -> Result<core::softfloat> {
 // identifier: cv_abs_softfloat_a
-  unsafe {
-    let rv = sys::cv_core_cv_abs_softfloat_a(a.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+/// Absolute value
+pub fn abs_1(a: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_abs_softfloat_a(a.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_absdiff_Mat_src1_Mat_src2_Mat_dst
 /// Calculates the per-element absolute difference between two arrays or between an array and a scalar.
 /// 
 /// The function cv::absdiff calculates:
@@ -1511,19 +1147,10 @@ pub fn abs_v0(a: &core::softfloat) -> Result<core::softfloat> {
 /// * dst: output array that has the same size and type as input arrays.
 /// @sa cv::abs(const Mat&)
 pub fn absdiff(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_absdiff_Mat_src1_Mat_src2_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_absdiff_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_absdiff_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_addWeighted_Mat_src1_double_alpha_Mat_src2_double_beta_double_gamma_Mat_dst_int_dtype
 /// Calculates the weighted sum of two arrays.
 /// 
 /// The function addWeighted calculates the weighted sum of two arrays as follows:
@@ -1552,19 +1179,10 @@ pub fn absdiff(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Resul
 /// ## C++ default parameters:
 /// * dtype: -1
 pub fn add_weighted(src1: &core::Mat, alpha: f64, src2: &core::Mat, beta: f64, gamma: f64, dst: &mut core::Mat, dtype: i32) -> Result<()> {
-// identifier: cv_addWeighted_Mat_src1_double_alpha_Mat_src2_double_beta_double_gamma_Mat_dst_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_addWeighted_Mat_src1_double_alpha_Mat_src2_double_beta_double_gamma_Mat_dst_int_dtype(src1.as_raw_Mat(), alpha, src2.as_raw_Mat(), beta, gamma, dst.as_raw_Mat(), dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_addWeighted_Mat_src1_double_alpha_Mat_src2_double_beta_double_gamma_Mat_dst_int_dtype(src1.as_raw_Mat(), alpha, src2.as_raw_Mat(), beta, gamma, dst.as_raw_Mat(), dtype) }.into_result()
 }
 
+// identifier: cv_add_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype
 /// Calculates the per-element sum of two arrays or an array and a scalar.
 /// 
 /// The function add calculates:
@@ -1608,19 +1226,10 @@ pub fn add_weighted(src1: &core::Mat, alpha: f64, src2: &core::Mat, beta: f64, g
 /// * mask: noArray()
 /// * dtype: -1
 pub fn add(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat, dtype: i32) -> Result<()> {
-// identifier: cv_add_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_add_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_add_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), dtype) }.into_result()
 }
 
+// identifier: cv_alignSize_size_t_sz_int_n
 /// Aligns a buffer size to the specified number of bytes.
 /// 
 /// The function returns the minimum number that is greater than or equal to sz and is divisible by n :
@@ -1629,19 +1238,10 @@ pub fn add(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core:
 /// * sz: Buffer size to align.
 /// * n: Alignment size that must be a power of two.
 pub fn align_size(sz: size_t, n: i32) -> Result<size_t> {
-// identifier: cv_alignSize_size_t_sz_int_n
-  unsafe {
-    let rv = sys::cv_core_cv_alignSize_size_t_sz_int_n(sz, n);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_alignSize_size_t_sz_int_n(sz, n) }.into_result()
 }
 
+// identifier: cv_batchDistance_Mat_src1_Mat_src2_Mat_dist_int_dtype_Mat_nidx_int_normType_int_K_Mat_mask_int_update_bool_crosscheck
 /// naive nearest neighbor finder
 /// 
 /// see http://en.wikipedia.org/wiki/Nearest_neighbor_search
@@ -1654,19 +1254,10 @@ pub fn align_size(sz: size_t, n: i32) -> Result<size_t> {
 /// * update: 0
 /// * crosscheck: false
 pub fn batch_distance(src1: &core::Mat, src2: &core::Mat, dist: &mut core::Mat, dtype: i32, nidx: &mut core::Mat, norm_type: i32, k: i32, mask: &core::Mat, update: i32, crosscheck: bool) -> Result<()> {
-// identifier: cv_batchDistance_Mat_src1_Mat_src2_Mat_dist_int_dtype_Mat_nidx_int_normType_int_K_Mat_mask_int_update_bool_crosscheck
-  unsafe {
-    let rv = sys::cv_core_cv_batchDistance_Mat_src1_Mat_src2_Mat_dist_int_dtype_Mat_nidx_int_normType_int_K_Mat_mask_int_update_bool_crosscheck(src1.as_raw_Mat(), src2.as_raw_Mat(), dist.as_raw_Mat(), dtype, nidx.as_raw_Mat(), norm_type, k, mask.as_raw_Mat(), update, crosscheck);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_batchDistance_Mat_src1_Mat_src2_Mat_dist_int_dtype_Mat_nidx_int_normType_int_K_Mat_mask_int_update_bool_crosscheck(src1.as_raw_Mat(), src2.as_raw_Mat(), dist.as_raw_Mat(), dtype, nidx.as_raw_Mat(), norm_type, k, mask.as_raw_Mat(), update, crosscheck) }.into_result()
 }
 
+// identifier: cv_bitwise_and_Mat_src1_Mat_src2_Mat_dst_Mat_mask
 /// computes bitwise conjunction of the two arrays (dst = src1 & src2)
 /// Calculates the per-element bit-wise conjunction of two arrays or an
 /// array and a scalar.
@@ -1696,19 +1287,10 @@ pub fn batch_distance(src1: &core::Mat, src2: &core::Mat, dist: &mut core::Mat, 
 /// ## C++ default parameters:
 /// * mask: noArray()
 pub fn bitwise_and(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-// identifier: cv_bitwise_and_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_bitwise_and_Mat_src1_Mat_src2_Mat_dst_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_bitwise_and_Mat_src1_Mat_src2_Mat_dst_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_bitwise_not_Mat_src_Mat_dst_Mat_mask
 /// Inverts every bit of an array.
 /// 
 /// The function cv::bitwise_not calculates per-element bit-wise inversion of the input
@@ -1727,19 +1309,10 @@ pub fn bitwise_and(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask
 /// ## C++ default parameters:
 /// * mask: noArray()
 pub fn bitwise_not(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-// identifier: cv_bitwise_not_Mat_src_Mat_dst_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_bitwise_not_Mat_src_Mat_dst_Mat_mask(src.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_bitwise_not_Mat_src_Mat_dst_Mat_mask(src.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_bitwise_or_Mat_src1_Mat_src2_Mat_dst_Mat_mask
 /// Calculates the per-element bit-wise disjunction of two arrays or an
 /// array and a scalar.
 /// 
@@ -1768,19 +1341,10 @@ pub fn bitwise_not(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Re
 /// ## C++ default parameters:
 /// * mask: noArray()
 pub fn bitwise_or(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-// identifier: cv_bitwise_or_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_bitwise_or_Mat_src1_Mat_src2_Mat_dst_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_bitwise_or_Mat_src1_Mat_src2_Mat_dst_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_bitwise_xor_Mat_src1_Mat_src2_Mat_dst_Mat_mask
 /// Calculates the per-element bit-wise "exclusive or" operation on two
 /// arrays or an array and a scalar.
 /// 
@@ -1810,19 +1374,10 @@ pub fn bitwise_or(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask:
 /// ## C++ default parameters:
 /// * mask: noArray()
 pub fn bitwise_xor(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-// identifier: cv_bitwise_xor_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_bitwise_xor_Mat_src1_Mat_src2_Mat_dst_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_bitwise_xor_Mat_src1_Mat_src2_Mat_dst_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_borderInterpolate_int_p_int_len_int_borderType
 /// Computes the source location of an extrapolated pixel.
 /// 
 /// The function computes and returns the coordinate of a donor pixel corresponding to the specified
@@ -1846,19 +1401,10 @@ pub fn bitwise_xor(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask
 /// 
 /// @sa copyMakeBorder
 pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
-// identifier: cv_borderInterpolate_int_p_int_len_int_borderType
-  unsafe {
-    let rv = sys::cv_core_cv_borderInterpolate_int_p_int_len_int_borderType(p, len, border_type);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_borderInterpolate_int_p_int_len_int_borderType(p, len, border_type) }.into_result()
 }
 
+// identifier: cv_calcCovarMatrix_Mat_samples_Mat_covar_Mat_mean_int_flags_int_ctype
 /// @overload
 /// 
 /// Note: use #COVAR_ROWS or #COVAR_COLS flag
@@ -1872,19 +1418,10 @@ pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
 /// ## C++ default parameters:
 /// * ctype: CV_64F
 pub fn calc_covar_matrix_arrays(samples: &core::Mat, covar: &mut core::Mat, mean: &mut core::Mat, flags: i32, ctype: i32) -> Result<()> {
-// identifier: cv_calcCovarMatrix_Mat_samples_Mat_covar_Mat_mean_int_flags_int_ctype
-  unsafe {
-    let rv = sys::cv_core_cv_calcCovarMatrix_Mat_samples_Mat_covar_Mat_mean_int_flags_int_ctype(samples.as_raw_Mat(), covar.as_raw_Mat(), mean.as_raw_Mat(), flags, ctype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_calcCovarMatrix_Mat_samples_Mat_covar_Mat_mean_int_flags_int_ctype(samples.as_raw_Mat(), covar.as_raw_Mat(), mean.as_raw_Mat(), flags, ctype) }.into_result()
 }
 
+// identifier: cv_calcCovarMatrix_const_Mat_samples_int_nsamples_Mat_covar_Mat_mean_int_flags_int_ctype
 /// Calculates the covariance matrix of a set of vectors.
 /// 
 /// The function cv::calcCovarMatrix calculates the covariance matrix and, optionally, the mean vector of
@@ -1902,19 +1439,10 @@ pub fn calc_covar_matrix_arrays(samples: &core::Mat, covar: &mut core::Mat, mean
 /// ## C++ default parameters:
 /// * ctype: CV_64F
 pub fn calc_covar_matrix(samples: &core::Mat, nsamples: i32, covar: &core::Mat, mean: &core::Mat, flags: i32, ctype: i32) -> Result<()> {
-// identifier: cv_calcCovarMatrix_Mat_samples_int_nsamples_Mat_covar_Mat_mean_int_flags_int_ctype
-  unsafe {
-    let rv = sys::cv_core_cv_calcCovarMatrix_Mat_samples_int_nsamples_Mat_covar_Mat_mean_int_flags_int_ctype(samples.as_raw_Mat(), nsamples, covar.as_raw_Mat(), mean.as_raw_Mat(), flags, ctype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_calcCovarMatrix_const_Mat_samples_int_nsamples_Mat_covar_Mat_mean_int_flags_int_ctype(samples.as_raw_Mat(), nsamples, covar.as_raw_Mat(), mean.as_raw_Mat(), flags, ctype) }.into_result()
 }
 
+// identifier: cv_cartToPolar_Mat_x_Mat_y_Mat_magnitude_Mat_angle_bool_angleInDegrees
 /// Calculates the magnitude and angle of 2D vectors.
 /// 
 /// The function cv::cartToPolar calculates either the magnitude, angle, or both
@@ -1937,38 +1465,20 @@ pub fn calc_covar_matrix(samples: &core::Mat, nsamples: i32, covar: &core::Mat, 
 /// ## C++ default parameters:
 /// * angle_in_degrees: false
 pub fn cart_to_polar(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat, angle: &mut core::Mat, angle_in_degrees: bool) -> Result<()> {
-// identifier: cv_cartToPolar_Mat_x_Mat_y_Mat_magnitude_Mat_angle_bool_angleInDegrees
-  unsafe {
-    let rv = sys::cv_core_cv_cartToPolar_Mat_x_Mat_y_Mat_magnitude_Mat_angle_bool_angleInDegrees(x.as_raw_Mat(), y.as_raw_Mat(), magnitude.as_raw_Mat(), angle.as_raw_Mat(), angle_in_degrees);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_cartToPolar_Mat_x_Mat_y_Mat_magnitude_Mat_angle_bool_angleInDegrees(x.as_raw_Mat(), y.as_raw_Mat(), magnitude.as_raw_Mat(), angle.as_raw_Mat(), angle_in_degrees) }.into_result()
 }
 
+// identifier: cv_cbrt_softfloat_a
 /// Cube root
 /// 
 /// Special cases:
 /// - cbrt(NaN) is NaN
 /// - cbrt(+/-Inf) is +/-Inf
 pub fn cbrt(a: &core::softfloat) -> Result<core::softfloat> {
-// identifier: cv_cbrt_softfloat_a
-  unsafe {
-    let rv = sys::cv_core_cv_cbrt_softfloat_a(a.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_core_cv_cbrt_softfloat_a(a.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_checkHardwareSupport_int_feature
 /// Returns true if the specified feature is supported by the host hardware.
 /// 
 /// The function returns true if the host hardware supports the specified feature. When user calls
@@ -1978,19 +1488,36 @@ pub fn cbrt(a: &core::softfloat) -> Result<core::softfloat> {
 /// ## Parameters
 /// * feature: The feature of interest, one of cv::CpuFeatures
 pub fn check_hardware_support(feature: i32) -> Result<bool> {
-// identifier: cv_checkHardwareSupport_int_feature
-  unsafe {
-    let rv = sys::cv_core_cv_checkHardwareSupport_int_feature(feature);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_checkHardwareSupport_int_feature(feature) }.into_result()
 }
 
+// identifier: cv_checkRange_Mat_a_bool_quiet_Point_X_pos_double_minVal_double_maxVal
+/// Checks every element of an input array for invalid values.
+/// 
+/// The function cv::checkRange checks that every array element is neither NaN nor infinite. When minVal \>
+/// -DBL_MAX and maxVal \< DBL_MAX, the function also checks that each value is between minVal and
+/// maxVal. In case of multi-channel arrays, each channel is processed independently. If some values
+/// are out of range, position of the first outlier is stored in pos (when pos != NULL). Then, the
+/// function either returns false (when quiet=true) or throws an exception.
+/// ## Parameters
+/// * a: input array.
+/// * quiet: a flag, indicating whether the functions quietly return false when the array elements
+/// are out of range or they throw an exception.
+/// * pos: optional output parameter, when not NULL, must be a pointer to array of src.dims
+/// elements.
+/// * minVal: inclusive lower boundary of valid values range.
+/// * maxVal: exclusive upper boundary of valid values range.
+///
+/// ## C++ default parameters:
+/// * quiet: true
+/// * pos: 0
+/// * min_val: -DBL_MAX
+/// * max_val: DBL_MAX
+pub fn check_range(a: &core::Mat, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
+    unsafe { sys::cv_core_cv_checkRange_Mat_a_bool_quiet_Point_X_pos_double_minVal_double_maxVal(a.as_raw_Mat(), quiet, pos, min_val, max_val) }.into_result()
+}
+
+// identifier: cv_compare_Mat_src1_Mat_src2_Mat_dst_int_cmpop
 /// Performs the per-element comparison of two arrays or an array and scalar value.
 /// 
 /// The function compares:
@@ -2019,19 +1546,10 @@ pub fn check_hardware_support(feature: i32) -> Result<bool> {
 /// * cmpop: a flag, that specifies correspondence between the arrays (cv::CmpTypes)
 /// @sa checkRange, min, max, threshold
 pub fn compare(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, cmpop: i32) -> Result<()> {
-// identifier: cv_compare_Mat_src1_Mat_src2_Mat_dst_int_cmpop
-  unsafe {
-    let rv = sys::cv_core_cv_compare_Mat_src1_Mat_src2_Mat_dst_int_cmpop(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), cmpop);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_compare_Mat_src1_Mat_src2_Mat_dst_int_cmpop(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), cmpop) }.into_result()
 }
 
+// identifier: cv_completeSymm_Mat_m_bool_lowerToUpper
 /// Copies the lower or the upper half of a square matrix to its another half.
 /// 
 /// The function cv::completeSymm copies the lower or the upper half of a square matrix to
@@ -2050,19 +1568,10 @@ pub fn compare(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, cmpop: i
 /// ## C++ default parameters:
 /// * lower_to_upper: false
 pub fn complete_symm(m: &mut core::Mat, lower_to_upper: bool) -> Result<()> {
-// identifier: cv_completeSymm_Mat_m_bool_lowerToUpper
-  unsafe {
-    let rv = sys::cv_core_cv_completeSymm_Mat_m_bool_lowerToUpper(m.as_raw_Mat(), lower_to_upper);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_completeSymm_Mat_m_bool_lowerToUpper(m.as_raw_Mat(), lower_to_upper) }.into_result()
 }
 
+// identifier: cv_convertFp16_Mat_src_Mat_dst
 /// Converts an array to half precision floating number.
 /// 
 /// This function converts FP32 (single precision floating point) from/to FP16 (half precision floating point). CV_16S format is used to represent FP16 data.
@@ -2074,19 +1583,10 @@ pub fn complete_symm(m: &mut core::Mat, lower_to_upper: bool) -> Result<()> {
 /// * src: input array.
 /// * dst: output array.
 pub fn convert_fp16(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_convertFp16_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_convertFp16_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_convertFp16_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_convertScaleAbs_Mat_src_Mat_dst_double_alpha_double_beta
 /// Scales, calculates absolute values, and converts the result to 8-bit.
 /// 
 /// On each element of the input array, the function convertScaleAbs
@@ -2118,19 +1618,10 @@ pub fn convert_fp16(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// * alpha: 1
 /// * beta: 0
 pub fn convert_scale_abs(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta: f64) -> Result<()> {
-// identifier: cv_convertScaleAbs_Mat_src_Mat_dst_double_alpha_double_beta
-  unsafe {
-    let rv = sys::cv_core_cv_convertScaleAbs_Mat_src_Mat_dst_double_alpha_double_beta(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_convertScaleAbs_Mat_src_Mat_dst_double_alpha_double_beta(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta) }.into_result()
 }
 
+// identifier: cv_copyMakeBorder_Mat_src_Mat_dst_int_top_int_bottom_int_left_int_right_int_borderType_Scalar_value
 /// Forms a border around an image.
 /// 
 /// The function copies the source image into the middle of the destination image. The areas to the
@@ -2180,38 +1671,20 @@ pub fn convert_scale_abs(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta:
 /// ## C++ default parameters:
 /// * value: Scalar()
 pub fn copy_make_border(src: &core::Mat, dst: &mut core::Mat, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar) -> Result<()> {
-// identifier: cv_copyMakeBorder_Mat_src_Mat_dst_int_top_int_bottom_int_left_int_right_int_borderType_Scalar_value
-  unsafe {
-    let rv = sys::cv_core_cv_copyMakeBorder_Mat_src_Mat_dst_int_top_int_bottom_int_left_int_right_int_borderType_Scalar_value(src.as_raw_Mat(), dst.as_raw_Mat(), top, bottom, left, right, border_type, value);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_copyMakeBorder_Mat_src_Mat_dst_int_top_int_bottom_int_left_int_right_int_borderType_Scalar_value(src.as_raw_Mat(), dst.as_raw_Mat(), top, bottom, left, right, border_type, value) }.into_result()
 }
 
+// identifier: cv_cos_softdouble_a
 /// Cosine
 /// 
 /// Special cases:
 /// - cos(Inf) or cos(NaN) is NaN
 /// - cos(x) == +/- 1 when cos(x) is close to +/- 1
 pub fn cos(a: &core::softdouble) -> Result<core::softdouble> {
-// identifier: cv_cos_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cv_cos_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_core_cv_cos_softdouble_a(a.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
+// identifier: cv_countNonZero_Mat_src
 /// Counts non-zero array elements.
 /// 
 /// The function returns the number of non-zero elements in src :
@@ -2220,19 +1693,10 @@ pub fn cos(a: &core::softdouble) -> Result<core::softdouble> {
 /// * src: single-channel array.
 /// @sa  mean, meanStdDev, norm, minMaxLoc, calcCovarMatrix
 pub fn count_non_zero(src: &core::Mat) -> Result<i32> {
-// identifier: cv_countNonZero_Mat_src
-  unsafe {
-    let rv = sys::cv_core_cv_countNonZero_Mat_src(src.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_countNonZero_Mat_src(src.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_cubeRoot_float_val
 /// Computes the cube root of an argument.
 /// 
 /// The function cubeRoot computes <span lang='latex'>\sqrt[3]{\texttt{val}}</span>. Negative arguments are handled correctly.
@@ -2241,47 +1705,20 @@ pub fn count_non_zero(src: &core::Mat) -> Result<i32> {
 /// ## Parameters
 /// * val: A function argument.
 pub fn cube_root(val: f32) -> Result<f32> {
-// identifier: cv_cubeRoot_float_val
-  unsafe {
-    let rv = sys::cv_core_cv_cubeRoot_float_val(val);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_cubeRoot_float_val(val) }.into_result()
 }
 
-pub fn cv_abs(x: i8) -> Result<i32> {
 // identifier: cv_cv_abs_schar_x
-  unsafe {
-    let rv = sys::cv_core_cv_cv_abs_schar_x(x);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_abs(x: i8) -> Result<i32> {
+    unsafe { sys::cv_core_cv_cv_abs_schar_x(x) }.into_result()
 }
 
-pub fn cv_abs_v0(x: u16) -> Result<i32> {
 // identifier: cv_cv_abs_ushort_x
-  unsafe {
-    let rv = sys::cv_core_cv_cv_abs_ushort_x(x);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn cv_abs_1(x: u16) -> Result<i32> {
+    unsafe { sys::cv_core_cv_cv_abs_ushort_x(x) }.into_result()
 }
 
+// identifier: cv_dct_Mat_src_Mat_dst_int_flags
 /// Performs a forward or inverse discrete Cosine transform of 1D or 2D array.
 /// 
 /// The function cv::dct performs a forward or inverse discrete Cosine transform (DCT) of a 1D or 2D
@@ -2327,19 +1764,22 @@ pub fn cv_abs_v0(x: u16) -> Result<i32> {
 /// ## C++ default parameters:
 /// * flags: 0
 pub fn dct(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-// identifier: cv_dct_Mat_src_Mat_dst_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_dct_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_dct_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_depthToString_int_depth
+/// Returns string of cv::Mat depth value: CV_8U -> "CV_8U" or "<invalid depth>"
+pub fn depth_to_string(depth: i32) -> Result<String> {
+    unsafe { sys::cv_core_cv_depthToString_int_depth(depth) }.into_result().map(crate::templ::receive_string)
+}
+
+// identifier: cv_detail_depthToString__int_depth
+/// Returns string of cv::Mat depth value: CV_8U -> "CV_8U" or NULL
+pub fn depth_to_string_(depth: i32) -> Result<String> {
+    unsafe { sys::cv_core_cv_detail_depthToString__int_depth(depth) }.into_result().map(crate::templ::receive_string)
+}
+
+// identifier: cv_determinant_Mat_mtx
 /// Returns the determinant of a square floating-point matrix.
 /// 
 /// The function cv::determinant calculates and returns the determinant of the
@@ -2354,19 +1794,10 @@ pub fn dct(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
 /// square size.
 /// @sa trace, invert, solve, eigen, @ref MatrixExpressions
 pub fn determinant(mtx: &core::Mat) -> Result<f64> {
-// identifier: cv_determinant_Mat_mtx
-  unsafe {
-    let rv = sys::cv_core_cv_determinant_Mat_mtx(mtx.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_determinant_Mat_mtx(mtx.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_dft_Mat_src_Mat_dst_int_flags_int_nonzeroRows
 /// Performs a forward or inverse Discrete Fourier transform of a 1D or 2D floating-point array.
 /// 
 /// The function cv::dft performs one of the following:
@@ -2506,81 +1937,36 @@ pub fn determinant(mtx: &core::Mat) -> Result<f64> {
 /// * flags: 0
 /// * nonzero_rows: 0
 pub fn dft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32) -> Result<()> {
-// identifier: cv_dft_Mat_src_Mat_dst_int_flags_int_nonzeroRows
-  unsafe {
-    let rv = sys::cv_core_cv_dft_Mat_src_Mat_dst_int_flags_int_nonzeroRows(src.as_raw_Mat(), dst.as_raw_Mat(), flags, nonzero_rows);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_dft_Mat_src_Mat_dst_int_flags_int_nonzeroRows(src.as_raw_Mat(), dst.as_raw_Mat(), flags, nonzero_rows) }.into_result()
 }
 
-pub fn get_type_from_d3_dformat(i_d3_dformat: i32) -> Result<i32> {
 // identifier: cv_directx_getTypeFromD3DFORMAT_int_iD3DFORMAT
-  unsafe {
-    let rv = sys::cv_core_cv_directx_getTypeFromD3DFORMAT_int_iD3DFORMAT(i_d3_dformat);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_type_from_d3_dformat(i_d3_dformat: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_directx_getTypeFromD3DFORMAT_int_iD3DFORMAT(i_d3_dformat) }.into_result()
 }
 
-pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
 // identifier: cv_directx_getTypeFromDXGI_FORMAT_int_iDXGI_FORMAT
-  unsafe {
-    let rv = sys::cv_core_cv_directx_getTypeFromDXGI_FORMAT_int_iDXGI_FORMAT(i_dxgi_format);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_directx_getTypeFromDXGI_FORMAT_int_iDXGI_FORMAT(i_dxgi_format) }.into_result()
 }
 
+// identifier: cv_divUp_int_a_unsigned_int_b
 /// Integer division with result round up.
 /// 
 /// Use this function instead of `ceil((float)a / b)` expressions.
 /// 
 /// @sa alignSize
 pub fn div_up(a: i32, b: u32) -> Result<i32> {
-// identifier: cv_divUp_int_a_unsigned_int_b
-  unsafe {
-    let rv = sys::cv_core_cv_divUp_int_a_unsigned_int_b(a, b);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_divUp_int_a_unsigned_int_b(a, b) }.into_result()
 }
 
-/// @overload
-pub fn div_up_v0(a: size_t, b: u32) -> Result<size_t> {
 // identifier: cv_divUp_size_t_a_unsigned_int_b
-  unsafe {
-    let rv = sys::cv_core_cv_divUp_size_t_a_unsigned_int_b(a, b);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+/// @overload
+pub fn div_up_1(a: size_t, b: u32) -> Result<size_t> {
+    unsafe { sys::cv_core_cv_divUp_size_t_a_unsigned_int_b(a, b) }.into_result()
 }
 
+// identifier: cv_divide_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype
 /// Performs per-element division of two arrays or a scalar by an array.
 /// 
 /// The function cv::divide divides one array by another:
@@ -2607,37 +1993,19 @@ pub fn div_up_v0(a: size_t, b: u32) -> Result<size_t> {
 /// * scale: 1
 /// * dtype: -1
 pub fn divide_mat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, scale: f64, dtype: i32) -> Result<()> {
-// identifier: cv_divide_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_divide_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), scale, dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_divide_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), scale, dtype) }.into_result()
 }
 
+// identifier: cv_divide_double_scale_Mat_src2_Mat_dst_int_dtype
 /// @overload
 ///
 /// ## C++ default parameters:
 /// * dtype: -1
 pub fn divide(scale: f64, src2: &core::Mat, dst: &mut core::Mat, dtype: i32) -> Result<()> {
-// identifier: cv_divide_double_scale_Mat_src2_Mat_dst_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_divide_double_scale_Mat_src2_Mat_dst_int_dtype(scale, src2.as_raw_Mat(), dst.as_raw_Mat(), dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_divide_double_scale_Mat_src2_Mat_dst_int_dtype(scale, src2.as_raw_Mat(), dst.as_raw_Mat(), dtype) }.into_result()
 }
 
+// identifier: cv_eigenNonSymmetric_Mat_src_Mat_eigenvalues_Mat_eigenvectors
 /// Calculates eigenvalues and eigenvectors of a non-symmetric matrix (real eigenvalues only).
 /// 
 /// 
@@ -2655,19 +2023,10 @@ pub fn divide(scale: f64, src2: &core::Mat, dst: &mut core::Mat, dtype: i32) -> 
 /// * eigenvectors: output matrix of eigenvectors (type is the same type as src). The eigenvectors are stored as subsequent matrix rows, in the same order as the corresponding eigenvalues.
 /// @sa eigen
 pub fn eigen_non_symmetric(src: &core::Mat, eigenvalues: &mut core::Mat, eigenvectors: &mut core::Mat) -> Result<()> {
-// identifier: cv_eigenNonSymmetric_Mat_src_Mat_eigenvalues_Mat_eigenvectors
-  unsafe {
-    let rv = sys::cv_core_cv_eigenNonSymmetric_Mat_src_Mat_eigenvalues_Mat_eigenvectors(src.as_raw_Mat(), eigenvalues.as_raw_Mat(), eigenvectors.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_eigenNonSymmetric_Mat_src_Mat_eigenvalues_Mat_eigenvectors(src.as_raw_Mat(), eigenvalues.as_raw_Mat(), eigenvectors.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_eigen_Mat_src_Mat_eigenvalues_Mat_eigenvectors
 /// Calculates eigenvalues and eigenvectors of a symmetric matrix.
 /// 
 /// The function cv::eigen calculates just eigenvalues, or eigenvalues and eigenvectors of the symmetric
@@ -2693,19 +2052,18 @@ pub fn eigen_non_symmetric(src: &core::Mat, eigenvalues: &mut core::Mat, eigenve
 /// ## C++ default parameters:
 /// * eigenvectors: noArray()
 pub fn eigen(src: &core::Mat, eigenvalues: &mut core::Mat, eigenvectors: &mut core::Mat) -> Result<bool> {
-// identifier: cv_eigen_Mat_src_Mat_eigenvalues_Mat_eigenvectors
-  unsafe {
-    let rv = sys::cv_core_cv_eigen_Mat_src_Mat_eigenvalues_Mat_eigenvectors(src.as_raw_Mat(), eigenvalues.as_raw_Mat(), eigenvectors.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_eigen_Mat_src_Mat_eigenvalues_Mat_eigenvectors(src.as_raw_Mat(), eigenvalues.as_raw_Mat(), eigenvectors.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_error_int__code_String__err_const_char_X__func_const_char_X__file_int__line
+pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Result<()> {
+    string_arg!(_err);
+    string_arg!(_func);
+    string_arg!(_file);
+    unsafe { sys::cv_core_cv_error_int__code_String__err_const_char_X__func_const_char_X__file_int__line(_code, _err.as_ptr(), _func.as_ptr(), _file.as_ptr(), _line) }.into_result()
+}
+
+// identifier: cv_exp_Mat_src_Mat_dst
 /// Calculates the exponent of every array element.
 /// 
 /// The function cv::exp calculates the exponent of every element of the input
@@ -2721,53 +2079,26 @@ pub fn eigen(src: &core::Mat, eigenvalues: &mut core::Mat, eigenvectors: &mut co
 /// * dst: output array of the same size and type as src.
 /// @sa log , cartToPolar , polarToCart , phase , pow , sqrt , magnitude
 pub fn exp(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_exp_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_exp_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_exp_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
-pub fn exp_v0(a: &core::softdouble) -> Result<core::softdouble> {
 // identifier: cv_exp_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cv_exp_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn exp_1(a: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_exp_softdouble_a(a.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
+// identifier: cv_exp_softfloat_a
 /// Exponent
 /// 
 /// Special cases:
 /// - exp(NaN) is NaN
 /// - exp(-Inf) == 0
 /// - exp(+Inf) == +Inf
-pub fn exp_v1(a: &core::softfloat) -> Result<core::softfloat> {
-// identifier: cv_exp_softfloat_a
-  unsafe {
-    let rv = sys::cv_core_cv_exp_softfloat_a(a.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+pub fn exp_2(a: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_exp_softfloat_a(a.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_extractChannel_Mat_src_Mat_dst_int_coi
 /// Extracts a single channel from src (coi is 0-based index)
 /// ## Parameters
 /// * src: input array
@@ -2775,19 +2106,10 @@ pub fn exp_v1(a: &core::softfloat) -> Result<core::softfloat> {
 /// * coi: index of channel to extract
 /// @sa mixChannels, split
 pub fn extract_channel(src: &core::Mat, dst: &mut core::Mat, coi: i32) -> Result<()> {
-// identifier: cv_extractChannel_Mat_src_Mat_dst_int_coi
-  unsafe {
-    let rv = sys::cv_core_cv_extractChannel_Mat_src_Mat_dst_int_coi(src.as_raw_Mat(), dst.as_raw_Mat(), coi);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_extractChannel_Mat_src_Mat_dst_int_coi(src.as_raw_Mat(), dst.as_raw_Mat(), coi) }.into_result()
 }
 
+// identifier: cv_fastAtan2_float_y_float_x
 /// Calculates the angle of a 2D vector in degrees.
 /// 
 /// The function fastAtan2 calculates the full-range angle of an input 2D vector. The angle is measured
@@ -2796,19 +2118,10 @@ pub fn extract_channel(src: &core::Mat, dst: &mut core::Mat, coi: i32) -> Result
 /// * x: x-coordinate of the vector.
 /// * y: y-coordinate of the vector.
 pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
-// identifier: cv_fastAtan2_float_y_float_x
-  unsafe {
-    let rv = sys::cv_core_cv_fastAtan2_float_y_float_x(y, x);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_fastAtan2_float_y_float_x(y, x) }.into_result()
 }
 
+// identifier: cv_findNonZero_Mat_src_Mat_idx
 /// Returns the list of locations of non-zero pixels
 /// 
 /// Given a binary matrix (likely returned from an operation such
@@ -2838,19 +2151,10 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 /// * src: single-channel array (type CV_8UC1)
 /// * idx: the output array, type of cv::Mat or std::vector<Point>, corresponding to non-zero indices in the input
 pub fn find_non_zero(src: &core::Mat, idx: &mut core::Mat) -> Result<()> {
-// identifier: cv_findNonZero_Mat_src_Mat_idx
-  unsafe {
-    let rv = sys::cv_core_cv_findNonZero_Mat_src_Mat_idx(src.as_raw_Mat(), idx.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_findNonZero_Mat_src_Mat_idx(src.as_raw_Mat(), idx.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_flip_Mat_src_Mat_dst_int_flipCode
 /// Flips a 2D array around vertical, horizontal, or both axes.
 /// 
 /// The function cv::flip flips the array in one of three different ways (row
@@ -2884,19 +2188,10 @@ pub fn find_non_zero(src: &core::Mat, idx: &mut core::Mat) -> Result<()> {
 /// around both axes.
 /// @sa transpose , repeat , completeSymm
 pub fn flip(src: &core::Mat, dst: &mut core::Mat, flip_code: i32) -> Result<()> {
-// identifier: cv_flip_Mat_src_Mat_dst_int_flipCode
-  unsafe {
-    let rv = sys::cv_core_cv_flip_Mat_src_Mat_dst_int_flipCode(src.as_raw_Mat(), dst.as_raw_Mat(), flip_code);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_flip_Mat_src_Mat_dst_int_flipCode(src.as_raw_Mat(), dst.as_raw_Mat(), flip_code) }.into_result()
 }
 
+// identifier: cv_gemm_Mat_src1_Mat_src2_double_alpha_Mat_src3_double_beta_Mat_dst_int_flags
 /// Performs generalized matrix multiplication.
 /// 
 /// The function cv::gemm performs generalized matrix multiplication similar to the
@@ -2930,40 +2225,20 @@ pub fn flip(src: &core::Mat, dst: &mut core::Mat, flip_code: i32) -> Result<()> 
 /// ## C++ default parameters:
 /// * flags: 0
 pub fn gemm(src1: &core::Mat, src2: &core::Mat, alpha: f64, src3: &core::Mat, beta: f64, dst: &mut core::Mat, flags: i32) -> Result<()> {
-// identifier: cv_gemm_Mat_src1_Mat_src2_double_alpha_Mat_src3_double_beta_Mat_dst_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_gemm_Mat_src1_Mat_src2_double_alpha_Mat_src3_double_beta_Mat_dst_int_flags(src1.as_raw_Mat(), src2.as_raw_Mat(), alpha, src3.as_raw_Mat(), beta, dst.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_gemm_Mat_src1_Mat_src2_double_alpha_Mat_src3_double_beta_Mat_dst_int_flags(src1.as_raw_Mat(), src2.as_raw_Mat(), alpha, src3.as_raw_Mat(), beta, dst.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_getBuildInformation
 /// Returns full configuration time cmake output.
 /// 
 /// Returned value is raw cmake output including version control system revision, compiler version,
 /// compiler flags, enabled modules and third party libraries, etc. Output format depends on target
 /// architecture.
 pub fn get_build_information() -> Result<String> {
-// identifier: cv_getBuildInformation
-  unsafe {
-    let rv = sys::cv_core_cv_getBuildInformation();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+    unsafe { sys::cv_core_cv_getBuildInformation() }.into_result().map(crate::templ::receive_string)
 }
 
+// identifier: cv_getCPUTickCount
 /// Returns the number of CPU ticks.
 /// 
 /// The function returns the current number of CPU ticks on some architectures (such as x86, x64,
@@ -2976,52 +2251,23 @@ pub fn get_build_information() -> Result<String> {
 /// converted to time units. Therefore, getTickCount is generally a preferable solution for measuring
 /// execution time.
 pub fn get_cpu_tick_count() -> Result<i64> {
-// identifier: cv_getCPUTickCount
-  unsafe {
-    let rv = sys::cv_core_cv_getCPUTickCount();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getCPUTickCount() }.into_result()
 }
 
-pub fn get_elem_size(_type: i32) -> Result<size_t> {
 // identifier: cv_getElemSize_int_type
-  unsafe {
-    let rv = sys::cv_core_cv_getElemSize_int_type(_type);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_elem_size(_type: i32) -> Result<size_t> {
+    unsafe { sys::cv_core_cv_getElemSize_int_type(_type) }.into_result()
 }
 
+// identifier: cv_getHardwareFeatureName_int_feature
 /// Returns feature name by ID
 /// 
 /// Returns empty string if feature is not defined
 pub fn get_hardware_feature_name(feature: i32) -> Result<String> {
-// identifier: cv_getHardwareFeatureName_int_feature
-  unsafe {
-    let rv = sys::cv_core_cv_getHardwareFeatureName_int_feature(feature);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+    unsafe { sys::cv_core_cv_getHardwareFeatureName_int_feature(feature) }.into_result().map(crate::templ::receive_string_mut)
 }
 
+// identifier: cv_getNumThreads
 /// Returns the number of threads used by OpenCV for parallel regions.
 /// 
 /// Always returns 1 if OpenCV is built without threading support.
@@ -3038,34 +2284,16 @@ pub fn get_hardware_feature_name(feature: i32) -> Result<String> {
 /// available for the process.
 /// @sa setNumThreads, getThreadNum
 pub fn get_num_threads() -> Result<i32> {
-// identifier: cv_getNumThreads
-  unsafe {
-    let rv = sys::cv_core_cv_getNumThreads();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getNumThreads() }.into_result()
 }
 
-/// Returns the number of logical CPUs available for the process.
-pub fn get_number_of_cp_us() -> Result<i32> {
 // identifier: cv_getNumberOfCPUs
-  unsafe {
-    let rv = sys::cv_core_cv_getNumberOfCPUs();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+/// Returns the number of logical CPUs available for the process.
+pub fn get_number_of_cpus() -> Result<i32> {
+    unsafe { sys::cv_core_cv_getNumberOfCPUs() }.into_result()
 }
 
+// identifier: cv_getOptimalDFTSize_int_vecsize
 /// Returns the optimal DFT size for a given vector size.
 /// 
 /// DFT performance is not a monotonic function of a vector size. Therefore, when you calculate
@@ -3088,19 +2316,10 @@ pub fn get_number_of_cp_us() -> Result<i32> {
 /// * vecsize: vector size.
 /// @sa dft , dct , idft , idct , mulSpectrums
 pub fn get_optimal_dft_size(vecsize: i32) -> Result<i32> {
-// identifier: cv_getOptimalDFTSize_int_vecsize
-  unsafe {
-    let rv = sys::cv_core_cv_getOptimalDFTSize_int_vecsize(vecsize);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getOptimalDFTSize_int_vecsize(vecsize) }.into_result()
 }
 
+// identifier: cv_getThreadNum
 /// Returns the index of the currently executed thread within the current parallel region. Always
 /// returns 0 if called outside of parallel region.
 /// 
@@ -3115,19 +2334,10 @@ pub fn get_optimal_dft_size(vecsize: i32) -> Result<i32> {
 /// - `C=` - The index of the current parallel task.
 /// @sa setNumThreads, getNumThreads
 pub fn get_thread_num() -> Result<i32> {
-// identifier: cv_getThreadNum
-  unsafe {
-    let rv = sys::cv_core_cv_getThreadNum();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getThreadNum() }.into_result()
 }
 
+// identifier: cv_getTickCount
 /// Returns the number of ticks.
 /// 
 /// The function returns the number of ticks after the certain event (for example, when the machine was
@@ -3135,19 +2345,10 @@ pub fn get_thread_num() -> Result<i32> {
 /// tick count before and after the function call.
 /// @sa getTickFrequency, TickMeter
 pub fn get_tick_count() -> Result<i64> {
-// identifier: cv_getTickCount
-  unsafe {
-    let rv = sys::cv_core_cv_getTickCount();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getTickCount() }.into_result()
 }
 
+// identifier: cv_getTickFrequency
 /// Returns the number of ticks per second.
 /// 
 /// The function returns the number of ticks per second. That is, the following code computes the
@@ -3160,117 +2361,632 @@ pub fn get_tick_count() -> Result<i64> {
 /// 
 /// @sa getTickCount, TickMeter
 pub fn get_tick_frequency() -> Result<f64> {
-// identifier: cv_getTickFrequency
-  unsafe {
-    let rv = sys::cv_core_cv_getTickFrequency();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getTickFrequency() }.into_result()
 }
 
+// identifier: cv_getVersionMajor
 /// Returns major library version
 pub fn get_version_major() -> Result<i32> {
-// identifier: cv_getVersionMajor
-  unsafe {
-    let rv = sys::cv_core_cv_getVersionMajor();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getVersionMajor() }.into_result()
 }
 
+// identifier: cv_getVersionMinor
 /// Returns minor library version
 pub fn get_version_minor() -> Result<i32> {
-// identifier: cv_getVersionMinor
-  unsafe {
-    let rv = sys::cv_core_cv_getVersionMinor();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getVersionMinor() }.into_result()
 }
 
+// identifier: cv_getVersionRevision
 /// Returns revision field of the library version
 pub fn get_version_revision() -> Result<i32> {
-// identifier: cv_getVersionRevision
-  unsafe {
-    let rv = sys::cv_core_cv_getVersionRevision();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_getVersionRevision() }.into_result()
 }
 
+// identifier: cv_getVersionString
 /// Returns library version string
 /// 
 /// For example "3.4.1-dev".
 /// 
 /// @sa getMajorVersion, getMinorVersion, getRevisionVersion
 pub fn get_version_string() -> Result<String> {
-// identifier: cv_getVersionString
-  unsafe {
-    let rv = sys::cv_core_cv_getVersionString();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+    unsafe { sys::cv_core_cv_getVersionString() }.into_result().map(crate::templ::receive_string_mut)
 }
 
+// identifier: cv_glob_String_pattern_VectorOfString_result_bool_recursive
 ///
 /// ## C++ default parameters:
 /// * recursive: false
-pub fn glob(pattern:&str, result: &types::VectorOfString, recursive: bool) -> Result<()> {
-// identifier: cv_glob_String_pattern_VectorOfString_result_bool_recursive
-  unsafe {
-    let pattern = CString::new(pattern).unwrap();
-    let rv = sys::cv_core_cv_glob_String_pattern_VectorOfString_result_bool_recursive(pattern.as_ptr() as _, result.as_raw_VectorOfString(), recursive);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn glob(pattern: &str, result: &types::VectorOfString, recursive: bool) -> Result<()> {
+    string_arg!(mut pattern);
+    unsafe { sys::cv_core_cv_glob_String_pattern_VectorOfString_result_bool_recursive(pattern.as_ptr() as _, result.as_raw_VectorOfString(), recursive) }.into_result()
 }
 
-pub fn have_open_vx() -> Result<bool> {
+// identifier: cv_hal_Cholesky32f_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n
+pub fn cholesky32f(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<bool> {
+    unsafe { sys::cv_core_cv_hal_Cholesky32f_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_hal_Cholesky64f_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n
+pub fn cholesky64f(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<bool> {
+    unsafe { sys::cv_core_cv_hal_Cholesky64f_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_hal_LU32f_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n
+pub fn lu32f(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_LU32f_float_X_A_size_t_astep_int_m_float_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_hal_LU64f_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n
+pub fn lu64f(a: &mut f64, astep: size_t, m: i32, b: &mut f64, bstep: size_t, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_LU64f_double_X_A_size_t_astep_int_m_double_X_b_size_t_bstep_int_n(a, astep, m, b, bstep, n) }.into_result()
+}
+
+// identifier: cv_hal_QR32f_float_X_A_size_t_astep_int_m_int_n_int_k_float_X_b_size_t_bstep_float_X_hFactors
+pub fn qr32f(a: &mut f32, astep: size_t, m: i32, n: i32, k: i32, b: &mut f32, bstep: size_t, h_factors: &mut f32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_QR32f_float_X_A_size_t_astep_int_m_int_n_int_k_float_X_b_size_t_bstep_float_X_hFactors(a, astep, m, n, k, b, bstep, h_factors) }.into_result()
+}
+
+// identifier: cv_hal_QR64f_double_X_A_size_t_astep_int_m_int_n_int_k_double_X_b_size_t_bstep_double_X_hFactors
+pub fn qr64f(a: &mut f64, astep: size_t, m: i32, n: i32, k: i32, b: &mut f64, bstep: size_t, h_factors: &mut f64) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_QR64f_double_X_A_size_t_astep_int_m_int_n_int_k_double_X_b_size_t_bstep_double_X_hFactors(a, astep, m, n, k, b, bstep, h_factors) }.into_result()
+}
+
+// identifier: cv_hal_SVD32f_float_X_At_size_t_astep_float_X_W_float_X_U_size_t_ustep_float_X_Vt_size_t_vstep_int_m_int_n_int_flags
+pub fn svd32f(at: &mut f32, astep: size_t, w: &mut f32, u: &mut f32, ustep: size_t, vt: &mut f32, vstep: size_t, m: i32, n: i32, flags: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_SVD32f_float_X_At_size_t_astep_float_X_W_float_X_U_size_t_ustep_float_X_Vt_size_t_vstep_int_m_int_n_int_flags(at, astep, w, u, ustep, vt, vstep, m, n, flags) }.into_result()
+}
+
+// identifier: cv_hal_SVD64f_double_X_At_size_t_astep_double_X_W_double_X_U_size_t_ustep_double_X_Vt_size_t_vstep_int_m_int_n_int_flags
+pub fn svd64f(at: &mut f64, astep: size_t, w: &mut f64, u: &mut f64, ustep: size_t, vt: &mut f64, vstep: size_t, m: i32, n: i32, flags: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_SVD64f_double_X_At_size_t_astep_double_X_W_double_X_U_size_t_ustep_double_X_Vt_size_t_vstep_int_m_int_n_int_flags(at, astep, w, u, ustep, vt, vstep, m, n, flags) }.into_result()
+}
+
+// identifier: cv_hal_absdiff16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn absdiff16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_absdiff16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_absdiff16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn absdiff16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_absdiff16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_absdiff32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn absdiff32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_absdiff32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_absdiff32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn absdiff32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_absdiff32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_absdiff64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn absdiff64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_absdiff64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_absdiff8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn absdiff8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_absdiff8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_absdiff8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn absdiff8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_absdiff8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_add16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn add16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_add16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_add16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn add16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_add16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_add32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn add32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_add32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_add32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn add32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_add32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_add64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn add64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_add64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_add8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn add8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_add8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_add8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn add8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_add8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_addWeighted16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scalars
+pub fn add_weighted16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, scalars: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_addWeighted16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scalars(src1, step1, src2, step2, dst, step, width, height, scalars) }.into_result()
+}
+
+// identifier: cv_hal_addWeighted16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scalars
+pub fn add_weighted16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, scalars: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_addWeighted16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scalars(src1, step1, src2, step2, dst, step, width, height, scalars) }.into_result()
+}
+
+// identifier: cv_hal_addWeighted32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scalars
+pub fn add_weighted32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, scalars: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_addWeighted32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scalars(src1, step1, src2, step2, dst, step, width, height, scalars) }.into_result()
+}
+
+// identifier: cv_hal_addWeighted32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scalars
+pub fn add_weighted32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, scalars: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_addWeighted32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scalars(src1, step1, src2, step2, dst, step, width, height, scalars) }.into_result()
+}
+
+// identifier: cv_hal_addWeighted64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scalars
+pub fn add_weighted64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, scalars: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_addWeighted64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scalars(src1, step1, src2, step2, dst, step, width, height, scalars) }.into_result()
+}
+
+// identifier: cv_hal_addWeighted8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scalars
+pub fn add_weighted8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, scalars: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_addWeighted8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scalars(src1, step1, src2, step2, dst, step, width, height, scalars) }.into_result()
+}
+
+// identifier: cv_hal_addWeighted8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__scalars
+pub fn add_weighted8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _scalars: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_addWeighted8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__scalars(src1, step1, src2, step2, dst, step, width, height, _scalars) }.into_result()
+}
+
+// identifier: cv_hal_and8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn and8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_and8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_cmp16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop
+pub fn cmp16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _cmpop: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_cmp16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop(src1, step1, src2, step2, dst, step, width, height, _cmpop) }.into_result()
+}
+
+// identifier: cv_hal_cmp16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop
+pub fn cmp16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _cmpop: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_cmp16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop(src1, step1, src2, step2, dst, step, width, height, _cmpop) }.into_result()
+}
+
+// identifier: cv_hal_cmp32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop
+pub fn cmp32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _cmpop: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_cmp32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop(src1, step1, src2, step2, dst, step, width, height, _cmpop) }.into_result()
+}
+
+// identifier: cv_hal_cmp32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop
+pub fn cmp32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _cmpop: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_cmp32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop(src1, step1, src2, step2, dst, step, width, height, _cmpop) }.into_result()
+}
+
+// identifier: cv_hal_cmp64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop
+pub fn cmp64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _cmpop: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_cmp64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop(src1, step1, src2, step2, dst, step, width, height, _cmpop) }.into_result()
+}
+
+// identifier: cv_hal_cmp8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop
+pub fn cmp8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _cmpop: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_cmp8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop(src1, step1, src2, step2, dst, step, width, height, _cmpop) }.into_result()
+}
+
+// identifier: cv_hal_cmp8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop
+pub fn cmp8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, _cmpop: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_cmp8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X__cmpop(src1, step1, src2, step2, dst, step, width, height, _cmpop) }.into_result()
+}
+
+// identifier: cv_hal_div16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn div16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_div16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_div16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn div16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_div16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_div32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn div32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_div32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_div32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn div32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_div32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_div64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn div64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_div64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_div8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn div8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_div8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_div8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn div8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_div8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_exp32f_const_float_X_src_float_X_dst_int_n
+pub fn exp32f(src: &f32, dst: &mut f32, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_exp32f_const_float_X_src_float_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_exp64f_const_double_X_src_double_X_dst_int_n
+pub fn exp64f(src: &f64, dst: &mut f64, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_exp64f_const_double_X_src_double_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_exp_const_double_X_src_double_X_dst_int_n
+pub fn exp_3(src: &f64, dst: &mut f64, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_exp_const_double_X_src_double_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_exp_const_float_X_src_float_X_dst_int_n
+pub fn exp_4(src: &f32, dst: &mut f32, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_exp_const_float_X_src_float_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_fastAtan2_const_float_X_y_const_float_X_x_float_X_dst_int_n_bool_angleInDegrees
+pub fn fast_atan3(y: &f32, x: &f32, dst: &mut f32, n: i32, angle_in_degrees: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_fastAtan2_const_float_X_y_const_float_X_x_float_X_dst_int_n_bool_angleInDegrees(y, x, dst, n, angle_in_degrees) }.into_result()
+}
+
+// identifier: cv_hal_fastAtan32f_const_float_X_y_const_float_X_x_float_X_dst_int_n_bool_angleInDegrees
+pub fn fast_atan32f(y: &f32, x: &f32, dst: &mut f32, n: i32, angle_in_degrees: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_fastAtan32f_const_float_X_y_const_float_X_x_float_X_dst_int_n_bool_angleInDegrees(y, x, dst, n, angle_in_degrees) }.into_result()
+}
+
+// identifier: cv_hal_fastAtan64f_const_double_X_y_const_double_X_x_double_X_dst_int_n_bool_angleInDegrees
+pub fn fast_atan64f(y: &f64, x: &f64, dst: &mut f64, n: i32, angle_in_degrees: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_fastAtan64f_const_double_X_y_const_double_X_x_double_X_dst_int_n_bool_angleInDegrees(y, x, dst, n, angle_in_degrees) }.into_result()
+}
+
+// identifier: cv_hal_gemm32f_const_float_X_src1_size_t_src1_step_const_float_X_src2_size_t_src2_step_float_alpha_const_float_X_src3_size_t_src3_step_float_beta_float_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags
+pub fn gemm32f(src1: &f32, src1_step: size_t, src2: &f32, src2_step: size_t, alpha: f32, src3: &f32, src3_step: size_t, beta: f32, dst: &mut f32, dst_step: size_t, m_a: i32, n_a: i32, n_d: i32, flags: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_gemm32f_const_float_X_src1_size_t_src1_step_const_float_X_src2_size_t_src2_step_float_alpha_const_float_X_src3_size_t_src3_step_float_beta_float_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags(src1, src1_step, src2, src2_step, alpha, src3, src3_step, beta, dst, dst_step, m_a, n_a, n_d, flags) }.into_result()
+}
+
+// identifier: cv_hal_gemm32fc_const_float_X_src1_size_t_src1_step_const_float_X_src2_size_t_src2_step_float_alpha_const_float_X_src3_size_t_src3_step_float_beta_float_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags
+pub fn gemm32fc(src1: &f32, src1_step: size_t, src2: &f32, src2_step: size_t, alpha: f32, src3: &f32, src3_step: size_t, beta: f32, dst: &mut f32, dst_step: size_t, m_a: i32, n_a: i32, n_d: i32, flags: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_gemm32fc_const_float_X_src1_size_t_src1_step_const_float_X_src2_size_t_src2_step_float_alpha_const_float_X_src3_size_t_src3_step_float_beta_float_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags(src1, src1_step, src2, src2_step, alpha, src3, src3_step, beta, dst, dst_step, m_a, n_a, n_d, flags) }.into_result()
+}
+
+// identifier: cv_hal_gemm64f_const_double_X_src1_size_t_src1_step_const_double_X_src2_size_t_src2_step_double_alpha_const_double_X_src3_size_t_src3_step_double_beta_double_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags
+pub fn gemm64f(src1: &f64, src1_step: size_t, src2: &f64, src2_step: size_t, alpha: f64, src3: &f64, src3_step: size_t, beta: f64, dst: &mut f64, dst_step: size_t, m_a: i32, n_a: i32, n_d: i32, flags: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_gemm64f_const_double_X_src1_size_t_src1_step_const_double_X_src2_size_t_src2_step_double_alpha_const_double_X_src3_size_t_src3_step_double_beta_double_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags(src1, src1_step, src2, src2_step, alpha, src3, src3_step, beta, dst, dst_step, m_a, n_a, n_d, flags) }.into_result()
+}
+
+// identifier: cv_hal_gemm64fc_const_double_X_src1_size_t_src1_step_const_double_X_src2_size_t_src2_step_double_alpha_const_double_X_src3_size_t_src3_step_double_beta_double_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags
+pub fn gemm64fc(src1: &f64, src1_step: size_t, src2: &f64, src2_step: size_t, alpha: f64, src3: &f64, src3_step: size_t, beta: f64, dst: &mut f64, dst_step: size_t, m_a: i32, n_a: i32, n_d: i32, flags: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_gemm64fc_const_double_X_src1_size_t_src1_step_const_double_X_src2_size_t_src2_step_double_alpha_const_double_X_src3_size_t_src3_step_double_beta_double_X_dst_size_t_dst_step_int_m_a_int_n_a_int_n_d_int_flags(src1, src1_step, src2, src2_step, alpha, src3, src3_step, beta, dst, dst_step, m_a, n_a, n_d, flags) }.into_result()
+}
+
+// identifier: cv_hal_invSqrt32f_const_float_X_src_float_X_dst_int_len
+pub fn inv_sqrt32f(src: &f32, dst: &mut f32, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_invSqrt32f_const_float_X_src_float_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_invSqrt64f_const_double_X_src_double_X_dst_int_len
+pub fn inv_sqrt64f(src: &f64, dst: &mut f64, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_invSqrt64f_const_double_X_src_double_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_invSqrt_const_double_X_src_double_X_dst_int_len
+pub fn inv_sqrt(src: &f64, dst: &mut f64, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_invSqrt_const_double_X_src_double_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_invSqrt_const_float_X_src_float_X_dst_int_len
+pub fn inv_sqrt_1(src: &f32, dst: &mut f32, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_invSqrt_const_float_X_src_float_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_log32f_const_float_X_src_float_X_dst_int_n
+pub fn log32f(src: &f32, dst: &mut f32, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_log32f_const_float_X_src_float_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_log64f_const_double_X_src_double_X_dst_int_n
+pub fn log64f(src: &f64, dst: &mut f64, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_log64f_const_double_X_src_double_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_log_const_double_X_src_double_X_dst_int_n
+pub fn log(src: &f64, dst: &mut f64, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_log_const_double_X_src_double_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_log_const_float_X_src_float_X_dst_int_n
+pub fn log_1(src: &f32, dst: &mut f32, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_log_const_float_X_src_float_X_dst_int_n(src, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_magnitude32f_const_float_X_x_const_float_X_y_float_X_dst_int_n
+pub fn magnitude32f(x: &f32, y: &f32, dst: &mut f32, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_magnitude32f_const_float_X_x_const_float_X_y_float_X_dst_int_n(x, y, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_magnitude64f_const_double_X_x_const_double_X_y_double_X_dst_int_n
+pub fn magnitude64f(x: &f64, y: &f64, dst: &mut f64, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_magnitude64f_const_double_X_x_const_double_X_y_double_X_dst_int_n(x, y, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_magnitude_const_double_X_x_const_double_X_y_double_X_dst_int_n
+pub fn magnitude(x: &f64, y: &f64, dst: &mut f64, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_magnitude_const_double_X_x_const_double_X_y_double_X_dst_int_n(x, y, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_magnitude_const_float_X_x_const_float_X_y_float_X_dst_int_n
+pub fn magnitude_1(x: &f32, y: &f32, dst: &mut f32, n: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_magnitude_const_float_X_x_const_float_X_y_float_X_dst_int_n(x, y, dst, n) }.into_result()
+}
+
+// identifier: cv_hal_max16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn max16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_max16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_max16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn max16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_max16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_max32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn max32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_max32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_max32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn max32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_max32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_max64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn max64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_max64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_max8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn max8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_max8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_max8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn max8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_max8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_min16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn min16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_min16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_min16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn min16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_min16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_min32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn min32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_min32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_min32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn min32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_min32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_min64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn min64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_min64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_min8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn min8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_min8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_min8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn min8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_min8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_mul16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn mul16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_mul16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_mul16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn mul16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_mul16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_mul32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn mul32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_mul32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_mul32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn mul32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_mul32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_mul64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn mul64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_mul64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_mul8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn mul8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_mul8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_mul8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn mul8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_mul8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_scale(src1, step1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_normHamming_const_uchar_X_a_const_uchar_X_b_int_n
+pub fn norm_hamming(a: &u8, b: &u8, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_normHamming_const_uchar_X_a_const_uchar_X_b_int_n(a, b, n) }.into_result()
+}
+
+// identifier: cv_hal_normHamming_const_uchar_X_a_const_uchar_X_b_int_n_int_cellSize
+pub fn norm_hamming_1(a: &u8, b: &u8, n: i32, cell_size: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_normHamming_const_uchar_X_a_const_uchar_X_b_int_n_int_cellSize(a, b, n, cell_size) }.into_result()
+}
+
+// identifier: cv_hal_normHamming_const_uchar_X_a_int_n
+pub fn norm_hamming_2(a: &u8, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_normHamming_const_uchar_X_a_int_n(a, n) }.into_result()
+}
+
+// identifier: cv_hal_normHamming_const_uchar_X_a_int_n_int_cellSize
+pub fn norm_hamming_3(a: &u8, n: i32, cell_size: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_normHamming_const_uchar_X_a_int_n_int_cellSize(a, n, cell_size) }.into_result()
+}
+
+// identifier: cv_hal_normL1__const_float_X_a_const_float_X_b_int_n
+pub fn norm_l1_(a: &f32, b: &f32, n: i32) -> Result<f32> {
+    unsafe { sys::cv_core_cv_hal_normL1__const_float_X_a_const_float_X_b_int_n(a, b, n) }.into_result()
+}
+
+// identifier: cv_hal_normL1__const_uchar_X_a_const_uchar_X_b_int_n
+pub fn norm_l1__1(a: &u8, b: &u8, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_hal_normL1__const_uchar_X_a_const_uchar_X_b_int_n(a, b, n) }.into_result()
+}
+
+// identifier: cv_hal_normL2Sqr__const_float_X_a_const_float_X_b_int_n
+pub fn norm_l2_sqr_(a: &f32, b: &f32, n: i32) -> Result<f32> {
+    unsafe { sys::cv_core_cv_hal_normL2Sqr__const_float_X_a_const_float_X_b_int_n(a, b, n) }.into_result()
+}
+
+// identifier: cv_hal_not8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn not8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_not8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_or8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn or8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_or8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_recip16s_const_short_X_unnamed_arg_size_t_unnamed_arg_1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn recip16s(unnamed_arg: &i16, unnamed_arg_1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_recip16s_const_short_X_unnamed_arg_size_t_unnamed_arg_1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_scale(unnamed_arg, unnamed_arg_1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_recip16u_const_ushort_X_unnamed_arg_size_t_unnamed_arg_1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn recip16u(unnamed_arg: &u16, unnamed_arg_1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_recip16u_const_ushort_X_unnamed_arg_size_t_unnamed_arg_1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_scale(unnamed_arg, unnamed_arg_1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_recip32f_const_float_X_unnamed_arg_size_t_unnamed_arg_1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn recip32f(unnamed_arg: &f32, unnamed_arg_1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_recip32f_const_float_X_unnamed_arg_size_t_unnamed_arg_1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_scale(unnamed_arg, unnamed_arg_1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_recip32s_const_int_X_unnamed_arg_size_t_unnamed_arg_1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn recip32s(unnamed_arg: &i32, unnamed_arg_1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_recip32s_const_int_X_unnamed_arg_size_t_unnamed_arg_1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_scale(unnamed_arg, unnamed_arg_1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_recip64f_const_double_X_unnamed_arg_size_t_unnamed_arg_1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn recip64f(unnamed_arg: &f64, unnamed_arg_1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_recip64f_const_double_X_unnamed_arg_size_t_unnamed_arg_1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_scale(unnamed_arg, unnamed_arg_1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_recip8s_const_schar_X_unnamed_arg_size_t_unnamed_arg_1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn recip8s(unnamed_arg: &i8, unnamed_arg_1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_recip8s_const_schar_X_unnamed_arg_size_t_unnamed_arg_1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_scale(unnamed_arg, unnamed_arg_1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_recip8u_const_uchar_X_unnamed_arg_size_t_unnamed_arg_1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_scale
+pub fn recip8u(unnamed_arg: &u8, unnamed_arg_1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, scale: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_recip8u_const_uchar_X_unnamed_arg_size_t_unnamed_arg_1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_scale(unnamed_arg, unnamed_arg_1, src2, step2, dst, step, width, height, scale) }.into_result()
+}
+
+// identifier: cv_hal_sqrt32f_const_float_X_src_float_X_dst_int_len
+pub fn sqrt32f(src: &f32, dst: &mut f32, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sqrt32f_const_float_X_src_float_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_sqrt64f_const_double_X_src_double_X_dst_int_len
+pub fn sqrt64f(src: &f64, dst: &mut f64, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sqrt64f_const_double_X_src_double_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_sqrt_const_double_X_src_double_X_dst_int_len
+pub fn sqrt(src: &f64, dst: &mut f64, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sqrt_const_double_X_src_double_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_sqrt_const_float_X_src_float_X_dst_int_len
+pub fn sqrt_1(src: &f32, dst: &mut f32, len: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sqrt_const_float_X_src_float_X_dst_int_len(src, dst, len) }.into_result()
+}
+
+// identifier: cv_hal_sub16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn sub16s(src1: &i16, step1: size_t, src2: &i16, step2: size_t, dst: &mut i16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sub16s_const_short_X_src1_size_t_step1_const_short_X_src2_size_t_step2_short_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_sub16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn sub16u(src1: &u16, step1: size_t, src2: &u16, step2: size_t, dst: &mut u16, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sub16u_const_ushort_X_src1_size_t_step1_const_ushort_X_src2_size_t_step2_ushort_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_sub32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn sub32f(src1: &f32, step1: size_t, src2: &f32, step2: size_t, dst: &mut f32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sub32f_const_float_X_src1_size_t_step1_const_float_X_src2_size_t_step2_float_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_sub32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn sub32s(src1: &i32, step1: size_t, src2: &i32, step2: size_t, dst: &mut i32, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sub32s_const_int_X_src1_size_t_step1_const_int_X_src2_size_t_step2_int_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_sub64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn sub64f(src1: &f64, step1: size_t, src2: &f64, step2: size_t, dst: &mut f64, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sub64f_const_double_X_src1_size_t_step1_const_double_X_src2_size_t_step2_double_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_sub8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn sub8s(src1: &i8, step1: size_t, src2: &i8, step2: size_t, dst: &mut i8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sub8s_const_schar_X_src1_size_t_step1_const_schar_X_src2_size_t_step2_schar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_sub8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn sub8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_sub8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
+// identifier: cv_hal_xor8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg
+pub fn xor8u(src1: &u8, step1: size_t, src2: &u8, step2: size_t, dst: &mut u8, step: size_t, width: i32, height: i32, unnamed_arg: &mut c_void) -> Result<()> {
+    unsafe { sys::cv_core_cv_hal_xor8u_const_uchar_X_src1_size_t_step1_const_uchar_X_src2_size_t_step2_uchar_X_dst_size_t_step_int_width_int_height_void_X_unnamed_arg(src1, step1, src2, step2, dst, step, width, height, unnamed_arg) }.into_result()
+}
+
 // identifier: cv_haveOpenVX
-  unsafe {
-    let rv = sys::cv_core_cv_haveOpenVX();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn have_open_vx() -> Result<bool> {
+    unsafe { sys::cv_core_cv_haveOpenVX() }.into_result()
 }
 
+// identifier: cv_hconcat_Mat_src1_Mat_src2_Mat_dst
 /// @overload
 /// ```ignore{.cpp}
 /// cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 4,
@@ -3293,19 +3009,10 @@ pub fn have_open_vx() -> Result<bool> {
 /// * src2: second input array to be considered for horizontal concatenation.
 /// * dst: output array. It has the same number of rows and depth as the src1 and src2, and the sum of cols of the src1 and src2.
 pub fn hconcat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_hconcat_Mat_src1_Mat_src2_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_hconcat_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_hconcat_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_hconcat_VectorOfMat_src_Mat_dst
 /// @overload
 /// ```ignore{.cpp}
 /// std::vector<cv::Mat> matrices = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
@@ -3325,20 +3032,38 @@ pub fn hconcat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Resul
 /// * src: input array or vector of matrices. all of the matrices must have the same number of rows and the same depth.
 /// * dst: output array. It has the same number of rows and depth as the src, and the sum of cols of the src.
 /// same depth.
-pub fn hconcat_v0(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_hconcat_VectorOfMat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_hconcat_VectorOfMat_src_Mat_dst(src.as_raw_VectorOfMat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn hconcat_1(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_hconcat_VectorOfMat_src_Mat_dst(src.as_raw_VectorOfMat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_hconcat_const_Mat_src_size_t_nsrc_Mat_dst
+/// Applies horizontal concatenation to given matrices.
+/// 
+/// The function horizontally concatenates two or more cv::Mat matrices (with the same number of rows).
+/// ```ignore{.cpp}
+/// cv::Mat matArray[] = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
+/// cv::Mat(4, 1, CV_8UC1, cv::Scalar(2)),
+/// cv::Mat(4, 1, CV_8UC1, cv::Scalar(3)),};
+/// 
+/// cv::Mat out;
+/// cv::hconcat( matArray, 3, out );
+/// //out:
+/// //[1, 2, 3;
+/// // 1, 2, 3;
+/// // 1, 2, 3;
+/// // 1, 2, 3]
+/// ```
+/// 
+/// ## Parameters
+/// * src: input array or vector of matrices. all of the matrices must have the same number of rows and the same depth.
+/// * nsrc: number of matrices in src.
+/// * dst: output array. It has the same number of rows and depth as the src, and the sum of cols of the src.
+/// @sa cv::vconcat(const Mat*, size_t, OutputArray), @sa cv::vconcat(InputArrayOfArrays, OutputArray) and @sa cv::vconcat(InputArray, InputArray, OutputArray)
+pub fn hconcat_2(src: &core::Mat, nsrc: size_t, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_hconcat_const_Mat_src_size_t_nsrc_Mat_dst(src.as_raw_Mat(), nsrc, dst.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_idct_Mat_src_Mat_dst_int_flags
 /// Calculates the inverse Discrete Cosine Transform of a 1D or 2D array.
 /// 
 /// idct(src, dst, flags) is equivalent to dct(src, dst, flags | DCT_INVERSE).
@@ -3351,19 +3076,10 @@ pub fn hconcat_v0(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
 /// ## C++ default parameters:
 /// * flags: 0
 pub fn idct(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-// identifier: cv_idct_Mat_src_Mat_dst_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_idct_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_idct_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_idft_Mat_src_Mat_dst_int_flags_int_nonzeroRows
 /// Calculates the inverse Discrete Fourier Transform of a 1D or 2D array.
 /// 
 /// idft(src, dst, flags) is equivalent to dft(src, dst, flags | #DFT_INVERSE) .
@@ -3382,19 +3098,10 @@ pub fn idct(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
 /// * flags: 0
 /// * nonzero_rows: 0
 pub fn idft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32) -> Result<()> {
-// identifier: cv_idft_Mat_src_Mat_dst_int_flags_int_nonzeroRows
-  unsafe {
-    let rv = sys::cv_core_cv_idft_Mat_src_Mat_dst_int_flags_int_nonzeroRows(src.as_raw_Mat(), dst.as_raw_Mat(), flags, nonzero_rows);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_idft_Mat_src_Mat_dst_int_flags_int_nonzeroRows(src.as_raw_Mat(), dst.as_raw_Mat(), flags, nonzero_rows) }.into_result()
 }
 
+// identifier: cv_inRange_Mat_src_Mat_lowerb_Mat_upperb_Mat_dst
 /// Checks if array elements lie between the elements of two other arrays.
 /// 
 /// The function checks the range as follows:
@@ -3415,19 +3122,10 @@ pub fn idft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32)
 /// * upperb: inclusive upper boundary array or a scalar.
 /// * dst: output array of the same size as src and CV_8U type.
 pub fn in_range(src: &core::Mat, lowerb: &core::Mat, upperb: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_inRange_Mat_src_Mat_lowerb_Mat_upperb_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_inRange_Mat_src_Mat_lowerb_Mat_upperb_Mat_dst(src.as_raw_Mat(), lowerb.as_raw_Mat(), upperb.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_inRange_Mat_src_Mat_lowerb_Mat_upperb_Mat_dst(src.as_raw_Mat(), lowerb.as_raw_Mat(), upperb.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_insertChannel_Mat_src_Mat_dst_int_coi
 /// Inserts a single channel to dst (coi is 0-based index)
 /// ## Parameters
 /// * src: input array
@@ -3435,75 +3133,30 @@ pub fn in_range(src: &core::Mat, lowerb: &core::Mat, upperb: &core::Mat, dst: &m
 /// * coi: index of channel for insertion
 /// @sa mixChannels, merge
 pub fn insert_channel(src: &core::Mat, dst: &mut core::Mat, coi: i32) -> Result<()> {
-// identifier: cv_insertChannel_Mat_src_Mat_dst_int_coi
-  unsafe {
-    let rv = sys::cv_core_cv_insertChannel_Mat_src_Mat_dst_int_coi(src.as_raw_Mat(), dst.as_raw_Mat(), coi);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_insertChannel_Mat_src_Mat_dst_int_coi(src.as_raw_Mat(), dst.as_raw_Mat(), coi) }.into_result()
 }
 
-pub fn reset_trace() -> Result<()> {
 // identifier: cv_instr_resetTrace
-  unsafe {
-    let rv = sys::cv_core_cv_instr_resetTrace();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn reset_trace() -> Result<()> {
+    unsafe { sys::cv_core_cv_instr_resetTrace() }.into_result()
 }
 
-pub fn set_flags(mode_flags: i32) -> Result<()> {
 // identifier: cv_instr_setFlags_int_modeFlags
-  unsafe {
-    let rv = sys::cv_core_cv_instr_setFlags_int_modeFlags(mode_flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_flags(mode_flags: i32) -> Result<()> {
+    unsafe { sys::cv_core_cv_instr_setFlags_int_modeFlags(mode_flags) }.into_result()
 }
 
-pub fn set_use_instrumentation(flag: bool) -> Result<()> {
 // identifier: cv_instr_setUseInstrumentation_bool_flag
-  unsafe {
-    let rv = sys::cv_core_cv_instr_setUseInstrumentation_bool_flag(flag);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_use_instrumentation(flag: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_instr_setUseInstrumentation_bool_flag(flag) }.into_result()
 }
 
-pub fn use_instrumentation() -> Result<bool> {
 // identifier: cv_instr_useInstrumentation
-  unsafe {
-    let rv = sys::cv_core_cv_instr_useInstrumentation();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn use_instrumentation() -> Result<bool> {
+    unsafe { sys::cv_core_cv_instr_useInstrumentation() }.into_result()
 }
 
+// identifier: cv_invert_Mat_src_Mat_dst_int_flags
 /// Finds the inverse or pseudo-inverse of a matrix.
 /// 
 /// The function cv::invert inverts the matrix src and stores the result in dst
@@ -3533,163 +3186,60 @@ pub fn use_instrumentation() -> Result<bool> {
 /// ## C++ default parameters:
 /// * flags: DECOMP_LU
 pub fn invert(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<f64> {
-// identifier: cv_invert_Mat_src_Mat_dst_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_invert_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_invert_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
 }
 
-pub fn get_ipp_error_location() -> Result<String> {
 // identifier: cv_ipp_getIppErrorLocation
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_getIppErrorLocation();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+pub fn get_ipp_error_location() -> Result<String> {
+    unsafe { sys::cv_core_cv_ipp_getIppErrorLocation() }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn get_ipp_features() -> Result<u64> {
 // identifier: cv_ipp_getIppFeatures
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_getIppFeatures();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_ipp_features() -> Result<u64> {
+    unsafe { sys::cv_core_cv_ipp_getIppFeatures() }.into_result()
 }
 
-pub fn get_ipp_status() -> Result<i32> {
 // identifier: cv_ipp_getIppStatus
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_getIppStatus();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_ipp_status() -> Result<i32> {
+    unsafe { sys::cv_core_cv_ipp_getIppStatus() }.into_result()
 }
 
-pub fn get_ipp_version() -> Result<String> {
 // identifier: cv_ipp_getIppVersion
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_getIppVersion();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+pub fn get_ipp_version() -> Result<String> {
+    unsafe { sys::cv_core_cv_ipp_getIppVersion() }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn set_use_ipp_ne(flag: bool) -> Result<()> {
 // identifier: cv_ipp_setUseIPP_NE_bool_flag
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_setUseIPP_NE_bool_flag(flag);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_use_ipp_ne(flag: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_ipp_setUseIPP_NE_bool_flag(flag) }.into_result()
 }
 
-pub fn set_use_ipp__not_exact(flag: bool) -> Result<()> {
 // identifier: cv_ipp_setUseIPP_NotExact_bool_flag
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_setUseIPP_NotExact_bool_flag(flag);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_use_ipp__not_exact(flag: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_ipp_setUseIPP_NotExact_bool_flag(flag) }.into_result()
 }
 
-pub fn set_use_ipp(flag: bool) -> Result<()> {
 // identifier: cv_ipp_setUseIPP_bool_flag
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_setUseIPP_bool_flag(flag);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_use_ipp(flag: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_ipp_setUseIPP_bool_flag(flag) }.into_result()
 }
 
-pub fn use_ipp() -> Result<bool> {
 // identifier: cv_ipp_useIPP
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_useIPP();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn use_ipp() -> Result<bool> {
+    unsafe { sys::cv_core_cv_ipp_useIPP() }.into_result()
 }
 
-pub fn use_ipp_ne() -> Result<bool> {
 // identifier: cv_ipp_useIPP_NE
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_useIPP_NE();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn use_ipp_ne() -> Result<bool> {
+    unsafe { sys::cv_core_cv_ipp_useIPP_NE() }.into_result()
 }
 
-pub fn use_ipp__not_exact() -> Result<bool> {
 // identifier: cv_ipp_useIPP_NotExact
-  unsafe {
-    let rv = sys::cv_core_cv_ipp_useIPP_NotExact();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn use_ipp__not_exact() -> Result<bool> {
+    unsafe { sys::cv_core_cv_ipp_useIPP_NotExact() }.into_result()
 }
 
+// identifier: cv_kmeans_Mat_data_int_K_Mat_bestLabels_TermCriteria_criteria_int_attempts_int_flags_Mat_centers
 /// Finds centers of clusters and groups input samples around the clusters.
 /// 
 /// The function kmeans implements a k-means algorithm that finds the centers of cluster_count clusters
@@ -3728,19 +3278,10 @@ pub fn use_ipp__not_exact() -> Result<bool> {
 /// ## C++ default parameters:
 /// * centers: noArray()
 pub fn kmeans(data: &core::Mat, k: i32, best_labels: &mut core::Mat, criteria: &core::TermCriteria, attempts: i32, flags: i32, centers: &mut core::Mat) -> Result<f64> {
-// identifier: cv_kmeans_Mat_data_int_K_Mat_bestLabels_TermCriteria_criteria_int_attempts_int_flags_Mat_centers
-  unsafe {
-    let rv = sys::cv_core_cv_kmeans_Mat_data_int_K_Mat_bestLabels_TermCriteria_criteria_int_attempts_int_flags_Mat_centers(data.as_raw_Mat(), k, best_labels.as_raw_Mat(), criteria.as_raw_TermCriteria(), attempts, flags, centers.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_kmeans_Mat_data_int_K_Mat_bestLabels_TermCriteria_criteria_int_attempts_int_flags_Mat_centers(data.as_raw_Mat(), k, best_labels.as_raw_Mat(), criteria.as_raw_TermCriteria(), attempts, flags, centers.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_log_Mat_src_Mat_dst
 /// Calculates the natural logarithm of every array element.
 /// 
 /// The function cv::log calculates the natural logarithm of every element of the input array:
@@ -3752,53 +3293,26 @@ pub fn kmeans(data: &core::Mat, k: i32, best_labels: &mut core::Mat, criteria: &
 /// * src: input array.
 /// * dst: output array of the same size and type as src .
 /// @sa exp, cartToPolar, polarToCart, phase, pow, sqrt, magnitude
-pub fn log(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_log_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_log_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn log_2(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_log_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
-pub fn log_v0(a: &core::softdouble) -> Result<core::softdouble> {
 // identifier: cv_log_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cv_log_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn log_3(a: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_log_softdouble_a(a.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
+// identifier: cv_log_softfloat_a
 /// Natural logarithm
 /// 
 /// Special cases:
 /// - log(NaN), log(x < 0) are NaN
 /// - log(0) == -Inf
-pub fn log_v1(a: &core::softfloat) -> Result<core::softfloat> {
-// identifier: cv_log_softfloat_a
-  unsafe {
-    let rv = sys::cv_core_cv_log_softfloat_a(a.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+pub fn log_4(a: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_log_softfloat_a(a.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_magnitude_Mat_x_Mat_y_Mat_magnitude
 /// Calculates the magnitude of 2D vectors.
 /// 
 /// The function cv::magnitude calculates the magnitude of 2D vectors formed
@@ -3810,20 +3324,11 @@ pub fn log_v1(a: &core::softfloat) -> Result<core::softfloat> {
 /// have the same size as x.
 /// * magnitude: output array of the same size and type as x.
 /// @sa cartToPolar, polarToCart, phase, sqrt
-pub fn magnitude(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> Result<()> {
-// identifier: cv_magnitude_Mat_x_Mat_y_Mat_magnitude
-  unsafe {
-    let rv = sys::cv_core_cv_magnitude_Mat_x_Mat_y_Mat_magnitude(x.as_raw_Mat(), y.as_raw_Mat(), magnitude.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn magnitude_2(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_magnitude_Mat_x_Mat_y_Mat_magnitude(x.as_raw_Mat(), y.as_raw_Mat(), magnitude.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_max_Mat_src1_Mat_src2_Mat_dst
 /// Calculates per-element maximum of two arrays or an array and a scalar.
 /// 
 /// The function cv::max calculates the per-element maximum of two arrays:
@@ -3836,47 +3341,20 @@ pub fn magnitude(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> Res
 /// * dst: output array of the same size and type as src1.
 /// @sa  min, compare, inRange, minMaxLoc, @ref MatrixExpressions
 pub fn max_mat_mat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_max_Mat_src1_Mat_src2_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_max_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_max_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
-pub fn max(a: &core::softdouble, b: &core::softdouble) -> Result<core::softdouble> {
 // identifier: cv_max_softdouble_a_softdouble_b
-  unsafe {
-    let rv = sys::cv_core_cv_max_softdouble_a_softdouble_b(a.as_raw_softdouble(), b.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn max(a: &core::softdouble, b: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_max_softdouble_a_softdouble_b(a.as_raw_softdouble(), b.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
-pub fn max_v0(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloat> {
 // identifier: cv_max_softfloat_a_softfloat_b
-  unsafe {
-    let rv = sys::cv_core_cv_max_softfloat_a_softfloat_b(a.as_raw_softfloat(), b.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+pub fn max_1(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_max_softfloat_a_softfloat_b(a.as_raw_softfloat(), b.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_meanStdDev_Mat_src_Mat_mean_Mat_stddev_Mat_mask
 /// Calculates a mean and standard deviation of array elements.
 /// 
 /// The function cv::meanStdDev calculates the mean and the standard deviation M
@@ -3902,19 +3380,10 @@ pub fn max_v0(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloa
 /// ## C++ default parameters:
 /// * mask: noArray()
 pub fn mean_std_dev(src: &core::Mat, mean: &mut core::Mat, stddev: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-// identifier: cv_meanStdDev_Mat_src_Mat_mean_Mat_stddev_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_meanStdDev_Mat_src_Mat_mean_Mat_stddev_Mat_mask(src.as_raw_Mat(), mean.as_raw_Mat(), stddev.as_raw_Mat(), mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_meanStdDev_Mat_src_Mat_mean_Mat_stddev_Mat_mask(src.as_raw_Mat(), mean.as_raw_Mat(), stddev.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_mean_Mat_src_Mat_mask
 /// Calculates an average (mean) of array elements.
 /// 
 /// The function cv::mean calculates the mean value M of array elements,
@@ -3930,19 +3399,10 @@ pub fn mean_std_dev(src: &core::Mat, mean: &mut core::Mat, stddev: &mut core::Ma
 /// ## C++ default parameters:
 /// * mask: noArray()
 pub fn mean(src: &core::Mat, mask: &core::Mat) -> Result<core::Scalar> {
-// identifier: cv_mean_Mat_src_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_mean_Mat_src_Mat_mask(src.as_raw_Mat(), mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_mean_Mat_src_Mat_mask(src.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_merge_VectorOfMat_mv_Mat_dst
 /// @overload
 /// ## Parameters
 /// * mv: input vector of matrices to be merged; all the matrices in mv must have the same
@@ -3950,19 +3410,98 @@ pub fn mean(src: &core::Mat, mask: &core::Mat) -> Result<core::Scalar> {
 /// * dst: output array of the same size and the same depth as mv[0]; The number of channels will
 /// be the total number of channels in the matrix array.
 pub fn merge(mv: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_merge_VectorOfMat_mv_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_merge_VectorOfMat_mv_Mat_dst(mv.as_raw_VectorOfMat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_merge_VectorOfMat_mv_Mat_dst(mv.as_raw_VectorOfMat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_merge_const_Mat_mv_size_t_count_Mat_dst
+/// Creates one multi-channel array out of several single-channel ones.
+/// 
+/// The function cv::merge merges several arrays to make a single multi-channel array. That is, each
+/// element of the output array will be a concatenation of the elements of the input arrays, where
+/// elements of i-th input array are treated as mv[i].channels()-element vectors.
+/// 
+/// The function cv::split does the reverse operation. If you need to shuffle channels in some other
+/// advanced way, use cv::mixChannels.
+/// 
+/// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
+/// @snippet snippets/core_merge.cpp example
+/// 
+/// ## Parameters
+/// * mv: input array of matrices to be merged; all the matrices in mv must have the same
+/// size and the same depth.
+/// * count: number of input matrices when mv is a plain C array; it must be greater than zero.
+/// * dst: output array of the same size and the same depth as mv[0]; The number of channels will
+/// be equal to the parameter count.
+/// @sa  mixChannels, split, Mat::reshape
+pub fn merge_1(mv: &core::Mat, count: size_t, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_merge_const_Mat_mv_size_t_count_Mat_dst(mv.as_raw_Mat(), count, dst.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_minMaxIdx_Mat_src_double_X_minVal_double_X_maxVal_int_X_minIdx_int_X_maxIdx_Mat_mask
+/// Finds the global minimum and maximum in an array
+/// 
+/// The function cv::minMaxIdx finds the minimum and maximum element values and their positions. The
+/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+/// array region. The function does not work with multi-channel arrays. If you need to find minimum or
+/// maximum elements across all the channels, use Mat::reshape first to reinterpret the array as
+/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
+/// mixChannels , or split . In case of a sparse matrix, the minimum is found among non-zero elements
+/// only.
+/// 
+/// Note: When minIdx is not NULL, it must have at least 2 elements (as well as maxIdx), even if src is
+/// a single-row or single-column matrix. In OpenCV (following MATLAB) each array has at least 2
+/// dimensions, i.e. single-column matrix is Mx1 matrix (and therefore minIdx/maxIdx will be
+/// (i1,0)/(i2,0)) and single-row matrix is 1xN matrix (and therefore minIdx/maxIdx will be
+/// (0,j1)/(0,j2)).
+/// ## Parameters
+/// * src: input single-channel array.
+/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+/// * minIdx: pointer to the returned minimum location (in nD case); NULL is used if not required;
+/// Otherwise, it must point to an array of src.dims elements, the coordinates of the minimum element
+/// in each dimension are stored there sequentially.
+/// * maxIdx: pointer to the returned maximum location (in nD case). NULL is used if not required.
+/// * mask: specified array region
+///
+/// ## C++ default parameters:
+/// * max_val: 0
+/// * min_idx: 0
+/// * max_idx: 0
+/// * mask: noArray()
+pub fn min_max_idx(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_idx: &mut i32, max_idx: &mut i32, mask: &core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_minMaxIdx_Mat_src_double_X_minVal_double_X_maxVal_int_X_minIdx_int_X_maxIdx_Mat_mask(src.as_raw_Mat(), min_val, max_val, min_idx, max_idx, mask.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_minMaxLoc_Mat_src_double_X_minVal_double_X_maxVal_Point_X_minLoc_Point_X_maxLoc_Mat_mask
+/// Finds the global minimum and maximum in an array.
+/// 
+/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
+/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+/// array region.
+/// 
+/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
+/// elements across all the channels, use Mat::reshape first to reinterpret the array as
+/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
+/// mixChannels , or split .
+/// ## Parameters
+/// * src: input single-channel array.
+/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+/// * minLoc: pointer to the returned minimum location (in 2D case); NULL is used if not required.
+/// * maxLoc: pointer to the returned maximum location (in 2D case); NULL is used if not required.
+/// * mask: optional mask used to select a sub-array.
+/// @sa max, min, compare, inRange, extractImageCOI, mixChannels, split, Mat::reshape
+///
+/// ## C++ default parameters:
+/// * max_val: 0
+/// * min_loc: 0
+/// * max_loc: 0
+/// * mask: noArray()
+pub fn min_max_loc(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_minMaxLoc_Mat_src_double_X_minVal_double_X_maxVal_Point_X_minLoc_Point_X_maxLoc_Mat_mask(src.as_raw_Mat(), min_val, max_val, min_loc, max_loc, mask.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_min_Mat_src1_Mat_src2_Mat_dst
 /// Calculates per-element minimum of two arrays or an array and a scalar.
 /// 
 /// The function cv::min calculates the per-element minimum of two arrays:
@@ -3975,48 +3514,21 @@ pub fn merge(mv: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
 /// * dst: output array of the same size and type as src1.
 /// @sa max, compare, inRange, minMaxLoc
 pub fn min_mat_mat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_min_Mat_src1_Mat_src2_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_min_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_min_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
-pub fn min(a: &core::softdouble, b: &core::softdouble) -> Result<core::softdouble> {
 // identifier: cv_min_softdouble_a_softdouble_b
-  unsafe {
-    let rv = sys::cv_core_cv_min_softdouble_a_softdouble_b(a.as_raw_softdouble(), b.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn min(a: &core::softdouble, b: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_min_softdouble_a_softdouble_b(a.as_raw_softdouble(), b.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
-/// Min and Max functions
-pub fn min_v0(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloat> {
 // identifier: cv_min_softfloat_a_softfloat_b
-  unsafe {
-    let rv = sys::cv_core_cv_min_softfloat_a_softfloat_b(a.as_raw_softfloat(), b.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+/// Min and Max functions
+pub fn min_1(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_min_softfloat_a_softfloat_b(a.as_raw_softfloat(), b.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_VectorOfint_fromTo
 /// @overload
 /// ## Parameters
 /// * src: input array or vector of matrices; all of the matrices must have the same size and the
@@ -4031,50 +3543,90 @@ pub fn min_v0(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloa
 /// channels; as a special case, when fromTo[k\*2] is negative, the corresponding output channel is
 /// filled with zero .
 pub fn mix_channels(src: &types::VectorOfMat, dst: &mut types::VectorOfMat, from_to: &types::VectorOfint) -> Result<()> {
-// identifier: cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_VectorOfint_fromTo
-  unsafe {
-    let rv = sys::cv_core_cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_VectorOfint_fromTo(src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), from_to.as_raw_VectorOfint());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_VectorOfint_fromTo(src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), from_to.as_raw_VectorOfint()) }.into_result()
 }
 
-pub fn mul_add(a: &core::softdouble, b: &core::softdouble, c: &core::softdouble) -> Result<core::softdouble> {
+// identifier: cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_const_int_X_fromTo_size_t_npairs
+/// @overload
+/// ## Parameters
+/// * src: input array or vector of matrices; all of the matrices must have the same size and the
+/// same depth.
+/// * dst: output array or vector of matrices; all the matrices **must be allocated**; their size and
+/// depth must be the same as in src[0].
+/// * fromTo: array of index pairs specifying which channels are copied and where; fromTo[k\*2] is
+/// a 0-based index of the input channel in src, fromTo[k\*2+1] is an index of the output channel in
+/// dst; the continuous channel numbering is used: the first input image channels are indexed from 0 to
+/// src[0].channels()-1, the second input image channels are indexed from src[0].channels() to
+/// src[0].channels() + src[1].channels()-1, and so on, the same scheme is used for the output image
+/// channels; as a special case, when fromTo[k\*2] is negative, the corresponding output channel is
+/// filled with zero .
+/// * npairs: number of index pairs in fromTo.
+pub fn mix_channels_1(src: &types::VectorOfMat, dst: &mut types::VectorOfMat, from_to: &i32, npairs: size_t) -> Result<()> {
+    unsafe { sys::cv_core_cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_const_int_X_fromTo_size_t_npairs(src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), from_to, npairs) }.into_result()
+}
+
+// identifier: cv_mixChannels_const_Mat_src_size_t_nsrcs_Mat_dst_size_t_ndsts_const_int_X_fromTo_size_t_npairs
+/// Copies specified channels from input arrays to the specified channels of
+/// output arrays.
+/// 
+/// The function cv::mixChannels provides an advanced mechanism for shuffling image channels.
+/// 
+/// cv::split,cv::merge,cv::extractChannel,cv::insertChannel and some forms of cv::cvtColor are partial cases of cv::mixChannels.
+/// 
+/// In the example below, the code splits a 4-channel BGRA image into a 3-channel BGR (with B and R
+/// channels swapped) and a separate alpha-channel image:
+/// ```ignore{.cpp}
+/// Mat bgra( 100, 100, CV_8UC4, Scalar(255,0,0,255) );
+/// Mat bgr( bgra.rows, bgra.cols, CV_8UC3 );
+/// Mat alpha( bgra.rows, bgra.cols, CV_8UC1 );
+/// 
+/// // forming an array of matrices is a quite efficient operation,
+/// // because the matrix data is not copied, only the headers
+/// Mat out[] = { bgr, alpha };
+/// // bgra[0] -> bgr[2], bgra[1] -> bgr[1],
+/// // bgra[2] -> bgr[0], bgra[3] -> alpha[0]
+/// int from_to[] = { 0,2, 1,1, 2,0, 3,3 };
+/// mixChannels( &bgra, 1, out, 2, from_to, 4 );
+/// ```
+/// 
+/// 
+/// Note: Unlike many other new-style C++ functions in OpenCV (see the introduction section and
+/// Mat::create ), cv::mixChannels requires the output arrays to be pre-allocated before calling the
+/// function.
+/// ## Parameters
+/// * src: input array or vector of matrices; all of the matrices must have the same size and the
+/// same depth.
+/// * nsrcs: number of matrices in `src`.
+/// * dst: output array or vector of matrices; all the matrices **must be allocated**; their size and
+/// depth must be the same as in `src[0]`.
+/// * ndsts: number of matrices in `dst`.
+/// * fromTo: array of index pairs specifying which channels are copied and where; fromTo[k\*2] is
+/// a 0-based index of the input channel in src, fromTo[k\*2+1] is an index of the output channel in
+/// dst; the continuous channel numbering is used: the first input image channels are indexed from 0 to
+/// src[0].channels()-1, the second input image channels are indexed from src[0].channels() to
+/// src[0].channels() + src[1].channels()-1, and so on, the same scheme is used for the output image
+/// channels; as a special case, when fromTo[k\*2] is negative, the corresponding output channel is
+/// filled with zero .
+/// * npairs: number of index pairs in `fromTo`.
+/// @sa split, merge, extractChannel, insertChannel, cvtColor
+pub fn mix_channels_2(src: &core::Mat, nsrcs: size_t, dst: &core::Mat, ndsts: size_t, from_to: &i32, npairs: size_t) -> Result<()> {
+    unsafe { sys::cv_core_cv_mixChannels_const_Mat_src_size_t_nsrcs_Mat_dst_size_t_ndsts_const_int_X_fromTo_size_t_npairs(src.as_raw_Mat(), nsrcs, dst.as_raw_Mat(), ndsts, from_to, npairs) }.into_result()
+}
+
 // identifier: cv_mulAdd_softdouble_a_softdouble_b_softdouble_c
-  unsafe {
-    let rv = sys::cv_core_cv_mulAdd_softdouble_a_softdouble_b_softdouble_c(a.as_raw_softdouble(), b.as_raw_softdouble(), c.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn mul_add(a: &core::softdouble, b: &core::softdouble, c: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_mulAdd_softdouble_a_softdouble_b_softdouble_c(a.as_raw_softdouble(), b.as_raw_softdouble(), c.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
+// identifier: cv_mulAdd_softfloat_a_softfloat_b_softfloat_c
 /// Fused Multiplication and Addition
 /// 
 /// Computes (a*b)+c with single rounding
-pub fn mul_add_v0(a: &core::softfloat, b: &core::softfloat, c: &core::softfloat) -> Result<core::softfloat> {
-// identifier: cv_mulAdd_softfloat_a_softfloat_b_softfloat_c
-  unsafe {
-    let rv = sys::cv_core_cv_mulAdd_softfloat_a_softfloat_b_softfloat_c(a.as_raw_softfloat(), b.as_raw_softfloat(), c.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+pub fn mul_add_1(a: &core::softfloat, b: &core::softfloat, c: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_mulAdd_softfloat_a_softfloat_b_softfloat_c(a.as_raw_softfloat(), b.as_raw_softfloat(), c.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_mulSpectrums_Mat_a_Mat_b_Mat_c_int_flags_bool_conjB
 /// Performs the per-element multiplication of two Fourier spectrums.
 /// 
 /// The function cv::mulSpectrums performs the per-element multiplication of the two CCS-packed or complex
@@ -4096,19 +3648,10 @@ pub fn mul_add_v0(a: &core::softfloat, b: &core::softfloat, c: &core::softfloat)
 /// ## C++ default parameters:
 /// * conj_b: false
 pub fn mul_spectrums(a: &core::Mat, b: &core::Mat, c: &mut core::Mat, flags: i32, conj_b: bool) -> Result<()> {
-// identifier: cv_mulSpectrums_Mat_a_Mat_b_Mat_c_int_flags_bool_conjB
-  unsafe {
-    let rv = sys::cv_core_cv_mulSpectrums_Mat_a_Mat_b_Mat_c_int_flags_bool_conjB(a.as_raw_Mat(), b.as_raw_Mat(), c.as_raw_Mat(), flags, conj_b);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_mulSpectrums_Mat_a_Mat_b_Mat_c_int_flags_bool_conjB(a.as_raw_Mat(), b.as_raw_Mat(), c.as_raw_Mat(), flags, conj_b) }.into_result()
 }
 
+// identifier: cv_mulTransposed_Mat_src_Mat_dst_bool_aTa_Mat_delta_double_scale_int_dtype
 /// Calculates the product of a matrix and its transposition.
 /// 
 /// The function cv::mulTransposed calculates the product of src and its
@@ -4143,19 +3686,10 @@ pub fn mul_spectrums(a: &core::Mat, b: &core::Mat, c: &mut core::Mat, flags: i32
 /// * scale: 1
 /// * dtype: -1
 pub fn mul_transposed(src: &core::Mat, dst: &mut core::Mat, a_ta: bool, delta: &core::Mat, scale: f64, dtype: i32) -> Result<()> {
-// identifier: cv_mulTransposed_Mat_src_Mat_dst_bool_aTa_Mat_delta_double_scale_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_mulTransposed_Mat_src_Mat_dst_bool_aTa_Mat_delta_double_scale_int_dtype(src.as_raw_Mat(), dst.as_raw_Mat(), a_ta, delta.as_raw_Mat(), scale, dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_mulTransposed_Mat_src_Mat_dst_bool_aTa_Mat_delta_double_scale_int_dtype(src.as_raw_Mat(), dst.as_raw_Mat(), a_ta, delta.as_raw_Mat(), scale, dtype) }.into_result()
 }
 
+// identifier: cv_multiply_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype
 /// Calculates the per-element scaled product of two arrays.
 /// 
 /// The function multiply calculates the per-element product of two arrays:
@@ -4183,19 +3717,25 @@ pub fn mul_transposed(src: &core::Mat, dst: &mut core::Mat, a_ta: bool, delta: &
 /// * scale: 1
 /// * dtype: -1
 pub fn multiply(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, scale: f64, dtype: i32) -> Result<()> {
-// identifier: cv_multiply_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_multiply_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), scale, dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_multiply_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), scale, dtype) }.into_result()
 }
 
+// identifier: cv_normL1_const_float_X_a_const_float_X_b_int_n
+pub fn norm_l1(a: &f32, b: &f32, n: i32) -> Result<f32> {
+    unsafe { sys::cv_core_cv_normL1_const_float_X_a_const_float_X_b_int_n(a, b, n) }.into_result()
+}
+
+// identifier: cv_normL1_const_uchar_X_a_const_uchar_X_b_int_n
+pub fn norm_l2(a: &u8, b: &u8, n: i32) -> Result<i32> {
+    unsafe { sys::cv_core_cv_normL1_const_uchar_X_a_const_uchar_X_b_int_n(a, b, n) }.into_result()
+}
+
+// identifier: cv_normL2Sqr_const_float_X_a_const_float_X_b_int_n
+pub fn norm_l2_sqr(a: &f32, b: &f32, n: i32) -> Result<f32> {
+    unsafe { sys::cv_core_cv_normL2Sqr_const_float_X_a_const_float_X_b_int_n(a, b, n) }.into_result()
+}
+
+// identifier: cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask
 /// Calculates an absolute difference norm or a relative difference norm.
 /// 
 /// This version of cv::norm calculates the absolute difference norm
@@ -4212,19 +3752,10 @@ pub fn multiply(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, scale: 
 /// * norm_type: NORM_L2
 /// * mask: noArray()
 pub fn norm_with_type(src1: &core::Mat, src2: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
-// identifier: cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), norm_type, mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask(src1.as_raw_Mat(), src2.as_raw_Mat(), norm_type, mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_norm_Mat_src1_int_normType_Mat_mask
 /// Calculates the  absolute norm of an array.
 /// 
 /// This version of #norm calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
@@ -4266,19 +3797,10 @@ pub fn norm_with_type(src1: &core::Mat, src2: &core::Mat, norm_type: i32, mask: 
 /// * norm_type: NORM_L2
 /// * mask: noArray()
 pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
-// identifier: cv_norm_Mat_src1_int_normType_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_norm_Mat_src1_int_normType_Mat_mask(src1.as_raw_Mat(), norm_type, mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_norm_Mat_src1_int_normType_Mat_mask(src1.as_raw_Mat(), norm_type, mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_normalize_Mat_src_Mat_dst_double_alpha_double_beta_int_norm_type_int_dtype_Mat_mask
 /// Normalizes the norm or value range of an array.
 /// 
 /// The function cv::normalize normalizes scale and shift the input array elements so that
@@ -4346,55 +3868,28 @@ pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
 /// * dtype: -1
 /// * mask: noArray()
 pub fn normalize(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &core::Mat) -> Result<()> {
-// identifier: cv_normalize_Mat_src_Mat_dst_double_alpha_double_beta_int_norm_type_int_dtype_Mat_mask
-  unsafe {
-    let rv = sys::cv_core_cv_normalize_Mat_src_Mat_dst_double_alpha_double_beta_int_norm_type_int_dtype_Mat_mask(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta, norm_type, dtype, mask.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_normalize_Mat_src_Mat_dst_double_alpha_double_beta_int_norm_type_int_dtype_Mat_mask(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta, norm_type, dtype, mask.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_parallel_for__Range_range_ParallelLoopBody_body_double_nstripes
 /// Parallel data processor
 ///
 /// ## C++ default parameters:
 /// * nstripes: -1.
 pub fn parallel_for_(range: &core::Range, body: &core::ParallelLoopBody, nstripes: f64) -> Result<()> {
-// identifier: cv_parallel_for__Range_range_ParallelLoopBody_body_double_nstripes
-  unsafe {
-    let rv = sys::cv_core_cv_parallel_for__Range_range_ParallelLoopBody_body_double_nstripes(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_parallel_for__Range_range_ParallelLoopBody_body_double_nstripes(range.as_raw_Range(), body.as_raw_ParallelLoopBody(), nstripes) }.into_result()
 }
 
+// identifier: cv_patchNaNs_Mat_a_double_val
 /// converts NaN's to the given number
 ///
 /// ## C++ default parameters:
 /// * val: 0
 pub fn patch_na_ns(a: &mut core::Mat, val: f64) -> Result<()> {
-// identifier: cv_patchNaNs_Mat_a_double_val
-  unsafe {
-    let rv = sys::cv_core_cv_patchNaNs_Mat_a_double_val(a.as_raw_Mat(), val);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_patchNaNs_Mat_a_double_val(a.as_raw_Mat(), val) }.into_result()
 }
 
+// identifier: cv_perspectiveTransform_Mat_src_Mat_dst_Mat_m
 /// Performs the perspective matrix transformation of vectors.
 /// 
 /// The function cv::perspectiveTransform transforms every element of src by
@@ -4422,19 +3917,10 @@ pub fn patch_na_ns(a: &mut core::Mat, val: f64) -> Result<()> {
 /// * m: 3x3 or 4x4 floating-point transformation matrix.
 /// @sa  transform, warpPerspective, getPerspectiveTransform, findHomography
 pub fn perspective_transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<()> {
-// identifier: cv_perspectiveTransform_Mat_src_Mat_dst_Mat_m
-  unsafe {
-    let rv = sys::cv_core_cv_perspectiveTransform_Mat_src_Mat_dst_Mat_m(src.as_raw_Mat(), dst.as_raw_Mat(), m.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_perspectiveTransform_Mat_src_Mat_dst_Mat_m(src.as_raw_Mat(), dst.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_phase_Mat_x_Mat_y_Mat_angle_bool_angleInDegrees
 /// Calculates the rotation angle of 2D vectors.
 /// 
 /// The function cv::phase calculates the rotation angle of each 2D vector that
@@ -4455,19 +3941,10 @@ pub fn perspective_transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat
 /// ## C++ default parameters:
 /// * angle_in_degrees: false
 pub fn phase(x: &core::Mat, y: &core::Mat, angle: &mut core::Mat, angle_in_degrees: bool) -> Result<()> {
-// identifier: cv_phase_Mat_x_Mat_y_Mat_angle_bool_angleInDegrees
-  unsafe {
-    let rv = sys::cv_core_cv_phase_Mat_x_Mat_y_Mat_angle_bool_angleInDegrees(x.as_raw_Mat(), y.as_raw_Mat(), angle.as_raw_Mat(), angle_in_degrees);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_phase_Mat_x_Mat_y_Mat_angle_bool_angleInDegrees(x.as_raw_Mat(), y.as_raw_Mat(), angle.as_raw_Mat(), angle_in_degrees) }.into_result()
 }
 
+// identifier: cv_polarToCart_Mat_magnitude_Mat_angle_Mat_x_Mat_y_bool_angleInDegrees
 /// Calculates x and y coordinates of 2D vectors from their magnitude and angle.
 /// 
 /// The function cv::polarToCart calculates the Cartesian coordinates of each 2D
@@ -4492,19 +3969,10 @@ pub fn phase(x: &core::Mat, y: &core::Mat, angle: &mut core::Mat, angle_in_degre
 /// ## C++ default parameters:
 /// * angle_in_degrees: false
 pub fn polar_to_cart(magnitude: &core::Mat, angle: &core::Mat, x: &mut core::Mat, y: &mut core::Mat, angle_in_degrees: bool) -> Result<()> {
-// identifier: cv_polarToCart_Mat_magnitude_Mat_angle_Mat_x_Mat_y_bool_angleInDegrees
-  unsafe {
-    let rv = sys::cv_core_cv_polarToCart_Mat_magnitude_Mat_angle_Mat_x_Mat_y_bool_angleInDegrees(magnitude.as_raw_Mat(), angle.as_raw_Mat(), x.as_raw_Mat(), y.as_raw_Mat(), angle_in_degrees);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_polarToCart_Mat_magnitude_Mat_angle_Mat_x_Mat_y_bool_angleInDegrees(magnitude.as_raw_Mat(), angle.as_raw_Mat(), x.as_raw_Mat(), y.as_raw_Mat(), angle_in_degrees) }.into_result()
 }
 
+// identifier: cv_pow_Mat_src_double_power_Mat_dst
 /// Raises every array element to a power.
 /// 
 /// The function cv::pow raises every element of the input array to power :
@@ -4530,33 +3998,15 @@ pub fn polar_to_cart(magnitude: &core::Mat, angle: &core::Mat, x: &mut core::Mat
 /// * dst: output array of the same size and type as src.
 /// @sa sqrt, exp, log, cartToPolar, polarToCart
 pub fn pow(src: &core::Mat, power: f64, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_pow_Mat_src_double_power_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_pow_Mat_src_double_power_Mat_dst(src.as_raw_Mat(), power, dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_pow_Mat_src_double_power_Mat_dst(src.as_raw_Mat(), power, dst.as_raw_Mat()) }.into_result()
 }
 
-pub fn pow_v0(a: &core::softdouble, b: &core::softdouble) -> Result<core::softdouble> {
 // identifier: cv_pow_softdouble_a_softdouble_b
-  unsafe {
-    let rv = sys::cv_core_cv_pow_softdouble_a_softdouble_b(a.as_raw_softdouble(), b.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn pow_1(a: &core::softdouble, b: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_pow_softdouble_a_softdouble_b(a.as_raw_softdouble(), b.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
+// identifier: cv_pow_softfloat_a_softfloat_b
 /// Raising to the power
 /// 
 /// Special cases:
@@ -4573,20 +4023,11 @@ pub fn pow_v0(a: &core::softdouble, b: &core::softdouble) -> Result<core::softdo
 /// - 0 ** 0 == 1
 /// - 0 ** (y < 0) is +Inf
 /// - 0 ** (y > 0) is 0
-pub fn pow_v1(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloat> {
-// identifier: cv_pow_softfloat_a_softfloat_b
-  unsafe {
-    let rv = sys::cv_core_cv_pow_softfloat_a_softfloat_b(a.as_raw_softfloat(), b.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+pub fn pow_2(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_pow_softfloat_a_softfloat_b(a.as_raw_softfloat(), b.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_randn_Mat_dst_Mat_mean_Mat_stddev
 /// Fills the array with normally distributed random numbers.
 /// 
 /// The function cv::randn fills the matrix dst with normally distributed random numbers with the specified
@@ -4599,19 +4040,10 @@ pub fn pow_v1(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloa
 /// which case a diagonal standard deviation matrix is assumed) or a square matrix.
 /// @sa RNG, randu
 pub fn randn(dst: &mut core::Mat, mean: &core::Mat, stddev: &core::Mat) -> Result<()> {
-// identifier: cv_randn_Mat_dst_Mat_mean_Mat_stddev
-  unsafe {
-    let rv = sys::cv_core_cv_randn_Mat_dst_Mat_mean_Mat_stddev(dst.as_raw_Mat(), mean.as_raw_Mat(), stddev.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_randn_Mat_dst_Mat_mean_Mat_stddev(dst.as_raw_Mat(), mean.as_raw_Mat(), stddev.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_randu_Mat_dst_Mat_low_Mat_high
 /// Generates a single uniformly-distributed random number or an array of random numbers.
 /// 
 /// Non-template variant of the function fills the matrix dst with uniformly-distributed
@@ -4623,19 +4055,10 @@ pub fn randn(dst: &mut core::Mat, mean: &core::Mat, stddev: &core::Mat) -> Resul
 /// * high: exclusive upper boundary of the generated random numbers.
 /// @sa RNG, randn, theRNG
 pub fn randu(dst: &mut core::Mat, low: &core::Mat, high: &core::Mat) -> Result<()> {
-// identifier: cv_randu_Mat_dst_Mat_low_Mat_high
-  unsafe {
-    let rv = sys::cv_core_cv_randu_Mat_dst_Mat_low_Mat_high(dst.as_raw_Mat(), low.as_raw_Mat(), high.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_randu_Mat_dst_Mat_low_Mat_high(dst.as_raw_Mat(), low.as_raw_Mat(), high.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_reduce_Mat_src_Mat_dst_int_dim_int_rtype_int_dtype
 /// Reduces a matrix to a vector.
 /// 
 /// The function #reduce reduces the matrix to a vector by treating the matrix rows/columns as a set of
@@ -4664,19 +4087,10 @@ pub fn randu(dst: &mut core::Mat, low: &core::Mat, high: &core::Mat) -> Result<(
 /// ## C++ default parameters:
 /// * dtype: -1
 pub fn reduce(src: &core::Mat, dst: &mut core::Mat, dim: i32, rtype: i32, dtype: i32) -> Result<()> {
-// identifier: cv_reduce_Mat_src_Mat_dst_int_dim_int_rtype_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_reduce_Mat_src_Mat_dst_int_dim_int_rtype_int_dtype(src.as_raw_Mat(), dst.as_raw_Mat(), dim, rtype, dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_reduce_Mat_src_Mat_dst_int_dim_int_rtype_int_dtype(src.as_raw_Mat(), dst.as_raw_Mat(), dim, rtype, dtype) }.into_result()
 }
 
+// identifier: cv_repeat_Mat_src_int_ny_int_nx
 /// @overload
 /// ## Parameters
 /// * src: input array to replicate.
@@ -4685,19 +4099,10 @@ pub fn reduce(src: &core::Mat, dst: &mut core::Mat, dim: i32, rtype: i32, dtype:
 /// * nx: Flag to specify how many times the `src` is repeated along the
 /// horizontal axis.
 pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
-// identifier: cv_repeat_Mat_src_int_ny_int_nx
-  unsafe {
-    let rv = sys::cv_core_cv_repeat_Mat_src_int_ny_int_nx(src.as_raw_Mat(), ny, nx);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::Mat { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_core_cv_repeat_Mat_src_int_ny_int_nx(src.as_raw_Mat(), ny, nx) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+// identifier: cv_repeat_Mat_src_int_ny_int_nx_Mat_dst
 /// Fills the output array with repeated copies of the input array.
 /// 
 /// The function cv::repeat duplicates the input array one or more times along each of the two axes:
@@ -4712,19 +4117,10 @@ pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
 /// * dst: output array of the same type as `src`.
 /// @sa cv::reduce
 pub fn repeat_to(src: &core::Mat, ny: i32, nx: i32, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_repeat_Mat_src_int_ny_int_nx_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_repeat_Mat_src_int_ny_int_nx_Mat_dst(src.as_raw_Mat(), ny, nx, dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_repeat_Mat_src_int_ny_int_nx_Mat_dst(src.as_raw_Mat(), ny, nx, dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_rotate_Mat_src_Mat_dst_int_rotateCode
 /// Rotates a 2D array in multiples of 90 degrees.
 /// The function cv::rotate rotates the array in one of three different ways:
 ///   Rotate by 90 degrees clockwise (rotateCode = ROTATE_90_CLOCKWISE).
@@ -4737,53 +4133,26 @@ pub fn repeat_to(src: &core::Mat, ny: i32, nx: i32, dst: &mut core::Mat) -> Resu
 /// * rotateCode: an enum to specify how to rotate the array; see the enum #RotateFlags
 /// @sa transpose , repeat , completeSymm, flip, RotateFlags
 pub fn rotate(src: &core::Mat, dst: &mut core::Mat, rotate_code: i32) -> Result<()> {
-// identifier: cv_rotate_Mat_src_Mat_dst_int_rotateCode
-  unsafe {
-    let rv = sys::cv_core_cv_rotate_Mat_src_Mat_dst_int_rotateCode(src.as_raw_Mat(), dst.as_raw_Mat(), rotate_code);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_rotate_Mat_src_Mat_dst_int_rotateCode(src.as_raw_Mat(), dst.as_raw_Mat(), rotate_code) }.into_result()
 }
 
+// identifier: cv_roundUp_int_a_unsigned_int_b
 /// Round first value up to the nearest multiple of second value.
 /// 
 /// Use this function instead of `ceil((float)a / b) * b` expressions.
 /// 
 /// @sa divUp
 pub fn round_up(a: i32, b: u32) -> Result<i32> {
-// identifier: cv_roundUp_int_a_unsigned_int_b
-  unsafe {
-    let rv = sys::cv_core_cv_roundUp_int_a_unsigned_int_b(a, b);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_roundUp_int_a_unsigned_int_b(a, b) }.into_result()
 }
 
-/// @overload
-pub fn round_up_v0(a: size_t, b: u32) -> Result<size_t> {
 // identifier: cv_roundUp_size_t_a_unsigned_int_b
-  unsafe {
-    let rv = sys::cv_core_cv_roundUp_size_t_a_unsigned_int_b(a, b);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+/// @overload
+pub fn round_up_1(a: size_t, b: u32) -> Result<size_t> {
+    unsafe { sys::cv_core_cv_roundUp_size_t_a_unsigned_int_b(a, b) }.into_result()
 }
 
+// identifier: cv_scaleAdd_Mat_src1_double_alpha_Mat_src2_Mat_dst
 /// Calculates the sum of a scaled array and another array.
 /// 
 /// The function scaleAdd is one of the classical primitive linear algebra operations, known as DAXPY
@@ -4804,19 +4173,10 @@ pub fn round_up_v0(a: size_t, b: u32) -> Result<size_t> {
 /// * dst: output array of the same size and type as src1.
 /// @sa add, addWeighted, subtract, Mat::dot, Mat::convertTo
 pub fn scale_add(src1: &core::Mat, alpha: f64, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_scaleAdd_Mat_src1_double_alpha_Mat_src2_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_scaleAdd_Mat_src1_double_alpha_Mat_src2_Mat_dst(src1.as_raw_Mat(), alpha, src2.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_scaleAdd_Mat_src1_double_alpha_Mat_src2_Mat_dst(src1.as_raw_Mat(), alpha, src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_setBreakOnError_bool_flag
 /// Sets/resets the break-on-error mode.
 /// 
 /// When the break-on-error mode is set, the default error handler issues a hardware exception, which
@@ -4824,19 +4184,10 @@ pub fn scale_add(src1: &core::Mat, alpha: f64, src2: &core::Mat, dst: &mut core:
 /// 
 /// \return the previous state
 pub fn set_break_on_error(flag: bool) -> Result<bool> {
-// identifier: cv_setBreakOnError_bool_flag
-  unsafe {
-    let rv = sys::cv_core_cv_setBreakOnError_bool_flag(flag);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_setBreakOnError_bool_flag(flag) }.into_result()
 }
 
+// identifier: cv_setIdentity_Mat_mtx_Scalar_s
 /// Initializes a scaled identity matrix.
 /// 
 /// The function cv::setIdentity initializes a scaled identity matrix:
@@ -4857,19 +4208,10 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 /// ## C++ default parameters:
 /// * s: Scalar(1)
 pub fn set_identity(mtx: &mut core::Mat, s: core::Scalar) -> Result<()> {
-// identifier: cv_setIdentity_Mat_mtx_Scalar_s
-  unsafe {
-    let rv = sys::cv_core_cv_setIdentity_Mat_mtx_Scalar_s(mtx.as_raw_Mat(), s);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_setIdentity_Mat_mtx_Scalar_s(mtx.as_raw_Mat(), s) }.into_result()
 }
 
+// identifier: cv_setNumThreads_int_nthreads
 /// OpenCV will try to set the number of threads for the next parallel region.
 /// 
 /// If threads == 0, OpenCV will disable threading optimizations and run all it's functions
@@ -4889,19 +4231,10 @@ pub fn set_identity(mtx: &mut core::Mat, s: core::Scalar) -> Result<()> {
 /// * nthreads: Number of threads used by OpenCV.
 /// @sa getNumThreads, getThreadNum
 pub fn set_num_threads(nthreads: i32) -> Result<()> {
-// identifier: cv_setNumThreads_int_nthreads
-  unsafe {
-    let rv = sys::cv_core_cv_setNumThreads_int_nthreads(nthreads);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_setNumThreads_int_nthreads(nthreads) }.into_result()
 }
 
+// identifier: cv_setRNGSeed_int_seed
 /// Sets state of default random number generator.
 /// 
 /// The function cv::setRNGSeed sets state of default random number generator to custom value.
@@ -4909,33 +4242,15 @@ pub fn set_num_threads(nthreads: i32) -> Result<()> {
 /// * seed: new state for default random number generator
 /// @sa RNG, randu, randn
 pub fn set_rng_seed(seed: i32) -> Result<()> {
-// identifier: cv_setRNGSeed_int_seed
-  unsafe {
-    let rv = sys::cv_core_cv_setRNGSeed_int_seed(seed);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_setRNGSeed_int_seed(seed) }.into_result()
 }
 
-pub fn set_use_open_vx(flag: bool) -> Result<()> {
 // identifier: cv_setUseOpenVX_bool_flag
-  unsafe {
-    let rv = sys::cv_core_cv_setUseOpenVX_bool_flag(flag);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn set_use_open_vx(flag: bool) -> Result<()> {
+    unsafe { sys::cv_core_cv_setUseOpenVX_bool_flag(flag) }.into_result()
 }
 
+// identifier: cv_setUseOptimized_bool_onoff
 /// Enables or disables the optimized code.
 /// 
 /// The function can be used to dynamically turn on and off optimized dispatched code (code that uses SSE4.2, AVX/AVX2,
@@ -4950,38 +4265,20 @@ pub fn set_use_open_vx(flag: bool) -> Result<()> {
 /// * onoff: The boolean flag specifying whether the optimized code should be used (onoff=true)
 /// or not (onoff=false).
 pub fn set_use_optimized(onoff: bool) -> Result<()> {
-// identifier: cv_setUseOptimized_bool_onoff
-  unsafe {
-    let rv = sys::cv_core_cv_setUseOptimized_bool_onoff(onoff);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_setUseOptimized_bool_onoff(onoff) }.into_result()
 }
 
+// identifier: cv_sin_softdouble_a
 /// Sine
 /// 
 /// Special cases:
 /// - sin(Inf) or sin(NaN) is NaN
 /// - sin(x) == x when sin(x) is close to zero
 pub fn sin(a: &core::softdouble) -> Result<core::softdouble> {
-// identifier: cv_sin_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cv_sin_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+    unsafe { sys::cv_core_cv_sin_softdouble_a(a.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
+// identifier: cv_solveCubic_Mat_coeffs_Mat_roots
 /// Finds the real roots of a cubic equation.
 /// 
 /// The function solveCubic finds the real roots of a cubic equation:
@@ -4996,19 +4293,10 @@ pub fn sin(a: &core::softdouble) -> Result<core::softdouble> {
 /// * roots: output array of real roots that has 1 or 3 elements.
 /// @return number of real roots. It can be 0, 1 or 2.
 pub fn solve_cubic(coeffs: &core::Mat, roots: &mut core::Mat) -> Result<i32> {
-// identifier: cv_solveCubic_Mat_coeffs_Mat_roots
-  unsafe {
-    let rv = sys::cv_core_cv_solveCubic_Mat_coeffs_Mat_roots(coeffs.as_raw_Mat(), roots.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_solveCubic_Mat_coeffs_Mat_roots(coeffs.as_raw_Mat(), roots.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_solveLP_Mat_Func_Mat_Constr_Mat_z
 /// Solve given (non-integer) linear programming problem using the Simplex Algorithm (Simplex Method).
 /// 
 /// What we mean here by "linear programming problem" (or LP problem, for short) can be formulated as:
@@ -5041,19 +4329,10 @@ pub fn solve_cubic(coeffs: &core::Mat, roots: &mut core::Mat) -> Result<i32> {
 /// formulation above. It will contain 64-bit floating point numbers.
 /// @return One of cv::SolveLPResult
 pub fn solve_lp(func: &core::Mat, constr: &core::Mat, z: &core::Mat) -> Result<i32> {
-// identifier: cv_solveLP_Mat_Func_Mat_Constr_Mat_z
-  unsafe {
-    let rv = sys::cv_core_cv_solveLP_Mat_Func_Mat_Constr_Mat_z(func.as_raw_Mat(), constr.as_raw_Mat(), z.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_solveLP_Mat_Func_Mat_Constr_Mat_z(func.as_raw_Mat(), constr.as_raw_Mat(), z.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_solvePoly_Mat_coeffs_Mat_roots_int_maxIters
 /// Finds the real or complex roots of a polynomial equation.
 /// 
 /// The function cv::solvePoly finds real and complex roots of a polynomial equation:
@@ -5066,19 +4345,10 @@ pub fn solve_lp(func: &core::Mat, constr: &core::Mat, z: &core::Mat) -> Result<i
 /// ## C++ default parameters:
 /// * max_iters: 300
 pub fn solve_poly(coeffs: &core::Mat, roots: &mut core::Mat, max_iters: i32) -> Result<f64> {
-// identifier: cv_solvePoly_Mat_coeffs_Mat_roots_int_maxIters
-  unsafe {
-    let rv = sys::cv_core_cv_solvePoly_Mat_coeffs_Mat_roots_int_maxIters(coeffs.as_raw_Mat(), roots.as_raw_Mat(), max_iters);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_solvePoly_Mat_coeffs_Mat_roots_int_maxIters(coeffs.as_raw_Mat(), roots.as_raw_Mat(), max_iters) }.into_result()
 }
 
+// identifier: cv_solve_Mat_src1_Mat_src2_Mat_dst_int_flags
 /// Solves one or more linear systems or least-squares problems.
 /// 
 /// The function cv::solve solves a linear system or least-squares problem (the
@@ -5106,19 +4376,10 @@ pub fn solve_poly(coeffs: &core::Mat, roots: &mut core::Mat, max_iters: i32) -> 
 /// ## C++ default parameters:
 /// * flags: DECOMP_LU
 pub fn solve(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<bool> {
-// identifier: cv_solve_Mat_src1_Mat_src2_Mat_dst_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_solve_Mat_src1_Mat_src2_Mat_dst_int_flags(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_solve_Mat_src1_Mat_src2_Mat_dst_int_flags(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_sortIdx_Mat_src_Mat_dst_int_flags
 /// Sorts each row or each column of a matrix.
 /// 
 /// The function cv::sortIdx sorts each matrix row or each matrix column in the
@@ -5139,19 +4400,10 @@ pub fn solve(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, flags: i32
 /// * flags: operation flags that could be a combination of cv::SortFlags
 /// @sa sort, randShuffle
 pub fn sort_idx(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-// identifier: cv_sortIdx_Mat_src_Mat_dst_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_sortIdx_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_sortIdx_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_sort_Mat_src_Mat_dst_int_flags
 /// Sorts each row or each column of a matrix.
 /// 
 /// The function cv::sort sorts each matrix row or each matrix column in
@@ -5166,37 +4418,19 @@ pub fn sort_idx(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> 
 /// * flags: operation flags, a combination of #SortFlags
 /// @sa sortIdx, randShuffle
 pub fn sort(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-// identifier: cv_sort_Mat_src_Mat_dst_int_flags
-  unsafe {
-    let rv = sys::cv_core_cv_sort_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_sort_Mat_src_Mat_dst_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
 }
 
+// identifier: cv_split_Mat_m_VectorOfMat_mv
 /// @overload
 /// ## Parameters
 /// * m: input multi-channel array.
 /// * mv: output vector of arrays; the arrays themselves are reallocated, if needed.
 pub fn split(m: &core::Mat, mv: &mut types::VectorOfMat) -> Result<()> {
-// identifier: cv_split_Mat_m_VectorOfMat_mv
-  unsafe {
-    let rv = sys::cv_core_cv_split_Mat_m_VectorOfMat_mv(m.as_raw_Mat(), mv.as_raw_VectorOfMat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_split_Mat_m_VectorOfMat_mv(m.as_raw_Mat(), mv.as_raw_VectorOfMat()) }.into_result()
 }
 
+// identifier: cv_split_Mat_src_Mat_mvbegin
 /// Divides a multi-channel array into several single-channel arrays.
 /// 
 /// The function cv::split splits a multi-channel array into separate single-channel arrays:
@@ -5213,19 +4447,10 @@ pub fn split(m: &core::Mat, mv: &mut types::VectorOfMat) -> Result<()> {
 /// reallocated, if needed.
 /// @sa merge, mixChannels, cvtColor
 pub fn split_at(src: &core::Mat, mvbegin: &core::Mat) -> Result<()> {
-// identifier: cv_split_Mat_src_Mat_mvbegin
-  unsafe {
-    let rv = sys::cv_core_cv_split_Mat_src_Mat_mvbegin(src.as_raw_Mat(), mvbegin.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_split_Mat_src_Mat_mvbegin(src.as_raw_Mat(), mvbegin.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_sqrt_Mat_src_Mat_dst
 /// Calculates a square root of array elements.
 /// 
 /// The function cv::sqrt calculates a square root of each input array element.
@@ -5235,49 +4460,22 @@ pub fn split_at(src: &core::Mat, mvbegin: &core::Mat) -> Result<()> {
 /// ## Parameters
 /// * src: input floating-point array.
 /// * dst: output array of the same size and type as src.
-pub fn sqrt(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_sqrt_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_sqrt_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn sqrt_2(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_sqrt_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
-pub fn sqrt_v0(a: &core::softdouble) -> Result<core::softdouble> {
 // identifier: cv_sqrt_softdouble_a
-  unsafe {
-    let rv = sys::cv_core_cv_sqrt_softdouble_a(a.as_raw_softdouble());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softdouble { ptr: rv.result })
-    }
-  }
+pub fn sqrt_3(a: &core::softdouble) -> Result<core::softdouble> {
+    unsafe { sys::cv_core_cv_sqrt_softdouble_a(a.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
 }
 
-/// Square root
-pub fn sqrt_v1(a: &core::softfloat) -> Result<core::softfloat> {
 // identifier: cv_sqrt_softfloat_a
-  unsafe {
-    let rv = sys::cv_core_cv_sqrt_softfloat_a(a.as_raw_softfloat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(core::softfloat { ptr: rv.result })
-    }
-  }
+/// Square root
+pub fn sqrt_4(a: &core::softfloat) -> Result<core::softfloat> {
+    unsafe { sys::cv_core_cv_sqrt_softfloat_a(a.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
 }
 
+// identifier: cv_subtract_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype
 /// Calculates the per-element difference between two arrays or array and a scalar.
 /// 
 /// The function subtract calculates:
@@ -5322,19 +4520,10 @@ pub fn sqrt_v1(a: &core::softfloat) -> Result<core::softfloat> {
 /// * mask: noArray()
 /// * dtype: -1
 pub fn subtract(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat, dtype: i32) -> Result<()> {
-// identifier: cv_subtract_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype
-  unsafe {
-    let rv = sys::cv_core_cv_subtract_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), dtype);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_subtract_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), dtype) }.into_result()
 }
 
+// identifier: cv_sum_Mat_src
 /// Calculates the sum of array elements.
 /// 
 /// The function cv::sum calculates and returns the sum of array elements,
@@ -5343,34 +4532,25 @@ pub fn subtract(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &
 /// * src: input array that must have from 1 to 4 channels.
 /// @sa  countNonZero, mean, meanStdDev, norm, minMaxLoc, reduce
 pub fn sum(src: &core::Mat) -> Result<core::Scalar> {
-// identifier: cv_sum_Mat_src
-  unsafe {
-    let rv = sys::cv_core_cv_sum_Mat_src(src.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_sum_Mat_src(src.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_swap_Mat_a_Mat_b
 /// Swaps two matrices
 pub fn swap(a: &core::Mat, b: &core::Mat) -> Result<()> {
-// identifier: cv_swap_Mat_a_Mat_b
-  unsafe {
-    let rv = sys::cv_core_cv_swap_Mat_a_Mat_b(a.as_raw_Mat(), b.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_swap_Mat_a_Mat_b(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_tempfile_const_char_X_suffix
+///
+/// ## C++ default parameters:
+/// * suffix: 0
+pub fn tempfile(suffix: &str) -> Result<String> {
+    string_arg!(suffix);
+    unsafe { sys::cv_core_cv_tempfile_const_char_X_suffix(suffix.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+// identifier: cv_trace_Mat_mtx
 /// Returns the trace of a matrix.
 /// 
 /// The function cv::trace returns the sum of the diagonal elements of the
@@ -5379,19 +4559,10 @@ pub fn swap(a: &core::Mat, b: &core::Mat) -> Result<()> {
 /// ## Parameters
 /// * mtx: input matrix.
 pub fn trace(mtx: &core::Mat) -> Result<core::Scalar> {
-// identifier: cv_trace_Mat_mtx
-  unsafe {
-    let rv = sys::cv_core_cv_trace_Mat_mtx(mtx.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_trace_Mat_mtx(mtx.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_transform_Mat_src_Mat_dst_Mat_m
 /// Performs the matrix transformation of every array element.
 /// 
 /// The function cv::transform performs the matrix transformation of every
@@ -5417,19 +4588,10 @@ pub fn trace(mtx: &core::Mat) -> Result<core::Scalar> {
 /// * m: transformation 2x2 or 2x3 floating-point matrix.
 /// @sa perspectiveTransform, getAffineTransform, estimateAffine2D, warpAffine, warpPerspective
 pub fn transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<()> {
-// identifier: cv_transform_Mat_src_Mat_dst_Mat_m
-  unsafe {
-    let rv = sys::cv_core_cv_transform_Mat_src_Mat_dst_Mat_m(src.as_raw_Mat(), dst.as_raw_Mat(), m.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_transform_Mat_src_Mat_dst_Mat_m(src.as_raw_Mat(), dst.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_transpose_Mat_src_Mat_dst
 /// Transposes a matrix.
 /// 
 /// The function cv::transpose transposes the matrix src :
@@ -5441,145 +4603,76 @@ pub fn transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<
 /// * src: input array.
 /// * dst: output array of the same type as src.
 pub fn transpose(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_transpose_Mat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_transpose_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_transpose_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_typeToString_int_type
 /// Returns string of cv::Mat depth value: CV_8UC3 -> "CV_8UC3" or "<invalid type>"
 pub fn type_to_string(_type: i32) -> Result<String> {
-// identifier: cv_typeToString_int_type
-  unsafe {
-    let rv = sys::cv_core_cv_typeToString_int_type(_type);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+    unsafe { sys::cv_core_cv_typeToString_int_type(_type) }.into_result().map(crate::templ::receive_string)
 }
 
-pub fn use_open_vx() -> Result<bool> {
 // identifier: cv_useOpenVX
-  unsafe {
-    let rv = sys::cv_core_cv_useOpenVX();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn use_open_vx() -> Result<bool> {
+    unsafe { sys::cv_core_cv_useOpenVX() }.into_result()
 }
 
+// identifier: cv_useOptimized
 /// Returns the status of optimized code usage.
 /// 
 /// The function returns true if the optimized code is enabled. Otherwise, it returns false.
 pub fn use_optimized() -> Result<bool> {
-// identifier: cv_useOptimized
-  unsafe {
-    let rv = sys::cv_core_cv_useOptimized();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_core_cv_useOptimized() }.into_result()
 }
 
-pub fn dump_input_array_of_arrays(argument: &types::VectorOfMat) -> Result<String> {
 // identifier: cv_utils_dumpInputArrayOfArrays_VectorOfMat_argument
-  unsafe {
-    let rv = sys::cv_core_cv_utils_dumpInputArrayOfArrays_VectorOfMat_argument(argument.as_raw_VectorOfMat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+pub fn dump_input_array_of_arrays(argument: &types::VectorOfMat) -> Result<String> {
+    unsafe { sys::cv_core_cv_utils_dumpInputArrayOfArrays_VectorOfMat_argument(argument.as_raw_VectorOfMat()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn dump_input_array(argument: &core::Mat) -> Result<String> {
 // identifier: cv_utils_dumpInputArray_Mat_argument
-  unsafe {
-    let rv = sys::cv_core_cv_utils_dumpInputArray_Mat_argument(argument.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+pub fn dump_input_array(argument: &core::Mat) -> Result<String> {
+    unsafe { sys::cv_core_cv_utils_dumpInputArray_Mat_argument(argument.as_raw_Mat()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn dump_input_output_array_of_arrays(argument: &mut types::VectorOfMat) -> Result<String> {
 // identifier: cv_utils_dumpInputOutputArrayOfArrays_VectorOfMat_argument
-  unsafe {
-    let rv = sys::cv_core_cv_utils_dumpInputOutputArrayOfArrays_VectorOfMat_argument(argument.as_raw_VectorOfMat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+pub fn dump_input_output_array_of_arrays(argument: &mut types::VectorOfMat) -> Result<String> {
+    unsafe { sys::cv_core_cv_utils_dumpInputOutputArrayOfArrays_VectorOfMat_argument(argument.as_raw_VectorOfMat()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn dump_input_output_array(argument: &mut core::Mat) -> Result<String> {
 // identifier: cv_utils_dumpInputOutputArray_Mat_argument
-  unsafe {
-    let rv = sys::cv_core_cv_utils_dumpInputOutputArray_Mat_argument(argument.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-      ::libc::free(rv.result as _);
-      Ok(String::from_utf8(v).unwrap())
-    }
-  }
+pub fn dump_input_output_array(argument: &mut core::Mat) -> Result<String> {
+    unsafe { sys::cv_core_cv_utils_dumpInputOutputArray_Mat_argument(argument.as_raw_Mat()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn get_thread_id() -> Result<i32> {
 // identifier: cv_utils_getThreadID
-  unsafe {
-    let rv = sys::cv_core_cv_utils_getThreadID();
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+pub fn get_thread_id() -> Result<i32> {
+    unsafe { sys::cv_core_cv_utils_getThreadID() }.into_result()
 }
 
+// identifier: cv_va_intel_convertFromVASurface_void_X_display_unsigned_int_surface_Size_size_Mat_dst
+/// Converts VASurfaceID object to OutputArray.
+/// ## Parameters
+/// * display: - VADisplay object.
+/// * surface: - source VASurfaceID object.
+/// * size:    - size of image represented by VASurfaceID object.
+/// * dst:     - destination OutputArray.
+pub fn convert_from_va_surface(display: &mut c_void, surface: u32, size: core::Size, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_va_intel_convertFromVASurface_void_X_display_unsigned_int_surface_Size_size_Mat_dst(display, surface, size, dst.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_va_intel_convertToVASurface_void_X_display_Mat_src_unsigned_int_surface_Size_size
+/// Converts InputArray to VASurfaceID object.
+/// ## Parameters
+/// * display: - VADisplay object.
+/// * src:     - source InputArray.
+/// * surface: - destination VASurfaceID object.
+/// * size:    - size of image represented by VASurfaceID object.
+pub fn convert_to_va_surface(display: &mut c_void, src: &core::Mat, surface: u32, size: core::Size) -> Result<()> {
+    unsafe { sys::cv_core_cv_va_intel_convertToVASurface_void_X_display_Mat_src_unsigned_int_surface_Size_size(display, src.as_raw_Mat(), surface, size) }.into_result()
+}
+
+// identifier: cv_vconcat_Mat_src1_Mat_src2_Mat_dst
 /// @overload
 /// ```ignore{.cpp}
 /// cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 7,
@@ -5605,19 +4698,10 @@ pub fn get_thread_id() -> Result<i32> {
 /// * src2: second input array to be considered for vertical concatenation.
 /// * dst: output array. It has the same number of cols and depth as the src1 and src2, and the sum of rows of the src1 and src2.
 pub fn vconcat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_vconcat_Mat_src1_Mat_src2_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_vconcat_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+    unsafe { sys::cv_core_cv_vconcat_Mat_src1_Mat_src2_Mat_dst(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+// identifier: cv_vconcat_VectorOfMat_src_Mat_dst
 /// @overload
 /// ```ignore{.cpp}
 /// std::vector<cv::Mat> matrices = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
@@ -5636,18 +4720,34 @@ pub fn vconcat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Resul
 /// * src: input array or vector of matrices. all of the matrices must have the same number of cols and the same depth
 /// * dst: output array. It has the same number of cols and depth as the src, and the sum of rows of the src.
 /// same depth.
-pub fn vconcat_v0(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
-// identifier: cv_vconcat_VectorOfMat_src_Mat_dst
-  unsafe {
-    let rv = sys::cv_core_cv_vconcat_VectorOfMat_src_Mat_dst(src.as_raw_VectorOfMat(), dst.as_raw_Mat());
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(())
-    }
-  }
+pub fn vconcat_1(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_vconcat_VectorOfMat_src_Mat_dst(src.as_raw_VectorOfMat(), dst.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_vconcat_const_Mat_src_size_t_nsrc_Mat_dst
+/// Applies vertical concatenation to given matrices.
+/// 
+/// The function vertically concatenates two or more cv::Mat matrices (with the same number of cols).
+/// ```ignore{.cpp}
+/// cv::Mat matArray[] = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
+/// cv::Mat(1, 4, CV_8UC1, cv::Scalar(2)),
+/// cv::Mat(1, 4, CV_8UC1, cv::Scalar(3)),};
+/// 
+/// cv::Mat out;
+/// cv::vconcat( matArray, 3, out );
+/// //out:
+/// //[1,   1,   1,   1;
+/// // 2,   2,   2,   2;
+/// // 3,   3,   3,   3]
+/// ```
+/// 
+/// ## Parameters
+/// * src: input array or vector of matrices. all of the matrices must have the same number of cols and the same depth.
+/// * nsrc: number of matrices in src.
+/// * dst: output array. It has the same number of cols and depth as the src, and the sum of rows of the src.
+/// @sa cv::hconcat(const Mat*, size_t, OutputArray), @sa cv::hconcat(InputArrayOfArrays, OutputArray) and @sa cv::hconcat(InputArray, InputArray, OutputArray)
+pub fn vconcat_2(src: &core::Mat, nsrc: size_t, dst: &mut core::Mat) -> Result<()> {
+    unsafe { sys::cv_core_cv_vconcat_const_Mat_src_size_t_nsrc_Mat_dst(src.as_raw_Mat(), nsrc, dst.as_raw_Mat()) }.into_result()
 }
 
 // Generating impl for trait cv::Algorithm (trait)
@@ -5662,79 +4762,41 @@ pub fn vconcat_v0(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
 /// @snippet snippets/core_various.cpp Algorithm
 pub trait Algorithm {
-  #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void;
-  /// Clears the algorithm state
-  fn clear(&mut self) -> Result<()> {
-  // identifier: cv_Algorithm_clear
-    unsafe {
-      let rv = sys::cv_core_cv_Algorithm_clear(self.as_raw_Algorithm());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void;
+    // identifier: cv_Algorithm_clear
+    /// Clears the algorithm state
+    fn clear(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Algorithm_clear(self.as_raw_Algorithm()) }.into_result()
     }
-  }
-
-  /// Returns true if the Algorithm is empty (e.g. in the very beginning or after unsuccessful read
-  fn empty(&self) -> Result<bool> {
-  // identifier: cv_Algorithm_empty
-    unsafe {
-      let rv = sys::cv_core_cv_Algorithm_empty(self.as_raw_Algorithm());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Algorithm_empty_const
+    /// Returns true if the Algorithm is empty (e.g. in the very beginning or after unsuccessful read
+    fn empty(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_Algorithm_empty_const(self.as_raw_Algorithm()) }.into_result()
     }
-  }
-
-  /// Saves the algorithm to a file.
-  /// In order to make this method work, the derived class must implement Algorithm::write(FileStorage& fs).
-  fn save(&self, filename:&str) -> Result<()> {
-  // identifier: cv_Algorithm_save_String_filename
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_core_cv_Algorithm_save_String_filename(self.as_raw_Algorithm(), filename.as_ptr() as _);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Algorithm_save_const_String_filename
+    /// Saves the algorithm to a file.
+    /// In order to make this method work, the derived class must implement Algorithm::write(FileStorage& fs).
+    fn save(&self, filename: &str) -> Result<()> {
+        string_arg!(filename);
+        unsafe { sys::cv_core_cv_Algorithm_save_const_String_filename(self.as_raw_Algorithm(), filename.as_ptr()) }.into_result()
     }
-  }
-
-  /// Returns the algorithm string identifier.
-  /// This string is used as top level xml/yml node tag when the object is saved to a file or string.
-  fn get_default_name(&self) -> Result<String> {
-  // identifier: cv_Algorithm_getDefaultName
-    unsafe {
-      let rv = sys::cv_core_cv_Algorithm_getDefaultName(self.as_raw_Algorithm());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-        ::libc::free(rv.result as _);
-        Ok(String::from_utf8(v).unwrap())
-      }
+    
+    // identifier: cv_Algorithm_getDefaultName_const
+    /// Returns the algorithm string identifier.
+    /// This string is used as top level xml/yml node tag when the object is saved to a file or string.
+    fn get_default_name(&self) -> Result<String> {
+        unsafe { sys::cv_core_cv_Algorithm_getDefaultName_const(self.as_raw_Algorithm()) }.into_result().map(crate::templ::receive_string_mut)
     }
-  }
-
+    
 }
+
 impl<'a> Algorithm + 'a {
 
 }
 
 // boxed class cv::AutoLock
-
 #[allow(dead_code)]
 pub struct AutoLock {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -5747,71 +4809,197 @@ impl Drop for core::AutoLock {
 impl core::AutoLock {
     #[doc(hidden)] pub fn as_raw_AutoLock(&self) -> *mut c_void { self.ptr }
 }
-impl AutoLock {
 
-}
 // Generating impl for trait cv::BufferPoolController (trait)
 pub trait BufferPoolController {
-  #[doc(hidden)] fn as_raw_BufferPoolController(&self) -> *mut c_void;
-  fn get_reserved_size(&self) -> Result<size_t> {
-  // identifier: cv_BufferPoolController_getReservedSize
-    unsafe {
-      let rv = sys::cv_core_cv_BufferPoolController_getReservedSize(self.as_raw_BufferPoolController());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    #[doc(hidden)] fn as_raw_BufferPoolController(&self) -> *mut c_void;
+    // identifier: cv_BufferPoolController_getReservedSize_const
+    fn get_reserved_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_BufferPoolController_getReservedSize_const(self.as_raw_BufferPoolController()) }.into_result()
     }
-  }
-
-  fn get_max_reserved_size(&self) -> Result<size_t> {
-  // identifier: cv_BufferPoolController_getMaxReservedSize
-    unsafe {
-      let rv = sys::cv_core_cv_BufferPoolController_getMaxReservedSize(self.as_raw_BufferPoolController());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_BufferPoolController_getMaxReservedSize_const
+    fn get_max_reserved_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_BufferPoolController_getMaxReservedSize_const(self.as_raw_BufferPoolController()) }.into_result()
     }
-  }
-
-  fn set_max_reserved_size(&mut self, size: size_t) -> Result<()> {
-  // identifier: cv_BufferPoolController_setMaxReservedSize_size_t_size
-    unsafe {
-      let rv = sys::cv_core_cv_BufferPoolController_setMaxReservedSize_size_t_size(self.as_raw_BufferPoolController(), size);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BufferPoolController_setMaxReservedSize_size_t_size
+    fn set_max_reserved_size(&mut self, size: size_t) -> Result<()> {
+        unsafe { sys::cv_core_cv_BufferPoolController_setMaxReservedSize_size_t_size(self.as_raw_BufferPoolController(), size) }.into_result()
     }
-  }
-
-  fn free_all_reserved_buffers(&mut self) -> Result<()> {
-  // identifier: cv_BufferPoolController_freeAllReservedBuffers
-    unsafe {
-      let rv = sys::cv_core_cv_BufferPoolController_freeAllReservedBuffers(self.as_raw_BufferPoolController());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_BufferPoolController_freeAllReservedBuffers
+    fn free_all_reserved_buffers(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_BufferPoolController_freeAllReservedBuffers(self.as_raw_BufferPoolController()) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> BufferPoolController + 'a {
 
+}
+
+// boxed class cv::CommandLineParser
+/// Designed for command line parsing
+/// 
+/// The sample below demonstrates how to use CommandLineParser:
+/// ```ignore
+/// CommandLineParser parser(argc, argv, keys);
+/// parser.about("Application name v1.0.0");
+/// 
+/// if (parser.has("help"))
+/// {
+/// parser.printMessage();
+/// return 0;
+/// }
+/// 
+/// int N = parser.get<int>("N");
+/// double fps = parser.get<double>("fps");
+/// String path = parser.get<String>("path");
+/// 
+/// use_time_stamp = parser.has("timestamp");
+/// 
+/// String img1 = parser.get<String>(0);
+/// String img2 = parser.get<String>(1);
+/// 
+/// int repeat = parser.get<int>(2);
+/// 
+/// if (!parser.check())
+/// {
+/// parser.printErrors();
+/// return 0;
+/// }
+/// ```
+/// 
+/// 
+/// ### Keys syntax
+/// 
+/// The keys parameter is a string containing several blocks, each one is enclosed in curly braces and
+/// describes one argument. Each argument contains three parts separated by the `|` symbol:
+/// 
+/// -# argument names is a space-separated list of option synonyms (to mark argument as positional, prefix it with the `@` symbol)
+/// -# default value will be used if the argument was not provided (can be empty)
+/// -# help message (can be empty)
+/// 
+/// For example:
+/// 
+/// ```ignore{.cpp}
+/// const String keys =
+/// "{help h usage ? |      | print this message   }"
+/// "{@image1        |      | image1 for compare   }"
+/// "{@image2        |<none>| image2 for compare   }"
+/// "{@repeat        |1     | number               }"
+/// "{path           |.     | path to file         }"
+/// "{fps            | -1.0 | fps for output video }"
+/// "{N count        |100   | count of objects     }"
+/// "{ts timestamp   |      | use time stamp       }"
+/// ;
+/// }
+/// ```
+/// 
+/// 
+/// Note that there are no default values for `help` and `timestamp` so we can check their presence using the `has()` method.
+/// Arguments with default values are considered to be always present. Use the `get()` method in these cases to check their
+/// actual value instead.
+/// 
+/// String keys like `get<String>("@image1")` return the empty string `""` by default - even with an empty default value.
+/// Use the special `<none>` default value to enforce that the returned string must not be empty. (like in `get<String>("@image2")`)
+/// 
+/// ### Usage
+/// 
+/// For the described keys:
+/// 
+/// ```ignore{.sh}
+/// # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
+/// $ ./app -N=200 1.png 2.jpg 19 -ts
+/// 
+/// # Bad call
+/// $ ./app -fps=aaa
+/// ERRORS:
+/// Parameter 'fps': can not convert: [aaa] to [double]
+/// ```
+#[allow(dead_code)]
+pub struct CommandLineParser {
+    #[doc(hidden)] pub ptr: *mut c_void
+}
+impl Drop for core::CommandLineParser {
+    fn drop(&mut self) {
+        unsafe { sys::cv_delete_CommandLineParser(self.ptr) };
+    }
+}
+impl core::CommandLineParser {
+    #[doc(hidden)] pub fn as_raw_CommandLineParser(&self) -> *mut c_void { self.ptr }
+}
+
+impl CommandLineParser {
+
+    // identifier: cv_CommandLineParser_CommandLineParser_CommandLineParser_parser
+    /// Copy constructor
+    pub fn new(parser: &core::CommandLineParser) -> Result<core::CommandLineParser> {
+        unsafe { sys::cv_core_cv_CommandLineParser_CommandLineParser_CommandLineParser_parser(parser.as_raw_CommandLineParser()) }.into_result().map(|x| core::CommandLineParser { ptr: x })
+    }
+    
+    // identifier: cv_CommandLineParser_getPathToApplication_const
+    /// Returns application path
+    /// 
+    /// This method returns the path to the executable from the command line (`argv[0]`).
+    /// 
+    /// For example, if the application has been started with such a command:
+    /// ```ignore{.sh}
+    /// $ ./bin/my-executable
+    /// ```
+    /// 
+    /// this method will return `./bin`.
+    pub fn get_path_to_application(&self) -> Result<String> {
+        unsafe { sys::cv_core_cv_CommandLineParser_getPathToApplication_const(self.as_raw_CommandLineParser()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    // identifier: cv_CommandLineParser_has_const_String_name
+    /// Check if field was provided in the command line
+    /// 
+    /// ## Parameters
+    /// * name: argument name to check
+    pub fn has(&self, name: &str) -> Result<bool> {
+        string_arg!(name);
+        unsafe { sys::cv_core_cv_CommandLineParser_has_const_String_name(self.as_raw_CommandLineParser(), name.as_ptr()) }.into_result()
+    }
+    
+    // identifier: cv_CommandLineParser_check_const
+    /// Check for parsing errors
+    /// 
+    /// Returns false if error occurred while accessing the parameters (bad conversion, missing arguments,
+    /// etc.). Call @ref printErrors to print error messages list.
+    pub fn check(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_CommandLineParser_check_const(self.as_raw_CommandLineParser()) }.into_result()
+    }
+    
+    // identifier: cv_CommandLineParser_about_String_message
+    /// Set the about message
+    /// 
+    /// The about message will be shown when @ref printMessage is called, right before arguments table.
+    pub fn about(&mut self, message: &str) -> Result<()> {
+        string_arg!(message);
+        unsafe { sys::cv_core_cv_CommandLineParser_about_String_message(self.as_raw_CommandLineParser(), message.as_ptr()) }.into_result()
+    }
+    
+    // identifier: cv_CommandLineParser_printMessage_const
+    /// Print help message
+    /// 
+    /// This method will print standard help message containing the about message and arguments description.
+    /// 
+    /// @sa about
+    pub fn print_message(&self) -> Result<()> {
+        unsafe { sys::cv_core_cv_CommandLineParser_printMessage_const(self.as_raw_CommandLineParser()) }.into_result()
+    }
+    
+    // identifier: cv_CommandLineParser_printErrors_const
+    /// Print list of errors occurred
+    /// 
+    /// @sa check
+    pub fn print_errors(&self) -> Result<()> {
+        unsafe { sys::cv_core_cv_CommandLineParser_printErrors_const(self.as_raw_CommandLineParser()) }.into_result()
+    }
+    
 }
 
 // boxed class cv::ConjGradSolver
@@ -5849,7 +5037,6 @@ impl<'a> BufferPoolController + 'a {
 /// // or
 /// termcrit.type == TermCriteria::MAX_ITER) && termcrit.maxCount > 0
 /// ```
-
 #[allow(dead_code)]
 pub struct ConjGradSolver {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -5870,85 +5057,52 @@ impl core::Algorithm for ConjGradSolver {
 impl core::MinProblemSolver for ConjGradSolver {
     #[doc(hidden)] fn as_raw_MinProblemSolver(&self) -> *mut c_void { self.ptr }
 }
+
 impl ConjGradSolver {
 
-  /// This function returns the reference to the ready-to-use ConjGradSolver object.
-  /// 
-  /// All the parameters are optional, so this procedure can be called even without parameters at
-  /// all. In this case, the default values will be used. As default value for terminal criteria are
-  /// the only sensible ones, MinProblemSolver::setFunction() should be called upon the obtained
-  /// object, if the function was not given to create(). Otherwise, the two ways (submit it to
-  /// create() or miss it out and call the MinProblemSolver::setFunction()) are absolutely equivalent
-  /// (and will drop the same errors in the same way, should invalid input be detected).
-  /// ## Parameters
-  /// * f: Pointer to the function that will be minimized, similarly to the one you submit via
-  /// MinProblemSolver::setFunction.
-  /// * termcrit: Terminal criteria to the algorithm, similarly to the one you submit via
-  /// MinProblemSolver::setTermCriteria.
-  ///
-  /// ## C++ default parameters:
-  /// * f: Ptr<ConjGradSolver::Function>()
-  /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
-  pub fn create(f: &types::PtrOfFunction, termcrit: &core::TermCriteria) -> Result<types::PtrOfConjGradSolver> {
-  // identifier: cv_ConjGradSolver_create_PtrOfFunction_f_TermCriteria_termcrit
-    unsafe {
-      let rv = sys::cv_core_cv_ConjGradSolver_create_PtrOfFunction_f_TermCriteria_termcrit(f.as_raw_PtrOfFunction(), termcrit.as_raw_TermCriteria());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfConjGradSolver { ptr: rv.result })
-      }
+    // identifier: cv_ConjGradSolver_create_PtrOfFunction_f_TermCriteria_termcrit
+    /// This function returns the reference to the ready-to-use ConjGradSolver object.
+    /// 
+    /// All the parameters are optional, so this procedure can be called even without parameters at
+    /// all. In this case, the default values will be used. As default value for terminal criteria are
+    /// the only sensible ones, MinProblemSolver::setFunction() should be called upon the obtained
+    /// object, if the function was not given to create(). Otherwise, the two ways (submit it to
+    /// create() or miss it out and call the MinProblemSolver::setFunction()) are absolutely equivalent
+    /// (and will drop the same errors in the same way, should invalid input be detected).
+    /// ## Parameters
+    /// * f: Pointer to the function that will be minimized, similarly to the one you submit via
+    /// MinProblemSolver::setFunction.
+    /// * termcrit: Terminal criteria to the algorithm, similarly to the one you submit via
+    /// MinProblemSolver::setTermCriteria.
+    ///
+    /// ## C++ default parameters:
+    /// * f: Ptr<ConjGradSolver::Function>()
+    /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
+    pub fn create(f: &types::PtrOfFunction, termcrit: &core::TermCriteria) -> Result<types::PtrOfConjGradSolver> {
+        unsafe { sys::cv_core_cv_ConjGradSolver_create_PtrOfFunction_f_TermCriteria_termcrit(f.as_raw_PtrOfFunction(), termcrit.as_raw_TermCriteria()) }.into_result().map(|x| types::PtrOfConjGradSolver { ptr: x })
     }
-  }
-
+    
 }
+
 impl DMatch {
 
-  pub fn default() -> Result<core::DMatch> {
-  // identifier: cv_DMatch_DMatch
-    unsafe {
-      let rv = sys::cv_core_cv_DMatch_DMatch();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    // identifier: cv_DMatch_DMatch
+    pub fn default() -> Result<core::DMatch> {
+        unsafe { sys::cv_core_cv_DMatch_DMatch() }.into_result()
     }
-  }
-
-  pub fn new(_query_idx: i32, _train_idx: i32, _distance: f32) -> Result<core::DMatch> {
-  // identifier: cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance
-    unsafe {
-      let rv = sys::cv_core_cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance(_query_idx, _train_idx, _distance);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance
+    pub fn new(_query_idx: i32, _train_idx: i32, _distance: f32) -> Result<core::DMatch> {
+        unsafe { sys::cv_core_cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance(_query_idx, _train_idx, _distance) }.into_result()
     }
-  }
-
-  pub fn new_index(_query_idx: i32, _train_idx: i32, _img_idx: i32, _distance: f32) -> Result<core::DMatch> {
-  // identifier: cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance
-    unsafe {
-      let rv = sys::cv_core_cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance(_query_idx, _train_idx, _img_idx, _distance);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance
+    pub fn new_index(_query_idx: i32, _train_idx: i32, _img_idx: i32, _distance: f32) -> Result<core::DMatch> {
+        unsafe { sys::cv_core_cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance(_query_idx, _train_idx, _img_idx, _distance) }.into_result()
     }
-  }
-
+    
 }
+
 // Generating impl for trait cv::DownhillSolver (trait)
 /// This class is used to perform the non-linear non-constrained minimization of a function,
 /// 
@@ -5982,114 +5136,85 @@ impl DMatch {
 /// termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 /// ```
 pub trait DownhillSolver : core::MinProblemSolver {
-  #[doc(hidden)] fn as_raw_DownhillSolver(&self) -> *mut c_void;
-  /// Returns the initial step that will be used in downhill simplex algorithm.
-  /// 
-  /// ## Parameters
-  /// * step: Initial step that will be used in algorithm. Note, that although corresponding setter
-  /// accepts column-vectors as well as row-vectors, this method will return a row-vector.
-  /// @see DownhillSolver::setInitStep
-  fn get_init_step(&self, step: &mut core::Mat) -> Result<()> {
-  // identifier: cv_DownhillSolver_getInitStep_Mat_step
-    unsafe {
-      let rv = sys::cv_core_cv_DownhillSolver_getInitStep_Mat_step(self.as_raw_DownhillSolver(), step.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    #[doc(hidden)] fn as_raw_DownhillSolver(&self) -> *mut c_void;
+    // identifier: cv_DownhillSolver_getInitStep_const_Mat_step
+    /// Returns the initial step that will be used in downhill simplex algorithm.
+    /// 
+    /// ## Parameters
+    /// * step: Initial step that will be used in algorithm. Note, that although corresponding setter
+    /// accepts column-vectors as well as row-vectors, this method will return a row-vector.
+    /// @see DownhillSolver::setInitStep
+    fn get_init_step(&self, step: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_DownhillSolver_getInitStep_const_Mat_step(self.as_raw_DownhillSolver(), step.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Sets the initial step that will be used in downhill simplex algorithm.
-  /// 
-  /// Step, together with initial point (givin in DownhillSolver::minimize) are two `n`-dimensional
-  /// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
-  /// determines the position of a simplex (it will become simplex's centroid), while step determines the
-  /// spread (size in each dimension) of a simplex. To be more precise, if <span lang='latex'>s,x_0\in\mathbb{R}^n</span> are
-  /// the initial step and initial point respectively, the vertices of a simplex will be:
-  /// <span lang='latex'>v_0:=x_0-\frac{1}{2} s</span> and <span lang='latex'>v_i:=x_0+s_i</span> for <span lang='latex'>i=1,2,\dots,n</span> where <span lang='latex'>s_i</span> denotes
-  /// projections of the initial step of *n*-th coordinate (the result of projection is treated to be
-  /// vector given by <span lang='latex'>s_i:=e_i\cdot\left<e_i\cdot s\right></span>, where <span lang='latex'>e_i</span> form canonical basis)
-  /// 
-  /// ## Parameters
-  /// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
-  /// (size in each dimension) of an initial simplex.
-  fn set_init_step(&mut self, step: &core::Mat) -> Result<()> {
-  // identifier: cv_DownhillSolver_setInitStep_Mat_step
-    unsafe {
-      let rv = sys::cv_core_cv_DownhillSolver_setInitStep_Mat_step(self.as_raw_DownhillSolver(), step.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_DownhillSolver_setInitStep_Mat_step
+    /// Sets the initial step that will be used in downhill simplex algorithm.
+    /// 
+    /// Step, together with initial point (givin in DownhillSolver::minimize) are two `n`-dimensional
+    /// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
+    /// determines the position of a simplex (it will become simplex's centroid), while step determines the
+    /// spread (size in each dimension) of a simplex. To be more precise, if <span lang='latex'>s,x_0\in\mathbb{R}^n</span> are
+    /// the initial step and initial point respectively, the vertices of a simplex will be:
+    /// <span lang='latex'>v_0:=x_0-\frac{1}{2} s</span> and <span lang='latex'>v_i:=x_0+s_i</span> for <span lang='latex'>i=1,2,\dots,n</span> where <span lang='latex'>s_i</span> denotes
+    /// projections of the initial step of *n*-th coordinate (the result of projection is treated to be
+    /// vector given by <span lang='latex'>s_i:=e_i\cdot\left<e_i\cdot s\right></span>, where <span lang='latex'>e_i</span> form canonical basis)
+    /// 
+    /// ## Parameters
+    /// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
+    /// (size in each dimension) of an initial simplex.
+    fn set_init_step(&mut self, step: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_DownhillSolver_setInitStep_Mat_step(self.as_raw_DownhillSolver(), step.as_raw_Mat()) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> DownhillSolver + 'a {
 
-  /// This function returns the reference to the ready-to-use DownhillSolver object.
-  /// 
-  /// All the parameters are optional, so this procedure can be called even without parameters at
-  /// all. In this case, the default values will be used. As default value for terminal criteria are
-  /// the only sensible ones, MinProblemSolver::setFunction() and DownhillSolver::setInitStep()
-  /// should be called upon the obtained object, if the respective parameters were not given to
-  /// create(). Otherwise, the two ways (give parameters to createDownhillSolver() or miss them out
-  /// and call the MinProblemSolver::setFunction() and DownhillSolver::setInitStep()) are absolutely
-  /// equivalent (and will drop the same errors in the same way, should invalid input be detected).
-  /// ## Parameters
-  /// * f: Pointer to the function that will be minimized, similarly to the one you submit via
-  /// MinProblemSolver::setFunction.
-  /// * initStep: Initial step, that will be used to construct the initial simplex, similarly to the one
-  /// you submit via MinProblemSolver::setInitStep.
-  /// * termcrit: Terminal criteria to the algorithm, similarly to the one you submit via
-  /// MinProblemSolver::setTermCriteria.
-  ///
-  /// ## C++ default parameters:
-  /// * f: Ptr<MinProblemSolver::Function>()
-  /// * init_step: Mat_<double>(1,1,0.0)
-  /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
-  pub fn create(f: &types::PtrOfFunction, init_step: &core::Mat, termcrit: &core::TermCriteria) -> Result<types::PtrOfDownhillSolver> {
-  // identifier: cv_DownhillSolver_create_PtrOfFunction_f_Mat_initStep_TermCriteria_termcrit
-    unsafe {
-      let rv = sys::cv_core_cv_DownhillSolver_create_PtrOfFunction_f_Mat_initStep_TermCriteria_termcrit(f.as_raw_PtrOfFunction(), init_step.as_raw_Mat(), termcrit.as_raw_TermCriteria());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfDownhillSolver { ptr: rv.result })
-      }
+    // identifier: cv_DownhillSolver_create_PtrOfFunction_f_Mat_initStep_TermCriteria_termcrit
+    /// This function returns the reference to the ready-to-use DownhillSolver object.
+    /// 
+    /// All the parameters are optional, so this procedure can be called even without parameters at
+    /// all. In this case, the default values will be used. As default value for terminal criteria are
+    /// the only sensible ones, MinProblemSolver::setFunction() and DownhillSolver::setInitStep()
+    /// should be called upon the obtained object, if the respective parameters were not given to
+    /// create(). Otherwise, the two ways (give parameters to createDownhillSolver() or miss them out
+    /// and call the MinProblemSolver::setFunction() and DownhillSolver::setInitStep()) are absolutely
+    /// equivalent (and will drop the same errors in the same way, should invalid input be detected).
+    /// ## Parameters
+    /// * f: Pointer to the function that will be minimized, similarly to the one you submit via
+    /// MinProblemSolver::setFunction.
+    /// * initStep: Initial step, that will be used to construct the initial simplex, similarly to the one
+    /// you submit via MinProblemSolver::setInitStep.
+    /// * termcrit: Terminal criteria to the algorithm, similarly to the one you submit via
+    /// MinProblemSolver::setTermCriteria.
+    ///
+    /// ## C++ default parameters:
+    /// * f: Ptr<MinProblemSolver::Function>()
+    /// * init_step: Mat_<double>(1,1,0.0)
+    /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
+    pub fn create(f: &types::PtrOfFunction, init_step: &core::Mat, termcrit: &core::TermCriteria) -> Result<types::PtrOfDownhillSolver> {
+        unsafe { sys::cv_core_cv_DownhillSolver_create_PtrOfFunction_f_Mat_initStep_TermCriteria_termcrit(f.as_raw_PtrOfFunction(), init_step.as_raw_Mat(), termcrit.as_raw_TermCriteria()) }.into_result().map(|x| types::PtrOfDownhillSolver { ptr: x })
     }
-  }
-
+    
 }
 
 // Generating impl for trait cv::Formatted (trait)
 /// @todo document
 pub trait Formatted {
-  #[doc(hidden)] fn as_raw_Formatted(&self) -> *mut c_void;
-  fn reset(&mut self) -> Result<()> {
-  // identifier: cv_Formatted_reset
-    unsafe {
-      let rv = sys::cv_core_cv_Formatted_reset(self.as_raw_Formatted());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    #[doc(hidden)] fn as_raw_Formatted(&self) -> *mut c_void;
+    // identifier: cv_Formatted_next
+    fn next(&mut self) -> Result<String> {
+        unsafe { sys::cv_core_cv_Formatted_next(self.as_raw_Formatted()) }.into_result().map(crate::templ::receive_string)
     }
-  }
-
+    
+    // identifier: cv_Formatted_reset
+    fn reset(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Formatted_reset(self.as_raw_Formatted()) }.into_result()
+    }
+    
 }
+
 impl<'a> Formatted + 'a {
 
 }
@@ -6097,97 +5222,52 @@ impl<'a> Formatted + 'a {
 // Generating impl for trait cv::Formatter (trait)
 /// @todo document
 pub trait Formatter {
-  #[doc(hidden)] fn as_raw_Formatter(&self) -> *mut c_void;
-  fn format(&self, mtx: &core::Mat) -> Result<types::PtrOfFormatted> {
-  // identifier: cv_Formatter_format_Mat_mtx
-    unsafe {
-      let rv = sys::cv_core_cv_Formatter_format_Mat_mtx(self.as_raw_Formatter(), mtx.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfFormatted { ptr: rv.result })
-      }
+    #[doc(hidden)] fn as_raw_Formatter(&self) -> *mut c_void;
+    // identifier: cv_Formatter_format_const_Mat_mtx
+    fn format(&self, mtx: &core::Mat) -> Result<types::PtrOfFormatted> {
+        unsafe { sys::cv_core_cv_Formatter_format_const_Mat_mtx(self.as_raw_Formatter(), mtx.as_raw_Mat()) }.into_result().map(|x| types::PtrOfFormatted { ptr: x })
     }
-  }
-
-  ///
-  /// ## C++ default parameters:
-  /// * p: 8
-  fn set32f_precision(&mut self, p: i32) -> Result<()> {
-  // identifier: cv_Formatter_set32fPrecision_int_p
-    unsafe {
-      let rv = sys::cv_core_cv_Formatter_set32fPrecision_int_p(self.as_raw_Formatter(), p);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Formatter_set32fPrecision_int_p
+    ///
+    /// ## C++ default parameters:
+    /// * p: 8
+    fn set32f_precision(&mut self, p: i32) -> Result<()> {
+        unsafe { sys::cv_core_cv_Formatter_set32fPrecision_int_p(self.as_raw_Formatter(), p) }.into_result()
     }
-  }
-
-  ///
-  /// ## C++ default parameters:
-  /// * p: 16
-  fn set64f_precision(&mut self, p: i32) -> Result<()> {
-  // identifier: cv_Formatter_set64fPrecision_int_p
-    unsafe {
-      let rv = sys::cv_core_cv_Formatter_set64fPrecision_int_p(self.as_raw_Formatter(), p);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Formatter_set64fPrecision_int_p
+    ///
+    /// ## C++ default parameters:
+    /// * p: 16
+    fn set64f_precision(&mut self, p: i32) -> Result<()> {
+        unsafe { sys::cv_core_cv_Formatter_set64fPrecision_int_p(self.as_raw_Formatter(), p) }.into_result()
     }
-  }
-
-  ///
-  /// ## C++ default parameters:
-  /// * ml: true
-  fn set_multiline(&mut self, ml: bool) -> Result<()> {
-  // identifier: cv_Formatter_setMultiline_bool_ml
-    unsafe {
-      let rv = sys::cv_core_cv_Formatter_setMultiline_bool_ml(self.as_raw_Formatter(), ml);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Formatter_setMultiline_bool_ml
+    ///
+    /// ## C++ default parameters:
+    /// * ml: true
+    fn set_multiline(&mut self, ml: bool) -> Result<()> {
+        unsafe { sys::cv_core_cv_Formatter_setMultiline_bool_ml(self.as_raw_Formatter(), ml) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> Formatter + 'a {
 
-  ///
-  /// ## C++ default parameters:
-  /// * fmt: FMT_DEFAULT
-  pub fn get(fmt: i32) -> Result<types::PtrOfFormatter> {
-  // identifier: cv_Formatter_get_int_fmt
-    unsafe {
-      let rv = sys::cv_core_cv_Formatter_get_int_fmt(fmt);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfFormatter { ptr: rv.result })
-      }
+    // identifier: cv_Formatter_get_int_fmt
+    ///
+    /// ## C++ default parameters:
+    /// * fmt: FMT_DEFAULT
+    pub fn get(fmt: i32) -> Result<types::PtrOfFormatter> {
+        unsafe { sys::cv_core_cv_Formatter_get_int_fmt(fmt) }.into_result().map(|x| types::PtrOfFormatter { ptr: x })
     }
-  }
-
+    
 }
 
 // boxed class cv::Hamming
 /// replaced with CV_Assert(expr) in Debug configuration
-
 #[allow(dead_code)]
 pub struct Hamming {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -6200,172 +5280,107 @@ impl Drop for core::Hamming {
 impl core::Hamming {
     #[doc(hidden)] pub fn as_raw_Hamming(&self) -> *mut c_void { self.ptr }
 }
-impl Hamming {
 
-}
 impl KeyPoint {
 
-  pub fn default() -> Result<core::KeyPoint> {
-  // identifier: cv_KeyPoint_KeyPoint
-    unsafe {
-      let rv = sys::cv_core_cv_KeyPoint_KeyPoint();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    // identifier: cv_KeyPoint_KeyPoint
+    pub fn default() -> Result<core::KeyPoint> {
+        unsafe { sys::cv_core_cv_KeyPoint_KeyPoint() }.into_result()
     }
-  }
-
-  /// ## Parameters
-  /// * _pt: x & y coordinates of the keypoint
-  /// * _size: keypoint diameter
-  /// * _angle: keypoint orientation
-  /// * _response: keypoint detector response on the keypoint (that is, strength of the keypoint)
-  /// * _octave: pyramid octave in which the keypoint has been detected
-  /// * _class_id: object id
-  ///
-  /// ## C++ default parameters:
-  /// * _angle: -1
-  /// * _response: 0
-  /// * _octave: 0
-  /// * _class_id: -1
-  pub fn new_point(_pt: core::Point2f, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint> {
-  // identifier: cv_KeyPoint_KeyPoint_Point2f__pt_float__size_float__angle_float__response_int__octave_int__class_id
-    unsafe {
-      let rv = sys::cv_core_cv_KeyPoint_KeyPoint_Point2f__pt_float__size_float__angle_float__response_int__octave_int__class_id(_pt, _size, _angle, _response, _octave, _class_id);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_KeyPoint_KeyPoint_Point2f__pt_float__size_float__angle_float__response_int__octave_int__class_id
+    /// ## Parameters
+    /// * _pt: x & y coordinates of the keypoint
+    /// * _size: keypoint diameter
+    /// * _angle: keypoint orientation
+    /// * _response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+    /// * _octave: pyramid octave in which the keypoint has been detected
+    /// * _class_id: object id
+    ///
+    /// ## C++ default parameters:
+    /// * _angle: -1
+    /// * _response: 0
+    /// * _octave: 0
+    /// * _class_id: -1
+    pub fn new_point(_pt: core::Point2f, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint> {
+        unsafe { sys::cv_core_cv_KeyPoint_KeyPoint_Point2f__pt_float__size_float__angle_float__response_int__octave_int__class_id(_pt, _size, _angle, _response, _octave, _class_id) }.into_result()
     }
-  }
-
-  /// ## Parameters
-  /// * x: x-coordinate of the keypoint
-  /// * y: y-coordinate of the keypoint
-  /// * _size: keypoint diameter
-  /// * _angle: keypoint orientation
-  /// * _response: keypoint detector response on the keypoint (that is, strength of the keypoint)
-  /// * _octave: pyramid octave in which the keypoint has been detected
-  /// * _class_id: object id
-  ///
-  /// ## C++ default parameters:
-  /// * _angle: -1
-  /// * _response: 0
-  /// * _octave: 0
-  /// * _class_id: -1
-  pub fn new_coords(x: f32, y: f32, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint> {
-  // identifier: cv_KeyPoint_KeyPoint_float_x_float_y_float__size_float__angle_float__response_int__octave_int__class_id
-    unsafe {
-      let rv = sys::cv_core_cv_KeyPoint_KeyPoint_float_x_float_y_float__size_float__angle_float__response_int__octave_int__class_id(x, y, _size, _angle, _response, _octave, _class_id);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_KeyPoint_KeyPoint_float_x_float_y_float__size_float__angle_float__response_int__octave_int__class_id
+    /// ## Parameters
+    /// * x: x-coordinate of the keypoint
+    /// * y: y-coordinate of the keypoint
+    /// * _size: keypoint diameter
+    /// * _angle: keypoint orientation
+    /// * _response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+    /// * _octave: pyramid octave in which the keypoint has been detected
+    /// * _class_id: object id
+    ///
+    /// ## C++ default parameters:
+    /// * _angle: -1
+    /// * _response: 0
+    /// * _octave: 0
+    /// * _class_id: -1
+    pub fn new_coords(x: f32, y: f32, _size: f32, _angle: f32, _response: f32, _octave: i32, _class_id: i32) -> Result<core::KeyPoint> {
+        unsafe { sys::cv_core_cv_KeyPoint_KeyPoint_float_x_float_y_float__size_float__angle_float__response_int__octave_int__class_id(x, y, _size, _angle, _response, _octave, _class_id) }.into_result()
     }
-  }
-
-  pub fn hash(self) -> Result<size_t> {
-  // identifier: cv_KeyPoint_hash
-    unsafe {
-      let rv = sys::cv_core_cv_KeyPoint_hash(self);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_KeyPoint_hash_const
+    pub fn hash(self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_KeyPoint_hash_const(self) }.into_result()
     }
-  }
-
-  /// This method converts vector of keypoints to vector of points or the reverse, where each keypoint is
-  /// assigned the same size and the same orientation.
-  /// 
-  /// ## Parameters
-  /// * keypoints: Keypoints obtained from any feature detection algorithm like SIFT/SURF/ORB
-  /// * points2f: Array of (x,y) coordinates of each keypoint
-  /// * keypointIndexes: Array of indexes of keypoints to be converted to points. (Acts like a mask to
-  /// convert only specified keypoints)
-  ///
-  /// ## C++ default parameters:
-  /// * keypoint_indexes: std::vector<int>()
-  pub fn convert_from(keypoints: &types::VectorOfKeyPoint, points2f: &types::VectorOfPoint2f, keypoint_indexes: &types::VectorOfint) -> Result<()> {
-  // identifier: cv_KeyPoint_convert_VectorOfKeyPoint_keypoints_VectorOfPoint2f_points2f_VectorOfint_keypointIndexes
-    unsafe {
-      let rv = sys::cv_core_cv_KeyPoint_convert_VectorOfKeyPoint_keypoints_VectorOfPoint2f_points2f_VectorOfint_keypointIndexes(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_VectorOfPoint2f(), keypoint_indexes.as_raw_VectorOfint());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_KeyPoint_convert_VectorOfKeyPoint_keypoints_VectorOfPoint2f_points2f_VectorOfint_keypointIndexes
+    /// This method converts vector of keypoints to vector of points or the reverse, where each keypoint is
+    /// assigned the same size and the same orientation.
+    /// 
+    /// ## Parameters
+    /// * keypoints: Keypoints obtained from any feature detection algorithm like SIFT/SURF/ORB
+    /// * points2f: Array of (x,y) coordinates of each keypoint
+    /// * keypointIndexes: Array of indexes of keypoints to be converted to points. (Acts like a mask to
+    /// convert only specified keypoints)
+    ///
+    /// ## C++ default parameters:
+    /// * keypoint_indexes: std::vector<int>()
+    pub fn convert_from(keypoints: &types::VectorOfKeyPoint, points2f: &types::VectorOfPoint2f, keypoint_indexes: &types::VectorOfint) -> Result<()> {
+        unsafe { sys::cv_core_cv_KeyPoint_convert_VectorOfKeyPoint_keypoints_VectorOfPoint2f_points2f_VectorOfint_keypointIndexes(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_VectorOfPoint2f(), keypoint_indexes.as_raw_VectorOfint()) }.into_result()
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * points2f: Array of (x,y) coordinates of each keypoint
-  /// * keypoints: Keypoints obtained from any feature detection algorithm like SIFT/SURF/ORB
-  /// * size: keypoint diameter
-  /// * response: keypoint detector response on the keypoint (that is, strength of the keypoint)
-  /// * octave: pyramid octave in which the keypoint has been detected
-  /// * class_id: object id
-  ///
-  /// ## C++ default parameters:
-  /// * size: 1
-  /// * response: 1
-  /// * octave: 0
-  /// * class_id: -1
-  pub fn convert_to(points2f: &types::VectorOfPoint2f, keypoints: &types::VectorOfKeyPoint, size: f32, response: f32, octave: i32, class_id: i32) -> Result<()> {
-  // identifier: cv_KeyPoint_convert_VectorOfPoint2f_points2f_VectorOfKeyPoint_keypoints_float_size_float_response_int_octave_int_class_id
-    unsafe {
-      let rv = sys::cv_core_cv_KeyPoint_convert_VectorOfPoint2f_points2f_VectorOfKeyPoint_keypoints_float_size_float_response_int_octave_int_class_id(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_VectorOfKeyPoint(), size, response, octave, class_id);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_KeyPoint_convert_VectorOfPoint2f_points2f_VectorOfKeyPoint_keypoints_float_size_float_response_int_octave_int_class_id
+    /// @overload
+    /// ## Parameters
+    /// * points2f: Array of (x,y) coordinates of each keypoint
+    /// * keypoints: Keypoints obtained from any feature detection algorithm like SIFT/SURF/ORB
+    /// * size: keypoint diameter
+    /// * response: keypoint detector response on the keypoint (that is, strength of the keypoint)
+    /// * octave: pyramid octave in which the keypoint has been detected
+    /// * class_id: object id
+    ///
+    /// ## C++ default parameters:
+    /// * size: 1
+    /// * response: 1
+    /// * octave: 0
+    /// * class_id: -1
+    pub fn convert_to(points2f: &types::VectorOfPoint2f, keypoints: &types::VectorOfKeyPoint, size: f32, response: f32, octave: i32, class_id: i32) -> Result<()> {
+        unsafe { sys::cv_core_cv_KeyPoint_convert_VectorOfPoint2f_points2f_VectorOfKeyPoint_keypoints_float_size_float_response_int_octave_int_class_id(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_VectorOfKeyPoint(), size, response, octave, class_id) }.into_result()
     }
-  }
-
-  /// This method computes overlap for pair of keypoints. Overlap is the ratio between area of keypoint
-  /// regions' intersection and area of keypoint regions' union (considering keypoint region as circle).
-  /// If they don't overlap, we get zero. If they coincide at same location with same size, we get 1.
-  /// ## Parameters
-  /// * kp1: First keypoint
-  /// * kp2: Second keypoint
-  pub fn overlap(kp1: core::KeyPoint, kp2: core::KeyPoint) -> Result<f32> {
-  // identifier: cv_KeyPoint_overlap_KeyPoint_kp1_KeyPoint_kp2
-    unsafe {
-      let rv = sys::cv_core_cv_KeyPoint_overlap_KeyPoint_kp1_KeyPoint_kp2(kp1, kp2);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_KeyPoint_overlap_KeyPoint_kp1_KeyPoint_kp2
+    /// This method computes overlap for pair of keypoints. Overlap is the ratio between area of keypoint
+    /// regions' intersection and area of keypoint regions' union (considering keypoint region as circle).
+    /// If they don't overlap, we get zero. If they coincide at same location with same size, we get 1.
+    /// ## Parameters
+    /// * kp1: First keypoint
+    /// * kp2: Second keypoint
+    pub fn overlap(kp1: core::KeyPoint, kp2: core::KeyPoint) -> Result<f32> {
+        unsafe { sys::cv_core_cv_KeyPoint_overlap_KeyPoint_kp1_KeyPoint_kp2(kp1, kp2) }.into_result()
     }
-  }
-
+    
 }
+
 // boxed class cv::LDA
 /// Linear Discriminant Analysis
 /// @todo document this class
-
 #[allow(dead_code)]
 pub struct LDA {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -6378,186 +5393,89 @@ impl Drop for core::LDA {
 impl core::LDA {
     #[doc(hidden)] pub fn as_raw_LDA(&self) -> *mut c_void { self.ptr }
 }
+
 impl LDA {
 
-  /// constructor
-  /// Initializes a LDA with num_components (default 0).
-  ///
-  /// ## C++ default parameters:
-  /// * num_components: 0
-  pub fn new(num_components: i32) -> Result<core::LDA> {
-  // identifier: cv_LDA_LDA_int_num_components
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_LDA_int_num_components(num_components);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::LDA { ptr: rv.result })
-      }
+    // identifier: cv_LDA_LDA_int_num_components
+    /// constructor
+    /// Initializes a LDA with num_components (default 0).
+    ///
+    /// ## C++ default parameters:
+    /// * num_components: 0
+    pub fn new(num_components: i32) -> Result<core::LDA> {
+        unsafe { sys::cv_core_cv_LDA_LDA_int_num_components(num_components) }.into_result().map(|x| core::LDA { ptr: x })
     }
-  }
-
-  /// Initializes and performs a Discriminant Analysis with Fisher's
-  /// Optimization Criterion on given data in src and corresponding labels
-  /// in labels. If 0 (or less) number of components are given, they are
-  /// automatically determined for given data in computation.
-  ///
-  /// ## C++ default parameters:
-  /// * num_components: 0
-  pub fn new_v0(src: &types::VectorOfMat, labels: &core::Mat, num_components: i32) -> Result<core::LDA> {
-  // identifier: cv_LDA_LDA_VectorOfMat_src_Mat_labels_int_num_components
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_LDA_VectorOfMat_src_Mat_labels_int_num_components(src.as_raw_VectorOfMat(), labels.as_raw_Mat(), num_components);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::LDA { ptr: rv.result })
-      }
+    
+    // identifier: cv_LDA_LDA_VectorOfMat_src_Mat_labels_int_num_components
+    /// Initializes and performs a Discriminant Analysis with Fisher's
+    /// Optimization Criterion on given data in src and corresponding labels
+    /// in labels. If 0 (or less) number of components are given, they are
+    /// automatically determined for given data in computation.
+    ///
+    /// ## C++ default parameters:
+    /// * num_components: 0
+    pub fn new_1(src: &types::VectorOfMat, labels: &core::Mat, num_components: i32) -> Result<core::LDA> {
+        unsafe { sys::cv_core_cv_LDA_LDA_VectorOfMat_src_Mat_labels_int_num_components(src.as_raw_VectorOfMat(), labels.as_raw_Mat(), num_components) }.into_result().map(|x| core::LDA { ptr: x })
     }
-  }
-
-  /// Serializes this object to a given filename.
-  pub fn save(&self, filename:&str) -> Result<()> {
-  // identifier: cv_LDA_save_String_filename
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_core_cv_LDA_save_String_filename(self.as_raw_LDA(), filename.as_ptr() as _);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_LDA_save_const_String_filename
+    /// Serializes this object to a given filename.
+    pub fn save(&self, filename: &str) -> Result<()> {
+        string_arg!(filename);
+        unsafe { sys::cv_core_cv_LDA_save_const_String_filename(self.as_raw_LDA(), filename.as_ptr()) }.into_result()
     }
-  }
-
-  /// Deserializes this object from a given filename.
-  pub fn load(&mut self, filename:&str) -> Result<()> {
-  // identifier: cv_LDA_load_String_filename
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_core_cv_LDA_load_String_filename(self.as_raw_LDA(), filename.as_ptr() as _);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_LDA_load_String_filename
+    /// Deserializes this object from a given filename.
+    pub fn load(&mut self, filename: &str) -> Result<()> {
+        string_arg!(filename);
+        unsafe { sys::cv_core_cv_LDA_load_String_filename(self.as_raw_LDA(), filename.as_ptr()) }.into_result()
     }
-  }
-
-  /// Compute the discriminants for data in src (row aligned) and labels.
-  pub fn compute(&mut self, src: &types::VectorOfMat, labels: &core::Mat) -> Result<()> {
-  // identifier: cv_LDA_compute_VectorOfMat_src_Mat_labels
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_compute_VectorOfMat_src_Mat_labels(self.as_raw_LDA(), src.as_raw_VectorOfMat(), labels.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_LDA_compute_VectorOfMat_src_Mat_labels
+    /// Compute the discriminants for data in src (row aligned) and labels.
+    pub fn compute(&mut self, src: &types::VectorOfMat, labels: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_LDA_compute_VectorOfMat_src_Mat_labels(self.as_raw_LDA(), src.as_raw_VectorOfMat(), labels.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Projects samples into the LDA subspace.
-  /// src may be one or more row aligned samples.
-  pub fn project(&mut self, src: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_LDA_project_Mat_src
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_project_Mat_src(self.as_raw_LDA(), src.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_LDA_project_Mat_src
+    /// Projects samples into the LDA subspace.
+    /// src may be one or more row aligned samples.
+    pub fn project(&mut self, src: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_LDA_project_Mat_src(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Reconstructs projections from the LDA subspace.
-  /// src may be one or more row aligned projections.
-  pub fn reconstruct(&mut self, src: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_LDA_reconstruct_Mat_src
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_reconstruct_Mat_src(self.as_raw_LDA(), src.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_LDA_reconstruct_Mat_src
+    /// Reconstructs projections from the LDA subspace.
+    /// src may be one or more row aligned projections.
+    pub fn reconstruct(&mut self, src: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_LDA_reconstruct_Mat_src(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Returns the eigenvectors of this LDA.
-  pub fn eigenvectors(&self) -> Result<core::Mat> {
-  // identifier: cv_LDA_eigenvectors
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_eigenvectors(self.as_raw_LDA());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_LDA_eigenvectors_const
+    /// Returns the eigenvectors of this LDA.
+    pub fn eigenvectors(&self) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_LDA_eigenvectors_const(self.as_raw_LDA()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Returns the eigenvalues of this LDA.
-  pub fn eigenvalues(&self) -> Result<core::Mat> {
-  // identifier: cv_LDA_eigenvalues
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_eigenvalues(self.as_raw_LDA());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_LDA_eigenvalues_const
+    /// Returns the eigenvalues of this LDA.
+    pub fn eigenvalues(&self) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_LDA_eigenvalues_const(self.as_raw_LDA()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  pub fn subspace_project(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_LDA_subspaceProject_Mat_W_Mat_mean_Mat_src
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_subspaceProject_Mat_W_Mat_mean_Mat_src(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_LDA_subspaceProject_Mat_W_Mat_mean_Mat_src
+    pub fn subspace_project(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_LDA_subspaceProject_Mat_W_Mat_mean_Mat_src(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  pub fn subspace_reconstruct(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_LDA_subspaceReconstruct_Mat_W_Mat_mean_Mat_src
-    unsafe {
-      let rv = sys::cv_core_cv_LDA_subspaceReconstruct_Mat_W_Mat_mean_Mat_src(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_LDA_subspaceReconstruct_Mat_W_Mat_mean_Mat_src
+    pub fn subspace_reconstruct(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_LDA_subspaceReconstruct_Mat_W_Mat_mean_Mat_src(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
+    
 }
+
 // boxed class cv::Mat
 /// n-dimensional dense array class \anchor CVMat_Details
 /// 
@@ -6762,7 +5680,6 @@ impl LDA {
 /// 
 /// 
 /// Note: Matrix Expressions and arithmetic see MatExpr
-
 #[allow(dead_code)]
 pub struct Mat {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -6775,1413 +5692,1118 @@ impl Drop for core::Mat {
 impl core::Mat {
     #[doc(hidden)] pub fn as_raw_Mat(&self) -> *mut c_void { self.ptr }
 }
+
 impl Mat {
 
-  /// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
-  /// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
-  /// The constructed matrix can further be assigned to another matrix or matrix expression or can be
-  /// allocated with Mat::create . In the former case, the old content is de-referenced.
-  pub fn new() -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    // identifier: cv_Mat_Mat
+    /// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
+    /// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
+    /// The constructed matrix can further be assigned to another matrix or matrix expression or can be
+    /// allocated with Mat::create . In the former case, the old content is de-referenced.
+    pub fn new() -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat() }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * rows: Number of rows in a 2D array.
-  /// * cols: Number of columns in a 2D array.
-  /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-  /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-  pub fn new_rows_cols(rows: i32, cols: i32, _type: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_int_rows_int_cols_int_type
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_int_rows_int_cols_int_type(rows, cols, _type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_int_rows_int_cols_int_type
+    /// @overload
+    /// ## Parameters
+    /// * rows: Number of rows in a 2D array.
+    /// * cols: Number of columns in a 2D array.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    pub fn new_rows_cols(rows: i32, cols: i32, _type: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_int_rows_int_cols_int_type(rows, cols, _type) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-  /// number of columns go in the reverse order.
-  /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-  /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-  pub fn new_size(size: core::Size, _type: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_Size_size_int_type
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_Size_size_int_type(size, _type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Size_size_int_type
+    /// @overload
+    /// ## Parameters
+    /// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+    /// number of columns go in the reverse order.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    pub fn new_size(size: core::Size, _type: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Size_size_int_type(size, _type) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * rows: Number of rows in a 2D array.
-  /// * cols: Number of columns in a 2D array.
-  /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-  /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-  /// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-  /// the particular value after the construction, use the assignment operator
-  /// Mat::operator=(const Scalar& value) .
-  pub fn new_rows_cols_with_default(rows: i32, cols: i32, _type: i32, s: core::Scalar) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_int_rows_int_cols_int_type_Scalar_s
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_int_rows_int_cols_int_type_Scalar_s(rows, cols, _type, s);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_int_rows_int_cols_int_type_Scalar_s
+    /// @overload
+    /// ## Parameters
+    /// * rows: Number of rows in a 2D array.
+    /// * cols: Number of columns in a 2D array.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+    /// the particular value after the construction, use the assignment operator
+    /// Mat::operator=(const Scalar& value) .
+    pub fn new_rows_cols_with_default(rows: i32, cols: i32, _type: i32, s: core::Scalar) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_int_rows_int_cols_int_type_Scalar_s(rows, cols, _type, s) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
-  /// number of columns go in the reverse order.
-  /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-  /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-  /// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-  /// the particular value after the construction, use the assignment operator
-  /// Mat::operator=(const Scalar& value) .
-  pub fn new_size_with_default(size: core::Size, _type: i32, s: core::Scalar) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_Size_size_int_type_Scalar_s
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_Size_size_int_type_Scalar_s(size, _type, s);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Size_size_int_type_Scalar_s
+    /// @overload
+    /// ## Parameters
+    /// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+    /// number of columns go in the reverse order.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+    /// the particular value after the construction, use the assignment operator
+    /// Mat::operator=(const Scalar& value) .
+    pub fn new_size_with_default(size: core::Size, _type: i32, s: core::Scalar) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Size_size_int_type_Scalar_s(size, _type, s) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * sizes: Array of integers specifying an n-dimensional array shape.
-  /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-  /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-  pub fn new_v0(sizes: &types::VectorOfint, _type: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_VectorOfint_sizes_int_type
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_VectorOfint_sizes_int_type(sizes.as_raw_VectorOfint(), _type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_int_ndims_const_int_X_sizes_int_type
+    /// @overload
+    /// ## Parameters
+    /// * ndims: Array dimensionality.
+    /// * sizes: Array of integers specifying an n-dimensional array shape.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    pub fn new_1(ndims: i32, sizes: &i32, _type: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_int_ndims_const_int_X_sizes_int_type(ndims, sizes, _type) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * sizes: Array of integers specifying an n-dimensional array shape.
-  /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
-  /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-  /// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
-  /// the particular value after the construction, use the assignment operator
-  /// Mat::operator=(const Scalar& value) .
-  pub fn new_v1(sizes: &types::VectorOfint, _type: i32, s: core::Scalar) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_VectorOfint_sizes_int_type_Scalar_s
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_VectorOfint_sizes_int_type_Scalar_s(sizes.as_raw_VectorOfint(), _type, s);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_VectorOfint_sizes_int_type
+    /// @overload
+    /// ## Parameters
+    /// * sizes: Array of integers specifying an n-dimensional array shape.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    pub fn new_2(sizes: &types::VectorOfint, _type: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_VectorOfint_sizes_int_type(sizes.as_raw_VectorOfint(), _type) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-  /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-  /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-  /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-  /// have an independent copy of the sub-array, use Mat::clone() .
-  pub fn copy(m: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_Mat_m(m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_int_ndims_const_int_X_sizes_int_type_Scalar_s
+    /// @overload
+    /// ## Parameters
+    /// * ndims: Array dimensionality.
+    /// * sizes: Array of integers specifying an n-dimensional array shape.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+    /// the particular value after the construction, use the assignment operator
+    /// Mat::operator=(const Scalar& value) .
+    pub fn new_3(ndims: i32, sizes: &i32, _type: i32, s: core::Scalar) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_int_ndims_const_int_X_sizes_int_type_Scalar_s(ndims, sizes, _type, s) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-  /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-  /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-  /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-  /// have an independent copy of the sub-array, use Mat::clone() .
-  /// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
-  /// end is exclusive. Use Range::all() to take all the rows.
-  /// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
-  ///
-  /// ## C++ default parameters:
-  /// * col_range: Range::all()
-  pub fn rowscols(m: &core::Mat, row_range: &core::Range, col_range: &core::Range) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_Mat_m_Range_rowRange_Range_colRange
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_Mat_m_Range_rowRange_Range_colRange(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_VectorOfint_sizes_int_type_Scalar_s
+    /// @overload
+    /// ## Parameters
+    /// * sizes: Array of integers specifying an n-dimensional array shape.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * s: An optional value to initialize each matrix element with. To set all the matrix elements to
+    /// the particular value after the construction, use the assignment operator
+    /// Mat::operator=(const Scalar& value) .
+    pub fn new_4(sizes: &types::VectorOfint, _type: i32, s: core::Scalar) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_VectorOfint_sizes_int_type_Scalar_s(sizes.as_raw_VectorOfint(), _type, s) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-  /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-  /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-  /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-  /// have an independent copy of the sub-array, use Mat::clone() .
-  /// * roi: Region of interest.
-  pub fn rect(m: &core::Mat, roi: core::Rect) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_Mat_m_Rect_roi
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_Mat_m_Rect_roi(m.as_raw_Mat(), roi);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Mat_m
+    /// @overload
+    /// ## Parameters
+    /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+    /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+    /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+    /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+    /// have an independent copy of the sub-array, use Mat::clone() .
+    pub fn copy(m: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Mat_m(m.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-  /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-  /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-  /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-  /// have an independent copy of the sub-array, use Mat::clone() .
-  /// * ranges: Array of selected ranges of m along each dimensionality.
-  pub fn ranges(m: &core::Mat, ranges: &core::Range) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_Mat_m_Range_ranges
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_Mat_m_Range_ranges(m.as_raw_Mat(), ranges.as_raw_Range());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_int_rows_int_cols_int_type_void_X_data_size_t_step
+    /// @overload
+    /// ## Parameters
+    /// * rows: Number of rows in a 2D array.
+    /// * cols: Number of columns in a 2D array.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+    /// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+    /// data, which means that no data is copied. This operation is very efficient and can be used to
+    /// process external data using OpenCV functions. The external data is not automatically deallocated, so
+    /// you should take care of it.
+    /// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+    /// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+    /// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+    ///
+    /// ## C++ default parameters:
+    /// * step: AUTO_STEP
+    pub fn new_5(rows: i32, cols: i32, _type: i32, data: &mut c_void, step: size_t) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_int_rows_int_cols_int_type_void_X_data_size_t_step(rows, cols, _type, data, step) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
-  /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
-  /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
-  /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
-  /// have an independent copy of the sub-array, use Mat::clone() .
-  /// * ranges: Array of selected ranges of m along each dimensionality.
-  pub fn new_v2(m: &core::Mat, ranges: &types::VectorOfRange) -> Result<core::Mat> {
-  // identifier: cv_Mat_Mat_Mat_m_VectorOfRange_ranges
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_Mat_Mat_m_VectorOfRange_ranges(m.as_raw_Mat(), ranges.as_raw_VectorOfRange());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Size_size_int_type_void_X_data_size_t_step
+    /// @overload
+    /// ## Parameters
+    /// * size: 2D array size: Size(cols, rows) . In the Size() constructor, the number of rows and the
+    /// number of columns go in the reverse order.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+    /// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+    /// data, which means that no data is copied. This operation is very efficient and can be used to
+    /// process external data using OpenCV functions. The external data is not automatically deallocated, so
+    /// you should take care of it.
+    /// * step: Number of bytes each matrix row occupies. The value should include the padding bytes at
+    /// the end of each row, if any. If the parameter is missing (set to AUTO_STEP ), no padding is assumed
+    /// and the actual step is calculated as cols*elemSize(). See Mat::elemSize.
+    ///
+    /// ## C++ default parameters:
+    /// * step: AUTO_STEP
+    pub fn new_6(size: core::Size, _type: i32, data: &mut c_void, step: size_t) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Size_size_int_type_void_X_data_size_t_step(size, _type, data, step) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Creates a matrix header for the specified matrix row.
-  /// 
-  /// The method makes a new header for the specified matrix row and returns it. This is an O(1)
-  /// operation, regardless of the matrix size. The underlying data of the new matrix is shared with the
-  /// original matrix. Here is the example of one of the classical basic matrix processing operations,
-  /// axpy, used by LU and many other algorithms:
-  /// ```ignore
-  /// inline void matrix_axpy(Mat& A, int i, int j, double alpha)
-  /// {
-  /// A.row(i) += A.row(j)*alpha;
-  /// }
-  /// ```
-  /// 
-  /// 
-  /// Note: In the current implementation, the following code does not work as expected:
-  /// ```ignore
-  /// Mat A;
-  /// ...
-  /// A.row(i) = A.row(j); // will not work
-  /// ```
-  /// 
-  /// This happens because A.row(i) forms a temporary header that is further assigned to another header.
-  /// Remember that each of these operations is O(1), that is, no data is copied. Thus, the above
-  /// assignment is not true if you may have expected the j-th row to be copied to the i-th row. To
-  /// achieve that, you should either turn this simple assignment into an expression or use the
-  /// Mat::copyTo method:
-  /// ```ignore
-  /// Mat A;
-  /// ...
-  /// // works, but looks a bit obscure.
-  /// A.row(i) = A.row(j) + 0;
-  /// // this is a bit longer, but the recommended method.
-  /// A.row(j).copyTo(A.row(i));
-  /// ```
-  /// 
-  /// ## Parameters
-  /// * y: A 0-based row index.
-  pub fn row(&self, y: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_row_int_y
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_row_int_y(self.as_raw_Mat(), y);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_int_ndims_const_int_X_sizes_int_type_void_X_data_const_size_t_X_steps
+    /// @overload
+    /// ## Parameters
+    /// * ndims: Array dimensionality.
+    /// * sizes: Array of integers specifying an n-dimensional array shape.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+    /// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+    /// data, which means that no data is copied. This operation is very efficient and can be used to
+    /// process external data using OpenCV functions. The external data is not automatically deallocated, so
+    /// you should take care of it.
+    /// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+    /// set to the element size). If not specified, the matrix is assumed to be continuous.
+    ///
+    /// ## C++ default parameters:
+    /// * steps: 0
+    pub fn new_7(ndims: i32, sizes: &i32, _type: i32, data: &mut c_void, steps: &size_t) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_int_ndims_const_int_X_sizes_int_type_void_X_data_const_size_t_X_steps(ndims, sizes, _type, data, steps) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Creates a matrix header for the specified matrix column.
-  /// 
-  /// The method makes a new header for the specified matrix column and returns it. This is an O(1)
-  /// operation, regardless of the matrix size. The underlying data of the new matrix is shared with the
-  /// original matrix. See also the Mat::row description.
-  /// ## Parameters
-  /// * x: A 0-based column index.
-  pub fn col(&self, x: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_col_int_x
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_col_int_x(self.as_raw_Mat(), x);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_VectorOfint_sizes_int_type_void_X_data_const_size_t_X_steps
+    /// @overload
+    /// ## Parameters
+    /// * sizes: Array of integers specifying an n-dimensional array shape.
+    /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
+    /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
+    /// * data: Pointer to the user data. Matrix constructors that take data and step parameters do not
+    /// allocate matrix data. Instead, they just initialize the matrix header that points to the specified
+    /// data, which means that no data is copied. This operation is very efficient and can be used to
+    /// process external data using OpenCV functions. The external data is not automatically deallocated, so
+    /// you should take care of it.
+    /// * steps: Array of ndims-1 steps in case of a multi-dimensional array (the last step is always
+    /// set to the element size). If not specified, the matrix is assumed to be continuous.
+    ///
+    /// ## C++ default parameters:
+    /// * steps: 0
+    pub fn new_8(sizes: &types::VectorOfint, _type: i32, data: &mut c_void, steps: &size_t) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_VectorOfint_sizes_int_type_void_X_data_const_size_t_X_steps(sizes.as_raw_VectorOfint(), _type, data, steps) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Creates a matrix header for the specified row span.
-  /// 
-  /// The method makes a new header for the specified row span of the matrix. Similarly to Mat::row and
-  /// Mat::col , this is an O(1) operation.
-  /// ## Parameters
-  /// * startrow: An inclusive 0-based start index of the row span.
-  /// * endrow: An exclusive 0-based ending index of the row span.
-  pub fn rowbounds(&self, startrow: i32, endrow: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_rowRange_int_startrow_int_endrow
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_rowRange_int_startrow_int_endrow(self.as_raw_Mat(), startrow, endrow);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Mat_m_Range_rowRange_Range_colRange
+    /// @overload
+    /// ## Parameters
+    /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+    /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+    /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+    /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+    /// have an independent copy of the sub-array, use Mat::clone() .
+    /// * rowRange: Range of the m rows to take. As usual, the range start is inclusive and the range
+    /// end is exclusive. Use Range::all() to take all the rows.
+    /// * colRange: Range of the m columns to take. Use Range::all() to take all the columns.
+    ///
+    /// ## C++ default parameters:
+    /// * col_range: Range::all()
+    pub fn rowscols(m: &core::Mat, row_range: &core::Range, col_range: &core::Range) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Mat_m_Range_rowRange_Range_colRange(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * r: Range structure containing both the start and the end indices.
-  pub fn rowRange(&self, r: &core::Range) -> Result<core::Mat> {
-  // identifier: cv_Mat_rowRange_Range_r
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_rowRange_Range_r(self.as_raw_Mat(), r.as_raw_Range());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Mat_m_Rect_roi
+    /// @overload
+    /// ## Parameters
+    /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+    /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+    /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+    /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+    /// have an independent copy of the sub-array, use Mat::clone() .
+    /// * roi: Region of interest.
+    pub fn roi(m: &core::Mat, roi: core::Rect) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Mat_m_Rect_roi(m.as_raw_Mat(), roi) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Creates a matrix header for the specified column span.
-  /// 
-  /// The method makes a new header for the specified column span of the matrix. Similarly to Mat::row and
-  /// Mat::col , this is an O(1) operation.
-  /// ## Parameters
-  /// * startcol: An inclusive 0-based start index of the column span.
-  /// * endcol: An exclusive 0-based ending index of the column span.
-  pub fn colbounds(&self, startcol: i32, endcol: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_colRange_int_startcol_int_endcol
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_colRange_int_startcol_int_endcol(self.as_raw_Mat(), startcol, endcol);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Mat_m_const_Range_ranges
+    /// @overload
+    /// ## Parameters
+    /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+    /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+    /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+    /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+    /// have an independent copy of the sub-array, use Mat::clone() .
+    /// * ranges: Array of selected ranges of m along each dimensionality.
+    pub fn ranges(m: &core::Mat, ranges: &core::Range) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Mat_m_const_Range_ranges(m.as_raw_Mat(), ranges.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * r: Range structure containing both the start and the end indices.
-  pub fn colrange(&self, r: &core::Range) -> Result<core::Mat> {
-  // identifier: cv_Mat_colRange_Range_r
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_colRange_Range_r(self.as_raw_Mat(), r.as_raw_Range());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_Mat_Mat_m_VectorOfRange_ranges
+    /// @overload
+    /// ## Parameters
+    /// * m: Array that (as a whole or partly) is assigned to the constructed matrix. No data is copied
+    /// by these constructors. Instead, the header pointing to m data or its sub-array is constructed and
+    /// associated with it. The reference counter, if any, is incremented. So, when you modify the matrix
+    /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
+    /// have an independent copy of the sub-array, use Mat::clone() .
+    /// * ranges: Array of selected ranges of m along each dimensionality.
+    pub fn new_9(m: &core::Mat, ranges: &types::VectorOfRange) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_Mat_Mat_m_VectorOfRange_ranges(m.as_raw_Mat(), ranges.as_raw_VectorOfRange()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Extracts a diagonal from a matrix
-  /// 
-  /// The method makes a new header for the specified matrix diagonal. The new matrix is represented as a
-  /// single-column matrix. Similarly to Mat::row and Mat::col, this is an O(1) operation.
-  /// ## Parameters
-  /// * d: index of the diagonal, with the following values:
-  /// - `d=0` is the main diagonal.
-  /// - `d<0` is a diagonal from the lower half. For example, d=-1 means the diagonal is set
-  /// immediately below the main one.
-  /// - `d>0` is a diagonal from the upper half. For example, d=1 means the diagonal is set
-  /// immediately above the main one.
-  /// For example:
-  /// ```ignore
-  /// Mat m = (Mat_<int>(3,3) <<
-  /// 1,2,3,
-  /// 4,5,6,
-  /// 7,8,9);
-  /// Mat d0 = m.diag(0);
-  /// Mat d1 = m.diag(1);
-  /// Mat d_1 = m.diag(-1);
-  /// ```
-  /// 
-  /// The resulting matrices are
-  /// ```ignore
-  /// d0 =
-  /// [1;
-  /// 5;
-  /// 9]
-  /// d1 =
-  /// [2;
-  /// 6]
-  /// d_1 =
-  /// [4;
-  /// 8]
-  /// ```
-  ///
-  /// ## C++ default parameters:
-  /// * d: 0
-  pub fn diag(&self, d: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_diag_int_d
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_diag_int_d(self.as_raw_Mat(), d);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_row_const_int_y
+    /// Creates a matrix header for the specified matrix row.
+    /// 
+    /// The method makes a new header for the specified matrix row and returns it. This is an O(1)
+    /// operation, regardless of the matrix size. The underlying data of the new matrix is shared with the
+    /// original matrix. Here is the example of one of the classical basic matrix processing operations,
+    /// axpy, used by LU and many other algorithms:
+    /// ```ignore
+    /// inline void matrix_axpy(Mat& A, int i, int j, double alpha)
+    /// {
+    /// A.row(i) += A.row(j)*alpha;
+    /// }
+    /// ```
+    /// 
+    /// 
+    /// Note: In the current implementation, the following code does not work as expected:
+    /// ```ignore
+    /// Mat A;
+    /// ...
+    /// A.row(i) = A.row(j); // will not work
+    /// ```
+    /// 
+    /// This happens because A.row(i) forms a temporary header that is further assigned to another header.
+    /// Remember that each of these operations is O(1), that is, no data is copied. Thus, the above
+    /// assignment is not true if you may have expected the j-th row to be copied to the i-th row. To
+    /// achieve that, you should either turn this simple assignment into an expression or use the
+    /// Mat::copyTo method:
+    /// ```ignore
+    /// Mat A;
+    /// ...
+    /// // works, but looks a bit obscure.
+    /// A.row(i) = A.row(j) + 0;
+    /// // this is a bit longer, but the recommended method.
+    /// A.row(j).copyTo(A.row(i));
+    /// ```
+    /// 
+    /// ## Parameters
+    /// * y: A 0-based row index.
+    pub fn row(&self, y: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_row_const_int_y(self.as_raw_Mat(), y) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// creates a diagonal matrix
-  /// 
-  /// The method creates a square diagonal matrix from specified main diagonal.
-  /// ## Parameters
-  /// * d: One-dimensional matrix that represents the main diagonal.
-  pub fn diag_new_mat(d: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_Mat_diag_Mat_d
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_diag_Mat_d(d.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_col_const_int_x
+    /// Creates a matrix header for the specified matrix column.
+    /// 
+    /// The method makes a new header for the specified matrix column and returns it. This is an O(1)
+    /// operation, regardless of the matrix size. The underlying data of the new matrix is shared with the
+    /// original matrix. See also the Mat::row description.
+    /// ## Parameters
+    /// * x: A 0-based column index.
+    pub fn col(&self, x: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_col_const_int_x(self.as_raw_Mat(), x) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Creates a full copy of the array and the underlying data.
-  /// 
-  /// The method creates a full copy of the array. The original step[] is not taken into account. So, the
-  /// array copy is a continuous array occupying total()*elemSize() bytes.
-  pub fn clone(&self) -> Result<core::Mat> {
-  // identifier: cv_Mat_clone
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_clone(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_rowRange_const_int_startrow_int_endrow
+    /// Creates a matrix header for the specified row span.
+    /// 
+    /// The method makes a new header for the specified row span of the matrix. Similarly to Mat::row and
+    /// Mat::col , this is an O(1) operation.
+    /// ## Parameters
+    /// * startrow: An inclusive 0-based start index of the row span.
+    /// * endrow: An exclusive 0-based ending index of the row span.
+    pub fn rowbounds(&self, startrow: i32, endrow: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_rowRange_const_int_startrow_int_endrow(self.as_raw_Mat(), startrow, endrow) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Copies the matrix to another one.
-  /// 
-  /// The method copies the matrix data to another matrix. Before copying the data, the method invokes :
-  /// ```ignore
-  /// m.create(this->size(), this->type());
-  /// ```
-  /// 
-  /// so that the destination matrix is reallocated if needed. While m.copyTo(m); works flawlessly, the
-  /// function does not handle the case of a partial overlap between the source and the destination
-  /// matrices.
-  /// 
-  /// When the operation mask is specified, if the Mat::create call shown above reallocates the matrix,
-  /// the newly allocated matrix is initialized with all zeros before copying the data.
-  /// ## Parameters
-  /// * m: Destination matrix. If it does not have a proper size or type before the operation, it is
-  /// reallocated.
-  pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
-  // identifier: cv_Mat_copyTo_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_copyTo_Mat_m(self.as_raw_Mat(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_rowRange_const_Range_r
+    /// @overload
+    /// ## Parameters
+    /// * r: Range structure containing both the start and the end indices.
+    pub fn row_range(&self, r: &core::Range) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_rowRange_const_Range_r(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * m: Destination matrix. If it does not have a proper size or type before the operation, it is
-  /// reallocated.
-  /// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
-  /// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
-  pub fn copy_to_masked(&self, m: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-  // identifier: cv_Mat_copyTo_Mat_m_Mat_mask
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_copyTo_Mat_m_Mat_mask(self.as_raw_Mat(), m.as_raw_Mat(), mask.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_colRange_const_int_startcol_int_endcol
+    /// Creates a matrix header for the specified column span.
+    /// 
+    /// The method makes a new header for the specified column span of the matrix. Similarly to Mat::row and
+    /// Mat::col , this is an O(1) operation.
+    /// ## Parameters
+    /// * startcol: An inclusive 0-based start index of the column span.
+    /// * endcol: An exclusive 0-based ending index of the column span.
+    pub fn colbounds(&self, startcol: i32, endcol: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_colRange_const_int_startcol_int_endcol(self.as_raw_Mat(), startcol, endcol) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Converts an array to another data type with optional scaling.
-  /// 
-  /// The method converts source pixel values to the target data type. saturate_cast\<\> is applied at
-  /// the end to avoid possible overflows:
-  /// 
-  /// <div lang='latex'>m(x,y) = saturate \_ cast<rType>( \alpha (*this)(x,y) +  \beta )</div>
-  /// ## Parameters
-  /// * m: output matrix; if it does not have a proper size or type before the operation, it is
-  /// reallocated.
-  /// * rtype: desired output matrix type or, rather, the depth since the number of channels are the
-  /// same as the input has; if rtype is negative, the output matrix will have the same type as the input.
-  /// * alpha: optional scale factor.
-  /// * beta: optional delta added to the scaled values.
-  ///
-  /// ## C++ default parameters:
-  /// * alpha: 1
-  /// * beta: 0
-  pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-  // identifier: cv_Mat_convertTo_Mat_m_int_rtype_double_alpha_double_beta
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_convertTo_Mat_m_int_rtype_double_alpha_double_beta(self.as_raw_Mat(), m.as_raw_Mat(), rtype, alpha, beta);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_colRange_const_Range_r
+    /// @overload
+    /// ## Parameters
+    /// * r: Range structure containing both the start and the end indices.
+    pub fn colrange(&self, r: &core::Range) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_colRange_const_Range_r(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Provides a functional form of convertTo.
-  /// 
-  /// This is an internally used method called by the @ref MatrixExpressions engine.
-  /// ## Parameters
-  /// * m: Destination array.
-  /// * type: Desired destination array depth (or -1 if it should be the same as the source type).
-  ///
-  /// ## C++ default parameters:
-  /// * _type: -1
-  pub fn assign_to(&self, m: &core::Mat, _type: i32) -> Result<()> {
-  // identifier: cv_Mat_assignTo_Mat_m_int_type
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_assignTo_Mat_m_int_type(self.as_raw_Mat(), m.as_raw_Mat(), _type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_diag_const_int_d
+    /// Extracts a diagonal from a matrix
+    /// 
+    /// The method makes a new header for the specified matrix diagonal. The new matrix is represented as a
+    /// single-column matrix. Similarly to Mat::row and Mat::col, this is an O(1) operation.
+    /// ## Parameters
+    /// * d: index of the diagonal, with the following values:
+    /// - `d=0` is the main diagonal.
+    /// - `d<0` is a diagonal from the lower half. For example, d=-1 means the diagonal is set
+    /// immediately below the main one.
+    /// - `d>0` is a diagonal from the upper half. For example, d=1 means the diagonal is set
+    /// immediately above the main one.
+    /// For example:
+    /// ```ignore
+    /// Mat m = (Mat_<int>(3,3) <<
+    /// 1,2,3,
+    /// 4,5,6,
+    /// 7,8,9);
+    /// Mat d0 = m.diag(0);
+    /// Mat d1 = m.diag(1);
+    /// Mat d_1 = m.diag(-1);
+    /// ```
+    /// 
+    /// The resulting matrices are
+    /// ```ignore
+    /// d0 =
+    /// [1;
+    /// 5;
+    /// 9]
+    /// d1 =
+    /// [2;
+    /// 6]
+    /// d_1 =
+    /// [4;
+    /// 8]
+    /// ```
+    ///
+    /// ## C++ default parameters:
+    /// * d: 0
+    pub fn diag(&self, d: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_diag_const_int_d(self.as_raw_Mat(), d) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Sets all or some of the array elements to the specified value.
-  /// 
-  /// This is an advanced variant of the Mat::operator=(const Scalar& s) operator.
-  /// ## Parameters
-  /// * value: Assigned scalar converted to the actual array type.
-  /// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
-  /// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels
-  ///
-  /// ## C++ default parameters:
-  /// * mask: noArray()
-  pub fn set_to(&mut self, value: &core::Mat, mask: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_Mat_setTo_Mat_value_Mat_mask
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_setTo_Mat_value_Mat_mask(self.as_raw_Mat(), value.as_raw_Mat(), mask.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_diag_Mat_d
+    /// creates a diagonal matrix
+    /// 
+    /// The method creates a square diagonal matrix from specified main diagonal.
+    /// ## Parameters
+    /// * d: One-dimensional matrix that represents the main diagonal.
+    pub fn diag_new_mat(d: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_diag_Mat_d(d.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
-  /// 
-  /// The method makes a new matrix header for \*this elements. The new matrix may have a different size
-  /// and/or different number of channels. Any combination is possible if:
-  /// *   No extra elements are included into the new matrix and no elements are excluded. Consequently,
-  /// the product rows\*cols\*channels() must stay the same after the transformation.
-  /// *   No data is copied. That is, this is an O(1) operation. Consequently, if you change the number of
-  /// rows, or the operation changes the indices of elements row in some other way, the matrix must be
-  /// continuous. See Mat::isContinuous .
-  /// 
-  /// For example, if there is a set of 3D points stored as an STL vector, and you want to represent the
-  /// points as a 3xN matrix, do the following:
-  /// ```ignore
-  /// std::vector<Point3f> vec;
-  /// ...
-  /// Mat pointMat = Mat(vec). // convert vector to Mat, O(1) operation
-  /// reshape(1). // make Nx3 1-channel matrix out of Nx1 3-channel.
-  /// // Also, an O(1) operation
-  /// t(); // finally, transpose the Nx3 matrix.
-  /// // This involves copying all the elements
-  /// ```
-  /// 
-  /// ## Parameters
-  /// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
-  /// * rows: New number of rows. If the parameter is 0, the number of rows remains the same.
-  ///
-  /// ## C++ default parameters:
-  /// * rows: 0
-  pub fn reshape(&self, cn: i32, rows: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_reshape_int_cn_int_rows
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_reshape_int_cn_int_rows(self.as_raw_Mat(), cn, rows);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_clone_const
+    /// Creates a full copy of the array and the underlying data.
+    /// 
+    /// The method creates a full copy of the array. The original step[] is not taken into account. So, the
+    /// array copy is a continuous array occupying total()*elemSize() bytes.
+    pub fn clone(&self) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_clone_const(self.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  pub fn reshape_v0(&self, cn: i32, newshape: &types::VectorOfint) -> Result<core::Mat> {
-  // identifier: cv_Mat_reshape_int_cn_VectorOfint_newshape
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_reshape_int_cn_VectorOfint_newshape(self.as_raw_Mat(), cn, newshape.as_raw_VectorOfint());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_copyTo_const_Mat_m
+    /// Copies the matrix to another one.
+    /// 
+    /// The method copies the matrix data to another matrix. Before copying the data, the method invokes :
+    /// ```ignore
+    /// m.create(this->size(), this->type());
+    /// ```
+    /// 
+    /// so that the destination matrix is reallocated if needed. While m.copyTo(m); works flawlessly, the
+    /// function does not handle the case of a partial overlap between the source and the destination
+    /// matrices.
+    /// 
+    /// When the operation mask is specified, if the Mat::create call shown above reallocates the matrix,
+    /// the newly allocated matrix is initialized with all zeros before copying the data.
+    /// ## Parameters
+    /// * m: Destination matrix. If it does not have a proper size or type before the operation, it is
+    /// reallocated.
+    pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_copyTo_const_Mat_m(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Computes a cross-product of two 3-element vectors.
-  /// 
-  /// The method computes a cross-product of two 3-element vectors. The vectors must be 3-element
-  /// floating-point vectors of the same shape and size. The result is another 3-element vector of the
-  /// same shape and type as operands.
-  /// ## Parameters
-  /// * m: Another cross-product operand.
-  pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_Mat_cross_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_cross_Mat_m(self.as_raw_Mat(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_copyTo_const_Mat_m_Mat_mask
+    /// @overload
+    /// ## Parameters
+    /// * m: Destination matrix. If it does not have a proper size or type before the operation, it is
+    /// reallocated.
+    /// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
+    /// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
+    pub fn copy_to_masked(&self, m: &mut core::Mat, mask: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_copyTo_const_Mat_m_Mat_mask(self.as_raw_Mat(), m.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Computes a dot-product of two vectors.
-  /// 
-  /// The method computes a dot-product of two matrices. If the matrices are not single-column or
-  /// single-row vectors, the top-to-bottom left-to-right scan ordering is used to treat them as 1D
-  /// vectors. The vectors must have the same size and type. If the matrices have more than one channel,
-  /// the dot products from all the channels are summed together.
-  /// ## Parameters
-  /// * m: another dot-product operand.
-  pub fn dot(&self, m: &core::Mat) -> Result<f64> {
-  // identifier: cv_Mat_dot_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_dot_Mat_m(self.as_raw_Mat(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_convertTo_const_Mat_m_int_rtype_double_alpha_double_beta
+    /// Converts an array to another data type with optional scaling.
+    /// 
+    /// The method converts source pixel values to the target data type. saturate_cast\<\> is applied at
+    /// the end to avoid possible overflows:
+    /// 
+    /// <div lang='latex'>m(x,y) = saturate \_ cast<rType>( \alpha (*this)(x,y) +  \beta )</div>
+    /// ## Parameters
+    /// * m: output matrix; if it does not have a proper size or type before the operation, it is
+    /// reallocated.
+    /// * rtype: desired output matrix type or, rather, the depth since the number of channels are the
+    /// same as the input has; if rtype is negative, the output matrix will have the same type as the input.
+    /// * alpha: optional scale factor.
+    /// * beta: optional delta added to the scaled values.
+    ///
+    /// ## C++ default parameters:
+    /// * alpha: 1
+    /// * beta: 0
+    pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_convertTo_const_Mat_m_int_rtype_double_alpha_double_beta(self.as_raw_Mat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * sizes: Array of integers specifying a new array shape.
-  /// * type: New matrix type.
-  pub fn create(&mut self, sizes: &types::VectorOfint, _type: i32) -> Result<()> {
-  // identifier: cv_Mat_create_VectorOfint_sizes_int_type
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_create_VectorOfint_sizes_int_type(self.as_raw_Mat(), sizes.as_raw_VectorOfint(), _type);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_assignTo_const_Mat_m_int_type
+    /// Provides a functional form of convertTo.
+    /// 
+    /// This is an internally used method called by the @ref MatrixExpressions engine.
+    /// ## Parameters
+    /// * m: Destination array.
+    /// * type: Desired destination array depth (or -1 if it should be the same as the source type).
+    ///
+    /// ## C++ default parameters:
+    /// * _type: -1
+    pub fn assign_to(&self, m: &core::Mat, _type: i32) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_assignTo_const_Mat_m_int_type(self.as_raw_Mat(), m.as_raw_Mat(), _type) }.into_result()
     }
-  }
-
-  /// Increments the reference counter.
-  /// 
-  /// The method increments the reference counter associated with the matrix data. If the matrix header
-  /// points to an external data set (see Mat::Mat ), the reference counter is NULL, and the method has no
-  /// effect in this case. Normally, to avoid memory leaks, the method should not be called explicitly. It
-  /// is called implicitly by the matrix assignment operator. The reference counter increment is an atomic
-  /// operation on the platforms that support it. Thus, it is safe to operate on the same matrices
-  /// asynchronously in different threads.
-  pub fn addref(&mut self) -> Result<()> {
-  // identifier: cv_Mat_addref
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_addref(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_setTo_Mat_value_Mat_mask
+    /// Sets all or some of the array elements to the specified value.
+    /// 
+    /// This is an advanced variant of the Mat::operator=(const Scalar& s) operator.
+    /// ## Parameters
+    /// * value: Assigned scalar converted to the actual array type.
+    /// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
+    /// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels
+    ///
+    /// ## C++ default parameters:
+    /// * mask: noArray()
+    pub fn set_to(&mut self, value: &core::Mat, mask: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_setTo_Mat_value_Mat_mask(self.as_raw_Mat(), value.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Decrements the reference counter and deallocates the matrix if needed.
-  /// 
-  /// The method decrements the reference counter associated with the matrix data. When the reference
-  /// counter reaches 0, the matrix data is deallocated and the data and the reference counter pointers
-  /// are set to NULL's. If the matrix header points to an external data set (see Mat::Mat ), the
-  /// reference counter is NULL, and the method has no effect in this case.
-  /// 
-  /// This method can be called manually to force the matrix data deallocation. But since this method is
-  /// automatically called in the destructor, or by any other method that changes the data pointer, it is
-  /// usually not needed. The reference counter decrement and check for 0 is an atomic operation on the
-  /// platforms that support it. Thus, it is safe to operate on the same matrices asynchronously in
-  /// different threads.
-  pub fn release(&mut self) -> Result<()> {
-  // identifier: cv_Mat_release
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_release(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_reshape_const_int_cn_int_rows
+    /// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
+    /// 
+    /// The method makes a new matrix header for \*this elements. The new matrix may have a different size
+    /// and/or different number of channels. Any combination is possible if:
+    /// *   No extra elements are included into the new matrix and no elements are excluded. Consequently,
+    /// the product rows\*cols\*channels() must stay the same after the transformation.
+    /// *   No data is copied. That is, this is an O(1) operation. Consequently, if you change the number of
+    /// rows, or the operation changes the indices of elements row in some other way, the matrix must be
+    /// continuous. See Mat::isContinuous .
+    /// 
+    /// For example, if there is a set of 3D points stored as an STL vector, and you want to represent the
+    /// points as a 3xN matrix, do the following:
+    /// ```ignore
+    /// std::vector<Point3f> vec;
+    /// ...
+    /// Mat pointMat = Mat(vec). // convert vector to Mat, O(1) operation
+    /// reshape(1). // make Nx3 1-channel matrix out of Nx1 3-channel.
+    /// // Also, an O(1) operation
+    /// t(); // finally, transpose the Nx3 matrix.
+    /// // This involves copying all the elements
+    /// ```
+    /// 
+    /// ## Parameters
+    /// * cn: New number of channels. If the parameter is 0, the number of channels remains the same.
+    /// * rows: New number of rows. If the parameter is 0, the number of rows remains the same.
+    ///
+    /// ## C++ default parameters:
+    /// * rows: 0
+    pub fn reshape(&self, cn: i32, rows: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_reshape_const_int_cn_int_rows(self.as_raw_Mat(), cn, rows) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  pub fn deallocate(&mut self) -> Result<()> {
-  // identifier: cv_Mat_deallocate
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_deallocate(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_reshape_const_int_cn_int_newndims_const_int_X_newsz
+    /// @overload
+    pub fn reshape_1(&self, cn: i32, newndims: i32, newsz: &i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_reshape_const_int_cn_int_newndims_const_int_X_newsz(self.as_raw_Mat(), cn, newndims, newsz) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  pub fn copy_size(&mut self, m: &core::Mat) -> Result<()> {
-  // identifier: cv_Mat_copySize_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_copySize_Mat_m(self.as_raw_Mat(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_reshape_const_int_cn_VectorOfint_newshape
+    /// @overload
+    pub fn reshape_2(&self, cn: i32, newshape: &types::VectorOfint) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_reshape_const_int_cn_VectorOfint_newshape(self.as_raw_Mat(), cn, newshape.as_raw_VectorOfint()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Reserves space for the certain number of rows.
-  /// 
-  /// The method reserves space for sz rows. If the matrix already has enough space to store sz rows,
-  /// nothing happens. If the matrix is reallocated, the first Mat::rows rows are preserved. The method
-  /// emulates the corresponding method of the STL vector class.
-  /// ## Parameters
-  /// * sz: Number of rows.
-  pub fn reserve(&mut self, sz: size_t) -> Result<()> {
-  // identifier: cv_Mat_reserve_size_t_sz
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_reserve_size_t_sz(self.as_raw_Mat(), sz);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_cross_const_Mat_m
+    /// Computes a cross-product of two 3-element vectors.
+    /// 
+    /// The method computes a cross-product of two 3-element vectors. The vectors must be 3-element
+    /// floating-point vectors of the same shape and size. The result is another 3-element vector of the
+    /// same shape and type as operands.
+    /// ## Parameters
+    /// * m: Another cross-product operand.
+    pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_cross_const_Mat_m(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Reserves space for the certain number of bytes.
-  /// 
-  /// The method reserves space for sz bytes. If the matrix already has enough space to store sz bytes,
-  /// nothing happens. If matrix has to be reallocated its previous content could be lost.
-  /// ## Parameters
-  /// * sz: Number of bytes.
-  pub fn reserve_buffer(&mut self, sz: size_t) -> Result<()> {
-  // identifier: cv_Mat_reserveBuffer_size_t_sz
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_reserveBuffer_size_t_sz(self.as_raw_Mat(), sz);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_dot_const_Mat_m
+    /// Computes a dot-product of two vectors.
+    /// 
+    /// The method computes a dot-product of two matrices. If the matrices are not single-column or
+    /// single-row vectors, the top-to-bottom left-to-right scan ordering is used to treat them as 1D
+    /// vectors. The vectors must have the same size and type. If the matrices have more than one channel,
+    /// the dot products from all the channels are summed together.
+    /// ## Parameters
+    /// * m: another dot-product operand.
+    pub fn dot(&self, m: &core::Mat) -> Result<f64> {
+        unsafe { sys::cv_core_cv_Mat_dot_const_Mat_m(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Changes the number of matrix rows.
-  /// 
-  /// The methods change the number of matrix rows. If the matrix is reallocated, the first
-  /// min(Mat::rows, sz) rows are preserved. The methods emulate the corresponding methods of the STL
-  /// vector class.
-  /// ## Parameters
-  /// * sz: New number of rows.
-  pub fn resize(&mut self, sz: size_t) -> Result<()> {
-  // identifier: cv_Mat_resize_size_t_sz
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_resize_size_t_sz(self.as_raw_Mat(), sz);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_create_int_ndims_const_int_X_sizes_int_type
+    /// @overload
+    /// ## Parameters
+    /// * ndims: New array dimensionality.
+    /// * sizes: Array of integers specifying a new array shape.
+    /// * type: New matrix type.
+    pub fn create(&mut self, ndims: i32, sizes: &i32, _type: i32) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_create_int_ndims_const_int_X_sizes_int_type(self.as_raw_Mat(), ndims, sizes, _type) }.into_result()
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * sz: New number of rows.
-  /// * s: Value assigned to the newly added elements.
-  pub fn resize_with_default(&mut self, sz: size_t, s: core::Scalar) -> Result<()> {
-  // identifier: cv_Mat_resize_size_t_sz_Scalar_s
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_resize_size_t_sz_Scalar_s(self.as_raw_Mat(), sz, s);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_create_VectorOfint_sizes_int_type
+    /// @overload
+    /// ## Parameters
+    /// * sizes: Array of integers specifying a new array shape.
+    /// * type: New matrix type.
+    pub fn create_1(&mut self, sizes: &types::VectorOfint, _type: i32) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_create_VectorOfint_sizes_int_type(self.as_raw_Mat(), sizes.as_raw_VectorOfint(), _type) }.into_result()
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * m: Added line(s).
-  pub fn push_back(&mut self, m: &core::Mat) -> Result<()> {
-  // identifier: cv_Mat_push_back_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_push_back_Mat_m(self.as_raw_Mat(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_addref
+    /// Increments the reference counter.
+    /// 
+    /// The method increments the reference counter associated with the matrix data. If the matrix header
+    /// points to an external data set (see Mat::Mat ), the reference counter is NULL, and the method has no
+    /// effect in this case. Normally, to avoid memory leaks, the method should not be called explicitly. It
+    /// is called implicitly by the matrix assignment operator. The reference counter increment is an atomic
+    /// operation on the platforms that support it. Thus, it is safe to operate on the same matrices
+    /// asynchronously in different threads.
+    pub fn addref(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_addref(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Removes elements from the bottom of the matrix.
-  /// 
-  /// The method removes one or more rows from the bottom of the matrix.
-  /// ## Parameters
-  /// * nelems: Number of removed rows. If it is greater than the total number of rows, an exception
-  /// is thrown.
-  ///
-  /// ## C++ default parameters:
-  /// * nelems: 1
-  pub fn pop_back(&mut self, nelems: size_t) -> Result<()> {
-  // identifier: cv_Mat_pop_back_size_t_nelems
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_pop_back_size_t_nelems(self.as_raw_Mat(), nelems);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_release
+    /// Decrements the reference counter and deallocates the matrix if needed.
+    /// 
+    /// The method decrements the reference counter associated with the matrix data. When the reference
+    /// counter reaches 0, the matrix data is deallocated and the data and the reference counter pointers
+    /// are set to NULL's. If the matrix header points to an external data set (see Mat::Mat ), the
+    /// reference counter is NULL, and the method has no effect in this case.
+    /// 
+    /// This method can be called manually to force the matrix data deallocation. But since this method is
+    /// automatically called in the destructor, or by any other method that changes the data pointer, it is
+    /// usually not needed. The reference counter decrement and check for 0 is an atomic operation on the
+    /// platforms that support it. Thus, it is safe to operate on the same matrices asynchronously in
+    /// different threads.
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_release(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Locates the matrix header within a parent matrix.
-  /// 
-  /// After you extracted a submatrix from a matrix using Mat::row, Mat::col, Mat::rowRange,
-  /// Mat::colRange, and others, the resultant submatrix points just to the part of the original big
-  /// matrix. However, each submatrix contains information (represented by datastart and dataend
-  /// fields) that helps reconstruct the original matrix size and the position of the extracted
-  /// submatrix within the original matrix. The method locateROI does exactly that.
-  /// ## Parameters
-  /// * wholeSize: Output parameter that contains the size of the whole matrix containing *this*
-  /// as a part.
-  /// * ofs: Output parameter that contains an offset of *this* inside the whole matrix.
-  pub fn locate_roi(&self, whole_size: core::Size, ofs: core::Point) -> Result<()> {
-  // identifier: cv_Mat_locateROI_Size_wholeSize_Point_ofs
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_locateROI_Size_wholeSize_Point_ofs(self.as_raw_Mat(), whole_size, ofs);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_deallocate
+    pub fn deallocate(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_deallocate(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Adjusts a submatrix size and position within the parent matrix.
-  /// 
-  /// The method is complimentary to Mat::locateROI . The typical use of these functions is to determine
-  /// the submatrix position within the parent matrix and then shift the position somehow. Typically, it
-  /// can be required for filtering operations when pixels outside of the ROI should be taken into
-  /// account. When all the method parameters are positive, the ROI needs to grow in all directions by the
-  /// specified amount, for example:
-  /// ```ignore
-  /// A.adjustROI(2, 2, 2, 2);
-  /// ```
-  /// 
-  /// In this example, the matrix size is increased by 4 elements in each direction. The matrix is shifted
-  /// by 2 elements to the left and 2 elements up, which brings in all the necessary pixels for the
-  /// filtering with the 5x5 kernel.
-  /// 
-  /// adjustROI forces the adjusted ROI to be inside of the parent matrix that is boundaries of the
-  /// adjusted ROI are constrained by boundaries of the parent matrix. For example, if the submatrix A is
-  /// located in the first row of a parent matrix and you called A.adjustROI(2, 2, 2, 2) then A will not
-  /// be increased in the upward direction.
-  /// 
-  /// The function is used internally by the OpenCV filtering functions, like filter2D , morphological
-  /// operations, and so on.
-  /// ## Parameters
-  /// * dtop: Shift of the top submatrix boundary upwards.
-  /// * dbottom: Shift of the bottom submatrix boundary downwards.
-  /// * dleft: Shift of the left submatrix boundary to the left.
-  /// * dright: Shift of the right submatrix boundary to the right.
-  /// @sa copyMakeBorder
-  pub fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::Mat> {
-  // identifier: cv_Mat_adjustROI_int_dtop_int_dbottom_int_dleft_int_dright
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_adjustROI_int_dtop_int_dbottom_int_dleft_int_dright(self.as_raw_Mat(), dtop, dbottom, dleft, dright);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_Mat_copySize_Mat_m
+    pub fn copy_size(&mut self, m: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_copySize_Mat_m(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Reports whether the matrix is continuous or not.
-  /// 
-  /// The method returns true if the matrix elements are stored continuously without gaps at the end of
-  /// each row. Otherwise, it returns false. Obviously, 1x1 or 1xN matrices are always continuous.
-  /// Matrices created with Mat::create are always continuous. But if you extract a part of the matrix
-  /// using Mat::col, Mat::diag, and so on, or constructed a matrix header for externally allocated data,
-  /// such matrices may no longer have this property.
-  /// 
-  /// The continuity flag is stored as a bit in the Mat::flags field and is computed automatically when
-  /// you construct a matrix header. Thus, the continuity check is a very fast operation, though
-  /// theoretically it could be done as follows:
-  /// ```ignore
-  /// // alternative implementation of Mat::isContinuous()
-  /// bool myCheckMatContinuity(const Mat& m)
-  /// {
-  /// //return (m.flags & Mat::CONTINUOUS_FLAG) != 0;
-  /// return m.rows == 1 || m.step == m.cols*m.elemSize();
-  /// }
-  /// ```
-  /// 
-  /// The method is used in quite a few of OpenCV functions. The point is that element-wise operations
-  /// (such as arithmetic and logical operations, math functions, alpha blending, color space
-  /// transformations, and others) do not depend on the image geometry. Thus, if all the input and output
-  /// arrays are continuous, the functions can process them as very long single-row vectors. The example
-  /// below illustrates how an alpha-blending function can be implemented:
-  /// ```ignore
-  /// template<typename T>
-  /// void alphaBlendRGBA(const Mat& src1, const Mat& src2, Mat& dst)
-  /// {
-  /// const float alpha_scale = (float)std::numeric_limits<T>::max(),
-  /// inv_scale = 1.f/alpha_scale;
-  /// 
-  /// CV_Assert( src1.type() == src2.type() &&
-  /// src1.type() == CV_MAKETYPE(traits::Depth<T>::value, 4) &&
-  /// src1.size() == src2.size());
-  /// Size size = src1.size();
-  /// dst.create(size, src1.type());
-  /// 
-  /// // here is the idiom: check the arrays for continuity and,
-  /// // if this is the case,
-  /// // treat the arrays as 1D vectors
-  /// if( src1.isContinuous() && src2.isContinuous() && dst.isContinuous() )
-  /// {
-  /// size.width *= size.height;
-  /// size.height = 1;
-  /// }
-  /// size.width *= 4;
-  /// 
-  /// for( int i = 0; i < size.height; i++ )
-  /// {
-  /// // when the arrays are continuous,
-  /// // the outer loop is executed only once
-  /// const T* ptr1 = src1.ptr<T>(i);
-  /// const T* ptr2 = src2.ptr<T>(i);
-  /// T* dptr = dst.ptr<T>(i);
-  /// 
-  /// for( int j = 0; j < size.width; j += 4 )
-  /// {
-  /// float alpha = ptr1[j+3]*inv_scale, beta = ptr2[j+3]*inv_scale;
-  /// dptr[j] = saturate_cast<T>(ptr1[j]*alpha + ptr2[j]*beta);
-  /// dptr[j+1] = saturate_cast<T>(ptr1[j+1]*alpha + ptr2[j+1]*beta);
-  /// dptr[j+2] = saturate_cast<T>(ptr1[j+2]*alpha + ptr2[j+2]*beta);
-  /// dptr[j+3] = saturate_cast<T>((1 - (1-alpha)*(1-beta))*alpha_scale);
-  /// }
-  /// }
-  /// }
-  /// ```
-  /// 
-  /// This approach, while being very simple, can boost the performance of a simple element-operation by
-  /// 10-20 percents, especially if the image is rather small and the operation is quite simple.
-  /// 
-  /// Another OpenCV idiom in this function, a call of Mat::create for the destination array, that
-  /// allocates the destination array unless it already has the proper size and type. And while the newly
-  /// allocated arrays are always continuous, you still need to check the destination array because
-  /// Mat::create does not always allocate a new matrix.
-  pub fn is_continuous(&self) -> Result<bool> {
-  // identifier: cv_Mat_isContinuous
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_isContinuous(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_reserve_size_t_sz
+    /// Reserves space for the certain number of rows.
+    /// 
+    /// The method reserves space for sz rows. If the matrix already has enough space to store sz rows,
+    /// nothing happens. If the matrix is reallocated, the first Mat::rows rows are preserved. The method
+    /// emulates the corresponding method of the STL vector class.
+    /// ## Parameters
+    /// * sz: Number of rows.
+    pub fn reserve(&mut self, sz: size_t) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_reserve_size_t_sz(self.as_raw_Mat(), sz) }.into_result()
     }
-  }
-
-  pub fn is_submatrix(&self) -> Result<bool> {
-  // identifier: cv_Mat_isSubmatrix
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_isSubmatrix(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_reserveBuffer_size_t_sz
+    /// Reserves space for the certain number of bytes.
+    /// 
+    /// The method reserves space for sz bytes. If the matrix already has enough space to store sz bytes,
+    /// nothing happens. If matrix has to be reallocated its previous content could be lost.
+    /// ## Parameters
+    /// * sz: Number of bytes.
+    pub fn reserve_buffer(&mut self, sz: size_t) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_reserveBuffer_size_t_sz(self.as_raw_Mat(), sz) }.into_result()
     }
-  }
-
-  /// Returns the matrix element size in bytes.
-  /// 
-  /// The method returns the matrix element size in bytes. For example, if the matrix type is CV_16SC3 ,
-  /// the method returns 3\*sizeof(short) or 6.
-  pub fn elem_size(&self) -> Result<size_t> {
-  // identifier: cv_Mat_elemSize
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_elemSize(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_resize_size_t_sz
+    /// Changes the number of matrix rows.
+    /// 
+    /// The methods change the number of matrix rows. If the matrix is reallocated, the first
+    /// min(Mat::rows, sz) rows are preserved. The methods emulate the corresponding methods of the STL
+    /// vector class.
+    /// ## Parameters
+    /// * sz: New number of rows.
+    pub fn resize(&mut self, sz: size_t) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_resize_size_t_sz(self.as_raw_Mat(), sz) }.into_result()
     }
-  }
-
-  /// Returns the size of each matrix element channel in bytes.
-  /// 
-  /// The method returns the matrix element channel size in bytes, that is, it ignores the number of
-  /// channels. For example, if the matrix type is CV_16SC3 , the method returns sizeof(short) or 2.
-  pub fn elem_size1(&self) -> Result<size_t> {
-  // identifier: cv_Mat_elemSize1
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_elemSize1(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_resize_size_t_sz_Scalar_s
+    /// @overload
+    /// ## Parameters
+    /// * sz: New number of rows.
+    /// * s: Value assigned to the newly added elements.
+    pub fn resize_with_default(&mut self, sz: size_t, s: core::Scalar) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_resize_size_t_sz_Scalar_s(self.as_raw_Mat(), sz, s) }.into_result()
     }
-  }
-
-  /// Returns the type of a matrix element.
-  /// 
-  /// The method returns a matrix element type. This is an identifier compatible with the CvMat type
-  /// system, like CV_16SC3 or 16-bit signed 3-channel array, and so on.
-  pub fn typ(&self) -> Result<i32> {
-  // identifier: cv_Mat_type
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_type(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_push_back__const_void_X_elem
+    pub fn push_back_(&mut self, elem: &c_void) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_push_back__const_void_X_elem(self.as_raw_Mat(), elem) }.into_result()
     }
-  }
-
-  /// Returns the depth of a matrix element.
-  /// 
-  /// The method returns the identifier of the matrix element depth (the type of each individual channel).
-  /// For example, for a 16-bit signed element array, the method returns CV_16S . A complete list of
-  /// matrix types contains the following values:
-  /// *   CV_8U - 8-bit unsigned integers ( 0..255 )
-  /// *   CV_8S - 8-bit signed integers ( -128..127 )
-  /// *   CV_16U - 16-bit unsigned integers ( 0..65535 )
-  /// *   CV_16S - 16-bit signed integers ( -32768..32767 )
-  /// *   CV_32S - 32-bit signed integers ( -2147483648..2147483647 )
-  /// *   CV_32F - 32-bit floating-point numbers ( -FLT_MAX..FLT_MAX, INF, NAN )
-  /// *   CV_64F - 64-bit floating-point numbers ( -DBL_MAX..DBL_MAX, INF, NAN )
-  pub fn depth(&self) -> Result<i32> {
-  // identifier: cv_Mat_depth
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_depth(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_push_back_Mat_m
+    /// @overload
+    /// ## Parameters
+    /// * m: Added line(s).
+    pub fn push_back(&mut self, m: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_push_back_Mat_m(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Returns the number of matrix channels.
-  /// 
-  /// The method returns the number of matrix channels.
-  pub fn channels(&self) -> Result<i32> {
-  // identifier: cv_Mat_channels
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_channels(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_pop_back_size_t_nelems
+    /// Removes elements from the bottom of the matrix.
+    /// 
+    /// The method removes one or more rows from the bottom of the matrix.
+    /// ## Parameters
+    /// * nelems: Number of removed rows. If it is greater than the total number of rows, an exception
+    /// is thrown.
+    ///
+    /// ## C++ default parameters:
+    /// * nelems: 1
+    pub fn pop_back(&mut self, nelems: size_t) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_pop_back_size_t_nelems(self.as_raw_Mat(), nelems) }.into_result()
     }
-  }
-
-  /// Returns a normalized step.
-  /// 
-  /// The method returns a matrix step divided by Mat::elemSize1() . It can be useful to quickly access an
-  /// arbitrary matrix element.
-  ///
-  /// ## C++ default parameters:
-  /// * i: 0
-  pub fn step1(&self, i: i32) -> Result<size_t> {
-  // identifier: cv_Mat_step1_int_i
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_step1_int_i(self.as_raw_Mat(), i);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_locateROI_const_Size_wholeSize_Point_ofs
+    /// Locates the matrix header within a parent matrix.
+    /// 
+    /// After you extracted a submatrix from a matrix using Mat::row, Mat::col, Mat::rowRange,
+    /// Mat::colRange, and others, the resultant submatrix points just to the part of the original big
+    /// matrix. However, each submatrix contains information (represented by datastart and dataend
+    /// fields) that helps reconstruct the original matrix size and the position of the extracted
+    /// submatrix within the original matrix. The method locateROI does exactly that.
+    /// ## Parameters
+    /// * wholeSize: Output parameter that contains the size of the whole matrix containing *this*
+    /// as a part.
+    /// * ofs: Output parameter that contains an offset of *this* inside the whole matrix.
+    pub fn locate_roi(&self, whole_size: core::Size, ofs: core::Point) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_locateROI_const_Size_wholeSize_Point_ofs(self.as_raw_Mat(), whole_size, ofs) }.into_result()
     }
-  }
-
-  /// Returns true if the array has no elements.
-  /// 
-  /// The method returns true if Mat::total() is 0 or if Mat::data is NULL. Because of pop_back() and
-  /// resize() methods `M.total() == 0` does not imply that `M.data == NULL`.
-  pub fn empty(&self) -> Result<bool> {
-  // identifier: cv_Mat_empty
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_empty(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_adjustROI_int_dtop_int_dbottom_int_dleft_int_dright
+    /// Adjusts a submatrix size and position within the parent matrix.
+    /// 
+    /// The method is complimentary to Mat::locateROI . The typical use of these functions is to determine
+    /// the submatrix position within the parent matrix and then shift the position somehow. Typically, it
+    /// can be required for filtering operations when pixels outside of the ROI should be taken into
+    /// account. When all the method parameters are positive, the ROI needs to grow in all directions by the
+    /// specified amount, for example:
+    /// ```ignore
+    /// A.adjustROI(2, 2, 2, 2);
+    /// ```
+    /// 
+    /// In this example, the matrix size is increased by 4 elements in each direction. The matrix is shifted
+    /// by 2 elements to the left and 2 elements up, which brings in all the necessary pixels for the
+    /// filtering with the 5x5 kernel.
+    /// 
+    /// adjustROI forces the adjusted ROI to be inside of the parent matrix that is boundaries of the
+    /// adjusted ROI are constrained by boundaries of the parent matrix. For example, if the submatrix A is
+    /// located in the first row of a parent matrix and you called A.adjustROI(2, 2, 2, 2) then A will not
+    /// be increased in the upward direction.
+    /// 
+    /// The function is used internally by the OpenCV filtering functions, like filter2D , morphological
+    /// operations, and so on.
+    /// ## Parameters
+    /// * dtop: Shift of the top submatrix boundary upwards.
+    /// * dbottom: Shift of the bottom submatrix boundary downwards.
+    /// * dleft: Shift of the left submatrix boundary to the left.
+    /// * dright: Shift of the right submatrix boundary to the right.
+    /// @sa copyMakeBorder
+    pub fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_Mat_adjustROI_int_dtop_int_dbottom_int_dleft_int_dright(self.as_raw_Mat(), dtop, dbottom, dleft, dright) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// Returns the total number of array elements.
-  /// 
-  /// The method returns the number of array elements (a number of pixels if the array represents an
-  /// image).
-  pub fn total(&self) -> Result<size_t> {
-  // identifier: cv_Mat_total
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_total(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_isContinuous_const
+    /// Reports whether the matrix is continuous or not.
+    /// 
+    /// The method returns true if the matrix elements are stored continuously without gaps at the end of
+    /// each row. Otherwise, it returns false. Obviously, 1x1 or 1xN matrices are always continuous.
+    /// Matrices created with Mat::create are always continuous. But if you extract a part of the matrix
+    /// using Mat::col, Mat::diag, and so on, or constructed a matrix header for externally allocated data,
+    /// such matrices may no longer have this property.
+    /// 
+    /// The continuity flag is stored as a bit in the Mat::flags field and is computed automatically when
+    /// you construct a matrix header. Thus, the continuity check is a very fast operation, though
+    /// theoretically it could be done as follows:
+    /// ```ignore
+    /// // alternative implementation of Mat::isContinuous()
+    /// bool myCheckMatContinuity(const Mat& m)
+    /// {
+    /// //return (m.flags & Mat::CONTINUOUS_FLAG) != 0;
+    /// return m.rows == 1 || m.step == m.cols*m.elemSize();
+    /// }
+    /// ```
+    /// 
+    /// The method is used in quite a few of OpenCV functions. The point is that element-wise operations
+    /// (such as arithmetic and logical operations, math functions, alpha blending, color space
+    /// transformations, and others) do not depend on the image geometry. Thus, if all the input and output
+    /// arrays are continuous, the functions can process them as very long single-row vectors. The example
+    /// below illustrates how an alpha-blending function can be implemented:
+    /// ```ignore
+    /// template<typename T>
+    /// void alphaBlendRGBA(const Mat& src1, const Mat& src2, Mat& dst)
+    /// {
+    /// const float alpha_scale = (float)std::numeric_limits<T>::max(),
+    /// inv_scale = 1.f/alpha_scale;
+    /// 
+    /// CV_Assert( src1.type() == src2.type() &&
+    /// src1.type() == CV_MAKETYPE(traits::Depth<T>::value, 4) &&
+    /// src1.size() == src2.size());
+    /// Size size = src1.size();
+    /// dst.create(size, src1.type());
+    /// 
+    /// // here is the idiom: check the arrays for continuity and,
+    /// // if this is the case,
+    /// // treat the arrays as 1D vectors
+    /// if( src1.isContinuous() && src2.isContinuous() && dst.isContinuous() )
+    /// {
+    /// size.width *= size.height;
+    /// size.height = 1;
+    /// }
+    /// size.width *= 4;
+    /// 
+    /// for( int i = 0; i < size.height; i++ )
+    /// {
+    /// // when the arrays are continuous,
+    /// // the outer loop is executed only once
+    /// const T* ptr1 = src1.ptr<T>(i);
+    /// const T* ptr2 = src2.ptr<T>(i);
+    /// T* dptr = dst.ptr<T>(i);
+    /// 
+    /// for( int j = 0; j < size.width; j += 4 )
+    /// {
+    /// float alpha = ptr1[j+3]*inv_scale, beta = ptr2[j+3]*inv_scale;
+    /// dptr[j] = saturate_cast<T>(ptr1[j]*alpha + ptr2[j]*beta);
+    /// dptr[j+1] = saturate_cast<T>(ptr1[j+1]*alpha + ptr2[j+1]*beta);
+    /// dptr[j+2] = saturate_cast<T>(ptr1[j+2]*alpha + ptr2[j+2]*beta);
+    /// dptr[j+3] = saturate_cast<T>((1 - (1-alpha)*(1-beta))*alpha_scale);
+    /// }
+    /// }
+    /// }
+    /// ```
+    /// 
+    /// This approach, while being very simple, can boost the performance of a simple element-operation by
+    /// 10-20 percents, especially if the image is rather small and the operation is quite simple.
+    /// 
+    /// Another OpenCV idiom in this function, a call of Mat::create for the destination array, that
+    /// allocates the destination array unless it already has the proper size and type. And while the newly
+    /// allocated arrays are always continuous, you still need to check the destination array because
+    /// Mat::create does not always allocate a new matrix.
+    pub fn is_continuous(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_Mat_isContinuous_const(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Returns the total number of array elements.
-  /// 
-  /// The method returns the number of elements within a certain sub-array slice with startDim <= dim < endDim
-  ///
-  /// ## C++ default parameters:
-  /// * end_dim: INT_MAX
-  pub fn total_v0(&self, start_dim: i32, end_dim: i32) -> Result<size_t> {
-  // identifier: cv_Mat_total_int_startDim_int_endDim
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_total_int_startDim_int_endDim(self.as_raw_Mat(), start_dim, end_dim);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_isSubmatrix_const
+    pub fn is_submatrix(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_Mat_isSubmatrix_const(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// ## Parameters
-  /// * elemChannels: Number of channels or number of columns the matrix should have.
-  ///                     For a 2-D matrix, when the matrix has only 1 column, then it should have
-  ///                     elemChannels channels; When the matrix has only 1 channel,
-  ///                     then it should have elemChannels columns.
-  ///                     For a 3-D matrix, it should have only one channel. Furthermore,
-  ///                     if the number of planes is not one, then the number of rows
-  ///                     within every plane has to be 1; if the number of rows within
-  ///                     every plane is not 1, then the number of planes has to be 1.
-  /// * depth: The depth the matrix should have. Set it to -1 when any depth is fine.
-  /// * requireContinuous: Set it to true to require the matrix to be continuous
-  /// @return -1 if the requirement is not satisfied.
-  ///         Otherwise, it returns the number of elements in the matrix. Note
-  ///         that an element may have multiple channels.
-  /// 
-  /// The following code demonstrates its usage for a 2-d matrix:
-  /// @snippet snippets/core_mat_checkVector.cpp example-2d
-  /// 
-  /// The following code demonstrates its usage for a 3-d matrix:
-  /// @snippet snippets/core_mat_checkVector.cpp example-3d
-  ///
-  /// ## C++ default parameters:
-  /// * depth: -1
-  /// * require_continuous: true
-  pub fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
-  // identifier: cv_Mat_checkVector_int_elemChannels_int_depth_bool_requireContinuous
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_checkVector_int_elemChannels_int_depth_bool_requireContinuous(self.as_raw_Mat(), elem_channels, depth, require_continuous);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_elemSize_const
+    /// Returns the matrix element size in bytes.
+    /// 
+    /// The method returns the matrix element size in bytes. For example, if the matrix type is CV_16SC3 ,
+    /// the method returns 3\*sizeof(short) or 6.
+    pub fn elem_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_Mat_elemSize_const(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Returns a pointer to the specified matrix row.
-  /// 
-  /// The methods return `uchar*` or typed pointer to the specified matrix row. See the sample in
-  /// Mat::isContinuous to know how to use these methods.
-  /// ## Parameters
-  /// * i0: A 0-based row index.
-  ///
-  /// ## C++ default parameters:
-  /// * i0: 0
-  pub fn ptr0(&mut self, i0: i32) -> Result<*mut u8> {
-  // identifier: cv_Mat_ptr_int_i0
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_ptr_int_i0(self.as_raw_Mat(), i0);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_elemSize1_const
+    /// Returns the size of each matrix element channel in bytes.
+    /// 
+    /// The method returns the matrix element channel size in bytes, that is, it ignores the number of
+    /// channels. For example, if the matrix type is CV_16SC3 , the method returns sizeof(short) or 2.
+    pub fn elem_size1(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_Mat_elemSize1_const(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * row: Index along the dimension 0
-  /// * col: Index along the dimension 1
-  pub fn ptr(&mut self, row: i32, col: i32) -> Result<*mut u8> {
-  // identifier: cv_Mat_ptr_int_row_int_col
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_ptr_int_row_int_col(self.as_raw_Mat(), row, col);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_type_const
+    /// Returns the type of a matrix element.
+    /// 
+    /// The method returns a matrix element type. This is an identifier compatible with the CvMat type
+    /// system, like CV_16SC3 or 16-bit signed 3-channel array, and so on.
+    pub fn typ(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_Mat_type_const(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// @overload
-  pub fn ptr2(&mut self, i0: i32, i1: i32, i2: i32) -> Result<*mut u8> {
-  // identifier: cv_Mat_ptr_int_i0_int_i1_int_i2
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_ptr_int_i0_int_i1_int_i2(self.as_raw_Mat(), i0, i1, i2);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_depth_const
+    /// Returns the depth of a matrix element.
+    /// 
+    /// The method returns the identifier of the matrix element depth (the type of each individual channel).
+    /// For example, for a 16-bit signed element array, the method returns CV_16S . A complete list of
+    /// matrix types contains the following values:
+    /// *   CV_8U - 8-bit unsigned integers ( 0..255 )
+    /// *   CV_8S - 8-bit signed integers ( -128..127 )
+    /// *   CV_16U - 16-bit unsigned integers ( 0..65535 )
+    /// *   CV_16S - 16-bit signed integers ( -32768..32767 )
+    /// *   CV_32S - 32-bit signed integers ( -2147483648..2147483647 )
+    /// *   CV_32F - 32-bit floating-point numbers ( -FLT_MAX..FLT_MAX, INF, NAN )
+    /// *   CV_64F - 64-bit floating-point numbers ( -DBL_MAX..DBL_MAX, INF, NAN )
+    pub fn depth(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_Mat_depth_const(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  pub fn update_continuity_flag(&mut self) -> Result<()> {
-  // identifier: cv_Mat_updateContinuityFlag
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_updateContinuityFlag(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_Mat_channels_const
+    /// Returns the number of matrix channels.
+    /// 
+    /// The method returns the number of matrix channels.
+    pub fn channels(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_Mat_channels_const(self.as_raw_Mat()) }.into_result()
     }
-  }
-
-  pub fn size(&self) -> Result<core::Size> {
-  // identifier: cv_Mat_size
-    unsafe {
-      let rv = sys::cv_core_cv_Mat_size(self.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Mat_step1_const_int_i
+    /// Returns a normalized step.
+    /// 
+    /// The method returns a matrix step divided by Mat::elemSize1() . It can be useful to quickly access an
+    /// arbitrary matrix element.
+    ///
+    /// ## C++ default parameters:
+    /// * i: 0
+    pub fn step1(&self, i: i32) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_Mat_step1_const_int_i(self.as_raw_Mat(), i) }.into_result()
     }
-  }
-
+    
+    // identifier: cv_Mat_empty_const
+    /// Returns true if the array has no elements.
+    /// 
+    /// The method returns true if Mat::total() is 0 or if Mat::data is NULL. Because of pop_back() and
+    /// resize() methods `M.total() == 0` does not imply that `M.data == NULL`.
+    pub fn empty(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_Mat_empty_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    // identifier: cv_Mat_total_const
+    /// Returns the total number of array elements.
+    /// 
+    /// The method returns the number of array elements (a number of pixels if the array represents an
+    /// image).
+    pub fn total(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_Mat_total_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    // identifier: cv_Mat_total_const_int_startDim_int_endDim
+    /// Returns the total number of array elements.
+    /// 
+    /// The method returns the number of elements within a certain sub-array slice with startDim <= dim < endDim
+    ///
+    /// ## C++ default parameters:
+    /// * end_dim: INT_MAX
+    pub fn total_1(&self, start_dim: i32, end_dim: i32) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_Mat_total_const_int_startDim_int_endDim(self.as_raw_Mat(), start_dim, end_dim) }.into_result()
+    }
+    
+    // identifier: cv_Mat_checkVector_const_int_elemChannels_int_depth_bool_requireContinuous
+    /// ## Parameters
+    /// * elemChannels: Number of channels or number of columns the matrix should have.
+    ///      For a 2-D matrix, when the matrix has only 1 column, then it should have
+    ///      elemChannels channels; When the matrix has only 1 channel,
+    ///      then it should have elemChannels columns.
+    ///      For a 3-D matrix, it should have only one channel. Furthermore,
+    ///      if the number of planes is not one, then the number of rows
+    ///      within every plane has to be 1; if the number of rows within
+    ///      every plane is not 1, then the number of planes has to be 1.
+    /// * depth: The depth the matrix should have. Set it to -1 when any depth is fine.
+    /// * requireContinuous: Set it to true to require the matrix to be continuous
+    /// @return -1 if the requirement is not satisfied.
+    ///   Otherwise, it returns the number of elements in the matrix. Note
+    ///   that an element may have multiple channels.
+    /// 
+    /// The following code demonstrates its usage for a 2-d matrix:
+    /// @snippet snippets/core_mat_checkVector.cpp example-2d
+    /// 
+    /// The following code demonstrates its usage for a 3-d matrix:
+    /// @snippet snippets/core_mat_checkVector.cpp example-3d
+    ///
+    /// ## C++ default parameters:
+    /// * depth: -1
+    /// * require_continuous: true
+    pub fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
+        unsafe { sys::cv_core_cv_Mat_checkVector_const_int_elemChannels_int_depth_bool_requireContinuous(self.as_raw_Mat(), elem_channels, depth, require_continuous) }.into_result()
+    }
+    
+    // identifier: cv_Mat_ptr_int_i0
+    /// Returns a pointer to the specified matrix row.
+    /// 
+    /// The methods return `uchar*` or typed pointer to the specified matrix row. See the sample in
+    /// Mat::isContinuous to know how to use these methods.
+    /// ## Parameters
+    /// * i0: A 0-based row index.
+    ///
+    /// ## C++ default parameters:
+    /// * i0: 0
+    pub fn ptr_mut(&mut self, i0: i32) -> Result<&mut u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_int_i0(self.as_raw_Mat(), i0) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_ptr_const_int_i0
+    /// @overload
+    ///
+    /// ## C++ default parameters:
+    /// * i0: 0
+    pub fn ptr(&self, i0: i32) -> Result<&u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_const_int_i0(self.as_raw_Mat(), i0) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_ptr_int_row_int_col
+    /// @overload
+    /// ## Parameters
+    /// * row: Index along the dimension 0
+    /// * col: Index along the dimension 1
+    pub fn ptr_2d_mut(&mut self, row: i32, col: i32) -> Result<&mut u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_int_row_int_col(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_ptr_const_int_row_int_col
+    /// @overload
+    /// ## Parameters
+    /// * row: Index along the dimension 0
+    /// * col: Index along the dimension 1
+    pub fn ptr_2d(&self, row: i32, col: i32) -> Result<&u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_const_int_row_int_col(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_ptr_int_i0_int_i1_int_i2
+    /// @overload
+    pub fn ptr_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_int_i0_int_i1_int_i2(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_ptr_const_int_i0_int_i1_int_i2
+    /// @overload
+    pub fn ptr_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<&u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_const_int_i0_int_i1_int_i2(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_ptr_const_int_X_idx
+    /// @overload
+    pub fn ptr_1(&mut self, idx: &i32) -> Result<&mut u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_const_int_X_idx(self.as_raw_Mat(), idx) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_ptr_const_const_int_X_idx
+    /// @overload
+    pub fn ptr_2(&self, idx: &i32) -> Result<&u8> {
+        unsafe { sys::cv_core_cv_Mat_ptr_const_const_int_X_idx(self.as_raw_Mat(), idx) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    // identifier: cv_Mat_at_int_i0
+    /// Returns a reference to the specified array element.
+    /// 
+    /// The template methods return a reference to the specified array element. For the sake of higher
+    /// performance, the index range checks are only performed in the Debug configuration.
+    /// 
+    /// Note that the variants with a single index (i) can be used to access elements of single-row or
+    /// single-column 2-dimensional arrays. That is, if, for example, A is a 1 x N floating-point matrix and
+    /// B is an M x 1 integer matrix, you can simply write `A.at<float>(k+4)` and `B.at<int>(2*i+1)`
+    /// instead of `A.at<float>(0,k+4)` and `B.at<int>(2*i+1,0)`, respectively.
+    /// 
+    /// The example below initializes a Hilbert matrix:
+    /// ```ignore
+    /// Mat H(100, 100, CV_64F);
+    /// for(int i = 0; i < H.rows; i++)
+    /// for(int j = 0; j < H.cols; j++)
+    /// H.at<double>(i,j)=1./(i+j+1);
+    /// ```
+    /// 
+    /// 
+    /// Keep in mind that the size identifier used in the at operator cannot be chosen at random. It depends
+    /// on the image from which you are trying to retrieve the data. The table below gives a better insight in this:
+    /// - If matrix is of type `CV_8U` then use `Mat.at<uchar>(y,x)`.
+    /// - If matrix is of type `CV_8S` then use `Mat.at<schar>(y,x)`.
+    /// - If matrix is of type `CV_16U` then use `Mat.at<ushort>(y,x)`.
+    /// - If matrix is of type `CV_16S` then use `Mat.at<short>(y,x)`.
+    /// - If matrix is of type `CV_32S`  then use `Mat.at<int>(y,x)`.
+    /// - If matrix is of type `CV_32F`  then use `Mat.at<float>(y,x)`.
+    /// - If matrix is of type `CV_64F` then use `Mat.at<double>(y,x)`.
+    /// 
+    /// ## Parameters
+    /// * i0: Index along the dimension 0
+    ///
+    /// ## C++ default parameters:
+    /// * i0: 0
+    pub fn at_mut<T: core::ValidMatElement>(&mut self, i0: i32) -> Result<&mut T> { self._at_mut(i0) }
+    
+    // identifier: cv_Mat_at_const_int_i0
+    /// @overload
+    /// ## Parameters
+    /// * i0: Index along the dimension 0
+    ///
+    /// ## C++ default parameters:
+    /// * i0: 0
+    pub fn at<T: core::ValidMatElement>(&self, i0: i32) -> Result<&T> { self._at(i0) }
+    
+    // identifier: cv_Mat_at_int_row_int_col
+    /// @overload
+    /// ## Parameters
+    /// * row: Index along the dimension 0
+    /// * col: Index along the dimension 1
+    pub fn at_2d_mut<T: core::ValidMatElement>(&mut self, row: i32, col: i32) -> Result<&mut T> { self._at_2d_mut(row, col) }
+    
+    // identifier: cv_Mat_at_const_int_row_int_col
+    /// @overload
+    /// ## Parameters
+    /// * row: Index along the dimension 0
+    /// * col: Index along the dimension 1
+    pub fn at_2d<T: core::ValidMatElement>(&self, row: i32, col: i32) -> Result<&T> { self._at_2d(row, col) }
+    
+    // identifier: cv_Mat_at_int_i0_int_i1_int_i2
+    /// @overload
+    /// ## Parameters
+    /// * i0: Index along the dimension 0
+    /// * i1: Index along the dimension 1
+    /// * i2: Index along the dimension 2
+    pub fn at_3d_mut<T: core::ValidMatElement>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> { self._at_3d_mut(i0, i1, i2) }
+    
+    // identifier: cv_Mat_at_const_int_i0_int_i1_int_i2
+    /// @overload
+    /// ## Parameters
+    /// * i0: Index along the dimension 0
+    /// * i1: Index along the dimension 1
+    /// * i2: Index along the dimension 2
+    pub fn at_3d<T: core::ValidMatElement>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> { self._at_3d(i0, i1, i2) }
+    
+    // identifier: cv_Mat_updateContinuityFlag
+    pub fn update_continuity_flag(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mat_updateContinuityFlag(self.as_raw_Mat()) }.into_result()
+    }
+    
+    // identifier: cv_Mat_size_const
+    pub fn size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_core_cv_Mat_size_const(self.as_raw_Mat()) }.into_result()
+    }
+    
 }
+
 // boxed class cv::MatExpr
 /// Matrix expression representation
 /// @anchor MatrixExpressions
@@ -8229,7 +6851,6 @@ impl Mat {
 /// Mat sharpened = img*(1+amount) + blurred*(-amount);
 /// img.copyTo(sharpened, lowContrastMask);
 /// ```
-
 #[allow(dead_code)]
 pub struct MatExpr {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8242,75 +6863,41 @@ impl Drop for core::MatExpr {
 impl core::MatExpr {
     #[doc(hidden)] pub fn as_raw_MatExpr(&self) -> *mut c_void { self.ptr }
 }
+
 impl MatExpr {
 
-  pub fn size(&self) -> Result<core::Size> {
-  // identifier: cv_MatExpr_size
-    unsafe {
-      let rv = sys::cv_core_cv_MatExpr_size(self.as_raw_MatExpr());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    // identifier: cv_MatExpr_size_const
+    pub fn size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_core_cv_MatExpr_size_const(self.as_raw_MatExpr()) }.into_result()
     }
-  }
-
-  pub fn typ(&self) -> Result<i32> {
-  // identifier: cv_MatExpr_type
-    unsafe {
-      let rv = sys::cv_core_cv_MatExpr_type(self.as_raw_MatExpr());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_MatExpr_type_const
+    pub fn typ(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_MatExpr_type_const(self.as_raw_MatExpr()) }.into_result()
     }
-  }
-
-  pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_MatExpr_cross_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_MatExpr_cross_Mat_m(self.as_raw_MatExpr(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_MatExpr_cross_const_Mat_m
+    pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_MatExpr_cross_const_Mat_m(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  pub fn dot(&self, m: &core::Mat) -> Result<f64> {
-  // identifier: cv_MatExpr_dot_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_MatExpr_dot_Mat_m(self.as_raw_MatExpr(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_MatExpr_dot_const_Mat_m
+    pub fn dot(&self, m: &core::Mat) -> Result<f64> {
+        unsafe { sys::cv_core_cv_MatExpr_dot_const_Mat_m(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
     }
-  }
-
+    
 }
+
 // Generating impl for trait cv::MatOp (trait)
 pub trait MatOp {
-  #[doc(hidden)] fn as_raw_MatOp(&self) -> *mut c_void;
+    #[doc(hidden)] fn as_raw_MatOp(&self) -> *mut c_void;
 }
+
 impl<'a> MatOp + 'a {
 
 }
 
 // boxed class cv::MatSize
-
 #[allow(dead_code)]
 pub struct MatSize {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8323,25 +6910,22 @@ impl Drop for core::MatSize {
 impl core::MatSize {
     #[doc(hidden)] pub fn as_raw_MatSize(&self) -> *mut c_void { self.ptr }
 }
+
 impl MatSize {
 
-  pub fn dims(&self) -> Result<i32> {
-  // identifier: cv_MatSize_dims
-    unsafe {
-      let rv = sys::cv_core_cv_MatSize_dims(self.as_raw_MatSize());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    // identifier: cv_MatSize_MatSize_int_X__p
+    pub fn new(_p: &mut i32) -> Result<core::MatSize> {
+        unsafe { sys::cv_core_cv_MatSize_MatSize_int_X__p(_p) }.into_result().map(|x| core::MatSize { ptr: x })
     }
-  }
-
+    
+    // identifier: cv_MatSize_dims_const
+    pub fn dims(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_MatSize_dims_const(self.as_raw_MatSize()) }.into_result()
+    }
+    
 }
-// boxed class cv::MatStep
 
+// boxed class cv::MatStep
 #[allow(dead_code)]
 pub struct MatStep {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8354,39 +6938,22 @@ impl Drop for core::MatStep {
 impl core::MatStep {
     #[doc(hidden)] pub fn as_raw_MatStep(&self) -> *mut c_void { self.ptr }
 }
+
 impl MatStep {
 
-  pub fn default() -> Result<core::MatStep> {
-  // identifier: cv_MatStep_MatStep
-    unsafe {
-      let rv = sys::cv_core_cv_MatStep_MatStep();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::MatStep { ptr: rv.result })
-      }
+    // identifier: cv_MatStep_MatStep
+    pub fn default() -> Result<core::MatStep> {
+        unsafe { sys::cv_core_cv_MatStep_MatStep() }.into_result().map(|x| core::MatStep { ptr: x })
     }
-  }
-
-  pub fn new(s: size_t) -> Result<core::MatStep> {
-  // identifier: cv_MatStep_MatStep_size_t_s
-    unsafe {
-      let rv = sys::cv_core_cv_MatStep_MatStep_size_t_s(s);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::MatStep { ptr: rv.result })
-      }
+    
+    // identifier: cv_MatStep_MatStep_size_t_s
+    pub fn new(s: size_t) -> Result<core::MatStep> {
+        unsafe { sys::cv_core_cv_MatStep_MatStep_size_t_s(s) }.into_result().map(|x| core::MatStep { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::Matx_AddOp
 
+// boxed class cv::Matx_AddOp
 #[allow(dead_code)]
 pub struct Matx_AddOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8399,39 +6966,22 @@ impl Drop for core::Matx_AddOp {
 impl core::Matx_AddOp {
     #[doc(hidden)] pub fn as_raw_Matx_AddOp(&self) -> *mut c_void { self.ptr }
 }
+
 impl Matx_AddOp {
 
-  pub fn new() -> Result<core::Matx_AddOp> {
-  // identifier: cv_Matx_AddOp_Matx_AddOp
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_AddOp_Matx_AddOp();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_AddOp { ptr: rv.result })
-      }
+    // identifier: cv_Matx_AddOp_Matx_AddOp
+    pub fn new() -> Result<core::Matx_AddOp> {
+        unsafe { sys::cv_core_cv_Matx_AddOp_Matx_AddOp() }.into_result().map(|x| core::Matx_AddOp { ptr: x })
     }
-  }
-
-  pub fn new_v0(unnamed_arg: &core::Matx_AddOp) -> Result<core::Matx_AddOp> {
-  // identifier: cv_Matx_AddOp_Matx_AddOp_Matx_AddOp_unnamed_arg
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_AddOp_Matx_AddOp_Matx_AddOp_unnamed_arg(unnamed_arg.as_raw_Matx_AddOp());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_AddOp { ptr: rv.result })
-      }
+    
+    // identifier: cv_Matx_AddOp_Matx_AddOp_Matx_AddOp_unnamed_arg
+    pub fn new_1(unnamed_arg: &core::Matx_AddOp) -> Result<core::Matx_AddOp> {
+        unsafe { sys::cv_core_cv_Matx_AddOp_Matx_AddOp_Matx_AddOp_unnamed_arg(unnamed_arg.as_raw_Matx_AddOp()) }.into_result().map(|x| core::Matx_AddOp { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::Matx_DivOp
 
+// boxed class cv::Matx_DivOp
 #[allow(dead_code)]
 pub struct Matx_DivOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8444,39 +6994,22 @@ impl Drop for core::Matx_DivOp {
 impl core::Matx_DivOp {
     #[doc(hidden)] pub fn as_raw_Matx_DivOp(&self) -> *mut c_void { self.ptr }
 }
+
 impl Matx_DivOp {
 
-  pub fn new() -> Result<core::Matx_DivOp> {
-  // identifier: cv_Matx_DivOp_Matx_DivOp
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_DivOp_Matx_DivOp();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_DivOp { ptr: rv.result })
-      }
+    // identifier: cv_Matx_DivOp_Matx_DivOp
+    pub fn new() -> Result<core::Matx_DivOp> {
+        unsafe { sys::cv_core_cv_Matx_DivOp_Matx_DivOp() }.into_result().map(|x| core::Matx_DivOp { ptr: x })
     }
-  }
-
-  pub fn new_v0(unnamed_arg: &core::Matx_DivOp) -> Result<core::Matx_DivOp> {
-  // identifier: cv_Matx_DivOp_Matx_DivOp_Matx_DivOp_unnamed_arg
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_DivOp_Matx_DivOp_Matx_DivOp_unnamed_arg(unnamed_arg.as_raw_Matx_DivOp());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_DivOp { ptr: rv.result })
-      }
+    
+    // identifier: cv_Matx_DivOp_Matx_DivOp_Matx_DivOp_unnamed_arg
+    pub fn new_1(unnamed_arg: &core::Matx_DivOp) -> Result<core::Matx_DivOp> {
+        unsafe { sys::cv_core_cv_Matx_DivOp_Matx_DivOp_Matx_DivOp_unnamed_arg(unnamed_arg.as_raw_Matx_DivOp()) }.into_result().map(|x| core::Matx_DivOp { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::Matx_MatMulOp
 
+// boxed class cv::Matx_MatMulOp
 #[allow(dead_code)]
 pub struct Matx_MatMulOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8489,39 +7022,22 @@ impl Drop for core::Matx_MatMulOp {
 impl core::Matx_MatMulOp {
     #[doc(hidden)] pub fn as_raw_Matx_MatMulOp(&self) -> *mut c_void { self.ptr }
 }
+
 impl Matx_MatMulOp {
 
-  pub fn new() -> Result<core::Matx_MatMulOp> {
-  // identifier: cv_Matx_MatMulOp_Matx_MatMulOp
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_MatMulOp_Matx_MatMulOp();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_MatMulOp { ptr: rv.result })
-      }
+    // identifier: cv_Matx_MatMulOp_Matx_MatMulOp
+    pub fn new() -> Result<core::Matx_MatMulOp> {
+        unsafe { sys::cv_core_cv_Matx_MatMulOp_Matx_MatMulOp() }.into_result().map(|x| core::Matx_MatMulOp { ptr: x })
     }
-  }
-
-  pub fn new_v0(unnamed_arg: &core::Matx_MatMulOp) -> Result<core::Matx_MatMulOp> {
-  // identifier: cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp_unnamed_arg
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp_unnamed_arg(unnamed_arg.as_raw_Matx_MatMulOp());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_MatMulOp { ptr: rv.result })
-      }
+    
+    // identifier: cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp_unnamed_arg
+    pub fn new_1(unnamed_arg: &core::Matx_MatMulOp) -> Result<core::Matx_MatMulOp> {
+        unsafe { sys::cv_core_cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp_unnamed_arg(unnamed_arg.as_raw_Matx_MatMulOp()) }.into_result().map(|x| core::Matx_MatMulOp { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::Matx_MulOp
 
+// boxed class cv::Matx_MulOp
 #[allow(dead_code)]
 pub struct Matx_MulOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8534,39 +7050,22 @@ impl Drop for core::Matx_MulOp {
 impl core::Matx_MulOp {
     #[doc(hidden)] pub fn as_raw_Matx_MulOp(&self) -> *mut c_void { self.ptr }
 }
+
 impl Matx_MulOp {
 
-  pub fn new() -> Result<core::Matx_MulOp> {
-  // identifier: cv_Matx_MulOp_Matx_MulOp
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_MulOp_Matx_MulOp();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_MulOp { ptr: rv.result })
-      }
+    // identifier: cv_Matx_MulOp_Matx_MulOp
+    pub fn new() -> Result<core::Matx_MulOp> {
+        unsafe { sys::cv_core_cv_Matx_MulOp_Matx_MulOp() }.into_result().map(|x| core::Matx_MulOp { ptr: x })
     }
-  }
-
-  pub fn new_v0(unnamed_arg: &core::Matx_MulOp) -> Result<core::Matx_MulOp> {
-  // identifier: cv_Matx_MulOp_Matx_MulOp_Matx_MulOp_unnamed_arg
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_MulOp_Matx_MulOp_Matx_MulOp_unnamed_arg(unnamed_arg.as_raw_Matx_MulOp());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_MulOp { ptr: rv.result })
-      }
+    
+    // identifier: cv_Matx_MulOp_Matx_MulOp_Matx_MulOp_unnamed_arg
+    pub fn new_1(unnamed_arg: &core::Matx_MulOp) -> Result<core::Matx_MulOp> {
+        unsafe { sys::cv_core_cv_Matx_MulOp_Matx_MulOp_Matx_MulOp_unnamed_arg(unnamed_arg.as_raw_Matx_MulOp()) }.into_result().map(|x| core::Matx_MulOp { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::Matx_ScaleOp
 
+// boxed class cv::Matx_ScaleOp
 #[allow(dead_code)]
 pub struct Matx_ScaleOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8579,39 +7078,22 @@ impl Drop for core::Matx_ScaleOp {
 impl core::Matx_ScaleOp {
     #[doc(hidden)] pub fn as_raw_Matx_ScaleOp(&self) -> *mut c_void { self.ptr }
 }
+
 impl Matx_ScaleOp {
 
-  pub fn new() -> Result<core::Matx_ScaleOp> {
-  // identifier: cv_Matx_ScaleOp_Matx_ScaleOp
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_ScaleOp_Matx_ScaleOp();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_ScaleOp { ptr: rv.result })
-      }
+    // identifier: cv_Matx_ScaleOp_Matx_ScaleOp
+    pub fn new() -> Result<core::Matx_ScaleOp> {
+        unsafe { sys::cv_core_cv_Matx_ScaleOp_Matx_ScaleOp() }.into_result().map(|x| core::Matx_ScaleOp { ptr: x })
     }
-  }
-
-  pub fn new_v0(unnamed_arg: &core::Matx_ScaleOp) -> Result<core::Matx_ScaleOp> {
-  // identifier: cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp_unnamed_arg
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp_unnamed_arg(unnamed_arg.as_raw_Matx_ScaleOp());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_ScaleOp { ptr: rv.result })
-      }
+    
+    // identifier: cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp_unnamed_arg
+    pub fn new_1(unnamed_arg: &core::Matx_ScaleOp) -> Result<core::Matx_ScaleOp> {
+        unsafe { sys::cv_core_cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp_unnamed_arg(unnamed_arg.as_raw_Matx_ScaleOp()) }.into_result().map(|x| core::Matx_ScaleOp { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::Matx_SubOp
 
+// boxed class cv::Matx_SubOp
 #[allow(dead_code)]
 pub struct Matx_SubOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8624,39 +7106,22 @@ impl Drop for core::Matx_SubOp {
 impl core::Matx_SubOp {
     #[doc(hidden)] pub fn as_raw_Matx_SubOp(&self) -> *mut c_void { self.ptr }
 }
+
 impl Matx_SubOp {
 
-  pub fn new() -> Result<core::Matx_SubOp> {
-  // identifier: cv_Matx_SubOp_Matx_SubOp
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_SubOp_Matx_SubOp();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_SubOp { ptr: rv.result })
-      }
+    // identifier: cv_Matx_SubOp_Matx_SubOp
+    pub fn new() -> Result<core::Matx_SubOp> {
+        unsafe { sys::cv_core_cv_Matx_SubOp_Matx_SubOp() }.into_result().map(|x| core::Matx_SubOp { ptr: x })
     }
-  }
-
-  pub fn new_v0(unnamed_arg: &core::Matx_SubOp) -> Result<core::Matx_SubOp> {
-  // identifier: cv_Matx_SubOp_Matx_SubOp_Matx_SubOp_unnamed_arg
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_SubOp_Matx_SubOp_Matx_SubOp_unnamed_arg(unnamed_arg.as_raw_Matx_SubOp());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_SubOp { ptr: rv.result })
-      }
+    
+    // identifier: cv_Matx_SubOp_Matx_SubOp_Matx_SubOp_unnamed_arg
+    pub fn new_1(unnamed_arg: &core::Matx_SubOp) -> Result<core::Matx_SubOp> {
+        unsafe { sys::cv_core_cv_Matx_SubOp_Matx_SubOp_Matx_SubOp_unnamed_arg(unnamed_arg.as_raw_Matx_SubOp()) }.into_result().map(|x| core::Matx_SubOp { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::Matx_TOp
 
+// boxed class cv::Matx_TOp
 #[allow(dead_code)]
 pub struct Matx_TOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8669,151 +7134,91 @@ impl Drop for core::Matx_TOp {
 impl core::Matx_TOp {
     #[doc(hidden)] pub fn as_raw_Matx_TOp(&self) -> *mut c_void { self.ptr }
 }
+
 impl Matx_TOp {
 
-  pub fn new() -> Result<core::Matx_TOp> {
-  // identifier: cv_Matx_TOp_Matx_TOp
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_TOp_Matx_TOp();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_TOp { ptr: rv.result })
-      }
+    // identifier: cv_Matx_TOp_Matx_TOp
+    pub fn new() -> Result<core::Matx_TOp> {
+        unsafe { sys::cv_core_cv_Matx_TOp_Matx_TOp() }.into_result().map(|x| core::Matx_TOp { ptr: x })
     }
-  }
-
-  pub fn new_v0(unnamed_arg: &core::Matx_TOp) -> Result<core::Matx_TOp> {
-  // identifier: cv_Matx_TOp_Matx_TOp_Matx_TOp_unnamed_arg
-    unsafe {
-      let rv = sys::cv_core_cv_Matx_TOp_Matx_TOp_Matx_TOp_unnamed_arg(unnamed_arg.as_raw_Matx_TOp());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Matx_TOp { ptr: rv.result })
-      }
+    
+    // identifier: cv_Matx_TOp_Matx_TOp_Matx_TOp_unnamed_arg
+    pub fn new_1(unnamed_arg: &core::Matx_TOp) -> Result<core::Matx_TOp> {
+        unsafe { sys::cv_core_cv_Matx_TOp_Matx_TOp_Matx_TOp_unnamed_arg(unnamed_arg.as_raw_Matx_TOp()) }.into_result().map(|x| core::Matx_TOp { ptr: x })
     }
-  }
-
+    
 }
+
 // Generating impl for trait cv::MinProblemSolver (trait)
 /// Basic interface for all solvers
 pub trait MinProblemSolver : core::Algorithm {
-  #[doc(hidden)] fn as_raw_MinProblemSolver(&self) -> *mut c_void;
-  /// Getter for the optimized function.
-  /// 
-  /// The optimized function is represented by Function interface, which requires derivatives to
-  /// implement the calc(double*) and getDim() methods to evaluate the function.
-  /// 
-  /// @return Smart-pointer to an object that implements Function interface - it represents the
-  /// function that is being optimized. It can be empty, if no function was given so far.
-  fn get_function(&self) -> Result<types::PtrOfFunction> {
-  // identifier: cv_MinProblemSolver_getFunction
-    unsafe {
-      let rv = sys::cv_core_cv_MinProblemSolver_getFunction(self.as_raw_MinProblemSolver());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(types::PtrOfFunction { ptr: rv.result })
-      }
+    #[doc(hidden)] fn as_raw_MinProblemSolver(&self) -> *mut c_void;
+    // identifier: cv_MinProblemSolver_getFunction_const
+    /// Getter for the optimized function.
+    /// 
+    /// The optimized function is represented by Function interface, which requires derivatives to
+    /// implement the calc(double*) and getDim() methods to evaluate the function.
+    /// 
+    /// @return Smart-pointer to an object that implements Function interface - it represents the
+    /// function that is being optimized. It can be empty, if no function was given so far.
+    fn get_function(&self) -> Result<types::PtrOfFunction> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_getFunction_const(self.as_raw_MinProblemSolver()) }.into_result().map(|x| types::PtrOfFunction { ptr: x })
     }
-  }
-
-  /// Setter for the optimized function.
-  /// 
-  /// *It should be called at least once before the call to* minimize(), as default value is not usable.
-  /// 
-  /// ## Parameters
-  /// * f: The new function to optimize.
-  fn set_function(&mut self, f: &types::PtrOfFunction) -> Result<()> {
-  // identifier: cv_MinProblemSolver_setFunction_PtrOfFunction_f
-    unsafe {
-      let rv = sys::cv_core_cv_MinProblemSolver_setFunction_PtrOfFunction_f(self.as_raw_MinProblemSolver(), f.as_raw_PtrOfFunction());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_MinProblemSolver_setFunction_PtrOfFunction_f
+    /// Setter for the optimized function.
+    /// 
+    /// *It should be called at least once before the call to* minimize(), as default value is not usable.
+    /// 
+    /// ## Parameters
+    /// * f: The new function to optimize.
+    fn set_function(&mut self, f: &types::PtrOfFunction) -> Result<()> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_setFunction_PtrOfFunction_f(self.as_raw_MinProblemSolver(), f.as_raw_PtrOfFunction()) }.into_result()
     }
-  }
-
-  /// Getter for the previously set terminal criteria for this algorithm.
-  /// 
-  /// @return Deep copy of the terminal criteria used at the moment.
-  fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-  // identifier: cv_MinProblemSolver_getTermCriteria
-    unsafe {
-      let rv = sys::cv_core_cv_MinProblemSolver_getTermCriteria(self.as_raw_MinProblemSolver());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::TermCriteria { ptr: rv.result })
-      }
+    
+    // identifier: cv_MinProblemSolver_getTermCriteria_const
+    /// Getter for the previously set terminal criteria for this algorithm.
+    /// 
+    /// @return Deep copy of the terminal criteria used at the moment.
+    fn get_term_criteria(&self) -> Result<core::TermCriteria> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_getTermCriteria_const(self.as_raw_MinProblemSolver()) }.into_result().map(|x| core::TermCriteria { ptr: x })
     }
-  }
-
-  /// Set terminal criteria for solver.
-  /// 
-  /// This method *is not necessary* to be called before the first call to minimize(), as the default
-  /// value is sensible.
-  /// 
-  /// Algorithm stops when the number of function evaluations done exceeds termcrit.maxCount, when
-  /// the function values at the vertices of simplex are within termcrit.epsilon range or simplex
-  /// becomes so small that it can enclosed in a box with termcrit.epsilon sides, whatever comes
-  /// first.
-  /// ## Parameters
-  /// * termcrit: Terminal criteria to be used, represented as cv::TermCriteria structure.
-  fn set_term_criteria(&mut self, termcrit: &core::TermCriteria) -> Result<()> {
-  // identifier: cv_MinProblemSolver_setTermCriteria_TermCriteria_termcrit
-    unsafe {
-      let rv = sys::cv_core_cv_MinProblemSolver_setTermCriteria_TermCriteria_termcrit(self.as_raw_MinProblemSolver(), termcrit.as_raw_TermCriteria());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_MinProblemSolver_setTermCriteria_TermCriteria_termcrit
+    /// Set terminal criteria for solver.
+    /// 
+    /// This method *is not necessary* to be called before the first call to minimize(), as the default
+    /// value is sensible.
+    /// 
+    /// Algorithm stops when the number of function evaluations done exceeds termcrit.maxCount, when
+    /// the function values at the vertices of simplex are within termcrit.epsilon range or simplex
+    /// becomes so small that it can enclosed in a box with termcrit.epsilon sides, whatever comes
+    /// first.
+    /// ## Parameters
+    /// * termcrit: Terminal criteria to be used, represented as cv::TermCriteria structure.
+    fn set_term_criteria(&mut self, termcrit: &core::TermCriteria) -> Result<()> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_setTermCriteria_TermCriteria_termcrit(self.as_raw_MinProblemSolver(), termcrit.as_raw_TermCriteria()) }.into_result()
     }
-  }
-
-  /// actually runs the algorithm and performs the minimization.
-  /// 
-  /// The sole input parameter determines the centroid of the starting simplex (roughly, it tells
-  /// where to start), all the others (terminal criteria, initial step, function to be minimized) are
-  /// supposed to be set via the setters before the call to this method or the default values (not
-  /// always sensible) will be used.
-  /// 
-  /// ## Parameters
-  /// * x: The initial point, that will become a centroid of an initial simplex. After the algorithm
-  /// will terminate, it will be set to the point where the algorithm stops, the point of possible
-  /// minimum.
-  /// @return The value of a function at the point found.
-  fn minimize(&mut self, x: &mut core::Mat) -> Result<f64> {
-  // identifier: cv_MinProblemSolver_minimize_Mat_x
-    unsafe {
-      let rv = sys::cv_core_cv_MinProblemSolver_minimize_Mat_x(self.as_raw_MinProblemSolver(), x.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_MinProblemSolver_minimize_Mat_x
+    /// actually runs the algorithm and performs the minimization.
+    /// 
+    /// The sole input parameter determines the centroid of the starting simplex (roughly, it tells
+    /// where to start), all the others (terminal criteria, initial step, function to be minimized) are
+    /// supposed to be set via the setters before the call to this method or the default values (not
+    /// always sensible) will be used.
+    /// 
+    /// ## Parameters
+    /// * x: The initial point, that will become a centroid of an initial simplex. After the algorithm
+    /// will terminate, it will be set to the point where the algorithm stops, the point of possible
+    /// minimum.
+    /// @return The value of a function at the point found.
+    fn minimize(&mut self, x: &mut core::Mat) -> Result<f64> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_minimize_Mat_x(self.as_raw_MinProblemSolver(), x.as_raw_Mat()) }.into_result()
     }
-  }
-
+    
 }
+
 impl<'a> MinProblemSolver + 'a {
 
 }
@@ -8821,71 +7226,90 @@ impl<'a> MinProblemSolver + 'a {
 // Generating impl for trait cv::MinProblemSolver::Function (trait)
 /// Represents function being optimized
 pub trait MinProblemSolver_Function {
-  #[doc(hidden)] fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void;
-  fn get_dims(&self) -> Result<i32> {
-  // identifier: cv_MinProblemSolver_Function_getDims
-    unsafe {
-      let rv = sys::cv_core_cv_MinProblemSolver_Function_getDims(self.as_raw_MinProblemSolver_Function());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    #[doc(hidden)] fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void;
+    // identifier: cv_MinProblemSolver_Function_getDims_const
+    fn get_dims(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_Function_getDims_const(self.as_raw_MinProblemSolver_Function()) }.into_result()
     }
-  }
-
-  fn get_gradient_eps(&self) -> Result<f64> {
-  // identifier: cv_MinProblemSolver_Function_getGradientEps
-    unsafe {
-      let rv = sys::cv_core_cv_MinProblemSolver_Function_getGradientEps(self.as_raw_MinProblemSolver_Function());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_MinProblemSolver_Function_getGradientEps_const
+    fn get_gradient_eps(&self) -> Result<f64> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_Function_getGradientEps_const(self.as_raw_MinProblemSolver_Function()) }.into_result()
     }
-  }
-
+    
+    // identifier: cv_MinProblemSolver_Function_calc_const_const_double_X_x
+    fn calc(&self, x: &f64) -> Result<f64> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_Function_calc_const_const_double_X_x(self.as_raw_MinProblemSolver_Function(), x) }.into_result()
+    }
+    
+    // identifier: cv_MinProblemSolver_Function_getGradient_const_double_X_x_double_X_grad
+    fn get_gradient(&mut self, x: &f64, grad: &mut f64) -> Result<()> {
+        unsafe { sys::cv_core_cv_MinProblemSolver_Function_getGradient_const_double_X_x_double_X_grad(self.as_raw_MinProblemSolver_Function(), x, grad) }.into_result()
+    }
+    
 }
+
 impl<'a> MinProblemSolver_Function + 'a {
 
 }
 
 impl Moments {
 
-  pub fn default() -> Result<core::Moments> {
-  // identifier: cv_Moments_Moments
-    unsafe {
-      let rv = sys::cv_core_cv_Moments_Moments();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    // identifier: cv_Moments_Moments
+    pub fn default() -> Result<core::Moments> {
+        unsafe { sys::cv_core_cv_Moments_Moments() }.into_result()
     }
-  }
-
-  pub fn new(m00: f64, m10: f64, m01: f64, m20: f64, m11: f64, m02: f64, m30: f64, m21: f64, m12: f64, m03: f64) -> Result<core::Moments> {
-  // identifier: cv_Moments_Moments_double_m00_double_m10_double_m01_double_m20_double_m11_double_m02_double_m30_double_m21_double_m12_double_m03
-    unsafe {
-      let rv = sys::cv_core_cv_Moments_Moments_double_m00_double_m10_double_m01_double_m20_double_m11_double_m02_double_m30_double_m21_double_m12_double_m03(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Moments_Moments_double_m00_double_m10_double_m01_double_m20_double_m11_double_m02_double_m30_double_m21_double_m12_double_m03
+    pub fn new(m00: f64, m10: f64, m01: f64, m20: f64, m11: f64, m02: f64, m30: f64, m21: f64, m12: f64, m03: f64) -> Result<core::Moments> {
+        unsafe { sys::cv_core_cv_Moments_Moments_double_m00_double_m10_double_m01_double_m20_double_m11_double_m02_double_m30_double_m21_double_m12_double_m03(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03) }.into_result()
     }
-  }
-
+    
 }
+
+// boxed class cv::Mutex
+#[allow(dead_code)]
+pub struct Mutex {
+    #[doc(hidden)] pub ptr: *mut c_void
+}
+impl Drop for core::Mutex {
+    fn drop(&mut self) {
+        unsafe { sys::cv_delete_Mutex(self.ptr) };
+    }
+}
+impl core::Mutex {
+    #[doc(hidden)] pub fn as_raw_Mutex(&self) -> *mut c_void { self.ptr }
+}
+
+impl Mutex {
+
+    // identifier: cv_Mutex_Mutex
+    pub fn new() -> Result<core::Mutex> {
+        unsafe { sys::cv_core_cv_Mutex_Mutex() }.into_result().map(|x| core::Mutex { ptr: x })
+    }
+    
+    // identifier: cv_Mutex_Mutex_Mutex_m
+    pub fn new_1(m: &core::Mutex) -> Result<core::Mutex> {
+        unsafe { sys::cv_core_cv_Mutex_Mutex_Mutex_m(m.as_raw_Mutex()) }.into_result().map(|x| core::Mutex { ptr: x })
+    }
+    
+    // identifier: cv_Mutex_lock
+    pub fn lock(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mutex_lock(self.as_raw_Mutex()) }.into_result()
+    }
+    
+    // identifier: cv_Mutex_trylock
+    pub fn trylock(&mut self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_Mutex_trylock(self.as_raw_Mutex()) }.into_result()
+    }
+    
+    // identifier: cv_Mutex_unlock
+    pub fn unlock(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_Mutex_unlock(self.as_raw_Mutex()) }.into_result()
+    }
+    
+}
+
 // boxed class cv::NAryMatIterator
 /// n-ary multi-dimensional array iterator.
 /// 
@@ -8946,7 +7370,6 @@ impl Moments {
 /// itNAry.planes[0] *= s;
 /// }
 /// ```
-
 #[allow(dead_code)]
 pub struct NAryMatIterator {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -8959,23 +7382,16 @@ impl Drop for core::NAryMatIterator {
 impl core::NAryMatIterator {
     #[doc(hidden)] pub fn as_raw_NAryMatIterator(&self) -> *mut c_void { self.ptr }
 }
+
 impl NAryMatIterator {
 
-  pub fn new() -> Result<core::NAryMatIterator> {
-  // identifier: cv_NAryMatIterator_NAryMatIterator
-    unsafe {
-      let rv = sys::cv_core_cv_NAryMatIterator_NAryMatIterator();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::NAryMatIterator { ptr: rv.result })
-      }
+    // identifier: cv_NAryMatIterator_NAryMatIterator
+    pub fn new() -> Result<core::NAryMatIterator> {
+        unsafe { sys::cv_core_cv_NAryMatIterator_NAryMatIterator() }.into_result().map(|x| core::NAryMatIterator { ptr: x })
     }
-  }
-
+    
 }
+
 // boxed class cv::PCA
 /// Principal Component Analysis
 /// 
@@ -9042,7 +7458,6 @@ impl NAryMatIterator {
 /// ```
 /// 
 /// @sa calcCovarMatrix, mulTransposed, SVD, dft, dct
-
 #[allow(dead_code)]
 pub struct PCA {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -9055,190 +7470,129 @@ impl Drop for core::PCA {
 impl core::PCA {
     #[doc(hidden)] pub fn as_raw_PCA(&self) -> *mut c_void { self.ptr }
 }
+
 impl PCA {
 
-  /// default constructor
-  /// 
-  /// The default constructor initializes an empty %PCA structure. The other
-  /// constructors initialize the structure and call PCA::operator()().
-  pub fn default() -> Result<core::PCA> {
-  // identifier: cv_PCA_PCA
-    unsafe {
-      let rv = sys::cv_core_cv_PCA_PCA();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::PCA { ptr: rv.result })
-      }
+    // identifier: cv_PCA_PCA
+    /// default constructor
+    /// 
+    /// The default constructor initializes an empty %PCA structure. The other
+    /// constructors initialize the structure and call PCA::operator()().
+    pub fn default() -> Result<core::PCA> {
+        unsafe { sys::cv_core_cv_PCA_PCA() }.into_result().map(|x| core::PCA { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * data: input samples stored as matrix rows or matrix columns.
-  /// * mean: optional mean value; if the matrix is empty (@c noArray()),
-  /// the mean is computed from the data.
-  /// * flags: operation flags; currently the parameter is only used to
-  /// specify the data layout (PCA::Flags)
-  /// * maxComponents: maximum number of components that %PCA should
-  /// retain; by default, all the components are retained.
-  ///
-  /// ## C++ default parameters:
-  /// * max_components: 0
-  pub fn new_mat_max(data: &core::Mat, mean: &core::Mat, flags: i32, max_components: i32) -> Result<core::PCA> {
-  // identifier: cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents
-    unsafe {
-      let rv = sys::cv_core_cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents(data.as_raw_Mat(), mean.as_raw_Mat(), flags, max_components);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::PCA { ptr: rv.result })
-      }
+    
+    // identifier: cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents
+    /// @overload
+    /// ## Parameters
+    /// * data: input samples stored as matrix rows or matrix columns.
+    /// * mean: optional mean value; if the matrix is empty (@c noArray()),
+    /// the mean is computed from the data.
+    /// * flags: operation flags; currently the parameter is only used to
+    /// specify the data layout (PCA::Flags)
+    /// * maxComponents: maximum number of components that %PCA should
+    /// retain; by default, all the components are retained.
+    ///
+    /// ## C++ default parameters:
+    /// * max_components: 0
+    pub fn new_mat_max(data: &core::Mat, mean: &core::Mat, flags: i32, max_components: i32) -> Result<core::PCA> {
+        unsafe { sys::cv_core_cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents(data.as_raw_Mat(), mean.as_raw_Mat(), flags, max_components) }.into_result().map(|x| core::PCA { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * data: input samples stored as matrix rows or matrix columns.
-  /// * mean: optional mean value; if the matrix is empty (noArray()),
-  /// the mean is computed from the data.
-  /// * flags: operation flags; currently the parameter is only used to
-  /// specify the data layout (PCA::Flags)
-  /// * retainedVariance: Percentage of variance that PCA should retain.
-  /// Using this parameter will let the PCA decided how many components to
-  /// retain but it will always keep at least 2.
-  pub fn new_mat_variance(data: &core::Mat, mean: &core::Mat, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-  // identifier: cv_PCA_PCA_Mat_data_Mat_mean_int_flags_double_retainedVariance
-    unsafe {
-      let rv = sys::cv_core_cv_PCA_PCA_Mat_data_Mat_mean_int_flags_double_retainedVariance(data.as_raw_Mat(), mean.as_raw_Mat(), flags, retained_variance);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::PCA { ptr: rv.result })
-      }
+    
+    // identifier: cv_PCA_PCA_Mat_data_Mat_mean_int_flags_double_retainedVariance
+    /// @overload
+    /// ## Parameters
+    /// * data: input samples stored as matrix rows or matrix columns.
+    /// * mean: optional mean value; if the matrix is empty (noArray()),
+    /// the mean is computed from the data.
+    /// * flags: operation flags; currently the parameter is only used to
+    /// specify the data layout (PCA::Flags)
+    /// * retainedVariance: Percentage of variance that PCA should retain.
+    /// Using this parameter will let the PCA decided how many components to
+    /// retain but it will always keep at least 2.
+    pub fn new_mat_variance(data: &core::Mat, mean: &core::Mat, flags: i32, retained_variance: f64) -> Result<core::PCA> {
+        unsafe { sys::cv_core_cv_PCA_PCA_Mat_data_Mat_mean_int_flags_double_retainedVariance(data.as_raw_Mat(), mean.as_raw_Mat(), flags, retained_variance) }.into_result().map(|x| core::PCA { ptr: x })
     }
-  }
-
-  /// Projects vector(s) to the principal component subspace.
-  /// 
-  /// The methods project one or more vectors to the principal component
-  /// subspace, where each vector projection is represented by coefficients in
-  /// the principal component basis. The first form of the method returns the
-  /// matrix that the second form writes to the result. So the first form can
-  /// be used as a part of expression while the second form can be more
-  /// efficient in a processing loop.
-  /// ## Parameters
-  /// * vec: input vector(s); must have the same dimensionality and the
-  /// same layout as the input data used at %PCA phase, that is, if
-  /// DATA_AS_ROW are specified, then `vec.cols==data.cols`
-  /// (vector dimensionality) and `vec.rows` is the number of vectors to
-  /// project, and the same is true for the PCA::DATA_AS_COL case.
-  pub fn project(&self, vec: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_PCA_project_Mat_vec
-    unsafe {
-      let rv = sys::cv_core_cv_PCA_project_Mat_vec(self.as_raw_PCA(), vec.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_PCA_project_const_Mat_vec
+    /// Projects vector(s) to the principal component subspace.
+    /// 
+    /// The methods project one or more vectors to the principal component
+    /// subspace, where each vector projection is represented by coefficients in
+    /// the principal component basis. The first form of the method returns the
+    /// matrix that the second form writes to the result. So the first form can
+    /// be used as a part of expression while the second form can be more
+    /// efficient in a processing loop.
+    /// ## Parameters
+    /// * vec: input vector(s); must have the same dimensionality and the
+    /// same layout as the input data used at %PCA phase, that is, if
+    /// DATA_AS_ROW are specified, then `vec.cols==data.cols`
+    /// (vector dimensionality) and `vec.rows` is the number of vectors to
+    /// project, and the same is true for the PCA::DATA_AS_COL case.
+    pub fn project(&self, vec: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_PCA_project_const_Mat_vec(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * vec: input vector(s); must have the same dimensionality and the
-  /// same layout as the input data used at PCA phase, that is, if
-  /// DATA_AS_ROW are specified, then `vec.cols==data.cols`
-  /// (vector dimensionality) and `vec.rows` is the number of vectors to
-  /// project, and the same is true for the PCA::DATA_AS_COL case.
-  /// * result: output vectors; in case of PCA::DATA_AS_COL, the
-  /// output matrix has as many columns as the number of input vectors, this
-  /// means that `result.cols==vec.cols` and the number of rows match the
-  /// number of principal components (for example, `maxComponents` parameter
-  /// passed to the constructor).
-  pub fn project_to(&self, vec: &core::Mat, result: &mut core::Mat) -> Result<()> {
-  // identifier: cv_PCA_project_Mat_vec_Mat_result
-    unsafe {
-      let rv = sys::cv_core_cv_PCA_project_Mat_vec_Mat_result(self.as_raw_PCA(), vec.as_raw_Mat(), result.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_PCA_project_const_Mat_vec_Mat_result
+    /// @overload
+    /// ## Parameters
+    /// * vec: input vector(s); must have the same dimensionality and the
+    /// same layout as the input data used at PCA phase, that is, if
+    /// DATA_AS_ROW are specified, then `vec.cols==data.cols`
+    /// (vector dimensionality) and `vec.rows` is the number of vectors to
+    /// project, and the same is true for the PCA::DATA_AS_COL case.
+    /// * result: output vectors; in case of PCA::DATA_AS_COL, the
+    /// output matrix has as many columns as the number of input vectors, this
+    /// means that `result.cols==vec.cols` and the number of rows match the
+    /// number of principal components (for example, `maxComponents` parameter
+    /// passed to the constructor).
+    pub fn project_to(&self, vec: &core::Mat, result: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_PCA_project_const_Mat_vec_Mat_result(self.as_raw_PCA(), vec.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Reconstructs vectors from their PC projections.
-  /// 
-  /// The methods are inverse operations to PCA::project. They take PC
-  /// coordinates of projected vectors and reconstruct the original vectors.
-  /// Unless all the principal components have been retained, the
-  /// reconstructed vectors are different from the originals. But typically,
-  /// the difference is small if the number of components is large enough (but
-  /// still much smaller than the original vector dimensionality). As a
-  /// result, PCA is used.
-  /// ## Parameters
-  /// * vec: coordinates of the vectors in the principal component
-  /// subspace, the layout and size are the same as of PCA::project output
-  /// vectors.
-  pub fn back_project(&self, vec: &core::Mat) -> Result<core::Mat> {
-  // identifier: cv_PCA_backProject_Mat_vec
-    unsafe {
-      let rv = sys::cv_core_cv_PCA_backProject_Mat_vec(self.as_raw_PCA(), vec.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    
+    // identifier: cv_PCA_backProject_const_Mat_vec
+    /// Reconstructs vectors from their PC projections.
+    /// 
+    /// The methods are inverse operations to PCA::project. They take PC
+    /// coordinates of projected vectors and reconstruct the original vectors.
+    /// Unless all the principal components have been retained, the
+    /// reconstructed vectors are different from the originals. But typically,
+    /// the difference is small if the number of components is large enough (but
+    /// still much smaller than the original vector dimensionality). As a
+    /// result, PCA is used.
+    /// ## Parameters
+    /// * vec: coordinates of the vectors in the principal component
+    /// subspace, the layout and size are the same as of PCA::project output
+    /// vectors.
+    pub fn back_project(&self, vec: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_PCA_backProject_const_Mat_vec(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * vec: coordinates of the vectors in the principal component
-  /// subspace, the layout and size are the same as of PCA::project output
-  /// vectors.
-  /// * result: reconstructed vectors; the layout and size are the same as
-  /// of PCA::project input vectors.
-  pub fn back_project_to(&self, vec: &core::Mat, result: &mut core::Mat) -> Result<()> {
-  // identifier: cv_PCA_backProject_Mat_vec_Mat_result
-    unsafe {
-      let rv = sys::cv_core_cv_PCA_backProject_Mat_vec_Mat_result(self.as_raw_PCA(), vec.as_raw_Mat(), result.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_PCA_backProject_const_Mat_vec_Mat_result
+    /// @overload
+    /// ## Parameters
+    /// * vec: coordinates of the vectors in the principal component
+    /// subspace, the layout and size are the same as of PCA::project output
+    /// vectors.
+    /// * result: reconstructed vectors; the layout and size are the same as
+    /// of PCA::project input vectors.
+    pub fn back_project_to(&self, vec: &core::Mat, result: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_PCA_backProject_const_Mat_vec_Mat_result(self.as_raw_PCA(), vec.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
     }
-  }
-
+    
 }
+
 // Generating impl for trait cv::ParallelLoopBody (trait)
 /// Base class for parallel data processors
 pub trait ParallelLoopBody {
-  #[doc(hidden)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
+    #[doc(hidden)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
 }
+
 impl<'a> ParallelLoopBody + 'a {
 
 }
 
 // boxed class cv::ParallelLoopBodyLambdaWrapper
-
 #[allow(dead_code)]
 pub struct ParallelLoopBodyLambdaWrapper {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -9255,9 +7609,21 @@ impl core::ParallelLoopBodyLambdaWrapper {
 impl core::ParallelLoopBody for ParallelLoopBodyLambdaWrapper {
     #[doc(hidden)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void { self.ptr }
 }
-impl ParallelLoopBodyLambdaWrapper {
 
+// boxed class cv::Param
+#[allow(dead_code)]
+pub struct Param {
+    #[doc(hidden)] pub ptr: *mut c_void
 }
+impl Drop for core::Param {
+    fn drop(&mut self) {
+        unsafe { sys::cv_delete_Param(self.ptr) };
+    }
+}
+impl core::Param {
+    #[doc(hidden)] pub fn as_raw_Param(&self) -> *mut c_void { self.ptr }
+}
+
 // boxed class cv::Range
 /// Template class specifying a continuous subsequence (slice) of a sequence.
 /// 
@@ -9281,7 +7647,6 @@ impl ParallelLoopBodyLambdaWrapper {
 /// }
 /// }
 /// ```
-
 #[allow(dead_code)]
 pub struct Range {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -9294,79 +7659,36 @@ impl Drop for core::Range {
 impl core::Range {
     #[doc(hidden)] pub fn as_raw_Range(&self) -> *mut c_void { self.ptr }
 }
+
 impl Range {
 
-  pub fn default() -> Result<core::Range> {
-  // identifier: cv_Range_Range
-    unsafe {
-      let rv = sys::cv_core_cv_Range_Range();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Range { ptr: rv.result })
-      }
+    // identifier: cv_Range_Range
+    pub fn default() -> Result<core::Range> {
+        unsafe { sys::cv_core_cv_Range_Range() }.into_result().map(|x| core::Range { ptr: x })
     }
-  }
-
-  pub fn new(_start: i32, _end: i32) -> Result<core::Range> {
-  // identifier: cv_Range_Range_int__start_int__end
-    unsafe {
-      let rv = sys::cv_core_cv_Range_Range_int__start_int__end(_start, _end);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Range { ptr: rv.result })
-      }
+    
+    // identifier: cv_Range_Range_int__start_int__end
+    pub fn new(_start: i32, _end: i32) -> Result<core::Range> {
+        unsafe { sys::cv_core_cv_Range_Range_int__start_int__end(_start, _end) }.into_result().map(|x| core::Range { ptr: x })
     }
-  }
-
-  pub fn size(&self) -> Result<i32> {
-  // identifier: cv_Range_size
-    unsafe {
-      let rv = sys::cv_core_cv_Range_size(self.as_raw_Range());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Range_size_const
+    pub fn size(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_Range_size_const(self.as_raw_Range()) }.into_result()
     }
-  }
-
-  pub fn empty(&self) -> Result<bool> {
-  // identifier: cv_Range_empty
-    unsafe {
-      let rv = sys::cv_core_cv_Range_empty(self.as_raw_Range());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_Range_empty_const
+    pub fn empty(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_Range_empty_const(self.as_raw_Range()) }.into_result()
     }
-  }
-
-  pub fn all() -> Result<core::Range> {
-  // identifier: cv_Range_all
-    unsafe {
-      let rv = sys::cv_core_cv_Range_all();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Range { ptr: rv.result })
-      }
+    
+    // identifier: cv_Range_all
+    pub fn all() -> Result<core::Range> {
+        unsafe { sys::cv_core_cv_Range_all() }.into_result().map(|x| core::Range { ptr: x })
     }
-  }
-
+    
 }
+
 // boxed class cv::RotatedRect
 /// The class represents rotated (i.e. not up-right) rectangles on a plane.
 /// 
@@ -9378,7 +7700,6 @@ impl Range {
 /// ![image](pics/rotatedrect.png)
 /// 
 /// @sa CamShift, fitEllipse, minAreaRect, CvBox2D
-
 #[allow(dead_code)]
 pub struct RotatedRect {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -9391,124 +7712,75 @@ impl Drop for core::RotatedRect {
 impl core::RotatedRect {
     #[doc(hidden)] pub fn as_raw_RotatedRect(&self) -> *mut c_void { self.ptr }
 }
+
 impl RotatedRect {
 
-  /// returns the angle attr of float type
-  pub fn get_angle(&mut self) -> Result<f32> {
-  // identifier: RotatedRect_get_angle
-    unsafe {
-      let rv = sys::cv_core_RotatedRect_get_angle(self.as_raw_RotatedRect());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    // identifier: RotatedRect_get_angle
+    /// returns the angle attr of float type
+    pub fn get_angle(&mut self) -> Result<f32> {
+        unsafe { sys::cv_core_RotatedRect_get_angle(self.as_raw_RotatedRect()) }.into_result()
     }
-  }
-
-  /// returns the center attr of Point2f type
-  pub fn get_center(&mut self) -> Result<core::Point2f> {
-  // identifier: RotatedRect_get_center
-    unsafe {
-      let rv = sys::cv_core_RotatedRect_get_center(self.as_raw_RotatedRect());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: RotatedRect_get_center
+    /// returns the center attr of Point2f type
+    pub fn get_center(&mut self) -> Result<core::Point2f> {
+        unsafe { sys::cv_core_RotatedRect_get_center(self.as_raw_RotatedRect()) }.into_result()
     }
-  }
-
-  /// returns the size attr of Size2f type
-  pub fn get_size(&mut self) -> Result<core::Size2f> {
-  // identifier: RotatedRect_get_size
-    unsafe {
-      let rv = sys::cv_core_RotatedRect_get_size(self.as_raw_RotatedRect());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: RotatedRect_get_size
+    /// returns the size attr of Size2f type
+    pub fn get_size(&mut self) -> Result<core::Size2f> {
+        unsafe { sys::cv_core_RotatedRect_get_size(self.as_raw_RotatedRect()) }.into_result()
     }
-  }
-
-  pub fn default() -> Result<core::RotatedRect> {
-  // identifier: cv_RotatedRect_RotatedRect
-    unsafe {
-      let rv = sys::cv_core_cv_RotatedRect_RotatedRect();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::RotatedRect { ptr: rv.result })
-      }
+    
+    // identifier: cv_RotatedRect_RotatedRect
+    pub fn default() -> Result<core::RotatedRect> {
+        unsafe { sys::cv_core_cv_RotatedRect_RotatedRect() }.into_result().map(|x| core::RotatedRect { ptr: x })
     }
-  }
-
-  /// full constructor
-  /// ## Parameters
-  /// * center: The rectangle mass center.
-  /// * size: Width and height of the rectangle.
-  /// * angle: The rotation angle in a clockwise direction. When the angle is 0, 90, 180, 270 etc.,
-  /// the rectangle becomes an up-right rectangle.
-  pub fn new(center: core::Point2f, size: core::Size2f, angle: f32) -> Result<core::RotatedRect> {
-  // identifier: cv_RotatedRect_RotatedRect_Point2f_center_Size2f_size_float_angle
-    unsafe {
-      let rv = sys::cv_core_cv_RotatedRect_RotatedRect_Point2f_center_Size2f_size_float_angle(center, size, angle);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::RotatedRect { ptr: rv.result })
-      }
+    
+    // identifier: cv_RotatedRect_RotatedRect_Point2f_center_Size2f_size_float_angle
+    /// full constructor
+    /// ## Parameters
+    /// * center: The rectangle mass center.
+    /// * size: Width and height of the rectangle.
+    /// * angle: The rotation angle in a clockwise direction. When the angle is 0, 90, 180, 270 etc.,
+    /// the rectangle becomes an up-right rectangle.
+    pub fn new(center: core::Point2f, size: core::Size2f, angle: f32) -> Result<core::RotatedRect> {
+        unsafe { sys::cv_core_cv_RotatedRect_RotatedRect_Point2f_center_Size2f_size_float_angle(center, size, angle) }.into_result().map(|x| core::RotatedRect { ptr: x })
     }
-  }
-
-  /// Any 3 end points of the RotatedRect. They must be given in order (either clockwise or
-  /// anticlockwise).
-  pub fn for_points(point1: core::Point2f, point2: core::Point2f, point3: core::Point2f) -> Result<core::RotatedRect> {
-  // identifier: cv_RotatedRect_RotatedRect_Point2f_point1_Point2f_point2_Point2f_point3
-    unsafe {
-      let rv = sys::cv_core_cv_RotatedRect_RotatedRect_Point2f_point1_Point2f_point2_Point2f_point3(point1, point2, point3);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::RotatedRect { ptr: rv.result })
-      }
+    
+    // identifier: cv_RotatedRect_RotatedRect_Point2f_point1_Point2f_point2_Point2f_point3
+    /// Any 3 end points of the RotatedRect. They must be given in order (either clockwise or
+    /// anticlockwise).
+    pub fn for_points(point1: core::Point2f, point2: core::Point2f, point3: core::Point2f) -> Result<core::RotatedRect> {
+        unsafe { sys::cv_core_cv_RotatedRect_RotatedRect_Point2f_point1_Point2f_point2_Point2f_point3(point1, point2, point3) }.into_result().map(|x| core::RotatedRect { ptr: x })
     }
-  }
-
-  pub fn bounding_rect(&self) -> Result<core::Rect> {
-  // identifier: cv_RotatedRect_boundingRect
-    unsafe {
-      let rv = sys::cv_core_cv_RotatedRect_boundingRect(self.as_raw_RotatedRect());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_RotatedRect_points_const_Point2f_X_pts
+    /// returns 4 vertices of the rectangle
+    /// ## Parameters
+    /// * pts: The points array for storing rectangle vertices. The order is bottomLeft, topLeft, topRight, bottomRight.
+    pub fn points(&self, pts: &mut core::Point2f) -> Result<()> {
+        unsafe { sys::cv_core_cv_RotatedRect_points_const_Point2f_X_pts(self.as_raw_RotatedRect(), pts) }.into_result()
     }
-  }
-
+    
+    // identifier: cv_RotatedRect_boundingRect_const
+    pub fn bounding_rect(&self) -> Result<core::Rect> {
+        unsafe { sys::cv_core_cv_RotatedRect_boundingRect_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
+    // identifier: cv_RotatedRect_boundingRect2f_const
+    pub fn bounding_rect2f(&self) -> Result<core::Rect2f> {
+        unsafe { sys::cv_core_cv_RotatedRect_boundingRect2f_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
 }
+
 // boxed class cv::TermCriteria
 /// The class defining termination criteria for iterative algorithms.
 /// 
 /// You can initialize it by default constructor and then override any parameters, or the structure may
 /// be fully initialized using the advanced variant of the constructor.
-
 #[allow(dead_code)]
 pub struct TermCriteria {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -9521,55 +7793,30 @@ impl Drop for core::TermCriteria {
 impl core::TermCriteria {
     #[doc(hidden)] pub fn as_raw_TermCriteria(&self) -> *mut c_void { self.ptr }
 }
+
 impl TermCriteria {
 
-  pub fn default() -> Result<core::TermCriteria> {
-  // identifier: cv_TermCriteria_TermCriteria
-    unsafe {
-      let rv = sys::cv_core_cv_TermCriteria_TermCriteria();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::TermCriteria { ptr: rv.result })
-      }
+    // identifier: cv_TermCriteria_TermCriteria
+    pub fn default() -> Result<core::TermCriteria> {
+        unsafe { sys::cv_core_cv_TermCriteria_TermCriteria() }.into_result().map(|x| core::TermCriteria { ptr: x })
     }
-  }
-
-  /// ## Parameters
-  /// * type: The type of termination criteria, one of TermCriteria::Type
-  /// * maxCount: The maximum number of iterations or elements to compute.
-  /// * epsilon: The desired accuracy or change in parameters at which the iterative algorithm stops.
-  pub fn new(_type: i32, max_count: i32, epsilon: f64) -> Result<core::TermCriteria> {
-  // identifier: cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon
-    unsafe {
-      let rv = sys::cv_core_cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon(_type, max_count, epsilon);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::TermCriteria { ptr: rv.result })
-      }
+    
+    // identifier: cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon
+    /// ## Parameters
+    /// * type: The type of termination criteria, one of TermCriteria::Type
+    /// * maxCount: The maximum number of iterations or elements to compute.
+    /// * epsilon: The desired accuracy or change in parameters at which the iterative algorithm stops.
+    pub fn new(_type: i32, max_count: i32, epsilon: f64) -> Result<core::TermCriteria> {
+        unsafe { sys::cv_core_cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon(_type, max_count, epsilon) }.into_result().map(|x| core::TermCriteria { ptr: x })
     }
-  }
-
-  pub fn is_valid(&self) -> Result<bool> {
-  // identifier: cv_TermCriteria_isValid
-    unsafe {
-      let rv = sys::cv_core_cv_TermCriteria_isValid(self.as_raw_TermCriteria());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_TermCriteria_isValid_const
+    pub fn is_valid(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_TermCriteria_isValid_const(self.as_raw_TermCriteria()) }.into_result()
     }
-  }
-
+    
 }
+
 // boxed class cv::TickMeter
 /// a Class to measure passing time.
 /// 
@@ -9598,7 +7845,6 @@ impl TermCriteria {
 /// ```
 /// 
 /// @sa getTickCount, getTickFrequency
-
 #[allow(dead_code)]
 pub struct TickMeter {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -9611,146 +7857,66 @@ impl Drop for core::TickMeter {
 impl core::TickMeter {
     #[doc(hidden)] pub fn as_raw_TickMeter(&self) -> *mut c_void { self.ptr }
 }
+
 impl TickMeter {
 
-  pub fn new() -> Result<core::TickMeter> {
-  // identifier: cv_TickMeter_TickMeter
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_TickMeter();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::TickMeter { ptr: rv.result })
-      }
+    // identifier: cv_TickMeter_TickMeter
+    pub fn new() -> Result<core::TickMeter> {
+        unsafe { sys::cv_core_cv_TickMeter_TickMeter() }.into_result().map(|x| core::TickMeter { ptr: x })
     }
-  }
-
-  /// starts counting ticks.
-  pub fn start(&mut self) -> Result<()> {
-  // identifier: cv_TickMeter_start
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_start(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_TickMeter_start
+    /// starts counting ticks.
+    pub fn start(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_TickMeter_start(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
-  /// stops counting ticks.
-  pub fn stop(&mut self) -> Result<()> {
-  // identifier: cv_TickMeter_stop
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_stop(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_TickMeter_stop
+    /// stops counting ticks.
+    pub fn stop(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_TickMeter_stop(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
-  /// returns counted ticks.
-  pub fn get_time_ticks(&self) -> Result<i64> {
-  // identifier: cv_TickMeter_getTimeTicks
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_getTimeTicks(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_TickMeter_getTimeTicks_const
+    /// returns counted ticks.
+    pub fn get_time_ticks(&self) -> Result<i64> {
+        unsafe { sys::cv_core_cv_TickMeter_getTimeTicks_const(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
-  /// returns passed time in microseconds.
-  pub fn get_time_micro(&self) -> Result<f64> {
-  // identifier: cv_TickMeter_getTimeMicro
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_getTimeMicro(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_TickMeter_getTimeMicro_const
+    /// returns passed time in microseconds.
+    pub fn get_time_micro(&self) -> Result<f64> {
+        unsafe { sys::cv_core_cv_TickMeter_getTimeMicro_const(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
-  /// returns passed time in milliseconds.
-  pub fn get_time_milli(&self) -> Result<f64> {
-  // identifier: cv_TickMeter_getTimeMilli
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_getTimeMilli(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_TickMeter_getTimeMilli_const
+    /// returns passed time in milliseconds.
+    pub fn get_time_milli(&self) -> Result<f64> {
+        unsafe { sys::cv_core_cv_TickMeter_getTimeMilli_const(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
-  /// returns passed time in seconds.
-  pub fn get_time_sec(&self) -> Result<f64> {
-  // identifier: cv_TickMeter_getTimeSec
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_getTimeSec(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_TickMeter_getTimeSec_const
+    /// returns passed time in seconds.
+    pub fn get_time_sec(&self) -> Result<f64> {
+        unsafe { sys::cv_core_cv_TickMeter_getTimeSec_const(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
-  /// returns internal counter value.
-  pub fn get_counter(&self) -> Result<i64> {
-  // identifier: cv_TickMeter_getCounter
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_getCounter(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_TickMeter_getCounter_const
+    /// returns internal counter value.
+    pub fn get_counter(&self) -> Result<i64> {
+        unsafe { sys::cv_core_cv_TickMeter_getCounter_const(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
-  /// resets internal values.
-  pub fn reset(&mut self) -> Result<()> {
-  // identifier: cv_TickMeter_reset
-    unsafe {
-      let rv = sys::cv_core_cv_TickMeter_reset(self.as_raw_TickMeter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_TickMeter_reset
+    /// resets internal values.
+    pub fn reset(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_TickMeter_reset(self.as_raw_TickMeter()) }.into_result()
     }
-  }
-
+    
 }
+
 // boxed class cv::UMat
 /// @todo document
-
 #[allow(dead_code)]
 pub struct UMat {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -9763,314 +7929,137 @@ impl Drop for core::UMat {
 impl core::UMat {
     #[doc(hidden)] pub fn as_raw_UMat(&self) -> *mut c_void { self.ptr }
 }
+
 impl UMat {
 
-  pub fn get_mat(&self, flags: i32) -> Result<core::Mat> {
-  // identifier: cv_UMat_getMat_int_flags
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_getMat_int_flags(self.as_raw_UMat(), flags);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::Mat { ptr: rv.result })
-      }
+    // identifier: cv_UMat_getMat_const_int_flags
+    pub fn get_mat(&self, flags: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_core_cv_UMat_getMat_const_int_flags(self.as_raw_UMat(), flags) }.into_result().map(|x| core::Mat { ptr: x })
     }
-  }
-
-  pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
-  // identifier: cv_UMat_copyTo_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_copyTo_Mat_m(self.as_raw_UMat(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_copyTo_const_Mat_m
+    pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_copyTo_const_Mat_m(self.as_raw_UMat(), m.as_raw_Mat()) }.into_result()
     }
-  }
-
-  pub fn copy_to_masked(&self, m: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-  // identifier: cv_UMat_copyTo_Mat_m_Mat_mask
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_copyTo_Mat_m_Mat_mask(self.as_raw_UMat(), m.as_raw_Mat(), mask.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_copyTo_const_Mat_m_Mat_mask
+    pub fn copy_to_masked(&self, m: &mut core::Mat, mask: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_copyTo_const_Mat_m_Mat_mask(self.as_raw_UMat(), m.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
-  }
-
-  ///
-  /// ## C++ default parameters:
-  /// * alpha: 1
-  /// * beta: 0
-  pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-  // identifier: cv_UMat_convertTo_Mat_m_int_rtype_double_alpha_double_beta
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_convertTo_Mat_m_int_rtype_double_alpha_double_beta(self.as_raw_UMat(), m.as_raw_Mat(), rtype, alpha, beta);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_convertTo_const_Mat_m_int_rtype_double_alpha_double_beta
+    ///
+    /// ## C++ default parameters:
+    /// * alpha: 1
+    /// * beta: 0
+    pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_convertTo_const_Mat_m_int_rtype_double_alpha_double_beta(self.as_raw_UMat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
     }
-  }
-
-  pub fn dot(&self, m: &core::Mat) -> Result<f64> {
-  // identifier: cv_UMat_dot_Mat_m
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_dot_Mat_m(self.as_raw_UMat(), m.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_dot_const_Mat_m
+    pub fn dot(&self, m: &core::Mat) -> Result<f64> {
+        unsafe { sys::cv_core_cv_UMat_dot_const_Mat_m(self.as_raw_UMat(), m.as_raw_Mat()) }.into_result()
     }
-  }
-
-  pub fn addref(&mut self) -> Result<()> {
-  // identifier: cv_UMat_addref
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_addref(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_addref
+    pub fn addref(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_addref(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn release(&mut self) -> Result<()> {
-  // identifier: cv_UMat_release
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_release(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_release
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_release(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn deallocate(&mut self) -> Result<()> {
-  // identifier: cv_UMat_deallocate
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_deallocate(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_deallocate
+    pub fn deallocate(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_deallocate(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn locate_roi(&self, whole_size: core::Size, ofs: core::Point) -> Result<()> {
-  // identifier: cv_UMat_locateROI_Size_wholeSize_Point_ofs
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_locateROI_Size_wholeSize_Point_ofs(self.as_raw_UMat(), whole_size, ofs);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_locateROI_const_Size_wholeSize_Point_ofs
+    pub fn locate_roi(&self, whole_size: core::Size, ofs: core::Point) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_locateROI_const_Size_wholeSize_Point_ofs(self.as_raw_UMat(), whole_size, ofs) }.into_result()
     }
-  }
-
-  pub fn is_continuous(&self) -> Result<bool> {
-  // identifier: cv_UMat_isContinuous
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_isContinuous(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_isContinuous_const
+    pub fn is_continuous(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMat_isContinuous_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn is_submatrix(&self) -> Result<bool> {
-  // identifier: cv_UMat_isSubmatrix
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_isSubmatrix(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_isSubmatrix_const
+    pub fn is_submatrix(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMat_isSubmatrix_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn elem_size(&self) -> Result<size_t> {
-  // identifier: cv_UMat_elemSize
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_elemSize(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_elemSize_const
+    pub fn elem_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_UMat_elemSize_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn elem_size1(&self) -> Result<size_t> {
-  // identifier: cv_UMat_elemSize1
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_elemSize1(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_elemSize1_const
+    pub fn elem_size1(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_UMat_elemSize1_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn typ(&self) -> Result<i32> {
-  // identifier: cv_UMat_type
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_type(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_type_const
+    pub fn typ(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_UMat_type_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn depth(&self) -> Result<i32> {
-  // identifier: cv_UMat_depth
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_depth(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_depth_const
+    pub fn depth(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_UMat_depth_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn channels(&self) -> Result<i32> {
-  // identifier: cv_UMat_channels
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_channels(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_channels_const
+    pub fn channels(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_UMat_channels_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  ///
-  /// ## C++ default parameters:
-  /// * i: 0
-  pub fn step1(&self, i: i32) -> Result<size_t> {
-  // identifier: cv_UMat_step1_int_i
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_step1_int_i(self.as_raw_UMat(), i);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_step1_const_int_i
+    ///
+    /// ## C++ default parameters:
+    /// * i: 0
+    pub fn step1(&self, i: i32) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_UMat_step1_const_int_i(self.as_raw_UMat(), i) }.into_result()
     }
-  }
-
-  pub fn empty(&self) -> Result<bool> {
-  // identifier: cv_UMat_empty
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_empty(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_empty_const
+    pub fn empty(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMat_empty_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  pub fn total(&self) -> Result<size_t> {
-  // identifier: cv_UMat_total
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_total(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_total_const
+    pub fn total(&self) -> Result<size_t> {
+        unsafe { sys::cv_core_cv_UMat_total_const(self.as_raw_UMat()) }.into_result()
     }
-  }
-
-  ///
-  /// ## C++ default parameters:
-  /// * depth: -1
-  /// * require_continuous: true
-  pub fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
-  // identifier: cv_UMat_checkVector_int_elemChannels_int_depth_bool_requireContinuous
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_checkVector_int_elemChannels_int_depth_bool_requireContinuous(self.as_raw_UMat(), elem_channels, depth, require_continuous);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMat_checkVector_const_int_elemChannels_int_depth_bool_requireContinuous
+    ///
+    /// ## C++ default parameters:
+    /// * depth: -1
+    /// * require_continuous: true
+    pub fn check_vector(&self, elem_channels: i32, depth: i32, require_continuous: bool) -> Result<i32> {
+        unsafe { sys::cv_core_cv_UMat_checkVector_const_int_elemChannels_int_depth_bool_requireContinuous(self.as_raw_UMat(), elem_channels, depth, require_continuous) }.into_result()
     }
-  }
-
-  pub fn update_continuity_flag(&mut self) -> Result<()> {
-  // identifier: cv_UMat_updateContinuityFlag
-    unsafe {
-      let rv = sys::cv_core_cv_UMat_updateContinuityFlag(self.as_raw_UMat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMat_handle_const_int_accessFlags
+    pub fn handle(&self, access_flags: i32) -> Result<&mut c_void> {
+        unsafe { sys::cv_core_cv_UMat_handle_const_int_accessFlags(self.as_raw_UMat(), access_flags) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
-  }
-
+    
+    // identifier: cv_UMat_ndoffset_const_size_t_X_ofs
+    pub fn ndoffset(&self, ofs: &mut size_t) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_ndoffset_const_size_t_X_ofs(self.as_raw_UMat(), ofs) }.into_result()
+    }
+    
+    // identifier: cv_UMat_updateContinuityFlag
+    pub fn update_continuity_flag(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMat_updateContinuityFlag(self.as_raw_UMat()) }.into_result()
+    }
+    
 }
+
 // boxed class cv::UMatData
 /// Comma-separated Matrix Initializer
 /// 
@@ -10083,7 +8072,6 @@ impl UMat {
 /// double angle = 30, a = cos(angle*CV_PI/180), b = sin(angle*CV_PI/180);
 /// Mat R = (Mat_<double>(2,2) << a, -b, b, a);
 /// \endcode
-
 #[allow(dead_code)]
 pub struct UMatData {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -10096,165 +8084,67 @@ impl Drop for core::UMatData {
 impl core::UMatData {
     #[doc(hidden)] pub fn as_raw_UMatData(&self) -> *mut c_void { self.ptr }
 }
+
 impl UMatData {
 
-  pub fn lock(&mut self) -> Result<()> {
-  // identifier: cv_UMatData_lock
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_lock(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    // identifier: cv_UMatData_lock
+    pub fn lock(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMatData_lock(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn unlock(&mut self) -> Result<()> {
-  // identifier: cv_UMatData_unlock
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_unlock(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMatData_unlock
+    pub fn unlock(&mut self) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMatData_unlock(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn host_copy_obsolete(&self) -> Result<bool> {
-  // identifier: cv_UMatData_hostCopyObsolete
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_hostCopyObsolete(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMatData_hostCopyObsolete_const
+    pub fn host_copy_obsolete(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMatData_hostCopyObsolete_const(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn device_copy_obsolete(&self) -> Result<bool> {
-  // identifier: cv_UMatData_deviceCopyObsolete
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_deviceCopyObsolete(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMatData_deviceCopyObsolete_const
+    pub fn device_copy_obsolete(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMatData_deviceCopyObsolete_const(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn device_mem_mapped(&self) -> Result<bool> {
-  // identifier: cv_UMatData_deviceMemMapped
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_deviceMemMapped(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMatData_deviceMemMapped_const
+    pub fn device_mem_mapped(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMatData_deviceMemMapped_const(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn copy_on_map(&self) -> Result<bool> {
-  // identifier: cv_UMatData_copyOnMap
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_copyOnMap(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMatData_copyOnMap_const
+    pub fn copy_on_map(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMatData_copyOnMap_const(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn temp_u_mat(&self) -> Result<bool> {
-  // identifier: cv_UMatData_tempUMat
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_tempUMat(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMatData_tempUMat_const
+    pub fn temp_u_mat(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMatData_tempUMat_const(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn temp_copied_u_mat(&self) -> Result<bool> {
-  // identifier: cv_UMatData_tempCopiedUMat
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_tempCopiedUMat(self.as_raw_UMatData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_UMatData_tempCopiedUMat_const
+    pub fn temp_copied_u_mat(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_UMatData_tempCopiedUMat_const(self.as_raw_UMatData()) }.into_result()
     }
-  }
-
-  pub fn mark_host_copy_obsolete(&mut self, flag: bool) -> Result<()> {
-  // identifier: cv_UMatData_markHostCopyObsolete_bool_flag
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_markHostCopyObsolete_bool_flag(self.as_raw_UMatData(), flag);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMatData_markHostCopyObsolete_bool_flag
+    pub fn mark_host_copy_obsolete(&mut self, flag: bool) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMatData_markHostCopyObsolete_bool_flag(self.as_raw_UMatData(), flag) }.into_result()
     }
-  }
-
-  pub fn mark_device_copy_obsolete(&mut self, flag: bool) -> Result<()> {
-  // identifier: cv_UMatData_markDeviceCopyObsolete_bool_flag
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_markDeviceCopyObsolete_bool_flag(self.as_raw_UMatData(), flag);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMatData_markDeviceCopyObsolete_bool_flag
+    pub fn mark_device_copy_obsolete(&mut self, flag: bool) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMatData_markDeviceCopyObsolete_bool_flag(self.as_raw_UMatData(), flag) }.into_result()
     }
-  }
-
-  pub fn mark_device_mem_mapped(&mut self, flag: bool) -> Result<()> {
-  // identifier: cv_UMatData_markDeviceMemMapped_bool_flag
-    unsafe {
-      let rv = sys::cv_core_cv_UMatData_markDeviceMemMapped_bool_flag(self.as_raw_UMatData(), flag);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_UMatData_markDeviceMemMapped_bool_flag
+    pub fn mark_device_mem_mapped(&mut self, flag: bool) -> Result<()> {
+        unsafe { sys::cv_core_cv_UMatData_markDeviceMemMapped_bool_flag(self.as_raw_UMatData(), flag) }.into_result()
     }
-  }
-
+    
 }
-// boxed class cv::detail::CheckContext
 
+// boxed class cv::detail::CheckContext
 #[allow(dead_code)]
 pub struct CheckContext {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -10267,13 +8157,8 @@ impl Drop for core::CheckContext {
 impl core::CheckContext {
     #[doc(hidden)] pub fn as_raw_CheckContext(&self) -> *mut c_void { self.ptr }
 }
-impl CheckContext {
 
-}
 // boxed class cv::float16_t
-/// \
-///                                 C++11 override / final                                 *
-
 #[allow(dead_code)]
 pub struct float16_t {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -10286,81 +8171,37 @@ impl Drop for core::float16_t {
 impl core::float16_t {
     #[doc(hidden)] pub fn as_raw_float16_t(&self) -> *mut c_void { self.ptr }
 }
+
 impl float16_t {
 
-  pub fn new() -> Result<core::float16_t> {
-  // identifier: cv_float16_t_float16_t
-    unsafe {
-      let rv = sys::cv_core_cv_float16_t_float16_t();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::float16_t { ptr: rv.result })
-      }
+    // identifier: cv_float16_t_float16_t
+    pub fn new() -> Result<core::float16_t> {
+        unsafe { sys::cv_core_cv_float16_t_float16_t() }.into_result().map(|x| core::float16_t { ptr: x })
     }
-  }
-
-  pub fn new_v0(x: f32) -> Result<core::float16_t> {
-  // identifier: cv_float16_t_float16_t_float_x
-    unsafe {
-      let rv = sys::cv_core_cv_float16_t_float16_t_float_x(x);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::float16_t { ptr: rv.result })
-      }
+    
+    // identifier: cv_float16_t_float16_t_float_x
+    pub fn new_1(x: f32) -> Result<core::float16_t> {
+        unsafe { sys::cv_core_cv_float16_t_float16_t_float_x(x) }.into_result().map(|x| core::float16_t { ptr: x })
     }
-  }
-
-  pub fn from_bits(w: u16) -> Result<core::float16_t> {
-  // identifier: cv_float16_t_fromBits_ushort_w
-    unsafe {
-      let rv = sys::cv_core_cv_float16_t_fromBits_ushort_w(w);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::float16_t { ptr: rv.result })
-      }
+    
+    // identifier: cv_float16_t_fromBits_ushort_w
+    pub fn from_bits(w: u16) -> Result<core::float16_t> {
+        unsafe { sys::cv_core_cv_float16_t_fromBits_ushort_w(w) }.into_result().map(|x| core::float16_t { ptr: x })
     }
-  }
-
-  pub fn zero() -> Result<core::float16_t> {
-  // identifier: cv_float16_t_zero
-    unsafe {
-      let rv = sys::cv_core_cv_float16_t_zero();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::float16_t { ptr: rv.result })
-      }
+    
+    // identifier: cv_float16_t_zero
+    pub fn zero() -> Result<core::float16_t> {
+        unsafe { sys::cv_core_cv_float16_t_zero() }.into_result().map(|x| core::float16_t { ptr: x })
     }
-  }
-
-  pub fn bits(&self) -> Result<u16> {
-  // identifier: cv_float16_t_bits
-    unsafe {
-      let rv = sys::cv_core_cv_float16_t_bits(self.as_raw_float16_t());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_float16_t_bits_const
+    pub fn bits(&self) -> Result<u16> {
+        unsafe { sys::cv_core_cv_float16_t_bits_const(self.as_raw_float16_t()) }.into_result()
     }
-  }
-
+    
 }
-// boxed class cv::instr::NodeData
 
+// boxed class cv::instr::NodeData
 #[allow(dead_code)]
 pub struct NodeData {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -10373,53 +8214,27 @@ impl Drop for core::NodeData {
 impl core::NodeData {
     #[doc(hidden)] pub fn as_raw_NodeData(&self) -> *mut c_void { self.ptr }
 }
+
 impl NodeData {
 
-  pub fn new(_ref: &core::NodeData) -> Result<core::NodeData> {
-  // identifier: cv_instr_NodeData_NodeData_NodeData_ref
-    unsafe {
-      let rv = sys::cv_core_cv_instr_NodeData_NodeData_NodeData_ref(_ref.as_raw_NodeData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::NodeData { ptr: rv.result })
-      }
+    // identifier: cv_instr_NodeData_NodeData_NodeData_ref
+    pub fn new(_ref: &core::NodeData) -> Result<core::NodeData> {
+        unsafe { sys::cv_core_cv_instr_NodeData_NodeData_NodeData_ref(_ref.as_raw_NodeData()) }.into_result().map(|x| core::NodeData { ptr: x })
     }
-  }
-
-  pub fn get_total_ms(&self) -> Result<f64> {
-  // identifier: cv_instr_NodeData_getTotalMs
-    unsafe {
-      let rv = sys::cv_core_cv_instr_NodeData_getTotalMs(self.as_raw_NodeData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_instr_NodeData_getTotalMs_const
+    pub fn get_total_ms(&self) -> Result<f64> {
+        unsafe { sys::cv_core_cv_instr_NodeData_getTotalMs_const(self.as_raw_NodeData()) }.into_result()
     }
-  }
-
-  pub fn get_mean_ms(&self) -> Result<f64> {
-  // identifier: cv_instr_NodeData_getMeanMs
-    unsafe {
-      let rv = sys::cv_core_cv_instr_NodeData_getMeanMs(self.as_raw_NodeData());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_instr_NodeData_getMeanMs_const
+    pub fn get_mean_ms(&self) -> Result<f64> {
+        unsafe { sys::cv_core_cv_instr_NodeData_getMeanMs_const(self.as_raw_NodeData()) }.into_result()
     }
-  }
-
+    
 }
-// boxed class cv::instr::NodeDataTls
 
+// boxed class cv::instr::NodeDataTls
 #[allow(dead_code)]
 pub struct NodeDataTls {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -10432,25 +8247,17 @@ impl Drop for core::NodeDataTls {
 impl core::NodeDataTls {
     #[doc(hidden)] pub fn as_raw_NodeDataTls(&self) -> *mut c_void { self.ptr }
 }
+
 impl NodeDataTls {
 
-  pub fn new() -> Result<core::NodeDataTls> {
-  // identifier: cv_instr_NodeDataTls_NodeDataTls
-    unsafe {
-      let rv = sys::cv_core_cv_instr_NodeDataTls_NodeDataTls();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::NodeDataTls { ptr: rv.result })
-      }
+    // identifier: cv_instr_NodeDataTls_NodeDataTls
+    pub fn new() -> Result<core::NodeDataTls> {
+        unsafe { sys::cv_core_cv_instr_NodeDataTls_NodeDataTls() }.into_result().map(|x| core::NodeDataTls { ptr: x })
     }
-  }
-
+    
 }
-// boxed class cv::softdouble
 
+// boxed class cv::softdouble
 #[allow(dead_code)]
 pub struct softdouble {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -10463,329 +8270,142 @@ impl Drop for core::softdouble {
 impl core::softdouble {
     #[doc(hidden)] pub fn as_raw_softdouble(&self) -> *mut c_void { self.ptr }
 }
+
 impl softdouble {
 
-  /// Copy constructor
-  pub fn new(c: &core::softdouble) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_softdouble_softdouble_c
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_softdouble_softdouble_c(c.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    // identifier: cv_softdouble_softdouble_softdouble_c
+    /// Copy constructor
+    pub fn new(c: &core::softdouble) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_softdouble_softdouble_c(c.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Construct from raw
-  /// 
-  /// Builds new value from raw binary representation
-  pub fn from_raw(a: u64) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_fromRaw_uint64_t_a
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_fromRaw_uint64_t_a(a);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_fromRaw_uint64_t_a
+    /// Construct from raw
+    /// 
+    /// Builds new value from raw binary representation
+    pub fn from_raw(a: u64) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_fromRaw_uint64_t_a(a) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  pub fn new_v0(a: i32) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_softdouble_int_a
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_softdouble_int_a(a);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_softdouble_int_a
+    pub fn new_1(a: i32) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_softdouble_int_a(a) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Construct from double
-  pub fn new_v1(a: f64) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_softdouble_double_a
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_softdouble_double_a(a);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_softdouble_double_a
+    /// Construct from double
+    pub fn new_2(a: f64) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_softdouble_double_a(a) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// NaN state indicator
-  pub fn is_na_n(&self) -> Result<bool> {
-  // identifier: cv_softdouble_isNaN
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_isNaN(self.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softdouble_isNaN_const
+    /// NaN state indicator
+    pub fn is_na_n(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softdouble_isNaN_const(self.as_raw_softdouble()) }.into_result()
     }
-  }
-
-  /// Inf state indicator
-  pub fn is_inf(&self) -> Result<bool> {
-  // identifier: cv_softdouble_isInf
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_isInf(self.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softdouble_isInf_const
+    /// Inf state indicator
+    pub fn is_inf(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softdouble_isInf_const(self.as_raw_softdouble()) }.into_result()
     }
-  }
-
-  /// Subnormal number indicator
-  pub fn is_subnormal(&self) -> Result<bool> {
-  // identifier: cv_softdouble_isSubnormal
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_isSubnormal(self.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softdouble_isSubnormal_const
+    /// Subnormal number indicator
+    pub fn is_subnormal(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softdouble_isSubnormal_const(self.as_raw_softdouble()) }.into_result()
     }
-  }
-
-  /// Get sign bit
-  pub fn get_sign(&self) -> Result<bool> {
-  // identifier: cv_softdouble_getSign
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_getSign(self.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softdouble_getSign_const
+    /// Get sign bit
+    pub fn get_sign(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softdouble_getSign_const(self.as_raw_softdouble()) }.into_result()
     }
-  }
-
-  /// Construct a copy with new sign bit
-  pub fn set_sign(&self, sign: bool) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_setSign_bool_sign
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_setSign_bool_sign(self.as_raw_softdouble(), sign);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_setSign_const_bool_sign
+    /// Construct a copy with new sign bit
+    pub fn set_sign(&self, sign: bool) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_setSign_const_bool_sign(self.as_raw_softdouble(), sign) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Get 0-based exponent
-  pub fn get_exp(&self) -> Result<i32> {
-  // identifier: cv_softdouble_getExp
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_getExp(self.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softdouble_getExp_const
+    /// Get 0-based exponent
+    pub fn get_exp(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_softdouble_getExp_const(self.as_raw_softdouble()) }.into_result()
     }
-  }
-
-  /// Construct a copy with new 0-based exponent
-  pub fn set_exp(&self, e: i32) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_setExp_int_e
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_setExp_int_e(self.as_raw_softdouble(), e);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_setExp_const_int_e
+    /// Construct a copy with new 0-based exponent
+    pub fn set_exp(&self, e: i32) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_setExp_const_int_e(self.as_raw_softdouble(), e) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Get a fraction part
-  /// 
-  /// Returns a number 1 <= x < 2 with the same significand
-  pub fn get_frac(&self) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_getFrac
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_getFrac(self.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_getFrac_const
+    /// Get a fraction part
+    /// 
+    /// Returns a number 1 <= x < 2 with the same significand
+    pub fn get_frac(&self) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_getFrac_const(self.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Construct a copy with provided significand
-  /// 
-  /// Constructs a copy of a number with significand taken from parameter
-  pub fn set_frac(&self, s: &core::softdouble) -> Result<core::softdouble> {
-  // identifier: cv_softdouble_setFrac_softdouble_s
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_setFrac_softdouble_s(self.as_raw_softdouble(), s.as_raw_softdouble());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_setFrac_const_softdouble_s
+    /// Construct a copy with provided significand
+    /// 
+    /// Constructs a copy of a number with significand taken from parameter
+    pub fn set_frac(&self, s: &core::softdouble) -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_setFrac_const_softdouble_s(self.as_raw_softdouble(), s.as_raw_softdouble()) }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Zero constant
-  pub fn zero() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_zero
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_zero();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_zero
+    /// Zero constant
+    pub fn zero() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_zero() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Positive infinity constant
-  pub fn inf() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_inf
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_inf();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_inf
+    /// Positive infinity constant
+    pub fn inf() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_inf() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Default NaN constant
-  pub fn nan() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_nan
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_nan();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_nan
+    /// Default NaN constant
+    pub fn nan() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_nan() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// One constant
-  pub fn one() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_one
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_one();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_one
+    /// One constant
+    pub fn one() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_one() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Smallest normalized value
-  pub fn min() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_min
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_min();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_min
+    /// Smallest normalized value
+    pub fn min() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_min() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Difference between 1 and next representable value
-  pub fn eps() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_eps
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_eps();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_eps
+    /// Difference between 1 and next representable value
+    pub fn eps() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_eps() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Biggest finite value
-  pub fn max() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_max
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_max();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_max
+    /// Biggest finite value
+    pub fn max() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_max() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
-  /// Correct pi approximation
-  pub fn pi() -> Result<core::softdouble> {
-  // identifier: cv_softdouble_pi
-    unsafe {
-      let rv = sys::cv_core_cv_softdouble_pi();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softdouble { ptr: rv.result })
-      }
+    
+    // identifier: cv_softdouble_pi
+    /// Correct pi approximation
+    pub fn pi() -> Result<core::softdouble> {
+        unsafe { sys::cv_core_cv_softdouble_pi() }.into_result().map(|x| core::softdouble { ptr: x })
     }
-  }
-
+    
 }
+
 // boxed class cv::softfloat
 /// @addtogroup core_utils_softfloat
 /// 
@@ -10818,7 +8438,6 @@ impl softdouble {
 /// number state indicators (isInf, isNan, isSubnormal)
 /// - Type-specific constants like eps, minimum/maximum value, best pi approximation, etc.
 /// - min(), max(), abs(), exp(), log() and pow() functions
-
 #[allow(dead_code)]
 pub struct softfloat {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -10831,510 +8450,255 @@ impl Drop for core::softfloat {
 impl core::softfloat {
     #[doc(hidden)] pub fn as_raw_softfloat(&self) -> *mut c_void { self.ptr }
 }
+
 impl softfloat {
 
-  /// Default constructor
-  pub fn new() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_softfloat
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_softfloat();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    // identifier: cv_softfloat_softfloat
+    /// Default constructor
+    pub fn new() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_softfloat() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Copy constructor
-  pub fn new_v0(c: &core::softfloat) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_softfloat_softfloat_c
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_softfloat_softfloat_c(c.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_softfloat_softfloat_c
+    /// Copy constructor
+    pub fn new_1(c: &core::softfloat) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_softfloat_softfloat_c(c.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Construct from raw
-  /// 
-  /// Builds new value from raw binary representation
-  pub fn from_raw(a: u32) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_fromRaw_uint32_t_a
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_fromRaw_uint32_t_a(a);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_fromRaw_uint32_t_a
+    /// Construct from raw
+    /// 
+    /// Builds new value from raw binary representation
+    pub fn from_raw(a: u32) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_fromRaw_uint32_t_a(a) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  pub fn new_v1(a: i32) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_softfloat_int_a
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_softfloat_int_a(a);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_softfloat_int_a
+    pub fn new_2(a: i32) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_softfloat_int_a(a) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Construct from float
-  pub fn new_v2(a: f32) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_softfloat_float_a
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_softfloat_float_a(a);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_softfloat_float_a
+    /// Construct from float
+    pub fn new_3(a: f32) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_softfloat_float_a(a) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// NaN state indicator
-  pub fn is_na_n(&self) -> Result<bool> {
-  // identifier: cv_softfloat_isNaN
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_isNaN(self.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softfloat_isNaN_const
+    /// NaN state indicator
+    pub fn is_na_n(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softfloat_isNaN_const(self.as_raw_softfloat()) }.into_result()
     }
-  }
-
-  /// Inf state indicator
-  pub fn is_inf(&self) -> Result<bool> {
-  // identifier: cv_softfloat_isInf
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_isInf(self.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softfloat_isInf_const
+    /// Inf state indicator
+    pub fn is_inf(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softfloat_isInf_const(self.as_raw_softfloat()) }.into_result()
     }
-  }
-
-  /// Subnormal number indicator
-  pub fn is_subnormal(&self) -> Result<bool> {
-  // identifier: cv_softfloat_isSubnormal
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_isSubnormal(self.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softfloat_isSubnormal_const
+    /// Subnormal number indicator
+    pub fn is_subnormal(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softfloat_isSubnormal_const(self.as_raw_softfloat()) }.into_result()
     }
-  }
-
-  /// Get sign bit
-  pub fn get_sign(&self) -> Result<bool> {
-  // identifier: cv_softfloat_getSign
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_getSign(self.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softfloat_getSign_const
+    /// Get sign bit
+    pub fn get_sign(&self) -> Result<bool> {
+        unsafe { sys::cv_core_cv_softfloat_getSign_const(self.as_raw_softfloat()) }.into_result()
     }
-  }
-
-  /// Construct a copy with new sign bit
-  pub fn set_sign(&self, sign: bool) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_setSign_bool_sign
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_setSign_bool_sign(self.as_raw_softfloat(), sign);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_setSign_const_bool_sign
+    /// Construct a copy with new sign bit
+    pub fn set_sign(&self, sign: bool) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_setSign_const_bool_sign(self.as_raw_softfloat(), sign) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Get 0-based exponent
-  pub fn get_exp(&self) -> Result<i32> {
-  // identifier: cv_softfloat_getExp
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_getExp(self.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_softfloat_getExp_const
+    /// Get 0-based exponent
+    pub fn get_exp(&self) -> Result<i32> {
+        unsafe { sys::cv_core_cv_softfloat_getExp_const(self.as_raw_softfloat()) }.into_result()
     }
-  }
-
-  /// Construct a copy with new 0-based exponent
-  pub fn set_exp(&self, e: i32) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_setExp_int_e
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_setExp_int_e(self.as_raw_softfloat(), e);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_setExp_const_int_e
+    /// Construct a copy with new 0-based exponent
+    pub fn set_exp(&self, e: i32) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_setExp_const_int_e(self.as_raw_softfloat(), e) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Get a fraction part
-  /// 
-  /// Returns a number 1 <= x < 2 with the same significand
-  pub fn get_frac(&self) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_getFrac
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_getFrac(self.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_getFrac_const
+    /// Get a fraction part
+    /// 
+    /// Returns a number 1 <= x < 2 with the same significand
+    pub fn get_frac(&self) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_getFrac_const(self.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Construct a copy with provided significand
-  /// 
-  /// Constructs a copy of a number with significand taken from parameter
-  pub fn set_frac(&self, s: &core::softfloat) -> Result<core::softfloat> {
-  // identifier: cv_softfloat_setFrac_softfloat_s
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_setFrac_softfloat_s(self.as_raw_softfloat(), s.as_raw_softfloat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_setFrac_const_softfloat_s
+    /// Construct a copy with provided significand
+    /// 
+    /// Constructs a copy of a number with significand taken from parameter
+    pub fn set_frac(&self, s: &core::softfloat) -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_setFrac_const_softfloat_s(self.as_raw_softfloat(), s.as_raw_softfloat()) }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Zero constant
-  pub fn zero() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_zero
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_zero();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_zero
+    /// Zero constant
+    pub fn zero() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_zero() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Positive infinity constant
-  pub fn inf() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_inf
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_inf();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_inf
+    /// Positive infinity constant
+    pub fn inf() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_inf() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Default NaN constant
-  pub fn nan() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_nan
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_nan();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_nan
+    /// Default NaN constant
+    pub fn nan() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_nan() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// One constant
-  pub fn one() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_one
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_one();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_one
+    /// One constant
+    pub fn one() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_one() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Smallest normalized value
-  pub fn min() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_min
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_min();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_min
+    /// Smallest normalized value
+    pub fn min() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_min() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Difference between 1 and next representable value
-  pub fn eps() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_eps
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_eps();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_eps
+    /// Difference between 1 and next representable value
+    pub fn eps() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_eps() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Biggest finite value
-  pub fn max() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_max
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_max();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_max
+    /// Biggest finite value
+    pub fn max() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_max() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
-  /// Correct pi approximation
-  pub fn pi() -> Result<core::softfloat> {
-  // identifier: cv_softfloat_pi
-    unsafe {
-      let rv = sys::cv_core_cv_softfloat_pi();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(core::softfloat { ptr: rv.result })
-      }
+    
+    // identifier: cv_softfloat_pi
+    /// Correct pi approximation
+    pub fn pi() -> Result<core::softfloat> {
+        unsafe { sys::cv_core_cv_softfloat_pi() }.into_result().map(|x| core::softfloat { ptr: x })
     }
-  }
-
+    
 }
-pub const ACCESS_FAST: i32 = 0x4000000;
-pub const ACCESS_MASK: i32 = 0x3000000;
-pub const ACCESS_READ: i32 = 0x1000000;
-pub const ACCESS_RW: i32 = 0x3000000;
-pub const ACCESS_WRITE: i32 = 0x2000000;
-pub const BORDER_DEFAULT: i32 = 0x4;
-pub const BORDER_REFLECT101: i32 = 0x4;
-pub const CV_16SC1: i32 = 0x3;
-pub const CV_16SC2: i32 = 0xb;
-pub const CV_16SC3: i32 = 0x13;
-pub const CV_16SC4: i32 = 0x1b;
-pub const CV_16UC1: i32 = 0x2;
-pub const CV_16UC2: i32 = 0xa;
-pub const CV_16UC3: i32 = 0x12;
-pub const CV_16UC4: i32 = 0x1a;
-pub const CV_32FC1: i32 = 0x5;
-pub const CV_32FC2: i32 = 0xd;
-pub const CV_32FC3: i32 = 0x15;
-pub const CV_32FC4: i32 = 0x1d;
-pub const CV_32SC1: i32 = 0x4;
-pub const CV_32SC2: i32 = 0xc;
-pub const CV_32SC3: i32 = 0x14;
-pub const CV_32SC4: i32 = 0x1c;
-pub const CV_64FC1: i32 = 0x6;
-pub const CV_64FC2: i32 = 0xe;
-pub const CV_64FC3: i32 = 0x16;
-pub const CV_64FC4: i32 = 0x1e;
-pub const CV_8SC1: i32 = 0x1;
-pub const CV_8SC2: i32 = 0x9;
-pub const CV_8SC3: i32 = 0x11;
-pub const CV_8SC4: i32 = 0x19;
-pub const CV_8UC1: i32 = 0x0;
-pub const CV_8UC2: i32 = 0x8;
-pub const CV_8UC3: i32 = 0x10;
-pub const CV_8UC4: i32 = 0x18;
-pub const CV_AUTOSTEP: i32 = 0x7fffffff;
-pub const CV_AUTO_STEP: i32 = 0x7fffffff;
-pub const CV_CPU_AVX_512IFMA512: i32 = 0x12;
-pub const CV_DEPTH_MAX: i32 = 0x8;
-pub const CV_DIFF_C: i32 = 0x11;
-pub const CV_DIFF_L1: i32 = 0x12;
-pub const CV_DIFF_L2: i32 = 0x14;
-pub const CV_DXT_INVERSE_SCALE: i32 = 0x3;
-pub const CV_DXT_INV_SCALE: i32 = 0x3;
-pub const CV_DXT_MUL_CONJ: i32 = 0x8;
-pub const CV_DXT_ROWS: i32 = 0x4;
-pub const CV_DXT_SCALE: i32 = 0x2;
-pub const CV_GRAPH: i32 = 0x1000;
-pub const CV_GRAPH_FLAG_ORIENTED: i32 = 0x4000;
-pub const CV_GRAPH_FORWARD_EDGE_FLAG: i32 = 0x10000000;
-pub const CV_GRAPH_ITEM_VISITED_FLAG: i32 = 0x40000000;
-pub const CV_GRAPH_SEARCH_TREE_NODE_FLAG: i32 = 0x20000000;
-pub const CV_HIST_RANGES_FLAG: i32 = 0x800;
-pub const CV_HIST_TREE: i32 = 0x1;
-pub const CV_HIST_UNIFORM_FLAG: i32 = 0x400;
-pub const CV_LOG_LEVEL_DEBUG: i32 = 0x5;
-pub const CV_LOG_LEVEL_ERROR: i32 = 0x2;
-pub const CV_LOG_LEVEL_FATAL: i32 = 0x1;
-pub const CV_LOG_LEVEL_INFO: i32 = 0x4;
-pub const CV_LOG_LEVEL_SILENT: i32 = 0x0;
-pub const CV_LOG_LEVEL_VERBOSE: i32 = 0x6;
-pub const CV_LOG_LEVEL_WARN: i32 = 0x3;
-pub const CV_MAJOR_VERSION: i32 = 0x3;
-pub const CV_MAT_CN_MASK: i32 = 0xff8;
-pub const CV_MAT_CONT_FLAG: i32 = 0x4000;
-pub const CV_MAT_DEPTH_MASK: i32 = 0x7;
-pub const CV_MAT_TYPE_MASK: i32 = 0xfff;
-pub const CV_MINOR_VERSION: i32 = 0x4;
-pub const CV_NODE_FLOAT: i32 = 0x2;
-pub const CV_NODE_FLOW: i32 = 0x8;
-pub const CV_NODE_INTEGER: i32 = 0x1;
-pub const CV_NODE_REF: i32 = 0x4;
-pub const CV_NODE_STRING: i32 = 0x3;
-pub const CV_ORIENTED_GRAPH: i32 = 0x5000;
-pub const CV_RELATIVE_C: i32 = 0x9;
-pub const CV_RELATIVE_L1: i32 = 0xa;
-pub const CV_RELATIVE_L2: i32 = 0xc;
-pub const CV_SEQ_CHAIN: i32 = 0x1000;
-pub const CV_SEQ_CHAIN_CONTOUR: i32 = 0x5000;
-pub const CV_SEQ_CONNECTED_COMP: i32 = 0x0;
-pub const CV_SEQ_CONTOUR: i32 = 0x500c;
-pub const CV_SEQ_ELTYPE_CODE: i32 = 0x0;
-pub const CV_SEQ_ELTYPE_CONNECTED_COMP: i32 = 0x0;
-pub const CV_SEQ_ELTYPE_GRAPH_EDGE: i32 = 0x0;
-pub const CV_SEQ_ELTYPE_GRAPH_VERTEX: i32 = 0x0;
-pub const CV_SEQ_ELTYPE_INDEX: i32 = 0x4;
-pub const CV_SEQ_ELTYPE_MASK: i32 = 0xfff;
-pub const CV_SEQ_ELTYPE_POINT: i32 = 0xc;
-pub const CV_SEQ_ELTYPE_POINT3D: i32 = 0x15;
-pub const CV_SEQ_ELTYPE_PPOINT: i32 = 0x7;
-pub const CV_SEQ_ELTYPE_PTR: i32 = 0x7;
-pub const CV_SEQ_ELTYPE_TRIAN_ATR: i32 = 0x0;
-pub const CV_SEQ_FLAG_CLOSED: i32 = 0x4000;
-pub const CV_SEQ_FLAG_CONVEX: i32 = 0x0;
-pub const CV_SEQ_FLAG_HOLE: i32 = 0x8000;
-pub const CV_SEQ_FLAG_SHIFT: i32 = 0xe;
-pub const CV_SEQ_FLAG_SIMPLE: i32 = 0x0;
-pub const CV_SEQ_INDEX: i32 = 0x4;
-pub const CV_SEQ_KIND_BIN_TREE: i32 = 0x2000;
-pub const CV_SEQ_KIND_CURVE: i32 = 0x1000;
-pub const CV_SEQ_KIND_GENERIC: i32 = 0x0;
-pub const CV_SEQ_KIND_GRAPH: i32 = 0x1000;
-pub const CV_SEQ_KIND_MASK: i32 = 0x3000;
-pub const CV_SEQ_KIND_SUBDIV2D: i32 = 0x2000;
-pub const CV_SEQ_POINT3D_SET: i32 = 0x15;
-pub const CV_SEQ_POINT_SET: i32 = 0xc;
-pub const CV_SEQ_POLYGON: i32 = 0x500c;
-pub const CV_SEQ_POLYGON_TREE: i32 = 0x2000;
-pub const CV_SEQ_POLYLINE: i32 = 0x100c;
-pub const CV_SEQ_SIMPLE_POLYGON: i32 = 0x500c;
-pub const CV_SET_ELEM_IDX_MASK: i32 = 0x3ffffff;
-pub const CV_STORAGE_FORMAT_MASK: i32 = 0x38;
-pub const CV_STORAGE_WRITE_BASE64: i32 = 0x41;
-pub const CV_STORAGE_WRITE_BINARY: i32 = 0x1;
-pub const CV_STORAGE_WRITE_TEXT: i32 = 0x1;
-pub const CV_SUBMAT_FLAG: i32 = 0x8000;
-pub const CV_SUBMINOR_VERSION: i32 = 0x5;
-pub const CV_TERMCRIT_NUMBER: i32 = 0x1;
+
+pub const CV_16SC1: i32 = 0x3; // 3
+pub const CV_16SC2: i32 = 0xb; // 11
+pub const CV_16SC3: i32 = 0x13; // 19
+pub const CV_16SC4: i32 = 0x1b; // 27
+pub const CV_16UC1: i32 = 0x2; // 2
+pub const CV_16UC2: i32 = 0xa; // 10
+pub const CV_16UC3: i32 = 0x12; // 18
+pub const CV_16UC4: i32 = 0x1a; // 26
+pub const CV_32FC1: i32 = 0x5; // 5
+pub const CV_32FC2: i32 = 0xd; // 13
+pub const CV_32FC3: i32 = 0x15; // 21
+pub const CV_32FC4: i32 = 0x1d; // 29
+pub const CV_32SC1: i32 = 0x4; // 4
+pub const CV_32SC2: i32 = 0xc; // 12
+pub const CV_32SC3: i32 = 0x14; // 20
+pub const CV_32SC4: i32 = 0x1c; // 28
+pub const CV_64FC1: i32 = 0x6; // 6
+pub const CV_64FC2: i32 = 0xe; // 14
+pub const CV_64FC3: i32 = 0x16; // 22
+pub const CV_64FC4: i32 = 0x1e; // 30
+pub const CV_8SC1: i32 = 0x1; // 1
+pub const CV_8SC2: i32 = 0x9; // 9
+pub const CV_8SC3: i32 = 0x11; // 17
+pub const CV_8SC4: i32 = 0x19; // 25
+pub const CV_8UC1: i32 = 0x0; // 0
+pub const CV_8UC2: i32 = 0x8; // 8
+pub const CV_8UC3: i32 = 0x10; // 16
+pub const CV_8UC4: i32 = 0x18; // 24
+pub const CV_DEPTH_MAX: i32 = 0x8; // 8
+pub const CV_DIFF_C: i32 = 0x11; // 17
+pub const CV_DIFF_L1: i32 = 0x12; // 18
+pub const CV_DIFF_L2: i32 = 0x14; // 20
+pub const CV_DXT_INVERSE_SCALE: i32 = 0x3; // 3
+pub const CV_DXT_INV_SCALE: i32 = 0x3; // 3
+pub const CV_GRAPH: i32 = 0x1000; // 4096
+pub const CV_GRAPH_FLAG_ORIENTED: i32 = 0x4000; // 16384
+pub const CV_MAT_CN_MASK: i32 = 0xff8; // 4088
+pub const CV_MAT_CONT_FLAG: i32 = 0x4000; // 16384
+pub const CV_MAT_DEPTH_MASK: i32 = 0x7; // 7
+pub const CV_MAT_TYPE_MASK: i32 = 0xfff; // 4095
+pub const CV_ORIENTED_GRAPH: i32 = 0x5000; // 20480
+pub const CV_RELATIVE_C: i32 = 0x9; // 9
+pub const CV_RELATIVE_L1: i32 = 0xa; // 10
+pub const CV_RELATIVE_L2: i32 = 0xc; // 12
+pub const CV_SEQ_CHAIN: i32 = 0x1000; // 4096
+pub const CV_SEQ_CHAIN_CONTOUR: i32 = 0x5000; // 20480
+pub const CV_SEQ_CONNECTED_COMP: i32 = 0x0; // 0
+pub const CV_SEQ_CONTOUR: i32 = 0x500c; // 20492
+pub const CV_SEQ_ELTYPE_CODE: i32 = 0x0; // 0
+pub const CV_SEQ_ELTYPE_INDEX: i32 = 0x4; // 4
+pub const CV_SEQ_ELTYPE_MASK: i32 = 0xfff; // 4095
+pub const CV_SEQ_ELTYPE_POINT: i32 = 0xc; // 12
+pub const CV_SEQ_ELTYPE_POINT3D: i32 = 0x15; // 21
+pub const CV_SEQ_FLAG_CLOSED: i32 = 0x4000; // 16384
+pub const CV_SEQ_FLAG_CONVEX: i32 = 0x0; // 0
+pub const CV_SEQ_FLAG_HOLE: i32 = 0x8000; // 32768
+pub const CV_SEQ_FLAG_SHIFT: i32 = 0xe; // 14
+pub const CV_SEQ_FLAG_SIMPLE: i32 = 0x0; // 0
+pub const CV_SEQ_INDEX: i32 = 0x4; // 4
+pub const CV_SEQ_KIND_BIN_TREE: i32 = 0x2000; // 8192
+pub const CV_SEQ_KIND_CURVE: i32 = 0x1000; // 4096
+pub const CV_SEQ_KIND_GENERIC: i32 = 0x0; // 0
+pub const CV_SEQ_KIND_GRAPH: i32 = 0x1000; // 4096
+pub const CV_SEQ_KIND_MASK: i32 = 0x3000; // 12288
+pub const CV_SEQ_KIND_SUBDIV2D: i32 = 0x2000; // 8192
+pub const CV_SEQ_POINT3D_SET: i32 = 0x15; // 21
+pub const CV_SEQ_POINT_SET: i32 = 0xc; // 12
+pub const CV_SEQ_POLYGON: i32 = 0x500c; // 20492
+pub const CV_SEQ_POLYGON_TREE: i32 = 0x2000; // 8192
+pub const CV_SEQ_POLYLINE: i32 = 0x100c; // 4108
+pub const CV_SEQ_SIMPLE_POLYGON: i32 = 0x500c; // 20492
+pub const CV_SET_ELEM_IDX_MASK: i32 = 0x3ffffff; // 67108863
+pub const CV_STORAGE_WRITE_BASE64: i32 = 0x41; // 65
+pub const CV_SUBMAT_FLAG: i32 = 0x8000; // 32768
 pub static CV_VERSION: &'static str = "3.4.5";
-pub const DCT_INVERSE: i32 = 0x1;
-pub const DCT_ROWS: i32 = 0x4;
-pub const ENUM_LOG_LEVEL_FORCE_INT: i32 = 0x7fffffff;
-pub const Hamming_normType: i32 = 0x6;
-pub const IMPL_IPP: i32 = 0x1;
-pub const IMPL_OPENCL: i32 = 0x2;
-pub const IPL_ALIGN_DWORD: i32 = 0x4;
-pub const IPL_ALIGN_QWORD: i32 = 0x8;
-pub const IPL_DEPTH_16S: i32 = 0x80000010;
-pub const IPL_DEPTH_32S: i32 = 0x80000020;
-pub const IPL_DEPTH_8S: i32 = 0x80000008;
-pub const Mat_CONTINUOUS_FLAG: i32 = 0x4000;
-pub const Mat_SUBMATRIX_FLAG: i32 = 0x8000;
-pub const SparseMat_HASH_SCALE: i32 = 0x5bd1e995;
-pub const TYPE_FUN: i32 = 0x3;
-pub const TYPE_MARKER: i32 = 0x1;
-pub const TYPE_WRAPPER: i32 = 0x2;
-pub const TermCriteria_MAX_ITER: i32 = 0x1;
-pub const USAGE_ALLOCATE_DEVICE_MEMORY: i32 = 0x2;
-pub const USAGE_ALLOCATE_HOST_MEMORY: i32 = 0x1;
-pub const USAGE_ALLOCATE_SHARED_MEMORY: i32 = 0x4;
-pub const _InputArray_CUDA_GPU_MAT: i32 = 0x90000;
-pub const _InputArray_CUDA_HOST_MEM: i32 = 0x80000;
-pub const _InputArray_EXPR: i32 = 0x60000;
-pub const _InputArray_FIXED_SIZE: i32 = 0x40000000;
-pub const _InputArray_FIXED_TYPE: i32 = 0x80000000;
-pub const _InputArray_KIND_MASK: i32 = 0x1f0000;
-pub const _InputArray_MATX: i32 = 0x20000;
-pub const _InputArray_NONE: i32 = 0x0;
-pub const _InputArray_OPENGL_BUFFER: i32 = 0x70000;
-pub const _InputArray_STD_ARRAY: i32 = 0xe0000;
-pub const _InputArray_STD_ARRAY_MAT: i32 = 0xf0000;
-pub const _InputArray_STD_BOOL_VECTOR: i32 = 0xc0000;
-pub const _InputArray_STD_VECTOR: i32 = 0x30000;
-pub const _InputArray_STD_VECTOR_CUDA_GPU_MAT: i32 = 0xd0000;
-pub const _InputArray_STD_VECTOR_MAT: i32 = 0x50000;
-pub const _InputArray_STD_VECTOR_UMAT: i32 = 0xb0000;
-pub const _InputArray_STD_VECTOR_VECTOR: i32 = 0x40000;
-pub const _InputArray_UMAT: i32 = 0xa0000;
-pub const _OutputArray_DEPTH_MASK_16S: i32 = 0x8;
-pub const _OutputArray_DEPTH_MASK_16U: i32 = 0x4;
-pub const _OutputArray_DEPTH_MASK_32F: i32 = 0x20;
-pub const _OutputArray_DEPTH_MASK_32S: i32 = 0x10;
-pub const _OutputArray_DEPTH_MASK_64F: i32 = 0x40;
-pub const _OutputArray_DEPTH_MASK_8S: i32 = 0x2;
-pub const _OutputArray_DEPTH_MASK_8U: i32 = 0x1;
-pub const _OutputArray_DEPTH_MASK_ALL: i32 = 0x7f;
-pub const _OutputArray_DEPTH_MASK_ALL_BUT_8S: i32 = 0x7d;
-pub const _OutputArray_DEPTH_MASK_FLT: i32 = 0x60;
-pub const __UMAT_USAGE_FLAGS_32BIT: i32 = 0x7fffffff;
+pub const ENUM_LOG_LEVEL_FORCE_INT: i32 = 0x7fffffff; // 2147483647
+pub const IPL_DEPTH_16S: i32 = 0x80000010; // -2147483632
+pub const IPL_DEPTH_32S: i32 = 0x80000020; // -2147483616
+pub const IPL_DEPTH_8S: i32 = 0x80000008; // -2147483640
+pub const Mat_CONTINUOUS_FLAG: i32 = 0x4000; // 16384
+pub const Mat_SUBMATRIX_FLAG: i32 = 0x8000; // 32768
+pub const _InputArray_CUDA_GPU_MAT: i32 = 0x90000; // 589824
+pub const _InputArray_CUDA_HOST_MEM: i32 = 0x80000; // 524288
+pub const _InputArray_EXPR: i32 = 0x60000; // 393216
+pub const _InputArray_FIXED_SIZE: i32 = 0x40000000; // 1073741824
+pub const _InputArray_FIXED_TYPE: i32 = 0x80000000; // -2147483648
+pub const _InputArray_KIND_MASK: i32 = 0x1f0000; // 2031616
+pub const _InputArray_MATX: i32 = 0x20000; // 131072
+pub const _InputArray_NONE: i32 = 0x0; // 0
+pub const _InputArray_OPENGL_BUFFER: i32 = 0x70000; // 458752
+pub const _InputArray_STD_ARRAY: i32 = 0xe0000; // 917504
+pub const _InputArray_STD_ARRAY_MAT: i32 = 0xf0000; // 983040
+pub const _InputArray_STD_BOOL_VECTOR: i32 = 0xc0000; // 786432
+pub const _InputArray_STD_VECTOR: i32 = 0x30000; // 196608
+pub const _InputArray_STD_VECTOR_CUDA_GPU_MAT: i32 = 0xd0000; // 851968
+pub const _InputArray_STD_VECTOR_MAT: i32 = 0x50000; // 327680
+pub const _InputArray_STD_VECTOR_UMAT: i32 = 0xb0000; // 720896
+pub const _InputArray_STD_VECTOR_VECTOR: i32 = 0x40000; // 262144
+pub const _InputArray_UMAT: i32 = 0xa0000; // 655360
+pub const _OutputArray_DEPTH_MASK_16S: i32 = 0x8; // 8
+pub const _OutputArray_DEPTH_MASK_16U: i32 = 0x4; // 4
+pub const _OutputArray_DEPTH_MASK_32F: i32 = 0x20; // 32
+pub const _OutputArray_DEPTH_MASK_32S: i32 = 0x10; // 16
+pub const _OutputArray_DEPTH_MASK_64F: i32 = 0x40; // 64
+pub const _OutputArray_DEPTH_MASK_8S: i32 = 0x2; // 2
+pub const _OutputArray_DEPTH_MASK_8U: i32 = 0x1; // 1
+pub const _OutputArray_DEPTH_MASK_ALL: i32 = 0x7f; // 127
+pub const _OutputArray_DEPTH_MASK_ALL_BUT_8S: i32 = 0x7d; // 125
+pub const _OutputArray_DEPTH_MASK_FLT: i32 = 0x60; // 96
+pub use crate::hub::manual::core::*;

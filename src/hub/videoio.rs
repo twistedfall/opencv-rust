@@ -28,25 +28,30 @@
 //! 
 //! # Query I/O API backends registry
 //! @}
+use std::os::raw::{c_char, c_void};
+use libc::size_t;
+use crate::{Error, Result, core, sys, types};
 
-use libc::{c_void, c_char, size_t};
-use std::ffi::{CStr, CString};
-use crate::{core, sys, types};
-use crate::{Error, Result};
 pub const CAP_ANDROID: i32 = 1000;
 pub const CAP_ANY: i32 = 0;
 pub const CAP_ARAVIS: i32 = 2100;
 pub const CAP_AVFOUNDATION: i32 = 1200;
+pub const CAP_CMU1394: i32 = 300;
+pub const CAP_DC1394: i32 = 300;
 pub const CAP_DSHOW: i32 = 700;
 pub const CAP_FFMPEG: i32 = 1900;
+pub const CAP_FIREWARE: i32 = 300;
 pub const CAP_FIREWIRE: i32 = 300;
 pub const CAP_GIGANETIX: i32 = 1300;
 pub const CAP_GPHOTO2: i32 = 1700;
 pub const CAP_GSTREAMER: i32 = 1800;
+pub const CAP_IEEE1394: i32 = 300;
 pub const CAP_IMAGES: i32 = 2000;
 pub const CAP_INTELPERC: i32 = 1500;
+pub const CAP_INTELPERC_DEPTH_GENERATOR: i32 = 1 << 29;
 pub const CAP_INTELPERC_DEPTH_MAP: i32 = 0;
 pub const CAP_INTELPERC_IMAGE: i32 = 3;
+pub const CAP_INTELPERC_IMAGE_GENERATOR: i32 = 1 << 28;
 pub const CAP_INTELPERC_IR_MAP: i32 = 2;
 pub const CAP_INTELPERC_UVDEPTH_MAP: i32 = 1;
 pub const CAP_INTEL_MFX: i32 = 2300;
@@ -61,10 +66,13 @@ pub const CAP_OPENNI2: i32 = 1600;
 pub const CAP_OPENNI2_ASUS: i32 = 1610;
 pub const CAP_OPENNI_ASUS: i32 = 910;
 pub const CAP_OPENNI_BGR_IMAGE: i32 = 5;
+pub const CAP_OPENNI_DEPTH_GENERATOR: i32 = 1 << 31;
 pub const CAP_OPENNI_DEPTH_MAP: i32 = 0;
 pub const CAP_OPENNI_DISPARITY_MAP: i32 = 2;
 pub const CAP_OPENNI_DISPARITY_MAP_32F: i32 = 3;
 pub const CAP_OPENNI_GRAY_IMAGE: i32 = 6;
+pub const CAP_OPENNI_IMAGE_GENERATOR: i32 = 1 << 30;
+pub const CAP_OPENNI_IR_GENERATOR: i32 = 1 << 29;
 pub const CAP_OPENNI_IR_IMAGE: i32 = 7;
 pub const CAP_OPENNI_POINT_CLOUD_MAP: i32 = 1;
 pub const CAP_OPENNI_QVGA_30HZ: i32 = 3;
@@ -145,6 +153,7 @@ pub const CAP_PROP_OPENNI_MAX_BUFFER_SIZE: i32 = 106;
 pub const CAP_PROP_OPENNI_MAX_TIME_DURATION: i32 = 108;
 pub const CAP_PROP_OPENNI_OUTPUT_MODE: i32 = 100;
 pub const CAP_PROP_OPENNI_REGISTRATION: i32 = 104;
+pub const CAP_PROP_OPENNI_REGISTRATION_ON: i32 = 104;
 pub const CAP_PROP_PAN: i32 = 33;
 pub const CAP_PROP_POS_AVI_RATIO: i32 = 2;
 pub const CAP_PROP_POS_FRAMES: i32 = 1;
@@ -344,6 +353,7 @@ pub const CAP_PVAPI_PIXELFORMAT_RGBA32: i32 = 7;
 pub const CAP_QT: i32 = 500;
 pub const CAP_UNICAP: i32 = 600;
 pub const CAP_V4L: i32 = 200;
+pub const CAP_V4L2: i32 = 200;
 pub const CAP_VFW: i32 = 200;
 pub const CAP_WINRT: i32 = 1410;
 pub const CAP_XIAPI: i32 = 1100;
@@ -365,8 +375,10 @@ pub const CV_CAP_GSTREAMER_QUEUE_LENGTH: i32 = 200;
 pub const CV_CAP_IEEE1394: i32 = 300;
 pub const CV_CAP_IMAGES: i32 = 2000;
 pub const CV_CAP_INTELPERC: i32 = 1500;
+pub const CV_CAP_INTELPERC_DEPTH_GENERATOR: i32 = 1 << 29;
 pub const CV_CAP_INTELPERC_DEPTH_MAP: i32 = 0;
 pub const CV_CAP_INTELPERC_IMAGE: i32 = 3;
+pub const CV_CAP_INTELPERC_IMAGE_GENERATOR: i32 = 1 << 28;
 pub const CV_CAP_INTELPERC_IR_MAP: i32 = 2;
 pub const CV_CAP_INTELPERC_UVDEPTH_MAP: i32 = 1;
 pub const CV_CAP_MIL: i32 = 100;
@@ -379,10 +391,13 @@ pub const CV_CAP_OPENNI: i32 = 900;
 pub const CV_CAP_OPENNI2: i32 = 1600;
 pub const CV_CAP_OPENNI_ASUS: i32 = 910;
 pub const CV_CAP_OPENNI_BGR_IMAGE: i32 = 5;
+pub const CV_CAP_OPENNI_DEPTH_GENERATOR: i32 = 1 << 31;
 pub const CV_CAP_OPENNI_DEPTH_MAP: i32 = 0;
 pub const CV_CAP_OPENNI_DISPARITY_MAP: i32 = 2;
 pub const CV_CAP_OPENNI_DISPARITY_MAP_32F: i32 = 3;
 pub const CV_CAP_OPENNI_GRAY_IMAGE: i32 = 6;
+pub const CV_CAP_OPENNI_IMAGE_GENERATOR: i32 = 1 << 30;
+pub const CV_CAP_OPENNI_IR_GENERATOR: i32 = 1 << 29;
 pub const CV_CAP_OPENNI_IR_IMAGE: i32 = 7;
 pub const CV_CAP_OPENNI_POINT_CLOUD_MAP: i32 = 1;
 pub const CV_CAP_OPENNI_QVGA_30HZ: i32 = 3;
@@ -468,6 +483,7 @@ pub const CV_CAP_PROP_OPENNI_MAX_BUFFER_SIZE: i32 = 106;
 pub const CV_CAP_PROP_OPENNI_MAX_TIME_DURATION: i32 = 108;
 pub const CV_CAP_PROP_OPENNI_OUTPUT_MODE: i32 = 100;
 pub const CV_CAP_PROP_OPENNI_REGISTRATION: i32 = 104;
+pub const CV_CAP_PROP_OPENNI_REGISTRATION_ON: i32 = 104;
 pub const CV_CAP_PROP_PAN: i32 = 33;
 pub const CV_CAP_PROP_POS_AVI_RATIO: i32 = 2;
 pub const CV_CAP_PROP_POS_FRAMES: i32 = 1;
@@ -665,6 +681,7 @@ pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
 pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
 pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 
+// identifier: CV_FOURCC_char_c1_char_c2_char_c3_char_c4
 /// Constructs the fourcc code of the codec function
 /// 
 /// Simply call it with 4 chars fourcc code like `CV_FOURCC('I', 'Y', 'U', 'V')`
@@ -673,17 +690,7 @@ pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 /// FFMPEG backend with MP4 container natively uses other values as fourcc code:
 /// see [ObjectType](http://www.mp4ra.org/codecs.html).
 pub fn cv_fourcc(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32> {
-// identifier: CV_FOURCC_char_c1_char_c2_char_c3_char_c4
-  unsafe {
-    let rv = sys::cv_videoio_CV_FOURCC_char_c1_char_c2_char_c3_char_c4(c1, c2, c3, c4);
-    if !rv.error_msg.is_null() {
-      let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-      ::libc::free(rv.error_msg as _);
-      Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-    } else {
-      Ok(rv.result)
-    }
-  }
+    unsafe { sys::cv_videoio_CV_FOURCC_char_c1_char_c2_char_c3_char_c4(c1, c2, c3, c4) }.into_result()
 }
 
 // boxed class cv::VideoCapture
@@ -706,751 +713,471 @@ pub fn cv_fourcc(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32> {
 /// `OPENCV_SOURCE_CODE/samples/python/video_threaded.py`
 /// *   (Python) %VideoCapture sample showcasing some features of the Video4Linux2 backend
 /// `OPENCV_SOURCE_CODE/samples/python/video_v4l2.py`
-
 #[allow(dead_code)]
 pub struct VideoCapture {
     #[doc(hidden)] pub ptr: *mut c_void
 }
-impl Drop for super::videoio::VideoCapture {
+impl Drop for crate::videoio::VideoCapture {
     fn drop(&mut self) {
         unsafe { sys::cv_delete_VideoCapture(self.ptr) };
     }
 }
-impl super::videoio::VideoCapture {
+impl crate::videoio::VideoCapture {
     #[doc(hidden)] pub fn as_raw_VideoCapture(&self) -> *mut c_void { self.ptr }
 }
+
 impl VideoCapture {
 
-  /// Default constructor
-  /// 
-  /// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
-  /// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
-  /// destructor.
-  pub fn default() -> Result<super::videoio::VideoCapture> {
-  // identifier: cv_VideoCapture_VideoCapture
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_VideoCapture();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoCapture { ptr: rv.result })
-      }
+    // identifier: cv_VideoCapture_VideoCapture
+    /// Default constructor
+    /// 
+    /// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
+    /// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
+    /// destructor.
+    pub fn default() -> Result<crate::videoio::VideoCapture> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture() }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
     }
-  }
-
-  /// @overload
-  ///   Open video file or a capturing device or a IP video stream for video capturing
-  /// 
-  /// Same as VideoCapture(const String& filename, int apiPreference) but using default Capture API backends
-  pub fn filename(filename:&str) -> Result<super::videoio::VideoCapture> {
-  // identifier: cv_VideoCapture_VideoCapture_String_filename
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoCapture_VideoCapture_String_filename(filename.as_ptr() as _);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoCapture { ptr: rv.result })
-      }
+    
+    // identifier: cv_VideoCapture_VideoCapture_String_filename
+    /// @overload
+    ///   Open video file or a capturing device or a IP video stream for video capturing
+    /// 
+    /// Same as VideoCapture(const String& filename, int apiPreference) but using default Capture API backends
+    pub fn filename(filename: &str) -> Result<crate::videoio::VideoCapture> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture_String_filename(filename.as_ptr()) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
     }
-  }
-
-  /// @overload
-  ///   Open video file or a capturing device or a IP video stream for video capturing with API Preference
-  /// 
-  /// ## Parameters
-  /// * filename: it can be:
-  /// - name of video file (eg. `video.avi`)
-  /// - or image sequence (eg. `img_%02d.jpg`, which will read samples like `img_00.jpg, img_01.jpg, img_02.jpg, ...`)
-  /// - or URL of video stream (eg. `protocol://host:port/script_name?script_params|auth`).
-  /// Note that each video stream or IP camera feed has its own URL scheme. Please refer to the
-  /// documentation of source stream to know the right URL.
-  /// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
-  /// implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
-  /// @sa The list of supported API backends cv::VideoCaptureAPIs
-  pub fn filename_api(filename:&str, api_preference: i32) -> Result<super::videoio::VideoCapture> {
-  // identifier: cv_VideoCapture_VideoCapture_String_filename_int_apiPreference
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoCapture_VideoCapture_String_filename_int_apiPreference(filename.as_ptr() as _, api_preference);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoCapture { ptr: rv.result })
-      }
+    
+    // identifier: cv_VideoCapture_VideoCapture_String_filename_int_apiPreference
+    /// @overload
+    ///   Open video file or a capturing device or a IP video stream for video capturing with API Preference
+    /// 
+    /// ## Parameters
+    /// * filename: it can be:
+    /// - name of video file (eg. `video.avi`)
+    /// - or image sequence (eg. `img_%02d.jpg`, which will read samples like `img_00.jpg, img_01.jpg, img_02.jpg, ...`)
+    /// - or URL of video stream (eg. `protocol://host:port/script_name?script_params|auth`).
+    /// Note that each video stream or IP camera feed has its own URL scheme. Please refer to the
+    /// documentation of source stream to know the right URL.
+    /// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
+    /// implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
+    /// @sa The list of supported API backends cv::VideoCaptureAPIs
+    pub fn filename_api(filename: &str, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture_String_filename_int_apiPreference(filename.as_ptr(), api_preference) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
     }
-  }
-
-  /// @overload
-  ///   Open a camera for video capturing
-  /// 
-  /// ## Parameters
-  /// * index: camera_id + domain_offset (CAP_*) id of the video capturing device to open. To open default camera using default backend just pass 0.
-  /// Use a `domain_offset` to enforce a specific reader implementation if multiple are available like cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
-  /// e.g. to open Camera 1 using the MS Media Foundation API use `index = 1 + cv::CAP_MSMF`
-  /// 
-  /// @sa The list of supported API backends cv::VideoCaptureAPIs
-  pub fn index(index: i32) -> Result<super::videoio::VideoCapture> {
-  // identifier: cv_VideoCapture_VideoCapture_int_index
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_VideoCapture_int_index(index);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoCapture { ptr: rv.result })
-      }
+    
+    // identifier: cv_VideoCapture_VideoCapture_int_index
+    /// @overload
+    ///   Open a camera for video capturing
+    /// 
+    /// ## Parameters
+    /// * index: camera_id + domain_offset (CAP_*) id of the video capturing device to open. To open default camera using default backend just pass 0.
+    /// Use a `domain_offset` to enforce a specific reader implementation if multiple are available like cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
+    /// e.g. to open Camera 1 using the MS Media Foundation API use `index = 1 + cv::CAP_MSMF`
+    /// 
+    /// @sa The list of supported API backends cv::VideoCaptureAPIs
+    pub fn index(index: i32) -> Result<crate::videoio::VideoCapture> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture_int_index(index) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
     }
-  }
-
-  /// @overload
-  ///   Opens a camera for video capturing
-  /// 
-  /// ## Parameters
-  /// * index: id of the video capturing device to open. To open default camera using default backend just pass 0.
-  /// (to backward compatibility usage of camera_id + domain_offset (CAP_*) is valid when apiPreference is CAP_ANY)
-  /// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
-  /// implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L2.
-  /// 
-  /// @sa The list of supported API backends cv::VideoCaptureAPIs
-  pub fn new(index: i32, api_preference: i32) -> Result<super::videoio::VideoCapture> {
-  // identifier: cv_VideoCapture_VideoCapture_int_index_int_apiPreference
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_VideoCapture_int_index_int_apiPreference(index, api_preference);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoCapture { ptr: rv.result })
-      }
+    
+    // identifier: cv_VideoCapture_VideoCapture_int_index_int_apiPreference
+    /// @overload
+    ///   Opens a camera for video capturing
+    /// 
+    /// ## Parameters
+    /// * index: id of the video capturing device to open. To open default camera using default backend just pass 0.
+    /// (to backward compatibility usage of camera_id + domain_offset (CAP_*) is valid when apiPreference is CAP_ANY)
+    /// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
+    /// implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L2.
+    /// 
+    /// @sa The list of supported API backends cv::VideoCaptureAPIs
+    pub fn new(index: i32, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture_int_index_int_apiPreference(index, api_preference) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
     }
-  }
-
-  /// Open video file or a capturing device or a IP video stream for video capturing
-  /// 
-  /// @overload
-  /// 
-  /// Parameters are same as the constructor VideoCapture(const String& filename)
-  /// @return `true` if the file has been successfully opened
-  /// 
-  /// The method first calls VideoCapture::release to close the already opened file or camera.
-  pub fn open_filename(&mut self, filename:&str) -> Result<bool> {
-  // identifier: cv_VideoCapture_open_String_filename
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoCapture_open_String_filename(self.as_raw_VideoCapture(), filename.as_ptr() as _);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_open_String_filename
+    /// Open video file or a capturing device or a IP video stream for video capturing
+    /// 
+    /// @overload
+    /// 
+    /// Parameters are same as the constructor VideoCapture(const String& filename)
+    /// @return `true` if the file has been successfully opened
+    /// 
+    /// The method first calls VideoCapture::release to close the already opened file or camera.
+    pub fn open_filename(&mut self, filename: &str) -> Result<bool> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoCapture_open_String_filename(self.as_raw_VideoCapture(), filename.as_ptr()) }.into_result()
     }
-  }
-
-  /// Open a camera for video capturing
-  /// 
-  /// @overload
-  /// 
-  /// Parameters are same as the constructor VideoCapture(int index)
-  /// @return `true` if the camera has been successfully opened.
-  /// 
-  /// The method first calls VideoCapture::release to close the already opened file or camera.
-  pub fn open_index(&mut self, index: i32) -> Result<bool> {
-  // identifier: cv_VideoCapture_open_int_index
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_open_int_index(self.as_raw_VideoCapture(), index);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_open_int_index
+    /// Open a camera for video capturing
+    /// 
+    /// @overload
+    /// 
+    /// Parameters are same as the constructor VideoCapture(int index)
+    /// @return `true` if the camera has been successfully opened.
+    /// 
+    /// The method first calls VideoCapture::release to close the already opened file or camera.
+    pub fn open_index(&mut self, index: i32) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_open_int_index(self.as_raw_VideoCapture(), index) }.into_result()
     }
-  }
-
-  /// Open a camera for video capturing
-  /// 
-  /// @overload
-  /// 
-  /// Parameters are similar as the constructor VideoCapture(int index),except it takes an additional argument apiPreference.
-  /// Definitely, is same as open(int index) where `index=cameraNum + apiPreference`
-  /// @return `true` if the camera has been successfully opened.
-  pub fn open(&mut self, camera_num: i32, api_preference: i32) -> Result<bool> {
-  // identifier: cv_VideoCapture_open_int_cameraNum_int_apiPreference
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_open_int_cameraNum_int_apiPreference(self.as_raw_VideoCapture(), camera_num, api_preference);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_open_int_cameraNum_int_apiPreference
+    /// Open a camera for video capturing
+    /// 
+    /// @overload
+    /// 
+    /// Parameters are similar as the constructor VideoCapture(int index),except it takes an additional argument apiPreference.
+    /// Definitely, is same as open(int index) where `index=cameraNum + apiPreference`
+    /// @return `true` if the camera has been successfully opened.
+    pub fn open(&mut self, camera_num: i32, api_preference: i32) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_open_int_cameraNum_int_apiPreference(self.as_raw_VideoCapture(), camera_num, api_preference) }.into_result()
     }
-  }
-
-  /// Returns true if video capturing has been initialized already.
-  /// 
-  /// If the previous call to VideoCapture constructor or VideoCapture::open() succeeded, the method returns
-  /// true.
-  pub fn is_opened(&self) -> Result<bool> {
-  // identifier: cv_VideoCapture_isOpened
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_isOpened(self.as_raw_VideoCapture());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_isOpened_const
+    /// Returns true if video capturing has been initialized already.
+    /// 
+    /// If the previous call to VideoCapture constructor or VideoCapture::open() succeeded, the method returns
+    /// true.
+    pub fn is_opened(&self) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_isOpened_const(self.as_raw_VideoCapture()) }.into_result()
     }
-  }
-
-  /// Closes video file or capturing device.
-  /// 
-  /// The method is automatically called by subsequent VideoCapture::open and by VideoCapture
-  /// destructor.
-  /// 
-  /// The C function also deallocates memory and clears \*capture pointer.
-  pub fn release(&mut self) -> Result<()> {
-  // identifier: cv_VideoCapture_release
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_release(self.as_raw_VideoCapture());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_VideoCapture_release
+    /// Closes video file or capturing device.
+    /// 
+    /// The method is automatically called by subsequent VideoCapture::open and by VideoCapture
+    /// destructor.
+    /// 
+    /// The C function also deallocates memory and clears \*capture pointer.
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_release(self.as_raw_VideoCapture()) }.into_result()
     }
-  }
-
-  /// Grabs the next frame from video file or capturing device.
-  /// 
-  /// @return `true` (non-zero) in the case of success.
-  /// 
-  /// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
-  /// the case of success.
-  /// 
-  /// The primary use of the function is in multi-camera environments, especially when the cameras do not
-  /// have hardware synchronization. That is, you call VideoCapture::grab() for each camera and after that
-  /// call the slower method VideoCapture::retrieve() to decode and get frame from each camera. This way
-  /// the overhead on demosaicing or motion jpeg decompression etc. is eliminated and the retrieved frames
-  /// from different cameras will be closer in time.
-  /// 
-  /// Also, when a connected camera is multi-head (for example, a stereo camera or a Kinect device), the
-  /// correct way of retrieving data from it is to call VideoCapture::grab() first and then call
-  /// VideoCapture::retrieve() one or more times with different values of the channel parameter.
-  /// 
-  /// @ref tutorial_kinect_openni
-  pub fn grab(&mut self) -> Result<bool> {
-  // identifier: cv_VideoCapture_grab
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_grab(self.as_raw_VideoCapture());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_grab
+    /// Grabs the next frame from video file or capturing device.
+    /// 
+    /// @return `true` (non-zero) in the case of success.
+    /// 
+    /// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
+    /// the case of success.
+    /// 
+    /// The primary use of the function is in multi-camera environments, especially when the cameras do not
+    /// have hardware synchronization. That is, you call VideoCapture::grab() for each camera and after that
+    /// call the slower method VideoCapture::retrieve() to decode and get frame from each camera. This way
+    /// the overhead on demosaicing or motion jpeg decompression etc. is eliminated and the retrieved frames
+    /// from different cameras will be closer in time.
+    /// 
+    /// Also, when a connected camera is multi-head (for example, a stereo camera or a Kinect device), the
+    /// correct way of retrieving data from it is to call VideoCapture::grab() first and then call
+    /// VideoCapture::retrieve() one or more times with different values of the channel parameter.
+    /// 
+    /// @ref tutorial_kinect_openni
+    pub fn grab(&mut self) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_grab(self.as_raw_VideoCapture()) }.into_result()
     }
-  }
-
-  /// Decodes and returns the grabbed video frame.
-  /// 
-  /// ## Parameters
-  /// * [out]: image the video frame is returned here. If no frames has been grabbed the image will be empty.
-  /// * flag: it could be a frame index or a driver specific flag
-  /// @return `false` if no frames has been grabbed
-  /// 
-  /// The method decodes and returns the just grabbed frame. If no frames has been grabbed
-  /// (camera has been disconnected, or there are no more frames in video file), the method returns false
-  /// and the function returns an empty image (with %cv::Mat, test it with Mat::empty()).
-  /// 
-  /// @sa read()
-  /// 
-  /// 
-  /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
-  /// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
-  /// cvCloneImage and then do whatever you want with the copy.
-  ///
-  /// ## C++ default parameters:
-  /// * flag: 0
-  pub fn retrieve(&mut self, image: &mut core::Mat, flag: i32) -> Result<bool> {
-  // identifier: cv_VideoCapture_retrieve_Mat_image_int_flag
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_retrieve_Mat_image_int_flag(self.as_raw_VideoCapture(), image.as_raw_Mat(), flag);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_retrieve_Mat_image_int_flag
+    /// Decodes and returns the grabbed video frame.
+    /// 
+    /// ## Parameters
+    /// * [out]: image the video frame is returned here. If no frames has been grabbed the image will be empty.
+    /// * flag: it could be a frame index or a driver specific flag
+    /// @return `false` if no frames has been grabbed
+    /// 
+    /// The method decodes and returns the just grabbed frame. If no frames has been grabbed
+    /// (camera has been disconnected, or there are no more frames in video file), the method returns false
+    /// and the function returns an empty image (with %cv::Mat, test it with Mat::empty()).
+    /// 
+    /// @sa read()
+    /// 
+    /// 
+    /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
+    /// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
+    /// cvCloneImage and then do whatever you want with the copy.
+    ///
+    /// ## C++ default parameters:
+    /// * flag: 0
+    pub fn retrieve(&mut self, image: &mut core::Mat, flag: i32) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_retrieve_Mat_image_int_flag(self.as_raw_VideoCapture(), image.as_raw_Mat(), flag) }.into_result()
     }
-  }
-
-  /// Grabs, decodes and returns the next video frame.
-  /// 
-  /// ## Parameters
-  /// * [out]: image the video frame is returned here. If no frames has been grabbed the image will be empty.
-  /// @return `false` if no frames has been grabbed
-  /// 
-  /// The method/function combines VideoCapture::grab() and VideoCapture::retrieve() in one call. This is the
-  /// most convenient method for reading video files or capturing data from decode and returns the just
-  /// grabbed frame. If no frames has been grabbed (camera has been disconnected, or there are no more
-  /// frames in video file), the method returns false and the function returns empty image (with %cv::Mat, test it with Mat::empty()).
-  /// 
-  /// 
-  /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
-  /// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
-  /// cvCloneImage and then do whatever you want with the copy.
-  pub fn read(&mut self, image: &mut core::Mat) -> Result<bool> {
-  // identifier: cv_VideoCapture_read_Mat_image
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_read_Mat_image(self.as_raw_VideoCapture(), image.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_read_Mat_image
+    /// Grabs, decodes and returns the next video frame.
+    /// 
+    /// ## Parameters
+    /// * [out]: image the video frame is returned here. If no frames has been grabbed the image will be empty.
+    /// @return `false` if no frames has been grabbed
+    /// 
+    /// The method/function combines VideoCapture::grab() and VideoCapture::retrieve() in one call. This is the
+    /// most convenient method for reading video files or capturing data from decode and returns the just
+    /// grabbed frame. If no frames has been grabbed (camera has been disconnected, or there are no more
+    /// frames in video file), the method returns false and the function returns empty image (with %cv::Mat, test it with Mat::empty()).
+    /// 
+    /// 
+    /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
+    /// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
+    /// cvCloneImage and then do whatever you want with the copy.
+    pub fn read(&mut self, image: &mut core::Mat) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_read_Mat_image(self.as_raw_VideoCapture(), image.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Sets a property in the VideoCapture.
-  /// 
-  /// ## Parameters
-  /// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
-  /// or one from @ref videoio_flags_others
-  /// * value: Value of the property.
-  /// @return `true` if the property is supported by backend used by the VideoCapture instance.
-  /// 
-  /// Note: Even if it returns `true` this doesn't ensure that the property
-  /// value has been accepted by the capture device. See note in VideoCapture::get()
-  pub fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
-  // identifier: cv_VideoCapture_set_int_propId_double_value
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_set_int_propId_double_value(self.as_raw_VideoCapture(), prop_id, value);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_set_int_propId_double_value
+    /// Sets a property in the VideoCapture.
+    /// 
+    /// ## Parameters
+    /// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
+    /// or one from @ref videoio_flags_others
+    /// * value: Value of the property.
+    /// @return `true` if the property is supported by backend used by the VideoCapture instance.
+    /// 
+    /// Note: Even if it returns `true` this doesn't ensure that the property
+    /// value has been accepted by the capture device. See note in VideoCapture::get()
+    pub fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_set_int_propId_double_value(self.as_raw_VideoCapture(), prop_id, value) }.into_result()
     }
-  }
-
-  /// Returns the specified VideoCapture property
-  /// 
-  /// ## Parameters
-  /// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
-  /// or one from @ref videoio_flags_others
-  /// @return Value for the specified property. Value 0 is returned when querying a property that is
-  /// not supported by the backend used by the VideoCapture instance.
-  /// 
-  /// 
-  /// Note: Reading / writing properties involves many layers. Some unexpected result might happens
-  /// along this chain.
-  /// ```ignore {.txt}
-  /// `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
-  /// ```
-  /// 
-  /// The returned value might be different from what really used by the device or it could be encoded
-  /// using device dependent rules (eg. steps or percentage). Effective behaviour depends from device
-  /// driver and API Backend
-  pub fn get(&self, prop_id: i32) -> Result<f64> {
-  // identifier: cv_VideoCapture_get_int_propId
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_get_int_propId(self.as_raw_VideoCapture(), prop_id);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_get_const_int_propId
+    /// Returns the specified VideoCapture property
+    /// 
+    /// ## Parameters
+    /// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
+    /// or one from @ref videoio_flags_others
+    /// @return Value for the specified property. Value 0 is returned when querying a property that is
+    /// not supported by the backend used by the VideoCapture instance.
+    /// 
+    /// 
+    /// Note: Reading / writing properties involves many layers. Some unexpected result might happens
+    /// along this chain.
+    /// ```ignore {.txt}
+    /// `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
+    /// ```
+    /// 
+    /// The returned value might be different from what really used by the device or it could be encoded
+    /// using device dependent rules (eg. steps or percentage). Effective behaviour depends from device
+    /// driver and API Backend
+    pub fn get(&self, prop_id: i32) -> Result<f64> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_get_const_int_propId(self.as_raw_VideoCapture(), prop_id) }.into_result()
     }
-  }
-
-  /// Open video file or a capturing device or a IP video stream for video capturing with API Preference
-  /// 
-  /// @overload
-  /// 
-  /// Parameters are same as the constructor VideoCapture(const String& filename, int apiPreference)
-  /// @return `true` if the file has been successfully opened
-  /// 
-  /// The method first calls VideoCapture::release to close the already opened file or camera.
-  pub fn open_filename_api(&mut self, filename:&str, api_preference: i32) -> Result<bool> {
-  // identifier: cv_VideoCapture_open_String_filename_int_apiPreference
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoCapture_open_String_filename_int_apiPreference(self.as_raw_VideoCapture(), filename.as_ptr() as _, api_preference);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoCapture_open_String_filename_int_apiPreference
+    /// Open video file or a capturing device or a IP video stream for video capturing with API Preference
+    /// 
+    /// @overload
+    /// 
+    /// Parameters are same as the constructor VideoCapture(const String& filename, int apiPreference)
+    /// @return `true` if the file has been successfully opened
+    /// 
+    /// The method first calls VideoCapture::release to close the already opened file or camera.
+    pub fn open_filename_api(&mut self, filename: &str, api_preference: i32) -> Result<bool> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoCapture_open_String_filename_int_apiPreference(self.as_raw_VideoCapture(), filename.as_ptr(), api_preference) }.into_result()
     }
-  }
-
-  /// Returns used backend API name
-  /// 
-  /// 
-  /// Note: Stream should be opened.
-  pub fn get_backend_name(&self) -> Result<String> {
-  // identifier: cv_VideoCapture_getBackendName
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoCapture_getBackendName(self.as_raw_VideoCapture());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-        ::libc::free(rv.result as _);
-        Ok(String::from_utf8(v).unwrap())
-      }
+    
+    // identifier: cv_VideoCapture_getBackendName_const
+    /// Returns used backend API name
+    /// 
+    /// 
+    /// Note: Stream should be opened.
+    pub fn get_backend_name(&self) -> Result<String> {
+        unsafe { sys::cv_videoio_cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture()) }.into_result().map(crate::templ::receive_string_mut)
     }
-  }
-
+    
 }
+
 // boxed class cv::VideoWriter
 /// Video writer class.
 /// 
 /// The class provides C++ API for writing video files or image sequences.
-
 #[allow(dead_code)]
 pub struct VideoWriter {
     #[doc(hidden)] pub ptr: *mut c_void
 }
-impl Drop for super::videoio::VideoWriter {
+impl Drop for crate::videoio::VideoWriter {
     fn drop(&mut self) {
         unsafe { sys::cv_delete_VideoWriter(self.ptr) };
     }
 }
-impl super::videoio::VideoWriter {
+impl crate::videoio::VideoWriter {
     #[doc(hidden)] pub fn as_raw_VideoWriter(&self) -> *mut c_void { self.ptr }
 }
+
 impl VideoWriter {
 
-  /// Default constructors
-  /// 
-  /// The constructors/functions initialize video writers.
-  /// *   On Linux FFMPEG is used to write videos;
-  /// *   On Windows FFMPEG or VFW is used;
-  /// *   On MacOSX QTKit is used.
-  pub fn default() -> Result<super::videoio::VideoWriter> {
-  // identifier: cv_VideoWriter_VideoWriter
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_VideoWriter();
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoWriter { ptr: rv.result })
-      }
+    // identifier: cv_VideoWriter_VideoWriter
+    /// Default constructors
+    /// 
+    /// The constructors/functions initialize video writers.
+    /// *   On Linux FFMPEG is used to write videos;
+    /// *   On Windows FFMPEG or VFW is used;
+    /// *   On MacOSX QTKit is used.
+    pub fn default() -> Result<crate::videoio::VideoWriter> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_VideoWriter() }.into_result().map(|x| crate::videoio::VideoWriter { ptr: x })
     }
-  }
-
-  /// @overload
-  /// ## Parameters
-  /// * filename: Name of the output video file.
-  /// * fourcc: 4-character code of codec used to compress the frames. For example,
-  /// VideoWriter::fourcc('P','I','M','1') is a MPEG-1 codec, VideoWriter::fourcc('M','J','P','G') is a
-  /// motion-jpeg codec etc. List of codes can be obtained at [Video Codecs by
-  /// FOURCC](http://www.fourcc.org/codecs.php) page. FFMPEG backend with MP4 container natively uses
-  /// other values as fourcc code: see [ObjectType](http://www.mp4ra.org/codecs.html),
-  /// so you may receive a warning message from OpenCV about fourcc code conversion.
-  /// * fps: Framerate of the created video stream.
-  /// * frameSize: Size of the video frames.
-  /// * isColor: If it is not zero, the encoder will expect and encode color frames, otherwise it
-  /// will work with grayscale frames (the flag is currently supported on Windows only).
-  /// 
-  /// @b Tips:
-  /// - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
-  /// - To save image sequence use a proper filename (eg. `img_%02d.jpg`) and `fourcc=0`
-  /// OR `fps=0`. Use uncompressed image format (eg. `img_%02d.BMP`) to save raw frames.
-  /// - Most codecs are lossy. If you want lossless video file you need to use a lossless codecs
-  /// (eg. FFMPEG FFV1, Huffman HFYU, Lagarith LAGS, etc...)
-  /// - If FFMPEG is enabled, using `codec=0; fps=0;` you can create an uncompressed (raw) video file.
-  ///
-  /// ## C++ default parameters:
-  /// * is_color: true
-  pub fn new(filename:&str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<super::videoio::VideoWriter> {
-  // identifier: cv_VideoWriter_VideoWriter_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoWriter_VideoWriter_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor(filename.as_ptr() as _, fourcc, fps, frame_size, is_color);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoWriter { ptr: rv.result })
-      }
+    
+    // identifier: cv_VideoWriter_VideoWriter_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor
+    /// @overload
+    /// ## Parameters
+    /// * filename: Name of the output video file.
+    /// * fourcc: 4-character code of codec used to compress the frames. For example,
+    /// VideoWriter::fourcc('P','I','M','1') is a MPEG-1 codec, VideoWriter::fourcc('M','J','P','G') is a
+    /// motion-jpeg codec etc. List of codes can be obtained at [Video Codecs by
+    /// FOURCC](http://www.fourcc.org/codecs.php) page. FFMPEG backend with MP4 container natively uses
+    /// other values as fourcc code: see [ObjectType](http://www.mp4ra.org/codecs.html),
+    /// so you may receive a warning message from OpenCV about fourcc code conversion.
+    /// * fps: Framerate of the created video stream.
+    /// * frameSize: Size of the video frames.
+    /// * isColor: If it is not zero, the encoder will expect and encode color frames, otherwise it
+    /// will work with grayscale frames (the flag is currently supported on Windows only).
+    /// 
+    /// @b Tips:
+    /// - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
+    /// - To save image sequence use a proper filename (eg. `img_%02d.jpg`) and `fourcc=0`
+    /// OR `fps=0`. Use uncompressed image format (eg. `img_%02d.BMP`) to save raw frames.
+    /// - Most codecs are lossy. If you want lossless video file you need to use a lossless codecs
+    /// (eg. FFMPEG FFV1, Huffman HFYU, Lagarith LAGS, etc...)
+    /// - If FFMPEG is enabled, using `codec=0; fps=0;` you can create an uncompressed (raw) video file.
+    ///
+    /// ## C++ default parameters:
+    /// * is_color: true
+    pub fn new(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoWriter_VideoWriter_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor(filename.as_ptr(), fourcc, fps, frame_size, is_color) }.into_result().map(|x| crate::videoio::VideoWriter { ptr: x })
     }
-  }
-
-  /// @overload
-  /// The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
-  /// if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_GSTREAMER.
-  ///
-  /// ## C++ default parameters:
-  /// * is_color: true
-  pub fn new_v0(filename:&str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<super::videoio::VideoWriter> {
-  // identifier: cv_VideoWriter_VideoWriter_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoWriter_VideoWriter_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor(filename.as_ptr() as _, api_preference, fourcc, fps, frame_size, is_color);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(super::videoio::VideoWriter { ptr: rv.result })
-      }
+    
+    // identifier: cv_VideoWriter_VideoWriter_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor
+    /// @overload
+    /// The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
+    /// if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_GSTREAMER.
+    ///
+    /// ## C++ default parameters:
+    /// * is_color: true
+    pub fn new_1(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoWriter_VideoWriter_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor(filename.as_ptr(), api_preference, fourcc, fps, frame_size, is_color) }.into_result().map(|x| crate::videoio::VideoWriter { ptr: x })
     }
-  }
-
-  /// Initializes or reinitializes video writer.
-  /// 
-  /// The method opens video writer. Parameters are the same as in the constructor
-  /// VideoWriter::VideoWriter.
-  /// @return `true` if video writer has been successfully initialized
-  /// 
-  /// The method first calls VideoWriter::release to close the already opened file.
-  ///
-  /// ## C++ default parameters:
-  /// * is_color: true
-  pub fn open(&mut self, filename:&str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
-  // identifier: cv_VideoWriter_open_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoWriter_open_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor(self.as_raw_VideoWriter(), filename.as_ptr() as _, fourcc, fps, frame_size, is_color);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoWriter_open_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor
+    /// Initializes or reinitializes video writer.
+    /// 
+    /// The method opens video writer. Parameters are the same as in the constructor
+    /// VideoWriter::VideoWriter.
+    /// @return `true` if video writer has been successfully initialized
+    /// 
+    /// The method first calls VideoWriter::release to close the already opened file.
+    ///
+    /// ## C++ default parameters:
+    /// * is_color: true
+    pub fn open(&mut self, filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoWriter_open_String_filename_int_fourcc_double_fps_Size_frameSize_bool_isColor(self.as_raw_VideoWriter(), filename.as_ptr(), fourcc, fps, frame_size, is_color) }.into_result()
     }
-  }
-
-  /// @overload
-  ///
-  /// ## C++ default parameters:
-  /// * is_color: true
-  pub fn open_v0(&mut self, filename:&str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
-  // identifier: cv_VideoWriter_open_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor
-    unsafe {
-      let filename = CString::new(filename).unwrap();
-      let rv = sys::cv_videoio_cv_VideoWriter_open_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor(self.as_raw_VideoWriter(), filename.as_ptr() as _, api_preference, fourcc, fps, frame_size, is_color);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoWriter_open_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor
+    /// @overload
+    ///
+    /// ## C++ default parameters:
+    /// * is_color: true
+    pub fn open_1(&mut self, filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<bool> {
+        string_arg!(filename);
+        unsafe { sys::cv_videoio_cv_VideoWriter_open_String_filename_int_apiPreference_int_fourcc_double_fps_Size_frameSize_bool_isColor(self.as_raw_VideoWriter(), filename.as_ptr(), api_preference, fourcc, fps, frame_size, is_color) }.into_result()
     }
-  }
-
-  /// Returns true if video writer has been successfully initialized.
-  pub fn is_opened(&self) -> Result<bool> {
-  // identifier: cv_VideoWriter_isOpened
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_isOpened(self.as_raw_VideoWriter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoWriter_isOpened_const
+    /// Returns true if video writer has been successfully initialized.
+    pub fn is_opened(&self) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_isOpened_const(self.as_raw_VideoWriter()) }.into_result()
     }
-  }
-
-  /// Closes the video writer.
-  /// 
-  /// The method is automatically called by subsequent VideoWriter::open and by the VideoWriter
-  /// destructor.
-  pub fn release(&mut self) -> Result<()> {
-  // identifier: cv_VideoWriter_release
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_release(self.as_raw_VideoWriter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_VideoWriter_release
+    /// Closes the video writer.
+    /// 
+    /// The method is automatically called by subsequent VideoWriter::open and by the VideoWriter
+    /// destructor.
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_release(self.as_raw_VideoWriter()) }.into_result()
     }
-  }
-
-  /// Writes the next video frame
-  /// 
-  /// ## Parameters
-  /// * image: The written frame. In general, color images are expected in BGR format.
-  /// 
-  /// The function/method writes the specified image to video file. It must have the same size as has
-  /// been specified when opening the video writer.
-  pub fn write(&mut self, image: &core::Mat) -> Result<()> {
-  // identifier: cv_VideoWriter_write_Mat_image
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_write_Mat_image(self.as_raw_VideoWriter(), image.as_raw_Mat());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(())
-      }
+    
+    // identifier: cv_VideoWriter_write_Mat_image
+    /// Writes the next video frame
+    /// 
+    /// ## Parameters
+    /// * image: The written frame. In general, color images are expected in BGR format.
+    /// 
+    /// The function/method writes the specified image to video file. It must have the same size as has
+    /// been specified when opening the video writer.
+    pub fn write(&mut self, image: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_write_Mat_image(self.as_raw_VideoWriter(), image.as_raw_Mat()) }.into_result()
     }
-  }
-
-  /// Sets a property in the VideoWriter.
-  /// 
-  /// ## Parameters
-  /// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
-  /// or one of @ref videoio_flags_others
-  /// 
-  /// * value: Value of the property.
-  /// @return  `true` if the property is supported by the backend used by the VideoWriter instance.
-  pub fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
-  // identifier: cv_VideoWriter_set_int_propId_double_value
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_set_int_propId_double_value(self.as_raw_VideoWriter(), prop_id, value);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoWriter_set_int_propId_double_value
+    /// Sets a property in the VideoWriter.
+    /// 
+    /// ## Parameters
+    /// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
+    /// or one of @ref videoio_flags_others
+    /// 
+    /// * value: Value of the property.
+    /// @return  `true` if the property is supported by the backend used by the VideoWriter instance.
+    pub fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_set_int_propId_double_value(self.as_raw_VideoWriter(), prop_id, value) }.into_result()
     }
-  }
-
-  /// Returns the specified VideoWriter property
-  /// 
-  /// ## Parameters
-  /// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
-  /// or one of @ref videoio_flags_others
-  /// 
-  /// @return Value for the specified property. Value 0 is returned when querying a property that is
-  /// not supported by the backend used by the VideoWriter instance.
-  pub fn get(&self, prop_id: i32) -> Result<f64> {
-  // identifier: cv_VideoWriter_get_int_propId
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_get_int_propId(self.as_raw_VideoWriter(), prop_id);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoWriter_get_const_int_propId
+    /// Returns the specified VideoWriter property
+    /// 
+    /// ## Parameters
+    /// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
+    /// or one of @ref videoio_flags_others
+    /// 
+    /// @return Value for the specified property. Value 0 is returned when querying a property that is
+    /// not supported by the backend used by the VideoWriter instance.
+    pub fn get(&self, prop_id: i32) -> Result<f64> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_get_const_int_propId(self.as_raw_VideoWriter(), prop_id) }.into_result()
     }
-  }
-
-  /// Concatenates 4 chars to a fourcc code
-  /// 
-  /// @return a fourcc code
-  /// 
-  /// This static method constructs the fourcc code of the codec to be used in the constructor
-  /// VideoWriter::VideoWriter or VideoWriter::open.
-  pub fn fourcc(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32> {
-  // identifier: cv_VideoWriter_fourcc_char_c1_char_c2_char_c3_char_c4
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_fourcc_char_c1_char_c2_char_c3_char_c4(c1, c2, c3, c4);
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        Ok(rv.result)
-      }
+    
+    // identifier: cv_VideoWriter_fourcc_char_c1_char_c2_char_c3_char_c4
+    /// Concatenates 4 chars to a fourcc code
+    /// 
+    /// @return a fourcc code
+    /// 
+    /// This static method constructs the fourcc code of the codec to be used in the constructor
+    /// VideoWriter::VideoWriter or VideoWriter::open.
+    pub fn fourcc(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_fourcc_char_c1_char_c2_char_c3_char_c4(c1, c2, c3, c4) }.into_result()
     }
-  }
-
-  /// Returns used backend API name
-  /// 
-  /// 
-  /// Note: Stream should be opened.
-  pub fn get_backend_name(&self) -> Result<String> {
-  // identifier: cv_VideoWriter_getBackendName
-    unsafe {
-      let rv = sys::cv_videoio_cv_VideoWriter_getBackendName(self.as_raw_VideoWriter());
-      if !rv.error_msg.is_null() {
-        let v = CStr::from_ptr(rv.error_msg as _).to_bytes().to_vec();
-        ::libc::free(rv.error_msg as _);
-        Err(Error { code: rv.error_code, message: String::from_utf8(v).unwrap() })
-      } else {
-        let v = CStr::from_ptr(rv.result as _).to_bytes().to_vec();
-        ::libc::free(rv.result as _);
-        Ok(String::from_utf8(v).unwrap())
-      }
+    
+    // identifier: cv_VideoWriter_getBackendName_const
+    /// Returns used backend API name
+    /// 
+    /// 
+    /// Note: Stream should be opened.
+    pub fn get_backend_name(&self) -> Result<String> {
+        unsafe { sys::cv_videoio_cv_VideoWriter_getBackendName_const(self.as_raw_VideoWriter()) }.into_result().map(crate::templ::receive_string_mut)
     }
-  }
-
+    
 }
-pub const CAP_CMU1394: i32 = 0x12c;
-pub const CAP_DC1394: i32 = 0x12c;
-pub const CAP_FIREWARE: i32 = 0x12c;
-pub const CAP_IEEE1394: i32 = 0x12c;
-pub const CAP_INTELPERC_DEPTH_GENERATOR: i32 = 0x20000000;
-pub const CAP_INTELPERC_GENERATORS_MASK: i32 = 0x30000000;
-pub const CAP_INTELPERC_IMAGE_GENERATOR: i32 = 0x10000000;
-pub const CAP_OPENNI_DEPTH_GENERATOR: i32 = 0x80000000;
-pub const CAP_OPENNI_DEPTH_GENERATOR_BASELINE: i32 = 0x80000066;
-pub const CAP_OPENNI_DEPTH_GENERATOR_FOCAL_LENGTH: i32 = 0x80000067;
-pub const CAP_OPENNI_DEPTH_GENERATOR_PRESENT: i32 = 0x8000006d;
-pub const CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION: i32 = 0x80000068;
-pub const CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION_ON: i32 = 0x80000068;
-pub const CAP_OPENNI_GENERATORS_MASK: i32 = 0xe0000000;
-pub const CAP_OPENNI_IMAGE_GENERATOR: i32 = 0x40000000;
-pub const CAP_OPENNI_IMAGE_GENERATOR_OUTPUT_MODE: i32 = 0x40000064;
-pub const CAP_OPENNI_IMAGE_GENERATOR_PRESENT: i32 = 0x4000006d;
-pub const CAP_OPENNI_IR_GENERATOR: i32 = 0x20000000;
-pub const CAP_OPENNI_IR_GENERATOR_PRESENT: i32 = 0x2000006d;
-pub const CAP_PROP_OPENNI_REGISTRATION_ON: i32 = 0x68;
-pub const CAP_V4L2: i32 = 0xc8;
-pub const CV_CAP_ANDROID_BACK: i32 = 0x44b;
-pub const CV_CAP_ANDROID_FRONT: i32 = 0x44a;
-pub const CV_CAP_INTELPERC_DEPTH_GENERATOR: i32 = 0x20000000;
-pub const CV_CAP_INTELPERC_GENERATORS_MASK: i32 = 0x30000000;
-pub const CV_CAP_INTELPERC_IMAGE_GENERATOR: i32 = 0x10000000;
-pub const CV_CAP_OPENNI_DEPTH_GENERATOR: i32 = 0x80000000;
-pub const CV_CAP_OPENNI_DEPTH_GENERATOR_BASELINE: i32 = 0x80000066;
-pub const CV_CAP_OPENNI_DEPTH_GENERATOR_FOCAL_LENGTH: i32 = 0x80000067;
-pub const CV_CAP_OPENNI_DEPTH_GENERATOR_PRESENT: i32 = 0x8000006d;
-pub const CV_CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION: i32 = 0x80000068;
-pub const CV_CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION_ON: i32 = 0x80000068;
-pub const CV_CAP_OPENNI_GENERATORS_MASK: i32 = 0xe0000000;
-pub const CV_CAP_OPENNI_IMAGE_GENERATOR: i32 = 0x40000000;
-pub const CV_CAP_OPENNI_IMAGE_GENERATOR_OUTPUT_MODE: i32 = 0x40000064;
-pub const CV_CAP_OPENNI_IMAGE_GENERATOR_PRESENT: i32 = 0x4000006d;
-pub const CV_CAP_OPENNI_IR_GENERATOR: i32 = 0x20000000;
-pub const CV_CAP_OPENNI_IR_GENERATOR_PRESENT: i32 = 0x2000006d;
-pub const CV_CAP_PROP_OPENNI_REGISTRATION_ON: i32 = 0x68;
+
+pub const CAP_INTELPERC_GENERATORS_MASK: i32 = 0x30000000; // 805306368
+pub const CAP_OPENNI_DEPTH_GENERATOR_BASELINE: i32 = 0x80000066; // -2147483546
+pub const CAP_OPENNI_DEPTH_GENERATOR_FOCAL_LENGTH: i32 = 0x80000067; // -2147483545
+pub const CAP_OPENNI_DEPTH_GENERATOR_PRESENT: i32 = 0x8000006d; // -2147483539
+pub const CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION: i32 = 0x80000068; // -2147483544
+pub const CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION_ON: i32 = 0x80000068; // -2147483544
+pub const CAP_OPENNI_GENERATORS_MASK: i32 = 0xe0000000; // -536870912
+pub const CAP_OPENNI_IMAGE_GENERATOR_OUTPUT_MODE: i32 = 0x40000064; // 1073741924
+pub const CAP_OPENNI_IMAGE_GENERATOR_PRESENT: i32 = 0x4000006d; // 1073741933
+pub const CAP_OPENNI_IR_GENERATOR_PRESENT: i32 = 0x2000006d; // 536871021
+pub const CV_CAP_ANDROID_BACK: i32 = 0x44b; // 1099
+pub const CV_CAP_ANDROID_FRONT: i32 = 0x44a; // 1098
+pub const CV_CAP_INTELPERC_GENERATORS_MASK: i32 = 0x30000000; // 805306368
+pub const CV_CAP_OPENNI_DEPTH_GENERATOR_BASELINE: i32 = 0x80000066; // -2147483546
+pub const CV_CAP_OPENNI_DEPTH_GENERATOR_FOCAL_LENGTH: i32 = 0x80000067; // -2147483545
+pub const CV_CAP_OPENNI_DEPTH_GENERATOR_PRESENT: i32 = 0x8000006d; // -2147483539
+pub const CV_CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION: i32 = 0x80000068; // -2147483544
+pub const CV_CAP_OPENNI_DEPTH_GENERATOR_REGISTRATION_ON: i32 = 0x80000068; // -2147483544
+pub const CV_CAP_OPENNI_GENERATORS_MASK: i32 = 0xe0000000; // -536870912
+pub const CV_CAP_OPENNI_IMAGE_GENERATOR_OUTPUT_MODE: i32 = 0x40000064; // 1073741924
+pub const CV_CAP_OPENNI_IMAGE_GENERATOR_PRESENT: i32 = 0x4000006d; // 1073741933
+pub const CV_CAP_OPENNI_IR_GENERATOR_PRESENT: i32 = 0x2000006d; // 536871021
