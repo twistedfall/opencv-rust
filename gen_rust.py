@@ -63,7 +63,7 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_Mat_Mat_Mat_m": "copy",
     "cv_Mat_Mat_Mat_m_Range_ranges": "ranges",
     "cv_Mat_Mat_Mat_m_Range_rowRange_Range_colRange": "rowscols",
-    "cv_Mat_Mat_Mat_m_Rect_roi": "rect",
+    "cv_Mat_Mat_Mat_m_Rect_roi": "roi",
     "cv_Mat_Mat_Size_size_int_type": "new_size",
     "cv_Mat_Mat_Size_size_int_type_Scalar_s": "new_size_with_default",
     "cv_Mat_Mat_int_rows_int_cols_int_type": "new_rows_cols",
@@ -75,9 +75,9 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_Mat_create_int_rows_int_cols_int_type": "-",
     "cv_Mat_diag_Mat_d": "diag_new_mat",
     "cv_Mat_diag_int_d": "diag",
-    "cv_Mat_ptr_int_i0": "ptr0",
-    "cv_Mat_ptr_int_i0_int_i1": "ptr1",
-    "cv_Mat_ptr_int_i0_int_i1_int_i2": "ptr2",
+    "cv_Mat_ptr_int_i0": "ptr_row",
+    "cv_Mat_ptr_int_row_int_col": "ptr_2d",
+    "cv_Mat_ptr_int_i0_int_i1_int_i2": "ptr_3d",
     "cv_Mat_resize_size_t_sz": "resize",
     "cv_Mat_resize_size_t_sz_Scalar_s": "resize_with_default",
     "cv_Mat_rowRange_Range_r": "rowRange",
@@ -215,6 +215,10 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_fastNlMeansDenoisingColored_Mat_src_Mat_dst_float_h_float_hColor_int_templateWindowSize_int_searchWindowSize": "fast_nl_means_denoising_color",
     "cv_fastNlMeansDenoising_Mat_src_Mat_dst_VectorOffloat_h_int_templateWindowSize_int_searchWindowSize_int_normType": "fast_nl_means_denoising_vec",
     "cv_fastNlMeansDenoising_Mat_src_Mat_dst_float_h_int_templateWindowSize_int_searchWindowSize": "fast_nl_means_denoising_window",
+    "cv_AlignMTB_process_VectorOfMat_src_VectorOfMat_dst_Mat_times_Mat_response": "process_with_response",
+    "cv_MergeDebevec_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response": "process_with_response",
+    "cv_MergeMertens_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response": "process_with_response",
+    "cv_MergeRobertson_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response": "process_with_response",
     # video
     # "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2": "default",
     # "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_int_history_float_varThreshold_bool_bShadowDetection": "new",
@@ -1918,16 +1922,13 @@ class RustWrapperGenerator(object):
         # If duplicate functions have the same call arguments, we skip duplicate function.
         rust_func_name = fi.r_name()
         classname = "" if fi.kind == fi.KIND_FUNCTION else fi.classname
-        if classname + '===' + fi.r_name() in self.func_names:
-            for i in range(100):
-                rust_func_name = fi.r_name() + '_v' + str(i)
-                if classname + '===' + rust_func_name not in self.func_names:
-                    break
+        while classname + '::' + rust_func_name in self.func_names:
+            rust_func_name = bump_counter(rust_func_name)
         fi.set_r_name(rust_func_name)
 
         # rust safe wrapper
         self.moduleSafeRust.write(fi.gen_safe_rust())
-        self.func_names.add(classname + '===' + fi.r_name())
+        self.func_names.add(classname + '::' + fi.r_name())
 
     def gen_value_struct_field(self, name, typ, is_simple_struct=False):
         if name == "*":
