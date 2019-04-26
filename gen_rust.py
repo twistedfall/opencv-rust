@@ -87,6 +87,9 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask": "recover_pose_matrix",
     # core
     "cvAlloc_size_t_size": "-",
+    "cvClone_const_void_X_struct_ptr": "-",
+    "cvFree__void_X_ptr": "-",
+    "cv_addImpl_int_flag_const_char_X_func": "-",
     # "cv_Algorithm_set_String_name_Mat_value": "set_mat",
     # "cv_Algorithm_set_String_name_VectorOfMat_value": "set_VectorOfMat",
     # "cv_Algorithm_set_String_name_bool_value": "set_bool",
@@ -231,6 +234,7 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_integral_Mat_src_Mat_sum_Mat_sqsum_int_sdepth_int_sqdepth": "integral_sq_depth",
     "cv_integral_Mat_src_Mat_sum_Mat_sqsum_int_sdepth": "integral_sq",
     "cv_integral_Mat_src_Mat_sum_int_sdepth": "integral",
+    "cv_hal_resize_int_src_type_const_uchar_X_src_data_size_t_src_step_int_src_width_int_src_height_uchar_X_dst_data_size_t_dst_step_int_dst_width_int_dst_height_double_inv_scale_x_double_inv_scale_y_int_interpolation": "hal_resize",
     # ml
     "cv_ml_ParamGrid_ParamGrid_double__minVal_double__maxVal_double__logStep": "for_range",
     # objdetect": "",
@@ -653,6 +657,9 @@ class FuncInfo(GeneralInfo):
         "rust_safe_rv_string": template("""
                 .map(crate::templ::receive_string)"""),
 
+        "rust_safe_rv_string_mut": template("""
+                .map(crate::templ::receive_string_mut)"""),
+
         "rust_safe_rv_const_raw_ptr": template("""
             .and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
 
@@ -807,8 +814,6 @@ class FuncInfo(GeneralInfo):
         for a in self.args:
             if a.type.is_ignored:
                 return "can not map type %s yet"%(a.type)
-            if isinstance(a.type, RawPtrTypeInfo) and not a.type.inner.is_by_ptr:
-                return "passing primitive by pointer is not supported (FIXME ?): {}".format(a)
 
         return None
 
@@ -960,8 +965,11 @@ class FuncInfo(GeneralInfo):
             "call_args": ", ".join(call_args),
             "forward_args": ", ".join(forward_args),
         })
-        if isinstance(self.rv_type(), StringTypeInfo):
-            rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_string"].substitute(template_vars)
+        if isinstance(self.rv_type(), StringTypeInfo) or isinstance(self.rv_type(), RawPtrTypeInfo) and self.rv_type().is_string():
+            if self.rv_type().is_const:
+                rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_string"].substitute(template_vars)
+            else:
+                rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_string_mut"].substitute(template_vars)
         elif isinstance(self.rv_type(), RawPtrTypeInfo):
                 rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_const_raw_ptr" if self.rv_type().is_const else "rust_safe_rv_mut_raw_ptr"].substitute(template_vars)
         elif self.rv_type().is_by_ptr:
@@ -1376,10 +1384,15 @@ class StringTypeInfo(TypeInfo):
         super(StringTypeInfo, self).__init__(gen, typeid)
         self.ctype = "const char*"
         self.cpptype = "String"
-        self.c_safe_id = "char_X"
         self.rust_full = "String"
-        self.rust_local = "*const c_char"  # fixme, not used?
-        self.rust_extern = "*mut c_char"
+        if self.is_const:
+            self.c_safe_id = "const_char_X"
+            self.rust_local = "*const c_char"  # fixme, not used?
+            self.rust_extern = "*const c_char"
+        else:
+            self.c_safe_id = "char_X"
+            self.rust_local = "*mut c_char"  # fixme, not used?
+            self.rust_extern = "*mut c_char"
         self.rust_safe_id = "String"
 
     def cpp_arg_func_call(self, var_name, is_const=True):
@@ -1826,33 +1839,43 @@ class RawPtrTypeInfo(TypeInfo):
         """
         super(RawPtrTypeInfo, self).__init__(gen, typeid)
         self.inner = inner
-        if self.inner.is_ignored or isinstance(inner, RawPtrTypeInfo):
+        if self.inner.is_ignored or isinstance(self.inner, RawPtrTypeInfo):
             self.is_ignored = True
         else:
-            if inner.is_by_ptr:
-                self.is_by_ptr = inner.is_by_ptr
-                self.c_safe_id = inner.c_safe_id
-                self.cpptype = inner.cpptype
-                self.ctype = inner.ctype
-                self.rust_safe_id = inner.rust_safe_id
-                self.rust_local = inner.rust_local
-                self.rust_full = inner.rust_full
-                self.rust_extern = inner.rust_extern
+            if self.inner.is_by_ptr:
+                self.is_by_ptr = self.inner.is_by_ptr
+                self.c_safe_id = self.inner.c_safe_id
+                self.cpptype = self.inner.cpptype
+                self.ctype = self.inner.ctype
+                self.rust_safe_id = self.inner.rust_safe_id
+                self.rust_local = self.inner.rust_local
+                self.rust_full = self.inner.rust_full
+                self.rust_extern = self.inner.rust_extern
                 if self.is_const:
                     pass
             else:
                 # self.rust_lifetimes = "'b"
-                self.rust_safe_id = inner.rust_safe_id + "_X"
-                self.c_safe_id = inner.c_safe_id + "_X"
-                self.cpptype = inner.cpptype + "*"
-                self.ctype = inner.cpptype + "*"
+                self.rust_safe_id = self.inner.rust_safe_id + "_X"
+                self.c_safe_id = self.inner.c_safe_id + "_X"
+                self.cpptype = self.inner.cpptype + "*"
+                self.ctype = self.inner.cpptype + "*"
                 # self.is_by_ptr = True
+                self.rust_full = "&"
+                self.rust_extern = "*"
                 if self.is_const:
-                    self.rust_full = "&{}".format(inner.rust_full)
-                    self.rust_extern = "*const {}".format(self.inner.rust_extern)
+                    self.rust_extern += "const "
                 else:
-                    self.rust_full = "&mut {}".format(inner.rust_full)
-                    self.rust_extern = "*mut {}".format(self.inner.rust_extern)
+                    self.rust_full += "mut "
+                    self.rust_extern += "mut "
+                if isinstance(self.inner, PrimitiveTypeInfo) and self.inner.cpptype == "void":
+                    self.rust_full += "c_void"
+                    self.rust_extern += "c_void"
+                elif self.is_string():
+                    self.rust_full = "String"
+                    self.rust_extern += "c_char"
+                else:
+                    self.rust_full += self.inner.rust_full
+                    self.rust_extern += self.inner.rust_extern
             if self.is_const:
                 self.c_safe_id = "const_" + self.c_safe_id
                 self.cpptype = "const " + self.cpptype
