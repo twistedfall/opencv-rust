@@ -143,6 +143,7 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_split_Mat_m_VectorOfMat_mv": "split",
     "cv_split_Mat_src_Mat_mvbegin": "split_at",
     "cv_vconcat_Mat_src_size_t_nsrc_Mat_dst": "-",
+    "cv_getNumberOfCPUs": "get_number_of_cpus",
     # features2d
     "cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression": "AGAST",
     "cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type": "AGAST_with_type",

@@ -1,5 +1,3 @@
-extern crate libc;
-extern crate opencv;
 use opencv::core;
 
 #[test]
@@ -8,7 +6,7 @@ fn test_primitives() {
     assert!(ticks > 10000);
     let freq = core::get_tick_frequency().unwrap();
     assert!(freq > 1000f64);
-    let cpus = core::get_number_of_cp_us().unwrap();
+    let cpus = core::get_number_of_cpus().unwrap();
     assert!(cpus > 0);
     core::set_use_optimized(true).unwrap();
     let optims = core::use_optimized().unwrap();
