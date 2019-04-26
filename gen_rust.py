@@ -339,8 +339,9 @@ func_ignore_filters = (
     lambda func_info: func_info.fullname.endswith("cv::Mat::ptr") and func_info.const,
 )
 
+# regular expressions to ignore matching constant names
 const_ignore_list = (
-    "CV_EXPORTS_W", "CV_EXPORTS_W_SIMPLE", "CV_EXPORTS_W_MAP", "CV_MAKE_TYPE",
+    "^CV_EXPORTS_W", "CV_MAKE_TYPE",
     "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
     "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
     "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_2PI", "CV_LOG2",
@@ -350,11 +351,12 @@ const_ignore_list = (
     "__CV_BEGIN__", "__CV_END__", "__CV_EXIT__",
     "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN",
     "CV_TRY", "CV_CATCH_ALL",
-    "CV__DEBUG_NS_BEGIN", "CV__DEBUG_NS_END",
+    "^CV__DEBUG_NS_",
     "UINT64_1",
     "CV_STRUCT_INITIALIZER", "CV__ENABLE_C_API_CTORS",
-    "VSX_IMPL_MULH_P16", "VSX_IMPL_MULH_P8",
-    "CV__DNN_EXPERIMENTAL_NS_BEGIN", "CV__DNN_EXPERIMENTAL_NS_END",
+    "^VSX_IMPL_MULH_",
+    "^CV__DNN_EXPERIMENTAL_NS_",
+    "^CV_Sts",
 )
 
 #
@@ -1008,7 +1010,7 @@ class ConstInfo(GeneralInfo):
         self.added_manually = added_manually
 
         # register
-        if self.isIgnored():
+        if self.is_ignored():
             logging.info('ignored: %s', self)
         elif not gen.get_const(self.name):
             gen.consts.append(self)
@@ -1018,7 +1020,7 @@ class ConstInfo(GeneralInfo):
                                                                 value=self.value,
                                                                 manual="(manual)" if self.added_manually else "")
 
-    def isIgnored(self):
+    def is_ignored(self):
         for c in const_ignore_list:
             if re.match(c, self.name):
                 return True
