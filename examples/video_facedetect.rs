@@ -1,4 +1,3 @@
-extern crate opencv;
 use opencv::core;
 use opencv::highgui;
 use opencv::imgproc;
@@ -70,7 +69,7 @@ fn run() -> opencv::Result<()> {
             imgproc::rectangle(
                 &frame,
                 scaled_face,
-                core::Scalar ([0f64, -1f64, -1f64, -1f64]),
+                core::Scalar::new(0f64, -1f64, -1f64, -1f64),
                 1,
                 8,
                 0

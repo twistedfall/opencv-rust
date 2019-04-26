@@ -78,6 +78,7 @@ fn build_wrapper(opencv: pkg_config::Library) {
     gcc.cpp(true)
         .flag("-std=c++0x")
         .flag("-Wno-deprecated-declarations")
+        .flag("-Wno-class-memaccess")
         .flag("-fno-strict-aliasing");
 //        .flag("-Wno-c++11-extensions");
     for path in &opencv.include_paths {

@@ -5,6 +5,7 @@ import re
 import shutil
 import sys
 import textwrap
+from collections import OrderedDict
 from itertools import chain
 from pprint import pformat
 from string import Template
@@ -54,14 +55,14 @@ def combine_dicts(src, add):
 
 # decls to inject before doing header parsing
 decls_manual_pre = {
-    "core": (
-        ["class cv.Mat", "", ["/Ghost"], []],
-        ["class cv.Algorithm", "", ["/Ghost"], []],
-        ["class cv.DMatch", "", ["/Ghost", "/Simple"], []],
-        ["class cv.KeyPoint", "", ["/Ghost", "/Simple"], []],
-        ["class cv.RotatedRect", "", ["/Ghost"], []],
-        ["class cv.TermCriteria", "", ["/Ghost"], []],
-        ["class cv.Range", "", ["/Ghost"], []],
+    "core": [
+        ("class cv.Range", "", ["/Ghost"], []),
+        ("class cv.Mat", "", ["/Ghost"], []),
+        ("class cv.Algorithm", "", ["/Ghost"], []),
+        ("class cv.DMatch", "", ["/Ghost", "/Simple"], []),
+        ("class cv.KeyPoint", "", ["/Ghost", "/Simple"], []),
+        ("class cv.RotatedRect", "", ["/Ghost"], []),
+        ("class cv.TermCriteria", "", ["/Ghost"], []),
         # ["class cv.MouseCallback", "", ["/Callback"], [
         #     ["int", "event", ""],
         #     ["int", "x", ""],
@@ -69,7 +70,7 @@ decls_manual_pre = {
         #     ["int", "flags", ""],
         #     ["void*", "userdata", ""],
         # ]],
-    )
+    ]
 }
 
 # decls to inject after doing header parsing
@@ -370,7 +371,7 @@ class_ignore_list = (
     "cv::dnn::_Range",
 )
 
-aliases_types = {
+type_replace = {
     "unsigned": "uint",
     "InputArray": "cv::Mat",
     "InputArrayOfArrays": "vector<cv::Mat>",
@@ -382,6 +383,17 @@ aliases_types = {
     "_OutputArray": "cv::Mat",
     "_InputOutputArray": "cv::Mat",
     "_Range": "cv::Range",
+    "Point_<int>": "Point2i",
+    "Point_<int64>": "Point2l",
+    "Point_<float>": "Point2f",
+    "Point_<double>": "Point2d",
+    "Rect_<int>": "Rect2i",
+    "Rect_<float>": "Rect2f",
+    "Rect_<double>": "Rect2d",
+    "Size_<int64>": "Size2l",
+    "Size_<float>": "Size2f",
+    "Size_<double>": "Size2d",
+    "Scalar_<double>": "Scalar",
 }
 
 func_ignore_list = (
@@ -468,31 +480,54 @@ primitives = {
     "double": {"ctype": "double", "rust_local": "f64"},
 }
 
+type_manual_declaration = {}
+
+
+def _base_type_alias(module, rust_name, rust_definition, cpp_field_type, cpp_fields):
+    if module not in type_manual_declaration:
+        type_manual_declaration[module] = {}
+    type_manual_declaration[module][rust_name] = {
+        "rust": template(template("""
+            ${doc_comment}pub type ${rust_local} = ${definition};
+        """).substitute({"doc_comment": "${doc_comment}", "rust_local": "${rust_local}", "definition": rust_definition})),
+        "cpp": "~",
+    }
+    cpp_props = [[cpp_field_type, x, "", "/RW"] for x in cpp_fields]
+    if module not in decls_manual_pre:
+        decls_manual_pre[module] = []
+    decls_manual_pre[module].insert(0, ("class cv.{}".format(rust_name), "", ["/Simple"], cpp_props))
+
+
+_base_type_alias("core", "Scalar", "core::Scalar_<f64>", "double", ("data[4]",))
+
+for s in (2, 3, 4, 6, 8):
+    types = ("b", "unsigned char"), \
+            ("s", "short"),\
+            ("w", "unsigned short"), \
+            ("i", "int"), \
+            ("l", "int64"), \
+            ("f", "float"), \
+            ("d", "double")
+    if s == 6:
+        types = (x for x in types if x[0] in ("d", "f", "i"))
+    elif s == 8:
+        types = (x for x in types if x[0] == "i")
+    for t in types:
+        rust_local = primitives[t[1]]["rust_local"]
+        if s == 2:
+            if t[0] == "i":
+                _base_type_alias("core", "Rect", "core::Rect_<{}>".format(rust_local), t[1], ("x", "y", "width", "height"))
+                _base_type_alias("core", "Point", "core::Point_<{}>".format(rust_local), t[1], ("x", "y"))
+                _base_type_alias("core", "Size", "core::Size_<{}>".format(rust_local), t[1], ("width", "height"))
+            if t[0] in ("i", "f", "d"):
+                _base_type_alias("core", "Rect{}{}".format(s, t[0]), "core::Rect_<{}>".format(rust_local), t[1], ("x", "y", "width", "height"))
+            if t[0] in ("i", "l", "f", "d"):
+                _base_type_alias("core", "Point{}{}".format(s, t[0]), "core::Point_<{}>".format(rust_local), t[1], ("x", "y"))
+                _base_type_alias("core", "Size{}{}".format(s, t[0]), "core::Size_<{}>".format(rust_local), t[1], ("width", "height"))
+        if t[0] != "l":
+            _base_type_alias("core", "Vec{}{}".format(s, t[0]), "core::Vec{}<{}>".format(s, rust_local), t[1], ("data[{}]".format(s),))
+
 forced_trait_classes = ("cv::Algorithm", "cv::BackgroundSubtractor", "cv::dnn::Layer")
-
-value_struct_types = {
-    "Point2i": (("x", "int"), ("y", "int")),
-    "Point2l": (("x", "int64"), ("y", "int64")),
-    "Point2f": (("x", "float"), ("y", "float")),
-    "Point2d": (("x", "double"), ("y", "double")),
-    "Point": (("x", "int"), ("y", "int")),
-    "Size2i": (("width", "int"), ("height", "int")),
-    "Size2l": (("width", "int64"), ("height", "int64")),
-    "Size2f": (("width", "float"), ("height", "float")),
-    "Size2d": (("width", "double"), ("height", "double")),
-    "Size": (("width", "int"), ("height", "int")),
-    "Rect2i": (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
-    "Rect2f": (("x", "float"), ("y", "float"), ("width", "float"), ("height", "float")),
-    "Rect2d": (("x", "double"), ("y", "double"), ("width", "double"), ("height", "double")),
-    "Rect": (("x", "int"), ("y", "int"), ("width", "int"), ("height", "int")),
-    # "TermCriteria": (("type", "int"), ("maxCount", "int"), ("epsilon", "double")),
-    "Scalar": (("*", "double[4]"),),
-    "CvRNG": (("data", "int64"),)
-}
-
-for s in (2, 3, 4, 6):
-    for t in (("uchar", "b"), ("short", "s"), ("int", "i"), ("double", "d"), ("float", "f")):
-        value_struct_types["Vec%d%s" % (s,t[1])] = ("data", "%s[%d]" % (t[0],s)),
 
 boxed_type_fields = {
     "RotatedRect": {
@@ -867,7 +902,7 @@ class FuncInfo(GeneralInfo):
 
     def c_name(self):
         # fixme identifier without cv_core_ prefix
-        return "cv_%s_%s" % (self.module, self.identifier.replace("::", "").replace(" ", "_"))
+        return "cv_%s_%s" % (self.module, self.identifier)
 
     def r_name(self):
         if renamed_funcs.get(self.identifier):
@@ -1148,6 +1183,19 @@ class ClassInfo(GeneralInfo):
         :rtype: TypeInfo
         """
         return self.gen.get_type_info(self.fullname)
+
+    def get_manual_declaration_template(self, section):
+        if self.module in type_manual_declaration:
+            module_types = type_manual_declaration[self.module]
+            if self.name in module_types:
+                templ = module_types[self.name]
+                if section in templ:
+                    if templ[section] == "~":
+                        return None
+                    return templ[section]
+                else:
+                    return template("")
+        return None
 
 
 class ConstInfo(GeneralInfo):
@@ -1511,39 +1559,22 @@ class SimpleClassTypeInfo(TypeInfo):
         :type typeid: str
         """
         super(SimpleClassTypeInfo, self).__init__(gen, typeid)
-
         self.ci = gen.get_class(self.typeid)
         if self.ci and self.ci.is_ignored:
             self.is_ignored = True
         if self.ci:
             self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
-            self.ctype = "c_" + self.rust_local
-            self.c_safe_id = self.ctype
+            if self.ci.get_manual_declaration_template("rust") is None:
+                self.ctype = self.ci.fullname
+                self.c_safe_id = self.rust_local
+            else:
+                self.ctype = "{}Wrapper".format(self.ci.name)
+                self.c_safe_id = self.ctype
             self.rust_extern = self.rust_full
             self.is_trait = False
 
     def __str__(self):
         return "%s (simple)"%(self.cpptype)
-
-
-class ValueStructTypeInfo(TypeInfo):
-    def __init__(self, gen, typeid):
-        """
-        :type gen: RustWrapperGenerator
-        :type typeid: str
-        """
-        super(ValueStructTypeInfo, self).__init__(gen, typeid)
-        self.ci = gen.get_class(self.typeid)
-        if self.ci and self.ci.is_ignored:
-            self.is_ignored = True
-        self.rust_full = "core::" + self.rust_local
-        self.ctype = "c_" + self.rust_local
-        self.c_safe_id = self.ctype
-        self.rust_extern = self.rust_full
-        self.is_trait = False
-
-    def __str__(self):
-        return "%s (struct)"%(self.cpptype)
 
 
 class BoxedClassTypeInfo(TypeInfo):
@@ -2023,8 +2054,6 @@ def parse_type(gen, typeid):
         if not inner:
             raise NameError("inner type `%s' not found" % (typeid[12:-1].strip()))
         return VectorTypeInfo(gen, full_typeid, inner)
-    elif gen.get_value_struct(typeid):
-        return ValueStructTypeInfo(gen, gen.get_value_struct(typeid))
     else:
         ci = gen.get_class(typeid)
         if ci and not ci.is_ignored:
@@ -2032,7 +2061,7 @@ def parse_type(gen, typeid):
                 return SimpleClassTypeInfo(gen, ci.fullname)
             else:
                 return BoxedClassTypeInfo(gen, ci.fullname, None)
-        actual = aliases_types.get(typeid)
+        actual = type_replace.get(typeid)
         if actual:
             ci = gen.get_class(actual)
             if ci:
@@ -2076,13 +2105,9 @@ class RustWrapperGenerator(object):
                     
                 """),
 
-            "rust_field_array_simple": template("""${visibility}[${rust_full}; ${size}], """),
+            "rust_field_array": template("""${visibility}${rsname}: [${rust_full}; ${size}],\n"""),
 
-            "rust_field_array_non_simple": template("""${visibility}${rsname}: [${rust_full}; ${size}],\n"""),
-
-            "rust_field_non_array_simple": template("""${visibility}${rust_full}, """),
-
-            "rust_field_non_array_non_simple": template("""${visibility}${rsname}: ${rust_full},\n"""),
+            "rust_field_non_array": template("""${visibility}${rsname}: ${rust_full},\n"""),
 
             "cpp_field_array": template("""${ctype} ${name}[${size}];\n"""),
 
@@ -2093,7 +2118,7 @@ class RustWrapperGenerator(object):
     def __init__(self):
         self.cpp_dir = ""
         self.rust_dir = ""
-        self.classes = {}
+        self.classes = OrderedDict()  # type: dict[str, ClassInfo]
         self.functions = []
         self.ported_func_list = []
         self.skipped_func_list = []
@@ -2114,15 +2139,6 @@ class RustWrapperGenerator(object):
             return c
         for c in self.classes.values():
             if c.fullname.endswith("::"+classname):
-                return c
-        return None
-
-    def get_value_struct(self, classname):
-        c = value_struct_types.get(classname)
-        if c:
-            return classname
-        for c in value_struct_types.keys():
-            if c.endswith("::" + classname):
                 return c
         return None
 
@@ -2224,16 +2240,12 @@ class RustWrapperGenerator(object):
 
         self.moduleSafeRust.write("\n")
 
-        if module == "core":
-            for c in sorted(value_struct_types, key=lambda c: c[0]):
-                self.gen_value_struct(c)
-
         for t in self.type_infos.values():
             if not t.is_ignored:
                 t.gen_wrappers()
 
         for c in self.classes.values():
-            if c.is_simple and not c.is_ignored and not c.is_ghost:
+            if c.is_simple and not c.is_ignored and not c.is_ghost and c.module == module:
                 self.gen_simple_class(c)
 
         for fi in sorted(self.functions, key=lambda fi: fi.identifier):
@@ -2350,10 +2362,8 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write(fi.gen_safe_rust())
         self.func_names.add(classname + '::' + fi.r_name())
 
-    def get_value_struct_field(self, name, typ, is_simple_struct=False):
-        if name == "*":
-            name = "data"
-        rsname = reserved_rename.get(name, name)
+    def get_value_struct_field(self, name, typ):
+        rsname = camel_case_to_snake_case(reserved_rename.get(name, name))
         visibility = "" if rsname == "__rust_private" else "pub "
         templates = RustWrapperGenerator.TEMPLATES["simple_class"]
         if "[" in typ:
@@ -2361,37 +2371,17 @@ class RustWrapperGenerator(object):
             size = typ[bracket+1:-1]
             typ = self.get_type_info(typ[:bracket])
             out_cpp = templates["cpp_field_array"].substitute(ctype=typ.ctype, name=name, size=size)
-            rust_templ_name = "rust_field_array_simple" if is_simple_struct else "rust_field_array_non_simple"
-            out_rust = templates[rust_templ_name].substitute(visibility=visibility, rsname=rsname, rust_full=typ.rust_full, size=size)
+            out_rust = templates["rust_field_array"].substitute(visibility=visibility, rsname=rsname, rust_full=typ.rust_full, size=size)
         else:
             typ = self.get_type_info(typ)
             out_cpp = templates["cpp_field_non_array"].substitute(ctype=typ.ctype, name=name)
-            rust_templ_name = "rust_field_non_array_simple" if is_simple_struct else "rust_field_non_array_non_simple"
-            out_rust = templates[rust_templ_name].substitute(visibility=visibility, rsname=rsname, rust_full=typ.rust_full)
+            out_rust = templates["rust_field_non_array"].substitute(visibility=visibility, rsname=rsname, rust_full=typ.rust_full)
         return out_rust, out_cpp
 
-    def gen_value_struct(self, c):
-        rust_fields = ""
-        cpp_fields = ""
-        is_simple_struct = len(value_struct_types[c]) == 1 and value_struct_types[c][0][0] == "*"
-        for field in value_struct_types[c]:
-            rust_field, cpp_field = self.get_value_struct_field(field[0], field[1], is_simple_struct)
-            rust_fields += rust_field
-            cpp_fields += cpp_field
-        templates = RustWrapperGenerator.TEMPLATES["simple_class"]
-        rust_templ_name = "rust_struct_simple" if is_simple_struct else "rust_struct"
-        rust_fields = rust_fields.rstrip()
-        self.moduleSafeRust.write(templates[rust_templ_name].substitute(
-            doc_comment="// manually defined value struct {}".format(c).rstrip(),
-            rust_local=c,
-            fields=rust_fields if is_simple_struct else indent(rust_fields)
-        ))
-        self.moduleCppTypes.write(templates["cpp_struct"].substitute(
-            c_safe_id="c_" + c,  # fixme drop c_ classes
-            fields=indent(cpp_fields.rstrip()),
-        ))
-
     def gen_simple_class(self, ci):
+        """
+        :type ci: ClassInfo
+        """
         rust_fields = ""
         cpp_fields = ""
         if len(ci.props) > 0:
@@ -2403,17 +2393,20 @@ class RustWrapperGenerator(object):
             rust_field, cpp_field = self.get_value_struct_field("__rust_private", "unsigned char[0]")
             rust_fields += rust_field
             cpp_fields += cpp_field
-        templates = RustWrapperGenerator.TEMPLATES["simple_class"]
-        rust_fields = rust_fields.rstrip()
-        self.moduleSafeRust.write(templates["rust_struct"].substitute(
-            doc_comment=self.reformat_doc(ci.comment).rstrip(),
-            rust_local=ci.type_info().rust_local,
-            fields=indent(rust_fields)
-        ))
-        self.moduleCppTypes.write(templates["cpp_struct"].substitute(
-            c_safe_id=ci.type_info().c_safe_id,
-            fields=indent(cpp_fields.rstrip()),
-        ))
+
+        templ = ci.get_manual_declaration_template("rust")
+        if templ is None:
+            templ = RustWrapperGenerator.TEMPLATES["simple_class"]["rust_struct"]
+        self.moduleSafeRust.write(templ.substitute(combine_dicts(ci.type_info().__dict__, {
+            "doc_comment": self.reformat_doc(ci.comment).rstrip(),
+            "fields": indent(rust_fields.rstrip()),
+        })))
+        templ = ci.get_manual_declaration_template("cpp")
+        if templ is None:
+            templ = RustWrapperGenerator.TEMPLATES["simple_class"]["cpp_struct"]
+        self.moduleCppTypes.write(templ.substitute(combine_dicts(ci.type_info().__dict__, {
+            "fields": indent(cpp_fields.rstrip()),
+        })))
 
     def gen_boxed_class(self, name):
         ci = self.get_class(name)
@@ -2513,11 +2506,12 @@ class RustWrapperGenerator(object):
         else:
             if isinstance(t, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.fullname)
-            logging.info("Generating impl for struct %s", ci)
-            self.moduleSafeRust.write("impl %s {\n\n" % (t.rust_local))
-            for fi in ci.methods:
-                self.gen_func(fi)
-            self.moduleSafeRust.write("}\n\n")
+            if len(ci.methods) > 0:
+                logging.info("Generating impl for struct %s", ci)
+                self.moduleSafeRust.write("impl %s {\n\n" % (t.rust_local))
+                for fi in ci.methods:
+                    self.gen_func(fi)
+                self.moduleSafeRust.write("}\n\n")
 
     def reformat_doc(self, text, comment_prefix="///"):
         text = text.strip()

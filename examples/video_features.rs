@@ -1,11 +1,9 @@
-extern crate opencv;
-use opencv::highgui;
 use opencv::core;
-use opencv::imgproc;
 use opencv::features2d;
-use opencv::videoio;
-
 use opencv::features2d::Feature2D;
+use opencv::highgui;
+use opencv::imgproc;
+use opencv::videoio;
 
 fn run() -> opencv::Result<()> {
     let window = "video capture";
@@ -47,7 +45,7 @@ fn run() -> opencv::Result<()> {
                 &gray,
                 &kps,
                 &mut display,
-                core::Scalar ([-1f64; 4]),
+                core::Scalar::all(-1f64),
                 features2d::DrawMatchesFlags_DEFAULT
             )?;
             highgui::imshow(window, &display)?;
