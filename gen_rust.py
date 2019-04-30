@@ -720,8 +720,8 @@ class ArgInfo:
         if typ in ("InputOutputArray", "InputOutputArrayOfArrays") or len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
             self.out = "IO"
 
-    def is_const(self):
-        return self.out not in ("O", "IO")
+    def is_output(self):
+        return self.out in ("O", "IO")
 
     def __repr__(self):
         return template("ARG $ctype$p $name=$defval").substitute(ctype=self.type,
@@ -946,8 +946,8 @@ class FuncInfo(GeneralInfo):
                 "ignored": ignored
             }))
 
-            decl_cpp_args.append(a.type.cpp_arg_func_decl(a.name, a.is_const()))
-            call_cpp_args.append(a.type.cpp_arg_func_call(a.name, a.is_const()))
+            decl_cpp_args.append(a.type.cpp_arg_func_decl(a.name, a.is_output()))
+            call_cpp_args.append(a.type.cpp_arg_func_call(a.name, a.is_output()))
 
         # cpp method call with prefix
         if self.is_constructor():
@@ -992,7 +992,7 @@ class FuncInfo(GeneralInfo):
     def gen_rust_extern(self):
         args = []
         if self.is_instance_method():
-            args.append(self.ci.type_info().rust_extern_self_func_decl(self.is_const))
+            args.append(self.ci.type_info().rust_extern_self_func_decl(not self.is_const))
         for a in self.args:
             args.append(a.type.rust_extern_arg_func_decl(a.rsname))
         template_vars = {
@@ -1023,8 +1023,8 @@ class FuncInfo(GeneralInfo):
             lifetimes = ""
 
         if self.is_instance_method():
-            args.append(self.ci.type_info().rust_self_func_decl(self.is_const))
-            call_args.append(self.ci.type_info().rust_self_func_call(self.is_const))
+            args.append(self.ci.type_info().rust_self_func_decl(not self.is_const))
+            call_args.append(self.ci.type_info().rust_self_func_call(not self.is_const))
 
         # todo: convert some *const Mat to slices in rust
         for a in self.args:
@@ -1032,8 +1032,8 @@ class FuncInfo(GeneralInfo):
             pre_call_arg = a.type.rust_arg_pre_call(a.rsname)
             if pre_call_arg:
                 pre_call_args.append(pre_call_arg)
-            args.append(a.type.rust_arg_func_decl(a.rsname, a.is_const()))
-            call_args.append(a.type.rust_arg_func_call(a.rsname))
+            args.append(a.type.rust_arg_func_decl(a.rsname, a.is_output()))
+            call_args.append(a.type.rust_arg_func_call(a.rsname, a.is_output()))
 
         pub = "" if self.ci and self.ci.type_info().is_trait and not self.is_static else "pub "
 
@@ -1360,26 +1360,26 @@ class TypeInfo(object):
         with open("{}/{}.rv.rs".format(rust_dir, template_vars["return_wrapper_type"]), "w") as f:
             f.write(self.base_templates["rust_void" if self.cpp_extern == "void" else "rust_non_void"].substitute(template_vars))
 
-    def rust_arg_forward(self, var_name, is_const=True):
+    def rust_arg_forward(self, var_name, is_output=False):
         """
         :type var_name: str
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         return var_name
 
-    def rust_arg_pre_call(self, var_name, is_const=True):
+    def rust_arg_pre_call(self, var_name, is_output=False):
         """
         :type var_name: str
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         return ""
 
-    def rust_arg_func_call(self, var_name, is_const=True):
+    def rust_arg_func_call(self, var_name, is_output=False):
         """
         :type var_name: str
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         if self.is_by_ptr:
@@ -1390,69 +1390,67 @@ class TypeInfo(object):
             return "{}.as_raw_{}()".format(var_name, self.rust_local)
         return var_name
 
-    def rust_arg_func_decl(self, var_name, is_const=True):
+    def rust_arg_func_decl(self, var_name, is_output=False):
         """
         :type var_name: str
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         if self.is_by_ptr:
-            if is_const:
-                return "{}: &{}".format(var_name, self.rust_full)
-            else:
+            if is_output:
                 return "{}: &mut {}".format(var_name, self.rust_full)
+            return "{}: &{}".format(var_name, self.rust_full)
         return "{}: {}".format(var_name, self.rust_full)
 
-    def rust_self_func_decl(self, is_const=True):
+    def rust_self_func_decl(self, is_output=False):
         """
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         if self.is_by_ptr:
-            if is_const:
-                return "&self"
-            else:
+            if is_output:
                 return "&mut self"
+            return "&self"
         return "self"
 
-    def rust_self_func_call(self, is_const=True):
+    def rust_self_func_call(self, is_output=False):
         """
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
-        return self.rust_arg_func_call("self", is_const)
+        return self.rust_arg_func_call("self", is_output)
 
-    def rust_extern_arg_func_decl(self, var_name, is_const=True):
+    def rust_extern_arg_func_decl(self, var_name, is_output=False):
         """
         :type var_name: str
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         return "{}: {}".format(var_name, self.rust_extern)
 
-    def rust_extern_self_func_decl(self, is_const=True):
+    def rust_extern_self_func_decl(self, is_output=False):
         """
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         if self.is_by_ptr:
-            return "instance: *{} c_void".format("const" if is_const else "mut")
+            return "instance: *{} c_void".format("mut" if is_output else "const")
         return "instance: {}".format(self.rust_full)
 
-    def cpp_arg_func_decl(self, var_name, is_const=True):
+    def cpp_arg_func_decl(self, var_name, is_output=False):
         """
         :type var_name: str
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
-        if is_const:
-            return "{} {}".format(self.cpp_extern, var_name)
-        return "{}* {}".format(self.cpp_extern, var_name)
+        if is_output:
+            return "{}* {}".format(self.cpp_extern, var_name)
+        return "{} {}".format(self.cpp_extern, var_name)
 
-    def cpp_arg_func_call(self, var_name, is_const=True):
+    def cpp_arg_func_call(self, var_name, is_output=False):
         """
         :type var_name: str
-        :type is_const: bool
+        :type is_output: bool
         :rtype: str
         """
         if self.is_by_ptr:
@@ -1511,16 +1509,18 @@ class StringTypeInfo(TypeInfo):
             self.rust_extern = "*mut c_char"
         self.rust_safe_id = "String"
 
-    def cpp_arg_func_call(self, var_name, is_const=True):
+    def cpp_arg_func_call(self, var_name, is_output=False):
         return "{}({})".format(self.cpptype, var_name)
 
-    def rust_arg_pre_call(self, var_name, is_const=True):
-        return "string_arg!({})".format(var_name)
+    def rust_arg_pre_call(self, var_name, is_output=False):
+        return "string_arg!({}{})".format("" if self.is_const else "mut ", var_name)
 
-    def rust_arg_func_call(self, var_name, is_const=True):
-        return "{}.as_ptr() as _".format(var_name)
+    def rust_arg_func_call(self, var_name, is_output=False):
+        if self.is_const:
+            return "{}.as_ptr()".format(var_name)
+        return "{}.as_ptr() as _".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
 
-    def rust_arg_func_decl(self, var_name, is_const=True):
+    def rust_arg_func_decl(self, var_name, is_output=False):
         return "{}: &str".format(var_name)
 
     def cpp_method_return(self, is_constructor):
@@ -1556,7 +1556,7 @@ class PrimitiveTypeInfo(TypeInfo):
         self.rust_safe_id = self.typeid.replace(" ", "_")
         self.c_safe_id = self.cpp_extern.replace(" ", "_").replace("*", "X").replace("::", "_")
 
-    def cpp_arg_func_call(self, var_name, is_const=True):
+    def cpp_arg_func_call(self, var_name, is_output=False):
         return var_name
 
     def cpp_method_call_invoke(self, call_name, call_args, is_constructor):
@@ -1616,8 +1616,8 @@ class BoxedClassTypeInfo(TypeInfo):
         self.is_ignored = self.ci.is_ignored
         self.rust_safe_id = self.ci.name
 
-    def cpp_arg_func_decl(self, var_name, is_const=True):
-        return super(BoxedClassTypeInfo, self).cpp_arg_func_decl(var_name, True)
+    def cpp_arg_func_decl(self, var_name, is_output=False):
+        return super(BoxedClassTypeInfo, self).cpp_arg_func_decl(var_name, False)
 
     def cpp_method_call_name(self, method_name):
         return "reinterpret_cast<{}*>(instance)->{}".format(self.cpptype, method_name)
@@ -1817,10 +1817,10 @@ class VectorTypeInfo(TypeInfo):
         with open("{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id), "w") as f:
             f.write(T_CPP_MODULE.substitute(code=externs, includes=""))
 
-    def cpp_arg_func_call(self, var_name, is_const=True):
+    def cpp_arg_func_call(self, var_name, is_output=False):
         if isinstance(self.inner, SmartPtrTypeInfo):
             return "*reinterpret_cast<{}*>({})".format(self.outer_cpptype.replace("&", ""), var_name)
-        return super(VectorTypeInfo, self).cpp_arg_func_call(var_name, is_const)
+        return super(VectorTypeInfo, self).cpp_arg_func_call(var_name, is_output)
 
     def cpp_method_return(self, is_constructor):
         return "return {{ Error::Code::StsOk, NULL, (void *)new {}(ret) }};".format(self.cpptype)
@@ -1915,7 +1915,7 @@ class SmartPtrTypeInfo(TypeInfo):
             code = SmartPtrTypeInfo.TEMPLATES["cpp_externs"].substitute(self.__dict__)
             f.write(T_CPP_MODULE.substitute(code=code, includes=""))
 
-    def cpp_arg_func_call(self, var_name, is_const=True):
+    def cpp_arg_func_call(self, var_name, is_output=False):
         return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
 
     def cpp_method_call_invoke(self, call_name, call_args, is_constructor):
@@ -1980,22 +1980,24 @@ class RawPtrTypeInfo(TypeInfo):
     def is_string(self):
         return isinstance(self.inner, PrimitiveTypeInfo) and self.inner.cpptype == "char"
 
-    def rust_arg_func_decl(self, var_name, is_const=True):
+    def rust_arg_func_decl(self, var_name, is_output=False):
         if self.is_string():
-            return "{}: &{}str".format(var_name, "" if is_const else "mut ")
-        return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_const)
+            return "{}: &{}str".format(var_name, "mut " if is_output else "")
+        return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_output)
 
-    def rust_arg_pre_call(self, var_name, is_const=True):
+    def rust_arg_pre_call(self, var_name, is_output=False):
         if self.is_string():
             return "string_arg!({})".format(var_name)
-        return super(RawPtrTypeInfo, self).rust_arg_pre_call(var_name, is_const)
+        return super(RawPtrTypeInfo, self).rust_arg_pre_call(var_name, is_output)
 
-    def rust_arg_func_call(self, var_name, is_const=True):
+    def rust_arg_func_call(self, var_name, is_output=False):
         if self.is_string():
-            return "{}.as_ptr() as _".format(var_name)
-        return super(RawPtrTypeInfo, self).rust_arg_func_call(var_name, is_const)
+            if self.is_const:
+                return "{}.as_ptr()".format(var_name)
+            return "{}.as_ptr() as _".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
+        return super(RawPtrTypeInfo, self).rust_arg_func_call(var_name, is_output)
 
-    def cpp_arg_func_call(self, var_name, is_const=True):
+    def cpp_arg_func_call(self, var_name, is_output=False):
         if isinstance(self.inner, PrimitiveTypeInfo):
             return var_name
         if self.is_by_ptr:
