@@ -80,13 +80,6 @@ decls_manual_pre = {
         ("class cv.KeyPoint", "", ["/Ghost", "/Simple"], []),
         ("class cv.RotatedRect", "", ["/Ghost"], []),
         ("class cv.TermCriteria", "", ["/Ghost"], []),
-        # ["class cv.MouseCallback", "", ["/Callback"], [
-        #     ["int", "event", ""],
-        #     ["int", "x", ""],
-        #     ["int", "y", ""],
-        #     ["int", "flags", ""],
-        #     ["void*", "userdata", ""],
-        # ]],
     ]
 }
 
@@ -755,7 +748,7 @@ class FuncInfo(GeneralInfo):
 
         "rust_safe": template("""
                 // identifier: ${identifier}
-                ${doc_comment}${visibility}fn ${r_name}${lifetimes}(${args}) -> Result<$rv_rust_full> {${pre_call_args}
+                ${doc_comment}${visibility}fn ${r_name}${generic_decl}(${args}) -> Result<$rv_rust_full> {${pre_call_args}
                     unsafe { sys::${c_name}(${call_args}) }.into_result()${rv}
                 }
                 
@@ -821,6 +814,8 @@ class FuncInfo(GeneralInfo):
         self.is_const = "/C" in decl[2]
         self.is_static = "/S" in decl[2]
         self.fake_attrgetter = "/ATTRGETTER" in decl[2]
+        self.has_callback_arg = False
+        has_userdata_arg = False
 
         if self.is_const:
             self.identifier += "_const"
@@ -828,11 +823,19 @@ class FuncInfo(GeneralInfo):
         self.args = []
         for arg in decl[3]:
             ai = ArgInfo(gen, arg)
+            if self.has_callback_arg and ai.name == "userdata":
+                has_userdata_arg = True
             while any(True for x in self.args if x.name == ai.name):
                 ai.name = bump_counter(ai.name)
                 ai.rsname = camel_case_to_snake_case(reserved_rename.get(ai.name, ai.name))
             self.args.append(ai)
             self.identifier += "_" + ai.type.rust_safe_id + "_" + ai.name
+            if isinstance(ai.type, CallbackTypeInfo):
+                self.has_callback_arg = True
+
+        if self.has_callback_arg and not has_userdata_arg:
+            logging.info("ignore function with callback, but without userdata %s %s in %s"%(self.kind, self.name, self.ci))
+            self.is_ignored = True
 
         if len(decl) > 5:
             self.comment = decl[5].encode("ascii", "ignore")
@@ -1026,30 +1029,37 @@ class FuncInfo(GeneralInfo):
             args.append(self.ci.type_info().rust_self_func_decl(not self.is_const))
             call_args.append(self.ci.type_info().rust_self_func_call(not self.is_const))
 
+        generic_decls = []
+
         # todo: convert some *const Mat to slices in rust
-        for a in self.args:
-            forward_args.append(a.type.rust_arg_forward(a.rsname))
-            pre_call_arg = a.type.rust_arg_pre_call(a.rsname)
+        for arg in self.args:
+            call_args.append(arg.type.rust_arg_func_call(arg.rsname, arg.is_output()))
+            forward_args.append(arg.type.rust_arg_forward(arg.rsname))
+            pre_call_arg = arg.type.rust_arg_pre_call(arg.rsname)
             if pre_call_arg:
                 pre_call_args.append(pre_call_arg)
-            args.append(a.type.rust_arg_func_decl(a.rsname, a.is_output()))
-            call_args.append(a.type.rust_arg_func_call(a.rsname, a.is_output()))
+            gdecl = arg.type.rust_generic_decl()
+            if gdecl:
+                generic_decls.append(gdecl)
+            if self.has_callback_arg and arg.name == "userdata":
+                continue
+            args.append(arg.type.rust_arg_func_decl(arg.rsname, arg.is_output()))
 
         pub = "" if self.ci and self.ci.type_info().is_trait and not self.is_static else "pub "
 
         doc_comment = self.gen.reformat_doc(self.comment)
 
         first = True
-        for a in (x for x in self.args if x.defval != ""):
+        for arg in (x for x in self.args if x.defval != ""):
             if first:
                 doc_comment += "///\n/// ## C++ default parameters:\n"
                 first = False
-            doc_comment += "/// * %s: %s\n" % (a.rsname, a.defval)
+            doc_comment += "/// * %s: %s\n" % (arg.rsname, arg.defval)
         template_vars = combine_dicts(self.__dict__, {
             "doc_comment": doc_comment,
             "rv_rust_full": self.rv_type().rust_full,
             "visibility": pub,
-            "lifetimes": "<{}>".format(lifetimes) if lifetimes else "",
+            "generic_decl": "<{}>".format(", ".join(generic_decls)) if len(generic_decls) >= 1 else "",
             "args": ", ".join(args),
             "pre_call_args": "".join("\n" + indent(x) + ";" for x in pre_call_args),
             "r_name": self.r_name(),
@@ -1143,10 +1153,7 @@ class ClassInfo(GeneralInfo):
         # class props
         self.props = []
         for p in decl[3]:
-            if self.is_callback:
-                self.props.append(ArgInfo(self.gen, p))
-            else:
-                self.props.append(ClassPropInfo(p))
+            self.props.append(ClassPropInfo(p))
 
         self.is_ignored = self.is_ignored or self.gen.class_is_ignored(self.fullname)
 
@@ -1275,6 +1282,14 @@ class TypedefInfo(GeneralInfo):
 
 
 class CallbackInfo(GeneralInfo):
+    TEMPLATES = {
+        "rust": template("""
+        ${doc_comment}pub type ${name}Extern = Option<extern "C" fn(${extern_args})>;
+        ${doc_comment}pub type ${name} = dyn FnMut(${args}) + Send + Sync + 'static;
+        
+        """),
+    }
+
     def __init__(self, gen, decl, namespaces):
         """
         :type gen: RustWrapperGenerator
@@ -1282,7 +1297,36 @@ class CallbackInfo(GeneralInfo):
         :type namespaces: frozenset
         """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
-        pass
+        self.args = []
+        self.is_ignored = False
+        for arg in decl[3]:
+            ai = ArgInfo(gen, arg)
+            while any(True for x in self.args if x.name == ai.name):
+                ai.name = bump_counter(ai.name)
+                ai.rsname = camel_case_to_snake_case(reserved_rename.get(ai.name, ai.name))
+            if ai.type.is_ignored:
+                self.is_ignored = True
+            self.args.append(ai)
+
+        if len(decl) > 5:
+            self.comment = decl[5].encode("ascii", "ignore")
+        else:
+            self.comment = ""
+
+    def gen_rust(self):
+        args = []
+        extern_args = []
+        for arg in self.args:
+            if arg.type.is_ignored:
+                return None
+            extern_args.append(arg.type.rust_extern_arg_func_decl(arg.rsname, arg.is_output()))
+            if arg.name != "userdata":
+                args.append(arg.type.rust_full)
+        return CallbackInfo.TEMPLATES["rust"].substitute(combine_dicts(self.__dict__, {
+            "doc_comment": self.gen.reformat_doc(self.comment),
+            "args": ", ".join(args),
+            "extern_args": ", ".join(extern_args),
+        }))
 
 
 class TypeInfo(object):
@@ -1389,6 +1433,9 @@ class TypeInfo(object):
             #     typ = a.type
             return "{}.as_raw_{}()".format(var_name, self.rust_local)
         return var_name
+
+    def rust_generic_decl(self):
+        return ""
 
     def rust_arg_func_decl(self, var_name, is_output=False):
         """
@@ -1596,6 +1643,45 @@ class SimpleClassTypeInfo(TypeInfo):
 
     def __str__(self):
         return "%s (simple)"%(self.cpptype)
+
+
+class CallbackTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid):
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        super(CallbackTypeInfo, self).__init__(gen, typeid)
+        self.ci = gen.get_class(self.typeid)
+        if self.ci and self.ci.is_ignored:
+            self.is_ignored = True
+        if self.ci:
+            self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
+            self.cpp_extern = self.ci.fullname
+            self.c_safe_id = self.rust_local
+            self.rust_extern = "{}Extern".format(self.rust_full)
+            self.is_trait = False
+
+    def rust_arg_pre_call(self, var_name, is_output=False):
+        callback_info = self.gen.get_callback(self.typeid)
+        if callback_info is None or callback_info.is_ignored:
+            return super(CallbackTypeInfo, self).rust_generic_decl()
+        extern_args = []
+        rust_args = []
+        for arg in callback_info.args:
+            extern_args.append(arg.type.rust_extern_arg_func_decl(arg.rsname, arg.is_output()))
+            if arg.name != "userdata":
+                rust_args.append(arg.type.rust_arg_func_decl(arg.rsname, arg.is_output()))
+        return "callback_arg!({}({}) via userdata => ({}))".format(var_name, ", ".join(extern_args), ", ".join(rust_args))
+
+    def rust_arg_func_decl(self, var_name, is_output=False):
+        callback_info = self.gen.get_callback(self.typeid)
+        if callback_info is None or callback_info.is_ignored:
+            return super(CallbackTypeInfo, self).rust_arg_func_decl(var_name, is_output)
+        return "{}: Option<Box<{}>>".format(var_name, self.rust_full)
+
+    def __str__(self):
+        return "{} (callback)".format(self.cpptype)
 
 
 class BoxedClassTypeInfo(TypeInfo):
@@ -2078,6 +2164,8 @@ def parse_type(gen, typeid):
         if ci and not ci.is_ignored:
             if ci.is_simple:
                 return SimpleClassTypeInfo(gen, ci.fullname)
+            elif ci.is_callback:
+                return CallbackTypeInfo(gen, ci.fullname)
             else:
                 return BoxedClassTypeInfo(gen, ci.fullname)
         actual = type_replace.get(typeid)
@@ -2086,6 +2174,8 @@ def parse_type(gen, typeid):
             if ci:
                 if ci.is_simple:
                     return SimpleClassTypeInfo(gen, ci.fullname)
+                elif ci.is_callback:
+                    return CallbackTypeInfo(gen, ci.fullname)
                 else:
                     return BoxedClassTypeInfo(gen, ci.fullname)
             return parse_type(gen, actual)
@@ -2143,6 +2233,7 @@ class RustWrapperGenerator(object):
         self.skipped_func_list = []
         self.consts = []
         self.type_infos = {}
+        self.callbacks = []  # type: list[CallbackInfo]
         self.namespaces = set()
         self.generated = set()
         self.generated_functions = []
@@ -2183,6 +2274,16 @@ class RustWrapperGenerator(object):
         for c in self.consts:
             if c.cname == name:
                 return c
+        return None
+
+    def get_callback(self, name):
+        """
+        :type name: str
+        :rtype: CallbackInfo
+        """
+        for x in self.callbacks:
+            if x.fullname == name:
+                return x
         return None
 
     def add_decl(self, module, decl):
@@ -2247,6 +2348,9 @@ class RustWrapperGenerator(object):
 
     def add_callback_decl(self, _module, decl):
         item = CallbackInfo(self, decl, frozenset(self.namespaces))
+        if not item.is_ignored:
+            self.add_decl(_module, ("class {}".format(item.fullname.replace("::", ".")), "", ["/Ghost", "/Callback"], []))
+            self.callbacks.append(item)
 
     def add_func_decl(self, module, decl):
         item = FuncInfo(self, module, decl, frozenset(self.namespaces))
@@ -2322,6 +2426,9 @@ class RustWrapperGenerator(object):
                 self.moduleCppConsts.write(co.gen_cpp_for_complex())
 
         self.moduleSafeRust.write("\n")
+
+        for cb in self.callbacks:
+            self.gen_callback(cb)
 
         for t in self.type_infos.values():
             if not t.is_ignored:
@@ -2460,6 +2567,12 @@ class RustWrapperGenerator(object):
             out_cpp = templates["cpp_field_non_array"].substitute(cpp_extern=typ.cpp_extern, name=name)
             out_rust = templates["rust_field_non_array"].substitute(visibility=visibility, rsname=rsname, rust_full=typ.rust_full)
         return out_rust, out_cpp
+
+    def gen_callback(self, cb):
+        """
+        :type cb: CallbackInfo
+        """
+        self.moduleSafeRust.write(cb.gen_rust())
 
     def gen_simple_class(self, ci):
         """

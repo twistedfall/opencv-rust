@@ -12,6 +12,26 @@ macro_rules! string_arg {
     };
 }
 
+macro_rules! callback_arg {
+    ($callback_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) via $userdata_name: ident => ($($fw_arg_name: ident: $fw_arg_type: ty),*)) => {
+        ::lazy_static::lazy_static!(
+            static ref callbacks: ::std::sync::Mutex<::slab::Slab<Box<dyn FnMut($($fw_arg_type),*) + Send + Sync>>> = ::std::sync::Mutex::new(::slab::Slab::with_capacity(1));
+        );
+
+        extern "C" fn trampoline($($tr_arg_name: $tr_arg_type),*) {
+            if let Some(callback) = callbacks.lock().unwrap().get_mut($userdata_name as _) {
+                callback($($fw_arg_name),*);
+            }
+        }
+
+        let ($userdata_name, $callback_name) = if let Some(callback) = $callback_name {
+            (callbacks.lock().unwrap().insert(callback) as _, Some(trampoline as _))
+        } else {
+            (0 as _, None) // fixme, remove previous callback
+        };
+    };
+}
+
 #[inline]
 pub fn receive_string(s: *const c_char) -> String {
     let out = String::from_utf8_lossy(unsafe { CStr::from_ptr(s as _) }.to_bytes()).into_owned();

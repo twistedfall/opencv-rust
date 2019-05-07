@@ -12,7 +12,9 @@ authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 build = "build.rs"
 
 [dependencies]
+lazy_static = "1.0"
 libc = "0.2"
+slab = "0.4"
 
 [build-dependencies]
 pkg-config = "0.3.14"
