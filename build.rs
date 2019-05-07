@@ -55,6 +55,10 @@ fn build_wrapper(opencv: pkg_config::Library) {
     println!("cargo:rerun-if-changed=gen_rust.py");
 
     let out_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap());
+    // detect building for docs.rs
+    if out_dir.starts_with("/home/cratesfyi/cratesfyi/debug/build/") {
+        return;
+    }
     let out_dir_as_str = out_dir.to_str().unwrap();
     let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src");
     let module_dir = hub_dir.join("hub");
