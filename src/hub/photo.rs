@@ -2,7 +2,12 @@
 //! Computational Photography
 //! 
 //! # Computational Photography
+//! 
+//! This module includes photo processing algorithms
 //! @{
+//! Inpainting
+//! 
+//! # Inpainting
 //! Denoising
 //! 
 //! # Denoising
@@ -13,15 +18,31 @@
 //! This section describes high dynamic range imaging algorithms namely tonemapping, exposure alignment,
 //! camera calibration with multiple exposures and exposure fusion.
 //! 
+//! Contrast Preserving Decolorization
+//! 
+//! # Contrast Preserving Decolorization
+//! 
+//! Useful links:
+//! 
+//! http://www.cse.cuhk.edu.hk/leojia/projects/color2gray/index.html
+//! 
 //! Seamless Cloning
 //! 
 //! # Seamless Cloning
+//! 
+//! Useful links:
+//! 
+//! https://www.learnopencv.com/seamless-cloning-using-opencv-python-cpp
+//! 
 //! Non-Photorealistic Rendering
 //! 
 //! # Non-Photorealistic Rendering
-//! C API
 //! 
-//! # C API
+//! Useful links:
+//! 
+//! http://www.inf.ufrgs.br/~eslgastal/DomainTransform
+//! 
+//! https://www.learnopencv.com/non-photorealistic-rendering-using-opencv-python-c/
 //! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -274,8 +295,8 @@ pub fn denoise_tvl1(observations: &types::VectorOfMat, result: &core::Mat, lambd
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Output image with the same size and type as src.
-/// * sigma_s: Range between 0 to 200.
-/// * sigma_r: Range between 0 to 1.
+/// * sigma_s: %Range between 0 to 200.
+/// * sigma_r: %Range between 0 to 1.
 ///
 /// ## C++ default parameters:
 /// * sigma_s: 10
@@ -291,11 +312,9 @@ pub fn detail_enhance(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Output 8-bit 3-channel image.
-/// * flags: Edge preserving filters:
-/// *   **RECURS_FILTER** = 1
-/// *   **NORMCONV_FILTER** = 2
-/// * sigma_s: Range between 0 to 200.
-/// * sigma_r: Range between 0 to 1.
+/// * flags: Edge preserving filters: cv::RECURS_FILTER or cv::NORMCONV_FILTER
+/// * sigma_s: %Range between 0 to 200.
+/// * sigma_r: %Range between 0 to 1.
 ///
 /// ## C++ default parameters:
 /// * flags: 1
@@ -530,9 +549,7 @@ pub fn illumination_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Ma
 /// * dst: Output image with the same size and type as src .
 /// * inpaintRadius: Radius of a circular neighborhood of each point inpainted that is considered
 /// by the algorithm.
-/// * flags: Inpainting method that could be one of the following:
-/// *   **INPAINT_NS** Navier-Stokes based method [Navier01]
-/// *   **INPAINT_TELEA** Method by Alexandru Telea @cite Telea04 .
+/// * flags: Inpainting method that could be cv::INPAINT_NS or cv::INPAINT_TELEA
 /// 
 /// The function reconstructs the selected image area from the pixel near the area boundary. The
 /// function may be used to remove dust and scratches from a scanned photo, or to remove undesirable
@@ -555,9 +572,9 @@ pub fn inpaint(src: &core::Mat, inpaint_mask: &core::Mat, dst: &mut core::Mat, i
 /// * src: Input 8-bit 3-channel image.
 /// * dst1: Output 8-bit 1-channel image.
 /// * dst2: Output image with the same size and type as src.
-/// * sigma_s: Range between 0 to 200.
-/// * sigma_r: Range between 0 to 1.
-/// * shade_factor: Range between 0 to 0.1.
+/// * sigma_s: %Range between 0 to 200.
+/// * sigma_r: %Range between 0 to 1.
+/// * shade_factor: %Range between 0 to 0.1.
 ///
 /// ## C++ default parameters:
 /// * sigma_s: 60
@@ -580,15 +597,7 @@ pub fn pencil_sketch(src: &core::Mat, dst1: &mut core::Mat, dst2: &mut core::Mat
 /// * mask: Input 8-bit 1 or 3-channel image.
 /// * p: Point in dst image where object is placed.
 /// * blend: Output image with the same size and type as dst.
-/// * flags: Cloning method that could be one of the following:
-/// *   **NORMAL_CLONE** The power of the method is fully expressed when inserting objects with
-/// complex outlines into a new background
-/// *   **MIXED_CLONE** The classic method, color-based selection and alpha masking might be time
-/// consuming and often leaves an undesirable halo. Seamless cloning, even averaged with the
-/// original image, is not effective. Mixed seamless cloning based on a loose selection proves
-/// effective.
-/// *   **MONOCHROME_TRANSFER** Monochrome transfer allows the user to easily replace certain features of
-/// one object by alternative features.
+/// * flags: Cloning method that could be cv::NORMAL_CLONE, cv::MIXED_CLONE or cv::MONOCHROME_TRANSFER
 pub fn seamless_clone(src: &core::Mat, dst: &core::Mat, mask: &core::Mat, p: core::Point, blend: &mut core::Mat, flags: i32) -> Result<()> {
     unsafe { sys::cv_photo_cv_seamlessClone_Mat_src_Mat_dst_Mat_mask_Point_p_Mat_blend_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), p, blend.as_raw_Mat(), flags) }.into_result()
 }
@@ -601,8 +610,8 @@ pub fn seamless_clone(src: &core::Mat, dst: &core::Mat, mask: &core::Mat, p: cor
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Output image with the same size and type as src.
-/// * sigma_s: Range between 0 to 200.
-/// * sigma_r: Range between 0 to 1.
+/// * sigma_s: %Range between 0 to 200.
+/// * sigma_r: %Range between 0 to 1.
 ///
 /// ## C++ default parameters:
 /// * sigma_s: 60
@@ -613,19 +622,18 @@ pub fn stylization(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_r: 
 
 // identifier: cv_textureFlattening_Mat_src_Mat_mask_Mat_dst_float_low_threshold_float_high_threshold_int_kernel_size
 /// By retaining only the gradients at edge locations, before integrating with the Poisson solver, one
-/// washes out the texture of the selected region, giving its contents a flat aspect. Here Canny Edge
-/// Detector is used.
+/// washes out the texture of the selected region, giving its contents a flat aspect. Here Canny Edge %Detector is used.
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * mask: Input 8-bit 1 or 3-channel image.
 /// * dst: Output image with the same size and type as src.
-/// * low_threshold: Range from 0 to 100.
+/// * low_threshold: %Range from 0 to 100.
 /// * high_threshold: Value \> 100.
 /// * kernel_size: The size of the Sobel kernel to be used.
 /// 
-/// **NOTE:**
 /// 
+/// Note:
 /// The algorithm assumes that the color of the source image is close to that of the destination. This
 /// assumption means that when the colors don't match, the source image color gets tinted toward the
 /// color of the destination image.
@@ -1000,8 +1008,8 @@ pub trait Tonemap : core::Algorithm {
     /// Tonemaps image
     /// 
     /// ## Parameters
-    /// * src: source image - 32-bit 3-channel Mat
-    /// * dst: destination image - 32-bit 3-channel Mat with values in [0, 1] range
+    /// * src: source image - CV_32FC3 Mat (float 32 bits 3 channels)
+    /// * dst: destination image - CV_32FC3 Mat with values in [0, 1] range
     fn process(&mut self, src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_photo_cv_Tonemap_process_Mat_src_Mat_dst(self.as_raw_Tonemap(), src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
     }

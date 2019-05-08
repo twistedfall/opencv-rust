@@ -203,16 +203,23 @@ pub const CHAIN_APPROX_TC89_KCOS: i32 = 4;
 pub const CHAIN_APPROX_TC89_L1: i32 = 3;
 pub const COLORMAP_AUTUMN: i32 = 0;
 pub const COLORMAP_BONE: i32 = 1;
+pub const COLORMAP_CIVIDIS: i32 = 17;
 pub const COLORMAP_COOL: i32 = 8;
 pub const COLORMAP_HOT: i32 = 11;
 pub const COLORMAP_HSV: i32 = 9;
+pub const COLORMAP_INFERNO: i32 = 14;
 pub const COLORMAP_JET: i32 = 2;
+pub const COLORMAP_MAGMA: i32 = 13;
 pub const COLORMAP_OCEAN: i32 = 5;
 pub const COLORMAP_PARULA: i32 = 12;
 pub const COLORMAP_PINK: i32 = 10;
+pub const COLORMAP_PLASMA: i32 = 15;
 pub const COLORMAP_RAINBOW: i32 = 4;
 pub const COLORMAP_SPRING: i32 = 7;
 pub const COLORMAP_SUMMER: i32 = 6;
+pub const COLORMAP_TWILIGHT: i32 = 18;
+pub const COLORMAP_TWILIGHT_SHIFTED: i32 = 19;
+pub const COLORMAP_VIRIDIS: i32 = 16;
 pub const COLORMAP_WINTER: i32 = 3;
 pub const COLOR_BGR2BGR555: i32 = 22;
 pub const COLOR_BGR2BGR565: i32 = 12;
@@ -2106,6 +2113,9 @@ pub fn create_hanning_window(dst: &mut core::Mat, win_size: core::Size, _type: i
 /// is chosen.
 /// * _density_th: Minimal density of aligned region points in the enclosing rectangle.
 /// * _n_bins: Number of bins in pseudo-ordering of gradient modulus.
+/// 
+/// 
+/// Note: Implementation has been removed due original code license conflict
 ///
 /// ## C++ default parameters:
 /// * _refine: LSD_REFINE_STD
@@ -5076,6 +5086,9 @@ impl LineIterator {
 /// Line segment detector class
 /// 
 /// following the algorithm described at @cite Rafael12 .
+/// 
+/// 
+/// Note: Implementation has been removed due original code license conflict
 pub trait LineSegmentDetector : core::Algorithm {
     #[doc(hidden)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
     // identifier: cv_LineSegmentDetector_detect_Mat__image_Mat__lines_Mat_width_Mat_prec_Mat_nfa

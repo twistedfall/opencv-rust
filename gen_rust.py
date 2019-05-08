@@ -447,6 +447,7 @@ const_ignore_list = (
     "VSX_IMPL_MULH_",
     "CV__DNN_EXPERIMENTAL_NS_",
     "CV_Sts",
+    "CV_ALWAYS_INLINE",
 )
 
 #

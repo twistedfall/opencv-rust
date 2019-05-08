@@ -183,6 +183,24 @@ pub fn calc_optical_flow_pyr_lk(prev_img: &core::Mat, next_img: &core::Mat, prev
     unsafe { sys::cv_video_cv_calcOpticalFlowPyrLK_Mat_prevImg_Mat_nextImg_Mat_prevPts_Mat_nextPts_Mat_status_Mat_err_Size_winSize_int_maxLevel_TermCriteria_criteria_int_flags_double_minEigThreshold(prev_img.as_raw_Mat(), next_img.as_raw_Mat(), prev_pts.as_raw_Mat(), next_pts.as_raw_Mat(), status.as_raw_Mat(), err.as_raw_Mat(), win_size, max_level, criteria.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result()
 }
 
+// identifier: cv_computeECC_Mat_templateImage_Mat_inputImage_Mat_inputMask
+/// Computes the Enhanced Correlation Coefficient value between two images @cite EP08 .
+/// 
+/// ## Parameters
+/// * templateImage: single-channel template image; CV_8U or CV_32F array.
+/// * inputImage: single-channel input image to be warped to provide an image similar to
+/// templateImage, same type as templateImage.
+/// * inputMask: An optional mask to indicate valid values of inputImage.
+/// 
+/// @sa
+/// findTransformECC
+///
+/// ## C++ default parameters:
+/// * input_mask: noArray()
+pub fn compute_ecc(template_image: &core::Mat, input_image: &core::Mat, input_mask: &core::Mat) -> Result<f64> {
+    unsafe { sys::cv_video_cv_computeECC_Mat_templateImage_Mat_inputImage_Mat_inputMask(template_image.as_raw_Mat(), input_image.as_raw_Mat(), input_mask.as_raw_Mat()) }.into_result()
+}
+
 // identifier: cv_createBackgroundSubtractorKNN_int_history_double_dist2Threshold_bool_detectShadows
 /// Creates KNN Background Subtractor
 /// 
@@ -264,12 +282,23 @@ pub fn estimate_rigid_transform_1(src: &core::Mat, dst: &core::Mat, full_affine:
 }
 
 // identifier: cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask
+/// @overload
+///
+/// ## C++ default parameters:
+/// * motion_type: MOTION_AFFINE
+/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 50, 0.001)
+/// * input_mask: noArray()
+pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, warp_matrix: &mut core::Mat, motion_type: i32, criteria: &core::TermCriteria, input_mask: &core::Mat) -> Result<f64> {
+    unsafe { sys::cv_video_cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask(template_image.as_raw_Mat(), input_image.as_raw_Mat(), warp_matrix.as_raw_Mat(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw_Mat()) }.into_result()
+}
+
+// identifier: cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask_int_gaussFiltSize
 /// Finds the geometric transform (warp) between two images in terms of the ECC criterion @cite EP08 .
 /// 
 /// ## Parameters
 /// * templateImage: single-channel template image; CV_8U or CV_32F array.
 /// * inputImage: single-channel input image which should be warped with the final warpMatrix in
-/// order to provide an image similar to templateImage, same type as temlateImage.
+/// order to provide an image similar to templateImage, same type as templateImage.
 /// * warpMatrix: floating-point <span lang='latex'>2\times 3</span> or <span lang='latex'>3\times 3</span> mapping matrix (warp).
 /// * motionType: parameter, specifying the type of motion:
 /// *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is <span lang='latex'>2\times 3</span> with
@@ -286,6 +315,7 @@ pub fn estimate_rigid_transform_1(src: &core::Mat, dst: &core::Mat, full_affine:
 /// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
 /// Default values are shown in the declaration above.
 /// * inputMask: An optional mask to indicate valid values of inputImage.
+/// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 /// 
 /// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
 /// (@cite EP08), that is
@@ -313,14 +343,9 @@ pub fn estimate_rigid_transform_1(src: &core::Mat, dst: &core::Mat, full_affine:
 /// an exception if algorithm does not converges.
 /// 
 /// @sa
-/// estimateAffine2D, estimateAffinePartial2D, findHomography
-///
-/// ## C++ default parameters:
-/// * motion_type: MOTION_AFFINE
-/// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 50, 0.001)
-/// * input_mask: noArray()
-pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, warp_matrix: &mut core::Mat, motion_type: i32, criteria: &core::TermCriteria, input_mask: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_video_cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask(template_image.as_raw_Mat(), input_image.as_raw_Mat(), warp_matrix.as_raw_Mat(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw_Mat()) }.into_result()
+/// computeECC, estimateAffine2D, estimateAffinePartial2D, findHomography
+pub fn find_transform_ecc_1(template_image: &core::Mat, input_image: &core::Mat, warp_matrix: &mut core::Mat, motion_type: i32, criteria: &core::TermCriteria, input_mask: &core::Mat, gauss_filt_size: i32) -> Result<f64> {
+    unsafe { sys::cv_video_cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask_int_gaussFiltSize(template_image.as_raw_Mat(), input_image.as_raw_Mat(), warp_matrix.as_raw_Mat(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw_Mat(), gauss_filt_size) }.into_result()
 }
 
 // identifier: cv_meanShift_Mat_probImage_Rect_window_TermCriteria_criteria

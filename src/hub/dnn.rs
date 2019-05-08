@@ -16,6 +16,9 @@ use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
 
+pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_2: &'static str = "Myriad2";
+pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_X: &'static str = "MyriadX";
+pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_UNSPECIFIED: &'static str = "";
 pub const DNN_BACKEND_DEFAULT: i32 = 0;
 pub const DNN_BACKEND_HALIDE: i32 = 1;
 pub const DNN_BACKEND_INFERENCE_ENGINE: i32 = 2;
@@ -474,7 +477,7 @@ pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<core::Mat> {
 }
 
 // identifier: cv_dnn_resetMyriadDevice
-/// Release a Myriad device is binded by OpenCV.
+/// Release a Myriad device (binded by OpenCV).
 /// 
 /// Single Myriad device cannot be shared across multiple processes which uses
 /// Inference Engine's Myriad plugin.

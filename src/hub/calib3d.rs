@@ -130,8 +130,6 @@
 //! opencv_source_code/samples/cpp/calibration.cpp
 //! *   A calibration sample in order to do 3D reconstruction can be found at
 //! opencv_source_code/samples/cpp/build3dmodel.cpp
-//! *   A calibration sample of an artificially generated camera and chessboard patterns can be
-//! found at opencv_source_code/samples/cpp/calibration_artificial.cpp
 //! *   A calibration example on stereo calibration can be found at
 //! opencv_source_code/samples/cpp/stereo_calib.cpp
 //! *   A calibration example on stereo matching can be found at
@@ -202,6 +200,11 @@ pub const CALIB_FIX_S1_S2_S3_S4: i32 = 0x10000;
 pub const CALIB_FIX_SKEW: i32 = 1 << 3;
 pub const CALIB_FIX_TANGENT_DIST: i32 = 0x200000;
 pub const CALIB_FIX_TAUX_TAUY: i32 = 0x80000;
+pub const CALIB_HAND_EYE_ANDREFF: i32 = 3;
+pub const CALIB_HAND_EYE_DANIILIDIS: i32 = 4;
+pub const CALIB_HAND_EYE_HORAUD: i32 = 2;
+pub const CALIB_HAND_EYE_PARK: i32 = 1;
+pub const CALIB_HAND_EYE_TSAI: i32 = 0;
 pub const CALIB_RATIONAL_MODEL: i32 = 0x04000;
 pub const CALIB_RECOMPUTE_EXTRINSIC: i32 = 1 << 1;
 pub const CALIB_SAME_FOCAL_LENGTH: i32 = 0x00200;
