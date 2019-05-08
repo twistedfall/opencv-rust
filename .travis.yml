@@ -21,6 +21,7 @@ addons:
       - libavcodec-dev
       - libavformat-dev
       - libswscale-dev
+      - libavresample-dev
       - python-dev
       - python-numpy
       - libtbb2

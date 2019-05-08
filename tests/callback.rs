@@ -4,12 +4,9 @@ use opencv::highgui;
 
 #[test]
 fn callback() {
-    #[cfg(target_os = "linux")]
-    {
-        // only run under X11 if on linux
-        if std::env::var("DISPLAY").is_err() {
-            return;
-        }
+    // only run under X11 if on linux
+    if cfg!(target_os = "linux") && option_env!("DISPLAY").is_none() {
+        return;
     }
     highgui::named_window("test", 0).unwrap();
     let mut value = 50;

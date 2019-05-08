@@ -2,14 +2,17 @@
 name = "opencv"
 description = "Rust bindings for OpenCV"
 documentation = "https://docs.rs/opencv"
-repository = "https://github.com/kali/opencv-rust"
+repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
 keywords = [ "opencv", "vision" ]
 license = "MIT"
-version = "0.5.3"
+version = "0.5.4"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
 build = "build.rs"
+
+[badges]
+travis-ci = { repository = "twistedfall/opencv-rust", branch = "master" }
 
 [dependencies]
 lazy_static = "1.0"
