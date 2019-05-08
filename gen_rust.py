@@ -2410,7 +2410,6 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust = StringIO()
         self.moduleRustExterns = StringIO()
 
-        self.moduleSafeRust.write('//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n'.encode("utf-8"))
         self.moduleSafeRust.write(self.reformat_doc(parser.module_comment.get(module, ""), "//!"))
 
         self.moduleSafeRust.write(template("""
@@ -2714,20 +2713,39 @@ class RustWrapperGenerator(object):
         text = text.strip()
         if len(text) == 0:
             return ""
+        # remove asterisks from c++ comment delimiters
         text = re.sub(r"^\s*\*$", "", text, 0, re.M)
         text = re.sub(r"^\* ", "", text, 0, re.M)
+        # comment body markers
         text = text.replace("@brief", "").replace("@note", "\nNote:")
+        # code blocks, don't run them during tests
         text = text.replace("@code", "```ignore").replace("@endcode", "```\n")
-        text = re.sub("^(.*?@param)", "## Parameters\n\\1", text, 1, re.M)
+        # see also block
+        text = re.sub(r"@sa\s+", "## See also\n", text, 0, re.M)
+        # citation links
+        text = re.sub(r"@cite\s+(.+?)\b", "[\\1](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_\\1)", text)
+        # images
+        text = re.sub(r"!\[(.*?)\]\((?:pics/)?(.+)?\)", "![\\1](https://docs.opencv.org/3.4.6/\\2)", text)
+        # ?
         text = re.sub(r".*\*\*\*\*\*", "", text, 0, re.M)
-        text = re.sub("@defgroup [^ ]+ (.*)", "\\1\n\n# \\1", text)
+        # module titles
+        text = re.sub(r"\s*@{\s*$", "", text, 0, re.M)
+        text = re.sub(r"\s*@}\s*$", "", text, 0, re.M)
+        text = re.sub("@defgroup [^ ]+ (.*)", "# \\1", text)
+        # parameter list
+        text = re.sub("^(.*?@param)", "## Parameters\n\\1", text, 1, re.M)
         text = re.sub("^.*?@param ([^ ]+) (.*)", "* \\1: \\2", text, 0, re.M)
+        # ?
         text = re.sub("^-  (.*)", "*  \\1", text, 0, re.M)
-        text = re.sub("\\\\f\[", "<div lang='latex'>", text, 0, re.M)
-        text = re.sub("\\\\f\]", "</div>", text, 0, re.M)
+        # math expressions
+        if r"\f" in text:
+            text = '<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n' + text
+        text = re.sub(r"\\f\[", "<div lang='latex'>", text, 0, re.M)
+        text = re.sub(r"\\f\]", "</div>", text, 0, re.M)
         text = re.sub(r"\\f\$(.*?)\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
         # catch sequences of 4 indents and reduce them to avoid cargo test running them as code
         text = re.sub(r"^((\s{1,5})\2{3})(\S)", r"\2\3", text, 0, re.M)
+        # add rustdoc comment markers
         text = re.sub("^", comment_prefix + " ", text.strip(), 0, re.M) + "\n"
         return text.encode("utf-8")
 
