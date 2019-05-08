@@ -25,10 +25,10 @@ tell me what happens. 3.0 will not work as is.
 
 You will also need python.
 
-[API Documentation](http://www.poumeyrol.fr/doc/opencv-rust/opencv/index.html)
+[API Documentation](https://docs.rs/opencv)
 — or what I managed to extract from opencv widely inconsistent doxygen. At
 least you can see what has been ported or not to rust and how. You'll probably
-need to refer to the official [OpenCV C++ documentation](http://docs.opencv.org/).
+need to refer to the official [OpenCV C++ documentation](https://docs.opencv.org/3.4.5/).
 
 All the major modules in the C++ API
 are merged together in a huge cv:: namespace, leaving the client developper
