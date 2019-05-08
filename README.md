@@ -3,7 +3,7 @@ the following doc is outdated:
 
 ## Rust OpenCV bindings
 
-[![Build Status](https://travis-ci.org/kali/opencv-rust.svg?branch=cv2)](https://travis-ci.org/kali/opencv-rust)
+[![Build Status](https://travis-ci.org/twistedfall/opencv-rust.svg?branch=master)](https://travis-ci.org/twistedfall/opencv-rust)
 
 This is my shot at generating Rust bindings for OpenCV.
 
