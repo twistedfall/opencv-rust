@@ -1,14 +1,19 @@
 language: rust
+rust:
+  - stable
+  - beta
+  - nightly
+cache: cargo
+
 sudo: true
-dist: trusty
+dist: xenial
 
 addons:
   apt:
     packages:
-      - curl
-      - build-essential
       - wget
       - unzip
+      - build-essential
       - cmake
       - git
       - libgtk2.0-dev
@@ -28,54 +33,49 @@ addons:
       - tree
 
 env:
-  global:
-    - DOC=3.1.0
+#  global:
+#    - DOC=3.1.0
   matrix:
-    - CV=3.1.0
+    - OPENCV_VERSION=3.4.6
 
 before_script:
   - |
-    if [ ! -e /tmp/opencv/opencv-$CV/release/unix-install ]
+    if [ ! -e /tmp/opencv/opencv-$OPENCV_VERSION/release/unix-install ]
     then
       mkdir -p /tmp/opencv
       cd /tmp/opencv
-      rm -rf opencv-$CV
-      wget https://github.com/Itseez/opencv/archive/$CV.zip
-      unzip -q $CV.zip
-      cd opencv-$CV
+      rm -rf opencv-$OPENCV_VERSION
+      wget -q https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
+      unzip -q $OPENCV_VERSION.zip
+      cd opencv-$OPENCV_VERSION
       mkdir release install
       cd release
-      cmake -D CMAKE_BUILD_TYPE=RELEASE -DBUILD_SHARED_LIBS=OFF -D CMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$CV/install -D WITH_FFMPEG=OFF ..
-      make install
+      cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DINSTALL_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$OPENCV_VERSION/install ..
+      make -j4 install
     fi
-  - tree /tmp/opencv/opencv-$CV/release
-  - cd /home/travis/build/kali/opencv-rust
-  - export PKG_CONFIG_PATH=/tmp/opencv/opencv-$CV/release/unix-install
+  - tree /tmp/opencv/opencv-$OPENCV_VERSION/release
+  - export PKG_CONFIG_PATH=/tmp/opencv/opencv-$OPENCV_VERSION/release/unix-install
   - pkg-config --cflags opencv
   - pkg-config --libs opencv
   - gcc --version
+  - cd /home/travis/build/twistedfall/opencv-rust
 
-after_success:
-  - echo $TRAVIS_RUST_VERSION
-  - |
-    if [ "$CV" = "$DOC" -a "$TRAVIS_RUST_VERSION" = "stable" ]
-    then
-      cargo doc
-      curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
-    fi
+#after_success:
+#  - echo $TRAVIS_RUST_VERSION
+#  - |
+#    if [ "$OPENCV_VERSION" = "$DOC" -a "$TRAVIS_RUST_VERSION" = "stable" ]
+#    then
+#      cargo doc
+#      curl https://raw.githubusercontent.com/kmcallister/travis-doc-upload/master/travis-doc-upload.sh | sh
+#    fi
 
 #cache:
 #  directories:
 #    - /tmp/opencv
-
-rust:
-  - stable
-  - beta
-  - nightly
 
 matrix:
   allow_failures:
     - rust: nightly
 #  include:
 #    - rust: stable
-#      env: CV=2.4.10
+#      env: OPENCV_VERSION=2.4.10
