@@ -103,6 +103,9 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_fisheye_undistortImage_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_Knew_Size_new_size": "fisheye_undistort_image",
     "cv_fisheye_undistortPoints_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_R_Mat_P": "fisheye_undistort_points",
     "cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask": "recover_pose_matrix",
+    "cv_solvePnP_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_flags": "solve_pnp",
+    "cv_solvePnPRansac_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_iterationsCount_float_reprojectionError_double_confidence_Mat_inliers_int_flags": "solve_pnp_ransac",
+    "cv_solveP3P_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags": "solve_p3p",
     # core
     "cvAlloc_size_t_size": "-",
     "cvClone_const_void_X_struct_ptr": "-",
