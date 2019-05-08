@@ -50,7 +50,7 @@ before_script:
       cd opencv-$OPENCV_VERSION
       mkdir release install
       cd release
-      cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DINSTALL_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$OPENCV_VERSION/install ..
+      cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DINSTALL_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_opencv_apps= -DWITH_IPP=OFF -DCMAKE_INSTALL_PREFIX=/tmp/opencv/opencv-$OPENCV_VERSION/install ..
       make -j4 install
     fi
   - tree /tmp/opencv/opencv-$OPENCV_VERSION/release
