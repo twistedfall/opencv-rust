@@ -1,6 +1,3 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Machine Learning
-//! 
 //! # Machine Learning
 //! 
 //! The Machine Learning Library (MLL) is a set of classes and functions for statistical
@@ -114,7 +111,8 @@ pub fn rand_mv_normal(mean: &core::Mat, cov: &core::Mat, nsamples: i32, samples:
 /// 
 /// Additional flags for StatModel::train are available: ANN_MLP::TrainFlags.
 /// 
-/// @sa @ref ml_intro_ann
+/// ## See also
+/// @ref ml_intro_ann
 pub trait ANN_MLP : crate::ml::StatModel {
     #[doc(hidden)] fn as_raw_ANN_MLP(&self) -> *mut c_void;
     // identifier: cv_ml_ANN_MLP_setTrainMethod_int_method_double_param1_double_param2
@@ -138,6 +136,7 @@ pub trait ANN_MLP : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_ANN_MLP_setActivationFunction_int_type_double_param1_double_param2
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
     /// Initialize the activation function for each neuron.
     /// Currently the default and the only fully supported activation function is ANN_MLP::SIGMOID_SYM.
     /// ## Parameters
@@ -156,7 +155,8 @@ pub trait ANN_MLP : crate::ml::StatModel {
     /// Integer vector specifying the number of neurons in each layer including the input and output layers.
     /// The very first element specifies the number of elements in the input layer.
     /// The last element - number of elements in the output layer. Default value is empty Mat.
-    /// @sa getLayerSizes
+    /// ## See also
+    /// getLayerSizes
     fn set_layer_sizes(&mut self, _layer_sizes: &core::Mat) -> Result<()> {
         unsafe { sys::cv_ml_cv_ml_ANN_MLP_setLayerSizes_Mat__layer_sizes(self.as_raw_ANN_MLP(), _layer_sizes.as_raw_Mat()) }.into_result()
     }
@@ -165,7 +165,8 @@ pub trait ANN_MLP : crate::ml::StatModel {
     /// Integer vector specifying the number of neurons in each layer including the input and output layers.
     /// The very first element specifies the number of elements in the input layer.
     /// The last element - number of elements in the output layer.
-    /// @sa setLayerSizes
+    /// ## See also
+    /// setLayerSizes
     fn get_layer_sizes(&self) -> Result<core::Mat> {
         unsafe { sys::cv_ml_cv_ml_ANN_MLP_getLayerSizes_const(self.as_raw_ANN_MLP()) }.into_result().map(|x| core::Mat { ptr: x })
     }
@@ -350,7 +351,8 @@ impl<'a> ANN_MLP + 'a {
 // Generating impl for trait cv::ml::ANN_MLP_ANNEAL (trait)
 /// Artificial Neural Networks - Multi-Layer Perceptrons.
 /// 
-/// @sa @ref ml_intro_ann
+/// ## See also
+/// @ref ml_intro_ann
 pub trait ANN_MLP_ANNEAL : crate::ml::ANN_MLP {
     #[doc(hidden)] fn as_raw_ANN_MLP_ANNEAL(&self) -> *mut c_void;
     // identifier: cv_ml_ANN_MLP_ANNEAL_getAnnealInitialT_const
@@ -410,7 +412,8 @@ impl<'a> ANN_MLP_ANNEAL + 'a {
 // Generating impl for trait cv::ml::Boost (trait)
 /// Boosted tree classifier derived from DTrees
 /// 
-/// @sa @ref ml_intro_boost
+/// ## See also
+/// @ref ml_intro_boost
 pub trait Boost : crate::ml::DTrees {
     #[doc(hidden)] fn as_raw_Boost(&self) -> *mut c_void;
     // identifier: cv_ml_Boost_getBoostType_const
@@ -489,7 +492,8 @@ impl<'a> Boost + 'a {
 /// responses or using a voting schemes), and the derived from DTrees classes (such as RTrees and Boost)
 /// use this capability to implement decision tree ensembles.
 /// 
-/// @sa @ref ml_intro_trees
+/// ## See also
+/// @ref ml_intro_trees
 pub trait DTrees : crate::ml::StatModel {
     #[doc(hidden)] fn as_raw_DTrees(&self) -> *mut c_void;
     // identifier: cv_ml_DTrees_getMaxCategories_const
@@ -716,7 +720,8 @@ impl DTrees_Split {
 // Generating impl for trait cv::ml::EM (trait)
 /// The class implements the Expectation Maximization algorithm.
 /// 
-/// @sa @ref ml_intro_em
+/// ## See also
+/// @ref ml_intro_em
 pub trait EM : crate::ml::StatModel {
     #[doc(hidden)] fn as_raw_EM(&self) -> *mut c_void;
     // identifier: cv_ml_EM_getClustersNumber_const
@@ -782,7 +787,8 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_predict_const_Mat_samples_Mat_results_int_flags
-    /// Returns posterior probabilities for the provided samples
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Returns posterior probabilities for the provided samples
     /// 
     /// ## Parameters
     /// * samples: The input samples, floating-point matrix
@@ -798,7 +804,8 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_predict2_const_Mat_sample_Mat_probs
-    /// Returns a likelihood logarithm value and an index of the most probable mixture component
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Returns a likelihood logarithm value and an index of the most probable mixture component
     /// for the given sample.
     /// 
     /// ## Parameters
@@ -815,7 +822,8 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_trainEM_Mat_samples_Mat_logLikelihoods_Mat_labels_Mat_probs
-    /// Estimate the Gaussian mixture parameters from a samples set.
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Estimate the Gaussian mixture parameters from a samples set.
     /// 
     /// This variation starts with Expectation step. Initial values of the model parameters will be
     /// estimated by the k-means algorithm.
@@ -853,7 +861,8 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_trainE_Mat_samples_Mat_means0_Mat_covs0_Mat_weights0_Mat_logLikelihoods_Mat_labels_Mat_probs
-    /// Estimate the Gaussian mixture parameters from a samples set.
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Estimate the Gaussian mixture parameters from a samples set.
     /// 
     /// This variation starts with Expectation step. You need to provide initial means <span lang='latex'>a_k</span> of
     /// mixture components. Optionally you can pass initial weights <span lang='latex'>\pi_k</span> and covariance matrices
@@ -892,7 +901,8 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_trainM_Mat_samples_Mat_probs0_Mat_logLikelihoods_Mat_labels_Mat_probs
-    /// Estimate the Gaussian mixture parameters from a samples set.
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Estimate the Gaussian mixture parameters from a samples set.
     /// 
     /// This variation starts with Maximization step. You need to provide initial probabilities
     /// <span lang='latex'>p_{i,k}</span> to use this option.
@@ -955,7 +965,8 @@ impl<'a> EM + 'a {
 // Generating impl for trait cv::ml::KNearest (trait)
 /// The class implements K-Nearest Neighbors model
 /// 
-/// @sa @ref ml_intro_knn
+/// ## See also
+/// @ref ml_intro_knn
 pub trait KNearest : crate::ml::StatModel {
     #[doc(hidden)] fn as_raw_KNearest(&self) -> *mut c_void;
     // identifier: cv_ml_KNearest_getDefaultK_const
@@ -1058,7 +1069,8 @@ impl<'a> KNearest + 'a {
 // Generating impl for trait cv::ml::LogisticRegression (trait)
 /// Implements Logistic Regression classifier.
 /// 
-/// @sa @ref ml_intro_lr
+/// ## See also
+/// @ref ml_intro_lr
 pub trait LogisticRegression : crate::ml::StatModel {
     #[doc(hidden)] fn as_raw_LogisticRegression(&self) -> *mut c_void;
     // identifier: cv_ml_LogisticRegression_getLearningRate_const
@@ -1194,7 +1206,8 @@ impl<'a> LogisticRegression + 'a {
 // Generating impl for trait cv::ml::NormalBayesClassifier (trait)
 /// Bayes classifier for normally distributed data.
 /// 
-/// @sa @ref ml_intro_bayes
+/// ## See also
+/// @ref ml_intro_bayes
 pub trait NormalBayesClassifier : crate::ml::StatModel {
     #[doc(hidden)] fn as_raw_NormalBayesClassifier(&self) -> *mut c_void;
     // identifier: cv_ml_NormalBayesClassifier_predictProb_const_Mat_inputs_Mat_outputs_Mat_outputProbs_int_flags
@@ -1297,7 +1310,8 @@ impl ParamGrid {
 // Generating impl for trait cv::ml::RTrees (trait)
 /// The class implements the random forest predictor.
 /// 
-/// @sa @ref ml_intro_rtrees
+/// ## See also
+/// @ref ml_intro_rtrees
 pub trait RTrees : crate::ml::DTrees {
     #[doc(hidden)] fn as_raw_RTrees(&self) -> *mut c_void;
     // identifier: cv_ml_RTrees_getCalculateVarImportance_const
@@ -1395,7 +1409,8 @@ impl<'a> RTrees + 'a {
 // Generating impl for trait cv::ml::SVM (trait)
 /// Support Vector Machines.
 /// 
-/// @sa @ref ml_intro_svm
+/// ## See also
+/// @ref ml_intro_svm
 pub trait SVM : crate::ml::StatModel {
     #[doc(hidden)] fn as_raw_SVM(&self) -> *mut c_void;
     // identifier: cv_ml_SVM_getType_const
@@ -1639,7 +1654,8 @@ pub trait SVM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_SVM_getDecisionFunction_const_int_i_Mat_alpha_Mat_svidx
-    /// Retrieves the decision function
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Retrieves the decision function
     /// 
     /// ## Parameters
     /// * i: the index of the decision function. If the problem solved is regression, 1-class or
@@ -1965,7 +1981,8 @@ impl<'a> StatModel + 'a {
 /// words, you can create your own class derived from TrainData and pass smart pointer to the instance
 /// of this class into StatModel::train.
 /// 
-/// @sa @ref ml_intro_data
+/// ## See also
+/// @ref ml_intro_data
 pub trait TrainData {
     #[doc(hidden)] fn as_raw_TrainData(&self) -> *mut c_void;
     // identifier: cv_ml_TrainData_missingValue
@@ -2164,7 +2181,8 @@ pub trait TrainData {
     
     // identifier: cv_ml_TrainData_setTrainTestSplit_int_count_bool_shuffle
     /// Splits the training data into the training and test parts
-    /// @sa TrainData::setTrainTestSplitRatio
+    /// ## See also
+    /// TrainData::setTrainTestSplitRatio
     ///
     /// ## C++ default parameters:
     /// * shuffle: true
@@ -2179,7 +2197,8 @@ pub trait TrainData {
     /// set. If the function is not called, all the data is used for training. Please, note that for
     /// each of TrainData::getTrain\* there is corresponding TrainData::getTest\*, so that the test
     /// subset can be retrieved and processed as well.
-    /// @sa TrainData::setTrainTestSplit
+    /// ## See also
+    /// TrainData::setTrainTestSplit
     ///
     /// ## C++ default parameters:
     /// * shuffle: true

@@ -1,11 +1,8 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Super Resolution
-//! 
 //! # Super Resolution
 //! 
 //! The Super Resolution module contains a set of functions and classes that can be used to solve the
 //! problem of resolution enhancement. There are a few methods implemented, most of them are described in
-//! the papers @cite Farsiu03 and @cite Mitzel09 .
+//! the papers [Farsiu03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Mitzel09) .
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -39,8 +36,8 @@ pub fn create_frame_source__video(file_name: &str) -> Result<types::PtrOfFrameSo
 // identifier: cv_superres_createSuperResolution_BTVL1
 /// Create Bilateral TV-L1 Super Resolution.
 /// 
-/// This class implements Super Resolution algorithm described in the papers @cite Farsiu03 and
-/// @cite Mitzel09 .
+/// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Farsiu03) and
+/// [Mitzel09](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Mitzel09) .
 /// 
 /// Here are important members of the class that control the algorithm, which you can set after
 /// constructing the class instance:
@@ -65,13 +62,11 @@ pub fn create_super_resolution_btvl1_cuda() -> Result<types::PtrOfSuperResolutio
 }
 
 // Generating impl for trait cv::superres::FrameSource (trait)
-/// Super Resolution
-/// 
 /// # Super Resolution
 /// 
 /// The Super Resolution module contains a set of functions and classes that can be used to solve the
 /// problem of resolution enhancement. There are a few methods implemented, most of them are described in
-/// the papers @cite Farsiu03 and @cite Mitzel09 .
+/// the papers [Farsiu03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Mitzel09) .
 pub trait FrameSource {
     #[doc(hidden)] fn as_raw_FrameSource(&self) -> *mut c_void;
     // identifier: cv_superres_FrameSource_nextFrame_Mat_frame

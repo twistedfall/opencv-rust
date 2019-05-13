@@ -1,8 +1,4 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Deep Neural Network module
-//! 
 //! # Deep Neural Network module
-//! @{
 //! This module contains:
 //! - API for new layers creation, layers are building bricks of neural networks;
 //! - set of built-in most-useful Layers;
@@ -11,7 +7,6 @@
 //! 
 //! Functionality of this module is designed only for forward pass computations (i.e. network testing).
 //! A network training is in principle not supported.
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -54,7 +49,8 @@ pub fn nms_boxes_rotated_f64(bboxes: &types::VectorOfRect2d, scores: &types::Vec
 }
 
 // identifier: cv_dnn_NMSBoxes_VectorOfRect_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k
-/// Performs non maximum suppression given boxes and corresponding scores.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Performs non maximum suppression given boxes and corresponding scores.
 /// 
 /// ## Parameters
 /// * bboxes: a set of bounding boxes to apply NMS.
@@ -723,10 +719,7 @@ impl BatchNormLayer {
 }
 
 // boxed class cv::dnn::BlankLayer
-/// Partial List of Implemented Layers
-/// 
 /// # Partial List of Implemented Layers
-/// @{
 /// This subsection of dnn module contains information about built-in layers and their descriptions.
 /// 
 /// Classes listed here, in fact, provides C++ API for creating instances of built-in layers.
@@ -1805,7 +1798,8 @@ impl Net {
     }
     
     // identifier: cv_dnn_Net_setInput_Mat_blob_String_name_double_scalefactor_Scalar_mean
-    /// Sets the new input value for the network
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Sets the new input value for the network
     /// ## Parameters
     /// * blob:        A new blob. Should have CV_32F or CV_8U depth.
     /// * name:        A name of input layer.
@@ -1969,7 +1963,8 @@ impl Net {
 }
 
 // boxed class cv::dnn::NormalizeBBoxLayer
-/// <span lang='latex'> L_p </span> - normalization layer.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  <span lang='latex'> L_p </span> - normalization layer.
 /// ## Parameters
 /// * p: Normalization factor. The most common `p = 1` for <span lang='latex'> L_1 </span> -
 ///          normalization or `p = 2` for <span lang='latex'> L_2 </span> - normalization or a custom one.
@@ -2468,6 +2463,7 @@ impl ShiftLayer {
 }
 
 // boxed class cv::dnn::ShuffleChannelLayer
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 /// Permute channels of 4-dimensional input blob.
 /// ## Parameters
 /// * group: Number of groups to split input channels and pick in turns

@@ -1,6 +1,4 @@
 //! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Camera Calibration and 3D Reconstruction
-//! 
 //! # Camera Calibration and 3D Reconstruction
 //! 
 //! The functions in this section use a so-called pinhole camera model. In this model, a scene view is
@@ -50,7 +48,7 @@
 //! 
 //! The following figure illustrates the pinhole camera model.
 //! 
-//! ![Pinhole camera model](pics/pinhole_camera_model.png)
+//! ![Pinhole camera model](https://docs.opencv.org/3.4.6/pinhole_camera_model.png)
 //! 
 //! Real lenses usually have some distortion, mostly radial distortion and slight tangential distortion.
 //! So, the above model is extended as:
@@ -72,13 +70,13 @@
 //! 
 //! The next figures show two common types of radial distortion: barrel distortion (typically <span lang='latex'> k_1 < 0 </span>) and pincushion distortion (typically <span lang='latex'> k_1 > 0 </span>).
 //! 
-//! ![](pics/distortion_examples.png)
-//! ![](pics/distortion_examples2.png)
+//! ![](https://docs.opencv.org/3.4.6/distortion_examples.png)
+//! ![](https://docs.opencv.org/3.4.6/distortion_examples2.png)
 //! 
 //! In some cases the image sensor may be tilted in order to focus an oblique plane in front of the
 //! camera (Scheimpfug condition). This can be useful for particle image velocimetry (PIV) or
 //! triangulation with a laser fan. The tilt causes a perspective distortion of <span lang='latex'>x''</span> and
-//! <span lang='latex'>y''</span>. This distortion can be modelled in the following way, see e.g. @cite Louhichi07.
+//! <span lang='latex'>y''</span>. This distortion can be modelled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Louhichi07).
 //! 
 //! <div lang='latex'>\begin{array}{l}
 //! s\vecthree{x'''}{y'''}{1} =
@@ -136,10 +134,6 @@
 //! opencv_source_code/samples/cpp/stereo_match.cpp
 //! *   (Python) A camera calibration sample can be found at
 //! opencv_source_code/samples/python/calibrate.py
-//! 
-//! @{
-//! Fisheye camera model
-//! 
 //! # Fisheye camera model
 //! 
 //! Definitions: Let P be a point in 3D of coordinates X in the world reference frame (stored in the
@@ -169,11 +163,7 @@
 //! <div lang='latex'>u = f_x (x' + \alpha y') + c_x \\
 //! v = f_y y' + c_y</div>
 //! 
-//! C API
-//! 
 //! # C API
-//! 
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -336,7 +326,7 @@ pub fn cv_ransac_update_num_iters(p: f64, err_prob: f64, model_points: i32, max_
 /// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 /// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 /// sequence of rotations about the three principal axes that results in the same orientation of an
-/// object, e.g. see @cite Slabaugh . Returned tree rotation matrices and corresponding three Euler angles
+/// object, e.g. see [Slabaugh](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned tree rotation matrices and corresponding three Euler angles
 /// are only one of the possible solutions.
 ///
 /// ## C++ default parameters:
@@ -348,7 +338,8 @@ pub fn rq_decomp3x3(src: &core::Mat, mtx_r: &mut core::Mat, mtx_q: &mut core::Ma
 }
 
 // identifier: cv_Rodrigues_Mat_src_Mat_dst_Mat_jacobian
-/// Converts a rotation matrix to a rotation vector or vice versa.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Converts a rotation matrix to a rotation vector or vice versa.
 /// 
 /// ## Parameters
 /// * src: Input rotation vector (3x1 or 1x3) or rotation matrix (3x3).
@@ -373,7 +364,8 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 }
 
 // identifier: cv_calibrateCamera_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_Mat_stdDeviationsIntrinsics_Mat_stdDeviationsExtrinsics_Mat_perViewErrors_int_flags_TermCriteria_criteria
-/// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
 /// 
 /// ## Parameters
 /// * objectPoints: In the new interface it is a vector of vectors of calibration pattern points in
@@ -454,7 +446,7 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 /// @return the overall RMS re-projection error.
 /// 
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-/// views. The algorithm is based on @cite Zhang2000 and @cite BouguetMCT . The coordinates of 3D object
+/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
 /// by using an object with a known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -485,7 +477,7 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 /// then you have probably used patternSize=cvSize(rows,cols) instead of using
 /// patternSize=cvSize(cols,rows) in findChessboardCorners .
 /// 
-/// @sa
+/// ## See also
 /// findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
 ///
 /// ## C++ default parameters:
@@ -512,7 +504,8 @@ pub fn calibrate_camera_1(object_points: &types::VectorOfMat, image_points: &typ
 }
 
 // identifier: cv_calibrationMatrixValues_Mat_cameraMatrix_Size_imageSize_double_apertureWidth_double_apertureHeight_double_fovx_double_fovy_double_focalLength_Point2d_principalPoint_double_aspectRatio
-/// Computes useful camera characteristics from the camera matrix.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes useful camera characteristics from the camera matrix.
 /// 
 /// ## Parameters
 /// * cameraMatrix: Input camera matrix that can be estimated by calibrateCamera or
@@ -538,7 +531,8 @@ pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Si
 }
 
 // identifier: cv_composeRT_Mat_rvec1_Mat_tvec1_Mat_rvec2_Mat_tvec2_Mat_rvec3_Mat_tvec3_Mat_dr3dr1_Mat_dr3dt1_Mat_dr3dr2_Mat_dr3dt2_Mat_dt3dr1_Mat_dt3dt1_Mat_dt3dr2_Mat_dt3dt2
-/// Combines two rotation-and-shift transformations.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Combines two rotation-and-shift transformations.
 /// 
 /// ## Parameters
 /// * rvec1: First rotation vector.
@@ -583,7 +577,8 @@ pub fn compose_rt(rvec1: &core::Mat, tvec1: &core::Mat, rvec2: &core::Mat, tvec2
 }
 
 // identifier: cv_computeCorrespondEpilines_Mat_points_int_whichImage_Mat_F_Mat_lines
-/// For points in an image of a stereo pair, computes the corresponding epilines in the other image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  For points in an image of a stereo pair, computes the corresponding epilines in the other image.
 /// 
 /// ## Parameters
 /// * points: Input points. <span lang='latex'>N \times 1</span> or <span lang='latex'>1 \times N</span> matrix of type CV_32FC2 or
@@ -654,7 +649,8 @@ pub fn convert_points_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Re
 }
 
 // identifier: cv_correctMatches_Mat_F_Mat_points1_Mat_points2_Mat_newPoints1_Mat_newPoints2
-/// Refines coordinates of corresponding points.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Refines coordinates of corresponding points.
 /// 
 /// ## Parameters
 /// * F: 3x3 fundamental matrix.
@@ -674,7 +670,8 @@ pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, 
 }
 
 // identifier: cv_decomposeEssentialMat_Mat_E_Mat_R1_Mat_R2_Mat_t
-/// Decompose an essential matrix to possible rotations and translation.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Decompose an essential matrix to possible rotations and translation.
 /// 
 /// ## Parameters
 /// * E: The input essential matrix.
@@ -682,7 +679,7 @@ pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, 
 /// * R2: Another possible rotation matrix.
 /// * t: One possible translation.
 /// 
-/// This function decompose an essential matrix E using svd decomposition @cite HartleyZ00 . Generally 4
+/// This function decompose an essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HartleyZ00) . Generally 4
 /// possible poses exists for a given E. They are <span lang='latex'>[R_1, t]</span>, <span lang='latex'>[R_1, -t]</span>, <span lang='latex'>[R_2, t]</span>, <span lang='latex'>[R_2, -t]</span>. By
 /// decomposing E, you can only get the direction of the translation, so the function returns unit t.
 pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
@@ -703,7 +700,7 @@ pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core:
 /// homography H induced by the plane. The intrinsic camera matrix K must also be provided. The function
 /// may return up to four mathematical solution sets. At least two of the solutions may further be
 /// invalidated if point correspondences are available by applying positive depth constraint (all points
-/// must be in front of the camera). The decomposition method is described in detail in @cite Malis .
+/// must be in front of the camera). The decomposition method is described in detail in [Malis](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Malis) .
 pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut types::VectorOfMat, translations: &mut types::VectorOfMat, normals: &mut types::VectorOfMat) -> Result<i32> {
     unsafe { sys::cv_calib3d_cv_decomposeHomographyMat_Mat_H_Mat_K_VectorOfMat_rotations_VectorOfMat_translations_VectorOfMat_normals(h.as_raw_Mat(), k.as_raw_Mat(), rotations.as_raw_VectorOfMat(), translations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat()) }.into_result()
 }
@@ -727,7 +724,7 @@ pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut ty
 /// 
 /// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 /// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
-/// principal axes that results in the same orientation of an object, e.g. see @cite Slabaugh . Returned
+/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 /// tree rotation matrices and corresponding three Euler angles are only one of the possible solutions.
 /// 
 /// The function is based on RQDecomp3x3 .
@@ -759,7 +756,9 @@ pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, 
 }
 
 // identifier: cv_drawFrameAxes_Mat_image_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_float_length_int_thickness
-/// Draw axes of the world/object coordinate system from pose estimation. @sa solvePnP
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Draw axes of the world/object coordinate system from pose estimation. ## See also
+/// solvePnP
 /// 
 /// ## Parameters
 /// * image: Input/output image. It must have 1 or 3 channels. The number of channels is not altered.
@@ -784,7 +783,8 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 }
 
 // identifier: cv_estimateAffine2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters
-/// Computes an optimal affine transformation between two 2D point sets.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes an optimal affine transformation between two 2D point sets.
 /// 
 /// It computes
 /// <div lang='latex'>
@@ -846,7 +846,8 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// distinguish inliers from outliers. The method LMeDS does not need any threshold but it works
 /// correctly only when there are more than 50% of inliers.
 /// 
-/// @sa estimateAffinePartial2D, getAffineTransform
+/// ## See also
+/// estimateAffinePartial2D, getAffineTransform
 ///
 /// ## C++ default parameters:
 /// * inliers: noArray()
@@ -860,7 +861,8 @@ pub fn estimate_affine2_d(from: &core::Mat, to: &core::Mat, inliers: &mut core::
 }
 
 // identifier: cv_estimateAffine3D_Mat_src_Mat_dst_Mat_out_Mat_inliers_double_ransacThreshold_double_confidence
-/// Computes an optimal affine transformation between two 3D point sets.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes an optimal affine transformation between two 3D point sets.
 /// 
 /// It computes
 /// <div lang='latex'>
@@ -917,7 +919,8 @@ pub fn estimate_affine3_d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 }
 
 // identifier: cv_estimateAffinePartial2D_Mat_from_Mat_to_Mat_inliers_int_method_double_ransacReprojThreshold_size_t_maxIters_double_confidence_size_t_refineIters
-/// Computes an optimal limited affine transformation with 4 degrees of freedom between
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes an optimal limited affine transformation with 4 degrees of freedom between
 /// two 2D point sets.
 /// 
 /// ## Parameters
@@ -960,7 +963,8 @@ pub fn estimate_affine3_d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 /// distinguish inliers from outliers. The method LMeDS does not need any threshold but it works
 /// correctly only when there are more than 50% of inliers.
 /// 
-/// @sa estimateAffine2D, getAffineTransform
+/// ## See also
+/// estimateAffine2D, getAffineTransform
 ///
 /// ## C++ default parameters:
 /// * inliers: noArray()
@@ -985,7 +989,7 @@ pub fn estimate_affine_partial2_d(from: &core::Mat, to: &core::Mat, inliers: &mu
 /// * pointsMask: optional Mat/Vector of 8u type representing the mask for the inliers as given by the findHomography function
 /// 
 /// This function is intended to filter the output of the decomposeHomographyMat based on additional
-/// information as described in @cite Malis . The summary of the method: the decomposeHomographyMat function
+/// information as described in [Malis](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Malis) . The summary of the method: the decomposeHomographyMat function
 /// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
 /// sets of points visible in the camera frame before and after the homography transformation is applied,
 /// we can determine which are the true potential solutions and which are the opposites by verifying which
@@ -1083,7 +1087,8 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 }
 
 // identifier: cv_findEssentialMat_Mat_points1_Mat_points2_Mat_cameraMatrix_int_method_double_prob_double_threshold_Mat_mask
-/// Calculates an essential matrix from the corresponding points in two images.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates an essential matrix from the corresponding points in two images.
 /// 
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
@@ -1104,8 +1109,8 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 /// 
-/// This function estimates essential matrix based on the five-point algorithm solver in @cite Nister03 .
-/// @cite SteweniusCFS is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 /// 
 /// <div lang='latex'>[p_2; 1]^T K^{-T} E K^{-1} [p_1; 1] = 0</div>
 /// 
@@ -1123,6 +1128,7 @@ pub fn find_essential_map_matrix(points1: &core::Mat, points2: &core::Mat, camer
 }
 
 // identifier: cv_findEssentialMat_Mat_points1_Mat_points2_double_focal_Point2d_pp_int_method_double_prob_double_threshold_Mat_mask
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 /// @overload
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
@@ -1176,7 +1182,8 @@ pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut
 }
 
 // identifier: cv_findFundamentalMat_Mat_points1_Mat_points2_int_method_double_ransacReprojThreshold_double_confidence_Mat_mask
-/// Calculates a fundamental matrix from the corresponding points in two images.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates a fundamental matrix from the corresponding points in two images.
 /// 
 /// ## Parameters
 /// * points1: Array of N points from the first image. The point coordinates should be
@@ -1247,7 +1254,8 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 }
 
 // identifier: cv_findHomography_Mat_srcPoints_Mat_dstPoints_int_method_double_ransacReprojThreshold_Mat_mask_int_maxIters_double_confidence
-/// Finds a perspective transformation between two planes.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds a perspective transformation between two planes.
 /// 
 /// ## Parameters
 /// * srcPoints: Coordinates of the points in the original plane, a matrix of the type CV_32FC2
@@ -1303,7 +1311,7 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 /// determined up to a scale. Thus, it is normalized so that <span lang='latex'>h_{33}=1</span>. Note that whenever an <span lang='latex'>H</span> matrix
 /// cannot be estimated, an empty one will be returned.
 /// 
-/// @sa
+/// ## See also
 /// getAffineTransform, estimateAffine2D, estimateAffinePartial2D, getPerspectiveTransform, warpPerspective,
 /// perspectiveTransform
 ///
@@ -1318,7 +1326,8 @@ pub fn find_homography_full(src_points: &core::Mat, dst_points: &core::Mat, meth
 }
 
 // identifier: cv_fisheye_calibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_image_size_Mat_K_Mat_D_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags_TermCriteria_criteria
-/// Performs camera calibaration
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Performs camera calibaration
 /// 
 /// ## Parameters
 /// * objectPoints: vector of vectors of calibration pattern points in the calibration pattern
@@ -1360,7 +1369,8 @@ pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::Vecto
 }
 
 // identifier: cv_fisheye_distortPoints_Mat_undistorted_Mat_distorted_Mat_K_Mat_D_double_alpha
-/// Distorts 2D points using fisheye model.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Distorts 2D points using fisheye model.
 /// 
 /// ## Parameters
 /// * undistorted: Array of object points, 1xN/Nx1 2-channel (or vector\<Point2f\> ), where N is
@@ -1381,7 +1391,8 @@ pub fn distort_points(undistorted: &core::Mat, distorted: &mut core::Mat, k: &co
 }
 
 // identifier: cv_fisheye_estimateNewCameraMatrixForUndistortRectify_Mat_K_Mat_D_Size_image_size_Mat_R_Mat_P_double_balance_Size_new_size_double_fov_scale
-/// Estimates new camera matrix for undistortion or rectification.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Estimates new camera matrix for undistortion or rectification.
 /// 
 /// ## Parameters
 /// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
@@ -1404,7 +1415,8 @@ pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &core::Mat, d: &core:
 }
 
 // identifier: cv_fisheye_initUndistortRectifyMap_Mat_K_Mat_D_Mat_R_Mat_P_Size_size_int_m1type_Mat_map1_Mat_map2
-/// Computes undistortion and rectification maps for image transform by cv::remap(). If D is empty zero
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes undistortion and rectification maps for image transform by cv::remap(). If D is empty zero
 /// distortion is used, if R or P is empty identity matrixes are used.
 /// 
 /// ## Parameters
@@ -1433,7 +1445,8 @@ pub fn fisheye_project_points(object_points: &core::Mat, image_points: &mut core
 }
 
 // identifier: cv_fisheye_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_T_int_flags_TermCriteria_criteria
-/// Performs stereo calibration
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Performs stereo calibration
 /// 
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points.
@@ -1474,7 +1487,8 @@ pub fn stereo_calibrate(object_points: &types::VectorOfMat, image_points1: &type
 }
 
 // identifier: cv_fisheye_stereoRectify_Mat_K1_Mat_D1_Mat_K2_Mat_D2_Size_imageSize_Mat_R_Mat_tvec_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_Size_newImageSize_double_balance_double_fov_scale
-/// Stereo rectification for fisheye camera model
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Stereo rectification for fisheye camera model
 /// 
 /// ## Parameters
 /// * K1: First camera matrix.
@@ -1514,7 +1528,8 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 }
 
 // identifier: cv_fisheye_undistortImage_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_Knew_Size_new_size
-/// Transforms an image to compensate for fisheye lens distortion.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Transforms an image to compensate for fisheye lens distortion.
 /// 
 /// ## Parameters
 /// * distorted: image with fisheye lens distortion.
@@ -1541,7 +1556,7 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 /// Pictures a) and b) almost the same. But if we consider points of image located far from the center
 /// of image, we can notice that on image a) these points are distorted.
 /// 
-/// ![image](pics/fisheye_undistorted.jpg)
+/// ![image](https://docs.opencv.org/3.4.6/fisheye_undistorted.jpg)
 ///
 /// ## C++ default parameters:
 /// * knew: cv::noArray()
@@ -1551,7 +1566,8 @@ pub fn fisheye_undistort_image(distorted: &core::Mat, undistorted: &mut core::Ma
 }
 
 // identifier: cv_fisheye_undistortPoints_Mat_distorted_Mat_undistorted_Mat_K_Mat_D_Mat_R_Mat_P
-/// Undistorts 2D points using fisheye model
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Undistorts 2D points using fisheye model
 /// 
 /// ## Parameters
 /// * distorted: Array of object points, 1xN/Nx1 2-channel (or vector\<Point2f\> ), where N is the
@@ -1571,7 +1587,8 @@ pub fn fisheye_undistort_points(distorted: &core::Mat, undistorted: &mut core::M
 }
 
 // identifier: cv_getOptimalNewCameraMatrix_Mat_cameraMatrix_Mat_distCoeffs_Size_imageSize_double_alpha_Size_newImgSize_Rect_X_validPixROI_bool_centerPrincipalPoint
-/// Returns the new camera matrix based on the free scaling parameter.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Returns the new camera matrix based on the free scaling parameter.
 /// 
 /// ## Parameters
 /// * cameraMatrix: Input camera matrix.
@@ -1613,7 +1630,8 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 }
 
 // identifier: cv_initCameraMatrix2D_VectorOfMat_objectPoints_VectorOfMat_imagePoints_Size_imageSize_double_aspectRatio
-/// Finds an initial camera matrix from 3D-2D point correspondences.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds an initial camera matrix from 3D-2D point correspondences.
 /// 
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points in the calibration pattern
@@ -1636,7 +1654,8 @@ pub fn init_camera_matrix2_d(object_points: &types::VectorOfMat, image_points: &
 }
 
 // identifier: cv_matMulDeriv_Mat_A_Mat_B_Mat_dABdA_Mat_dABdB
-/// Computes partial derivatives of the matrix product for each multiplied matrix.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes partial derivatives of the matrix product for each multiplied matrix.
 /// 
 /// ## Parameters
 /// * A: First multiplied matrix.
@@ -1654,7 +1673,8 @@ pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a
 }
 
 // identifier: cv_projectPoints_Mat_objectPoints_Mat_rvec_Mat_tvec_Mat_cameraMatrix_Mat_distCoeffs_Mat_imagePoints_Mat_jacobian_double_aspectRatio
-/// Projects 3D points to an image plane.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Projects 3D points to an image plane.
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points, 3xN/Nx3 1-channel or 1xN/Nx1 3-channel (or
@@ -1696,6 +1716,7 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 }
 
 // identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_R_Mat_t_double_focal_Point2d_pp_Mat_mask
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 /// @overload
 /// ## Parameters
 /// * E: The input essential matrix.
@@ -1731,7 +1752,8 @@ pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: 
 }
 
 // identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_Mat_mask
-/// Recover relative camera rotation and translation from an estimated essential matrix and the
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Recover relative camera rotation and translation from an estimated essential matrix and the
 /// corresponding points in two images, using cheirality check. Returns the number of inliers which pass
 /// the check.
 /// 
@@ -1751,7 +1773,7 @@ pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: 
 /// which pass the cheirality check.
 /// This function decomposes an essential matrix using decomposeEssentialMat and then verifies possible
 /// pose hypotheses by doing cheirality check. The cheirality check basically means that the
-/// triangulated 3D points should have positive depth. Some details can be found in @cite Nister03 .
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
 /// 
 /// This function can be used to process output E and mask from findEssentialMat. In this scenario,
 /// points1 and points2 are the same input for findEssentialMat. :
@@ -1784,6 +1806,7 @@ pub fn recover_pose_matrix(e: &core::Mat, points1: &core::Mat, points2: &core::M
 }
 
 // identifier: cv_recoverPose_Mat_E_Mat_points1_Mat_points2_Mat_cameraMatrix_Mat_R_Mat_t_double_distanceThresh_Mat_mask_Mat_triangulatedPoints
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 /// @overload
 /// ## Parameters
 /// * E: The input essential matrix.
@@ -1815,7 +1838,8 @@ pub fn rectify3_collinear(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, 
 }
 
 // identifier: cv_reprojectImageTo3D_Mat_disparity_Mat__3dImage_Mat_Q_bool_handleMissingValues_int_ddepth
-/// Reprojects a disparity image to 3D space.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Reprojects a disparity image to 3D space.
 /// 
 /// ## Parameters
 /// * disparity: Input single-channel 8-bit unsigned, 16-bit signed, 32-bit signed or 32-bit
@@ -1850,7 +1874,8 @@ pub fn reproject_image_to3_d(disparity: &core::Mat, _3d_image: &mut core::Mat, q
 }
 
 // identifier: cv_sampsonDistance_Mat_pt1_Mat_pt2_Mat_F
-/// Calculates the Sampson Distance between two points.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the Sampson Distance between two points.
 /// 
 /// The function cv::sampsonDistance calculates and returns the first order approximation of the geometric error as:
 /// <div lang='latex'>
@@ -1861,7 +1886,7 @@ pub fn reproject_image_to3_d(disparity: &core::Mat, _3d_image: &mut core::Mat, q
 /// ((\texttt{F}^t \cdot \texttt{pt2})(0))^2 +
 /// ((\texttt{F}^t \cdot \texttt{pt2})(1))^2}
 /// </div>
-/// The fundamental matrix may be calculated using the cv::findFundamentalMat function. See @cite HartleyZ00 11.4.3 for details.
+/// The fundamental matrix may be calculated using the cv::findFundamentalMat function. See [HartleyZ00](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
 /// ## Parameters
 /// * pt1: first homogeneous 2d point
 /// * pt2: second homogeneous 2d point
@@ -1872,7 +1897,8 @@ pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Resu
 }
 
 // identifier: cv_solveP3P_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags
-/// Finds an object pose from 3 3D-2D point correspondences.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds an object pose from 3 3D-2D point correspondences.
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, 3x3 1-channel or
@@ -1889,18 +1915,19 @@ pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Resu
 /// * tvecs: Output translation vectors.
 /// * flags: Method for solving a P3P problem:
 /// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-/// "Complete Solution Classification for the Perspective-Three-Point Problem" (@cite gao2003complete).
+/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// *   **SOLVEPNP_AP3P** Method is based on the paper of Tong Ke and Stergios I. Roumeliotis.
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" (@cite Ke17).
+/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)).
 /// 
 /// The function estimates the object pose given 3 object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients.
-pub fn solve_p3_p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32) -> Result<i32> {
+pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32) -> Result<i32> {
     unsafe { sys::cv_calib3d_cv_solveP3P_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_VectorOfMat_rvecs_VectorOfMat_tvecs_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags) }.into_result()
 }
 
 // identifier: cv_solvePnPRansac_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_iterationsCount_float_reprojectionError_double_confidence_Mat_inliers_int_flags
-/// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
@@ -1951,12 +1978,13 @@ pub fn solve_p3_p(object_points: &core::Mat, image_points: &core::Mat, camera_ma
 /// * confidence: 0.99
 /// * inliers: noArray()
 /// * flags: SOLVEPNP_ITERATIVE
-pub fn solve_pn_p_ransac(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut core::Mat, flags: i32) -> Result<bool> {
+pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut core::Mat, flags: i32) -> Result<bool> {
     unsafe { sys::cv_calib3d_cv_solvePnPRansac_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_iterationsCount_float_reprojectionError_double_confidence_Mat_inliers_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw_Mat(), flags) }.into_result()
 }
 
 // identifier: cv_solvePnP_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_flags
-/// Finds an object pose from 3D-2D point correspondences.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds an object pose from 3D-2D point correspondences.
 /// 
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
@@ -1980,22 +2008,22 @@ pub fn solve_pn_p_ransac(object_points: &core::Mat, image_points: &core::Mat, ca
 /// of squared distances between the observed projections imagePoints and the projected (using
 /// projectPoints ) objectPoints .
 /// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-/// "Complete Solution Classification for the Perspective-Three-Point Problem" (@cite gao2003complete).
+/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// In this case the function requires exactly four object and image points.
 /// *   **SOLVEPNP_AP3P** Method is based on the paper of T. Ke, S. Roumeliotis
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" (@cite Ke17).
+/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)).
 /// In this case the function requires exactly four object and image points.
 /// *   **SOLVEPNP_EPNP** Method has been introduced by F.Moreno-Noguer, V.Lepetit and P.Fua in the
-/// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" (@cite lepetit2009epnp).
+/// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
 /// *   **SOLVEPNP_DLS** Method is based on the paper of Joel A. Hesch and Stergios I. Roumeliotis.
-/// "A Direct Least-Squares (DLS) Method for PnP" (@cite hesch2011direct).
+/// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_hesch2011direct)).
 /// *   **SOLVEPNP_UPNP** Method is based on the paper of A.Penate-Sanchez, J.Andrade-Cetto,
 /// F.Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
-/// Estimation" (@cite penate2013exhaustive). In this case the function also estimates the parameters <span lang='latex'>f_x</span> and <span lang='latex'>f_y</span>
+/// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters <span lang='latex'>f_x</span> and <span lang='latex'>f_y</span>
 /// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
 /// focal length.
 /// *   **SOLVEPNP_AP3P** Method is based on the paper of Tong Ke and Stergios I. Roumeliotis.
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" (@cite Ke17). In this case the
+/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)). In this case the
 /// function requires exactly four object and image points.
 /// 
 /// The function estimates the object pose given a set of object points, their corresponding image
@@ -2003,7 +2031,7 @@ pub fn solve_pn_p_ransac(object_points: &core::Mat, image_points: &core::Mat, ca
 /// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
 /// and the Z-axis forward).
 /// 
-/// ![](pnp.jpg)
+/// ![](https://docs.opencv.org/3.4.6/pnp.jpg)
 /// 
 /// Points expressed in the world frame <span lang='latex'> \bf{X}_w </span> are projected into the image plane <span lang='latex'> \left[ u, v \right] </span>
 /// using the perspective projection model <span lang='latex'> \Pi </span> and the camera intrinsic parameters matrix <span lang='latex'> \bf{A} </span>:
@@ -2118,12 +2146,13 @@ pub fn solve_pn_p_ransac(object_points: &core::Mat, image_points: &core::Mat, ca
 /// ## C++ default parameters:
 /// * use_extrinsic_guess: false
 /// * flags: SOLVEPNP_ITERATIVE
-pub fn solve_pn_p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
+pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
     unsafe { sys::cv_calib3d_cv_solvePnP_Mat_objectPoints_Mat_imagePoints_Mat_cameraMatrix_Mat_distCoeffs_Mat_rvec_Mat_tvec_bool_useExtrinsicGuess_int_flags(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, flags) }.into_result()
 }
 
 // identifier: cv_stereoCalibrate_VectorOfMat_objectPoints_VectorOfMat_imagePoints1_VectorOfMat_imagePoints2_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_E_Mat_F_Mat_perViewErrors_int_flags_TermCriteria_criteria
-/// Calibrates the stereo camera.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calibrates the stereo camera.
 /// 
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points.
@@ -2236,7 +2265,8 @@ pub fn stereo_calibrate_2(object_points: &types::VectorOfMat, image_points1: &ty
 }
 
 // identifier: cv_stereoRectifyUncalibrated_Mat_points1_Mat_points2_Mat_F_Size_imgSize_Mat_H1_Mat_H2_double_threshold
-/// Computes a rectification transform for an uncalibrated stereo camera.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes a rectification transform for an uncalibrated stereo camera.
 /// 
 /// ## Parameters
 /// * points1: Array of feature points in the first image.
@@ -2256,7 +2286,7 @@ pub fn stereo_calibrate_2(object_points: &types::VectorOfMat, image_points1: &ty
 /// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 /// related difference from stereoRectify is that the function outputs not the rectification
 /// transformations in the object (3D) space, but the planar perspective transformations encoded by the
-/// homography matrices H1 and H2 . The function implements the algorithm @cite Hartley99 .
+/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Hartley99) .
 /// 
 /// 
 /// Note:
@@ -2274,7 +2304,8 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 }
 
 // identifier: cv_stereoRectify_Mat_cameraMatrix1_Mat_distCoeffs1_Mat_cameraMatrix2_Mat_distCoeffs2_Size_imageSize_Mat_R_Mat_T_Mat_R1_Mat_R2_Mat_P1_Mat_P2_Mat_Q_int_flags_double_alpha_Size_newImageSize_Rect_X_validPixROI1_Rect_X_validPixROI2
-/// Computes rectification transforms for each head of a calibrated stereo camera.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes rectification transforms for each head of a calibrated stereo camera.
 /// 
 /// ## Parameters
 /// * cameraMatrix1: First camera matrix.
@@ -2352,7 +2383,7 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 /// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 /// their interiors are all valid pixels.
 /// 
-/// ![image](pics/stereo_undistort.jpg)
+/// ![image](https://docs.opencv.org/3.4.6/stereo_undistort.jpg)
 ///
 /// ## C++ default parameters:
 /// * flags: CALIB_ZERO_DISPARITY
@@ -2383,7 +2414,7 @@ pub fn stereo_rectify_1(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, ca
 /// Note:
 /// Keep in mind that all input data should be of float type in order for this function to work.
 /// 
-/// @sa
+/// ## See also
 /// reprojectImageTo3D
 pub fn triangulate_points(proj_matr1: &core::Mat, proj_matr2: &core::Mat, proj_points1: &core::Mat, proj_points2: &core::Mat, points4_d: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_calib3d_cv_triangulatePoints_Mat_projMatr1_Mat_projMatr2_Mat_projPoints1_Mat_projPoints2_Mat_points4D(proj_matr1.as_raw_Mat(), proj_matr2.as_raw_Mat(), proj_points1.as_raw_Mat(), proj_points2.as_raw_Mat(), points4_d.as_raw_Mat()) }.into_result()
@@ -2607,7 +2638,7 @@ impl<'a> StereoMatcher + 'a {
 }
 
 // Generating impl for trait cv::StereoSGBM (trait)
-/// The class implements the modified H. Hirschmuller algorithm @cite HH08 that differs from the original
+/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 /// one as follows:
 /// 
 /// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
@@ -2616,7 +2647,7 @@ impl<'a> StereoMatcher + 'a {
 /// *   The algorithm matches blocks, not individual pixels. Though, setting blockSize=1 reduces the
 /// blocks to single pixels.
 /// *   Mutual information cost function is not implemented. Instead, a simpler Birchfield-Tomasi
-/// sub-pixel metric from @cite BT98 is used. Though, the color images are supported as well.
+/// sub-pixel metric from [BT98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
 /// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
 /// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
 /// check, quadratic interpolation and speckle filtering).

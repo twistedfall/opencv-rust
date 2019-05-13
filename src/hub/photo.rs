@@ -1,24 +1,12 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Computational Photography
-//! 
 //! # Computational Photography
 //! 
 //! This module includes photo processing algorithms
-//! @{
-//! Inpainting
-//! 
 //! # Inpainting
-//! Denoising
-//! 
 //! # Denoising
-//! HDR imaging
-//! 
 //! # HDR imaging
 //! 
 //! This section describes high dynamic range imaging algorithms namely tonemapping, exposure alignment,
 //! camera calibration with multiple exposures and exposure fusion.
-//! 
-//! Contrast Preserving Decolorization
 //! 
 //! # Contrast Preserving Decolorization
 //! 
@@ -26,15 +14,11 @@
 //! 
 //! http://www.cse.cuhk.edu.hk/leojia/projects/color2gray/index.html
 //! 
-//! Seamless Cloning
-//! 
 //! # Seamless Cloning
 //! 
 //! Useful links:
 //! 
 //! https://www.learnopencv.com/seamless-cloning-using-opencv-python-cpp
-//! 
-//! Non-Photorealistic Rendering
 //! 
 //! # Non-Photorealistic Rendering
 //! 
@@ -43,7 +27,6 @@
 //! http://www.inf.ufrgs.br/~eslgastal/DomainTransform
 //! 
 //! https://www.learnopencv.com/non-photorealistic-rendering-using-opencv-python-c/
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -231,7 +214,7 @@ pub fn create_tonemap(gamma: f32) -> Result<types::PtrOfTonemap> {
 // identifier: cv_decolor_Mat_src_Mat_grayscale_Mat_color_boost
 /// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 /// black-and-white photograph rendering, and in many single channel image processing applications
-/// @cite CL12 .
+/// [CL12](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_CL12) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -244,18 +227,19 @@ pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut cor
 }
 
 // identifier: cv_denoise_TVL1_VectorOfMat_observations_Mat_result_double_lambda_int_niters
-/// Primal-dual algorithm is an algorithm for solving special types of variational problems (that is,
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Primal-dual algorithm is an algorithm for solving special types of variational problems (that is,
 /// finding a function to minimize some functional). As the image denoising, in particular, may be seen
 /// as the variational problem, primal-dual algorithm then can be used to perform denoising and this is
 /// exactly what is implemented.
 /// 
 /// It should be noted, that this implementation was taken from the July 2013 blog entry
-/// @cite MA13 , which also contained (slightly more general) ready-to-use source code on Python.
+/// [MA13](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 /// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 /// of July 2013 and finally it was slightly adapted by later authors.
 /// 
 /// Although the thorough discussion and justification of the algorithm involved may be found in
-/// @cite ChambolleEtAl, it might make sense to skim over it here, following @cite MA13 . To begin
+/// [ChambolleEtAl](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MA13) . To begin
 /// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 /// pixels (it may be seen as set
 /// <span lang='latex'>\left\{(x,y)\in\mathbb{N}\times\mathbb{N}\mid 1\leq x\leq n,\;1\leq y\leq m\right\}</span> for some
@@ -307,7 +291,7 @@ pub fn detail_enhance(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_
 
 // identifier: cv_edgePreservingFilter_Mat_src_Mat_dst_int_flags_float_sigma_s_float_sigma_r
 /// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
-/// filters are used in many different applications @cite EM11 .
+/// filters are used in many different applications [EM11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_EM11) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -589,7 +573,7 @@ pub fn pencil_sketch(src: &core::Mat, dst1: &mut core::Mat, dst2: &mut core::Mat
 /// deformations) or local changes concerned to a selection. Here we are interested in achieving local
 /// changes, ones that are restricted to a region manually selected (ROI), in a seamless and effortless
 /// manner. The extent of the changes ranges from slight distortions to complete replacement by novel
-/// content @cite PM03 .
+/// content [PM03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_PM03) .
 /// 
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
@@ -677,7 +661,7 @@ impl<'a> AlignExposures + 'a {
 /// 
 /// In this implementation new image regions are filled with zeros.
 /// 
-/// For more information see @cite GW03 .
+/// For more information see [GW03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_GW03) .
 pub trait AlignMTB : crate::photo::AlignExposures {
     #[doc(hidden)] fn as_raw_AlignMTB(&self) -> *mut c_void;
     // identifier: cv_AlignMTB_process_VectorOfMat_src_VectorOfMat_dst_Mat_times_Mat_response
@@ -790,7 +774,7 @@ impl<'a> CalibrateCRF + 'a {
 /// function as linear system. Objective function is constructed using pixel values on the same position
 /// in all images, extra term is added to make the result smoother.
 /// 
-/// For more information see @cite DM97 .
+/// For more information see [DM97](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait CalibrateDebevec : crate::photo::CalibrateCRF {
     #[doc(hidden)] fn as_raw_CalibrateDebevec(&self) -> *mut c_void;
     // identifier: cv_CalibrateDebevec_getLambda_const
@@ -833,7 +817,7 @@ impl<'a> CalibrateDebevec + 'a {
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. This algorithm uses all image pixels.
 /// 
-/// For more information see @cite RB99 .
+/// For more information see [RB99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait CalibrateRobertson : crate::photo::CalibrateCRF {
     #[doc(hidden)] fn as_raw_CalibrateRobertson(&self) -> *mut c_void;
     // identifier: cv_CalibrateRobertson_getMaxIter_const
@@ -871,7 +855,7 @@ impl<'a> CalibrateRobertson + 'a {
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 /// 
-/// For more information see @cite DM97 .
+/// For more information see [DM97](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait MergeDebevec : crate::photo::MergeExposures {
     #[doc(hidden)] fn as_raw_MergeDebevec(&self) -> *mut c_void;
     // identifier: cv_MergeDebevec_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response
@@ -923,7 +907,7 @@ impl<'a> MergeExposures + 'a {
 /// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 /// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 /// 
-/// For more information see @cite MK07 .
+/// For more information see [MK07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MK07) .
 pub trait MergeMertens : crate::photo::MergeExposures {
     #[doc(hidden)] fn as_raw_MergeMertens(&self) -> *mut c_void;
     // identifier: cv_MergeMertens_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response
@@ -981,7 +965,7 @@ impl<'a> MergeMertens + 'a {
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 /// 
-/// For more information see @cite RB99 .
+/// For more information see [RB99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait MergeRobertson : crate::photo::MergeExposures {
     #[doc(hidden)] fn as_raw_MergeRobertson(&self) -> *mut c_void;
     // identifier: cv_MergeRobertson_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response
@@ -1037,9 +1021,9 @@ impl<'a> Tonemap + 'a {
 /// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 /// bias parameter.
 /// 
-/// Optional saturation enhancement is possible as described in @cite FL02 .
+/// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_FL02) .
 /// 
-/// For more information see @cite DM03 .
+/// For more information see [DM03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM03) .
 pub trait TonemapDrago : crate::photo::Tonemap {
     #[doc(hidden)] fn as_raw_TonemapDrago(&self) -> *mut c_void;
     // identifier: cv_TonemapDrago_getSaturation_const
@@ -1073,7 +1057,7 @@ impl<'a> TonemapDrago + 'a {
 /// transforms contrast values to HVS response and scales the response. After this the image is
 /// reconstructed from new contrast values.
 /// 
-/// For more information see @cite MM06 .
+/// For more information see [MM06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MM06) .
 pub trait TonemapMantiuk : crate::photo::Tonemap {
     #[doc(hidden)] fn as_raw_TonemapMantiuk(&self) -> *mut c_void;
     // identifier: cv_TonemapMantiuk_getScale_const
@@ -1108,7 +1092,7 @@ impl<'a> TonemapMantiuk + 'a {
 /// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 /// color adaptation.
 /// 
-/// For more information see @cite RD05 .
+/// For more information see [RD05](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RD05) .
 pub trait TonemapReinhard : crate::photo::Tonemap {
     #[doc(hidden)] fn as_raw_TonemapReinhard(&self) -> *mut c_void;
     // identifier: cv_TonemapReinhard_getIntensity_const

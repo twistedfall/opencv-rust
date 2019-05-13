@@ -1,6 +1,3 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Images stitching
-//! 
 //! # Images stitching
 //! 
 //! This figure illustrates the stitching module pipeline implemented in the Stitcher class. Using that
@@ -8,9 +5,9 @@
 //! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 //! one can combine and use them separately.
 //! 
-//! The implemented stitching pipeline is very similar to the one proposed in @cite BL07 .
+//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BL07) .
 //! 
-//! ![stitching pipeline](StitchingPipeline.jpg)
+//! ![stitching pipeline](https://docs.opencv.org/3.4.6/StitchingPipeline.jpg)
 //! 
 //! Camera models
 //! -------------
@@ -34,30 +31,13 @@
 //! Certain detailed settings of @ref cv::Stitcher might not make sense. Especially
 //! you should not mix classes implementing affine model and classes implementing
 //! Homography model, as they work with different transformations.
-//! 
-//! @{
-//! Features Finding and Images Matching
-//! 
 //! # Features Finding and Images Matching
-//! Rotation Estimation
-//! 
 //! # Rotation Estimation
-//! Autocalibration
-//! 
 //! # Autocalibration
-//! Images Warping
-//! 
 //! # Images Warping
-//! Seam Estimation
-//! 
 //! # Seam Estimation
-//! Exposure Compensation
-//! 
 //! # Exposure Compensation
-//! Image Blenders
-//! 
 //! # Image Blenders
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -88,7 +68,8 @@ pub fn create_stitcher(try_use_gpu: bool) -> Result<types::PtrOfStitcher> {
 
 // boxed class cv::AffineWarper
 /// Affine warper factory class.
-/// @sa detail::AffineWarper
+/// ## See also
+/// detail::AffineWarper
 #[allow(dead_code)]
 pub struct AffineWarper {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -174,7 +155,8 @@ impl CompressedRectilinearWarper {
 
 // boxed class cv::CylindricalWarper
 /// Cylindrical warper factory class.
-/// @sa detail::CylindricalWarper
+/// ## See also
+/// detail::CylindricalWarper
 #[allow(dead_code)]
 pub struct CylindricalWarper {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -304,7 +286,8 @@ impl PaniniWarper {
 
 // boxed class cv::PlaneWarper
 /// Plane warper factory class.
-/// @sa detail::PlaneWarper
+/// ## See also
+/// detail::PlaneWarper
 #[allow(dead_code)]
 pub struct PlaneWarper {
     #[doc(hidden)] pub ptr: *mut c_void

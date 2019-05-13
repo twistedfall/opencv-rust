@@ -1,11 +1,8 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Video Stabilization
-//! 
 //! # Video Stabilization
 //! 
 //! The video stabilization module contains a set of functions and classes that can be used to solve the
 //! problem of video stabilization. There are a few methods implemented, most of them are described in
-//! the papers @cite OF06 and @cite G11 . However, there are some extensions and deviations from the original
+//! the papers [OF06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 //! paper methods.
 //! 
 //! ### References
@@ -14,10 +11,6 @@
 //! Yasuyuki Matsushita, Eyal Ofek, Weina Ge, Xiaoou Tang, Senior Member, and Heung-Yeung Shum
 //! 2. "Auto-Directed Video Stabilization with Robust L1 Optimal Camera Paths"
 //! Matthias Grundmann, Vivek Kwatra, Irfan Essa
-//! 
-//! @{
-//! Global Motion Estimation
-//! 
 //! # Global Motion Estimation
 //! 
 //! The video stabilization module contains a set of functions and classes for global motion estimation
@@ -25,14 +18,10 @@
 //! internally. For the sake of convenience the motion estimation functions are wrapped into classes.
 //! Both the functions and the classes are available.
 //! 
-//! Fast Marching Method
-//! 
 //! # Fast Marching Method
 //! 
-//! The Fast Marching Method @cite Telea04 is used in of the video stabilization routines to do motion and
+//! The Fast Marching Method [Telea04](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 //! color inpainting. The method is implemented is a flexible way and it's made public for other users.
-//! 
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};

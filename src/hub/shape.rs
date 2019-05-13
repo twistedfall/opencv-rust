@@ -1,6 +1,3 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Shape Distance and Matching
-//! 
 //! # Shape Distance and Matching
 use std::os::raw::{c_char, c_void};
 use libc::size_t;

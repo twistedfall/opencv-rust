@@ -1,6 +1,3 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Video I/O
-//! 
 //! # Video I/O
 //! 
 //!  Read and write video or images sequence with OpenCV
@@ -8,26 +5,12 @@
 //! ### See also:
 //! - @ref videoio_overview
 //! - Tutorials: @ref tutorial_table_of_content_videoio
-//! @{
-//! Flags for video I/O
-//! 
 //! # Flags for video I/O
-//! Additional flags for video I/O API backends
-//! 
 //! # Additional flags for video I/O API backends
-//! C API for video I/O
-//! 
 //! # C API for video I/O
-//! iOS glue for video I/O
-//! 
 //! # iOS glue for video I/O
-//! WinRT glue for video I/O
-//! 
 //! # WinRT glue for video I/O
-//! Query I/O API backends registry
-//! 
 //! # Query I/O API backends registry
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -761,7 +744,8 @@ impl VideoCapture {
     /// documentation of source stream to know the right URL.
     /// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
     /// implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
-    /// @sa The list of supported API backends cv::VideoCaptureAPIs
+    /// ## See also
+    /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn filename_api(filename: &str, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
         string_arg!(filename);
         unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture_String_filename_int_apiPreference(filename.as_ptr(), api_preference) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
@@ -776,7 +760,8 @@ impl VideoCapture {
     /// Use a `domain_offset` to enforce a specific reader implementation if multiple are available like cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
     /// e.g. to open Camera 1 using the MS Media Foundation API use `index = 1 + cv::CAP_MSMF`
     /// 
-    /// @sa The list of supported API backends cv::VideoCaptureAPIs
+    /// ## See also
+    /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn index(index: i32) -> Result<crate::videoio::VideoCapture> {
         unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture_int_index(index) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
     }
@@ -791,7 +776,8 @@ impl VideoCapture {
     /// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
     /// implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L2.
     /// 
-    /// @sa The list of supported API backends cv::VideoCaptureAPIs
+    /// ## See also
+    /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn new(index: i32, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
         unsafe { sys::cv_videoio_cv_VideoCapture_VideoCapture_int_index_int_apiPreference(index, api_preference) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
     }
@@ -890,7 +876,8 @@ impl VideoCapture {
     /// (camera has been disconnected, or there are no more frames in video file), the method returns false
     /// and the function returns an empty image (with %cv::Mat, test it with Mat::empty()).
     /// 
-    /// @sa read()
+    /// ## See also
+    /// read()
     /// 
     /// 
     /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video

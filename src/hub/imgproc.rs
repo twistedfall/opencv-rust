@@ -1,13 +1,7 @@
 //! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Image Processing
-//! 
 //! # Image Processing
 //! 
 //! This module includes image-processing functions.
-//! 
-//! @{
-//! Image Filtering
-//! 
 //! # Image Filtering
 //! 
 //! Functions and classes described in this section are used to perform various linear or non-linear
@@ -40,8 +34,6 @@
 //! 
 //! 
 //! Note: when ddepth=-1, the output image will have the same depth as the source.
-//! 
-//! Geometric Image Transformations
 //! 
 //! # Geometric Image Transformations
 //! 
@@ -83,11 +75,7 @@
 //! 
 //! Note: The geometrical transformations do not work with `CV_8S` or `CV_32S` images.
 //! 
-//! Miscellaneous Image Transformations
-//! 
 //! # Miscellaneous Image Transformations
-//! Drawing Functions
-//! 
 //! # Drawing Functions
 //! 
 //! Drawing functions work with matrices/images of arbitrary depth. The boundaries of the shapes can be
@@ -117,11 +105,7 @@
 //! semi-transparent shapes, you can paint them in a separate buffer and then blend it with the main
 //! image.
 //! 
-//! Color Space Conversions
-//! 
 //! # Color Space Conversions
-//! ColorMaps in OpenCV
-//! 
 //! # ColorMaps in OpenCV
 //! 
 //! The human perception isn't built for observing fine changes in grayscale images. Human eyes are more
@@ -137,8 +121,6 @@
 //! 
 //! @see #ColormapTypes
 //! 
-//! Planar Subdivision
-//! 
 //! # Planar Subdivision
 //! 
 //! The Subdiv2D class described in this section is used to perform various planar subdivision on
@@ -147,41 +129,20 @@
 //! In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
 //! diagram with red lines.
 //! 
-//! ![Delaunay triangulation (black) and Voronoi (red)](pics/delaunay_voronoi.png)
+//! ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/3.4.6/delaunay_voronoi.png)
 //! 
 //! The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
 //! location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
 //! 
-//! Histograms
-//! 
 //! # Histograms
-//! Structural Analysis and Shape Descriptors
-//! 
 //! # Structural Analysis and Shape Descriptors
-//! Motion Analysis and Object Tracking
-//! 
 //! # Motion Analysis and Object Tracking
-//! Feature Detection
-//! 
 //! # Feature Detection
-//! Object Detection
-//! 
 //! # Object Detection
-//! C API
-//! 
 //! # C API
-//! Hardware Acceleration Layer
-//! 
 //! # Hardware Acceleration Layer
-//! @{
-//! Functions
-//! 
 //! # Functions
-//! Interface
-//! 
 //! # Interface
-//! @}
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -876,6 +837,7 @@ pub fn cv_match_shapes(object1: &c_void, object2: &c_void, method: i32, paramete
 }
 
 // identifier: cv_Canny_Mat_dx_Mat_dy_Mat_edges_double_threshold1_double_threshold2_bool_L2gradient
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 /// \overload
 /// 
 /// Finds edges in an image using the Canny algorithm with custom image gradient.
@@ -898,7 +860,8 @@ pub fn canny_derivative(dx: &core::Mat, dy: &core::Mat, edges: &mut core::Mat, t
 }
 
 // identifier: cv_Canny_Mat_image_Mat_edges_double_threshold1_double_threshold2_int_apertureSize_bool_L2gradient
-/// Finds edges in an image using the Canny algorithm @cite Canny86 .
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Canny86) .
 /// 
 /// The function finds edges in the input image and marks them in the output map edges using the
 /// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -924,11 +887,12 @@ pub fn canny(image: &core::Mat, edges: &mut core::Mat, threshold1: f64, threshol
 }
 
 // identifier: cv_EMD_Mat_signature1_Mat_signature2_int_distType_Mat_cost_float_X_lowerBound_Mat_flow
-/// Computes the "minimal work" distance between two weighted point configurations.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes the "minimal work" distance between two weighted point configurations.
 /// 
 /// The function computes the earth mover distance and/or a lower boundary of the distance between the
-/// two weighted point configurations. One of the applications described in @cite RubnerSept98,
-/// @cite Rubner2000 is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RubnerSept98),
+/// [Rubner2000](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 /// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 /// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 /// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -987,7 +951,8 @@ pub fn emd(signature1: &core::Mat, signature2: &core::Mat, dist_type: i32, cost:
 /// sigmaX, and sigmaY.
 /// * borderType: pixel extrapolation method, see #BorderTypes
 /// 
-/// @sa  sepFilter2D, filter2D, blur, boxFilter, bilateralFilter, medianBlur
+/// ## See also
+/// sepFilter2D, filter2D, blur, boxFilter, bilateralFilter, medianBlur
 ///
 /// ## C++ default parameters:
 /// * sigma_y: 0
@@ -997,7 +962,8 @@ pub fn gaussian_blur(src: &core::Mat, dst: &mut core::Mat, ksize: core::Size, si
 }
 
 // identifier: cv_HoughCircles_Mat_image_Mat_circles_int_method_double_dp_double_minDist_double_param1_double_param2_int_minRadius_int_maxRadius
-/// Finds circles in a grayscale image using the Hough transform.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds circles in a grayscale image using the Hough transform.
 /// 
 /// The function finds circles in a grayscale image using a modification of the Hough transform.
 /// 
@@ -1031,7 +997,8 @@ pub fn gaussian_blur(src: &core::Mat, dst: &mut core::Mat, ksize: core::Size, si
 /// * maxRadius: Maximum circle radius. If <= 0, uses the maximum image dimension. If < 0, returns
 /// centers without finding the radius.
 /// 
-/// @sa fitEllipse, minEnclosingCircle
+/// ## See also
+/// fitEllipse, minEnclosingCircle
 ///
 /// ## C++ default parameters:
 /// * param1: 100
@@ -1043,20 +1010,21 @@ pub fn hough_circles(image: &core::Mat, circles: &mut core::Mat, method: i32, dp
 }
 
 // identifier: cv_HoughLinesP_Mat_image_Mat_lines_double_rho_double_theta_int_threshold_double_minLineLength_double_maxLineGap
-/// Finds line segments in a binary image using the probabilistic Hough transform.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds line segments in a binary image using the probabilistic Hough transform.
 /// 
 /// The function implements the probabilistic Hough transform algorithm for line detection, described
-/// in @cite Matas00
+/// in [Matas00](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Matas00)
 /// 
 /// See the line detection example below:
 /// @include snippets/imgproc_HoughLinesP.cpp
 /// This is a sample picture the function parameters have been tuned for:
 /// 
-/// ![image](pics/building.jpg)
+/// ![image](https://docs.opencv.org/3.4.6/building.jpg)
 /// 
 /// And this is the output of the above program in case of the probabilistic Hough transform:
 /// 
-/// ![image](pics/houghp.png)
+/// ![image](https://docs.opencv.org/3.4.6/houghp.png)
 /// 
 /// ## Parameters
 /// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -1070,7 +1038,8 @@ pub fn hough_circles(image: &core::Mat, circles: &mut core::Mat, method: i32, dp
 /// * minLineLength: Minimum line length. Line segments shorter than that are rejected.
 /// * maxLineGap: Maximum allowed gap between points on the same line to link them.
 /// 
-/// @sa LineSegmentDetector
+/// ## See also
+/// LineSegmentDetector
 ///
 /// ## C++ default parameters:
 /// * min_line_length: 0
@@ -1080,7 +1049,8 @@ pub fn hough_lines_p(image: &core::Mat, lines: &mut core::Mat, rho: f64, theta: 
 }
 
 // identifier: cv_HoughLinesPointSet_Mat__point_Mat__lines_int_lines_max_int_threshold_double_min_rho_double_max_rho_double_rho_step_double_min_theta_double_max_theta_double_theta_step
-/// Finds lines in a set of points using the standard Hough transform.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds lines in a set of points using the standard Hough transform.
 /// 
 /// The function finds lines in a set of points using a modification of the Hough transform.
 /// @include snippets/imgproc_HoughLinesPointSet.cpp
@@ -1102,7 +1072,8 @@ pub fn hough_lines_point_set(_point: &core::Mat, _lines: &mut core::Mat, lines_m
 }
 
 // identifier: cv_HoughLines_Mat_image_Mat_lines_double_rho_double_theta_int_threshold_double_srn_double_stn_double_min_theta_double_max_theta
-/// Finds lines in a binary image using the standard Hough transform.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds lines in a binary image using the standard Hough transform.
 /// 
 /// The function implements the standard or standard multi-scale Hough transform algorithm for line
 /// detection. See <http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm> for a good explanation of Hough
@@ -1139,7 +1110,8 @@ pub fn hough_lines(image: &core::Mat, lines: &mut core::Mat, rho: f64, theta: f6
 }
 
 // identifier: cv_Laplacian_Mat_src_Mat_dst_int_ddepth_int_ksize_double_scale_double_delta_int_borderType
-/// Calculates the Laplacian of an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the Laplacian of an image.
 /// 
 /// The function calculates the Laplacian of the source image by adding up the second x and y
 /// derivatives calculated using the Sobel operator:
@@ -1161,7 +1133,8 @@ pub fn hough_lines(image: &core::Mat, lines: &mut core::Mat, rho: f64, theta: f6
 /// applied. See #getDerivKernels for details.
 /// * delta: Optional delta value that is added to the results prior to storing them in dst .
 /// * borderType: Pixel extrapolation method, see #BorderTypes
-/// @sa  Sobel, Scharr
+/// ## See also
+/// Sobel, Scharr
 ///
 /// ## C++ default parameters:
 /// * ksize: 1
@@ -1173,7 +1146,8 @@ pub fn laplacian(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, ksize: i32, 
 }
 
 // identifier: cv_Scharr_Mat_src_Mat_dst_int_ddepth_int_dx_int_dy_double_scale_double_delta_int_borderType
-/// Calculates the first x- or y- image derivative using Scharr operator.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the first x- or y- image derivative using Scharr operator.
 /// 
 /// The function computes the first x- or y- spatial image derivative using the Scharr operator. The
 /// call
@@ -1194,7 +1168,8 @@ pub fn laplacian(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, ksize: i32, 
 /// applied (see #getDerivKernels for details).
 /// * delta: optional delta value that is added to the results prior to storing them in dst.
 /// * borderType: pixel extrapolation method, see #BorderTypes
-/// @sa  cartToPolar
+/// ## See also
+/// cartToPolar
 ///
 /// ## C++ default parameters:
 /// * scale: 1
@@ -1205,7 +1180,8 @@ pub fn scharr(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i3
 }
 
 // identifier: cv_Sobel_Mat_src_Mat_dst_int_ddepth_int_dx_int_dy_int_ksize_double_scale_double_delta_int_borderType
-/// Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
 /// 
 /// In all cases except one, the <span lang='latex'>\texttt{ksize} \times \texttt{ksize}</span> separable kernel is used to
 /// calculate the derivative. When <span lang='latex'>\texttt{ksize = 1}</span>, the <span lang='latex'>3 \times 1</span> or <span lang='latex'>1 \times 3</span>
@@ -1246,7 +1222,8 @@ pub fn scharr(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i3
 /// applied (see #getDerivKernels for details).
 /// * delta: optional delta value that is added to the results prior to storing them in dst.
 /// * borderType: pixel extrapolation method, see #BorderTypes
-/// @sa  Scharr, Laplacian, sepFilter2D, filter2D, GaussianBlur, cartToPolar
+/// ## See also
+/// Scharr, Laplacian, sepFilter2D, filter2D, GaussianBlur, cartToPolar
 ///
 /// ## C++ default parameters:
 /// * ksize: 3
@@ -1258,7 +1235,8 @@ pub fn sobel(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i32
 }
 
 // identifier: cv_accumulateProduct_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-/// Adds the per-element product of two input images to the accumulator image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Adds the per-element product of two input images to the accumulator image.
 /// 
 /// The function adds the product of two images or their selected regions to the accumulator dst :
 /// 
@@ -1273,7 +1251,8 @@ pub fn sobel(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i32
 /// floating-point.
 /// * mask: Optional operation mask.
 /// 
-/// @sa  accumulate, accumulateSquare, accumulateWeighted
+/// ## See also
+/// accumulate, accumulateSquare, accumulateWeighted
 ///
 /// ## C++ default parameters:
 /// * mask: noArray()
@@ -1282,7 +1261,8 @@ pub fn accumulate_product(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Ma
 }
 
 // identifier: cv_accumulateSquare_Mat_src_Mat_dst_Mat_mask
-/// Adds the square of a source image to the accumulator image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Adds the square of a source image to the accumulator image.
 /// 
 /// The function adds the input image src or its selected region, raised to a power of 2, to the
 /// accumulator dst :
@@ -1297,7 +1277,8 @@ pub fn accumulate_product(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Ma
 /// floating-point.
 /// * mask: Optional operation mask.
 /// 
-/// @sa  accumulateSquare, accumulateProduct, accumulateWeighted
+/// ## See also
+/// accumulateSquare, accumulateProduct, accumulateWeighted
 ///
 /// ## C++ default parameters:
 /// * mask: noArray()
@@ -1306,7 +1287,8 @@ pub fn accumulate_square(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat)
 }
 
 // identifier: cv_accumulateWeighted_Mat_src_Mat_dst_double_alpha_Mat_mask
-/// Updates a running average.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Updates a running average.
 /// 
 /// The function calculates the weighted sum of the input image src and the accumulator dst so that dst
 /// becomes a running average of a frame sequence:
@@ -1323,7 +1305,8 @@ pub fn accumulate_square(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat)
 /// * alpha: Weight of the input image.
 /// * mask: Optional operation mask.
 /// 
-/// @sa  accumulate, accumulateSquare, accumulateProduct
+/// ## See also
+/// accumulate, accumulateSquare, accumulateProduct
 ///
 /// ## C++ default parameters:
 /// * mask: noArray()
@@ -1332,7 +1315,8 @@ pub fn accumulate_weighted(src: &core::Mat, dst: &mut core::Mat, alpha: f64, mas
 }
 
 // identifier: cv_accumulate_Mat_src_Mat_dst_Mat_mask
-/// Adds an image to the accumulator image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Adds an image to the accumulator image.
 /// 
 /// The function adds src or some of its elements to dst :
 /// 
@@ -1348,7 +1332,8 @@ pub fn accumulate_weighted(src: &core::Mat, dst: &mut core::Mat, alpha: f64, mas
 /// * dst: %Accumulator image with the same number of channels as input image, and a depth of CV_32F or CV_64F.
 /// * mask: Optional operation mask.
 /// 
-/// @sa  accumulateSquare, accumulateProduct, accumulateWeighted
+/// ## See also
+/// accumulateSquare, accumulateProduct, accumulateWeighted
 ///
 /// ## C++ default parameters:
 /// * mask: noArray()
@@ -1357,7 +1342,8 @@ pub fn accumulate(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Res
 }
 
 // identifier: cv_adaptiveThreshold_Mat_src_Mat_dst_double_maxValue_int_adaptiveMethod_int_thresholdType_int_blockSize_double_C
-/// Applies an adaptive threshold to an array.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Applies an adaptive threshold to an array.
 /// 
 /// The function transforms a grayscale image to a binary image according to the formulae:
 /// *   **THRESH_BINARY**
@@ -1381,7 +1367,8 @@ pub fn accumulate(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Res
 /// * C: Constant subtracted from the mean or weighted mean (see the details below). Normally, it
 /// is positive but may be zero or negative as well.
 /// 
-/// @sa  threshold, blur, GaussianBlur
+/// ## See also
+/// threshold, blur, GaussianBlur
 pub fn adaptive_threshold(src: &core::Mat, dst: &mut core::Mat, max_value: f64, adaptive_method: i32, threshold_type: i32, block_size: i32, c: f64) -> Result<()> {
     unsafe { sys::cv_imgproc_cv_adaptiveThreshold_Mat_src_Mat_dst_double_maxValue_int_adaptiveMethod_int_thresholdType_int_blockSize_double_C(src.as_raw_Mat(), dst.as_raw_Mat(), max_value, adaptive_method, threshold_type, block_size, c) }.into_result()
 }
@@ -1504,7 +1491,8 @@ pub fn blend_linear(src1: &core::Mat, src2: &core::Mat, weights1: &core::Mat, we
 }
 
 // identifier: cv_blur_Mat_src_Mat_dst_Size_ksize_Point_anchor_int_borderType
-/// Blurs an image using the normalized box filter.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Blurs an image using the normalized box filter.
 /// 
 /// The function smooths an image using the kernel:
 /// 
@@ -1521,7 +1509,8 @@ pub fn blend_linear(src1: &core::Mat, src2: &core::Mat, weights1: &core::Mat, we
 /// * anchor: anchor point; default value Point(-1,-1) means that the anchor is at the kernel
 /// center.
 /// * borderType: border mode used to extrapolate pixels outside of the image, see #BorderTypes
-/// @sa  boxFilter, bilateralFilter, GaussianBlur, medianBlur
+/// ## See also
+/// boxFilter, bilateralFilter, GaussianBlur, medianBlur
 ///
 /// ## C++ default parameters:
 /// * anchor: Point(-1,-1)
@@ -1543,7 +1532,8 @@ pub fn bounding_rect(array: &core::Mat) -> Result<core::Rect> {
 }
 
 // identifier: cv_boxFilter_Mat_src_Mat_dst_int_ddepth_Size_ksize_Point_anchor_bool_normalize_int_borderType
-/// Blurs an image using the box filter.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Blurs an image using the box filter.
 /// 
 /// The function smooths an image using the kernel:
 /// 
@@ -1566,7 +1556,8 @@ pub fn bounding_rect(array: &core::Mat) -> Result<core::Rect> {
 /// center.
 /// * normalize: flag, specifying whether the kernel is normalized by its area or not.
 /// * borderType: border mode used to extrapolate pixels outside of the image, see #BorderTypes
-/// @sa  blur, bilateralFilter, GaussianBlur, medianBlur, integral
+/// ## See also
+/// blur, bilateralFilter, GaussianBlur, medianBlur, integral
 ///
 /// ## C++ default parameters:
 /// * anchor: Point(-1,-1)
@@ -1681,7 +1672,8 @@ pub fn clip_line_size(img_size: core::Size, pt1: core::Point, pt2: core::Point) 
 }
 
 // identifier: cv_compareHist_Mat_H1_Mat_H2_int_method
-/// Compares two histograms.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Compares two histograms.
 /// 
 /// The function cv::compareHist compares two dense or two sparse histograms using the specified method.
 /// 
@@ -1825,7 +1817,8 @@ pub fn contour_area(contour: &core::Mat, oriented: bool) -> Result<f64> {
 }
 
 // identifier: cv_convertMaps_Mat_map1_Mat_map2_Mat_dstmap1_Mat_dstmap2_int_dstmap1type_bool_nninterpolation
-/// Converts image transformation maps from one representation to another.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Converts image transformation maps from one representation to another.
 /// 
 /// The function converts a pair of maps for remap from one representation to another. The following
 /// options ( (map1.type(), map2.type()) <span lang='latex'>\rightarrow</span> (dstmap1.type(), dstmap2.type()) ) are
@@ -1854,7 +1847,8 @@ pub fn contour_area(contour: &core::Mat, oriented: bool) -> Result<f64> {
 /// * nninterpolation: Flag indicating whether the fixed-point maps are used for the
 /// nearest-neighbor or for a more complex interpolation.
 /// 
-/// @sa  remap, undistort, initUndistortRectifyMap
+/// ## See also
+/// remap, undistort, initUndistortRectifyMap
 ///
 /// ## C++ default parameters:
 /// * nninterpolation: false
@@ -1865,7 +1859,7 @@ pub fn convert_maps(map1: &core::Mat, map2: &core::Mat, dstmap1: &mut core::Mat,
 // identifier: cv_convexHull_Mat_points_Mat_hull_bool_clockwise_bool_returnPoints
 /// Finds the convex hull of a point set.
 /// 
-/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm @cite Sklansky82
+/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Sklansky82)
 /// that has *O(N logN)* complexity in the current implementation.
 /// 
 /// ## Parameters
@@ -1904,7 +1898,7 @@ pub fn convex_hull(points: &core::Mat, hull: &mut core::Mat, clockwise: bool, re
 /// 
 /// The figure below displays convexity defects of a hand contour:
 /// 
-/// ![image](pics/defects.png)
+/// ![image](https://docs.opencv.org/3.4.6/defects.png)
 /// 
 /// ## Parameters
 /// * contour: Input contour.
@@ -1922,7 +1916,8 @@ pub fn convexity_defects(contour: &core::Mat, convexhull: &core::Mat, convexity_
 }
 
 // identifier: cv_cornerEigenValsAndVecs_Mat_src_Mat_dst_int_blockSize_int_ksize_int_borderType
-/// Calculates eigenvalues and eigenvectors of image blocks for corner detection.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates eigenvalues and eigenvectors of image blocks for corner detection.
 /// 
 /// For every pixel <span lang='latex'>p</span> , the function cornerEigenValsAndVecs considers a blockSize <span lang='latex'>\times</span> blockSize
 /// neighborhood <span lang='latex'>S(p)</span> . It calculates the covariation matrix of derivatives over the neighborhood as:
@@ -1947,7 +1942,8 @@ pub fn convexity_defects(contour: &core::Mat, convexhull: &core::Mat, convexity_
 /// * ksize: Aperture parameter for the Sobel operator.
 /// * borderType: Pixel extrapolation method. See #BorderTypes.
 /// 
-/// @sa  cornerMinEigenVal, cornerHarris, preCornerDetect
+/// ## See also
+/// cornerMinEigenVal, cornerHarris, preCornerDetect
 ///
 /// ## C++ default parameters:
 /// * border_type: BORDER_DEFAULT
@@ -1956,7 +1952,8 @@ pub fn corner_eigen_vals_and_vecs(src: &core::Mat, dst: &mut core::Mat, block_si
 }
 
 // identifier: cv_cornerHarris_Mat_src_Mat_dst_int_blockSize_int_ksize_double_k_int_borderType
-/// Harris corner detector.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Harris corner detector.
 /// 
 /// The function runs the Harris corner detector on the image. Similarly to cornerMinEigenVal and
 /// cornerEigenValsAndVecs , for each pixel <span lang='latex'>(x, y)</span> it calculates a <span lang='latex'>2\times2</span> gradient covariance
@@ -1983,7 +1980,8 @@ pub fn corner_harris(src: &core::Mat, dst: &mut core::Mat, block_size: i32, ksiz
 }
 
 // identifier: cv_cornerMinEigenVal_Mat_src_Mat_dst_int_blockSize_int_ksize_int_borderType
-/// Calculates the minimal eigenvalue of gradient matrices for corner detection.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the minimal eigenvalue of gradient matrices for corner detection.
 /// 
 /// The function is similar to cornerEigenValsAndVecs but it calculates and stores only the minimal
 /// eigenvalue of the covariance matrix of derivatives, that is, <span lang='latex'>\min(\lambda_1, \lambda_2)</span> in terms
@@ -2005,12 +2003,13 @@ pub fn corner_min_eigen_val(src: &core::Mat, dst: &mut core::Mat, block_size: i3
 }
 
 // identifier: cv_cornerSubPix_Mat_image_Mat_corners_Size_winSize_Size_zeroZone_TermCriteria_criteria
-/// Refines the corner locations.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Refines the corner locations.
 /// 
 /// The function iterates to find the sub-pixel accurate location of corners or radial saddle points, as
 /// shown on the figure below.
 /// 
-/// ![image](pics/cornersubpix.png)
+/// ![image](https://docs.opencv.org/3.4.6/cornersubpix.png)
 /// 
 /// Sub-pixel accurate corner locator is based on the observation that every vector from the center <span lang='latex'>q</span>
 /// to a point <span lang='latex'>p</span> located within a neighborhood of <span lang='latex'>q</span> is orthogonal to the image gradient at <span lang='latex'>p</span>
@@ -2154,7 +2153,8 @@ pub fn cvt_color_two_plane(src1: &core::Mat, src2: &core::Mat, dst: &mut core::M
 }
 
 // identifier: cv_cvtColor_Mat_src_Mat_dst_int_code_int_dstCn
-/// Converts an image from one color space to another.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Converts an image from one color space to another.
 /// 
 /// The function converts an input image from one color space to another. In case of a transformation
 /// to-from RGB color space, the order of the channels should be specified explicitly (RGB or BGR). Note
@@ -2233,7 +2233,8 @@ pub fn cvt_color(src: &core::Mat, dst: &mut core::Mat, code: i32, dst_cn: i32) -
 /// 
 /// #COLOR_BayerBG2BGRA , #COLOR_BayerGB2BGRA , #COLOR_BayerRG2BGRA , #COLOR_BayerGR2BGRA
 /// 
-/// @sa cvtColor
+/// ## See also
+/// cvtColor
 ///
 /// ## C++ default parameters:
 /// * dst_cn: 0
@@ -2242,7 +2243,8 @@ pub fn demosaicing(src: &core::Mat, dst: &mut core::Mat, code: i32, dst_cn: i32)
 }
 
 // identifier: cv_dilate_Mat_src_Mat_dst_Mat_kernel_Point_anchor_int_iterations_int_borderType_Scalar_borderValue
-/// Dilates an image by using a specific structuring element.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Dilates an image by using a specific structuring element.
 /// 
 /// The function dilates the source image using the specified structuring element that determines the
 /// shape of a pixel neighborhood over which the maximum is taken:
@@ -2262,7 +2264,8 @@ pub fn demosaicing(src: &core::Mat, dst: &mut core::Mat, code: i32, dst_cn: i32)
 /// * iterations: number of times dilation is applied.
 /// * borderType: pixel extrapolation method, see #BorderTypes
 /// * borderValue: border value in case of a constant border
-/// @sa  erode, morphologyEx, getStructuringElement
+/// ## See also
+/// erode, morphologyEx, getStructuringElement
 ///
 /// ## C++ default parameters:
 /// * anchor: Point(-1,-1)
@@ -2274,15 +2277,16 @@ pub fn dilate(src: &core::Mat, dst: &mut core::Mat, kernel: &core::Mat, anchor: 
 }
 
 // identifier: cv_distanceTransform_Mat_src_Mat_dst_Mat_labels_int_distanceType_int_maskSize_int_labelType
-/// Calculates the distance to the closest zero pixel for each pixel of the source image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the distance to the closest zero pixel for each pixel of the source image.
 /// 
 /// The function cv::distanceTransform calculates the approximate or precise distance from every binary
 /// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 /// 
 /// When maskSize == #DIST_MASK_PRECISE and distanceType == #DIST_L2 , the function runs the
-/// algorithm described in @cite Felzenszwalb04 . This algorithm is parallelized with the TBB library.
+/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 /// 
-/// In other cases, the algorithm @cite Borgefors86 is used. This means that for a pixel the function
+/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 /// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 /// diagonal, or knight's move (the latest is available for a <span lang='latex'>5\times 5</span> mask). The overall
 /// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -2335,6 +2339,7 @@ pub fn distance_transform_labels(src: &core::Mat, dst: &mut core::Mat, labels: &
 }
 
 // identifier: cv_distanceTransform_Mat_src_Mat_dst_int_distanceType_int_maskSize_int_dstType
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 /// @overload
 /// ## Parameters
 /// * src: 8-bit, single-channel (binary) source image.
@@ -2354,7 +2359,8 @@ pub fn distance_transform(src: &core::Mat, dst: &mut core::Mat, distance_type: i
 }
 
 // identifier: cv_drawContours_Mat_image_VectorOfMat_contours_int_contourIdx_Scalar_color_int_thickness_int_lineType_Mat_hierarchy_int_maxLevel_Point_offset
-/// Draws contours outlines or filled contours.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Draws contours outlines or filled contours.
 /// 
 /// The function draws contour outlines in the image if <span lang='latex'>\texttt{thickness} \ge 0</span> or fills the area
 /// bounded by the contours if <span lang='latex'>\texttt{thickness}<0</span> . The example below shows how to retrieve
@@ -2463,7 +2469,7 @@ pub fn ellipse2_poly(center: core::Point, axes: core::Size, angle: i32, arc_star
 /// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 /// the meaning of the parameters to draw the blue arc.
 /// 
-/// ![Parameters of Elliptic Arc](pics/ellipse.svg)
+/// ![Parameters of Elliptic Arc](https://docs.opencv.org/3.4.6/ellipse.svg)
 /// 
 /// ## Parameters
 /// * img: Image.
@@ -2505,7 +2511,8 @@ pub fn ellipse_new_rotated_rect(img: &mut core::Mat, _box: &core::RotatedRect, c
 }
 
 // identifier: cv_equalizeHist_Mat_src_Mat_dst
-/// Equalizes the histogram of a grayscale image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Equalizes the histogram of a grayscale image.
 /// 
 /// The function equalizes the histogram of the input image using the following algorithm:
 /// 
@@ -2525,7 +2532,8 @@ pub fn equalize_hist(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 }
 
 // identifier: cv_erode_Mat_src_Mat_dst_Mat_kernel_Point_anchor_int_iterations_int_borderType_Scalar_borderValue
-/// Erodes an image by using a specific structuring element.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Erodes an image by using a specific structuring element.
 /// 
 /// The function erodes the source image using the specified structuring element that determines the
 /// shape of a pixel neighborhood over which the minimum is taken:
@@ -2546,7 +2554,8 @@ pub fn equalize_hist(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// * iterations: number of times erosion is applied.
 /// * borderType: pixel extrapolation method, see #BorderTypes
 /// * borderValue: border value in case of a constant border
-/// @sa  dilate, morphologyEx, getStructuringElement
+/// ## See also
+/// dilate, morphologyEx, getStructuringElement
 ///
 /// ## C++ default parameters:
 /// * anchor: Point(-1,-1)
@@ -2613,7 +2622,8 @@ pub fn fill_poly(img: &mut core::Mat, pts: &types::VectorOfMat, color: core::Sca
 }
 
 // identifier: cv_filter2D_Mat_src_Mat_dst_int_ddepth_Mat_kernel_Point_anchor_double_delta_int_borderType
-/// Convolves an image with the kernel.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Convolves an image with the kernel.
 /// 
 /// The function applies an arbitrary linear filter to an image. In-place operation is supported. When
 /// the aperture is partially outside the image, the function interpolates outlier pixel values
@@ -2642,7 +2652,8 @@ pub fn fill_poly(img: &mut core::Mat, pts: &types::VectorOfMat, color: core::Sca
 /// is at the kernel center.
 /// * delta: optional value added to the filtered pixels before storing them in dst.
 /// * borderType: pixel extrapolation method, see #BorderTypes
-/// @sa  sepFilter2D, dft, matchTemplate
+/// ## See also
+/// sepFilter2D, dft, matchTemplate
 ///
 /// ## C++ default parameters:
 /// * anchor: Point(-1,-1)
@@ -2655,7 +2666,7 @@ pub fn filter2_d(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, kernel: &cor
 // identifier: cv_findContours_Mat_image_VectorOfMat_contours_Mat_hierarchy_int_mode_int_method_Point_offset
 /// Finds contours in a binary image.
 /// 
-/// The function retrieves contours from the binary image using the algorithm @cite Suzuki85 . The contours
+/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 /// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 /// OpenCV sample directory.
 /// 
@@ -2696,11 +2707,12 @@ pub fn find_contours(image: &mut core::Mat, contours: &mut types::VectorOfMat, m
 }
 
 // identifier: cv_fitEllipseAMS_Mat_points
-/// Fits an ellipse around a set of 2D points.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Fits an ellipse around a set of 2D points.
 /// 
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
-/// The Approximate Mean Square (AMS) proposed by @cite Taubin1991 is used.
+/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
 /// 
 /// For an ellipse, this basis set is <span lang='latex'> \chi= \left(x^2, x y, y^2, x, y, 1\right) </span>,
 /// which is a set of six free coefficients <span lang='latex'> A^T=\left\{A_{\text{xx}},A_{\text{xy}},A_{\text{yy}},A_x,A_y,A_0\right\} </span>.
@@ -2736,11 +2748,12 @@ pub fn fit_ellipse_ams(points: &core::Mat) -> Result<core::RotatedRect> {
 }
 
 // identifier: cv_fitEllipseDirect_Mat_points
-/// Fits an ellipse around a set of 2D points.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Fits an ellipse around a set of 2D points.
 /// 
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
-/// The Direct least square (Direct) method by @cite Fitzgibbon1999 is used.
+/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
 /// 
 /// For an ellipse, this basis set is <span lang='latex'> \chi= \left(x^2, x y, y^2, x, y, 1\right) </span>,
 /// which is a set of six free coefficients <span lang='latex'> A^T=\left\{A_{\text{xx}},A_{\text{xy}},A_{\text{yy}},A_x,A_y,A_0\right\} </span>.
@@ -2786,7 +2799,7 @@ pub fn fit_ellipse_direct(points: &core::Mat) -> Result<core::RotatedRect> {
 /// Fits an ellipse around a set of 2D points.
 /// 
 /// The function calculates the ellipse that fits (in a least-squares sense) a set of 2D points best of
-/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by @cite Fitzgibbon95
+/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
 /// is used. Developer should keep in mind that it is possible that the returned
 /// ellipse/rotatedRect data contains negative indices, due to the data points being close to the
 /// border of the containing Mat element.
@@ -2798,7 +2811,8 @@ pub fn fit_ellipse(points: &core::Mat) -> Result<core::RotatedRect> {
 }
 
 // identifier: cv_fitLine_Mat_points_Mat_line_int_distType_double_param_double_reps_double_aeps
-/// Fits a line to a 2D or 3D point set.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Fits a line to a 2D or 3D point set.
 /// 
 /// The function fitLine fits a line to a 2D or 3D point set by minimizing <span lang='latex'>\sum_i \rho(r_i)</span> where
 /// <span lang='latex'>r_i</span> is a distance between the <span lang='latex'>i^{th}</span> point, the line and <span lang='latex'>\rho(r)</span> is a distance function, one
@@ -2837,7 +2851,8 @@ pub fn fit_line(points: &core::Mat, line: &mut core::Mat, dist_type: i32, param:
 }
 
 // identifier: cv_floodFill_Mat_image_Mat_mask_Point_seedPoint_Scalar_newVal_Rect_X_rect_Scalar_loDiff_Scalar_upDiff_int_flags
-/// Fills a connected component with the given color.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Fills a connected component with the given color.
 /// 
 /// The function cv::floodFill fills a connected component starting from the seed point with the specified
 /// color. The connectivity is determined by the color/brightness closeness of the neighbor pixels. The
@@ -2908,7 +2923,8 @@ pub fn fit_line(points: &core::Mat, line: &mut core::Mat, dist_type: i32, param:
 /// Note: Since the mask is larger than the filled image, a pixel <span lang='latex'>(x, y)</span> in image corresponds to the
 /// pixel <span lang='latex'>(x+1, y+1)</span> in the mask .
 /// 
-/// @sa findContours
+/// ## See also
+/// findContours
 ///
 /// ## C++ default parameters:
 /// * rect: 0
@@ -2939,7 +2955,8 @@ pub fn get_affine_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Ma
 }
 
 // identifier: cv_getAffineTransform_const_Point2f_X_src_const_Point2f_X_dst
-/// Calculates an affine transform from three pairs of the corresponding points.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates an affine transform from three pairs of the corresponding points.
 /// 
 /// The function calculates the <span lang='latex'>2 \times 3</span> matrix of an affine transform so that:
 /// 
@@ -2953,13 +2970,15 @@ pub fn get_affine_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Ma
 /// * src: Coordinates of triangle vertices in the source image.
 /// * dst: Coordinates of the corresponding triangle vertices in the destination image.
 /// 
-/// @sa  warpAffine, transform
+/// ## See also
+/// warpAffine, transform
 pub fn get_affine_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Result<core::Mat> {
     unsafe { sys::cv_imgproc_cv_getAffineTransform_const_Point2f_X_src_const_Point2f_X_dst(src, dst) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
 // identifier: cv_getDefaultNewCameraMatrix_Mat_cameraMatrix_Size_imgsize_bool_centerPrincipalPoint
-/// Returns the default new camera matrix.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Returns the default new camera matrix.
 /// 
 /// The function returns the camera matrix that is either an exact copy of the input cameraMatrix (when
 /// centerPrinicipalPoint=false ), or the modified one (when centerPrincipalPoint=true).
@@ -2990,7 +3009,8 @@ pub fn get_default_new_camera_matrix(camera_matrix: &core::Mat, imgsize: core::S
 }
 
 // identifier: cv_getDerivKernels_Mat_kx_Mat_ky_int_dx_int_dy_int_ksize_bool_normalize_int_ktype
-/// Returns filter coefficients for computing spatial image derivatives.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Returns filter coefficients for computing spatial image derivatives.
 /// 
 /// The function computes and returns the filter coefficients for spatial image derivatives. When
 /// `ksize=CV_SCHARR`, the Scharr <span lang='latex'>3 \times 3</span> kernels are generated (see #Scharr). Otherwise, Sobel
@@ -3056,7 +3076,8 @@ pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, g
 }
 
 // identifier: cv_getGaussianKernel_int_ksize_double_sigma_int_ktype
-/// Returns Gaussian filter coefficients.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Returns Gaussian filter coefficients.
 /// 
 /// The function computes and returns the <span lang='latex'>\texttt{ksize} \times 1</span> matrix of Gaussian filter
 /// coefficients:
@@ -3073,7 +3094,8 @@ pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, g
 /// * sigma: Gaussian standard deviation. If it is non-positive, it is computed from ksize as
 /// `sigma = 0.3*((ksize-1)*0.5 - 1) + 0.8`.
 /// * ktype: Type of filter coefficients. It can be CV_32F or CV_64F .
-/// @sa  sepFilter2D, getDerivKernels, getStructuringElement, GaussianBlur
+/// ## See also
+/// sepFilter2D, getDerivKernels, getStructuringElement, GaussianBlur
 ///
 /// ## C++ default parameters:
 /// * ktype: CV_64F
@@ -3082,7 +3104,8 @@ pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::M
 }
 
 // identifier: cv_getPerspectiveTransform_Mat_src_Mat_dst
-/// Calculates a perspective transform from four pairs of the corresponding points.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates a perspective transform from four pairs of the corresponding points.
 /// 
 /// The function calculates the <span lang='latex'>3 \times 3</span> matrix of a perspective transform so that:
 /// 
@@ -3096,7 +3119,8 @@ pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::M
 /// * src: Coordinates of quadrangle vertices in the source image.
 /// * dst: Coordinates of the corresponding quadrangle vertices in the destination image.
 /// 
-/// @sa  findHomography, warpPerspective, perspectiveTransform
+/// ## See also
+/// findHomography, warpPerspective, perspectiveTransform
 pub fn get_perspective_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Mat> {
     unsafe { sys::cv_imgproc_cv_getPerspectiveTransform_Mat_src_Mat_dst(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
@@ -3107,7 +3131,8 @@ pub fn get_perspective_transform_1(src: &core::Point2f, dst: &core::Point2f) -> 
 }
 
 // identifier: cv_getRectSubPix_Mat_image_Size_patchSize_Point2f_center_Mat_patch_int_patchType
-/// Retrieves a pixel rectangle from an image with sub-pixel accuracy.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Retrieves a pixel rectangle from an image with sub-pixel accuracy.
 /// 
 /// The function getRectSubPix extracts pixels from src:
 /// 
@@ -3126,7 +3151,8 @@ pub fn get_perspective_transform_1(src: &core::Point2f, dst: &core::Point2f) -> 
 /// * patch: Extracted patch that has the size patchSize and the same number of channels as src .
 /// * patchType: Depth of the extracted pixels. By default, they have the same depth as src .
 /// 
-/// @sa  warpAffine, warpPerspective
+/// ## See also
+/// warpAffine, warpPerspective
 ///
 /// ## C++ default parameters:
 /// * patch_type: -1
@@ -3135,7 +3161,8 @@ pub fn get_rect_sub_pix(image: &core::Mat, patch_size: core::Size, center: core:
 }
 
 // identifier: cv_getRotationMatrix2D_Point2f_center_double_angle_double_scale
-/// Calculates an affine matrix of 2D rotation.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates an affine matrix of 2D rotation.
 /// 
 /// The function calculates the following matrix:
 /// 
@@ -3153,13 +3180,15 @@ pub fn get_rect_sub_pix(image: &core::Mat, patch_size: core::Size, center: core:
 /// coordinate origin is assumed to be the top-left corner).
 /// * scale: Isotropic scale factor.
 /// 
-/// @sa  getAffineTransform, warpAffine, transform
+/// ## See also
+/// getAffineTransform, warpAffine, transform
 pub fn get_rotation_matrix2_d(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Mat> {
     unsafe { sys::cv_imgproc_cv_getRotationMatrix2D_Point2f_center_double_angle_double_scale(center, angle, scale) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
 // identifier: cv_getStructuringElement_int_shape_Size_ksize_Point_anchor
-/// Returns a structuring element of the specified size and shape for morphological operations.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Returns a structuring element of the specified size and shape for morphological operations.
 /// 
 /// The function constructs and returns the structuring element that can be further passed to #erode,
 /// #dilate or #morphologyEx. But you can also construct an arbitrary binary mask yourself and use it as
@@ -3232,10 +3261,11 @@ pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32
 }
 
 // identifier: cv_goodFeaturesToTrack_Mat_image_Mat_corners_int_maxCorners_double_qualityLevel_double_minDistance_Mat_mask_int_blockSize_bool_useHarrisDetector_double_k
-/// Determines strong corners on an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Determines strong corners on an image.
 /// 
 /// The function finds the most prominent corners in the image or in the specified image region, as
-/// described in @cite Shi94
+/// described in [Shi94](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Shi94)
 /// 
 /// *   Function calculates the corner quality measure at every source image pixel using the
 /// #cornerMinEigenVal or #cornerHarris .
@@ -3275,7 +3305,8 @@ pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32
 /// or #cornerMinEigenVal.
 /// * k: Free parameter of the Harris detector.
 /// 
-/// @sa  cornerMinEigenVal, cornerHarris, calcOpticalFlowPyrLK, estimateRigidTransform,
+/// ## See also
+/// cornerMinEigenVal, cornerHarris, calcOpticalFlowPyrLK, estimateRigidTransform,
 ///
 /// ## C++ default parameters:
 /// * mask: noArray()
@@ -3457,7 +3488,8 @@ pub fn sep_filter2_d(stype: i32, dtype: i32, ktype: i32, src_data: &mut u8, src_
 }
 
 // identifier: cv_initUndistortRectifyMap_Mat_cameraMatrix_Mat_distCoeffs_Mat_R_Mat_newCameraMatrix_Size_size_int_m1type_Mat_map1_Mat_map2
-/// Computes the undistortion and rectification transformation map.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes the undistortion and rectification transformation map.
 /// 
 /// The function computes the joint undistortion and rectification transformation and represents the
 /// result in the form of maps for remap. The undistorted image looks like original, as if it is
@@ -3533,7 +3565,8 @@ pub fn init_wide_angle_proj_map(camera_matrix: &core::Mat, dist_coeffs: &core::M
 }
 
 // identifier: cv_integral_Mat_src_Mat_sum_Mat_sqsum_Mat_tilted_int_sdepth_int_sqdepth
-/// Calculates the integral of an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the integral of an image.
 /// 
 /// The function calculates one or more integral images for the source image as follows:
 /// 
@@ -3555,7 +3588,7 @@ pub fn init_wide_angle_proj_map(camera_matrix: &core::Mat, dist_coeffs: &core::M
 /// rectangle Rect(3,3,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 /// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 /// 
-/// ![integral calculation example](pics/integral.png)
+/// ![integral calculation example](https://docs.opencv.org/3.4.6/integral.png)
 /// 
 /// ## Parameters
 /// * src: input image as <span lang='latex'>W \times H</span>, 8-bit or floating-point (32f or 64f).
@@ -3603,7 +3636,8 @@ pub fn intersect_convex_convex(_p1: &core::Mat, _p2: &core::Mat, _p12: &mut core
 }
 
 // identifier: cv_invertAffineTransform_Mat_M_Mat_iM
-/// Inverts an affine transformation.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Inverts an affine transformation.
 /// 
 /// The function computes an inverse affine transformation represented by <span lang='latex'>2 \times 3</span> matrix M:
 /// 
@@ -3656,7 +3690,8 @@ pub fn line(img: &mut core::Mat, pt1: core::Point, pt2: core::Point, color: core
 }
 
 // identifier: cv_linearPolar_Mat_src_Mat_dst_Point2f_center_double_maxRadius_int_flags
-/// Remaps an image to polar coordinates space.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Remaps an image to polar coordinates space.
 /// 
 /// @deprecated This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags)
 /// 
@@ -3693,14 +3728,16 @@ pub fn line(img: &mut core::Mat, pt1: core::Point, pt2: core::Point, color: core
 /// *   The function can not operate in-place.
 /// *   To calculate magnitude and angle in degrees #cartToPolar is used internally thus angles are measured from 0 to 360 with accuracy about 0.3 degrees.
 /// 
-/// @sa cv::logPolar
+/// ## See also
+/// cv::logPolar
 /// @endinternal
 pub fn linear_polar(src: &core::Mat, dst: &mut core::Mat, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
     unsafe { sys::cv_imgproc_cv_linearPolar_Mat_src_Mat_dst_Point2f_center_double_maxRadius_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), center, max_radius, flags) }.into_result()
 }
 
 // identifier: cv_logPolar_Mat_src_Mat_dst_Point2f_center_double_M_int_flags
-/// Remaps an image to semilog-polar coordinates space.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Remaps an image to semilog-polar coordinates space.
 /// 
 /// @deprecated This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags+WARP_POLAR_LOG);
 /// 
@@ -3738,7 +3775,8 @@ pub fn linear_polar(src: &core::Mat, dst: &mut core::Mat, center: core::Point2f,
 /// *   The function can not operate in-place.
 /// *   To calculate magnitude and angle in degrees #cartToPolar is used internally thus angles are measured from 0 to 360 with accuracy about 0.3 degrees.
 /// 
-/// @sa cv::linearPolar
+/// ## See also
+/// cv::linearPolar
 /// @endinternal
 pub fn log_polar(src: &core::Mat, dst: &mut core::Mat, center: core::Point2f, m: f64, flags: i32) -> Result<()> {
     unsafe { sys::cv_imgproc_cv_logPolar_Mat_src_Mat_dst_Point2f_center_double_M_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), center, m, flags) }.into_result()
@@ -3759,7 +3797,8 @@ pub fn match_shapes(contour1: &core::Mat, contour2: &core::Mat, method: i32, par
 }
 
 // identifier: cv_matchTemplate_Mat_image_Mat_templ_Mat_result_int_method_Mat_mask
-/// Compares a template against overlapped image regions.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Compares a template against overlapped image regions.
 /// 
 /// The function slides through image , compares the overlapped patches of size <span lang='latex'>w \times h</span> against
 /// templ using the specified method and stores the comparison results in result . Here are the formulae
@@ -3790,7 +3829,8 @@ pub fn match_template(image: &core::Mat, templ: &core::Mat, result: &mut core::M
 }
 
 // identifier: cv_medianBlur_Mat_src_Mat_dst_int_ksize
-/// Blurs an image using the median filter.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Blurs an image using the median filter.
 /// 
 /// The function smoothes an image using the median filter with the \f$\texttt{ksize} \times
 /// \texttt{ksize}\f$ aperture. Each channel of a multi-channel image is processed independently.
@@ -3804,7 +3844,8 @@ pub fn match_template(image: &core::Mat, templ: &core::Mat, result: &mut core::M
 /// CV_8U, CV_16U, or CV_32F, for larger aperture sizes, it can only be CV_8U.
 /// * dst: destination array of the same size and type as src.
 /// * ksize: aperture linear size; it must be odd and greater than 1, for example: 3, 5, 7 ...
-/// @sa  bilateralFilter, blur, boxFilter, GaussianBlur
+/// ## See also
+/// bilateralFilter, blur, boxFilter, GaussianBlur
 pub fn median_blur(src: &core::Mat, dst: &mut core::Mat, ksize: i32) -> Result<()> {
     unsafe { sys::cv_imgproc_cv_medianBlur_Mat_src_Mat_dst_int_ksize(src.as_raw_Mat(), dst.as_raw_Mat(), ksize) }.into_result()
 }
@@ -3836,16 +3877,17 @@ pub fn min_enclosing_circle(points: &core::Mat, center: core::Point2f, radius: f
 }
 
 // identifier: cv_minEnclosingTriangle_Mat_points_Mat_triangle
-/// Finds a triangle of minimum area enclosing a 2D point set and returns its area.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Finds a triangle of minimum area enclosing a 2D point set and returns its area.
 /// 
 /// The function finds a triangle of minimum area enclosing the given set of 2D points and returns its
 /// area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
 /// *red* and the enclosing triangle in *yellow*.
 /// 
-/// ![Sample output of the minimum enclosing triangle function](pics/minenclosingtriangle.png)
+/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/3.4.6/minenclosingtriangle.png)
 /// 
-/// The implementation of the algorithm is based on O'Rourke's @cite ORourke86 and Klee and Laskowski's
-/// @cite KleeLaskowski85 papers. O'Rourke provides a <span lang='latex'>\theta(n)</span> algorithm for finding the minimal
+/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
+/// [KleeLaskowski85](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a <span lang='latex'>\theta(n)</span> algorithm for finding the minimal
 /// enclosing triangle of a 2D convex polygon with n vertices. Since the #minEnclosingTriangle function
 /// takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
 /// 2D point set is required. The complexity of the #convexHull function is <span lang='latex'>O(n log(n))</span> which is higher
@@ -3885,7 +3927,8 @@ pub fn morphology_default_border_value() -> Result<core::Scalar> {
 /// * borderType: Pixel extrapolation method, see #BorderTypes
 /// * borderValue: Border value in case of a constant border. The default value has a special
 /// meaning.
-/// @sa  dilate, erode, getStructuringElement
+/// ## See also
+/// dilate, erode, getStructuringElement
 /// 
 /// Note: The number of iterations is the number of times erosion or dilatation operation will be applied.
 /// For instance, an opening operation (#MORPH_OPEN) with two iterations is equivalent to apply
@@ -3901,7 +3944,8 @@ pub fn morphology_ex(src: &core::Mat, dst: &mut core::Mat, op: i32, kernel: &cor
 }
 
 // identifier: cv_phaseCorrelate_Mat_src1_Mat_src2_Mat_window_double_X_response
-/// The function is used to detect translational shifts that occur between two images.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  The function is used to detect translational shifts that occur between two images.
 /// 
 /// The operation takes advantage of the Fourier shift theorem for detecting the translational shift in
 /// the frequency domain. It can be used for fast image registration as well as motion estimation. For
@@ -3935,7 +3979,8 @@ pub fn morphology_ex(src: &core::Mat, dst: &mut core::Mat, op: i32, kernel: &cor
 /// * response: Signal power within the 5x5 centroid around the peak, between 0 and 1 (optional).
 /// @returns detected phase shift (sub-pixel) between the two arrays.
 /// 
-/// @sa dft, getOptimalDFTSize, idft, mulSpectrums createHanningWindow
+/// ## See also
+/// dft, getOptimalDFTSize, idft, mulSpectrums createHanningWindow
 ///
 /// ## C++ default parameters:
 /// * window: noArray()
@@ -3954,7 +3999,7 @@ pub fn phase_correlate(src1: &core::Mat, src2: &core::Mat, window: &core::Mat, r
 /// 
 /// See below a sample output of the function where each image pixel is tested against the contour:
 /// 
-/// ![sample output](pics/pointpolygon.png)
+/// ![sample output](https://docs.opencv.org/3.4.6/pointpolygon.png)
 /// 
 /// ## Parameters
 /// * contour: Input contour.
@@ -3989,7 +4034,8 @@ pub fn polylines(img: &mut core::Mat, pts: &types::VectorOfMat, is_closed: bool,
 }
 
 // identifier: cv_preCornerDetect_Mat_src_Mat_dst_int_ksize_int_borderType
-/// Calculates a feature map for corner detection.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates a feature map for corner detection.
 /// 
 /// The function calculates the complex spatial derivative-based function of the source image
 /// 
@@ -4049,7 +4095,8 @@ pub fn put_text(img: &mut core::Mat, text: &str, org: core::Point, font_face: i3
 }
 
 // identifier: cv_pyrDown_Mat_src_Mat_dst_Size_dstsize_int_borderType
-/// Blurs an image and downsamples it.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Blurs an image and downsamples it.
 /// 
 /// By default, size of the output image is computed as `Size((src.cols+1)/2, (src.rows+1)/2)`, but in
 /// any case, the following conditions should be satisfied:
@@ -4077,7 +4124,8 @@ pub fn pyr_down(src: &core::Mat, dst: &mut core::Mat, dstsize: core::Size, borde
 }
 
 // identifier: cv_pyrMeanShiftFiltering_Mat_src_Mat_dst_double_sp_double_sr_int_maxLevel_TermCriteria_termcrit
-/// Performs initial step of meanshift segmentation of an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Performs initial step of meanshift segmentation of an image.
 /// 
 /// The function implements the filtering stage of meanshift segmentation, that is, the output of the
 /// function is the filtered "posterized" image with color gradients and fine-grain texture flattened.
@@ -4122,7 +4170,8 @@ pub fn pyr_mean_shift_filtering(src: &core::Mat, dst: &mut core::Mat, sp: f64, s
 }
 
 // identifier: cv_pyrUp_Mat_src_Mat_dst_Size_dstsize_int_borderType
-/// Upsamples an image and then blurs it.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Upsamples an image and then blurs it.
 /// 
 /// By default, size of the output image is computed as `Size(src.cols\*2, (src.rows\*2)`, but in any
 /// case, the following conditions should be satisfied:
@@ -4186,7 +4235,8 @@ pub fn rectangle(img: &core::Mat, rec: core::Rect, color: core::Scalar, thicknes
 }
 
 // identifier: cv_remap_Mat_src_Mat_dst_Mat_map1_Mat_map2_int_interpolation_int_borderMode_Scalar_borderValue
-/// Applies a generic geometrical transformation to an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Applies a generic geometrical transformation to an image.
 /// 
 /// The function remap transforms the source image using the specified map:
 /// 
@@ -4228,7 +4278,8 @@ pub fn remap(src: &core::Mat, dst: &mut core::Mat, map1: &core::Mat, map2: &core
 }
 
 // identifier: cv_resize_Mat_src_Mat_dst_Size_dsize_double_fx_double_fy_int_interpolation
-/// Resizes an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Resizes an image.
 /// 
 /// The function resize resizes the image src down to or up to the specified size. Note that the
 /// initial dst type or size are not taken into account. Instead, the size and type are derived from
@@ -4263,7 +4314,8 @@ pub fn remap(src: &core::Mat, dst: &mut core::Mat, map1: &core::Mat, map2: &core
 /// <div lang='latex'>\texttt{(double)dsize.height/src.rows}</div>
 /// * interpolation: interpolation method, see #InterpolationFlags
 /// 
-/// @sa  warpAffine, warpPerspective, remap
+/// ## See also
+/// warpAffine, warpPerspective, remap
 ///
 /// ## C++ default parameters:
 /// * fx: 0
@@ -4281,7 +4333,7 @@ pub fn resize(src: &core::Mat, dst: &mut core::Mat, dsize: core::Size, fx: f64, 
 /// Below are some examples of intersection configurations. The hatched pattern indicates the
 /// intersecting region and the red vertices are returned by the function.
 /// 
-/// ![intersection examples](pics/intersection.png)
+/// ![intersection examples](https://docs.opencv.org/3.4.6/intersection.png)
 /// 
 /// ## Parameters
 /// * rect1: First rectangle
@@ -4294,7 +4346,8 @@ pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::R
 }
 
 // identifier: cv_sepFilter2D_Mat_src_Mat_dst_int_ddepth_Mat_kernelX_Mat_kernelY_Point_anchor_double_delta_int_borderType
-/// Applies a separable linear filter to an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Applies a separable linear filter to an image.
 /// 
 /// The function applies a separable linear filter to the image. That is, first, every row of src is
 /// filtered with the 1D kernel kernelX. Then, every column of the result is filtered with the 1D
@@ -4310,7 +4363,8 @@ pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::R
 /// is at the kernel center.
 /// * delta: Value added to the filtered results before storing them.
 /// * borderType: Pixel extrapolation method, see #BorderTypes
-/// @sa  filter2D, Sobel, GaussianBlur, boxFilter, blur
+/// ## See also
+/// filter2D, Sobel, GaussianBlur, boxFilter, blur
 ///
 /// ## C++ default parameters:
 /// * anchor: Point(-1,-1)
@@ -4338,7 +4392,8 @@ pub fn sep_filter2_d_1(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, kernel
 /// * ksize: size of Sobel kernel. It must be 3.
 /// * borderType: pixel extrapolation method, see #BorderTypes
 /// 
-/// @sa Sobel
+/// ## See also
+/// Sobel
 ///
 /// ## C++ default parameters:
 /// * ksize: 3
@@ -4348,7 +4403,8 @@ pub fn spatial_gradient(src: &core::Mat, dx: &mut core::Mat, dy: &mut core::Mat,
 }
 
 // identifier: cv_sqrBoxFilter_Mat_src_Mat_dst_int_ddepth_Size_ksize_Point_anchor_bool_normalize_int_borderType
-/// Calculates the normalized sum of squares of the pixel values overlapping the filter.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Calculates the normalized sum of squares of the pixel values overlapping the filter.
 /// 
 /// For every pixel <span lang='latex'> (x, y) </span> in the source image, the function calculates the sum of squares of those neighboring
 /// pixel values which overlap the filter placed over the pixel <span lang='latex'> (x, y) </span>.
@@ -4365,7 +4421,8 @@ pub fn spatial_gradient(src: &core::Mat, dx: &mut core::Mat, dy: &mut core::Mat,
 /// center.
 /// * normalize: flag, specifying whether the kernel is to be normalized by it's area or not.
 /// * borderType: border mode used to extrapolate pixels outside of the image, see #BorderTypes
-/// @sa boxFilter
+/// ## See also
+/// boxFilter
 ///
 /// ## C++ default parameters:
 /// * anchor: Point(-1, -1)
@@ -4400,13 +4457,15 @@ pub fn sqr_box_filter(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, ksize: 
 /// * type: thresholding type (see #ThresholdTypes).
 /// @return the computed threshold value if Otsu's or Triangle methods used.
 /// 
-/// @sa  adaptiveThreshold, findContours, compare, min, max
+/// ## See also
+/// adaptiveThreshold, findContours, compare, min, max
 pub fn threshold(src: &core::Mat, dst: &mut core::Mat, thresh: f64, maxval: f64, _type: i32) -> Result<f64> {
     unsafe { sys::cv_imgproc_cv_threshold_Mat_src_Mat_dst_double_thresh_double_maxval_int_type(src.as_raw_Mat(), dst.as_raw_Mat(), thresh, maxval, _type) }.into_result()
 }
 
 // identifier: cv_undistortPoints_Mat_src_Mat_dst_Mat_cameraMatrix_Mat_distCoeffs_Mat_R_Mat_P
-/// Computes the ideal point coordinates from the observed point coordinates.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Computes the ideal point coordinates from the observed point coordinates.
 /// 
 /// The function is similar to #undistort and #initUndistortRectifyMap but it operates on a
 /// sparse set of points instead of a raster image. Also the function performs a reverse transformation
@@ -4463,7 +4522,8 @@ pub fn undistort_points_1(src: &core::Mat, dst: &mut core::Mat, camera_matrix: &
 }
 
 // identifier: cv_undistort_Mat_src_Mat_dst_Mat_cameraMatrix_Mat_distCoeffs_Mat_newCameraMatrix
-/// Transforms an image to compensate for lens distortion.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Transforms an image to compensate for lens distortion.
 /// 
 /// The function transforms an image to compensate radial and tangential lens distortion.
 /// 
@@ -4500,7 +4560,8 @@ pub fn undistort(src: &core::Mat, dst: &mut core::Mat, camera_matrix: &core::Mat
 }
 
 // identifier: cv_warpAffine_Mat_src_Mat_dst_Mat_M_Size_dsize_int_flags_int_borderMode_Scalar_borderValue
-/// Applies an affine transformation to an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Applies an affine transformation to an image.
 /// 
 /// The function warpAffine transforms the source image using the specified matrix:
 /// 
@@ -4523,7 +4584,8 @@ pub fn undistort(src: &core::Mat, dst: &mut core::Mat, camera_matrix: &core::Mat
 /// the "outliers" in the source image are not modified by the function.
 /// * borderValue: value used in case of a constant border; by default, it is 0.
 /// 
-/// @sa  warpPerspective, resize, remap, getRectSubPix, transform
+/// ## See also
+/// warpPerspective, resize, remap, getRectSubPix, transform
 ///
 /// ## C++ default parameters:
 /// * flags: INTER_LINEAR
@@ -4534,7 +4596,8 @@ pub fn warp_affine(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsize: c
 }
 
 // identifier: cv_warpPerspective_Mat_src_Mat_dst_Mat_M_Size_dsize_int_flags_int_borderMode_Scalar_borderValue
-/// Applies a perspective transformation to an image.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Applies a perspective transformation to an image.
 /// 
 /// The function warpPerspective transforms the source image using the specified matrix:
 /// 
@@ -4555,7 +4618,8 @@ pub fn warp_affine(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsize: c
 /// * borderMode: pixel extrapolation method (#BORDER_CONSTANT or #BORDER_REPLICATE).
 /// * borderValue: value used in case of a constant border; by default, it equals 0.
 /// 
-/// @sa  warpAffine, resize, remap, getRectSubPix, perspectiveTransform
+/// ## See also
+/// warpAffine, resize, remap, getRectSubPix, perspectiveTransform
 ///
 /// ## C++ default parameters:
 /// * flags: INTER_LINEAR
@@ -4566,10 +4630,11 @@ pub fn warp_perspective(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsi
 }
 
 // identifier: cv_warpPolar_Mat_src_Mat_dst_Size_dsize_Point2f_center_double_maxRadius_int_flags
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 /// \brief Remaps an image to polar or semilog-polar coordinates space
 /// 
 /// @anchor polar_remaps_reference_image
-/// ![Polar remaps reference](pics/polar_remap_doc.png)
+/// ![Polar remaps reference](https://docs.opencv.org/3.4.6/polar_remap_doc.png)
 /// 
 /// Transform the source image using the following transformation:
 /// <div lang='latex'>
@@ -4653,7 +4718,8 @@ pub fn warp_perspective(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsi
 /// *  To calculate magnitude and angle in degrees #cartToPolar is used internally thus angles are measured from 0 to 360 with accuracy about 0.3 degrees.
 /// *  This function uses #remap. Due to current implementation limitations the size of an input and output images should be less than 32767x32767.
 /// 
-/// @sa cv::remap
+/// ## See also
+/// cv::remap
 pub fn warp_polar(src: &core::Mat, dst: &mut core::Mat, dsize: core::Size, center: core::Point2f, max_radius: f64, flags: i32) -> Result<()> {
     unsafe { sys::cv_imgproc_cv_warpPolar_Mat_src_Mat_dst_Size_dsize_Point2f_center_double_maxRadius_int_flags(src.as_raw_Mat(), dst.as_raw_Mat(), dsize, center, max_radius, flags) }.into_result()
 }
@@ -4662,7 +4728,7 @@ pub fn warp_polar(src: &core::Mat, dst: &mut core::Mat, dsize: core::Size, cente
 /// Performs a marker-based image segmentation using the watershed algorithm.
 /// 
 /// The function implements one of the variants of watershed, non-parametric marker-based segmentation
-/// algorithm, described in @cite Meyer92 .
+/// algorithm, described in [Meyer92](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Meyer92) .
 /// 
 /// Before passing the image to the function, you have to roughly outline the desired regions in the
 /// image markers with positive (\>0) indices. So, every region is represented as one or more connected
@@ -4683,7 +4749,8 @@ pub fn warp_polar(src: &core::Mat, dst: &mut core::Mat, dsize: core::Size, cente
 /// * markers: Input/output 32-bit single-channel image (map) of markers. It should have the same
 /// size as image .
 /// 
-/// @sa findContours
+/// ## See also
+/// findContours
 /// 
 /// @ingroup imgproc_misc
 pub fn watershed(image: &core::Mat, markers: &mut core::Mat) -> Result<()> {
@@ -4849,7 +4916,7 @@ impl<'a> GeneralizedHough + 'a {
 // Generating impl for trait cv::GeneralizedHoughBallard (trait)
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
-/// Detects position only without translation and rotation @cite Ballard1981 .
+/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ballard1981) .
 pub trait GeneralizedHoughBallard : crate::imgproc::GeneralizedHough {
     #[doc(hidden)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
     // identifier: cv_GeneralizedHoughBallard_setLevels_int_levels
@@ -4881,7 +4948,7 @@ impl<'a> GeneralizedHoughBallard + 'a {
 // Generating impl for trait cv::GeneralizedHoughGuil (trait)
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
-/// Detects position, translation and rotation @cite Guil1999 .
+/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Guil1999) .
 pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
     #[doc(hidden)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
     // identifier: cv_GeneralizedHoughGuil_setXi_double_xi
@@ -5085,7 +5152,7 @@ impl LineIterator {
 // Generating impl for trait cv::LineSegmentDetector (trait)
 /// Line segment detector class
 /// 
-/// following the algorithm described at @cite Rafael12 .
+/// following the algorithm described at [Rafael12](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Rafael12) .
 /// 
 /// 
 /// Note: Implementation has been removed due original code license conflict
@@ -5096,7 +5163,7 @@ pub trait LineSegmentDetector : core::Algorithm {
     /// 
     /// This is the output of the default parameters of the algorithm on the above shown image.
     /// 
-    /// ![image](pics/building_lsd.png)
+    /// ![image](https://docs.opencv.org/3.4.6/building_lsd.png)
     /// 
     /// ## Parameters
     /// * _image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -5347,7 +5414,7 @@ impl Subdiv2D {
     /// *   PREV_AROUND_LEFT previous around the left facet (reversed eOnext )
     /// *   PREV_AROUND_RIGHT previous around the right facet (reversed eDnext )
     /// 
-    /// ![sample output](pics/quadedge.png)
+    /// ![sample output](https://docs.opencv.org/3.4.6/quadedge.png)
     /// 
     /// @returns edge ID related to the input edge.
     pub fn get_edge(&self, edge: i32, next_edge_type: i32) -> Result<i32> {

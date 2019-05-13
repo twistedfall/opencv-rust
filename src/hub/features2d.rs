@@ -1,13 +1,5 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! 2D Features Framework
-//! 
 //! # 2D Features Framework
-//! @{
-//! Feature Detection and Description
-//! 
 //! # Feature Detection and Description
-//! Descriptor Matchers
-//! 
 //! # Descriptor Matchers
 //! 
 //! Matchers of keypoint descriptors in OpenCV have wrappers with a common interface that enables you to
@@ -24,11 +16,7 @@
 //! *   An example on one to many image matching can be found at
 //! opencv_source_code/samples/cpp/matching_to_many_images.cpp
 //! 
-//! Drawing Function of Keypoints and Matches
-//! 
 //! # Drawing Function of Keypoints and Matches
-//! Object Categorization
-//! 
 //! # Object Categorization
 //! 
 //! This section describes approaches based on local 2D features and used to categorize objects.
@@ -39,8 +27,6 @@
 //! opencv_source_code/samples/cpp/bagofwords_classification.cpp
 //! *   (Python) An example using the features2D framework to perform object categorization can be
 //! found at opencv_source_code/samples/python/find_obj.py
-//! 
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -131,7 +117,7 @@ pub fn AGAST(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: 
 /// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 /// The 32-bit binary tree tables were generated automatically from original code using perl script.
 /// The perl script and examples of tree generation are placed in features2d/doc folder.
-/// Detects corners using the AGAST algorithm by @cite mair2010_agast .
+/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 pub fn AGAST_with_type(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<()> {
     unsafe { sys::cv_features2d_cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
 }
@@ -159,7 +145,7 @@ pub fn FAST(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: i
 /// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 /// FastFeatureDetector::TYPE_5_8
 /// 
-/// Detects corners using the FAST algorithm by @cite Rosten06 .
+/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Rosten06) .
 /// 
 /// 
 /// Note: In Python API, types are given as cv2.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -265,7 +251,7 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
 }
 
 // Generating impl for trait cv::AKAZE (trait)
-/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in @cite ANB13.
+/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_ANB13).
 /// 
 /// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
 /// 
@@ -742,7 +728,7 @@ impl<'a> BOWTrainer + 'a {
 }
 
 // boxed class cv::BRISK
-/// Class implementing the BRISK keypoint detector and descriptor extractor, described in @cite LCS11 .
+/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_LCS11) .
 #[allow(dead_code)]
 pub struct BRISK {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -1432,7 +1418,7 @@ impl<'a> GFTTDetector + 'a {
 }
 
 // Generating impl for trait cv::KAZE (trait)
-/// Class implementing the KAZE keypoint detector and descriptor extractor, described in @cite ABD12 .
+/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_ABD12) .
 /// 
 /// 
 /// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
@@ -1602,10 +1588,10 @@ impl KeyPointsFilter {
 /// 
 /// - there are two different implementation of %MSER: one for grey image, one for color image
 /// 
-/// - the grey image algorithm is taken from: @cite nister2008linear ;  the paper claims to be faster
+/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 /// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 /// 
-/// - the color image algorithm is taken from: @cite forssen2007maximally ; it should be much slower
+/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 /// than grey image method ( 3~4 times ); the chi_table.h file is taken directly from paper's source
 /// code which is distributed under GPL.
 /// 
@@ -1673,7 +1659,8 @@ pub trait MSER : crate::features2d::Feature2D {
 impl<'a> MSER + 'a {
 
     // identifier: cv_MSER_create_int__delta_int__min_area_int__max_area_double__max_variation_double__min_diversity_int__max_evolution_double__area_threshold_double__min_margin_int__edge_blur_size
-    /// Full consturctor for %MSER detector
+    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    ///  Full consturctor for %MSER detector
     /// 
     /// ## Parameters
     /// * _delta: it compares <span lang='latex'>(size_{i}-size_{i-delta})/size_{i-delta}</span>
@@ -1705,7 +1692,7 @@ impl<'a> MSER + 'a {
 // Generating impl for trait cv::ORB (trait)
 /// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 /// 
-/// described in @cite RRKB11 . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+/// described in [RRKB11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 /// the strongest features using FAST or Harris response, finds their orientation using first-order
 /// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 /// k-tuples) are rotated according to the measured orientation).
@@ -1860,7 +1847,8 @@ impl<'a> ORB + 'a {
 }
 
 // boxed class cv::SimpleBlobDetector
-/// Class for extracting blobs from an image. :
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Class for extracting blobs from an image. :
 /// 
 /// The class implements a simple algorithm for extracting blobs from an image:
 /// 

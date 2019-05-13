@@ -1,15 +1,6 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! Image file reading and writing
-//! 
 //! # Image file reading and writing
-//! @{
-//! C API
-//! 
 //! # C API
-//! iOS glue
-//! 
 //! # iOS glue
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -214,7 +205,8 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 /// * filename: Name of file to be loaded.
 /// * flags: Flag that can take values of cv::ImreadModes, default with cv::IMREAD_ANYCOLOR.
 /// * mats: A vector of Mat objects holding each page, if more than one.
-/// @sa cv::imread
+/// ## See also
+/// cv::imread
 ///
 /// ## C++ default parameters:
 /// * flags: IMREAD_ANYCOLOR

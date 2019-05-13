@@ -1,6 +1,3 @@
-//! <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
-//! High-level GUI
-//! 
 //! # High-level GUI
 //! 
 //! While OpenCV was designed for use in full-scale applications and can be used within functionally
@@ -13,16 +10,10 @@
 //! *   Create and manipulate windows that can display images and "remember" their content (no need to
 //! handle repaint events from OS).
 //! *   Add trackbars to the windows, handle simple mouse events as well as keyboard commands.
-//! 
-//! @{
-//! OpenGL support
-//! 
 //! # OpenGL support
-//! Qt New Functions
-//! 
 //! # Qt New Functions
 //! 
-//! ![image](pics/qtgui.png)
+//! ![image](https://docs.opencv.org/3.4.6/qtgui.png)
 //! 
 //! This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 //! a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -83,8 +74,6 @@
 //! 
 //! 
 //! 
-//! WinRT support
-//! 
 //! # WinRT support
 //! 
 //! This figure explains new functionality implemented with WinRT GUI. The new GUI provides an Image control,
@@ -124,10 +113,7 @@
 //! ```
 //! 
 //! 
-//! C API
-//! 
 //! # C API
-//! @}
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
 use crate::{Error, Result, core, sys, types};
@@ -707,7 +693,8 @@ pub fn get_trackbar_pos(trackbarname: &str, winname: &str) -> Result<i32> {
 /// ## Parameters
 /// * winname: Name of the window.
 /// 
-/// @sa resizeWindow moveWindow
+/// ## See also
+/// resizeWindow moveWindow
 pub fn get_window_image_rect(winname: &str) -> Result<core::Rect> {
     string_arg!(winname);
     unsafe { sys::cv_highgui_cv_getWindowImageRect_String_winname(winname.as_ptr()) }.into_result()
@@ -722,7 +709,8 @@ pub fn get_window_image_rect(winname: &str) -> Result<core::Rect> {
 /// * winname: Name of the window.
 /// * prop_id: Window property to retrieve. The following operation flags are available: (cv::WindowPropertyFlags)
 /// 
-/// @sa setWindowProperty
+/// ## See also
+/// setWindowProperty
 pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
     string_arg!(winname);
     unsafe { sys::cv_highgui_cv_getWindowProperty_String_winname_int_prop_id(winname.as_ptr(), prop_id) }.into_result()
@@ -1133,7 +1121,8 @@ pub fn wait_key_ex(delay: i32) -> Result<i32> {
 }
 
 // identifier: cv_waitKey_int_delay
-/// Waits for a pressed key.
+/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+///  Waits for a pressed key.
 /// 
 /// The function waitKey waits for a key event infinitely (when <span lang='latex'>\texttt{delay}\leq 0</span> ) or for delay
 /// milliseconds, when it is positive. Since the OS has a minimum time between switching threads, the
