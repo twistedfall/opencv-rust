@@ -1,4 +1,4 @@
-Quick update: this crate has been updated to work with OpenCV 3.4.5, some of
+Quick update: this crate has been updated to work with OpenCV 3.4.6, some of
 the following doc is outdated:
 
 ## Rust OpenCV bindings
@@ -28,7 +28,7 @@ You will also need python.
 [API Documentation](https://docs.rs/opencv)
 — or what I managed to extract from opencv widely inconsistent doxygen. At
 least you can see what has been ported or not to rust and how. You'll probably
-need to refer to the official [OpenCV C++ documentation](https://docs.opencv.org/3.4.5/).
+need to refer to the official [OpenCV C++ documentation](https://docs.opencv.org/3.4.6/).
 
 All the major modules in the C++ API
 are merged together in a huge cv:: namespace, leaving the client developper
