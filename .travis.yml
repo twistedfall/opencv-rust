@@ -41,25 +41,16 @@ env:
     - OPENCV_VERSION=3.4.6
 
 before_script:
-  - |
-    if [ ! -e /tmp/opencv/opencv-$OPENCV_VERSION/release/unix-install ]
-    then
-      mkdir -p /tmp/opencv
-      cd /tmp/opencv
-      rm -rf opencv-$OPENCV_VERSION
-      wget -q https://github.com/opencv/opencv/archive/$OPENCV_VERSION.zip
-      unzip -q $OPENCV_VERSION.zip
-      cd opencv-$OPENCV_VERSION
-      mkdir release install
-      cd release
-      Atlas_ROOT_DIR=/usr/include/ cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DINSTALL_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_opencv_apps= -DWITH_IPP=OFF -DPYTHON_EXECUTABLE=OFF -DINSTALL_PYTHON_EXAMPLES=OFF -DWITH_LAPACK=ON -DWITH_EIGEN=ON -DBUILD_SHARED_LIBS=ON -DWITH_TBB=ON -DOPENCV_ENABLE_NONFREE=ON -DCMAKE_INSTALL_PREFIX=/usr ..
-      sudo make -j4 install
-    fi
-  - tree /tmp/opencv/opencv-$OPENCV_VERSION/release
+  - wget -q -O- https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz | tar -xzC /home/travis/build
+  - mkdir -p /home/travis/build/opencv-$OPENCV_VERSION-build
+  - pushd /home/travis/build/opencv-$OPENCV_VERSION-build
+  - Atlas_ROOT_DIR=/usr/include/ cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DINSTALL_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_opencv_apps= -DWITH_IPP=OFF -DPYTHON_EXECUTABLE=OFF -DINSTALL_PYTHON_EXAMPLES=OFF -DWITH_LAPACK=ON -DWITH_EIGEN=ON -DBUILD_SHARED_LIBS=ON -DWITH_TBB=ON -DOPENCV_ENABLE_NONFREE=ON -DCMAKE_INSTALL_PREFIX=/usr /home/travis/build/opencv-$OPENCV_VERSION
+  - sudo make -j4 install
+  - tree .
+  - popd
   - pkg-config --cflags opencv
   - pkg-config --libs opencv
   - gcc --version
-  - cd /home/travis/build/twistedfall/opencv-rust
 
 matrix:
   allow_failures:
