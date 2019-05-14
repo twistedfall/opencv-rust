@@ -227,7 +227,7 @@ pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut cor
 }
 
 // identifier: cv_denoise_TVL1_VectorOfMat_observations_Mat_result_double_lambda_int_niters
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Primal-dual algorithm is an algorithm for solving special types of variational problems (that is,
 /// finding a function to minimize some functional). As the image denoising, in particular, may be seen
 /// as the variational problem, primal-dual algorithm then can be used to perform denoising and this is

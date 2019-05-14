@@ -647,7 +647,7 @@ pub struct KeyPoint {
     pub class_id: i32,
 }
 
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  struct returned by cv::moments
 /// 
 /// The spatial moments <span lang='latex'>\texttt{Moments::m}_{ji}</span> are computed as:
@@ -931,7 +931,7 @@ pub fn cholesky_1(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t
 }
 
 // identifier: cv_LUT_Mat_src_Mat_lut_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs a look-up table transform of an array.
 /// 
 /// The function LUT fills the output array with values from the look-up table. Indices of the entries
@@ -964,7 +964,7 @@ pub fn lu_1(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n: i
 }
 
 // identifier: cv_Mahalanobis_Mat_v1_Mat_v2_Mat_icovar
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the Mahalanobis distance between two vectors.
 /// 
 /// The function cv::Mahalanobis calculates and returns the weighted distance between two vectors:
@@ -1022,7 +1022,7 @@ pub fn pca_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat,
 }
 
 // identifier: cv_PSNR_Mat_src1_Mat_src2
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
 /// 
 /// This function calculates the Peak Signal-to-Noise Ratio (PSNR) image quality metric in decibels (dB), between two input arrays src1 and src2. Arrays must have depth CV_8U.
@@ -1069,7 +1069,7 @@ pub fn abs_1(a: &core::softfloat) -> Result<core::softfloat> {
 }
 
 // identifier: cv_absdiff_Mat_src1_Mat_src2_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the per-element absolute difference between two arrays or between an array and a scalar.
 /// 
 /// The function cv::absdiff calculates:
@@ -1100,7 +1100,7 @@ pub fn absdiff(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Resul
 }
 
 // identifier: cv_addWeighted_Mat_src1_double_alpha_Mat_src2_double_beta_double_gamma_Mat_dst_int_dtype
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the weighted sum of two arrays.
 /// 
 /// The function addWeighted calculates the weighted sum of two arrays as follows:
@@ -1134,7 +1134,7 @@ pub fn add_weighted(src1: &core::Mat, alpha: f64, src2: &core::Mat, beta: f64, g
 }
 
 // identifier: cv_add_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the per-element sum of two arrays or an array and a scalar.
 /// 
 /// The function add calculates:
@@ -1183,7 +1183,7 @@ pub fn add(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core:
 }
 
 // identifier: cv_alignSize_size_t_sz_int_n
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Aligns a buffer size to the specified number of bytes.
 /// 
 /// The function returns the minimum number that is greater than or equal to sz and is divisible by n :
@@ -1212,7 +1212,7 @@ pub fn batch_distance(src1: &core::Mat, src2: &core::Mat, dist: &mut core::Mat, 
 }
 
 // identifier: cv_bitwise_and_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  computes bitwise conjunction of the two arrays (dst = src1 & src2)
 /// Calculates the per-element bit-wise conjunction of two arrays or an
 /// array and a scalar.
@@ -1246,7 +1246,7 @@ pub fn bitwise_and(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask
 }
 
 // identifier: cv_bitwise_not_Mat_src_Mat_dst_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///   Inverts every bit of an array.
 /// 
 /// The function cv::bitwise_not calculates per-element bit-wise inversion of the input
@@ -1269,7 +1269,7 @@ pub fn bitwise_not(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Re
 }
 
 // identifier: cv_bitwise_or_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the per-element bit-wise disjunction of two arrays or an
 /// array and a scalar.
 /// 
@@ -1302,7 +1302,7 @@ pub fn bitwise_or(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask:
 }
 
 // identifier: cv_bitwise_xor_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the per-element bit-wise "exclusive or" operation on two
 /// arrays or an array and a scalar.
 /// 
@@ -1403,7 +1403,7 @@ pub fn calc_covar_matrix(samples: &core::Mat, nsamples: i32, covar: &core::Mat, 
 }
 
 // identifier: cv_cartToPolar_Mat_x_Mat_y_Mat_magnitude_Mat_angle_bool_angleInDegrees
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the magnitude and angle of 2D vectors.
 /// 
 /// The function cv::cartToPolar calculates either the magnitude, angle, or both
@@ -1480,7 +1480,7 @@ pub fn check_range(a: &core::Mat, quiet: bool, pos: &mut core::Point, min_val: f
 }
 
 // identifier: cv_compare_Mat_src1_Mat_src2_Mat_dst_int_cmpop
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs the per-element comparison of two arrays or an array and scalar value.
 /// 
 /// The function compares:
@@ -1514,7 +1514,7 @@ pub fn compare(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, cmpop: i
 }
 
 // identifier: cv_completeSymm_Mat_m_bool_lowerToUpper
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Copies the lower or the upper half of a square matrix to its another half.
 /// 
 /// The function cv::completeSymm copies the lower or the upper half of a square matrix to
@@ -1553,7 +1553,7 @@ pub fn convert_fp16(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 }
 
 // identifier: cv_convertScaleAbs_Mat_src_Mat_dst_double_alpha_double_beta
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Scales, calculates absolute values, and converts the result to 8-bit.
 /// 
 /// On each element of the input array, the function convertScaleAbs
@@ -1654,7 +1654,7 @@ pub fn cos(a: &core::softdouble) -> Result<core::softdouble> {
 }
 
 // identifier: cv_countNonZero_Mat_src
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Counts non-zero array elements.
 /// 
 /// The function returns the number of non-zero elements in src :
@@ -1668,7 +1668,7 @@ pub fn count_non_zero(src: &core::Mat) -> Result<i32> {
 }
 
 // identifier: cv_cubeRoot_float_val
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Computes the cube root of an argument.
 /// 
 /// The function cubeRoot computes <span lang='latex'>\sqrt[3]{\texttt{val}}</span>. Negative arguments are handled correctly.
@@ -1691,7 +1691,7 @@ pub fn cv_abs_1(x: u16) -> Result<i32> {
 }
 
 // identifier: cv_dct_Mat_src_Mat_dst_int_flags
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs a forward or inverse discrete Cosine transform of 1D or 2D array.
 /// 
 /// The function cv::dct performs a forward or inverse discrete Cosine transform (DCT) of a 1D or 2D
@@ -1773,7 +1773,7 @@ pub fn determinant(mtx: &core::Mat) -> Result<f64> {
 }
 
 // identifier: cv_dft_Mat_src_Mat_dst_int_flags_int_nonzeroRows
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs a forward or inverse Discrete Fourier transform of a 1D or 2D floating-point array.
 /// 
 /// The function cv::dft performs one of the following:
@@ -1945,7 +1945,7 @@ pub fn div_up_1(a: size_t, b: u32) -> Result<size_t> {
 }
 
 // identifier: cv_divide_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs per-element division of two arrays or a scalar by an array.
 /// 
 /// The function cv::divide divides one array by another:
@@ -2046,7 +2046,7 @@ pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Re
 }
 
 // identifier: cv_exp_Mat_src_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the exponent of every array element.
 /// 
 /// The function cv::exp calculates the exponent of every element of the input
@@ -2140,7 +2140,7 @@ pub fn find_non_zero(src: &core::Mat, idx: &mut core::Mat) -> Result<()> {
 }
 
 // identifier: cv_flip_Mat_src_Mat_dst_int_flipCode
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Flips a 2D array around vertical, horizontal, or both axes.
 /// 
 /// The function cv::flip flips the array in one of three different ways (row
@@ -2179,7 +2179,7 @@ pub fn flip(src: &core::Mat, dst: &mut core::Mat, flip_code: i32) -> Result<()> 
 }
 
 // identifier: cv_gemm_Mat_src1_Mat_src2_double_alpha_Mat_src3_double_beta_Mat_dst_int_flags
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs generalized matrix multiplication.
 /// 
 /// The function cv::gemm performs generalized matrix multiplication similar to the
@@ -3102,7 +3102,7 @@ pub fn idft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32)
 }
 
 // identifier: cv_inRange_Mat_src_Mat_lowerb_Mat_upperb_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///   Checks if array elements lie between the elements of two other arrays.
 /// 
 /// The function checks the range as follows:
@@ -3243,7 +3243,7 @@ pub fn use_ipp__not_exact() -> Result<bool> {
 }
 
 // identifier: cv_kmeans_Mat_data_int_K_Mat_bestLabels_TermCriteria_criteria_int_attempts_int_flags_Mat_centers
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Finds centers of clusters and groups input samples around the clusters.
 /// 
 /// The function kmeans implements a k-means algorithm that finds the centers of cluster_count clusters
@@ -3286,7 +3286,7 @@ pub fn kmeans(data: &core::Mat, k: i32, best_labels: &mut core::Mat, criteria: &
 }
 
 // identifier: cv_log_Mat_src_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the natural logarithm of every array element.
 /// 
 /// The function cv::log calculates the natural logarithm of every element of the input array:
@@ -3319,7 +3319,7 @@ pub fn log_4(a: &core::softfloat) -> Result<core::softfloat> {
 }
 
 // identifier: cv_magnitude_Mat_x_Mat_y_Mat_magnitude
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the magnitude of 2D vectors.
 /// 
 /// The function cv::magnitude calculates the magnitude of 2D vectors formed
@@ -3337,7 +3337,7 @@ pub fn magnitude_2(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> R
 }
 
 // identifier: cv_max_Mat_src1_Mat_src2_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates per-element maximum of two arrays or an array and a scalar.
 /// 
 /// The function cv::max calculates the per-element maximum of two arrays:
@@ -3365,7 +3365,7 @@ pub fn max_1(a: &core::softfloat, b: &core::softfloat) -> Result<core::softfloat
 }
 
 // identifier: cv_meanStdDev_Mat_src_Mat_mean_Mat_stddev_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 /// Calculates a mean and standard deviation of array elements.
 /// 
 /// The function cv::meanStdDev calculates the mean and the standard deviation M
@@ -3396,7 +3396,7 @@ pub fn mean_std_dev(src: &core::Mat, mean: &mut core::Mat, stddev: &mut core::Ma
 }
 
 // identifier: cv_mean_Mat_src_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates an average (mean) of array elements.
 /// 
 /// The function cv::mean calculates the mean value M of array elements,
@@ -3518,7 +3518,7 @@ pub fn min_max_loc(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_lo
 }
 
 // identifier: cv_min_Mat_src1_Mat_src2_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates per-element minimum of two arrays or an array and a scalar.
 /// 
 /// The function cv::min calculates the per-element minimum of two arrays:
@@ -3671,7 +3671,7 @@ pub fn mul_spectrums(a: &core::Mat, b: &core::Mat, c: &mut core::Mat, flags: i32
 }
 
 // identifier: cv_mulTransposed_Mat_src_Mat_dst_bool_aTa_Mat_delta_double_scale_int_dtype
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the product of a matrix and its transposition.
 /// 
 /// The function cv::mulTransposed calculates the product of src and its
@@ -3711,7 +3711,7 @@ pub fn mul_transposed(src: &core::Mat, dst: &mut core::Mat, a_ta: bool, delta: &
 }
 
 // identifier: cv_multiply_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the per-element scaled product of two arrays.
 /// 
 /// The function multiply calculates the per-element product of two arrays:
@@ -3779,7 +3779,7 @@ pub fn norm_with_type(src1: &core::Mat, src2: &core::Mat, norm_type: i32, mask: 
 }
 
 // identifier: cv_norm_Mat_src1_int_normType_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the  absolute norm of an array.
 /// 
 /// This version of #norm calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
@@ -3825,7 +3825,7 @@ pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
 }
 
 // identifier: cv_normalize_Mat_src_Mat_dst_double_alpha_double_beta_int_norm_type_int_dtype_Mat_mask
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Normalizes the norm or value range of an array.
 /// 
 /// The function cv::normalize normalizes scale and shift the input array elements so that
@@ -3916,7 +3916,7 @@ pub fn patch_na_ns(a: &mut core::Mat, val: f64) -> Result<()> {
 }
 
 // identifier: cv_perspectiveTransform_Mat_src_Mat_dst_Mat_m
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs the perspective matrix transformation of vectors.
 /// 
 /// The function cv::perspectiveTransform transforms every element of src by
@@ -3949,7 +3949,7 @@ pub fn perspective_transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat
 }
 
 // identifier: cv_phase_Mat_x_Mat_y_Mat_angle_bool_angleInDegrees
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the rotation angle of 2D vectors.
 /// 
 /// The function cv::phase calculates the rotation angle of each 2D vector that
@@ -3974,7 +3974,7 @@ pub fn phase(x: &core::Mat, y: &core::Mat, angle: &mut core::Mat, angle_in_degre
 }
 
 // identifier: cv_polarToCart_Mat_magnitude_Mat_angle_Mat_x_Mat_y_bool_angleInDegrees
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates x and y coordinates of 2D vectors from their magnitude and angle.
 /// 
 /// The function cv::polarToCart calculates the Cartesian coordinates of each 2D
@@ -4004,7 +4004,7 @@ pub fn polar_to_cart(magnitude: &core::Mat, angle: &core::Mat, x: &mut core::Mat
 }
 
 // identifier: cv_pow_Mat_src_double_power_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Raises every array element to a power.
 /// 
 /// The function cv::pow raises every element of the input array to power :
@@ -4078,7 +4078,7 @@ pub fn randn(dst: &mut core::Mat, mean: &core::Mat, stddev: &core::Mat) -> Resul
 }
 
 // identifier: cv_randu_Mat_dst_Mat_low_Mat_high
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Generates a single uniformly-distributed random number or an array of random numbers.
 /// 
 /// Non-template variant of the function fills the matrix dst with uniformly-distributed
@@ -4140,7 +4140,7 @@ pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
 }
 
 // identifier: cv_repeat_Mat_src_int_ny_int_nx_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Fills the output array with repeated copies of the input array.
 /// 
 /// The function cv::repeat duplicates the input array one or more times along each of the two axes:
@@ -4194,7 +4194,7 @@ pub fn round_up_1(a: size_t, b: u32) -> Result<size_t> {
 }
 
 // identifier: cv_scaleAdd_Mat_src1_double_alpha_Mat_src2_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the sum of a scaled array and another array.
 /// 
 /// The function scaleAdd is one of the classical primitive linear algebra operations, known as DAXPY
@@ -4231,7 +4231,7 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 }
 
 // identifier: cv_setIdentity_Mat_mtx_Scalar_s
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Initializes a scaled identity matrix.
 /// 
 /// The function cv::setIdentity initializes a scaled identity matrix:
@@ -4326,7 +4326,7 @@ pub fn sin(a: &core::softdouble) -> Result<core::softdouble> {
 }
 
 // identifier: cv_solveCubic_Mat_coeffs_Mat_roots
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Finds the real roots of a cubic equation.
 /// 
 /// The function solveCubic finds the real roots of a cubic equation:
@@ -4345,7 +4345,7 @@ pub fn solve_cubic(coeffs: &core::Mat, roots: &mut core::Mat) -> Result<i32> {
 }
 
 // identifier: cv_solveLP_Mat_Func_Mat_Constr_Mat_z
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Solve given (non-integer) linear programming problem using the Simplex Algorithm (Simplex Method).
 /// 
 /// What we mean here by "linear programming problem" (or LP problem, for short) can be formulated as:
@@ -4382,7 +4382,7 @@ pub fn solve_lp(func: &core::Mat, constr: &core::Mat, z: &core::Mat) -> Result<i
 }
 
 // identifier: cv_solvePoly_Mat_coeffs_Mat_roots_int_maxIters
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Finds the real or complex roots of a polynomial equation.
 /// 
 /// The function cv::solvePoly finds real and complex roots of a polynomial equation:
@@ -4399,7 +4399,7 @@ pub fn solve_poly(coeffs: &core::Mat, roots: &mut core::Mat, max_iters: i32) -> 
 }
 
 // identifier: cv_solve_Mat_src1_Mat_src2_Mat_dst_int_flags
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Solves one or more linear systems or least-squares problems.
 /// 
 /// The function cv::solve solves a linear system or least-squares problem (the
@@ -4485,7 +4485,7 @@ pub fn split(m: &core::Mat, mv: &mut types::VectorOfMat) -> Result<()> {
 }
 
 // identifier: cv_split_Mat_src_Mat_mvbegin
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Divides a multi-channel array into several single-channel arrays.
 /// 
 /// The function cv::split splits a multi-channel array into separate single-channel arrays:
@@ -4532,7 +4532,7 @@ pub fn sqrt_4(a: &core::softfloat) -> Result<core::softfloat> {
 }
 
 // identifier: cv_subtract_Mat_src1_Mat_src2_Mat_dst_Mat_mask_int_dtype
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Calculates the per-element difference between two arrays or array and a scalar.
 /// 
 /// The function subtract calculates:
@@ -4610,7 +4610,7 @@ pub fn tempfile(suffix: &str) -> Result<String> {
 }
 
 // identifier: cv_trace_Mat_mtx
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Returns the trace of a matrix.
 /// 
 /// The function cv::trace returns the sum of the diagonal elements of the
@@ -4623,7 +4623,7 @@ pub fn trace(mtx: &core::Mat) -> Result<core::Scalar> {
 }
 
 // identifier: cv_transform_Mat_src_Mat_dst_Mat_m
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Performs the matrix transformation of every array element.
 /// 
 /// The function cv::transform performs the matrix transformation of every
@@ -4654,7 +4654,7 @@ pub fn transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<
 }
 
 // identifier: cv_transpose_Mat_src_Mat_dst
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Transposes a matrix.
 /// 
 /// The function cv::transpose transposes the matrix src :
@@ -5217,7 +5217,7 @@ pub trait DownhillSolver : core::MinProblemSolver {
     }
     
     // identifier: cv_DownhillSolver_setInitStep_Mat_step
-    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
     ///  Sets the initial step that will be used in downhill simplex algorithm.
     /// 
     /// Step, together with initial point (givin in DownhillSolver::minimize) are two `n`-dimensional
@@ -5546,7 +5546,7 @@ impl LDA {
 }
 
 // boxed class cv::Mat
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  n-dimensional dense array class \anchor CVMat_Details
 /// 
 /// The class Mat represents an n-dimensional dense numerical single-channel or multi-channel array. It
@@ -6215,7 +6215,7 @@ impl Mat {
     }
     
     // identifier: cv_Mat_convertTo_const_Mat_m_int_rtype_double_alpha_double_beta
-    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
     ///  Converts an array to another data type with optional scaling.
     /// 
     /// The method converts source pixel values to the target data type. saturate_cast\<\> is applied at
@@ -7698,7 +7698,7 @@ impl core::Param {
 }
 
 // boxed class cv::Range
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Template class specifying a continuous subsequence (slice) of a sequence.
 /// 
 /// The class is used to specify a row or a column span in a matrix ( Mat ) and for many other purposes.

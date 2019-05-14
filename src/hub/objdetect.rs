@@ -115,7 +115,7 @@ pub fn group_rectangle_weights(rect_list: &types::VectorOfRect, weights: &types:
 }
 
 // identifier: cv_groupRectangles_VectorOfRect_rectList_int_groupThreshold_double_eps
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Groups the object candidate rectangles.
 /// 
 /// ## Parameters

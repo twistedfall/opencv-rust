@@ -69,7 +69,7 @@ pub fn build_optical_flow_pyramid(img: &core::Mat, pyramid: &mut types::VectorOf
 }
 
 // identifier: cv_calcOpticalFlowFarneback_Mat_prev_Mat_next_Mat_flow_double_pyr_scale_int_levels_int_winsize_int_iterations_int_poly_n_double_poly_sigma_int_flags
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Computes a dense optical flow using the Gunnar Farneback's algorithm.
 /// 
 /// ## Parameters
@@ -235,7 +235,7 @@ pub fn create_opt_flow__dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
 }
 
 // identifier: cv_estimateRigidTransform_Mat_src_Mat_dst_bool_fullAffine
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Computes an optimal affine transformation between two 2D point sets.
 /// 
 /// ## Parameters
@@ -284,7 +284,7 @@ pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, w
 }
 
 // identifier: cv_findTransformECC_Mat_templateImage_Mat_inputImage_Mat_warpMatrix_int_motionType_TermCriteria_criteria_Mat_inputMask_int_gaussFiltSize
-/// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 ///  Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_EP08) .
 /// 
 /// ## Parameters
@@ -700,7 +700,7 @@ pub trait BackgroundSubtractorMOG2 : crate::video::BackgroundSubtractor {
     }
     
     // identifier: cv_BackgroundSubtractorMOG2_apply_Mat_image_Mat_fgmask_double_learningRate
-    /// <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
     ///  Computes a foreground mask.
     /// 
     /// ## Parameters
