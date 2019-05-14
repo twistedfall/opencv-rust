@@ -2742,7 +2742,7 @@ class RustWrapperGenerator(object):
         text = re.sub("^-  (.*)", "*  \\1", text, 0, re.M)
         # math expressions
         if r"\f" in text:
-            text = '<script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>\n' + text
+            text = '<script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>\n' + text
         text = re.sub(r"\\f\[", "<div lang='latex'>", text, 0, re.M)
         text = re.sub(r"\\f\]", "</div>", text, 0, re.M)
         text = re.sub(r"\\f\$(.*?)\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
