@@ -37,9 +37,8 @@ addons:
       - tree
 
 env:
-  matrix:
-    - OPENCV_VERSION=3.4.6
-    - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
+  - OPENCV_VERSION=3.4.6
+  - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
 
 before_script:
   - wget -q -O- https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz | tar -xzC ~/build
