@@ -1,4 +1,3 @@
-//! <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 //! # Image Processing
 //! 
 //! This module includes image-processing functions.
@@ -837,7 +836,6 @@ pub fn cv_match_shapes(object1: &c_void, object2: &c_void, method: i32, paramete
 }
 
 // identifier: cv_Canny_Mat_dx_Mat_dy_Mat_edges_double_threshold1_double_threshold2_bool_L2gradient
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 /// \overload
 /// 
 /// Finds edges in an image using the Canny algorithm with custom image gradient.
@@ -860,8 +858,7 @@ pub fn canny_derivative(dx: &core::Mat, dy: &core::Mat, edges: &mut core::Mat, t
 }
 
 // identifier: cv_Canny_Mat_image_Mat_edges_double_threshold1_double_threshold2_int_apertureSize_bool_L2gradient
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Canny86) .
+/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Canny86) .
 /// 
 /// The function finds edges in the input image and marks them in the output map edges using the
 /// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -887,8 +884,7 @@ pub fn canny(image: &core::Mat, edges: &mut core::Mat, threshold1: f64, threshol
 }
 
 // identifier: cv_EMD_Mat_signature1_Mat_signature2_int_distType_Mat_cost_float_X_lowerBound_Mat_flow
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Computes the "minimal work" distance between two weighted point configurations.
+/// Computes the "minimal work" distance between two weighted point configurations.
 /// 
 /// The function computes the earth mover distance and/or a lower boundary of the distance between the
 /// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RubnerSept98),
@@ -962,8 +958,7 @@ pub fn gaussian_blur(src: &core::Mat, dst: &mut core::Mat, ksize: core::Size, si
 }
 
 // identifier: cv_HoughCircles_Mat_image_Mat_circles_int_method_double_dp_double_minDist_double_param1_double_param2_int_minRadius_int_maxRadius
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Finds circles in a grayscale image using the Hough transform.
+/// Finds circles in a grayscale image using the Hough transform.
 /// 
 /// The function finds circles in a grayscale image using a modification of the Hough transform.
 /// 
@@ -1010,8 +1005,7 @@ pub fn hough_circles(image: &core::Mat, circles: &mut core::Mat, method: i32, dp
 }
 
 // identifier: cv_HoughLinesP_Mat_image_Mat_lines_double_rho_double_theta_int_threshold_double_minLineLength_double_maxLineGap
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Finds line segments in a binary image using the probabilistic Hough transform.
+/// Finds line segments in a binary image using the probabilistic Hough transform.
 /// 
 /// The function implements the probabilistic Hough transform algorithm for line detection, described
 /// in [Matas00](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Matas00)
@@ -1049,8 +1043,7 @@ pub fn hough_lines_p(image: &core::Mat, lines: &mut core::Mat, rho: f64, theta: 
 }
 
 // identifier: cv_HoughLinesPointSet_Mat__point_Mat__lines_int_lines_max_int_threshold_double_min_rho_double_max_rho_double_rho_step_double_min_theta_double_max_theta_double_theta_step
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Finds lines in a set of points using the standard Hough transform.
+/// Finds lines in a set of points using the standard Hough transform.
 /// 
 /// The function finds lines in a set of points using a modification of the Hough transform.
 /// @include snippets/imgproc_HoughLinesPointSet.cpp
@@ -1072,8 +1065,7 @@ pub fn hough_lines_point_set(_point: &core::Mat, _lines: &mut core::Mat, lines_m
 }
 
 // identifier: cv_HoughLines_Mat_image_Mat_lines_double_rho_double_theta_int_threshold_double_srn_double_stn_double_min_theta_double_max_theta
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Finds lines in a binary image using the standard Hough transform.
+/// Finds lines in a binary image using the standard Hough transform.
 /// 
 /// The function implements the standard or standard multi-scale Hough transform algorithm for line
 /// detection. See <http://homepages.inf.ed.ac.uk/rbf/HIPR2/hough.htm> for a good explanation of Hough
@@ -1110,8 +1102,7 @@ pub fn hough_lines(image: &core::Mat, lines: &mut core::Mat, rho: f64, theta: f6
 }
 
 // identifier: cv_Laplacian_Mat_src_Mat_dst_int_ddepth_int_ksize_double_scale_double_delta_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates the Laplacian of an image.
+/// Calculates the Laplacian of an image.
 /// 
 /// The function calculates the Laplacian of the source image by adding up the second x and y
 /// derivatives calculated using the Sobel operator:
@@ -1146,8 +1137,7 @@ pub fn laplacian(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, ksize: i32, 
 }
 
 // identifier: cv_Scharr_Mat_src_Mat_dst_int_ddepth_int_dx_int_dy_double_scale_double_delta_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates the first x- or y- image derivative using Scharr operator.
+/// Calculates the first x- or y- image derivative using Scharr operator.
 /// 
 /// The function computes the first x- or y- spatial image derivative using the Scharr operator. The
 /// call
@@ -1180,8 +1170,7 @@ pub fn scharr(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i3
 }
 
 // identifier: cv_Sobel_Mat_src_Mat_dst_int_ddepth_int_dx_int_dy_int_ksize_double_scale_double_delta_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
+/// Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
 /// 
 /// In all cases except one, the <span lang='latex'>\texttt{ksize} \times \texttt{ksize}</span> separable kernel is used to
 /// calculate the derivative. When <span lang='latex'>\texttt{ksize = 1}</span>, the <span lang='latex'>3 \times 1</span> or <span lang='latex'>1 \times 3</span>
@@ -1235,8 +1224,7 @@ pub fn sobel(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i32
 }
 
 // identifier: cv_accumulateProduct_Mat_src1_Mat_src2_Mat_dst_Mat_mask
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Adds the per-element product of two input images to the accumulator image.
+/// Adds the per-element product of two input images to the accumulator image.
 /// 
 /// The function adds the product of two images or their selected regions to the accumulator dst :
 /// 
@@ -1261,8 +1249,7 @@ pub fn accumulate_product(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Ma
 }
 
 // identifier: cv_accumulateSquare_Mat_src_Mat_dst_Mat_mask
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Adds the square of a source image to the accumulator image.
+/// Adds the square of a source image to the accumulator image.
 /// 
 /// The function adds the input image src or its selected region, raised to a power of 2, to the
 /// accumulator dst :
@@ -1287,8 +1274,7 @@ pub fn accumulate_square(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat)
 }
 
 // identifier: cv_accumulateWeighted_Mat_src_Mat_dst_double_alpha_Mat_mask
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Updates a running average.
+/// Updates a running average.
 /// 
 /// The function calculates the weighted sum of the input image src and the accumulator dst so that dst
 /// becomes a running average of a frame sequence:
@@ -1315,8 +1301,7 @@ pub fn accumulate_weighted(src: &core::Mat, dst: &mut core::Mat, alpha: f64, mas
 }
 
 // identifier: cv_accumulate_Mat_src_Mat_dst_Mat_mask
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Adds an image to the accumulator image.
+/// Adds an image to the accumulator image.
 /// 
 /// The function adds src or some of its elements to dst :
 /// 
@@ -1342,8 +1327,7 @@ pub fn accumulate(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Res
 }
 
 // identifier: cv_adaptiveThreshold_Mat_src_Mat_dst_double_maxValue_int_adaptiveMethod_int_thresholdType_int_blockSize_double_C
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Applies an adaptive threshold to an array.
+/// Applies an adaptive threshold to an array.
 /// 
 /// The function transforms a grayscale image to a binary image according to the formulae:
 /// *   **THRESH_BINARY**
@@ -1491,8 +1475,7 @@ pub fn blend_linear(src1: &core::Mat, src2: &core::Mat, weights1: &core::Mat, we
 }
 
 // identifier: cv_blur_Mat_src_Mat_dst_Size_ksize_Point_anchor_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Blurs an image using the normalized box filter.
+/// Blurs an image using the normalized box filter.
 /// 
 /// The function smooths an image using the kernel:
 /// 
@@ -1532,8 +1515,7 @@ pub fn bounding_rect(array: &core::Mat) -> Result<core::Rect> {
 }
 
 // identifier: cv_boxFilter_Mat_src_Mat_dst_int_ddepth_Size_ksize_Point_anchor_bool_normalize_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Blurs an image using the box filter.
+/// Blurs an image using the box filter.
 /// 
 /// The function smooths an image using the kernel:
 /// 
@@ -1672,8 +1654,7 @@ pub fn clip_line_size(img_size: core::Size, pt1: core::Point, pt2: core::Point) 
 }
 
 // identifier: cv_compareHist_Mat_H1_Mat_H2_int_method
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Compares two histograms.
+/// Compares two histograms.
 /// 
 /// The function cv::compareHist compares two dense or two sparse histograms using the specified method.
 /// 
@@ -1817,8 +1798,7 @@ pub fn contour_area(contour: &core::Mat, oriented: bool) -> Result<f64> {
 }
 
 // identifier: cv_convertMaps_Mat_map1_Mat_map2_Mat_dstmap1_Mat_dstmap2_int_dstmap1type_bool_nninterpolation
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Converts image transformation maps from one representation to another.
+/// Converts image transformation maps from one representation to another.
 /// 
 /// The function converts a pair of maps for remap from one representation to another. The following
 /// options ( (map1.type(), map2.type()) <span lang='latex'>\rightarrow</span> (dstmap1.type(), dstmap2.type()) ) are
@@ -1916,8 +1896,7 @@ pub fn convexity_defects(contour: &core::Mat, convexhull: &core::Mat, convexity_
 }
 
 // identifier: cv_cornerEigenValsAndVecs_Mat_src_Mat_dst_int_blockSize_int_ksize_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates eigenvalues and eigenvectors of image blocks for corner detection.
+/// Calculates eigenvalues and eigenvectors of image blocks for corner detection.
 /// 
 /// For every pixel <span lang='latex'>p</span> , the function cornerEigenValsAndVecs considers a blockSize <span lang='latex'>\times</span> blockSize
 /// neighborhood <span lang='latex'>S(p)</span> . It calculates the covariation matrix of derivatives over the neighborhood as:
@@ -1952,8 +1931,7 @@ pub fn corner_eigen_vals_and_vecs(src: &core::Mat, dst: &mut core::Mat, block_si
 }
 
 // identifier: cv_cornerHarris_Mat_src_Mat_dst_int_blockSize_int_ksize_double_k_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Harris corner detector.
+/// Harris corner detector.
 /// 
 /// The function runs the Harris corner detector on the image. Similarly to cornerMinEigenVal and
 /// cornerEigenValsAndVecs , for each pixel <span lang='latex'>(x, y)</span> it calculates a <span lang='latex'>2\times2</span> gradient covariance
@@ -1980,8 +1958,7 @@ pub fn corner_harris(src: &core::Mat, dst: &mut core::Mat, block_size: i32, ksiz
 }
 
 // identifier: cv_cornerMinEigenVal_Mat_src_Mat_dst_int_blockSize_int_ksize_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates the minimal eigenvalue of gradient matrices for corner detection.
+/// Calculates the minimal eigenvalue of gradient matrices for corner detection.
 /// 
 /// The function is similar to cornerEigenValsAndVecs but it calculates and stores only the minimal
 /// eigenvalue of the covariance matrix of derivatives, that is, <span lang='latex'>\min(\lambda_1, \lambda_2)</span> in terms
@@ -2003,8 +1980,7 @@ pub fn corner_min_eigen_val(src: &core::Mat, dst: &mut core::Mat, block_size: i3
 }
 
 // identifier: cv_cornerSubPix_Mat_image_Mat_corners_Size_winSize_Size_zeroZone_TermCriteria_criteria
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Refines the corner locations.
+/// Refines the corner locations.
 /// 
 /// The function iterates to find the sub-pixel accurate location of corners or radial saddle points, as
 /// shown on the figure below.
@@ -2153,8 +2129,7 @@ pub fn cvt_color_two_plane(src1: &core::Mat, src2: &core::Mat, dst: &mut core::M
 }
 
 // identifier: cv_cvtColor_Mat_src_Mat_dst_int_code_int_dstCn
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Converts an image from one color space to another.
+/// Converts an image from one color space to another.
 /// 
 /// The function converts an input image from one color space to another. In case of a transformation
 /// to-from RGB color space, the order of the channels should be specified explicitly (RGB or BGR). Note
@@ -2243,8 +2218,7 @@ pub fn demosaicing(src: &core::Mat, dst: &mut core::Mat, code: i32, dst_cn: i32)
 }
 
 // identifier: cv_dilate_Mat_src_Mat_dst_Mat_kernel_Point_anchor_int_iterations_int_borderType_Scalar_borderValue
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Dilates an image by using a specific structuring element.
+/// Dilates an image by using a specific structuring element.
 /// 
 /// The function dilates the source image using the specified structuring element that determines the
 /// shape of a pixel neighborhood over which the maximum is taken:
@@ -2277,8 +2251,7 @@ pub fn dilate(src: &core::Mat, dst: &mut core::Mat, kernel: &core::Mat, anchor: 
 }
 
 // identifier: cv_distanceTransform_Mat_src_Mat_dst_Mat_labels_int_distanceType_int_maskSize_int_labelType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates the distance to the closest zero pixel for each pixel of the source image.
+/// Calculates the distance to the closest zero pixel for each pixel of the source image.
 /// 
 /// The function cv::distanceTransform calculates the approximate or precise distance from every binary
 /// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
@@ -2339,7 +2312,6 @@ pub fn distance_transform_labels(src: &core::Mat, dst: &mut core::Mat, labels: &
 }
 
 // identifier: cv_distanceTransform_Mat_src_Mat_dst_int_distanceType_int_maskSize_int_dstType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 /// @overload
 /// ## Parameters
 /// * src: 8-bit, single-channel (binary) source image.
@@ -2359,8 +2331,7 @@ pub fn distance_transform(src: &core::Mat, dst: &mut core::Mat, distance_type: i
 }
 
 // identifier: cv_drawContours_Mat_image_VectorOfMat_contours_int_contourIdx_Scalar_color_int_thickness_int_lineType_Mat_hierarchy_int_maxLevel_Point_offset
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Draws contours outlines or filled contours.
+/// Draws contours outlines or filled contours.
 /// 
 /// The function draws contour outlines in the image if <span lang='latex'>\texttt{thickness} \ge 0</span> or fills the area
 /// bounded by the contours if <span lang='latex'>\texttt{thickness}<0</span> . The example below shows how to retrieve
@@ -2511,8 +2482,7 @@ pub fn ellipse_new_rotated_rect(img: &mut core::Mat, _box: &core::RotatedRect, c
 }
 
 // identifier: cv_equalizeHist_Mat_src_Mat_dst
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Equalizes the histogram of a grayscale image.
+/// Equalizes the histogram of a grayscale image.
 /// 
 /// The function equalizes the histogram of the input image using the following algorithm:
 /// 
@@ -2532,8 +2502,7 @@ pub fn equalize_hist(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 }
 
 // identifier: cv_erode_Mat_src_Mat_dst_Mat_kernel_Point_anchor_int_iterations_int_borderType_Scalar_borderValue
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Erodes an image by using a specific structuring element.
+/// Erodes an image by using a specific structuring element.
 /// 
 /// The function erodes the source image using the specified structuring element that determines the
 /// shape of a pixel neighborhood over which the minimum is taken:
@@ -2622,8 +2591,7 @@ pub fn fill_poly(img: &mut core::Mat, pts: &types::VectorOfMat, color: core::Sca
 }
 
 // identifier: cv_filter2D_Mat_src_Mat_dst_int_ddepth_Mat_kernel_Point_anchor_double_delta_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Convolves an image with the kernel.
+/// Convolves an image with the kernel.
 /// 
 /// The function applies an arbitrary linear filter to an image. In-place operation is supported. When
 /// the aperture is partially outside the image, the function interpolates outlier pixel values
@@ -2707,8 +2675,7 @@ pub fn find_contours(image: &mut core::Mat, contours: &mut types::VectorOfMat, m
 }
 
 // identifier: cv_fitEllipseAMS_Mat_points
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Fits an ellipse around a set of 2D points.
+/// Fits an ellipse around a set of 2D points.
 /// 
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
@@ -2748,8 +2715,7 @@ pub fn fit_ellipse_ams(points: &core::Mat) -> Result<core::RotatedRect> {
 }
 
 // identifier: cv_fitEllipseDirect_Mat_points
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Fits an ellipse around a set of 2D points.
+/// Fits an ellipse around a set of 2D points.
 /// 
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
@@ -2811,8 +2777,7 @@ pub fn fit_ellipse(points: &core::Mat) -> Result<core::RotatedRect> {
 }
 
 // identifier: cv_fitLine_Mat_points_Mat_line_int_distType_double_param_double_reps_double_aeps
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Fits a line to a 2D or 3D point set.
+/// Fits a line to a 2D or 3D point set.
 /// 
 /// The function fitLine fits a line to a 2D or 3D point set by minimizing <span lang='latex'>\sum_i \rho(r_i)</span> where
 /// <span lang='latex'>r_i</span> is a distance between the <span lang='latex'>i^{th}</span> point, the line and <span lang='latex'>\rho(r)</span> is a distance function, one
@@ -2851,8 +2816,7 @@ pub fn fit_line(points: &core::Mat, line: &mut core::Mat, dist_type: i32, param:
 }
 
 // identifier: cv_floodFill_Mat_image_Mat_mask_Point_seedPoint_Scalar_newVal_Rect_X_rect_Scalar_loDiff_Scalar_upDiff_int_flags
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Fills a connected component with the given color.
+/// Fills a connected component with the given color.
 /// 
 /// The function cv::floodFill fills a connected component starting from the seed point with the specified
 /// color. The connectivity is determined by the color/brightness closeness of the neighbor pixels. The
@@ -2955,8 +2919,7 @@ pub fn get_affine_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Ma
 }
 
 // identifier: cv_getAffineTransform_const_Point2f_X_src_const_Point2f_X_dst
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates an affine transform from three pairs of the corresponding points.
+/// Calculates an affine transform from three pairs of the corresponding points.
 /// 
 /// The function calculates the <span lang='latex'>2 \times 3</span> matrix of an affine transform so that:
 /// 
@@ -2977,8 +2940,7 @@ pub fn get_affine_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Resul
 }
 
 // identifier: cv_getDefaultNewCameraMatrix_Mat_cameraMatrix_Size_imgsize_bool_centerPrincipalPoint
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Returns the default new camera matrix.
+/// Returns the default new camera matrix.
 /// 
 /// The function returns the camera matrix that is either an exact copy of the input cameraMatrix (when
 /// centerPrinicipalPoint=false ), or the modified one (when centerPrincipalPoint=true).
@@ -3009,8 +2971,7 @@ pub fn get_default_new_camera_matrix(camera_matrix: &core::Mat, imgsize: core::S
 }
 
 // identifier: cv_getDerivKernels_Mat_kx_Mat_ky_int_dx_int_dy_int_ksize_bool_normalize_int_ktype
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Returns filter coefficients for computing spatial image derivatives.
+/// Returns filter coefficients for computing spatial image derivatives.
 /// 
 /// The function computes and returns the filter coefficients for spatial image derivatives. When
 /// `ksize=CV_SCHARR`, the Scharr <span lang='latex'>3 \times 3</span> kernels are generated (see #Scharr). Otherwise, Sobel
@@ -3076,8 +3037,7 @@ pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, g
 }
 
 // identifier: cv_getGaussianKernel_int_ksize_double_sigma_int_ktype
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Returns Gaussian filter coefficients.
+/// Returns Gaussian filter coefficients.
 /// 
 /// The function computes and returns the <span lang='latex'>\texttt{ksize} \times 1</span> matrix of Gaussian filter
 /// coefficients:
@@ -3104,8 +3064,7 @@ pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::M
 }
 
 // identifier: cv_getPerspectiveTransform_Mat_src_Mat_dst
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates a perspective transform from four pairs of the corresponding points.
+/// Calculates a perspective transform from four pairs of the corresponding points.
 /// 
 /// The function calculates the <span lang='latex'>3 \times 3</span> matrix of a perspective transform so that:
 /// 
@@ -3131,8 +3090,7 @@ pub fn get_perspective_transform_1(src: &core::Point2f, dst: &core::Point2f) -> 
 }
 
 // identifier: cv_getRectSubPix_Mat_image_Size_patchSize_Point2f_center_Mat_patch_int_patchType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Retrieves a pixel rectangle from an image with sub-pixel accuracy.
+/// Retrieves a pixel rectangle from an image with sub-pixel accuracy.
 /// 
 /// The function getRectSubPix extracts pixels from src:
 /// 
@@ -3161,8 +3119,7 @@ pub fn get_rect_sub_pix(image: &core::Mat, patch_size: core::Size, center: core:
 }
 
 // identifier: cv_getRotationMatrix2D_Point2f_center_double_angle_double_scale
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates an affine matrix of 2D rotation.
+/// Calculates an affine matrix of 2D rotation.
 /// 
 /// The function calculates the following matrix:
 /// 
@@ -3187,8 +3144,7 @@ pub fn get_rotation_matrix2_d(center: core::Point2f, angle: f64, scale: f64) -> 
 }
 
 // identifier: cv_getStructuringElement_int_shape_Size_ksize_Point_anchor
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Returns a structuring element of the specified size and shape for morphological operations.
+/// Returns a structuring element of the specified size and shape for morphological operations.
 /// 
 /// The function constructs and returns the structuring element that can be further passed to #erode,
 /// #dilate or #morphologyEx. But you can also construct an arbitrary binary mask yourself and use it as
@@ -3261,8 +3217,7 @@ pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32
 }
 
 // identifier: cv_goodFeaturesToTrack_Mat_image_Mat_corners_int_maxCorners_double_qualityLevel_double_minDistance_Mat_mask_int_blockSize_bool_useHarrisDetector_double_k
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Determines strong corners on an image.
+/// Determines strong corners on an image.
 /// 
 /// The function finds the most prominent corners in the image or in the specified image region, as
 /// described in [Shi94](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Shi94)
@@ -3488,8 +3443,7 @@ pub fn sep_filter2_d(stype: i32, dtype: i32, ktype: i32, src_data: &mut u8, src_
 }
 
 // identifier: cv_initUndistortRectifyMap_Mat_cameraMatrix_Mat_distCoeffs_Mat_R_Mat_newCameraMatrix_Size_size_int_m1type_Mat_map1_Mat_map2
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Computes the undistortion and rectification transformation map.
+/// Computes the undistortion and rectification transformation map.
 /// 
 /// The function computes the joint undistortion and rectification transformation and represents the
 /// result in the form of maps for remap. The undistorted image looks like original, as if it is
@@ -3565,8 +3519,7 @@ pub fn init_wide_angle_proj_map(camera_matrix: &core::Mat, dist_coeffs: &core::M
 }
 
 // identifier: cv_integral_Mat_src_Mat_sum_Mat_sqsum_Mat_tilted_int_sdepth_int_sqdepth
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates the integral of an image.
+/// Calculates the integral of an image.
 /// 
 /// The function calculates one or more integral images for the source image as follows:
 /// 
@@ -3636,8 +3589,7 @@ pub fn intersect_convex_convex(_p1: &core::Mat, _p2: &core::Mat, _p12: &mut core
 }
 
 // identifier: cv_invertAffineTransform_Mat_M_Mat_iM
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Inverts an affine transformation.
+/// Inverts an affine transformation.
 /// 
 /// The function computes an inverse affine transformation represented by <span lang='latex'>2 \times 3</span> matrix M:
 /// 
@@ -3690,8 +3642,7 @@ pub fn line(img: &mut core::Mat, pt1: core::Point, pt2: core::Point, color: core
 }
 
 // identifier: cv_linearPolar_Mat_src_Mat_dst_Point2f_center_double_maxRadius_int_flags
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Remaps an image to polar coordinates space.
+/// Remaps an image to polar coordinates space.
 /// 
 /// @deprecated This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags)
 /// 
@@ -3736,8 +3687,7 @@ pub fn linear_polar(src: &core::Mat, dst: &mut core::Mat, center: core::Point2f,
 }
 
 // identifier: cv_logPolar_Mat_src_Mat_dst_Point2f_center_double_M_int_flags
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Remaps an image to semilog-polar coordinates space.
+/// Remaps an image to semilog-polar coordinates space.
 /// 
 /// @deprecated This function produces same result as cv::warpPolar(src, dst, src.size(), center, maxRadius, flags+WARP_POLAR_LOG);
 /// 
@@ -3797,8 +3747,7 @@ pub fn match_shapes(contour1: &core::Mat, contour2: &core::Mat, method: i32, par
 }
 
 // identifier: cv_matchTemplate_Mat_image_Mat_templ_Mat_result_int_method_Mat_mask
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Compares a template against overlapped image regions.
+/// Compares a template against overlapped image regions.
 /// 
 /// The function slides through image , compares the overlapped patches of size <span lang='latex'>w \times h</span> against
 /// templ using the specified method and stores the comparison results in result . Here are the formulae
@@ -3829,8 +3778,7 @@ pub fn match_template(image: &core::Mat, templ: &core::Mat, result: &mut core::M
 }
 
 // identifier: cv_medianBlur_Mat_src_Mat_dst_int_ksize
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Blurs an image using the median filter.
+/// Blurs an image using the median filter.
 /// 
 /// The function smoothes an image using the median filter with the \f$\texttt{ksize} \times
 /// \texttt{ksize}\f$ aperture. Each channel of a multi-channel image is processed independently.
@@ -3877,8 +3825,7 @@ pub fn min_enclosing_circle(points: &core::Mat, center: core::Point2f, radius: f
 }
 
 // identifier: cv_minEnclosingTriangle_Mat_points_Mat_triangle
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Finds a triangle of minimum area enclosing a 2D point set and returns its area.
+/// Finds a triangle of minimum area enclosing a 2D point set and returns its area.
 /// 
 /// The function finds a triangle of minimum area enclosing the given set of 2D points and returns its
 /// area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
@@ -3944,8 +3891,7 @@ pub fn morphology_ex(src: &core::Mat, dst: &mut core::Mat, op: i32, kernel: &cor
 }
 
 // identifier: cv_phaseCorrelate_Mat_src1_Mat_src2_Mat_window_double_X_response
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  The function is used to detect translational shifts that occur between two images.
+/// The function is used to detect translational shifts that occur between two images.
 /// 
 /// The operation takes advantage of the Fourier shift theorem for detecting the translational shift in
 /// the frequency domain. It can be used for fast image registration as well as motion estimation. For
@@ -4034,8 +3980,7 @@ pub fn polylines(img: &mut core::Mat, pts: &types::VectorOfMat, is_closed: bool,
 }
 
 // identifier: cv_preCornerDetect_Mat_src_Mat_dst_int_ksize_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates a feature map for corner detection.
+/// Calculates a feature map for corner detection.
 /// 
 /// The function calculates the complex spatial derivative-based function of the source image
 /// 
@@ -4095,8 +4040,7 @@ pub fn put_text(img: &mut core::Mat, text: &str, org: core::Point, font_face: i3
 }
 
 // identifier: cv_pyrDown_Mat_src_Mat_dst_Size_dstsize_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Blurs an image and downsamples it.
+/// Blurs an image and downsamples it.
 /// 
 /// By default, size of the output image is computed as `Size((src.cols+1)/2, (src.rows+1)/2)`, but in
 /// any case, the following conditions should be satisfied:
@@ -4124,8 +4068,7 @@ pub fn pyr_down(src: &core::Mat, dst: &mut core::Mat, dstsize: core::Size, borde
 }
 
 // identifier: cv_pyrMeanShiftFiltering_Mat_src_Mat_dst_double_sp_double_sr_int_maxLevel_TermCriteria_termcrit
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Performs initial step of meanshift segmentation of an image.
+/// Performs initial step of meanshift segmentation of an image.
 /// 
 /// The function implements the filtering stage of meanshift segmentation, that is, the output of the
 /// function is the filtered "posterized" image with color gradients and fine-grain texture flattened.
@@ -4170,8 +4113,7 @@ pub fn pyr_mean_shift_filtering(src: &core::Mat, dst: &mut core::Mat, sp: f64, s
 }
 
 // identifier: cv_pyrUp_Mat_src_Mat_dst_Size_dstsize_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Upsamples an image and then blurs it.
+/// Upsamples an image and then blurs it.
 /// 
 /// By default, size of the output image is computed as `Size(src.cols\*2, (src.rows\*2)`, but in any
 /// case, the following conditions should be satisfied:
@@ -4235,8 +4177,7 @@ pub fn rectangle(img: &core::Mat, rec: core::Rect, color: core::Scalar, thicknes
 }
 
 // identifier: cv_remap_Mat_src_Mat_dst_Mat_map1_Mat_map2_int_interpolation_int_borderMode_Scalar_borderValue
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Applies a generic geometrical transformation to an image.
+/// Applies a generic geometrical transformation to an image.
 /// 
 /// The function remap transforms the source image using the specified map:
 /// 
@@ -4278,8 +4219,7 @@ pub fn remap(src: &core::Mat, dst: &mut core::Mat, map1: &core::Mat, map2: &core
 }
 
 // identifier: cv_resize_Mat_src_Mat_dst_Size_dsize_double_fx_double_fy_int_interpolation
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Resizes an image.
+/// Resizes an image.
 /// 
 /// The function resize resizes the image src down to or up to the specified size. Note that the
 /// initial dst type or size are not taken into account. Instead, the size and type are derived from
@@ -4346,8 +4286,7 @@ pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::R
 }
 
 // identifier: cv_sepFilter2D_Mat_src_Mat_dst_int_ddepth_Mat_kernelX_Mat_kernelY_Point_anchor_double_delta_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Applies a separable linear filter to an image.
+/// Applies a separable linear filter to an image.
 /// 
 /// The function applies a separable linear filter to the image. That is, first, every row of src is
 /// filtered with the 1D kernel kernelX. Then, every column of the result is filtered with the 1D
@@ -4403,8 +4342,7 @@ pub fn spatial_gradient(src: &core::Mat, dx: &mut core::Mat, dy: &mut core::Mat,
 }
 
 // identifier: cv_sqrBoxFilter_Mat_src_Mat_dst_int_ddepth_Size_ksize_Point_anchor_bool_normalize_int_borderType
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Calculates the normalized sum of squares of the pixel values overlapping the filter.
+/// Calculates the normalized sum of squares of the pixel values overlapping the filter.
 /// 
 /// For every pixel <span lang='latex'> (x, y) </span> in the source image, the function calculates the sum of squares of those neighboring
 /// pixel values which overlap the filter placed over the pixel <span lang='latex'> (x, y) </span>.
@@ -4464,8 +4402,7 @@ pub fn threshold(src: &core::Mat, dst: &mut core::Mat, thresh: f64, maxval: f64,
 }
 
 // identifier: cv_undistortPoints_Mat_src_Mat_dst_Mat_cameraMatrix_Mat_distCoeffs_Mat_R_Mat_P
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Computes the ideal point coordinates from the observed point coordinates.
+/// Computes the ideal point coordinates from the observed point coordinates.
 /// 
 /// The function is similar to #undistort and #initUndistortRectifyMap but it operates on a
 /// sparse set of points instead of a raster image. Also the function performs a reverse transformation
@@ -4522,8 +4459,7 @@ pub fn undistort_points_1(src: &core::Mat, dst: &mut core::Mat, camera_matrix: &
 }
 
 // identifier: cv_undistort_Mat_src_Mat_dst_Mat_cameraMatrix_Mat_distCoeffs_Mat_newCameraMatrix
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Transforms an image to compensate for lens distortion.
+/// Transforms an image to compensate for lens distortion.
 /// 
 /// The function transforms an image to compensate radial and tangential lens distortion.
 /// 
@@ -4560,8 +4496,7 @@ pub fn undistort(src: &core::Mat, dst: &mut core::Mat, camera_matrix: &core::Mat
 }
 
 // identifier: cv_warpAffine_Mat_src_Mat_dst_Mat_M_Size_dsize_int_flags_int_borderMode_Scalar_borderValue
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Applies an affine transformation to an image.
+/// Applies an affine transformation to an image.
 /// 
 /// The function warpAffine transforms the source image using the specified matrix:
 /// 
@@ -4596,8 +4531,7 @@ pub fn warp_affine(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsize: c
 }
 
 // identifier: cv_warpPerspective_Mat_src_Mat_dst_Mat_M_Size_dsize_int_flags_int_borderMode_Scalar_borderValue
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Applies a perspective transformation to an image.
+/// Applies a perspective transformation to an image.
 /// 
 /// The function warpPerspective transforms the source image using the specified matrix:
 /// 
@@ -4630,7 +4564,6 @@ pub fn warp_perspective(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsi
 }
 
 // identifier: cv_warpPolar_Mat_src_Mat_dst_Size_dsize_Point2f_center_double_maxRadius_int_flags
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 /// \brief Remaps an image to polar or semilog-polar coordinates space
 /// 
 /// @anchor polar_remaps_reference_image

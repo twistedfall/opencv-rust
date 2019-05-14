@@ -49,8 +49,7 @@ pub fn nms_boxes_rotated_f64(bboxes: &types::VectorOfRect2d, scores: &types::Vec
 }
 
 // identifier: cv_dnn_NMSBoxes_VectorOfRect_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Performs non maximum suppression given boxes and corresponding scores.
+/// Performs non maximum suppression given boxes and corresponding scores.
 /// 
 /// ## Parameters
 /// * bboxes: a set of bounding boxes to apply NMS.
@@ -1798,8 +1797,7 @@ impl Net {
     }
     
     // identifier: cv_dnn_Net_setInput_Mat_blob_String_name_double_scalefactor_Scalar_mean
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Sets the new input value for the network
+    /// Sets the new input value for the network
     /// ## Parameters
     /// * blob:        A new blob. Should have CV_32F or CV_8U depth.
     /// * name:        A name of input layer.
@@ -1963,8 +1961,7 @@ impl Net {
 }
 
 // boxed class cv::dnn::NormalizeBBoxLayer
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  <span lang='latex'> L_p </span> - normalization layer.
+/// <span lang='latex'> L_p </span> - normalization layer.
 /// ## Parameters
 /// * p: Normalization factor. The most common `p = 1` for <span lang='latex'> L_1 </span> -
 ///          normalization or `p = 2` for <span lang='latex'> L_2 </span> - normalization or a custom one.
@@ -2463,7 +2460,6 @@ impl ShiftLayer {
 }
 
 // boxed class cv::dnn::ShuffleChannelLayer
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
 /// Permute channels of 4-dimensional input blob.
 /// ## Parameters
 /// * group: Number of groups to split input channels and pick in turns

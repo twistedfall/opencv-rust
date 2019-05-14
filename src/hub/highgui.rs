@@ -1121,8 +1121,7 @@ pub fn wait_key_ex(delay: i32) -> Result<i32> {
 }
 
 // identifier: cv_waitKey_int_delay
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Waits for a pressed key.
+/// Waits for a pressed key.
 /// 
 /// The function waitKey waits for a key event infinitely (when <span lang='latex'>\texttt{delay}\leq 0</span> ) or for delay
 /// milliseconds, when it is positive. Since the OS has a minimum time between switching threads, the

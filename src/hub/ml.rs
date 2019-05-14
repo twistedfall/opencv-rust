@@ -136,7 +136,6 @@ pub trait ANN_MLP : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_ANN_MLP_setActivationFunction_int_type_double_param1_double_param2
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
     /// Initialize the activation function for each neuron.
     /// Currently the default and the only fully supported activation function is ANN_MLP::SIGMOID_SYM.
     /// ## Parameters
@@ -787,8 +786,7 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_predict_const_Mat_samples_Mat_results_int_flags
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Returns posterior probabilities for the provided samples
+    /// Returns posterior probabilities for the provided samples
     /// 
     /// ## Parameters
     /// * samples: The input samples, floating-point matrix
@@ -804,8 +802,7 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_predict2_const_Mat_sample_Mat_probs
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Returns a likelihood logarithm value and an index of the most probable mixture component
+    /// Returns a likelihood logarithm value and an index of the most probable mixture component
     /// for the given sample.
     /// 
     /// ## Parameters
@@ -822,8 +819,7 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_trainEM_Mat_samples_Mat_logLikelihoods_Mat_labels_Mat_probs
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Estimate the Gaussian mixture parameters from a samples set.
+    /// Estimate the Gaussian mixture parameters from a samples set.
     /// 
     /// This variation starts with Expectation step. Initial values of the model parameters will be
     /// estimated by the k-means algorithm.
@@ -861,8 +857,7 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_trainE_Mat_samples_Mat_means0_Mat_covs0_Mat_weights0_Mat_logLikelihoods_Mat_labels_Mat_probs
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Estimate the Gaussian mixture parameters from a samples set.
+    /// Estimate the Gaussian mixture parameters from a samples set.
     /// 
     /// This variation starts with Expectation step. You need to provide initial means <span lang='latex'>a_k</span> of
     /// mixture components. Optionally you can pass initial weights <span lang='latex'>\pi_k</span> and covariance matrices
@@ -901,8 +896,7 @@ pub trait EM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_EM_trainM_Mat_samples_Mat_probs0_Mat_logLikelihoods_Mat_labels_Mat_probs
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Estimate the Gaussian mixture parameters from a samples set.
+    /// Estimate the Gaussian mixture parameters from a samples set.
     /// 
     /// This variation starts with Maximization step. You need to provide initial probabilities
     /// <span lang='latex'>p_{i,k}</span> to use this option.
@@ -1654,8 +1648,7 @@ pub trait SVM : crate::ml::StatModel {
     }
     
     // identifier: cv_ml_SVM_getDecisionFunction_const_int_i_Mat_alpha_Mat_svidx
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Retrieves the decision function
+    /// Retrieves the decision function
     /// 
     /// ## Parameters
     /// * i: the index of the decision function. If the problem solved is regression, 1-class or

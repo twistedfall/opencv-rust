@@ -1659,8 +1659,7 @@ pub trait MSER : crate::features2d::Feature2D {
 impl<'a> MSER + 'a {
 
     // identifier: cv_MSER_create_int__delta_int__min_area_int__max_area_double__max_variation_double__min_diversity_int__max_evolution_double__area_threshold_double__min_margin_int__edge_blur_size
-    /// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-    ///  Full consturctor for %MSER detector
+    /// Full consturctor for %MSER detector
     /// 
     /// ## Parameters
     /// * _delta: it compares <span lang='latex'>(size_{i}-size_{i-delta})/size_{i-delta}</span>
@@ -1847,8 +1846,7 @@ impl<'a> ORB + 'a {
 }
 
 // boxed class cv::SimpleBlobDetector
-/// <script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>
-///  Class for extracting blobs from an image. :
+/// Class for extracting blobs from an image. :
 /// 
 /// The class implements a simple algorithm for extracting blobs from an image:
 /// 
