@@ -65,6 +65,16 @@ def classes_equal(first, second):
         return True
     return False
 
+
+def write_exc(filename, action):
+    """ Calls action with file handle of filename only when file didn't exist before, thread-safe """
+    try:
+        with os.fdopen(os.open(filename, os.O_CREAT | os.O_WRONLY | os.O_EXCL, 0o666), "w") as f:
+            action(f)
+    except OSError:
+        pass
+
+
 #
 #       EXCEPTIONS TO AUTO GENERATION
 #
@@ -1403,10 +1413,14 @@ class TypeInfo(object):
         template_vars = combine_dicts(self.__dict__, {
             "return_wrapper_type": self.rust_cpp_return_wrapper_type(),
         })
-        with open("{}/{}.type.h".format(cpp_dir, template_vars["return_wrapper_type"]), "w") as f:
-            f.write(self.base_templates["cpp_void" if self.cpp_extern == "void" else "cpp_non_void"].substitute(template_vars))
-        with open("{}/{}.rv.rs".format(rust_dir, template_vars["return_wrapper_type"]), "w") as f:
-            f.write(self.base_templates["rust_void" if self.cpp_extern == "void" else "rust_non_void"].substitute(template_vars))
+        write_exc(
+            "{}/{}.type.h".format(cpp_dir, template_vars["return_wrapper_type"]),
+            lambda f: f.write(self.base_templates["cpp_void" if self.cpp_extern == "void" else "cpp_non_void"].substitute(template_vars))
+        )
+        write_exc(
+            "{}/{}.rv.rs".format(rust_dir, template_vars["return_wrapper_type"]),
+            lambda f: f.write(self.base_templates["rust_void" if self.cpp_extern == "void" else "rust_non_void"].substitute(template_vars))
+        )
 
     def rust_arg_forward(self, var_name, is_output=False):
         """
@@ -1884,7 +1898,7 @@ class VectorTypeInfo(TypeInfo):
             self.inner_rust_full = inner.rust_full
 
     def gen_wrappers(self):
-        with open("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), "w") as f:
+        def write_rust(f):
             f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(self.__dict__))
             if isinstance(self.inner, BoxedClassTypeInfo) or self.inner.is_by_ptr:
                 f.write(VectorTypeInfo.TEMPLATES["rust_boxed"].substitute(self.__dict__))
@@ -1893,6 +1907,7 @@ class VectorTypeInfo(TypeInfo):
                 if self.inner.typeid != "bool":
                     f.write(VectorTypeInfo.TEMPLATES["rust_non_bool"].substitute(self.__dict__))
 
+        write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
         if isinstance(self.inner, SmartPtrTypeInfo):
             template_vars = self.__dict__.copy()
             template_vars["cpptype"] = self.outer_cpptype
@@ -1904,8 +1919,10 @@ class VectorTypeInfo(TypeInfo):
             externs += VectorTypeInfo.TEMPLATES["cpp_externs_bool"].substitute(template_vars)
         else:
             externs += VectorTypeInfo.TEMPLATES["cpp_externs_non_bool"].substitute(template_vars)
-        with open("{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id), "w") as f:
-            f.write(T_CPP_MODULE.substitute(code=externs, includes=""))
+        write_exc(
+            "{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id),
+            lambda f: f.write(T_CPP_MODULE.substitute(code=externs, includes=""))
+        )
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         if isinstance(self.inner, SmartPtrTypeInfo):
@@ -1987,7 +2004,7 @@ class SmartPtrTypeInfo(TypeInfo):
             self.inner_local = inner.rust_local
 
     def gen_wrappers(self):
-        with open("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), "w") as f:
+        def write_rust(f):
             f.write(SmartPtrTypeInfo.TEMPLATES["rust"].substitute(self.__dict__))
             if not isinstance(self.inner, PrimitiveTypeInfo) and self.inner.ci.is_trait:
                 bases = self.gen.all_bases(self.inner.ci.name).union({self.inner.typeid})
@@ -2001,9 +2018,12 @@ class SmartPtrTypeInfo(TypeInfo):
                             base_local=cibase.rust_local,
                             base_full=cibase.rust_full
                         ))
-        with open("{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id), "w") as f:
-            code = SmartPtrTypeInfo.TEMPLATES["cpp_externs"].substitute(self.__dict__)
-            f.write(T_CPP_MODULE.substitute(code=code, includes=""))
+
+        write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
+        write_exc(
+            "{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id),
+            lambda f: f.write(T_CPP_MODULE.substitute(code=SmartPtrTypeInfo.TEMPLATES["cpp_externs"].substitute(self.__dict__), includes=""))
+        )
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
@@ -2452,10 +2472,10 @@ class RustWrapperGenerator(object):
         for ci in sorted(self.classes.values(), key=lambda ci:ci.fullname):
             self.gen_class(ci)
 
-        with open(cpp_dir + "/types.h", "a") as f:
+        with open("{}/{}.types.h".format(cpp_dir, module), "w") as f:
             f.write(self.moduleCppTypes.getvalue())
 
-        with open(cpp_dir + "/" + module + ".consts.cpp", "w") as f:
+        with open("{}/{}.consts.cpp".format(cpp_dir, module), "w") as f:
             f.write("""#include <cstdio>\n""")
             f.write("""#include "opencv2/opencv_modules.hpp"\n""")
             f.write("""#include "opencv2/%s.hpp"\n"""%(module))
@@ -2470,18 +2490,18 @@ class RustWrapperGenerator(object):
         for namespace in self.namespaces:
             if namespace != "":
                 namespaces += "using namespace %s;\n"%(namespace.replace(".", "::"))
-        with open(cpp_dir + "/" + module + ".cpp", "w") as f:
-            f.write(T_CPP_MODULE.substitute(m = module, M = module.upper(), code = self.moduleCppCode.getvalue(), includes = "\n".join(includes), namespaces=namespaces))
+        with open("{}/{}.cpp".format(cpp_dir, module), "w") as f:
+            f.write(T_CPP_MODULE.substitute(m=module, M=module.upper(), code=self.moduleCppCode.getvalue(), includes="\n".join(includes), namespaces=namespaces))
 
-        with open(rust_dir + "/%s.externs.rs" % (module), "w") as f:
+        with open("{}/{}.externs.rs".format(rust_dir, module), "w") as f:
             f.write("extern \"C\" {\n")
             f.write(self.moduleRustExterns.getvalue())
             f.write("}\n")
 
-        with open(rust_dir + "/" + module + ".rs", "w") as f:
+        with open("{}/{}.rs".format(rust_dir, module), "w") as f:
             f.write(self.moduleSafeRust.getvalue())
 
-        with open(cpp_dir + "/" + module + ".txt", "w") as f:
+        with open("{}/{}.txt".format(cpp_dir, module), "w") as f:
             f.write(self.make_report())
 
     def make_report(self):

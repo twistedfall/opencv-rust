@@ -95,7 +95,7 @@ pub type cv_return_value_unsigned_short = cv_return_value<u16>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// std::vector<Mat>
+// Ptr<FrameSource>
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {

@@ -1,9 +1,15 @@
-use std::{ffi::OsString, fs::{self, File, read_dir}, io, io::Write, path::PathBuf, process::Command};
-use std::collections::HashSet;
-use std::fs::OpenOptions;
-use std::iter::FromIterator;
+use std::{
+    collections::HashSet,
+    ffi::OsString,
+    fs::{self, File, OpenOptions, read_dir},
+    io::{self, Write},
+    iter::FromIterator,
+    path::PathBuf,
+    process::Command,
+};
 
 use glob::glob;
+use rayon::prelude::*;
 
 fn link_wrapper() -> pkg_config::Library {
     let opencv = pkg_config::Config::new().probe("opencv").unwrap();
@@ -179,11 +185,7 @@ fn build_wrapper(opencv: pkg_config::Library) {
         write!(&mut types, "#include <cstddef>\n").unwrap();
     }
 
-    for module in &modules {
-        let mut cpp = out_dir.clone();
-        cpp.push(&*module.0);
-        cpp.set_extension("cpp");
-
+    modules.par_iter_mut().for_each(|module| {
         if !Command::new("python2.7")
             .args(&["gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0])
             .args(
@@ -204,7 +206,6 @@ fn build_wrapper(opencv: pkg_config::Library) {
             panic!();
         }
 
-        gcc.file(cpp);
         if cfg!(feature = "buildtime_bindgen") {
             let e = Command::new("sh")
                .current_dir(&out_dir)
@@ -226,7 +227,18 @@ fn build_wrapper(opencv: pkg_config::Library) {
             let _ = fs::remove_file(out_dir.join(format!("{}.consts", module.0)));
         }
         let _ = fs::remove_file(out_dir.join(format!("{}.consts.cpp", module.0)));
+    });
+
+    {
+        let mut types_file = File::create(out_dir.join("types.h")).unwrap();
+        for module in &modules {
+            gcc.file(out_dir.join(format!("{}.cpp", module.0)));
+            let src = out_dir.join(format!("{}.types.h", module.0));
+            io::copy(&mut File::open(&src).unwrap(), &mut types_file).unwrap();
+            let _ = fs::remove_file(src);
+        }
     }
+
     let _ = fs::remove_file("gen_rust.pyc");
     let _ = fs::remove_file("hdr_parser.pyc");
 
