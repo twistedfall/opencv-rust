@@ -14,7 +14,3 @@ mod error;
 
 #[cfg(test)]
 mod test;
-
-pub fn mat() -> core::Mat {
-    core::Mat::new().unwrap()
-}

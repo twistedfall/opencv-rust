@@ -191,6 +191,12 @@ impl fmt::Debug for Mat {
     }
 }
 
+impl Default for Mat {
+    fn default() -> Self {
+        Mat::new().unwrap()
+    }
+}
+
 
 mod private {
     pub trait Sealed {}
