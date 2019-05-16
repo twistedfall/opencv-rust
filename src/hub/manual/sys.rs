@@ -20,7 +20,7 @@ impl<S: Into<O>, O> cv_return_value<S, O> {
         if self.error_msg.is_null() {
             Ok(self.result.into())
         } else {
-            Err(Error::new(self.error_code, crate::templ::receive_string(self.error_msg)))
+            Err(Error::new(self.error_code, crate::templ::receive_string_mut(self.error_msg)))
         }
     }
 }
