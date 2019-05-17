@@ -91,16 +91,32 @@ pub struct SimpleBlobDetector_Params {
     pub max_convexity: f32,
 }
 
-// identifier: cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression
-/// @overload
+/// Detects corners using the AGAST algorithm
+/// 
+/// ## Parameters
+/// * image: grayscale image where keypoints (corners) are detected.
+/// * keypoints: keypoints detected on the image.
+/// * threshold: threshold on difference between intensity of the central pixel and pixels of a
+/// circle around this pixel.
+/// * nonmaxSuppression: if true, non-maximum suppression is applied to detected corners
+/// (keypoints).
+/// * type: one of the four neighborhoods as defined in the paper:
+/// AgastFeatureDetector::AGAST_5_8, AgastFeatureDetector::AGAST_7_12d,
+/// AgastFeatureDetector::AGAST_7_12s, AgastFeatureDetector::OAST_9_16
+/// 
+/// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
+/// The 32-bit binary tree tables were generated automatically from original code using perl script.
+/// The perl script and examples of tree generation are placed in features2d/doc folder.
+/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+/// 
+/// ## Overloaded parameters
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * nonmax_suppression: true
 pub fn AGAST(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
+    unsafe { sys::cv_AGAST_Mat_VectorOfKeyPoint_int_bool(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
 }
 
-// identifier: cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type
 /// Detects corners using the AGAST algorithm
 /// 
 /// ## Parameters
@@ -119,19 +135,37 @@ pub fn AGAST(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: 
 /// The perl script and examples of tree generation are placed in features2d/doc folder.
 /// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 pub fn AGAST_with_type(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_AGAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
+    unsafe { sys::cv_AGAST_Mat_VectorOfKeyPoint_int_bool_int(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
 }
 
-// identifier: cv_FAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression
-/// @overload
+/// Detects corners using the FAST algorithm
+/// 
+/// ## Parameters
+/// * image: grayscale image where keypoints (corners) are detected.
+/// * keypoints: keypoints detected on the image.
+/// * threshold: threshold on difference between intensity of the central pixel and pixels of a
+/// circle around this pixel.
+/// * nonmaxSuppression: if true, non-maximum suppression is applied to detected corners
+/// (keypoints).
+/// * type: one of the three neighborhoods as defined in the paper:
+/// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
+/// FastFeatureDetector::TYPE_5_8
+/// 
+/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Rosten06) .
+/// 
+/// 
+/// Note: In Python API, types are given as cv2.FAST_FEATURE_DETECTOR_TYPE_5_8,
+/// cv2.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv2.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
+/// detection, use cv2.FAST.detect() method.
+/// 
+/// ## Overloaded parameters
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * nonmax_suppression: true
 pub fn FAST(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_FAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
+    unsafe { sys::cv_FAST_Mat_VectorOfKeyPoint_int_bool(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
 }
 
-// identifier: cv_FAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type
 /// Detects corners using the FAST algorithm
 /// 
 /// ## Parameters
@@ -152,15 +186,13 @@ pub fn FAST(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: i
 /// cv2.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv2.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
 /// detection, use cv2.FAST.detect() method.
 pub fn FAST_with_type(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_FAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
+    unsafe { sys::cv_FAST_Mat_VectorOfKeyPoint_int_bool_int(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
 }
 
-// identifier: cv_computeRecallPrecisionCurve_VectorOfVectorOfDMatch_matches1to2_VectorOfVectorOfuchar_correctMatches1to2Mask_VectorOfPoint2f_recallPrecisionCurve
 pub fn compute_recall_precision_curve(matches1to2: &types::VectorOfVectorOfDMatch, correct_matches1to2_mask: &types::VectorOfVectorOfuchar, recall_precision_curve: &types::VectorOfPoint2f) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_computeRecallPrecisionCurve_VectorOfVectorOfDMatch_matches1to2_VectorOfVectorOfuchar_correctMatches1to2Mask_VectorOfPoint2f_recallPrecisionCurve(matches1to2.as_raw_VectorOfVectorOfDMatch(), correct_matches1to2_mask.as_raw_VectorOfVectorOfuchar(), recall_precision_curve.as_raw_VectorOfPoint2f()) }.into_result()
+    unsafe { sys::cv_computeRecallPrecisionCurve_VectorOfVectorOfDMatch_VectorOfVectorOfuchar_VectorOfPoint2f(matches1to2.as_raw_VectorOfVectorOfDMatch(), correct_matches1to2_mask.as_raw_VectorOfVectorOfuchar(), recall_precision_curve.as_raw_VectorOfPoint2f()) }.into_result()
 }
 
-// identifier: cv_drawKeypoints_Mat_image_VectorOfKeyPoint_keypoints_Mat_outImage_Scalar_color_int_flags
 /// Draws keypoints.
 /// 
 /// ## Parameters
@@ -178,14 +210,13 @@ pub fn compute_recall_precision_curve(matches1to2: &types::VectorOfVectorOfDMatc
 /// cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS, cv2.DRAW_MATCHES_FLAGS_DRAW_OVER_OUTIMG,
 /// cv2.DRAW_MATCHES_FLAGS_NOT_DRAW_SINGLE_POINTS
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * color: Scalar::all(-1)
 /// * flags: DrawMatchesFlags::DEFAULT
 pub fn draw_keypoints(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, out_image: &mut core::Mat, color: core::Scalar, flags: i32) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_drawKeypoints_Mat_image_VectorOfKeyPoint_keypoints_Mat_outImage_Scalar_color_int_flags(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw_Mat(), color, flags) }.into_result()
+    unsafe { sys::cv_drawKeypoints_Mat_VectorOfKeyPoint_Mat_Scalar_int(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw_Mat(), color, flags) }.into_result()
 }
 
-// identifier: cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfchar_matchesMask_int_flags
 /// Draws the found matches of keypoints from two images.
 /// 
 /// ## Parameters
@@ -209,45 +240,64 @@ pub fn draw_keypoints(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, ou
 /// This function draws matches of keypoints from two images in the output image. Match is a line
 /// connecting two keypoints (circles). See cv::DrawMatchesFlags.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * match_color: Scalar::all(-1)
 /// * single_point_color: Scalar::all(-1)
 /// * matches_mask: std::vector<char>()
 /// * flags: DrawMatchesFlags::DEFAULT
 pub fn draw_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoint, img2: &core::Mat, keypoints2: &types::VectorOfKeyPoint, matches1to2: &types::VectorOfDMatch, out_img: &mut core::Mat, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &types::VectorOfchar, flags: i32) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfchar_matchesMask_int_flags(img1.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw_Mat(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_Mat(), match_color, single_point_color, matches_mask.as_raw_VectorOfchar(), flags) }.into_result()
+    unsafe { sys::cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfDMatch_Mat_Scalar_Scalar_VectorOfchar_int(img1.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw_Mat(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_Mat(), match_color, single_point_color, matches_mask.as_raw_VectorOfchar(), flags) }.into_result()
 }
 
-// identifier: cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfVectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfVectorOfchar_matchesMask_int_flags
-/// @overload
+/// Draws the found matches of keypoints from two images.
+/// 
+/// ## Parameters
+/// * img1: First source image.
+/// * keypoints1: Keypoints from the first source image.
+/// * img2: Second source image.
+/// * keypoints2: Keypoints from the second source image.
+/// * matches1to2: Matches from the first image to the second one, which means that keypoints1[i]
+/// has a corresponding point in keypoints2[matches[i]] .
+/// * outImg: Output image. Its content depends on the flags value defining what is drawn in the
+/// output image. See possible flags bit values below.
+/// * matchColor: Color of matches (lines and connected keypoints). If matchColor==Scalar::all(-1)
+/// , the color is generated randomly.
+/// * singlePointColor: Color of single keypoints (circles), which means that keypoints do not
+/// have the matches. If singlePointColor==Scalar::all(-1) , the color is generated randomly.
+/// * matchesMask: Mask determining which matches are drawn. If the mask is empty, all matches are
+/// drawn.
+/// * flags: Flags setting drawing features. Possible flags bit values are defined by
+/// DrawMatchesFlags.
+/// 
+/// This function draws matches of keypoints from two images in the output image. Match is a line
+/// connecting two keypoints (circles). See cv::DrawMatchesFlags.
+/// 
+/// ## Overloaded parameters
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * match_color: Scalar::all(-1)
 /// * single_point_color: Scalar::all(-1)
 /// * matches_mask: std::vector<std::vector<char> >()
 /// * flags: DrawMatchesFlags::DEFAULT
 pub fn draw_vector_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoint, img2: &core::Mat, keypoints2: &types::VectorOfKeyPoint, matches1to2: &types::VectorOfVectorOfDMatch, out_img: &mut core::Mat, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &types::VectorOfVectorOfchar, flags: i32) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_drawMatches_Mat_img1_VectorOfKeyPoint_keypoints1_Mat_img2_VectorOfKeyPoint_keypoints2_VectorOfVectorOfDMatch_matches1to2_Mat_outImg_Scalar_matchColor_Scalar_singlePointColor_VectorOfVectorOfchar_matchesMask_int_flags(img1.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw_Mat(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw_Mat(), match_color, single_point_color, matches_mask.as_raw_VectorOfVectorOfchar(), flags) }.into_result()
+    unsafe { sys::cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int(img1.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw_Mat(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw_Mat(), match_color, single_point_color, matches_mask.as_raw_VectorOfVectorOfchar(), flags) }.into_result()
 }
 
-// identifier: cv_evaluateFeatureDetector_Mat_img1_Mat_img2_Mat_H1to2_VectorOfKeyPoint_keypoints1_VectorOfKeyPoint_keypoints2_float_repeatability_int_correspCount_PtrOfFeature2D_fdetector
 /// \
 ///   Functions to evaluate the feature detectors and [generic] descriptor extractors      *
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * fdetector: Ptr<FeatureDetector>()
 pub fn evaluate_feature_detector(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &types::VectorOfKeyPoint, keypoints2: &types::VectorOfKeyPoint, repeatability: f32, corresp_count: i32, fdetector: &types::PtrOfFeature2D) -> Result<()> {
-    unsafe { sys::cv_features2d_cv_evaluateFeatureDetector_Mat_img1_Mat_img2_Mat_H1to2_VectorOfKeyPoint_keypoints1_VectorOfKeyPoint_keypoints2_float_repeatability_int_correspCount_PtrOfFeature2D_fdetector(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), repeatability, corresp_count, fdetector.as_raw_PtrOfFeature2D()) }.into_result()
+    unsafe { sys::cv_evaluateFeatureDetector_Mat_Mat_Mat_VectorOfKeyPoint_VectorOfKeyPoint_float_int_PtrOfFeature2D(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), repeatability, corresp_count, fdetector.as_raw_PtrOfFeature2D()) }.into_result()
 }
 
-// identifier: cv_getNearestPoint_VectorOfPoint2f_recallPrecisionCurve_float_l_precision
 pub fn get_nearest_point(recall_precision_curve: &types::VectorOfPoint2f, l_precision: f32) -> Result<i32> {
-    unsafe { sys::cv_features2d_cv_getNearestPoint_VectorOfPoint2f_recallPrecisionCurve_float_l_precision(recall_precision_curve.as_raw_VectorOfPoint2f(), l_precision) }.into_result()
+    unsafe { sys::cv_getNearestPoint_VectorOfPoint2f_float(recall_precision_curve.as_raw_VectorOfPoint2f(), l_precision) }.into_result()
 }
 
-// identifier: cv_getRecall_VectorOfPoint2f_recallPrecisionCurve_float_l_precision
 pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: f32) -> Result<f32> {
-    unsafe { sys::cv_features2d_cv_getRecall_VectorOfPoint2f_recallPrecisionCurve_float_l_precision(recall_precision_curve.as_raw_VectorOfPoint2f(), l_precision) }.into_result()
+    unsafe { sys::cv_getRecall_VectorOfPoint2f_float(recall_precision_curve.as_raw_VectorOfPoint2f(), l_precision) }.into_result()
 }
 
 // Generating impl for trait cv::AKAZE (trait)
@@ -270,86 +320,70 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
 /// British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
 pub trait AKAZE : crate::features2d::Feature2D {
     #[doc(hidden)] fn as_raw_AKAZE(&self) -> *mut c_void;
-    // identifier: cv_AKAZE_setDescriptorType_int_dtype
     fn set_descriptor_type(&mut self, dtype: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AKAZE_setDescriptorType_int_dtype(self.as_raw_AKAZE(), dtype) }.into_result()
+        unsafe { sys::cv_AKAZE_setDescriptorType_int(self.as_raw_AKAZE(), dtype) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getDescriptorType_const
     fn get_descriptor_type(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getDescriptorType_const(self.as_raw_AKAZE()) }.into_result()
+        unsafe { sys::cv_AKAZE_getDescriptorType_const(self.as_raw_AKAZE()) }.into_result()
     }
     
-    // identifier: cv_AKAZE_setDescriptorSize_int_dsize
     fn set_descriptor_size(&mut self, dsize: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AKAZE_setDescriptorSize_int_dsize(self.as_raw_AKAZE(), dsize) }.into_result()
+        unsafe { sys::cv_AKAZE_setDescriptorSize_int(self.as_raw_AKAZE(), dsize) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getDescriptorSize_const
     fn get_descriptor_size(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getDescriptorSize_const(self.as_raw_AKAZE()) }.into_result()
+        unsafe { sys::cv_AKAZE_getDescriptorSize_const(self.as_raw_AKAZE()) }.into_result()
     }
     
-    // identifier: cv_AKAZE_setDescriptorChannels_int_dch
     fn set_descriptor_channels(&mut self, dch: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AKAZE_setDescriptorChannels_int_dch(self.as_raw_AKAZE(), dch) }.into_result()
+        unsafe { sys::cv_AKAZE_setDescriptorChannels_int(self.as_raw_AKAZE(), dch) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getDescriptorChannels_const
     fn get_descriptor_channels(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getDescriptorChannels_const(self.as_raw_AKAZE()) }.into_result()
+        unsafe { sys::cv_AKAZE_getDescriptorChannels_const(self.as_raw_AKAZE()) }.into_result()
     }
     
-    // identifier: cv_AKAZE_setThreshold_double_threshold
     fn set_threshold(&mut self, threshold: f64) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AKAZE_setThreshold_double_threshold(self.as_raw_AKAZE(), threshold) }.into_result()
+        unsafe { sys::cv_AKAZE_setThreshold_double(self.as_raw_AKAZE(), threshold) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getThreshold_const
     fn get_threshold(&self) -> Result<f64> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getThreshold_const(self.as_raw_AKAZE()) }.into_result()
+        unsafe { sys::cv_AKAZE_getThreshold_const(self.as_raw_AKAZE()) }.into_result()
     }
     
-    // identifier: cv_AKAZE_setNOctaves_int_octaves
     fn set_n_octaves(&mut self, octaves: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AKAZE_setNOctaves_int_octaves(self.as_raw_AKAZE(), octaves) }.into_result()
+        unsafe { sys::cv_AKAZE_setNOctaves_int(self.as_raw_AKAZE(), octaves) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getNOctaves_const
     fn get_n_octaves(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getNOctaves_const(self.as_raw_AKAZE()) }.into_result()
+        unsafe { sys::cv_AKAZE_getNOctaves_const(self.as_raw_AKAZE()) }.into_result()
     }
     
-    // identifier: cv_AKAZE_setNOctaveLayers_int_octaveLayers
     fn set_n_octave_layers(&mut self, octave_layers: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AKAZE_setNOctaveLayers_int_octaveLayers(self.as_raw_AKAZE(), octave_layers) }.into_result()
+        unsafe { sys::cv_AKAZE_setNOctaveLayers_int(self.as_raw_AKAZE(), octave_layers) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getNOctaveLayers_const
     fn get_n_octave_layers(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getNOctaveLayers_const(self.as_raw_AKAZE()) }.into_result()
+        unsafe { sys::cv_AKAZE_getNOctaveLayers_const(self.as_raw_AKAZE()) }.into_result()
     }
     
-    // identifier: cv_AKAZE_setDiffusivity_int_diff
     fn set_diffusivity(&mut self, diff: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AKAZE_setDiffusivity_int_diff(self.as_raw_AKAZE(), diff) }.into_result()
+        unsafe { sys::cv_AKAZE_setDiffusivity_int(self.as_raw_AKAZE(), diff) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getDiffusivity_const
     fn get_diffusivity(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getDiffusivity_const(self.as_raw_AKAZE()) }.into_result()
+        unsafe { sys::cv_AKAZE_getDiffusivity_const(self.as_raw_AKAZE()) }.into_result()
     }
     
-    // identifier: cv_AKAZE_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_AKAZE_getDefaultName_const(self.as_raw_AKAZE()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_AKAZE_getDefaultName_const(self.as_raw_AKAZE()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl<'a> AKAZE + 'a {
 
-    // identifier: cv_AKAZE_create_int_descriptor_type_int_descriptor_size_int_descriptor_channels_float_threshold_int_nOctaves_int_nOctaveLayers_int_diffusivity
     /// The AKAZE constructor
     /// 
     /// ## Parameters
@@ -363,7 +397,7 @@ impl<'a> AKAZE + 'a {
     /// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
     /// DIFF_CHARBONNIER
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * descriptor_type: AKAZE::DESCRIPTOR_MLDB
     /// * descriptor_size: 0
     /// * descriptor_channels: 3
@@ -372,7 +406,7 @@ impl<'a> AKAZE + 'a {
     /// * n_octave_layers: 4
     /// * diffusivity: KAZE::DIFF_PM_G2
     pub fn create(descriptor_type: i32, descriptor_size: i32, descriptor_channels: i32, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: i32) -> Result<types::PtrOfAKAZE> {
-        unsafe { sys::cv_features2d_cv_AKAZE_create_int_descriptor_type_int_descriptor_size_int_descriptor_channels_float_threshold_int_nOctaves_int_nOctaveLayers_int_diffusivity(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity) }.into_result().map(|x| types::PtrOfAKAZE { ptr: x })
+        unsafe { sys::cv_AKAZE_create_int_int_int_float_int_int_int(descriptor_type, descriptor_size, descriptor_channels, threshold, n_octaves, n_octave_layers, diffusivity) }.into_result().map(|x| types::PtrOfAKAZE { ptr: x })
     }
     
 }
@@ -381,53 +415,45 @@ impl<'a> AKAZE + 'a {
 /// Wrapping class for feature detection using the AGAST method. :
 pub trait AgastFeatureDetector : crate::features2d::Feature2D {
     #[doc(hidden)] fn as_raw_AgastFeatureDetector(&self) -> *mut c_void;
-    // identifier: cv_AgastFeatureDetector_setThreshold_int_threshold
     fn set_threshold(&mut self, threshold: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_setThreshold_int_threshold(self.as_raw_AgastFeatureDetector(), threshold) }.into_result()
+        unsafe { sys::cv_AgastFeatureDetector_setThreshold_int(self.as_raw_AgastFeatureDetector(), threshold) }.into_result()
     }
     
-    // identifier: cv_AgastFeatureDetector_getThreshold_const
     fn get_threshold(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_getThreshold_const(self.as_raw_AgastFeatureDetector()) }.into_result()
+        unsafe { sys::cv_AgastFeatureDetector_getThreshold_const(self.as_raw_AgastFeatureDetector()) }.into_result()
     }
     
-    // identifier: cv_AgastFeatureDetector_setNonmaxSuppression_bool_f
     fn set_nonmax_suppression(&mut self, f: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_setNonmaxSuppression_bool_f(self.as_raw_AgastFeatureDetector(), f) }.into_result()
+        unsafe { sys::cv_AgastFeatureDetector_setNonmaxSuppression_bool(self.as_raw_AgastFeatureDetector(), f) }.into_result()
     }
     
-    // identifier: cv_AgastFeatureDetector_getNonmaxSuppression_const
     fn get_nonmax_suppression(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_getNonmaxSuppression_const(self.as_raw_AgastFeatureDetector()) }.into_result()
+        unsafe { sys::cv_AgastFeatureDetector_getNonmaxSuppression_const(self.as_raw_AgastFeatureDetector()) }.into_result()
     }
     
-    // identifier: cv_AgastFeatureDetector_setType_int_type
     fn set_type(&mut self, _type: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_setType_int_type(self.as_raw_AgastFeatureDetector(), _type) }.into_result()
+        unsafe { sys::cv_AgastFeatureDetector_setType_int(self.as_raw_AgastFeatureDetector(), _type) }.into_result()
     }
     
-    // identifier: cv_AgastFeatureDetector_getType_const
     fn get_type(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_getType_const(self.as_raw_AgastFeatureDetector()) }.into_result()
+        unsafe { sys::cv_AgastFeatureDetector_getType_const(self.as_raw_AgastFeatureDetector()) }.into_result()
     }
     
-    // identifier: cv_AgastFeatureDetector_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_getDefaultName_const(self.as_raw_AgastFeatureDetector()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_AgastFeatureDetector_getDefaultName_const(self.as_raw_AgastFeatureDetector()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl<'a> AgastFeatureDetector + 'a {
 
-    // identifier: cv_AgastFeatureDetector_create_int_threshold_bool_nonmaxSuppression_int_type
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * threshold: 10
     /// * nonmax_suppression: true
     /// * _type: AgastFeatureDetector::OAST_9_16
     pub fn create(threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<types::PtrOfAgastFeatureDetector> {
-        unsafe { sys::cv_features2d_cv_AgastFeatureDetector_create_int_threshold_bool_nonmaxSuppression_int_type(threshold, nonmax_suppression, _type) }.into_result().map(|x| types::PtrOfAgastFeatureDetector { ptr: x })
+        unsafe { sys::cv_AgastFeatureDetector_create_int_bool_int(threshold, nonmax_suppression, _type) }.into_result().map(|x| types::PtrOfAgastFeatureDetector { ptr: x })
     }
     
 }
@@ -461,22 +487,19 @@ impl core::Algorithm for BFMatcher {
 
 impl BFMatcher {
 
-    // identifier: cv_BFMatcher_BFMatcher_int_normType_bool_crossCheck
     /// Brute-force matcher constructor (obsolete). Please use BFMatcher.create()
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * norm_type: NORM_L2
     /// * cross_check: false
     pub fn new(norm_type: i32, cross_check: bool) -> Result<crate::features2d::BFMatcher> {
-        unsafe { sys::cv_features2d_cv_BFMatcher_BFMatcher_int_normType_bool_crossCheck(norm_type, cross_check) }.into_result().map(|x| crate::features2d::BFMatcher { ptr: x })
+        unsafe { sys::cv_BFMatcher_BFMatcher_int_bool(norm_type, cross_check) }.into_result().map(|x| crate::features2d::BFMatcher { ptr: x })
     }
     
-    // identifier: cv_BFMatcher_isMaskSupported_const
     pub fn is_mask_supported(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_BFMatcher_isMaskSupported_const(self.as_raw_BFMatcher()) }.into_result()
+        unsafe { sys::cv_BFMatcher_isMaskSupported_const(self.as_raw_BFMatcher()) }.into_result()
     }
     
-    // identifier: cv_BFMatcher_create_int_normType_bool_crossCheck
     /// Brute-force matcher create method.
     /// ## Parameters
     /// * normType: One of NORM_L1, NORM_L2, NORM_HAMMING, NORM_HAMMING2. L1 and L2 norms are
@@ -490,19 +513,18 @@ impl BFMatcher {
     /// pairs. Such technique usually produces best results with minimal number of outliers when there are
     /// enough matches. This is alternative to the ratio test, used by D. Lowe in SIFT paper.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * norm_type: NORM_L2
     /// * cross_check: false
     pub fn create(norm_type: i32, cross_check: bool) -> Result<types::PtrOfBFMatcher> {
-        unsafe { sys::cv_features2d_cv_BFMatcher_create_int_normType_bool_crossCheck(norm_type, cross_check) }.into_result().map(|x| types::PtrOfBFMatcher { ptr: x })
+        unsafe { sys::cv_BFMatcher_create_int_bool(norm_type, cross_check) }.into_result().map(|x| types::PtrOfBFMatcher { ptr: x })
     }
     
-    // identifier: cv_BFMatcher_clone_const_bool_emptyTrainData
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * empty_train_data: false
     pub fn clone(&self, empty_train_data: bool) -> Result<types::PtrOfDescriptorMatcher> {
-        unsafe { sys::cv_features2d_cv_BFMatcher_clone_const_bool_emptyTrainData(self.as_raw_BFMatcher(), empty_train_data) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
+        unsafe { sys::cv_BFMatcher_clone_const_bool(self.as_raw_BFMatcher(), empty_train_data) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
     }
     
 }
@@ -532,7 +554,6 @@ impl crate::features2d::BOWImgDescriptorExtractor {
 
 impl BOWImgDescriptorExtractor {
 
-    // identifier: cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_dextractor_PtrOfDescriptorMatcher_dmatcher
     /// The constructor.
     /// 
     /// ## Parameters
@@ -540,33 +561,28 @@ impl BOWImgDescriptorExtractor {
     /// its keypoints.
     /// * dmatcher: Descriptor matcher that is used to find the nearest word of the trained vocabulary
     /// for each keypoint descriptor of the image.
-    pub fn new(dextractor: &types::PtrOfFeature2D, dmatcher: &types::PtrOfDescriptorMatcher) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_dextractor_PtrOfDescriptorMatcher_dmatcher(dextractor.as_raw_PtrOfFeature2D(), dmatcher.as_raw_PtrOfDescriptorMatcher()) }.into_result().map(|x| crate::features2d::BOWImgDescriptorExtractor { ptr: x })
+    pub fn new_with_dextractor(dextractor: &types::PtrOfFeature2D, dmatcher: &types::PtrOfDescriptorMatcher) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
+        unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_PtrOfDescriptorMatcher(dextractor.as_raw_PtrOfFeature2D(), dmatcher.as_raw_PtrOfDescriptorMatcher()) }.into_result().map(|x| crate::features2d::BOWImgDescriptorExtractor { ptr: x })
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfDescriptorMatcher_dmatcher
-    /// @overload
-    pub fn new_1(dmatcher: &types::PtrOfDescriptorMatcher) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfDescriptorMatcher_dmatcher(dmatcher.as_raw_PtrOfDescriptorMatcher()) }.into_result().map(|x| crate::features2d::BOWImgDescriptorExtractor { ptr: x })
+    pub fn new(dmatcher: &types::PtrOfDescriptorMatcher) -> Result<crate::features2d::BOWImgDescriptorExtractor> {
+        unsafe { sys::cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfDescriptorMatcher(dmatcher.as_raw_PtrOfDescriptorMatcher()) }.into_result().map(|x| crate::features2d::BOWImgDescriptorExtractor { ptr: x })
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_setVocabulary_Mat_vocabulary
     /// Sets a visual vocabulary.
     /// 
     /// ## Parameters
     /// * vocabulary: Vocabulary (can be trained using the inheritor of BOWTrainer ). Each row of the
     /// vocabulary is a visual word (cluster center).
     pub fn set_vocabulary(&mut self, vocabulary: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_setVocabulary_Mat_vocabulary(self.as_raw_BOWImgDescriptorExtractor(), vocabulary.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_BOWImgDescriptorExtractor_setVocabulary_Mat(self.as_raw_BOWImgDescriptorExtractor(), vocabulary.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_getVocabulary_const
     /// Returns the set vocabulary.
     pub fn get_vocabulary(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_getVocabulary_const(self.as_raw_BOWImgDescriptorExtractor()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_BOWImgDescriptorExtractor_getVocabulary_const(self.as_raw_BOWImgDescriptorExtractor()) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters_Mat_descriptors
     /// Computes an image descriptor using the set visual vocabulary.
     /// 
     /// ## Parameters
@@ -578,15 +594,13 @@ impl BOWImgDescriptorExtractor {
     /// returned if it is non-zero.
     /// * descriptors: Descriptors of the image keypoints that are returned if they are non-zero.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * point_idxs_of_clusters: 0
     /// * descriptors: 0
     pub fn compute_desc(&mut self, image: &core::Mat, keypoints: &types::VectorOfKeyPoint, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &types::VectorOfVectorOfint, descriptors: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters_Mat_descriptors(self.as_raw_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint(), descriptors.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_BOWImgDescriptorExtractor_compute_Mat_VectorOfKeyPoint_Mat_VectorOfVectorOfint_Mat(self.as_raw_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint(), descriptors.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_compute_Mat_keypointDescriptors_Mat_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters
-    /// @overload
     /// ## Parameters
     /// * keypointDescriptors: Computed descriptors to match with vocabulary.
     /// * imgDescriptor: Computed output image descriptor.
@@ -594,27 +608,24 @@ impl BOWImgDescriptorExtractor {
     /// pointIdxsOfClusters[i] are keypoint indices that belong to the i -th cluster (word of vocabulary)
     /// returned if it is non-zero.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * point_idxs_of_clusters: 0
     pub fn compute(&mut self, keypoint_descriptors: &core::Mat, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &types::VectorOfVectorOfint) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_compute_Mat_keypointDescriptors_Mat_imgDescriptor_VectorOfVectorOfint_pointIdxsOfClusters(self.as_raw_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw_Mat(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint()) }.into_result()
+        unsafe { sys::cv_BOWImgDescriptorExtractor_compute_Mat_Mat_VectorOfVectorOfint(self.as_raw_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw_Mat(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_compute2_Mat_image_VectorOfKeyPoint_keypoints_Mat_imgDescriptor
     pub fn compute2(&mut self, image: &core::Mat, keypoints: &types::VectorOfKeyPoint, img_descriptor: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_compute2_Mat_image_VectorOfKeyPoint_keypoints_Mat_imgDescriptor(self.as_raw_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), img_descriptor.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_BOWImgDescriptorExtractor_compute2_Mat_VectorOfKeyPoint_Mat(self.as_raw_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), img_descriptor.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_descriptorSize_const
     /// Returns an image descriptor size if the vocabulary is set. Otherwise, it returns 0.
     pub fn descriptor_size(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_descriptorSize_const(self.as_raw_BOWImgDescriptorExtractor()) }.into_result()
+        unsafe { sys::cv_BOWImgDescriptorExtractor_descriptorSize_const(self.as_raw_BOWImgDescriptorExtractor()) }.into_result()
     }
     
-    // identifier: cv_BOWImgDescriptorExtractor_descriptorType_const
     /// Returns an image descriptor type.
     pub fn descriptor_type(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_BOWImgDescriptorExtractor_descriptorType_const(self.as_raw_BOWImgDescriptorExtractor()) }.into_result()
+        unsafe { sys::cv_BOWImgDescriptorExtractor_descriptorType_const(self.as_raw_BOWImgDescriptorExtractor()) }.into_result()
     }
     
 }
@@ -640,27 +651,24 @@ impl crate::features2d::BOWTrainer for BOWKMeansTrainer {
 
 impl BOWKMeansTrainer {
 
-    // identifier: cv_BOWKMeansTrainer_BOWKMeansTrainer_int_clusterCount_TermCriteria_termcrit_int_attempts_int_flags
     /// The constructor.
     /// 
     /// @see cv::kmeans
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * termcrit: TermCriteria()
     /// * attempts: 3
     /// * flags: KMEANS_PP_CENTERS
     pub fn new_with_criteria(cluster_count: i32, termcrit: &core::TermCriteria, attempts: i32, flags: i32) -> Result<crate::features2d::BOWKMeansTrainer> {
-        unsafe { sys::cv_features2d_cv_BOWKMeansTrainer_BOWKMeansTrainer_int_clusterCount_TermCriteria_termcrit_int_attempts_int_flags(cluster_count, termcrit.as_raw_TermCriteria(), attempts, flags) }.into_result().map(|x| crate::features2d::BOWKMeansTrainer { ptr: x })
+        unsafe { sys::cv_BOWKMeansTrainer_BOWKMeansTrainer_int_TermCriteria_int_int(cluster_count, termcrit.as_raw_TermCriteria(), attempts, flags) }.into_result().map(|x| crate::features2d::BOWKMeansTrainer { ptr: x })
     }
     
-    // identifier: cv_BOWKMeansTrainer_cluster_const
     pub fn default(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_features2d_cv_BOWKMeansTrainer_cluster_const(self.as_raw_BOWKMeansTrainer()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_BOWKMeansTrainer_cluster_const(self.as_raw_BOWKMeansTrainer()) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
-    // identifier: cv_BOWKMeansTrainer_cluster_const_Mat_descriptors
     pub fn new(&self, descriptors: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_features2d_cv_BOWKMeansTrainer_cluster_const_Mat_descriptors(self.as_raw_BOWKMeansTrainer(), descriptors.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_BOWKMeansTrainer_cluster_const_Mat(self.as_raw_BOWKMeansTrainer(), descriptors.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
 }
@@ -672,7 +680,6 @@ impl BOWKMeansTrainer {
 /// Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray, 2004. :
 pub trait BOWTrainer {
     #[doc(hidden)] fn as_raw_BOWTrainer(&self) -> *mut c_void;
-    // identifier: cv_BOWTrainer_add_Mat_descriptors
     /// Adds descriptors to a training set.
     /// 
     /// ## Parameters
@@ -681,33 +688,27 @@ pub trait BOWTrainer {
     /// 
     /// The training set is clustered using clustermethod to construct the vocabulary.
     fn add(&mut self, descriptors: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_BOWTrainer_add_Mat_descriptors(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_BOWTrainer_add_Mat(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_BOWTrainer_getDescriptors_const
     /// Returns a training set of descriptors.
     fn get_descriptors(&self) -> Result<types::VectorOfMat> {
-        unsafe { sys::cv_features2d_cv_BOWTrainer_getDescriptors_const(self.as_raw_BOWTrainer()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
+        unsafe { sys::cv_BOWTrainer_getDescriptors_const(self.as_raw_BOWTrainer()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
     }
     
-    // identifier: cv_BOWTrainer_descriptorsCount_const
     /// Returns the count of all descriptors stored in the training set.
     fn descriptors_count(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_BOWTrainer_descriptorsCount_const(self.as_raw_BOWTrainer()) }.into_result()
+        unsafe { sys::cv_BOWTrainer_descriptorsCount_const(self.as_raw_BOWTrainer()) }.into_result()
     }
     
-    // identifier: cv_BOWTrainer_clear
     fn clear(&mut self) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_BOWTrainer_clear(self.as_raw_BOWTrainer()) }.into_result()
+        unsafe { sys::cv_BOWTrainer_clear(self.as_raw_BOWTrainer()) }.into_result()
     }
     
-    // identifier: cv_BOWTrainer_cluster_const
-    /// @overload
     fn cluster(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_features2d_cv_BOWTrainer_cluster_const(self.as_raw_BOWTrainer()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_BOWTrainer_cluster_const(self.as_raw_BOWTrainer()) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
-    // identifier: cv_BOWTrainer_cluster_const_Mat_descriptors
     /// Clusters train descriptors.
     /// 
     /// ## Parameters
@@ -717,8 +718,8 @@ pub trait BOWTrainer {
     /// The vocabulary consists of cluster centers. So, this method returns the vocabulary. In the first
     /// variant of the method, train descriptors stored in the object are clustered. In the second variant,
     /// input descriptors are clustered.
-    fn cluster_1(&self, descriptors: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_features2d_cv_BOWTrainer_cluster_const_Mat_descriptors(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+    fn cluster_with_descriptors(&self, descriptors: &core::Mat) -> Result<core::Mat> {
+        unsafe { sys::cv_BOWTrainer_cluster_const_Mat(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
 }
@@ -752,7 +753,6 @@ impl crate::features2d::Feature2D for BRISK {
 
 impl BRISK {
 
-    // identifier: cv_BRISK_create_int_thresh_int_octaves_float_patternScale
     /// The BRISK constructor
     /// 
     /// ## Parameters
@@ -761,15 +761,14 @@ impl BRISK {
     /// * patternScale: apply this scale to the pattern used for sampling the neighbourhood of a
     /// keypoint.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * thresh: 30
     /// * octaves: 3
     /// * pattern_scale: 1.0f
     pub fn create(thresh: i32, octaves: i32, pattern_scale: f32) -> Result<types::PtrOfBRISK> {
-        unsafe { sys::cv_features2d_cv_BRISK_create_int_thresh_int_octaves_float_patternScale(thresh, octaves, pattern_scale) }.into_result().map(|x| types::PtrOfBRISK { ptr: x })
+        unsafe { sys::cv_BRISK_create_int_int_float(thresh, octaves, pattern_scale) }.into_result().map(|x| types::PtrOfBRISK { ptr: x })
     }
     
-    // identifier: cv_BRISK_create_VectorOffloat_radiusList_VectorOfint_numberList_float_dMax_float_dMin_VectorOfint_indexChange
     /// The BRISK constructor for a custom pattern
     /// 
     /// ## Parameters
@@ -783,15 +782,14 @@ impl BRISK {
     /// keypoint scale 1).
     /// * indexChange: index remapping of the bits.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * d_max: 5.85f
     /// * d_min: 8.2f
     /// * index_change: std::vector<int>()
-    pub fn create_1(radius_list: &types::VectorOffloat, number_list: &types::VectorOfint, d_max: f32, d_min: f32, index_change: &types::VectorOfint) -> Result<types::PtrOfBRISK> {
-        unsafe { sys::cv_features2d_cv_BRISK_create_VectorOffloat_radiusList_VectorOfint_numberList_float_dMax_float_dMin_VectorOfint_indexChange(radius_list.as_raw_VectorOffloat(), number_list.as_raw_VectorOfint(), d_max, d_min, index_change.as_raw_VectorOfint()) }.into_result().map(|x| types::PtrOfBRISK { ptr: x })
+    pub fn create_with_pattern(radius_list: &types::VectorOffloat, number_list: &types::VectorOfint, d_max: f32, d_min: f32, index_change: &types::VectorOfint) -> Result<types::PtrOfBRISK> {
+        unsafe { sys::cv_BRISK_create_VectorOffloat_VectorOfint_float_float_VectorOfint(radius_list.as_raw_VectorOffloat(), number_list.as_raw_VectorOfint(), d_max, d_min, index_change.as_raw_VectorOfint()) }.into_result().map(|x| types::PtrOfBRISK { ptr: x })
     }
     
-    // identifier: cv_BRISK_create_int_thresh_int_octaves_VectorOffloat_radiusList_VectorOfint_numberList_float_dMax_float_dMin_VectorOfint_indexChange
     /// The BRISK constructor for a custom pattern, detection threshold and octaves
     /// 
     /// ## Parameters
@@ -807,17 +805,16 @@ impl BRISK {
     /// keypoint scale 1).
     /// * indexChange: index remapping of the bits.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * d_max: 5.85f
     /// * d_min: 8.2f
     /// * index_change: std::vector<int>()
-    pub fn create_2(thresh: i32, octaves: i32, radius_list: &types::VectorOffloat, number_list: &types::VectorOfint, d_max: f32, d_min: f32, index_change: &types::VectorOfint) -> Result<types::PtrOfBRISK> {
-        unsafe { sys::cv_features2d_cv_BRISK_create_int_thresh_int_octaves_VectorOffloat_radiusList_VectorOfint_numberList_float_dMax_float_dMin_VectorOfint_indexChange(thresh, octaves, radius_list.as_raw_VectorOffloat(), number_list.as_raw_VectorOfint(), d_max, d_min, index_change.as_raw_VectorOfint()) }.into_result().map(|x| types::PtrOfBRISK { ptr: x })
+    pub fn create_with_pattern_threshold_octaves(thresh: i32, octaves: i32, radius_list: &types::VectorOffloat, number_list: &types::VectorOfint, d_max: f32, d_min: f32, index_change: &types::VectorOfint) -> Result<types::PtrOfBRISK> {
+        unsafe { sys::cv_BRISK_create_int_int_VectorOffloat_VectorOfint_float_float_VectorOfint(thresh, octaves, radius_list.as_raw_VectorOffloat(), number_list.as_raw_VectorOfint(), d_max, d_min, index_change.as_raw_VectorOfint()) }.into_result().map(|x| types::PtrOfBRISK { ptr: x })
     }
     
-    // identifier: cv_BRISK_getDefaultName_const
     pub fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_BRISK_getDefaultName_const(self.as_raw_BRISK()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_BRISK_getDefaultName_const(self.as_raw_BRISK()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
@@ -829,7 +826,6 @@ impl BRISK {
 /// an image set.
 pub trait DescriptorMatcher : core::Algorithm {
     #[doc(hidden)] fn as_raw_DescriptorMatcher(&self) -> *mut c_void;
-    // identifier: cv_DescriptorMatcher_add_VectorOfMat_descriptors
     /// Adds descriptors to train a CPU(trainDescCollectionis) or GPU(utrainDescCollectionis) descriptor
     /// collection.
     /// 
@@ -839,34 +835,29 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// * descriptors: Descriptors to add. Each descriptors[i] is a set of descriptors from the same
     /// train image.
     fn add(&mut self, descriptors: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_add_VectorOfMat_descriptors(self.as_raw_DescriptorMatcher(), descriptors.as_raw_VectorOfMat()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_add_VectorOfMat(self.as_raw_DescriptorMatcher(), descriptors.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_getTrainDescriptors_const
     /// Returns a constant link to the train descriptor collection trainDescCollection .
     fn get_train_descriptors(&self) -> Result<types::VectorOfMat> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_getTrainDescriptors_const(self.as_raw_DescriptorMatcher()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
+        unsafe { sys::cv_DescriptorMatcher_getTrainDescriptors_const(self.as_raw_DescriptorMatcher()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
     }
     
-    // identifier: cv_DescriptorMatcher_clear
     /// Clears the train descriptor collections.
     fn clear(&mut self) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_clear(self.as_raw_DescriptorMatcher()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_clear(self.as_raw_DescriptorMatcher()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_empty_const
     /// Returns true if there are no train descriptors in the both collections.
     fn empty(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_empty_const(self.as_raw_DescriptorMatcher()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_empty_const(self.as_raw_DescriptorMatcher()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_isMaskSupported_const
     /// Returns true if the descriptor matcher supports masking permissible matches.
     fn is_mask_supported(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_isMaskSupported_const(self.as_raw_DescriptorMatcher()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_isMaskSupported_const(self.as_raw_DescriptorMatcher()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_train
     /// Trains a descriptor matcher
     /// 
     /// Trains a descriptor matcher (for example, the flann index). In all methods to match, the method
@@ -874,10 +865,9 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// have an empty implementation of this method. Other matchers really train their inner structures (for
     /// example, FlannBasedMatcher trains flann::Index ).
     fn train(&mut self) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_train(self.as_raw_DescriptorMatcher()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_train(self.as_raw_DescriptorMatcher()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_match_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfDMatch_matches_Mat_mask
     /// Finds the best match for each descriptor from a query set.
     /// 
     /// ## Parameters
@@ -895,13 +885,12 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// matched. Namely, queryDescriptors[i] can be matched with trainDescriptors[j] only if
     /// mask.at\<uchar\>(i,j) is non-zero.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * mask: noArray()
     fn train_matches(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &types::VectorOfDMatch, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_match_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfDMatch_matches_Mat_mask(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfDMatch(), mask.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_match_const_Mat_Mat_VectorOfDMatch_Mat(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfDMatch(), mask.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_knnMatch_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_int_k_Mat_mask_bool_compactResult
     /// Finds the k best matches for each descriptor from a query set.
     /// 
     /// ## Parameters
@@ -921,14 +910,13 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
     /// for the details about query and train descriptors.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * mask: noArray()
     /// * compact_result: false
     fn knn_train_matches(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &types::VectorOfVectorOfDMatch, k: i32, mask: &core::Mat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_knnMatch_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_int_k_Mat_mask_bool_compactResult(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), k, mask.as_raw_Mat(), compact_result) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_knnMatch_const_Mat_Mat_VectorOfVectorOfDMatch_int_Mat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), k, mask.as_raw_Mat(), compact_result) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_radiusMatch_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_Mat_mask_bool_compactResult
     /// For each query descriptor, finds the training descriptors not farther than the specified distance.
     /// 
     /// ## Parameters
@@ -949,15 +937,13 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
     /// returned in the distance increasing order.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * mask: noArray()
     /// * compact_result: false
     fn train_radius_matches(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &types::VectorOfVectorOfDMatch, max_distance: f32, mask: &core::Mat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_radiusMatch_const_Mat_queryDescriptors_Mat_trainDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_Mat_mask_bool_compactResult(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, mask.as_raw_Mat(), compact_result) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_radiusMatch_const_Mat_Mat_VectorOfVectorOfDMatch_float_Mat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, mask.as_raw_Mat(), compact_result) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_match_Mat_queryDescriptors_VectorOfDMatch_matches_VectorOfMat_masks
-    /// @overload
     /// ## Parameters
     /// * queryDescriptors: Query set of descriptors.
     /// * matches: Matches. If a query descriptor is masked out in mask , no match is added for this
@@ -965,14 +951,12 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// * masks: Set of masks. Each masks[i] specifies permissible matches between the input query
     /// descriptors and stored train descriptors from the i-th image trainDescCollection[i].
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * masks: noArray()
     fn matches(&mut self, query_descriptors: &core::Mat, matches: &types::VectorOfDMatch, masks: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_match_Mat_queryDescriptors_VectorOfDMatch_matches_VectorOfMat_masks(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfDMatch(), masks.as_raw_VectorOfMat()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_match_Mat_VectorOfDMatch_VectorOfMat(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfDMatch(), masks.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_knnMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_int_k_VectorOfMat_masks_bool_compactResult
-    /// @overload
     /// ## Parameters
     /// * queryDescriptors: Query set of descriptors.
     /// * matches: Matches. Each matches[i] is k or less matches for the same query descriptor.
@@ -984,15 +968,13 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
     /// the matches vector does not contain matches for fully masked-out query descriptors.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * masks: noArray()
     /// * compact_result: false
     fn knn_matches(&mut self, query_descriptors: &core::Mat, matches: &types::VectorOfVectorOfDMatch, k: i32, masks: &types::VectorOfMat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_knnMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_int_k_VectorOfMat_masks_bool_compactResult(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_knnMatch_Mat_VectorOfVectorOfDMatch_int_VectorOfMat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_VectorOfMat_masks_bool_compactResult
-    /// @overload
     /// ## Parameters
     /// * queryDescriptors: Query set of descriptors.
     /// * matches: Found matches.
@@ -1005,26 +987,23 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
     /// the matches vector does not contain matches for fully masked-out query descriptors.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * masks: noArray()
     /// * compact_result: false
     fn radius_matches(&mut self, query_descriptors: &core::Mat, matches: &types::VectorOfVectorOfDMatch, max_distance: f32, masks: &types::VectorOfMat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_radiusMatch_Mat_queryDescriptors_VectorOfVectorOfDMatch_matches_float_maxDistance_VectorOfMat_masks_bool_compactResult(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_radiusMatch_Mat_VectorOfVectorOfDMatch_float_VectorOfMat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_write_const_String_fileName
     fn write(&self, file_name: &str) -> Result<()> {
         string_arg!(file_name);
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_write_const_String_fileName(self.as_raw_DescriptorMatcher(), file_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_write_const_String(self.as_raw_DescriptorMatcher(), file_name.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_read_String_fileName
     fn read(&mut self, file_name: &str) -> Result<()> {
         string_arg!(file_name);
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_read_String_fileName(self.as_raw_DescriptorMatcher(), file_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_DescriptorMatcher_read_String(self.as_raw_DescriptorMatcher(), file_name.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_DescriptorMatcher_clone_const_bool_emptyTrainData
     /// Clones the matcher.
     /// 
     /// ## Parameters
@@ -1032,17 +1011,16 @@ pub trait DescriptorMatcher : core::Algorithm {
     /// that is, copies both parameters and train data. If emptyTrainData is true, the method creates an
     /// object copy with the current parameters but with empty train data.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * empty_train_data: false
     fn clone(&self, empty_train_data: bool) -> Result<types::PtrOfDescriptorMatcher> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_clone_const_bool_emptyTrainData(self.as_raw_DescriptorMatcher(), empty_train_data) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
+        unsafe { sys::cv_DescriptorMatcher_clone_const_bool(self.as_raw_DescriptorMatcher(), empty_train_data) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
     }
     
 }
 
 impl<'a> DescriptorMatcher + 'a {
 
-    // identifier: cv_DescriptorMatcher_create_String_descriptorMatcherType
     /// Creates a descriptor matcher of a given type with the default parameters (using default
     /// constructor).
     /// 
@@ -1056,12 +1034,11 @@ impl<'a> DescriptorMatcher + 'a {
     /// *   `FlannBased`
     pub fn create(descriptor_matcher_type: &str) -> Result<types::PtrOfDescriptorMatcher> {
         string_arg!(descriptor_matcher_type);
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_create_String_descriptorMatcherType(descriptor_matcher_type.as_ptr()) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
+        unsafe { sys::cv_DescriptorMatcher_create_String(descriptor_matcher_type.as_ptr()) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
     }
     
-    // identifier: cv_DescriptorMatcher_create_int_matcherType
-    pub fn create_1(matcher_type: i32) -> Result<types::PtrOfDescriptorMatcher> {
-        unsafe { sys::cv_features2d_cv_DescriptorMatcher_create_int_matcherType(matcher_type) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
+    pub fn create_with_matcher_type(matcher_type: i32) -> Result<types::PtrOfDescriptorMatcher> {
+        unsafe { sys::cv_DescriptorMatcher_create_int(matcher_type) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
     }
     
 }
@@ -1086,53 +1063,45 @@ impl crate::features2d::DrawMatchesFlags {
 /// Wrapping class for feature detection using the FAST method. :
 pub trait FastFeatureDetector : crate::features2d::Feature2D {
     #[doc(hidden)] fn as_raw_FastFeatureDetector(&self) -> *mut c_void;
-    // identifier: cv_FastFeatureDetector_setThreshold_int_threshold
     fn set_threshold(&mut self, threshold: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_setThreshold_int_threshold(self.as_raw_FastFeatureDetector(), threshold) }.into_result()
+        unsafe { sys::cv_FastFeatureDetector_setThreshold_int(self.as_raw_FastFeatureDetector(), threshold) }.into_result()
     }
     
-    // identifier: cv_FastFeatureDetector_getThreshold_const
     fn get_threshold(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_getThreshold_const(self.as_raw_FastFeatureDetector()) }.into_result()
+        unsafe { sys::cv_FastFeatureDetector_getThreshold_const(self.as_raw_FastFeatureDetector()) }.into_result()
     }
     
-    // identifier: cv_FastFeatureDetector_setNonmaxSuppression_bool_f
     fn set_nonmax_suppression(&mut self, f: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_setNonmaxSuppression_bool_f(self.as_raw_FastFeatureDetector(), f) }.into_result()
+        unsafe { sys::cv_FastFeatureDetector_setNonmaxSuppression_bool(self.as_raw_FastFeatureDetector(), f) }.into_result()
     }
     
-    // identifier: cv_FastFeatureDetector_getNonmaxSuppression_const
     fn get_nonmax_suppression(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_getNonmaxSuppression_const(self.as_raw_FastFeatureDetector()) }.into_result()
+        unsafe { sys::cv_FastFeatureDetector_getNonmaxSuppression_const(self.as_raw_FastFeatureDetector()) }.into_result()
     }
     
-    // identifier: cv_FastFeatureDetector_setType_int_type
     fn set_type(&mut self, _type: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_setType_int_type(self.as_raw_FastFeatureDetector(), _type) }.into_result()
+        unsafe { sys::cv_FastFeatureDetector_setType_int(self.as_raw_FastFeatureDetector(), _type) }.into_result()
     }
     
-    // identifier: cv_FastFeatureDetector_getType_const
     fn get_type(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_getType_const(self.as_raw_FastFeatureDetector()) }.into_result()
+        unsafe { sys::cv_FastFeatureDetector_getType_const(self.as_raw_FastFeatureDetector()) }.into_result()
     }
     
-    // identifier: cv_FastFeatureDetector_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_getDefaultName_const(self.as_raw_FastFeatureDetector()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_FastFeatureDetector_getDefaultName_const(self.as_raw_FastFeatureDetector()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl<'a> FastFeatureDetector + 'a {
 
-    // identifier: cv_FastFeatureDetector_create_int_threshold_bool_nonmaxSuppression_int_type
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * threshold: 10
     /// * nonmax_suppression: true
     /// * _type: FastFeatureDetector::TYPE_9_16
     pub fn create(threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<types::PtrOfFastFeatureDetector> {
-        unsafe { sys::cv_features2d_cv_FastFeatureDetector_create_int_threshold_bool_nonmaxSuppression_int_type(threshold, nonmax_suppression, _type) }.into_result().map(|x| types::PtrOfFastFeatureDetector { ptr: x })
+        unsafe { sys::cv_FastFeatureDetector_create_int_bool_int(threshold, nonmax_suppression, _type) }.into_result().map(|x| types::PtrOfFastFeatureDetector { ptr: x })
     }
     
 }
@@ -1141,7 +1110,6 @@ impl<'a> FastFeatureDetector + 'a {
 /// Abstract base class for 2D image feature detectors and descriptor extractors
 pub trait Feature2D : core::Algorithm {
     #[doc(hidden)] fn as_raw_Feature2D(&self) -> *mut c_void;
-    // identifier: cv_Feature2D_detect_Mat_image_VectorOfKeyPoint_keypoints_Mat_mask
     /// Detects keypoints in an image (first variant) or image set (second variant).
     /// 
     /// ## Parameters
@@ -1151,14 +1119,12 @@ pub trait Feature2D : core::Algorithm {
     /// * mask: Mask specifying where to look for keypoints (optional). It must be a 8-bit integer
     /// matrix with non-zero values in the region of interest.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * mask: noArray()
     fn detect(&mut self, image: &core::Mat, keypoints: &types::VectorOfKeyPoint, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_Feature2D_detect_Mat_image_VectorOfKeyPoint_keypoints_Mat_mask(self.as_raw_Feature2D(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), mask.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_Feature2D_detect_Mat_VectorOfKeyPoint_Mat(self.as_raw_Feature2D(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), mask.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_detect_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_masks
-    /// @overload
     /// ## Parameters
     /// * images: Image set.
     /// * keypoints: The detected keypoints. In the second variant of the method keypoints[i] is a set
@@ -1166,13 +1132,12 @@ pub trait Feature2D : core::Algorithm {
     /// * masks: Masks for each input image specifying where to look for keypoints (optional).
     /// masks[i] is a mask for images[i].
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * masks: noArray()
     fn detect_n(&mut self, images: &types::VectorOfMat, keypoints: &types::VectorOfVectorOfKeyPoint, masks: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_Feature2D_detect_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_masks(self.as_raw_Feature2D(), images.as_raw_VectorOfMat(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), masks.as_raw_VectorOfMat()) }.into_result()
+        unsafe { sys::cv_Feature2D_detect_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat(self.as_raw_Feature2D(), images.as_raw_VectorOfMat(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), masks.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_descriptors
     /// Computes the descriptors for a set of keypoints detected in an image (first variant) or image set
     /// (second variant).
     /// 
@@ -1185,12 +1150,9 @@ pub trait Feature2D : core::Algorithm {
     /// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
     /// descriptor for keypoint j-th keypoint.
     fn compute(&mut self, image: &core::Mat, keypoints: &types::VectorOfKeyPoint, descriptors: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_Feature2D_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_descriptors(self.as_raw_Feature2D(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_Feature2D_compute_Mat_VectorOfKeyPoint_Mat(self.as_raw_Feature2D(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_compute_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_descriptors
-    /// @overload
-    /// 
     /// ## Parameters
     /// * images: Image set.
     /// * keypoints: Input collection of keypoints. Keypoints for which a descriptor cannot be
@@ -1199,54 +1161,46 @@ pub trait Feature2D : core::Algorithm {
     /// * descriptors: Computed descriptors. In the second variant of the method descriptors[i] are
     /// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
     /// descriptor for keypoint j-th keypoint.
-    fn compute_1(&mut self, images: &types::VectorOfMat, keypoints: &types::VectorOfVectorOfKeyPoint, descriptors: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_Feature2D_compute_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_descriptors(self.as_raw_Feature2D(), images.as_raw_VectorOfMat(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), descriptors.as_raw_VectorOfMat()) }.into_result()
+    fn compute_multiple(&mut self, images: &types::VectorOfMat, keypoints: &types::VectorOfVectorOfKeyPoint, descriptors: &mut types::VectorOfMat) -> Result<()> {
+        unsafe { sys::cv_Feature2D_compute_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat(self.as_raw_Feature2D(), images.as_raw_VectorOfMat(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), descriptors.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_detectAndCompute_Mat_image_Mat_mask_VectorOfKeyPoint_keypoints_Mat_descriptors_bool_useProvidedKeypoints
     /// Detects keypoints and computes the descriptors
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * use_provided_keypoints: false
     fn detect_and_compute(&mut self, image: &core::Mat, mask: &core::Mat, keypoints: &types::VectorOfKeyPoint, descriptors: &mut core::Mat, use_provided_keypoints: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_Feature2D_detectAndCompute_Mat_image_Mat_mask_VectorOfKeyPoint_keypoints_Mat_descriptors_bool_useProvidedKeypoints(self.as_raw_Feature2D(), image.as_raw_Mat(), mask.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw_Mat(), use_provided_keypoints) }.into_result()
+        unsafe { sys::cv_Feature2D_detectAndCompute_Mat_Mat_VectorOfKeyPoint_Mat_bool(self.as_raw_Feature2D(), image.as_raw_Mat(), mask.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw_Mat(), use_provided_keypoints) }.into_result()
     }
     
-    // identifier: cv_Feature2D_descriptorSize_const
     fn descriptor_size(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_Feature2D_descriptorSize_const(self.as_raw_Feature2D()) }.into_result()
+        unsafe { sys::cv_Feature2D_descriptorSize_const(self.as_raw_Feature2D()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_descriptorType_const
     fn descriptor_type(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_Feature2D_descriptorType_const(self.as_raw_Feature2D()) }.into_result()
+        unsafe { sys::cv_Feature2D_descriptorType_const(self.as_raw_Feature2D()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_defaultNorm_const
     fn default_norm(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_Feature2D_defaultNorm_const(self.as_raw_Feature2D()) }.into_result()
+        unsafe { sys::cv_Feature2D_defaultNorm_const(self.as_raw_Feature2D()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_write_const_String_fileName
     fn write(&self, file_name: &str) -> Result<()> {
         string_arg!(file_name);
-        unsafe { sys::cv_features2d_cv_Feature2D_write_const_String_fileName(self.as_raw_Feature2D(), file_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_Feature2D_write_const_String(self.as_raw_Feature2D(), file_name.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_read_String_fileName
     fn read(&mut self, file_name: &str) -> Result<()> {
         string_arg!(file_name);
-        unsafe { sys::cv_features2d_cv_Feature2D_read_String_fileName(self.as_raw_Feature2D(), file_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_Feature2D_read_String(self.as_raw_Feature2D(), file_name.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_empty_const
     fn empty(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_Feature2D_empty_const(self.as_raw_Feature2D()) }.into_result()
+        unsafe { sys::cv_Feature2D_empty_const(self.as_raw_Feature2D()) }.into_result()
     }
     
-    // identifier: cv_Feature2D_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_Feature2D_getDefaultName_const(self.as_raw_Feature2D()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_Feature2D_getDefaultName_const(self.as_raw_Feature2D()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
@@ -1285,37 +1239,31 @@ impl core::Algorithm for FlannBasedMatcher {
 
 impl FlannBasedMatcher {
 
-    // identifier: cv_FlannBasedMatcher_add_VectorOfMat_descriptors
     pub fn add(&mut self, descriptors: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_FlannBasedMatcher_add_VectorOfMat_descriptors(self.as_raw_FlannBasedMatcher(), descriptors.as_raw_VectorOfMat()) }.into_result()
+        unsafe { sys::cv_FlannBasedMatcher_add_VectorOfMat(self.as_raw_FlannBasedMatcher(), descriptors.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_FlannBasedMatcher_clear
     pub fn clear(&mut self) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_FlannBasedMatcher_clear(self.as_raw_FlannBasedMatcher()) }.into_result()
+        unsafe { sys::cv_FlannBasedMatcher_clear(self.as_raw_FlannBasedMatcher()) }.into_result()
     }
     
-    // identifier: cv_FlannBasedMatcher_train
     pub fn train(&mut self) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_FlannBasedMatcher_train(self.as_raw_FlannBasedMatcher()) }.into_result()
+        unsafe { sys::cv_FlannBasedMatcher_train(self.as_raw_FlannBasedMatcher()) }.into_result()
     }
     
-    // identifier: cv_FlannBasedMatcher_isMaskSupported_const
     pub fn is_mask_supported(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_FlannBasedMatcher_isMaskSupported_const(self.as_raw_FlannBasedMatcher()) }.into_result()
+        unsafe { sys::cv_FlannBasedMatcher_isMaskSupported_const(self.as_raw_FlannBasedMatcher()) }.into_result()
     }
     
-    // identifier: cv_FlannBasedMatcher_create
     pub fn create() -> Result<types::PtrOfFlannBasedMatcher> {
-        unsafe { sys::cv_features2d_cv_FlannBasedMatcher_create() }.into_result().map(|x| types::PtrOfFlannBasedMatcher { ptr: x })
+        unsafe { sys::cv_FlannBasedMatcher_create() }.into_result().map(|x| types::PtrOfFlannBasedMatcher { ptr: x })
     }
     
-    // identifier: cv_FlannBasedMatcher_clone_const_bool_emptyTrainData
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * empty_train_data: false
     pub fn clone(&self, empty_train_data: bool) -> Result<types::PtrOfDescriptorMatcher> {
-        unsafe { sys::cv_features2d_cv_FlannBasedMatcher_clone_const_bool_emptyTrainData(self.as_raw_FlannBasedMatcher(), empty_train_data) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
+        unsafe { sys::cv_FlannBasedMatcher_clone_const_bool(self.as_raw_FlannBasedMatcher(), empty_train_data) }.into_result().map(|x| types::PtrOfDescriptorMatcher { ptr: x })
     }
     
 }
@@ -1324,78 +1272,64 @@ impl FlannBasedMatcher {
 /// Wrapping class for feature detection using the goodFeaturesToTrack function. :
 pub trait GFTTDetector : crate::features2d::Feature2D {
     #[doc(hidden)] fn as_raw_GFTTDetector(&self) -> *mut c_void;
-    // identifier: cv_GFTTDetector_setMaxFeatures_int_maxFeatures
     fn set_max_features(&mut self, max_features: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_setMaxFeatures_int_maxFeatures(self.as_raw_GFTTDetector(), max_features) }.into_result()
+        unsafe { sys::cv_GFTTDetector_setMaxFeatures_int(self.as_raw_GFTTDetector(), max_features) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_getMaxFeatures_const
     fn get_max_features(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_getMaxFeatures_const(self.as_raw_GFTTDetector()) }.into_result()
+        unsafe { sys::cv_GFTTDetector_getMaxFeatures_const(self.as_raw_GFTTDetector()) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_setQualityLevel_double_qlevel
     fn set_quality_level(&mut self, qlevel: f64) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_setQualityLevel_double_qlevel(self.as_raw_GFTTDetector(), qlevel) }.into_result()
+        unsafe { sys::cv_GFTTDetector_setQualityLevel_double(self.as_raw_GFTTDetector(), qlevel) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_getQualityLevel_const
     fn get_quality_level(&self) -> Result<f64> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_getQualityLevel_const(self.as_raw_GFTTDetector()) }.into_result()
+        unsafe { sys::cv_GFTTDetector_getQualityLevel_const(self.as_raw_GFTTDetector()) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_setMinDistance_double_minDistance
     fn set_min_distance(&mut self, min_distance: f64) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_setMinDistance_double_minDistance(self.as_raw_GFTTDetector(), min_distance) }.into_result()
+        unsafe { sys::cv_GFTTDetector_setMinDistance_double(self.as_raw_GFTTDetector(), min_distance) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_getMinDistance_const
     fn get_min_distance(&self) -> Result<f64> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_getMinDistance_const(self.as_raw_GFTTDetector()) }.into_result()
+        unsafe { sys::cv_GFTTDetector_getMinDistance_const(self.as_raw_GFTTDetector()) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_setBlockSize_int_blockSize
     fn set_block_size(&mut self, block_size: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_setBlockSize_int_blockSize(self.as_raw_GFTTDetector(), block_size) }.into_result()
+        unsafe { sys::cv_GFTTDetector_setBlockSize_int(self.as_raw_GFTTDetector(), block_size) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_getBlockSize_const
     fn get_block_size(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_getBlockSize_const(self.as_raw_GFTTDetector()) }.into_result()
+        unsafe { sys::cv_GFTTDetector_getBlockSize_const(self.as_raw_GFTTDetector()) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_setHarrisDetector_bool_val
     fn set_harris_detector(&mut self, val: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_setHarrisDetector_bool_val(self.as_raw_GFTTDetector(), val) }.into_result()
+        unsafe { sys::cv_GFTTDetector_setHarrisDetector_bool(self.as_raw_GFTTDetector(), val) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_getHarrisDetector_const
     fn get_harris_detector(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_getHarrisDetector_const(self.as_raw_GFTTDetector()) }.into_result()
+        unsafe { sys::cv_GFTTDetector_getHarrisDetector_const(self.as_raw_GFTTDetector()) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_setK_double_k
     fn set_k(&mut self, k: f64) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_setK_double_k(self.as_raw_GFTTDetector(), k) }.into_result()
+        unsafe { sys::cv_GFTTDetector_setK_double(self.as_raw_GFTTDetector(), k) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_getK_const
     fn get_k(&self) -> Result<f64> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_getK_const(self.as_raw_GFTTDetector()) }.into_result()
+        unsafe { sys::cv_GFTTDetector_getK_const(self.as_raw_GFTTDetector()) }.into_result()
     }
     
-    // identifier: cv_GFTTDetector_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_getDefaultName_const(self.as_raw_GFTTDetector()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_GFTTDetector_getDefaultName_const(self.as_raw_GFTTDetector()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl<'a> GFTTDetector + 'a {
 
-    // identifier: cv_GFTTDetector_create_int_maxCorners_double_qualityLevel_double_minDistance_int_blockSize_bool_useHarrisDetector_double_k
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * max_corners: 1000
     /// * quality_level: 0.01
     /// * min_distance: 1
@@ -1403,16 +1337,15 @@ impl<'a> GFTTDetector + 'a {
     /// * use_harris_detector: false
     /// * k: 0.04
     pub fn create(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, use_harris_detector: bool, k: f64) -> Result<types::PtrOfGFTTDetector> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_create_int_maxCorners_double_qualityLevel_double_minDistance_int_blockSize_bool_useHarrisDetector_double_k(max_corners, quality_level, min_distance, block_size, use_harris_detector, k) }.into_result().map(|x| types::PtrOfGFTTDetector { ptr: x })
+        unsafe { sys::cv_GFTTDetector_create_int_double_double_int_bool_double(max_corners, quality_level, min_distance, block_size, use_harris_detector, k) }.into_result().map(|x| types::PtrOfGFTTDetector { ptr: x })
     }
     
-    // identifier: cv_GFTTDetector_create_int_maxCorners_double_qualityLevel_double_minDistance_int_blockSize_int_gradiantSize_bool_useHarrisDetector_double_k
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * use_harris_detector: false
     /// * k: 0.04
-    pub fn create_1(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32, use_harris_detector: bool, k: f64) -> Result<types::PtrOfGFTTDetector> {
-        unsafe { sys::cv_features2d_cv_GFTTDetector_create_int_maxCorners_double_qualityLevel_double_minDistance_int_blockSize_int_gradiantSize_bool_useHarrisDetector_double_k(max_corners, quality_level, min_distance, block_size, gradiant_size, use_harris_detector, k) }.into_result().map(|x| types::PtrOfGFTTDetector { ptr: x })
+    pub fn create_with_gradient(max_corners: i32, quality_level: f64, min_distance: f64, block_size: i32, gradiant_size: i32, use_harris_detector: bool, k: f64) -> Result<types::PtrOfGFTTDetector> {
+        unsafe { sys::cv_GFTTDetector_create_int_double_double_int_int_bool_double(max_corners, quality_level, min_distance, block_size, gradiant_size, use_harris_detector, k) }.into_result().map(|x| types::PtrOfGFTTDetector { ptr: x })
     }
     
 }
@@ -1426,76 +1359,62 @@ impl<'a> GFTTDetector + 'a {
 /// (ECCV), Fiorenze, Italy, October 2012.
 pub trait KAZE : crate::features2d::Feature2D {
     #[doc(hidden)] fn as_raw_KAZE(&self) -> *mut c_void;
-    // identifier: cv_KAZE_setExtended_bool_extended
     fn set_extended(&mut self, extended: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KAZE_setExtended_bool_extended(self.as_raw_KAZE(), extended) }.into_result()
+        unsafe { sys::cv_KAZE_setExtended_bool(self.as_raw_KAZE(), extended) }.into_result()
     }
     
-    // identifier: cv_KAZE_getExtended_const
     fn get_extended(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_KAZE_getExtended_const(self.as_raw_KAZE()) }.into_result()
+        unsafe { sys::cv_KAZE_getExtended_const(self.as_raw_KAZE()) }.into_result()
     }
     
-    // identifier: cv_KAZE_setUpright_bool_upright
     fn set_upright(&mut self, upright: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KAZE_setUpright_bool_upright(self.as_raw_KAZE(), upright) }.into_result()
+        unsafe { sys::cv_KAZE_setUpright_bool(self.as_raw_KAZE(), upright) }.into_result()
     }
     
-    // identifier: cv_KAZE_getUpright_const
     fn get_upright(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_KAZE_getUpright_const(self.as_raw_KAZE()) }.into_result()
+        unsafe { sys::cv_KAZE_getUpright_const(self.as_raw_KAZE()) }.into_result()
     }
     
-    // identifier: cv_KAZE_setThreshold_double_threshold
     fn set_threshold(&mut self, threshold: f64) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KAZE_setThreshold_double_threshold(self.as_raw_KAZE(), threshold) }.into_result()
+        unsafe { sys::cv_KAZE_setThreshold_double(self.as_raw_KAZE(), threshold) }.into_result()
     }
     
-    // identifier: cv_KAZE_getThreshold_const
     fn get_threshold(&self) -> Result<f64> {
-        unsafe { sys::cv_features2d_cv_KAZE_getThreshold_const(self.as_raw_KAZE()) }.into_result()
+        unsafe { sys::cv_KAZE_getThreshold_const(self.as_raw_KAZE()) }.into_result()
     }
     
-    // identifier: cv_KAZE_setNOctaves_int_octaves
     fn set_n_octaves(&mut self, octaves: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KAZE_setNOctaves_int_octaves(self.as_raw_KAZE(), octaves) }.into_result()
+        unsafe { sys::cv_KAZE_setNOctaves_int(self.as_raw_KAZE(), octaves) }.into_result()
     }
     
-    // identifier: cv_KAZE_getNOctaves_const
     fn get_n_octaves(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_KAZE_getNOctaves_const(self.as_raw_KAZE()) }.into_result()
+        unsafe { sys::cv_KAZE_getNOctaves_const(self.as_raw_KAZE()) }.into_result()
     }
     
-    // identifier: cv_KAZE_setNOctaveLayers_int_octaveLayers
     fn set_n_octave_layers(&mut self, octave_layers: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KAZE_setNOctaveLayers_int_octaveLayers(self.as_raw_KAZE(), octave_layers) }.into_result()
+        unsafe { sys::cv_KAZE_setNOctaveLayers_int(self.as_raw_KAZE(), octave_layers) }.into_result()
     }
     
-    // identifier: cv_KAZE_getNOctaveLayers_const
     fn get_n_octave_layers(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_KAZE_getNOctaveLayers_const(self.as_raw_KAZE()) }.into_result()
+        unsafe { sys::cv_KAZE_getNOctaveLayers_const(self.as_raw_KAZE()) }.into_result()
     }
     
-    // identifier: cv_KAZE_setDiffusivity_int_diff
     fn set_diffusivity(&mut self, diff: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KAZE_setDiffusivity_int_diff(self.as_raw_KAZE(), diff) }.into_result()
+        unsafe { sys::cv_KAZE_setDiffusivity_int(self.as_raw_KAZE(), diff) }.into_result()
     }
     
-    // identifier: cv_KAZE_getDiffusivity_const
     fn get_diffusivity(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_KAZE_getDiffusivity_const(self.as_raw_KAZE()) }.into_result()
+        unsafe { sys::cv_KAZE_getDiffusivity_const(self.as_raw_KAZE()) }.into_result()
     }
     
-    // identifier: cv_KAZE_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_KAZE_getDefaultName_const(self.as_raw_KAZE()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_KAZE_getDefaultName_const(self.as_raw_KAZE()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl<'a> KAZE + 'a {
 
-    // identifier: cv_KAZE_create_bool_extended_bool_upright_float_threshold_int_nOctaves_int_nOctaveLayers_int_diffusivity
     /// The KAZE constructor
     /// 
     /// ## Parameters
@@ -1507,7 +1426,7 @@ impl<'a> KAZE + 'a {
     /// * diffusivity: Diffusivity type. DIFF_PM_G1, DIFF_PM_G2, DIFF_WEICKERT or
     /// DIFF_CHARBONNIER
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * extended: false
     /// * upright: false
     /// * threshold: 0.001f
@@ -1515,7 +1434,7 @@ impl<'a> KAZE + 'a {
     /// * n_octave_layers: 4
     /// * diffusivity: KAZE::DIFF_PM_G2
     pub fn create(extended: bool, upright: bool, threshold: f32, n_octaves: i32, n_octave_layers: i32, diffusivity: i32) -> Result<types::PtrOfKAZE> {
-        unsafe { sys::cv_features2d_cv_KAZE_create_bool_extended_bool_upright_float_threshold_int_nOctaves_int_nOctaveLayers_int_diffusivity(extended, upright, threshold, n_octaves, n_octave_layers, diffusivity) }.into_result().map(|x| types::PtrOfKAZE { ptr: x })
+        unsafe { sys::cv_KAZE_create_bool_bool_float_int_int_int(extended, upright, threshold, n_octaves, n_octave_layers, diffusivity) }.into_result().map(|x| types::PtrOfKAZE { ptr: x })
     }
     
 }
@@ -1540,42 +1459,35 @@ impl crate::features2d::KeyPointsFilter {
 
 impl KeyPointsFilter {
 
-    // identifier: cv_KeyPointsFilter_KeyPointsFilter
     pub fn new() -> Result<crate::features2d::KeyPointsFilter> {
-        unsafe { sys::cv_features2d_cv_KeyPointsFilter_KeyPointsFilter() }.into_result().map(|x| crate::features2d::KeyPointsFilter { ptr: x })
+        unsafe { sys::cv_KeyPointsFilter_KeyPointsFilter() }.into_result().map(|x| crate::features2d::KeyPointsFilter { ptr: x })
     }
     
-    // identifier: cv_KeyPointsFilter_runByImageBorder_VectorOfKeyPoint_keypoints_Size_imageSize_int_borderSize
     pub fn run_by_image_border(keypoints: &types::VectorOfKeyPoint, image_size: core::Size, border_size: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KeyPointsFilter_runByImageBorder_VectorOfKeyPoint_keypoints_Size_imageSize_int_borderSize(keypoints.as_raw_VectorOfKeyPoint(), image_size, border_size) }.into_result()
+        unsafe { sys::cv_KeyPointsFilter_runByImageBorder_VectorOfKeyPoint_Size_int(keypoints.as_raw_VectorOfKeyPoint(), image_size, border_size) }.into_result()
     }
     
-    // identifier: cv_KeyPointsFilter_runByKeypointSize_VectorOfKeyPoint_keypoints_float_minSize_float_maxSize
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * max_size: FLT_MAX
     pub fn run_by_keypoint_size(keypoints: &types::VectorOfKeyPoint, min_size: f32, max_size: f32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KeyPointsFilter_runByKeypointSize_VectorOfKeyPoint_keypoints_float_minSize_float_maxSize(keypoints.as_raw_VectorOfKeyPoint(), min_size, max_size) }.into_result()
+        unsafe { sys::cv_KeyPointsFilter_runByKeypointSize_VectorOfKeyPoint_float_float(keypoints.as_raw_VectorOfKeyPoint(), min_size, max_size) }.into_result()
     }
     
-    // identifier: cv_KeyPointsFilter_runByPixelsMask_VectorOfKeyPoint_keypoints_Mat_mask
     pub fn run_by_pixels_mask(keypoints: &types::VectorOfKeyPoint, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KeyPointsFilter_runByPixelsMask_VectorOfKeyPoint_keypoints_Mat_mask(keypoints.as_raw_VectorOfKeyPoint(), mask.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_KeyPointsFilter_runByPixelsMask_VectorOfKeyPoint_Mat(keypoints.as_raw_VectorOfKeyPoint(), mask.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_KeyPointsFilter_removeDuplicated_VectorOfKeyPoint_keypoints
     pub fn remove_duplicated(keypoints: &types::VectorOfKeyPoint) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KeyPointsFilter_removeDuplicated_VectorOfKeyPoint_keypoints(keypoints.as_raw_VectorOfKeyPoint()) }.into_result()
+        unsafe { sys::cv_KeyPointsFilter_removeDuplicated_VectorOfKeyPoint(keypoints.as_raw_VectorOfKeyPoint()) }.into_result()
     }
     
-    // identifier: cv_KeyPointsFilter_removeDuplicatedSorted_VectorOfKeyPoint_keypoints
     pub fn remove_duplicated_sorted(keypoints: &types::VectorOfKeyPoint) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KeyPointsFilter_removeDuplicatedSorted_VectorOfKeyPoint_keypoints(keypoints.as_raw_VectorOfKeyPoint()) }.into_result()
+        unsafe { sys::cv_KeyPointsFilter_removeDuplicatedSorted_VectorOfKeyPoint(keypoints.as_raw_VectorOfKeyPoint()) }.into_result()
     }
     
-    // identifier: cv_KeyPointsFilter_retainBest_VectorOfKeyPoint_keypoints_int_npoints
     pub fn retain_best(keypoints: &types::VectorOfKeyPoint, npoints: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_KeyPointsFilter_retainBest_VectorOfKeyPoint_keypoints_int_npoints(keypoints.as_raw_VectorOfKeyPoint(), npoints) }.into_result()
+        unsafe { sys::cv_KeyPointsFilter_retainBest_VectorOfKeyPoint_int(keypoints.as_raw_VectorOfKeyPoint(), npoints) }.into_result()
     }
     
 }
@@ -1598,7 +1510,6 @@ impl KeyPointsFilter {
 /// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
 pub trait MSER : crate::features2d::Feature2D {
     #[doc(hidden)] fn as_raw_MSER(&self) -> *mut c_void;
-    // identifier: cv_MSER_detectRegions_Mat_image_VectorOfVectorOfPoint_msers_VectorOfRect_bboxes
     /// Detect %MSER regions
     /// 
     /// ## Parameters
@@ -1606,59 +1517,49 @@ pub trait MSER : crate::features2d::Feature2D {
     /// * msers: resulting list of point sets
     /// * bboxes: resulting bounding boxes
     fn detect_regions(&mut self, image: &core::Mat, msers: &types::VectorOfVectorOfPoint, bboxes: &types::VectorOfRect) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_MSER_detectRegions_Mat_image_VectorOfVectorOfPoint_msers_VectorOfRect_bboxes(self.as_raw_MSER(), image.as_raw_Mat(), msers.as_raw_VectorOfVectorOfPoint(), bboxes.as_raw_VectorOfRect()) }.into_result()
+        unsafe { sys::cv_MSER_detectRegions_Mat_VectorOfVectorOfPoint_VectorOfRect(self.as_raw_MSER(), image.as_raw_Mat(), msers.as_raw_VectorOfVectorOfPoint(), bboxes.as_raw_VectorOfRect()) }.into_result()
     }
     
-    // identifier: cv_MSER_setDelta_int_delta
     fn set_delta(&mut self, delta: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_MSER_setDelta_int_delta(self.as_raw_MSER(), delta) }.into_result()
+        unsafe { sys::cv_MSER_setDelta_int(self.as_raw_MSER(), delta) }.into_result()
     }
     
-    // identifier: cv_MSER_getDelta_const
     fn get_delta(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_MSER_getDelta_const(self.as_raw_MSER()) }.into_result()
+        unsafe { sys::cv_MSER_getDelta_const(self.as_raw_MSER()) }.into_result()
     }
     
-    // identifier: cv_MSER_setMinArea_int_minArea
     fn set_min_area(&mut self, min_area: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_MSER_setMinArea_int_minArea(self.as_raw_MSER(), min_area) }.into_result()
+        unsafe { sys::cv_MSER_setMinArea_int(self.as_raw_MSER(), min_area) }.into_result()
     }
     
-    // identifier: cv_MSER_getMinArea_const
     fn get_min_area(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_MSER_getMinArea_const(self.as_raw_MSER()) }.into_result()
+        unsafe { sys::cv_MSER_getMinArea_const(self.as_raw_MSER()) }.into_result()
     }
     
-    // identifier: cv_MSER_setMaxArea_int_maxArea
     fn set_max_area(&mut self, max_area: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_MSER_setMaxArea_int_maxArea(self.as_raw_MSER(), max_area) }.into_result()
+        unsafe { sys::cv_MSER_setMaxArea_int(self.as_raw_MSER(), max_area) }.into_result()
     }
     
-    // identifier: cv_MSER_getMaxArea_const
     fn get_max_area(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_MSER_getMaxArea_const(self.as_raw_MSER()) }.into_result()
+        unsafe { sys::cv_MSER_getMaxArea_const(self.as_raw_MSER()) }.into_result()
     }
     
-    // identifier: cv_MSER_setPass2Only_bool_f
     fn set_pass2_only(&mut self, f: bool) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_MSER_setPass2Only_bool_f(self.as_raw_MSER(), f) }.into_result()
+        unsafe { sys::cv_MSER_setPass2Only_bool(self.as_raw_MSER(), f) }.into_result()
     }
     
-    // identifier: cv_MSER_getPass2Only_const
     fn get_pass2_only(&self) -> Result<bool> {
-        unsafe { sys::cv_features2d_cv_MSER_getPass2Only_const(self.as_raw_MSER()) }.into_result()
+        unsafe { sys::cv_MSER_getPass2Only_const(self.as_raw_MSER()) }.into_result()
     }
     
-    // identifier: cv_MSER_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_MSER_getDefaultName_const(self.as_raw_MSER()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_MSER_getDefaultName_const(self.as_raw_MSER()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl<'a> MSER + 'a {
 
-    // identifier: cv_MSER_create_int__delta_int__min_area_int__max_area_double__max_variation_double__min_diversity_int__max_evolution_double__area_threshold_double__min_margin_int__edge_blur_size
     /// Full consturctor for %MSER detector
     /// 
     /// ## Parameters
@@ -1667,12 +1568,12 @@ impl<'a> MSER + 'a {
     /// * _max_area: prune the area which bigger than maxArea
     /// * _max_variation: prune the area have similar size to its children
     /// * _min_diversity: for color image, trace back to cut off mser with diversity less than min_diversity
-    /// * _max_evolution:  for color image, the evolution steps
+    /// * _max_evolution: for color image, the evolution steps
     /// * _area_threshold: for color image, the area threshold to cause re-initialize
     /// * _min_margin: for color image, ignore too small margin
     /// * _edge_blur_size: for color image, the aperture size for edge blur
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * _delta: 5
     /// * _min_area: 60
     /// * _max_area: 14400
@@ -1683,7 +1584,7 @@ impl<'a> MSER + 'a {
     /// * _min_margin: 0.003
     /// * _edge_blur_size: 5
     pub fn create(_delta: i32, _min_area: i32, _max_area: i32, _max_variation: f64, _min_diversity: f64, _max_evolution: i32, _area_threshold: f64, _min_margin: f64, _edge_blur_size: i32) -> Result<types::PtrOfMSER> {
-        unsafe { sys::cv_features2d_cv_MSER_create_int__delta_int__min_area_int__max_area_double__max_variation_double__min_diversity_int__max_evolution_double__area_threshold_double__min_margin_int__edge_blur_size(_delta, _min_area, _max_area, _max_variation, _min_diversity, _max_evolution, _area_threshold, _min_margin, _edge_blur_size) }.into_result().map(|x| types::PtrOfMSER { ptr: x })
+        unsafe { sys::cv_MSER_create_int_int_int_double_double_int_double_double_int(_delta, _min_area, _max_area, _max_variation, _min_diversity, _max_evolution, _area_threshold, _min_margin, _edge_blur_size) }.into_result().map(|x| types::PtrOfMSER { ptr: x })
     }
     
 }
@@ -1697,106 +1598,86 @@ impl<'a> MSER + 'a {
 /// k-tuples) are rotated according to the measured orientation).
 pub trait ORB : crate::features2d::Feature2D {
     #[doc(hidden)] fn as_raw_ORB(&self) -> *mut c_void;
-    // identifier: cv_ORB_setMaxFeatures_int_maxFeatures
     fn set_max_features(&mut self, max_features: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setMaxFeatures_int_maxFeatures(self.as_raw_ORB(), max_features) }.into_result()
+        unsafe { sys::cv_ORB_setMaxFeatures_int(self.as_raw_ORB(), max_features) }.into_result()
     }
     
-    // identifier: cv_ORB_getMaxFeatures_const
     fn get_max_features(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getMaxFeatures_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getMaxFeatures_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setScaleFactor_double_scaleFactor
     fn set_scale_factor(&mut self, scale_factor: f64) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setScaleFactor_double_scaleFactor(self.as_raw_ORB(), scale_factor) }.into_result()
+        unsafe { sys::cv_ORB_setScaleFactor_double(self.as_raw_ORB(), scale_factor) }.into_result()
     }
     
-    // identifier: cv_ORB_getScaleFactor_const
     fn get_scale_factor(&self) -> Result<f64> {
-        unsafe { sys::cv_features2d_cv_ORB_getScaleFactor_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getScaleFactor_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setNLevels_int_nlevels
     fn set_n_levels(&mut self, nlevels: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setNLevels_int_nlevels(self.as_raw_ORB(), nlevels) }.into_result()
+        unsafe { sys::cv_ORB_setNLevels_int(self.as_raw_ORB(), nlevels) }.into_result()
     }
     
-    // identifier: cv_ORB_getNLevels_const
     fn get_n_levels(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getNLevels_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getNLevels_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setEdgeThreshold_int_edgeThreshold
     fn set_edge_threshold(&mut self, edge_threshold: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setEdgeThreshold_int_edgeThreshold(self.as_raw_ORB(), edge_threshold) }.into_result()
+        unsafe { sys::cv_ORB_setEdgeThreshold_int(self.as_raw_ORB(), edge_threshold) }.into_result()
     }
     
-    // identifier: cv_ORB_getEdgeThreshold_const
     fn get_edge_threshold(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getEdgeThreshold_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getEdgeThreshold_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setFirstLevel_int_firstLevel
     fn set_first_level(&mut self, first_level: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setFirstLevel_int_firstLevel(self.as_raw_ORB(), first_level) }.into_result()
+        unsafe { sys::cv_ORB_setFirstLevel_int(self.as_raw_ORB(), first_level) }.into_result()
     }
     
-    // identifier: cv_ORB_getFirstLevel_const
     fn get_first_level(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getFirstLevel_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getFirstLevel_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setWTA_K_int_wta_k
     fn set_wta_k(&mut self, wta_k: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setWTA_K_int_wta_k(self.as_raw_ORB(), wta_k) }.into_result()
+        unsafe { sys::cv_ORB_setWTA_K_int(self.as_raw_ORB(), wta_k) }.into_result()
     }
     
-    // identifier: cv_ORB_getWTA_K_const
     fn get_wta_k(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getWTA_K_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getWTA_K_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setScoreType_int_scoreType
     fn set_score_type(&mut self, score_type: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setScoreType_int_scoreType(self.as_raw_ORB(), score_type) }.into_result()
+        unsafe { sys::cv_ORB_setScoreType_int(self.as_raw_ORB(), score_type) }.into_result()
     }
     
-    // identifier: cv_ORB_getScoreType_const
     fn get_score_type(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getScoreType_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getScoreType_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setPatchSize_int_patchSize
     fn set_patch_size(&mut self, patch_size: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setPatchSize_int_patchSize(self.as_raw_ORB(), patch_size) }.into_result()
+        unsafe { sys::cv_ORB_setPatchSize_int(self.as_raw_ORB(), patch_size) }.into_result()
     }
     
-    // identifier: cv_ORB_getPatchSize_const
     fn get_patch_size(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getPatchSize_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getPatchSize_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_setFastThreshold_int_fastThreshold
     fn set_fast_threshold(&mut self, fast_threshold: i32) -> Result<()> {
-        unsafe { sys::cv_features2d_cv_ORB_setFastThreshold_int_fastThreshold(self.as_raw_ORB(), fast_threshold) }.into_result()
+        unsafe { sys::cv_ORB_setFastThreshold_int(self.as_raw_ORB(), fast_threshold) }.into_result()
     }
     
-    // identifier: cv_ORB_getFastThreshold_const
     fn get_fast_threshold(&self) -> Result<i32> {
-        unsafe { sys::cv_features2d_cv_ORB_getFastThreshold_const(self.as_raw_ORB()) }.into_result()
+        unsafe { sys::cv_ORB_getFastThreshold_const(self.as_raw_ORB()) }.into_result()
     }
     
-    // identifier: cv_ORB_getDefaultName_const
     fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_ORB_getDefaultName_const(self.as_raw_ORB()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_ORB_getDefaultName_const(self.as_raw_ORB()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl<'a> ORB + 'a {
 
-    // identifier: cv_ORB_create_int_nfeatures_float_scaleFactor_int_nlevels_int_edgeThreshold_int_firstLevel_int_WTA_K_int_scoreType_int_patchSize_int_fastThreshold
     /// The ORB constructor
     /// 
     /// ## Parameters
@@ -1827,9 +1708,9 @@ impl<'a> ORB + 'a {
     /// but it is a little faster to compute.
     /// * patchSize: size of the patch used by the oriented BRIEF descriptor. Of course, on smaller
     /// pyramid layers the perceived image area covered by a feature will be larger.
-    /// @param fastThreshold
+    /// * fastThreshold:
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * nfeatures: 500
     /// * scale_factor: 1.2f
     /// * nlevels: 8
@@ -1840,7 +1721,7 @@ impl<'a> ORB + 'a {
     /// * patch_size: 31
     /// * fast_threshold: 20
     pub fn create(nfeatures: i32, scale_factor: f32, nlevels: i32, edge_threshold: i32, first_level: i32, wta_k: i32, score_type: i32, patch_size: i32, fast_threshold: i32) -> Result<types::PtrOfORB> {
-        unsafe { sys::cv_features2d_cv_ORB_create_int_nfeatures_float_scaleFactor_int_nlevels_int_edgeThreshold_int_firstLevel_int_WTA_K_int_scoreType_int_patchSize_int_fastThreshold(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold) }.into_result().map(|x| types::PtrOfORB { ptr: x })
+        unsafe { sys::cv_ORB_create_int_float_int_int_int_int_int_int_int(nfeatures, scale_factor, nlevels, edge_threshold, first_level, wta_k, score_type, patch_size, fast_threshold) }.into_result().map(|x| types::PtrOfORB { ptr: x })
     }
     
 }
@@ -1899,26 +1780,23 @@ impl crate::features2d::Feature2D for SimpleBlobDetector {
 
 impl SimpleBlobDetector {
 
-    // identifier: cv_SimpleBlobDetector_create_SimpleBlobDetector_Params_parameters
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * parameters: SimpleBlobDetector::Params()
     pub fn create(parameters: crate::features2d::SimpleBlobDetector_Params) -> Result<types::PtrOfSimpleBlobDetector> {
-        unsafe { sys::cv_features2d_cv_SimpleBlobDetector_create_SimpleBlobDetector_Params_parameters(parameters) }.into_result().map(|x| types::PtrOfSimpleBlobDetector { ptr: x })
+        unsafe { sys::cv_SimpleBlobDetector_create_SimpleBlobDetector_Params(parameters) }.into_result().map(|x| types::PtrOfSimpleBlobDetector { ptr: x })
     }
     
-    // identifier: cv_SimpleBlobDetector_getDefaultName_const
     pub fn get_default_name(&self) -> Result<String> {
-        unsafe { sys::cv_features2d_cv_SimpleBlobDetector_getDefaultName_const(self.as_raw_SimpleBlobDetector()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_SimpleBlobDetector_getDefaultName_const(self.as_raw_SimpleBlobDetector()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
 
 impl SimpleBlobDetector_Params {
 
-    // identifier: cv_SimpleBlobDetector_Params_Params
     pub fn new() -> Result<crate::features2d::SimpleBlobDetector_Params> {
-        unsafe { sys::cv_features2d_cv_SimpleBlobDetector_Params_Params() }.into_result()
+        unsafe { sys::cv_SimpleBlobDetector_Params_Params() }.into_result()
     }
     
 }

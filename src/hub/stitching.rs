@@ -50,20 +50,18 @@ pub const Stitcher_ORIG_RESOL: i32 = -1;
 pub const Stitcher_PANORAMA: i32 = 0;
 pub const Stitcher_SCANS: i32 = 1;
 
-// identifier: cv_createStitcherScans_bool_try_use_gpu
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * try_use_gpu: false
 pub fn create_stitcher_scans(try_use_gpu: bool) -> Result<types::PtrOfStitcher> {
-    unsafe { sys::cv_stitching_cv_createStitcherScans_bool_try_use_gpu(try_use_gpu) }.into_result().map(|x| types::PtrOfStitcher { ptr: x })
+    unsafe { sys::cv_createStitcherScans_bool(try_use_gpu) }.into_result().map(|x| types::PtrOfStitcher { ptr: x })
 }
 
-// identifier: cv_createStitcher_bool_try_use_gpu
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * try_use_gpu: false
 pub fn create_stitcher(try_use_gpu: bool) -> Result<types::PtrOfStitcher> {
-    unsafe { sys::cv_stitching_cv_createStitcher_bool_try_use_gpu(try_use_gpu) }.into_result().map(|x| types::PtrOfStitcher { ptr: x })
+    unsafe { sys::cv_createStitcher_bool(try_use_gpu) }.into_result().map(|x| types::PtrOfStitcher { ptr: x })
 }
 
 // boxed class cv::AffineWarper
@@ -111,13 +109,12 @@ impl crate::stitching::WarperCreator for CompressedRectilinearPortraitWarper {
 
 impl CompressedRectilinearPortraitWarper {
 
-    // identifier: cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_A_float_B
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * a: 1
     /// * b: 1
     pub fn new(a: f32, b: f32) -> Result<crate::stitching::CompressedRectilinearPortraitWarper> {
-        unsafe { sys::cv_stitching_cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_A_float_B(a, b) }.into_result().map(|x| crate::stitching::CompressedRectilinearPortraitWarper { ptr: x })
+        unsafe { sys::cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float(a, b) }.into_result().map(|x| crate::stitching::CompressedRectilinearPortraitWarper { ptr: x })
     }
     
 }
@@ -142,13 +139,12 @@ impl crate::stitching::WarperCreator for CompressedRectilinearWarper {
 
 impl CompressedRectilinearWarper {
 
-    // identifier: cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_A_float_B
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * a: 1
     /// * b: 1
     pub fn new(a: f32, b: f32) -> Result<crate::stitching::CompressedRectilinearWarper> {
-        unsafe { sys::cv_stitching_cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_A_float_B(a, b) }.into_result().map(|x| crate::stitching::CompressedRectilinearWarper { ptr: x })
+        unsafe { sys::cv_CompressedRectilinearWarper_CompressedRectilinearWarper_float_float(a, b) }.into_result().map(|x| crate::stitching::CompressedRectilinearWarper { ptr: x })
     }
     
 }
@@ -242,13 +238,12 @@ impl crate::stitching::WarperCreator for PaniniPortraitWarper {
 
 impl PaniniPortraitWarper {
 
-    // identifier: cv_PaniniPortraitWarper_PaniniPortraitWarper_float_A_float_B
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * a: 1
     /// * b: 1
     pub fn new(a: f32, b: f32) -> Result<crate::stitching::PaniniPortraitWarper> {
-        unsafe { sys::cv_stitching_cv_PaniniPortraitWarper_PaniniPortraitWarper_float_A_float_B(a, b) }.into_result().map(|x| crate::stitching::PaniniPortraitWarper { ptr: x })
+        unsafe { sys::cv_PaniniPortraitWarper_PaniniPortraitWarper_float_float(a, b) }.into_result().map(|x| crate::stitching::PaniniPortraitWarper { ptr: x })
     }
     
 }
@@ -273,13 +268,12 @@ impl crate::stitching::WarperCreator for PaniniWarper {
 
 impl PaniniWarper {
 
-    // identifier: cv_PaniniWarper_PaniniWarper_float_A_float_B
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * a: 1
     /// * b: 1
     pub fn new(a: f32, b: f32) -> Result<crate::stitching::PaniniWarper> {
-        unsafe { sys::cv_stitching_cv_PaniniWarper_PaniniWarper_float_A_float_B(a, b) }.into_result().map(|x| crate::stitching::PaniniWarper { ptr: x })
+        unsafe { sys::cv_PaniniWarper_PaniniWarper_float_float(a, b) }.into_result().map(|x| crate::stitching::PaniniWarper { ptr: x })
     }
     
 }
@@ -382,77 +376,65 @@ impl crate::stitching::Stitcher {
 
 impl Stitcher {
 
-    // identifier: cv_Stitcher_createDefault_bool_try_use_gpu
     /// Creates a stitcher with the default parameters.
     /// 
     /// ## Parameters
     /// * try_use_gpu: Flag indicating whether GPU should be used whenever it's possible.
-    /// @return Stitcher class instance.
+    /// ## Returns
+    /// Stitcher class instance.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * try_use_gpu: false
     pub fn create_default(try_use_gpu: bool) -> Result<crate::stitching::Stitcher> {
-        unsafe { sys::cv_stitching_cv_Stitcher_createDefault_bool_try_use_gpu(try_use_gpu) }.into_result().map(|x| crate::stitching::Stitcher { ptr: x })
+        unsafe { sys::cv_Stitcher_createDefault_bool(try_use_gpu) }.into_result().map(|x| crate::stitching::Stitcher { ptr: x })
     }
     
-    // identifier: cv_Stitcher_registrationResol_const
     pub fn registration_resol(&self) -> Result<f64> {
-        unsafe { sys::cv_stitching_cv_Stitcher_registrationResol_const(self.as_raw_Stitcher()) }.into_result()
+        unsafe { sys::cv_Stitcher_registrationResol_const(self.as_raw_Stitcher()) }.into_result()
     }
     
-    // identifier: cv_Stitcher_setRegistrationResol_double_resol_mpx
     pub fn set_registration_resol(&mut self, resol_mpx: f64) -> Result<()> {
-        unsafe { sys::cv_stitching_cv_Stitcher_setRegistrationResol_double_resol_mpx(self.as_raw_Stitcher(), resol_mpx) }.into_result()
+        unsafe { sys::cv_Stitcher_setRegistrationResol_double(self.as_raw_Stitcher(), resol_mpx) }.into_result()
     }
     
-    // identifier: cv_Stitcher_seamEstimationResol_const
     pub fn seam_estimation_resol(&self) -> Result<f64> {
-        unsafe { sys::cv_stitching_cv_Stitcher_seamEstimationResol_const(self.as_raw_Stitcher()) }.into_result()
+        unsafe { sys::cv_Stitcher_seamEstimationResol_const(self.as_raw_Stitcher()) }.into_result()
     }
     
-    // identifier: cv_Stitcher_setSeamEstimationResol_double_resol_mpx
     pub fn set_seam_estimation_resol(&mut self, resol_mpx: f64) -> Result<()> {
-        unsafe { sys::cv_stitching_cv_Stitcher_setSeamEstimationResol_double_resol_mpx(self.as_raw_Stitcher(), resol_mpx) }.into_result()
+        unsafe { sys::cv_Stitcher_setSeamEstimationResol_double(self.as_raw_Stitcher(), resol_mpx) }.into_result()
     }
     
-    // identifier: cv_Stitcher_compositingResol_const
     pub fn compositing_resol(&self) -> Result<f64> {
-        unsafe { sys::cv_stitching_cv_Stitcher_compositingResol_const(self.as_raw_Stitcher()) }.into_result()
+        unsafe { sys::cv_Stitcher_compositingResol_const(self.as_raw_Stitcher()) }.into_result()
     }
     
-    // identifier: cv_Stitcher_setCompositingResol_double_resol_mpx
     pub fn set_compositing_resol(&mut self, resol_mpx: f64) -> Result<()> {
-        unsafe { sys::cv_stitching_cv_Stitcher_setCompositingResol_double_resol_mpx(self.as_raw_Stitcher(), resol_mpx) }.into_result()
+        unsafe { sys::cv_Stitcher_setCompositingResol_double(self.as_raw_Stitcher(), resol_mpx) }.into_result()
     }
     
-    // identifier: cv_Stitcher_panoConfidenceThresh_const
     pub fn pano_confidence_thresh(&self) -> Result<f64> {
-        unsafe { sys::cv_stitching_cv_Stitcher_panoConfidenceThresh_const(self.as_raw_Stitcher()) }.into_result()
+        unsafe { sys::cv_Stitcher_panoConfidenceThresh_const(self.as_raw_Stitcher()) }.into_result()
     }
     
-    // identifier: cv_Stitcher_setPanoConfidenceThresh_double_conf_thresh
     pub fn set_pano_confidence_thresh(&mut self, conf_thresh: f64) -> Result<()> {
-        unsafe { sys::cv_stitching_cv_Stitcher_setPanoConfidenceThresh_double_conf_thresh(self.as_raw_Stitcher(), conf_thresh) }.into_result()
+        unsafe { sys::cv_Stitcher_setPanoConfidenceThresh_double(self.as_raw_Stitcher(), conf_thresh) }.into_result()
     }
     
-    // identifier: cv_Stitcher_waveCorrection_const
     pub fn wave_correction(&self) -> Result<bool> {
-        unsafe { sys::cv_stitching_cv_Stitcher_waveCorrection_const(self.as_raw_Stitcher()) }.into_result()
+        unsafe { sys::cv_Stitcher_waveCorrection_const(self.as_raw_Stitcher()) }.into_result()
     }
     
-    // identifier: cv_Stitcher_setWaveCorrection_bool_flag
     pub fn set_wave_correction(&mut self, flag: bool) -> Result<()> {
-        unsafe { sys::cv_stitching_cv_Stitcher_setWaveCorrection_bool_flag(self.as_raw_Stitcher(), flag) }.into_result()
+        unsafe { sys::cv_Stitcher_setWaveCorrection_bool(self.as_raw_Stitcher(), flag) }.into_result()
     }
     
-    // identifier: cv_Stitcher_component_const
     pub fn component(&self) -> Result<types::VectorOfint> {
-        unsafe { sys::cv_stitching_cv_Stitcher_component_const(self.as_raw_Stitcher()) }.into_result().map(|x| types::VectorOfint { ptr: x })
+        unsafe { sys::cv_Stitcher_component_const(self.as_raw_Stitcher()) }.into_result().map(|x| types::VectorOfint { ptr: x })
     }
     
-    // identifier: cv_Stitcher_workScale_const
     pub fn work_scale(&self) -> Result<f64> {
-        unsafe { sys::cv_stitching_cv_Stitcher_workScale_const(self.as_raw_Stitcher()) }.into_result()
+        unsafe { sys::cv_Stitcher_workScale_const(self.as_raw_Stitcher()) }.into_result()
     }
     
 }

@@ -39,16 +39,14 @@ pub struct Net {
     __rust_private: [u8; 0],
 }
 
-// identifier: cv_dnn_NMSBoxes_VectorOfRect2d_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * eta: 1.f
 /// * top_k: 0
-pub fn nms_boxes_rotated_f64(bboxes: &types::VectorOfRect2d, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
-    unsafe { sys::cv_dnn_cv_dnn_NMSBoxes_VectorOfRect2d_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
+pub fn nms_boxes_f64(bboxes: &types::VectorOfRect2d, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
+    unsafe { sys::cv_dnn_NMSBoxes_VectorOfRect2d_VectorOffloat_float_float_VectorOfint_float_int(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
 }
 
-// identifier: cv_dnn_NMSBoxes_VectorOfRect_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k
 /// Performs non maximum suppression given boxes and corresponding scores.
 /// 
 /// ## Parameters
@@ -60,39 +58,36 @@ pub fn nms_boxes_rotated_f64(bboxes: &types::VectorOfRect2d, scores: &types::Vec
 /// * eta: a coefficient in adaptive threshold formula: <span lang='latex'>nms\_threshold_{i+1}=eta\cdot nms\_threshold_i</span>.
 /// * top_k: if `>0`, keep at most @p top_k picked indices.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * eta: 1.f
 /// * top_k: 0
 pub fn nms_boxes(bboxes: &types::VectorOfRect, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
-    unsafe { sys::cv_dnn_cv_dnn_NMSBoxes_VectorOfRect_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
+    unsafe { sys::cv_dnn_NMSBoxes_VectorOfRect_VectorOffloat_float_float_VectorOfint_float_int(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
 }
 
-// identifier: cv_dnn_NMSBoxes_VectorOfRotatedRect_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * eta: 1.f
 /// * top_k: 0
 pub fn nms_boxes_rotated(bboxes: &types::VectorOfRotatedRect, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
-    unsafe { sys::cv_dnn_cv_dnn_NMSBoxes_VectorOfRotatedRect_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k(bboxes.as_raw_VectorOfRotatedRect(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
+    unsafe { sys::cv_dnn_NMSBoxes_VectorOfRotatedRect_VectorOffloat_float_float_VectorOfint_float_int(bboxes.as_raw_VectorOfRotatedRect(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
 }
 
-// identifier: cv_dnn_blobFromImage_Mat_image_Mat_blob_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth
 /// Creates 4-dimensional blob from image.
 ///  @details This is an overloaded member function, provided for convenience.
 ///           It differs from the above function only in what argument(s) it accepts.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * scalefactor: 1.0
 /// * size: Size()
 /// * mean: Scalar()
 /// * swap_rb: false
 /// * crop: false
 /// * ddepth: CV_32F
-pub fn blob_from_image(image: &core::Mat, blob: &mut core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
-    unsafe { sys::cv_dnn_cv_dnn_blobFromImage_Mat_image_Mat_blob_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth(image.as_raw_Mat(), blob.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
+pub fn blob_from_image_to(image: &core::Mat, blob: &mut core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
+    unsafe { sys::cv_dnn_blobFromImage_Mat_Mat_double_Size_Scalar_bool_bool_int(image.as_raw_Mat(), blob.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
 }
 
-// identifier: cv_dnn_blobFromImage_Mat_image_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth
 /// Creates 4-dimensional blob from image. Optionally resizes and crops @p image from center,
 ///  subtract @p mean values, scales values by @p scalefactor, swap Blue and Red channels.
 /// ## Parameters
@@ -108,25 +103,25 @@ pub fn blob_from_image(image: &core::Mat, blob: &mut core::Mat, scalefactor: f64
 ///  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
 ///  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
 ///  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
-///  @returns 4-dimensional Mat with NCHW dimensions order.
+/// ## Returns
+/// 4-dimensional Mat with NCHW dimensions order.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * scalefactor: 1.0
 /// * size: Size()
 /// * mean: Scalar()
 /// * swap_rb: false
 /// * crop: false
 /// * ddepth: CV_32F
-pub fn blob_from_image_1(image: &core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_cv_dnn_blobFromImage_Mat_image_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth(image.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|x| core::Mat { ptr: x })
+pub fn blob_from_image(image: &core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
+    unsafe { sys::cv_dnn_blobFromImage_Mat_double_Size_Scalar_bool_bool_int(image.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_blobFromImages_VectorOfMat_images_Mat_blob_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth
 /// Creates 4-dimensional blob from series of images.
 ///  @details This is an overloaded member function, provided for convenience.
 ///           It differs from the above function only in what argument(s) it accepts.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * scalefactor: 1.0
 /// * size: Size()
 /// * mean: Scalar()
@@ -134,10 +129,9 @@ pub fn blob_from_image_1(image: &core::Mat, scalefactor: f64, size: core::Size, 
 /// * crop: false
 /// * ddepth: CV_32F
 pub fn blob_from_images(images: &types::VectorOfMat, blob: &mut core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
-    unsafe { sys::cv_dnn_cv_dnn_blobFromImages_VectorOfMat_images_Mat_blob_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth(images.as_raw_VectorOfMat(), blob.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
+    unsafe { sys::cv_dnn_blobFromImages_VectorOfMat_Mat_double_Size_Scalar_bool_bool_int(images.as_raw_VectorOfMat(), blob.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
 }
 
-// identifier: cv_dnn_blobFromImages_VectorOfMat_images_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth
 /// Creates 4-dimensional blob from series of images. Optionally resizes and
 ///  crops @p images from center, subtract @p mean values, scales values by @p scalefactor,
 ///  swap Blue and Red channels.
@@ -154,9 +148,10 @@ pub fn blob_from_images(images: &types::VectorOfMat, blob: &mut core::Mat, scale
 ///  @details if @p crop is true, input image is resized so one side after resize is equal to corresponding
 ///  dimension in @p size and another one is equal or larger. Then, crop from the center is performed.
 ///  If @p crop is false, direct resize without cropping and preserving aspect ratio is performed.
-///  @returns 4-dimensional Mat with NCHW dimensions order.
+/// ## Returns
+/// 4-dimensional Mat with NCHW dimensions order.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * scalefactor: 1.0
 /// * size: Size()
 /// * mean: Scalar()
@@ -164,66 +159,61 @@ pub fn blob_from_images(images: &types::VectorOfMat, blob: &mut core::Mat, scale
 /// * crop: false
 /// * ddepth: CV_32F
 pub fn blob_from_images_1(images: &types::VectorOfMat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_cv_dnn_blobFromImages_VectorOfMat_images_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth(images.as_raw_VectorOfMat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_dnn_blobFromImages_VectorOfMat_double_Size_Scalar_bool_bool_int(images.as_raw_VectorOfMat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_clamp_Range_r_int_axisSize
-pub fn clamp(r: &core::Range, axis_size: i32) -> Result<core::Range> {
-    unsafe { sys::cv_dnn_cv_dnn_clamp_Range_r_int_axisSize(r.as_raw_Range(), axis_size) }.into_result().map(|x| core::Range { ptr: x })
+pub fn clamp_range(r: &core::Range, axis_size: i32) -> Result<core::Range> {
+    unsafe { sys::cv_dnn_clamp_Range_int(r.as_raw_Range(), axis_size) }.into_result().map(|x| core::Range { ptr: x })
 }
 
-// identifier: cv_dnn_clamp_int_ax_int_dims
-pub fn clamp_1(ax: i32, dims: i32) -> Result<i32> {
-    unsafe { sys::cv_dnn_cv_dnn_clamp_int_ax_int_dims(ax, dims) }.into_result()
+pub fn clamp(ax: i32, dims: i32) -> Result<i32> {
+    unsafe { sys::cv_dnn_clamp_int_int(ax, dims) }.into_result()
 }
 
-// identifier: cv_dnn_getPlane_Mat_m_int_n_int_cn
 pub fn get_plane(m: &core::Mat, n: i32, cn: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_cv_dnn_getPlane_Mat_m_int_n_int_cn(m.as_raw_Mat(), n, cn) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_dnn_getPlane_Mat_int_int(m.as_raw_Mat(), n, cn) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_imagesFromBlob_Mat_blob__VectorOfMat_images_
 /// Parse a 4D blob and output the images it contains as 2D arrays through a simpler data structure
 ///  (std::vector<cv::Mat>).
 /// ## Parameters
-///  @param[in] blob_ 4 dimensional array (images, channels, height, width) in floating point precision (CV_32F) from
+/// * blob_: 4 dimensional array (images, channels, height, width) in floating point precision (CV_32F) from
 ///  which you would like to extract the images.
-///  @param[out] images_ array of 2D Mat containing the images extracted from the blob in floating point precision
+/// * images_: [out] array of 2D Mat containing the images extracted from the blob in floating point precision
 ///  (CV_32F). They are non normalized neither mean added. The number of returned images equals the first dimension
 ///  of the blob (batch size). Every image has a number of channels equals to the second dimension of the blob (depth).
 pub fn images_from_blob(blob_: &core::Mat, images_: &mut types::VectorOfMat) -> Result<()> {
-    unsafe { sys::cv_dnn_cv_dnn_imagesFromBlob_Mat_blob__VectorOfMat_images_(blob_.as_raw_Mat(), images_.as_raw_VectorOfMat()) }.into_result()
+    unsafe { sys::cv_dnn_imagesFromBlob_Mat_VectorOfMat(blob_.as_raw_Mat(), images_.as_raw_VectorOfMat()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromCaffe_String_prototxt_String_caffeModel
 /// Reads a network model stored in <a href="http://caffe.berkeleyvision.org">Caffe</a> framework's format.
 /// ## Parameters
-/// * prototxt:   path to the .prototxt file with text description of the network architecture.
+/// * prototxt: path to the .prototxt file with text description of the network architecture.
 /// * caffeModel: path to the .caffemodel file with learned network.
-/// @returns Net object.
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * caffe_model: String()
 pub fn read_net_from_caffe(prototxt: &str, caffe_model: &str) -> Result<crate::dnn::Net> {
     string_arg!(prototxt);
     string_arg!(caffe_model);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromCaffe_String_prototxt_String_caffeModel(prototxt.as_ptr(), caffe_model.as_ptr()) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromCaffe_String_String(prototxt.as_ptr(), caffe_model.as_ptr()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromCaffe_VectorOfuchar_bufferProto_VectorOfuchar_bufferModel
 /// Reads a network model stored in Caffe model in memory.
 /// ## Parameters
 /// * bufferProto: buffer containing the content of the .prototxt file
 /// * bufferModel: buffer containing the content of the .caffemodel file
-/// @returns Net object.
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * buffer_model: std::vector<uchar>()
-pub fn read_net_from_caffe_1(buffer_proto: &types::VectorOfuchar, buffer_model: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromCaffe_VectorOfuchar_bufferProto_VectorOfuchar_bufferModel(buffer_proto.as_raw_VectorOfuchar(), buffer_model.as_raw_VectorOfuchar()) }.into_result()
+pub fn read_net_from_caffe_buffer(buffer_proto: &types::VectorOfuchar, buffer_model: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
+    unsafe { sys::cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar(buffer_proto.as_raw_VectorOfuchar(), buffer_model.as_raw_VectorOfuchar()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromCaffe_const_char_X_bufferProto_size_t_lenProto_const_char_X_bufferModel_size_t_lenModel
 /// Reads a network model stored in Caffe model in memory.
 /// @details This is an overloaded member function, provided for convenience.
 /// It differs from the above function only in what argument(s) it accepts.
@@ -232,119 +222,120 @@ pub fn read_net_from_caffe_1(buffer_proto: &types::VectorOfuchar, buffer_model: 
 /// * lenProto: length of bufferProto
 /// * bufferModel: buffer containing the content of the .caffemodel file
 /// * lenModel: length of bufferModel
-/// @returns Net object.
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * buffer_model: NULL
 /// * len_model: 0
-pub fn read_net_from_caffe_2(buffer_proto: &str, len_proto: size_t, buffer_model: &str, len_model: size_t) -> Result<crate::dnn::Net> {
+pub fn read_net_from_caffe_str(buffer_proto: &str, len_proto: size_t, buffer_model: &str, len_model: size_t) -> Result<crate::dnn::Net> {
     string_arg!(buffer_proto);
     string_arg!(buffer_model);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromCaffe_const_char_X_bufferProto_size_t_lenProto_const_char_X_bufferModel_size_t_lenModel(buffer_proto.as_ptr(), len_proto, buffer_model.as_ptr(), len_model) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t(buffer_proto.as_ptr(), len_proto, buffer_model.as_ptr(), len_model) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromDarknet_String_cfgFile_String_darknetModel
 /// Reads a network model stored in <a href="https://pjreddie.com/darknet/">Darknet</a> model files.
 /// ## Parameters
-/// * cfgFile:      path to the .cfg file with text description of the network architecture.
+/// * cfgFile: path to the .cfg file with text description of the network architecture.
 /// * darknetModel: path to the .weights file with learned network.
-///  @returns Network object that ready to do forward, throw an exception in failure cases.
-///  @returns Net object.
+/// ## Returns
+/// Network object that ready to do forward, throw an exception in failure cases.
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * darknet_model: String()
 pub fn read_net_from_darknet(cfg_file: &str, darknet_model: &str) -> Result<crate::dnn::Net> {
     string_arg!(cfg_file);
     string_arg!(darknet_model);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromDarknet_String_cfgFile_String_darknetModel(cfg_file.as_ptr(), darknet_model.as_ptr()) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromDarknet_String_String(cfg_file.as_ptr(), darknet_model.as_ptr()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromDarknet_VectorOfuchar_bufferCfg_VectorOfuchar_bufferModel
 /// Reads a network model stored in <a href="https://pjreddie.com/darknet/">Darknet</a> model files.
 /// ## Parameters
-/// * bufferCfg:   A buffer contains a content of .cfg file with text description of the network architecture.
+/// * bufferCfg: A buffer contains a content of .cfg file with text description of the network architecture.
 /// * bufferModel: A buffer contains a content of .weights file with learned network.
-///  @returns Net object.
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * buffer_model: std::vector<uchar>()
-pub fn read_net_from_darknet_1(buffer_cfg: &types::VectorOfuchar, buffer_model: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromDarknet_VectorOfuchar_bufferCfg_VectorOfuchar_bufferModel(buffer_cfg.as_raw_VectorOfuchar(), buffer_model.as_raw_VectorOfuchar()) }.into_result()
+pub fn read_net_from_darknet_buffer(buffer_cfg: &types::VectorOfuchar, buffer_model: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
+    unsafe { sys::cv_dnn_readNetFromDarknet_VectorOfuchar_VectorOfuchar(buffer_cfg.as_raw_VectorOfuchar(), buffer_model.as_raw_VectorOfuchar()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromDarknet_const_char_X_bufferCfg_size_t_lenCfg_const_char_X_bufferModel_size_t_lenModel
 /// Reads a network model stored in <a href="https://pjreddie.com/darknet/">Darknet</a> model files.
 /// ## Parameters
-/// * bufferCfg:   A buffer contains a content of .cfg file with text description of the network architecture.
-/// * lenCfg:      Number of bytes to read from bufferCfg
+/// * bufferCfg: A buffer contains a content of .cfg file with text description of the network architecture.
+/// * lenCfg: Number of bytes to read from bufferCfg
 /// * bufferModel: A buffer contains a content of .weights file with learned network.
-/// * lenModel:    Number of bytes to read from bufferModel
-///  @returns Net object.
+/// * lenModel: Number of bytes to read from bufferModel
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * buffer_model: NULL
 /// * len_model: 0
-pub fn read_net_from_darknet_2(buffer_cfg: &str, len_cfg: size_t, buffer_model: &str, len_model: size_t) -> Result<crate::dnn::Net> {
+pub fn read_net_from_darknet_str(buffer_cfg: &str, len_cfg: size_t, buffer_model: &str, len_model: size_t) -> Result<crate::dnn::Net> {
     string_arg!(buffer_cfg);
     string_arg!(buffer_model);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromDarknet_const_char_X_bufferCfg_size_t_lenCfg_const_char_X_bufferModel_size_t_lenModel(buffer_cfg.as_ptr(), len_cfg, buffer_model.as_ptr(), len_model) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromDarknet_const_char_X_size_t_const_char_X_size_t(buffer_cfg.as_ptr(), len_cfg, buffer_model.as_ptr(), len_model) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromModelOptimizer_String_xml_String_bin
 /// Load a network from Intel's Model Optimizer intermediate representation.
 /// ## Parameters
-///  @param[in] xml XML configuration file with network's topology.
-///  @param[in] bin Binary file with trained weights.
-///  @returns Net object.
+/// * xml: XML configuration file with network's topology.
+/// * bin: Binary file with trained weights.
+/// ## Returns
+/// Net object.
 ///  Networks imported from Intel's Model Optimizer are launched in Intel's Inference Engine
 ///  backend.
 pub fn read_net_from_model_optimizer(xml: &str, bin: &str) -> Result<crate::dnn::Net> {
     string_arg!(xml);
     string_arg!(bin);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromModelOptimizer_String_xml_String_bin(xml.as_ptr(), bin.as_ptr()) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromModelOptimizer_String_String(xml.as_ptr(), bin.as_ptr()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromONNX_String_onnxFile
 /// Reads a network model <a href="https://onnx.ai/">ONNX</a>.
 /// ## Parameters
 /// * onnxFile: path to the .onnx file with text description of the network architecture.
-///  @returns Network object that ready to do forward, throw an exception in failure cases.
+/// ## Returns
+/// Network object that ready to do forward, throw an exception in failure cases.
 pub fn read_net_from_onnx(onnx_file: &str) -> Result<crate::dnn::Net> {
     string_arg!(onnx_file);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromONNX_String_onnxFile(onnx_file.as_ptr()) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromONNX_String(onnx_file.as_ptr()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromTensorflow_String_model_String_config
 /// Reads a network model stored in <a href="https://www.tensorflow.org/">TensorFlow</a> framework's format.
 /// ## Parameters
-/// * model:  path to the .pb file with binary protobuf description of the network architecture
+/// * model: path to the .pb file with binary protobuf description of the network architecture
 /// * config: path to the .pbtxt file that contains text graph definition in protobuf format.
 ///               Resulting Net object is built by text graph using weights from a binary one that
 ///               let us make it more flexible.
-/// @returns Net object.
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * config: String()
 pub fn read_net_from_tensorflow(model: &str, config: &str) -> Result<crate::dnn::Net> {
     string_arg!(model);
     string_arg!(config);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromTensorflow_String_model_String_config(model.as_ptr(), config.as_ptr()) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromTensorflow_String_String(model.as_ptr(), config.as_ptr()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromTensorflow_VectorOfuchar_bufferModel_VectorOfuchar_bufferConfig
 /// Reads a network model stored in <a href="https://www.tensorflow.org/">TensorFlow</a> framework's format.
 /// ## Parameters
 /// * bufferModel: buffer containing the content of the pb file
 /// * bufferConfig: buffer containing the content of the pbtxt file
-/// @returns Net object.
+/// ## Returns
+/// Net object.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * buffer_config: std::vector<uchar>()
-pub fn read_net_from_tensorflow_1(buffer_model: &types::VectorOfuchar, buffer_config: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromTensorflow_VectorOfuchar_bufferModel_VectorOfuchar_bufferConfig(buffer_model.as_raw_VectorOfuchar(), buffer_config.as_raw_VectorOfuchar()) }.into_result()
+pub fn read_net_from_tensorflow_buffer(buffer_model: &types::VectorOfuchar, buffer_config: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
+    unsafe { sys::cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar(buffer_model.as_raw_VectorOfuchar(), buffer_config.as_raw_VectorOfuchar()) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromTensorflow_const_char_X_bufferModel_size_t_lenModel_const_char_X_bufferConfig_size_t_lenConfig
 /// Reads a network model stored in <a href="https://www.tensorflow.org/">TensorFlow</a> framework's format.
 /// @details This is an overloaded member function, provided for convenience.
 /// It differs from the above function only in what argument(s) it accepts.
@@ -354,22 +345,22 @@ pub fn read_net_from_tensorflow_1(buffer_model: &types::VectorOfuchar, buffer_co
 /// * bufferConfig: buffer containing the content of the pbtxt file
 /// * lenConfig: length of bufferConfig
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * buffer_config: NULL
 /// * len_config: 0
-pub fn read_net_from_tensorflow_2(buffer_model: &str, len_model: size_t, buffer_config: &str, len_config: size_t) -> Result<crate::dnn::Net> {
+pub fn read_net_from_tensorflow_str(buffer_model: &str, len_model: size_t, buffer_config: &str, len_config: size_t) -> Result<crate::dnn::Net> {
     string_arg!(buffer_model);
     string_arg!(buffer_config);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromTensorflow_const_char_X_bufferModel_size_t_lenModel_const_char_X_bufferConfig_size_t_lenConfig(buffer_model.as_ptr(), len_model, buffer_config.as_ptr(), len_config) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromTensorflow_const_char_X_size_t_const_char_X_size_t(buffer_model.as_ptr(), len_model, buffer_config.as_ptr(), len_config) }.into_result()
 }
 
-// identifier: cv_dnn_readNetFromTorch_String_model_bool_isBinary_bool_evaluate
 /// Reads a network model stored in <a href="http://torch.ch">Torch7</a> framework's format.
 /// ## Parameters
-/// * model:    path to the file, dumped from Torch by using torch.save() function.
+/// * model: path to the file, dumped from Torch by using torch.save() function.
 /// * isBinary: specifies whether the network was serialized in ascii mode or binary.
 /// * evaluate: specifies testing phase of network. If true, it's similar to evaluate() method in Torch.
-///  @returns Net object.
+/// ## Returns
+/// Net object.
 /// 
 ///  
 /// Note: Ascii mode of Torch serializer is more preferable, because binary mode extensively use `long` type of C language,
@@ -391,116 +382,110 @@ pub fn read_net_from_tensorflow_2(buffer_model: &str, len_model: size_t, buffer_
 /// 
 /// Also some equivalents of these classes from cunn, cudnn, and fbcunn may be successfully imported.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * is_binary: true
 /// * evaluate: true
 pub fn read_net_from_torch(model: &str, is_binary: bool, evaluate: bool) -> Result<crate::dnn::Net> {
     string_arg!(model);
-    unsafe { sys::cv_dnn_cv_dnn_readNetFromTorch_String_model_bool_isBinary_bool_evaluate(model.as_ptr(), is_binary, evaluate) }.into_result()
+    unsafe { sys::cv_dnn_readNetFromTorch_String_bool_bool(model.as_ptr(), is_binary, evaluate) }.into_result()
 }
 
-// identifier: cv_dnn_readNet_String_framework_VectorOfuchar_bufferModel_VectorOfuchar_bufferConfig
-/// Read deep learning network represented in one of the supported formats.
-/// @details This is an overloaded member function, provided for convenience.
-///          It differs from the above function only in what argument(s) it accepts.
-/// ## Parameters
-/// @param[in] framework    Name of origin framework.
-/// @param[in] bufferModel  A buffer with a content of binary file with weights
-/// @param[in] bufferConfig A buffer with a content of text file contains network configuration.
-/// @returns Net object.
-///
-/// ## C++ default parameters:
-/// * buffer_config: std::vector<uchar>()
-pub fn read_net(framework: &str, buffer_model: &types::VectorOfuchar, buffer_config: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
-    string_arg!(framework);
-    unsafe { sys::cv_dnn_cv_dnn_readNet_String_framework_VectorOfuchar_bufferModel_VectorOfuchar_bufferConfig(framework.as_ptr(), buffer_model.as_raw_VectorOfuchar(), buffer_config.as_raw_VectorOfuchar()) }.into_result()
-}
-
-// identifier: cv_dnn_readNet_String_model_String_config_String_framework
 /// Read deep learning network represented in one of the supported formats.
 /// ## Parameters
-/// @param[in] model Binary file contains trained weights. The following file
+/// * model: Binary file contains trained weights. The following file
 ///                  extensions are expected for models from different frameworks:
 ///                  * `*.caffemodel` (Caffe, http://caffe.berkeleyvision.org/)
 ///                  * `*.pb` (TensorFlow, https://www.tensorflow.org/)
 ///                  * `*.t7` | `*.net` (Torch, http://torch.ch/)
 ///                  * `*.weights` (Darknet, https://pjreddie.com/darknet/)
 ///                  * `*.bin` (DLDT, https://software.intel.com/openvino-toolkit)
-/// @param[in] config Text file contains network configuration. It could be a
+/// * config: Text file contains network configuration. It could be a
 ///                   file with the following extensions:
 ///                  * `*.prototxt` (Caffe, http://caffe.berkeleyvision.org/)
 ///                  * `*.pbtxt` (TensorFlow, https://www.tensorflow.org/)
 ///                  * `*.cfg` (Darknet, https://pjreddie.com/darknet/)
 ///                  * `*.xml` (DLDT, https://software.intel.com/openvino-toolkit)
-/// @param[in] framework Explicit framework name tag to determine a format.
-/// @returns Net object.
+/// * framework: Explicit framework name tag to determine a format.
+/// ## Returns
+/// Net object.
 /// 
 /// This function automatically detects an origin framework of trained model
 /// and calls an appropriate function such @ref readNetFromCaffe, @ref readNetFromTensorflow,
 /// @ref readNetFromTorch or @ref readNetFromDarknet. An order of @p model and @p config
 /// arguments does not matter.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * config: ""
 /// * framework: ""
-pub fn read_net_1(model: &str, config: &str, framework: &str) -> Result<crate::dnn::Net> {
+pub fn read_net(model: &str, config: &str, framework: &str) -> Result<crate::dnn::Net> {
     string_arg!(model);
     string_arg!(config);
     string_arg!(framework);
-    unsafe { sys::cv_dnn_cv_dnn_readNet_String_model_String_config_String_framework(model.as_ptr(), config.as_ptr(), framework.as_ptr()) }.into_result()
+    unsafe { sys::cv_dnn_readNet_String_String_String(model.as_ptr(), config.as_ptr(), framework.as_ptr()) }.into_result()
 }
 
-// identifier: cv_dnn_readTensorFromONNX_String_path
+/// Read deep learning network represented in one of the supported formats.
+/// @details This is an overloaded member function, provided for convenience.
+///          It differs from the above function only in what argument(s) it accepts.
+/// ## Parameters
+/// * framework: Name of origin framework.
+/// * bufferModel: A buffer with a content of binary file with weights
+/// * bufferConfig: A buffer with a content of text file contains network configuration.
+/// ## Returns
+/// Net object.
+///
+/// ## C++ default parameters
+/// * buffer_config: std::vector<uchar>()
+pub fn read_net_1(framework: &str, buffer_model: &types::VectorOfuchar, buffer_config: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
+    string_arg!(framework);
+    unsafe { sys::cv_dnn_readNet_String_VectorOfuchar_VectorOfuchar(framework.as_ptr(), buffer_model.as_raw_VectorOfuchar(), buffer_config.as_raw_VectorOfuchar()) }.into_result()
+}
+
 /// Creates blob from .pb file.
 /// ## Parameters
 /// * path: to the .pb file with input tensor.
-///  @returns Mat.
+/// ## Returns
+/// Mat.
 pub fn read_tensor_from_onnx(path: &str) -> Result<core::Mat> {
     string_arg!(path);
-    unsafe { sys::cv_dnn_cv_dnn_readTensorFromONNX_String_path(path.as_ptr()) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_dnn_readTensorFromONNX_String(path.as_ptr()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_readTorchBlob_String_filename_bool_isBinary
 /// Loads blob which was serialized as torch.Tensor object of Torch7 framework.
 ///  @warning This function has the same limitations as readNetFromTorch().
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * is_binary: true
 pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<core::Mat> {
     string_arg!(filename);
-    unsafe { sys::cv_dnn_cv_dnn_readTorchBlob_String_filename_bool_isBinary(filename.as_ptr(), is_binary) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_dnn_readTorchBlob_String_bool(filename.as_ptr(), is_binary) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_resetMyriadDevice
 /// Release a Myriad device (binded by OpenCV).
 /// 
 /// Single Myriad device cannot be shared across multiple processes which uses
 /// Inference Engine's Myriad plugin.
 pub fn reset_myriad_device() -> Result<()> {
-    unsafe { sys::cv_dnn_cv_dnn_resetMyriadDevice() }.into_result()
+    unsafe { sys::cv_dnn_resetMyriadDevice() }.into_result()
 }
 
-// identifier: cv_dnn_shape_Mat_mat
 pub fn shape(mat: &core::Mat) -> Result<types::VectorOfint> {
-    unsafe { sys::cv_dnn_cv_dnn_shape_Mat_mat(mat.as_raw_Mat()) }.into_result().map(|x| types::VectorOfint { ptr: x })
+    unsafe { sys::cv_dnn_shape_Mat(mat.as_raw_Mat()) }.into_result().map(|x| types::VectorOfint { ptr: x })
 }
 
-// identifier: cv_dnn_shape_const_int_X_dims_int_n
-pub fn shape_1(dims: &i32, n: i32) -> Result<types::VectorOfint> {
-    unsafe { sys::cv_dnn_cv_dnn_shape_const_int_X_dims_int_n(dims, n) }.into_result().map(|x| types::VectorOfint { ptr: x })
+pub fn shape_nd(dims: &i32, n: i32) -> Result<types::VectorOfint> {
+    unsafe { sys::cv_dnn_shape_const_int_X_int(dims, n) }.into_result().map(|x| types::VectorOfint { ptr: x })
 }
 
-// identifier: cv_dnn_shape_int_a0_int_a1_int_a2_int_a3
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * a1: -1
 /// * a2: -1
 /// * a3: -1
-pub fn shape_2(a0: i32, a1: i32, a2: i32, a3: i32) -> Result<types::VectorOfint> {
-    unsafe { sys::cv_dnn_cv_dnn_shape_int_a0_int_a1_int_a2_int_a3(a0, a1, a2, a3) }.into_result().map(|x| types::VectorOfint { ptr: x })
+pub fn shape_3d(a0: i32, a1: i32, a2: i32, a3: i32) -> Result<types::VectorOfint> {
+    unsafe { sys::cv_dnn_shape_int_int_int_int(a0, a1, a2, a3) }.into_result().map(|x| types::VectorOfint { ptr: x })
 }
 
-// identifier: cv_dnn_shrinkCaffeModel_String_src_String_dst_VectorOfString_layersTypes
 /// Convert all weights of Caffe network to half precision floating point.
 /// ## Parameters
 /// * src: Path to origin model from Caffe framework contains single
@@ -516,46 +501,41 @@ pub fn shape_2(a0: i32, a1: i32, a2: i32, a3: i32) -> Result<types::VectorOfint>
 ///       is taken from NVidia's Caffe fork: https://github.com/NVIDIA/caffe.
 ///       So the resulting model may be used there.
 ///
-/// ## C++ default parameters:
+/// ## C++ default parameters
 /// * layers_types: std::vector<String>()
 pub fn shrink_caffe_model(src: &str, dst: &str, layers_types: &types::VectorOfString) -> Result<()> {
     string_arg!(src);
     string_arg!(dst);
-    unsafe { sys::cv_dnn_cv_dnn_shrinkCaffeModel_String_src_String_dst_VectorOfString_layersTypes(src.as_ptr(), dst.as_ptr(), layers_types.as_raw_VectorOfString()) }.into_result()
+    unsafe { sys::cv_dnn_shrinkCaffeModel_String_String_VectorOfString(src.as_ptr(), dst.as_ptr(), layers_types.as_raw_VectorOfString()) }.into_result()
 }
 
-// identifier: cv_dnn_slice_Mat_m_Range_r0
-pub fn slice(m: &core::Mat, r0: &core::Range) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_cv_dnn_slice_Mat_m_Range_r0(m.as_raw_Mat(), r0.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
+pub fn slice_1d(m: &core::Mat, r0: &core::Range) -> Result<core::Mat> {
+    unsafe { sys::cv_dnn_slice_Mat_Range(m.as_raw_Mat(), r0.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_slice_Mat_m_Range_r0_Range_r1
-pub fn slice_1(m: &core::Mat, r0: &core::Range, r1: &core::Range) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_cv_dnn_slice_Mat_m_Range_r0_Range_r1(m.as_raw_Mat(), r0.as_raw_Range(), r1.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
+pub fn slice_2d(m: &core::Mat, r0: &core::Range, r1: &core::Range) -> Result<core::Mat> {
+    unsafe { sys::cv_dnn_slice_Mat_Range_Range(m.as_raw_Mat(), r0.as_raw_Range(), r1.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_slice_Mat_m_Range_r0_Range_r1_Range_r2
-pub fn slice_2(m: &core::Mat, r0: &core::Range, r1: &core::Range, r2: &core::Range) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_cv_dnn_slice_Mat_m_Range_r0_Range_r1_Range_r2(m.as_raw_Mat(), r0.as_raw_Range(), r1.as_raw_Range(), r2.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
+pub fn slice_3d(m: &core::Mat, r0: &core::Range, r1: &core::Range, r2: &core::Range) -> Result<core::Mat> {
+    unsafe { sys::cv_dnn_slice_Mat_Range_Range_Range(m.as_raw_Mat(), r0.as_raw_Range(), r1.as_raw_Range(), r2.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_slice_Mat_m_Range_r0_Range_r1_Range_r2_Range_r3
-pub fn slice_3(m: &core::Mat, r0: &core::Range, r1: &core::Range, r2: &core::Range, r3: &core::Range) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_cv_dnn_slice_Mat_m_Range_r0_Range_r1_Range_r2_Range_r3(m.as_raw_Mat(), r0.as_raw_Range(), r1.as_raw_Range(), r2.as_raw_Range(), r3.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
+pub fn slice_4d(m: &core::Mat, r0: &core::Range, r1: &core::Range, r2: &core::Range, r3: &core::Range) -> Result<core::Mat> {
+    unsafe { sys::cv_dnn_slice_Mat_Range_Range_Range_Range(m.as_raw_Mat(), r0.as_raw_Range(), r1.as_raw_Range(), r2.as_raw_Range(), r3.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
-// identifier: cv_dnn_writeTextGraph_String_model_String_output
 /// Create a text representation for a binary network stored in protocol buffer format.
 /// ## Parameters
-///  @param[in] model  A path to binary network.
-///  @param[in] output A path to output text file to be created.
+/// * model: A path to binary network.
+/// * output: A path to output text file to be created.
 /// 
 ///  
 /// Note: To reduce output file size, trained weights are not included.
 pub fn write_text_graph(model: &str, output: &str) -> Result<()> {
     string_arg!(model);
     string_arg!(output);
-    unsafe { sys::cv_dnn_cv_dnn_writeTextGraph_String_model_String_output(model.as_ptr(), output.as_ptr()) }.into_result()
+    unsafe { sys::cv_dnn_writeTextGraph_String_String(model.as_ptr(), output.as_ptr()) }.into_result()
 }
 
 // boxed class cv::dnn::AbsLayer
@@ -591,9 +571,8 @@ impl AbsLayer {
 // Generating impl for trait cv::dnn::ActivationLayer (trait)
 pub trait ActivationLayer : crate::dnn::Layer {
     #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void;
-    // identifier: cv_dnn_ActivationLayer_forwardSlice_const_const_float_X_src_float_X_dst_int_len_size_t_outPlaneSize_int_cn0_int_cn1
     fn forward_slice(&self, src: &f32, dst: &mut f32, len: i32, out_plane_size: size_t, cn0: i32, cn1: i32) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_ActivationLayer_forwardSlice_const_const_float_X_src_float_X_dst_int_len_size_t_outPlaneSize_int_cn0_int_cn1(self.as_raw_ActivationLayer(), src, dst, len, out_plane_size, cn0, cn1) }.into_result()
+        unsafe { sys::cv_dnn_ActivationLayer_forwardSlice_const_const_float_X_float_X_int_size_t_int_int(self.as_raw_ActivationLayer(), src, dst, len, out_plane_size, cn0, cn1) }.into_result()
     }
     
 }
@@ -649,9 +628,8 @@ impl crate::dnn::BackendNode {
 
 impl BackendNode {
 
-    // identifier: cv_dnn_BackendNode_BackendNode_int_backendId
     pub fn new(backend_id: i32) -> Result<crate::dnn::BackendNode> {
-        unsafe { sys::cv_dnn_cv_dnn_BackendNode_BackendNode_int_backendId(backend_id) }.into_result().map(|x| crate::dnn::BackendNode { ptr: x })
+        unsafe { sys::cv_dnn_BackendNode_BackendNode_int(backend_id) }.into_result().map(|x| crate::dnn::BackendNode { ptr: x })
     }
     
 }
@@ -660,16 +638,14 @@ impl BackendNode {
 /// Derivatives of this class wraps cv::Mat for different backends and targets.
 pub trait BackendWrapper {
     #[doc(hidden)] fn as_raw_BackendWrapper(&self) -> *mut c_void;
-    // identifier: cv_dnn_BackendWrapper_copyToHost
     /// Transfer data to CPU host memory.
     fn copy_to_host(&mut self) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_BackendWrapper_copyToHost(self.as_raw_BackendWrapper()) }.into_result()
+        unsafe { sys::cv_dnn_BackendWrapper_copyToHost(self.as_raw_BackendWrapper()) }.into_result()
     }
     
-    // identifier: cv_dnn_BackendWrapper_setHostDirty
     /// Indicate that an actual data is on CPU.
     fn set_host_dirty(&mut self) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_BackendWrapper_setHostDirty(self.as_raw_BackendWrapper()) }.into_result()
+        unsafe { sys::cv_dnn_BackendWrapper_setHostDirty(self.as_raw_BackendWrapper()) }.into_result()
     }
     
 }
@@ -987,35 +963,29 @@ impl DetectionOutputLayer {
 /// This class implements name-value dictionary, values are instances of DictValue.
 pub trait Dict {
     #[doc(hidden)] fn as_raw_Dict(&self) -> *mut c_void;
-    // identifier: cv_dnn_Dict_has_const_String_key
     fn has(&self, key: &str) -> Result<bool> {
         string_arg!(key);
-        unsafe { sys::cv_dnn_cv_dnn_Dict_has_const_String_key(self.as_raw_Dict(), key.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Dict_has_const_String(self.as_raw_Dict(), key.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_dnn_Dict_ptr_String_key
     fn ptr_mut(&mut self, key: &str) -> Result<crate::dnn::DictValue> {
         string_arg!(key);
-        unsafe { sys::cv_dnn_cv_dnn_Dict_ptr_String_key(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
+        unsafe { sys::cv_dnn_Dict_ptr_String(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
     }
     
-    // identifier: cv_dnn_Dict_ptr_const_String_key
-    /// @overload
     fn ptr(&self, key: &str) -> Result<crate::dnn::DictValue> {
         string_arg!(key);
-        unsafe { sys::cv_dnn_cv_dnn_Dict_ptr_const_String_key(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
+        unsafe { sys::cv_dnn_Dict_ptr_const_String(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
     }
     
-    // identifier: cv_dnn_Dict_get_const_String_key
     fn get(&self, key: &str) -> Result<crate::dnn::DictValue> {
         string_arg!(key);
-        unsafe { sys::cv_dnn_cv_dnn_Dict_get_const_String_key(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
+        unsafe { sys::cv_dnn_Dict_get_const_String(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
     }
     
-    // identifier: cv_dnn_Dict_erase_String_key
     fn erase(&mut self, key: &str) -> Result<()> {
         string_arg!(key);
-        unsafe { sys::cv_dnn_cv_dnn_Dict_erase_String_key(self.as_raw_Dict(), key.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Dict_erase_String(self.as_raw_Dict(), key.as_ptr()) }.into_result()
     }
     
 }
@@ -1042,53 +1012,45 @@ impl crate::dnn::DictValue {
 
 impl DictValue {
 
-    // identifier: cv_dnn_DictValue_DictValue_DictValue_r
     pub fn new(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_DictValue_DictValue_r(r.as_raw_DictValue()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
+        unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
     }
     
-    // identifier: cv_dnn_DictValue_size_const
     pub fn size(&self) -> Result<i32> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_size_const(self.as_raw_DictValue()) }.into_result()
+        unsafe { sys::cv_dnn_DictValue_size_const(self.as_raw_DictValue()) }.into_result()
     }
     
-    // identifier: cv_dnn_DictValue_isInt_const
     pub fn is_int(&self) -> Result<bool> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_isInt_const(self.as_raw_DictValue()) }.into_result()
+        unsafe { sys::cv_dnn_DictValue_isInt_const(self.as_raw_DictValue()) }.into_result()
     }
     
-    // identifier: cv_dnn_DictValue_isString_const
     pub fn is_string(&self) -> Result<bool> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_isString_const(self.as_raw_DictValue()) }.into_result()
+        unsafe { sys::cv_dnn_DictValue_isString_const(self.as_raw_DictValue()) }.into_result()
     }
     
-    // identifier: cv_dnn_DictValue_isReal_const
     pub fn is_real(&self) -> Result<bool> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_isReal_const(self.as_raw_DictValue()) }.into_result()
+        unsafe { sys::cv_dnn_DictValue_isReal_const(self.as_raw_DictValue()) }.into_result()
     }
     
-    // identifier: cv_dnn_DictValue_getIntValue_const_int_idx
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * idx: -1
     pub fn get_int_value(&self, idx: i32) -> Result<i32> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_getIntValue_const_int_idx(self.as_raw_DictValue(), idx) }.into_result()
+        unsafe { sys::cv_dnn_DictValue_getIntValue_const_int(self.as_raw_DictValue(), idx) }.into_result()
     }
     
-    // identifier: cv_dnn_DictValue_getRealValue_const_int_idx
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * idx: -1
     pub fn get_real_value(&self, idx: i32) -> Result<f64> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_getRealValue_const_int_idx(self.as_raw_DictValue(), idx) }.into_result()
+        unsafe { sys::cv_dnn_DictValue_getRealValue_const_int(self.as_raw_DictValue(), idx) }.into_result()
     }
     
-    // identifier: cv_dnn_DictValue_getStringValue_const_int_idx
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * idx: -1
     pub fn get_string_value(&self, idx: i32) -> Result<String> {
-        unsafe { sys::cv_dnn_cv_dnn_DictValue_getStringValue_const_int_idx(self.as_raw_DictValue(), idx) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_dnn_DictValue_getStringValue_const_int(self.as_raw_DictValue(), idx) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }
@@ -1259,8 +1221,8 @@ impl LRNLayer {
 // Generating impl for trait cv::dnn::LSTMLayer (trait)
 pub trait LSTMLayer : crate::dnn::Layer {
     #[doc(hidden)] fn as_raw_LSTMLayer(&self) -> *mut c_void;
-    // identifier: cv_dnn_LSTMLayer_setWeights_Mat_Wh_Mat_Wx_Mat_b
-    /// @deprecated Use LayerParams::blobs instead.
+    /// **Deprecated**: Use LayerParams::blobs instead.
+    /// 
     ///  Set trained weights for LSTM layer.
     /// 
     /// LSTM behavior on each step is defined by current input, previous output, previous cell state and learned weights.
@@ -1291,13 +1253,14 @@ pub trait LSTMLayer : crate::dnn::Layer {
     /// ## Parameters
     /// * Wh: is matrix defining how previous output is transformed to internal gates (i.e. according to above mentioned notation is @f$ W_h @f$)
     /// * Wx: is matrix defining how current input is transformed to internal gates (i.e. according to above mentioned notation is @f$ W_x @f$)
-    /// * b:  is bias vector (i.e. according to above mentioned notation is @f$ b @f$)
+    /// * b: is bias vector (i.e. according to above mentioned notation is @f$ b @f$)
+    #[deprecated = "Use LayerParams::blobs instead."]
     fn set_weights(&mut self, wh: &core::Mat, wx: &core::Mat, b: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_LSTMLayer_setWeights_Mat_Wh_Mat_Wx_Mat_b(self.as_raw_LSTMLayer(), wh.as_raw_Mat(), wx.as_raw_Mat(), b.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_dnn_LSTMLayer_setWeights_Mat_Mat_Mat(self.as_raw_LSTMLayer(), wh.as_raw_Mat(), wx.as_raw_Mat(), b.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_dnn_LSTMLayer_setUseTimstampsDim_bool_use
-    /// @deprecated Use flag `produce_cell_output` in LayerParams.
+    /// **Deprecated**: Use flag `produce_cell_output` in LayerParams.
+    /// 
     ///  Specifies either interpret first dimension of input blob as timestamp dimenion either as sample.
     /// 
     /// If flag is set to true then shape of input blob will be interpreted as [`T`, `N`, `[data dims]`] where `T` specifies number of timestamps, `N` is number of independent streams.
@@ -1306,33 +1269,33 @@ pub trait LSTMLayer : crate::dnn::Layer {
     /// If flag is set to false then shape of input blob will be interpreted as [`N`, `[data dims]`].
     /// In this case each forward() call will make one iteration and produce one timestamp with shape [`N`, `[out dims]`].
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * _use: true
+    #[deprecated = "Use flag `produce_cell_output` in LayerParams."]
     fn set_use_timstamps_dim(&mut self, _use: bool) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_LSTMLayer_setUseTimstampsDim_bool_use(self.as_raw_LSTMLayer(), _use) }.into_result()
+        unsafe { sys::cv_dnn_LSTMLayer_setUseTimstampsDim_bool(self.as_raw_LSTMLayer(), _use) }.into_result()
     }
     
-    // identifier: cv_dnn_LSTMLayer_setProduceCellOutput_bool_produce
-    /// @deprecated Use flag `use_timestamp_dim` in LayerParams.
+    /// **Deprecated**: Use flag `use_timestamp_dim` in LayerParams.
+    /// 
     ///  If this flag is set to true then layer will produce @f$ c_t @f$ as second output.
     /// @details Shape of the second output is the same as first output.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * produce: false
+    #[deprecated = "Use flag `use_timestamp_dim` in LayerParams."]
     fn set_produce_cell_output(&mut self, produce: bool) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_LSTMLayer_setProduceCellOutput_bool_produce(self.as_raw_LSTMLayer(), produce) }.into_result()
+        unsafe { sys::cv_dnn_LSTMLayer_setProduceCellOutput_bool(self.as_raw_LSTMLayer(), produce) }.into_result()
     }
     
-    // identifier: cv_dnn_LSTMLayer_inputNameToIndex_String_inputName
     fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
         string_arg!(mut input_name);
-        unsafe { sys::cv_dnn_cv_dnn_LSTMLayer_inputNameToIndex_String_inputName(self.as_raw_LSTMLayer(), input_name.as_ptr() as _) }.into_result()
+        unsafe { sys::cv_dnn_LSTMLayer_inputNameToIndex_String(self.as_raw_LSTMLayer(), input_name.as_ptr() as _) }.into_result()
     }
     
-    // identifier: cv_dnn_LSTMLayer_outputNameToIndex_String_outputName
     fn output_name_to_index(&mut self, output_name: &str) -> Result<i32> {
         string_arg!(output_name);
-        unsafe { sys::cv_dnn_cv_dnn_LSTMLayer_outputNameToIndex_String_outputName(self.as_raw_LSTMLayer(), output_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_LSTMLayer_outputNameToIndex_String(self.as_raw_LSTMLayer(), output_name.as_ptr()) }.into_result()
     }
     
 }
@@ -1348,53 +1311,48 @@ impl<'a> LSTMLayer + 'a {
 /// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
 pub trait Layer : core::Algorithm {
     #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void;
-    // identifier: cv_dnn_Layer_finalize_VectorOfMat_inputs_VectorOfMat_outputs
     /// Computes and sets internal parameters according to inputs, outputs and blobs.
     /// ## Parameters
-    ///  @param[in]  inputs  vector of already allocated input blobs
-    ///  @param[out] outputs vector of already allocated output blobs
+    /// * inputs: vector of already allocated input blobs
+    /// * outputs: [out] vector of already allocated output blobs
     /// 
     /// If this method is called after network has allocated all memory for input and output blobs
     /// and before inferencing.
-    fn finalize(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_finalize_VectorOfMat_inputs_VectorOfMat_outputs(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat()) }.into_result()
+    fn finalize_to(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat) -> Result<()> {
+        unsafe { sys::cv_dnn_Layer_finalize_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_forward_VectorOfMat_inputs_VectorOfMat_outputs_VectorOfMat_internals
     /// Given the @p input blobs, computes the output @p blobs.
     /// ## Parameters
-    ///  @param[in]  inputs  the input blobs.
-    ///  @param[out] outputs allocated output blobs, which will store results of the computation.
-    ///  @param[out] internals allocated internal blobs
+    /// * inputs: the input blobs.
+    /// * outputs: [out] allocated output blobs, which will store results of the computation.
+    /// * internals: [out] allocated internal blobs
     fn forward(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat, internals: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_forward_VectorOfMat_inputs_VectorOfMat_outputs_VectorOfMat_internals(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_forward_VectorOfMat_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_forward_fallback_VectorOfMat_inputs_VectorOfMat_outputs_VectorOfMat_internals
     /// Given the @p input blobs, computes the output @p blobs.
     /// ## Parameters
-    ///  @param[in]  inputs  the input blobs.
-    ///  @param[out] outputs allocated output blobs, which will store results of the computation.
-    ///  @param[out] internals allocated internal blobs
+    /// * inputs: the input blobs.
+    /// * outputs: [out] allocated output blobs, which will store results of the computation.
+    /// * internals: [out] allocated internal blobs
     fn forward_fallback(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat, internals: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_forward_fallback_VectorOfMat_inputs_VectorOfMat_outputs_VectorOfMat_internals(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_forward_fallback_VectorOfMat_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_finalize_VectorOfMat_inputs
-    /// @overload
-    /// @deprecated Use Layer::finalize(InputArrayOfArrays, OutputArrayOfArrays) instead
-    fn finalize_1(&mut self, inputs: &types::VectorOfMat) -> Result<types::VectorOfMat> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_finalize_VectorOfMat_inputs(self.as_raw_Layer(), inputs.as_raw_VectorOfMat()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
+    /// **Deprecated**: Use Layer::finalize(InputArrayOfArrays, OutputArrayOfArrays) instead
+    #[deprecated = "Use Layer::finalize(InputArrayOfArrays, OutputArrayOfArrays) instead"]
+    fn finalize(&mut self, inputs: &types::VectorOfMat) -> Result<types::VectorOfMat> {
+        unsafe { sys::cv_dnn_Layer_finalize_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
     }
     
-    // identifier: cv_dnn_Layer_run_VectorOfMat_inputs_VectorOfMat_outputs_VectorOfMat_internals
     /// Allocates layer and computes output.
-    ///  @deprecated This method will be removed in the future release.
+    /// **Deprecated**: This method will be removed in the future release.
+    #[deprecated = "This method will be removed in the future release."]
     fn run(&mut self, inputs: &types::VectorOfMat, outputs: &types::VectorOfMat, internals: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_run_VectorOfMat_inputs_VectorOfMat_outputs_VectorOfMat_internals(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_run_VectorOfMat_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_inputNameToIndex_String_inputName
     /// Returns index of input blob into the input array.
     /// ## Parameters
     /// * inputName: label of input blob
@@ -1403,30 +1361,27 @@ pub trait Layer : core::Algorithm {
     /// This method maps label of input blob to its index into input vector.
     fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
         string_arg!(mut input_name);
-        unsafe { sys::cv_dnn_cv_dnn_Layer_inputNameToIndex_String_inputName(self.as_raw_Layer(), input_name.as_ptr() as _) }.into_result()
+        unsafe { sys::cv_dnn_Layer_inputNameToIndex_String(self.as_raw_Layer(), input_name.as_ptr() as _) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_outputNameToIndex_String_outputName
     /// Returns index of output blob in output array.
     ///  @see inputNameToIndex()
     fn output_name_to_index(&mut self, output_name: &str) -> Result<i32> {
         string_arg!(output_name);
-        unsafe { sys::cv_dnn_cv_dnn_Layer_outputNameToIndex_String_outputName(self.as_raw_Layer(), output_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_outputNameToIndex_String(self.as_raw_Layer(), output_name.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_supportBackend_int_backendId
     /// Ask layer if it support specific backend for doing computations.
     /// ## Parameters
-    /// @param[in] backendId computation backend identifier.
+    /// * backendId: computation backend identifier.
     /// @see Backend
     fn support_backend(&mut self, backend_id: i32) -> Result<bool> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_supportBackend_int_backendId(self.as_raw_Layer(), backend_id) }.into_result()
+        unsafe { sys::cv_dnn_Layer_supportBackend_int(self.as_raw_Layer(), backend_id) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_initHalide_VectorOfPtrOfBackendWrapper_inputs
     /// Returns Halide backend node.
     /// ## Parameters
-    /// @param[in] inputs Input Halide buffers.
+    /// * inputs: Input Halide buffers.
     /// @see BackendNode, BackendWrapper
     /// 
     /// Input buffers should be exactly the same that will be used in forward invocations.
@@ -1434,43 +1389,39 @@ pub trait Layer : core::Algorithm {
     /// it helps prevent some memory management issues (if something wrong,
     /// Halide tests will be failed).
     fn init_halide(&mut self, inputs: &types::VectorOfPtrOfBackendWrapper) -> Result<types::PtrOfBackendNode> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_initHalide_VectorOfPtrOfBackendWrapper_inputs(self.as_raw_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper()) }.into_result().map(|x| types::PtrOfBackendNode { ptr: x })
+        unsafe { sys::cv_dnn_Layer_initHalide_VectorOfPtrOfBackendWrapper(self.as_raw_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper()) }.into_result().map(|x| types::PtrOfBackendNode { ptr: x })
     }
     
-    // identifier: cv_dnn_Layer_initInfEngine_VectorOfPtrOfBackendWrapper_inputs
     fn init_inf_engine(&mut self, inputs: &types::VectorOfPtrOfBackendWrapper) -> Result<types::PtrOfBackendNode> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_initInfEngine_VectorOfPtrOfBackendWrapper_inputs(self.as_raw_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper()) }.into_result().map(|x| types::PtrOfBackendNode { ptr: x })
+        unsafe { sys::cv_dnn_Layer_initInfEngine_VectorOfPtrOfBackendWrapper(self.as_raw_Layer(), inputs.as_raw_VectorOfPtrOfBackendWrapper()) }.into_result().map(|x| types::PtrOfBackendNode { ptr: x })
     }
     
-    // identifier: cv_dnn_Layer_tryAttach_PtrOfBackendNode_node
     /// Implement layers fusing.
     /// ## Parameters
-    /// @param[in] node Backend node of bottom layer.
+    /// * node: Backend node of bottom layer.
     /// @see BackendNode
     /// 
     /// Actual for graph-based backends. If layer attached successfully,
     /// returns non-empty cv::Ptr to node of the same backend.
     /// Fuse only over the last function.
     fn try_attach(&mut self, node: &types::PtrOfBackendNode) -> Result<types::PtrOfBackendNode> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_tryAttach_PtrOfBackendNode_node(self.as_raw_Layer(), node.as_raw_PtrOfBackendNode()) }.into_result().map(|x| types::PtrOfBackendNode { ptr: x })
+        unsafe { sys::cv_dnn_Layer_tryAttach_PtrOfBackendNode(self.as_raw_Layer(), node.as_raw_PtrOfBackendNode()) }.into_result().map(|x| types::PtrOfBackendNode { ptr: x })
     }
     
-    // identifier: cv_dnn_Layer_setActivation_PtrOfActivationLayer_layer
     /// Tries to attach to the layer the subsequent activation layer, i.e. do the layer fusion in a partial case.
     /// ## Parameters
-    /// @param[in] layer The subsequent activation layer.
+    /// * layer: The subsequent activation layer.
     /// 
     /// Returns true if the activation layer has been attached successfully.
     fn set_activation(&mut self, layer: &types::PtrOfActivationLayer) -> Result<bool> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_setActivation_PtrOfActivationLayer_layer(self.as_raw_Layer(), layer.as_raw_PtrOfActivationLayer()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_setActivation_PtrOfActivationLayer(self.as_raw_Layer(), layer.as_raw_PtrOfActivationLayer()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_getScaleShift_const_Mat_scale_Mat_shift
     /// Returns parameters of layers with channel-wise multiplication and addition.
     /// ## Parameters
-    /// @param[out] scale Channel-wise multipliers. Total number of values should
+    /// * scale: [out] Channel-wise multipliers. Total number of values should
     ///                   be equal to number of channels.
-    /// @param[out] shift Channel-wise offsets. Total number of values should
+    /// * shift: [out] Channel-wise offsets. Total number of values should
     ///                   be equal to number of channels.
     /// 
     /// Some layers can fuse their transformations with further layers.
@@ -1479,23 +1430,20 @@ pub trait Layer : core::Algorithm {
     /// By default, @p scale and @p shift are empty that means layer has no
     /// element-wise multiplications or additions.
     fn get_scale_shift(&self, scale: &core::Mat, shift: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_getScaleShift_const_Mat_scale_Mat_shift(self.as_raw_Layer(), scale.as_raw_Mat(), shift.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_getScaleShift_const_Mat_Mat(self.as_raw_Layer(), scale.as_raw_Mat(), shift.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_unsetAttached
     /// "Deattaches" all the layers, attached to particular layer.
     fn unset_attached(&mut self) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_unsetAttached(self.as_raw_Layer()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_unsetAttached(self.as_raw_Layer()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_getMemoryShapes_const_VectorOfVectorOfint_inputs_int_requiredOutputs_VectorOfVectorOfint_outputs_VectorOfVectorOfint_internals
     fn get_memory_shapes(&self, inputs: &types::VectorOfVectorOfint, required_outputs: i32, outputs: &types::VectorOfVectorOfint, internals: &types::VectorOfVectorOfint) -> Result<bool> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_getMemoryShapes_const_VectorOfVectorOfint_inputs_int_requiredOutputs_VectorOfVectorOfint_outputs_VectorOfVectorOfint_internals(self.as_raw_Layer(), inputs.as_raw_VectorOfVectorOfint(), required_outputs, outputs.as_raw_VectorOfVectorOfint(), internals.as_raw_VectorOfVectorOfint()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_getMemoryShapes_const_VectorOfVectorOfint_int_VectorOfVectorOfint_VectorOfVectorOfint(self.as_raw_Layer(), inputs.as_raw_VectorOfVectorOfint(), required_outputs, outputs.as_raw_VectorOfVectorOfint(), internals.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
-    // identifier: cv_dnn_Layer_getFLOPS_const_VectorOfVectorOfint_inputs_VectorOfVectorOfint_outputs
     fn get_flops(&self, inputs: &types::VectorOfVectorOfint, outputs: &types::VectorOfVectorOfint) -> Result<i64> {
-        unsafe { sys::cv_dnn_cv_dnn_Layer_getFLOPS_const_VectorOfVectorOfint_inputs_VectorOfVectorOfint_outputs(self.as_raw_Layer(), inputs.as_raw_VectorOfVectorOfint(), outputs.as_raw_VectorOfVectorOfint()) }.into_result()
+        unsafe { sys::cv_dnn_Layer_getFLOPS_const_VectorOfVectorOfint_VectorOfVectorOfint(self.as_raw_Layer(), inputs.as_raw_VectorOfVectorOfint(), outputs.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
 }
@@ -1521,10 +1469,9 @@ impl crate::dnn::LayerFactory {
 
 impl LayerFactory {
 
-    // identifier: cv_dnn_LayerFactory_unregisterLayer_String_type
     pub fn unregister_layer(_type: &str) -> Result<()> {
         string_arg!(_type);
-        unsafe { sys::cv_dnn_cv_dnn_LayerFactory_unregisterLayer_String_type(_type.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_String(_type.as_ptr()) }.into_result()
     }
     
 }
@@ -1605,66 +1552,60 @@ impl MaxUnpoolLayer {
 
 impl Net {
 
-    // identifier: cv_dnn_Net_Net
     pub fn new() -> Result<crate::dnn::Net> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_Net() }.into_result()
+        unsafe { sys::cv_dnn_Net_Net() }.into_result()
     }
     
-    // identifier: cv_dnn_Net_readFromModelOptimizer_String_xml_String_bin
     /// Create a network from Intel's Model Optimizer intermediate representation.
     /// ## Parameters
-    ///  @param[in] xml XML configuration file with network's topology.
-    ///  @param[in] bin Binary file with trained weights.
+    /// * xml: XML configuration file with network's topology.
+    /// * bin: Binary file with trained weights.
     ///  Networks imported from Intel's Model Optimizer are launched in Intel's Inference Engine
     ///  backend.
     pub fn read_from_model_optimizer(xml: &str, bin: &str) -> Result<crate::dnn::Net> {
         string_arg!(xml);
         string_arg!(bin);
-        unsafe { sys::cv_dnn_cv_dnn_Net_readFromModelOptimizer_String_xml_String_bin(xml.as_ptr(), bin.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Net_readFromModelOptimizer_String_String(xml.as_ptr(), bin.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_empty_const
     /// Returns true if there are no layers in the network.
     pub fn empty(self) -> Result<bool> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_empty_const(self) }.into_result()
+        unsafe { sys::cv_dnn_Net_empty_const(self) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_addLayer_String_name_String_type_LayerParams_params
     /// Adds new layer to the net.
     /// ## Parameters
-    /// * name:   unique name of the adding layer.
-    /// * type:   typename of the adding layer (type must be registered in LayerRegister).
+    /// * name: unique name of the adding layer.
+    /// * type: typename of the adding layer (type must be registered in LayerRegister).
     /// * params: parameters which will be used to initialize the creating layer.
-    ///  @returns unique identifier of created layer, or -1 if a failure will happen.
+    /// ## Returns
+    /// unique identifier of created layer, or -1 if a failure will happen.
     pub fn add_layer(self, name: &str, _type: &str, params: &crate::dnn::LayerParams) -> Result<i32> {
         string_arg!(name);
         string_arg!(_type);
-        unsafe { sys::cv_dnn_cv_dnn_Net_addLayer_String_name_String_type_LayerParams_params(self, name.as_ptr(), _type.as_ptr(), params.as_raw_LayerParams()) }.into_result()
+        unsafe { sys::cv_dnn_Net_addLayer_String_String_LayerParams(self, name.as_ptr(), _type.as_ptr(), params.as_raw_LayerParams()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_addLayerToPrev_String_name_String_type_LayerParams_params
     /// Adds new layer and connects its first input to the first output of previously added layer.
     ///  @see addLayer()
     pub fn add_layer_to_prev(self, name: &str, _type: &str, params: &crate::dnn::LayerParams) -> Result<i32> {
         string_arg!(name);
         string_arg!(_type);
-        unsafe { sys::cv_dnn_cv_dnn_Net_addLayerToPrev_String_name_String_type_LayerParams_params(self, name.as_ptr(), _type.as_ptr(), params.as_raw_LayerParams()) }.into_result()
+        unsafe { sys::cv_dnn_Net_addLayerToPrev_String_String_LayerParams(self, name.as_ptr(), _type.as_ptr(), params.as_raw_LayerParams()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getLayerId_String_layer
     /// Converts string name of the layer to the integer identifier.
-    ///  @returns id of the layer, or -1 if the layer wasn't found.
+    /// ## Returns
+    /// id of the layer, or -1 if the layer wasn't found.
     pub fn get_layer_id(self, layer: &str) -> Result<i32> {
         string_arg!(layer);
-        unsafe { sys::cv_dnn_cv_dnn_Net_getLayerId_String_layer(self, layer.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getLayerId_String(self, layer.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getLayerNames_const
     pub fn get_layer_names(self) -> Result<types::VectorOfString> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getLayerNames_const(self) }.into_result().map(|x| types::VectorOfString { ptr: x })
+        unsafe { sys::cv_dnn_Net_getLayerNames_const(self) }.into_result().map(|x| types::VectorOfString { ptr: x })
     }
     
-    // identifier: cv_dnn_Net_connect_String_outPin_String_inpPin
     /// Connects output of the first layer to input of the second layer.
     /// ## Parameters
     /// * outPin: descriptor of the first layer output.
@@ -1678,24 +1619,22 @@ impl Net {
     ///   If this part is omitted then the first layer input will be used.
     /// 
     ///  @see setNetInputs(), Layer::inputNameToIndex(), Layer::outputNameToIndex()
-    pub fn connect(self, out_pin: &str, inp_pin: &str) -> Result<()> {
+    pub fn connect_first_second(self, out_pin: &str, inp_pin: &str) -> Result<()> {
         string_arg!(mut out_pin);
         string_arg!(mut inp_pin);
-        unsafe { sys::cv_dnn_cv_dnn_Net_connect_String_outPin_String_inpPin(self, out_pin.as_ptr() as _, inp_pin.as_ptr() as _) }.into_result()
+        unsafe { sys::cv_dnn_Net_connect_String_String(self, out_pin.as_ptr() as _, inp_pin.as_ptr() as _) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_connect_int_outLayerId_int_outNum_int_inpLayerId_int_inpNum
     /// Connects #@p outNum output of the first layer to #@p inNum input of the second layer.
     /// ## Parameters
     /// * outLayerId: identifier of the first layer
     /// * outNum: number of the first layer output
     /// * inpLayerId: identifier of the second layer
     /// * inpNum: number of the second layer input
-    pub fn connect_1(self, out_layer_id: i32, out_num: i32, inp_layer_id: i32, inp_num: i32) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_connect_int_outLayerId_int_outNum_int_inpLayerId_int_inpNum(self, out_layer_id, out_num, inp_layer_id, inp_num) }.into_result()
+    pub fn connect(self, out_layer_id: i32, out_num: i32, inp_layer_id: i32, inp_num: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_Net_connect_int_int_int_int(self, out_layer_id, out_num, inp_layer_id, inp_num) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_setInputsNames_VectorOfString_inputBlobNames
     /// Sets outputs names of the network input pseudo layer.
     /// 
     /// Each net always has special own the network input pseudo layer with id=0.
@@ -1703,59 +1642,47 @@ impl Net {
     /// In fact, this layer provides the only way to pass user data into the network.
     /// As any other layer, this layer can label its outputs and this function provides an easy way to do this.
     pub fn set_inputs_names(self, input_blob_names: &types::VectorOfString) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_setInputsNames_VectorOfString_inputBlobNames(self, input_blob_names.as_raw_VectorOfString()) }.into_result()
+        unsafe { sys::cv_dnn_Net_setInputsNames_VectorOfString(self, input_blob_names.as_raw_VectorOfString()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_forward_String_outputName
     /// Runs forward pass to compute output of layer with name @p outputName.
     /// ## Parameters
     /// * outputName: name for layer which output is needed to get
-    ///  @return blob for first output of specified layer.
+    /// ## Returns
+    /// blob for first output of specified layer.
     ///  @details By default runs forward pass for the whole network.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * output_name: String()
     pub fn forward(self, output_name: &str) -> Result<core::Mat> {
         string_arg!(output_name);
-        unsafe { sys::cv_dnn_cv_dnn_Net_forward_String_outputName(self, output_name.as_ptr()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_dnn_Net_forward_String(self, output_name.as_ptr()) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
-    // identifier: cv_dnn_Net_forward_VectorOfMat_outputBlobs_String_outputName
     /// Runs forward pass to compute output of layer with name @p outputName.
     /// ## Parameters
     /// * outputBlobs: contains all output blobs for specified layer.
     /// * outputName: name for layer which output is needed to get
     ///  @details If @p outputName is empty, runs forward pass for the whole network.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * output_name: String()
-    pub fn forward_1(self, output_blobs: &mut types::VectorOfMat, output_name: &str) -> Result<()> {
+    pub fn forward_to(self, output_blobs: &mut types::VectorOfMat, output_name: &str) -> Result<()> {
         string_arg!(output_name);
-        unsafe { sys::cv_dnn_cv_dnn_Net_forward_VectorOfMat_outputBlobs_String_outputName(self, output_blobs.as_raw_VectorOfMat(), output_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Net_forward_VectorOfMat_String(self, output_blobs.as_raw_VectorOfMat(), output_name.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_forward_VectorOfMat_outputBlobs_VectorOfString_outBlobNames
-    /// Runs forward pass to compute outputs of layers listed in @p outBlobNames.
-    /// ## Parameters
-    /// * outputBlobs: contains blobs for first outputs of specified layers.
-    /// * outBlobNames: names for layers which outputs are needed to get
-    pub fn forward_2(self, output_blobs: &mut types::VectorOfMat, out_blob_names: &types::VectorOfString) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_forward_VectorOfMat_outputBlobs_VectorOfString_outBlobNames(self, output_blobs.as_raw_VectorOfMat(), out_blob_names.as_raw_VectorOfString()) }.into_result()
-    }
-    
-    // identifier: cv_dnn_Net_forward_VectorOfVectorOfMat_outputBlobs_VectorOfString_outBlobNames
     /// Runs forward pass to compute outputs of layers listed in @p outBlobNames.
     /// ## Parameters
     /// * outputBlobs: contains all output blobs for each layer specified in @p outBlobNames.
     /// * outBlobNames: names for layers which outputs are needed to get
-    pub fn forward_3(self, output_blobs: &types::VectorOfVectorOfMat, out_blob_names: &types::VectorOfString) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_forward_VectorOfVectorOfMat_outputBlobs_VectorOfString_outBlobNames(self, output_blobs.as_raw_VectorOfVectorOfMat(), out_blob_names.as_raw_VectorOfString()) }.into_result()
+    pub fn forward_all(self, output_blobs: &types::VectorOfVectorOfMat, out_blob_names: &types::VectorOfString) -> Result<()> {
+        unsafe { sys::cv_dnn_Net_forward_VectorOfVectorOfMat_VectorOfString(self, output_blobs.as_raw_VectorOfVectorOfMat(), out_blob_names.as_raw_VectorOfString()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_setHalideScheduler_String_scheduler
     /// Compile Halide layers.
     /// ## Parameters
-    /// @param[in] scheduler Path to YAML file with scheduling directives.
+    /// * scheduler: Path to YAML file with scheduling directives.
     /// @see setPreferableBackend
     /// 
     /// Schedule layers that support Halide backend. Then compile them for
@@ -1763,25 +1690,23 @@ impl Net {
     /// or if no manual scheduling used at all, automatic scheduling will be applied.
     pub fn set_halide_scheduler(self, scheduler: &str) -> Result<()> {
         string_arg!(scheduler);
-        unsafe { sys::cv_dnn_cv_dnn_Net_setHalideScheduler_String_scheduler(self, scheduler.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Net_setHalideScheduler_String(self, scheduler.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_setPreferableBackend_int_backendId
     /// Ask network to use specific computation backend where it supported.
     /// ## Parameters
-    /// @param[in] backendId backend identifier.
+    /// * backendId: backend identifier.
     /// @see Backend
     /// 
     /// If OpenCV is compiled with Intel's Inference Engine library, DNN_BACKEND_DEFAULT
     /// means DNN_BACKEND_INFERENCE_ENGINE. Otherwise it equals to DNN_BACKEND_OPENCV.
     pub fn set_preferable_backend(self, backend_id: i32) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_setPreferableBackend_int_backendId(self, backend_id) }.into_result()
+        unsafe { sys::cv_dnn_Net_setPreferableBackend_int(self, backend_id) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_setPreferableTarget_int_targetId
     /// Ask network to make computations on specific target device.
     /// ## Parameters
-    /// @param[in] targetId target identifier.
+    /// * targetId: target identifier.
     /// @see Target
     /// 
     /// List of supported combinations backend / target:
@@ -1793,32 +1718,30 @@ impl Net {
     /// | DNN_TARGET_MYRIAD      |                    |                            + |                    |
     /// | DNN_TARGET_FPGA        |                    |                            + |                    |
     pub fn set_preferable_target(self, target_id: i32) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_setPreferableTarget_int_targetId(self, target_id) }.into_result()
+        unsafe { sys::cv_dnn_Net_setPreferableTarget_int(self, target_id) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_setInput_Mat_blob_String_name_double_scalefactor_Scalar_mean
     /// Sets the new input value for the network
     /// ## Parameters
-    /// * blob:        A new blob. Should have CV_32F or CV_8U depth.
-    /// * name:        A name of input layer.
+    /// * blob: A new blob. Should have CV_32F or CV_8U depth.
+    /// * name: A name of input layer.
     /// * scalefactor: An optional normalization scale.
-    /// * mean:        An optional mean subtraction values.
+    /// * mean: An optional mean subtraction values.
     ///  @see connect(String, String) to know format of the descriptor.
     /// 
     ///  If scale or mean values are specified, a final input blob is computed
     ///  as:
     /// <div lang='latex'>input(n,c,h,w) = scalefactor \times (blob(n,c,h,w) - mean_c)</div>
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * name: ""
     /// * scalefactor: 1.0
     /// * mean: Scalar()
     pub fn set_input(self, blob: &core::Mat, name: &str, scalefactor: f64, mean: core::Scalar) -> Result<()> {
         string_arg!(name);
-        unsafe { sys::cv_dnn_cv_dnn_Net_setInput_Mat_blob_String_name_double_scalefactor_Scalar_mean(self, blob.as_raw_Mat(), name.as_ptr(), scalefactor, mean) }.into_result()
+        unsafe { sys::cv_dnn_Net_setInput_Mat_String_double_Scalar(self, blob.as_raw_Mat(), name.as_ptr(), scalefactor, mean) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_setParam_DictValue_layer_int_numParam_Mat_blob
     /// Sets the new value for the learned param of the layer.
     /// ## Parameters
     /// * layer: name or id of the layer.
@@ -1829,35 +1752,31 @@ impl Net {
     /// Note: If shape of the new blob differs from the previous shape,
     ///  then the following forward pass may fail.
     pub fn set_param(self, layer: &crate::dnn::DictValue, num_param: i32, blob: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_setParam_DictValue_layer_int_numParam_Mat_blob(self, layer.as_raw_DictValue(), num_param, blob.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_dnn_Net_setParam_DictValue_int_Mat(self, layer.as_raw_DictValue(), num_param, blob.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getParam_DictValue_layer_int_numParam
     /// Returns parameter blob of the layer.
     /// ## Parameters
     /// * layer: name or id of the layer.
     /// * numParam: index of the layer parameter in the Layer::blobs array.
     ///  @see Layer::blobs
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * num_param: 0
     pub fn get_param(self, layer: &crate::dnn::DictValue, num_param: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getParam_DictValue_layer_int_numParam(self, layer.as_raw_DictValue(), num_param) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_dnn_Net_getParam_DictValue_int(self, layer.as_raw_DictValue(), num_param) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
-    // identifier: cv_dnn_Net_getUnconnectedOutLayers_const
     /// Returns indexes of layers with unconnected outputs.
     pub fn get_unconnected_out_layers(self) -> Result<types::VectorOfint> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getUnconnectedOutLayers_const(self) }.into_result().map(|x| types::VectorOfint { ptr: x })
+        unsafe { sys::cv_dnn_Net_getUnconnectedOutLayers_const(self) }.into_result().map(|x| types::VectorOfint { ptr: x })
     }
     
-    // identifier: cv_dnn_Net_getUnconnectedOutLayersNames_const
     /// Returns names of layers with unconnected outputs.
     pub fn get_unconnected_out_layers_names(self) -> Result<types::VectorOfString> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getUnconnectedOutLayersNames_const(self) }.into_result().map(|x| types::VectorOfString { ptr: x })
+        unsafe { sys::cv_dnn_Net_getUnconnectedOutLayersNames_const(self) }.into_result().map(|x| types::VectorOfString { ptr: x })
     }
     
-    // identifier: cv_dnn_Net_getLayersShapes_const_VectorOfVectorOfint_netInputShapes_VectorOfint_layersIds_VectorOfVectorOfVectorOfint_inLayersShapes_VectorOfVectorOfVectorOfint_outLayersShapes
     /// Returns input and output shapes for all layers in loaded model;
     ///  preliminary inferencing isn't necessary.
     /// ## Parameters
@@ -1868,49 +1787,43 @@ impl Net {
     /// * outLayersShapes: output parameter for output layers shapes;
     /// order is the same as in layersIds
     pub fn get_layers_shapes(self, net_input_shapes: &types::VectorOfVectorOfint, layers_ids: &types::VectorOfint, in_layers_shapes: &types::VectorOfVectorOfVectorOfint, out_layers_shapes: &types::VectorOfVectorOfVectorOfint) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getLayersShapes_const_VectorOfVectorOfint_netInputShapes_VectorOfint_layersIds_VectorOfVectorOfVectorOfint_inLayersShapes_VectorOfVectorOfVectorOfint_outLayersShapes(self, net_input_shapes.as_raw_VectorOfVectorOfint(), layers_ids.as_raw_VectorOfint(), in_layers_shapes.as_raw_VectorOfVectorOfVectorOfint(), out_layers_shapes.as_raw_VectorOfVectorOfVectorOfint()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getLayersShapes_const_VectorOfVectorOfint_VectorOfint_VectorOfVectorOfVectorOfint_VectorOfVectorOfVectorOfint(self, net_input_shapes.as_raw_VectorOfVectorOfint(), layers_ids.as_raw_VectorOfint(), in_layers_shapes.as_raw_VectorOfVectorOfVectorOfint(), out_layers_shapes.as_raw_VectorOfVectorOfVectorOfint()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getLayerShapes_const_VectorOfVectorOfint_netInputShapes_int_layerId_VectorOfVectorOfint_inLayerShapes_VectorOfVectorOfint_outLayerShapes
-    /// @overload
     pub fn get_layer_shapes(self, net_input_shapes: &types::VectorOfVectorOfint, layer_id: i32, in_layer_shapes: &types::VectorOfVectorOfint, out_layer_shapes: &types::VectorOfVectorOfint) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getLayerShapes_const_VectorOfVectorOfint_netInputShapes_int_layerId_VectorOfVectorOfint_inLayerShapes_VectorOfVectorOfint_outLayerShapes(self, net_input_shapes.as_raw_VectorOfVectorOfint(), layer_id, in_layer_shapes.as_raw_VectorOfVectorOfint(), out_layer_shapes.as_raw_VectorOfVectorOfint()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getLayerShapes_const_VectorOfVectorOfint_int_VectorOfVectorOfint_VectorOfVectorOfint(self, net_input_shapes.as_raw_VectorOfVectorOfint(), layer_id, in_layer_shapes.as_raw_VectorOfVectorOfint(), out_layer_shapes.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getFLOPS_const_VectorOfVectorOfint_netInputShapes
     /// Computes FLOP for whole loaded model with specified input shapes.
     /// ## Parameters
     /// * netInputShapes: vector of shapes for all net inputs.
-    /// @returns computed FLOP.
+    /// ## Returns
+    /// computed FLOP.
     pub fn get_flops(self, net_input_shapes: &types::VectorOfVectorOfint) -> Result<i64> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getFLOPS_const_VectorOfVectorOfint_netInputShapes(self, net_input_shapes.as_raw_VectorOfVectorOfint()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getFLOPS_const_VectorOfVectorOfint(self, net_input_shapes.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getFLOPS_const_int_layerId_VectorOfVectorOfint_netInputShapes
-    /// @overload
     pub fn get_flops_1(self, layer_id: i32, net_input_shapes: &types::VectorOfVectorOfint) -> Result<i64> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getFLOPS_const_int_layerId_VectorOfVectorOfint_netInputShapes(self, layer_id, net_input_shapes.as_raw_VectorOfVectorOfint()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getFLOPS_const_int_VectorOfVectorOfint(self, layer_id, net_input_shapes.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getLayerTypes_const_VectorOfString_layersTypes
     /// Returns list of types for layer used in model.
     /// ## Parameters
     /// * layersTypes: output parameter for returning types.
     pub fn get_layer_types(self, layers_types: &types::VectorOfString) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getLayerTypes_const_VectorOfString_layersTypes(self, layers_types.as_raw_VectorOfString()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getLayerTypes_const_VectorOfString(self, layers_types.as_raw_VectorOfString()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getLayersCount_const_String_layerType
     /// Returns count of layers of specified type.
     /// ## Parameters
     /// * layerType: type.
-    /// @returns count of layers
+    /// ## Returns
+    /// count of layers
     pub fn get_layers_count(self, layer_type: &str) -> Result<i32> {
         string_arg!(layer_type);
-        unsafe { sys::cv_dnn_cv_dnn_Net_getLayersCount_const_String_layerType(self, layer_type.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getLayersCount_const_String(self, layer_type.as_ptr()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_netInputShapes_size_t_weights_size_t_blobs
     /// Computes bytes number which are required to store
     /// all weights and intermediate blobs for model.
     /// ## Parameters
@@ -1918,16 +1831,13 @@ impl Net {
     /// * weights: output parameter to store resulting bytes for weights.
     /// * blobs: output parameter to store resulting bytes for intermediate blobs.
     pub fn get_memory_consumption(self, net_input_shapes: &types::VectorOfVectorOfint, weights: size_t, blobs: size_t) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_netInputShapes_size_t_weights_size_t_blobs(self, net_input_shapes.as_raw_VectorOfVectorOfint(), weights, blobs) }.into_result()
+        unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_size_t_size_t(self, net_input_shapes.as_raw_VectorOfVectorOfint(), weights, blobs) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getMemoryConsumption_const_int_layerId_VectorOfVectorOfint_netInputShapes_size_t_weights_size_t_blobs
-    /// @overload
-    pub fn get_memory_consumption_1(self, layer_id: i32, net_input_shapes: &types::VectorOfVectorOfint, weights: size_t, blobs: size_t) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getMemoryConsumption_const_int_layerId_VectorOfVectorOfint_netInputShapes_size_t_weights_size_t_blobs(self, layer_id, net_input_shapes.as_raw_VectorOfVectorOfint(), weights, blobs) }.into_result()
+    pub fn get_memory_consumption_for_layer(self, layer_id: i32, net_input_shapes: &types::VectorOfVectorOfint, weights: size_t, blobs: size_t) -> Result<()> {
+        unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t(self, layer_id, net_input_shapes.as_raw_VectorOfVectorOfint(), weights, blobs) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_netInputShapes_VectorOfint_layerIds_VectorOfsize_t_weights_VectorOfsize_t_blobs
     /// Computes bytes number which are required to store
     /// all weights and intermediate blobs for each layer.
     /// ## Parameters
@@ -1935,27 +1845,26 @@ impl Net {
     /// * layerIds: output vector to save layer IDs.
     /// * weights: output parameter to store resulting bytes for weights.
     /// * blobs: output parameter to store resulting bytes for intermediate blobs.
-    pub fn get_memory_consumption_2(self, net_input_shapes: &types::VectorOfVectorOfint, layer_ids: &types::VectorOfint, weights: &types::VectorOfsize_t, blobs: &types::VectorOfsize_t) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_netInputShapes_VectorOfint_layerIds_VectorOfsize_t_weights_VectorOfsize_t_blobs(self, net_input_shapes.as_raw_VectorOfVectorOfint(), layer_ids.as_raw_VectorOfint(), weights.as_raw_VectorOfsize_t(), blobs.as_raw_VectorOfsize_t()) }.into_result()
+    pub fn get_memory_consumption_for_layers(self, net_input_shapes: &types::VectorOfVectorOfint, layer_ids: &types::VectorOfint, weights: &types::VectorOfsize_t, blobs: &types::VectorOfsize_t) -> Result<()> {
+        unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t(self, net_input_shapes.as_raw_VectorOfVectorOfint(), layer_ids.as_raw_VectorOfint(), weights.as_raw_VectorOfsize_t(), blobs.as_raw_VectorOfsize_t()) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_enableFusion_bool_fusion
     /// Enables or disables layer fusion in the network.
     /// ## Parameters
     /// * fusion: true to enable the fusion, false to disable. The fusion is enabled by default.
     pub fn enable_fusion(self, fusion: bool) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_enableFusion_bool_fusion(self, fusion) }.into_result()
+        unsafe { sys::cv_dnn_Net_enableFusion_bool(self, fusion) }.into_result()
     }
     
-    // identifier: cv_dnn_Net_getPerfProfile_VectorOfdouble_timings
     /// Returns overall time for inference and timings (in ticks) for layers.
     /// Indexes in returned vector correspond to layers ids. Some layers can be fused with others,
     /// in this case zero ticks count will be return for that skipped layers.
     /// ## Parameters
     /// * timings: vector for tick timings for all layers.
-    /// @return overall ticks for model inference.
+    /// ## Returns
+    /// overall ticks for model inference.
     pub fn get_perf_profile(self, timings: &types::VectorOfdouble) -> Result<i64> {
-        unsafe { sys::cv_dnn_cv_dnn_Net_getPerfProfile_VectorOfdouble_timings(self, timings.as_raw_VectorOfdouble()) }.into_result()
+        unsafe { sys::cv_dnn_Net_getPerfProfile_VectorOfdouble(self, timings.as_raw_VectorOfdouble()) }.into_result()
     }
     
 }
@@ -2205,7 +2114,6 @@ impl ProposalLayer {
 /// If setProduceHiddenOutput() is set to true then @p output[1] will contain a Mat with shape [`T`, `N`, @f$N_h@f$], where @f$N_h@f$ is number of rows in @f$ W_{hh} @f$ matrix.
 pub trait RNNLayer : crate::dnn::Layer {
     #[doc(hidden)] fn as_raw_RNNLayer(&self) -> *mut c_void;
-    // identifier: cv_dnn_RNNLayer_setWeights_Mat_Wxh_Mat_bh_Mat_Whh_Mat_Who_Mat_bo
     /// Setups learned weights.
     /// 
     /// Recurrent-layer behavior on each step is defined by current input @f$ x_t @f$, previous state @f$ h_t @f$ and learned weights as follows:
@@ -2216,22 +2124,21 @@ pub trait RNNLayer : crate::dnn::Layer {
     /// 
     /// ## Parameters
     /// * Wxh: is @f$ W_{xh} @f$ matrix
-    /// * bh:  is @f$ b_{h}  @f$ vector
+    /// * bh: is @f$ b_{h}  @f$ vector
     /// * Whh: is @f$ W_{hh} @f$ matrix
     /// * Who: is @f$ W_{xo} @f$ matrix
-    /// * bo:  is @f$ b_{o}  @f$ vector
+    /// * bo: is @f$ b_{o}  @f$ vector
     fn set_weights(&mut self, wxh: &core::Mat, bh: &core::Mat, whh: &core::Mat, who: &core::Mat, bo: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_RNNLayer_setWeights_Mat_Wxh_Mat_bh_Mat_Whh_Mat_Who_Mat_bo(self.as_raw_RNNLayer(), wxh.as_raw_Mat(), bh.as_raw_Mat(), whh.as_raw_Mat(), who.as_raw_Mat(), bo.as_raw_Mat()) }.into_result()
+        unsafe { sys::cv_dnn_RNNLayer_setWeights_Mat_Mat_Mat_Mat_Mat(self.as_raw_RNNLayer(), wxh.as_raw_Mat(), bh.as_raw_Mat(), whh.as_raw_Mat(), who.as_raw_Mat(), bo.as_raw_Mat()) }.into_result()
     }
     
-    // identifier: cv_dnn_RNNLayer_setProduceHiddenOutput_bool_produce
     /// If this flag is set to true then layer will produce @f$ h_t @f$ as second output.
     /// @details Shape of the second output is the same as first output.
     ///
-    /// ## C++ default parameters:
+    /// ## C++ default parameters
     /// * produce: false
     fn set_produce_hidden_output(&mut self, produce: bool) -> Result<()> {
-        unsafe { sys::cv_dnn_cv_dnn_RNNLayer_setProduceHiddenOutput_bool_produce(self.as_raw_RNNLayer(), produce) }.into_result()
+        unsafe { sys::cv_dnn_RNNLayer_setProduceHiddenOutput_bool(self.as_raw_RNNLayer(), produce) }.into_result()
     }
     
 }
@@ -2527,8 +2434,8 @@ impl SigmoidLayer {
 /// Slice layer has several modes:
 /// 1. Caffe mode
 /// ## Parameters
-/// @param[in] axis Axis of split operation
-/// @param[in] slice_point Array of split points
+/// * axis: Axis of split operation
+/// * slice_point: Array of split points
 /// 
 /// Number of output blobs equals to number of split points plus one. The
 /// first blob is a slice on input from 0 to @p slice_point[0] - 1 by @p axis,
