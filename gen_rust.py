@@ -333,12 +333,10 @@ renamed_funcs = {  # todo check if any "new" is required
 }
 
 _templ_const = template("""
-// identifier: ${identifier}
 ${doc_comment}${visibility}fn ${r_name}<T: core::ValidMatElement>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
             
 """)
 _templ_mut = template("""
-// identifier: ${identifier}
 ${doc_comment}${visibility}fn ${r_name}<T: core::ValidMatElement>(${args}) -> Result<&mut T> { ${pre_call_args}self._${r_name}(${forward_args}) }
 
 """)
@@ -750,7 +748,7 @@ class FuncInfo(GeneralInfo):
                 // parsed: ${fullname}
                 // as:     ${repr}
                 ${args}// Return value: ${rv_type}
-                ${return_wrapper_type} ${c_name}(${decl_cpp_args}) {
+                ${return_wrapper_type} ${identifier}(${decl_cpp_args}) {
                     try {
                 ${code}
                     } CVRS_CATCH(${return_wrapper_type})
@@ -761,9 +759,8 @@ class FuncInfo(GeneralInfo):
         "cpp_doc_arg": template("""// Arg ${repr}${ptr} ${type} = ${defval}${ignored}\n"""),
 
         "rust_safe": template("""
-                // identifier: ${identifier}
                 ${doc_comment}${visibility}fn ${r_name}${generic_decl}(${args}) -> Result<$rv_rust_full> {${pre_call_args}
-                    unsafe { sys::${c_name}(${call_args}) }.into_result()${rv}
+                    unsafe { sys::${identifier}(${call_args}) }.into_result()${rv}
                 }
                 
             """),
@@ -785,7 +782,7 @@ class FuncInfo(GeneralInfo):
         "rust_safe_rv_other": template(""""""),
 
         "rust_externs": template("""
-                #[doc(hidden)] pub fn ${c_name}(${args}) -> ${return_wrapper_type};
+                #[doc(hidden)] pub fn ${identifier}(${args}) -> ${return_wrapper_type};
              """),
     }
 
@@ -834,6 +831,7 @@ class FuncInfo(GeneralInfo):
         if self.is_const:
             self.identifier += "_const"
 
+        self.identifier_with_arg_names = self.identifier
         self.args = []
         for arg in decl[3]:
             ai = ArgInfo(gen, arg)
@@ -843,7 +841,8 @@ class FuncInfo(GeneralInfo):
                 ai.name = bump_counter(ai.name)
                 ai.rsname = camel_case_to_snake_case(reserved_rename.get(ai.name, ai.name))
             self.args.append(ai)
-            self.identifier += "_" + ai.type.rust_safe_id + "_" + ai.name
+            self.identifier += "_" + ai.type.rust_safe_id
+            self.identifier_with_arg_names += "_" + ai.type.rust_safe_id + "_" + ai.name
             if isinstance(ai.type, CallbackTypeInfo):
                 self.has_callback_arg = True
 
@@ -869,8 +868,8 @@ class FuncInfo(GeneralInfo):
             self.is_ignored = True
 
     def _get_manual_implementation(self, section, template_vars):
-        if self.identifier in func_manual_implementation:
-            templ = func_manual_implementation[self.identifier]
+        templ = func_manual_implementation.get(self.identifier, func_manual_implementation.get(self.identifier_with_arg_names))
+        if templ is not None:
             if section in templ:
                 if templ[section] == "~":
                     return None
@@ -901,7 +900,7 @@ class FuncInfo(GeneralInfo):
         if self.identifier in self.gen.generated:
             return "already there"
 
-        if self.identifier in func_manual_implementation:
+        if self.identifier in func_manual_implementation or self.identifier_with_arg_names in func_manual_implementation:
             return None
 
         if self.name.startswith("operator"):
@@ -911,7 +910,7 @@ class FuncInfo(GeneralInfo):
             if self.fullname.endswith(f):
                 return "manual ignore from list"
 
-        if renamed_funcs.get(self.identifier) == "-":
+        if renamed_funcs.get(self.identifier, renamed_funcs.get(self.identifier_with_arg_names)) == "-":
             return "ignored by renamed table"
 
         if not self.rv_type():
@@ -932,13 +931,10 @@ class FuncInfo(GeneralInfo):
 
         return None
 
-    def c_name(self):
-        # fixme identifier without cv_core_ prefix
-        return "cv_%s_%s" % (self.module, self.identifier)
-
     def r_name(self):
-        if renamed_funcs.get(self.identifier):
-            return renamed_funcs[self.identifier]
+        out = renamed_funcs.get(self.identifier, renamed_funcs.get(self.identifier_with_arg_names))
+        if out is not None:
+            return out
         name = "new" if self.is_constructor() else self.name
 
         return camel_case_to_snake_case(reserved_rename.get(name, name))
@@ -994,7 +990,6 @@ class FuncInfo(GeneralInfo):
             "rv_type": self.rv_type(),
             "args": args,
             "return_wrapper_type": self.rv_type().rust_cpp_return_wrapper_type(),
-            "c_name": self.c_name(),
             "decl_cpp_args": ", ".join(decl_cpp_args),
             "code": indent(code, 2),
         })
@@ -1012,11 +1007,10 @@ class FuncInfo(GeneralInfo):
             args.append(self.ci.type_info().rust_extern_self_func_decl(not self.is_const))
         for a in self.args:
             args.append(a.type.rust_extern_arg_func_decl(a.rsname))
-        template_vars = {
-            "c_name": self.c_name(),
+        template_vars = combine_dicts(self.__dict__, {
             "args": ", ".join(args),
             "return_wrapper_type": self.rv_type().rust_cpp_return_wrapper_type(),
-        }
+        })
         manual = self._get_manual_implementation("rust_externs", template_vars)
         return FuncInfo.TEMPLATES["rust_externs"].substitute(template_vars) if manual is None else manual
 
@@ -1077,7 +1071,6 @@ class FuncInfo(GeneralInfo):
             "args": ", ".join(args),
             "pre_call_args": "".join("\n" + indent(x) + ";" for x in pre_call_args),
             "r_name": self.r_name(),
-            "c_name": self.c_name(),
             "call_args": ", ".join(call_args),
             "forward_args": ", ".join(forward_args),
         })
