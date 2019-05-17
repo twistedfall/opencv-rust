@@ -7,7 +7,7 @@ use opencv::{
 
 #[test]
 fn simple_struct() {
-    let res = imgproc::get_structuring_element(imgproc::CV_SHAPE_CROSS, core::Size { width: 100, height: 100 }, core::Point { x: 50, y: 50 }).unwrap();
+    let res = imgproc::get_structuring_element(imgproc::MORPH_CROSS, core::Size { width: 100, height: 100 }, core::Point { x: 50, y: 50 }).unwrap();
     assert_eq!(res.typ().unwrap(), 0);
     let size = res.size().unwrap();
     assert_eq!(size.width, 100);

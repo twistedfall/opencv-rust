@@ -1,5 +1,4 @@
 use std::{fmt, slice};
-use std::intrinsics::transmute;
 
 use crate::{
     Error,

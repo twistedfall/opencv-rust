@@ -8,11 +8,11 @@ use opencv::videoio;
 fn run() -> opencv::Result<()> {
     let window = "video capture";
     highgui::named_window(window, 1)?;
-    let mut cam = videoio::VideoCapture::index(1)?;
+    let mut cam = videoio::VideoCapture::new(1)?;
     let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
         println!("Using different camera");
-        cam = videoio::VideoCapture::index(0)?;
+        cam = videoio::VideoCapture::new(0)?;
     }
     loop {
         let mut frame = core::Mat::new()?;

@@ -117,20 +117,13 @@ fn build_wrapper(opencv: pkg_config::Library) {
     let ignore_header_suffix = [
         ".details.hpp",
         ".inl.hpp",
-        "_inl.hpp",
-        "_winrt.hpp",
-        "core/cv_cpu_dispatch.h",
-        "core/hal/intrin.hpp",
-        "core/hal/intrin_avx.hpp",
-        "core/hal/intrin_cpp.hpp",
-        "core/hal/intrin_forward.hpp",
-        "core/hal/intrin_neon.hpp",
-        "core/hal/intrin_sse.hpp",
-        "core/hal/intrin_sse_em.hpp",
-        "core/hal/intrin_vsx.hpp",
-        "core/ocl_genbase.hpp",
-        "core/opengl.hpp",
-        "cvstd.hpp",
+        "hal.hpp",
+        "_c.h",
+        "core/cv_cpu_dispatch.h", // ?
+        "core/ocl_genbase.hpp", // ?
+        "core/opengl.hpp", // ?
+        "core/cvstd.hpp",
+        "core/eigen.hpp",
         "ios.h",
         "ippasync.hpp",
         "ocl.hpp",
@@ -141,10 +134,9 @@ fn build_wrapper(opencv: pkg_config::Library) {
     let ignore_header_substring = [
         "/detail/",
         "/superres/",
+        "core/hal/intrin",
         "core/opencl/",
         "cuda",
-        "eigen",
-        "private",
     ];
     let mut modules = glob(&format!("{}/*.hpp", opencv_dir_as_string)).unwrap()
         .map(|entry| {
