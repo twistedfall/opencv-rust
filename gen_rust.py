@@ -1136,14 +1136,18 @@ class FuncInfo(GeneralInfo):
 
         pub = "" if self.ci and self.ci.type_info().is_trait and not self.is_static else "pub "
 
-        doc_comment = self.gen.reformat_doc(self.comment)
+        doc_comment = self.gen.reformat_doc(self.comment, self)
 
-        first = True
+        defattr_doc_comment = ""
         for arg in (x for x in self.args if x.defval != ""):
-            if first:
-                doc_comment += "///\n/// ## C++ default parameters:\n"
-                first = False
-            doc_comment += "/// * %s: %s\n" % (arg.rsname, arg.defval)
+            if not defattr_doc_comment:
+                defattr_doc_comment += "///\n/// ## C++ default parameters\n"
+            defattr_doc_comment += "/// * %s: %s\n" % (arg.rsname, arg.defval)
+        if defattr_doc_comment:
+            attr_pos = doc_comment.find("#[")
+            if attr_pos == -1:
+                attr_pos = len(doc_comment)
+            doc_comment = doc_comment[:attr_pos] + defattr_doc_comment + doc_comment[attr_pos:]
         template_vars = combine_dicts(self.__dict__, {
             "doc_comment": doc_comment,
             "rv_rust_full": self.rv_type().rust_full,
@@ -2507,7 +2511,7 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust = StringIO()
         self.moduleRustExterns = StringIO()
 
-        self.moduleSafeRust.write(self.reformat_doc(parser.module_comment.get(module, ""), "//!"))
+        self.moduleSafeRust.write(self.reformat_doc(parser.module_comment.get(module, ""), None, "//!"))
 
         self.moduleSafeRust.write(template("""
             use std::os::raw::{c_char, c_void};
@@ -2806,7 +2810,20 @@ class RustWrapperGenerator(object):
                     self.gen_func(fi)
                 self.moduleSafeRust.write("}\n\n")
 
-    def reformat_doc(self, text, comment_prefix="///"):
+    def reformat_doc(self, text, func_info=None, comment_prefix="///"):
+        """
+        :type text: str
+        :type func_info: FuncInfo
+        :type comment_prefix: str
+        :rtype: str
+        """
+        # overload
+        if func_info is not None and "@overload" in text:
+            try:
+                src_comment = next(x.comment for x in self.functions if x.fullname == func_info.fullname and "@overload" not in x.comment and len(x.comment) > 0)
+                text = text.replace("@overload", src_comment + "\n\n## Overloaded parameters\n")
+            except StopIteration:
+                text = text.replace("@overload", "")
         text = text.strip()
         if len(text) == 0:
             return ""
@@ -2820,18 +2837,27 @@ class RustWrapperGenerator(object):
         # see also block
         text = re.sub(r"@sa\s+", "## See also\n", text, 0, re.M)
         # citation links
-        text = re.sub(r"@cite\s+(.+?)\b", "[\\1](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_\\1)", text)
+        text = re.sub(r"@cite\s+(.+?)\b", r"[\1](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_\1)", text)
         # images
-        text = re.sub(r"!\[(.*?)\]\((?:pics/)?(.+)?\)", "![\\1](https://docs.opencv.org/3.4.6/\\2)", text)
+        text = re.sub(r"!\[(.*?)\]\((?:pics/)?(.+)?\)", r"![\1](https://docs.opencv.org/3.4.6/\2)", text)
         # ?
         text = re.sub(r".*\*\*\*\*\*", "", text, 0, re.M)
         # module titles
         text = re.sub(r"\s*@{\s*$", "", text, 0, re.M)
         text = re.sub(r"\s*@}\s*$", "", text, 0, re.M)
-        text = re.sub("@defgroup [^ ]+ (.*)", "# \\1", text)
+        text = re.sub(r"@defgroup [^ ]+ (.*)", "# \\1", text)
+        # returns
+        text = re.sub(r"^.*?@returns?\s*", "## Returns\n", text, 0, re.M)
         # parameter list
-        text = re.sub("^(.*?@param)", "## Parameters\n\\1", text, 1, re.M)
-        text = re.sub("^.*?@param ([^ ]+) (.*)", "* \\1: \\2", text, 0, re.M)
+        text = re.sub(r"^(.*?@param)", "## Parameters\n\\1", text, 1, re.M)
+        text = re.sub(r"^.*?@param(?:\[in\])?\s+(\w+) *(.*)", r"* \1: \2", text, 0, re.M)
+        text = re.sub(r"^.*?@param\s*\[out\]\s+(\w+) *(.*)", r"* \1: [out] \2", text, 0, re.M)
+        # deprecated
+        m = re.search(r"^.*?@deprecated\s+(.+)", text, re.M)
+        deprecated = None
+        if m is not None:
+            text = re.sub(r"^.*?@deprecated\s+(.+)", r"**Deprecated**: \1\n", text, 0, re.M)
+            deprecated = m.group(1)
         # ?
         text = re.sub("^-  (.*)", "*  \\1", text, 0, re.M)
         # math expressions
@@ -2844,6 +2870,8 @@ class RustWrapperGenerator(object):
         text = re.sub(r"^((\s{1,5})\2{3})(\S)", r"\2\3", text, 0, re.M)
         # add rustdoc comment markers
         text = re.sub("^", comment_prefix + " ", text.strip(), 0, re.M) + "\n"
+        if deprecated is not None:
+            text += "#[deprecated = \"{}\"]\n".format(deprecated)
         return text.encode("utf-8")
 
 
