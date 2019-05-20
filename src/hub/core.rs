@@ -246,7 +246,7 @@ pub const LOG_LEVEL_SILENT: i32 = 0;
 pub const LOG_LEVEL_VERBOSE: i32 = 6;
 pub const LOG_LEVEL_WARNING: i32 = 3;
 pub const MaskIsTiled: i32 = -26;
-pub const Mat_AUTO_STEP: i32 = 0;
+pub const Mat_AUTO_STEP: usize = 0;
 pub const Mat_DEPTH_MASK: i32 = 7;
 pub const Mat_MAGIC_MASK: i32 = 0xFFFF0000;
 pub const Mat_MAGIC_VAL: i32 = 0x42FF0000;
@@ -3230,7 +3230,7 @@ pub fn sort(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
 /// reallocated, if needed.
 /// ## See also
 /// merge, mixChannels, cvtColor
-pub fn split_at(src: &core::Mat, mvbegin: &core::Mat) -> Result<()> {
+pub fn split_at(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_split_Mat_Mat(src.as_raw_Mat(), mvbegin.as_raw_Mat()) }.into_result()
 }
 
@@ -5385,36 +5385,36 @@ impl Mat {
     ///
     /// ## C++ default parameters
     /// * i0: 0
-    pub fn at_mut<T: core::ValidMatElement>(&mut self, i0: i32) -> Result<&mut T> { self._at_mut(i0) }
+    pub fn at_mut<T: core::DataType>(&mut self, i0: i32) -> Result<&mut T> { self._at_mut(i0) }
     
     /// ## Parameters
     /// * i0: Index along the dimension 0
     ///
     /// ## C++ default parameters
     /// * i0: 0
-    pub fn at<T: core::ValidMatElement>(&self, i0: i32) -> Result<&T> { self._at(i0) }
+    pub fn at<T: core::DataType>(&self, i0: i32) -> Result<&T> { self._at(i0) }
     
     /// ## Parameters
     /// * row: Index along the dimension 0
     /// * col: Index along the dimension 1
-    pub fn at_2d_mut<T: core::ValidMatElement>(&mut self, row: i32, col: i32) -> Result<&mut T> { self._at_2d_mut(row, col) }
+    pub fn at_2d_mut<T: core::DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> { self._at_2d_mut(row, col) }
     
     /// ## Parameters
     /// * row: Index along the dimension 0
     /// * col: Index along the dimension 1
-    pub fn at_2d<T: core::ValidMatElement>(&self, row: i32, col: i32) -> Result<&T> { self._at_2d(row, col) }
+    pub fn at_2d<T: core::DataType>(&self, row: i32, col: i32) -> Result<&T> { self._at_2d(row, col) }
     
     /// ## Parameters
     /// * i0: Index along the dimension 0
     /// * i1: Index along the dimension 1
     /// * i2: Index along the dimension 2
-    pub fn at_3d_mut<T: core::ValidMatElement>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> { self._at_3d_mut(i0, i1, i2) }
+    pub fn at_3d_mut<T: core::DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> { self._at_3d_mut(i0, i1, i2) }
     
     /// ## Parameters
     /// * i0: Index along the dimension 0
     /// * i1: Index along the dimension 1
     /// * i2: Index along the dimension 2
-    pub fn at_3d<T: core::ValidMatElement>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> { self._at_3d(i0, i1, i2) }
+    pub fn at_3d<T: core::DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> { self._at_3d(i0, i1, i2) }
     
     pub fn update_continuity_flag(&mut self) -> Result<()> {
         unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_Mat()) }.into_result()

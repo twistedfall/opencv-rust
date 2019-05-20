@@ -288,7 +288,7 @@ pub fn draw_vector_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoin
 ///
 /// ## C++ default parameters
 /// * fdetector: Ptr<FeatureDetector>()
-pub fn evaluate_feature_detector(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &types::VectorOfKeyPoint, keypoints2: &types::VectorOfKeyPoint, repeatability: f32, corresp_count: i32, fdetector: &types::PtrOfFeature2D) -> Result<()> {
+pub fn evaluate_feature_detector(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &mut types::VectorOfKeyPoint, keypoints2: &mut types::VectorOfKeyPoint, repeatability: f32, corresp_count: i32, fdetector: &types::PtrOfFeature2D) -> Result<()> {
     unsafe { sys::cv_evaluateFeatureDetector_Mat_Mat_Mat_VectorOfKeyPoint_VectorOfKeyPoint_float_int_PtrOfFeature2D(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), repeatability, corresp_count, fdetector.as_raw_PtrOfFeature2D()) }.into_result()
 }
 
@@ -597,7 +597,7 @@ impl BOWImgDescriptorExtractor {
     /// ## C++ default parameters
     /// * point_idxs_of_clusters: 0
     /// * descriptors: 0
-    pub fn compute_desc(&mut self, image: &core::Mat, keypoints: &types::VectorOfKeyPoint, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &types::VectorOfVectorOfint, descriptors: &core::Mat) -> Result<()> {
+    pub fn compute_desc(&mut self, image: &core::Mat, keypoints: &types::VectorOfKeyPoint, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &mut types::VectorOfVectorOfint, descriptors: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_BOWImgDescriptorExtractor_compute_Mat_VectorOfKeyPoint_Mat_VectorOfVectorOfint_Mat(self.as_raw_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint(), descriptors.as_raw_Mat()) }.into_result()
     }
     
@@ -610,7 +610,7 @@ impl BOWImgDescriptorExtractor {
     ///
     /// ## C++ default parameters
     /// * point_idxs_of_clusters: 0
-    pub fn compute(&mut self, keypoint_descriptors: &core::Mat, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &types::VectorOfVectorOfint) -> Result<()> {
+    pub fn compute(&mut self, keypoint_descriptors: &core::Mat, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &mut types::VectorOfVectorOfint) -> Result<()> {
         unsafe { sys::cv_BOWImgDescriptorExtractor_compute_Mat_Mat_VectorOfVectorOfint(self.as_raw_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw_Mat(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     

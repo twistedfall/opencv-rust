@@ -1667,9 +1667,17 @@ impl Net {
     ///
     /// ## C++ default parameters
     /// * output_name: String()
-    pub fn forward_to(self, output_blobs: &mut types::VectorOfMat, output_name: &str) -> Result<()> {
+    pub fn forward_layer(self, output_blobs: &mut types::VectorOfMat, output_name: &str) -> Result<()> {
         string_arg!(output_name);
         unsafe { sys::cv_dnn_Net_forward_VectorOfMat_String(self, output_blobs.as_raw_VectorOfMat(), output_name.as_ptr()) }.into_result()
+    }
+    
+    /// Runs forward pass to compute outputs of layers listed in @p outBlobNames.
+    /// ## Parameters
+    /// * outputBlobs: contains blobs for first outputs of specified layers.
+    /// * outBlobNames: names for layers which outputs are needed to get
+    pub fn forward_first_outputs(self, output_blobs: &mut types::VectorOfMat, out_blob_names: &types::VectorOfString) -> Result<()> {
+        unsafe { sys::cv_dnn_Net_forward_VectorOfMat_VectorOfString(self, output_blobs.as_raw_VectorOfMat(), out_blob_names.as_raw_VectorOfString()) }.into_result()
     }
     
     /// Runs forward pass to compute outputs of layers listed in @p outBlobNames.

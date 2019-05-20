@@ -86,7 +86,7 @@ pub type cv_return_value_unsigned_long_long = cv_return_value<u64>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// cv::Mat
+// Ptr<BaseCascadeClassifier::MaskGenerator>
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {
@@ -722,6 +722,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_dnn_Net_setInputsNames_VectorOfString(instance: crate::dnn::Net, input_blob_names: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_forward_String(instance: crate::dnn::Net, output_name: *const c_char) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_dnn_Net_forward_VectorOfMat_String(instance: crate::dnn::Net, output_blobs: *mut c_void, output_name: *const c_char) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_dnn_Net_forward_VectorOfMat_VectorOfString(instance: crate::dnn::Net, output_blobs: *mut c_void, out_blob_names: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_forward_VectorOfVectorOfMat_VectorOfString(instance: crate::dnn::Net, output_blobs: *mut c_void, out_blob_names: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_setHalideScheduler_String(instance: crate::dnn::Net, scheduler: *const c_char) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_setPreferableBackend_int(instance: crate::dnn::Net, backend_id: i32) -> cv_return_value_void;

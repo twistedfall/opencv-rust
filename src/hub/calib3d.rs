@@ -1925,7 +1925,7 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn recover_pose_matrix(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, mask: &mut core::Mat) -> Result<i32> {
+pub fn recover_pose_camera_with_points(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, mask: &mut core::Mat) -> Result<i32> {
     unsafe { sys::cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_Mat(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
@@ -1997,7 +1997,7 @@ pub fn recover_pose_matrix(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * triangulated_points: noArray()
-pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, distance_thresh: f64, mask: &mut core::Mat, triangulated_points: &mut core::Mat) -> Result<i32> {
+pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, distance_thresh: f64, mask: &mut core::Mat, triangulated_points: &mut core::Mat) -> Result<i32> {
     unsafe { sys::cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat_Mat(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), distance_thresh, mask.as_raw_Mat(), triangulated_points.as_raw_Mat()) }.into_result()
 }
 
@@ -2078,7 +2078,7 @@ pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, cam
 /// * focal: 1.0
 /// * pp: Point2d(0, 0)
 /// * mask: noArray()
-pub fn recover_pose_1(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, focal: f64, pp: core::Point2d, mask: &mut core::Mat) -> Result<i32> {
+pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, focal: f64, pp: core::Point2d, mask: &mut core::Mat) -> Result<i32> {
     unsafe { sys::cv_recoverPose_Mat_Mat_Mat_Mat_Mat_double_Point2d_Mat(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), focal, pp, mask.as_raw_Mat()) }.into_result()
 }
 
@@ -2489,7 +2489,7 @@ pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// ## C++ default parameters
 /// * flags: CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6)
-pub fn stereo_calibrate_1(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, per_view_errors: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+pub fn stereo_calibrate_camera_with_errors(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, per_view_errors: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
     unsafe { sys::cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), per_view_errors.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
@@ -2497,7 +2497,7 @@ pub fn stereo_calibrate_1(object_points: &types::VectorOfMat, image_points1: &ty
 /// ## C++ default parameters
 /// * flags: CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6)
-pub fn stereo_calibrate_2(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+pub fn stereo_calibrate_camera(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
     unsafe { sys::cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
@@ -2624,7 +2624,7 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 /// * new_image_size: Size()
 /// * valid_pix_roi1: 0
 /// * valid_pix_roi2: 0
-pub fn stereo_rectify_1(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, camera_matrix2: &core::Mat, dist_coeffs2: &core::Mat, image_size: core::Size, r: &core::Mat, t: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, q: &mut core::Mat, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
+pub fn stereo_rectify_camera(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, camera_matrix2: &core::Mat, dist_coeffs2: &core::Mat, image_size: core::Size, r: &core::Mat, t: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, q: &mut core::Mat, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
     unsafe { sys::cv_stereoRectify_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_int_double_Size_Rect_X_Rect_X(camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), q.as_raw_Mat(), flags, alpha, new_image_size, valid_pix_roi1, valid_pix_roi2) }.into_result()
 }
 

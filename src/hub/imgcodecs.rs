@@ -83,7 +83,7 @@ pub fn decode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
 /// * flags: 
 /// * dst: The optional output placeholder for the decoded matrix. It can save the image
 /// reallocations when the function is called repeatedly for images of the same size.
-pub fn decode_to(buf: &core::Mat, flags: i32, dst: &core::Mat) -> Result<core::Mat> {
+pub fn decode_to(buf: &core::Mat, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
     unsafe { sys::cv_imdecode_Mat_int_Mat(buf.as_raw_Mat(), flags, dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 

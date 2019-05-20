@@ -173,7 +173,7 @@ pub fn group_rectangle(rect_list: &types::VectorOfRect, group_threshold: i32, ep
 /// cluster, the average rectangle is computed and put into the output rectangle list.
 /// 
 /// ## Overloaded parameters
-pub fn group_rectangle_levelweights(rect_list: &types::VectorOfRect, group_threshold: i32, eps: f64, weights: &types::VectorOfint, level_weights: &types::VectorOfdouble) -> Result<()> {
+pub fn group_rectangle_levelweights(rect_list: &types::VectorOfRect, group_threshold: i32, eps: f64, weights: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_int_double_VectorOfint_VectorOfdouble(rect_list.as_raw_VectorOfRect(), group_threshold, eps, weights.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble()) }.into_result()
 }
 
