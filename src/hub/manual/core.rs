@@ -7,11 +7,16 @@ pub use self::vec::*;
 
 macro_rules! valid_types {
     ($trait: ident, $($rust_type: ty),+) => {
-        // todo, make sealed
-        pub trait $trait {}
+        /// This sealed trait is implemented for types that are valid to use in corresponding context
+        pub trait $trait: Copy + private::Sealed {}
+
+        mod private {
+            pub trait Sealed {}
+        }
 
         $(
             impl $trait for $rust_type {}
+            impl private::Sealed for $rust_type {}
         )+
     };
 }
