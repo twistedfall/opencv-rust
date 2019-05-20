@@ -105,86 +105,71 @@ decls_manual_post = {
 
 renamed_funcs = {  # todo check if any "new" is required
     ### calib3d ###
-    # "cv_StereoBM_StereoBM": "default",
-    # "cv_StereoBM_StereoBM_int_preset_int_ndisparities_int_SADWindowSize": "new",
-    # "cv_StereoSGBM_StereoSGBM": "default",
-    # "cv_StereoSGBM_StereoSGBM_int_minDisparity_int_numDisparities_int_SADWindowSize_int_P1_int_P2_int_disp12MaxDiff_int_preFilterCap_int_uniquenessRatio_int_speckleWindowSize_int_speckleRange_bool_fullDP": "new",
-    "cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat": "find_essential_mat_matrix",
-    "cv_findHomography_Mat_Mat_int_double_Mat_int_double": "find_homography_full",
-    "cv_fisheye_projectPoints_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat": "fisheye_project_points",
-    "cv_fisheye_undistortImage_Mat_Mat_Mat_Mat_Mat_Size": "fisheye_undistort_image",
-    "cv_fisheye_undistortPoints_Mat_Mat_Mat_Mat_Mat_Mat": "fisheye_undistort_points",
-    "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_Mat": "recover_pose_matrix",
+    "cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat": "+_matrix",
+    "cv_findHomography_Mat_Mat_int_double_Mat_int_double": "+_full",
+    "cv_fisheye_projectPoints_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat": "fisheye_+",
+    "cv_fisheye_undistortImage_Mat_Mat_Mat_Mat_Mat_Size": "fisheye_+",
+    "cv_fisheye_undistortPoints_Mat_Mat_Mat_Mat_Mat_Mat": "fisheye_+",
+    "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_Mat": "+_camera_with_points",
+    "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat_Mat": "+_camera",
     "cv_solvePnP_Mat_Mat_Mat_Mat_Mat_Mat_bool_int": "solve_pnp",
     "cv_solvePnPRansac_Mat_Mat_Mat_Mat_Mat_Mat_bool_int_float_double_Mat_int": "solve_pnp_ransac",
     "cv_solveP3P_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_int": "solve_p3p",
-    "cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria": "calibrate_camera_with_stddev",
+    "cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria": "+_with_stddev",
+    "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera",
+    "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera_with_errors",
+    "cv_stereoRectify_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_int_double_Size_Rect_X_Rect_X": "+_camera",
 
     ### core ###
-    "cvAlloc_size_t": "-",
-    "cvClone_const_void_X": "-",
-    "cvFree__void_X": "-",
     "cv_addImpl_int_const_char_X": "-",
-    # "cv_Algorithm_set_String_name_Mat_value": "set_mat",
-    # "cv_Algorithm_set_String_name_VectorOfMat_value": "set_VectorOfMat",
-    # "cv_Algorithm_set_String_name_bool_value": "set_bool",
-    # "cv_Algorithm_set_String_name_double_value": "set_double",
-    # "cv_Algorithm_set_String_name_int_value": "set_int",
-    # "cv_Algorithm_set_String_name_String_value": "set_string",
-    # "cv_Algorithm_setInt_String_name_int_value" : "-",
-    # "cv_Algorithm_setDouble_String_name_double_value" : "-",
-    # "cv_Algorithm_setBool_String_name_bool_value" : "-",
-    # "cv_Algorithm_setString_String_name_String_value" : "-",
-    # "cv_Algorithm_setMat_String_name_Mat_value" : "-",
-    # "cv_Algorithm_setMatVector_String_name_VectorOfMat_value" : "-",
     "cv_MatExpr_type_const": "typ",
     "cv_Mat_Mat": "new",
     "cv_Mat_Mat_int_int_int": "new_rows_cols",
     "cv_Mat_Mat_Size_int": "new_size",
     "cv_Mat_Mat_int_int_int_Scalar": "new_rows_cols_with_default",
     "cv_Mat_Mat_Size_int_Scalar": "new_size_with_default",
-    "cv_Mat_Mat_int_const_int_X_int": "-",  # duplicate of cv_Mat_Mat_VectorOfint_sizes_int_type, but with pointers
+    "cv_Mat_Mat_int_const_int_X_int": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int, but with pointers
     "cv_Mat_Mat_VectorOfint_int": "new_nd",
-    "cv_Mat_Mat_int_const_int_X_int_Scalar": "-",  # duplicate of cv_Mat_Mat_VectorOfint_sizes_int_type_Scalar_s, but with pointers
+    "cv_Mat_Mat_int_const_int_X_int_Scalar": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_Scalar_s, but with pointers
     "cv_Mat_Mat_VectorOfint_int_Scalar": "new_nd_with_default",
     "cv_Mat_Mat_Mat": "copy",
     "cv_Mat_Mat_int_int_int_void_X_size_t": "new_rows_cols_with_data",
     "cv_Mat_Mat_Size_int_void_X_size_t": "new_size_with_data",
-    "cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X": "-",  # duplicate of cv_Mat_Mat_VectorOfint_sizes_int_type_void_X_data_const_size_t_X_steps, but with pointers
-    "cv_Mat_Mat_VectorOfint_sizes_int_type_void_X_data_const_size_t_X_steps": "new_nd_with_data",  # fixme steps should be slice
-    "cv_Mat_Mat_Mat_m_Range_rowRange_Range_colRange": "rowscols",
-    "cv_Mat_Mat_Mat_m_Rect_roi": "roi",
-    "cv_Mat_Mat_Mat_m_const_Range_ranges": "-",  # duplicate of cv_Mat_Mat_Mat_m_VectorOfRange_ranges, but with pointers
-    "cv_Mat_Mat_Mat_m_VectorOfRange_ranges": "ranges",
-    "cv_Mat_colRange_const_Range_r": "colrange",
-    "cv_Mat_colRange_const_int_startcol_int_endcol": "colbounds",
-    "cv_Mat_copyTo_const_Mat_m_Mat_mask": "copy_to_masked",
-    "cv_Mat_create_int_rows_int_cols_int_type": "create_rows_cols",
-    "cv_Mat_create_Size_size_int_type": "create_size",
-    "cv_Mat_create_int_ndims_const_int_X_sizes_int_type": "-",  # duplicate of cv_Mat_create_VectorOfint_sizes_int_type, but with pointers
-    "cv_Mat_create_VectorOfint_sizes_int_type": "create_nd",
-    "cv_Mat_diag_Mat_d": "diag_new_mat",
-    "cv_Mat_diag_const_int_d": "diag",
-    "cv_Mat_ptr_int_i0": "ptr_mut",
-    "cv_Mat_ptr_const_int_i0": "ptr",
-    "cv_Mat_ptr_int_row_int_col": "ptr_2d_mut",
-    "cv_Mat_ptr_const_int_row_int_col": "ptr_2d",
-    "cv_Mat_ptr_int_i0_int_i1_int_i2": "ptr_3d_mut",
-    "cv_Mat_ptr_const_int_i0_int_i1_int_i2": "ptr_3d",
-    "cv_Mat_ptr_const_int_X_idx": "ptr_nd_mut",
-    "cv_Mat_ptr_const_const_int_X_idx": "ptr_nd",
-    "cv_Mat_at_int_i0": "at_mut",
-    "cv_Mat_at_int_row_int_col": "at_2d_mut",
-    "cv_Mat_at_const_int_row_int_col": "at_2d",
-    "cv_Mat_at_int_i0_int_i1_int_i2": "at_3d_mut",
-    "cv_Mat_at_const_int_i0_int_i1_int_i2": "at_3d",
-    "cv_Mat_resize_size_t_sz": "resize",
-    "cv_Mat_resize_size_t_sz_Scalar_s": "resize_with_default",
-    "cv_Mat_rowRange_const_Range_r": "row_range",
-    "cv_Mat_rowRange_const_int_startrow_int_endrow": "rowbounds",
+    "cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_void_X_data_const_size_t_X_steps, but with pointers
+    "cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X": "new_nd_with_data",  # fixme steps should be slice
+    "cv_Mat_Mat_Mat_Range_Range": "rowscols",
+    "cv_Mat_Mat_Mat_Rect": "roi",
+    "cv_Mat_Mat_Mat_const_Range": "-",  # duplicate of cv_Mat_Mat_Mat_VectorOfRange_ranges, but with pointers
+    "cv_Mat_Mat_Mat_VectorOfRange": "ranges",
+    "cv_Mat_colRange_const_Range": "colrange",
+    "cv_Mat_colRange_const_int_int": "colbounds",
+    "cv_Mat_copyTo_const_Mat_Mat": "copy_to_masked",
+    "cv_Mat_create_int_int_int": "create_rows_cols",
+    "cv_Mat_create_Size_int": "create_size",
+    "cv_Mat_create_int_const_int_X_int": "-",  # duplicate of cv_Mat_create_VectorOfint_int, but with pointers
+    "cv_Mat_create_VectorOfint_int": "create_nd",
+    "cv_Mat_diag_Mat": "diag_new_mat",
+    "cv_Mat_diag_const_int": "diag",
+    "cv_Mat_ptr_int": "ptr_mut",
+    "cv_Mat_ptr_const_int": "ptr",
+    "cv_Mat_ptr_int_int": "ptr_2d_mut",
+    "cv_Mat_ptr_const_int_int": "ptr_2d",
+    "cv_Mat_ptr_int_int_int": "ptr_3d_mut",
+    "cv_Mat_ptr_const_int_int_int": "ptr_3d",
+    "cv_Mat_ptr_const_int_X": "ptr_nd_mut",
+    "cv_Mat_ptr_const_const_int_X": "ptr_nd",
+    "cv_Mat_at_int": "at_mut",
+    "cv_Mat_at_int_int": "at_2d_mut",
+    "cv_Mat_at_const_int_int": "at_2d",
+    "cv_Mat_at_int_int_int": "at_3d_mut",
+    "cv_Mat_at_const_int_int_int": "at_3d",
+    "cv_Mat_resize_size_t": "resize",
+    "cv_Mat_resize_size_t_Scalar": "resize_with_default",
+    "cv_Mat_rowRange_const_Range": "row_range",
+    "cv_Mat_rowRange_const_int_int": "rowbounds",
     "cv_Mat_type_const": "typ",
-    "cv_Mat_reshape_const_int_int_const_int_X": "-",  # duplicate of cv_Mat_reshape_const_int_cn_VectorOfint_newshape, but with pointers
-    "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_mv_Mat_dst, but with pointers
+    "cv_Mat_reshape_const_int_int_const_int_X": "-",  # duplicate of cv_Mat_reshape_const_int_VectorOfint, but with pointers
+    "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Mat_reshape_const_int_VectorOfint": "reshape_nd",
     "cv_Mat_total_const_int_int": "total_slice",
     "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",
@@ -196,121 +181,110 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp": "copy",
     "cv_PCA_PCA": "default",
     "cv_PCA_PCA_Mat_Mat_int_double": "new_mat_variance",
-    "cv_PCA_PCA_Mat_data_Mat_mean_int_flags_int_maxComponents": "new_mat_max",
-    "cv_PCA_backProject_const_Mat_vec_Mat_result": "back_project_to",
-    "cv_PCA_project_const_Mat_vec_Mat_result": "project_to",
+    "cv_PCA_PCA_Mat_Mat_int_int": "new_mat_max",
+    "cv_PCA_backProject_const_Mat_Mat": "back_project_to",
+    "cv_PCA_project_const_Mat_Mat": "project_to",
     "cv_PCACompute_Mat_Mat_Mat_double": "pca_compute_variance",
     "cv_PCACompute_Mat_Mat_Mat_Mat_double": "pca_compute_values_variance",
     "cv_PCACompute_Mat_Mat_Mat_Mat_int": "pca_compute_values",
     "cv_Range_Range": "default",
-    "cv_Range_Range_int__start_int__end": "new",
+    "cv_Range_Range_int_int": "new",
     "cv_RotatedRect_RotatedRect": "default",
     "cv_RotatedRect_RotatedRect_Point2f_Size2f_float": "new",
     "cv_RotatedRect_RotatedRect_Point2f_Point2f_Point2f": "for_points",
     "cv_TermCriteria_TermCriteria": "default",
-    "cv_TermCriteria_TermCriteria_int_type_int_maxCount_double_epsilon": "new",
+    "cv_TermCriteria_TermCriteria_int_int_double": "new",
     "cv_UMat_type_const": "typ",
-    "cv_UMat_copyTo_const_Mat_m": "copy_to",
-    "cv_UMat_copyTo_const_Mat_m_Mat_mask": "copy_to_masked",
+    "cv_UMat_copyTo_const_Mat": "copy_to",
+    "cv_UMat_copyTo_const_Mat_Mat": "copy_to_masked",
     "cv_calcCovarMatrix_Mat_Mat_Mat_int_int": "calc_covar_matrix_arrays",
     "cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int": "calc_covar_matrix",
-    "cv_clipLine_Size_imgSize_Point_pt1_Point_pt2": "clip_line_size",
-    "cv_clipLine_Size2l_imgSize_Point2l_pt1_Point2l_pt2": "clip_line_size_i64",
-    "cv_clipLine_Rect_imgRect_Point_pt1_Point_pt2": "clip_line",
-    "cv_cv_abs_short_x": "-",
-    "cv_cv_abs_uchar_x": "-",
-    "cv_divide_double_scale_Mat_src2_Mat_dst_int_dtype": "divide",
-    "cv_divide_Mat_src1_Mat_src2_Mat_dst_double_scale_int_dtype": "divide_mat",
+    "cv_clipLine_Size_Point_Point": "clip_line_size",
+    "cv_clipLine_Size2l_Point2l_Point2l": "clip_line_size_i64",
+    "cv_clipLine_Rect_Point_Point": "clip_line",
+    "cv_cv_abs_short": "-",
+    "cv_cv_abs_uchar": "-",
+    "cv_divide_double_Mat_Mat_int": "divide",
+    "cv_divide_Mat_Mat_Mat_double_int": "divide_mat",
     "cv_ellipse_Mat_RotatedRect_Scalar_int_int": "ellipse_new_rotated_rect",
     "cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_VectorOfPoint2d": "ellipse_2_poly_f64",
     "cv_ellipse2Poly_Point_Size_int_int_int_int_VectorOfPoint": "ellipse_2_poly",
-    # "cv_eigen_Mat_src_Mat_eigenvalues_int_lowindex_int_highindex": "eigen_indexes", ?
-    # "cv_eigen_Mat_src_bool_computeEigenvectors_Mat_eigenvalues_Mat_eigenvectors": "eigen", ?
-    # "cv_eigen_Mat_src_Mat_eigenvalues_Mat_eigenvectors_int_lowindex_int_highindex": "eigen_vectors", ?
-    "cv_norm_Mat_src1_Mat_src2_int_normType_Mat_mask": "norm_with_type",
-    "cv_norm_Mat_src1_int_normType_Mat_mask": "norm",
+    "cv_norm_Mat_Mat_int_Mat": "norm_with_type",
+    "cv_norm_Mat_int_Mat": "norm",
     "cv_rectangle_Mat_Point_Point_Scalar_int_int_int": "rectangle_points",
-    "cv_rectangle_Mat_img_Rect_rec_Scalar_color_int_thickness_int_lineType_int_shift": "rectangle",
-    "cv_repeat_Mat_src_int_ny_int_nx_Mat_dst": "repeat_to",
-    "cv_repeat_Mat_src_int_ny_int_nx": "repeat",
-    "cv_split_Mat_m_VectorOfMat_mv": "split",
-    "cv_split_Mat_src_Mat_mvbegin": "split_at",
-    "cv_vconcat_Mat_src_size_t_nsrc_Mat_dst": "-",
+    "cv_rectangle_Mat_Rect_Scalar_int_int_int": "rectangle",
+    "cv_repeat_Mat_int_int_Mat": "repeat_to",
+    "cv_repeat_Mat_int_int": "repeat",
+    "cv_split_Mat_VectorOfMat": "split",
+    "cv_split_Mat_Mat": "split_at",
     "cv_getNumberOfCPUs": "get_number_of_cpus",
-    "cv_setImpl_int_flags": "-",
-    "cv_setUseCollection_bool_flag": "-",
+    "cv_setImpl_int": "-",
+    "cv_setUseCollection_bool": "-",
     "cv_useCollection": "-",
-    "cv_directx_getTypeFromD3DFORMAT_int_iD3DFORMAT": "get_type_from_d3d_format",
-    "cv_divUp_size_t_a_unsigned_int_b": "duv_up_u",
-    "cv_hconcat_Mat_src1_Mat_src2_Mat_dst": "hconcat_2",
-    "cv_hconcat_const_Mat_src_size_t_nsrc_Mat_dst": "-",  # duplicate of cv_hconcat_VectorOfMat_src_Mat_dst, but with pointers
-    "cv_vconcat_Mat_src1_Mat_src2_Mat_dst": "vconcat_2",
-    "cv_vconcat_const_Mat_src_size_t_nsrc_Mat_dst": "-",  # duplicate of cv_vconcat_VectorOfMat_src_Mat_dst, but with pointers
+    "cv_directx_getTypeFromD3DFORMAT_int": "get_type_from_d3d_format",
+    "cv_divUp_size_t_unsigned_int": "duv_up_u",
+    "cv_hconcat_Mat_Mat_Mat": "hconcat_2",
+    "cv_hconcat_const_Mat_size_t_Mat": "-",  # duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
+    "cv_vconcat_Mat_Mat_Mat": "vconcat_2",
+    "cv_vconcat_const_Mat_size_t_Mat": "-",  # duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
     "cv_Cholesky_float_X_size_t_int_float_X_size_t_int": "cholesky_f32",
     "cv_LU_float_X_size_t_int_float_X_size_t_int": "lu_f32",
-    "cv_LDA_LDA_VectorOfMat_src_Mat_labels_int_num_components": "new_with_data",
-    "cv_mixChannels_VectorOfMat_VectorOfMat_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_VectorOfint_fromTo, but with pointers
-    "cv_mixChannels_const_Mat_size_t_Mat_size_t_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_src_VectorOfMat_dst_VectorOfint_fromTo, but with pointers
+    "cv_LDA_LDA_VectorOfMat_Mat_int": "new_with_data",
+    "cv_mixChannels_VectorOfMat_VectorOfMat_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
+    "cv_mixChannels_const_Mat_size_t_Mat_size_t_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
+    "cv_noArray": "-",  # conversion from ‘const cv::_InputOutputArray’ to non-scalar type ‘cv::Mat’ requested
 
     ### features2d ###
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_int": "AGAST_with_type",
     "cv_BOWKMeansTrainer_cluster_const": "default",
-    "cv_BOWKMeansTrainer_cluster_const_Mat_descriptors": "new",
+    "cv_BOWKMeansTrainer_cluster_const_Mat": "new",
     "cv_BOWKMeansTrainer_BOWKMeansTrainer_int_TermCriteria_int_int": "new_with_criteria",
     "cv_BOWImgDescriptorExtractor_compute_Mat_VectorOfKeyPoint_Mat_VectorOfVectorOfint_Mat": "compute_desc",
     "cv_DMatch_DMatch": "default",
-    "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_float__distance": "new",
-    "cv_DMatch_DMatch_int__queryIdx_int__trainIdx_int__imgIdx_float__distance": "new_index",
-    # "cv_DescriptorExtractor_compute_Mat_image_VectorOfKeyPoint_keypoints_Mat_descriptors": "compute",
-    # "cv_DescriptorExtractor_compute_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_descriptors": "compute_n",
+    "cv_DMatch_DMatch_int_int_float": "new",
+    "cv_DMatch_DMatch_int_int_int_float": "new_index",
     "cv_DescriptorMatcher_knnMatch_const_Mat_Mat_VectorOfVectorOfDMatch_int_Mat_bool": "knn_train_matches",
     "cv_DescriptorMatcher_knnMatch_Mat_VectorOfVectorOfDMatch_int_VectorOfMat_bool": "knn_matches",
-    "cv_DescriptorMatcher_match_Mat_queryDescriptors_VectorOfDMatch_matches_VectorOfMat_masks": "matches",
+    "cv_DescriptorMatcher_match_Mat_VectorOfDMatch_VectorOfMat": "matches",
     "cv_DescriptorMatcher_match_const_Mat_Mat_VectorOfDMatch_Mat": "train_matches",
     "cv_DescriptorMatcher_radiusMatch_const_Mat_Mat_VectorOfVectorOfDMatch_float_Mat_bool": "train_radius_matches",
     "cv_DescriptorMatcher_radiusMatch_Mat_VectorOfVectorOfDMatch_float_VectorOfMat_bool": "radius_matches",
-    # "cv_FREAK_FREAK_FREAK_rhs": "copy",
-    # "cv_FREAK_FREAK_bool_orientationNormalized_bool_scaleNormalized_float_patternScale_int_nOctaves_VectorOfint_selectedPairs": "new",
-    "cv_FAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression": "FAST",
-    "cv_FAST_Mat_image_VectorOfKeyPoint_keypoints_int_threshold_bool_nonmaxSuppression_int_type": "FAST_with_type",
-    "cv_Feature2D_detect_VectorOfMat_images_VectorOfVectorOfKeyPoint_keypoints_VectorOfMat_masks": "detect_n",
+    "cv_FAST_Mat_VectorOfKeyPoint_int_bool": "FAST",
+    "cv_FAST_Mat_VectorOfKeyPoint_int_bool_int": "FAST_with_type",
+    "cv_Feature2D_detect_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "detect_n",
     "cv_KeyPoint_KeyPoint": "default",
     "cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int": "new_point",
     "cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int": "new_coords",
     "cv_KeyPoint_convert_VectorOfKeyPoint_VectorOfPoint2f_VectorOfint": "convert_from",
     "cv_KeyPoint_convert_VectorOfPoint2f_VectorOfKeyPoint_float_float_int_int": "convert_to",
     "cv_MatStep_MatStep": "default",
-    "cv_MatStep_MatStep_size_t_s": "new",
+    "cv_MatStep_MatStep_size_t": "new",
     "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfDMatch_Mat_Scalar_Scalar_VectorOfchar_int": "draw_matches",
     "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int": "draw_vector_matches",
     "cv_BRISK_create_VectorOffloat_VectorOfint_float_float_VectorOfint": "create_with_pattern",
     "cv_BRISK_create_int_int_VectorOffloat_VectorOfint_float_float_VectorOfint": "create_with_pattern_threshold_octaves",
-    "cv_BOWTrainer_cluster_const_Mat_descriptors": "cluster_with_descriptors",
+    "cv_BOWTrainer_cluster_const_Mat": "cluster_with_descriptors",
     "cv_GFTTDetector_create_int_double_double_int_int_bool_double": "create_with_gradient",
     "cv_Feature2D_compute_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "compute_multiple",
     "cv_DescriptorMatcher_create_int": "create_with_matcher_type",
     "cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_PtrOfDescriptorMatcher": "new_with_dextractor",
 
     ### highgui ###
-    "cv_addText_Mat_img_String_text_Point_org_QtFont_font": "add_text_with_font",
+    "cv_addText_Mat_String_Point_QtFont": "add_text_with_font",
 
     ### imgcodecs ###
-    "cv_imdecode_Mat_buf_int_flags": "decode",
-    "cv_imdecode_Mat_buf_int_flags_Mat_dst": "decode_to",
+    "cv_imdecode_Mat_int": "decode",
+    "cv_imdecode_Mat_int_Mat": "decode_to",
 
     ### imgproc ###
-    "cv_Canny_Mat_dx_Mat_dy_Mat_edges_double_threshold1_double_threshold2_bool_L2gradient": "canny_derivative",
-    # "cv_GeneralizedHough_detect_Mat_image_Mat_positions_Mat_votes_int_cannyThreshold": "detect",
-    # "cv_GeneralizedHough_detect_Mat_edges_Mat_dx_Mat_dy_Mat_positions_Mat_votes": "detect_edges",
-    # "cv_GeneralizedHough_setTemplate_Mat_edges_Mat_dx_Mat_dy_Point_templCenter": "set_template_edges",
-    # "cv_GeneralizedHough_setTemplate_Mat_templ_int_cannyThreshold_Point_templCenter": "set_template_templ",
+    "cv_Canny_Mat_Mat_Mat_double_double_bool": "canny_derivative",
     "cv_Moments_Moments": "default",
     "cv_Moments_Moments_double_double_double_double_double_double_double_double_double_double": "new",
     "cv_Subdiv2D_Subdiv2D": "default",
-    "cv_Subdiv2D_Subdiv2D_Rect_rect": "new",
-    "cv_Subdiv2D_insert_Point2f_pt": "insert",
-    "cv_Subdiv2D_insert_VectorOfPoint2f_ptvec": "insert_n",
+    "cv_Subdiv2D_Subdiv2D_Rect": "new",
+    "cv_Subdiv2D_insert_Point2f": "insert",
+    "cv_Subdiv2D_insert_VectorOfPoint2f": "insert_n",
     "cv_findContours_Mat_VectorOfMat_Mat_int_int_Point": "find_contours_with_hierarchy",
     "cv_distanceTransform_Mat_Mat_Mat_int_int_int": "distance_transform_labels",
     "cv_distanceTransform_Mat_Mat_int_int_int": "distance_transform",
@@ -319,53 +293,37 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_GeneralizedHough_detect_Mat_Mat_Mat_Mat_Mat": "detect_with_edges",
 
     ### ml ###
-    "cv_ml_ParamGrid_ParamGrid_double__minVal_double__maxVal_double__logStep": "for_range",
+    "cv_ml_ParamGrid_ParamGrid_double_double_double": "for_range",
     # objdetect": "",
     "cv_CascadeClassifier_CascadeClassifier": "default",
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "detect_multi_scale_levels",
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size": "detect_multi_scale_num",
-    "cv_CascadeClassifier_detectMultiScale_Mat_image_VectorOfRect_objects_double_scaleFactor_int_minNeighbors_int_flags_Size_minSize_Size_maxSize": "detect_multi_scale",
-    "cv_HOGDescriptor_HOGDescriptor_HOGDescriptor_d": "copy",
-    "cv_HOGDescriptor_detectMultiScale_const_Mat_img_VectorOfRect_foundLocations_VectorOfdouble_foundWeights_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale",
-    "cv_HOGDescriptor_detectMultiScale_const_Mat_img_VectorOfRect_foundLocations_double_hitThreshold_Size_winStride_Size_padding_double_scale_double_finalThreshold_bool_useMeanshiftGrouping": "detect_multi_scale_weights",
-    "cv_HOGDescriptor_detect_const_Mat_img_VectorOfPoint_foundLocations_VectorOfdouble_weights_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect_weights",
-    "cv_HOGDescriptor_detect_const_Mat_img_VectorOfPoint_foundLocations_double_hitThreshold_Size_winStride_Size_padding_VectorOfPoint_searchLocations": "detect",
-    "cv_groupRectangles_VectorOfRect_rectList_VectorOfint_rejectLevels_VectorOfdouble_levelWeights_int_groupThreshold_double_eps": "group_rectangles_levels",
-    "cv_groupRectangles_VectorOfRect_rectList_VectorOfint_weights_int_groupThreshold_double_eps": "group_rectangle_weights",
-    "cv_groupRectangles_VectorOfRect_rectList_int_groupThreshold_double_eps": "group_rectangle",
-    "cv_groupRectangles_VectorOfRect_rectList_int_groupThreshold_double_eps_VectorOfint_weights_VectorOfdouble_levelWeights": "group_rectangle_levelweights",
-    # "cv_linemod_ColorGradient_ColorGradient": "default",
-    # "cv_linemod_ColorGradient_ColorGradient_float_weak_threshold_size_t_num_features_float_strong_threshold": "new",
-    # "cv_linemod_DepthNormal_DepthNormal": "default",
-    # "cv_linemod_DepthNormal_DepthNormal_int_distance_threshold_int_difference_threshold_size_t_num_features_int_extract_threshold": "new",
-    # "cv_linemod_Feature_Feature": "default",
-    # "cv_linemod_Feature_Feature_int__x_int__y_int__label": "-",
-    # "cv_linemod_Feature_Feature_int_x_int_y_int_label": "new",
-    "cv_ml_StatModel_train_PtrOfTrainData_trainData_int_flags": "train_with_data",
+    "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size": "detect_multi_scale",
+    "cv_HOGDescriptor_HOGDescriptor_HOGDescriptor": "copy",
+    "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool": "detect_multi_scale",
+    "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_double_Size_Size_double_double_bool": "detect_multi_scale_weights",
+    "cv_HOGDescriptor_detect_const_Mat_VectorOfPoint_VectorOfdouble_double_Size_Size_VectorOfPoint": "detect_weights",
+    "cv_HOGDescriptor_detect_const_Mat_VectorOfPoint_double_Size_Size_VectorOfPoint": "detect",
+    "cv_groupRectangles_VectorOfRect_VectorOfint_VectorOfdouble_int_double": "group_rectangles_levels",
+    "cv_groupRectangles_VectorOfRect_VectorOfint_int_double": "group_rectangle_weights",
+    "cv_groupRectangles_VectorOfRect_int_double": "group_rectangle",
+    "cv_groupRectangles_VectorOfRect_int_double_VectorOfint_VectorOfdouble": "group_rectangle_levelweights",
+    "cv_ml_StatModel_train_PtrOfTrainData_int": "train_with_data",
     "cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size": "detect_multi_scale_num",
     "cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "detect_multi_scale_levels",
 
     ### photo ###
-    "cv_fastNlMeansDenoisingColored_Mat_src_Mat_dst_float_h_float_hColor_int_templateWindowSize_int_searchWindowSize": "fast_nl_means_denoising_color",
-    "cv_fastNlMeansDenoising_Mat_src_Mat_dst_VectorOffloat_h_int_templateWindowSize_int_searchWindowSize_int_normType": "fast_nl_means_denoising_vec",
-    "cv_fastNlMeansDenoising_Mat_src_Mat_dst_float_h_int_templateWindowSize_int_searchWindowSize": "fast_nl_means_denoising_window",
-    "cv_AlignMTB_process_VectorOfMat_src_VectorOfMat_dst_Mat_times_Mat_response": "process_with_response",
-    "cv_MergeDebevec_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response": "process_with_response",
-    "cv_MergeMertens_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response": "process_with_response",
-    "cv_MergeRobertson_process_VectorOfMat_src_Mat_dst_Mat_times_Mat_response": "process_with_response",
+    "cv_fastNlMeansDenoisingColored_Mat_Mat_float_float_int_int": "fast_nl_means_denoising_color",
+    "cv_fastNlMeansDenoising_Mat_Mat_VectorOffloat_int_int_int": "fast_nl_means_denoising_vec",
+    "cv_fastNlMeansDenoising_Mat_Mat_float_int_int": "fast_nl_means_denoising_window",
+    "cv_AlignMTB_process_VectorOfMat_VectorOfMat_Mat_Mat": "process_with_response",
+    "cv_MergeDebevec_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
+    "cv_MergeMertens_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
+    "cv_MergeRobertson_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
 
     ### video ###
-    # "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2": "default",
-    # "cv_BackgroundSubtractorMOG2_BackgroundSubtractorMOG2_int_history_float_varThreshold_bool_bShadowDetection": "new",
-    # "cv_BackgroundSubtractorMOG_BackgroundSubtractorMOG": "default",
-    # "cv_BackgroundSubtractorMOG_BackgroundSubtractorMOG_int_history_int_nmixtures_double_backgroundRatio_double_noiseSigma": "new",
     "cv_KalmanFilter_KalmanFilter": "default",
-    "cv_KalmanFilter_KalmanFilter_int_dynamParams_int_measureParams_int_controlParams_int_type": "new",
-    # "cv_calcOpticalFlowSF_Mat_from_Mat_to_Mat_flow_int_layers_int_averaging_block_size_int_max_flow": "new",
-    # "cv_calcOpticalFlowSF_Mat_from_Mat_to_Mat_flow_int_layers_int_averaging_block_size_int_max_flow_double_sigma_dist_double_sigma_color_int_postprocess_window_double_sigma_dist_fix_double_sigma_color_fix_double_occ_thr_int_upscale_averaging_radius_double_upscale_sigma_dist_double_upscale_sigma_color_double_speed_up_thr": "new_sigmas",
-
-    ### videostab ###
-    "cv_videostab_GaussianMotionFilter_GaussianMotionFilter_int__radius_float__stdev" : "-",  # duplicate constructor
+    "cv_KalmanFilter_KalmanFilter_int_int_int_int": "new",
 
     ### videoio ###
     "cv_VideoCapture_VideoCapture": "default",
@@ -380,29 +338,29 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_VideoWriter_open_String_int_int_double_Size_bool": "open_with_backend",
 
     ### utility ###
-    "cv_getImpl_VectorOfint_impl_VectorOfString_funName": "-",
+    "cv_getImpl_VectorOfint_VectorOfString": "-",
 
     ### dnn ###
-    "cv_dnn_<unnamed>_is_neg_int_i": "-",
+    "cv_dnn_<unnamed>_is_neg_int": "-",
     "cv_dnn_NMSBoxes_VectorOfRotatedRect_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_rotated",
-    "cv_dnn_NMSBoxes_VectorOfRect2d_bboxes_VectorOffloat_scores_float_score_threshold_float_nms_threshold_VectorOfint_indices_float_eta_int_top_k": "nms_boxes_f64",
-    "cv_dnn_Dict_ptr_String_key": "ptr_mut",
-    "cv_dnn_Dict_ptr_const_String_key": "ptr",
-    "cv_dnn_Net_forward_VectorOfMat_outputBlobs_String_outputName": "forward_to",
-    "cv_dnn_Net_forward_VectorOfMat_outputBlobs_VectorOfString_outBlobNames": "-",  # duplicate of cv_dnn_Net_forward_VectorOfVectorOfMat_outputBlobs_VectorOfString_outBlobNames, but with OutputArrayOfArrays
-    "cv_dnn_Net_forward_VectorOfVectorOfMat_outputBlobs_VectorOfString_outBlobNames": "forward_all",
-    "cv_dnn_slice_Mat_m_Range_r0": "slice_1d",
-    "cv_dnn_slice_Mat_m_Range_r0_Range_r1": "slice_2d",
-    "cv_dnn_slice_Mat_m_Range_r0_Range_r1_Range_r2": "slice_3d",
-    "cv_dnn_slice_Mat_m_Range_r0_Range_r1_Range_r2_Range_r3": "slice_4d",
-    "cv_dnn_shape_const_int_X_dims_int_n": "shape_nd",
-    "cv_dnn_shape_int_a0_int_a1_int_a2_int_a3": "shape_3d",
-    "cv_dnn_blobFromImage_Mat_image_Mat_blob_double_scalefactor_Size_size_Scalar_mean_bool_swapRB_bool_crop_int_ddepth": "blob_from_image_to",
-    "cv_dnn_clamp_Range_r_int_axisSize": "clamp_range",
-    "cv_dnn_Net_connect_String_outPin_String_inpPin": "connect_first_second",
-    "cv_dnn_Layer_finalize_VectorOfMat_inputs_VectorOfMat_outputs": "finalize_to",
-    "cv_dnn_readNetFromCaffe_VectorOfuchar_bufferProto_VectorOfuchar_bufferModel": "read_net_from_caffe_buffer",
-    "cv_dnn_readNetFromCaffe_const_char_X_bufferProto_size_t_lenProto_const_char_X_bufferModel_size_t_lenModel": "read_net_from_caffe_str",
+    "cv_dnn_NMSBoxes_VectorOfRect2d_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_f64",
+    "cv_dnn_Dict_ptr_String": "ptr_mut",
+    "cv_dnn_Dict_ptr_const_String": "ptr",
+    "cv_dnn_Net_forward_VectorOfMat_String": "forward_layer",
+    "cv_dnn_Net_forward_VectorOfMat_VectorOfString": "forward_first_outputs",
+    "cv_dnn_Net_forward_VectorOfVectorOfMat_VectorOfString": "forward_all",
+    "cv_dnn_slice_Mat_Range": "slice_1d",
+    "cv_dnn_slice_Mat_Range_Range": "slice_2d",
+    "cv_dnn_slice_Mat_Range_Range_Range": "slice_3d",
+    "cv_dnn_slice_Mat_Range_Range_Range_Range": "slice_4d",
+    "cv_dnn_shape_const_int_X_int": "shape_nd",
+    "cv_dnn_shape_int_int_int_int": "shape_3d",
+    "cv_dnn_blobFromImage_Mat_Mat_double_Size_Scalar_bool_bool_int": "blob_from_image_to",
+    "cv_dnn_clamp_Range_int": "clamp_range",
+    "cv_dnn_Net_connect_String_String": "connect_first_second",
+    "cv_dnn_Layer_finalize_VectorOfMat_VectorOfMat": "finalize_to",
+    "cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar": "read_net_from_caffe_buffer",
+    "cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t": "read_net_from_caffe_str",
     "cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar": "read_net_from_tensorflow_buffer",
     "cv_dnn_readNetFromTensorflow_const_char_X_size_t_const_char_X_size_t": "read_net_from_tensorflow_str",
     "cv_dnn_readNetFromDarknet_VectorOfuchar_VectorOfuchar": "read_net_from_darknet_buffer",
@@ -494,29 +452,6 @@ type_replace = {
     "Size_<double>": "Size2d",
     "Scalar_<double>": "Scalar",
 }
-
-func_ignore_list = (
-    "cv.glob", "cv.fastFree", "cv.fastMalloc",
-    "cv.getBuildInformation", "cv.scalarToRawData", "cv::noArray", "()", "cv.Mat.MSize.operator[]",
-    "const int*", "=", "==", "!=", "--", "++", "*", ">>", "<<", "<", ">", "operator==", "operator()",
-    "cv.Mat.MStep.operator[]",
-    "cv.abs", "cvCeil", "cvFloor", "cvIsInf", "cvIsNaN", "cvRound",
-    "cv.swap",
-    "cv.minMaxLoc", "cv.minMaxIdx", # return prims by pointer
-    "cv.merge", # pointer to array of matrix
-    "cv.split",
-    "cv.mixChannels", "cv.insertChannel",
-    "cv.hconcat", "cv.vconcat", "cv.repeat", # maybe: repeat(*((const Mat&*)src), ny, nx)
-    "cv.min", "cv.max", "cv.exp", "cv.log", "cv.fastAtan2", # return prims by pointer (may be make to work)
-    "cv.magnitude", "cv.patchNaNs", "cv.setIdentity", "cv.completeSymm", "cv.calcCovarMatrix",
-    "cv.fillConvexPoly", "cv.fillPoly", "cv.polylines", # Point**
-    "cv.getTextSize", # return prim by ptr
-    "cv.SparseMat.Hdr.clear",
-    "cv.PCA.computeVar", # what ?
-    "cvSetPreprocessFuncWin32_", "cvSetPostprocessFuncWin32_",
-    # features
-    "cv.BOWImgDescriptorExtractor.getVocabulary",
-)
 
 func_unsafe_list = {
     # allocates uninitialized memory
@@ -918,7 +853,6 @@ class FuncInfo(GeneralInfo):
         if self.is_const:
             self.identifier += "_const"
 
-        self.identifier_with_arg_names = self.identifier
         self.args = []
         for arg in decl[3]:
             ai = ArgInfo(gen, arg)
@@ -929,7 +863,6 @@ class FuncInfo(GeneralInfo):
                 ai.rsname = camel_case_to_snake_case(reserved_rename.get(ai.name, ai.name))
             self.args.append(ai)
             self.identifier += "_" + ai.type.rust_safe_id
-            self.identifier_with_arg_names += "_" + ai.type.rust_safe_id + "_" + ai.name
             if isinstance(ai.type, CallbackTypeInfo):
                 self.has_callback_arg = True
 
@@ -956,7 +889,7 @@ class FuncInfo(GeneralInfo):
             self.is_ignored = True
 
     def _get_manual_implementation(self, section, template_vars):
-        templ = func_manual_implementation.get(self.identifier, func_manual_implementation.get(self.identifier_with_arg_names))
+        templ = func_manual_implementation.get(self.identifier)
         if templ is not None:
             if section in templ:
                 if templ[section] == "~":
@@ -988,17 +921,13 @@ class FuncInfo(GeneralInfo):
         if self.identifier in self.gen.generated:
             return "already there"
 
-        if self.identifier in func_manual_implementation or self.identifier_with_arg_names in func_manual_implementation:
+        if self.identifier in func_manual_implementation:
             return None
 
         if self.name.startswith("operator"):
             return "can not map %s yet"%(self.name)
 
-        for f in func_ignore_list:
-            if self.fullname.endswith(f):
-                return "manual ignore from list"
-
-        if renamed_funcs.get(self.identifier, renamed_funcs.get(self.identifier_with_arg_names)) == "-":
+        if renamed_funcs.get(self.identifier) == "-":
             return "ignored by renamed table"
 
         if not self.rv_type():
@@ -1020,8 +949,11 @@ class FuncInfo(GeneralInfo):
         return None
 
     def r_name(self):
-        out = renamed_funcs.get(self.identifier, renamed_funcs.get(self.identifier_with_arg_names))
+        out = renamed_funcs.get(self.identifier)
         if out is not None:
+            if "+" in out:
+                name = out.replace("+", self.name)
+                return camel_case_to_snake_case(reserved_rename.get(name, name))
             return out
         name = "new" if self.is_constructor() else self.name
 
