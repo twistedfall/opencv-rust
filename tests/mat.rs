@@ -1,6 +1,6 @@
 use std::mem::transmute;
 
-use opencv::core::{self, Mat, Scalar, Size, Vec2b};
+use opencv::core::{self, Mat, Scalar, Size, Vec2b, DataType};
 use opencv::types::VectorOfMat;
 
 const PIXEL: &[u8] = include_bytes!("../pixel.png");
@@ -17,7 +17,7 @@ fn mat_for_rows_and_cols() {
 
 #[test]
 fn mat_at() {
-    let mut mat = Mat::new_rows_cols_with_default(100, 100, core::CV_32F, Scalar::all(0.)).unwrap();
+    let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(0.)).unwrap();
     assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 0.);
     *mat.at_2d_mut::<f32>(0, 0).unwrap() = 1.;
     assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
@@ -61,11 +61,11 @@ fn mat_vec() {
 fn mat_operations() {
     {
         let mut src = VectorOfMat::new();
-        src.push(Mat::new_rows_cols_with_default(1, 3, core::CV_8U, Scalar::all(1.)).unwrap());
-        src.push(Mat::new_rows_cols_with_default(1, 3, core::CV_8U, Scalar::all(2.)).unwrap());
+        src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.)).unwrap());
+        src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(2.)).unwrap());
         let mut dst = Mat::default();
         core::merge(&src, &mut dst).unwrap();
-        assert_eq!(dst.typ().unwrap(), core::CV_8UC2);
+        assert_eq!(dst.typ().unwrap(), Vec2b::typ());
         assert_eq!(dst.at_2d::<Vec2b>(0, 1).unwrap()[0], 1);
         assert_eq!(dst.at_2d::<Vec2b>(0, 2).unwrap()[1], 2);
     }
@@ -75,7 +75,7 @@ fn mat_operations() {
 #[test]
 fn mat_from_data() {
     let mut bytes = PIXEL.to_vec();
-    let src = Mat::new_rows_cols_with_data(1, PIXEL.len() as _, core::CV_8U, unsafe { transmute(bytes.as_mut_ptr()) }, core::Mat_AUTO_STEP).unwrap();
+    let src = Mat::new_rows_cols_with_data(1, PIXEL.len() as _, u8::typ(), unsafe { transmute(bytes.as_mut_ptr()) }, core::Mat_AUTO_STEP).unwrap();
     assert_eq!(src.size().unwrap(), Size::new(PIXEL.len() as _, 1));
     assert_eq!(src.total().unwrap(), PIXEL.len());
     let row = src.at_row::<u8>(0).unwrap();

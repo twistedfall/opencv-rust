@@ -370,11 +370,11 @@ renamed_funcs = {  # todo check if any "new" is required
 }
 
 _templ_const = template("""
-${doc_comment}${visibility}fn ${r_name}<T: core::ValidMatElement>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
+${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
             
 """)
 _templ_mut = template("""
-${doc_comment}${visibility}fn ${r_name}<T: core::ValidMatElement>(${args}) -> Result<&mut T> { ${pre_call_args}self._${r_name}(${forward_args}) }
+${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&mut T> { ${pre_call_args}self._${r_name}(${forward_args}) }
 
 """)
 
