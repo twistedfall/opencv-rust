@@ -2834,7 +2834,8 @@ class RustWrapperGenerator(object):
         # code blocks, don't run them during tests
         text = text.replace("@code", "```ignore").replace("@endcode", "```\n")
         # see also block
-        text = re.sub(r"@sa\s+", "## See also\n", text, 0, re.M)
+        text = re.sub(r"@sa\s+", "## See also\n", text, 1, re.M)
+        text = text.replace("@sa", "")
         # citation links
         text = re.sub(r"@cite\s+(.+?)\b", r"[\1](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_\1)", text)
         # images
