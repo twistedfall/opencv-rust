@@ -143,7 +143,7 @@ impl Mat {
         } else {
             0
         };
-        let mut out = Mat::new_rows_cols(row_count, col_count, T::typ())?;
+        let mut out = unsafe { Mat::new_rows_cols(row_count, col_count, T::typ()) }?;
         for (row_n, row) in s.into_iter().enumerate() {
             let trg = out.at_row_mut(row_n as _)?;
             let src = row.as_ref();

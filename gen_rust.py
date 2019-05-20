@@ -518,6 +518,13 @@ func_ignore_list = (
     "cv.BOWImgDescriptorExtractor.getVocabulary",
 )
 
+func_unsafe_list = {
+    # allocates uninitialized memory
+    "cv_Mat_Mat_int_int_int",
+    "cv_Mat_Mat_Size_int",
+    "cv_Mat_Mat_VectorOfint_int",
+}
+
 # regular expressions to ignore matching constant names
 const_ignore_list = (
     "CV_EXPORTS_W", "CV_MAKE_TYPE",
@@ -839,8 +846,8 @@ class FuncInfo(GeneralInfo):
         "cpp_doc_arg": template("""// Arg ${repr}${ptr} ${type} = ${defval}${ignored}\n"""),
 
         "rust_safe": template("""
-                ${doc_comment}${visibility}fn ${r_name}${generic_decl}(${args}) -> Result<$rv_rust_full> {${pre_call_args}
-                    unsafe { sys::${identifier}(${call_args}) }.into_result()${rv}
+                ${doc_comment}${visibility}${unsafety_decl}fn ${r_name}${generic_decl}(${args}) -> Result<$rv_rust_full> {${pre_call_args}
+                    ${unsafety_call}{ sys::${identifier}(${call_args}) }.into_result()${rv}
                 }
                 
             """),
@@ -938,6 +945,7 @@ class FuncInfo(GeneralInfo):
         self.struct_attrname = decl[6] if self.fake_attrgetter else None
 
         self.cname = self.cppname = self.name
+        self.is_safe = self.identifier not in func_unsafe_list
 
         if self.name.startswith("~"):
             logging.info("ignore destructor %s %s in %s"%(self.kind, self.name, self.ci))
@@ -1150,6 +1158,8 @@ class FuncInfo(GeneralInfo):
         template_vars = combine_dicts(self.__dict__, {
             "doc_comment": doc_comment,
             "rv_rust_full": self.rv_type().rust_full,
+            "unsafety_decl": "" if self.is_safe else "unsafe ",
+            "unsafety_call": "unsafe " if self.is_safe else "",
             "visibility": pub,
             "generic_decl": "<{}>".format(", ".join(generic_decls)) if len(generic_decls) >= 1 else "",
             "args": ", ".join(args),

@@ -19,7 +19,7 @@ fn vec() {
     let mut m = Mat::new_rows_cols_with_default(10, 10, core::CV_8UC3, core::Scalar::default()).unwrap();
     let mut ps = types::VectorOfMat::new();
     assert_eq!(ps.len(), 0);
-    let mut p1 = Mat::new_rows_cols(3, 2, core::CV_32S).unwrap();
+    let mut p1 = unsafe { Mat::new_rows_cols(3, 2, core::CV_32S) }.unwrap();
     p1.at_row_mut::<i32>(0).unwrap().copy_from_slice(&[0, 0]);
     p1.at_row_mut::<i32>(1).unwrap().copy_from_slice(&[0, 9]);
     p1.at_row_mut::<i32>(2).unwrap().copy_from_slice(&[9, 9]);

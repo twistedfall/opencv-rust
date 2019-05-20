@@ -4,8 +4,9 @@ use opencv::types::VectorOfMat;
 #[test]
 fn mat_for_rows_and_cols() {
     let typ = core::CV_8UC3;
-    let mat = Mat::new_rows_cols(400, 300, typ).unwrap();
+    let mat = unsafe { Mat::new_rows_cols(400, 300, typ) }.unwrap();
     let size = mat.size().unwrap();
+    assert_eq!(mat.typ().unwrap(), typ);
     assert_eq!(
         core::Size {
             width: 300,
@@ -19,7 +20,7 @@ fn mat_for_rows_and_cols() {
 
 #[test]
 fn mat_at() {
-    let mut mat = Mat::new_rows_cols(100, 100, core::CV_32F).unwrap();
+    let mut mat = Mat::new_rows_cols_with_default(100, 100, core::CV_32F, Scalar::all(0.)).unwrap();
     assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 0.);
     *mat.at_2d_mut::<f32>(0, 0).unwrap() = 1.;
     assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
