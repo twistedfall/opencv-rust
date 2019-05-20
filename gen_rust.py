@@ -297,7 +297,7 @@ renamed_funcs = {  # todo check if any "new" is required
 
     ### imgcodecs ###
     "cv_imdecode_Mat_buf_int_flags": "decode",
-    "cv_imdecode_Mat_buf_int_flags_Mat_dst": "decode_to",  # fixme, make sure dst is &mut
+    "cv_imdecode_Mat_buf_int_flags_Mat_dst": "decode_to",
 
     ### imgproc ###
     "cv_Canny_Mat_dx_Mat_dy_Mat_edges_double_threshold1_double_threshold2_bool_L2gradient": "canny_derivative",
@@ -2146,8 +2146,6 @@ class RawPtrTypeInfo(TypeInfo):
                 self.rust_local = self.inner.rust_local
                 self.rust_full = self.inner.rust_full
                 self.rust_extern = self.inner.rust_extern
-                if self.is_const:
-                    pass
             else:
                 # self.rust_lifetimes = "'b"
                 self.rust_safe_id = self.inner.rust_safe_id + "_X"
@@ -2183,7 +2181,7 @@ class RawPtrTypeInfo(TypeInfo):
     def rust_arg_func_decl(self, var_name, is_output=False):
         if self.is_string():
             return "{}: &{}str".format(var_name, "mut " if is_output else "")
-        return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_output)
+        return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_output or not self.is_const)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
         if self.is_string():

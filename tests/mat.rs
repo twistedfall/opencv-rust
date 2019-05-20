@@ -1,19 +1,16 @@
-use opencv::core::{self, Mat, Scalar, Vec2b};
+use std::mem::transmute;
+
+use opencv::core::{self, Mat, Scalar, Size, Vec2b};
 use opencv::types::VectorOfMat;
+
+const PIXEL: &[u8] = include_bytes!("../pixel.png");
 
 #[test]
 fn mat_for_rows_and_cols() {
     let typ = core::CV_8UC3;
     let mat = unsafe { Mat::new_rows_cols(400, 300, typ) }.unwrap();
-    let size = mat.size().unwrap();
     assert_eq!(mat.typ().unwrap(), typ);
-    assert_eq!(
-        core::Size {
-            width: 300,
-            height: 400
-        },
-        size
-    );
+    assert_eq!(mat.size().unwrap(), Size::new(300, 400));
     assert_eq!(core::CV_8U, mat.depth().unwrap());
     assert_eq!(3, mat.channels().unwrap());
 }
@@ -72,4 +69,17 @@ fn mat_operations() {
         assert_eq!(dst.at_2d::<Vec2b>(0, 1).unwrap()[0], 1);
         assert_eq!(dst.at_2d::<Vec2b>(0, 2).unwrap()[1], 2);
     }
+}
+
+
+#[test]
+fn mat_from_data() {
+    let mut bytes = PIXEL.to_vec();
+    let src = Mat::new_rows_cols_with_data(1, PIXEL.len() as _, core::CV_8U, unsafe { transmute(bytes.as_mut_ptr()) }, core::Mat_AUTO_STEP).unwrap();
+    assert_eq!(src.size().unwrap(), Size::new(PIXEL.len() as _, 1));
+    assert_eq!(src.total().unwrap(), PIXEL.len());
+    let row = src.at_row::<u8>(0).unwrap();
+    assert_eq!(row[0], 0x89);
+    assert_eq!(row[11], 0x0D);
+    assert_eq!(row[89], 0x82);
 }
