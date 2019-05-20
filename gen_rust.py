@@ -1301,6 +1301,7 @@ class ConstInfo(GeneralInfo):
     TEMPLATES = {
         "rust_string": template("${doccomment}pub const ${name}: &'static str = ${value};\n"),
         "rust_int": template("${doccomment}pub const ${name}: i32 = ${value};\n"),
+        "rust_usize": template("${doccomment}pub const ${name}: usize = ${value};\n"),
         "cpp_string": template("""    printf("pub static ${name}: &'static str = \\"%s\\";\\n", ${full_name});\n"""),
         "cpp_double": template("""    printf("pub const ${name}: f64 = %f;\\n", ${full_name});\n"""),
         "cpp_int": template("""    printf("pub const ${name}: i32 = 0x%x; // %i\\n", ${full_name}, ${full_name});\n"""),
@@ -1338,6 +1339,8 @@ class ConstInfo(GeneralInfo):
                 doccomment = "/// {}\n".format(m.group(3) if m.group(2) is None else m.group(2))
             if value.startswith('"'):
                 return ConstInfo.TEMPLATES["rust_string"].substitute(doccomment=doccomment, name=name, value=value)
+            elif name in ("Mat_AUTO_STEP", ""):
+                return ConstInfo.TEMPLATES["rust_usize"].substitute(doccomment=doccomment, name=name, value=value)
             elif re.match(r"^(-?[0-9]+|0x[0-9A-Fa-f]+)$", value):  # decimal or hexadecimal
                 return ConstInfo.TEMPLATES["rust_int"].substitute(doccomment=doccomment, name=name, value=value)
             elif re.match(r"^\(?\s*(\d+\s*<<\s*\d+)\s*\)?$", value):  # (1 << 24)
