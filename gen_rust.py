@@ -118,8 +118,6 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_solvePnP_Mat_Mat_Mat_Mat_Mat_Mat_bool_int": "solve_pnp",
     "cv_solvePnPRansac_Mat_Mat_Mat_Mat_Mat_Mat_bool_int_float_double_Mat_int": "solve_pnp_ransac",
     "cv_solveP3P_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_int": "solve_p3p",
-    "cv_reprojectImageTo3D_Mat_Mat_Mat_bool_int": "reproject_image_to_3d",
-    "cv_estimateAffine3D_Mat_Mat_Mat_Mat_double_double": "estimate_affine_3d",
     "cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria": "calibrate_camera_with_stddev",
 
     ### core ###
@@ -319,7 +317,6 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_integral_Mat_Mat_Mat_Mat_int_int": "integral_titled_sq",
     "cv_integral_Mat_Mat_Mat_int_int": "integral_sq_depth",
     "cv_GeneralizedHough_detect_Mat_Mat_Mat_Mat_Mat": "detect_with_edges",
-    "cv_sepFilter2D_Mat_Mat_int_Mat_Mat_Point_double_int": "sep_filter_2d",
 
     ### ml ###
     "cv_ml_ParamGrid_ParamGrid_double__minVal_double__maxVal_double__logStep": "for_range",
@@ -703,8 +700,10 @@ const_private_list = (
 #
 
 def camel_case_to_snake_case(name):
-    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+    res = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    res = re.sub('([a-z0-9])([A-Z])', r'\1_\2', res)
+    res = re.sub(r'\B([23])_(D)\b', r'_\1\2', res)  # fix 2_d and 3_d
+    return res.lower()
 
 
 def bump_counter(name):
