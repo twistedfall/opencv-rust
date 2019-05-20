@@ -86,7 +86,7 @@ pub type cv_return_value_unsigned_long_long = cv_return_value<u64>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// cv::QtFont
+// cv::Mat
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {

@@ -897,7 +897,7 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// * max_iters: 2000
 /// * confidence: 0.99
 /// * refine_iters: 10
-pub fn estimate_affine2_d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
+pub fn estimate_affine_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
     unsafe { sys::cv_estimateAffine2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
@@ -1011,7 +1011,7 @@ pub fn estimate_affine_3d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 /// * max_iters: 2000
 /// * confidence: 0.99
 /// * refine_iters: 10
-pub fn estimate_affine_partial2_d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
+pub fn estimate_affine_partial_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
     unsafe { sys::cv_estimateAffinePartial2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
@@ -1815,7 +1815,7 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 ///
 /// ## C++ default parameters
 /// * aspect_ratio: 1.0
-pub fn init_camera_matrix2_d(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
+pub fn init_camera_matrix_2d(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
     unsafe { sys::cv_initCameraMatrix2D_VectorOfMat_VectorOfMat_Size_double(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, aspect_ratio) }.into_result().map(|x| core::Mat { ptr: x })
 }
 

@@ -1903,9 +1903,7 @@ pub fn have_open_vx() -> Result<bool> {
 /// * nsrc: number of matrices in src.
 /// * dst: output array. It has the same number of rows and depth as the src, and the sum of cols of the src.
 /// ## See also
-/// cv::vconcat(const Mat*, size_t, OutputArray), ## See also
-/// cv::vconcat(InputArrayOfArrays, OutputArray) and ## See also
-/// cv::vconcat(InputArray, InputArray, OutputArray)
+/// cv::vconcat(const Mat*, size_t, OutputArray),  cv::vconcat(InputArrayOfArrays, OutputArray) and  cv::vconcat(InputArray, InputArray, OutputArray)
 /// 
 /// ## Overloaded parameters
 /// 
@@ -1954,9 +1952,7 @@ pub fn hconcat_2(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Res
 /// * nsrc: number of matrices in src.
 /// * dst: output array. It has the same number of rows and depth as the src, and the sum of cols of the src.
 /// ## See also
-/// cv::vconcat(const Mat*, size_t, OutputArray), ## See also
-/// cv::vconcat(InputArrayOfArrays, OutputArray) and ## See also
-/// cv::vconcat(InputArray, InputArray, OutputArray)
+/// cv::vconcat(const Mat*, size_t, OutputArray),  cv::vconcat(InputArrayOfArrays, OutputArray) and  cv::vconcat(InputArray, InputArray, OutputArray)
 /// 
 /// ## Overloaded parameters
 /// 
@@ -3480,9 +3476,7 @@ pub fn convert_to_va_surface(display: &mut c_void, src: &core::Mat, surface: u32
 /// * nsrc: number of matrices in src.
 /// * dst: output array. It has the same number of cols and depth as the src, and the sum of rows of the src.
 /// ## See also
-/// cv::hconcat(const Mat*, size_t, OutputArray), ## See also
-/// cv::hconcat(InputArrayOfArrays, OutputArray) and ## See also
-/// cv::hconcat(InputArray, InputArray, OutputArray)
+/// cv::hconcat(const Mat*, size_t, OutputArray),  cv::hconcat(InputArrayOfArrays, OutputArray) and  cv::hconcat(InputArray, InputArray, OutputArray)
 /// 
 /// ## Overloaded parameters
 /// 
@@ -3533,9 +3527,7 @@ pub fn vconcat_2(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Res
 /// * nsrc: number of matrices in src.
 /// * dst: output array. It has the same number of cols and depth as the src, and the sum of rows of the src.
 /// ## See also
-/// cv::hconcat(const Mat*, size_t, OutputArray), ## See also
-/// cv::hconcat(InputArrayOfArrays, OutputArray) and ## See also
-/// cv::hconcat(InputArray, InputArray, OutputArray)
+/// cv::hconcat(const Mat*, size_t, OutputArray),  cv::hconcat(InputArrayOfArrays, OutputArray) and  cv::hconcat(InputArray, InputArray, OutputArray)
 /// 
 /// ## Overloaded parameters
 /// 
@@ -4471,8 +4463,8 @@ impl Mat {
     /// * cols: Number of columns in a 2D array.
     /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
     /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-    pub fn new_rows_cols(rows: i32, cols: i32, _type: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_int_int_int(rows, cols, _type) }.into_result().map(|x| core::Mat { ptr: x })
+    pub unsafe fn new_rows_cols(rows: i32, cols: i32, _type: i32) -> Result<core::Mat> {
+        { sys::cv_Mat_Mat_int_int_int(rows, cols, _type) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
     /// ## Parameters
@@ -4480,8 +4472,8 @@ impl Mat {
     /// number of columns go in the reverse order.
     /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
     /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-    pub fn new_size(size: core::Size, _type: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_Size_int(size, _type) }.into_result().map(|x| core::Mat { ptr: x })
+    pub unsafe fn new_size(size: core::Size, _type: i32) -> Result<core::Mat> {
+        { sys::cv_Mat_Mat_Size_int(size, _type) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
     /// ## Parameters
@@ -4512,8 +4504,8 @@ impl Mat {
     /// * sizes: Array of integers specifying an n-dimensional array shape.
     /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
     /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
-    pub fn new_nd(sizes: &types::VectorOfint, _type: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_VectorOfint_int(sizes.as_raw_VectorOfint(), _type) }.into_result().map(|x| core::Mat { ptr: x })
+    pub unsafe fn new_nd(sizes: &types::VectorOfint, _type: i32) -> Result<core::Mat> {
+        { sys::cv_Mat_Mat_VectorOfint_int(sizes.as_raw_VectorOfint(), _type) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
     /// ## Parameters

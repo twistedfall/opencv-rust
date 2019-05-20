@@ -2479,7 +2479,7 @@ pub fn fill_poly(img: &mut core::Mat, pts: &types::VectorOfMat, color: core::Sca
 /// * anchor: Point(-1,-1)
 /// * delta: 0
 /// * border_type: BORDER_DEFAULT
-pub fn filter2_d(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, kernel: &core::Mat, anchor: core::Point, delta: f64, border_type: i32) -> Result<()> {
+pub fn filter_2d(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, kernel: &core::Mat, anchor: core::Point, delta: f64, border_type: i32) -> Result<()> {
     unsafe { sys::cv_filter2D_Mat_Mat_int_Mat_Point_double_int(src.as_raw_Mat(), dst.as_raw_Mat(), ddepth, kernel.as_raw_Mat(), anchor, delta, border_type) }.into_result()
 }
 
@@ -3075,7 +3075,7 @@ pub fn get_rect_sub_pix(image: &core::Mat, patch_size: core::Size, center: core:
 /// 
 /// ## See also
 /// getAffineTransform, warpAffine, transform
-pub fn get_rotation_matrix2_d(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Mat> {
+pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Mat> {
     unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(center, angle, scale) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
