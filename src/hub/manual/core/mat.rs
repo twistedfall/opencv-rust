@@ -149,7 +149,7 @@ impl Mat {
             let trg = out.at_row_mut(row_n as _)?;
             let src = row.as_ref();
             if trg.len() != src.len() {
-                return Err(Error::new(core::StsBadArg, format!("Unexpected number of items: {} in a row index: {}, expected: {}", trg.len(), row_n, src.len())));
+                return Err(Error::new(core::StsUnmatchedSizes, format!("Unexpected number of items: {} in a row index: {}, expected: {}", trg.len(), row_n, src.len())));
             }
             trg.copy_from_slice(src);
         }
