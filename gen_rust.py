@@ -14,7 +14,6 @@ from string import Template
 # fixme Net methods consume self, should probably take reference
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme add getcpufeaturesline
-# fixme cv_Mat_locateROI_const_Size_Point must take references to its output arguments
 
 if sys.version_info[0] >= 3:
     from io import StringIO
@@ -1390,14 +1389,18 @@ class TypeInfo(object):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
+        self.is_by_ref = typeid.endswith("&")
+        if self.is_by_ref:
+            typeid = typeid[:-1].strip()
         self.is_const = typeid.startswith("const ")  # type has C++ const modifier
-        self.typeid = typeid.replace("const ", "")  # e.g. "vector<cv::Mat>", "std::vector<int>", "float"
+        self.typeid = typeid.replace("const ", "").strip()  # e.g. "vector<cv::Mat>", "std::vector<int>", "float"
         self.gen = gen
         self.is_ignored = False  # don't generate
         # False: types that contain ptr field to actual heap allocated data (e.g. BoxedClass, Vector, SmartPtr)
         # True: types that are getting passed by value (e.g. Primitive, SimpleClass)
         self.is_by_ptr = False
         self.is_trait = False  # don't generate struct, generate trait (abstract classes and classes inside forced_trait_classes)
+        self.is_copy = False  # true for types that are Copy in Rust (e.g. Primitive, SimpleClass)
 
         self.cpp_extern = ""  # cpp type used on the boundary between Rust and C (e.g. in return wrappers)
         self.cpptype = self.typeid
@@ -1506,6 +1509,8 @@ class TypeInfo(object):
             if is_output:
                 return "{}: &mut {}".format(var_name, self.rust_full)
             return "{}: &{}".format(var_name, self.rust_full)
+        if self.is_by_ref and not self.is_const:
+            return "{}: &mut {}".format(var_name, self.rust_full)
         return "{}: {}".format(var_name, self.rust_full)
 
     def rust_self_func_decl(self, is_output=False):
@@ -1532,6 +1537,8 @@ class TypeInfo(object):
         :type is_output: bool
         :rtype: str
         """
+        if not self.is_by_ptr and self.is_by_ref and not self.is_const:
+            return "{}: &mut {}".format(var_name, self.rust_extern)
         return "{}: {}".format(var_name, self.rust_extern)
 
     def rust_extern_self_func_decl(self, is_output=False):
@@ -1551,6 +1558,8 @@ class TypeInfo(object):
         """
         if is_output:
             return "{}* {}".format(self.cpp_extern, var_name)
+        if not self.is_by_ptr and self.is_by_ref and not self.is_const:
+            return "{}& {}".format(self.cpp_extern, var_name)
         return "{} {}".format(self.cpp_extern, var_name)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
@@ -1664,7 +1673,7 @@ class PrimitiveTypeInfo(TypeInfo):
         self.rust_extern = self.rust_full = self.rust_local = primitive["rust_local"]
         self.rust_safe_id = self.typeid.replace(" ", "_")
         self.c_safe_id = self.cpp_extern.replace(" ", "_").replace("*", "X").replace("::", "_")
-        self.is_const = True
+        self.is_copy = True
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         return var_name
@@ -1703,7 +1712,7 @@ class SimpleClassTypeInfo(TypeInfo):
                 self.c_safe_id = self.cpp_extern
             self.rust_extern = self.rust_full
             self.is_trait = False
-            self.is_const = True
+            self.is_copy = True
 
     def __str__(self):
         return "%s (simple)"%(self.cpptype)
@@ -2090,7 +2099,7 @@ class RawPtrTypeInfo(TypeInfo):
         """
         super(RawPtrTypeInfo, self).__init__(gen, typeid)
         self.inner = inner
-        if self.inner.is_ignored or isinstance(self.inner, RawPtrTypeInfo):
+        if self.inner.is_ignored or isinstance(self.inner, RawPtrTypeInfo):  # fixme double pointer
             self.is_ignored = True
         else:
             if self.inner.is_by_ptr:
@@ -2194,16 +2203,19 @@ def parse_type(gen, typeid):
     """
     typeid = typeid.strip()
     full_typeid = typeid
+    is_const = False
     if full_typeid.startswith("const "):
         typeid = full_typeid[6:]
+        is_const = True
     if typeid == "":
         typeid = "void"
         full_typeid = "void"
     # if typeid.endswith("&"):
     #     return ReferenceTypeInfo(gen, typeid, gen.get_type_info(typeid[0:-1]))
+    is_by_ref = False
     if typeid.endswith("&"):
         typeid = typeid[:-1].strip()
-        full_typeid = full_typeid[:-1].strip()
+        is_by_ref = True
     if typeid in primitives:
         return PrimitiveTypeInfo(gen, full_typeid)
     elif typeid.endswith("*"):
@@ -2230,22 +2242,24 @@ def parse_type(gen, typeid):
     else:
         ci = gen.get_class(typeid)
         if ci and not ci.is_ignored:
+            reconst_full_typeid = "{}{}{}".format("const " if is_const else "", ci.fullname, "&" if is_by_ref else "")
             if ci.is_simple:
-                return SimpleClassTypeInfo(gen, ci.fullname)
+                return SimpleClassTypeInfo(gen, reconst_full_typeid)
             elif ci.is_callback:
-                return CallbackTypeInfo(gen, ci.fullname)
+                return CallbackTypeInfo(gen, reconst_full_typeid)
             else:
-                return BoxedClassTypeInfo(gen, ci.fullname)
+                return BoxedClassTypeInfo(gen, reconst_full_typeid)
         actual = type_replace.get(typeid)
         if actual:
             ci = gen.get_class(actual)
             if ci:
+                reconst_full_typeid = "{}{}{}".format("const " if is_const else "", ci.fullname, "&" if is_by_ref else "")
                 if ci.is_simple:
-                    return SimpleClassTypeInfo(gen, ci.fullname)
+                    return SimpleClassTypeInfo(gen, reconst_full_typeid)
                 elif ci.is_callback:
-                    return CallbackTypeInfo(gen, ci.fullname)
+                    return CallbackTypeInfo(gen, reconst_full_typeid)
                 else:
-                    return BoxedClassTypeInfo(gen, ci.fullname)
+                    return BoxedClassTypeInfo(gen, reconst_full_typeid)
             return parse_type(gen, actual)
     return UnknownTypeInfo(gen, full_typeid)
 
@@ -2753,7 +2767,7 @@ class RustWrapperGenerator(object):
                 for prop in ci.props:
                     attrs = ["/ATTRGETTER"]
                     prop_type = self.get_type_info(prop.ctype)
-                    if prop_type.is_const:
+                    if prop_type.is_const or prop_type.is_copy:
                         attrs.append("/C")
                     self.gen_func(FuncInfo(self, ci.module, ["{}.{}".format(ci.fullname, prop.name), prop.ctype, attrs, [], None, prop.comment], self.namespaces))
             if has_impl:
