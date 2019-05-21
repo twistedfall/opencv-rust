@@ -2797,13 +2797,18 @@ class RustWrapperGenerator(object):
         :type comment_prefix: str
         :rtype: str
         """
-        # overload
+        # @overload
         if func_info is not None and "@overload" in text:
             try:
                 src_comment = next(x.comment for x in self.functions if x.fullname == func_info.fullname and "@overload" not in x.comment and len(x.comment) > 0)
                 text = text.replace("@overload", src_comment + "\n\n## Overloaded parameters\n")
             except StopIteration:
                 text = text.replace("@overload", "")
+        # module titles
+        text = re.sub(r"\s*@{.*$", "", text, 0, re.M)
+        text = re.sub(r"\s*@}.*$", "", text, 0, re.M)
+        text = re.sub(r"@defgroup [^ ]+ (.*)", "# \\1", text)
+        text = re.sub(r"^.*?@addtogroup\s+(.+)", "", text, 0, re.M)
         text = text.strip()
         if len(text) == 0:
             return ""
@@ -2823,10 +2828,6 @@ class RustWrapperGenerator(object):
         text = re.sub(r"!\[(.*?)\]\((?:pics/)?(.+)?\)", r"![\1](https://docs.opencv.org/3.4.6/\2)", text)
         # ?
         text = re.sub(r".*\*\*\*\*\*", "", text, 0, re.M)
-        # module titles
-        text = re.sub(r"\s*@{\s*$", "", text, 0, re.M)
-        text = re.sub(r"\s*@}\s*$", "", text, 0, re.M)
-        text = re.sub(r"@defgroup [^ ]+ (.*)", "# \\1", text)
         # returns
         text = re.sub(r"^.*?@returns?\s*", "## Returns\n", text, 0, re.M)
         # parameter list
@@ -2849,8 +2850,10 @@ class RustWrapperGenerator(object):
         text = re.sub(r"\\f\$(.*?)\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
         # catch sequences of 4 indents and reduce them to avoid cargo test running them as code
         text = re.sub(r"^((\s{1,5})\2{3})(\S)", r"\2\3", text, 0, re.M)
-        # add rustdoc comment markers
-        text = re.sub("^", comment_prefix + " ", text.strip(), 0, re.M) + "\n"
+        text = text.strip()
+        if len(text) > 0:
+            # add rustdoc comment markers
+            text = re.sub("^", comment_prefix + " ", text.strip(), 0, re.M) + "\n"
         if deprecated is not None:
             text += "#[deprecated = \"{}\"]\n".format(deprecated)
         return text.encode("utf-8")
