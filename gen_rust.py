@@ -2525,10 +2525,6 @@ class RustWrapperGenerator(object):
             if not fi.is_ignored:
                 self.gen_func(fi)
 
-#        if module in forced_boxed_classes:
-#            for cb in sorted(forced_boxed_classes[module]):
-#                self.gen_boxed_class(cb)
-
         for ci in sorted(self.classes.values(), key=lambda ci:ci.fullname):
             self.gen_class(ci)
 
@@ -2770,7 +2766,7 @@ class RustWrapperGenerator(object):
                 bases = ""
             logging.info("Generating impl for trait %s", ci)
             self.moduleSafeRust.write("// Generating impl for trait %s\n" % (ci))
-            self.moduleSafeRust.write(self.reformat_doc(ci.comment.strip()))
+            self.moduleSafeRust.write(self.reformat_doc(ci.comment))
             self.moduleSafeRust.write("pub trait %s%s {\n" % (t.rust_local, bases))
             self.moduleSafeRust.write("    #[doc(hidden)] fn as_raw_%s(&self) -> *mut c_void;\n" % (t.rust_local))
             for fi in ci.methods:
