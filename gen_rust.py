@@ -2594,7 +2594,7 @@ class RustWrapperGenerator(object):
         """
         if fi.kind == fi.KIND_FUNCTION or fi.fake_attrgetter:
             for item in self.generated_functions:
-                if item.name == fi.name and str(item.args) == str(fi.args):
+                if item.fullname == fi.fullname and str(item.args) == str(fi.args):
                     return
             else:
                 self.generated_functions.append(fi)
