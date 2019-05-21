@@ -1680,6 +1680,7 @@ class PrimitiveTypeInfo(TypeInfo):
         self.rust_extern = self.rust_full = self.rust_local = primitive["rust_local"]
         self.rust_safe_id = self.typeid.replace(" ", "_")
         self.c_safe_id = self.cpp_extern.replace(" ", "_").replace("*", "X").replace("::", "_")
+        self.is_const = True
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         return var_name
@@ -1718,6 +1719,7 @@ class SimpleClassTypeInfo(TypeInfo):
                 self.c_safe_id = self.cpp_extern
             self.rust_extern = self.rust_full
             self.is_trait = False
+            self.is_const = True
 
     def __str__(self):
         return "%s (simple)"%(self.cpptype)
