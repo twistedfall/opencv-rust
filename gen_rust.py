@@ -13,9 +13,8 @@ from string import Template
 
 # fixme Net methods consume self, should probably take reference
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
-
-# fixme add automatic lifetimes where needed
 # fixme add getcpufeaturesline
+# fixme cv_Mat_locateROI_const_Size_Point must take references to its output arguments
 
 if sys.version_info[0] >= 3:
     from io import StringIO
@@ -103,7 +102,6 @@ decls_manual_pre = {
 decls_manual_post = {
     "core": [
         ("cv.Mat.size", "Size", ["/C"], []),
-        # ["cv.Mat.step", "size_t", ["/C"], []],
     ]
 }
 
@@ -175,9 +173,10 @@ func_rename = {  # todo check if any "new" is required
     "cv_Mat_rowRange_const_int_int": "rowbounds",
     "cv_Mat_type_const": "typ",
     "cv_Mat_reshape_const_int_int_const_int_X": "-",  # duplicate of cv_Mat_reshape_const_int_VectorOfint, but with pointers
-    "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Mat_reshape_const_int_VectorOfint": "reshape_nd",
     "cv_Mat_total_const_int_int": "total_slice",
+    "cv_Mat_size": "-",  # doesn't have any use, dims() and Size are already accessible through other methods
+    "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",
     "cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp": "copy",
     "cv_Matx_MulOp_Matx_MulOp_Matx_MulOp": "copy",
@@ -380,9 +379,7 @@ func_rename = {  # todo check if any "new" is required
 class_ignore_list = (
     ### core ###
     "Cv[A-Z]",  # C style types
-    "cv::Mat::MStep", "cv::Mat::MSize",
     "Ipl.*",
-    "BinaryFunc", "ConvertData", "ConvertScaleData",
     "cv::Mutex", "cv::softfloat", "cv::softdouble", "cv::float16_t",  # have corresponding Rust implementation
     "cv::Exception",
     "cv::RNG.*",  # maybe
@@ -605,14 +602,6 @@ forced_trait_classes = (
     "cv::dnn::Layer"
 )
 
-boxed_type_fields = {
-    "RotatedRect": {
-        "center": "Point2f",
-        "size": "Size2f",
-        "angle": "float",
-    }
-}
-
 # dict of reserved Rust keywords and their replacement to be used in var, function and class names
 # key: reserved keyword
 # value: replacement
@@ -797,14 +786,12 @@ class ArgInfo:
 
 
 class FuncInfo(GeneralInfo):
-
     KIND_FUNCTION    = "(function)"
     KIND_METHOD      = "(method)"
     KIND_CONSTRUCTOR = "(constructor)"
 
     TEMPLATES = {
         "cpp": template("""
-                // ${identifier}
                 // parsed: ${fullname}
                 // as:     ${repr}
                 ${args}// Return value: ${rv_type}
@@ -884,7 +871,7 @@ class FuncInfo(GeneralInfo):
 
         self.is_const = "/C" in decl[2]
         self.is_static = "/S" in decl[2]
-        self.fake_attrgetter = "/ATTRGETTER" in decl[2]
+        self.attr_getter = "/ATTRGETTER" in decl[2]
         self.has_callback_arg = False
         has_userdata_arg = False
 
@@ -912,8 +899,6 @@ class FuncInfo(GeneralInfo):
             self.comment = decl[5].encode("ascii", "ignore")
         else:
             self.comment = ""
-
-        self.struct_attrname = decl[6] if self.fake_attrgetter else None
 
         self.cname = self.cppname = self.name
         self.is_safe = self.identifier not in func_unsafe_list
@@ -1028,17 +1013,11 @@ class FuncInfo(GeneralInfo):
                 call_name = self.cppname
             else:
                 call_name = self.fullname
-        elif self.fake_attrgetter:
-            call_name = self.ci.type_info().cpp_method_call_name(self.struct_attrname)
         else:
             call_name = self.ci.type_info().cpp_method_call_name(self.cppname)
 
         # actual call
-        if self.fake_attrgetter:
-            code = "%s ret = %s;" % (self.rv_type().cpptype, call_name)
-        else:
-            code = self.rv_type().cpp_method_call_invoke(call_name, ", ".join(call_cpp_args), self.is_constructor())
-        code += "\n"
+        code = self.rv_type().cpp_method_call_invoke(call_name, ", ".join(call_cpp_args), self.is_constructor(), self.attr_getter) + "\n"
 
         # return value
         code += self.rv_type().cpp_method_return(self.is_constructor())
@@ -1170,8 +1149,10 @@ class FuncInfo(GeneralInfo):
 
 class ClassPropInfo:
     def __init__(self, decl):  # [f_ctype, f_name, '', '/RW']
-        self.ctype = decl[0]
+        self.is_const = "/C" in decl[3]
+        self.ctype = "{}{}".format("const " if self.is_const else "", decl[0])
         self.name = decl[1]
+        self.comment = decl[2].encode("ascii", "ignore")
         self.rw = "/RW" in decl[3]
 
     def __repr__(self):
@@ -1589,17 +1570,20 @@ class TypeInfo(object):
         """
         return "reinterpret_cast<{}*>(&instance)->{}".format(self.cpptype, method_name)
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
         """
         :type call_name: str
         :type call_args: str
         :type is_constructor: bool
+        :type is_property: bool
         :rtype: str
         """
         if is_constructor:
             if call_args == "":
                 return "{} ret;".format(self.cpptype)
             return "{} ret({});".format(self.cpptype, call_args)
+        if is_property:
+            return "{} ret = {};".format(self.cpptype, call_name)
         return "{} ret = {}({});".format(self.cpptype, call_name, call_args)
 
     def cpp_method_return(self, is_constructor):
@@ -1685,10 +1669,10 @@ class PrimitiveTypeInfo(TypeInfo):
     def cpp_arg_func_call(self, var_name, is_output=False):
         return var_name
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
         if self.cpptype == "void":
             return "{}({});".format(call_name, call_args)
-        return super(PrimitiveTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor)
+        return super(PrimitiveTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, is_property)
 
     def cpp_method_return(self, is_constructor):
         if self.cpptype == "void":
@@ -1788,10 +1772,10 @@ class BoxedClassTypeInfo(TypeInfo):
     def cpp_method_call_name(self, method_name):
         return "reinterpret_cast<{}*>(instance)->{}".format(self.cpptype, method_name)
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
         if is_constructor:
             return "{}* ret = new {}({});".format(self.cpptype, call_name, call_args)
-        return super(BoxedClassTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor)
+        return super(BoxedClassTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, is_property)
 
     def cpp_method_return(self, is_constructor):
         if not is_constructor:
@@ -2090,8 +2074,8 @@ class SmartPtrTypeInfo(TypeInfo):
     def cpp_arg_func_call(self, var_name, is_output=False):
         return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor):
-        return "Ptr<{}> *ret = new Ptr<{}>({}({}));".format(self.cpptype, self.cpptype, call_name, call_args)
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
+        return "Ptr<{}> *ret = new Ptr<{}>({}({}));".format(self.cpptype, self.cpptype, call_name, call_args, is_property)
 
     def __str__(self):
         return "SmartPtr[%s]" % (self.inner)
@@ -2174,10 +2158,10 @@ class RawPtrTypeInfo(TypeInfo):
             return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
         return "reinterpret_cast<{}*>(&{})".format(self.inner.cpptype, var_name)
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
         if self.is_by_ptr:
             return "{}* ret = {}({});".format(self.cpptype, call_name, call_args)
-        return super(RawPtrTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor)
+        return super(RawPtrTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, is_property)
 
     def cpp_method_return(self, is_constructor):
         if self.is_string():
@@ -2394,28 +2378,6 @@ class RustWrapperGenerator(object):
                      " [ignored]" if item.is_ignored else "",
                      " impl:"+",".join(item.bases) if len(item.bases) else "")
         self.classes[item.fullname] = item
-        """
-        This is used to create methods, what allows you to access to simple types inside
-        complex structures. For instance, RotatedRect items contains Point2f, Size and angle instances,
-        this method creates attribute getters get_point, get_size, get_angle.
-        """
-        for struct_field, field_type in boxed_type_fields.get(item.classname, {}).items():
-            field_decl = [
-                u'{classname}.get_{struct_field}'.format(
-                    classname=item.classname,
-                    struct_field=struct_field,
-                ),
-                field_type,
-                ['/ATTRGETTER'],
-                [],
-                None,
-                u'returns the {struct_field} attr of {field_type} type\n'.format(
-                    struct_field=struct_field,
-                    field_type=field_type,
-                ),
-                struct_field,
-            ]
-            item.add_method(FuncInfo(self, module, field_decl, frozenset(self.namespaces)))
 
     def add_const_decl(self, _module, decl):
         item = ConstInfo(self, decl, frozenset(self.namespaces))
@@ -2592,7 +2554,7 @@ class RustWrapperGenerator(object):
         :type fi: FuncInfo
         :return:
         """
-        if fi.kind == fi.KIND_FUNCTION or fi.fake_attrgetter:
+        if fi.kind == fi.KIND_FUNCTION or fi.attr_getter:
             for item in self.generated_functions:
                 if item.fullname == fi.fullname and str(item.args) == str(fi.args):
                     return
@@ -2781,11 +2743,20 @@ class RustWrapperGenerator(object):
         else:
             if isinstance(t, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.fullname)
-            if len(ci.methods) > 0:
+            has_impl = len(ci.methods) > 0 or (isinstance(t, BoxedClassTypeInfo) and len(ci.props) > 0)
+            if has_impl:
                 logging.info("Generating impl for struct %s", ci)
                 self.moduleSafeRust.write("impl %s {\n\n" % (t.rust_local))
-                for fi in ci.methods:
-                    self.gen_func(fi)
+            for fi in ci.methods:
+                self.gen_func(fi)
+            if isinstance(t, BoxedClassTypeInfo):
+                for prop in ci.props:
+                    attrs = ["/ATTRGETTER"]
+                    prop_type = self.get_type_info(prop.ctype)
+                    if prop_type.is_const:
+                        attrs.append("/C")
+                    self.gen_func(FuncInfo(self, ci.module, ["{}.{}".format(ci.fullname, prop.name), prop.ctype, attrs, [], None, prop.comment], self.namespaces))
+            if has_impl:
                 self.moduleSafeRust.write("}\n\n")
 
     def reformat_doc(self, text, func_info=None, comment_prefix="///"):

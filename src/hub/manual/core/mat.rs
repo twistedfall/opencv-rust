@@ -122,14 +122,14 @@ impl Mat {
         self._at_mut(i0).map(|x| unsafe { slice::from_raw_parts_mut(x, width) })
     }
 
-    pub fn data<T: DataType>(&self) -> Result<&[T]> {
+    pub fn data_typed<T: DataType>(&self) -> Result<&[T]> {
         let total = self.total()?;
         self._at(0).map(|x| unsafe { slice::from_raw_parts(x, total) })
     }
 
-    pub fn data_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
+    pub fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
         let total = self.total()?;
-        self._at_mut(0).map(|x| unsafe { slice::from_raw_parts_mut(x, total) })
+        self.data().map(|x| unsafe { slice::from_raw_parts_mut(x as *mut _ as *mut _, total) })
     }
 
     #[inline]
@@ -158,9 +158,13 @@ impl Mat {
 
     pub fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
         self.match_format::<T>().and_then(|_| {
+            let dims = self.dims()?;
+            if dims > 2 {
+                return Err(Error::new(core::StsUnmatchedSizes, format!("Cannot convert Mat with dims: {} to 2D Vec", dims)));
+            }
             let size = self.size()?;
             let width = size.width as usize;
-            let data = self.data()?;
+            let data = self.data_typed()?;
             Ok((0..size.height)
                 .map(|row_n| {
                     let row_n = row_n as usize;
@@ -178,15 +182,19 @@ impl Mat {
 impl fmt::Debug for Mat {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("Mat")
-            .field("channels", &self.channels().unwrap())
-            .field("depth", &self.depth().unwrap())
-            .field("elem_size", &self.elem_size().unwrap())
-            .field("elem_size1", &self.elem_size1().unwrap())
-            .field("is_continuous", &self.is_continuous().unwrap())
-            .field("is_submatrix", &self.is_submatrix().unwrap())
-            .field("total", &self.total().unwrap())
-            .field("type", &self.typ().unwrap())
-            .field("size", &self.size().unwrap())
+            .field("type", &self.typ().map_err(|_| fmt::Error)?)
+            .field("channels", &self.channels().map_err(|_| fmt::Error)?)
+            .field("depth", &self.depth().map_err(|_| fmt::Error)?)
+            .field("dims", &self.dims().map_err(|_| fmt::Error)?)
+            .field("flags", &self.flags().map_err(|_| fmt::Error)?)
+            .field("elem_size", &self.elem_size().map_err(|_| fmt::Error)?)
+            .field("elem_size1", &self.elem_size1().map_err(|_| fmt::Error)?)
+            .field("total", &self.total().map_err(|_| fmt::Error)?)
+            .field("size", &self.size().map_err(|_| fmt::Error)?)
+            .field("rows", &self.rows().map_err(|_| fmt::Error)?)
+            .field("cols", &self.cols().map_err(|_| fmt::Error)?)
+            .field("is_continuous", &self.is_continuous().map_err(|_| fmt::Error)?)
+            .field("is_submatrix", &self.is_submatrix().map_err(|_| fmt::Error)?)
             .finish()
     }
 }
