@@ -164,17 +164,29 @@ impl Mat {
             }
             let size = self.size()?;
             let width = size.width as usize;
-            let data = self.data_typed()?;
-            Ok((0..size.height)
-                .map(|row_n| {
-                    let row_n = row_n as usize;
-                    let mut row = Vec::with_capacity(width);
-                    unsafe { row.set_len(width); }
-                    row[0..width].copy_from_slice(&data[row_n * width..(row_n + 1) * width]);
-                    row
-                })
-                .collect()
-            )
+            if self.is_continuous()? {
+                let data = self.data_typed()?;
+                Ok((0..size.height)
+                    .map(|row_n| {
+                        let row_n = row_n as usize;
+                        let mut row = Vec::with_capacity(width);
+                        row.extend_from_slice(&data[row_n * width..(row_n + 1) * width]);
+                        row
+                    })
+                    .collect()
+                )
+            } else {
+                Ok((0..size.height)
+                    .map(|row_n| {
+                        self.at_row(row_n).map(|src_row| {
+                            let mut row = Vec::with_capacity(width);
+                            row.extend_from_slice(src_row);
+                            row
+                        })
+                    })
+                    .collect::<Result<_>>()?
+                )
+            }
         })
     }
 }
