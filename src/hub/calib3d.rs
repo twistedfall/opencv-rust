@@ -584,7 +584,7 @@ pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types
 /// Note:
 /// Do keep in mind that the unity measure 'mm' stands for whatever unit of measure one chooses for
 /// the chessboard pitch (it can thus be any value).
-pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: f64, fovy: f64, focal_length: f64, principal_point: core::Point2d, aspect_ratio: f64) -> Result<()> {
+pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> Result<()> {
     unsafe { sys::cv_calibrationMatrixValues_Mat_Size_double_double_double_double_double_Point2d_double(camera_matrix.as_raw_Mat(), image_size, aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio) }.into_result()
 }
 
@@ -1058,6 +1058,7 @@ pub fn filter_speckles(img: &mut core::Mat, new_val: f64, max_speckle_size: i32,
     unsafe { sys::cv_filterSpeckles_Mat_double_int_double_Mat(img.as_raw_Mat(), new_val, max_speckle_size, max_diff, buf.as_raw_Mat()) }.into_result()
 }
 
+/// finds subpixel-accurate positions of the chessboard corners
 pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region_size: core::Size) -> Result<bool> {
     unsafe { sys::cv_find4QuadCornerSubpix_Mat_Mat_Size(img.as_raw_Mat(), corners.as_raw_Mat(), region_size) }.into_result()
 }
@@ -1290,66 +1291,6 @@ pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, 
 /// * confidence: 0.99
 pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
     unsafe { sys::cv_findFundamentalMat_Mat_Mat_Mat_int_double_double(points1.as_raw_Mat(), points2.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold, confidence) }.into_result().map(|x| core::Mat { ptr: x })
-}
-
-/// Calculates a fundamental matrix from the corresponding points in two images.
-/// 
-/// ## Parameters
-/// * points1: Array of N points from the first image. The point coordinates should be
-/// floating-point (single or double precision).
-/// * points2: Array of the second image points of the same size and format as points1 .
-/// * method: Method for computing a fundamental matrix.
-/// *   **CV_FM_7POINT** for a 7-point algorithm. <span lang='latex'>N = 7</span>
-/// *   **CV_FM_8POINT** for an 8-point algorithm. <span lang='latex'>N \ge 8</span>
-/// *   **CV_FM_RANSAC** for the RANSAC algorithm. <span lang='latex'>N \ge 8</span>
-/// *   **CV_FM_LMEDS** for the LMedS algorithm. <span lang='latex'>N \ge 8</span>
-/// * ransacReprojThreshold: Parameter used only for RANSAC. It is the maximum distance from a point to an epipolar
-/// line in pixels, beyond which the point is considered an outlier and is not used for computing the
-/// final fundamental matrix. It can be set to something like 1-3, depending on the accuracy of the
-/// point localization, image resolution, and the image noise.
-/// * confidence: Parameter used for the RANSAC and LMedS methods only. It specifies a desirable level
-/// of confidence (probability) that the estimated matrix is correct.
-/// * mask: 
-/// 
-/// The epipolar geometry is described by the following equation:
-/// 
-/// <div lang='latex'>[p_2; 1]^T F [p_1; 1] = 0</div>
-/// 
-/// where <span lang='latex'>F</span> is a fundamental matrix, <span lang='latex'>p_1</span> and <span lang='latex'>p_2</span> are corresponding points in the first and the
-/// second images, respectively.
-/// 
-/// The function calculates the fundamental matrix using one of four methods listed above and returns
-/// the found fundamental matrix. Normally just one matrix is found. But in case of the 7-point
-/// algorithm, the function may return up to 3 solutions ( <span lang='latex'>9 \times 3</span> matrix that stores all 3
-/// matrices sequentially).
-/// 
-/// The calculated fundamental matrix may be passed further to computeCorrespondEpilines that finds the
-/// epipolar lines corresponding to the specified points. It can also be passed to
-/// stereoRectifyUncalibrated to compute the rectification transformation. :
-/// ```ignore
-/// // Example. Estimation of fundamental matrix using the RANSAC algorithm
-/// int point_count = 100;
-/// vector<Point2f> points1(point_count);
-/// vector<Point2f> points2(point_count);
-/// 
-/// // initialize the points here ...
-/// for( int i = 0; i < point_count; i++ )
-/// {
-/// points1[i] = ...;
-/// points2[i] = ...;
-/// }
-/// 
-/// Mat fundamental_matrix =
-/// findFundamentalMat(points1, points2, FM_RANSAC, 3, 0.99);
-/// ```
-///
-/// ## C++ default parameters
-/// * method: FM_RANSAC
-/// * ransac_reproj_threshold: 3.
-/// * confidence: 0.99
-/// * mask: noArray()
-pub fn find_fundamental_mat_1(points1: &core::Mat, points2: &core::Mat, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_findFundamentalMat_Mat_Mat_int_double_double_Mat(points1.as_raw_Mat(), points2.as_raw_Mat(), method, ransac_reproj_threshold, confidence, mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
 /// Finds a perspective transformation between two planes.
@@ -1793,6 +1734,7 @@ pub fn get_optimal_new_camera_matrix(camera_matrix: &core::Mat, dist_coeffs: &co
     unsafe { sys::cv_getOptimalNewCameraMatrix_Mat_Mat_Size_double_Size_Rect_X_bool(camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_size, alpha, new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+/// computes valid disparity ROI from the valid ROIs of the rectified images (that are returned by cv::stereoRectify())
 pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity: i32, number_of_disparities: i32, sad_window_size: i32) -> Result<core::Rect> {
     unsafe { sys::cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1, roi2, min_disparity, number_of_disparities, sad_window_size) }.into_result()
 }
@@ -2082,6 +2024,7 @@ pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: 
     unsafe { sys::cv_recoverPose_Mat_Mat_Mat_Mat_Mat_double_Point2d_Mat(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), focal, pp, mask.as_raw_Mat()) }.into_result()
 }
 
+/// computes the rectification transformations for 3-head camera, where all the heads are on the same line.
 pub fn rectify3_collinear(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, camera_matrix2: &core::Mat, dist_coeffs2: &core::Mat, camera_matrix3: &core::Mat, dist_coeffs3: &core::Mat, imgpt1: &types::VectorOfMat, imgpt3: &types::VectorOfMat, image_size: core::Size, r12: &core::Mat, t12: &core::Mat, r13: &core::Mat, t13: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, r3: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, p3: &mut core::Mat, q: &mut core::Mat, alpha: f64, new_img_size: core::Size, roi1: &mut core::Rect, roi2: &mut core::Rect, flags: i32) -> Result<f32> {
     unsafe { sys::cv_rectify3Collinear_Mat_Mat_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_double_Size_Rect_X_Rect_X_int(camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), camera_matrix3.as_raw_Mat(), dist_coeffs3.as_raw_Mat(), imgpt1.as_raw_VectorOfMat(), imgpt3.as_raw_VectorOfMat(), image_size, r12.as_raw_Mat(), t12.as_raw_Mat(), r13.as_raw_Mat(), t13.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), r3.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), p3.as_raw_Mat(), q.as_raw_Mat(), alpha, new_img_size, roi1, roi2, flags) }.into_result()
 }
@@ -2652,6 +2595,7 @@ pub fn triangulate_points(proj_matr1: &core::Mat, proj_matr2: &core::Mat, proj_p
     unsafe { sys::cv_triangulatePoints_Mat_Mat_Mat_Mat_Mat(proj_matr1.as_raw_Mat(), proj_matr2.as_raw_Mat(), proj_points1.as_raw_Mat(), proj_points2.as_raw_Mat(), points4_d.as_raw_Mat()) }.into_result()
 }
 
+/// validates disparity using the left-right check. The matrix "cost" should be computed by the stereo correspondence algorithm
 ///
 /// ## C++ default parameters
 /// * disp12_max_disp: 1

@@ -33,7 +33,7 @@ pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 /// Note:
 /// *   (Python) A sample explaining the camshift tracking algorithm can be found at
 /// opencv_source_code/samples/python/camshift.py
-pub fn cam_shift(prob_image: &core::Mat, window: core::Rect, criteria: &core::TermCriteria) -> Result<core::RotatedRect> {
+pub fn cam_shift(prob_image: &core::Mat, window: &mut core::Rect, criteria: &core::TermCriteria) -> Result<core::RotatedRect> {
     unsafe { sys::cv_CamShift_Mat_Rect_TermCriteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result().map(|x| core::RotatedRect { ptr: x })
 }
 
@@ -392,7 +392,7 @@ pub fn find_transform_ecc_1(template_image: &core::Mat, input_image: &core::Mat,
 /// projection and remove the noise. For example, you can do this by retrieving connected components
 /// with findContours , throwing away contours with small area ( contourArea ), and rendering the
 /// remaining contours with drawContours.
-pub fn mean_shift(prob_image: &core::Mat, window: core::Rect, criteria: &core::TermCriteria) -> Result<i32> {
+pub fn mean_shift(prob_image: &core::Mat, window: &mut core::Rect, criteria: &core::TermCriteria) -> Result<i32> {
     unsafe { sys::cv_meanShift_Mat_Rect_TermCriteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
@@ -1088,6 +1088,55 @@ impl KalmanFilter {
     /// * measurement: The measured system parameters
     pub fn correct(&mut self, measurement: &core::Mat) -> Result<core::Mat> {
         unsafe { sys::cv_KalmanFilter_correct_Mat(self.as_raw_KalmanFilter(), measurement.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    pub fn state_pre(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_statePre(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
+    pub fn state_post(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_statePost(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
+    pub fn transition_matrix(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_transitionMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < state transition matrix (A)
+    pub fn control_matrix(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_controlMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < control matrix (B) (not used if there is no control)
+    pub fn measurement_matrix(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_measurementMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < measurement matrix (H)
+    pub fn process_noise_cov(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_processNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < process noise covariance matrix (Q)
+    pub fn measurement_noise_cov(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_measurementNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < measurement noise covariance matrix (R)
+    pub fn error_cov_pre(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_errorCovPre(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
+    pub fn gain(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_gain(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+    }
+    
+    /// < Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
+    pub fn error_cov_post(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_errorCovPost(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
 }

@@ -1416,10 +1416,20 @@ pub fn dft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32) 
     unsafe { sys::cv_dft_Mat_Mat_int_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags, nonzero_rows) }.into_result()
 }
 
+/// Get OpenCV type from DirectX type
+/// ## Parameters
+/// * iD3DFORMAT: - enum D3DTYPE for D3D9
+/// ## Returns
+/// OpenCV type or -1 if there is no equivalent
 pub fn get_type_from_d3d_format(i_d3_dformat: i32) -> Result<i32> {
     unsafe { sys::cv_directx_getTypeFromD3DFORMAT_int(i_d3_dformat) }.into_result()
 }
 
+/// Get OpenCV type from DirectX type
+/// ## Parameters
+/// * iDXGI_FORMAT: - enum DXGI_FORMAT for D3D10/D3D11
+/// ## Returns
+/// OpenCV type or -1 if there is no equivalent
 pub fn get_type_from_dxgi_format(i_dxgi_format: i32) -> Result<i32> {
     unsafe { sys::cv_directx_getTypeFromDXGI_FORMAT_int(i_dxgi_format) }.into_result()
 }
@@ -4057,6 +4067,7 @@ impl core::Hamming {
 
 impl KeyPoint {
 
+    /// the default constructor
     pub fn default() -> Result<core::KeyPoint> {
         unsafe { sys::cv_KeyPoint_KeyPoint() }.into_result()
     }
@@ -4987,10 +4998,12 @@ impl Mat {
         unsafe { sys::cv_Mat_release(self.as_raw_Mat()) }.into_result()
     }
     
+    /// internal use function, consider to use 'release' method instead; deallocates the matrix data
     pub fn deallocate(&mut self) -> Result<()> {
         unsafe { sys::cv_Mat_deallocate(self.as_raw_Mat()) }.into_result()
     }
     
+    /// internal use function; properly re-allocates _size, _step arrays
     pub fn copy_size(&mut self, m: &core::Mat) -> Result<()> {
         unsafe { sys::cv_Mat_copySize_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
     }
@@ -5034,6 +5047,7 @@ impl Mat {
         unsafe { sys::cv_Mat_resize_size_t_Scalar(self.as_raw_Mat(), sz, s) }.into_result()
     }
     
+    /// internal function
     pub fn push_back_(&mut self, elem: &c_void) -> Result<()> {
         unsafe { sys::cv_Mat_push_back__const_void_X(self.as_raw_Mat(), elem) }.into_result()
     }
@@ -5068,7 +5082,7 @@ impl Mat {
     /// * wholeSize: Output parameter that contains the size of the whole matrix containing *this*
     /// as a part.
     /// * ofs: Output parameter that contains an offset of *this* inside the whole matrix.
-    pub fn locate_roi(&self, whole_size: core::Size, ofs: core::Point) -> Result<()> {
+    pub fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
         unsafe { sys::cv_Mat_locateROI_const_Size_Point(self.as_raw_Mat(), whole_size, ofs) }.into_result()
     }
     
@@ -5184,6 +5198,7 @@ impl Mat {
         unsafe { sys::cv_Mat_isContinuous_const(self.as_raw_Mat()) }.into_result()
     }
     
+    /// returns true if the matrix is a submatrix of another matrix
     pub fn is_submatrix(&self) -> Result<bool> {
         unsafe { sys::cv_Mat_isSubmatrix_const(self.as_raw_Mat()) }.into_result()
     }
@@ -5416,12 +5431,54 @@ impl Mat {
     /// * i2: Index along the dimension 2
     pub fn at_3d<T: core::DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> { self._at_3d(i0, i1, i2) }
     
+    /// internal use method: updates the continuity flag
     pub fn update_continuity_flag(&mut self) -> Result<()> {
         unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_Mat()) }.into_result()
     }
     
     pub fn size(&self) -> Result<core::Size> {
         unsafe { sys::cv_Mat_size_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    pub fn flags(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_flags_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the matrix dimensionality, >= 2
+    pub fn dims(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_dims_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn rows(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_rows_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn cols(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_cols_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// pointer to the data
+    pub fn data(&mut self) -> Result<&mut u8> {
+        unsafe { sys::cv_Mat_data(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// helper fields used in locateROI and adjustROI
+    pub fn datastart(&self) -> Result<&u8> {
+        unsafe { sys::cv_Mat_datastart_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn dataend(&self) -> Result<&u8> {
+        unsafe { sys::cv_Mat_dataend_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn datalimit(&self) -> Result<&u8> {
+        unsafe { sys::cv_Mat_datalimit_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn step(&mut self) -> Result<core::MatStep> {
+        unsafe { sys::cv_Mat_step(self.as_raw_Mat()) }.into_result().map(|x| core::MatStep { ptr: x })
     }
     
 }
@@ -5568,6 +5625,7 @@ impl MatStep {
 }
 
 // boxed class cv::Matx_AddOp
+/// @cond IGNORED
 #[allow(dead_code)]
 pub struct Matx_AddOp {
     #[doc(hidden)] pub ptr: *mut c_void
@@ -5849,10 +5907,12 @@ impl<'a> MinProblemSolver_Function + 'a {
 
 impl Moments {
 
+    /// the default constructor
     pub fn default() -> Result<core::Moments> {
         unsafe { sys::cv_Moments_Moments() }.into_result()
     }
     
+    /// the full constructor
     pub fn new(m00: f64, m10: f64, m01: f64, m20: f64, m11: f64, m02: f64, m30: f64, m21: f64, m12: f64, m03: f64) -> Result<core::Moments> {
         unsafe { sys::cv_Moments_Moments_double_double_double_double_double_double_double_double_double_double(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03) }.into_result()
     }
@@ -5934,6 +5994,7 @@ impl core::NAryMatIterator {
 
 impl NAryMatIterator {
 
+    /// the default constructor
     pub fn new() -> Result<core::NAryMatIterator> {
         unsafe { sys::cv_NAryMatIterator_NAryMatIterator() }.into_result().map(|x| core::NAryMatIterator { ptr: x })
     }
@@ -6220,6 +6281,14 @@ impl Range {
         unsafe { sys::cv_Range_all() }.into_result().map(|x| core::Range { ptr: x })
     }
     
+    pub fn start(&self) -> Result<i32> {
+        unsafe { sys::cv_Range_start_const(self.as_raw_Range()) }.into_result()
+    }
+    
+    pub fn end(&self) -> Result<i32> {
+        unsafe { sys::cv_Range_end_const(self.as_raw_Range()) }.into_result()
+    }
+    
 }
 
 // boxed class cv::RotatedRect
@@ -6249,21 +6318,7 @@ impl core::RotatedRect {
 
 impl RotatedRect {
 
-    /// returns the angle attr of float type
-    pub fn get_angle(&mut self) -> Result<f32> {
-        unsafe { sys::RotatedRect_get_angle(self.as_raw_RotatedRect()) }.into_result()
-    }
-    
-    /// returns the center attr of Point2f type
-    pub fn get_center(&mut self) -> Result<core::Point2f> {
-        unsafe { sys::RotatedRect_get_center(self.as_raw_RotatedRect()) }.into_result()
-    }
-    
-    /// returns the size attr of Size2f type
-    pub fn get_size(&mut self) -> Result<core::Size2f> {
-        unsafe { sys::RotatedRect_get_size(self.as_raw_RotatedRect()) }.into_result()
-    }
-    
+    /// default constructor
     pub fn default() -> Result<core::RotatedRect> {
         unsafe { sys::cv_RotatedRect_RotatedRect() }.into_result().map(|x| core::RotatedRect { ptr: x })
     }
@@ -6291,12 +6346,29 @@ impl RotatedRect {
         unsafe { sys::cv_RotatedRect_points_const_Point2f_X(self.as_raw_RotatedRect(), pts) }.into_result()
     }
     
+    /// returns the minimal up-right integer rectangle containing the rotated rectangle
     pub fn bounding_rect(&self) -> Result<core::Rect> {
         unsafe { sys::cv_RotatedRect_boundingRect_const(self.as_raw_RotatedRect()) }.into_result()
     }
     
+    /// returns the minimal (exact) floating point rectangle containing the rotated rectangle, not intended for use with images
     pub fn bounding_rect2f(&self) -> Result<core::Rect2f> {
         unsafe { sys::cv_RotatedRect_boundingRect2f_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
+    /// returns the rectangle mass center
+    pub fn center(&self) -> Result<core::Point2f> {
+        unsafe { sys::cv_RotatedRect_center_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
+    /// returns width and height of the rectangle
+    pub fn size(&self) -> Result<core::Size2f> {
+        unsafe { sys::cv_RotatedRect_size_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
+    /// returns the rotation angle. When the angle is 0, 90, 180, 270 etc., the rectangle becomes an up-right rectangle.
+    pub fn angle(&self) -> Result<f32> {
+        unsafe { sys::cv_RotatedRect_angle_const(self.as_raw_RotatedRect()) }.into_result()
     }
     
 }
@@ -6321,6 +6393,7 @@ impl core::TermCriteria {
 
 impl TermCriteria {
 
+    /// default constructor
     pub fn default() -> Result<core::TermCriteria> {
         unsafe { sys::cv_TermCriteria_TermCriteria() }.into_result().map(|x| core::TermCriteria { ptr: x })
     }
@@ -6335,6 +6408,20 @@ impl TermCriteria {
     
     pub fn is_valid(&self) -> Result<bool> {
         unsafe { sys::cv_TermCriteria_isValid_const(self.as_raw_TermCriteria()) }.into_result()
+    }
+    
+    pub fn _type(&self) -> Result<i32> {
+        unsafe { sys::cv_TermCriteria_type_const(self.as_raw_TermCriteria()) }.into_result()
+    }
+    
+    /// < the type of termination criteria: COUNT, EPS or COUNT + EPS
+    pub fn max_count(&self) -> Result<i32> {
+        unsafe { sys::cv_TermCriteria_maxCount_const(self.as_raw_TermCriteria()) }.into_result()
+    }
+    
+    /// < the maximum number of iterations/elements
+    pub fn epsilon(&self) -> Result<f64> {
+        unsafe { sys::cv_TermCriteria_epsilon_const(self.as_raw_TermCriteria()) }.into_result()
     }
     
 }
@@ -6383,6 +6470,7 @@ impl core::TickMeter {
 
 impl TickMeter {
 
+    /// the default constructor
     pub fn new() -> Result<core::TickMeter> {
         unsafe { sys::cv_TickMeter_TickMeter() }.into_result().map(|x| core::TickMeter { ptr: x })
     }
@@ -6450,14 +6538,17 @@ impl UMat {
         unsafe { sys::cv_UMat_getMat_const_int(self.as_raw_UMat(), flags) }.into_result().map(|x| core::Mat { ptr: x })
     }
     
+    /// copies the matrix content to "m".
     pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_UMat_copyTo_const_Mat(self.as_raw_UMat(), m.as_raw_Mat()) }.into_result()
     }
     
+    /// copies those matrix elements to "m" that are marked with non-zero mask elements.
     pub fn copy_to_masked(&self, m: &mut core::Mat, mask: &core::Mat) -> Result<()> {
         unsafe { sys::cv_UMat_copyTo_const_Mat_Mat(self.as_raw_UMat(), m.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
     
+    /// converts matrix to another datatype with optional scaling. See cvConvertScale.
     ///
     /// ## C++ default parameters
     /// * alpha: 1
@@ -6466,54 +6557,67 @@ impl UMat {
         unsafe { sys::cv_UMat_convertTo_const_Mat_int_double_double(self.as_raw_UMat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
     }
     
+    /// computes dot-product
     pub fn dot(&self, m: &core::Mat) -> Result<f64> {
         unsafe { sys::cv_UMat_dot_const_Mat(self.as_raw_UMat(), m.as_raw_Mat()) }.into_result()
     }
     
+    /// increases the reference counter; use with care to avoid memleaks
     pub fn addref(&mut self) -> Result<()> {
         unsafe { sys::cv_UMat_addref(self.as_raw_UMat()) }.into_result()
     }
     
+    /// decreases reference counter;
     pub fn release(&mut self) -> Result<()> {
         unsafe { sys::cv_UMat_release(self.as_raw_UMat()) }.into_result()
     }
     
+    /// deallocates the matrix data
     pub fn deallocate(&mut self) -> Result<()> {
         unsafe { sys::cv_UMat_deallocate(self.as_raw_UMat()) }.into_result()
     }
     
-    pub fn locate_roi(&self, whole_size: core::Size, ofs: core::Point) -> Result<()> {
+    /// locates matrix header within a parent matrix. See below
+    pub fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
         unsafe { sys::cv_UMat_locateROI_const_Size_Point(self.as_raw_UMat(), whole_size, ofs) }.into_result()
     }
     
+    /// returns true iff the matrix data is continuous
     pub fn is_continuous(&self) -> Result<bool> {
         unsafe { sys::cv_UMat_isContinuous_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns true if the matrix is a submatrix of another matrix
     pub fn is_submatrix(&self) -> Result<bool> {
         unsafe { sys::cv_UMat_isSubmatrix_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns element size in bytes,
     pub fn elem_size(&self) -> Result<size_t> {
         unsafe { sys::cv_UMat_elemSize_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns the size of element channel in bytes.
     pub fn elem_size1(&self) -> Result<size_t> {
         unsafe { sys::cv_UMat_elemSize1_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns element type, similar to CV_MAT_TYPE(cvmat->type)
     pub fn typ(&self) -> Result<i32> {
         unsafe { sys::cv_UMat_type_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns element type, similar to CV_MAT_DEPTH(cvmat->type)
     pub fn depth(&self) -> Result<i32> {
         unsafe { sys::cv_UMat_depth_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns element type, similar to CV_MAT_CN(cvmat->type)
     pub fn channels(&self) -> Result<i32> {
         unsafe { sys::cv_UMat_channels_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns step/elemSize1()
     ///
     /// ## C++ default parameters
     /// * i: 0
@@ -6521,14 +6625,17 @@ impl UMat {
         unsafe { sys::cv_UMat_step1_const_int(self.as_raw_UMat(), i) }.into_result()
     }
     
+    /// returns true if matrix data is NULL
     pub fn empty(&self) -> Result<bool> {
         unsafe { sys::cv_UMat_empty_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns the total number of matrix elements
     pub fn total(&self) -> Result<size_t> {
         unsafe { sys::cv_UMat_total_const(self.as_raw_UMat()) }.into_result()
     }
     
+    /// returns N if the matrix is 1-channel (N x ptdim) or ptdim-channel (1 x N) or (N x 1); negative number otherwise
     ///
     /// ## C++ default parameters
     /// * depth: -1
@@ -6545,6 +6652,7 @@ impl UMat {
         unsafe { sys::cv_UMat_ndoffset_const_size_t_X(self.as_raw_UMat(), ofs) }.into_result()
     }
     
+    /// internal use method: updates the continuity flag
     pub fn update_continuity_flag(&mut self) -> Result<()> {
         unsafe { sys::cv_UMat_updateContinuityFlag(self.as_raw_UMat()) }.into_result()
     }
@@ -6562,7 +6670,9 @@ impl UMat {
 /// \code
 /// double angle = 30, a = cos(angle*CV_PI/180), b = sin(angle*CV_PI/180);
 /// Mat R = (Mat_<double>(2,2) << a, -b, b, a);
-/// \endcode
+/// \endcodethe constructor, created by "matrix << firstValue" operator, where matrix is cv::Mat
+/// the operator that takes the next value and put it to the matrix
+/// another form of conversion operator
 #[allow(dead_code)]
 pub struct UMatData {
     #[doc(hidden)] pub ptr: *mut c_void

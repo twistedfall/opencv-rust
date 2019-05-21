@@ -6,9 +6,9 @@ repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
 keywords = [ "opencv", "vision" ]
 license = "MIT"
-version = "0.10.0"
+version = "0.11.0"
 edition = "2018"
-authors = ["Mathieu Poumeyrol <kali@zoy.org>"]
+authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
 build = "build.rs"
 
 [badges]

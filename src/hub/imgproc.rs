@@ -1124,6 +1124,14 @@ pub fn bilateral_filter(src: &core::Mat, dst: &mut core::Mat, d: i32, sigma_colo
     unsafe { sys::cv_bilateralFilter_Mat_Mat_int_double_double_int(src.as_raw_Mat(), dst.as_raw_Mat(), d, sigma_color, sigma_space, border_type) }.into_result()
 }
 
+/// Performs linear blending of two images:
+/// <div lang='latex'> \texttt{dst}(i,j) = \texttt{weights1}(i,j)*\texttt{src1}(i,j) + \texttt{weights2}(i,j)*\texttt{src2}(i,j) </div>
+/// ## Parameters
+/// * src1: It has a type of CV_8UC(n) or CV_32FC(n), where n is a positive integer.
+/// * src2: It has the same type and size as src1.
+/// * weights1: It has a type of CV_32FC1 and the same size with src1.
+/// * weights2: It has a type of CV_32FC1 and the same size with src1.
+/// * dst: It is created if it does not have the same size and type with src1.
 pub fn blend_linear(src1: &core::Mat, src2: &core::Mat, weights1: &core::Mat, weights2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_blendLinear_Mat_Mat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), weights1.as_raw_Mat(), weights2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
@@ -1355,7 +1363,7 @@ pub fn circle(img: &mut core::Mat, center: core::Point, radius: i32, color: core
 /// * imgRect: Image rectangle.
 /// * pt1: First line point.
 /// * pt2: Second line point.
-pub fn clip_line(img_rect: core::Rect, pt1: core::Point, pt2: core::Point) -> Result<bool> {
+pub fn clip_line(img_rect: core::Rect, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
     unsafe { sys::cv_clipLine_Rect_Point_Point(img_rect, pt1, pt2) }.into_result()
 }
 
@@ -1374,7 +1382,7 @@ pub fn clip_line(img_rect: core::Rect, pt1: core::Point, pt2: core::Point) -> Re
 /// * imgSize: Image size. The image rectangle is Rect(0, 0, imgSize.width, imgSize.height) .
 /// * pt1: First line point.
 /// * pt2: Second line point.
-pub fn clip_line_size_i64(img_size: core::Size2l, pt1: core::Point2l, pt2: core::Point2l) -> Result<bool> {
+pub fn clip_line_size_i64(img_size: core::Size2l, pt1: &mut core::Point2l, pt2: &mut core::Point2l) -> Result<bool> {
     unsafe { sys::cv_clipLine_Size2l_Point2l_Point2l(img_size, pt1, pt2) }.into_result()
 }
 
@@ -1387,7 +1395,7 @@ pub fn clip_line_size_i64(img_size: core::Size2l, pt1: core::Point2l, pt2: core:
 /// * imgSize: Image size. The image rectangle is Rect(0, 0, imgSize.width, imgSize.height) .
 /// * pt1: First line point.
 /// * pt2: Second line point.
-pub fn clip_line_size(img_size: core::Size, pt1: core::Point, pt2: core::Point) -> Result<bool> {
+pub fn clip_line_size(img_size: core::Size, pt1: &mut core::Point, pt2: &mut core::Point) -> Result<bool> {
     unsafe { sys::cv_clipLine_Size_Point_Point(img_size, pt1, pt2) }.into_result()
 }
 
@@ -3023,6 +3031,7 @@ pub fn get_perspective_transform(src: &core::Mat, dst: &core::Mat) -> Result<cor
     unsafe { sys::cv_getPerspectiveTransform_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
+/// returns 3x3 perspective transformation for the corresponding 4 point pairs.
 pub fn get_perspective_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Result<core::Mat> {
     unsafe { sys::cv_getPerspectiveTransform_const_Point2f_X_const_Point2f_X(src, dst) }.into_result().map(|x| core::Mat { ptr: x })
 }
@@ -3305,6 +3314,7 @@ pub fn init_undistort_rectify_map(camera_matrix: &core::Mat, dist_coeffs: &core:
     unsafe { sys::cv_initUndistortRectifyMap_Mat_Mat_Mat_Mat_Size_int_Mat_Mat(camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), r.as_raw_Mat(), new_camera_matrix.as_raw_Mat(), size, m1type, map1.as_raw_Mat(), map2.as_raw_Mat()) }.into_result()
 }
 
+/// initializes maps for #remap for wide-angle
 ///
 /// ## C++ default parameters
 /// * proj_type: PROJ_SPHERICAL_EQRECT
@@ -3442,6 +3452,7 @@ pub fn integral(src: &core::Mat, sum: &mut core::Mat, sdepth: i32) -> Result<()>
     unsafe { sys::cv_integral_Mat_Mat_int(src.as_raw_Mat(), sum.as_raw_Mat(), sdepth) }.into_result()
 }
 
+/// finds intersection of two convex polygons
 ///
 /// ## C++ default parameters
 /// * handle_nested: true
@@ -3675,7 +3686,7 @@ pub fn min_area_rect(points: &core::Mat) -> Result<core::RotatedRect> {
 /// * points: Input vector of 2D points, stored in std::vector\<\> or Mat
 /// * center: Output center of the circle.
 /// * radius: Output radius of the circle.
-pub fn min_enclosing_circle(points: &core::Mat, center: core::Point2f, radius: f32) -> Result<()> {
+pub fn min_enclosing_circle(points: &core::Mat, center: &mut core::Point2f, radius: &mut f32) -> Result<()> {
     unsafe { sys::cv_minEnclosingCircle_Mat_Point2f_float(points.as_raw_Mat(), center, radius) }.into_result()
 }
 
@@ -3702,6 +3713,7 @@ pub fn min_enclosing_triangle(points: &core::Mat, triangle: &mut core::Mat) -> R
     unsafe { sys::cv_minEnclosingTriangle_Mat_Mat(points.as_raw_Mat(), triangle.as_raw_Mat()) }.into_result()
 }
 
+/// returns "magic" border value for erosion and dilation. It is automatically transformed to Scalar::all(-DBL_MAX) for dilation.
 pub fn morphology_default_border_value() -> Result<core::Scalar> {
     unsafe { sys::cv_morphologyDefaultBorderValue() }.into_result()
 }
@@ -4609,6 +4621,7 @@ pub trait CLAHE : core::Algorithm {
         unsafe { sys::cv_CLAHE_setClipLimit_double(self.as_raw_CLAHE(), clip_limit) }.into_result()
     }
     
+    /// Returns threshold value for contrast limiting.
     fn get_clip_limit(&self) -> Result<f64> {
         unsafe { sys::cv_CLAHE_getClipLimit_const(self.as_raw_CLAHE()) }.into_result()
     }
@@ -4622,6 +4635,7 @@ pub trait CLAHE : core::Algorithm {
         unsafe { sys::cv_CLAHE_setTilesGridSize_Size(self.as_raw_CLAHE(), tile_grid_size) }.into_result()
     }
     
+    /// Returns Size defines the number of tiles in row and column.
     fn get_tiles_grid_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_CLAHE_getTilesGridSize_const(self.as_raw_CLAHE()) }.into_result()
     }
@@ -4640,6 +4654,7 @@ impl<'a> CLAHE + 'a {
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 pub trait GeneralizedHough : core::Algorithm {
     #[doc(hidden)] fn as_raw_GeneralizedHough(&self) -> *mut c_void;
+    /// set template to search
     ///
     /// ## C++ default parameters
     /// * templ_center: Point(-1, -1)
@@ -4654,6 +4669,7 @@ pub trait GeneralizedHough : core::Algorithm {
         unsafe { sys::cv_GeneralizedHough_setTemplate_Mat_Mat_Mat_Point(self.as_raw_GeneralizedHough(), edges.as_raw_Mat(), dx.as_raw_Mat(), dy.as_raw_Mat(), templ_center) }.into_result()
     }
     
+    /// find template on image
     ///
     /// ## C++ default parameters
     /// * votes: noArray()
@@ -4668,6 +4684,7 @@ pub trait GeneralizedHough : core::Algorithm {
         unsafe { sys::cv_GeneralizedHough_detect_Mat_Mat_Mat_Mat_Mat(self.as_raw_GeneralizedHough(), edges.as_raw_Mat(), dx.as_raw_Mat(), dy.as_raw_Mat(), positions.as_raw_Mat(), votes.as_raw_Mat()) }.into_result()
     }
     
+    /// Canny low threshold.
     fn set_canny_low_thresh(&mut self, canny_low_thresh: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHough_setCannyLowThresh_int(self.as_raw_GeneralizedHough(), canny_low_thresh) }.into_result()
     }
@@ -4676,6 +4693,7 @@ pub trait GeneralizedHough : core::Algorithm {
         unsafe { sys::cv_GeneralizedHough_getCannyLowThresh_const(self.as_raw_GeneralizedHough()) }.into_result()
     }
     
+    /// Canny high threshold.
     fn set_canny_high_thresh(&mut self, canny_high_thresh: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHough_setCannyHighThresh_int(self.as_raw_GeneralizedHough(), canny_high_thresh) }.into_result()
     }
@@ -4684,6 +4702,7 @@ pub trait GeneralizedHough : core::Algorithm {
         unsafe { sys::cv_GeneralizedHough_getCannyHighThresh_const(self.as_raw_GeneralizedHough()) }.into_result()
     }
     
+    /// Minimum distance between the centers of the detected objects.
     fn set_min_dist(&mut self, min_dist: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHough_setMinDist_double(self.as_raw_GeneralizedHough(), min_dist) }.into_result()
     }
@@ -4692,6 +4711,7 @@ pub trait GeneralizedHough : core::Algorithm {
         unsafe { sys::cv_GeneralizedHough_getMinDist_const(self.as_raw_GeneralizedHough()) }.into_result()
     }
     
+    /// Inverse ratio of the accumulator resolution to the image resolution.
     fn set_dp(&mut self, dp: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHough_setDp_double(self.as_raw_GeneralizedHough(), dp) }.into_result()
     }
@@ -4700,6 +4720,7 @@ pub trait GeneralizedHough : core::Algorithm {
         unsafe { sys::cv_GeneralizedHough_getDp_const(self.as_raw_GeneralizedHough()) }.into_result()
     }
     
+    /// Maximal size of inner buffers.
     fn set_max_buffer_size(&mut self, max_buffer_size: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHough_setMaxBufferSize_int(self.as_raw_GeneralizedHough(), max_buffer_size) }.into_result()
     }
@@ -4720,6 +4741,7 @@ impl<'a> GeneralizedHough + 'a {
 /// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ballard1981) .
 pub trait GeneralizedHoughBallard : crate::imgproc::GeneralizedHough {
     #[doc(hidden)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
+    /// R-Table levels.
     fn set_levels(&mut self, levels: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughBallard_setLevels_int(self.as_raw_GeneralizedHoughBallard(), levels) }.into_result()
     }
@@ -4728,6 +4750,7 @@ pub trait GeneralizedHoughBallard : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughBallard_getLevels_const(self.as_raw_GeneralizedHoughBallard()) }.into_result()
     }
     
+    /// The accumulator threshold for the template centers at the detection stage. The smaller it is, the more false positions may be detected.
     fn set_votes_threshold(&mut self, votes_threshold: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughBallard_setVotesThreshold_int(self.as_raw_GeneralizedHoughBallard(), votes_threshold) }.into_result()
     }
@@ -4748,6 +4771,7 @@ impl<'a> GeneralizedHoughBallard + 'a {
 /// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Guil1999) .
 pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
     #[doc(hidden)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
+    /// Angle difference in degrees between two points in feature.
     fn set_xi(&mut self, xi: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setXi_double(self.as_raw_GeneralizedHoughGuil(), xi) }.into_result()
     }
@@ -4756,6 +4780,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getXi_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Feature table levels.
     fn set_levels(&mut self, levels: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setLevels_int(self.as_raw_GeneralizedHoughGuil(), levels) }.into_result()
     }
@@ -4764,6 +4789,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getLevels_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Maximal difference between angles that treated as equal.
     fn set_angle_epsilon(&mut self, angle_epsilon: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setAngleEpsilon_double(self.as_raw_GeneralizedHoughGuil(), angle_epsilon) }.into_result()
     }
@@ -4772,6 +4798,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getAngleEpsilon_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Minimal rotation angle to detect in degrees.
     fn set_min_angle(&mut self, min_angle: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setMinAngle_double(self.as_raw_GeneralizedHoughGuil(), min_angle) }.into_result()
     }
@@ -4780,6 +4807,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getMinAngle_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Maximal rotation angle to detect in degrees.
     fn set_max_angle(&mut self, max_angle: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setMaxAngle_double(self.as_raw_GeneralizedHoughGuil(), max_angle) }.into_result()
     }
@@ -4788,6 +4816,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getMaxAngle_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Angle step in degrees.
     fn set_angle_step(&mut self, angle_step: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setAngleStep_double(self.as_raw_GeneralizedHoughGuil(), angle_step) }.into_result()
     }
@@ -4796,6 +4825,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getAngleStep_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Angle votes threshold.
     fn set_angle_thresh(&mut self, angle_thresh: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setAngleThresh_int(self.as_raw_GeneralizedHoughGuil(), angle_thresh) }.into_result()
     }
@@ -4804,6 +4834,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getAngleThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Minimal scale to detect.
     fn set_min_scale(&mut self, min_scale: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setMinScale_double(self.as_raw_GeneralizedHoughGuil(), min_scale) }.into_result()
     }
@@ -4812,6 +4843,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getMinScale_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Maximal scale to detect.
     fn set_max_scale(&mut self, max_scale: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setMaxScale_double(self.as_raw_GeneralizedHoughGuil(), max_scale) }.into_result()
     }
@@ -4820,6 +4852,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getMaxScale_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Scale step.
     fn set_scale_step(&mut self, scale_step: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setScaleStep_double(self.as_raw_GeneralizedHoughGuil(), scale_step) }.into_result()
     }
@@ -4828,6 +4861,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getScaleStep_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Scale votes threshold.
     fn set_scale_thresh(&mut self, scale_thresh: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setScaleThresh_int(self.as_raw_GeneralizedHoughGuil(), scale_thresh) }.into_result()
     }
@@ -4836,6 +4870,7 @@ pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getScaleThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
+    /// Position votes threshold.
     fn set_pos_thresh(&mut self, pos_thresh: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setPosThresh_int(self.as_raw_GeneralizedHoughGuil(), pos_thresh) }.into_result()
     }
@@ -5076,7 +5111,7 @@ impl Subdiv2D {
     /// and no pointers are filled.
     /// *  One of input arguments is invalid. A runtime error is raised or, if silent or "parent" error
     /// processing mode is selected, #PTLOC_ERROR is returned.
-    pub fn locate(&mut self, pt: core::Point2f, edge: i32, vertex: i32) -> Result<i32> {
+    pub fn locate(&mut self, pt: core::Point2f, edge: &mut i32, vertex: &mut i32) -> Result<i32> {
         unsafe { sys::cv_Subdiv2D_locate_Point2f_int_int(self.as_raw_Subdiv2D(), pt, edge, vertex) }.into_result()
     }
     

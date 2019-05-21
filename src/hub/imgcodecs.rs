@@ -60,7 +60,7 @@ pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 /// ## Parameters
 /// * buf: Input array or vector of bytes.
 /// * flags: The same flags as in cv::imread, see cv::ImreadModes.
-pub fn decode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
+pub fn imdecode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
     unsafe { sys::cv_imdecode_Mat_int(buf.as_raw_Mat(), flags) }.into_result().map(|x| core::Mat { ptr: x })
 }
 
@@ -83,7 +83,7 @@ pub fn decode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
 /// * flags: 
 /// * dst: The optional output placeholder for the decoded matrix. It can save the image
 /// reallocations when the function is called repeatedly for images of the same size.
-pub fn decode_to(buf: &core::Mat, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
+pub fn imdecode_to(buf: &core::Mat, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
     unsafe { sys::cv_imdecode_Mat_int_Mat(buf.as_raw_Mat(), flags, dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
 }
 

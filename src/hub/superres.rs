@@ -56,11 +56,6 @@ pub fn create_super_resolution_btvl1_cuda() -> Result<types::PtrOfSuperResolutio
 }
 
 // Generating impl for trait cv::superres::FrameSource (trait)
-/// # Super Resolution
-/// 
-/// The Super Resolution module contains a set of functions and classes that can be used to solve the
-/// problem of resolution enhancement. There are a few methods implemented, most of them are described in
-/// the papers [Farsiu03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Mitzel09) .
 pub trait FrameSource {
     #[doc(hidden)] fn as_raw_FrameSource(&self) -> *mut c_void;
     fn next_frame(&mut self, frame: &mut core::Mat) -> Result<()> {

@@ -1175,6 +1175,26 @@ impl ParamGrid {
         unsafe { sys::cv_ml_ParamGrid_create_double_double_double(min_val, max_val, logstep) }.into_result().map(|x| types::PtrOfParamGrid { ptr: x })
     }
     
+    pub fn min_val(&self) -> Result<f64> {
+        unsafe { sys::cv_ml_ParamGrid_minVal_const(self.as_raw_ParamGrid()) }.into_result()
+    }
+    
+    /// < Minimum value of the statmodel parameter. Default value is 0.
+    pub fn max_val(&self) -> Result<f64> {
+        unsafe { sys::cv_ml_ParamGrid_maxVal_const(self.as_raw_ParamGrid()) }.into_result()
+    }
+    
+    /// Logarithmic step for iterating the statmodel parameter.
+    /// 
+    /// The grid determines the following iteration sequence of the statmodel parameter values:
+    /// <div lang='latex'>(minVal, minVal*step, minVal*{step}^2, \dots,  minVal*{logStep}^n),</div>
+    /// where <span lang='latex'>n</span> is the maximal index satisfying
+    /// <div lang='latex'>\texttt{minVal} * \texttt{logStep} ^n <  \texttt{maxVal}</div>
+    /// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
+    pub fn log_step(&self) -> Result<f64> {
+        unsafe { sys::cv_ml_ParamGrid_logStep_const(self.as_raw_ParamGrid()) }.into_result()
+    }
+    
 }
 
 // Generating impl for trait cv::ml::RTrees (trait)

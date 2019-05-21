@@ -169,46 +169,28 @@ pub const WND_PROP_VISIBLE: i32 = 4;
 /// * y: The y-coordinate of the mouse event.
 /// * flags: one of the cv::MouseEventFlags constants.
 /// * userdata: The optional parameter.
-pub type MouseCallbackExtern = Option<extern "C" fn(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void)>;
-/// Callback function for mouse events. see cv::setMouseCallback
-/// ## Parameters
-/// * event: one of the cv::MouseEventTypes constants.
-/// * x: The x-coordinate of the mouse event.
-/// * y: The y-coordinate of the mouse event.
-/// * flags: one of the cv::MouseEventFlags constants.
-/// * userdata: The optional parameter.
 pub type MouseCallback = dyn FnMut(i32, i32, i32, i32) + Send + Sync + 'static;
+#[doc(hidden)] pub type MouseCallbackExtern = Option<extern "C" fn(event: i32, x: i32, y: i32, flags: i32, userdata: *mut c_void)>;
 
-/// Callback function for Trackbar see cv::createTrackbar
-/// ## Parameters
-/// * pos: current position of the specified trackbar.
-/// * userdata: The optional parameter.
-pub type TrackbarCallbackExtern = Option<extern "C" fn(pos: i32, userdata: *mut c_void)>;
 /// Callback function for Trackbar see cv::createTrackbar
 /// ## Parameters
 /// * pos: current position of the specified trackbar.
 /// * userdata: The optional parameter.
 pub type TrackbarCallback = dyn FnMut(i32) + Send + Sync + 'static;
+#[doc(hidden)] pub type TrackbarCallbackExtern = Option<extern "C" fn(pos: i32, userdata: *mut c_void)>;
 
-/// Callback function defined to be called every frame. See cv::setOpenGlDrawCallback
-/// ## Parameters
-/// * userdata: The optional parameter.
-pub type OpenGlDrawCallbackExtern = Option<extern "C" fn(userdata: *mut c_void)>;
 /// Callback function defined to be called every frame. See cv::setOpenGlDrawCallback
 /// ## Parameters
 /// * userdata: The optional parameter.
 pub type OpenGlDrawCallback = dyn FnMut() + Send + Sync + 'static;
+#[doc(hidden)] pub type OpenGlDrawCallbackExtern = Option<extern "C" fn(userdata: *mut c_void)>;
 
-/// Callback function for a button created by cv::createButton
-/// ## Parameters
-/// * state: current state of the button. It could be -1 for a push button, 0 or 1 for a check/radio box button.
-/// * userdata: The optional parameter.
-pub type ButtonCallbackExtern = Option<extern "C" fn(state: i32, userdata: *mut c_void)>;
 /// Callback function for a button created by cv::createButton
 /// ## Parameters
 /// * state: current state of the button. It could be -1 for a push button, 0 or 1 for a check/radio box button.
 /// * userdata: The optional parameter.
 pub type ButtonCallback = dyn FnMut(i32) + Send + Sync + 'static;
+#[doc(hidden)] pub type ButtonCallbackExtern = Option<extern "C" fn(state: i32, userdata: *mut c_void)>;
 
 /// Draws a text on the image.
 /// 
@@ -690,7 +672,7 @@ pub fn select_roi(img: &core::Mat, show_crosshair: bool, from_center: bool) -> R
 /// ## C++ default parameters
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_roi_1(window_name: &str, img: &core::Mat, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+pub fn select_roi_for_window(window_name: &str, img: &core::Mat, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
     string_arg!(window_name);
     unsafe { sys::cv_selectROI_String_Mat_bool_bool(window_name.as_ptr(), img.as_raw_Mat(), show_crosshair, from_center) }.into_result()
 }
@@ -715,7 +697,7 @@ pub fn select_roi_1(window_name: &str, img: &core::Mat, show_crosshair: bool, fr
 /// ## C++ default parameters
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_ro_is(window_name: &str, img: &core::Mat, bounding_boxes: &types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
+pub fn select_rois(window_name: &str, img: &core::Mat, bounding_boxes: &types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
     string_arg!(window_name);
     unsafe { sys::cv_selectROIs_String_Mat_VectorOfRect_bool_bool(window_name.as_ptr(), img.as_raw_Mat(), bounding_boxes.as_raw_VectorOfRect(), show_crosshair, from_center) }.into_result()
 }

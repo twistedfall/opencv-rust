@@ -963,11 +963,13 @@ impl DetectionOutputLayer {
 /// This class implements name-value dictionary, values are instances of DictValue.
 pub trait Dict {
     #[doc(hidden)] fn as_raw_Dict(&self) -> *mut c_void;
+    /// Checks a presence of the @p key in the dictionary.
     fn has(&self, key: &str) -> Result<bool> {
         string_arg!(key);
         unsafe { sys::cv_dnn_Dict_has_const_String(self.as_raw_Dict(), key.as_ptr()) }.into_result()
     }
     
+    /// If the @p key in the dictionary then returns pointer to its value, else returns NULL.
     fn ptr_mut(&mut self, key: &str) -> Result<crate::dnn::DictValue> {
         string_arg!(key);
         unsafe { sys::cv_dnn_Dict_ptr_String(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
@@ -978,11 +980,13 @@ pub trait Dict {
         unsafe { sys::cv_dnn_Dict_ptr_const_String(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
     }
     
+    /// If the @p key in the dictionary then returns its value, else an error will be generated.
     fn get(&self, key: &str) -> Result<crate::dnn::DictValue> {
         string_arg!(key);
         unsafe { sys::cv_dnn_Dict_get_const_String(self.as_raw_Dict(), key.as_ptr()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
     }
     
+    /// Erase @p key from the dictionary.
     fn erase(&mut self, key: &str) -> Result<()> {
         string_arg!(key);
         unsafe { sys::cv_dnn_Dict_erase_String(self.as_raw_Dict(), key.as_ptr()) }.into_result()
@@ -1016,6 +1020,7 @@ impl DictValue {
         unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|x| crate::dnn::DictValue { ptr: x })
     }
     
+    /// < Tries to convert array element with specified index to requested type and returns its.
     pub fn size(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_DictValue_size_const(self.as_raw_DictValue()) }.into_result()
     }
@@ -1219,6 +1224,7 @@ impl LRNLayer {
 }
 
 // Generating impl for trait cv::dnn::LSTMLayer (trait)
+/// LSTM recurrent layer
 pub trait LSTMLayer : crate::dnn::Layer {
     #[doc(hidden)] fn as_raw_LSTMLayer(&self) -> *mut c_void;
     /// **Deprecated**: Use LayerParams::blobs instead.
@@ -1469,6 +1475,7 @@ impl crate::dnn::LayerFactory {
 
 impl LayerFactory {
 
+    /// Unregisters registered layer with specified type name. Thread-safe.
     pub fn unregister_layer(_type: &str) -> Result<()> {
         string_arg!(_type);
         unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_String(_type.as_ptr()) }.into_result()
@@ -1838,11 +1845,11 @@ impl Net {
     /// * netInputShapes: vector of shapes for all net inputs.
     /// * weights: output parameter to store resulting bytes for weights.
     /// * blobs: output parameter to store resulting bytes for intermediate blobs.
-    pub fn get_memory_consumption(self, net_input_shapes: &types::VectorOfVectorOfint, weights: size_t, blobs: size_t) -> Result<()> {
+    pub fn get_memory_consumption(self, net_input_shapes: &types::VectorOfVectorOfint, weights: &mut size_t, blobs: &mut size_t) -> Result<()> {
         unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_size_t_size_t(self, net_input_shapes.as_raw_VectorOfVectorOfint(), weights, blobs) }.into_result()
     }
     
-    pub fn get_memory_consumption_for_layer(self, layer_id: i32, net_input_shapes: &types::VectorOfVectorOfint, weights: size_t, blobs: size_t) -> Result<()> {
+    pub fn get_memory_consumption_for_layer(self, layer_id: i32, net_input_shapes: &types::VectorOfVectorOfint, weights: &mut size_t, blobs: &mut size_t) -> Result<()> {
         unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t(self, layer_id, net_input_shapes.as_raw_VectorOfVectorOfint(), weights, blobs) }.into_result()
     }
     

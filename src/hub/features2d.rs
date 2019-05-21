@@ -288,7 +288,7 @@ pub fn draw_vector_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoin
 ///
 /// ## C++ default parameters
 /// * fdetector: Ptr<FeatureDetector>()
-pub fn evaluate_feature_detector(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &mut types::VectorOfKeyPoint, keypoints2: &mut types::VectorOfKeyPoint, repeatability: f32, corresp_count: i32, fdetector: &types::PtrOfFeature2D) -> Result<()> {
+pub fn evaluate_feature_detector(img1: &core::Mat, img2: &core::Mat, h1to2: &core::Mat, keypoints1: &mut types::VectorOfKeyPoint, keypoints2: &mut types::VectorOfKeyPoint, repeatability: &mut f32, corresp_count: &mut i32, fdetector: &types::PtrOfFeature2D) -> Result<()> {
     unsafe { sys::cv_evaluateFeatureDetector_Mat_Mat_Mat_VectorOfKeyPoint_VectorOfKeyPoint_float_int_PtrOfFeature2D(img1.as_raw_Mat(), img2.as_raw_Mat(), h1to2.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), keypoints2.as_raw_VectorOfKeyPoint(), repeatability, corresp_count, fdetector.as_raw_PtrOfFeature2D()) }.into_result()
 }
 
@@ -1195,6 +1195,7 @@ pub trait Feature2D : core::Algorithm {
         unsafe { sys::cv_Feature2D_read_String(self.as_raw_Feature2D(), file_name.as_ptr()) }.into_result()
     }
     
+    /// Return true if detector object is empty
     fn empty(&self) -> Result<bool> {
         unsafe { sys::cv_Feature2D_empty_const(self.as_raw_Feature2D()) }.into_result()
     }

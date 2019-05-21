@@ -86,7 +86,7 @@ pub type cv_return_value_unsigned_long_long = cv_return_value<u64>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// Ptr<BaseCascadeClassifier::MaskGenerator>
+// Ptr<FrameSource>
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {
@@ -354,7 +354,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_Mat_push_back__const_void_X(instance: *mut c_void, elem: *const c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_Mat_push_back_Mat(instance: *mut c_void, m: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_Mat_pop_back_size_t(instance: *mut c_void, nelems: size_t) -> cv_return_value_void;
-#[doc(hidden)] pub fn cv_Mat_locateROI_const_Size_Point(instance: *const c_void, whole_size: core::Size, ofs: core::Point) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_Mat_locateROI_const_Size_Point(instance: *const c_void, whole_size: &mut core::Size, ofs: &mut core::Point) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_Mat_adjustROI_int_int_int_int(instance: *mut c_void, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_Mat_isContinuous_const(instance: *const c_void) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_Mat_isSubmatrix_const(instance: *const c_void) -> cv_return_value_bool;
@@ -378,6 +378,15 @@ extern "C" {
 #[doc(hidden)] pub fn cv_Mat_ptr_const_const_int_X(instance: *const c_void, idx: *const i32) -> cv_return_value_const_unsigned_char_X;
 #[doc(hidden)] pub fn cv_Mat_updateContinuityFlag(instance: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_Mat_size_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
+#[doc(hidden)] pub fn cv_Mat_flags_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_Mat_dims_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_Mat_rows_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_Mat_cols_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_Mat_data(instance: *mut c_void) -> cv_return_value_unsigned_char_X;
+#[doc(hidden)] pub fn cv_Mat_datastart_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
+#[doc(hidden)] pub fn cv_Mat_dataend_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
+#[doc(hidden)] pub fn cv_Mat_datalimit_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
+#[doc(hidden)] pub fn cv_Mat_step(instance: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_delete_MatExpr(ptr : *mut c_void);
 #[doc(hidden)] pub fn cv_MatExpr_size_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
 #[doc(hidden)] pub fn cv_MatExpr_type_const(instance: *const c_void) -> cv_return_value_int;
@@ -439,20 +448,25 @@ extern "C" {
 #[doc(hidden)] pub fn cv_Range_size_const(instance: *const c_void) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_Range_empty_const(instance: *const c_void) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_Range_all() -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_Range_start_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_Range_end_const(instance: *const c_void) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_delete_RotatedRect(ptr : *mut c_void);
-#[doc(hidden)] pub fn RotatedRect_get_angle(instance: *mut c_void) -> cv_return_value_float;
-#[doc(hidden)] pub fn RotatedRect_get_center(instance: *mut c_void) -> cv_return_value_Point2fWrapper;
-#[doc(hidden)] pub fn RotatedRect_get_size(instance: *mut c_void) -> cv_return_value_Size2fWrapper;
 #[doc(hidden)] pub fn cv_RotatedRect_RotatedRect() -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_RotatedRect_RotatedRect_Point2f_Size2f_float(center: core::Point2f, size: core::Size2f, angle: f32) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_RotatedRect_RotatedRect_Point2f_Point2f_Point2f(point1: core::Point2f, point2: core::Point2f, point3: core::Point2f) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_RotatedRect_points_const_Point2f_X(instance: *const c_void, pts: *mut core::Point2f) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_RotatedRect_boundingRect_const(instance: *const c_void) -> cv_return_value_RectWrapper;
 #[doc(hidden)] pub fn cv_RotatedRect_boundingRect2f_const(instance: *const c_void) -> cv_return_value_Rect2fWrapper;
+#[doc(hidden)] pub fn cv_RotatedRect_center_const(instance: *const c_void) -> cv_return_value_Point2fWrapper;
+#[doc(hidden)] pub fn cv_RotatedRect_size_const(instance: *const c_void) -> cv_return_value_Size2fWrapper;
+#[doc(hidden)] pub fn cv_RotatedRect_angle_const(instance: *const c_void) -> cv_return_value_float;
 #[doc(hidden)] pub fn cv_delete_TermCriteria(ptr : *mut c_void);
 #[doc(hidden)] pub fn cv_TermCriteria_TermCriteria() -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_TermCriteria_TermCriteria_int_int_double(_type: i32, max_count: i32, epsilon: f64) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_TermCriteria_isValid_const(instance: *const c_void) -> cv_return_value_bool;
+#[doc(hidden)] pub fn cv_TermCriteria_type_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_TermCriteria_maxCount_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_TermCriteria_epsilon_const(instance: *const c_void) -> cv_return_value_double;
 #[doc(hidden)] pub fn cv_delete_TickMeter(ptr : *mut c_void);
 #[doc(hidden)] pub fn cv_TickMeter_TickMeter() -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_TickMeter_start(instance: *mut c_void) -> cv_return_value_void;
@@ -472,7 +486,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_UMat_addref(instance: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_UMat_release(instance: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_UMat_deallocate(instance: *mut c_void) -> cv_return_value_void;
-#[doc(hidden)] pub fn cv_UMat_locateROI_const_Size_Point(instance: *const c_void, whole_size: core::Size, ofs: core::Point) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_UMat_locateROI_const_Size_Point(instance: *const c_void, whole_size: &mut core::Size, ofs: &mut core::Point) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_UMat_isContinuous_const(instance: *const c_void) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_UMat_isSubmatrix_const(instance: *const c_void) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_UMat_elemSize_const(instance: *const c_void) -> cv_return_value_std_size_t;
@@ -512,7 +526,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_Rodrigues_Mat_Mat_Mat(src: *mut c_void, dst: *mut c_void, jacobian: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria(object_points: *mut c_void, image_points: *mut c_void, image_size: core::Size, camera_matrix: *mut c_void, dist_coeffs: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, std_deviations_intrinsics: *mut c_void, std_deviations_extrinsics: *mut c_void, per_view_errors: *mut c_void, flags: i32, criteria: *mut c_void) -> cv_return_value_double;
 #[doc(hidden)] pub fn cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_int_TermCriteria(object_points: *mut c_void, image_points: *mut c_void, image_size: core::Size, camera_matrix: *mut c_void, dist_coeffs: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, flags: i32, criteria: *mut c_void) -> cv_return_value_double;
-#[doc(hidden)] pub fn cv_calibrationMatrixValues_Mat_Size_double_double_double_double_double_Point2d_double(camera_matrix: *mut c_void, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: f64, fovy: f64, focal_length: f64, principal_point: core::Point2d, aspect_ratio: f64) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_calibrationMatrixValues_Mat_Size_double_double_double_double_double_Point2d_double(camera_matrix: *mut c_void, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_composeRT_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat(rvec1: *mut c_void, tvec1: *mut c_void, rvec2: *mut c_void, tvec2: *mut c_void, rvec3: *mut c_void, tvec3: *mut c_void, dr3dr1: *mut c_void, dr3dt1: *mut c_void, dr3dr2: *mut c_void, dr3dt2: *mut c_void, dt3dr1: *mut c_void, dt3dt1: *mut c_void, dt3dr2: *mut c_void, dt3dt2: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_computeCorrespondEpilines_Mat_int_Mat_Mat(points: *mut c_void, which_image: i32, f: *mut c_void, lines: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_convertPointsFromHomogeneous_Mat_Mat(src: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
@@ -534,7 +548,6 @@ extern "C" {
 #[doc(hidden)] pub fn cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat(points1: *mut c_void, points2: *mut c_void, camera_matrix: *mut c_void, method: i32, prob: f64, threshold: f64, mask: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_findEssentialMat_Mat_Mat_double_Point2d_int_double_double_Mat(points1: *mut c_void, points2: *mut c_void, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_findFundamentalMat_Mat_Mat_Mat_int_double_double(points1: *mut c_void, points2: *mut c_void, mask: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> cv_return_value_void_X;
-#[doc(hidden)] pub fn cv_findFundamentalMat_Mat_Mat_int_double_double_Mat(points1: *mut c_void, points2: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_findHomography_Mat_Mat_Mat_int_double(src_points: *mut c_void, dst_points: *mut c_void, mask: *mut c_void, method: i32, ransac_reproj_threshold: f64) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_findHomography_Mat_Mat_int_double_Mat_int_double(src_points: *mut c_void, dst_points: *mut c_void, method: i32, ransac_reproj_threshold: f64, mask: *mut c_void, max_iters: i32, confidence: f64) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_fisheye_calibrate_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_int_TermCriteria(object_points: *mut c_void, image_points: *mut c_void, image_size: core::Size, k: *mut c_void, d: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, flags: i32, criteria: *mut c_void) -> cv_return_value_double;
@@ -738,8 +751,8 @@ extern "C" {
 #[doc(hidden)] pub fn cv_dnn_Net_getFLOPS_const_int_VectorOfVectorOfint(instance: crate::dnn::Net, layer_id: i32, net_input_shapes: *mut c_void) -> cv_return_value_int64;
 #[doc(hidden)] pub fn cv_dnn_Net_getLayerTypes_const_VectorOfString(instance: crate::dnn::Net, layers_types: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_getLayersCount_const_String(instance: crate::dnn::Net, layer_type: *const c_char) -> cv_return_value_int;
-#[doc(hidden)] pub fn cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_size_t_size_t(instance: crate::dnn::Net, net_input_shapes: *mut c_void, weights: size_t, blobs: size_t) -> cv_return_value_void;
-#[doc(hidden)] pub fn cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t(instance: crate::dnn::Net, layer_id: i32, net_input_shapes: *mut c_void, weights: size_t, blobs: size_t) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_size_t_size_t(instance: crate::dnn::Net, net_input_shapes: *mut c_void, weights: &mut size_t, blobs: &mut size_t) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t(instance: crate::dnn::Net, layer_id: i32, net_input_shapes: *mut c_void, weights: &mut size_t, blobs: &mut size_t) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t(instance: crate::dnn::Net, net_input_shapes: *mut c_void, layer_ids: *mut c_void, weights: *mut c_void, blobs: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_enableFusion_bool(instance: crate::dnn::Net, fusion: bool) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_dnn_Net_getPerfProfile_VectorOfdouble(instance: crate::dnn::Net, timings: *mut c_void) -> cv_return_value_int64;
@@ -776,7 +789,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_drawKeypoints_Mat_VectorOfKeyPoint_Mat_Scalar_int(image: *mut c_void, keypoints: *mut c_void, out_image: *mut c_void, color: core::Scalar, flags: i32) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfDMatch_Mat_Scalar_Scalar_VectorOfchar_int(img1: *mut c_void, keypoints1: *mut c_void, img2: *mut c_void, keypoints2: *mut c_void, matches1to2: *mut c_void, out_img: *mut c_void, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: *mut c_void, flags: i32) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int(img1: *mut c_void, keypoints1: *mut c_void, img2: *mut c_void, keypoints2: *mut c_void, matches1to2: *mut c_void, out_img: *mut c_void, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: *mut c_void, flags: i32) -> cv_return_value_void;
-#[doc(hidden)] pub fn cv_evaluateFeatureDetector_Mat_Mat_Mat_VectorOfKeyPoint_VectorOfKeyPoint_float_int_PtrOfFeature2D(img1: *mut c_void, img2: *mut c_void, h1to2: *mut c_void, keypoints1: *mut c_void, keypoints2: *mut c_void, repeatability: f32, corresp_count: i32, fdetector: *mut c_void) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_evaluateFeatureDetector_Mat_Mat_Mat_VectorOfKeyPoint_VectorOfKeyPoint_float_int_PtrOfFeature2D(img1: *mut c_void, img2: *mut c_void, h1to2: *mut c_void, keypoints1: *mut c_void, keypoints2: *mut c_void, repeatability: &mut f32, corresp_count: &mut i32, fdetector: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_getNearestPoint_VectorOfPoint2f_float(recall_precision_curve: *mut c_void, l_precision: f32) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_getRecall_VectorOfPoint2f_float(recall_precision_curve: *mut c_void, l_precision: f32) -> cv_return_value_float;
 #[doc(hidden)] pub fn cv_AKAZE_setDescriptorType_int(instance: *mut c_void, dtype: i32) -> cv_return_value_void;
@@ -1030,9 +1043,9 @@ extern "C" {
 #[doc(hidden)] pub fn cv_calcBackProject_VectorOfMat_VectorOfint_Mat_Mat_VectorOffloat_double(images: *mut c_void, channels: *mut c_void, hist: *mut c_void, dst: *mut c_void, ranges: *mut c_void, scale: f64) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_calcHist_VectorOfMat_VectorOfint_Mat_Mat_VectorOfint_VectorOffloat_bool(images: *mut c_void, channels: *mut c_void, mask: *mut c_void, hist: *mut c_void, hist_size: *mut c_void, ranges: *mut c_void, accumulate: bool) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_circle_Mat_Point_int_Scalar_int_int_int(img: *mut c_void, center: core::Point, radius: i32, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> cv_return_value_void;
-#[doc(hidden)] pub fn cv_clipLine_Rect_Point_Point(img_rect: core::Rect, pt1: core::Point, pt2: core::Point) -> cv_return_value_bool;
-#[doc(hidden)] pub fn cv_clipLine_Size2l_Point2l_Point2l(img_size: core::Size2l, pt1: core::Point2l, pt2: core::Point2l) -> cv_return_value_bool;
-#[doc(hidden)] pub fn cv_clipLine_Size_Point_Point(img_size: core::Size, pt1: core::Point, pt2: core::Point) -> cv_return_value_bool;
+#[doc(hidden)] pub fn cv_clipLine_Rect_Point_Point(img_rect: core::Rect, pt1: &mut core::Point, pt2: &mut core::Point) -> cv_return_value_bool;
+#[doc(hidden)] pub fn cv_clipLine_Size2l_Point2l_Point2l(img_size: core::Size2l, pt1: &mut core::Point2l, pt2: &mut core::Point2l) -> cv_return_value_bool;
+#[doc(hidden)] pub fn cv_clipLine_Size_Point_Point(img_size: core::Size, pt1: &mut core::Point, pt2: &mut core::Point) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_compareHist_Mat_Mat_int(h1: *mut c_void, h2: *mut c_void, method: i32) -> cv_return_value_double;
 #[doc(hidden)] pub fn cv_connectedComponentsWithStats_Mat_Mat_Mat_Mat_int_int(image: *mut c_void, labels: *mut c_void, stats: *mut c_void, centroids: *mut c_void, connectivity: i32, ltype: i32) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_connectedComponentsWithStats_Mat_Mat_Mat_Mat_int_int_int(image: *mut c_void, labels: *mut c_void, stats: *mut c_void, centroids: *mut c_void, connectivity: i32, ltype: i32, ccltype: i32) -> cv_return_value_int;
@@ -1108,7 +1121,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_matchTemplate_Mat_Mat_Mat_int_Mat(image: *mut c_void, templ: *mut c_void, result: *mut c_void, method: i32, mask: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_medianBlur_Mat_Mat_int(src: *mut c_void, dst: *mut c_void, ksize: i32) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_minAreaRect_Mat(points: *mut c_void) -> cv_return_value_void_X;
-#[doc(hidden)] pub fn cv_minEnclosingCircle_Mat_Point2f_float(points: *mut c_void, center: core::Point2f, radius: f32) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_minEnclosingCircle_Mat_Point2f_float(points: *mut c_void, center: &mut core::Point2f, radius: &mut f32) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_minEnclosingTriangle_Mat_Mat(points: *mut c_void, triangle: *mut c_void) -> cv_return_value_double;
 #[doc(hidden)] pub fn cv_morphologyDefaultBorderValue() -> cv_return_value_ScalarWrapper;
 #[doc(hidden)] pub fn cv_morphologyEx_Mat_Mat_int_Mat_Point_int_int_Scalar(src: *mut c_void, dst: *mut c_void, op: i32, kernel: *mut c_void, anchor: core::Point, iterations: i32, border_type: i32, border_value: core::Scalar) -> cv_return_value_void;
@@ -1197,7 +1210,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_Subdiv2D_initDelaunay_Rect(instance: *mut c_void, rect: core::Rect) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_Subdiv2D_insert_Point2f(instance: *mut c_void, pt: core::Point2f) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_Subdiv2D_insert_VectorOfPoint2f(instance: *mut c_void, ptvec: *mut c_void) -> cv_return_value_void;
-#[doc(hidden)] pub fn cv_Subdiv2D_locate_Point2f_int_int(instance: *mut c_void, pt: core::Point2f, edge: i32, vertex: i32) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_Subdiv2D_locate_Point2f_int_int(instance: *mut c_void, pt: core::Point2f, edge: &mut i32, vertex: &mut i32) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_Subdiv2D_findNearest_Point2f_Point2f_X(instance: *mut c_void, pt: core::Point2f, nearest_pt: *mut core::Point2f) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_Subdiv2D_getEdgeList_const_VectorOfVec4f(instance: *const c_void, edge_list: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_Subdiv2D_getLeadingEdgeList_const_VectorOfint(instance: *const c_void, leading_edge_list: *mut c_void) -> cv_return_value_void;
@@ -1339,6 +1352,9 @@ extern "C" {
 #[doc(hidden)] pub fn cv_ml_ParamGrid_ParamGrid() -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_ml_ParamGrid_ParamGrid_double_double_double(_min_val: f64, _max_val: f64, _log_step: f64) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_ml_ParamGrid_create_double_double_double(min_val: f64, max_val: f64, logstep: f64) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_ml_ParamGrid_minVal_const(instance: *const c_void) -> cv_return_value_double;
+#[doc(hidden)] pub fn cv_ml_ParamGrid_maxVal_const(instance: *const c_void) -> cv_return_value_double;
+#[doc(hidden)] pub fn cv_ml_ParamGrid_logStep_const(instance: *const c_void) -> cv_return_value_double;
 #[doc(hidden)] pub fn cv_ml_RTrees_getCalculateVarImportance_const(instance: *const c_void) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_ml_RTrees_setCalculateVarImportance_bool(instance: *mut c_void, val: bool) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_ml_RTrees_getActiveVarCount_const(instance: *const c_void) -> cv_return_value_int;
@@ -1529,6 +1545,18 @@ extern "C" {
 #[doc(hidden)] pub fn cv_HOGDescriptor_detectMultiScaleROI_const_Mat_VectorOfRect_VectorOfDetectionROI_double_int(instance: *const c_void, img: *mut c_void, found_locations: *mut c_void, locations: *mut c_void, hit_threshold: f64, group_threshold: i32) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_HOGDescriptor_readALTModel_String(instance: *mut c_void, modelfile: *mut c_char) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_HOGDescriptor_groupRectangles_const_VectorOfRect_VectorOfdouble_int_double(instance: *const c_void, rect_list: *mut c_void, weights: *mut c_void, group_threshold: i32, eps: f64) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_HOGDescriptor_winSize_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
+#[doc(hidden)] pub fn cv_HOGDescriptor_blockSize_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
+#[doc(hidden)] pub fn cv_HOGDescriptor_blockStride_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
+#[doc(hidden)] pub fn cv_HOGDescriptor_cellSize_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
+#[doc(hidden)] pub fn cv_HOGDescriptor_nbins_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_HOGDescriptor_derivAperture_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_HOGDescriptor_winSigma_const(instance: *const c_void) -> cv_return_value_double;
+#[doc(hidden)] pub fn cv_HOGDescriptor_histogramNormType_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_HOGDescriptor_L2HysThreshold_const(instance: *const c_void) -> cv_return_value_double;
+#[doc(hidden)] pub fn cv_HOGDescriptor_gammaCorrection_const(instance: *const c_void) -> cv_return_value_bool;
+#[doc(hidden)] pub fn cv_HOGDescriptor_nlevels_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_HOGDescriptor_signedGradient_const(instance: *const c_void) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_delete_QRCodeDetector(ptr : *mut c_void);
 #[doc(hidden)] pub fn cv_QRCodeDetector_QRCodeDetector() -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_QRCodeDetector_setEpsX_double(instance: *mut c_void, eps_x: f64) -> cv_return_value_void;
@@ -1743,7 +1771,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_superres_SuperResolution_setTemporalAreaRadius_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
 }
 extern "C" {
-#[doc(hidden)] pub fn cv_CamShift_Mat_Rect_TermCriteria(prob_image: *mut c_void, window: core::Rect, criteria: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_CamShift_Mat_Rect_TermCriteria(prob_image: *mut c_void, window: &mut core::Rect, criteria: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_buildOpticalFlowPyramid_Mat_VectorOfMat_Size_int_bool_int_int_bool(img: *mut c_void, pyramid: *mut c_void, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_calcOpticalFlowFarneback_Mat_Mat_Mat_double_int_int_int_int_double_int(prev: *mut c_void, next: *mut c_void, flow: *mut c_void, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_calcOpticalFlowPyrLK_Mat_Mat_Mat_Mat_Mat_Mat_Size_int_TermCriteria_int_double(prev_img: *mut c_void, next_img: *mut c_void, prev_pts: *mut c_void, next_pts: *mut c_void, status: *mut c_void, err: *mut c_void, win_size: core::Size, max_level: i32, criteria: *mut c_void, flags: i32, min_eig_threshold: f64) -> cv_return_value_void;
@@ -1755,7 +1783,7 @@ extern "C" {
 #[doc(hidden)] pub fn cv_estimateRigidTransform_Mat_Mat_bool_int_double_int(src: *mut c_void, dst: *mut c_void, full_affine: bool, ransac_max_iters: i32, ransac_good_ratio: f64, ransac_size0: i32) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_findTransformECC_Mat_Mat_Mat_int_TermCriteria_Mat(template_image: *mut c_void, input_image: *mut c_void, warp_matrix: *mut c_void, motion_type: i32, criteria: *mut c_void, input_mask: *mut c_void) -> cv_return_value_double;
 #[doc(hidden)] pub fn cv_findTransformECC_Mat_Mat_Mat_int_TermCriteria_Mat_int(template_image: *mut c_void, input_image: *mut c_void, warp_matrix: *mut c_void, motion_type: i32, criteria: *mut c_void, input_mask: *mut c_void, gauss_filt_size: i32) -> cv_return_value_double;
-#[doc(hidden)] pub fn cv_meanShift_Mat_Rect_TermCriteria(prob_image: *mut c_void, window: core::Rect, criteria: *mut c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_meanShift_Mat_Rect_TermCriteria(prob_image: *mut c_void, window: &mut core::Rect, criteria: *mut c_void) -> cv_return_value_int;
 #[doc(hidden)] pub fn cv_BackgroundSubtractor_apply_Mat_Mat_double(instance: *mut c_void, image: *mut c_void, fgmask: *mut c_void, learning_rate: f64) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_BackgroundSubtractor_getBackgroundImage_const_Mat(instance: *const c_void, background_image: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_BackgroundSubtractorKNN_getHistory_const(instance: *const c_void) -> cv_return_value_int;
@@ -1847,6 +1875,16 @@ extern "C" {
 #[doc(hidden)] pub fn cv_KalmanFilter_init_int_int_int_int(instance: *mut c_void, dynam_params: i32, measure_params: i32, control_params: i32, _type: i32) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_KalmanFilter_predict_Mat(instance: *mut c_void, control: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_KalmanFilter_correct_Mat(instance: *mut c_void, measurement: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_statePre(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_statePost(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_transitionMatrix(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_controlMatrix(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_measurementMatrix(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_processNoiseCov(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_measurementNoiseCov(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_errorCovPre(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_gain(instance: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_KalmanFilter_errorCovPost(instance: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_SparseOpticalFlow_calc_Mat_Mat_Mat_Mat_Mat_Mat(instance: *mut c_void, prev_img: *mut c_void, next_img: *mut c_void, prev_pts: *mut c_void, next_pts: *mut c_void, status: *mut c_void, err: *mut c_void) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_SparsePyrLKOpticalFlow_getWinSize_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
 #[doc(hidden)] pub fn cv_SparsePyrLKOpticalFlow_setWinSize_Size(instance: *mut c_void, win_size: core::Size) -> cv_return_value_void;
