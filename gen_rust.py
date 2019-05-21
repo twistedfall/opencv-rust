@@ -82,7 +82,9 @@ def write_exc(filename, action):
 #
 
 
-# decls to inject before doing header parsing
+# dict of decls to inject before doing header parsing
+# key: module name
+# value: list of declarations as supplied by hdr_parser
 decls_manual_pre = {
     "core": [
         ("class cv.Range", "", ["/Ghost"], []),
@@ -95,15 +97,18 @@ decls_manual_pre = {
     ]
 }
 
-# decls to inject after doing header parsing
+# dict of decls to inject after doing header parsing
+# key: module name
+# value: list of declarations as supplied by hdr_parser
 decls_manual_post = {
-    "core": (
-        ["cv.Mat.size", "Size", ["/C"], []],
+    "core": [
+        ("cv.Mat.size", "Size", ["/C"], []),
         # ["cv.Mat.step", "size_t", ["/C"], []],
-    )
+    ]
 }
 
-renamed_funcs = {  # todo check if any "new" is required
+# dict of functions to rename or skip, key is FuncInfo.identifier, value is new name ("+" will be replaces by old name) or "-" to skip
+func_rename = {  # todo check if any "new" is required
     ### calib3d ###
     "cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat": "+_matrix",
     "cv_findHomography_Mat_Mat_int_double_Mat_int_double": "+_full",
@@ -371,44 +376,14 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t": "get_memory_consumption_for_layers",
 }
 
-_templ_const = template("""
-${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
-            
-""")
-_templ_mut = template("""
-${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&mut T> { ${pre_call_args}self._${r_name}(${forward_args}) }
-
-""")
-
-func_manual_implementation = {
-    "cv_Mat_at_int": {
-        "rust_safe": _templ_mut,
-    },
-    "cv_Mat_at_const_int": {
-        "rust_safe": _templ_const,
-    },
-    "cv_Mat_at_int_int_int": {
-        "rust_safe": _templ_mut,
-    },
-    "cv_Mat_at_const_int_int_int":  {
-        "rust_safe": _templ_const,
-    },
-    "cv_Mat_at_int_int": {
-        "rust_safe": _templ_mut,
-    },
-    "cv_Mat_at_const_int_int": {
-        "rust_safe": _templ_const,
-    },
-}
-
+# list of classes to skip, elements are regular expressions for re.match() against ClassInfo.fullname
 class_ignore_list = (
-    # core
-    "Cv[A-Z]",
+    ### core ###
+    "Cv[A-Z]",  # C style types
     "cv::Mat::MStep", "cv::Mat::MSize",
-    "cv::Mutex",  # exists in Rust
     "Ipl.*",
     "BinaryFunc", "ConvertData", "ConvertScaleData",
-    "cv::softfloat", "cv::softdouble", "cv::float16_t",
+    "cv::Mutex", "cv::softfloat", "cv::softdouble", "cv::float16_t",  # have corresponding Rust implementation
     "cv::Exception",
     "cv::RNG.*",  # maybe
     "cv::SVD",
@@ -417,21 +392,56 @@ class_ignore_list = (
     "cv::TLSDataContainer",
     "cv::MatConstIterator",
     "cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray",
-    # stitching
+
+    ### stitching ###
     "cv::CylindricalWarperGpu", "cv::PlaneWarperGpu", "cv::SphericalWarperGpu",
-    # videostab
+
+    ### videostab ###
     "cv::videostab::DensePyrLkOptFlowEstimatorGpu",
     "cv::videostab::KeypointBasedMotionEstimatorGpu",
     "cv::videostab::MoreAccurateMotionWobbleSuppressorGpu",
     "cv::videostab::SparsePyrLkOptFlowEstimatorGpu",
-    # ml
+
+    ### ml ###
     "cv::ml::SimulatedAnnealingSolverSystem",  # only defined in docs
-    # dnn
+
+    ### dnn ###
     "cv::dnn::_Range",
 )
 
+# list of constants to skip, elements are regular expressions for re.match() against ConstInfo.name
+const_ignore_list = (
+    "CV_EXPORTS_W", "CV_MAKE_TYPE",
+    "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
+    "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
+    "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_2PI", "CV_LOG2",
+    "CV_TYPE_NAME_IMAGE",
+    "CV_SUPPRESS_DEPRECATED_START",
+    "CV_SUPPRESS_DEPRECATED_END",
+    "__CV_BEGIN__", "__CV_END__", "__CV_EXIT__",
+    "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN",
+    "CV_TRY", "CV_CATCH_ALL",
+    "CV__DEBUG_NS_",
+    "UINT64_1",
+    "CV_STRUCT_INITIALIZER", "CV__ENABLE_C_API_CTORS",
+    "VSX_IMPL_MULH_",
+    "CV__DNN_EXPERIMENTAL_NS_",
+    "CV_Sts",
+    "CV_ALWAYS_INLINE",
+)
+
+# set of functions that should have unsafe in their declaration, element is FuncInfo.identifier
+func_unsafe_list = {
+    # allocates uninitialized memory
+    "cv_Mat_Mat_int_int_int",
+    "cv_Mat_Mat_Size_int",
+    "cv_Mat_Mat_VectorOfint_int",
+}
+
+# dict of types to replace if cannot be handled automatically
+# key: typeid (full class path with . replaces by ::)
+# value: replacement typeid
 type_replace = {
-    "unsigned": "uint",
     "InputArray": "cv::Mat",
     "InputArrayOfArrays": "vector<cv::Mat>",
     "OutputArray": "cv::Mat",
@@ -455,38 +465,12 @@ type_replace = {
     "Scalar_<double>": "Scalar",
 }
 
-func_unsafe_list = {
-    # allocates uninitialized memory
-    "cv_Mat_Mat_int_int_int",
-    "cv_Mat_Mat_Size_int",
-    "cv_Mat_Mat_VectorOfint_int",
-}
-
-# regular expressions to ignore matching constant names
-const_ignore_list = (
-    "CV_EXPORTS_W", "CV_MAKE_TYPE",
-    "CV_IS_CONT_MAT", "CV_RNG_COEFF", "IPL_IMAGE_MAGIC_VAL",
-    "CV_SET_ELEM_FREE_FLAG", "CV_FOURCC_DEFAULT",
-    "CV_WHOLE_ARR", "CV_WHOLE_SEQ", "CV_PI", "CV_2PI", "CV_LOG2",
-    "CV_TYPE_NAME_IMAGE",
-    "CV_SUPPRESS_DEPRECATED_START",
-    "CV_SUPPRESS_DEPRECATED_END",
-    "__CV_BEGIN__", "__CV_END__", "__CV_EXIT__",
-    "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN",
-    "CV_TRY", "CV_CATCH_ALL",
-    "CV__DEBUG_NS_",
-    "UINT64_1",
-    "CV_STRUCT_INITIALIZER", "CV__ENABLE_C_API_CTORS",
-    "VSX_IMPL_MULH_",
-    "CV__DNN_EXPERIMENTAL_NS_",
-    "CV_Sts",
-    "CV_ALWAYS_INLINE",
-)
-
-#
-#       TYPES MAPPING
-#
-
+# dict for handling primitives
+# key: primitive typeid
+# value: dict
+#   keys: "cpp_extern", "rust_local"
+#   values: corresponding native typeid
+# fixme, is "cpp_extern" needed at all?
 primitives = {
     "void": {"cpp_extern": "void", "rust_local": "()"},
 
@@ -506,6 +490,7 @@ primitives = {
     "int": {"cpp_extern": "int", "rust_local": "i32"},
     "signed int": {"cpp_extern": "int", "rust_local": "i32"},
     "uint": {"cpp_extern": "unsigned int", "rust_local": "u32"},
+    "unsigned": {"cpp_extern": "unsigned int", "rust_local": "u32"},
     "unsigned int": {"cpp_extern": "unsigned int", "rust_local": "u32"},
     "uint32_t": {"cpp_extern": "uint32_t", "rust_local": "u32"},
 
@@ -524,13 +509,55 @@ primitives = {
     "double": {"cpp_extern": "double", "rust_local": "f64"},
 }
 
-type_manual_declaration = {}
+_forward_const_rust_safe = template("""
+${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
+            
+""")
+_forward_mut_rust_safe = template("""
+${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&mut T> { ${pre_call_args}self._${r_name}(${forward_args}) }
+
+""")
+
+# dict of functions with manual implementations
+# key: FuncInfo.identifier
+# value: dict
+#   keys: "rust_safe", "rust_externs", "cpp", missing key means skip particular implementation
+#   values: template to use for manual implementation or "~" to use default implementation
+func_manual = {
+    "cv_Mat_at_int": {
+        "rust_safe": _forward_mut_rust_safe,
+    },
+    "cv_Mat_at_const_int": {
+        "rust_safe": _forward_const_rust_safe,
+    },
+    "cv_Mat_at_int_int_int": {
+        "rust_safe": _forward_mut_rust_safe,
+    },
+    "cv_Mat_at_const_int_int_int":  {
+        "rust_safe": _forward_const_rust_safe,
+    },
+    "cv_Mat_at_int_int": {
+        "rust_safe": _forward_mut_rust_safe,
+    },
+    "cv_Mat_at_const_int_int": {
+        "rust_safe": _forward_const_rust_safe,
+    },
+}
+
+# dict of manual declaration for types
+# key: module name
+# value: dict
+#   key: local rust type name
+#   value: dict
+#     keys: "cpp", "rust", missing key means skip particular implementation
+#     values: template to use for manual implementation or "~" to use default implementation
+type_manual = {}
 
 
 def _base_type_alias(module, rust_name, rust_definition, cpp_field_type, cpp_fields):
-    if module not in type_manual_declaration:
-        type_manual_declaration[module] = {}
-    type_manual_declaration[module][rust_name] = {
+    if module not in type_manual:
+        type_manual[module] = {}
+    type_manual[module][rust_name] = {
         "rust": template(template("""
             ${doc_comment}pub type ${rust_local} = ${definition};
         """).substitute({"doc_comment": "${doc_comment}", "rust_local": "${rust_local}", "definition": rust_definition})),
@@ -546,7 +573,7 @@ _base_type_alias("core", "Scalar", "core::Scalar_<f64>", "double", ("data[4]",))
 
 for s in (2, 3, 4, 6, 8):
     types = ("b", "unsigned char"), \
-            ("s", "short"),\
+            ("s", "short"), \
             ("w", "unsigned short"), \
             ("i", "int"), \
             ("l", "int64"), \
@@ -571,7 +598,12 @@ for s in (2, 3, 4, 6, 8):
         if t[0] != "l":
             _base_type_alias("core", "Vec{}{}".format(s, t[0]), "core::Vec{}<{}>".format(s, rust_local), t[1], ("data[{}]".format(s),))
 
-forced_trait_classes = ("cv::Algorithm", "cv::BackgroundSubtractor", "cv::dnn::Layer")
+# list of types that must be generated as traits, elements are typeids
+forced_trait_classes = (
+    "cv::Algorithm",
+    "cv::BackgroundSubtractor",
+    "cv::dnn::Layer"
+)
 
 boxed_type_fields = {
     "RotatedRect": {
@@ -581,6 +613,9 @@ boxed_type_fields = {
     }
 }
 
+# dict of reserved Rust keywords and their replacement to be used in var, function and class names
+# key: reserved keyword
+# value: replacement
 reserved_rename = {
     "type": "_type",
     "box": "_box",
@@ -589,6 +624,7 @@ reserved_rename = {
     "use": "_use",
 }
 
+# list of modules that are imported into every other module so there is no need to reference them using full path, elements are module names
 static_modules = ("core", "sys", "types")
 
 #
@@ -891,7 +927,7 @@ class FuncInfo(GeneralInfo):
             self.is_ignored = True
 
     def _get_manual_implementation(self, section, template_vars):
-        templ = func_manual_implementation.get(self.identifier)
+        templ = func_manual.get(self.identifier)
         if templ is not None:
             if section in templ:
                 if templ[section] == "~":
@@ -923,13 +959,13 @@ class FuncInfo(GeneralInfo):
         if self.identifier in self.gen.generated:
             return "already there"
 
-        if self.identifier in func_manual_implementation:
+        if self.identifier in func_manual:
             return None
 
         if self.name.startswith("operator"):
             return "can not map %s yet"%(self.name)
 
-        if renamed_funcs.get(self.identifier) == "-":
+        if func_rename.get(self.identifier) == "-":
             return "ignored by renamed table"
 
         if not self.rv_type():
@@ -951,7 +987,7 @@ class FuncInfo(GeneralInfo):
         return None
 
     def r_name(self):
-        out = renamed_funcs.get(self.identifier)
+        out = func_rename.get(self.identifier)
         if out is not None:
             if "+" in out:
                 name = out.replace("+", self.name)
@@ -1218,8 +1254,8 @@ class ClassInfo(GeneralInfo):
         return self.gen.get_type_info(self.fullname)
 
     def get_manual_declaration_template(self, section):
-        if self.module in type_manual_declaration:
-            module_types = type_manual_declaration[self.module]
+        if self.module in type_manual:
+            module_types = type_manual[self.module]
             if self.name in module_types:
                 templ = module_types[self.name]
                 if section in templ:
@@ -2591,7 +2627,7 @@ class RustWrapperGenerator(object):
             rust_func_name = bump_counter(rust_func_name)
             renamed = True
         if renamed:
-            renamed_funcs[fi.identifier] = rust_func_name
+            func_rename[fi.identifier] = rust_func_name
 
         # rust safe wrapper
         self.moduleSafeRust.write(fi.gen_safe_rust())
