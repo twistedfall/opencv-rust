@@ -808,10 +808,11 @@ class CppHeaderParser(object):
                 var_list = stmt.split(",")
                 var_type, var_name1, modlist, argno = self.parse_arg(var_list[0], -1)
                 var_list = [var_name1] + [i.strip() for i in var_list[1:]]
+                var_modlist.extend(modlist)
 
                 for v in var_list:
-                    class_decl[3].append([var_type, v, "", var_modlist])
-            return stmt_type, "", False, None
+                    class_decl[3].append([var_type, v, docstring, var_modlist])
+            return stmt_type, "", True, None
 
         # something unknown
         return stmt_type, "", False, None
