@@ -17,6 +17,7 @@ travis-ci = { repository = "twistedfall/opencv-rust", branch = "master" }
 [dependencies]
 lazy_static = "1.0"
 libc = "0.2"
+num = "0.2"
 slab = "0.4"
 
 [build-dependencies]

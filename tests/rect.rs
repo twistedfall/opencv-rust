@@ -1,4 +1,5 @@
 use opencv::core;
+use opencv::core::{Rect2d, Point2d, Size2d};
 
 #[test]
 fn rect_add() {
@@ -64,4 +65,18 @@ fn rect_sub() {
         out -= core::Size::new(25, 25);
         assert_eq!(out, res);
     }
+}
+
+#[test]
+fn rect_methods() {
+    let mut rect = Rect2d::new(10., 20., 100., 200.);
+    assert!(!rect.empty());
+    assert_eq!(20000., rect.area());
+    assert_eq!(Point2d::new(10., 20.), rect.tl());
+    assert_eq!(Point2d::new(110., 220.), rect.br());
+    assert_eq!(Size2d::new(100., 200.), rect.size());
+    assert!(rect.contains(Point2d::new(20., 20.)));
+    assert!(!rect.contains(Point2d::new(120., 120.)));
+    rect.width = 0.;
+    assert!(rect.empty());
 }

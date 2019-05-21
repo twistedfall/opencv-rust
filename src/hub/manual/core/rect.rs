@@ -1,4 +1,5 @@
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
+use num::Zero;
 
 use crate::core::{Point_, Size_, ValidPointType, ValidSizeType};
 
@@ -16,6 +17,48 @@ pub struct Rect_<T: ValidRectType> {
 impl<T: ValidRectType> Rect_<T> {
     pub fn new(x: T, y: T, width: T, height: T) -> Self {
         Self { x, y, width, height }
+    }
+}
+
+impl<T: ValidRectType + ValidPointType> Rect_<T> {
+    #[inline]
+    pub fn tl(&self) -> Point_<T> {
+        Point_::new(self.x, self.y)
+    }
+}
+
+impl<T: ValidRectType + ValidPointType + Add<T, Output=T>> Rect_<T> {
+    #[inline]
+    pub fn br(&self) -> Point_<T> {
+        Point_::new(self.x + self.width, self.y + self.height)
+    }
+}
+
+impl<T: ValidRectType + ValidSizeType> Rect_<T> {
+    #[inline]
+    pub fn size(&self) -> Size_<T> {
+        Size_::new(self.width, self.height)
+    }
+}
+
+impl<T: ValidRectType + Mul<T, Output=T>> Rect_<T> {
+    #[inline]
+    pub fn area(&self) -> T {
+        self.width * self.height
+    }
+}
+
+impl<T: ValidRectType + Zero + PartialOrd> Rect_<T> {
+    #[inline]
+    pub fn empty(&self) -> bool {
+        self.width <= T::zero() || self.height <= T::zero()
+    }
+}
+
+impl<T: ValidRectType + ValidPointType + Add<T, Output=T> + PartialOrd> Rect_<T> {
+    #[inline]
+    pub fn contains(&self, pt: Point_<T>) -> bool {
+        self.x <= pt.x && pt.x < self.x + self.width && self.y <= pt.y && pt.y < self.y + self.height
     }
 }
 
