@@ -119,6 +119,7 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera",
     "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera_with_errors",
     "cv_stereoRectify_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_int_double_Size_Rect_X_Rect_X": "+_camera",
+    "cv_findFundamentalMat_Mat_Mat_int_double_double_Mat": "-",  # duplicate of cv_findFundamentalMat_Mat_Mat_Mat_int_double_double, but with different order of arguments
 
     ### core ###
     "cv_addImpl_int_const_char_X": "-",
@@ -135,7 +136,7 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_Mat_Mat_Mat": "copy",
     "cv_Mat_Mat_int_int_int_void_X_size_t": "new_rows_cols_with_data",
     "cv_Mat_Mat_Size_int_void_X_size_t": "new_size_with_data",
-    "cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_void_X_data_const_size_t_X_steps, but with pointers
+    "cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X, but with pointers
     "cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X": "new_nd_with_data",  # fixme steps should be slice
     "cv_Mat_Mat_Mat_Range_Range": "rowscols",
     "cv_Mat_Mat_Mat_Rect": "roi",
@@ -232,7 +233,7 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_LDA_LDA_VectorOfMat_Mat_int": "new_with_data",
     "cv_mixChannels_VectorOfMat_VectorOfMat_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
     "cv_mixChannels_const_Mat_size_t_Mat_size_t_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
-    "cv_noArray": "-",  # conversion from ‘const cv::_InputOutputArray’ to non-scalar type ‘cv::Mat’ requested
+    "cv_noArray": "-",  # fixme: conversion from ‘const cv::_InputOutputArray’ to non-scalar type ‘cv::Mat’ requested
 
     ### features2d ###
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
@@ -271,11 +272,12 @@ renamed_funcs = {  # todo check if any "new" is required
     "cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_PtrOfDescriptorMatcher": "new_with_dextractor",
 
     ### highgui ###
-    "cv_addText_Mat_String_Point_QtFont": "add_text_with_font",
+    "cv_addText_Mat_String_Point_QtFont": "+_with_font",
+    "cv_selectROIs_String_Mat_VectorOfRect_bool_bool": "select_rois",
+    "cv_selectROI_String_Mat_bool_bool": "+_for_window",
 
     ### imgcodecs ###
-    "cv_imdecode_Mat_int": "decode",
-    "cv_imdecode_Mat_int_Mat": "decode_to",
+    "cv_imdecode_Mat_int_Mat": "+_to",
 
     ### imgproc ###
     "cv_Canny_Mat_Mat_Mat_double_double_bool": "canny_derivative",
@@ -1320,8 +1322,8 @@ class TypedefInfo(GeneralInfo):
 class CallbackInfo(GeneralInfo):
     TEMPLATES = {
         "rust": template("""
-        ${doc_comment}pub type ${name}Extern = Option<extern "C" fn(${extern_args})>;
         ${doc_comment}pub type ${name} = dyn FnMut(${args}) + Send + Sync + 'static;
+        #[doc(hidden)] pub type ${name}Extern = Option<extern "C" fn(${extern_args})>;
         
         """),
     }

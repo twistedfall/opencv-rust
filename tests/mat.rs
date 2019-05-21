@@ -1,17 +1,17 @@
 use std::mem::transmute;
 
-use opencv::core::{self, Mat, Scalar, Size, Vec2b, DataType};
-use opencv::types::VectorOfMat;
+use opencv::core::{self, Mat, Scalar, Size, Vec2b, DataType, Vec3b};
+use opencv::types::{VectorOfMat, VectorOfint};
 
 const PIXEL: &[u8] = include_bytes!("../pixel.png");
 
 #[test]
 fn mat_for_rows_and_cols() {
-    let typ = core::CV_8UC3;
+    let typ = Vec3b::typ();
     let mat = unsafe { Mat::new_rows_cols(400, 300, typ) }.unwrap();
     assert_eq!(mat.typ().unwrap(), typ);
     assert_eq!(mat.size().unwrap(), Size::new(300, 400));
-    assert_eq!(core::CV_8U, mat.depth().unwrap());
+    assert_eq!(u8::typ(), mat.depth().unwrap());
     assert_eq!(3, mat.channels().unwrap());
 }
 
