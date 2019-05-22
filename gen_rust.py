@@ -1798,31 +1798,45 @@ class BoxedClassTypeInfo(TypeInfo):
 class VectorTypeInfo(TypeInfo):
     TEMPLATES = {
         "rust_common": template("""
-                extern "C" {
-                   #[doc(hidden)] fn cv_${rust_safe_id}_new() -> ${rust_extern};
-                   #[doc(hidden)] fn cv_${rust_safe_id}_delete(ptr: ${rust_extern});
-                   #[doc(hidden)] fn cv_push_${rust_safe_id}(ptr: ${rust_extern}, ptr2: *const c_void);
-                   #[doc(hidden)] fn cv_${rust_safe_id}_len(ptr: ${rust_extern}) -> i32;
-                   #[doc(hidden)] fn cv_${rust_safe_id}_get(ptr: ${rust_extern}, index: i32) -> ${rust_extern};
-                }
-                
                 #[allow(dead_code)]
                 pub struct ${rust_local} {
                     pub(crate) ptr: ${rust_extern}
                 }
                 
+                extern "C" {
+                   #[doc(hidden)] fn cv_${rust_safe_id}_new() -> ${rust_extern};
+                   #[doc(hidden)] fn cv_${rust_safe_id}_clone(src: ${rust_extern}) -> ${rust_extern};
+                   #[doc(hidden)] fn cv_${rust_safe_id}_delete(vec: ${rust_extern});
+                   #[doc(hidden)] fn cv_${rust_safe_id}_reserve(vec: ${rust_extern}, n: size_t);
+                   #[doc(hidden)] fn cv_${rust_safe_id}_capacity(vec: ${rust_extern}) -> size_t;
+                   #[doc(hidden)] fn cv_${rust_safe_id}_push_back(vec: ${rust_extern}, val_ref: *const c_void);
+                   #[doc(hidden)] fn cv_${rust_safe_id}_size(vec: ${rust_extern}) -> size_t;
+                   #[doc(hidden)] fn cv_${rust_safe_id}_get(vec: ${rust_extern}, index: size_t) -> ${rust_extern};
+                }
+                
                 impl ${rust_local} {
+                    #[doc(hidden)] pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
+
                     pub fn new() -> Self {
                         unsafe { Self { ptr: cv_${rust_safe_id}_new() } }
                     }
                     
-                    pub fn len(&self) -> i32 {
-                        unsafe { cv_${rust_safe_id}_len(self.ptr) }
+                    pub fn with_capacity(capacity: size_t) -> Self {
+                        let mut out = Self::new();
+                        out.reserve(capacity);
+                        out
+                    } 
+                    
+                    pub fn len(&self) -> size_t {
+                        unsafe { cv_${rust_safe_id}_size(self.ptr) }
                     }
                     
-                    #[doc(hidden)]
-                    pub fn as_raw_$rust_local(&self) -> ${rust_extern} {
-                        self.ptr
+                    pub fn capacity(&self) -> size_t {
+                        unsafe { cv_${rust_safe_id}_capacity(self.ptr) }
+                    }
+                    
+                    pub fn reserve(&mut self, additional: size_t) {
+                        unsafe { cv_${rust_safe_id}_reserve(self.ptr, self.len() + additional) }
                     }
                 }
 
@@ -1837,10 +1851,10 @@ class VectorTypeInfo(TypeInfo):
                 // BoxedClassTypeInfo
                 impl ${rust_local} {
                     pub fn push(&mut self, val: ${inner_rust_full}) {
-                        unsafe { cv_push_${rust_safe_id}(self.ptr, val.ptr) }
+                        unsafe { cv_${rust_safe_id}_push_back(self.ptr, val.ptr) }
                     }
                     
-                    pub fn get(&self, index: i32) -> ${inner_rust_full} {
+                    pub fn get(&self, index: size_t) -> ${inner_rust_full} {
                         ${inner_rust_full} { ptr: unsafe { cv_${rust_safe_id}_get(self.ptr, index) } }
                     }
                     
@@ -1853,10 +1867,10 @@ class VectorTypeInfo(TypeInfo):
         "rust_non_boxed": template("""
                 impl ${rust_local} {
                     pub fn push(&mut self, val: ${inner_rust_full}) {
-                        unsafe { cv_push_${rust_safe_id}(self.ptr, &val as *const _ as _) }
+                        unsafe { cv_${rust_safe_id}_push_back(self.ptr, &val as *const _ as _) }
                     }
                     
-                    pub fn get(&self, index: i32) -> &mut $inner_rust_full {
+                    pub fn get(&self, index: size_t) -> &mut $inner_rust_full {
                         unsafe { (cv_${rust_safe_id}_get(self.ptr, index) as *mut ${inner_rust_full}).as_mut().unwrap() }
                     }
                 }
@@ -1870,7 +1884,7 @@ class VectorTypeInfo(TypeInfo):
                     
                     fn deref(&self) -> &Self::Target {
                         unsafe {
-                            let length = cv_${rust_safe_id}_len(self.ptr) as usize;
+                            let length = cv_${rust_safe_id}_size(self.ptr);
                             let data = cv_${rust_safe_id}_data(self.ptr);
                             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
                         }
@@ -1879,49 +1893,51 @@ class VectorTypeInfo(TypeInfo):
             """),
 
         "cpp_externs": template("""
-                    void* cv_${rust_safe_id}_new() {
+                    ${cpp_extern} cv_${rust_safe_id}_new() {
                         return new ${cpptype}();
                     }
                     
-                    void cv_${rust_safe_id}_delete(void* ptr) {
-                        delete reinterpret_cast<${cpptype}*>(ptr);
+                    ${cpp_extern} cv_${rust_safe_id}_clone(${cpp_extern} src) {
+                        return new ${cpptype}(*reinterpret_cast<${cpptype}*>(src));
                     }
                     
-                    void cv_push_${rust_safe_id}(void* ptr, void* ptr2) {
-                        ${inner_cpptype}* val = reinterpret_cast<${inner_cpptype}*>(ptr2);
-                        reinterpret_cast<${cpptype}*>(ptr)->push_back(*val);
+                    void cv_${rust_safe_id}_delete(${cpp_extern} vec) {
+                        delete reinterpret_cast<${cpptype}*>(vec);
                     }
                     
-                    ${inner_cpptype}* cv_${rust_safe_id}_front_item(void* ptr) {
-                        ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(ptr)->front();
-                        return new ${inner_cpptype}(val);
+                    void cv_${rust_safe_id}_reserve(${cpp_extern} vec, size_t n) {
+                        reinterpret_cast<${cpptype}*>(vec)->reserve(n);
+                    }
+
+                    size_t cv_${rust_safe_id}_capacity(${cpp_extern} vec) {
+                        return reinterpret_cast<${cpptype}*>(vec)->capacity();
                     }
                     
-                    ${inner_cpptype}* cv_${rust_safe_id}_back_item(void* ptr) {
-                        ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(ptr)->back();
-                        return new ${inner_cpptype}(val);
+                    void cv_${rust_safe_id}_push_back(${cpp_extern} vec, void* val_ref) {
+                        ${inner_cpptype}* val = reinterpret_cast<${inner_cpptype}*>(val_ref);
+                        reinterpret_cast<${cpptype}*>(vec)->push_back(*val);
                     }
                     
-                    int cv_${rust_safe_id}_len(void* ptr) {
-                        return reinterpret_cast<${cpptype}*>(ptr)->size();
+                    size_t cv_${rust_safe_id}_size(${cpp_extern} vec) {
+                        return reinterpret_cast<${cpptype}*>(vec)->size();
                     }
             """),
 
         "cpp_externs_bool": template("""
-                ${inner_cpptype}* cv_${rust_safe_id}_get(void* ptr, int index) {
-                    ${inner_cpptype} val = (*reinterpret_cast<${cpptype}*>(ptr))[index];
+                ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
+                    ${inner_cpptype} val = (*reinterpret_cast<${cpptype}*>(vec))[index];
                     return new ${inner_cpptype}(val);
                 }
             """),
 
         "cpp_externs_non_bool": template("""
-                ${inner_cpptype}* cv_${rust_safe_id}_get(void* ptr, int index) {
-                    ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(ptr)->data()[index];
+                ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
+                    ${inner_cpptype} val = (*reinterpret_cast<${cpptype}*>(vec))[index];
                     return new ${inner_cpptype}(val);
                 }
                 
-                ${cpp_extern}* cv_${rust_safe_id}_data(void* ptr) {
-                    return reinterpret_cast<${cpp_extern}*>(reinterpret_cast<${cpptype}*>(ptr)->data());
+                ${cpp_extern}* cv_${rust_safe_id}_data(${cpp_extern} vec) {
+                    return reinterpret_cast<${cpp_extern}*>(reinterpret_cast<${cpptype}*>(vec)->data());
                 }
             """),
 
@@ -2005,9 +2021,7 @@ class SmartPtrTypeInfo(TypeInfo):
                 }
 
                 impl ${rust_local} {
-                    #[doc(hidden)] pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} {
-                        self.ptr
-                    }
+                    #[doc(hidden)] pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} { self.ptr }
                 }
 
                 impl Drop for ${rust_local} {
