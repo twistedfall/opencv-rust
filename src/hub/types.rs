@@ -3,7 +3,7 @@ use crate::{core, types};
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfAKAZE_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfAKAZE(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfAKAZE_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -12,14 +12,12 @@ pub struct PtrOfAKAZE {
 }
 
 impl PtrOfAKAZE {
-    #[doc(hidden)] pub fn as_raw_PtrOfAKAZE(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfAKAZE(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfAKAZE {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfAKAZE(self.ptr) };
+        unsafe { cv_PtrOfAKAZE_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfAKAZE {
@@ -45,7 +43,7 @@ impl crate::features2d::AKAZE for PtrOfAKAZE {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfANN_MLP_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfANN_MLP(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfANN_MLP_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -54,14 +52,12 @@ pub struct PtrOfANN_MLP {
 }
 
 impl PtrOfANN_MLP {
-    #[doc(hidden)] pub fn as_raw_PtrOfANN_MLP(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfANN_MLP(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfANN_MLP {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfANN_MLP(self.ptr) };
+        unsafe { cv_PtrOfANN_MLP_delete(self.ptr) };
     }
 }
 impl crate::ml::ANN_MLP for PtrOfANN_MLP {
@@ -87,7 +83,7 @@ impl crate::ml::StatModel for PtrOfANN_MLP {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfAbsLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfAbsLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfAbsLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -96,19 +92,17 @@ pub struct PtrOfAbsLayer {
 }
 
 impl PtrOfAbsLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfAbsLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfAbsLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfAbsLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfAbsLayer(self.ptr) };
+        unsafe { cv_PtrOfAbsLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfActivationLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfActivationLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfActivationLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -117,14 +111,12 @@ pub struct PtrOfActivationLayer {
 }
 
 impl PtrOfActivationLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfActivationLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfActivationLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfActivationLayer(self.ptr) };
+        unsafe { cv_PtrOfActivationLayer_delete(self.ptr) };
     }
 }
 impl crate::dnn::Layer for PtrOfActivationLayer {
@@ -150,7 +142,7 @@ impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfAffineTransformer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfAffineTransformer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfAffineTransformer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -159,14 +151,12 @@ pub struct PtrOfAffineTransformer {
 }
 
 impl PtrOfAffineTransformer {
-    #[doc(hidden)] pub fn as_raw_PtrOfAffineTransformer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfAffineTransformer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfAffineTransformer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfAffineTransformer(self.ptr) };
+        unsafe { cv_PtrOfAffineTransformer_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfAffineTransformer {
@@ -192,7 +182,7 @@ impl crate::shape::ShapeTransformer for PtrOfAffineTransformer {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfAgastFeatureDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfAgastFeatureDetector(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfAgastFeatureDetector_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -201,14 +191,12 @@ pub struct PtrOfAgastFeatureDetector {
 }
 
 impl PtrOfAgastFeatureDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfAgastFeatureDetector(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfAgastFeatureDetector(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfAgastFeatureDetector {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfAgastFeatureDetector(self.ptr) };
+        unsafe { cv_PtrOfAgastFeatureDetector_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfAgastFeatureDetector {
@@ -234,7 +222,7 @@ impl crate::features2d::AgastFeatureDetector for PtrOfAgastFeatureDetector {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfAlignMTB_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfAlignMTB(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfAlignMTB_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -243,14 +231,12 @@ pub struct PtrOfAlignMTB {
 }
 
 impl PtrOfAlignMTB {
-    #[doc(hidden)] pub fn as_raw_PtrOfAlignMTB(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfAlignMTB(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfAlignMTB {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfAlignMTB(self.ptr) };
+        unsafe { cv_PtrOfAlignMTB_delete(self.ptr) };
     }
 }
 impl crate::photo::AlignMTB for PtrOfAlignMTB {
@@ -275,8 +261,27 @@ impl crate::photo::AlignExposures for PtrOfAlignMTB {
 }
 
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfAverageHash_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfAverageHash_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfAverageHash {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfAverageHash {
+    #[doc(hidden)] pub fn as_raw_PtrOfAverageHash(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfAverageHash {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfAverageHash_delete(self.ptr) };
+    }
+}
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfBFMatcher_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBFMatcher(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBFMatcher_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -285,19 +290,17 @@ pub struct PtrOfBFMatcher {
 }
 
 impl PtrOfBFMatcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfBFMatcher(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBFMatcher(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBFMatcher {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBFMatcher(self.ptr) };
+        unsafe { cv_PtrOfBFMatcher_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBNLLLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBNLLLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBNLLLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -306,19 +309,17 @@ pub struct PtrOfBNLLLayer {
 }
 
 impl PtrOfBNLLLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfBNLLLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBNLLLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBNLLLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBNLLLayer(self.ptr) };
+        unsafe { cv_PtrOfBNLLLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBRISK_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBRISK(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBRISK_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -327,19 +328,17 @@ pub struct PtrOfBRISK {
 }
 
 impl PtrOfBRISK {
-    #[doc(hidden)] pub fn as_raw_PtrOfBRISK(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBRISK(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBRISK {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBRISK(self.ptr) };
+        unsafe { cv_PtrOfBRISK_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBackendNode_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBackendNode(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBackendNode_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -348,19 +347,17 @@ pub struct PtrOfBackendNode {
 }
 
 impl PtrOfBackendNode {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackendNode(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBackendNode(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBackendNode {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBackendNode(self.ptr) };
+        unsafe { cv_PtrOfBackendNode_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBackendWrapper_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBackendWrapper(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBackendWrapper_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -369,14 +366,12 @@ pub struct PtrOfBackendWrapper {
 }
 
 impl PtrOfBackendWrapper {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackendWrapper(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBackendWrapper(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBackendWrapper {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBackendWrapper(self.ptr) };
+        unsafe { cv_PtrOfBackendWrapper_delete(self.ptr) };
     }
 }
 impl crate::dnn::BackendWrapper for PtrOfBackendWrapper {
@@ -388,7 +383,7 @@ impl crate::dnn::BackendWrapper for PtrOfBackendWrapper {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBackgroundSubtractorKNN_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBackgroundSubtractorKNN(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBackgroundSubtractorKNN_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -397,14 +392,12 @@ pub struct PtrOfBackgroundSubtractorKNN {
 }
 
 impl PtrOfBackgroundSubtractorKNN {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackgroundSubtractorKNN(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBackgroundSubtractorKNN(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBackgroundSubtractorKNN {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBackgroundSubtractorKNN(self.ptr) };
+        unsafe { cv_PtrOfBackgroundSubtractorKNN_delete(self.ptr) };
     }
 }
 impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorKNN {
@@ -430,7 +423,7 @@ impl core::Algorithm for PtrOfBackgroundSubtractorKNN {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBackgroundSubtractorMOG2_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBackgroundSubtractorMOG2(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBackgroundSubtractorMOG2_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -439,14 +432,12 @@ pub struct PtrOfBackgroundSubtractorMOG2 {
 }
 
 impl PtrOfBackgroundSubtractorMOG2 {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackgroundSubtractorMOG2(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBackgroundSubtractorMOG2(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBackgroundSubtractorMOG2 {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBackgroundSubtractorMOG2(self.ptr) };
+        unsafe { cv_PtrOfBackgroundSubtractorMOG2_delete(self.ptr) };
     }
 }
 impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorMOG2 {
@@ -472,7 +463,7 @@ impl core::Algorithm for PtrOfBackgroundSubtractorMOG2 {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBaseConvolutionLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBaseConvolutionLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBaseConvolutionLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -481,14 +472,12 @@ pub struct PtrOfBaseConvolutionLayer {
 }
 
 impl PtrOfBaseConvolutionLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfBaseConvolutionLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBaseConvolutionLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBaseConvolutionLayer(self.ptr) };
+        unsafe { cv_PtrOfBaseConvolutionLayer_delete(self.ptr) };
     }
 }
 impl crate::dnn::Layer for PtrOfBaseConvolutionLayer {
@@ -514,7 +503,7 @@ impl crate::dnn::BaseConvolutionLayer for PtrOfBaseConvolutionLayer {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBatchNormLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBatchNormLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBatchNormLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -523,19 +512,36 @@ pub struct PtrOfBatchNormLayer {
 }
 
 impl PtrOfBatchNormLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfBatchNormLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBatchNormLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBatchNormLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBatchNormLayer(self.ptr) };
+        unsafe { cv_PtrOfBatchNormLayer_delete(self.ptr) };
+    }
+}
+extern "C" {
+    #[doc(hidden)] fn cv_PtrOfBlockMeanHash_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfBlockMeanHash_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfBlockMeanHash {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBlockMeanHash {
+    #[doc(hidden)] pub fn as_raw_PtrOfBlockMeanHash(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfBlockMeanHash {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfBlockMeanHash_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfBoost_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfBoost(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfBoost_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -544,14 +550,12 @@ pub struct PtrOfBoost {
 }
 
 impl PtrOfBoost {
-    #[doc(hidden)] pub fn as_raw_PtrOfBoost(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfBoost(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfBoost {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfBoost(self.ptr) };
+        unsafe { cv_PtrOfBoost_delete(self.ptr) };
     }
 }
 impl crate::ml::DTrees for PtrOfBoost {
@@ -584,7 +588,7 @@ impl crate::ml::Boost for PtrOfBoost {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfCLAHE_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfCLAHE(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfCLAHE_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -593,14 +597,12 @@ pub struct PtrOfCLAHE {
 }
 
 impl PtrOfCLAHE {
-    #[doc(hidden)] pub fn as_raw_PtrOfCLAHE(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfCLAHE(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfCLAHE {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfCLAHE(self.ptr) };
+        unsafe { cv_PtrOfCLAHE_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfCLAHE {
@@ -619,7 +621,7 @@ impl crate::imgproc::CLAHE for PtrOfCLAHE {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfCalibrateDebevec_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfCalibrateDebevec(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfCalibrateDebevec_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -628,14 +630,12 @@ pub struct PtrOfCalibrateDebevec {
 }
 
 impl PtrOfCalibrateDebevec {
-    #[doc(hidden)] pub fn as_raw_PtrOfCalibrateDebevec(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfCalibrateDebevec(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfCalibrateDebevec {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfCalibrateDebevec(self.ptr) };
+        unsafe { cv_PtrOfCalibrateDebevec_delete(self.ptr) };
     }
 }
 impl crate::photo::CalibrateDebevec for PtrOfCalibrateDebevec {
@@ -661,7 +661,7 @@ impl crate::photo::CalibrateCRF for PtrOfCalibrateDebevec {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfCalibrateRobertson_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfCalibrateRobertson(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfCalibrateRobertson_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -670,14 +670,12 @@ pub struct PtrOfCalibrateRobertson {
 }
 
 impl PtrOfCalibrateRobertson {
-    #[doc(hidden)] pub fn as_raw_PtrOfCalibrateRobertson(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfCalibrateRobertson(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfCalibrateRobertson {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfCalibrateRobertson(self.ptr) };
+        unsafe { cv_PtrOfCalibrateRobertson_delete(self.ptr) };
     }
 }
 impl crate::photo::CalibrateRobertson for PtrOfCalibrateRobertson {
@@ -702,8 +700,27 @@ impl crate::photo::CalibrateCRF for PtrOfCalibrateRobertson {
 }
 
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfColorMomentHash_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfColorMomentHash_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfColorMomentHash {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfColorMomentHash {
+    #[doc(hidden)] pub fn as_raw_PtrOfColorMomentHash(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfColorMomentHash {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfColorMomentHash_delete(self.ptr) };
+    }
+}
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfConcatLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfConcatLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfConcatLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -712,19 +729,17 @@ pub struct PtrOfConcatLayer {
 }
 
 impl PtrOfConcatLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfConcatLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfConcatLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfConcatLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfConcatLayer(self.ptr) };
+        unsafe { cv_PtrOfConcatLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfConjGradSolver_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfConjGradSolver(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfConjGradSolver_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -733,19 +748,17 @@ pub struct PtrOfConjGradSolver {
 }
 
 impl PtrOfConjGradSolver {
-    #[doc(hidden)] pub fn as_raw_PtrOfConjGradSolver(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfConjGradSolver(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfConjGradSolver {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfConjGradSolver(self.ptr) };
+        unsafe { cv_PtrOfConjGradSolver_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfCropLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfCropLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfCropLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -754,19 +767,17 @@ pub struct PtrOfCropLayer {
 }
 
 impl PtrOfCropLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfCropLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfCropLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfCropLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfCropLayer(self.ptr) };
+        unsafe { cv_PtrOfCropLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfDTrees_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfDTrees(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfDTrees_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -775,14 +786,12 @@ pub struct PtrOfDTrees {
 }
 
 impl PtrOfDTrees {
-    #[doc(hidden)] pub fn as_raw_PtrOfDTrees(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfDTrees(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfDTrees {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfDTrees(self.ptr) };
+        unsafe { cv_PtrOfDTrees_delete(self.ptr) };
     }
 }
 impl crate::ml::DTrees for PtrOfDTrees {
@@ -808,7 +817,7 @@ impl crate::ml::StatModel for PtrOfDTrees {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfDeblurerBase_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfDeblurerBase(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfDeblurerBase_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -817,14 +826,12 @@ pub struct PtrOfDeblurerBase {
 }
 
 impl PtrOfDeblurerBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfDeblurerBase(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfDeblurerBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfDeblurerBase {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfDeblurerBase(self.ptr) };
+        unsafe { cv_PtrOfDeblurerBase_delete(self.ptr) };
     }
 }
 impl crate::videostab::DeblurerBase for PtrOfDeblurerBase {
@@ -836,7 +843,7 @@ impl crate::videostab::DeblurerBase for PtrOfDeblurerBase {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfDescriptorMatcher_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfDescriptorMatcher(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfDescriptorMatcher_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -845,14 +852,12 @@ pub struct PtrOfDescriptorMatcher {
 }
 
 impl PtrOfDescriptorMatcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfDescriptorMatcher(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfDescriptorMatcher(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfDescriptorMatcher {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfDescriptorMatcher(self.ptr) };
+        unsafe { cv_PtrOfDescriptorMatcher_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfDescriptorMatcher {
@@ -871,7 +876,7 @@ impl crate::features2d::DescriptorMatcher for PtrOfDescriptorMatcher {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfDetectionOutputLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfDetectionOutputLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfDetectionOutputLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -880,19 +885,17 @@ pub struct PtrOfDetectionOutputLayer {
 }
 
 impl PtrOfDetectionOutputLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfDetectionOutputLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfDetectionOutputLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfDetectionOutputLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfDetectionOutputLayer(self.ptr) };
+        unsafe { cv_PtrOfDetectionOutputLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfDownhillSolver_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfDownhillSolver(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfDownhillSolver_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -901,14 +904,12 @@ pub struct PtrOfDownhillSolver {
 }
 
 impl PtrOfDownhillSolver {
-    #[doc(hidden)] pub fn as_raw_PtrOfDownhillSolver(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfDownhillSolver(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfDownhillSolver {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfDownhillSolver(self.ptr) };
+        unsafe { cv_PtrOfDownhillSolver_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfDownhillSolver {
@@ -934,7 +935,7 @@ impl core::MinProblemSolver for PtrOfDownhillSolver {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfDualTVL1OpticalFlow_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfDualTVL1OpticalFlow(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfDualTVL1OpticalFlow_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -943,14 +944,12 @@ pub struct PtrOfDualTVL1OpticalFlow {
 }
 
 impl PtrOfDualTVL1OpticalFlow {
-    #[doc(hidden)] pub fn as_raw_PtrOfDualTVL1OpticalFlow(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfDualTVL1OpticalFlow(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfDualTVL1OpticalFlow {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfDualTVL1OpticalFlow(self.ptr) };
+        unsafe { cv_PtrOfDualTVL1OpticalFlow_delete(self.ptr) };
     }
 }
 impl crate::video::DenseOpticalFlow for PtrOfDualTVL1OpticalFlow {
@@ -976,7 +975,7 @@ impl core::Algorithm for PtrOfDualTVL1OpticalFlow {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfELULayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfELULayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfELULayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -985,19 +984,17 @@ pub struct PtrOfELULayer {
 }
 
 impl PtrOfELULayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfELULayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfELULayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfELULayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfELULayer(self.ptr) };
+        unsafe { cv_PtrOfELULayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfEM_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfEM(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfEM_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1006,14 +1003,12 @@ pub struct PtrOfEM {
 }
 
 impl PtrOfEM {
-    #[doc(hidden)] pub fn as_raw_PtrOfEM(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfEM(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfEM {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfEM(self.ptr) };
+        unsafe { cv_PtrOfEM_delete(self.ptr) };
     }
 }
 impl crate::ml::EM for PtrOfEM {
@@ -1039,7 +1034,7 @@ impl crate::ml::StatModel for PtrOfEM {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfEltwiseLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfEltwiseLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfEltwiseLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1048,19 +1043,17 @@ pub struct PtrOfEltwiseLayer {
 }
 
 impl PtrOfEltwiseLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfEltwiseLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfEltwiseLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfEltwiseLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfEltwiseLayer(self.ptr) };
+        unsafe { cv_PtrOfEltwiseLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFarnebackOpticalFlow_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFarnebackOpticalFlow(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFarnebackOpticalFlow_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1069,14 +1062,12 @@ pub struct PtrOfFarnebackOpticalFlow {
 }
 
 impl PtrOfFarnebackOpticalFlow {
-    #[doc(hidden)] pub fn as_raw_PtrOfFarnebackOpticalFlow(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFarnebackOpticalFlow(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFarnebackOpticalFlow {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFarnebackOpticalFlow(self.ptr) };
+        unsafe { cv_PtrOfFarnebackOpticalFlow_delete(self.ptr) };
     }
 }
 impl crate::video::DenseOpticalFlow for PtrOfFarnebackOpticalFlow {
@@ -1102,7 +1093,7 @@ impl crate::video::FarnebackOpticalFlow for PtrOfFarnebackOpticalFlow {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFastFeatureDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFastFeatureDetector(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFastFeatureDetector_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1111,14 +1102,12 @@ pub struct PtrOfFastFeatureDetector {
 }
 
 impl PtrOfFastFeatureDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfFastFeatureDetector(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFastFeatureDetector(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFastFeatureDetector {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFastFeatureDetector(self.ptr) };
+        unsafe { cv_PtrOfFastFeatureDetector_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfFastFeatureDetector {
@@ -1144,7 +1133,7 @@ impl crate::features2d::FastFeatureDetector for PtrOfFastFeatureDetector {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFeature2D_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFeature2D(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFeature2D_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1153,14 +1142,12 @@ pub struct PtrOfFeature2D {
 }
 
 impl PtrOfFeature2D {
-    #[doc(hidden)] pub fn as_raw_PtrOfFeature2D(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFeature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFeature2D {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFeature2D(self.ptr) };
+        unsafe { cv_PtrOfFeature2D_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfFeature2D {
@@ -1179,7 +1166,7 @@ impl core::Algorithm for PtrOfFeature2D {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFlannBasedMatcher_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFlannBasedMatcher(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFlannBasedMatcher_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1188,19 +1175,17 @@ pub struct PtrOfFlannBasedMatcher {
 }
 
 impl PtrOfFlannBasedMatcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFlannBasedMatcher {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFlannBasedMatcher(self.ptr) };
+        unsafe { cv_PtrOfFlannBasedMatcher_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFlattenLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFlattenLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFlattenLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1209,19 +1194,17 @@ pub struct PtrOfFlattenLayer {
 }
 
 impl PtrOfFlattenLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfFlattenLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFlattenLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFlattenLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFlattenLayer(self.ptr) };
+        unsafe { cv_PtrOfFlattenLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFormatted_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFormatted(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFormatted_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1230,14 +1213,12 @@ pub struct PtrOfFormatted {
 }
 
 impl PtrOfFormatted {
-    #[doc(hidden)] pub fn as_raw_PtrOfFormatted(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFormatted(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFormatted {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFormatted(self.ptr) };
+        unsafe { cv_PtrOfFormatted_delete(self.ptr) };
     }
 }
 impl core::Formatted for PtrOfFormatted {
@@ -1249,7 +1230,7 @@ impl core::Formatted for PtrOfFormatted {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFormatter_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFormatter(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFormatter_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1258,14 +1239,12 @@ pub struct PtrOfFormatter {
 }
 
 impl PtrOfFormatter {
-    #[doc(hidden)] pub fn as_raw_PtrOfFormatter(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFormatter(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFormatter {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFormatter(self.ptr) };
+        unsafe { cv_PtrOfFormatter_delete(self.ptr) };
     }
 }
 impl core::Formatter for PtrOfFormatter {
@@ -1277,7 +1256,7 @@ impl core::Formatter for PtrOfFormatter {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfFrameSource_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFrameSource(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFrameSource_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1286,14 +1265,12 @@ pub struct PtrOfFrameSource {
 }
 
 impl PtrOfFrameSource {
-    #[doc(hidden)] pub fn as_raw_PtrOfFrameSource(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFrameSource(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFrameSource {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFrameSource(self.ptr) };
+        unsafe { cv_PtrOfFrameSource_delete(self.ptr) };
     }
 }
 impl crate::superres::FrameSource for PtrOfFrameSource {
@@ -1304,8 +1281,41 @@ impl crate::superres::FrameSource for PtrOfFrameSource {
 }
 
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfFreeType2_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfFreeType2_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfFreeType2 {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfFreeType2 {
+    #[doc(hidden)] pub fn as_raw_PtrOfFreeType2(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfFreeType2 {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfFreeType2_delete(self.ptr) };
+    }
+}
+impl core::Algorithm for PtrOfFreeType2 {
+    #[doc(hidden)]
+    fn as_raw_Algorithm(&self) -> *mut c_void {
+        unsafe { cv_PtrOfFreeType2_get(self.ptr) }
+    }
+}
+
+impl crate::freetype::FreeType2 for PtrOfFreeType2 {
+    #[doc(hidden)]
+    fn as_raw_FreeType2(&self) -> *mut c_void {
+        unsafe { cv_PtrOfFreeType2_get(self.ptr) }
+    }
+}
+
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfFunction_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfFunction(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfFunction_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1314,14 +1324,12 @@ pub struct PtrOfFunction {
 }
 
 impl PtrOfFunction {
-    #[doc(hidden)] pub fn as_raw_PtrOfFunction(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfFunction(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfFunction {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfFunction(self.ptr) };
+        unsafe { cv_PtrOfFunction_delete(self.ptr) };
     }
 }
 impl core::MinProblemSolver_Function for PtrOfFunction {
@@ -1333,7 +1341,7 @@ impl core::MinProblemSolver_Function for PtrOfFunction {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfGFTTDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfGFTTDetector(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfGFTTDetector_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1342,14 +1350,12 @@ pub struct PtrOfGFTTDetector {
 }
 
 impl PtrOfGFTTDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfGFTTDetector(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfGFTTDetector(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfGFTTDetector {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfGFTTDetector(self.ptr) };
+        unsafe { cv_PtrOfGFTTDetector_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfGFTTDetector {
@@ -1375,7 +1381,7 @@ impl core::Algorithm for PtrOfGFTTDetector {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfGeneralizedHoughBallard_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfGeneralizedHoughBallard(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfGeneralizedHoughBallard_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1384,14 +1390,12 @@ pub struct PtrOfGeneralizedHoughBallard {
 }
 
 impl PtrOfGeneralizedHoughBallard {
-    #[doc(hidden)] pub fn as_raw_PtrOfGeneralizedHoughBallard(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfGeneralizedHoughBallard(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfGeneralizedHoughBallard {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfGeneralizedHoughBallard(self.ptr) };
+        unsafe { cv_PtrOfGeneralizedHoughBallard_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfGeneralizedHoughBallard {
@@ -1417,7 +1421,7 @@ impl crate::imgproc::GeneralizedHoughBallard for PtrOfGeneralizedHoughBallard {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfGeneralizedHoughGuil_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfGeneralizedHoughGuil(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfGeneralizedHoughGuil_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1426,14 +1430,12 @@ pub struct PtrOfGeneralizedHoughGuil {
 }
 
 impl PtrOfGeneralizedHoughGuil {
-    #[doc(hidden)] pub fn as_raw_PtrOfGeneralizedHoughGuil(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfGeneralizedHoughGuil(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfGeneralizedHoughGuil {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfGeneralizedHoughGuil(self.ptr) };
+        unsafe { cv_PtrOfGeneralizedHoughGuil_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfGeneralizedHoughGuil {
@@ -1459,7 +1461,7 @@ impl crate::imgproc::GeneralizedHoughGuil for PtrOfGeneralizedHoughGuil {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfHausdorffDistanceExtractor_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfHausdorffDistanceExtractor(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfHausdorffDistanceExtractor_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1468,14 +1470,12 @@ pub struct PtrOfHausdorffDistanceExtractor {
 }
 
 impl PtrOfHausdorffDistanceExtractor {
-    #[doc(hidden)] pub fn as_raw_PtrOfHausdorffDistanceExtractor(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfHausdorffDistanceExtractor(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfHausdorffDistanceExtractor {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfHausdorffDistanceExtractor(self.ptr) };
+        unsafe { cv_PtrOfHausdorffDistanceExtractor_delete(self.ptr) };
     }
 }
 impl crate::shape::ShapeDistanceExtractor for PtrOfHausdorffDistanceExtractor {
@@ -1501,7 +1501,7 @@ impl crate::shape::HausdorffDistanceExtractor for PtrOfHausdorffDistanceExtracto
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfHistogramCostExtractor_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfHistogramCostExtractor(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfHistogramCostExtractor_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1510,14 +1510,12 @@ pub struct PtrOfHistogramCostExtractor {
 }
 
 impl PtrOfHistogramCostExtractor {
-    #[doc(hidden)] pub fn as_raw_PtrOfHistogramCostExtractor(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfHistogramCostExtractor(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfHistogramCostExtractor {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfHistogramCostExtractor(self.ptr) };
+        unsafe { cv_PtrOfHistogramCostExtractor_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfHistogramCostExtractor {
@@ -1535,8 +1533,48 @@ impl crate::shape::HistogramCostExtractor for PtrOfHistogramCostExtractor {
 }
 
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfHistogramPhaseUnwrapping_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfHistogramPhaseUnwrapping_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfHistogramPhaseUnwrapping {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfHistogramPhaseUnwrapping {
+    #[doc(hidden)] pub fn as_raw_PtrOfHistogramPhaseUnwrapping(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfHistogramPhaseUnwrapping {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfHistogramPhaseUnwrapping_delete(self.ptr) };
+    }
+}
+impl crate::phase_unwrapping::HistogramPhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
+    #[doc(hidden)]
+    fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void {
+        unsafe { cv_PtrOfHistogramPhaseUnwrapping_get(self.ptr) }
+    }
+}
+
+impl crate::phase_unwrapping::PhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
+    #[doc(hidden)]
+    fn as_raw_PhaseUnwrapping(&self) -> *mut c_void {
+        unsafe { cv_PtrOfHistogramPhaseUnwrapping_get(self.ptr) }
+    }
+}
+
+impl core::Algorithm for PtrOfHistogramPhaseUnwrapping {
+    #[doc(hidden)]
+    fn as_raw_Algorithm(&self) -> *mut c_void {
+        unsafe { cv_PtrOfHistogramPhaseUnwrapping_get(self.ptr) }
+    }
+}
+
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfIFrameSource_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfIFrameSource(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfIFrameSource_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1545,14 +1583,12 @@ pub struct PtrOfIFrameSource {
 }
 
 impl PtrOfIFrameSource {
-    #[doc(hidden)] pub fn as_raw_PtrOfIFrameSource(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfIFrameSource(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfIFrameSource {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfIFrameSource(self.ptr) };
+        unsafe { cv_PtrOfIFrameSource_delete(self.ptr) };
     }
 }
 impl crate::videostab::IFrameSource for PtrOfIFrameSource {
@@ -1564,7 +1600,7 @@ impl crate::videostab::IFrameSource for PtrOfIFrameSource {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfILog_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfILog(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfILog_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1573,14 +1609,12 @@ pub struct PtrOfILog {
 }
 
 impl PtrOfILog {
-    #[doc(hidden)] pub fn as_raw_PtrOfILog(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfILog(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfILog {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfILog(self.ptr) };
+        unsafe { cv_PtrOfILog_delete(self.ptr) };
     }
 }
 impl crate::videostab::ILog for PtrOfILog {
@@ -1592,7 +1626,7 @@ impl crate::videostab::ILog for PtrOfILog {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfIMotionStabilizer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfIMotionStabilizer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfIMotionStabilizer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1601,14 +1635,12 @@ pub struct PtrOfIMotionStabilizer {
 }
 
 impl PtrOfIMotionStabilizer {
-    #[doc(hidden)] pub fn as_raw_PtrOfIMotionStabilizer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfIMotionStabilizer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfIMotionStabilizer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfIMotionStabilizer(self.ptr) };
+        unsafe { cv_PtrOfIMotionStabilizer_delete(self.ptr) };
     }
 }
 impl crate::videostab::IMotionStabilizer for PtrOfIMotionStabilizer {
@@ -1620,7 +1652,7 @@ impl crate::videostab::IMotionStabilizer for PtrOfIMotionStabilizer {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfImageMotionEstimatorBase_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfImageMotionEstimatorBase(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfImageMotionEstimatorBase_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1629,14 +1661,12 @@ pub struct PtrOfImageMotionEstimatorBase {
 }
 
 impl PtrOfImageMotionEstimatorBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfImageMotionEstimatorBase(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfImageMotionEstimatorBase {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfImageMotionEstimatorBase(self.ptr) };
+        unsafe { cv_PtrOfImageMotionEstimatorBase_delete(self.ptr) };
     }
 }
 impl crate::videostab::ImageMotionEstimatorBase for PtrOfImageMotionEstimatorBase {
@@ -1648,7 +1678,7 @@ impl crate::videostab::ImageMotionEstimatorBase for PtrOfImageMotionEstimatorBas
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfInnerProductLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfInnerProductLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfInnerProductLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1657,19 +1687,17 @@ pub struct PtrOfInnerProductLayer {
 }
 
 impl PtrOfInnerProductLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfInnerProductLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfInnerProductLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfInnerProductLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfInnerProductLayer(self.ptr) };
+        unsafe { cv_PtrOfInnerProductLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfInpainterBase_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfInpainterBase(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfInpainterBase_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1678,14 +1706,12 @@ pub struct PtrOfInpainterBase {
 }
 
 impl PtrOfInpainterBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfInpainterBase(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfInpainterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfInpainterBase {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfInpainterBase(self.ptr) };
+        unsafe { cv_PtrOfInpainterBase_delete(self.ptr) };
     }
 }
 impl crate::videostab::InpainterBase for PtrOfInpainterBase {
@@ -1697,7 +1723,7 @@ impl crate::videostab::InpainterBase for PtrOfInpainterBase {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfKAZE_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfKAZE(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfKAZE_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1706,14 +1732,12 @@ pub struct PtrOfKAZE {
 }
 
 impl PtrOfKAZE {
-    #[doc(hidden)] pub fn as_raw_PtrOfKAZE(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfKAZE(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfKAZE {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfKAZE(self.ptr) };
+        unsafe { cv_PtrOfKAZE_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfKAZE {
@@ -1739,7 +1763,7 @@ impl core::Algorithm for PtrOfKAZE {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfKNearest_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfKNearest(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfKNearest_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1748,14 +1772,12 @@ pub struct PtrOfKNearest {
 }
 
 impl PtrOfKNearest {
-    #[doc(hidden)] pub fn as_raw_PtrOfKNearest(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfKNearest(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfKNearest {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfKNearest(self.ptr) };
+        unsafe { cv_PtrOfKNearest_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfKNearest {
@@ -1781,7 +1803,7 @@ impl crate::ml::KNearest for PtrOfKNearest {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfKernel_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfKernel(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfKernel_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1790,14 +1812,12 @@ pub struct PtrOfKernel {
 }
 
 impl PtrOfKernel {
-    #[doc(hidden)] pub fn as_raw_PtrOfKernel(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfKernel(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfKernel {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfKernel(self.ptr) };
+        unsafe { cv_PtrOfKernel_delete(self.ptr) };
     }
 }
 impl crate::ml::SVM_Kernel for PtrOfKernel {
@@ -1816,7 +1836,7 @@ impl core::Algorithm for PtrOfKernel {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfLRNLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfLRNLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfLRNLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1825,19 +1845,17 @@ pub struct PtrOfLRNLayer {
 }
 
 impl PtrOfLRNLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfLRNLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfLRNLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfLRNLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfLRNLayer(self.ptr) };
+        unsafe { cv_PtrOfLRNLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfLSTMLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfLSTMLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfLSTMLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1846,14 +1864,12 @@ pub struct PtrOfLSTMLayer {
 }
 
 impl PtrOfLSTMLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfLSTMLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfLSTMLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfLSTMLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfLSTMLayer(self.ptr) };
+        unsafe { cv_PtrOfLSTMLayer_delete(self.ptr) };
     }
 }
 impl crate::dnn::LSTMLayer for PtrOfLSTMLayer {
@@ -1879,7 +1895,7 @@ impl core::Algorithm for PtrOfLSTMLayer {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfLineSegmentDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfLineSegmentDetector(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfLineSegmentDetector_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1888,14 +1904,12 @@ pub struct PtrOfLineSegmentDetector {
 }
 
 impl PtrOfLineSegmentDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfLineSegmentDetector(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfLineSegmentDetector(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfLineSegmentDetector {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfLineSegmentDetector(self.ptr) };
+        unsafe { cv_PtrOfLineSegmentDetector_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfLineSegmentDetector {
@@ -1914,7 +1928,7 @@ impl crate::imgproc::LineSegmentDetector for PtrOfLineSegmentDetector {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfLogisticRegression_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfLogisticRegression(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfLogisticRegression_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1923,14 +1937,12 @@ pub struct PtrOfLogisticRegression {
 }
 
 impl PtrOfLogisticRegression {
-    #[doc(hidden)] pub fn as_raw_PtrOfLogisticRegression(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfLogisticRegression(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfLogisticRegression {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfLogisticRegression(self.ptr) };
+        unsafe { cv_PtrOfLogisticRegression_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfLogisticRegression {
@@ -1956,7 +1968,7 @@ impl crate::ml::LogisticRegression for PtrOfLogisticRegression {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMSER_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMSER(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMSER_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -1965,14 +1977,12 @@ pub struct PtrOfMSER {
 }
 
 impl PtrOfMSER {
-    #[doc(hidden)] pub fn as_raw_PtrOfMSER(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMSER(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMSER {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMSER(self.ptr) };
+        unsafe { cv_PtrOfMSER_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfMSER {
@@ -1998,7 +2008,7 @@ impl crate::features2d::MSER for PtrOfMSER {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMVNLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMVNLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMVNLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2007,19 +2017,36 @@ pub struct PtrOfMVNLayer {
 }
 
 impl PtrOfMVNLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfMVNLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMVNLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMVNLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMVNLayer(self.ptr) };
+        unsafe { cv_PtrOfMVNLayer_delete(self.ptr) };
+    }
+}
+extern "C" {
+    #[doc(hidden)] fn cv_PtrOfMarrHildrethHash_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfMarrHildrethHash_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfMarrHildrethHash {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfMarrHildrethHash {
+    #[doc(hidden)] pub fn as_raw_PtrOfMarrHildrethHash(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfMarrHildrethHash {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfMarrHildrethHash_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMaskGenerator_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMaskGenerator(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMaskGenerator_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2028,14 +2055,12 @@ pub struct PtrOfMaskGenerator {
 }
 
 impl PtrOfMaskGenerator {
-    #[doc(hidden)] pub fn as_raw_PtrOfMaskGenerator(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMaskGenerator(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMaskGenerator {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMaskGenerator(self.ptr) };
+        unsafe { cv_PtrOfMaskGenerator_delete(self.ptr) };
     }
 }
 impl crate::objdetect::BaseCascadeClassifier_MaskGenerator for PtrOfMaskGenerator {
@@ -2047,7 +2072,7 @@ impl crate::objdetect::BaseCascadeClassifier_MaskGenerator for PtrOfMaskGenerato
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMaxUnpoolLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMaxUnpoolLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMaxUnpoolLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2056,19 +2081,17 @@ pub struct PtrOfMaxUnpoolLayer {
 }
 
 impl PtrOfMaxUnpoolLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfMaxUnpoolLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMaxUnpoolLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMaxUnpoolLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMaxUnpoolLayer(self.ptr) };
+        unsafe { cv_PtrOfMaxUnpoolLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMergeDebevec_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMergeDebevec(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMergeDebevec_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2077,14 +2100,12 @@ pub struct PtrOfMergeDebevec {
 }
 
 impl PtrOfMergeDebevec {
-    #[doc(hidden)] pub fn as_raw_PtrOfMergeDebevec(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMergeDebevec(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMergeDebevec {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMergeDebevec(self.ptr) };
+        unsafe { cv_PtrOfMergeDebevec_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfMergeDebevec {
@@ -2110,7 +2131,7 @@ impl crate::photo::MergeExposures for PtrOfMergeDebevec {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMergeMertens_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMergeMertens(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMergeMertens_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2119,14 +2140,12 @@ pub struct PtrOfMergeMertens {
 }
 
 impl PtrOfMergeMertens {
-    #[doc(hidden)] pub fn as_raw_PtrOfMergeMertens(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMergeMertens(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMergeMertens {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMergeMertens(self.ptr) };
+        unsafe { cv_PtrOfMergeMertens_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfMergeMertens {
@@ -2152,7 +2171,7 @@ impl crate::photo::MergeExposures for PtrOfMergeMertens {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMergeRobertson_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMergeRobertson(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMergeRobertson_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2161,14 +2180,12 @@ pub struct PtrOfMergeRobertson {
 }
 
 impl PtrOfMergeRobertson {
-    #[doc(hidden)] pub fn as_raw_PtrOfMergeRobertson(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMergeRobertson(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMergeRobertson {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMergeRobertson(self.ptr) };
+        unsafe { cv_PtrOfMergeRobertson_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfMergeRobertson {
@@ -2194,7 +2211,7 @@ impl crate::photo::MergeExposures for PtrOfMergeRobertson {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMotionEstimatorBase_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMotionEstimatorBase(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMotionEstimatorBase_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2203,14 +2220,12 @@ pub struct PtrOfMotionEstimatorBase {
 }
 
 impl PtrOfMotionEstimatorBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfMotionEstimatorBase(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMotionEstimatorBase {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMotionEstimatorBase(self.ptr) };
+        unsafe { cv_PtrOfMotionEstimatorBase_delete(self.ptr) };
     }
 }
 impl crate::videostab::MotionEstimatorBase for PtrOfMotionEstimatorBase {
@@ -2222,7 +2237,7 @@ impl crate::videostab::MotionEstimatorBase for PtrOfMotionEstimatorBase {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMotionFilterBase_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfMotionFilterBase(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfMotionFilterBase_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2231,14 +2246,12 @@ pub struct PtrOfMotionFilterBase {
 }
 
 impl PtrOfMotionFilterBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfMotionFilterBase(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfMotionFilterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfMotionFilterBase {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfMotionFilterBase(self.ptr) };
+        unsafe { cv_PtrOfMotionFilterBase_delete(self.ptr) };
     }
 }
 impl crate::videostab::IMotionStabilizer for PtrOfMotionFilterBase {
@@ -2257,7 +2270,7 @@ impl crate::videostab::MotionFilterBase for PtrOfMotionFilterBase {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfNormalBayesClassifier_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfNormalBayesClassifier(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfNormalBayesClassifier_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2266,14 +2279,12 @@ pub struct PtrOfNormalBayesClassifier {
 }
 
 impl PtrOfNormalBayesClassifier {
-    #[doc(hidden)] pub fn as_raw_PtrOfNormalBayesClassifier(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfNormalBayesClassifier(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfNormalBayesClassifier {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfNormalBayesClassifier(self.ptr) };
+        unsafe { cv_PtrOfNormalBayesClassifier_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfNormalBayesClassifier {
@@ -2299,7 +2310,7 @@ impl crate::ml::NormalBayesClassifier for PtrOfNormalBayesClassifier {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfNormalizeBBoxLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfNormalizeBBoxLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfNormalizeBBoxLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2308,19 +2319,17 @@ pub struct PtrOfNormalizeBBoxLayer {
 }
 
 impl PtrOfNormalizeBBoxLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfNormalizeBBoxLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfNormalizeBBoxLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfNormalizeBBoxLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfNormalizeBBoxLayer(self.ptr) };
+        unsafe { cv_PtrOfNormalizeBBoxLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfORB_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfORB(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfORB_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2329,14 +2338,12 @@ pub struct PtrOfORB {
 }
 
 impl PtrOfORB {
-    #[doc(hidden)] pub fn as_raw_PtrOfORB(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfORB(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfORB {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfORB(self.ptr) };
+        unsafe { cv_PtrOfORB_delete(self.ptr) };
     }
 }
 impl crate::features2d::Feature2D for PtrOfORB {
@@ -2361,8 +2368,27 @@ impl crate::features2d::ORB for PtrOfORB {
 }
 
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfPHash_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfPHash_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfPHash {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfPHash {
+    #[doc(hidden)] pub fn as_raw_PtrOfPHash(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfPHash {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfPHash_delete(self.ptr) };
+    }
+}
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfPaddingLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfPaddingLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfPaddingLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2371,19 +2397,17 @@ pub struct PtrOfPaddingLayer {
 }
 
 impl PtrOfPaddingLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPaddingLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfPaddingLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfPaddingLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfPaddingLayer(self.ptr) };
+        unsafe { cv_PtrOfPaddingLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfParamGrid_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfParamGrid(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfParamGrid_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2392,19 +2416,17 @@ pub struct PtrOfParamGrid {
 }
 
 impl PtrOfParamGrid {
-    #[doc(hidden)] pub fn as_raw_PtrOfParamGrid(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfParamGrid(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfParamGrid {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfParamGrid(self.ptr) };
+        unsafe { cv_PtrOfParamGrid_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfPermuteLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfPermuteLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfPermuteLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2413,19 +2435,50 @@ pub struct PtrOfPermuteLayer {
 }
 
 impl PtrOfPermuteLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPermuteLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfPermuteLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfPermuteLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfPermuteLayer(self.ptr) };
+        unsafe { cv_PtrOfPermuteLayer_delete(self.ptr) };
     }
 }
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfPlot2d_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfPlot2d_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfPlot2d {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfPlot2d {
+    #[doc(hidden)] pub fn as_raw_PtrOfPlot2d(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfPlot2d {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfPlot2d_delete(self.ptr) };
+    }
+}
+impl core::Algorithm for PtrOfPlot2d {
+    #[doc(hidden)]
+    fn as_raw_Algorithm(&self) -> *mut c_void {
+        unsafe { cv_PtrOfPlot2d_get(self.ptr) }
+    }
+}
+
+impl crate::plot::Plot2d for PtrOfPlot2d {
+    #[doc(hidden)]
+    fn as_raw_Plot2d(&self) -> *mut c_void {
+        unsafe { cv_PtrOfPlot2d_get(self.ptr) }
+    }
+}
+
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfPoolingLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfPoolingLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfPoolingLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2434,19 +2487,17 @@ pub struct PtrOfPoolingLayer {
 }
 
 impl PtrOfPoolingLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPoolingLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfPoolingLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfPoolingLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfPoolingLayer(self.ptr) };
+        unsafe { cv_PtrOfPoolingLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfPowerLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfPowerLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfPowerLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2455,19 +2506,17 @@ pub struct PtrOfPowerLayer {
 }
 
 impl PtrOfPowerLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPowerLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfPowerLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfPowerLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfPowerLayer(self.ptr) };
+        unsafe { cv_PtrOfPowerLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfPriorBoxLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfPriorBoxLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfPriorBoxLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2476,19 +2525,17 @@ pub struct PtrOfPriorBoxLayer {
 }
 
 impl PtrOfPriorBoxLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPriorBoxLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfPriorBoxLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfPriorBoxLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfPriorBoxLayer(self.ptr) };
+        unsafe { cv_PtrOfPriorBoxLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfProposalLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfProposalLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfProposalLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2497,19 +2544,17 @@ pub struct PtrOfProposalLayer {
 }
 
 impl PtrOfProposalLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfProposalLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfProposalLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfProposalLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfProposalLayer(self.ptr) };
+        unsafe { cv_PtrOfProposalLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfRNNLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfRNNLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfRNNLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2518,14 +2563,12 @@ pub struct PtrOfRNNLayer {
 }
 
 impl PtrOfRNNLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfRNNLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfRNNLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfRNNLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfRNNLayer(self.ptr) };
+        unsafe { cv_PtrOfRNNLayer_delete(self.ptr) };
     }
 }
 impl crate::dnn::Layer for PtrOfRNNLayer {
@@ -2551,7 +2594,7 @@ impl crate::dnn::RNNLayer for PtrOfRNNLayer {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfRTrees_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfRTrees(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfRTrees_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2560,14 +2603,12 @@ pub struct PtrOfRTrees {
 }
 
 impl PtrOfRTrees {
-    #[doc(hidden)] pub fn as_raw_PtrOfRTrees(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfRTrees(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfRTrees {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfRTrees(self.ptr) };
+        unsafe { cv_PtrOfRTrees_delete(self.ptr) };
     }
 }
 impl crate::ml::DTrees for PtrOfRTrees {
@@ -2599,8 +2640,27 @@ impl crate::ml::RTrees for PtrOfRTrees {
 }
 
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfRadialVarianceHash_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfRadialVarianceHash_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfRadialVarianceHash {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfRadialVarianceHash {
+    #[doc(hidden)] pub fn as_raw_PtrOfRadialVarianceHash(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfRadialVarianceHash {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfRadialVarianceHash_delete(self.ptr) };
+    }
+}
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfReLU6Layer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfReLU6Layer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfReLU6Layer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2609,19 +2669,17 @@ pub struct PtrOfReLU6Layer {
 }
 
 impl PtrOfReLU6Layer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReLU6Layer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfReLU6Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfReLU6Layer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfReLU6Layer(self.ptr) };
+        unsafe { cv_PtrOfReLU6Layer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfReLULayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfReLULayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfReLULayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2630,19 +2688,17 @@ pub struct PtrOfReLULayer {
 }
 
 impl PtrOfReLULayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReLULayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfReLULayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfReLULayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfReLULayer(self.ptr) };
+        unsafe { cv_PtrOfReLULayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfRegionLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfRegionLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfRegionLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2651,19 +2707,17 @@ pub struct PtrOfRegionLayer {
 }
 
 impl PtrOfRegionLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfRegionLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfRegionLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfRegionLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfRegionLayer(self.ptr) };
+        unsafe { cv_PtrOfRegionLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfReorgLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfReorgLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfReorgLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2672,19 +2726,17 @@ pub struct PtrOfReorgLayer {
 }
 
 impl PtrOfReorgLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReorgLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfReorgLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfReorgLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfReorgLayer(self.ptr) };
+        unsafe { cv_PtrOfReorgLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfReshapeLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfReshapeLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfReshapeLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2693,19 +2745,17 @@ pub struct PtrOfReshapeLayer {
 }
 
 impl PtrOfReshapeLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReshapeLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfReshapeLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfReshapeLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfReshapeLayer(self.ptr) };
+        unsafe { cv_PtrOfReshapeLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfResizeLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfResizeLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfResizeLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2714,19 +2764,83 @@ pub struct PtrOfResizeLayer {
 }
 
 impl PtrOfResizeLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfResizeLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfResizeLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfResizeLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfResizeLayer(self.ptr) };
+        unsafe { cv_PtrOfResizeLayer_delete(self.ptr) };
     }
 }
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfRetina_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfRetina_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfRetina {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfRetina {
+    #[doc(hidden)] pub fn as_raw_PtrOfRetina(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfRetina {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfRetina_delete(self.ptr) };
+    }
+}
+impl core::Algorithm for PtrOfRetina {
+    #[doc(hidden)]
+    fn as_raw_Algorithm(&self) -> *mut c_void {
+        unsafe { cv_PtrOfRetina_get(self.ptr) }
+    }
+}
+
+impl crate::bioinspired::Retina for PtrOfRetina {
+    #[doc(hidden)]
+    fn as_raw_Retina(&self) -> *mut c_void {
+        unsafe { cv_PtrOfRetina_get(self.ptr) }
+    }
+}
+
+extern "C" {
+    #[doc(hidden)] fn cv_PtrOfRetinaFastToneMapping_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfRetinaFastToneMapping_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfRetinaFastToneMapping {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfRetinaFastToneMapping {
+    #[doc(hidden)] pub fn as_raw_PtrOfRetinaFastToneMapping(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfRetinaFastToneMapping {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfRetinaFastToneMapping_delete(self.ptr) };
+    }
+}
+impl core::Algorithm for PtrOfRetinaFastToneMapping {
+    #[doc(hidden)]
+    fn as_raw_Algorithm(&self) -> *mut c_void {
+        unsafe { cv_PtrOfRetinaFastToneMapping_get(self.ptr) }
+    }
+}
+
+impl crate::bioinspired::RetinaFastToneMapping for PtrOfRetinaFastToneMapping {
+    #[doc(hidden)]
+    fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void {
+        unsafe { cv_PtrOfRetinaFastToneMapping_get(self.ptr) }
+    }
+}
+
+extern "C" {
     #[doc(hidden)] fn cv_PtrOfSVM_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSVM(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSVM_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2735,14 +2849,12 @@ pub struct PtrOfSVM {
 }
 
 impl PtrOfSVM {
-    #[doc(hidden)] pub fn as_raw_PtrOfSVM(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSVM(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSVM {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSVM(self.ptr) };
+        unsafe { cv_PtrOfSVM_delete(self.ptr) };
     }
 }
 impl crate::ml::SVM for PtrOfSVM {
@@ -2768,7 +2880,7 @@ impl crate::ml::StatModel for PtrOfSVM {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSVMSGD_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSVMSGD(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSVMSGD_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2777,14 +2889,12 @@ pub struct PtrOfSVMSGD {
 }
 
 impl PtrOfSVMSGD {
-    #[doc(hidden)] pub fn as_raw_PtrOfSVMSGD(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSVMSGD(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSVMSGD {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSVMSGD(self.ptr) };
+        unsafe { cv_PtrOfSVMSGD_delete(self.ptr) };
     }
 }
 impl crate::ml::SVMSGD for PtrOfSVMSGD {
@@ -2810,7 +2920,7 @@ impl crate::ml::StatModel for PtrOfSVMSGD {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfScaleLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfScaleLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfScaleLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2819,19 +2929,17 @@ pub struct PtrOfScaleLayer {
 }
 
 impl PtrOfScaleLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfScaleLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfScaleLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfScaleLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfScaleLayer(self.ptr) };
+        unsafe { cv_PtrOfScaleLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfShapeContextDistanceExtractor_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfShapeContextDistanceExtractor(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfShapeContextDistanceExtractor_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2840,14 +2948,12 @@ pub struct PtrOfShapeContextDistanceExtractor {
 }
 
 impl PtrOfShapeContextDistanceExtractor {
-    #[doc(hidden)] pub fn as_raw_PtrOfShapeContextDistanceExtractor(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfShapeContextDistanceExtractor(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfShapeContextDistanceExtractor {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfShapeContextDistanceExtractor(self.ptr) };
+        unsafe { cv_PtrOfShapeContextDistanceExtractor_delete(self.ptr) };
     }
 }
 impl crate::shape::ShapeDistanceExtractor for PtrOfShapeContextDistanceExtractor {
@@ -2873,7 +2979,7 @@ impl crate::shape::ShapeContextDistanceExtractor for PtrOfShapeContextDistanceEx
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSigmoidLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSigmoidLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSigmoidLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2882,19 +2988,17 @@ pub struct PtrOfSigmoidLayer {
 }
 
 impl PtrOfSigmoidLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSigmoidLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSigmoidLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSigmoidLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSigmoidLayer(self.ptr) };
+        unsafe { cv_PtrOfSigmoidLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSimpleBlobDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSimpleBlobDetector(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSimpleBlobDetector_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2903,19 +3007,17 @@ pub struct PtrOfSimpleBlobDetector {
 }
 
 impl PtrOfSimpleBlobDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSimpleBlobDetector {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSimpleBlobDetector(self.ptr) };
+        unsafe { cv_PtrOfSimpleBlobDetector_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSliceLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSliceLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSliceLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2924,19 +3026,17 @@ pub struct PtrOfSliceLayer {
 }
 
 impl PtrOfSliceLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSliceLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSliceLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSliceLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSliceLayer(self.ptr) };
+        unsafe { cv_PtrOfSliceLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSoftmaxLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSoftmaxLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSoftmaxLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2945,19 +3045,17 @@ pub struct PtrOfSoftmaxLayer {
 }
 
 impl PtrOfSoftmaxLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSoftmaxLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSoftmaxLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSoftmaxLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSoftmaxLayer(self.ptr) };
+        unsafe { cv_PtrOfSoftmaxLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSparsePyrLKOpticalFlow_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSparsePyrLKOpticalFlow(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSparsePyrLKOpticalFlow_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -2966,14 +3064,12 @@ pub struct PtrOfSparsePyrLKOpticalFlow {
 }
 
 impl PtrOfSparsePyrLKOpticalFlow {
-    #[doc(hidden)] pub fn as_raw_PtrOfSparsePyrLKOpticalFlow(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSparsePyrLKOpticalFlow(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSparsePyrLKOpticalFlow {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSparsePyrLKOpticalFlow(self.ptr) };
+        unsafe { cv_PtrOfSparsePyrLKOpticalFlow_delete(self.ptr) };
     }
 }
 impl crate::video::SparseOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
@@ -2999,7 +3095,7 @@ impl crate::video::SparsePyrLKOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSplitLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSplitLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSplitLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3008,19 +3104,17 @@ pub struct PtrOfSplitLayer {
 }
 
 impl PtrOfSplitLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSplitLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSplitLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSplitLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSplitLayer(self.ptr) };
+        unsafe { cv_PtrOfSplitLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfStereoBM_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfStereoBM(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfStereoBM_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3029,14 +3123,12 @@ pub struct PtrOfStereoBM {
 }
 
 impl PtrOfStereoBM {
-    #[doc(hidden)] pub fn as_raw_PtrOfStereoBM(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfStereoBM(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfStereoBM {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfStereoBM(self.ptr) };
+        unsafe { cv_PtrOfStereoBM_delete(self.ptr) };
     }
 }
 impl crate::calib3d::StereoMatcher for PtrOfStereoBM {
@@ -3062,7 +3154,7 @@ impl crate::calib3d::StereoBM for PtrOfStereoBM {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfStereoSGBM_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfStereoSGBM(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfStereoSGBM_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3071,14 +3163,12 @@ pub struct PtrOfStereoSGBM {
 }
 
 impl PtrOfStereoSGBM {
-    #[doc(hidden)] pub fn as_raw_PtrOfStereoSGBM(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfStereoSGBM(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfStereoSGBM {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfStereoSGBM(self.ptr) };
+        unsafe { cv_PtrOfStereoSGBM_delete(self.ptr) };
     }
 }
 impl crate::calib3d::StereoMatcher for PtrOfStereoSGBM {
@@ -3104,7 +3194,7 @@ impl crate::calib3d::StereoSGBM for PtrOfStereoSGBM {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfStitcher_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfStitcher(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfStitcher_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3113,19 +3203,17 @@ pub struct PtrOfStitcher {
 }
 
 impl PtrOfStitcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfStitcher(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfStitcher(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfStitcher {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfStitcher(self.ptr) };
+        unsafe { cv_PtrOfStitcher_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfSuperResolution_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfSuperResolution(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfSuperResolution_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3134,14 +3222,12 @@ pub struct PtrOfSuperResolution {
 }
 
 impl PtrOfSuperResolution {
-    #[doc(hidden)] pub fn as_raw_PtrOfSuperResolution(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfSuperResolution(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfSuperResolution {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfSuperResolution(self.ptr) };
+        unsafe { cv_PtrOfSuperResolution_delete(self.ptr) };
     }
 }
 impl crate::superres::SuperResolution for PtrOfSuperResolution {
@@ -3167,7 +3253,7 @@ impl crate::superres::FrameSource for PtrOfSuperResolution {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfTanHLayer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfTanHLayer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfTanHLayer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3176,19 +3262,17 @@ pub struct PtrOfTanHLayer {
 }
 
 impl PtrOfTanHLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfTanHLayer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfTanHLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfTanHLayer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfTanHLayer(self.ptr) };
+        unsafe { cv_PtrOfTanHLayer_delete(self.ptr) };
     }
 }
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfThinPlateSplineShapeTransformer_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfThinPlateSplineShapeTransformer(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfThinPlateSplineShapeTransformer_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3197,14 +3281,12 @@ pub struct PtrOfThinPlateSplineShapeTransformer {
 }
 
 impl PtrOfThinPlateSplineShapeTransformer {
-    #[doc(hidden)] pub fn as_raw_PtrOfThinPlateSplineShapeTransformer(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfThinPlateSplineShapeTransformer(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfThinPlateSplineShapeTransformer {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfThinPlateSplineShapeTransformer(self.ptr) };
+        unsafe { cv_PtrOfThinPlateSplineShapeTransformer_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfThinPlateSplineShapeTransformer {
@@ -3230,7 +3312,7 @@ impl crate::shape::ShapeTransformer for PtrOfThinPlateSplineShapeTransformer {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfTonemap_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfTonemap(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfTonemap_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3239,14 +3321,12 @@ pub struct PtrOfTonemap {
 }
 
 impl PtrOfTonemap {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemap(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfTonemap(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfTonemap {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfTonemap(self.ptr) };
+        unsafe { cv_PtrOfTonemap_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfTonemap {
@@ -3265,7 +3345,7 @@ impl crate::photo::Tonemap for PtrOfTonemap {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfTonemapDrago_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfTonemapDrago(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfTonemapDrago_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3274,14 +3354,12 @@ pub struct PtrOfTonemapDrago {
 }
 
 impl PtrOfTonemapDrago {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemapDrago(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfTonemapDrago(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfTonemapDrago {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfTonemapDrago(self.ptr) };
+        unsafe { cv_PtrOfTonemapDrago_delete(self.ptr) };
     }
 }
 impl crate::photo::TonemapDrago for PtrOfTonemapDrago {
@@ -3307,7 +3385,7 @@ impl crate::photo::Tonemap for PtrOfTonemapDrago {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfTonemapMantiuk_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfTonemapMantiuk(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfTonemapMantiuk_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3316,14 +3394,12 @@ pub struct PtrOfTonemapMantiuk {
 }
 
 impl PtrOfTonemapMantiuk {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemapMantiuk(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfTonemapMantiuk(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfTonemapMantiuk {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfTonemapMantiuk(self.ptr) };
+        unsafe { cv_PtrOfTonemapMantiuk_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfTonemapMantiuk {
@@ -3349,7 +3425,7 @@ impl crate::photo::TonemapMantiuk for PtrOfTonemapMantiuk {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfTonemapReinhard_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfTonemapReinhard(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfTonemapReinhard_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3358,14 +3434,12 @@ pub struct PtrOfTonemapReinhard {
 }
 
 impl PtrOfTonemapReinhard {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemapReinhard(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfTonemapReinhard(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfTonemapReinhard {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfTonemapReinhard(self.ptr) };
+        unsafe { cv_PtrOfTonemapReinhard_delete(self.ptr) };
     }
 }
 impl core::Algorithm for PtrOfTonemapReinhard {
@@ -3391,7 +3465,7 @@ impl crate::photo::TonemapReinhard for PtrOfTonemapReinhard {
 
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfTrainData_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOfTrainData(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOfTrainData_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3400,14 +3474,12 @@ pub struct PtrOfTrainData {
 }
 
 impl PtrOfTrainData {
-    #[doc(hidden)] pub fn as_raw_PtrOfTrainData(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOfTrainData(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOfTrainData {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOfTrainData(self.ptr) };
+        unsafe { cv_PtrOfTrainData_delete(self.ptr) };
     }
 }
 impl crate::ml::TrainData for PtrOfTrainData {
@@ -3418,8 +3490,41 @@ impl crate::ml::TrainData for PtrOfTrainData {
 }
 
 extern "C" {
+    #[doc(hidden)] fn cv_PtrOfTransientAreasSegmentationModule_get(ptr: *mut c_void) -> *mut c_void;
+    #[doc(hidden)] fn cv_PtrOfTransientAreasSegmentationModule_delete(ptr: *mut c_void);
+}
+
+#[allow(dead_code)]
+pub struct PtrOfTransientAreasSegmentationModule {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfTransientAreasSegmentationModule {
+    #[doc(hidden)] pub fn as_raw_PtrOfTransientAreasSegmentationModule(&self) -> *mut c_void { self.ptr }
+}
+
+impl Drop for PtrOfTransientAreasSegmentationModule {
+    fn drop(&mut self) {
+        unsafe { cv_PtrOfTransientAreasSegmentationModule_delete(self.ptr) };
+    }
+}
+impl core::Algorithm for PtrOfTransientAreasSegmentationModule {
+    #[doc(hidden)]
+    fn as_raw_Algorithm(&self) -> *mut c_void {
+        unsafe { cv_PtrOfTransientAreasSegmentationModule_get(self.ptr) }
+    }
+}
+
+impl crate::bioinspired::TransientAreasSegmentationModule for PtrOfTransientAreasSegmentationModule {
+    #[doc(hidden)]
+    fn as_raw_TransientAreasSegmentationModule(&self) -> *mut c_void {
+        unsafe { cv_PtrOfTransientAreasSegmentationModule_get(self.ptr) }
+    }
+}
+
+extern "C" {
     #[doc(hidden)] fn cv_PtrOffloat_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_delete_PtrOffloat(ptr: *mut c_void);
+    #[doc(hidden)] fn cv_PtrOffloat_delete(ptr: *mut c_void);
 }
 
 #[allow(dead_code)]
@@ -3428,55 +3533,71 @@ pub struct PtrOffloat {
 }
 
 impl PtrOffloat {
-    #[doc(hidden)] pub fn as_raw_PtrOffloat(&self) -> *mut c_void {
-        self.ptr
-    }
+    #[doc(hidden)] pub fn as_raw_PtrOffloat(&self) -> *mut c_void { self.ptr }
 }
 
 impl Drop for PtrOffloat {
     fn drop(&mut self) {
-        unsafe { cv_delete_PtrOffloat(self.ptr) };
+        unsafe { cv_PtrOffloat_delete(self.ptr) };
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfDMatch() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfDMatch(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfDMatch(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfDMatch_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfDMatch_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfDMatch {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfDMatch_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfDMatch_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfDMatch_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfDMatch_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfDMatch_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfDMatch_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfDMatch_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfDMatch_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfDMatch {
+    #[doc(hidden)] pub fn as_raw_VectorOfDMatch(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfDMatch() } }
+        unsafe { Self { ptr: cv_VectorOfDMatch_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfDMatch_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfDMatch_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfDMatch(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfDMatch_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfDMatch_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfDMatch {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfDMatch(self.ptr) };
+        unsafe { cv_VectorOfDMatch_delete(self.ptr) };
     }
 }
 impl VectorOfDMatch {
     pub fn push(&mut self, val: core::DMatch) {
-        unsafe { cv_push_VectorOfDMatch(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfDMatch_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::DMatch {
+    pub fn get(&self, index: size_t) -> &core::DMatch {
+        unsafe { (cv_VectorOfDMatch_get(self.ptr, index) as *mut core::DMatch).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::DMatch {
         unsafe { (cv_VectorOfDMatch_get(self.ptr, index) as *mut core::DMatch).as_mut().unwrap() }
     }
 }
@@ -3487,145 +3608,205 @@ impl ::std::ops::Deref for VectorOfDMatch {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfDMatch_len(self.ptr) as usize;
+            let length = cv_VectorOfDMatch_size(self.ptr);
             let data = cv_VectorOfDMatch_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfDetectionROI() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfDetectionROI(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfDetectionROI(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfDetectionROI_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfDetectionROI_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfDetectionROI {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfDetectionROI_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfDetectionROI {
+    #[doc(hidden)] pub fn as_raw_VectorOfDetectionROI(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfDetectionROI() } }
+        unsafe { Self { ptr: cv_VectorOfDetectionROI_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfDetectionROI_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfDetectionROI_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfDetectionROI(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfDetectionROI_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfDetectionROI_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfDetectionROI {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfDetectionROI(self.ptr) };
+        unsafe { cv_VectorOfDetectionROI_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfDetectionROI {
     pub fn push(&mut self, val: crate::objdetect::DetectionROI) {
-        unsafe { cv_push_VectorOfDetectionROI(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfDetectionROI_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> crate::objdetect::DetectionROI {
+    pub fn get(&self, index: size_t) -> crate::objdetect::DetectionROI {
         crate::objdetect::DetectionROI { ptr: unsafe { cv_VectorOfDetectionROI_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfDetectionROI_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> crate::objdetect::DetectionROI {
+        crate::objdetect::DetectionROI { ptr: unsafe { cv_VectorOfDetectionROI_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfDetectionROI_get(self.ptr, index)) }
+        // crate::objdetect::DetectionROI { ptr: unsafe { cv_VectorOfDetectionROI_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::objdetect::DetectionROI> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfExtObject() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfExtObject(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfExtObject(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfExtObject_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfExtObject_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfExtObject {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfExtObject_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfExtObject_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfExtObject_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfExtObject_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfExtObject_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfExtObject_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfExtObject_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfExtObject_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfExtObject {
+    #[doc(hidden)] pub fn as_raw_VectorOfExtObject(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfExtObject() } }
+        unsafe { Self { ptr: cv_VectorOfExtObject_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfExtObject_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfExtObject_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfExtObject(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfExtObject_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfExtObject_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfExtObject {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfExtObject(self.ptr) };
+        unsafe { cv_VectorOfExtObject_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfExtObject {
     pub fn push(&mut self, val: crate::objdetect::DetectionBasedTracker_ExtObject) {
-        unsafe { cv_push_VectorOfExtObject(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfExtObject_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> crate::objdetect::DetectionBasedTracker_ExtObject {
+    pub fn get(&self, index: size_t) -> crate::objdetect::DetectionBasedTracker_ExtObject {
         crate::objdetect::DetectionBasedTracker_ExtObject { ptr: unsafe { cv_VectorOfExtObject_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfExtObject_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> crate::objdetect::DetectionBasedTracker_ExtObject {
+        crate::objdetect::DetectionBasedTracker_ExtObject { ptr: unsafe { cv_VectorOfExtObject_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfExtObject_get(self.ptr, index)) }
+        // crate::objdetect::DetectionBasedTracker_ExtObject { ptr: unsafe { cv_VectorOfExtObject_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::objdetect::DetectionBasedTracker_ExtObject> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfKeyPoint() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfKeyPoint(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfKeyPoint(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfKeyPoint_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfKeyPoint_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfKeyPoint {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfKeyPoint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfKeyPoint {
+    #[doc(hidden)] pub fn as_raw_VectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfKeyPoint() } }
+        unsafe { Self { ptr: cv_VectorOfKeyPoint_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfKeyPoint_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfKeyPoint_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfKeyPoint(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfKeyPoint_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfKeyPoint_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfKeyPoint {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfKeyPoint(self.ptr) };
+        unsafe { cv_VectorOfKeyPoint_delete(self.ptr) };
     }
 }
 impl VectorOfKeyPoint {
     pub fn push(&mut self, val: core::KeyPoint) {
-        unsafe { cv_push_VectorOfKeyPoint(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfKeyPoint_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::KeyPoint {
+    pub fn get(&self, index: size_t) -> &core::KeyPoint {
+        unsafe { (cv_VectorOfKeyPoint_get(self.ptr, index) as *mut core::KeyPoint).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::KeyPoint {
         unsafe { (cv_VectorOfKeyPoint_get(self.ptr, index) as *mut core::KeyPoint).as_mut().unwrap() }
     }
 }
@@ -3636,145 +3817,273 @@ impl ::std::ops::Deref for VectorOfKeyPoint {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfKeyPoint_len(self.ptr) as usize;
+            let length = cv_VectorOfKeyPoint_size(self.ptr);
             let data = cv_VectorOfKeyPoint_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfMat() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfMat(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfMat(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfMat_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfMat_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfMat {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfMat_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfMat_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfMat_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfMat_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfMat_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfMat_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfMat_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfMat_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfMat {
+    #[doc(hidden)] pub fn as_raw_VectorOfMat(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfMat() } }
+        unsafe { Self { ptr: cv_VectorOfMat_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfMat_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfMat_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfMat(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfMat_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfMat_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfMat {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfMat(self.ptr) };
+        unsafe { cv_VectorOfMat_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfMat {
     pub fn push(&mut self, val: core::Mat) {
-        unsafe { cv_push_VectorOfMat(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfMat_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> core::Mat {
+    pub fn get(&self, index: size_t) -> core::Mat {
         core::Mat { ptr: unsafe { cv_VectorOfMat_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfMat_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> core::Mat {
+        core::Mat { ptr: unsafe { cv_VectorOfMat_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfMat_get(self.ptr, index)) }
+        // core::Mat { ptr: unsafe { cv_VectorOfMat_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<core::Mat> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfNode() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfNode(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfNode(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfNode_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfNode_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfNode {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfNode_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfNode_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfNode_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfNode_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfNode_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfNode_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfNode_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfNode_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfNode {
+    #[doc(hidden)] pub fn as_raw_VectorOfNode(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfNode() } }
+        unsafe { Self { ptr: cv_VectorOfNode_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfNode_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfNode_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfNode(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfNode_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfNode_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfNode {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfNode(self.ptr) };
+        unsafe { cv_VectorOfNode_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfNode {
     pub fn push(&mut self, val: crate::ml::DTrees_Node) {
-        unsafe { cv_push_VectorOfNode(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfNode_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> crate::ml::DTrees_Node {
+    pub fn get(&self, index: size_t) -> crate::ml::DTrees_Node {
         crate::ml::DTrees_Node { ptr: unsafe { cv_VectorOfNode_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfNode_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> crate::ml::DTrees_Node {
+        crate::ml::DTrees_Node { ptr: unsafe { cv_VectorOfNode_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfNode_get(self.ptr, index)) }
+        // crate::ml::DTrees_Node { ptr: unsafe { cv_VectorOfNode_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::ml::DTrees_Node> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfPoint() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfPoint(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfPoint(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfPoint_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfPoint_get(ptr: *mut c_void, index: i32) -> *mut c_void;
+#[allow(dead_code)]
+pub struct VectorOfObjectDetection {
+    pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfObjectDetection_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
+impl VectorOfObjectDetection {
+    #[doc(hidden)] pub fn as_raw_VectorOfObjectDetection(&self) -> *mut c_void { self.ptr }
+
+    pub fn new() -> Self {
+        unsafe { Self { ptr: cv_VectorOfObjectDetection_new() } }
+    }
+
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfObjectDetection_size(self.ptr) }
+    }
+
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfObjectDetection_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfObjectDetection_reserve(self.ptr, self.len() + additional) }
+    }
+}
+
+impl Drop for VectorOfObjectDetection {
+    fn drop(&mut self) {
+        unsafe { cv_VectorOfObjectDetection_delete(self.ptr) };
+    }
+}
+// BoxedClassTypeInfo
+impl VectorOfObjectDetection {
+    pub fn push(&mut self, val: crate::dpm::DPMDetector_ObjectDetection) {
+        unsafe { cv_VectorOfObjectDetection_push_back(self.ptr, val.ptr) }
+    }
+
+    pub fn get(&self, index: size_t) -> crate::dpm::DPMDetector_ObjectDetection {
+        crate::dpm::DPMDetector_ObjectDetection { ptr: unsafe { cv_VectorOfObjectDetection_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfObjectDetection_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> crate::dpm::DPMDetector_ObjectDetection {
+        crate::dpm::DPMDetector_ObjectDetection { ptr: unsafe { cv_VectorOfObjectDetection_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfObjectDetection_get(self.ptr, index)) }
+        // crate::dpm::DPMDetector_ObjectDetection { ptr: unsafe { cv_VectorOfObjectDetection_get(self.ptr, index) } }
+    }
+
+    pub fn to_vec(&self) -> Vec<crate::dpm::DPMDetector_ObjectDetection> {
+        (0..self.len()).map(|x| self.get(x)).collect()
+    }
+}
 #[allow(dead_code)]
 pub struct VectorOfPoint {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfPoint_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPoint_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPoint_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfPoint_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfPoint_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPoint_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfPoint_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPoint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfPoint {
+    #[doc(hidden)] pub fn as_raw_VectorOfPoint(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfPoint() } }
+        unsafe { Self { ptr: cv_VectorOfPoint_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfPoint_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfPoint_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfPoint(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfPoint_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfPoint_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfPoint {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfPoint(self.ptr) };
+        unsafe { cv_VectorOfPoint_delete(self.ptr) };
     }
 }
 impl VectorOfPoint {
     pub fn push(&mut self, val: core::Point) {
-        unsafe { cv_push_VectorOfPoint(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfPoint_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::Point {
+    pub fn get(&self, index: size_t) -> &core::Point {
+        unsafe { (cv_VectorOfPoint_get(self.ptr, index) as *mut core::Point).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::Point {
         unsafe { (cv_VectorOfPoint_get(self.ptr, index) as *mut core::Point).as_mut().unwrap() }
     }
 }
@@ -3785,51 +4094,69 @@ impl ::std::ops::Deref for VectorOfPoint {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfPoint_len(self.ptr) as usize;
+            let length = cv_VectorOfPoint_size(self.ptr);
             let data = cv_VectorOfPoint_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfPoint2d() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfPoint2d(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfPoint2d(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfPoint2d_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfPoint2d_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfPoint2d {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfPoint2d_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPoint2d_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPoint2d_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfPoint2d_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfPoint2d_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPoint2d_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfPoint2d_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPoint2d_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfPoint2d {
+    #[doc(hidden)] pub fn as_raw_VectorOfPoint2d(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfPoint2d() } }
+        unsafe { Self { ptr: cv_VectorOfPoint2d_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfPoint2d_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfPoint2d_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfPoint2d(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfPoint2d_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfPoint2d_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfPoint2d {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfPoint2d(self.ptr) };
+        unsafe { cv_VectorOfPoint2d_delete(self.ptr) };
     }
 }
 impl VectorOfPoint2d {
     pub fn push(&mut self, val: core::Point2d) {
-        unsafe { cv_push_VectorOfPoint2d(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfPoint2d_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::Point2d {
+    pub fn get(&self, index: size_t) -> &core::Point2d {
+        unsafe { (cv_VectorOfPoint2d_get(self.ptr, index) as *mut core::Point2d).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::Point2d {
         unsafe { (cv_VectorOfPoint2d_get(self.ptr, index) as *mut core::Point2d).as_mut().unwrap() }
     }
 }
@@ -3840,51 +4167,69 @@ impl ::std::ops::Deref for VectorOfPoint2d {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfPoint2d_len(self.ptr) as usize;
+            let length = cv_VectorOfPoint2d_size(self.ptr);
             let data = cv_VectorOfPoint2d_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfPoint2f() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfPoint2f(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfPoint2f(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfPoint2f_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfPoint2f_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfPoint2f {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfPoint2f_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPoint2f_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPoint2f_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfPoint2f_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfPoint2f_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPoint2f_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfPoint2f_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPoint2f_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfPoint2f {
+    #[doc(hidden)] pub fn as_raw_VectorOfPoint2f(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfPoint2f() } }
+        unsafe { Self { ptr: cv_VectorOfPoint2f_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfPoint2f_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfPoint2f_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfPoint2f(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfPoint2f_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfPoint2f_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfPoint2f {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfPoint2f(self.ptr) };
+        unsafe { cv_VectorOfPoint2f_delete(self.ptr) };
     }
 }
 impl VectorOfPoint2f {
     pub fn push(&mut self, val: core::Point2f) {
-        unsafe { cv_push_VectorOfPoint2f(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfPoint2f_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::Point2f {
+    pub fn get(&self, index: size_t) -> &core::Point2f {
+        unsafe { (cv_VectorOfPoint2f_get(self.ptr, index) as *mut core::Point2f).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::Point2f {
         unsafe { (cv_VectorOfPoint2f_get(self.ptr, index) as *mut core::Point2f).as_mut().unwrap() }
     }
 }
@@ -3895,145 +4240,205 @@ impl ::std::ops::Deref for VectorOfPoint2f {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfPoint2f_len(self.ptr) as usize;
+            let length = cv_VectorOfPoint2f_size(self.ptr);
             let data = cv_VectorOfPoint2f_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfPtrOfBackendWrapper() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfPtrOfBackendWrapper(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfPtrOfBackendWrapper(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfPtrOfBackendWrapper {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfPtrOfBackendWrapper_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfPtrOfBackendWrapper {
+    #[doc(hidden)] pub fn as_raw_VectorOfPtrOfBackendWrapper(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfPtrOfBackendWrapper() } }
+        unsafe { Self { ptr: cv_VectorOfPtrOfBackendWrapper_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfPtrOfBackendWrapper_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfPtrOfBackendWrapper_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfPtrOfBackendWrapper(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfPtrOfBackendWrapper_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfPtrOfBackendWrapper_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfPtrOfBackendWrapper {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfPtrOfBackendWrapper(self.ptr) };
+        unsafe { cv_VectorOfPtrOfBackendWrapper_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfPtrOfBackendWrapper {
     pub fn push(&mut self, val: types::PtrOfBackendWrapper) {
-        unsafe { cv_push_VectorOfPtrOfBackendWrapper(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfPtrOfBackendWrapper_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::PtrOfBackendWrapper {
+    pub fn get(&self, index: size_t) -> types::PtrOfBackendWrapper {
         types::PtrOfBackendWrapper { ptr: unsafe { cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::PtrOfBackendWrapper {
+        types::PtrOfBackendWrapper { ptr: unsafe { cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index)) }
+        // types::PtrOfBackendWrapper { ptr: unsafe { cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::PtrOfBackendWrapper> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfRange() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfRange(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfRange(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfRange_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfRange_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfRange {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfRange_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRange_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRange_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfRange_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfRange_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRange_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfRange_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRange_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfRange {
+    #[doc(hidden)] pub fn as_raw_VectorOfRange(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfRange() } }
+        unsafe { Self { ptr: cv_VectorOfRange_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfRange_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfRange_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfRange(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfRange_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfRange_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfRange {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfRange(self.ptr) };
+        unsafe { cv_VectorOfRange_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfRange {
     pub fn push(&mut self, val: core::Range) {
-        unsafe { cv_push_VectorOfRange(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfRange_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> core::Range {
+    pub fn get(&self, index: size_t) -> core::Range {
         core::Range { ptr: unsafe { cv_VectorOfRange_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfRange_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> core::Range {
+        core::Range { ptr: unsafe { cv_VectorOfRange_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfRange_get(self.ptr, index)) }
+        // core::Range { ptr: unsafe { cv_VectorOfRange_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<core::Range> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfRect() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfRect(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfRect(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfRect_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfRect_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfRect {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfRect_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRect_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRect_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfRect_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfRect_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRect_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfRect_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRect_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfRect {
+    #[doc(hidden)] pub fn as_raw_VectorOfRect(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfRect() } }
+        unsafe { Self { ptr: cv_VectorOfRect_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfRect_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfRect_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfRect(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfRect_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfRect_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfRect {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfRect(self.ptr) };
+        unsafe { cv_VectorOfRect_delete(self.ptr) };
     }
 }
 impl VectorOfRect {
     pub fn push(&mut self, val: core::Rect) {
-        unsafe { cv_push_VectorOfRect(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfRect_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::Rect {
+    pub fn get(&self, index: size_t) -> &core::Rect {
+        unsafe { (cv_VectorOfRect_get(self.ptr, index) as *mut core::Rect).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::Rect {
         unsafe { (cv_VectorOfRect_get(self.ptr, index) as *mut core::Rect).as_mut().unwrap() }
     }
 }
@@ -4044,51 +4449,69 @@ impl ::std::ops::Deref for VectorOfRect {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfRect_len(self.ptr) as usize;
+            let length = cv_VectorOfRect_size(self.ptr);
             let data = cv_VectorOfRect_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfRect2d() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfRect2d(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfRect2d(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfRect2d_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfRect2d_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfRect2d {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfRect2d_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRect2d_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRect2d_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfRect2d_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfRect2d_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRect2d_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfRect2d_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRect2d_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfRect2d {
+    #[doc(hidden)] pub fn as_raw_VectorOfRect2d(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfRect2d() } }
+        unsafe { Self { ptr: cv_VectorOfRect2d_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfRect2d_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfRect2d_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfRect2d(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfRect2d_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfRect2d_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfRect2d {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfRect2d(self.ptr) };
+        unsafe { cv_VectorOfRect2d_delete(self.ptr) };
     }
 }
 impl VectorOfRect2d {
     pub fn push(&mut self, val: core::Rect2d) {
-        unsafe { cv_push_VectorOfRect2d(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfRect2d_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::Rect2d {
+    pub fn get(&self, index: size_t) -> &core::Rect2d {
+        unsafe { (cv_VectorOfRect2d_get(self.ptr, index) as *mut core::Rect2d).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::Rect2d {
         unsafe { (cv_VectorOfRect2d_get(self.ptr, index) as *mut core::Rect2d).as_mut().unwrap() }
     }
 }
@@ -4099,145 +4522,205 @@ impl ::std::ops::Deref for VectorOfRect2d {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfRect2d_len(self.ptr) as usize;
+            let length = cv_VectorOfRect2d_size(self.ptr);
             let data = cv_VectorOfRect2d_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfRotatedRect() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfRotatedRect(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfRotatedRect(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfRotatedRect_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfRotatedRect_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfRotatedRect {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfRotatedRect_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfRotatedRect {
+    #[doc(hidden)] pub fn as_raw_VectorOfRotatedRect(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfRotatedRect() } }
+        unsafe { Self { ptr: cv_VectorOfRotatedRect_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfRotatedRect_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfRotatedRect_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfRotatedRect(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfRotatedRect_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfRotatedRect_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfRotatedRect {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfRotatedRect(self.ptr) };
+        unsafe { cv_VectorOfRotatedRect_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfRotatedRect {
     pub fn push(&mut self, val: core::RotatedRect) {
-        unsafe { cv_push_VectorOfRotatedRect(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfRotatedRect_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> core::RotatedRect {
+    pub fn get(&self, index: size_t) -> core::RotatedRect {
         core::RotatedRect { ptr: unsafe { cv_VectorOfRotatedRect_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfRotatedRect_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> core::RotatedRect {
+        core::RotatedRect { ptr: unsafe { cv_VectorOfRotatedRect_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfRotatedRect_get(self.ptr, index)) }
+        // core::RotatedRect { ptr: unsafe { cv_VectorOfRotatedRect_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<core::RotatedRect> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfSplit() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfSplit(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfSplit(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfSplit_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfSplit_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfSplit {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfSplit_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfSplit_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfSplit_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfSplit_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfSplit_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfSplit_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfSplit_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfSplit_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfSplit {
+    #[doc(hidden)] pub fn as_raw_VectorOfSplit(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfSplit() } }
+        unsafe { Self { ptr: cv_VectorOfSplit_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfSplit_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfSplit_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfSplit(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfSplit_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfSplit_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfSplit {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfSplit(self.ptr) };
+        unsafe { cv_VectorOfSplit_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfSplit {
     pub fn push(&mut self, val: crate::ml::DTrees_Split) {
-        unsafe { cv_push_VectorOfSplit(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfSplit_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> crate::ml::DTrees_Split {
+    pub fn get(&self, index: size_t) -> crate::ml::DTrees_Split {
         crate::ml::DTrees_Split { ptr: unsafe { cv_VectorOfSplit_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfSplit_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> crate::ml::DTrees_Split {
+        crate::ml::DTrees_Split { ptr: unsafe { cv_VectorOfSplit_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfSplit_get(self.ptr, index)) }
+        // crate::ml::DTrees_Split { ptr: unsafe { cv_VectorOfSplit_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::ml::DTrees_Split> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfString() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfString(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfString(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfString_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfString_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfString {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfString_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfString_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfString_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfString_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfString_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfString_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfString_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfString_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfString {
+    #[doc(hidden)] pub fn as_raw_VectorOfString(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfString() } }
+        unsafe { Self { ptr: cv_VectorOfString_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfString_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfString_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfString(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfString_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfString_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfString {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfString(self.ptr) };
+        unsafe { cv_VectorOfString_delete(self.ptr) };
     }
 }
 impl VectorOfString {
     pub fn push(&mut self, val: String) {
-        unsafe { cv_push_VectorOfString(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfString_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut String {
+    pub fn get(&self, index: size_t) -> &String {
+        unsafe { (cv_VectorOfString_get(self.ptr, index) as *mut String).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut String {
         unsafe { (cv_VectorOfString_get(self.ptr, index) as *mut String).as_mut().unwrap() }
     }
 }
@@ -4248,51 +4731,69 @@ impl ::std::ops::Deref for VectorOfString {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfString_len(self.ptr) as usize;
+            let length = cv_VectorOfString_size(self.ptr);
             let data = cv_VectorOfString_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVec4f() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVec4f(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVec4f(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVec4f_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVec4f_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVec4f {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVec4f_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVec4f_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVec4f_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVec4f_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVec4f_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVec4f_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVec4f_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVec4f_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVec4f {
+    #[doc(hidden)] pub fn as_raw_VectorOfVec4f(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVec4f() } }
+        unsafe { Self { ptr: cv_VectorOfVec4f_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVec4f_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVec4f_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVec4f(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVec4f_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVec4f_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVec4f {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVec4f(self.ptr) };
+        unsafe { cv_VectorOfVec4f_delete(self.ptr) };
     }
 }
 impl VectorOfVec4f {
     pub fn push(&mut self, val: core::Vec4f) {
-        unsafe { cv_push_VectorOfVec4f(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfVec4f_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::Vec4f {
+    pub fn get(&self, index: size_t) -> &core::Vec4f {
+        unsafe { (cv_VectorOfVec4f_get(self.ptr, index) as *mut core::Vec4f).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::Vec4f {
         unsafe { (cv_VectorOfVec4f_get(self.ptr, index) as *mut core::Vec4f).as_mut().unwrap() }
     }
 }
@@ -4303,51 +4804,69 @@ impl ::std::ops::Deref for VectorOfVec4f {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfVec4f_len(self.ptr) as usize;
+            let length = cv_VectorOfVec4f_size(self.ptr);
             let data = cv_VectorOfVec4f_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVec6f() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVec6f(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVec6f(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVec6f_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVec6f_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVec6f {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVec6f_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVec6f_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVec6f_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVec6f_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVec6f_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVec6f_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVec6f_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVec6f_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVec6f {
+    #[doc(hidden)] pub fn as_raw_VectorOfVec6f(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVec6f() } }
+        unsafe { Self { ptr: cv_VectorOfVec6f_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVec6f_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVec6f_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVec6f(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVec6f_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVec6f_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVec6f {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVec6f(self.ptr) };
+        unsafe { cv_VectorOfVec6f_delete(self.ptr) };
     }
 }
 impl VectorOfVec6f {
     pub fn push(&mut self, val: core::Vec6f) {
-        unsafe { cv_push_VectorOfVec6f(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfVec6f_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut core::Vec6f {
+    pub fn get(&self, index: size_t) -> &core::Vec6f {
+        unsafe { (cv_VectorOfVec6f_get(self.ptr, index) as *mut core::Vec6f).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut core::Vec6f {
         unsafe { (cv_VectorOfVec6f_get(self.ptr, index) as *mut core::Vec6f).as_mut().unwrap() }
     }
 }
@@ -4358,610 +4877,877 @@ impl ::std::ops::Deref for VectorOfVec6f {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfVec6f_len(self.ptr) as usize;
+            let length = cv_VectorOfVec6f_size(self.ptr);
             let data = cv_VectorOfVec6f_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfDMatch() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfDMatch(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfDMatch(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfDMatch {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfDMatch_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfDMatch {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfDMatch(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfDMatch() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfDMatch_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfDMatch_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfDMatch_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfDMatch(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfDMatch_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfDMatch_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfDMatch {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfDMatch(self.ptr) };
+        unsafe { cv_VectorOfVectorOfDMatch_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfDMatch {
     pub fn push(&mut self, val: types::VectorOfDMatch) {
-        unsafe { cv_push_VectorOfVectorOfDMatch(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfDMatch_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfDMatch {
+    pub fn get(&self, index: size_t) -> types::VectorOfDMatch {
         types::VectorOfDMatch { ptr: unsafe { cv_VectorOfVectorOfDMatch_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfDMatch_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfDMatch {
+        types::VectorOfDMatch { ptr: unsafe { cv_VectorOfVectorOfDMatch_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfDMatch_get(self.ptr, index)) }
+        // types::VectorOfDMatch { ptr: unsafe { cv_VectorOfVectorOfDMatch_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfDMatch> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfKeyPoint() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfKeyPoint(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfKeyPoint(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfKeyPoint {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfKeyPoint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfKeyPoint {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfKeyPoint() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfKeyPoint_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfKeyPoint_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfKeyPoint_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfKeyPoint(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfKeyPoint_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfKeyPoint_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfKeyPoint {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfKeyPoint(self.ptr) };
+        unsafe { cv_VectorOfVectorOfKeyPoint_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfKeyPoint {
     pub fn push(&mut self, val: types::VectorOfKeyPoint) {
-        unsafe { cv_push_VectorOfVectorOfKeyPoint(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfKeyPoint_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfKeyPoint {
+    pub fn get(&self, index: size_t) -> types::VectorOfKeyPoint {
         types::VectorOfKeyPoint { ptr: unsafe { cv_VectorOfVectorOfKeyPoint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfKeyPoint_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfKeyPoint {
+        types::VectorOfKeyPoint { ptr: unsafe { cv_VectorOfVectorOfKeyPoint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfKeyPoint_get(self.ptr, index)) }
+        // types::VectorOfKeyPoint { ptr: unsafe { cv_VectorOfVectorOfKeyPoint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfKeyPoint> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfMat() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfMat(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfMat(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfMat_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfMat_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfMat {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfMat_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfMat {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfMat(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfMat() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfMat_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfMat_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfMat_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfMat(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfMat_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfMat_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfMat {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfMat(self.ptr) };
+        unsafe { cv_VectorOfVectorOfMat_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfMat {
     pub fn push(&mut self, val: types::VectorOfMat) {
-        unsafe { cv_push_VectorOfVectorOfMat(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfMat_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfMat {
+    pub fn get(&self, index: size_t) -> types::VectorOfMat {
         types::VectorOfMat { ptr: unsafe { cv_VectorOfVectorOfMat_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfMat_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfMat {
+        types::VectorOfMat { ptr: unsafe { cv_VectorOfVectorOfMat_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfMat_get(self.ptr, index)) }
+        // types::VectorOfMat { ptr: unsafe { cv_VectorOfVectorOfMat_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfMat> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfPoint() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfPoint(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfPoint(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfPoint {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfPoint {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfPoint(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfPoint() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfPoint_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfPoint_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfPoint_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfPoint(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfPoint_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfPoint_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfPoint {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfPoint(self.ptr) };
+        unsafe { cv_VectorOfVectorOfPoint_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfPoint {
     pub fn push(&mut self, val: types::VectorOfPoint) {
-        unsafe { cv_push_VectorOfVectorOfPoint(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfPoint_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfPoint {
+    pub fn get(&self, index: size_t) -> types::VectorOfPoint {
         types::VectorOfPoint { ptr: unsafe { cv_VectorOfVectorOfPoint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfPoint {
+        types::VectorOfPoint { ptr: unsafe { cv_VectorOfVectorOfPoint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint_get(self.ptr, index)) }
+        // types::VectorOfPoint { ptr: unsafe { cv_VectorOfVectorOfPoint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfPoint> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfPoint2f() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfPoint2f(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfPoint2f(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfPoint2f {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfPoint2f_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfPoint2f {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfPoint2f(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfPoint2f() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfPoint2f_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfPoint2f_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfPoint2f_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfPoint2f(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfPoint2f_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfPoint2f_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfPoint2f {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfPoint2f(self.ptr) };
+        unsafe { cv_VectorOfVectorOfPoint2f_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfPoint2f {
     pub fn push(&mut self, val: types::VectorOfPoint2f) {
-        unsafe { cv_push_VectorOfVectorOfPoint2f(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfPoint2f_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfPoint2f {
+    pub fn get(&self, index: size_t) -> types::VectorOfPoint2f {
         types::VectorOfPoint2f { ptr: unsafe { cv_VectorOfVectorOfPoint2f_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint2f_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfPoint2f {
+        types::VectorOfPoint2f { ptr: unsafe { cv_VectorOfVectorOfPoint2f_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint2f_get(self.ptr, index)) }
+        // types::VectorOfPoint2f { ptr: unsafe { cv_VectorOfVectorOfPoint2f_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfPoint2f> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfRect() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfRect(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfRect(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfRect_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfRect_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfRect {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfRect_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfRect {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfRect(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfRect() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfRect_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfRect_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfRect_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfRect(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfRect_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfRect_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfRect {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfRect(self.ptr) };
+        unsafe { cv_VectorOfVectorOfRect_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfRect {
     pub fn push(&mut self, val: types::VectorOfRect) {
-        unsafe { cv_push_VectorOfVectorOfRect(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfRect_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfRect {
+    pub fn get(&self, index: size_t) -> types::VectorOfRect {
         types::VectorOfRect { ptr: unsafe { cv_VectorOfVectorOfRect_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfRect_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfRect {
+        types::VectorOfRect { ptr: unsafe { cv_VectorOfVectorOfRect_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfRect_get(self.ptr, index)) }
+        // types::VectorOfRect { ptr: unsafe { cv_VectorOfVectorOfRect_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfRect> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfVectorOfint() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfVectorOfint(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfVectorOfint(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfVectorOfint {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfVectorOfint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfVectorOfint {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfVectorOfint() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfVectorOfint_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfVectorOfint_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfVectorOfint_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfVectorOfint(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfVectorOfint_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfVectorOfint_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfVectorOfint {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfVectorOfint(self.ptr) };
+        unsafe { cv_VectorOfVectorOfVectorOfint_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfVectorOfint {
     pub fn push(&mut self, val: types::VectorOfVectorOfint) {
-        unsafe { cv_push_VectorOfVectorOfVectorOfint(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfVectorOfint_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfVectorOfint {
+    pub fn get(&self, index: size_t) -> types::VectorOfVectorOfint {
         types::VectorOfVectorOfint { ptr: unsafe { cv_VectorOfVectorOfVectorOfint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfVectorOfint_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfVectorOfint {
+        types::VectorOfVectorOfint { ptr: unsafe { cv_VectorOfVectorOfVectorOfint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfVectorOfint_get(self.ptr, index)) }
+        // types::VectorOfVectorOfint { ptr: unsafe { cv_VectorOfVectorOfVectorOfint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfVectorOfint> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfbool() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfbool(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfbool(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfbool_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfbool_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfbool {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfbool_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfbool {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfbool(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfbool() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfbool_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfbool_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfbool_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfbool(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfbool_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfbool_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfbool {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfbool(self.ptr) };
+        unsafe { cv_VectorOfVectorOfbool_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfbool {
     pub fn push(&mut self, val: types::VectorOfbool) {
-        unsafe { cv_push_VectorOfVectorOfbool(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfbool_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfbool {
+    pub fn get(&self, index: size_t) -> types::VectorOfbool {
         types::VectorOfbool { ptr: unsafe { cv_VectorOfVectorOfbool_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfbool_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfbool {
+        types::VectorOfbool { ptr: unsafe { cv_VectorOfVectorOfbool_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfbool_get(self.ptr, index)) }
+        // types::VectorOfbool { ptr: unsafe { cv_VectorOfVectorOfbool_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfbool> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfchar() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfchar(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfchar(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfchar_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfchar_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfchar {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfchar_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfchar {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfchar(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfchar() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfchar_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfchar_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfchar_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfchar(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfchar_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfchar_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfchar {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfchar(self.ptr) };
+        unsafe { cv_VectorOfVectorOfchar_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfchar {
     pub fn push(&mut self, val: types::VectorOfchar) {
-        unsafe { cv_push_VectorOfVectorOfchar(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfchar_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfchar {
+    pub fn get(&self, index: size_t) -> types::VectorOfchar {
         types::VectorOfchar { ptr: unsafe { cv_VectorOfVectorOfchar_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfchar_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfchar {
+        types::VectorOfchar { ptr: unsafe { cv_VectorOfVectorOfchar_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfchar_get(self.ptr, index)) }
+        // types::VectorOfchar { ptr: unsafe { cv_VectorOfVectorOfchar_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfchar> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfint() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfint(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfint(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfint_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfint_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfint {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfint {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfint() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfint_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfint_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfint_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfint(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfint_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfint_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfint {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfint(self.ptr) };
+        unsafe { cv_VectorOfVectorOfint_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfint {
     pub fn push(&mut self, val: types::VectorOfint) {
-        unsafe { cv_push_VectorOfVectorOfint(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfint_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfint {
+    pub fn get(&self, index: size_t) -> types::VectorOfint {
         types::VectorOfint { ptr: unsafe { cv_VectorOfVectorOfint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfint_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfint {
+        types::VectorOfint { ptr: unsafe { cv_VectorOfVectorOfint_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfint_get(self.ptr, index)) }
+        // types::VectorOfint { ptr: unsafe { cv_VectorOfVectorOfint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfint> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfVectorOfuchar() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfVectorOfuchar(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfVectorOfuchar(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfVectorOfuchar {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfVectorOfuchar_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfVectorOfuchar {
+    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfuchar(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfVectorOfuchar() } }
+        unsafe { Self { ptr: cv_VectorOfVectorOfuchar_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfVectorOfuchar_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfuchar_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfVectorOfuchar(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfVectorOfuchar_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfVectorOfuchar_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfVectorOfuchar {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfVectorOfuchar(self.ptr) };
+        unsafe { cv_VectorOfVectorOfuchar_delete(self.ptr) };
     }
 }
 // BoxedClassTypeInfo
 impl VectorOfVectorOfuchar {
     pub fn push(&mut self, val: types::VectorOfuchar) {
-        unsafe { cv_push_VectorOfVectorOfuchar(self.ptr, val.ptr) }
+        unsafe { cv_VectorOfVectorOfuchar_push_back(self.ptr, val.ptr) }
     }
 
-    pub fn get(&self, index: i32) -> types::VectorOfuchar {
+    pub fn get(&self, index: size_t) -> types::VectorOfuchar {
         types::VectorOfuchar { ptr: unsafe { cv_VectorOfVectorOfuchar_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfuchar_get(self.ptr, index)) }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> types::VectorOfuchar {
+        types::VectorOfuchar { ptr: unsafe { cv_VectorOfVectorOfuchar_get(self.ptr, index) } }
+        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfuchar_get(self.ptr, index)) }
+        // types::VectorOfuchar { ptr: unsafe { cv_VectorOfVectorOfuchar_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfuchar> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfbool() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfbool(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfbool(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfbool_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfbool_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfbool {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfbool_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfbool_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfbool_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfbool_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfbool_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfbool_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfbool_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfbool_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfbool {
+    #[doc(hidden)] pub fn as_raw_VectorOfbool(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfbool() } }
+        unsafe { Self { ptr: cv_VectorOfbool_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfbool_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfbool_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfbool(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfbool_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfbool_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfbool {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfbool(self.ptr) };
+        unsafe { cv_VectorOfbool_delete(self.ptr) };
     }
 }
 impl VectorOfbool {
     pub fn push(&mut self, val: bool) {
-        unsafe { cv_push_VectorOfbool(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfbool_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut bool {
+    pub fn get(&self, index: size_t) -> &bool {
+        unsafe { (cv_VectorOfbool_get(self.ptr, index) as *mut bool).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut bool {
         unsafe { (cv_VectorOfbool_get(self.ptr, index) as *mut bool).as_mut().unwrap() }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfchar() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfchar(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfchar(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfchar_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfchar_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfchar {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfchar_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfchar_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfchar_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfchar_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfchar_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfchar_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfchar_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfchar_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfchar {
+    #[doc(hidden)] pub fn as_raw_VectorOfchar(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfchar() } }
+        unsafe { Self { ptr: cv_VectorOfchar_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfchar_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfchar_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfchar(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfchar_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfchar_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfchar {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfchar(self.ptr) };
+        unsafe { cv_VectorOfchar_delete(self.ptr) };
     }
 }
 impl VectorOfchar {
     pub fn push(&mut self, val: i8) {
-        unsafe { cv_push_VectorOfchar(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfchar_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut i8 {
+    pub fn get(&self, index: size_t) -> &i8 {
+        unsafe { (cv_VectorOfchar_get(self.ptr, index) as *mut i8).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut i8 {
         unsafe { (cv_VectorOfchar_get(self.ptr, index) as *mut i8).as_mut().unwrap() }
     }
 }
@@ -4972,51 +5758,69 @@ impl ::std::ops::Deref for VectorOfchar {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfchar_len(self.ptr) as usize;
+            let length = cv_VectorOfchar_size(self.ptr);
             let data = cv_VectorOfchar_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfdouble() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfdouble(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfdouble(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfdouble_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfdouble_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfdouble {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfdouble_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfdouble_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfdouble_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfdouble_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfdouble_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfdouble_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfdouble_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfdouble_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfdouble {
+    #[doc(hidden)] pub fn as_raw_VectorOfdouble(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfdouble() } }
+        unsafe { Self { ptr: cv_VectorOfdouble_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfdouble_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfdouble_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfdouble(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfdouble_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfdouble_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfdouble {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfdouble(self.ptr) };
+        unsafe { cv_VectorOfdouble_delete(self.ptr) };
     }
 }
 impl VectorOfdouble {
     pub fn push(&mut self, val: f64) {
-        unsafe { cv_push_VectorOfdouble(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfdouble_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut f64 {
+    pub fn get(&self, index: size_t) -> &f64 {
+        unsafe { (cv_VectorOfdouble_get(self.ptr, index) as *mut f64).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut f64 {
         unsafe { (cv_VectorOfdouble_get(self.ptr, index) as *mut f64).as_mut().unwrap() }
     }
 }
@@ -5027,51 +5831,69 @@ impl ::std::ops::Deref for VectorOfdouble {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfdouble_len(self.ptr) as usize;
+            let length = cv_VectorOfdouble_size(self.ptr);
             let data = cv_VectorOfdouble_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOffloat() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOffloat(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOffloat(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOffloat_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOffloat_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOffloat {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOffloat_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOffloat_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOffloat_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOffloat_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOffloat_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOffloat_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOffloat_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOffloat_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOffloat {
+    #[doc(hidden)] pub fn as_raw_VectorOffloat(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOffloat() } }
+        unsafe { Self { ptr: cv_VectorOffloat_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOffloat_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOffloat_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOffloat(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOffloat_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOffloat_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOffloat {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOffloat(self.ptr) };
+        unsafe { cv_VectorOffloat_delete(self.ptr) };
     }
 }
 impl VectorOffloat {
     pub fn push(&mut self, val: f32) {
-        unsafe { cv_push_VectorOffloat(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOffloat_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut f32 {
+    pub fn get(&self, index: size_t) -> &f32 {
+        unsafe { (cv_VectorOffloat_get(self.ptr, index) as *mut f32).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut f32 {
         unsafe { (cv_VectorOffloat_get(self.ptr, index) as *mut f32).as_mut().unwrap() }
     }
 }
@@ -5082,51 +5904,69 @@ impl ::std::ops::Deref for VectorOffloat {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOffloat_len(self.ptr) as usize;
+            let length = cv_VectorOffloat_size(self.ptr);
             let data = cv_VectorOffloat_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfint() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfint(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfint(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfint_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfint_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfint {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfint_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfint_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfint_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfint_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfint_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfint_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfint_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfint {
+    #[doc(hidden)] pub fn as_raw_VectorOfint(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfint() } }
+        unsafe { Self { ptr: cv_VectorOfint_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfint_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfint_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfint(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfint_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfint_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfint {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfint(self.ptr) };
+        unsafe { cv_VectorOfint_delete(self.ptr) };
     }
 }
 impl VectorOfint {
     pub fn push(&mut self, val: i32) {
-        unsafe { cv_push_VectorOfint(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfint_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut i32 {
+    pub fn get(&self, index: size_t) -> &i32 {
+        unsafe { (cv_VectorOfint_get(self.ptr, index) as *mut i32).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut i32 {
         unsafe { (cv_VectorOfint_get(self.ptr, index) as *mut i32).as_mut().unwrap() }
     }
 }
@@ -5137,51 +5977,69 @@ impl ::std::ops::Deref for VectorOfint {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfint_len(self.ptr) as usize;
+            let length = cv_VectorOfint_size(self.ptr);
             let data = cv_VectorOfint_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfsize_t() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfsize_t(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfsize_t(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfsize_t_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfsize_t_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfsize_t {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfsize_t_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfsize_t_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfsize_t_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfsize_t_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfsize_t_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfsize_t_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfsize_t_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfsize_t_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfsize_t {
+    #[doc(hidden)] pub fn as_raw_VectorOfsize_t(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfsize_t() } }
+        unsafe { Self { ptr: cv_VectorOfsize_t_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfsize_t_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfsize_t_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfsize_t(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfsize_t_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfsize_t_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfsize_t {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfsize_t(self.ptr) };
+        unsafe { cv_VectorOfsize_t_delete(self.ptr) };
     }
 }
 impl VectorOfsize_t {
     pub fn push(&mut self, val: size_t) {
-        unsafe { cv_push_VectorOfsize_t(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfsize_t_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut size_t {
+    pub fn get(&self, index: size_t) -> &size_t {
+        unsafe { (cv_VectorOfsize_t_get(self.ptr, index) as *mut size_t).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut size_t {
         unsafe { (cv_VectorOfsize_t_get(self.ptr, index) as *mut size_t).as_mut().unwrap() }
     }
 }
@@ -5192,51 +6050,69 @@ impl ::std::ops::Deref for VectorOfsize_t {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfsize_t_len(self.ptr) as usize;
+            let length = cv_VectorOfsize_t_size(self.ptr);
             let data = cv_VectorOfsize_t_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }
     }
 }
-extern "C" {
-   #[doc(hidden)] fn cv_new_VectorOfuchar() -> *mut c_void;
-   #[doc(hidden)] fn cv_delete_VectorOfuchar(ptr: *mut c_void);
-   #[doc(hidden)] fn cv_push_VectorOfuchar(ptr: *mut c_void, ptr2: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfuchar_len(ptr: *mut c_void) -> i32;
-   #[doc(hidden)] fn cv_VectorOfuchar_get(ptr: *mut c_void, index: i32) -> *mut c_void;
-}
-
 #[allow(dead_code)]
 pub struct VectorOfuchar {
     pub(crate) ptr: *mut c_void
 }
 
+extern "C" {
+   #[doc(hidden)] fn cv_VectorOfuchar_new() -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfuchar_clone(src: *mut c_void) -> *mut c_void;
+   #[doc(hidden)] fn cv_VectorOfuchar_delete(vec: *mut c_void);
+   #[doc(hidden)] fn cv_VectorOfuchar_reserve(vec: *mut c_void, n: size_t);
+   #[doc(hidden)] fn cv_VectorOfuchar_capacity(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfuchar_push_back(vec: *mut c_void, val_ref: *const c_void);
+   #[doc(hidden)] fn cv_VectorOfuchar_size(vec: *mut c_void) -> size_t;
+   #[doc(hidden)] fn cv_VectorOfuchar_get(vec: *mut c_void, index: size_t) -> *mut c_void;
+}
+
 impl VectorOfuchar {
+    #[doc(hidden)] pub fn as_raw_VectorOfuchar(&self) -> *mut c_void { self.ptr }
+
     pub fn new() -> Self {
-        unsafe { Self { ptr: cv_new_VectorOfuchar() } }
+        unsafe { Self { ptr: cv_VectorOfuchar_new() } }
     }
 
-    pub fn len(&self) -> i32 {
-        unsafe { cv_VectorOfuchar_len(self.ptr) }
+    pub fn with_capacity(capacity: size_t) -> Self {
+        let mut out = Self::new();
+        out.reserve(capacity);
+        out
+    } 
+
+    pub fn len(&self) -> size_t {
+        unsafe { cv_VectorOfuchar_size(self.ptr) }
     }
 
-    #[doc(hidden)]
-    pub fn as_raw_VectorOfuchar(&self) -> *mut c_void {
-        self.ptr
+    pub fn capacity(&self) -> size_t {
+        unsafe { cv_VectorOfuchar_capacity(self.ptr) }
+    }
+
+    pub fn reserve(&mut self, additional: size_t) {
+        unsafe { cv_VectorOfuchar_reserve(self.ptr, self.len() + additional) }
     }
 }
 
 impl Drop for VectorOfuchar {
     fn drop(&mut self) {
-        unsafe { cv_delete_VectorOfuchar(self.ptr) };
+        unsafe { cv_VectorOfuchar_delete(self.ptr) };
     }
 }
 impl VectorOfuchar {
     pub fn push(&mut self, val: u8) {
-        unsafe { cv_push_VectorOfuchar(self.ptr, &val as *const _ as _) }
+        unsafe { cv_VectorOfuchar_push_back(self.ptr, &val as *const _ as _) }
     }
 
-    pub fn get(&self, index: i32) -> &mut u8 {
+    pub fn get(&self, index: size_t) -> &u8 {
+        unsafe { (cv_VectorOfuchar_get(self.ptr, index) as *mut u8).as_mut().unwrap() }
+    }
+
+    pub fn get_mut(&mut self, index: size_t) -> &mut u8 {
         unsafe { (cv_VectorOfuchar_get(self.ptr, index) as *mut u8).as_mut().unwrap() }
     }
 }
@@ -5247,7 +6123,7 @@ impl ::std::ops::Deref for VectorOfuchar {
 
     fn deref(&self) -> &Self::Target {
         unsafe {
-            let length = cv_VectorOfuchar_len(self.ptr) as usize;
+            let length = cv_VectorOfuchar_size(self.ptr);
             let data = cv_VectorOfuchar_data(self.ptr);
             ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
         }

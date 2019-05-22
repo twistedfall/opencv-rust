@@ -94,11 +94,11 @@ impl<'a> AffineTransformer + 'a {
 /// An Chi based cost extraction. :
 #[allow(dead_code)]
 pub struct ChiHistogramCostExtractor {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::shape::ChiHistogramCostExtractor {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ChiHistogramCostExtractor(self.ptr) };
+        unsafe { sys::cv_ChiHistogramCostExtractor_delete(self.ptr) };
     }
 }
 impl crate::shape::ChiHistogramCostExtractor {
@@ -135,11 +135,11 @@ impl<'a> EMDHistogramCostExtractor + 'a {
 /// An EMD-L1 based cost extraction. :
 #[allow(dead_code)]
 pub struct EMDL1HistogramCostExtractor {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::shape::EMDL1HistogramCostExtractor {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_EMDL1HistogramCostExtractor(self.ptr) };
+        unsafe { sys::cv_EMDL1HistogramCostExtractor_delete(self.ptr) };
     }
 }
 impl crate::shape::EMDL1HistogramCostExtractor {

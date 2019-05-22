@@ -3606,11 +3606,11 @@ impl<'a> Algorithm + 'a {
 // boxed class cv::AutoLock
 #[allow(dead_code)]
 pub struct AutoLock {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::AutoLock {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_AutoLock(self.ptr) };
+        unsafe { sys::cv_AutoLock_delete(self.ptr) };
     }
 }
 impl core::AutoLock {
@@ -3723,11 +3723,11 @@ impl<'a> BufferPoolController + 'a {
 /// ```
 #[allow(dead_code)]
 pub struct CommandLineParser {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::CommandLineParser {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_CommandLineParser(self.ptr) };
+        unsafe { sys::cv_CommandLineParser_delete(self.ptr) };
     }
 }
 impl core::CommandLineParser {
@@ -3837,11 +3837,11 @@ impl CommandLineParser {
 /// ```
 #[allow(dead_code)]
 pub struct ConjGradSolver {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::ConjGradSolver {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ConjGradSolver(self.ptr) };
+        unsafe { sys::cv_ConjGradSolver_delete(self.ptr) };
     }
 }
 impl core::ConjGradSolver {
@@ -4054,11 +4054,11 @@ impl<'a> Formatter + 'a {
 /// replaced with CV_Assert(expr) in Debug configuration
 #[allow(dead_code)]
 pub struct Hamming {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Hamming {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Hamming(self.ptr) };
+        unsafe { sys::cv_Hamming_delete(self.ptr) };
     }
 }
 impl core::Hamming {
@@ -4160,11 +4160,11 @@ impl KeyPoint {
 /// @todo document this class
 #[allow(dead_code)]
 pub struct LDA {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::LDA {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_LDA(self.ptr) };
+        unsafe { sys::cv_LDA_delete(self.ptr) };
     }
 }
 impl core::LDA {
@@ -4448,11 +4448,11 @@ impl LDA {
 /// Note: Matrix Expressions and arithmetic see MatExpr
 #[allow(dead_code)]
 pub struct Mat {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Mat {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Mat(self.ptr) };
+        unsafe { sys::cv_Mat_delete(self.ptr) };
     }
 }
 impl core::Mat {
@@ -5532,11 +5532,11 @@ impl Mat {
 /// ```
 #[allow(dead_code)]
 pub struct MatExpr {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::MatExpr {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MatExpr(self.ptr) };
+        unsafe { sys::cv_MatExpr_delete(self.ptr) };
     }
 }
 impl core::MatExpr {
@@ -5575,11 +5575,11 @@ impl<'a> MatOp + 'a {
 // boxed class cv::MatSize
 #[allow(dead_code)]
 pub struct MatSize {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::MatSize {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MatSize(self.ptr) };
+        unsafe { sys::cv_MatSize_delete(self.ptr) };
     }
 }
 impl core::MatSize {
@@ -5601,11 +5601,11 @@ impl MatSize {
 // boxed class cv::MatStep
 #[allow(dead_code)]
 pub struct MatStep {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::MatStep {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MatStep(self.ptr) };
+        unsafe { sys::cv_MatStep_delete(self.ptr) };
     }
 }
 impl core::MatStep {
@@ -5628,11 +5628,11 @@ impl MatStep {
 /// @cond IGNORED
 #[allow(dead_code)]
 pub struct Matx_AddOp {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Matx_AddOp {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Matx_AddOp(self.ptr) };
+        unsafe { sys::cv_Matx_AddOp_delete(self.ptr) };
     }
 }
 impl core::Matx_AddOp {
@@ -5654,11 +5654,11 @@ impl Matx_AddOp {
 // boxed class cv::Matx_DivOp
 #[allow(dead_code)]
 pub struct Matx_DivOp {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Matx_DivOp {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Matx_DivOp(self.ptr) };
+        unsafe { sys::cv_Matx_DivOp_delete(self.ptr) };
     }
 }
 impl core::Matx_DivOp {
@@ -5680,11 +5680,11 @@ impl Matx_DivOp {
 // boxed class cv::Matx_MatMulOp
 #[allow(dead_code)]
 pub struct Matx_MatMulOp {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Matx_MatMulOp {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Matx_MatMulOp(self.ptr) };
+        unsafe { sys::cv_Matx_MatMulOp_delete(self.ptr) };
     }
 }
 impl core::Matx_MatMulOp {
@@ -5706,11 +5706,11 @@ impl Matx_MatMulOp {
 // boxed class cv::Matx_MulOp
 #[allow(dead_code)]
 pub struct Matx_MulOp {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Matx_MulOp {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Matx_MulOp(self.ptr) };
+        unsafe { sys::cv_Matx_MulOp_delete(self.ptr) };
     }
 }
 impl core::Matx_MulOp {
@@ -5732,11 +5732,11 @@ impl Matx_MulOp {
 // boxed class cv::Matx_ScaleOp
 #[allow(dead_code)]
 pub struct Matx_ScaleOp {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Matx_ScaleOp {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Matx_ScaleOp(self.ptr) };
+        unsafe { sys::cv_Matx_ScaleOp_delete(self.ptr) };
     }
 }
 impl core::Matx_ScaleOp {
@@ -5758,11 +5758,11 @@ impl Matx_ScaleOp {
 // boxed class cv::Matx_SubOp
 #[allow(dead_code)]
 pub struct Matx_SubOp {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Matx_SubOp {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Matx_SubOp(self.ptr) };
+        unsafe { sys::cv_Matx_SubOp_delete(self.ptr) };
     }
 }
 impl core::Matx_SubOp {
@@ -5784,11 +5784,11 @@ impl Matx_SubOp {
 // boxed class cv::Matx_TOp
 #[allow(dead_code)]
 pub struct Matx_TOp {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Matx_TOp {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Matx_TOp(self.ptr) };
+        unsafe { sys::cv_Matx_TOp_delete(self.ptr) };
     }
 }
 impl core::Matx_TOp {
@@ -5981,11 +5981,11 @@ impl Moments {
 /// ```
 #[allow(dead_code)]
 pub struct NAryMatIterator {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::NAryMatIterator {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NAryMatIterator(self.ptr) };
+        unsafe { sys::cv_NAryMatIterator_delete(self.ptr) };
     }
 }
 impl core::NAryMatIterator {
@@ -6070,11 +6070,11 @@ impl NAryMatIterator {
 /// calcCovarMatrix, mulTransposed, SVD, dft, dct
 #[allow(dead_code)]
 pub struct PCA {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::PCA {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_PCA(self.ptr) };
+        unsafe { sys::cv_PCA_delete(self.ptr) };
     }
 }
 impl core::PCA {
@@ -6194,11 +6194,11 @@ impl<'a> ParallelLoopBody + 'a {
 // boxed class cv::ParallelLoopBodyLambdaWrapper
 #[allow(dead_code)]
 pub struct ParallelLoopBodyLambdaWrapper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::ParallelLoopBodyLambdaWrapper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ParallelLoopBodyLambdaWrapper(self.ptr) };
+        unsafe { sys::cv_ParallelLoopBodyLambdaWrapper_delete(self.ptr) };
     }
 }
 impl core::ParallelLoopBodyLambdaWrapper {
@@ -6212,11 +6212,11 @@ impl core::ParallelLoopBody for ParallelLoopBodyLambdaWrapper {
 // boxed class cv::Param
 #[allow(dead_code)]
 pub struct Param {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Param {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Param(self.ptr) };
+        unsafe { sys::cv_Param_delete(self.ptr) };
     }
 }
 impl core::Param {
@@ -6248,11 +6248,11 @@ impl core::Param {
 /// ```
 #[allow(dead_code)]
 pub struct Range {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::Range {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Range(self.ptr) };
+        unsafe { sys::cv_Range_delete(self.ptr) };
     }
 }
 impl core::Range {
@@ -6305,11 +6305,11 @@ impl Range {
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 #[allow(dead_code)]
 pub struct RotatedRect {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::RotatedRect {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_RotatedRect(self.ptr) };
+        unsafe { sys::cv_RotatedRect_delete(self.ptr) };
     }
 }
 impl core::RotatedRect {
@@ -6380,11 +6380,11 @@ impl RotatedRect {
 /// be fully initialized using the advanced variant of the constructor.
 #[allow(dead_code)]
 pub struct TermCriteria {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::TermCriteria {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_TermCriteria(self.ptr) };
+        unsafe { sys::cv_TermCriteria_delete(self.ptr) };
     }
 }
 impl core::TermCriteria {
@@ -6457,11 +6457,11 @@ impl TermCriteria {
 /// getTickCount, getTickFrequency
 #[allow(dead_code)]
 pub struct TickMeter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::TickMeter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_TickMeter(self.ptr) };
+        unsafe { sys::cv_TickMeter_delete(self.ptr) };
     }
 }
 impl core::TickMeter {
@@ -6521,11 +6521,11 @@ impl TickMeter {
 /// @todo document
 #[allow(dead_code)]
 pub struct UMat {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::UMat {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_UMat(self.ptr) };
+        unsafe { sys::cv_UMat_delete(self.ptr) };
     }
 }
 impl core::UMat {
@@ -6675,11 +6675,11 @@ impl UMat {
 /// another form of conversion operator
 #[allow(dead_code)]
 pub struct UMatData {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::UMatData {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_UMatData(self.ptr) };
+        unsafe { sys::cv_UMatData_delete(self.ptr) };
     }
 }
 impl core::UMatData {
@@ -6737,11 +6737,11 @@ impl UMatData {
 // boxed class cv::detail::CheckContext
 #[allow(dead_code)]
 pub struct CheckContext {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::CheckContext {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_CheckContext(self.ptr) };
+        unsafe { sys::cv_CheckContext_delete(self.ptr) };
     }
 }
 impl core::CheckContext {
@@ -6751,11 +6751,11 @@ impl core::CheckContext {
 // boxed class cv::instr::NodeData
 #[allow(dead_code)]
 pub struct NodeData {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::NodeData {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NodeData(self.ptr) };
+        unsafe { sys::cv_NodeData_delete(self.ptr) };
     }
 }
 impl core::NodeData {
@@ -6781,11 +6781,11 @@ impl NodeData {
 // boxed class cv::instr::NodeDataTls
 #[allow(dead_code)]
 pub struct NodeDataTls {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for core::NodeDataTls {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NodeDataTls(self.ptr) };
+        unsafe { sys::cv_NodeDataTls_delete(self.ptr) };
     }
 }
 impl core::NodeDataTls {

@@ -260,11 +260,11 @@ impl<'a> BaseCascadeClassifier_MaskGenerator + 'a {
 /// Cascade classifier class for object detection.
 #[allow(dead_code)]
 pub struct CascadeClassifier {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::CascadeClassifier {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_CascadeClassifier(self.ptr) };
+        unsafe { sys::cv_CascadeClassifier_delete(self.ptr) };
     }
 }
 impl crate::objdetect::CascadeClassifier {
@@ -421,11 +421,11 @@ impl CascadeClassifier {
 // boxed class cv::DetectionBasedTracker
 #[allow(dead_code)]
 pub struct DetectionBasedTracker {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::DetectionBasedTracker {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_DetectionBasedTracker(self.ptr) };
+        unsafe { sys::cv_DetectionBasedTracker_delete(self.ptr) };
     }
 }
 impl crate::objdetect::DetectionBasedTracker {
@@ -475,11 +475,11 @@ impl DetectionBasedTracker {
 // boxed class cv::DetectionBasedTracker::ExtObject
 #[allow(dead_code)]
 pub struct DetectionBasedTracker_ExtObject {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::DetectionBasedTracker_ExtObject {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_DetectionBasedTracker_ExtObject(self.ptr) };
+        unsafe { sys::cv_DetectionBasedTracker_ExtObject_delete(self.ptr) };
     }
 }
 impl crate::objdetect::DetectionBasedTracker_ExtObject {
@@ -534,11 +534,11 @@ impl<'a> DetectionBasedTracker_IDetector + 'a {
 // boxed class cv::DetectionBasedTracker::Parameters
 #[allow(dead_code)]
 pub struct DetectionBasedTracker_Parameters {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::DetectionBasedTracker_Parameters {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_DetectionBasedTracker_Parameters(self.ptr) };
+        unsafe { sys::cv_DetectionBasedTracker_Parameters_delete(self.ptr) };
     }
 }
 impl crate::objdetect::DetectionBasedTracker_Parameters {
@@ -557,11 +557,11 @@ impl DetectionBasedTracker_Parameters {
 /// struct for detection region of interest (ROI)
 #[allow(dead_code)]
 pub struct DetectionROI {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::DetectionROI {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_DetectionROI(self.ptr) };
+        unsafe { sys::cv_DetectionROI_delete(self.ptr) };
     }
 }
 impl crate::objdetect::DetectionROI {
@@ -586,11 +586,11 @@ impl crate::objdetect::DetectionROI {
 /// http://www.learnopencv.com/handwritten-digits-classification-an-opencv-c-python-tutorial
 #[allow(dead_code)]
 pub struct HOGDescriptor {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::HOGDescriptor {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_HOGDescriptor(self.ptr) };
+        unsafe { sys::cv_HOGDescriptor_delete(self.ptr) };
     }
 }
 impl crate::objdetect::HOGDescriptor {
@@ -919,11 +919,11 @@ impl HOGDescriptor {
 // boxed class cv::QRCodeDetector
 #[allow(dead_code)]
 pub struct QRCodeDetector {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::QRCodeDetector {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_QRCodeDetector(self.ptr) };
+        unsafe { sys::cv_QRCodeDetector_delete(self.ptr) };
     }
 }
 impl crate::objdetect::QRCodeDetector {
@@ -967,11 +967,11 @@ impl QRCodeDetector {
 /// instance of the class is to be passed to cv::partition (see cxoperations.hpp)
 #[allow(dead_code)]
 pub struct SimilarRects {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::objdetect::SimilarRects {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_SimilarRects(self.ptr) };
+        unsafe { sys::cv_SimilarRects_delete(self.ptr) };
     }
 }
 impl crate::objdetect::SimilarRects {

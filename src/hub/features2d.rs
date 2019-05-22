@@ -466,11 +466,11 @@ impl<'a> AgastFeatureDetector + 'a {
 /// sets.
 #[allow(dead_code)]
 pub struct BFMatcher {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::BFMatcher {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_BFMatcher(self.ptr) };
+        unsafe { sys::cv_BFMatcher_delete(self.ptr) };
     }
 }
 impl crate::features2d::BFMatcher {
@@ -541,11 +541,11 @@ impl BFMatcher {
 /// vocabulary in the given image.
 #[allow(dead_code)]
 pub struct BOWImgDescriptorExtractor {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::BOWImgDescriptorExtractor {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_BOWImgDescriptorExtractor(self.ptr) };
+        unsafe { sys::cv_BOWImgDescriptorExtractor_delete(self.ptr) };
     }
 }
 impl crate::features2d::BOWImgDescriptorExtractor {
@@ -634,11 +634,11 @@ impl BOWImgDescriptorExtractor {
 /// kmeans -based class to train visual vocabulary using the *bag of visual words* approach. :
 #[allow(dead_code)]
 pub struct BOWKMeansTrainer {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::BOWKMeansTrainer {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_BOWKMeansTrainer(self.ptr) };
+        unsafe { sys::cv_BOWKMeansTrainer_delete(self.ptr) };
     }
 }
 impl crate::features2d::BOWKMeansTrainer {
@@ -732,11 +732,11 @@ impl<'a> BOWTrainer + 'a {
 /// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_LCS11) .
 #[allow(dead_code)]
 pub struct BRISK {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::BRISK {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_BRISK(self.ptr) };
+        unsafe { sys::cv_BRISK_delete(self.ptr) };
     }
 }
 impl crate::features2d::BRISK {
@@ -1048,11 +1048,11 @@ impl<'a> DescriptorMatcher + 'a {
 ///                                   Drawing functions                                    *
 #[allow(dead_code)]
 pub struct DrawMatchesFlags {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::DrawMatchesFlags {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_DrawMatchesFlags(self.ptr) };
+        unsafe { sys::cv_DrawMatchesFlags_delete(self.ptr) };
     }
 }
 impl crate::features2d::DrawMatchesFlags {
@@ -1219,11 +1219,11 @@ impl<'a> Feature2D + 'a {
 /// matches of descriptor sets because flann::Index does not support this. :
 #[allow(dead_code)]
 pub struct FlannBasedMatcher {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::FlannBasedMatcher {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_FlannBasedMatcher(self.ptr) };
+        unsafe { sys::cv_FlannBasedMatcher_delete(self.ptr) };
     }
 }
 impl crate::features2d::FlannBasedMatcher {
@@ -1447,11 +1447,11 @@ impl<'a> KAZE + 'a {
 /// keypoints filter class, it has only several needed by now static methods.
 #[allow(dead_code)]
 pub struct KeyPointsFilter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::KeyPointsFilter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_KeyPointsFilter(self.ptr) };
+        unsafe { sys::cv_KeyPointsFilter_delete(self.ptr) };
     }
 }
 impl crate::features2d::KeyPointsFilter {
@@ -1760,11 +1760,11 @@ impl<'a> ORB + 'a {
 /// Default values of parameters are tuned to extract dark circular blobs.
 #[allow(dead_code)]
 pub struct SimpleBlobDetector {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::features2d::SimpleBlobDetector {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_SimpleBlobDetector(self.ptr) };
+        unsafe { sys::cv_SimpleBlobDetector_delete(self.ptr) };
     }
 }
 impl crate::features2d::SimpleBlobDetector {

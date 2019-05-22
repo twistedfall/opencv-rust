@@ -598,11 +598,11 @@ impl<'a> DTrees + 'a {
 /// The class represents a decision tree node.
 #[allow(dead_code)]
 pub struct DTrees_Node {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::ml::DTrees_Node {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_DTrees_Node(self.ptr) };
+        unsafe { sys::cv_DTrees_Node_delete(self.ptr) };
     }
 }
 impl crate::ml::DTrees_Node {
@@ -621,11 +621,11 @@ impl DTrees_Node {
 /// The class represents split in a decision tree.
 #[allow(dead_code)]
 pub struct DTrees_Split {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::ml::DTrees_Split {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_DTrees_Split(self.ptr) };
+        unsafe { sys::cv_DTrees_Split_delete(self.ptr) };
     }
 }
 impl crate::ml::DTrees_Split {
@@ -1137,11 +1137,11 @@ impl<'a> NormalBayesClassifier + 'a {
 /// being computed by cross-validation.
 #[allow(dead_code)]
 pub struct ParamGrid {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::ml::ParamGrid {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ParamGrid(self.ptr) };
+        unsafe { sys::cv_ParamGrid_delete(self.ptr) };
     }
 }
 impl crate::ml::ParamGrid {

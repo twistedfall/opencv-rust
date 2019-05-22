@@ -4919,11 +4919,11 @@ impl<'a> GeneralizedHoughGuil + 'a {
 /// ```
 #[allow(dead_code)]
 pub struct LineIterator {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::imgproc::LineIterator {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_LineIterator(self.ptr) };
+        unsafe { sys::cv_LineIterator_delete(self.ptr) };
     }
 }
 impl crate::imgproc::LineIterator {
@@ -5026,11 +5026,11 @@ impl<'a> LineSegmentDetector + 'a {
 // boxed class cv::Subdiv2D
 #[allow(dead_code)]
 pub struct Subdiv2D {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::imgproc::Subdiv2D {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Subdiv2D(self.ptr) };
+        unsafe { sys::cv_Subdiv2D_delete(self.ptr) };
     }
 }
 impl crate::imgproc::Subdiv2D {

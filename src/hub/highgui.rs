@@ -923,11 +923,11 @@ pub fn wait_key(delay: i32) -> Result<i32> {
 /// QtFont available only for Qt. See cv::fontQt
 #[allow(dead_code)]
 pub struct QtFont {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::highgui::QtFont {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_QtFont(self.ptr) };
+        unsafe { sys::cv_QtFont_delete(self.ptr) };
     }
 }
 impl crate::highgui::QtFont {

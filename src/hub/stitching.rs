@@ -70,11 +70,11 @@ pub fn create_stitcher(try_use_gpu: bool) -> Result<types::PtrOfStitcher> {
 /// detail::AffineWarper
 #[allow(dead_code)]
 pub struct AffineWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::AffineWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_AffineWarper(self.ptr) };
+        unsafe { sys::cv_AffineWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::AffineWarper {
@@ -92,11 +92,11 @@ impl AffineWarper {
 // boxed class cv::CompressedRectilinearPortraitWarper
 #[allow(dead_code)]
 pub struct CompressedRectilinearPortraitWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::CompressedRectilinearPortraitWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_CompressedRectilinearPortraitWarper(self.ptr) };
+        unsafe { sys::cv_CompressedRectilinearPortraitWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::CompressedRectilinearPortraitWarper {
@@ -122,11 +122,11 @@ impl CompressedRectilinearPortraitWarper {
 // boxed class cv::CompressedRectilinearWarper
 #[allow(dead_code)]
 pub struct CompressedRectilinearWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::CompressedRectilinearWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_CompressedRectilinearWarper(self.ptr) };
+        unsafe { sys::cv_CompressedRectilinearWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::CompressedRectilinearWarper {
@@ -155,11 +155,11 @@ impl CompressedRectilinearWarper {
 /// detail::CylindricalWarper
 #[allow(dead_code)]
 pub struct CylindricalWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::CylindricalWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_CylindricalWarper(self.ptr) };
+        unsafe { sys::cv_CylindricalWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::CylindricalWarper {
@@ -177,11 +177,11 @@ impl CylindricalWarper {
 // boxed class cv::FisheyeWarper
 #[allow(dead_code)]
 pub struct FisheyeWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::FisheyeWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_FisheyeWarper(self.ptr) };
+        unsafe { sys::cv_FisheyeWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::FisheyeWarper {
@@ -199,11 +199,11 @@ impl FisheyeWarper {
 // boxed class cv::MercatorWarper
 #[allow(dead_code)]
 pub struct MercatorWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::MercatorWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MercatorWarper(self.ptr) };
+        unsafe { sys::cv_MercatorWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::MercatorWarper {
@@ -221,11 +221,11 @@ impl MercatorWarper {
 // boxed class cv::PaniniPortraitWarper
 #[allow(dead_code)]
 pub struct PaniniPortraitWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::PaniniPortraitWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_PaniniPortraitWarper(self.ptr) };
+        unsafe { sys::cv_PaniniPortraitWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::PaniniPortraitWarper {
@@ -251,11 +251,11 @@ impl PaniniPortraitWarper {
 // boxed class cv::PaniniWarper
 #[allow(dead_code)]
 pub struct PaniniWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::PaniniWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_PaniniWarper(self.ptr) };
+        unsafe { sys::cv_PaniniWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::PaniniWarper {
@@ -284,11 +284,11 @@ impl PaniniWarper {
 /// detail::PlaneWarper
 #[allow(dead_code)]
 pub struct PlaneWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::PlaneWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_PlaneWarper(self.ptr) };
+        unsafe { sys::cv_PlaneWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::PlaneWarper {
@@ -307,11 +307,11 @@ impl PlaneWarper {
 /// Spherical warper factory class
 #[allow(dead_code)]
 pub struct SphericalWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::SphericalWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_SphericalWarper(self.ptr) };
+        unsafe { sys::cv_SphericalWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::SphericalWarper {
@@ -329,11 +329,11 @@ impl SphericalWarper {
 // boxed class cv::StereographicWarper
 #[allow(dead_code)]
 pub struct StereographicWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::StereographicWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_StereographicWarper(self.ptr) };
+        unsafe { sys::cv_StereographicWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::StereographicWarper {
@@ -363,11 +363,11 @@ impl StereographicWarper {
 /// opencv_source_code/samples/cpp/stitching_detailed.cpp
 #[allow(dead_code)]
 pub struct Stitcher {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::Stitcher {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_Stitcher(self.ptr) };
+        unsafe { sys::cv_Stitcher_delete(self.ptr) };
     }
 }
 impl crate::stitching::Stitcher {
@@ -442,11 +442,11 @@ impl Stitcher {
 // boxed class cv::TransverseMercatorWarper
 #[allow(dead_code)]
 pub struct TransverseMercatorWarper {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::stitching::TransverseMercatorWarper {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_TransverseMercatorWarper(self.ptr) };
+        unsafe { sys::cv_TransverseMercatorWarper_delete(self.ptr) };
     }
 }
 impl crate::stitching::TransverseMercatorWarper {

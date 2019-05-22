@@ -1026,11 +1026,11 @@ impl<'a> FarnebackOpticalFlow + 'a {
 /// with cvReleaseKalman(&kalmanFilter)
 #[allow(dead_code)]
 pub struct KalmanFilter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::video::KalmanFilter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_KalmanFilter(self.ptr) };
+        unsafe { sys::cv_KalmanFilter_delete(self.ptr) };
     }
 }
 impl crate::video::KalmanFilter {

@@ -367,11 +367,11 @@ pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 /// `OPENCV_SOURCE_CODE/samples/python/video_v4l2.py`
 #[allow(dead_code)]
 pub struct VideoCapture {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videoio::VideoCapture {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_VideoCapture(self.ptr) };
+        unsafe { sys::cv_VideoCapture_delete(self.ptr) };
     }
 }
 impl crate::videoio::VideoCapture {
@@ -636,11 +636,11 @@ impl VideoCapture {
 /// The class provides C++ API for writing video files or image sequences.
 #[allow(dead_code)]
 pub struct VideoWriter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videoio::VideoWriter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_VideoWriter(self.ptr) };
+        unsafe { sys::cv_VideoWriter_delete(self.ptr) };
     }
 }
 impl crate::videoio::VideoWriter {

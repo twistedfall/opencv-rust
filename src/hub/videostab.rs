@@ -90,11 +90,11 @@ pub fn get_motion(from: i32, to: i32, motions: &types::VectorOfMat) -> Result<co
 // boxed class cv::videostab::ColorAverageInpainter
 #[allow(dead_code)]
 pub struct ColorAverageInpainter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::ColorAverageInpainter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ColorAverageInpainter(self.ptr) };
+        unsafe { sys::cv_ColorAverageInpainter_delete(self.ptr) };
     }
 }
 impl crate::videostab::ColorAverageInpainter {
@@ -116,11 +116,11 @@ impl ColorAverageInpainter {
 // boxed class cv::videostab::ColorInpainter
 #[allow(dead_code)]
 pub struct ColorInpainter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::ColorInpainter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ColorInpainter(self.ptr) };
+        unsafe { sys::cv_ColorInpainter_delete(self.ptr) };
     }
 }
 impl crate::videostab::ColorInpainter {
@@ -150,11 +150,11 @@ impl ColorInpainter {
 // boxed class cv::videostab::ConsistentMosaicInpainter
 #[allow(dead_code)]
 pub struct ConsistentMosaicInpainter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::ConsistentMosaicInpainter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ConsistentMosaicInpainter(self.ptr) };
+        unsafe { sys::cv_ConsistentMosaicInpainter_delete(self.ptr) };
     }
 }
 impl crate::videostab::ConsistentMosaicInpainter {
@@ -236,11 +236,11 @@ impl<'a> DeblurerBase + 'a {
 /// See http://iwi.eldoc.ub.rug.nl/FILES/root/2004/JGraphToolsTelea/2004JGraphToolsTelea.pdf
 #[allow(dead_code)]
 pub struct FastMarchingMethod {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::FastMarchingMethod {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_FastMarchingMethod(self.ptr) };
+        unsafe { sys::cv_FastMarchingMethod_delete(self.ptr) };
     }
 }
 impl crate::videostab::FastMarchingMethod {
@@ -260,11 +260,11 @@ impl FastMarchingMethod {
 // boxed class cv::videostab::FromFileMotionReader
 #[allow(dead_code)]
 pub struct FromFileMotionReader {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::FromFileMotionReader {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_FromFileMotionReader(self.ptr) };
+        unsafe { sys::cv_FromFileMotionReader_delete(self.ptr) };
     }
 }
 impl crate::videostab::FromFileMotionReader {
@@ -294,11 +294,11 @@ impl FromFileMotionReader {
 // boxed class cv::videostab::GaussianMotionFilter
 #[allow(dead_code)]
 pub struct GaussianMotionFilter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::GaussianMotionFilter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_GaussianMotionFilter(self.ptr) };
+        unsafe { sys::cv_GaussianMotionFilter_delete(self.ptr) };
     }
 }
 impl crate::videostab::GaussianMotionFilter {
@@ -487,11 +487,11 @@ impl<'a> InpainterBase + 'a {
 // boxed class cv::videostab::InpaintingPipeline
 #[allow(dead_code)]
 pub struct InpaintingPipeline {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::InpaintingPipeline {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_InpaintingPipeline(self.ptr) };
+        unsafe { sys::cv_InpaintingPipeline_delete(self.ptr) };
     }
 }
 impl crate::videostab::InpaintingPipeline {
@@ -543,11 +543,11 @@ impl InpaintingPipeline {
 /// matching.
 #[allow(dead_code)]
 pub struct KeypointBasedMotionEstimator {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::KeypointBasedMotionEstimator {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_KeypointBasedMotionEstimator(self.ptr) };
+        unsafe { sys::cv_KeypointBasedMotionEstimator_delete(self.ptr) };
     }
 }
 impl crate::videostab::KeypointBasedMotionEstimator {
@@ -576,11 +576,11 @@ impl KeypointBasedMotionEstimator {
 // boxed class cv::videostab::LogToStdout
 #[allow(dead_code)]
 pub struct LogToStdout {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::LogToStdout {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_LogToStdout(self.ptr) };
+        unsafe { sys::cv_LogToStdout_delete(self.ptr) };
     }
 }
 impl crate::videostab::LogToStdout {
@@ -598,11 +598,11 @@ impl LogToStdout {
 // boxed class cv::videostab::LpMotionStabilizer
 #[allow(dead_code)]
 pub struct LpMotionStabilizer {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::LpMotionStabilizer {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_LpMotionStabilizer(self.ptr) };
+        unsafe { sys::cv_LpMotionStabilizer_delete(self.ptr) };
     }
 }
 impl crate::videostab::LpMotionStabilizer {
@@ -668,11 +668,11 @@ impl LpMotionStabilizer {
 // boxed class cv::videostab::MoreAccurateMotionWobbleSuppressor
 #[allow(dead_code)]
 pub struct MoreAccurateMotionWobbleSuppressor {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::MoreAccurateMotionWobbleSuppressor {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MoreAccurateMotionWobbleSuppressor(self.ptr) };
+        unsafe { sys::cv_MoreAccurateMotionWobbleSuppressor_delete(self.ptr) };
     }
 }
 impl crate::videostab::MoreAccurateMotionWobbleSuppressor {
@@ -744,11 +744,11 @@ impl<'a> MotionEstimatorBase + 'a {
 /// Note: To be able to use this method you must build OpenCV with CLP library support. :
 #[allow(dead_code)]
 pub struct MotionEstimatorL1 {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::MotionEstimatorL1 {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MotionEstimatorL1(self.ptr) };
+        unsafe { sys::cv_MotionEstimatorL1_delete(self.ptr) };
     }
 }
 impl crate::videostab::MotionEstimatorL1 {
@@ -774,11 +774,11 @@ impl MotionEstimatorL1 {
 /// Describes a robust RANSAC-based global 2D motion estimation method which minimizes L2 error.
 #[allow(dead_code)]
 pub struct MotionEstimatorRansacL2 {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::MotionEstimatorRansacL2 {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MotionEstimatorRansacL2(self.ptr) };
+        unsafe { sys::cv_MotionEstimatorRansacL2_delete(self.ptr) };
     }
 }
 impl crate::videostab::MotionEstimatorRansacL2 {
@@ -820,11 +820,11 @@ impl<'a> MotionFilterBase + 'a {
 // boxed class cv::videostab::MotionInpainter
 #[allow(dead_code)]
 pub struct MotionInpainter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::MotionInpainter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MotionInpainter(self.ptr) };
+        unsafe { sys::cv_MotionInpainter_delete(self.ptr) };
     }
 }
 impl crate::videostab::MotionInpainter {
@@ -874,11 +874,11 @@ impl MotionInpainter {
 // boxed class cv::videostab::MotionStabilizationPipeline
 #[allow(dead_code)]
 pub struct MotionStabilizationPipeline {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::MotionStabilizationPipeline {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_MotionStabilizationPipeline(self.ptr) };
+        unsafe { sys::cv_MotionStabilizationPipeline_delete(self.ptr) };
     }
 }
 impl crate::videostab::MotionStabilizationPipeline {
@@ -904,11 +904,11 @@ impl MotionStabilizationPipeline {
 // boxed class cv::videostab::NullDeblurer
 #[allow(dead_code)]
 pub struct NullDeblurer {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::NullDeblurer {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NullDeblurer(self.ptr) };
+        unsafe { sys::cv_NullDeblurer_delete(self.ptr) };
     }
 }
 impl crate::videostab::NullDeblurer {
@@ -930,11 +930,11 @@ impl NullDeblurer {
 // boxed class cv::videostab::NullFrameSource
 #[allow(dead_code)]
 pub struct NullFrameSource {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::NullFrameSource {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NullFrameSource(self.ptr) };
+        unsafe { sys::cv_NullFrameSource_delete(self.ptr) };
     }
 }
 impl crate::videostab::NullFrameSource {
@@ -960,11 +960,11 @@ impl NullFrameSource {
 // boxed class cv::videostab::NullInpainter
 #[allow(dead_code)]
 pub struct NullInpainter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::NullInpainter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NullInpainter(self.ptr) };
+        unsafe { sys::cv_NullInpainter_delete(self.ptr) };
     }
 }
 impl crate::videostab::NullInpainter {
@@ -986,11 +986,11 @@ impl NullInpainter {
 // boxed class cv::videostab::NullLog
 #[allow(dead_code)]
 pub struct NullLog {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::NullLog {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NullLog(self.ptr) };
+        unsafe { sys::cv_NullLog_delete(self.ptr) };
     }
 }
 impl crate::videostab::NullLog {
@@ -1008,11 +1008,11 @@ impl NullLog {
 // boxed class cv::videostab::NullOutlierRejector
 #[allow(dead_code)]
 pub struct NullOutlierRejector {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::NullOutlierRejector {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NullOutlierRejector(self.ptr) };
+        unsafe { sys::cv_NullOutlierRejector_delete(self.ptr) };
     }
 }
 impl crate::videostab::NullOutlierRejector {
@@ -1034,11 +1034,11 @@ impl NullOutlierRejector {
 // boxed class cv::videostab::NullWobbleSuppressor
 #[allow(dead_code)]
 pub struct NullWobbleSuppressor {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::NullWobbleSuppressor {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_NullWobbleSuppressor(self.ptr) };
+        unsafe { sys::cv_NullWobbleSuppressor_delete(self.ptr) };
     }
 }
 impl crate::videostab::NullWobbleSuppressor {
@@ -1060,11 +1060,11 @@ impl NullWobbleSuppressor {
 // boxed class cv::videostab::OnePassStabilizer
 #[allow(dead_code)]
 pub struct OnePassStabilizer {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::OnePassStabilizer {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_OnePassStabilizer(self.ptr) };
+        unsafe { sys::cv_OnePassStabilizer_delete(self.ptr) };
     }
 }
 impl crate::videostab::OnePassStabilizer {
@@ -1132,11 +1132,11 @@ impl<'a> PyrLkOptFlowEstimatorBase + 'a {
 /// Describes RANSAC method parameters.
 #[allow(dead_code)]
 pub struct RansacParams {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::RansacParams {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_RansacParams(self.ptr) };
+        unsafe { sys::cv_RansacParams_delete(self.ptr) };
     }
 }
 impl crate::videostab::RansacParams {
@@ -1156,11 +1156,11 @@ impl RansacParams {
 // boxed class cv::videostab::SparsePyrLkOptFlowEstimator
 #[allow(dead_code)]
 pub struct SparsePyrLkOptFlowEstimator {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::SparsePyrLkOptFlowEstimator {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_SparsePyrLkOptFlowEstimator(self.ptr) };
+        unsafe { sys::cv_SparsePyrLkOptFlowEstimator_delete(self.ptr) };
     }
 }
 impl crate::videostab::SparsePyrLkOptFlowEstimator {
@@ -1267,11 +1267,11 @@ impl<'a> StabilizerBase + 'a {
 // boxed class cv::videostab::ToFileMotionWriter
 #[allow(dead_code)]
 pub struct ToFileMotionWriter {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::ToFileMotionWriter {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_ToFileMotionWriter(self.ptr) };
+        unsafe { sys::cv_ToFileMotionWriter_delete(self.ptr) };
     }
 }
 impl crate::videostab::ToFileMotionWriter {
@@ -1301,11 +1301,11 @@ impl ToFileMotionWriter {
 // boxed class cv::videostab::TranslationBasedLocalOutlierRejector
 #[allow(dead_code)]
 pub struct TranslationBasedLocalOutlierRejector {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::TranslationBasedLocalOutlierRejector {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_TranslationBasedLocalOutlierRejector(self.ptr) };
+        unsafe { sys::cv_TranslationBasedLocalOutlierRejector_delete(self.ptr) };
     }
 }
 impl crate::videostab::TranslationBasedLocalOutlierRejector {
@@ -1339,11 +1339,11 @@ impl TranslationBasedLocalOutlierRejector {
 // boxed class cv::videostab::TwoPassStabilizer
 #[allow(dead_code)]
 pub struct TwoPassStabilizer {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::TwoPassStabilizer {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_TwoPassStabilizer(self.ptr) };
+        unsafe { sys::cv_TwoPassStabilizer_delete(self.ptr) };
     }
 }
 impl crate::videostab::TwoPassStabilizer {
@@ -1393,11 +1393,11 @@ impl TwoPassStabilizer {
 // boxed class cv::videostab::VideoFileSource
 #[allow(dead_code)]
 pub struct VideoFileSource {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::VideoFileSource {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_VideoFileSource(self.ptr) };
+        unsafe { sys::cv_VideoFileSource_delete(self.ptr) };
     }
 }
 impl crate::videostab::VideoFileSource {
@@ -1447,11 +1447,11 @@ impl VideoFileSource {
 // boxed class cv::videostab::WeightingDeblurer
 #[allow(dead_code)]
 pub struct WeightingDeblurer {
-    #[doc(hidden)] pub ptr: *mut c_void
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 impl Drop for crate::videostab::WeightingDeblurer {
     fn drop(&mut self) {
-        unsafe { sys::cv_delete_WeightingDeblurer(self.ptr) };
+        unsafe { sys::cv_WeightingDeblurer_delete(self.ptr) };
     }
 }
 impl crate::videostab::WeightingDeblurer {
