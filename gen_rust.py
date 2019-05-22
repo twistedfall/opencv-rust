@@ -828,8 +828,8 @@ class FuncInfo(GeneralInfo):
         "rust_safe_rv_other": template(""""""),
 
         "rust_externs": template("""
-                #[doc(hidden)] pub fn ${identifier}(${args}) -> ${return_wrapper_type};
-             """),
+            pub fn ${identifier}(${args}) -> ${return_wrapper_type};
+         """),
     }
 
     def __init__(self, gen, module, decl, namespaces=frozenset()):  # [ funcname, return_ctype, [modifiers], [args] ]
@@ -1796,11 +1796,11 @@ class BoxedClassTypeInfo(TypeInfo):
 
 
 class VectorTypeInfo(TypeInfo):
-    TEMPLATES = {  # fixme _delete to suffix
+    TEMPLATES = {
         "rust_common": template("""
                 extern "C" {
-                   #[doc(hidden)] fn cv_new_${rust_safe_id}() -> ${rust_extern};
-                   #[doc(hidden)] fn cv_delete_${rust_safe_id}(ptr: ${rust_extern});
+                   #[doc(hidden)] fn cv_${rust_safe_id}_new() -> ${rust_extern};
+                   #[doc(hidden)] fn cv_${rust_safe_id}_delete(ptr: ${rust_extern});
                    #[doc(hidden)] fn cv_push_${rust_safe_id}(ptr: ${rust_extern}, ptr2: *const c_void);
                    #[doc(hidden)] fn cv_${rust_safe_id}_len(ptr: ${rust_extern}) -> i32;
                    #[doc(hidden)] fn cv_${rust_safe_id}_get(ptr: ${rust_extern}, index: i32) -> ${rust_extern};
@@ -1813,7 +1813,7 @@ class VectorTypeInfo(TypeInfo):
                 
                 impl ${rust_local} {
                     pub fn new() -> Self {
-                        unsafe { Self { ptr: cv_new_${rust_safe_id}() } }
+                        unsafe { Self { ptr: cv_${rust_safe_id}_new() } }
                     }
                     
                     pub fn len(&self) -> i32 {
@@ -1828,7 +1828,7 @@ class VectorTypeInfo(TypeInfo):
 
                 impl Drop for $rust_local {
                     fn drop(&mut self) {
-                        unsafe { cv_delete_${rust_safe_id}(self.ptr) };
+                        unsafe { cv_${rust_safe_id}_delete(self.ptr) };
                     }
                 }
             """),
@@ -1879,11 +1879,11 @@ class VectorTypeInfo(TypeInfo):
             """),
 
         "cpp_externs": template("""
-                    void* cv_new_${rust_safe_id}() {
+                    void* cv_${rust_safe_id}_new() {
                         return new ${cpptype}();
                     }
                     
-                    void cv_delete_${rust_safe_id}(void* ptr) {
+                    void cv_${rust_safe_id}_delete(void* ptr) {
                         delete reinterpret_cast<${cpptype}*>(ptr);
                     }
                     
@@ -1996,7 +1996,7 @@ class SmartPtrTypeInfo(TypeInfo):
         "rust": template("""
                 extern "C" {
                     #[doc(hidden)] fn cv_${rust_safe_id}_get(ptr: ${rust_extern}) -> ${rust_extern};
-                    #[doc(hidden)] fn cv_delete_${rust_safe_id}(ptr: ${rust_extern});
+                    #[doc(hidden)] fn cv_${rust_safe_id}_delete(ptr: ${rust_extern});
                 }
 
                 #[allow(dead_code)]
@@ -2012,7 +2012,7 @@ class SmartPtrTypeInfo(TypeInfo):
 
                 impl Drop for ${rust_local} {
                     fn drop(&mut self) {
-                        unsafe { cv_delete_${rust_safe_id}(self.ptr) };
+                        unsafe { cv_${rust_safe_id}_delete(self.ptr) };
                     }
                 }
             """),
@@ -2031,7 +2031,7 @@ class SmartPtrTypeInfo(TypeInfo):
                 void* cv_${rust_safe_id}_get(${cpp_extern} ptr) {
                     return reinterpret_cast<${outer_cpptype}*>(ptr)->get();
                 }
-                void  cv_delete_${rust_safe_id}(${cpp_extern} ptr) {
+                void  cv_${rust_safe_id}_delete(${cpp_extern} ptr) {
                     delete reinterpret_cast<${outer_cpptype}*>(ptr);
                 }
             """),
@@ -2669,23 +2669,23 @@ class RustWrapperGenerator(object):
 
         self.moduleCppCode.write(template("""
             // boxed class: $typeid
-            void cv_delete_$rust_local(void* instance) {
+            void cv_${rust_local}_delete(void* instance) {
                 delete ($cpptype*) instance;
             }
             """).substitute(typ.__dict__))
 
-        self.moduleRustExterns.write("#[doc(hidden)] pub fn cv_delete_%s(ptr : *mut c_void);\n" % (typ.rust_local))
+        self.moduleRustExterns.write("#[doc(hidden)] pub fn cv_%s_delete(ptr : *mut c_void);\n" % (typ.rust_local))
 
         self.moduleSafeRust.write("// boxed class %s\n"%(typ.typeid))
         self.moduleSafeRust.write(self.reformat_doc(ci.comment))
         self.moduleSafeRust.write(template("""
             #[allow(dead_code)]
             pub struct $rust_local {
-                #[doc(hidden)] pub ptr: *mut c_void
+                #[doc(hidden)] pub(crate) ptr: *mut c_void
             }
             impl Drop for $rust_full {
                 fn drop(&mut self) {
-                    unsafe { sys::cv_delete_${rust_local}(self.ptr) };
+                    unsafe { sys::cv_${rust_local}_delete(self.ptr) };
                 }
             }
             impl $rust_full {
