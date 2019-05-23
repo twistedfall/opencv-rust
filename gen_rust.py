@@ -11,7 +11,6 @@ from pprint import pformat
 from string import Template
 
 
-# fixme Net methods consume self, should probably take reference
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme add getcpufeaturesline
 
@@ -92,7 +91,10 @@ decls_manual_pre = {
         ("class cv.KeyPoint", "", ["/Ghost", "/Simple"], []),
         ("class cv.RotatedRect", "", ["/Ghost"], []),
         ("class cv.TermCriteria", "", ["/Ghost"], []),
-    ]
+    ],
+    "dnn": [
+        ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
+    ],
 }
 
 # dict of decls to inject after doing header parsing
@@ -101,7 +103,10 @@ decls_manual_pre = {
 decls_manual_post = {
     "core": [
         ("cv.Mat.size", "Size", ["/C"], []),
-    ]
+    ],
+    "dnn": [
+        ("cv.dnn.LayerParams.LayerParams", "", [], []),
+    ],
 }
 
 # dict of functions to rename or skip, key is FuncInfo.identifier, value is new name ("+" will be replaces by old name) or "-" to skip
@@ -447,6 +452,7 @@ type_replace = {
     "_InputArray": "cv::Mat",
     "_OutputArray": "cv::Mat",
     "_InputOutputArray": "cv::Mat",
+    "vector_Mat": "vector<cv::Mat>",
     "_Range": "cv::Range",
     "Point_<int>": "Point2i",
     "Point_<int64>": "Point2l",
@@ -599,6 +605,11 @@ forced_class_trait = {
     "cv::Algorithm",
     "cv::BackgroundSubtractor",
     "cv::dnn::Layer",
+}
+
+# set of types that must not be treated as simple, most probably will be treated as boxed, elements are ClassInfo.fullname
+force_class_not_simple = {
+    "cv::dnn::Net",  # marked as Simple, but it's actually boxed
 }
 
 # dict of reserved Rust keywords and their replacement to be used in var, function and class names
@@ -1177,7 +1188,7 @@ class ClassInfo(GeneralInfo):
         if len(decl) > 5:
             self.comment = decl[5].encode("ascii", "ignore")
         for m in decl[2]:
-            if m == "/Simple" or m == "/Map":
+            if (m == "/Simple" or m == "/Map") and self.fullname not in force_class_not_simple:
                 self.is_simple = True
             if m == "/Hidden":
                 self.is_ignored = True
@@ -1185,8 +1196,10 @@ class ClassInfo(GeneralInfo):
                 self.is_ghost = True
             if m == "/Callback":
                 self.is_callback = True
-        if self.classpath and self.gen.get_class(self.classpath).is_ignored:
-            self.is_ignored = True
+        if self.classpath:
+            ci = self.gen.get_class(self.classpath)
+            if ci is not None and ci.is_ignored:
+                self.is_ignored = True
 
         self.nested_cname = self.fullname.replace("::", "_")
 
