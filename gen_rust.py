@@ -594,12 +594,12 @@ for s in (2, 3, 4, 6, 8):
         if t[0] != "l":
             _base_type_alias("core", "Vec{}{}".format(s, t[0]), "core::Vec{}<{}>".format(s, rust_local), t[1], ("data[{}]".format(s),))
 
-# list of types that must be generated as traits, elements are typeids
-forced_trait_classes = (
+# set of types that must be generated as traits, elements are typeids
+forced_class_trait = {
     "cv::Algorithm",
     "cv::BackgroundSubtractor",
-    "cv::dnn::Layer"
-)
+    "cv::dnn::Layer",
+}
 
 # dict of reserved Rust keywords and their replacement to be used in var, function and class names
 # key: reserved keyword
@@ -1171,7 +1171,7 @@ class ClassInfo(GeneralInfo):
         self.namespaces = namespaces
         self.module = module
         self.is_simple = self.is_ignored = self.is_ghost = self.is_callback = False
-        self.is_trait = self.fullname in forced_trait_classes
+        self.is_trait = self.fullname in forced_class_trait
         self.classname = self.name
         self.comment = ""
         if len(decl) > 5:
@@ -1769,7 +1769,7 @@ class BoxedClassTypeInfo(TypeInfo):
         self.rust_extern = "*mut c_void"
         self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
         self.is_by_ptr = True
-        self.is_trait = self.typeid in forced_trait_classes or self.ci.is_trait
+        self.is_trait = self.typeid in forced_class_trait or self.ci.is_trait
         self.cpp_extern = "void*"
         self.c_safe_id = "void_X"
         self.is_ignored = self.ci.is_ignored
