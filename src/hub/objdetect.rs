@@ -268,7 +268,12 @@ impl Drop for crate::objdetect::CascadeClassifier {
     }
 }
 impl crate::objdetect::CascadeClassifier {
-    #[doc(hidden)] pub fn as_raw_CascadeClassifier(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CascadeClassifier(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CascadeClassifier {
+            ptr
+        }
+    }
 }
 
 impl CascadeClassifier {
@@ -429,7 +434,12 @@ impl Drop for crate::objdetect::DetectionBasedTracker {
     }
 }
 impl crate::objdetect::DetectionBasedTracker {
-    #[doc(hidden)] pub fn as_raw_DetectionBasedTracker(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DetectionBasedTracker(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DetectionBasedTracker {
+            ptr
+        }
+    }
 }
 
 impl DetectionBasedTracker {
@@ -483,7 +493,12 @@ impl Drop for crate::objdetect::DetectionBasedTracker_ExtObject {
     }
 }
 impl crate::objdetect::DetectionBasedTracker_ExtObject {
-    #[doc(hidden)] pub fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DetectionBasedTracker_ExtObject {
+            ptr
+        }
+    }
 }
 
 // Generating impl for trait cv::DetectionBasedTracker::IDetector (trait)
@@ -542,7 +557,12 @@ impl Drop for crate::objdetect::DetectionBasedTracker_Parameters {
     }
 }
 impl crate::objdetect::DetectionBasedTracker_Parameters {
-    #[doc(hidden)] pub fn as_raw_DetectionBasedTracker_Parameters(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DetectionBasedTracker_Parameters(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DetectionBasedTracker_Parameters {
+            ptr
+        }
+    }
 }
 
 impl DetectionBasedTracker_Parameters {
@@ -565,7 +585,12 @@ impl Drop for crate::objdetect::DetectionROI {
     }
 }
 impl crate::objdetect::DetectionROI {
-    #[doc(hidden)] pub fn as_raw_DetectionROI(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DetectionROI(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DetectionROI {
+            ptr
+        }
+    }
 }
 
 // boxed class cv::HOGDescriptor
@@ -594,7 +619,12 @@ impl Drop for crate::objdetect::HOGDescriptor {
     }
 }
 impl crate::objdetect::HOGDescriptor {
-    #[doc(hidden)] pub fn as_raw_HOGDescriptor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_HOGDescriptor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        HOGDescriptor {
+            ptr
+        }
+    }
 }
 
 impl HOGDescriptor {
@@ -927,7 +957,12 @@ impl Drop for crate::objdetect::QRCodeDetector {
     }
 }
 impl crate::objdetect::QRCodeDetector {
-    #[doc(hidden)] pub fn as_raw_QRCodeDetector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_QRCodeDetector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        QRCodeDetector {
+            ptr
+        }
+    }
 }
 
 impl QRCodeDetector {
@@ -975,6 +1010,11 @@ impl Drop for crate::objdetect::SimilarRects {
     }
 }
 impl crate::objdetect::SimilarRects {
-    #[doc(hidden)] pub fn as_raw_SimilarRects(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SimilarRects(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SimilarRects {
+            ptr
+        }
+    }
 }
 

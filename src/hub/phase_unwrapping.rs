@@ -75,7 +75,12 @@ impl Drop for crate::phase_unwrapping::HistogramPhaseUnwrapping_Params {
     }
 }
 impl crate::phase_unwrapping::HistogramPhaseUnwrapping_Params {
-    #[doc(hidden)] pub fn as_raw_HistogramPhaseUnwrapping_Params(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_HistogramPhaseUnwrapping_Params(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        HistogramPhaseUnwrapping_Params {
+            ptr
+        }
+    }
 }
 
 impl HistogramPhaseUnwrapping_Params {

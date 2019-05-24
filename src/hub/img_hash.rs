@@ -79,15 +79,20 @@ impl Drop for crate::img_hash::AverageHash {
     }
 }
 impl crate::img_hash::AverageHash {
-    #[doc(hidden)] pub fn as_raw_AverageHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_AverageHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        AverageHash {
+            ptr
+        }
+    }
 }
 
 impl crate::img_hash::ImgHashBase for AverageHash {
-    #[doc(hidden)] fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for AverageHash {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl AverageHash {
@@ -112,15 +117,20 @@ impl Drop for crate::img_hash::BlockMeanHash {
     }
 }
 impl crate::img_hash::BlockMeanHash {
-    #[doc(hidden)] pub fn as_raw_BlockMeanHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BlockMeanHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BlockMeanHash {
+            ptr
+        }
+    }
 }
 
 impl crate::img_hash::ImgHashBase for BlockMeanHash {
-    #[doc(hidden)] fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for BlockMeanHash {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl BlockMeanHash {
@@ -159,15 +169,20 @@ impl Drop for crate::img_hash::ColorMomentHash {
     }
 }
 impl crate::img_hash::ColorMomentHash {
-    #[doc(hidden)] pub fn as_raw_ColorMomentHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ColorMomentHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ColorMomentHash {
+            ptr
+        }
+    }
 }
 
 impl crate::img_hash::ImgHashBase for ColorMomentHash {
-    #[doc(hidden)] fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ColorMomentHash {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ColorMomentHash {
@@ -202,15 +217,20 @@ impl Drop for crate::img_hash::MarrHildrethHash {
     }
 }
 impl crate::img_hash::MarrHildrethHash {
-    #[doc(hidden)] pub fn as_raw_MarrHildrethHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MarrHildrethHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MarrHildrethHash {
+            ptr
+        }
+    }
 }
 
 impl crate::img_hash::ImgHashBase for MarrHildrethHash {
-    #[doc(hidden)] fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for MarrHildrethHash {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl MarrHildrethHash {
@@ -262,15 +282,20 @@ impl Drop for crate::img_hash::PHash {
     }
 }
 impl crate::img_hash::PHash {
-    #[doc(hidden)] pub fn as_raw_PHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PHash {
+            ptr
+        }
+    }
 }
 
 impl crate::img_hash::ImgHashBase for PHash {
-    #[doc(hidden)] fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for PHash {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl PHash {
@@ -295,15 +320,20 @@ impl Drop for crate::img_hash::RadialVarianceHash {
     }
 }
 impl crate::img_hash::RadialVarianceHash {
-    #[doc(hidden)] pub fn as_raw_RadialVarianceHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RadialVarianceHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RadialVarianceHash {
+            ptr
+        }
+    }
 }
 
 impl crate::img_hash::ImgHashBase for RadialVarianceHash {
-    #[doc(hidden)] fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImgHashBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for RadialVarianceHash {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl RadialVarianceHash {

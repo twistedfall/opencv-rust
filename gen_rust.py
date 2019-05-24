@@ -1825,7 +1825,7 @@ class VectorTypeInfo(TypeInfo):
                 }
                 
                 impl ${rust_local} {
-                    #[doc(hidden)] pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
+                    pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
 
                     pub fn new() -> Self {
                         unsafe { Self { ptr: cv_${rust_safe_id}_new() } }
@@ -2041,7 +2041,12 @@ class SmartPtrTypeInfo(TypeInfo):
                 }
 
                 impl ${rust_local} {
-                    #[doc(hidden)] pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} { self.ptr }
+                    pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} { self.ptr }
+                    pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
+                        ${rust_local} {
+                            ptr
+                        }
+                    }
                 }
 
                 impl Drop for ${rust_local} {
@@ -2053,7 +2058,6 @@ class SmartPtrTypeInfo(TypeInfo):
 
         "rust_trait_cast": template("""
                 impl ${base_full} for ${rust_local} {
-                    #[doc(hidden)]
                     fn as_raw_${base_local}(&self) -> ${rust_extern} {
                         unsafe { cv_${rust_safe_id}_get(self.ptr) }
                     }
@@ -2723,7 +2727,12 @@ class RustWrapperGenerator(object):
                 }
             }
             impl $rust_full {
-                #[doc(hidden)] pub fn as_raw_${rust_local}(&self) -> *mut c_void { self.ptr }
+                pub fn as_raw_${rust_local}(&self) -> *mut c_void { self.ptr }
+                pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
+                    ${rust_local} {
+                        ptr
+                    }
+                }
             }
             
             """).substitute(typ.__dict__))
@@ -2735,7 +2744,7 @@ class RustWrapperGenerator(object):
                 cibase = cibase.type_info()
                 self.moduleSafeRust.write(template("""
                     impl $base_full for ${rust_local} {
-                        #[doc(hidden)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
+                        fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
                     }
                     
                 """).substitute(rust_local=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))

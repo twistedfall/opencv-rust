@@ -102,15 +102,20 @@ impl Drop for crate::shape::ChiHistogramCostExtractor {
     }
 }
 impl crate::shape::ChiHistogramCostExtractor {
-    #[doc(hidden)] pub fn as_raw_ChiHistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ChiHistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ChiHistogramCostExtractor {
+            ptr
+        }
+    }
 }
 
 impl core::Algorithm for ChiHistogramCostExtractor {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::shape::HistogramCostExtractor for ChiHistogramCostExtractor {
-    #[doc(hidden)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
 }
 
 // Generating impl for trait cv::EMDHistogramCostExtractor (trait)
@@ -143,15 +148,20 @@ impl Drop for crate::shape::EMDL1HistogramCostExtractor {
     }
 }
 impl crate::shape::EMDL1HistogramCostExtractor {
-    #[doc(hidden)] pub fn as_raw_EMDL1HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_EMDL1HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        EMDL1HistogramCostExtractor {
+            ptr
+        }
+    }
 }
 
 impl core::Algorithm for EMDL1HistogramCostExtractor {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::shape::HistogramCostExtractor for EMDL1HistogramCostExtractor {
-    #[doc(hidden)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
 }
 
 // Generating impl for trait cv::HausdorffDistanceExtractor (trait)

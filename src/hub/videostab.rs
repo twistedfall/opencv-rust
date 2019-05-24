@@ -98,11 +98,16 @@ impl Drop for crate::videostab::ColorAverageInpainter {
     }
 }
 impl crate::videostab::ColorAverageInpainter {
-    #[doc(hidden)] pub fn as_raw_ColorAverageInpainter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ColorAverageInpainter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ColorAverageInpainter {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::InpainterBase for ColorAverageInpainter {
-    #[doc(hidden)] fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl ColorAverageInpainter {
@@ -124,11 +129,16 @@ impl Drop for crate::videostab::ColorInpainter {
     }
 }
 impl crate::videostab::ColorInpainter {
-    #[doc(hidden)] pub fn as_raw_ColorInpainter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ColorInpainter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ColorInpainter {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::InpainterBase for ColorInpainter {
-    #[doc(hidden)] fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl ColorInpainter {
@@ -158,11 +168,16 @@ impl Drop for crate::videostab::ConsistentMosaicInpainter {
     }
 }
 impl crate::videostab::ConsistentMosaicInpainter {
-    #[doc(hidden)] pub fn as_raw_ConsistentMosaicInpainter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ConsistentMosaicInpainter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ConsistentMosaicInpainter {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::InpainterBase for ConsistentMosaicInpainter {
-    #[doc(hidden)] fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConsistentMosaicInpainter {
@@ -244,7 +259,12 @@ impl Drop for crate::videostab::FastMarchingMethod {
     }
 }
 impl crate::videostab::FastMarchingMethod {
-    #[doc(hidden)] pub fn as_raw_FastMarchingMethod(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_FastMarchingMethod(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        FastMarchingMethod {
+            ptr
+        }
+    }
 }
 
 impl FastMarchingMethod {
@@ -268,11 +288,16 @@ impl Drop for crate::videostab::FromFileMotionReader {
     }
 }
 impl crate::videostab::FromFileMotionReader {
-    #[doc(hidden)] pub fn as_raw_FromFileMotionReader(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_FromFileMotionReader(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        FromFileMotionReader {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::ImageMotionEstimatorBase for FromFileMotionReader {
-    #[doc(hidden)] fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl FromFileMotionReader {
@@ -302,15 +327,20 @@ impl Drop for crate::videostab::GaussianMotionFilter {
     }
 }
 impl crate::videostab::GaussianMotionFilter {
-    #[doc(hidden)] pub fn as_raw_GaussianMotionFilter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_GaussianMotionFilter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        GaussianMotionFilter {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IMotionStabilizer for GaussianMotionFilter {
-    #[doc(hidden)] fn as_raw_IMotionStabilizer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IMotionStabilizer(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::videostab::MotionFilterBase for GaussianMotionFilter {
-    #[doc(hidden)] fn as_raw_MotionFilterBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_MotionFilterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl GaussianMotionFilter {
@@ -495,11 +525,16 @@ impl Drop for crate::videostab::InpaintingPipeline {
     }
 }
 impl crate::videostab::InpaintingPipeline {
-    #[doc(hidden)] pub fn as_raw_InpaintingPipeline(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_InpaintingPipeline(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        InpaintingPipeline {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::InpainterBase for InpaintingPipeline {
-    #[doc(hidden)] fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl InpaintingPipeline {
@@ -551,11 +586,16 @@ impl Drop for crate::videostab::KeypointBasedMotionEstimator {
     }
 }
 impl crate::videostab::KeypointBasedMotionEstimator {
-    #[doc(hidden)] pub fn as_raw_KeypointBasedMotionEstimator(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_KeypointBasedMotionEstimator(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        KeypointBasedMotionEstimator {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::ImageMotionEstimatorBase for KeypointBasedMotionEstimator {
-    #[doc(hidden)] fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl KeypointBasedMotionEstimator {
@@ -584,11 +624,16 @@ impl Drop for crate::videostab::LogToStdout {
     }
 }
 impl crate::videostab::LogToStdout {
-    #[doc(hidden)] pub fn as_raw_LogToStdout(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_LogToStdout(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        LogToStdout {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::ILog for LogToStdout {
-    #[doc(hidden)] fn as_raw_ILog(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ILog(&self) -> *mut c_void { self.ptr }
 }
 
 impl LogToStdout {
@@ -606,11 +651,16 @@ impl Drop for crate::videostab::LpMotionStabilizer {
     }
 }
 impl crate::videostab::LpMotionStabilizer {
-    #[doc(hidden)] pub fn as_raw_LpMotionStabilizer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_LpMotionStabilizer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        LpMotionStabilizer {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IMotionStabilizer for LpMotionStabilizer {
-    #[doc(hidden)] fn as_raw_IMotionStabilizer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IMotionStabilizer(&self) -> *mut c_void { self.ptr }
 }
 
 impl LpMotionStabilizer {
@@ -676,15 +726,20 @@ impl Drop for crate::videostab::MoreAccurateMotionWobbleSuppressor {
     }
 }
 impl crate::videostab::MoreAccurateMotionWobbleSuppressor {
-    #[doc(hidden)] pub fn as_raw_MoreAccurateMotionWobbleSuppressor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MoreAccurateMotionWobbleSuppressor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MoreAccurateMotionWobbleSuppressor {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::WobbleSuppressorBase for MoreAccurateMotionWobbleSuppressor {
-    #[doc(hidden)] fn as_raw_WobbleSuppressorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WobbleSuppressorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::videostab::MoreAccurateMotionWobbleSuppressorBase for MoreAccurateMotionWobbleSuppressor {
-    #[doc(hidden)] fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl MoreAccurateMotionWobbleSuppressor {
@@ -752,11 +807,16 @@ impl Drop for crate::videostab::MotionEstimatorL1 {
     }
 }
 impl crate::videostab::MotionEstimatorL1 {
-    #[doc(hidden)] pub fn as_raw_MotionEstimatorL1(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MotionEstimatorL1(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MotionEstimatorL1 {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::MotionEstimatorBase for MotionEstimatorL1 {
-    #[doc(hidden)] fn as_raw_MotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_MotionEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl MotionEstimatorL1 {
@@ -782,11 +842,16 @@ impl Drop for crate::videostab::MotionEstimatorRansacL2 {
     }
 }
 impl crate::videostab::MotionEstimatorRansacL2 {
-    #[doc(hidden)] pub fn as_raw_MotionEstimatorRansacL2(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MotionEstimatorRansacL2(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MotionEstimatorRansacL2 {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::MotionEstimatorBase for MotionEstimatorRansacL2 {
-    #[doc(hidden)] fn as_raw_MotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_MotionEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl MotionEstimatorRansacL2 {
@@ -828,11 +893,16 @@ impl Drop for crate::videostab::MotionInpainter {
     }
 }
 impl crate::videostab::MotionInpainter {
-    #[doc(hidden)] pub fn as_raw_MotionInpainter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MotionInpainter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MotionInpainter {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::InpainterBase for MotionInpainter {
-    #[doc(hidden)] fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl MotionInpainter {
@@ -882,11 +952,16 @@ impl Drop for crate::videostab::MotionStabilizationPipeline {
     }
 }
 impl crate::videostab::MotionStabilizationPipeline {
-    #[doc(hidden)] pub fn as_raw_MotionStabilizationPipeline(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MotionStabilizationPipeline(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MotionStabilizationPipeline {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IMotionStabilizer for MotionStabilizationPipeline {
-    #[doc(hidden)] fn as_raw_IMotionStabilizer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IMotionStabilizer(&self) -> *mut c_void { self.ptr }
 }
 
 impl MotionStabilizationPipeline {
@@ -912,11 +987,16 @@ impl Drop for crate::videostab::NullDeblurer {
     }
 }
 impl crate::videostab::NullDeblurer {
-    #[doc(hidden)] pub fn as_raw_NullDeblurer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NullDeblurer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NullDeblurer {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::DeblurerBase for NullDeblurer {
-    #[doc(hidden)] fn as_raw_DeblurerBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_DeblurerBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl NullDeblurer {
@@ -938,11 +1018,16 @@ impl Drop for crate::videostab::NullFrameSource {
     }
 }
 impl crate::videostab::NullFrameSource {
-    #[doc(hidden)] pub fn as_raw_NullFrameSource(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NullFrameSource(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NullFrameSource {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IFrameSource for NullFrameSource {
-    #[doc(hidden)] fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
 }
 
 impl NullFrameSource {
@@ -968,11 +1053,16 @@ impl Drop for crate::videostab::NullInpainter {
     }
 }
 impl crate::videostab::NullInpainter {
-    #[doc(hidden)] pub fn as_raw_NullInpainter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NullInpainter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NullInpainter {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::InpainterBase for NullInpainter {
-    #[doc(hidden)] fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_InpainterBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl NullInpainter {
@@ -994,11 +1084,16 @@ impl Drop for crate::videostab::NullLog {
     }
 }
 impl crate::videostab::NullLog {
-    #[doc(hidden)] pub fn as_raw_NullLog(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NullLog(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NullLog {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::ILog for NullLog {
-    #[doc(hidden)] fn as_raw_ILog(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ILog(&self) -> *mut c_void { self.ptr }
 }
 
 impl NullLog {
@@ -1016,11 +1111,16 @@ impl Drop for crate::videostab::NullOutlierRejector {
     }
 }
 impl crate::videostab::NullOutlierRejector {
-    #[doc(hidden)] pub fn as_raw_NullOutlierRejector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NullOutlierRejector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NullOutlierRejector {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IOutlierRejector for NullOutlierRejector {
-    #[doc(hidden)] fn as_raw_IOutlierRejector(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IOutlierRejector(&self) -> *mut c_void { self.ptr }
 }
 
 impl NullOutlierRejector {
@@ -1042,11 +1142,16 @@ impl Drop for crate::videostab::NullWobbleSuppressor {
     }
 }
 impl crate::videostab::NullWobbleSuppressor {
-    #[doc(hidden)] pub fn as_raw_NullWobbleSuppressor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NullWobbleSuppressor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NullWobbleSuppressor {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::WobbleSuppressorBase for NullWobbleSuppressor {
-    #[doc(hidden)] fn as_raw_WobbleSuppressorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WobbleSuppressorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl NullWobbleSuppressor {
@@ -1068,15 +1173,20 @@ impl Drop for crate::videostab::OnePassStabilizer {
     }
 }
 impl crate::videostab::OnePassStabilizer {
-    #[doc(hidden)] pub fn as_raw_OnePassStabilizer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_OnePassStabilizer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        OnePassStabilizer {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IFrameSource for OnePassStabilizer {
-    #[doc(hidden)] fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::videostab::StabilizerBase for OnePassStabilizer {
-    #[doc(hidden)] fn as_raw_StabilizerBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_StabilizerBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl OnePassStabilizer {
@@ -1140,7 +1250,12 @@ impl Drop for crate::videostab::RansacParams {
     }
 }
 impl crate::videostab::RansacParams {
-    #[doc(hidden)] pub fn as_raw_RansacParams(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RansacParams(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RansacParams {
+            ptr
+        }
+    }
 }
 
 impl RansacParams {
@@ -1164,15 +1279,20 @@ impl Drop for crate::videostab::SparsePyrLkOptFlowEstimator {
     }
 }
 impl crate::videostab::SparsePyrLkOptFlowEstimator {
-    #[doc(hidden)] pub fn as_raw_SparsePyrLkOptFlowEstimator(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SparsePyrLkOptFlowEstimator(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SparsePyrLkOptFlowEstimator {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::ISparseOptFlowEstimator for SparsePyrLkOptFlowEstimator {
-    #[doc(hidden)] fn as_raw_ISparseOptFlowEstimator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ISparseOptFlowEstimator(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::videostab::PyrLkOptFlowEstimatorBase for SparsePyrLkOptFlowEstimator {
-    #[doc(hidden)] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl SparsePyrLkOptFlowEstimator {
@@ -1275,11 +1395,16 @@ impl Drop for crate::videostab::ToFileMotionWriter {
     }
 }
 impl crate::videostab::ToFileMotionWriter {
-    #[doc(hidden)] pub fn as_raw_ToFileMotionWriter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ToFileMotionWriter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ToFileMotionWriter {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::ImageMotionEstimatorBase for ToFileMotionWriter {
-    #[doc(hidden)] fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl ToFileMotionWriter {
@@ -1309,11 +1434,16 @@ impl Drop for crate::videostab::TranslationBasedLocalOutlierRejector {
     }
 }
 impl crate::videostab::TranslationBasedLocalOutlierRejector {
-    #[doc(hidden)] pub fn as_raw_TranslationBasedLocalOutlierRejector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_TranslationBasedLocalOutlierRejector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        TranslationBasedLocalOutlierRejector {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IOutlierRejector for TranslationBasedLocalOutlierRejector {
-    #[doc(hidden)] fn as_raw_IOutlierRejector(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IOutlierRejector(&self) -> *mut c_void { self.ptr }
 }
 
 impl TranslationBasedLocalOutlierRejector {
@@ -1347,15 +1477,20 @@ impl Drop for crate::videostab::TwoPassStabilizer {
     }
 }
 impl crate::videostab::TwoPassStabilizer {
-    #[doc(hidden)] pub fn as_raw_TwoPassStabilizer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_TwoPassStabilizer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        TwoPassStabilizer {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IFrameSource for TwoPassStabilizer {
-    #[doc(hidden)] fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::videostab::StabilizerBase for TwoPassStabilizer {
-    #[doc(hidden)] fn as_raw_StabilizerBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_StabilizerBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl TwoPassStabilizer {
@@ -1401,11 +1536,16 @@ impl Drop for crate::videostab::VideoFileSource {
     }
 }
 impl crate::videostab::VideoFileSource {
-    #[doc(hidden)] pub fn as_raw_VideoFileSource(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VideoFileSource(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        VideoFileSource {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::IFrameSource for VideoFileSource {
-    #[doc(hidden)] fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
+    fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
 }
 
 impl VideoFileSource {
@@ -1455,11 +1595,16 @@ impl Drop for crate::videostab::WeightingDeblurer {
     }
 }
 impl crate::videostab::WeightingDeblurer {
-    #[doc(hidden)] pub fn as_raw_WeightingDeblurer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_WeightingDeblurer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        WeightingDeblurer {
+            ptr
+        }
+    }
 }
 
 impl crate::videostab::DeblurerBase for WeightingDeblurer {
-    #[doc(hidden)] fn as_raw_DeblurerBase(&self) -> *mut c_void { self.ptr }
+    fn as_raw_DeblurerBase(&self) -> *mut c_void { self.ptr }
 }
 
 impl WeightingDeblurer {

@@ -78,11 +78,16 @@ impl Drop for crate::stitching::AffineWarper {
     }
 }
 impl crate::stitching::AffineWarper {
-    #[doc(hidden)] pub fn as_raw_AffineWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_AffineWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        AffineWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for AffineWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl AffineWarper {
@@ -100,11 +105,16 @@ impl Drop for crate::stitching::CompressedRectilinearPortraitWarper {
     }
 }
 impl crate::stitching::CompressedRectilinearPortraitWarper {
-    #[doc(hidden)] pub fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CompressedRectilinearPortraitWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CompressedRectilinearPortraitWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for CompressedRectilinearPortraitWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl CompressedRectilinearPortraitWarper {
@@ -130,11 +140,16 @@ impl Drop for crate::stitching::CompressedRectilinearWarper {
     }
 }
 impl crate::stitching::CompressedRectilinearWarper {
-    #[doc(hidden)] pub fn as_raw_CompressedRectilinearWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CompressedRectilinearWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CompressedRectilinearWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for CompressedRectilinearWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl CompressedRectilinearWarper {
@@ -163,11 +178,16 @@ impl Drop for crate::stitching::CylindricalWarper {
     }
 }
 impl crate::stitching::CylindricalWarper {
-    #[doc(hidden)] pub fn as_raw_CylindricalWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CylindricalWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CylindricalWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for CylindricalWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl CylindricalWarper {
@@ -185,11 +205,16 @@ impl Drop for crate::stitching::FisheyeWarper {
     }
 }
 impl crate::stitching::FisheyeWarper {
-    #[doc(hidden)] pub fn as_raw_FisheyeWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_FisheyeWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        FisheyeWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for FisheyeWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl FisheyeWarper {
@@ -207,11 +232,16 @@ impl Drop for crate::stitching::MercatorWarper {
     }
 }
 impl crate::stitching::MercatorWarper {
-    #[doc(hidden)] pub fn as_raw_MercatorWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MercatorWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MercatorWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for MercatorWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl MercatorWarper {
@@ -229,11 +259,16 @@ impl Drop for crate::stitching::PaniniPortraitWarper {
     }
 }
 impl crate::stitching::PaniniPortraitWarper {
-    #[doc(hidden)] pub fn as_raw_PaniniPortraitWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PaniniPortraitWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PaniniPortraitWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for PaniniPortraitWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl PaniniPortraitWarper {
@@ -259,11 +294,16 @@ impl Drop for crate::stitching::PaniniWarper {
     }
 }
 impl crate::stitching::PaniniWarper {
-    #[doc(hidden)] pub fn as_raw_PaniniWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PaniniWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PaniniWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for PaniniWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl PaniniWarper {
@@ -292,11 +332,16 @@ impl Drop for crate::stitching::PlaneWarper {
     }
 }
 impl crate::stitching::PlaneWarper {
-    #[doc(hidden)] pub fn as_raw_PlaneWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PlaneWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PlaneWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for PlaneWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl PlaneWarper {
@@ -315,11 +360,16 @@ impl Drop for crate::stitching::SphericalWarper {
     }
 }
 impl crate::stitching::SphericalWarper {
-    #[doc(hidden)] pub fn as_raw_SphericalWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SphericalWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SphericalWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for SphericalWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl SphericalWarper {
@@ -337,11 +387,16 @@ impl Drop for crate::stitching::StereographicWarper {
     }
 }
 impl crate::stitching::StereographicWarper {
-    #[doc(hidden)] pub fn as_raw_StereographicWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_StereographicWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        StereographicWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for StereographicWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl StereographicWarper {
@@ -371,7 +426,12 @@ impl Drop for crate::stitching::Stitcher {
     }
 }
 impl crate::stitching::Stitcher {
-    #[doc(hidden)] pub fn as_raw_Stitcher(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Stitcher(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Stitcher {
+            ptr
+        }
+    }
 }
 
 impl Stitcher {
@@ -450,11 +510,16 @@ impl Drop for crate::stitching::TransverseMercatorWarper {
     }
 }
 impl crate::stitching::TransverseMercatorWarper {
-    #[doc(hidden)] pub fn as_raw_TransverseMercatorWarper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_TransverseMercatorWarper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        TransverseMercatorWarper {
+            ptr
+        }
+    }
 }
 
 impl crate::stitching::WarperCreator for TransverseMercatorWarper {
-    #[doc(hidden)] fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
+    fn as_raw_WarperCreator(&self) -> *mut c_void { self.ptr }
 }
 
 impl TransverseMercatorWarper {

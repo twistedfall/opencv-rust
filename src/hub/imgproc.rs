@@ -4927,7 +4927,12 @@ impl Drop for crate::imgproc::LineIterator {
     }
 }
 impl crate::imgproc::LineIterator {
-    #[doc(hidden)] pub fn as_raw_LineIterator(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_LineIterator(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        LineIterator {
+            ptr
+        }
+    }
 }
 
 impl LineIterator {
@@ -5034,7 +5039,12 @@ impl Drop for crate::imgproc::Subdiv2D {
     }
 }
 impl crate::imgproc::Subdiv2D {
-    #[doc(hidden)] pub fn as_raw_Subdiv2D(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Subdiv2D(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Subdiv2D {
+            ptr
+        }
+    }
 }
 
 impl Subdiv2D {

@@ -534,19 +534,24 @@ impl Drop for crate::dnn::AbsLayer {
     }
 }
 impl crate::dnn::AbsLayer {
-    #[doc(hidden)] pub fn as_raw_AbsLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_AbsLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        AbsLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for AbsLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for AbsLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for AbsLayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl AbsLayer {
@@ -581,19 +586,24 @@ impl Drop for crate::dnn::BNLLLayer {
     }
 }
 impl crate::dnn::BNLLLayer {
-    #[doc(hidden)] pub fn as_raw_BNLLLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BNLLLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BNLLLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for BNLLLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for BNLLLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for BNLLLayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl BNLLLayer {
@@ -616,7 +626,12 @@ impl Drop for crate::dnn::BackendNode {
     }
 }
 impl crate::dnn::BackendNode {
-    #[doc(hidden)] pub fn as_raw_BackendNode(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BackendNode(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BackendNode {
+            ptr
+        }
+    }
 }
 
 impl BackendNode {
@@ -667,19 +682,24 @@ impl Drop for crate::dnn::BatchNormLayer {
     }
 }
 impl crate::dnn::BatchNormLayer {
-    #[doc(hidden)] pub fn as_raw_BatchNormLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BatchNormLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BatchNormLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for BatchNormLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for BatchNormLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for BatchNormLayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl BatchNormLayer {
@@ -720,15 +740,20 @@ impl Drop for crate::dnn::BlankLayer {
     }
 }
 impl crate::dnn::BlankLayer {
-    #[doc(hidden)] pub fn as_raw_BlankLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BlankLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BlankLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for BlankLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for BlankLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl BlankLayer {
@@ -746,19 +771,24 @@ impl Drop for crate::dnn::ChannelsPReLULayer {
     }
 }
 impl crate::dnn::ChannelsPReLULayer {
-    #[doc(hidden)] pub fn as_raw_ChannelsPReLULayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ChannelsPReLULayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ChannelsPReLULayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ChannelsPReLULayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ChannelsPReLULayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for ChannelsPReLULayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ChannelsPReLULayer {
@@ -776,15 +806,20 @@ impl Drop for crate::dnn::ConcatLayer {
     }
 }
 impl crate::dnn::ConcatLayer {
-    #[doc(hidden)] pub fn as_raw_ConcatLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ConcatLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ConcatLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ConcatLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ConcatLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConcatLayer {
@@ -807,15 +842,20 @@ impl Drop for crate::dnn::ConstLayer {
     }
 }
 impl crate::dnn::ConstLayer {
-    #[doc(hidden)] pub fn as_raw_ConstLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ConstLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ConstLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ConstLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ConstLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConstLayer {
@@ -833,19 +873,24 @@ impl Drop for crate::dnn::ConvolutionLayer {
     }
 }
 impl crate::dnn::ConvolutionLayer {
-    #[doc(hidden)] pub fn as_raw_ConvolutionLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ConvolutionLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ConvolutionLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::BaseConvolutionLayer for ConvolutionLayer {
-    #[doc(hidden)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ConvolutionLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::Layer for ConvolutionLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConvolutionLayer {
@@ -867,15 +912,20 @@ impl Drop for crate::dnn::CropAndResizeLayer {
     }
 }
 impl crate::dnn::CropAndResizeLayer {
-    #[doc(hidden)] pub fn as_raw_CropAndResizeLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CropAndResizeLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CropAndResizeLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for CropAndResizeLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for CropAndResizeLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl CropAndResizeLayer {
@@ -893,15 +943,20 @@ impl Drop for crate::dnn::CropLayer {
     }
 }
 impl crate::dnn::CropLayer {
-    #[doc(hidden)] pub fn as_raw_CropLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CropLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CropLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for CropLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for CropLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl CropLayer {
@@ -923,19 +978,24 @@ impl Drop for crate::dnn::DeconvolutionLayer {
     }
 }
 impl crate::dnn::DeconvolutionLayer {
-    #[doc(hidden)] pub fn as_raw_DeconvolutionLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DeconvolutionLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DeconvolutionLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::BaseConvolutionLayer for DeconvolutionLayer {
-    #[doc(hidden)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for DeconvolutionLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::Layer for DeconvolutionLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl DeconvolutionLayer {
@@ -957,15 +1017,20 @@ impl Drop for crate::dnn::DetectionOutputLayer {
     }
 }
 impl crate::dnn::DetectionOutputLayer {
-    #[doc(hidden)] pub fn as_raw_DetectionOutputLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DetectionOutputLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DetectionOutputLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for DetectionOutputLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for DetectionOutputLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl DetectionOutputLayer {
@@ -1028,7 +1093,12 @@ impl Drop for crate::dnn::DictValue {
     }
 }
 impl crate::dnn::DictValue {
-    #[doc(hidden)] pub fn as_raw_DictValue(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DictValue(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DictValue {
+            ptr
+        }
+    }
 }
 
 impl DictValue {
@@ -1088,19 +1158,24 @@ impl Drop for crate::dnn::ELULayer {
     }
 }
 impl crate::dnn::ELULayer {
-    #[doc(hidden)] pub fn as_raw_ELULayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ELULayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ELULayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ELULayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ELULayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for ELULayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ELULayer {
@@ -1122,15 +1197,20 @@ impl Drop for crate::dnn::EltwiseLayer {
     }
 }
 impl crate::dnn::EltwiseLayer {
-    #[doc(hidden)] pub fn as_raw_EltwiseLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_EltwiseLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        EltwiseLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for EltwiseLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for EltwiseLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl EltwiseLayer {
@@ -1152,15 +1232,20 @@ impl Drop for crate::dnn::FlattenLayer {
     }
 }
 impl crate::dnn::FlattenLayer {
-    #[doc(hidden)] pub fn as_raw_FlattenLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_FlattenLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        FlattenLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for FlattenLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for FlattenLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl FlattenLayer {
@@ -1182,15 +1267,20 @@ impl Drop for crate::dnn::InnerProductLayer {
     }
 }
 impl crate::dnn::InnerProductLayer {
-    #[doc(hidden)] pub fn as_raw_InnerProductLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_InnerProductLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        InnerProductLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for InnerProductLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for InnerProductLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl InnerProductLayer {
@@ -1215,15 +1305,20 @@ impl Drop for crate::dnn::InterpLayer {
     }
 }
 impl crate::dnn::InterpLayer {
-    #[doc(hidden)] pub fn as_raw_InterpLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_InterpLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        InterpLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for InterpLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for InterpLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl InterpLayer {
@@ -1241,15 +1336,20 @@ impl Drop for crate::dnn::LRNLayer {
     }
 }
 impl crate::dnn::LRNLayer {
-    #[doc(hidden)] pub fn as_raw_LRNLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_LRNLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        LRNLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for LRNLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for LRNLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl LRNLayer {
@@ -1517,7 +1617,12 @@ impl Drop for crate::dnn::LayerFactory {
     }
 }
 impl crate::dnn::LayerFactory {
-    #[doc(hidden)] pub fn as_raw_LayerFactory(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_LayerFactory(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        LayerFactory {
+            ptr
+        }
+    }
 }
 
 impl LayerFactory {
@@ -1545,11 +1650,16 @@ impl Drop for crate::dnn::LayerParams {
     }
 }
 impl crate::dnn::LayerParams {
-    #[doc(hidden)] pub fn as_raw_LayerParams(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_LayerParams(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        LayerParams {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Dict for LayerParams {
-    #[doc(hidden)] fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
 }
 
 impl LayerParams {
@@ -1585,15 +1695,20 @@ impl Drop for crate::dnn::MVNLayer {
     }
 }
 impl crate::dnn::MVNLayer {
-    #[doc(hidden)] pub fn as_raw_MVNLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MVNLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MVNLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for MVNLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for MVNLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl MVNLayer {
@@ -1615,15 +1730,20 @@ impl Drop for crate::dnn::MaxUnpoolLayer {
     }
 }
 impl crate::dnn::MaxUnpoolLayer {
-    #[doc(hidden)] pub fn as_raw_MaxUnpoolLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MaxUnpoolLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MaxUnpoolLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for MaxUnpoolLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for MaxUnpoolLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl MaxUnpoolLayer {
@@ -1654,7 +1774,12 @@ impl Drop for crate::dnn::Net {
     }
 }
 impl crate::dnn::Net {
-    #[doc(hidden)] pub fn as_raw_Net(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Net(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Net {
+            ptr
+        }
+    }
 }
 
 impl Net {
@@ -2019,15 +2144,20 @@ impl Drop for crate::dnn::NormalizeBBoxLayer {
     }
 }
 impl crate::dnn::NormalizeBBoxLayer {
-    #[doc(hidden)] pub fn as_raw_NormalizeBBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NormalizeBBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NormalizeBBoxLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for NormalizeBBoxLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for NormalizeBBoxLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl NormalizeBBoxLayer {
@@ -2069,15 +2199,20 @@ impl Drop for crate::dnn::PaddingLayer {
     }
 }
 impl crate::dnn::PaddingLayer {
-    #[doc(hidden)] pub fn as_raw_PaddingLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PaddingLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PaddingLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for PaddingLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for PaddingLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl PaddingLayer {
@@ -2099,15 +2234,20 @@ impl Drop for crate::dnn::PermuteLayer {
     }
 }
 impl crate::dnn::PermuteLayer {
-    #[doc(hidden)] pub fn as_raw_PermuteLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PermuteLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PermuteLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for PermuteLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for PermuteLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl PermuteLayer {
@@ -2129,15 +2269,20 @@ impl Drop for crate::dnn::PoolingLayer {
     }
 }
 impl crate::dnn::PoolingLayer {
-    #[doc(hidden)] pub fn as_raw_PoolingLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PoolingLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PoolingLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for PoolingLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for PoolingLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl PoolingLayer {
@@ -2159,19 +2304,24 @@ impl Drop for crate::dnn::PowerLayer {
     }
 }
 impl crate::dnn::PowerLayer {
-    #[doc(hidden)] pub fn as_raw_PowerLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PowerLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PowerLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for PowerLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for PowerLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for PowerLayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl PowerLayer {
@@ -2193,15 +2343,20 @@ impl Drop for crate::dnn::PriorBoxLayer {
     }
 }
 impl crate::dnn::PriorBoxLayer {
-    #[doc(hidden)] pub fn as_raw_PriorBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PriorBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PriorBoxLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for PriorBoxLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for PriorBoxLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl PriorBoxLayer {
@@ -2223,15 +2378,20 @@ impl Drop for crate::dnn::ProposalLayer {
     }
 }
 impl crate::dnn::ProposalLayer {
-    #[doc(hidden)] pub fn as_raw_ProposalLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ProposalLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ProposalLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ProposalLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ProposalLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ProposalLayer {
@@ -2306,19 +2466,24 @@ impl Drop for crate::dnn::ReLU6Layer {
     }
 }
 impl crate::dnn::ReLU6Layer {
-    #[doc(hidden)] pub fn as_raw_ReLU6Layer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ReLU6Layer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ReLU6Layer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ReLU6Layer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ReLU6Layer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for ReLU6Layer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReLU6Layer {
@@ -2340,19 +2505,24 @@ impl Drop for crate::dnn::ReLULayer {
     }
 }
 impl crate::dnn::ReLULayer {
-    #[doc(hidden)] pub fn as_raw_ReLULayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ReLULayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ReLULayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ReLULayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ReLULayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for ReLULayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReLULayer {
@@ -2374,15 +2544,20 @@ impl Drop for crate::dnn::RegionLayer {
     }
 }
 impl crate::dnn::RegionLayer {
-    #[doc(hidden)] pub fn as_raw_RegionLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RegionLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RegionLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for RegionLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for RegionLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl RegionLayer {
@@ -2404,15 +2579,20 @@ impl Drop for crate::dnn::ReorgLayer {
     }
 }
 impl crate::dnn::ReorgLayer {
-    #[doc(hidden)] pub fn as_raw_ReorgLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ReorgLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ReorgLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ReorgLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ReorgLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReorgLayer {
@@ -2434,15 +2614,20 @@ impl Drop for crate::dnn::ReshapeLayer {
     }
 }
 impl crate::dnn::ReshapeLayer {
-    #[doc(hidden)] pub fn as_raw_ReshapeLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ReshapeLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ReshapeLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ReshapeLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ReshapeLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReshapeLayer {
@@ -2467,15 +2652,20 @@ impl Drop for crate::dnn::ResizeLayer {
     }
 }
 impl crate::dnn::ResizeLayer {
-    #[doc(hidden)] pub fn as_raw_ResizeLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ResizeLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ResizeLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ResizeLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ResizeLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ResizeLayer {
@@ -2497,15 +2687,20 @@ impl Drop for crate::dnn::ScaleLayer {
     }
 }
 impl crate::dnn::ScaleLayer {
-    #[doc(hidden)] pub fn as_raw_ScaleLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ScaleLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ScaleLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ScaleLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ScaleLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ScaleLayer {
@@ -2527,15 +2722,20 @@ impl Drop for crate::dnn::ShiftLayer {
     }
 }
 impl crate::dnn::ShiftLayer {
-    #[doc(hidden)] pub fn as_raw_ShiftLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ShiftLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ShiftLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ShiftLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ShiftLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ShiftLayer {
@@ -2561,15 +2761,20 @@ impl Drop for crate::dnn::ShuffleChannelLayer {
     }
 }
 impl crate::dnn::ShuffleChannelLayer {
-    #[doc(hidden)] pub fn as_raw_ShuffleChannelLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ShuffleChannelLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ShuffleChannelLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for ShuffleChannelLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for ShuffleChannelLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl ShuffleChannelLayer {
@@ -2587,19 +2792,24 @@ impl Drop for crate::dnn::SigmoidLayer {
     }
 }
 impl crate::dnn::SigmoidLayer {
-    #[doc(hidden)] pub fn as_raw_SigmoidLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SigmoidLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SigmoidLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for SigmoidLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for SigmoidLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for SigmoidLayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl SigmoidLayer {
@@ -2644,15 +2854,20 @@ impl Drop for crate::dnn::SliceLayer {
     }
 }
 impl crate::dnn::SliceLayer {
-    #[doc(hidden)] pub fn as_raw_SliceLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SliceLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SliceLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for SliceLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for SliceLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl SliceLayer {
@@ -2674,15 +2889,20 @@ impl Drop for crate::dnn::SoftmaxLayer {
     }
 }
 impl crate::dnn::SoftmaxLayer {
-    #[doc(hidden)] pub fn as_raw_SoftmaxLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SoftmaxLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SoftmaxLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for SoftmaxLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for SoftmaxLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl SoftmaxLayer {
@@ -2704,15 +2924,20 @@ impl Drop for crate::dnn::SplitLayer {
     }
 }
 impl crate::dnn::SplitLayer {
-    #[doc(hidden)] pub fn as_raw_SplitLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SplitLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SplitLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for SplitLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for SplitLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl SplitLayer {
@@ -2735,19 +2960,24 @@ impl Drop for crate::dnn::TanHLayer {
     }
 }
 impl crate::dnn::TanHLayer {
-    #[doc(hidden)] pub fn as_raw_TanHLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_TanHLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        TanHLayer {
+            ptr
+        }
+    }
 }
 
 impl crate::dnn::Layer for TanHLayer {
-    #[doc(hidden)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for TanHLayer {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::dnn::ActivationLayer for TanHLayer {
-    #[doc(hidden)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
 impl TanHLayer {
