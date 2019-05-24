@@ -1,6 +1,17 @@
 Quick update: this crate has been updated to work with OpenCV 3.4.6, some of
 the following doc is outdated:
 
+## Contrib modules
+The following modules require contrib installed:
+ * bioinspired
+ * ccalib
+ * dpm
+ * freetype
+ * fuzzy
+ * img_hash
+ * phase_unwrapping
+ * plot
+
 ## Rust OpenCV bindings
 
 [![Build Status](https://travis-ci.org/twistedfall/opencv-rust.svg?branch=master)](https://travis-ci.org/twistedfall/opencv-rust)

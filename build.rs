@@ -99,17 +99,25 @@ fn build_wrapper(opencv: pkg_config::Library) {
     let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
         "aruco",
         "bgsegm",
-        "hal",
-        "hfs",
+        "core_detect",
+        "face",
         "flann",
+        "hal",
+        "hdf", // includes platform-specific headers like /usr/include/x86_64-pc-linux-gnu/opencv2/hdf/hdf5.hpp
+        "hfs",
         "ippicv",
+        "line_descriptor",
         "opencv",
         "opencv_modules",
         "optflow",
         "rgbd",
+        "saliency",
         "stereo",
+        "structured_light",
         "surface_matching",
+        "text",
         "tracking",
+        "viz", // includes platform-specific headers like /usr/include/x86_64-pc-linux-gnu/opencv2/viz.hpp
         "ximgproc",
         "xobjdetect",
         "xphoto",
@@ -124,13 +132,14 @@ fn build_wrapper(opencv: pkg_config::Library) {
         "core/opengl.hpp", // ?
         "core/cvstd.hpp",
         "core/eigen.hpp",
-        "core/fast_math.hpp", // contains funcions with Rust native counterpart
+        "core/fast_math.hpp", // contains functions with Rust native counterpart
         "ios.h",
         "ippasync.hpp",
         "ocl.hpp",
         "operations.hpp",
         "persistence.hpp",
         "utils/trace.hpp",
+        "viz/widget_accessor.hpp",  // want to include vtk header
     ];
     let ignore_header_substring = [
         "/detail/",
