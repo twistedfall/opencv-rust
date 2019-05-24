@@ -921,29 +921,8 @@ pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
 ///
 /// ## C++ default parameters
 /// * ctype: CV_64F
-pub fn calc_covar_matrix_arrays(samples: &core::Mat, covar: &mut core::Mat, mean: &mut core::Mat, flags: i32, ctype: i32) -> Result<()> {
+pub fn calc_covar_matrix(samples: &core::Mat, covar: &mut core::Mat, mean: &mut core::Mat, flags: i32, ctype: i32) -> Result<()> {
     unsafe { sys::cv_calcCovarMatrix_Mat_Mat_Mat_int_int(samples.as_raw_Mat(), covar.as_raw_Mat(), mean.as_raw_Mat(), flags, ctype) }.into_result()
-}
-
-/// Calculates the covariance matrix of a set of vectors.
-/// 
-/// The function cv::calcCovarMatrix calculates the covariance matrix and, optionally, the mean vector of
-/// the set of input vectors.
-/// ## Parameters
-/// * samples: samples stored as separate matrices
-/// * nsamples: number of samples
-/// * covar: output covariance matrix of the type ctype and square size.
-/// * mean: input or output (depending on the flags) array as the average value of the input vectors.
-/// * flags: operation flags as a combination of #CovarFlags
-/// * ctype: type of the matrixl; it equals 'CV_64F' by default.
-/// ## See also
-/// PCA, mulTransposed, Mahalanobis
-/// @todo InputArrayOfArrays
-///
-/// ## C++ default parameters
-/// * ctype: CV_64F
-pub fn calc_covar_matrix(samples: &core::Mat, nsamples: i32, covar: &core::Mat, mean: &core::Mat, flags: i32, ctype: i32) -> Result<()> {
-    unsafe { sys::cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int(samples.as_raw_Mat(), nsamples, covar.as_raw_Mat(), mean.as_raw_Mat(), flags, ctype) }.into_result()
 }
 
 /// Calculates the magnitude and angle of 2D vectors.
@@ -1882,7 +1861,7 @@ pub fn get_version_string() -> Result<String> {
 ///
 /// ## C++ default parameters
 /// * recursive: false
-pub fn glob(pattern: &str, result: &types::VectorOfString, recursive: bool) -> Result<()> {
+pub fn glob(pattern: &str, result: &mut types::VectorOfString, recursive: bool) -> Result<()> {
     string_arg!(mut pattern);
     unsafe { sys::cv_glob_String_VectorOfString_bool(pattern.as_ptr() as _, result.as_raw_VectorOfString(), recursive) }.into_result()
 }
@@ -3132,7 +3111,7 @@ pub fn solve_cubic(coeffs: &core::Mat, roots: &mut core::Mat) -> Result<i32> {
 /// formulation above. It will contain 64-bit floating point numbers.
 /// ## Returns
 /// One of cv::SolveLPResult
-pub fn solve_lp(func: &core::Mat, constr: &core::Mat, z: &core::Mat) -> Result<i32> {
+pub fn solve_lp(func: &core::Mat, constr: &core::Mat, z: &mut core::Mat) -> Result<i32> {
     unsafe { sys::cv_solveLP_Mat_Mat_Mat(func.as_raw_Mat(), constr.as_raw_Mat(), z.as_raw_Mat()) }.into_result()
 }
 
@@ -3240,26 +3219,6 @@ pub fn sort(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
 /// reallocated, if needed.
 /// ## See also
 /// merge, mixChannels, cvtColor
-pub fn split_at(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_split_Mat_Mat(src.as_raw_Mat(), mvbegin.as_raw_Mat()) }.into_result()
-}
-
-/// Divides a multi-channel array into several single-channel arrays.
-/// 
-/// The function cv::split splits a multi-channel array into separate single-channel arrays:
-/// <div lang='latex'>\texttt{mv} [c](I) =  \texttt{src} (I)_c</div>
-/// If you need to extract a single channel or do some other sophisticated channel permutation, use
-/// mixChannels .
-/// 
-/// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// @snippet snippets/core_split.cpp example
-/// 
-/// ## Parameters
-/// * src: input multi-channel array.
-/// * mvbegin: output array; the number of arrays must match src.channels(); the arrays themselves are
-/// reallocated, if needed.
-/// ## See also
-/// merge, mixChannels, cvtColor
 /// 
 /// ## Overloaded parameters
 /// 
@@ -3343,7 +3302,7 @@ pub fn sum(src: &core::Mat) -> Result<core::Scalar> {
 }
 
 /// Swaps two matrices
-pub fn swap(a: &core::Mat, b: &core::Mat) -> Result<()> {
+pub fn swap(a: &mut core::Mat, b: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_swap_Mat_Mat(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()
 }
 
@@ -4122,7 +4081,7 @@ impl KeyPoint {
     ///
     /// ## C++ default parameters
     /// * keypoint_indexes: std::vector<int>()
-    pub fn convert_from(keypoints: &types::VectorOfKeyPoint, points2f: &types::VectorOfPoint2f, keypoint_indexes: &types::VectorOfint) -> Result<()> {
+    pub fn convert_from(keypoints: &types::VectorOfKeyPoint, points2f: &mut types::VectorOfPoint2f, keypoint_indexes: &types::VectorOfint) -> Result<()> {
         unsafe { sys::cv_KeyPoint_convert_VectorOfKeyPoint_VectorOfPoint2f_VectorOfint(keypoints.as_raw_VectorOfKeyPoint(), points2f.as_raw_VectorOfPoint2f(), keypoint_indexes.as_raw_VectorOfint()) }.into_result()
     }
     
@@ -4139,7 +4098,7 @@ impl KeyPoint {
     /// * response: 1
     /// * octave: 0
     /// * class_id: -1
-    pub fn convert_to(points2f: &types::VectorOfPoint2f, keypoints: &types::VectorOfKeyPoint, size: f32, response: f32, octave: i32, class_id: i32) -> Result<()> {
+    pub fn convert_to(points2f: &types::VectorOfPoint2f, keypoints: &mut types::VectorOfKeyPoint, size: f32, response: f32, octave: i32, class_id: i32) -> Result<()> {
         unsafe { sys::cv_KeyPoint_convert_VectorOfPoint2f_VectorOfKeyPoint_float_float_int_int(points2f.as_raw_VectorOfPoint2f(), keypoints.as_raw_VectorOfKeyPoint(), size, response, octave, class_id) }.into_result()
     }
     
@@ -4840,7 +4799,7 @@ impl Mat {
     ///
     /// ## C++ default parameters
     /// * _type: -1
-    pub fn assign_to(&self, m: &core::Mat, _type: i32) -> Result<()> {
+    pub fn assign_to(&self, m: &mut core::Mat, _type: i32) -> Result<()> {
         unsafe { sys::cv_Mat_assignTo_const_Mat_int(self.as_raw_Mat(), m.as_raw_Mat(), _type) }.into_result()
     }
     
@@ -6764,7 +6723,7 @@ impl core::NodeData {
 
 impl NodeData {
 
-    pub fn new(_ref: &core::NodeData) -> Result<core::NodeData> {
+    pub fn new(_ref: &mut core::NodeData) -> Result<core::NodeData> {
         unsafe { sys::cv_instr_NodeData_NodeData_NodeData(_ref.as_raw_NodeData()) }.into_result().map(|x| core::NodeData { ptr: x })
     }
     

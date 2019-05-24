@@ -1198,7 +1198,7 @@ pub trait SparsePyrLKOpticalFlow : crate::video::SparseOpticalFlow {
         unsafe { sys::cv_SparsePyrLKOpticalFlow_getTermCriteria_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result().map(|x| core::TermCriteria { ptr: x })
     }
     
-    fn set_term_criteria(&mut self, crit: &core::TermCriteria) -> Result<()> {
+    fn set_term_criteria(&mut self, crit: &mut core::TermCriteria) -> Result<()> {
         unsafe { sys::cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteria(self.as_raw_SparsePyrLKOpticalFlow(), crit.as_raw_TermCriteria()) }.into_result()
     }
     

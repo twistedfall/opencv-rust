@@ -82,7 +82,7 @@ pub fn create_face_detection_mask_generator() -> Result<types::PtrOfMaskGenerato
 /// ## C++ default parameters
 /// * eps_x: 0.2
 /// * eps_y: 0.1
-pub fn detect_qr_code(_in: &core::Mat, points: &types::VectorOfPoint, eps_x: f64, eps_y: f64) -> Result<bool> {
+pub fn detect_qr_code(_in: &core::Mat, points: &mut types::VectorOfPoint, eps_x: f64, eps_y: f64) -> Result<bool> {
     unsafe { sys::cv_detectQRCode_Mat_VectorOfPoint_double_double(_in.as_raw_Mat(), points.as_raw_VectorOfPoint(), eps_x, eps_y) }.into_result()
 }
 
@@ -106,7 +106,7 @@ pub fn detect_qr_code(_in: &core::Mat, points: &types::VectorOfPoint, eps_x: f64
 ///
 /// ## C++ default parameters
 /// * eps: 0.2
-pub fn group_rectangles_levels(rect_list: &types::VectorOfRect, reject_levels: &types::VectorOfint, level_weights: &types::VectorOfdouble, group_threshold: i32, eps: f64) -> Result<()> {
+pub fn group_rectangles_levels(rect_list: &mut types::VectorOfRect, reject_levels: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble, group_threshold: i32, eps: f64) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_VectorOfint_VectorOfdouble_int_double(rect_list.as_raw_VectorOfRect(), reject_levels.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble(), group_threshold, eps) }.into_result()
 }
 
@@ -130,7 +130,7 @@ pub fn group_rectangles_levels(rect_list: &types::VectorOfRect, reject_levels: &
 ///
 /// ## C++ default parameters
 /// * eps: 0.2
-pub fn group_rectangle_weights(rect_list: &types::VectorOfRect, weights: &types::VectorOfint, group_threshold: i32, eps: f64) -> Result<()> {
+pub fn group_rectangle_weights(rect_list: &mut types::VectorOfRect, weights: &mut types::VectorOfint, group_threshold: i32, eps: f64) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_VectorOfint_int_double(rect_list.as_raw_VectorOfRect(), weights.as_raw_VectorOfint(), group_threshold, eps) }.into_result()
 }
 
@@ -152,7 +152,7 @@ pub fn group_rectangle_weights(rect_list: &types::VectorOfRect, weights: &types:
 ///
 /// ## C++ default parameters
 /// * eps: 0.2
-pub fn group_rectangle(rect_list: &types::VectorOfRect, group_threshold: i32, eps: f64) -> Result<()> {
+pub fn group_rectangle(rect_list: &mut types::VectorOfRect, group_threshold: i32, eps: f64) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_int_double(rect_list.as_raw_VectorOfRect(), group_threshold, eps) }.into_result()
 }
 
@@ -173,7 +173,7 @@ pub fn group_rectangle(rect_list: &types::VectorOfRect, group_threshold: i32, ep
 /// cluster, the average rectangle is computed and put into the output rectangle list.
 /// 
 /// ## Overloaded parameters
-pub fn group_rectangle_levelweights(rect_list: &types::VectorOfRect, group_threshold: i32, eps: f64, weights: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble) -> Result<()> {
+pub fn group_rectangle_levelweights(rect_list: &mut types::VectorOfRect, group_threshold: i32, eps: f64, weights: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_int_double_VectorOfint_VectorOfdouble(rect_list.as_raw_VectorOfRect(), group_threshold, eps, weights.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble()) }.into_result()
 }
 
@@ -181,7 +181,7 @@ pub fn group_rectangle_levelweights(rect_list: &types::VectorOfRect, group_thres
 /// ## C++ default parameters
 /// * detect_threshold: 0.0
 /// * win_det_size: Size(64, 128)
-pub fn group_rectangles_meanshift(rect_list: &types::VectorOfRect, found_weights: &types::VectorOfdouble, found_scales: &types::VectorOfdouble, detect_threshold: f64, win_det_size: core::Size) -> Result<()> {
+pub fn group_rectangles_meanshift(rect_list: &mut types::VectorOfRect, found_weights: &mut types::VectorOfdouble, found_scales: &mut types::VectorOfdouble, detect_threshold: f64, win_det_size: core::Size) -> Result<()> {
     unsafe { sys::cv_groupRectangles_meanshift_VectorOfRect_VectorOfdouble_VectorOfdouble_double_Size(rect_list.as_raw_VectorOfRect(), found_weights.as_raw_VectorOfdouble(), found_scales.as_raw_VectorOfdouble(), detect_threshold, win_det_size) }.into_result()
 }
 
@@ -197,15 +197,15 @@ pub trait BaseCascadeClassifier : core::Algorithm {
         unsafe { sys::cv_BaseCascadeClassifier_load_String(self.as_raw_BaseCascadeClassifier(), filename.as_ptr()) }.into_result()
     }
     
-    fn detect_multi_scale(&mut self, image: &core::Mat, objects: &types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+    fn detect_multi_scale(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
         unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size(self.as_raw_BaseCascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
-    fn detect_multi_scale_num(&mut self, image: &core::Mat, objects: &types::VectorOfRect, num_detections: &types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+    fn detect_multi_scale_num(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, num_detections: &mut types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
         unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size(self.as_raw_BaseCascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), num_detections.as_raw_VectorOfint(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
-    fn detect_multi_scale_levels(&mut self, image: &core::Mat, objects: &types::VectorOfRect, reject_levels: &types::VectorOfint, level_weights: &types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
+    fn detect_multi_scale_levels(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, reject_levels: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
         unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool(self.as_raw_BaseCascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), reject_levels.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble(), scale_factor, min_neighbors, flags, min_size, max_size, output_reject_levels) }.into_result()
     }
     
@@ -330,7 +330,7 @@ impl CascadeClassifier {
     /// * flags: 0
     /// * min_size: Size()
     /// * max_size: Size()
-    pub fn detect_multi_scale(&mut self, image: &core::Mat, objects: &types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+    pub fn detect_multi_scale(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
         unsafe { sys::cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size(self.as_raw_CascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
@@ -355,7 +355,7 @@ impl CascadeClassifier {
     /// * flags: 0
     /// * min_size: Size()
     /// * max_size: Size()
-    pub fn detect_multi_scale_num(&mut self, image: &core::Mat, objects: &types::VectorOfRect, num_detections: &types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+    pub fn detect_multi_scale_num(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, num_detections: &mut types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
         unsafe { sys::cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size(self.as_raw_CascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), num_detections.as_raw_VectorOfint(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
@@ -382,7 +382,7 @@ impl CascadeClassifier {
     /// * min_size: Size()
     /// * max_size: Size()
     /// * output_reject_levels: false
-    pub fn detect_multi_scale_levels(&mut self, image: &core::Mat, objects: &types::VectorOfRect, reject_levels: &types::VectorOfint, level_weights: &types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
+    pub fn detect_multi_scale_levels(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, reject_levels: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
         unsafe { sys::cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool(self.as_raw_CascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), reject_levels.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble(), scale_factor, min_neighbors, flags, min_size, max_size, output_reject_levels) }.into_result()
     }
     
@@ -458,11 +458,11 @@ impl DetectionBasedTracker {
         unsafe { sys::cv_DetectionBasedTracker_getParameters_const(self.as_raw_DetectionBasedTracker()) }.into_result().map(|x| crate::objdetect::DetectionBasedTracker_Parameters { ptr: x })
     }
     
-    pub fn get_objects(&self, result: &types::VectorOfRect) -> Result<()> {
+    pub fn get_objects(&self, result: &mut types::VectorOfRect) -> Result<()> {
         unsafe { sys::cv_DetectionBasedTracker_getObjects_const_VectorOfRect(self.as_raw_DetectionBasedTracker(), result.as_raw_VectorOfRect()) }.into_result()
     }
     
-    pub fn get_objects_1(&self, result: &types::VectorOfExtObject) -> Result<()> {
+    pub fn get_objects_1(&self, result: &mut types::VectorOfExtObject) -> Result<()> {
         unsafe { sys::cv_DetectionBasedTracker_getObjects_const_VectorOfExtObject(self.as_raw_DetectionBasedTracker(), result.as_raw_VectorOfExtObject()) }.into_result()
     }
     
@@ -489,7 +489,7 @@ impl crate::objdetect::DetectionBasedTracker_ExtObject {
 // Generating impl for trait cv::DetectionBasedTracker::IDetector (trait)
 pub trait DetectionBasedTracker_IDetector {
     #[doc(hidden)] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *mut c_void;
-    fn detect(&mut self, image: &core::Mat, objects: &types::VectorOfRect) -> Result<()> {
+    fn detect(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect) -> Result<()> {
         unsafe { sys::cv_DetectionBasedTracker_IDetector_detect_Mat_VectorOfRect(self.as_raw_DetectionBasedTracker_IDetector(), image.as_raw_Mat(), objects.as_raw_VectorOfRect()) }.into_result()
     }
     
@@ -663,7 +663,7 @@ impl HOGDescriptor {
     /// clones the HOGDescriptor
     /// ## Parameters
     /// * c: cloned HOGDescriptor
-    pub fn copy_to(&self, c: &crate::objdetect::HOGDescriptor) -> Result<()> {
+    pub fn copy_to(&self, c: &mut crate::objdetect::HOGDescriptor) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_copyTo_const_HOGDescriptor(self.as_raw_HOGDescriptor(), c.as_raw_HOGDescriptor()) }.into_result()
     }
     
@@ -679,7 +679,7 @@ impl HOGDescriptor {
     /// * win_stride: Size()
     /// * padding: Size()
     /// * locations: std::vector<Point>()
-    pub fn compute(&self, img: &core::Mat, descriptors: &types::VectorOffloat, win_stride: core::Size, padding: core::Size, locations: &types::VectorOfPoint) -> Result<()> {
+    pub fn compute(&self, img: &core::Mat, descriptors: &mut types::VectorOffloat, win_stride: core::Size, padding: core::Size, locations: &types::VectorOfPoint) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_compute_const_Mat_VectorOffloat_Size_Size_VectorOfPoint(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), descriptors.as_raw_VectorOffloat(), win_stride, padding, locations.as_raw_VectorOfPoint()) }.into_result()
     }
     
@@ -700,7 +700,7 @@ impl HOGDescriptor {
     /// * win_stride: Size()
     /// * padding: Size()
     /// * search_locations: std::vector<Point>()
-    pub fn detect_weights(&self, img: &core::Mat, found_locations: &types::VectorOfPoint, weights: &types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &types::VectorOfPoint) -> Result<()> {
+    pub fn detect_weights(&self, img: &core::Mat, found_locations: &mut types::VectorOfPoint, weights: &mut types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &types::VectorOfPoint) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_detect_const_Mat_VectorOfPoint_VectorOfdouble_double_Size_Size_VectorOfPoint(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_VectorOfPoint(), weights.as_raw_VectorOfdouble(), hit_threshold, win_stride, padding, search_locations.as_raw_VectorOfPoint()) }.into_result()
     }
     
@@ -720,7 +720,7 @@ impl HOGDescriptor {
     /// * win_stride: Size()
     /// * padding: Size()
     /// * search_locations: std::vector<Point>()
-    pub fn detect(&self, img: &core::Mat, found_locations: &types::VectorOfPoint, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &types::VectorOfPoint) -> Result<()> {
+    pub fn detect(&self, img: &core::Mat, found_locations: &mut types::VectorOfPoint, hit_threshold: f64, win_stride: core::Size, padding: core::Size, search_locations: &types::VectorOfPoint) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_detect_const_Mat_VectorOfPoint_double_Size_Size_VectorOfPoint(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_VectorOfPoint(), hit_threshold, win_stride, padding, search_locations.as_raw_VectorOfPoint()) }.into_result()
     }
     
@@ -746,7 +746,7 @@ impl HOGDescriptor {
     /// * scale: 1.05
     /// * final_threshold: 2.0
     /// * use_meanshift_grouping: false
-    pub fn detect_multi_scale(&self, img: &core::Mat, found_locations: &types::VectorOfRect, found_weights: &types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+    pub fn detect_multi_scale(&self, img: &core::Mat, found_locations: &mut types::VectorOfRect, found_weights: &mut types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_VectorOfRect(), found_weights.as_raw_VectorOfdouble(), hit_threshold, win_stride, padding, scale, final_threshold, use_meanshift_grouping) }.into_result()
     }
     
@@ -771,7 +771,7 @@ impl HOGDescriptor {
     /// * scale: 1.05
     /// * final_threshold: 2.0
     /// * use_meanshift_grouping: false
-    pub fn detect_multi_scale_weights(&self, img: &core::Mat, found_locations: &types::VectorOfRect, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+    pub fn detect_multi_scale_weights(&self, img: &core::Mat, found_locations: &mut types::VectorOfRect, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_VectorOfRect(), hit_threshold, win_stride, padding, scale, final_threshold, use_meanshift_grouping) }.into_result()
     }
     
@@ -786,7 +786,7 @@ impl HOGDescriptor {
     /// ## C++ default parameters
     /// * padding_tl: Size()
     /// * padding_br: Size()
-    pub fn compute_gradient(&self, img: &core::Mat, grad: &core::Mat, angle_ofs: &core::Mat, padding_tl: core::Size, padding_br: core::Size) -> Result<()> {
+    pub fn compute_gradient(&self, img: &core::Mat, grad: &mut core::Mat, angle_ofs: &mut core::Mat, padding_tl: core::Size, padding_br: core::Size) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_computeGradient_const_Mat_Mat_Mat_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), grad.as_raw_Mat(), angle_ofs.as_raw_Mat(), padding_tl, padding_br) }.into_result()
     }
     
@@ -816,7 +816,7 @@ impl HOGDescriptor {
     /// * hit_threshold: 0
     /// * win_stride: Size()
     /// * padding: Size()
-    pub fn detect_roi(&self, img: &core::Mat, locations: &types::VectorOfPoint, found_locations: &types::VectorOfPoint, confidences: &types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size) -> Result<()> {
+    pub fn detect_roi(&self, img: &core::Mat, locations: &types::VectorOfPoint, found_locations: &mut types::VectorOfPoint, confidences: &mut types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_detectROI_const_Mat_VectorOfPoint_VectorOfPoint_VectorOfdouble_double_Size_Size(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), locations.as_raw_VectorOfPoint(), found_locations.as_raw_VectorOfPoint(), confidences.as_raw_VectorOfdouble(), hit_threshold, win_stride, padding) }.into_result()
     }
     
@@ -832,7 +832,7 @@ impl HOGDescriptor {
     /// ## C++ default parameters
     /// * hit_threshold: 0
     /// * group_threshold: 0
-    pub fn detect_multi_scale_roi(&self, img: &core::Mat, found_locations: &types::VectorOfRect, locations: &types::VectorOfDetectionROI, hit_threshold: f64, group_threshold: i32) -> Result<()> {
+    pub fn detect_multi_scale_roi(&self, img: &core::Mat, found_locations: &mut types::VectorOfRect, locations: &mut types::VectorOfDetectionROI, hit_threshold: f64, group_threshold: i32) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_detectMultiScaleROI_const_Mat_VectorOfRect_VectorOfDetectionROI_double_int(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_VectorOfRect(), locations.as_raw_VectorOfDetectionROI(), hit_threshold, group_threshold) }.into_result()
     }
     
@@ -850,7 +850,7 @@ impl HOGDescriptor {
     /// * weights: Input/output vector of weights of rectangles. Output vector includes weights of retained and grouped rectangles. (The Python list is not modified in place.)
     /// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a group of rectangles to retain it.
     /// * eps: Relative difference between sides of the rectangles to merge them into a group.
-    pub fn group_rectangles(&self, rect_list: &types::VectorOfRect, weights: &types::VectorOfdouble, group_threshold: i32, eps: f64) -> Result<()> {
+    pub fn group_rectangles(&self, rect_list: &mut types::VectorOfRect, weights: &mut types::VectorOfdouble, group_threshold: i32, eps: f64) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_groupRectangles_const_VectorOfRect_VectorOfdouble_int_double(self.as_raw_HOGDescriptor(), rect_list.as_raw_VectorOfRect(), weights.as_raw_VectorOfdouble(), group_threshold, eps) }.into_result()
     }
     

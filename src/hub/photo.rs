@@ -253,7 +253,7 @@ pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut cor
 /// ## C++ default parameters
 /// * lambda: 1.0
 /// * niters: 30
-pub fn denoise_tvl1(observations: &types::VectorOfMat, result: &core::Mat, lambda: f64, niters: i32) -> Result<()> {
+pub fn denoise_tvl1(observations: &types::VectorOfMat, result: &mut core::Mat, lambda: f64, niters: i32) -> Result<()> {
     unsafe { sys::cv_denoise_TVL1_VectorOfMat_Mat_double_int(observations.as_raw_VectorOfMat(), result.as_raw_Mat(), lambda, niters) }.into_result()
 }
 
@@ -612,7 +612,7 @@ pub trait AlignExposures : core::Algorithm {
     /// * times: vector of exposure time values for each image
     /// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
     /// have the same number of channels as images.
-    fn process(&mut self, src: &types::VectorOfMat, dst: &types::VectorOfMat, times: &core::Mat, response: &core::Mat) -> Result<()> {
+    fn process(&mut self, src: &types::VectorOfMat, dst: &mut types::VectorOfMat, times: &core::Mat, response: &core::Mat) -> Result<()> {
         unsafe { sys::cv_AlignExposures_process_VectorOfMat_VectorOfMat_Mat_Mat(self.as_raw_AlignExposures(), src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
     }
     
@@ -633,7 +633,7 @@ impl<'a> AlignExposures + 'a {
 /// For more information see [GW03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_GW03) .
 pub trait AlignMTB : crate::photo::AlignExposures {
     #[doc(hidden)] fn as_raw_AlignMTB(&self) -> *mut c_void;
-    fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &types::VectorOfMat, times: &core::Mat, response: &core::Mat) -> Result<()> {
+    fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut types::VectorOfMat, times: &core::Mat, response: &core::Mat) -> Result<()> {
         unsafe { sys::cv_AlignMTB_process_VectorOfMat_VectorOfMat_Mat_Mat(self.as_raw_AlignMTB(), src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
     }
     
@@ -642,7 +642,7 @@ pub trait AlignMTB : crate::photo::AlignExposures {
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: vector of aligned images
-    fn process(&mut self, src: &types::VectorOfMat, dst: &types::VectorOfMat) -> Result<()> {
+    fn process(&mut self, src: &types::VectorOfMat, dst: &mut types::VectorOfMat) -> Result<()> {
         unsafe { sys::cv_AlignMTB_process_VectorOfMat_VectorOfMat(self.as_raw_AlignMTB(), src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat()) }.into_result()
     }
     

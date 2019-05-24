@@ -100,7 +100,7 @@ pub fn imdecode_to(buf: &core::Mat, flags: i32, dst: &mut core::Mat) -> Result<c
 ///
 /// ## C++ default parameters
 /// * params: std::vector<int>()
-pub fn imencode(ext: &str, img: &core::Mat, buf: &types::VectorOfuchar, params: &types::VectorOfint) -> Result<bool> {
+pub fn imencode(ext: &str, img: &core::Mat, buf: &mut types::VectorOfuchar, params: &types::VectorOfint) -> Result<bool> {
     string_arg!(ext);
     unsafe { sys::cv_imencode_String_Mat_VectorOfuchar_VectorOfint(ext.as_ptr(), img.as_raw_Mat(), buf.as_raw_VectorOfuchar(), params.as_raw_VectorOfint()) }.into_result()
 }
@@ -174,7 +174,7 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 ///
 /// ## C++ default parameters
 /// * flags: IMREAD_ANYCOLOR
-pub fn imreadmulti(filename: &str, mats: &types::VectorOfMat, flags: i32) -> Result<bool> {
+pub fn imreadmulti(filename: &str, mats: &mut types::VectorOfMat, flags: i32) -> Result<bool> {
     string_arg!(filename);
     unsafe { sys::cv_imreadmulti_String_VectorOfMat_int(filename.as_ptr(), mats.as_raw_VectorOfMat(), flags) }.into_result()
 }

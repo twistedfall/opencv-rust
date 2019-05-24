@@ -47,7 +47,7 @@ pub trait DPMDetector {
     /// ## Parameters
     /// * image: An image.
     /// * objects: The detections: rectangulars, scores and class IDs.
-    fn detect(&mut self, image: &core::Mat, objects: &types::VectorOfObjectDetection) -> Result<()> {
+    fn detect(&mut self, image: &mut core::Mat, objects: &mut types::VectorOfObjectDetection) -> Result<()> {
         unsafe { sys::cv_dpm_DPMDetector_detect_Mat_VectorOfObjectDetection(self.as_raw_DPMDetector(), image.as_raw_Mat(), objects.as_raw_VectorOfObjectDetection()) }.into_result()
     }
     

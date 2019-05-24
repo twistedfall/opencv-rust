@@ -437,7 +437,7 @@ pub trait ShapeTransformer : core::Algorithm {
     /// * transformingShape: Contour defining first shape.
     /// * targetShape: Contour defining second shape (Target).
     /// * matches: Standard vector of Matches between points.
-    fn estimate_transformation(&mut self, transforming_shape: &core::Mat, target_shape: &core::Mat, matches: &types::VectorOfDMatch) -> Result<()> {
+    fn estimate_transformation(&mut self, transforming_shape: &core::Mat, target_shape: &core::Mat, matches: &mut types::VectorOfDMatch) -> Result<()> {
         unsafe { sys::cv_ShapeTransformer_estimateTransformation_Mat_Mat_VectorOfDMatch(self.as_raw_ShapeTransformer(), transforming_shape.as_raw_Mat(), target_shape.as_raw_Mat(), matches.as_raw_VectorOfDMatch()) }.into_result()
     }
     

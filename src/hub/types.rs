@@ -3669,13 +3669,10 @@ impl VectorOfDetectionROI {
 
     pub fn get(&self, index: size_t) -> crate::objdetect::DetectionROI {
         crate::objdetect::DetectionROI { ptr: unsafe { cv_VectorOfDetectionROI_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfDetectionROI_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> crate::objdetect::DetectionROI {
         crate::objdetect::DetectionROI { ptr: unsafe { cv_VectorOfDetectionROI_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfDetectionROI_get(self.ptr, index)) }
-        // crate::objdetect::DetectionROI { ptr: unsafe { cv_VectorOfDetectionROI_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::objdetect::DetectionROI> {
@@ -3737,13 +3734,10 @@ impl VectorOfExtObject {
 
     pub fn get(&self, index: size_t) -> crate::objdetect::DetectionBasedTracker_ExtObject {
         crate::objdetect::DetectionBasedTracker_ExtObject { ptr: unsafe { cv_VectorOfExtObject_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfExtObject_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> crate::objdetect::DetectionBasedTracker_ExtObject {
         crate::objdetect::DetectionBasedTracker_ExtObject { ptr: unsafe { cv_VectorOfExtObject_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfExtObject_get(self.ptr, index)) }
-        // crate::objdetect::DetectionBasedTracker_ExtObject { ptr: unsafe { cv_VectorOfExtObject_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::objdetect::DetectionBasedTracker_ExtObject> {
@@ -3878,13 +3872,10 @@ impl VectorOfMat {
 
     pub fn get(&self, index: size_t) -> core::Mat {
         core::Mat { ptr: unsafe { cv_VectorOfMat_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfMat_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> core::Mat {
         core::Mat { ptr: unsafe { cv_VectorOfMat_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfMat_get(self.ptr, index)) }
-        // core::Mat { ptr: unsafe { cv_VectorOfMat_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<core::Mat> {
@@ -3946,13 +3937,10 @@ impl VectorOfNode {
 
     pub fn get(&self, index: size_t) -> crate::ml::DTrees_Node {
         crate::ml::DTrees_Node { ptr: unsafe { cv_VectorOfNode_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfNode_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> crate::ml::DTrees_Node {
         crate::ml::DTrees_Node { ptr: unsafe { cv_VectorOfNode_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfNode_get(self.ptr, index)) }
-        // crate::ml::DTrees_Node { ptr: unsafe { cv_VectorOfNode_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::ml::DTrees_Node> {
@@ -4014,13 +4002,10 @@ impl VectorOfObjectDetection {
 
     pub fn get(&self, index: size_t) -> crate::dpm::DPMDetector_ObjectDetection {
         crate::dpm::DPMDetector_ObjectDetection { ptr: unsafe { cv_VectorOfObjectDetection_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfObjectDetection_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> crate::dpm::DPMDetector_ObjectDetection {
         crate::dpm::DPMDetector_ObjectDetection { ptr: unsafe { cv_VectorOfObjectDetection_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfObjectDetection_get(self.ptr, index)) }
-        // crate::dpm::DPMDetector_ObjectDetection { ptr: unsafe { cv_VectorOfObjectDetection_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::dpm::DPMDetector_ObjectDetection> {
@@ -4301,13 +4286,10 @@ impl VectorOfPtrOfBackendWrapper {
 
     pub fn get(&self, index: size_t) -> types::PtrOfBackendWrapper {
         types::PtrOfBackendWrapper { ptr: unsafe { cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::PtrOfBackendWrapper {
         types::PtrOfBackendWrapper { ptr: unsafe { cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index)) }
-        // types::PtrOfBackendWrapper { ptr: unsafe { cv_VectorOfPtrOfBackendWrapper_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::PtrOfBackendWrapper> {
@@ -4369,13 +4351,10 @@ impl VectorOfRange {
 
     pub fn get(&self, index: size_t) -> core::Range {
         core::Range { ptr: unsafe { cv_VectorOfRange_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfRange_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> core::Range {
         core::Range { ptr: unsafe { cv_VectorOfRange_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfRange_get(self.ptr, index)) }
-        // core::Range { ptr: unsafe { cv_VectorOfRange_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<core::Range> {
@@ -4583,13 +4562,10 @@ impl VectorOfRotatedRect {
 
     pub fn get(&self, index: size_t) -> core::RotatedRect {
         core::RotatedRect { ptr: unsafe { cv_VectorOfRotatedRect_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfRotatedRect_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> core::RotatedRect {
         core::RotatedRect { ptr: unsafe { cv_VectorOfRotatedRect_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfRotatedRect_get(self.ptr, index)) }
-        // core::RotatedRect { ptr: unsafe { cv_VectorOfRotatedRect_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<core::RotatedRect> {
@@ -4651,13 +4627,10 @@ impl VectorOfSplit {
 
     pub fn get(&self, index: size_t) -> crate::ml::DTrees_Split {
         crate::ml::DTrees_Split { ptr: unsafe { cv_VectorOfSplit_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfSplit_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> crate::ml::DTrees_Split {
         crate::ml::DTrees_Split { ptr: unsafe { cv_VectorOfSplit_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfSplit_get(self.ptr, index)) }
-        // crate::ml::DTrees_Split { ptr: unsafe { cv_VectorOfSplit_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<crate::ml::DTrees_Split> {
@@ -4938,13 +4911,10 @@ impl VectorOfVectorOfDMatch {
 
     pub fn get(&self, index: size_t) -> types::VectorOfDMatch {
         types::VectorOfDMatch { ptr: unsafe { cv_VectorOfVectorOfDMatch_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfDMatch_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfDMatch {
         types::VectorOfDMatch { ptr: unsafe { cv_VectorOfVectorOfDMatch_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfDMatch_get(self.ptr, index)) }
-        // types::VectorOfDMatch { ptr: unsafe { cv_VectorOfVectorOfDMatch_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfDMatch> {
@@ -5006,13 +4976,10 @@ impl VectorOfVectorOfKeyPoint {
 
     pub fn get(&self, index: size_t) -> types::VectorOfKeyPoint {
         types::VectorOfKeyPoint { ptr: unsafe { cv_VectorOfVectorOfKeyPoint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfKeyPoint_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfKeyPoint {
         types::VectorOfKeyPoint { ptr: unsafe { cv_VectorOfVectorOfKeyPoint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfKeyPoint_get(self.ptr, index)) }
-        // types::VectorOfKeyPoint { ptr: unsafe { cv_VectorOfVectorOfKeyPoint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfKeyPoint> {
@@ -5074,13 +5041,10 @@ impl VectorOfVectorOfMat {
 
     pub fn get(&self, index: size_t) -> types::VectorOfMat {
         types::VectorOfMat { ptr: unsafe { cv_VectorOfVectorOfMat_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfMat_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfMat {
         types::VectorOfMat { ptr: unsafe { cv_VectorOfVectorOfMat_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfMat_get(self.ptr, index)) }
-        // types::VectorOfMat { ptr: unsafe { cv_VectorOfVectorOfMat_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfMat> {
@@ -5142,13 +5106,10 @@ impl VectorOfVectorOfPoint {
 
     pub fn get(&self, index: size_t) -> types::VectorOfPoint {
         types::VectorOfPoint { ptr: unsafe { cv_VectorOfVectorOfPoint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfPoint {
         types::VectorOfPoint { ptr: unsafe { cv_VectorOfVectorOfPoint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint_get(self.ptr, index)) }
-        // types::VectorOfPoint { ptr: unsafe { cv_VectorOfVectorOfPoint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfPoint> {
@@ -5210,13 +5171,10 @@ impl VectorOfVectorOfPoint2f {
 
     pub fn get(&self, index: size_t) -> types::VectorOfPoint2f {
         types::VectorOfPoint2f { ptr: unsafe { cv_VectorOfVectorOfPoint2f_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint2f_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfPoint2f {
         types::VectorOfPoint2f { ptr: unsafe { cv_VectorOfVectorOfPoint2f_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfPoint2f_get(self.ptr, index)) }
-        // types::VectorOfPoint2f { ptr: unsafe { cv_VectorOfVectorOfPoint2f_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfPoint2f> {
@@ -5278,13 +5236,10 @@ impl VectorOfVectorOfRect {
 
     pub fn get(&self, index: size_t) -> types::VectorOfRect {
         types::VectorOfRect { ptr: unsafe { cv_VectorOfVectorOfRect_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfRect_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfRect {
         types::VectorOfRect { ptr: unsafe { cv_VectorOfVectorOfRect_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfRect_get(self.ptr, index)) }
-        // types::VectorOfRect { ptr: unsafe { cv_VectorOfVectorOfRect_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfRect> {
@@ -5346,13 +5301,10 @@ impl VectorOfVectorOfVectorOfint {
 
     pub fn get(&self, index: size_t) -> types::VectorOfVectorOfint {
         types::VectorOfVectorOfint { ptr: unsafe { cv_VectorOfVectorOfVectorOfint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfVectorOfint_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfVectorOfint {
         types::VectorOfVectorOfint { ptr: unsafe { cv_VectorOfVectorOfVectorOfint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfVectorOfint_get(self.ptr, index)) }
-        // types::VectorOfVectorOfint { ptr: unsafe { cv_VectorOfVectorOfVectorOfint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfVectorOfint> {
@@ -5414,13 +5366,10 @@ impl VectorOfVectorOfbool {
 
     pub fn get(&self, index: size_t) -> types::VectorOfbool {
         types::VectorOfbool { ptr: unsafe { cv_VectorOfVectorOfbool_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfbool_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfbool {
         types::VectorOfbool { ptr: unsafe { cv_VectorOfVectorOfbool_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfbool_get(self.ptr, index)) }
-        // types::VectorOfbool { ptr: unsafe { cv_VectorOfVectorOfbool_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfbool> {
@@ -5482,13 +5431,10 @@ impl VectorOfVectorOfchar {
 
     pub fn get(&self, index: size_t) -> types::VectorOfchar {
         types::VectorOfchar { ptr: unsafe { cv_VectorOfVectorOfchar_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfchar_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfchar {
         types::VectorOfchar { ptr: unsafe { cv_VectorOfVectorOfchar_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfchar_get(self.ptr, index)) }
-        // types::VectorOfchar { ptr: unsafe { cv_VectorOfVectorOfchar_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfchar> {
@@ -5550,13 +5496,10 @@ impl VectorOfVectorOfint {
 
     pub fn get(&self, index: size_t) -> types::VectorOfint {
         types::VectorOfint { ptr: unsafe { cv_VectorOfVectorOfint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfint_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfint {
         types::VectorOfint { ptr: unsafe { cv_VectorOfVectorOfint_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfint_get(self.ptr, index)) }
-        // types::VectorOfint { ptr: unsafe { cv_VectorOfVectorOfint_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfint> {
@@ -5618,13 +5561,10 @@ impl VectorOfVectorOfuchar {
 
     pub fn get(&self, index: size_t) -> types::VectorOfuchar {
         types::VectorOfuchar { ptr: unsafe { cv_VectorOfVectorOfuchar_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfuchar_get(self.ptr, index)) }
     }
 
     pub fn get_mut(&mut self, index: size_t) -> types::VectorOfuchar {
         types::VectorOfuchar { ptr: unsafe { cv_VectorOfVectorOfuchar_get(self.ptr, index) } }
-        // unsafe { ::std::mem::transmute(cv_VectorOfVectorOfuchar_get(self.ptr, index)) }
-        // types::VectorOfuchar { ptr: unsafe { cv_VectorOfVectorOfuchar_get(self.ptr, index) } }
     }
 
     pub fn to_vec(&self) -> Vec<types::VectorOfuchar> {

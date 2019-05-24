@@ -28,7 +28,7 @@ pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 /// ## C++ default parameters
 /// * eta: 1.f
 /// * top_k: 0
-pub fn nms_boxes_f64(bboxes: &types::VectorOfRect2d, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
+pub fn nms_boxes_f64(bboxes: &types::VectorOfRect2d, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &mut types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
     unsafe { sys::cv_dnn_NMSBoxes_VectorOfRect2d_VectorOffloat_float_float_VectorOfint_float_int(bboxes.as_raw_VectorOfRect2d(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
 }
 
@@ -46,7 +46,7 @@ pub fn nms_boxes_f64(bboxes: &types::VectorOfRect2d, scores: &types::VectorOfflo
 /// ## C++ default parameters
 /// * eta: 1.f
 /// * top_k: 0
-pub fn nms_boxes(bboxes: &types::VectorOfRect, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
+pub fn nms_boxes(bboxes: &types::VectorOfRect, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &mut types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
     unsafe { sys::cv_dnn_NMSBoxes_VectorOfRect_VectorOffloat_float_float_VectorOfint_float_int(bboxes.as_raw_VectorOfRect(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
 }
 
@@ -54,7 +54,7 @@ pub fn nms_boxes(bboxes: &types::VectorOfRect, scores: &types::VectorOffloat, sc
 /// ## C++ default parameters
 /// * eta: 1.f
 /// * top_k: 0
-pub fn nms_boxes_rotated(bboxes: &types::VectorOfRotatedRect, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
+pub fn nms_boxes_rotated(bboxes: &types::VectorOfRotatedRect, scores: &types::VectorOffloat, score_threshold: f32, nms_threshold: f32, indices: &mut types::VectorOfint, eta: f32, top_k: i32) -> Result<()> {
     unsafe { sys::cv_dnn_NMSBoxes_VectorOfRotatedRect_VectorOffloat_float_float_VectorOfint_float_int(bboxes.as_raw_VectorOfRotatedRect(), scores.as_raw_VectorOffloat(), score_threshold, nms_threshold, indices.as_raw_VectorOfint(), eta, top_k) }.into_result()
 }
 
@@ -1397,7 +1397,7 @@ pub trait Layer : core::Algorithm {
     /// Allocates layer and computes output.
     /// **Deprecated**: This method will be removed in the future release.
     #[deprecated = "This method will be removed in the future release."]
-    fn run(&mut self, inputs: &types::VectorOfMat, outputs: &types::VectorOfMat, internals: &types::VectorOfMat) -> Result<()> {
+    fn run(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat, internals: &mut types::VectorOfMat) -> Result<()> {
         unsafe { sys::cv_dnn_Layer_run_VectorOfMat_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
     }
     
@@ -1477,7 +1477,7 @@ pub trait Layer : core::Algorithm {
     /// use weights from layer after it. Fused layer is skipped.
     /// By default, @p scale and @p shift are empty that means layer has no
     /// element-wise multiplications or additions.
-    fn get_scale_shift(&self, scale: &core::Mat, shift: &core::Mat) -> Result<()> {
+    fn get_scale_shift(&self, scale: &mut core::Mat, shift: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_dnn_Layer_getScaleShift_const_Mat_Mat(self.as_raw_Layer(), scale.as_raw_Mat(), shift.as_raw_Mat()) }.into_result()
     }
     
@@ -1486,7 +1486,7 @@ pub trait Layer : core::Algorithm {
         unsafe { sys::cv_dnn_Layer_unsetAttached(self.as_raw_Layer()) }.into_result()
     }
     
-    fn get_memory_shapes(&self, inputs: &types::VectorOfVectorOfint, required_outputs: i32, outputs: &types::VectorOfVectorOfint, internals: &types::VectorOfVectorOfint) -> Result<bool> {
+    fn get_memory_shapes(&self, inputs: &types::VectorOfVectorOfint, required_outputs: i32, outputs: &mut types::VectorOfVectorOfint, internals: &mut types::VectorOfVectorOfint) -> Result<bool> {
         unsafe { sys::cv_dnn_Layer_getMemoryShapes_const_VectorOfVectorOfint_int_VectorOfVectorOfint_VectorOfVectorOfint(self.as_raw_Layer(), inputs.as_raw_VectorOfVectorOfint(), required_outputs, outputs.as_raw_VectorOfVectorOfint(), internals.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
@@ -1687,7 +1687,7 @@ impl Net {
     /// * params: parameters which will be used to initialize the creating layer.
     /// ## Returns
     /// unique identifier of created layer, or -1 if a failure will happen.
-    pub fn add_layer(&mut self, name: &str, _type: &str, params: &crate::dnn::LayerParams) -> Result<i32> {
+    pub fn add_layer(&mut self, name: &str, _type: &str, params: &mut crate::dnn::LayerParams) -> Result<i32> {
         string_arg!(name);
         string_arg!(_type);
         unsafe { sys::cv_dnn_Net_addLayer_String_String_LayerParams(self.as_raw_Net(), name.as_ptr(), _type.as_ptr(), params.as_raw_LayerParams()) }.into_result()
@@ -1695,7 +1695,7 @@ impl Net {
     
     /// Adds new layer and connects its first input to the first output of previously added layer.
     ///  @see addLayer()
-    pub fn add_layer_to_prev(&mut self, name: &str, _type: &str, params: &crate::dnn::LayerParams) -> Result<i32> {
+    pub fn add_layer_to_prev(&mut self, name: &str, _type: &str, params: &mut crate::dnn::LayerParams) -> Result<i32> {
         string_arg!(name);
         string_arg!(_type);
         unsafe { sys::cv_dnn_Net_addLayerToPrev_String_String_LayerParams(self.as_raw_Net(), name.as_ptr(), _type.as_ptr(), params.as_raw_LayerParams()) }.into_result()
@@ -1791,7 +1791,7 @@ impl Net {
     /// ## Parameters
     /// * outputBlobs: contains all output blobs for each layer specified in @p outBlobNames.
     /// * outBlobNames: names for layers which outputs are needed to get
-    pub fn forward_all(&mut self, output_blobs: &types::VectorOfVectorOfMat, out_blob_names: &types::VectorOfString) -> Result<()> {
+    pub fn forward_all(&mut self, output_blobs: &mut types::VectorOfVectorOfMat, out_blob_names: &types::VectorOfString) -> Result<()> {
         unsafe { sys::cv_dnn_Net_forward_VectorOfVectorOfMat_VectorOfString(self.as_raw_Net(), output_blobs.as_raw_VectorOfVectorOfMat(), out_blob_names.as_raw_VectorOfString()) }.into_result()
     }
     
@@ -1901,11 +1901,11 @@ impl Net {
     /// order is the same as in layersIds
     /// * outLayersShapes: output parameter for output layers shapes;
     /// order is the same as in layersIds
-    pub fn get_layers_shapes(&self, net_input_shapes: &types::VectorOfVectorOfint, layers_ids: &types::VectorOfint, in_layers_shapes: &types::VectorOfVectorOfVectorOfint, out_layers_shapes: &types::VectorOfVectorOfVectorOfint) -> Result<()> {
+    pub fn get_layers_shapes(&self, net_input_shapes: &types::VectorOfVectorOfint, layers_ids: &mut types::VectorOfint, in_layers_shapes: &mut types::VectorOfVectorOfVectorOfint, out_layers_shapes: &mut types::VectorOfVectorOfVectorOfint) -> Result<()> {
         unsafe { sys::cv_dnn_Net_getLayersShapes_const_VectorOfVectorOfint_VectorOfint_VectorOfVectorOfVectorOfint_VectorOfVectorOfVectorOfint(self.as_raw_Net(), net_input_shapes.as_raw_VectorOfVectorOfint(), layers_ids.as_raw_VectorOfint(), in_layers_shapes.as_raw_VectorOfVectorOfVectorOfint(), out_layers_shapes.as_raw_VectorOfVectorOfVectorOfint()) }.into_result()
     }
     
-    pub fn get_layer_shapes(&self, net_input_shapes: &types::VectorOfVectorOfint, layer_id: i32, in_layer_shapes: &types::VectorOfVectorOfint, out_layer_shapes: &types::VectorOfVectorOfint) -> Result<()> {
+    pub fn get_layer_shapes(&self, net_input_shapes: &types::VectorOfVectorOfint, layer_id: i32, in_layer_shapes: &mut types::VectorOfVectorOfint, out_layer_shapes: &mut types::VectorOfVectorOfint) -> Result<()> {
         unsafe { sys::cv_dnn_Net_getLayerShapes_const_VectorOfVectorOfint_int_VectorOfVectorOfint_VectorOfVectorOfint(self.as_raw_Net(), net_input_shapes.as_raw_VectorOfVectorOfint(), layer_id, in_layer_shapes.as_raw_VectorOfVectorOfint(), out_layer_shapes.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
@@ -1925,7 +1925,7 @@ impl Net {
     /// Returns list of types for layer used in model.
     /// ## Parameters
     /// * layersTypes: output parameter for returning types.
-    pub fn get_layer_types(&self, layers_types: &types::VectorOfString) -> Result<()> {
+    pub fn get_layer_types(&self, layers_types: &mut types::VectorOfString) -> Result<()> {
         unsafe { sys::cv_dnn_Net_getLayerTypes_const_VectorOfString(self.as_raw_Net(), layers_types.as_raw_VectorOfString()) }.into_result()
     }
     
@@ -1960,7 +1960,7 @@ impl Net {
     /// * layerIds: output vector to save layer IDs.
     /// * weights: output parameter to store resulting bytes for weights.
     /// * blobs: output parameter to store resulting bytes for intermediate blobs.
-    pub fn get_memory_consumption_for_layers(&self, net_input_shapes: &types::VectorOfVectorOfint, layer_ids: &types::VectorOfint, weights: &types::VectorOfsize_t, blobs: &types::VectorOfsize_t) -> Result<()> {
+    pub fn get_memory_consumption_for_layers(&self, net_input_shapes: &types::VectorOfVectorOfint, layer_ids: &mut types::VectorOfint, weights: &mut types::VectorOfsize_t, blobs: &mut types::VectorOfsize_t) -> Result<()> {
         unsafe { sys::cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t(self.as_raw_Net(), net_input_shapes.as_raw_VectorOfVectorOfint(), layer_ids.as_raw_VectorOfint(), weights.as_raw_VectorOfsize_t(), blobs.as_raw_VectorOfsize_t()) }.into_result()
     }
     
@@ -1978,7 +1978,7 @@ impl Net {
     /// * timings: vector for tick timings for all layers.
     /// ## Returns
     /// overall ticks for model inference.
-    pub fn get_perf_profile(&mut self, timings: &types::VectorOfdouble) -> Result<i64> {
+    pub fn get_perf_profile(&mut self, timings: &mut types::VectorOfdouble) -> Result<i64> {
         unsafe { sys::cv_dnn_Net_getPerfProfile_VectorOfdouble(self.as_raw_Net(), timings.as_raw_VectorOfdouble()) }.into_result()
     }
     

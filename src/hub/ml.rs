@@ -696,7 +696,7 @@ pub trait EM : crate::ml::StatModel {
     /// 
     /// Returns vector of covariation matrices. Number of matrices is the number of gaussian mixtures,
     /// each matrix is a square floating-point matrix NxN, where N is the space dimensionality.
-    fn get_covs(&self, covs: &types::VectorOfMat) -> Result<()> {
+    fn get_covs(&self, covs: &mut types::VectorOfMat) -> Result<()> {
         unsafe { sys::cv_ml_EM_getCovs_const_VectorOfMat(self.as_raw_EM(), covs.as_raw_VectorOfMat()) }.into_result()
     }
     
@@ -2005,7 +2005,7 @@ pub trait TrainData {
     }
     
     /// Returns vector of symbolic names captured in loadFromCSV()
-    fn get_names(&self, names: &types::VectorOfString) -> Result<()> {
+    fn get_names(&self, names: &mut types::VectorOfString) -> Result<()> {
         unsafe { sys::cv_ml_TrainData_getNames_const_VectorOfString(self.as_raw_TrainData(), names.as_raw_VectorOfString()) }.into_result()
     }
     

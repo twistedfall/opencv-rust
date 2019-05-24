@@ -39,11 +39,11 @@ pub fn calc_blurriness(frame: &core::Mat) -> Result<f32> {
     unsafe { sys::cv_videostab_calcBlurriness_Mat(frame.as_raw_Mat()) }.into_result()
 }
 
-pub fn calc_flow_mask(flow_x: &core::Mat, flow_y: &core::Mat, errors: &core::Mat, max_error: f32, mask0: &core::Mat, mask1: &core::Mat, flow_mask: &core::Mat) -> Result<()> {
+pub fn calc_flow_mask(flow_x: &core::Mat, flow_y: &core::Mat, errors: &core::Mat, max_error: f32, mask0: &core::Mat, mask1: &core::Mat, flow_mask: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_videostab_calcFlowMask_Mat_Mat_Mat_float_Mat_Mat_Mat(flow_x.as_raw_Mat(), flow_y.as_raw_Mat(), errors.as_raw_Mat(), max_error, mask0.as_raw_Mat(), mask1.as_raw_Mat(), flow_mask.as_raw_Mat()) }.into_result()
 }
 
-pub fn complete_frame_according_to_flow(flow_mask: &core::Mat, flow_x: &core::Mat, flow_y: &core::Mat, frame1: &core::Mat, mask1: &core::Mat, dist_thresh: f32, frame0: &core::Mat, mask0: &core::Mat) -> Result<()> {
+pub fn complete_frame_according_to_flow(flow_mask: &core::Mat, flow_x: &core::Mat, flow_y: &core::Mat, frame1: &core::Mat, mask1: &core::Mat, dist_thresh: f32, frame0: &mut core::Mat, mask0: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_videostab_completeFrameAccordingToFlow_Mat_Mat_Mat_Mat_Mat_float_Mat_Mat(flow_mask.as_raw_Mat(), flow_x.as_raw_Mat(), flow_y.as_raw_Mat(), frame1.as_raw_Mat(), mask1.as_raw_Mat(), dist_thresh, frame0.as_raw_Mat(), mask0.as_raw_Mat()) }.into_result()
 }
 
@@ -107,7 +107,7 @@ impl crate::videostab::InpainterBase for ColorAverageInpainter {
 
 impl ColorAverageInpainter {
 
-    pub fn inpaint(&mut self, idx: i32, frame: &core::Mat, mask: &core::Mat) -> Result<()> {
+    pub fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_ColorAverageInpainter_inpaint_int_Mat_Mat(self.as_raw_ColorAverageInpainter(), idx, frame.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
     
@@ -141,7 +141,7 @@ impl ColorInpainter {
         unsafe { sys::cv_videostab_ColorInpainter_ColorInpainter_int_double(method, radius) }.into_result().map(|x| crate::videostab::ColorInpainter { ptr: x })
     }
     
-    pub fn inpaint(&mut self, idx: i32, frame: &core::Mat, mask: &core::Mat) -> Result<()> {
+    pub fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_ColorInpainter_inpaint_int_Mat_Mat(self.as_raw_ColorInpainter(), idx, frame.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
     
@@ -179,7 +179,7 @@ impl ConsistentMosaicInpainter {
         unsafe { sys::cv_videostab_ConsistentMosaicInpainter_stdevThresh_const(self.as_raw_ConsistentMosaicInpainter()) }.into_result()
     }
     
-    pub fn inpaint(&mut self, idx: i32, frame: &core::Mat, mask: &core::Mat) -> Result<()> {
+    pub fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_ConsistentMosaicInpainter_inpaint_int_Mat_Mat(self.as_raw_ConsistentMosaicInpainter(), idx, frame.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
     
@@ -196,7 +196,7 @@ pub trait DeblurerBase {
         unsafe { sys::cv_videostab_DeblurerBase_radius_const(self.as_raw_DeblurerBase()) }.into_result()
     }
     
-    fn deblur(&mut self, idx: i32, frame: &core::Mat) -> Result<()> {
+    fn deblur(&mut self, idx: i32, frame: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_DeblurerBase_deblur_int_Mat(self.as_raw_DeblurerBase(), idx, frame.as_raw_Mat()) }.into_result()
     }
     
@@ -442,7 +442,7 @@ pub trait InpainterBase {
         unsafe { sys::cv_videostab_InpainterBase_radius_const(self.as_raw_InpainterBase()) }.into_result()
     }
     
-    fn inpaint(&mut self, idx: i32, frame: &core::Mat, mask: &core::Mat) -> Result<()> {
+    fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_InpainterBase_inpaint_int_Mat_Mat(self.as_raw_InpainterBase(), idx, frame.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
     
@@ -532,7 +532,7 @@ impl InpaintingPipeline {
         unsafe { sys::cv_videostab_InpaintingPipeline_setStabilizationMotions_VectorOfMat(self.as_raw_InpaintingPipeline(), val.as_raw_VectorOfMat()) }.into_result()
     }
     
-    pub fn inpaint(&mut self, idx: i32, frame: &core::Mat, mask: &core::Mat) -> Result<()> {
+    pub fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_InpaintingPipeline_inpaint_int_Mat_Mat(self.as_raw_InpaintingPipeline(), idx, frame.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
     
@@ -689,7 +689,7 @@ impl crate::videostab::MoreAccurateMotionWobbleSuppressorBase for MoreAccurateMo
 
 impl MoreAccurateMotionWobbleSuppressor {
 
-    pub fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &core::Mat) -> Result<()> {
+    pub fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_suppress_int_Mat_Mat(self.as_raw_MoreAccurateMotionWobbleSuppressor(), idx, frame.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
     }
     
@@ -865,7 +865,7 @@ impl MotionInpainter {
         unsafe { sys::cv_videostab_MotionInpainter_borderMode_const(self.as_raw_MotionInpainter()) }.into_result()
     }
     
-    pub fn inpaint(&mut self, idx: i32, frame: &core::Mat, mask: &core::Mat) -> Result<()> {
+    pub fn inpaint(&mut self, idx: i32, frame: &mut core::Mat, mask: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_MotionInpainter_inpaint_int_Mat_Mat(self.as_raw_MotionInpainter(), idx, frame.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
     }
     
@@ -921,7 +921,7 @@ impl crate::videostab::DeblurerBase for NullDeblurer {
 
 impl NullDeblurer {
 
-    pub fn deblur(&mut self, unnamed_arg: i32, unnamed_arg_1: &core::Mat) -> Result<()> {
+    pub fn deblur(&mut self, unnamed_arg: i32, unnamed_arg_1: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_NullDeblurer_deblur_int_Mat(self.as_raw_NullDeblurer(), unnamed_arg, unnamed_arg_1.as_raw_Mat()) }.into_result()
     }
     
@@ -977,7 +977,7 @@ impl crate::videostab::InpainterBase for NullInpainter {
 
 impl NullInpainter {
 
-    pub fn inpaint(&mut self, unnamed_arg: i32, unnamed_arg_1: &core::Mat, unnamed_arg_2: &core::Mat) -> Result<()> {
+    pub fn inpaint(&mut self, unnamed_arg: i32, unnamed_arg_1: &mut core::Mat, unnamed_arg_2: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_NullInpainter_inpaint_int_Mat_Mat(self.as_raw_NullInpainter(), unnamed_arg, unnamed_arg_1.as_raw_Mat(), unnamed_arg_2.as_raw_Mat()) }.into_result()
     }
     
@@ -1051,7 +1051,7 @@ impl crate::videostab::WobbleSuppressorBase for NullWobbleSuppressor {
 
 impl NullWobbleSuppressor {
 
-    pub fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &core::Mat) -> Result<()> {
+    pub fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_NullWobbleSuppressor_suppress_int_Mat_Mat(self.as_raw_NullWobbleSuppressor(), idx, frame.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
     }
     
@@ -1476,7 +1476,7 @@ impl WeightingDeblurer {
         unsafe { sys::cv_videostab_WeightingDeblurer_sensitivity_const(self.as_raw_WeightingDeblurer()) }.into_result()
     }
     
-    pub fn deblur(&mut self, idx: i32, frame: &core::Mat) -> Result<()> {
+    pub fn deblur(&mut self, idx: i32, frame: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_WeightingDeblurer_deblur_int_Mat(self.as_raw_WeightingDeblurer(), idx, frame.as_raw_Mat()) }.into_result()
     }
     
@@ -1493,7 +1493,7 @@ pub trait WobbleSuppressorBase {
         unsafe { sys::cv_videostab_WobbleSuppressorBase_motionEstimator_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|x| types::PtrOfImageMotionEstimatorBase { ptr: x })
     }
     
-    fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &core::Mat) -> Result<()> {
+    fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_videostab_WobbleSuppressorBase_suppress_int_Mat_Mat(self.as_raw_WobbleSuppressorBase(), idx, frame.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
     }
     

@@ -2206,7 +2206,7 @@ pub fn draw_contours(image: &mut core::Mat, contours: &types::VectorOfMat, conto
 /// * marker_size: 20
 /// * thickness: 1
 /// * line_type: 8
-pub fn draw_marker(img: &core::Mat, position: core::Point, color: core::Scalar, marker_type: i32, marker_size: i32, thickness: i32, line_type: i32) -> Result<()> {
+pub fn draw_marker(img: &mut core::Mat, position: core::Point, color: core::Scalar, marker_type: i32, marker_size: i32, thickness: i32, line_type: i32) -> Result<()> {
     unsafe { sys::cv_drawMarker_Mat_Point_Scalar_int_int_int_int(img.as_raw_Mat(), position, color, marker_type, marker_size, thickness, line_type) }.into_result()
 }
 
@@ -2234,7 +2234,7 @@ pub fn draw_marker(img: &core::Mat, position: core::Point, color: core::Scalar, 
 /// * arcEnd: Ending angle of the elliptic arc in degrees.
 /// * delta: Angle between the subsequent polyline vertices. It defines the approximation accuracy.
 /// * pts: Output vector of polyline vertices.
-pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &types::VectorOfPoint2d) -> Result<()> {
+pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut types::VectorOfPoint2d) -> Result<()> {
     unsafe { sys::cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_VectorOfPoint2d(center, axes, angle, arc_start, arc_end, delta, pts.as_raw_VectorOfPoint2d()) }.into_result()
 }
 
@@ -2252,7 +2252,7 @@ pub fn ellipse_2_poly_f64(center: core::Point2d, axes: core::Size2d, angle: i32,
 /// * delta: Angle between the subsequent polyline vertices. It defines the approximation
 /// accuracy.
 /// * pts: Output vector of polyline vertices.
-pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &types::VectorOfPoint) -> Result<()> {
+pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_start: i32, arc_end: i32, delta: i32, pts: &mut types::VectorOfPoint) -> Result<()> {
     unsafe { sys::cv_ellipse2Poly_Point_Size_int_int_int_int_VectorOfPoint(center, axes, angle, arc_start, arc_end, delta, pts.as_raw_VectorOfPoint()) }.into_result()
 }
 
@@ -2425,7 +2425,7 @@ pub fn fill_convex_poly(img: &mut core::Mat, points: &core::Mat, color: core::Sc
 /// ## C++ default parameters
 /// * line_type: LINE_8
 /// * shift: 0
-pub fn fill_convex_poly_1(img: &core::Mat, pts: &core::Point, npts: i32, color: core::Scalar, line_type: i32, shift: i32) -> Result<()> {
+pub fn fill_convex_poly_1(img: &mut core::Mat, pts: &core::Point, npts: i32, color: core::Scalar, line_type: i32, shift: i32) -> Result<()> {
     unsafe { sys::cv_fillConvexPoly_Mat_const_Point_X_int_Scalar_int_int(img.as_raw_Mat(), pts, npts, color, line_type, shift) }.into_result()
 }
 
@@ -4043,7 +4043,7 @@ pub fn rectangle_points(img: &mut core::Mat, pt1: core::Point, pt2: core::Point,
 /// * thickness: 1
 /// * line_type: LINE_8
 /// * shift: 0
-pub fn rectangle(img: &core::Mat, rec: core::Rect, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
+pub fn rectangle(img: &mut core::Mat, rec: core::Rect, color: core::Scalar, thickness: i32, line_type: i32, shift: i32) -> Result<()> {
     unsafe { sys::cv_rectangle_Mat_Rect_Scalar_int_int_int(img.as_raw_Mat(), rec, color, thickness, line_type, shift) }.into_result()
 }
 
@@ -5142,7 +5142,7 @@ impl Subdiv2D {
     /// 
     /// The function gives each edge as a 4 numbers vector, where each two are one of the edge
     /// vertices. i.e. org_x = v[0], org_y = v[1], dst_x = v[2], dst_y = v[3].
-    pub fn get_edge_list(&self, edge_list: &types::VectorOfVec4f) -> Result<()> {
+    pub fn get_edge_list(&self, edge_list: &mut types::VectorOfVec4f) -> Result<()> {
         unsafe { sys::cv_Subdiv2D_getEdgeList_const_VectorOfVec4f(self.as_raw_Subdiv2D(), edge_list.as_raw_VectorOfVec4f()) }.into_result()
     }
     
@@ -5152,7 +5152,7 @@ impl Subdiv2D {
     /// * leadingEdgeList: Output vector.
     /// 
     /// The function gives one edge ID for each triangle.
-    pub fn get_leading_edge_list(&self, leading_edge_list: &types::VectorOfint) -> Result<()> {
+    pub fn get_leading_edge_list(&self, leading_edge_list: &mut types::VectorOfint) -> Result<()> {
         unsafe { sys::cv_Subdiv2D_getLeadingEdgeList_const_VectorOfint(self.as_raw_Subdiv2D(), leading_edge_list.as_raw_VectorOfint()) }.into_result()
     }
     
@@ -5163,7 +5163,7 @@ impl Subdiv2D {
     /// 
     /// The function gives each triangle as a 6 numbers vector, where each two are one of the triangle
     /// vertices. i.e. p1_x = v[0], p1_y = v[1], p2_x = v[2], p2_y = v[3], p3_x = v[4], p3_y = v[5].
-    pub fn get_triangle_list(&self, triangle_list: &types::VectorOfVec6f) -> Result<()> {
+    pub fn get_triangle_list(&self, triangle_list: &mut types::VectorOfVec6f) -> Result<()> {
         unsafe { sys::cv_Subdiv2D_getTriangleList_const_VectorOfVec6f(self.as_raw_Subdiv2D(), triangle_list.as_raw_VectorOfVec6f()) }.into_result()
     }
     
@@ -5173,7 +5173,7 @@ impl Subdiv2D {
     /// * idx: Vector of vertices IDs to consider. For all vertices you can pass empty vector.
     /// * facetList: Output vector of the Voroni facets.
     /// * facetCenters: Output vector of the Voroni facets center points.
-    pub fn get_voronoi_facet_list(&mut self, idx: &types::VectorOfint, facet_list: &types::VectorOfVectorOfPoint2f, facet_centers: &types::VectorOfPoint2f) -> Result<()> {
+    pub fn get_voronoi_facet_list(&mut self, idx: &types::VectorOfint, facet_list: &mut types::VectorOfVectorOfPoint2f, facet_centers: &mut types::VectorOfPoint2f) -> Result<()> {
         unsafe { sys::cv_Subdiv2D_getVoronoiFacetList_VectorOfint_VectorOfVectorOfPoint2f_VectorOfPoint2f(self.as_raw_Subdiv2D(), idx.as_raw_VectorOfint(), facet_list.as_raw_VectorOfVectorOfPoint2f(), facet_centers.as_raw_VectorOfPoint2f()) }.into_result()
     }
     

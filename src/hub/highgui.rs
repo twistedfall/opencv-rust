@@ -697,7 +697,7 @@ pub fn select_roi_for_window(window_name: &str, img: &core::Mat, show_crosshair:
 /// ## C++ default parameters
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_rois(window_name: &str, img: &core::Mat, bounding_boxes: &types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
+pub fn select_rois(window_name: &str, img: &core::Mat, bounding_boxes: &mut types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
     string_arg!(window_name);
     unsafe { sys::cv_selectROIs_String_Mat_VectorOfRect_bool_bool(window_name.as_ptr(), img.as_raw_Mat(), bounding_boxes.as_raw_VectorOfRect(), show_crosshair, from_center) }.into_result()
 }

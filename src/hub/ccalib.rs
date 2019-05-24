@@ -68,15 +68,15 @@ pub fn init_undistort_rectify_map(k: &core::Mat, d: &core::Mat, xi: &core::Mat, 
     unsafe { sys::cv_omnidir_initUndistortRectifyMap_Mat_Mat_Mat_Mat_Mat_Size_int_Mat_Mat_int(k.as_raw_Mat(), d.as_raw_Mat(), xi.as_raw_Mat(), r.as_raw_Mat(), p.as_raw_Mat(), size, mltype, map1.as_raw_Mat(), map2.as_raw_Mat(), flags) }.into_result()
 }
 
-pub fn compose_motion(_om1: &core::Mat, _t1: &core::Mat, _om2: &core::Mat, _t2: &core::Mat, om3: &core::Mat, t3: &core::Mat, dom3dom1: &core::Mat, dom3d_t1: &core::Mat, dom3dom2: &core::Mat, dom3d_t2: &core::Mat, d_t3dom1: &core::Mat, d_t3d_t1: &core::Mat, d_t3dom2: &core::Mat, d_t3d_t2: &core::Mat) -> Result<()> {
+pub fn compose_motion(_om1: &core::Mat, _t1: &core::Mat, _om2: &core::Mat, _t2: &core::Mat, om3: &mut core::Mat, t3: &mut core::Mat, dom3dom1: &mut core::Mat, dom3d_t1: &mut core::Mat, dom3dom2: &mut core::Mat, dom3d_t2: &mut core::Mat, d_t3dom1: &mut core::Mat, d_t3d_t1: &mut core::Mat, d_t3dom2: &mut core::Mat, d_t3d_t2: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_compose_motion_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat(_om1.as_raw_Mat(), _t1.as_raw_Mat(), _om2.as_raw_Mat(), _t2.as_raw_Mat(), om3.as_raw_Mat(), t3.as_raw_Mat(), dom3dom1.as_raw_Mat(), dom3d_t1.as_raw_Mat(), dom3dom2.as_raw_Mat(), dom3d_t2.as_raw_Mat(), d_t3dom1.as_raw_Mat(), d_t3d_t1.as_raw_Mat(), d_t3dom2.as_raw_Mat(), d_t3d_t2.as_raw_Mat()) }.into_result()
 }
 
-pub fn compute_jacobian_stereo(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, parameters: &core::Mat, jtj_inv: &core::Mat, jte: &core::Mat, flags: i32, epsilon: f64) -> Result<()> {
+pub fn compute_jacobian_stereo(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, parameters: &core::Mat, jtj_inv: &mut core::Mat, jte: &mut core::Mat, flags: i32, epsilon: f64) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_computeJacobianStereo_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_double(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), parameters.as_raw_Mat(), jtj_inv.as_raw_Mat(), jte.as_raw_Mat(), flags, epsilon) }.into_result()
 }
 
-pub fn compute_jacobian(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, parameters: &core::Mat, jtj_inv: &core::Mat, jte: &core::Mat, flags: i32, epsilon: f64) -> Result<()> {
+pub fn compute_jacobian(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, parameters: &core::Mat, jtj_inv: &mut core::Mat, jte: &mut core::Mat, flags: i32, epsilon: f64) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_computeJacobian_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_double(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), parameters.as_raw_Mat(), jtj_inv.as_raw_Mat(), jte.as_raw_Mat(), flags, epsilon) }.into_result()
 }
 
@@ -108,19 +108,19 @@ pub fn encode_parameters(k: &core::Mat, om_all: &types::VectorOfMat, t_all: &typ
     unsafe { sys::cv_omnidir_internal_encodeParameters_Mat_VectorOfMat_VectorOfMat_Mat_double_Mat(k.as_raw_Mat(), om_all.as_raw_VectorOfMat(), t_all.as_raw_VectorOfMat(), distoaration.as_raw_Mat(), xi, parameters.as_raw_Mat()) }.into_result()
 }
 
-pub fn estimate_uncertainties_stereo(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, parameters: &core::Mat, errors: &core::Mat, std_error: &mut core::Vec2d, rms: &mut f64, flags: i32) -> Result<()> {
+pub fn estimate_uncertainties_stereo(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, parameters: &core::Mat, errors: &mut core::Mat, std_error: &mut core::Vec2d, rms: &mut f64, flags: i32) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_estimateUncertaintiesStereo_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Vec2d_double_int(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), parameters.as_raw_Mat(), errors.as_raw_Mat(), std_error, rms, flags) }.into_result()
 }
 
-pub fn estimate_uncertainties(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, parameters: &core::Mat, errors: &core::Mat, std_error: &mut core::Vec2d, rms: &mut f64, flags: i32) -> Result<()> {
+pub fn estimate_uncertainties(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, parameters: &core::Mat, errors: &mut core::Mat, std_error: &mut core::Vec2d, rms: &mut f64, flags: i32) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_estimateUncertainties_VectorOfMat_VectorOfMat_Mat_Mat_Vec2d_double_int(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), parameters.as_raw_Mat(), errors.as_raw_Mat(), std_error, rms, flags) }.into_result()
 }
 
-pub fn fill_fixed_stereo(g: &core::Mat, flags: i32, n: i32) -> Result<()> {
+pub fn fill_fixed_stereo(g: &mut core::Mat, flags: i32, n: i32) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_fillFixedStereo_Mat_int_int(g.as_raw_Mat(), flags, n) }.into_result()
 }
 
-pub fn fill_fixed(g: &core::Mat, flags: i32, n: i32) -> Result<()> {
+pub fn fill_fixed(g: &mut core::Mat, flags: i32, n: i32) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_fillFixed_Mat_int_int(g.as_raw_Mat(), flags, n) }.into_result()
 }
 
@@ -132,11 +132,11 @@ pub fn find_median(row: &core::Mat) -> Result<f64> {
     unsafe { sys::cv_omnidir_internal_findMedian_Mat(row.as_raw_Mat()) }.into_result()
 }
 
-pub fn flags2idx_stereo(flags: i32, idx: &types::VectorOfint, n: i32) -> Result<()> {
+pub fn flags2idx_stereo(flags: i32, idx: &mut types::VectorOfint, n: i32) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_flags2idxStereo_int_VectorOfint_int(flags, idx.as_raw_VectorOfint(), n) }.into_result()
 }
 
-pub fn flags2idx(flags: i32, idx: &types::VectorOfint, n: i32) -> Result<()> {
+pub fn flags2idx(flags: i32, idx: &mut types::VectorOfint, n: i32) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_flags2idx_int_VectorOfint_int(flags, idx.as_raw_VectorOfint(), n) }.into_result()
 }
 
@@ -155,7 +155,7 @@ pub fn initialize_stereo_calibration(object_points: &types::VectorOfMat, image_p
     unsafe { sys::cv_omnidir_internal_initializeStereoCalibration_VectorOfMat_VectorOfMat_VectorOfMat_Size_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_double_double_int_Mat(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), size1, size2, om.as_raw_Mat(), t.as_raw_Mat(), om_l.as_raw_VectorOfMat(), t_l.as_raw_VectorOfMat(), k1.as_raw_Mat(), d1.as_raw_Mat(), k2.as_raw_Mat(), d2.as_raw_Mat(), xi1, xi2, flags, idx.as_raw_Mat()) }.into_result()
 }
 
-pub fn sub_matrix(src: &core::Mat, dst: &core::Mat, cols: &types::VectorOfint, rows: &types::VectorOfint) -> Result<()> {
+pub fn sub_matrix(src: &core::Mat, dst: &mut core::Mat, cols: &types::VectorOfint, rows: &types::VectorOfint) -> Result<()> {
     unsafe { sys::cv_omnidir_internal_subMatrix_Mat_Mat_VectorOfint_VectorOfint(src.as_raw_Mat(), dst.as_raw_Mat(), cols.as_raw_VectorOfint(), rows.as_raw_VectorOfint()) }.into_result()
 }
 
@@ -347,7 +347,7 @@ impl CustomPattern {
         unsafe { sys::cv_ccalib_CustomPattern_isInitialized(self.as_raw_CustomPattern()) }.into_result()
     }
     
-    pub fn get_pattern_points(&mut self, original_points: &types::VectorOfKeyPoint) -> Result<()> {
+    pub fn get_pattern_points(&mut self, original_points: &mut types::VectorOfKeyPoint) -> Result<()> {
         unsafe { sys::cv_ccalib_CustomPattern_getPatternPoints_VectorOfKeyPoint(self.as_raw_CustomPattern(), original_points.as_raw_VectorOfKeyPoint()) }.into_result()
     }
     

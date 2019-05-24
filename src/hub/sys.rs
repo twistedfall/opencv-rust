@@ -53,7 +53,7 @@ pub type cv_return_value_bool = cv_return_value<bool>;
 // String
 pub type cv_return_value_char_X = cv_return_value<*mut c_char>;
 
-// char*
+// String
 pub type cv_return_value_const_char_X = cv_return_value<*const c_char>;
 
 // uchar*
@@ -83,7 +83,7 @@ pub type cv_return_value_unsigned_long_long = cv_return_value<u64>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// cv::Mat
+// Ptr<AffineTransformer>
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {
@@ -113,7 +113,6 @@ pub fn cv_bitwise_or_Mat_Mat_Mat_Mat(src1: *mut c_void, src2: *mut c_void, dst: 
 pub fn cv_bitwise_xor_Mat_Mat_Mat_Mat(src1: *mut c_void, src2: *mut c_void, dst: *mut c_void, mask: *mut c_void) -> cv_return_value_void;
 pub fn cv_borderInterpolate_int_int_int(p: i32, len: i32, border_type: i32) -> cv_return_value_int;
 pub fn cv_calcCovarMatrix_Mat_Mat_Mat_int_int(samples: *mut c_void, covar: *mut c_void, mean: *mut c_void, flags: i32, ctype: i32) -> cv_return_value_void;
-pub fn cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int(samples: *mut c_void, nsamples: i32, covar: *mut c_void, mean: *mut c_void, flags: i32, ctype: i32) -> cv_return_value_void;
 pub fn cv_cartToPolar_Mat_Mat_Mat_Mat_bool(x: *mut c_void, y: *mut c_void, magnitude: *mut c_void, angle: *mut c_void, angle_in_degrees: bool) -> cv_return_value_void;
 pub fn cv_checkHardwareSupport_int(feature: i32) -> cv_return_value_bool;
 pub fn cv_checkRange_Mat_bool_Point_X_double_double(a: *mut c_void, quiet: bool, pos: *mut core::Point, min_val: f64, max_val: f64) -> cv_return_value_bool;
@@ -230,7 +229,6 @@ pub fn cv_solvePoly_Mat_Mat_int(coeffs: *mut c_void, roots: *mut c_void, max_ite
 pub fn cv_solve_Mat_Mat_Mat_int(src1: *mut c_void, src2: *mut c_void, dst: *mut c_void, flags: i32) -> cv_return_value_bool;
 pub fn cv_sortIdx_Mat_Mat_int(src: *mut c_void, dst: *mut c_void, flags: i32) -> cv_return_value_void;
 pub fn cv_sort_Mat_Mat_int(src: *mut c_void, dst: *mut c_void, flags: i32) -> cv_return_value_void;
-pub fn cv_split_Mat_Mat(src: *mut c_void, mvbegin: *mut c_void) -> cv_return_value_void;
 pub fn cv_split_Mat_VectorOfMat(m: *mut c_void, mv: *mut c_void) -> cv_return_value_void;
 pub fn cv_sqrt_Mat_Mat(src: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
 pub fn cv_subtract_Mat_Mat_Mat_Mat_int(src1: *mut c_void, src2: *mut c_void, dst: *mut c_void, mask: *mut c_void, dtype: i32) -> cv_return_value_void;
