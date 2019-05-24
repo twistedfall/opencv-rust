@@ -1868,6 +1868,10 @@ class VectorTypeInfo(TypeInfo):
                         ${inner_rust_full} { ptr: unsafe { cv_${rust_safe_id}_get(self.ptr, index) } }
                     }
                     
+                    pub fn get_mut(&mut self, index: size_t) -> ${inner_rust_full} {
+                        ${inner_rust_full} { ptr: unsafe { cv_${rust_safe_id}_get(self.ptr, index) } }
+                    }
+                    
                     pub fn to_vec(&self) -> Vec<$inner_rust_full> {
                         (0..self.len()).map(|x| self.get(x)).collect()
                     }
@@ -1880,7 +1884,11 @@ class VectorTypeInfo(TypeInfo):
                         unsafe { cv_${rust_safe_id}_push_back(self.ptr, &val as *const _ as _) }
                     }
                     
-                    pub fn get(&self, index: size_t) -> &mut $inner_rust_full {
+                    pub fn get(&self, index: size_t) -> &$inner_rust_full {
+                        unsafe { (cv_${rust_safe_id}_get(self.ptr, index) as *mut ${inner_rust_full}).as_mut().unwrap() }
+                    }
+
+                    pub fn get_mut(&mut self, index: size_t) -> &mut $inner_rust_full {
                         unsafe { (cv_${rust_safe_id}_get(self.ptr, index) as *mut ${inner_rust_full}).as_mut().unwrap() }
                     }
                 }
@@ -1934,15 +1942,17 @@ class VectorTypeInfo(TypeInfo):
             """),
 
         "cpp_externs_bool": template("""
+
                 ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
-                    ${inner_cpptype} val = (*reinterpret_cast<${cpptype}*>(vec))[index];
+                    ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(vec)->at(index);
                     return new ${inner_cpptype}(val);
                 }
             """),
 
         "cpp_externs_non_bool": template("""
+
                 ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
-                    ${inner_cpptype} val = (*reinterpret_cast<${cpptype}*>(vec))[index];
+                    ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(vec)->at(index);
                     return new ${inner_cpptype}(val);
                 }
                 
