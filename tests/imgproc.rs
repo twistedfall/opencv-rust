@@ -1,13 +1,8 @@
 use opencv::{
-    core::{
-        DataType,
-        Mat,
-        Scalar,
-        Vec2f,
-    },
+    core::{DataType, Mat, Point, Point2f, Scalar, Size, Vec2f},
     imgproc,
+    types::VectorOfPoint,
 };
-use opencv::core::Point2f;
 
 #[test]
 fn min_enclosing() {
@@ -21,4 +16,13 @@ fn min_enclosing() {
     imgproc::min_enclosing_circle(&pts, &mut center, &mut radius).unwrap();
     assert_eq!(radius, 5.0001);
     assert_eq!(center, Point2f::new(15., 10.))
+}
+
+#[test]
+fn ellipse() {
+    let mut pts = VectorOfPoint::new();
+    imgproc::ellipse_2_poly(Point::new(100, 100), Size::new(200, 200), 0, 45, 90, 10, &mut pts);
+    assert_eq!(6, pts.len());
+    assert_eq!(Point::new(241, 241), *pts.get(0));
+    assert_eq!(Point::new(100, 300), *pts.get(5));
 }

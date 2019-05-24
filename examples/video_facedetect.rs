@@ -67,7 +67,7 @@ fn run() -> opencv::Result<()> {
                 height: face.height * 4,
             };
             imgproc::rectangle(
-                &frame,
+                &mut frame,
                 scaled_face,
                 core::Scalar::new(0f64, -1f64, -1f64, -1f64),
                 1,

@@ -146,12 +146,25 @@ fn mat_operations() {
         let mut src = VectorOfMat::new();
         src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.)).unwrap());
         src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(2.)).unwrap());
-        let mut dst = Mat::default();
-        core::merge(&src, &mut dst).unwrap();
-        assert_eq!(dst.typ().unwrap(), Vec2b::typ());
-        assert_eq!(dst.at_2d::<Vec2b>(0, 1).unwrap()[0], 1);
-        assert_eq!(dst.at_2d::<Vec2b>(0, 2).unwrap()[1], 2);
+        let mut merged = Mat::default();
+        core::merge(&src, &mut merged).unwrap();
+        assert_eq!(merged.typ().unwrap(), Vec2b::typ());
+        assert_eq!(merged.at_2d::<Vec2b>(0, 1).unwrap()[0], 1);
+        assert_eq!(merged.at_2d::<Vec2b>(0, 2).unwrap()[1], 2);
+
+        let mut split = VectorOfMat::new();
+        core::split(&merged, &mut split).unwrap();
+        assert_eq!(2, split.len());
+        let mat = split.get(0);
+        assert_eq!(u8::typ(), mat.typ().unwrap());
+        assert_eq!(1, mat.channels().unwrap());
+        assert_eq!(1, *mat.at_2d::<u8>(0, 2).unwrap());
+        let mat = split.get(1);
+        assert_eq!(u8::typ(), mat.typ().unwrap());
+        assert_eq!(1, mat.channels().unwrap());
+        assert_eq!(2, *mat.at_2d::<u8>(0, 0).unwrap());
     }
+
 }
 
 

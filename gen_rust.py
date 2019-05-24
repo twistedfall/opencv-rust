@@ -206,8 +206,7 @@ func_rename = {  # todo check if any "new" is required
     "cv_UMat_type_const": "typ",
     "cv_UMat_copyTo_const_Mat": "copy_to",
     "cv_UMat_copyTo_const_Mat_Mat": "copy_to_masked",
-    "cv_calcCovarMatrix_Mat_Mat_Mat_int_int": "calc_covar_matrix_arrays",
-    "cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int": "calc_covar_matrix",
+    "cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int": "-",  # duplicate of cv_calcCovarMatrix_Mat_Mat_Mat_int_int, but with pointers
     "cv_clipLine_Size_Point_Point": "clip_line_size",
     "cv_clipLine_Size2l_Point2l_Point2l": "clip_line_size_i64",
     "cv_clipLine_Rect_Point_Point": "clip_line",
@@ -224,8 +223,7 @@ func_rename = {  # todo check if any "new" is required
     "cv_rectangle_Mat_Rect_Scalar_int_int_int": "rectangle",
     "cv_repeat_Mat_int_int_Mat": "repeat_to",
     "cv_repeat_Mat_int_int": "repeat",
-    "cv_split_Mat_VectorOfMat": "split",
-    "cv_split_Mat_Mat": "split_at",
+    "cv_split_Mat_Mat": "-",  # duplicate of cv_split_Mat_VectorOfMat, but with pointers
     "cv_getNumberOfCPUs": "get_number_of_cpus",
     "cv_setImpl_int": "-",
     "cv_setUseCollection_bool": "-",
@@ -779,7 +777,7 @@ class ArgInfo:
         if len(arg_tuple) > 2:
             self.defval = arg_tuple[2]
         self.out = ""
-        if typ in ("OutputArray", "OutputArrayOfArrays") or len(arg_tuple) > 3 and "/O" in arg_tuple[3]:
+        if typ in ("OutputArray", "OutputArrayOfArrays") or len(arg_tuple) > 3 and "/O" in arg_tuple[3] or self.type.is_by_ref and not self.type.is_const:
             self.out = "O"
         if typ in ("InputOutputArray", "InputOutputArrayOfArrays") or len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
             self.out = "IO"
@@ -1569,10 +1567,12 @@ class TypeInfo(object):
         :type is_output: bool
         :rtype: str
         """
-        if is_output:
-            return "{}* {}".format(self.cpp_extern, var_name)
-        if not self.is_by_ptr and self.is_by_ref and not self.is_const:
-            return "{}& {}".format(self.cpp_extern, var_name)
+        if not self.is_by_ptr:
+            if self.is_by_ref:
+                if not self.is_const:
+                    return "{}& {}".format(self.cpp_extern, var_name)
+            elif is_output:
+                return "{}* {}".format(self.cpp_extern, var_name)
         return "{} {}".format(self.cpp_extern, var_name)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
@@ -1787,9 +1787,6 @@ class BoxedClassTypeInfo(TypeInfo):
         self.c_safe_id = "void_X"
         self.is_ignored = self.ci.is_ignored
         self.rust_safe_id = self.ci.name
-
-    def cpp_arg_func_decl(self, var_name, is_output=False):
-        return super(BoxedClassTypeInfo, self).cpp_arg_func_decl(var_name, False)
 
     def cpp_method_call_name(self, method_name):
         return "reinterpret_cast<{}*>(instance)->{}".format(self.cpptype, method_name)

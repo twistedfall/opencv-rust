@@ -10,7 +10,7 @@ fn net() {
     assert_eq!(params._type().unwrap(), "");
     let blobs = params.blobs().unwrap();
     assert_eq!(0, blobs.len());
-    let res = net.add_layer("layer", "type", &params).unwrap();
+    let res = net.add_layer("layer", "type", &mut params).unwrap();
     assert_ne!(-1, res);
     assert!(!net.empty().unwrap());
 }
