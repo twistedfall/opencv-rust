@@ -18,7 +18,8 @@ documentation](https://docs.opencv.org/3.4.6/) as well.
 
 The following external dependencies are required:
 - python2.7
-- opencv
+- opencv 3.4.6 (other 3.4 versions may work, but development is done
+  against this version)
 
 OpenCV is a complicated dependency with a lot of different
 configurations that can break this crate since it relies on fragile
@@ -35,9 +36,9 @@ opencv_version
 
 ### Install OpenCV
 
-Install opencv 3.4.6 (other versions of 3.4.6 may work too, but
-development is done against 3.4.6). Check your platform's package
-manager or see the upstream opencv [installation guides](https://docs.opencv.org/3.4/df/d65/tutorial_table_of_content_introduction.html).
+Install opencv 3.4.6. Check your platform's package manager or see the
+upstream opencv
+[installation guides](https://docs.opencv.org/3.4/df/d65/tutorial_table_of_content_introduction.html).
 
 ### Compiling OpenCV
 
