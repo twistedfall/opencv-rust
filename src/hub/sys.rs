@@ -83,7 +83,7 @@ pub type cv_return_value_unsigned_long_long = cv_return_value<u64>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// Ptr<AverageHash>
+// Ptr<HistogramPhaseUnwrapping>
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {
@@ -2351,9 +2351,5 @@ pub fn cv_videostab_WobbleSuppressorBase_setMotions2_VectorOfMat(instance: *mut 
 pub fn cv_videostab_WobbleSuppressorBase_motions2_const(instance: *const c_void) -> cv_return_value_void_X;
 pub fn cv_videostab_WobbleSuppressorBase_setStabilizationMotions_VectorOfMat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(instance: *const c_void) -> cv_return_value_void_X;
-}
-extern "C" {
-pub fn cv_xfeatures2d_FASTForPointSet_Mat_VectorOfKeyPoint_int_bool_int(image: *mut c_void, keypoints: *mut c_void, threshold: i32, nonmax_suppression: bool, _type: i32) -> cv_return_value_void;
-pub fn cv_xfeatures2d_matchGMS_Size_Size_VectorOfKeyPoint_VectorOfKeyPoint_VectorOfDMatch_VectorOfDMatch_bool_bool_double(size1: core::Size, size2: core::Size, keypoints1: *mut c_void, keypoints2: *mut c_void, matches1to2: *mut c_void, matches_gms: *mut c_void, with_rotation: bool, with_scale: bool, threshold_factor: f64) -> cv_return_value_void;
 }
 pub use crate::hub::manual::sys::*;

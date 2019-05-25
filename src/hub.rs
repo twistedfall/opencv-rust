@@ -23,6 +23,5 @@ pub mod superres;
 pub mod video;
 pub mod videoio;
 pub mod videostab;
-pub mod xfeatures2d;
 pub mod types;
 #[doc(hidden)] pub mod sys;
