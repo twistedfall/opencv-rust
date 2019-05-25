@@ -1034,7 +1034,12 @@ impl Drop for crate::video::KalmanFilter {
     }
 }
 impl crate::video::KalmanFilter {
-    #[doc(hidden)] pub fn as_raw_KalmanFilter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_KalmanFilter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        KalmanFilter {
+            ptr
+        }
+    }
 }
 
 impl KalmanFilter {

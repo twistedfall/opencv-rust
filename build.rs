@@ -118,6 +118,7 @@ fn build_wrapper(opencv: pkg_config::Library) {
         "text",
         "tracking",
         "viz", // includes platform-specific headers like /usr/include/x86_64-pc-linux-gnu/opencv2/viz.hpp
+        "xfeatures2d", // only appears in some builds, maybe platform or opencv compile flag specific
         "ximgproc",
         "xobjdetect",
         "xphoto",

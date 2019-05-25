@@ -478,7 +478,12 @@ impl Drop for crate::bioinspired::RetinaParameters {
     }
 }
 impl crate::bioinspired::RetinaParameters {
-    #[doc(hidden)] pub fn as_raw_RetinaParameters(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RetinaParameters(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RetinaParameters {
+            ptr
+        }
+    }
 }
 
 // boxed class cv::bioinspired::RetinaParameters::IplMagnoParameters
@@ -493,7 +498,12 @@ impl Drop for crate::bioinspired::RetinaParameters_IplMagnoParameters {
     }
 }
 impl crate::bioinspired::RetinaParameters_IplMagnoParameters {
-    #[doc(hidden)] pub fn as_raw_RetinaParameters_IplMagnoParameters(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RetinaParameters_IplMagnoParameters(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RetinaParameters_IplMagnoParameters {
+            ptr
+        }
+    }
 }
 
 // boxed class cv::bioinspired::RetinaParameters::OPLandIplParvoParameters
@@ -508,7 +518,12 @@ impl Drop for crate::bioinspired::RetinaParameters_OPLandIplParvoParameters {
     }
 }
 impl crate::bioinspired::RetinaParameters_OPLandIplParvoParameters {
-    #[doc(hidden)] pub fn as_raw_RetinaParameters_OPLandIplParvoParameters(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RetinaParameters_OPLandIplParvoParameters(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RetinaParameters_OPLandIplParvoParameters {
+            ptr
+        }
+    }
 }
 
 // boxed class cv::bioinspired::SegmentationParameters
@@ -523,7 +538,12 @@ impl Drop for crate::bioinspired::SegmentationParameters {
     }
 }
 impl crate::bioinspired::SegmentationParameters {
-    #[doc(hidden)] pub fn as_raw_SegmentationParameters(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SegmentationParameters(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SegmentationParameters {
+            ptr
+        }
+    }
 }
 
 // Generating impl for trait cv::bioinspired::TransientAreasSegmentationModule (trait)

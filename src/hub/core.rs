@@ -3573,7 +3573,12 @@ impl Drop for core::AutoLock {
     }
 }
 impl core::AutoLock {
-    #[doc(hidden)] pub fn as_raw_AutoLock(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_AutoLock(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        AutoLock {
+            ptr
+        }
+    }
 }
 
 // Generating impl for trait cv::BufferPoolController (trait)
@@ -3690,7 +3695,12 @@ impl Drop for core::CommandLineParser {
     }
 }
 impl core::CommandLineParser {
-    #[doc(hidden)] pub fn as_raw_CommandLineParser(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CommandLineParser(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CommandLineParser {
+            ptr
+        }
+    }
 }
 
 impl CommandLineParser {
@@ -3804,15 +3814,20 @@ impl Drop for core::ConjGradSolver {
     }
 }
 impl core::ConjGradSolver {
-    #[doc(hidden)] pub fn as_raw_ConjGradSolver(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ConjGradSolver(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ConjGradSolver {
+            ptr
+        }
+    }
 }
 
 impl core::Algorithm for ConjGradSolver {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::MinProblemSolver for ConjGradSolver {
-    #[doc(hidden)] fn as_raw_MinProblemSolver(&self) -> *mut c_void { self.ptr }
+    fn as_raw_MinProblemSolver(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConjGradSolver {
@@ -4021,7 +4036,12 @@ impl Drop for core::Hamming {
     }
 }
 impl core::Hamming {
-    #[doc(hidden)] pub fn as_raw_Hamming(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Hamming(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Hamming {
+            ptr
+        }
+    }
 }
 
 impl KeyPoint {
@@ -4127,7 +4147,12 @@ impl Drop for core::LDA {
     }
 }
 impl core::LDA {
-    #[doc(hidden)] pub fn as_raw_LDA(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_LDA(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        LDA {
+            ptr
+        }
+    }
 }
 
 impl LDA {
@@ -4415,7 +4440,12 @@ impl Drop for core::Mat {
     }
 }
 impl core::Mat {
-    #[doc(hidden)] pub fn as_raw_Mat(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Mat(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Mat {
+            ptr
+        }
+    }
 }
 
 impl Mat {
@@ -5499,7 +5529,12 @@ impl Drop for core::MatExpr {
     }
 }
 impl core::MatExpr {
-    #[doc(hidden)] pub fn as_raw_MatExpr(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MatExpr(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MatExpr {
+            ptr
+        }
+    }
 }
 
 impl MatExpr {
@@ -5542,7 +5577,12 @@ impl Drop for core::MatSize {
     }
 }
 impl core::MatSize {
-    #[doc(hidden)] pub fn as_raw_MatSize(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MatSize(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MatSize {
+            ptr
+        }
+    }
 }
 
 impl MatSize {
@@ -5568,7 +5608,12 @@ impl Drop for core::MatStep {
     }
 }
 impl core::MatStep {
-    #[doc(hidden)] pub fn as_raw_MatStep(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MatStep(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MatStep {
+            ptr
+        }
+    }
 }
 
 impl MatStep {
@@ -5595,7 +5640,12 @@ impl Drop for core::Matx_AddOp {
     }
 }
 impl core::Matx_AddOp {
-    #[doc(hidden)] pub fn as_raw_Matx_AddOp(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Matx_AddOp(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Matx_AddOp {
+            ptr
+        }
+    }
 }
 
 impl Matx_AddOp {
@@ -5621,7 +5671,12 @@ impl Drop for core::Matx_DivOp {
     }
 }
 impl core::Matx_DivOp {
-    #[doc(hidden)] pub fn as_raw_Matx_DivOp(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Matx_DivOp(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Matx_DivOp {
+            ptr
+        }
+    }
 }
 
 impl Matx_DivOp {
@@ -5647,7 +5702,12 @@ impl Drop for core::Matx_MatMulOp {
     }
 }
 impl core::Matx_MatMulOp {
-    #[doc(hidden)] pub fn as_raw_Matx_MatMulOp(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Matx_MatMulOp(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Matx_MatMulOp {
+            ptr
+        }
+    }
 }
 
 impl Matx_MatMulOp {
@@ -5673,7 +5733,12 @@ impl Drop for core::Matx_MulOp {
     }
 }
 impl core::Matx_MulOp {
-    #[doc(hidden)] pub fn as_raw_Matx_MulOp(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Matx_MulOp(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Matx_MulOp {
+            ptr
+        }
+    }
 }
 
 impl Matx_MulOp {
@@ -5699,7 +5764,12 @@ impl Drop for core::Matx_ScaleOp {
     }
 }
 impl core::Matx_ScaleOp {
-    #[doc(hidden)] pub fn as_raw_Matx_ScaleOp(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Matx_ScaleOp(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Matx_ScaleOp {
+            ptr
+        }
+    }
 }
 
 impl Matx_ScaleOp {
@@ -5725,7 +5795,12 @@ impl Drop for core::Matx_SubOp {
     }
 }
 impl core::Matx_SubOp {
-    #[doc(hidden)] pub fn as_raw_Matx_SubOp(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Matx_SubOp(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Matx_SubOp {
+            ptr
+        }
+    }
 }
 
 impl Matx_SubOp {
@@ -5751,7 +5826,12 @@ impl Drop for core::Matx_TOp {
     }
 }
 impl core::Matx_TOp {
-    #[doc(hidden)] pub fn as_raw_Matx_TOp(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Matx_TOp(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Matx_TOp {
+            ptr
+        }
+    }
 }
 
 impl Matx_TOp {
@@ -5948,7 +6028,12 @@ impl Drop for core::NAryMatIterator {
     }
 }
 impl core::NAryMatIterator {
-    #[doc(hidden)] pub fn as_raw_NAryMatIterator(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NAryMatIterator(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NAryMatIterator {
+            ptr
+        }
+    }
 }
 
 impl NAryMatIterator {
@@ -6037,7 +6122,12 @@ impl Drop for core::PCA {
     }
 }
 impl core::PCA {
-    #[doc(hidden)] pub fn as_raw_PCA(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PCA(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PCA {
+            ptr
+        }
+    }
 }
 
 impl PCA {
@@ -6161,11 +6251,16 @@ impl Drop for core::ParallelLoopBodyLambdaWrapper {
     }
 }
 impl core::ParallelLoopBodyLambdaWrapper {
-    #[doc(hidden)] pub fn as_raw_ParallelLoopBodyLambdaWrapper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ParallelLoopBodyLambdaWrapper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ParallelLoopBodyLambdaWrapper {
+            ptr
+        }
+    }
 }
 
 impl core::ParallelLoopBody for ParallelLoopBodyLambdaWrapper {
-    #[doc(hidden)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void { self.ptr }
+    fn as_raw_ParallelLoopBody(&self) -> *mut c_void { self.ptr }
 }
 
 // boxed class cv::Param
@@ -6179,7 +6274,12 @@ impl Drop for core::Param {
     }
 }
 impl core::Param {
-    #[doc(hidden)] pub fn as_raw_Param(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Param(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Param {
+            ptr
+        }
+    }
 }
 
 // boxed class cv::Range
@@ -6215,7 +6315,12 @@ impl Drop for core::Range {
     }
 }
 impl core::Range {
-    #[doc(hidden)] pub fn as_raw_Range(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_Range(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Range {
+            ptr
+        }
+    }
 }
 
 impl Range {
@@ -6272,7 +6377,12 @@ impl Drop for core::RotatedRect {
     }
 }
 impl core::RotatedRect {
-    #[doc(hidden)] pub fn as_raw_RotatedRect(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RotatedRect(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RotatedRect {
+            ptr
+        }
+    }
 }
 
 impl RotatedRect {
@@ -6347,7 +6457,12 @@ impl Drop for core::TermCriteria {
     }
 }
 impl core::TermCriteria {
-    #[doc(hidden)] pub fn as_raw_TermCriteria(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_TermCriteria(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        TermCriteria {
+            ptr
+        }
+    }
 }
 
 impl TermCriteria {
@@ -6424,7 +6539,12 @@ impl Drop for core::TickMeter {
     }
 }
 impl core::TickMeter {
-    #[doc(hidden)] pub fn as_raw_TickMeter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_TickMeter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        TickMeter {
+            ptr
+        }
+    }
 }
 
 impl TickMeter {
@@ -6488,7 +6608,12 @@ impl Drop for core::UMat {
     }
 }
 impl core::UMat {
-    #[doc(hidden)] pub fn as_raw_UMat(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_UMat(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        UMat {
+            ptr
+        }
+    }
 }
 
 impl UMat {
@@ -6642,7 +6767,12 @@ impl Drop for core::UMatData {
     }
 }
 impl core::UMatData {
-    #[doc(hidden)] pub fn as_raw_UMatData(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_UMatData(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        UMatData {
+            ptr
+        }
+    }
 }
 
 impl UMatData {
@@ -6704,7 +6834,12 @@ impl Drop for core::CheckContext {
     }
 }
 impl core::CheckContext {
-    #[doc(hidden)] pub fn as_raw_CheckContext(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CheckContext(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CheckContext {
+            ptr
+        }
+    }
 }
 
 // boxed class cv::instr::NodeData
@@ -6718,7 +6853,12 @@ impl Drop for core::NodeData {
     }
 }
 impl core::NodeData {
-    #[doc(hidden)] pub fn as_raw_NodeData(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NodeData(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NodeData {
+            ptr
+        }
+    }
 }
 
 impl NodeData {
@@ -6748,7 +6888,12 @@ impl Drop for core::NodeDataTls {
     }
 }
 impl core::NodeDataTls {
-    #[doc(hidden)] pub fn as_raw_NodeDataTls(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_NodeDataTls(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        NodeDataTls {
+            ptr
+        }
+    }
 }
 
 impl NodeDataTls {

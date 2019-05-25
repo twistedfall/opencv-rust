@@ -311,11 +311,16 @@ impl Drop for crate::ccalib::CustomPattern {
     }
 }
 impl crate::ccalib::CustomPattern {
-    #[doc(hidden)] pub fn as_raw_CustomPattern(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_CustomPattern(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        CustomPattern {
+            ptr
+        }
+    }
 }
 
 impl core::Algorithm for CustomPattern {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl CustomPattern {
@@ -445,7 +450,12 @@ impl Drop for crate::ccalib::MultiCameraCalibration {
     }
 }
 impl crate::ccalib::MultiCameraCalibration {
-    #[doc(hidden)] pub fn as_raw_MultiCameraCalibration(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MultiCameraCalibration(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MultiCameraCalibration {
+            ptr
+        }
+    }
 }
 
 impl MultiCameraCalibration {
@@ -479,7 +489,12 @@ impl Drop for crate::ccalib::MultiCameraCalibration_edge {
     }
 }
 impl crate::ccalib::MultiCameraCalibration_edge {
-    #[doc(hidden)] pub fn as_raw_MultiCameraCalibration_edge(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MultiCameraCalibration_edge(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MultiCameraCalibration_edge {
+            ptr
+        }
+    }
 }
 
 impl MultiCameraCalibration_edge {
@@ -501,7 +516,12 @@ impl Drop for crate::ccalib::MultiCameraCalibration_vertex {
     }
 }
 impl crate::ccalib::MultiCameraCalibration_vertex {
-    #[doc(hidden)] pub fn as_raw_MultiCameraCalibration_vertex(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_MultiCameraCalibration_vertex(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        MultiCameraCalibration_vertex {
+            ptr
+        }
+    }
 }
 
 impl MultiCameraCalibration_vertex {
@@ -536,7 +556,12 @@ impl Drop for crate::ccalib::RandomPatternCornerFinder {
     }
 }
 impl crate::ccalib::RandomPatternCornerFinder {
-    #[doc(hidden)] pub fn as_raw_RandomPatternCornerFinder(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RandomPatternCornerFinder(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RandomPatternCornerFinder {
+            ptr
+        }
+    }
 }
 
 impl RandomPatternCornerFinder {
@@ -578,7 +603,12 @@ impl Drop for crate::ccalib::RandomPatternGenerator {
     }
 }
 impl crate::ccalib::RandomPatternGenerator {
-    #[doc(hidden)] pub fn as_raw_RandomPatternGenerator(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_RandomPatternGenerator(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        RandomPatternGenerator {
+            ptr
+        }
+    }
 }
 
 impl RandomPatternGenerator {

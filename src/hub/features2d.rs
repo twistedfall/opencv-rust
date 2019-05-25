@@ -474,15 +474,20 @@ impl Drop for crate::features2d::BFMatcher {
     }
 }
 impl crate::features2d::BFMatcher {
-    #[doc(hidden)] pub fn as_raw_BFMatcher(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BFMatcher(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BFMatcher {
+            ptr
+        }
+    }
 }
 
 impl crate::features2d::DescriptorMatcher for BFMatcher {
-    #[doc(hidden)] fn as_raw_DescriptorMatcher(&self) -> *mut c_void { self.ptr }
+    fn as_raw_DescriptorMatcher(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for BFMatcher {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl BFMatcher {
@@ -549,7 +554,12 @@ impl Drop for crate::features2d::BOWImgDescriptorExtractor {
     }
 }
 impl crate::features2d::BOWImgDescriptorExtractor {
-    #[doc(hidden)] pub fn as_raw_BOWImgDescriptorExtractor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BOWImgDescriptorExtractor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BOWImgDescriptorExtractor {
+            ptr
+        }
+    }
 }
 
 impl BOWImgDescriptorExtractor {
@@ -642,11 +652,16 @@ impl Drop for crate::features2d::BOWKMeansTrainer {
     }
 }
 impl crate::features2d::BOWKMeansTrainer {
-    #[doc(hidden)] pub fn as_raw_BOWKMeansTrainer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BOWKMeansTrainer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BOWKMeansTrainer {
+            ptr
+        }
+    }
 }
 
 impl crate::features2d::BOWTrainer for BOWKMeansTrainer {
-    #[doc(hidden)] fn as_raw_BOWTrainer(&self) -> *mut c_void { self.ptr }
+    fn as_raw_BOWTrainer(&self) -> *mut c_void { self.ptr }
 }
 
 impl BOWKMeansTrainer {
@@ -740,15 +755,20 @@ impl Drop for crate::features2d::BRISK {
     }
 }
 impl crate::features2d::BRISK {
-    #[doc(hidden)] pub fn as_raw_BRISK(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_BRISK(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        BRISK {
+            ptr
+        }
+    }
 }
 
 impl core::Algorithm for BRISK {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::features2d::Feature2D for BRISK {
-    #[doc(hidden)] fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl BRISK {
@@ -1056,7 +1076,12 @@ impl Drop for crate::features2d::DrawMatchesFlags {
     }
 }
 impl crate::features2d::DrawMatchesFlags {
-    #[doc(hidden)] pub fn as_raw_DrawMatchesFlags(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DrawMatchesFlags(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DrawMatchesFlags {
+            ptr
+        }
+    }
 }
 
 // Generating impl for trait cv::FastFeatureDetector (trait)
@@ -1227,15 +1252,20 @@ impl Drop for crate::features2d::FlannBasedMatcher {
     }
 }
 impl crate::features2d::FlannBasedMatcher {
-    #[doc(hidden)] pub fn as_raw_FlannBasedMatcher(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_FlannBasedMatcher(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        FlannBasedMatcher {
+            ptr
+        }
+    }
 }
 
 impl crate::features2d::DescriptorMatcher for FlannBasedMatcher {
-    #[doc(hidden)] fn as_raw_DescriptorMatcher(&self) -> *mut c_void { self.ptr }
+    fn as_raw_DescriptorMatcher(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::Algorithm for FlannBasedMatcher {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl FlannBasedMatcher {
@@ -1455,7 +1485,12 @@ impl Drop for crate::features2d::KeyPointsFilter {
     }
 }
 impl crate::features2d::KeyPointsFilter {
-    #[doc(hidden)] pub fn as_raw_KeyPointsFilter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_KeyPointsFilter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        KeyPointsFilter {
+            ptr
+        }
+    }
 }
 
 impl KeyPointsFilter {
@@ -1768,15 +1803,20 @@ impl Drop for crate::features2d::SimpleBlobDetector {
     }
 }
 impl crate::features2d::SimpleBlobDetector {
-    #[doc(hidden)] pub fn as_raw_SimpleBlobDetector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_SimpleBlobDetector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        SimpleBlobDetector {
+            ptr
+        }
+    }
 }
 
 impl core::Algorithm for SimpleBlobDetector {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::features2d::Feature2D for SimpleBlobDetector {
-    #[doc(hidden)] fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+    fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl SimpleBlobDetector {

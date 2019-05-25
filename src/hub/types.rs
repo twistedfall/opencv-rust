@@ -12,7 +12,12 @@ pub struct PtrOfAKAZE {
 }
 
 impl PtrOfAKAZE {
-    #[doc(hidden)] pub fn as_raw_PtrOfAKAZE(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfAKAZE(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfAKAZE {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfAKAZE {
@@ -21,21 +26,18 @@ impl Drop for PtrOfAKAZE {
     }
 }
 impl crate::features2d::Feature2D for PtrOfAKAZE {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfAKAZE_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfAKAZE {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfAKAZE_get(self.ptr) }
     }
 }
 
 impl crate::features2d::AKAZE for PtrOfAKAZE {
-    #[doc(hidden)]
     fn as_raw_AKAZE(&self) -> *mut c_void {
         unsafe { cv_PtrOfAKAZE_get(self.ptr) }
     }
@@ -52,7 +54,12 @@ pub struct PtrOfANN_MLP {
 }
 
 impl PtrOfANN_MLP {
-    #[doc(hidden)] pub fn as_raw_PtrOfANN_MLP(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfANN_MLP(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfANN_MLP {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfANN_MLP {
@@ -61,21 +68,18 @@ impl Drop for PtrOfANN_MLP {
     }
 }
 impl crate::ml::ANN_MLP for PtrOfANN_MLP {
-    #[doc(hidden)]
     fn as_raw_ANN_MLP(&self) -> *mut c_void {
         unsafe { cv_PtrOfANN_MLP_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfANN_MLP {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfANN_MLP_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfANN_MLP {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfANN_MLP_get(self.ptr) }
     }
@@ -92,7 +96,12 @@ pub struct PtrOfAbsLayer {
 }
 
 impl PtrOfAbsLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfAbsLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfAbsLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfAbsLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfAbsLayer {
@@ -111,7 +120,12 @@ pub struct PtrOfActivationLayer {
 }
 
 impl PtrOfActivationLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfActivationLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfActivationLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfActivationLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfActivationLayer {
@@ -120,21 +134,18 @@ impl Drop for PtrOfActivationLayer {
     }
 }
 impl crate::dnn::Layer for PtrOfActivationLayer {
-    #[doc(hidden)]
     fn as_raw_Layer(&self) -> *mut c_void {
         unsafe { cv_PtrOfActivationLayer_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfActivationLayer {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfActivationLayer_get(self.ptr) }
     }
 }
 
 impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
-    #[doc(hidden)]
     fn as_raw_ActivationLayer(&self) -> *mut c_void {
         unsafe { cv_PtrOfActivationLayer_get(self.ptr) }
     }
@@ -151,7 +162,12 @@ pub struct PtrOfAffineTransformer {
 }
 
 impl PtrOfAffineTransformer {
-    #[doc(hidden)] pub fn as_raw_PtrOfAffineTransformer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfAffineTransformer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfAffineTransformer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfAffineTransformer {
@@ -160,21 +176,18 @@ impl Drop for PtrOfAffineTransformer {
     }
 }
 impl core::Algorithm for PtrOfAffineTransformer {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfAffineTransformer_get(self.ptr) }
     }
 }
 
 impl crate::shape::AffineTransformer for PtrOfAffineTransformer {
-    #[doc(hidden)]
     fn as_raw_AffineTransformer(&self) -> *mut c_void {
         unsafe { cv_PtrOfAffineTransformer_get(self.ptr) }
     }
 }
 
 impl crate::shape::ShapeTransformer for PtrOfAffineTransformer {
-    #[doc(hidden)]
     fn as_raw_ShapeTransformer(&self) -> *mut c_void {
         unsafe { cv_PtrOfAffineTransformer_get(self.ptr) }
     }
@@ -191,7 +204,12 @@ pub struct PtrOfAgastFeatureDetector {
 }
 
 impl PtrOfAgastFeatureDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfAgastFeatureDetector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfAgastFeatureDetector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfAgastFeatureDetector {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfAgastFeatureDetector {
@@ -200,21 +218,18 @@ impl Drop for PtrOfAgastFeatureDetector {
     }
 }
 impl crate::features2d::Feature2D for PtrOfAgastFeatureDetector {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfAgastFeatureDetector_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfAgastFeatureDetector {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfAgastFeatureDetector_get(self.ptr) }
     }
 }
 
 impl crate::features2d::AgastFeatureDetector for PtrOfAgastFeatureDetector {
-    #[doc(hidden)]
     fn as_raw_AgastFeatureDetector(&self) -> *mut c_void {
         unsafe { cv_PtrOfAgastFeatureDetector_get(self.ptr) }
     }
@@ -231,7 +246,12 @@ pub struct PtrOfAlignMTB {
 }
 
 impl PtrOfAlignMTB {
-    #[doc(hidden)] pub fn as_raw_PtrOfAlignMTB(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfAlignMTB(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfAlignMTB {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfAlignMTB {
@@ -240,21 +260,18 @@ impl Drop for PtrOfAlignMTB {
     }
 }
 impl crate::photo::AlignMTB for PtrOfAlignMTB {
-    #[doc(hidden)]
     fn as_raw_AlignMTB(&self) -> *mut c_void {
         unsafe { cv_PtrOfAlignMTB_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfAlignMTB {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfAlignMTB_get(self.ptr) }
     }
 }
 
 impl crate::photo::AlignExposures for PtrOfAlignMTB {
-    #[doc(hidden)]
     fn as_raw_AlignExposures(&self) -> *mut c_void {
         unsafe { cv_PtrOfAlignMTB_get(self.ptr) }
     }
@@ -271,7 +288,12 @@ pub struct PtrOfAverageHash {
 }
 
 impl PtrOfAverageHash {
-    #[doc(hidden)] pub fn as_raw_PtrOfAverageHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfAverageHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfAverageHash {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfAverageHash {
@@ -290,7 +312,12 @@ pub struct PtrOfBFMatcher {
 }
 
 impl PtrOfBFMatcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfBFMatcher(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBFMatcher(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBFMatcher {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBFMatcher {
@@ -309,7 +336,12 @@ pub struct PtrOfBNLLLayer {
 }
 
 impl PtrOfBNLLLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfBNLLLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBNLLLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBNLLLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBNLLLayer {
@@ -328,7 +360,12 @@ pub struct PtrOfBRISK {
 }
 
 impl PtrOfBRISK {
-    #[doc(hidden)] pub fn as_raw_PtrOfBRISK(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBRISK(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBRISK {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBRISK {
@@ -347,7 +384,12 @@ pub struct PtrOfBackendNode {
 }
 
 impl PtrOfBackendNode {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackendNode(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBackendNode(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBackendNode {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBackendNode {
@@ -366,7 +408,12 @@ pub struct PtrOfBackendWrapper {
 }
 
 impl PtrOfBackendWrapper {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackendWrapper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBackendWrapper(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBackendWrapper {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBackendWrapper {
@@ -375,7 +422,6 @@ impl Drop for PtrOfBackendWrapper {
     }
 }
 impl crate::dnn::BackendWrapper for PtrOfBackendWrapper {
-    #[doc(hidden)]
     fn as_raw_BackendWrapper(&self) -> *mut c_void {
         unsafe { cv_PtrOfBackendWrapper_get(self.ptr) }
     }
@@ -392,7 +438,12 @@ pub struct PtrOfBackgroundSubtractorKNN {
 }
 
 impl PtrOfBackgroundSubtractorKNN {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackgroundSubtractorKNN(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBackgroundSubtractorKNN(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBackgroundSubtractorKNN {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBackgroundSubtractorKNN {
@@ -401,21 +452,18 @@ impl Drop for PtrOfBackgroundSubtractorKNN {
     }
 }
 impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorKNN {
-    #[doc(hidden)]
     fn as_raw_BackgroundSubtractor(&self) -> *mut c_void {
         unsafe { cv_PtrOfBackgroundSubtractorKNN_get(self.ptr) }
     }
 }
 
 impl crate::video::BackgroundSubtractorKNN for PtrOfBackgroundSubtractorKNN {
-    #[doc(hidden)]
     fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void {
         unsafe { cv_PtrOfBackgroundSubtractorKNN_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfBackgroundSubtractorKNN {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfBackgroundSubtractorKNN_get(self.ptr) }
     }
@@ -432,7 +480,12 @@ pub struct PtrOfBackgroundSubtractorMOG2 {
 }
 
 impl PtrOfBackgroundSubtractorMOG2 {
-    #[doc(hidden)] pub fn as_raw_PtrOfBackgroundSubtractorMOG2(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBackgroundSubtractorMOG2(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBackgroundSubtractorMOG2 {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBackgroundSubtractorMOG2 {
@@ -441,21 +494,18 @@ impl Drop for PtrOfBackgroundSubtractorMOG2 {
     }
 }
 impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorMOG2 {
-    #[doc(hidden)]
     fn as_raw_BackgroundSubtractor(&self) -> *mut c_void {
         unsafe { cv_PtrOfBackgroundSubtractorMOG2_get(self.ptr) }
     }
 }
 
 impl crate::video::BackgroundSubtractorMOG2 for PtrOfBackgroundSubtractorMOG2 {
-    #[doc(hidden)]
     fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void {
         unsafe { cv_PtrOfBackgroundSubtractorMOG2_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfBackgroundSubtractorMOG2 {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfBackgroundSubtractorMOG2_get(self.ptr) }
     }
@@ -472,7 +522,12 @@ pub struct PtrOfBaseConvolutionLayer {
 }
 
 impl PtrOfBaseConvolutionLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfBaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBaseConvolutionLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBaseConvolutionLayer {
@@ -481,21 +536,18 @@ impl Drop for PtrOfBaseConvolutionLayer {
     }
 }
 impl crate::dnn::Layer for PtrOfBaseConvolutionLayer {
-    #[doc(hidden)]
     fn as_raw_Layer(&self) -> *mut c_void {
         unsafe { cv_PtrOfBaseConvolutionLayer_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfBaseConvolutionLayer {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfBaseConvolutionLayer_get(self.ptr) }
     }
 }
 
 impl crate::dnn::BaseConvolutionLayer for PtrOfBaseConvolutionLayer {
-    #[doc(hidden)]
     fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void {
         unsafe { cv_PtrOfBaseConvolutionLayer_get(self.ptr) }
     }
@@ -512,7 +564,12 @@ pub struct PtrOfBatchNormLayer {
 }
 
 impl PtrOfBatchNormLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfBatchNormLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBatchNormLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBatchNormLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBatchNormLayer {
@@ -531,7 +588,12 @@ pub struct PtrOfBlockMeanHash {
 }
 
 impl PtrOfBlockMeanHash {
-    #[doc(hidden)] pub fn as_raw_PtrOfBlockMeanHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBlockMeanHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBlockMeanHash {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBlockMeanHash {
@@ -550,7 +612,12 @@ pub struct PtrOfBoost {
 }
 
 impl PtrOfBoost {
-    #[doc(hidden)] pub fn as_raw_PtrOfBoost(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfBoost(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfBoost {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfBoost {
@@ -559,28 +626,24 @@ impl Drop for PtrOfBoost {
     }
 }
 impl crate::ml::DTrees for PtrOfBoost {
-    #[doc(hidden)]
     fn as_raw_DTrees(&self) -> *mut c_void {
         unsafe { cv_PtrOfBoost_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfBoost {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfBoost_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfBoost {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfBoost_get(self.ptr) }
     }
 }
 
 impl crate::ml::Boost for PtrOfBoost {
-    #[doc(hidden)]
     fn as_raw_Boost(&self) -> *mut c_void {
         unsafe { cv_PtrOfBoost_get(self.ptr) }
     }
@@ -597,7 +660,12 @@ pub struct PtrOfCLAHE {
 }
 
 impl PtrOfCLAHE {
-    #[doc(hidden)] pub fn as_raw_PtrOfCLAHE(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfCLAHE(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfCLAHE {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfCLAHE {
@@ -606,14 +674,12 @@ impl Drop for PtrOfCLAHE {
     }
 }
 impl core::Algorithm for PtrOfCLAHE {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfCLAHE_get(self.ptr) }
     }
 }
 
 impl crate::imgproc::CLAHE for PtrOfCLAHE {
-    #[doc(hidden)]
     fn as_raw_CLAHE(&self) -> *mut c_void {
         unsafe { cv_PtrOfCLAHE_get(self.ptr) }
     }
@@ -630,7 +696,12 @@ pub struct PtrOfCalibrateDebevec {
 }
 
 impl PtrOfCalibrateDebevec {
-    #[doc(hidden)] pub fn as_raw_PtrOfCalibrateDebevec(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfCalibrateDebevec(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfCalibrateDebevec {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfCalibrateDebevec {
@@ -639,21 +710,18 @@ impl Drop for PtrOfCalibrateDebevec {
     }
 }
 impl crate::photo::CalibrateDebevec for PtrOfCalibrateDebevec {
-    #[doc(hidden)]
     fn as_raw_CalibrateDebevec(&self) -> *mut c_void {
         unsafe { cv_PtrOfCalibrateDebevec_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfCalibrateDebevec {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfCalibrateDebevec_get(self.ptr) }
     }
 }
 
 impl crate::photo::CalibrateCRF for PtrOfCalibrateDebevec {
-    #[doc(hidden)]
     fn as_raw_CalibrateCRF(&self) -> *mut c_void {
         unsafe { cv_PtrOfCalibrateDebevec_get(self.ptr) }
     }
@@ -670,7 +738,12 @@ pub struct PtrOfCalibrateRobertson {
 }
 
 impl PtrOfCalibrateRobertson {
-    #[doc(hidden)] pub fn as_raw_PtrOfCalibrateRobertson(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfCalibrateRobertson(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfCalibrateRobertson {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfCalibrateRobertson {
@@ -679,21 +752,18 @@ impl Drop for PtrOfCalibrateRobertson {
     }
 }
 impl crate::photo::CalibrateRobertson for PtrOfCalibrateRobertson {
-    #[doc(hidden)]
     fn as_raw_CalibrateRobertson(&self) -> *mut c_void {
         unsafe { cv_PtrOfCalibrateRobertson_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfCalibrateRobertson {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfCalibrateRobertson_get(self.ptr) }
     }
 }
 
 impl crate::photo::CalibrateCRF for PtrOfCalibrateRobertson {
-    #[doc(hidden)]
     fn as_raw_CalibrateCRF(&self) -> *mut c_void {
         unsafe { cv_PtrOfCalibrateRobertson_get(self.ptr) }
     }
@@ -710,7 +780,12 @@ pub struct PtrOfColorMomentHash {
 }
 
 impl PtrOfColorMomentHash {
-    #[doc(hidden)] pub fn as_raw_PtrOfColorMomentHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfColorMomentHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfColorMomentHash {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfColorMomentHash {
@@ -729,7 +804,12 @@ pub struct PtrOfConcatLayer {
 }
 
 impl PtrOfConcatLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfConcatLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfConcatLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfConcatLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfConcatLayer {
@@ -748,7 +828,12 @@ pub struct PtrOfConjGradSolver {
 }
 
 impl PtrOfConjGradSolver {
-    #[doc(hidden)] pub fn as_raw_PtrOfConjGradSolver(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfConjGradSolver(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfConjGradSolver {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfConjGradSolver {
@@ -767,7 +852,12 @@ pub struct PtrOfCropLayer {
 }
 
 impl PtrOfCropLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfCropLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfCropLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfCropLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfCropLayer {
@@ -786,7 +876,12 @@ pub struct PtrOfDTrees {
 }
 
 impl PtrOfDTrees {
-    #[doc(hidden)] pub fn as_raw_PtrOfDTrees(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfDTrees(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfDTrees {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfDTrees {
@@ -795,21 +890,18 @@ impl Drop for PtrOfDTrees {
     }
 }
 impl crate::ml::DTrees for PtrOfDTrees {
-    #[doc(hidden)]
     fn as_raw_DTrees(&self) -> *mut c_void {
         unsafe { cv_PtrOfDTrees_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfDTrees {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfDTrees_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfDTrees {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfDTrees_get(self.ptr) }
     }
@@ -826,7 +918,12 @@ pub struct PtrOfDeblurerBase {
 }
 
 impl PtrOfDeblurerBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfDeblurerBase(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfDeblurerBase(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfDeblurerBase {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfDeblurerBase {
@@ -835,7 +932,6 @@ impl Drop for PtrOfDeblurerBase {
     }
 }
 impl crate::videostab::DeblurerBase for PtrOfDeblurerBase {
-    #[doc(hidden)]
     fn as_raw_DeblurerBase(&self) -> *mut c_void {
         unsafe { cv_PtrOfDeblurerBase_get(self.ptr) }
     }
@@ -852,7 +948,12 @@ pub struct PtrOfDescriptorMatcher {
 }
 
 impl PtrOfDescriptorMatcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfDescriptorMatcher(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfDescriptorMatcher(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfDescriptorMatcher {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfDescriptorMatcher {
@@ -861,14 +962,12 @@ impl Drop for PtrOfDescriptorMatcher {
     }
 }
 impl core::Algorithm for PtrOfDescriptorMatcher {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfDescriptorMatcher_get(self.ptr) }
     }
 }
 
 impl crate::features2d::DescriptorMatcher for PtrOfDescriptorMatcher {
-    #[doc(hidden)]
     fn as_raw_DescriptorMatcher(&self) -> *mut c_void {
         unsafe { cv_PtrOfDescriptorMatcher_get(self.ptr) }
     }
@@ -885,7 +984,12 @@ pub struct PtrOfDetectionOutputLayer {
 }
 
 impl PtrOfDetectionOutputLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfDetectionOutputLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfDetectionOutputLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfDetectionOutputLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfDetectionOutputLayer {
@@ -904,7 +1008,12 @@ pub struct PtrOfDownhillSolver {
 }
 
 impl PtrOfDownhillSolver {
-    #[doc(hidden)] pub fn as_raw_PtrOfDownhillSolver(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfDownhillSolver(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfDownhillSolver {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfDownhillSolver {
@@ -913,21 +1022,18 @@ impl Drop for PtrOfDownhillSolver {
     }
 }
 impl core::Algorithm for PtrOfDownhillSolver {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfDownhillSolver_get(self.ptr) }
     }
 }
 
 impl core::DownhillSolver for PtrOfDownhillSolver {
-    #[doc(hidden)]
     fn as_raw_DownhillSolver(&self) -> *mut c_void {
         unsafe { cv_PtrOfDownhillSolver_get(self.ptr) }
     }
 }
 
 impl core::MinProblemSolver for PtrOfDownhillSolver {
-    #[doc(hidden)]
     fn as_raw_MinProblemSolver(&self) -> *mut c_void {
         unsafe { cv_PtrOfDownhillSolver_get(self.ptr) }
     }
@@ -944,7 +1050,12 @@ pub struct PtrOfDualTVL1OpticalFlow {
 }
 
 impl PtrOfDualTVL1OpticalFlow {
-    #[doc(hidden)] pub fn as_raw_PtrOfDualTVL1OpticalFlow(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfDualTVL1OpticalFlow(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfDualTVL1OpticalFlow {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfDualTVL1OpticalFlow {
@@ -953,21 +1064,18 @@ impl Drop for PtrOfDualTVL1OpticalFlow {
     }
 }
 impl crate::video::DenseOpticalFlow for PtrOfDualTVL1OpticalFlow {
-    #[doc(hidden)]
     fn as_raw_DenseOpticalFlow(&self) -> *mut c_void {
         unsafe { cv_PtrOfDualTVL1OpticalFlow_get(self.ptr) }
     }
 }
 
 impl crate::video::DualTVL1OpticalFlow for PtrOfDualTVL1OpticalFlow {
-    #[doc(hidden)]
     fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void {
         unsafe { cv_PtrOfDualTVL1OpticalFlow_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfDualTVL1OpticalFlow {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfDualTVL1OpticalFlow_get(self.ptr) }
     }
@@ -984,7 +1092,12 @@ pub struct PtrOfELULayer {
 }
 
 impl PtrOfELULayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfELULayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfELULayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfELULayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfELULayer {
@@ -1003,7 +1116,12 @@ pub struct PtrOfEM {
 }
 
 impl PtrOfEM {
-    #[doc(hidden)] pub fn as_raw_PtrOfEM(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfEM(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfEM {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfEM {
@@ -1012,21 +1130,18 @@ impl Drop for PtrOfEM {
     }
 }
 impl crate::ml::EM for PtrOfEM {
-    #[doc(hidden)]
     fn as_raw_EM(&self) -> *mut c_void {
         unsafe { cv_PtrOfEM_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfEM {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfEM_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfEM {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfEM_get(self.ptr) }
     }
@@ -1043,7 +1158,12 @@ pub struct PtrOfEltwiseLayer {
 }
 
 impl PtrOfEltwiseLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfEltwiseLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfEltwiseLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfEltwiseLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfEltwiseLayer {
@@ -1062,7 +1182,12 @@ pub struct PtrOfFarnebackOpticalFlow {
 }
 
 impl PtrOfFarnebackOpticalFlow {
-    #[doc(hidden)] pub fn as_raw_PtrOfFarnebackOpticalFlow(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFarnebackOpticalFlow(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFarnebackOpticalFlow {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFarnebackOpticalFlow {
@@ -1071,21 +1196,18 @@ impl Drop for PtrOfFarnebackOpticalFlow {
     }
 }
 impl crate::video::DenseOpticalFlow for PtrOfFarnebackOpticalFlow {
-    #[doc(hidden)]
     fn as_raw_DenseOpticalFlow(&self) -> *mut c_void {
         unsafe { cv_PtrOfFarnebackOpticalFlow_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfFarnebackOpticalFlow {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfFarnebackOpticalFlow_get(self.ptr) }
     }
 }
 
 impl crate::video::FarnebackOpticalFlow for PtrOfFarnebackOpticalFlow {
-    #[doc(hidden)]
     fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void {
         unsafe { cv_PtrOfFarnebackOpticalFlow_get(self.ptr) }
     }
@@ -1102,7 +1224,12 @@ pub struct PtrOfFastFeatureDetector {
 }
 
 impl PtrOfFastFeatureDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfFastFeatureDetector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFastFeatureDetector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFastFeatureDetector {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFastFeatureDetector {
@@ -1111,21 +1238,18 @@ impl Drop for PtrOfFastFeatureDetector {
     }
 }
 impl crate::features2d::Feature2D for PtrOfFastFeatureDetector {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfFastFeatureDetector_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfFastFeatureDetector {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfFastFeatureDetector_get(self.ptr) }
     }
 }
 
 impl crate::features2d::FastFeatureDetector for PtrOfFastFeatureDetector {
-    #[doc(hidden)]
     fn as_raw_FastFeatureDetector(&self) -> *mut c_void {
         unsafe { cv_PtrOfFastFeatureDetector_get(self.ptr) }
     }
@@ -1142,7 +1266,12 @@ pub struct PtrOfFeature2D {
 }
 
 impl PtrOfFeature2D {
-    #[doc(hidden)] pub fn as_raw_PtrOfFeature2D(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFeature2D(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFeature2D {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFeature2D {
@@ -1151,14 +1280,12 @@ impl Drop for PtrOfFeature2D {
     }
 }
 impl crate::features2d::Feature2D for PtrOfFeature2D {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfFeature2D_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfFeature2D {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfFeature2D_get(self.ptr) }
     }
@@ -1175,7 +1302,12 @@ pub struct PtrOfFlannBasedMatcher {
 }
 
 impl PtrOfFlannBasedMatcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFlannBasedMatcher(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFlannBasedMatcher {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFlannBasedMatcher {
@@ -1194,7 +1326,12 @@ pub struct PtrOfFlattenLayer {
 }
 
 impl PtrOfFlattenLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfFlattenLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFlattenLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFlattenLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFlattenLayer {
@@ -1213,7 +1350,12 @@ pub struct PtrOfFormatted {
 }
 
 impl PtrOfFormatted {
-    #[doc(hidden)] pub fn as_raw_PtrOfFormatted(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFormatted(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFormatted {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFormatted {
@@ -1222,7 +1364,6 @@ impl Drop for PtrOfFormatted {
     }
 }
 impl core::Formatted for PtrOfFormatted {
-    #[doc(hidden)]
     fn as_raw_Formatted(&self) -> *mut c_void {
         unsafe { cv_PtrOfFormatted_get(self.ptr) }
     }
@@ -1239,7 +1380,12 @@ pub struct PtrOfFormatter {
 }
 
 impl PtrOfFormatter {
-    #[doc(hidden)] pub fn as_raw_PtrOfFormatter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFormatter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFormatter {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFormatter {
@@ -1248,7 +1394,6 @@ impl Drop for PtrOfFormatter {
     }
 }
 impl core::Formatter for PtrOfFormatter {
-    #[doc(hidden)]
     fn as_raw_Formatter(&self) -> *mut c_void {
         unsafe { cv_PtrOfFormatter_get(self.ptr) }
     }
@@ -1265,7 +1410,12 @@ pub struct PtrOfFrameSource {
 }
 
 impl PtrOfFrameSource {
-    #[doc(hidden)] pub fn as_raw_PtrOfFrameSource(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFrameSource(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFrameSource {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFrameSource {
@@ -1274,7 +1424,6 @@ impl Drop for PtrOfFrameSource {
     }
 }
 impl crate::superres::FrameSource for PtrOfFrameSource {
-    #[doc(hidden)]
     fn as_raw_FrameSource(&self) -> *mut c_void {
         unsafe { cv_PtrOfFrameSource_get(self.ptr) }
     }
@@ -1291,7 +1440,12 @@ pub struct PtrOfFreeType2 {
 }
 
 impl PtrOfFreeType2 {
-    #[doc(hidden)] pub fn as_raw_PtrOfFreeType2(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFreeType2(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFreeType2 {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFreeType2 {
@@ -1300,14 +1454,12 @@ impl Drop for PtrOfFreeType2 {
     }
 }
 impl core::Algorithm for PtrOfFreeType2 {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfFreeType2_get(self.ptr) }
     }
 }
 
 impl crate::freetype::FreeType2 for PtrOfFreeType2 {
-    #[doc(hidden)]
     fn as_raw_FreeType2(&self) -> *mut c_void {
         unsafe { cv_PtrOfFreeType2_get(self.ptr) }
     }
@@ -1324,7 +1476,12 @@ pub struct PtrOfFunction {
 }
 
 impl PtrOfFunction {
-    #[doc(hidden)] pub fn as_raw_PtrOfFunction(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfFunction(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfFunction {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfFunction {
@@ -1333,7 +1490,6 @@ impl Drop for PtrOfFunction {
     }
 }
 impl core::MinProblemSolver_Function for PtrOfFunction {
-    #[doc(hidden)]
     fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void {
         unsafe { cv_PtrOfFunction_get(self.ptr) }
     }
@@ -1350,7 +1506,12 @@ pub struct PtrOfGFTTDetector {
 }
 
 impl PtrOfGFTTDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfGFTTDetector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfGFTTDetector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfGFTTDetector {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfGFTTDetector {
@@ -1359,21 +1520,18 @@ impl Drop for PtrOfGFTTDetector {
     }
 }
 impl crate::features2d::Feature2D for PtrOfGFTTDetector {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfGFTTDetector_get(self.ptr) }
     }
 }
 
 impl crate::features2d::GFTTDetector for PtrOfGFTTDetector {
-    #[doc(hidden)]
     fn as_raw_GFTTDetector(&self) -> *mut c_void {
         unsafe { cv_PtrOfGFTTDetector_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfGFTTDetector {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfGFTTDetector_get(self.ptr) }
     }
@@ -1390,7 +1548,12 @@ pub struct PtrOfGeneralizedHoughBallard {
 }
 
 impl PtrOfGeneralizedHoughBallard {
-    #[doc(hidden)] pub fn as_raw_PtrOfGeneralizedHoughBallard(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfGeneralizedHoughBallard(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfGeneralizedHoughBallard {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfGeneralizedHoughBallard {
@@ -1399,21 +1562,18 @@ impl Drop for PtrOfGeneralizedHoughBallard {
     }
 }
 impl core::Algorithm for PtrOfGeneralizedHoughBallard {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfGeneralizedHoughBallard_get(self.ptr) }
     }
 }
 
 impl crate::imgproc::GeneralizedHough for PtrOfGeneralizedHoughBallard {
-    #[doc(hidden)]
     fn as_raw_GeneralizedHough(&self) -> *mut c_void {
         unsafe { cv_PtrOfGeneralizedHoughBallard_get(self.ptr) }
     }
 }
 
 impl crate::imgproc::GeneralizedHoughBallard for PtrOfGeneralizedHoughBallard {
-    #[doc(hidden)]
     fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void {
         unsafe { cv_PtrOfGeneralizedHoughBallard_get(self.ptr) }
     }
@@ -1430,7 +1590,12 @@ pub struct PtrOfGeneralizedHoughGuil {
 }
 
 impl PtrOfGeneralizedHoughGuil {
-    #[doc(hidden)] pub fn as_raw_PtrOfGeneralizedHoughGuil(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfGeneralizedHoughGuil(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfGeneralizedHoughGuil {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfGeneralizedHoughGuil {
@@ -1439,21 +1604,18 @@ impl Drop for PtrOfGeneralizedHoughGuil {
     }
 }
 impl core::Algorithm for PtrOfGeneralizedHoughGuil {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfGeneralizedHoughGuil_get(self.ptr) }
     }
 }
 
 impl crate::imgproc::GeneralizedHough for PtrOfGeneralizedHoughGuil {
-    #[doc(hidden)]
     fn as_raw_GeneralizedHough(&self) -> *mut c_void {
         unsafe { cv_PtrOfGeneralizedHoughGuil_get(self.ptr) }
     }
 }
 
 impl crate::imgproc::GeneralizedHoughGuil for PtrOfGeneralizedHoughGuil {
-    #[doc(hidden)]
     fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void {
         unsafe { cv_PtrOfGeneralizedHoughGuil_get(self.ptr) }
     }
@@ -1470,7 +1632,12 @@ pub struct PtrOfHausdorffDistanceExtractor {
 }
 
 impl PtrOfHausdorffDistanceExtractor {
-    #[doc(hidden)] pub fn as_raw_PtrOfHausdorffDistanceExtractor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfHausdorffDistanceExtractor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfHausdorffDistanceExtractor {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfHausdorffDistanceExtractor {
@@ -1479,21 +1646,18 @@ impl Drop for PtrOfHausdorffDistanceExtractor {
     }
 }
 impl crate::shape::ShapeDistanceExtractor for PtrOfHausdorffDistanceExtractor {
-    #[doc(hidden)]
     fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void {
         unsafe { cv_PtrOfHausdorffDistanceExtractor_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfHausdorffDistanceExtractor {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfHausdorffDistanceExtractor_get(self.ptr) }
     }
 }
 
 impl crate::shape::HausdorffDistanceExtractor for PtrOfHausdorffDistanceExtractor {
-    #[doc(hidden)]
     fn as_raw_HausdorffDistanceExtractor(&self) -> *mut c_void {
         unsafe { cv_PtrOfHausdorffDistanceExtractor_get(self.ptr) }
     }
@@ -1510,7 +1674,12 @@ pub struct PtrOfHistogramCostExtractor {
 }
 
 impl PtrOfHistogramCostExtractor {
-    #[doc(hidden)] pub fn as_raw_PtrOfHistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfHistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfHistogramCostExtractor {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfHistogramCostExtractor {
@@ -1519,14 +1688,12 @@ impl Drop for PtrOfHistogramCostExtractor {
     }
 }
 impl core::Algorithm for PtrOfHistogramCostExtractor {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfHistogramCostExtractor_get(self.ptr) }
     }
 }
 
 impl crate::shape::HistogramCostExtractor for PtrOfHistogramCostExtractor {
-    #[doc(hidden)]
     fn as_raw_HistogramCostExtractor(&self) -> *mut c_void {
         unsafe { cv_PtrOfHistogramCostExtractor_get(self.ptr) }
     }
@@ -1543,7 +1710,12 @@ pub struct PtrOfHistogramPhaseUnwrapping {
 }
 
 impl PtrOfHistogramPhaseUnwrapping {
-    #[doc(hidden)] pub fn as_raw_PtrOfHistogramPhaseUnwrapping(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfHistogramPhaseUnwrapping(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfHistogramPhaseUnwrapping {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfHistogramPhaseUnwrapping {
@@ -1552,21 +1724,18 @@ impl Drop for PtrOfHistogramPhaseUnwrapping {
     }
 }
 impl crate::phase_unwrapping::HistogramPhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
-    #[doc(hidden)]
     fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void {
         unsafe { cv_PtrOfHistogramPhaseUnwrapping_get(self.ptr) }
     }
 }
 
 impl crate::phase_unwrapping::PhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
-    #[doc(hidden)]
     fn as_raw_PhaseUnwrapping(&self) -> *mut c_void {
         unsafe { cv_PtrOfHistogramPhaseUnwrapping_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfHistogramPhaseUnwrapping {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfHistogramPhaseUnwrapping_get(self.ptr) }
     }
@@ -1583,7 +1752,12 @@ pub struct PtrOfIFrameSource {
 }
 
 impl PtrOfIFrameSource {
-    #[doc(hidden)] pub fn as_raw_PtrOfIFrameSource(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfIFrameSource(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfIFrameSource {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfIFrameSource {
@@ -1592,7 +1766,6 @@ impl Drop for PtrOfIFrameSource {
     }
 }
 impl crate::videostab::IFrameSource for PtrOfIFrameSource {
-    #[doc(hidden)]
     fn as_raw_IFrameSource(&self) -> *mut c_void {
         unsafe { cv_PtrOfIFrameSource_get(self.ptr) }
     }
@@ -1609,7 +1782,12 @@ pub struct PtrOfILog {
 }
 
 impl PtrOfILog {
-    #[doc(hidden)] pub fn as_raw_PtrOfILog(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfILog(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfILog {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfILog {
@@ -1618,7 +1796,6 @@ impl Drop for PtrOfILog {
     }
 }
 impl crate::videostab::ILog for PtrOfILog {
-    #[doc(hidden)]
     fn as_raw_ILog(&self) -> *mut c_void {
         unsafe { cv_PtrOfILog_get(self.ptr) }
     }
@@ -1635,7 +1812,12 @@ pub struct PtrOfIMotionStabilizer {
 }
 
 impl PtrOfIMotionStabilizer {
-    #[doc(hidden)] pub fn as_raw_PtrOfIMotionStabilizer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfIMotionStabilizer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfIMotionStabilizer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfIMotionStabilizer {
@@ -1644,7 +1826,6 @@ impl Drop for PtrOfIMotionStabilizer {
     }
 }
 impl crate::videostab::IMotionStabilizer for PtrOfIMotionStabilizer {
-    #[doc(hidden)]
     fn as_raw_IMotionStabilizer(&self) -> *mut c_void {
         unsafe { cv_PtrOfIMotionStabilizer_get(self.ptr) }
     }
@@ -1661,7 +1842,12 @@ pub struct PtrOfImageMotionEstimatorBase {
 }
 
 impl PtrOfImageMotionEstimatorBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfImageMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfImageMotionEstimatorBase {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfImageMotionEstimatorBase {
@@ -1670,7 +1856,6 @@ impl Drop for PtrOfImageMotionEstimatorBase {
     }
 }
 impl crate::videostab::ImageMotionEstimatorBase for PtrOfImageMotionEstimatorBase {
-    #[doc(hidden)]
     fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void {
         unsafe { cv_PtrOfImageMotionEstimatorBase_get(self.ptr) }
     }
@@ -1687,7 +1872,12 @@ pub struct PtrOfInnerProductLayer {
 }
 
 impl PtrOfInnerProductLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfInnerProductLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfInnerProductLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfInnerProductLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfInnerProductLayer {
@@ -1706,7 +1896,12 @@ pub struct PtrOfInpainterBase {
 }
 
 impl PtrOfInpainterBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfInpainterBase(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfInpainterBase(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfInpainterBase {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfInpainterBase {
@@ -1715,7 +1910,6 @@ impl Drop for PtrOfInpainterBase {
     }
 }
 impl crate::videostab::InpainterBase for PtrOfInpainterBase {
-    #[doc(hidden)]
     fn as_raw_InpainterBase(&self) -> *mut c_void {
         unsafe { cv_PtrOfInpainterBase_get(self.ptr) }
     }
@@ -1732,7 +1926,12 @@ pub struct PtrOfKAZE {
 }
 
 impl PtrOfKAZE {
-    #[doc(hidden)] pub fn as_raw_PtrOfKAZE(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfKAZE(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfKAZE {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfKAZE {
@@ -1741,21 +1940,18 @@ impl Drop for PtrOfKAZE {
     }
 }
 impl crate::features2d::Feature2D for PtrOfKAZE {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfKAZE_get(self.ptr) }
     }
 }
 
 impl crate::features2d::KAZE for PtrOfKAZE {
-    #[doc(hidden)]
     fn as_raw_KAZE(&self) -> *mut c_void {
         unsafe { cv_PtrOfKAZE_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfKAZE {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfKAZE_get(self.ptr) }
     }
@@ -1772,7 +1968,12 @@ pub struct PtrOfKNearest {
 }
 
 impl PtrOfKNearest {
-    #[doc(hidden)] pub fn as_raw_PtrOfKNearest(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfKNearest(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfKNearest {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfKNearest {
@@ -1781,21 +1982,18 @@ impl Drop for PtrOfKNearest {
     }
 }
 impl core::Algorithm for PtrOfKNearest {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfKNearest_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfKNearest {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfKNearest_get(self.ptr) }
     }
 }
 
 impl crate::ml::KNearest for PtrOfKNearest {
-    #[doc(hidden)]
     fn as_raw_KNearest(&self) -> *mut c_void {
         unsafe { cv_PtrOfKNearest_get(self.ptr) }
     }
@@ -1812,7 +2010,12 @@ pub struct PtrOfKernel {
 }
 
 impl PtrOfKernel {
-    #[doc(hidden)] pub fn as_raw_PtrOfKernel(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfKernel(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfKernel {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfKernel {
@@ -1821,14 +2024,12 @@ impl Drop for PtrOfKernel {
     }
 }
 impl crate::ml::SVM_Kernel for PtrOfKernel {
-    #[doc(hidden)]
     fn as_raw_SVM_Kernel(&self) -> *mut c_void {
         unsafe { cv_PtrOfKernel_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfKernel {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfKernel_get(self.ptr) }
     }
@@ -1845,7 +2046,12 @@ pub struct PtrOfLRNLayer {
 }
 
 impl PtrOfLRNLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfLRNLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfLRNLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfLRNLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfLRNLayer {
@@ -1864,7 +2070,12 @@ pub struct PtrOfLSTMLayer {
 }
 
 impl PtrOfLSTMLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfLSTMLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfLSTMLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfLSTMLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfLSTMLayer {
@@ -1873,21 +2084,18 @@ impl Drop for PtrOfLSTMLayer {
     }
 }
 impl crate::dnn::LSTMLayer for PtrOfLSTMLayer {
-    #[doc(hidden)]
     fn as_raw_LSTMLayer(&self) -> *mut c_void {
         unsafe { cv_PtrOfLSTMLayer_get(self.ptr) }
     }
 }
 
 impl crate::dnn::Layer for PtrOfLSTMLayer {
-    #[doc(hidden)]
     fn as_raw_Layer(&self) -> *mut c_void {
         unsafe { cv_PtrOfLSTMLayer_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfLSTMLayer {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfLSTMLayer_get(self.ptr) }
     }
@@ -1904,7 +2112,12 @@ pub struct PtrOfLineSegmentDetector {
 }
 
 impl PtrOfLineSegmentDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfLineSegmentDetector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfLineSegmentDetector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfLineSegmentDetector {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfLineSegmentDetector {
@@ -1913,14 +2126,12 @@ impl Drop for PtrOfLineSegmentDetector {
     }
 }
 impl core::Algorithm for PtrOfLineSegmentDetector {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfLineSegmentDetector_get(self.ptr) }
     }
 }
 
 impl crate::imgproc::LineSegmentDetector for PtrOfLineSegmentDetector {
-    #[doc(hidden)]
     fn as_raw_LineSegmentDetector(&self) -> *mut c_void {
         unsafe { cv_PtrOfLineSegmentDetector_get(self.ptr) }
     }
@@ -1937,7 +2148,12 @@ pub struct PtrOfLogisticRegression {
 }
 
 impl PtrOfLogisticRegression {
-    #[doc(hidden)] pub fn as_raw_PtrOfLogisticRegression(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfLogisticRegression(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfLogisticRegression {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfLogisticRegression {
@@ -1946,21 +2162,18 @@ impl Drop for PtrOfLogisticRegression {
     }
 }
 impl core::Algorithm for PtrOfLogisticRegression {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfLogisticRegression_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfLogisticRegression {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfLogisticRegression_get(self.ptr) }
     }
 }
 
 impl crate::ml::LogisticRegression for PtrOfLogisticRegression {
-    #[doc(hidden)]
     fn as_raw_LogisticRegression(&self) -> *mut c_void {
         unsafe { cv_PtrOfLogisticRegression_get(self.ptr) }
     }
@@ -1977,7 +2190,12 @@ pub struct PtrOfMSER {
 }
 
 impl PtrOfMSER {
-    #[doc(hidden)] pub fn as_raw_PtrOfMSER(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMSER(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMSER {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMSER {
@@ -1986,21 +2204,18 @@ impl Drop for PtrOfMSER {
     }
 }
 impl crate::features2d::Feature2D for PtrOfMSER {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfMSER_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfMSER {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfMSER_get(self.ptr) }
     }
 }
 
 impl crate::features2d::MSER for PtrOfMSER {
-    #[doc(hidden)]
     fn as_raw_MSER(&self) -> *mut c_void {
         unsafe { cv_PtrOfMSER_get(self.ptr) }
     }
@@ -2017,7 +2232,12 @@ pub struct PtrOfMVNLayer {
 }
 
 impl PtrOfMVNLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfMVNLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMVNLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMVNLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMVNLayer {
@@ -2036,7 +2256,12 @@ pub struct PtrOfMarrHildrethHash {
 }
 
 impl PtrOfMarrHildrethHash {
-    #[doc(hidden)] pub fn as_raw_PtrOfMarrHildrethHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMarrHildrethHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMarrHildrethHash {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMarrHildrethHash {
@@ -2055,7 +2280,12 @@ pub struct PtrOfMaskGenerator {
 }
 
 impl PtrOfMaskGenerator {
-    #[doc(hidden)] pub fn as_raw_PtrOfMaskGenerator(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMaskGenerator(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMaskGenerator {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMaskGenerator {
@@ -2064,7 +2294,6 @@ impl Drop for PtrOfMaskGenerator {
     }
 }
 impl crate::objdetect::BaseCascadeClassifier_MaskGenerator for PtrOfMaskGenerator {
-    #[doc(hidden)]
     fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void {
         unsafe { cv_PtrOfMaskGenerator_get(self.ptr) }
     }
@@ -2081,7 +2310,12 @@ pub struct PtrOfMaxUnpoolLayer {
 }
 
 impl PtrOfMaxUnpoolLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfMaxUnpoolLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMaxUnpoolLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMaxUnpoolLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMaxUnpoolLayer {
@@ -2100,7 +2334,12 @@ pub struct PtrOfMergeDebevec {
 }
 
 impl PtrOfMergeDebevec {
-    #[doc(hidden)] pub fn as_raw_PtrOfMergeDebevec(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMergeDebevec(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMergeDebevec {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMergeDebevec {
@@ -2109,21 +2348,18 @@ impl Drop for PtrOfMergeDebevec {
     }
 }
 impl core::Algorithm for PtrOfMergeDebevec {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeDebevec_get(self.ptr) }
     }
 }
 
 impl crate::photo::MergeDebevec for PtrOfMergeDebevec {
-    #[doc(hidden)]
     fn as_raw_MergeDebevec(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeDebevec_get(self.ptr) }
     }
 }
 
 impl crate::photo::MergeExposures for PtrOfMergeDebevec {
-    #[doc(hidden)]
     fn as_raw_MergeExposures(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeDebevec_get(self.ptr) }
     }
@@ -2140,7 +2376,12 @@ pub struct PtrOfMergeMertens {
 }
 
 impl PtrOfMergeMertens {
-    #[doc(hidden)] pub fn as_raw_PtrOfMergeMertens(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMergeMertens(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMergeMertens {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMergeMertens {
@@ -2149,21 +2390,18 @@ impl Drop for PtrOfMergeMertens {
     }
 }
 impl core::Algorithm for PtrOfMergeMertens {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeMertens_get(self.ptr) }
     }
 }
 
 impl crate::photo::MergeMertens for PtrOfMergeMertens {
-    #[doc(hidden)]
     fn as_raw_MergeMertens(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeMertens_get(self.ptr) }
     }
 }
 
 impl crate::photo::MergeExposures for PtrOfMergeMertens {
-    #[doc(hidden)]
     fn as_raw_MergeExposures(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeMertens_get(self.ptr) }
     }
@@ -2180,7 +2418,12 @@ pub struct PtrOfMergeRobertson {
 }
 
 impl PtrOfMergeRobertson {
-    #[doc(hidden)] pub fn as_raw_PtrOfMergeRobertson(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMergeRobertson(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMergeRobertson {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMergeRobertson {
@@ -2189,21 +2432,18 @@ impl Drop for PtrOfMergeRobertson {
     }
 }
 impl core::Algorithm for PtrOfMergeRobertson {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeRobertson_get(self.ptr) }
     }
 }
 
 impl crate::photo::MergeRobertson for PtrOfMergeRobertson {
-    #[doc(hidden)]
     fn as_raw_MergeRobertson(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeRobertson_get(self.ptr) }
     }
 }
 
 impl crate::photo::MergeExposures for PtrOfMergeRobertson {
-    #[doc(hidden)]
     fn as_raw_MergeExposures(&self) -> *mut c_void {
         unsafe { cv_PtrOfMergeRobertson_get(self.ptr) }
     }
@@ -2220,7 +2460,12 @@ pub struct PtrOfMotionEstimatorBase {
 }
 
 impl PtrOfMotionEstimatorBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMotionEstimatorBase(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMotionEstimatorBase {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMotionEstimatorBase {
@@ -2229,7 +2474,6 @@ impl Drop for PtrOfMotionEstimatorBase {
     }
 }
 impl crate::videostab::MotionEstimatorBase for PtrOfMotionEstimatorBase {
-    #[doc(hidden)]
     fn as_raw_MotionEstimatorBase(&self) -> *mut c_void {
         unsafe { cv_PtrOfMotionEstimatorBase_get(self.ptr) }
     }
@@ -2246,7 +2490,12 @@ pub struct PtrOfMotionFilterBase {
 }
 
 impl PtrOfMotionFilterBase {
-    #[doc(hidden)] pub fn as_raw_PtrOfMotionFilterBase(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfMotionFilterBase(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfMotionFilterBase {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfMotionFilterBase {
@@ -2255,14 +2504,12 @@ impl Drop for PtrOfMotionFilterBase {
     }
 }
 impl crate::videostab::IMotionStabilizer for PtrOfMotionFilterBase {
-    #[doc(hidden)]
     fn as_raw_IMotionStabilizer(&self) -> *mut c_void {
         unsafe { cv_PtrOfMotionFilterBase_get(self.ptr) }
     }
 }
 
 impl crate::videostab::MotionFilterBase for PtrOfMotionFilterBase {
-    #[doc(hidden)]
     fn as_raw_MotionFilterBase(&self) -> *mut c_void {
         unsafe { cv_PtrOfMotionFilterBase_get(self.ptr) }
     }
@@ -2279,7 +2526,12 @@ pub struct PtrOfNormalBayesClassifier {
 }
 
 impl PtrOfNormalBayesClassifier {
-    #[doc(hidden)] pub fn as_raw_PtrOfNormalBayesClassifier(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfNormalBayesClassifier(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfNormalBayesClassifier {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfNormalBayesClassifier {
@@ -2288,21 +2540,18 @@ impl Drop for PtrOfNormalBayesClassifier {
     }
 }
 impl core::Algorithm for PtrOfNormalBayesClassifier {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfNormalBayesClassifier_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfNormalBayesClassifier {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfNormalBayesClassifier_get(self.ptr) }
     }
 }
 
 impl crate::ml::NormalBayesClassifier for PtrOfNormalBayesClassifier {
-    #[doc(hidden)]
     fn as_raw_NormalBayesClassifier(&self) -> *mut c_void {
         unsafe { cv_PtrOfNormalBayesClassifier_get(self.ptr) }
     }
@@ -2319,7 +2568,12 @@ pub struct PtrOfNormalizeBBoxLayer {
 }
 
 impl PtrOfNormalizeBBoxLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfNormalizeBBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfNormalizeBBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfNormalizeBBoxLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfNormalizeBBoxLayer {
@@ -2338,7 +2592,12 @@ pub struct PtrOfORB {
 }
 
 impl PtrOfORB {
-    #[doc(hidden)] pub fn as_raw_PtrOfORB(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfORB(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfORB {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfORB {
@@ -2347,21 +2606,18 @@ impl Drop for PtrOfORB {
     }
 }
 impl crate::features2d::Feature2D for PtrOfORB {
-    #[doc(hidden)]
     fn as_raw_Feature2D(&self) -> *mut c_void {
         unsafe { cv_PtrOfORB_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfORB {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfORB_get(self.ptr) }
     }
 }
 
 impl crate::features2d::ORB for PtrOfORB {
-    #[doc(hidden)]
     fn as_raw_ORB(&self) -> *mut c_void {
         unsafe { cv_PtrOfORB_get(self.ptr) }
     }
@@ -2378,7 +2634,12 @@ pub struct PtrOfPHash {
 }
 
 impl PtrOfPHash {
-    #[doc(hidden)] pub fn as_raw_PtrOfPHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfPHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfPHash {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfPHash {
@@ -2397,7 +2658,12 @@ pub struct PtrOfPaddingLayer {
 }
 
 impl PtrOfPaddingLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPaddingLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfPaddingLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfPaddingLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfPaddingLayer {
@@ -2416,7 +2682,12 @@ pub struct PtrOfParamGrid {
 }
 
 impl PtrOfParamGrid {
-    #[doc(hidden)] pub fn as_raw_PtrOfParamGrid(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfParamGrid(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfParamGrid {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfParamGrid {
@@ -2435,7 +2706,12 @@ pub struct PtrOfPermuteLayer {
 }
 
 impl PtrOfPermuteLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPermuteLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfPermuteLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfPermuteLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfPermuteLayer {
@@ -2454,7 +2730,12 @@ pub struct PtrOfPlot2d {
 }
 
 impl PtrOfPlot2d {
-    #[doc(hidden)] pub fn as_raw_PtrOfPlot2d(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfPlot2d(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfPlot2d {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfPlot2d {
@@ -2463,14 +2744,12 @@ impl Drop for PtrOfPlot2d {
     }
 }
 impl core::Algorithm for PtrOfPlot2d {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfPlot2d_get(self.ptr) }
     }
 }
 
 impl crate::plot::Plot2d for PtrOfPlot2d {
-    #[doc(hidden)]
     fn as_raw_Plot2d(&self) -> *mut c_void {
         unsafe { cv_PtrOfPlot2d_get(self.ptr) }
     }
@@ -2487,7 +2766,12 @@ pub struct PtrOfPoolingLayer {
 }
 
 impl PtrOfPoolingLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPoolingLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfPoolingLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfPoolingLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfPoolingLayer {
@@ -2506,7 +2790,12 @@ pub struct PtrOfPowerLayer {
 }
 
 impl PtrOfPowerLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPowerLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfPowerLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfPowerLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfPowerLayer {
@@ -2525,7 +2814,12 @@ pub struct PtrOfPriorBoxLayer {
 }
 
 impl PtrOfPriorBoxLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfPriorBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfPriorBoxLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfPriorBoxLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfPriorBoxLayer {
@@ -2544,7 +2838,12 @@ pub struct PtrOfProposalLayer {
 }
 
 impl PtrOfProposalLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfProposalLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfProposalLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfProposalLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfProposalLayer {
@@ -2563,7 +2862,12 @@ pub struct PtrOfRNNLayer {
 }
 
 impl PtrOfRNNLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfRNNLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfRNNLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfRNNLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfRNNLayer {
@@ -2572,21 +2876,18 @@ impl Drop for PtrOfRNNLayer {
     }
 }
 impl crate::dnn::Layer for PtrOfRNNLayer {
-    #[doc(hidden)]
     fn as_raw_Layer(&self) -> *mut c_void {
         unsafe { cv_PtrOfRNNLayer_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfRNNLayer {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfRNNLayer_get(self.ptr) }
     }
 }
 
 impl crate::dnn::RNNLayer for PtrOfRNNLayer {
-    #[doc(hidden)]
     fn as_raw_RNNLayer(&self) -> *mut c_void {
         unsafe { cv_PtrOfRNNLayer_get(self.ptr) }
     }
@@ -2603,7 +2904,12 @@ pub struct PtrOfRTrees {
 }
 
 impl PtrOfRTrees {
-    #[doc(hidden)] pub fn as_raw_PtrOfRTrees(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfRTrees(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfRTrees {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfRTrees {
@@ -2612,28 +2918,24 @@ impl Drop for PtrOfRTrees {
     }
 }
 impl crate::ml::DTrees for PtrOfRTrees {
-    #[doc(hidden)]
     fn as_raw_DTrees(&self) -> *mut c_void {
         unsafe { cv_PtrOfRTrees_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfRTrees {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfRTrees_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfRTrees {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfRTrees_get(self.ptr) }
     }
 }
 
 impl crate::ml::RTrees for PtrOfRTrees {
-    #[doc(hidden)]
     fn as_raw_RTrees(&self) -> *mut c_void {
         unsafe { cv_PtrOfRTrees_get(self.ptr) }
     }
@@ -2650,7 +2952,12 @@ pub struct PtrOfRadialVarianceHash {
 }
 
 impl PtrOfRadialVarianceHash {
-    #[doc(hidden)] pub fn as_raw_PtrOfRadialVarianceHash(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfRadialVarianceHash(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfRadialVarianceHash {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfRadialVarianceHash {
@@ -2669,7 +2976,12 @@ pub struct PtrOfReLU6Layer {
 }
 
 impl PtrOfReLU6Layer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReLU6Layer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfReLU6Layer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfReLU6Layer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfReLU6Layer {
@@ -2688,7 +3000,12 @@ pub struct PtrOfReLULayer {
 }
 
 impl PtrOfReLULayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReLULayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfReLULayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfReLULayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfReLULayer {
@@ -2707,7 +3024,12 @@ pub struct PtrOfRegionLayer {
 }
 
 impl PtrOfRegionLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfRegionLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfRegionLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfRegionLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfRegionLayer {
@@ -2726,7 +3048,12 @@ pub struct PtrOfReorgLayer {
 }
 
 impl PtrOfReorgLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReorgLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfReorgLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfReorgLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfReorgLayer {
@@ -2745,7 +3072,12 @@ pub struct PtrOfReshapeLayer {
 }
 
 impl PtrOfReshapeLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfReshapeLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfReshapeLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfReshapeLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfReshapeLayer {
@@ -2764,7 +3096,12 @@ pub struct PtrOfResizeLayer {
 }
 
 impl PtrOfResizeLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfResizeLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfResizeLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfResizeLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfResizeLayer {
@@ -2783,7 +3120,12 @@ pub struct PtrOfRetina {
 }
 
 impl PtrOfRetina {
-    #[doc(hidden)] pub fn as_raw_PtrOfRetina(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfRetina(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfRetina {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfRetina {
@@ -2792,14 +3134,12 @@ impl Drop for PtrOfRetina {
     }
 }
 impl core::Algorithm for PtrOfRetina {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfRetina_get(self.ptr) }
     }
 }
 
 impl crate::bioinspired::Retina for PtrOfRetina {
-    #[doc(hidden)]
     fn as_raw_Retina(&self) -> *mut c_void {
         unsafe { cv_PtrOfRetina_get(self.ptr) }
     }
@@ -2816,7 +3156,12 @@ pub struct PtrOfRetinaFastToneMapping {
 }
 
 impl PtrOfRetinaFastToneMapping {
-    #[doc(hidden)] pub fn as_raw_PtrOfRetinaFastToneMapping(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfRetinaFastToneMapping(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfRetinaFastToneMapping {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfRetinaFastToneMapping {
@@ -2825,14 +3170,12 @@ impl Drop for PtrOfRetinaFastToneMapping {
     }
 }
 impl core::Algorithm for PtrOfRetinaFastToneMapping {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfRetinaFastToneMapping_get(self.ptr) }
     }
 }
 
 impl crate::bioinspired::RetinaFastToneMapping for PtrOfRetinaFastToneMapping {
-    #[doc(hidden)]
     fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void {
         unsafe { cv_PtrOfRetinaFastToneMapping_get(self.ptr) }
     }
@@ -2849,7 +3192,12 @@ pub struct PtrOfSVM {
 }
 
 impl PtrOfSVM {
-    #[doc(hidden)] pub fn as_raw_PtrOfSVM(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSVM(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSVM {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSVM {
@@ -2858,21 +3206,18 @@ impl Drop for PtrOfSVM {
     }
 }
 impl crate::ml::SVM for PtrOfSVM {
-    #[doc(hidden)]
     fn as_raw_SVM(&self) -> *mut c_void {
         unsafe { cv_PtrOfSVM_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfSVM {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfSVM_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfSVM {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfSVM_get(self.ptr) }
     }
@@ -2889,7 +3234,12 @@ pub struct PtrOfSVMSGD {
 }
 
 impl PtrOfSVMSGD {
-    #[doc(hidden)] pub fn as_raw_PtrOfSVMSGD(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSVMSGD(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSVMSGD {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSVMSGD {
@@ -2898,21 +3248,18 @@ impl Drop for PtrOfSVMSGD {
     }
 }
 impl crate::ml::SVMSGD for PtrOfSVMSGD {
-    #[doc(hidden)]
     fn as_raw_SVMSGD(&self) -> *mut c_void {
         unsafe { cv_PtrOfSVMSGD_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfSVMSGD {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfSVMSGD_get(self.ptr) }
     }
 }
 
 impl crate::ml::StatModel for PtrOfSVMSGD {
-    #[doc(hidden)]
     fn as_raw_StatModel(&self) -> *mut c_void {
         unsafe { cv_PtrOfSVMSGD_get(self.ptr) }
     }
@@ -2929,7 +3276,12 @@ pub struct PtrOfScaleLayer {
 }
 
 impl PtrOfScaleLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfScaleLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfScaleLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfScaleLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfScaleLayer {
@@ -2948,7 +3300,12 @@ pub struct PtrOfShapeContextDistanceExtractor {
 }
 
 impl PtrOfShapeContextDistanceExtractor {
-    #[doc(hidden)] pub fn as_raw_PtrOfShapeContextDistanceExtractor(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfShapeContextDistanceExtractor(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfShapeContextDistanceExtractor {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfShapeContextDistanceExtractor {
@@ -2957,21 +3314,18 @@ impl Drop for PtrOfShapeContextDistanceExtractor {
     }
 }
 impl crate::shape::ShapeDistanceExtractor for PtrOfShapeContextDistanceExtractor {
-    #[doc(hidden)]
     fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void {
         unsafe { cv_PtrOfShapeContextDistanceExtractor_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfShapeContextDistanceExtractor {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfShapeContextDistanceExtractor_get(self.ptr) }
     }
 }
 
 impl crate::shape::ShapeContextDistanceExtractor for PtrOfShapeContextDistanceExtractor {
-    #[doc(hidden)]
     fn as_raw_ShapeContextDistanceExtractor(&self) -> *mut c_void {
         unsafe { cv_PtrOfShapeContextDistanceExtractor_get(self.ptr) }
     }
@@ -2988,7 +3342,12 @@ pub struct PtrOfSigmoidLayer {
 }
 
 impl PtrOfSigmoidLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSigmoidLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSigmoidLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSigmoidLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSigmoidLayer {
@@ -3007,7 +3366,12 @@ pub struct PtrOfSimpleBlobDetector {
 }
 
 impl PtrOfSimpleBlobDetector {
-    #[doc(hidden)] pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSimpleBlobDetector(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSimpleBlobDetector {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSimpleBlobDetector {
@@ -3026,7 +3390,12 @@ pub struct PtrOfSliceLayer {
 }
 
 impl PtrOfSliceLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSliceLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSliceLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSliceLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSliceLayer {
@@ -3045,7 +3414,12 @@ pub struct PtrOfSoftmaxLayer {
 }
 
 impl PtrOfSoftmaxLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSoftmaxLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSoftmaxLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSoftmaxLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSoftmaxLayer {
@@ -3064,7 +3438,12 @@ pub struct PtrOfSparsePyrLKOpticalFlow {
 }
 
 impl PtrOfSparsePyrLKOpticalFlow {
-    #[doc(hidden)] pub fn as_raw_PtrOfSparsePyrLKOpticalFlow(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSparsePyrLKOpticalFlow(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSparsePyrLKOpticalFlow {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSparsePyrLKOpticalFlow {
@@ -3073,21 +3452,18 @@ impl Drop for PtrOfSparsePyrLKOpticalFlow {
     }
 }
 impl crate::video::SparseOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
-    #[doc(hidden)]
     fn as_raw_SparseOpticalFlow(&self) -> *mut c_void {
         unsafe { cv_PtrOfSparsePyrLKOpticalFlow_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfSparsePyrLKOpticalFlow {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfSparsePyrLKOpticalFlow_get(self.ptr) }
     }
 }
 
 impl crate::video::SparsePyrLKOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
-    #[doc(hidden)]
     fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void {
         unsafe { cv_PtrOfSparsePyrLKOpticalFlow_get(self.ptr) }
     }
@@ -3104,7 +3480,12 @@ pub struct PtrOfSplitLayer {
 }
 
 impl PtrOfSplitLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfSplitLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSplitLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSplitLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSplitLayer {
@@ -3123,7 +3504,12 @@ pub struct PtrOfStereoBM {
 }
 
 impl PtrOfStereoBM {
-    #[doc(hidden)] pub fn as_raw_PtrOfStereoBM(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfStereoBM(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfStereoBM {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfStereoBM {
@@ -3132,21 +3518,18 @@ impl Drop for PtrOfStereoBM {
     }
 }
 impl crate::calib3d::StereoMatcher for PtrOfStereoBM {
-    #[doc(hidden)]
     fn as_raw_StereoMatcher(&self) -> *mut c_void {
         unsafe { cv_PtrOfStereoBM_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfStereoBM {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfStereoBM_get(self.ptr) }
     }
 }
 
 impl crate::calib3d::StereoBM for PtrOfStereoBM {
-    #[doc(hidden)]
     fn as_raw_StereoBM(&self) -> *mut c_void {
         unsafe { cv_PtrOfStereoBM_get(self.ptr) }
     }
@@ -3163,7 +3546,12 @@ pub struct PtrOfStereoSGBM {
 }
 
 impl PtrOfStereoSGBM {
-    #[doc(hidden)] pub fn as_raw_PtrOfStereoSGBM(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfStereoSGBM(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfStereoSGBM {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfStereoSGBM {
@@ -3172,21 +3560,18 @@ impl Drop for PtrOfStereoSGBM {
     }
 }
 impl crate::calib3d::StereoMatcher for PtrOfStereoSGBM {
-    #[doc(hidden)]
     fn as_raw_StereoMatcher(&self) -> *mut c_void {
         unsafe { cv_PtrOfStereoSGBM_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfStereoSGBM {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfStereoSGBM_get(self.ptr) }
     }
 }
 
 impl crate::calib3d::StereoSGBM for PtrOfStereoSGBM {
-    #[doc(hidden)]
     fn as_raw_StereoSGBM(&self) -> *mut c_void {
         unsafe { cv_PtrOfStereoSGBM_get(self.ptr) }
     }
@@ -3203,7 +3588,12 @@ pub struct PtrOfStitcher {
 }
 
 impl PtrOfStitcher {
-    #[doc(hidden)] pub fn as_raw_PtrOfStitcher(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfStitcher(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfStitcher {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfStitcher {
@@ -3222,7 +3612,12 @@ pub struct PtrOfSuperResolution {
 }
 
 impl PtrOfSuperResolution {
-    #[doc(hidden)] pub fn as_raw_PtrOfSuperResolution(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfSuperResolution(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfSuperResolution {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfSuperResolution {
@@ -3231,21 +3626,18 @@ impl Drop for PtrOfSuperResolution {
     }
 }
 impl crate::superres::SuperResolution for PtrOfSuperResolution {
-    #[doc(hidden)]
     fn as_raw_SuperResolution(&self) -> *mut c_void {
         unsafe { cv_PtrOfSuperResolution_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfSuperResolution {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfSuperResolution_get(self.ptr) }
     }
 }
 
 impl crate::superres::FrameSource for PtrOfSuperResolution {
-    #[doc(hidden)]
     fn as_raw_FrameSource(&self) -> *mut c_void {
         unsafe { cv_PtrOfSuperResolution_get(self.ptr) }
     }
@@ -3262,7 +3654,12 @@ pub struct PtrOfTanHLayer {
 }
 
 impl PtrOfTanHLayer {
-    #[doc(hidden)] pub fn as_raw_PtrOfTanHLayer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfTanHLayer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfTanHLayer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfTanHLayer {
@@ -3281,7 +3678,12 @@ pub struct PtrOfThinPlateSplineShapeTransformer {
 }
 
 impl PtrOfThinPlateSplineShapeTransformer {
-    #[doc(hidden)] pub fn as_raw_PtrOfThinPlateSplineShapeTransformer(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfThinPlateSplineShapeTransformer(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfThinPlateSplineShapeTransformer {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfThinPlateSplineShapeTransformer {
@@ -3290,21 +3692,18 @@ impl Drop for PtrOfThinPlateSplineShapeTransformer {
     }
 }
 impl core::Algorithm for PtrOfThinPlateSplineShapeTransformer {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfThinPlateSplineShapeTransformer_get(self.ptr) }
     }
 }
 
 impl crate::shape::ThinPlateSplineShapeTransformer for PtrOfThinPlateSplineShapeTransformer {
-    #[doc(hidden)]
     fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *mut c_void {
         unsafe { cv_PtrOfThinPlateSplineShapeTransformer_get(self.ptr) }
     }
 }
 
 impl crate::shape::ShapeTransformer for PtrOfThinPlateSplineShapeTransformer {
-    #[doc(hidden)]
     fn as_raw_ShapeTransformer(&self) -> *mut c_void {
         unsafe { cv_PtrOfThinPlateSplineShapeTransformer_get(self.ptr) }
     }
@@ -3321,7 +3720,12 @@ pub struct PtrOfTonemap {
 }
 
 impl PtrOfTonemap {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemap(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfTonemap(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfTonemap {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfTonemap {
@@ -3330,14 +3734,12 @@ impl Drop for PtrOfTonemap {
     }
 }
 impl core::Algorithm for PtrOfTonemap {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemap_get(self.ptr) }
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemap {
-    #[doc(hidden)]
     fn as_raw_Tonemap(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemap_get(self.ptr) }
     }
@@ -3354,7 +3756,12 @@ pub struct PtrOfTonemapDrago {
 }
 
 impl PtrOfTonemapDrago {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemapDrago(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfTonemapDrago(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfTonemapDrago {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfTonemapDrago {
@@ -3363,21 +3770,18 @@ impl Drop for PtrOfTonemapDrago {
     }
 }
 impl crate::photo::TonemapDrago for PtrOfTonemapDrago {
-    #[doc(hidden)]
     fn as_raw_TonemapDrago(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapDrago_get(self.ptr) }
     }
 }
 
 impl core::Algorithm for PtrOfTonemapDrago {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapDrago_get(self.ptr) }
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemapDrago {
-    #[doc(hidden)]
     fn as_raw_Tonemap(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapDrago_get(self.ptr) }
     }
@@ -3394,7 +3798,12 @@ pub struct PtrOfTonemapMantiuk {
 }
 
 impl PtrOfTonemapMantiuk {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemapMantiuk(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfTonemapMantiuk(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfTonemapMantiuk {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfTonemapMantiuk {
@@ -3403,21 +3812,18 @@ impl Drop for PtrOfTonemapMantiuk {
     }
 }
 impl core::Algorithm for PtrOfTonemapMantiuk {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapMantiuk_get(self.ptr) }
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemapMantiuk {
-    #[doc(hidden)]
     fn as_raw_Tonemap(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapMantiuk_get(self.ptr) }
     }
 }
 
 impl crate::photo::TonemapMantiuk for PtrOfTonemapMantiuk {
-    #[doc(hidden)]
     fn as_raw_TonemapMantiuk(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapMantiuk_get(self.ptr) }
     }
@@ -3434,7 +3840,12 @@ pub struct PtrOfTonemapReinhard {
 }
 
 impl PtrOfTonemapReinhard {
-    #[doc(hidden)] pub fn as_raw_PtrOfTonemapReinhard(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfTonemapReinhard(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfTonemapReinhard {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfTonemapReinhard {
@@ -3443,21 +3854,18 @@ impl Drop for PtrOfTonemapReinhard {
     }
 }
 impl core::Algorithm for PtrOfTonemapReinhard {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapReinhard_get(self.ptr) }
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemapReinhard {
-    #[doc(hidden)]
     fn as_raw_Tonemap(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapReinhard_get(self.ptr) }
     }
 }
 
 impl crate::photo::TonemapReinhard for PtrOfTonemapReinhard {
-    #[doc(hidden)]
     fn as_raw_TonemapReinhard(&self) -> *mut c_void {
         unsafe { cv_PtrOfTonemapReinhard_get(self.ptr) }
     }
@@ -3474,7 +3882,12 @@ pub struct PtrOfTrainData {
 }
 
 impl PtrOfTrainData {
-    #[doc(hidden)] pub fn as_raw_PtrOfTrainData(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfTrainData(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfTrainData {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfTrainData {
@@ -3483,7 +3896,6 @@ impl Drop for PtrOfTrainData {
     }
 }
 impl crate::ml::TrainData for PtrOfTrainData {
-    #[doc(hidden)]
     fn as_raw_TrainData(&self) -> *mut c_void {
         unsafe { cv_PtrOfTrainData_get(self.ptr) }
     }
@@ -3500,7 +3912,12 @@ pub struct PtrOfTransientAreasSegmentationModule {
 }
 
 impl PtrOfTransientAreasSegmentationModule {
-    #[doc(hidden)] pub fn as_raw_PtrOfTransientAreasSegmentationModule(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOfTransientAreasSegmentationModule(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOfTransientAreasSegmentationModule {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOfTransientAreasSegmentationModule {
@@ -3509,14 +3926,12 @@ impl Drop for PtrOfTransientAreasSegmentationModule {
     }
 }
 impl core::Algorithm for PtrOfTransientAreasSegmentationModule {
-    #[doc(hidden)]
     fn as_raw_Algorithm(&self) -> *mut c_void {
         unsafe { cv_PtrOfTransientAreasSegmentationModule_get(self.ptr) }
     }
 }
 
 impl crate::bioinspired::TransientAreasSegmentationModule for PtrOfTransientAreasSegmentationModule {
-    #[doc(hidden)]
     fn as_raw_TransientAreasSegmentationModule(&self) -> *mut c_void {
         unsafe { cv_PtrOfTransientAreasSegmentationModule_get(self.ptr) }
     }
@@ -3533,7 +3948,12 @@ pub struct PtrOffloat {
 }
 
 impl PtrOffloat {
-    #[doc(hidden)] pub fn as_raw_PtrOffloat(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_PtrOffloat(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        PtrOffloat {
+            ptr
+        }
+    }
 }
 
 impl Drop for PtrOffloat {
@@ -3558,7 +3978,7 @@ extern "C" {
 }
 
 impl VectorOfDMatch {
-    #[doc(hidden)] pub fn as_raw_VectorOfDMatch(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfDMatch(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfDMatch_new() } }
@@ -3631,7 +4051,7 @@ extern "C" {
 }
 
 impl VectorOfDetectionROI {
-    #[doc(hidden)] pub fn as_raw_VectorOfDetectionROI(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfDetectionROI(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfDetectionROI_new() } }
@@ -3696,7 +4116,7 @@ extern "C" {
 }
 
 impl VectorOfExtObject {
-    #[doc(hidden)] pub fn as_raw_VectorOfExtObject(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfExtObject(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfExtObject_new() } }
@@ -3761,7 +4181,7 @@ extern "C" {
 }
 
 impl VectorOfKeyPoint {
-    #[doc(hidden)] pub fn as_raw_VectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfKeyPoint_new() } }
@@ -3834,7 +4254,7 @@ extern "C" {
 }
 
 impl VectorOfMat {
-    #[doc(hidden)] pub fn as_raw_VectorOfMat(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfMat(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfMat_new() } }
@@ -3899,7 +4319,7 @@ extern "C" {
 }
 
 impl VectorOfNode {
-    #[doc(hidden)] pub fn as_raw_VectorOfNode(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfNode(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfNode_new() } }
@@ -3964,7 +4384,7 @@ extern "C" {
 }
 
 impl VectorOfObjectDetection {
-    #[doc(hidden)] pub fn as_raw_VectorOfObjectDetection(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfObjectDetection(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfObjectDetection_new() } }
@@ -4029,7 +4449,7 @@ extern "C" {
 }
 
 impl VectorOfPoint {
-    #[doc(hidden)] pub fn as_raw_VectorOfPoint(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfPoint(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfPoint_new() } }
@@ -4102,7 +4522,7 @@ extern "C" {
 }
 
 impl VectorOfPoint2d {
-    #[doc(hidden)] pub fn as_raw_VectorOfPoint2d(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfPoint2d(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfPoint2d_new() } }
@@ -4175,7 +4595,7 @@ extern "C" {
 }
 
 impl VectorOfPoint2f {
-    #[doc(hidden)] pub fn as_raw_VectorOfPoint2f(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfPoint2f(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfPoint2f_new() } }
@@ -4248,7 +4668,7 @@ extern "C" {
 }
 
 impl VectorOfPtrOfBackendWrapper {
-    #[doc(hidden)] pub fn as_raw_VectorOfPtrOfBackendWrapper(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfPtrOfBackendWrapper(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfPtrOfBackendWrapper_new() } }
@@ -4313,7 +4733,7 @@ extern "C" {
 }
 
 impl VectorOfRange {
-    #[doc(hidden)] pub fn as_raw_VectorOfRange(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfRange(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfRange_new() } }
@@ -4378,7 +4798,7 @@ extern "C" {
 }
 
 impl VectorOfRect {
-    #[doc(hidden)] pub fn as_raw_VectorOfRect(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfRect(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfRect_new() } }
@@ -4451,7 +4871,7 @@ extern "C" {
 }
 
 impl VectorOfRect2d {
-    #[doc(hidden)] pub fn as_raw_VectorOfRect2d(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfRect2d(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfRect2d_new() } }
@@ -4524,7 +4944,7 @@ extern "C" {
 }
 
 impl VectorOfRotatedRect {
-    #[doc(hidden)] pub fn as_raw_VectorOfRotatedRect(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfRotatedRect(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfRotatedRect_new() } }
@@ -4589,7 +5009,7 @@ extern "C" {
 }
 
 impl VectorOfSplit {
-    #[doc(hidden)] pub fn as_raw_VectorOfSplit(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfSplit(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfSplit_new() } }
@@ -4654,7 +5074,7 @@ extern "C" {
 }
 
 impl VectorOfString {
-    #[doc(hidden)] pub fn as_raw_VectorOfString(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfString(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfString_new() } }
@@ -4727,7 +5147,7 @@ extern "C" {
 }
 
 impl VectorOfVec4f {
-    #[doc(hidden)] pub fn as_raw_VectorOfVec4f(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVec4f(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVec4f_new() } }
@@ -4800,7 +5220,7 @@ extern "C" {
 }
 
 impl VectorOfVec6f {
-    #[doc(hidden)] pub fn as_raw_VectorOfVec6f(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVec6f(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVec6f_new() } }
@@ -4873,7 +5293,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfDMatch {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfDMatch(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfDMatch(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfDMatch_new() } }
@@ -4938,7 +5358,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfKeyPoint {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfKeyPoint_new() } }
@@ -5003,7 +5423,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfMat {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfMat(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfMat(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfMat_new() } }
@@ -5068,7 +5488,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfPoint {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfPoint(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfPoint(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfPoint_new() } }
@@ -5133,7 +5553,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfPoint2f {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfPoint2f(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfPoint2f(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfPoint2f_new() } }
@@ -5198,7 +5618,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfRect {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfRect(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfRect(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfRect_new() } }
@@ -5263,7 +5683,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfVectorOfint {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfVectorOfint_new() } }
@@ -5328,7 +5748,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfbool {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfbool(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfbool(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfbool_new() } }
@@ -5393,7 +5813,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfchar {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfchar(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfchar(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfchar_new() } }
@@ -5458,7 +5878,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfint {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfint_new() } }
@@ -5523,7 +5943,7 @@ extern "C" {
 }
 
 impl VectorOfVectorOfuchar {
-    #[doc(hidden)] pub fn as_raw_VectorOfVectorOfuchar(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfVectorOfuchar(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfVectorOfuchar_new() } }
@@ -5588,7 +6008,7 @@ extern "C" {
 }
 
 impl VectorOfbool {
-    #[doc(hidden)] pub fn as_raw_VectorOfbool(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfbool(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfbool_new() } }
@@ -5648,7 +6068,7 @@ extern "C" {
 }
 
 impl VectorOfchar {
-    #[doc(hidden)] pub fn as_raw_VectorOfchar(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfchar(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfchar_new() } }
@@ -5721,7 +6141,7 @@ extern "C" {
 }
 
 impl VectorOfdouble {
-    #[doc(hidden)] pub fn as_raw_VectorOfdouble(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfdouble(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfdouble_new() } }
@@ -5794,7 +6214,7 @@ extern "C" {
 }
 
 impl VectorOffloat {
-    #[doc(hidden)] pub fn as_raw_VectorOffloat(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOffloat(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOffloat_new() } }
@@ -5867,7 +6287,7 @@ extern "C" {
 }
 
 impl VectorOfint {
-    #[doc(hidden)] pub fn as_raw_VectorOfint(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfint(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfint_new() } }
@@ -5940,7 +6360,7 @@ extern "C" {
 }
 
 impl VectorOfsize_t {
-    #[doc(hidden)] pub fn as_raw_VectorOfsize_t(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfsize_t(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfsize_t_new() } }
@@ -6013,7 +6433,7 @@ extern "C" {
 }
 
 impl VectorOfuchar {
-    #[doc(hidden)] pub fn as_raw_VectorOfuchar(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VectorOfuchar(&self) -> *mut c_void { self.ptr }
 
     pub fn new() -> Self {
         unsafe { Self { ptr: cv_VectorOfuchar_new() } }

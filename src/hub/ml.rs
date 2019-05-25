@@ -606,7 +606,12 @@ impl Drop for crate::ml::DTrees_Node {
     }
 }
 impl crate::ml::DTrees_Node {
-    #[doc(hidden)] pub fn as_raw_DTrees_Node(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DTrees_Node(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DTrees_Node {
+            ptr
+        }
+    }
 }
 
 impl DTrees_Node {
@@ -629,7 +634,12 @@ impl Drop for crate::ml::DTrees_Split {
     }
 }
 impl crate::ml::DTrees_Split {
-    #[doc(hidden)] pub fn as_raw_DTrees_Split(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_DTrees_Split(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        DTrees_Split {
+            ptr
+        }
+    }
 }
 
 impl DTrees_Split {
@@ -1145,7 +1155,12 @@ impl Drop for crate::ml::ParamGrid {
     }
 }
 impl crate::ml::ParamGrid {
-    #[doc(hidden)] pub fn as_raw_ParamGrid(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_ParamGrid(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        ParamGrid {
+            ptr
+        }
+    }
 }
 
 impl ParamGrid {

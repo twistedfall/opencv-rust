@@ -375,7 +375,12 @@ impl Drop for crate::videoio::VideoCapture {
     }
 }
 impl crate::videoio::VideoCapture {
-    #[doc(hidden)] pub fn as_raw_VideoCapture(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VideoCapture(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        VideoCapture {
+            ptr
+        }
+    }
 }
 
 impl VideoCapture {
@@ -644,7 +649,12 @@ impl Drop for crate::videoio::VideoWriter {
     }
 }
 impl crate::videoio::VideoWriter {
-    #[doc(hidden)] pub fn as_raw_VideoWriter(&self) -> *mut c_void { self.ptr }
+    pub fn as_raw_VideoWriter(&self) -> *mut c_void { self.ptr }
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        VideoWriter {
+            ptr
+        }
+    }
 }
 
 impl VideoWriter {
