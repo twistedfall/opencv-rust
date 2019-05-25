@@ -152,36 +152,6 @@ impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
 }
 
 extern "C" {
-    #[doc(hidden)] fn cv_PtrOfAffineFeature2D_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfAffineFeature2D_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfAffineFeature2D {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfAffineFeature2D {
-    pub fn as_raw_PtrOfAffineFeature2D(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfAffineFeature2D {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfAffineFeature2D {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfAffineFeature2D_delete(self.ptr) };
-    }
-}
-impl crate::xfeatures2d::AffineFeature2D for PtrOfAffineFeature2D {
-    fn as_raw_AffineFeature2D(&self) -> *mut c_void {
-        unsafe { cv_PtrOfAffineFeature2D_get(self.ptr) }
-    }
-}
-
-extern "C" {
     #[doc(hidden)] fn cv_PtrOfAffineTransformer_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfAffineTransformer_delete(ptr: *mut c_void);
 }
@@ -680,60 +650,6 @@ impl crate::ml::Boost for PtrOfBoost {
 }
 
 extern "C" {
-    #[doc(hidden)] fn cv_PtrOfBoostDesc_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfBoostDesc_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfBoostDesc {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfBoostDesc {
-    pub fn as_raw_PtrOfBoostDesc(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfBoostDesc {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfBoostDesc {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfBoostDesc_delete(self.ptr) };
-    }
-}
-impl crate::xfeatures2d::BoostDesc for PtrOfBoostDesc {
-    fn as_raw_BoostDesc(&self) -> *mut c_void {
-        unsafe { cv_PtrOfBoostDesc_get(self.ptr) }
-    }
-}
-
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfBriefDescriptorExtractor_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfBriefDescriptorExtractor_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfBriefDescriptorExtractor {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfBriefDescriptorExtractor {
-    pub fn as_raw_PtrOfBriefDescriptorExtractor(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfBriefDescriptorExtractor {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfBriefDescriptorExtractor {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfBriefDescriptorExtractor_delete(self.ptr) };
-    }
-}
-extern "C" {
     #[doc(hidden)] fn cv_PtrOfCLAHE_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfCLAHE_delete(ptr: *mut c_void);
 }
@@ -949,36 +865,6 @@ impl Drop for PtrOfCropLayer {
         unsafe { cv_PtrOfCropLayer_delete(self.ptr) };
     }
 }
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfDAISY_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfDAISY_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfDAISY {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfDAISY {
-    pub fn as_raw_PtrOfDAISY(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfDAISY {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfDAISY {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfDAISY_delete(self.ptr) };
-    }
-}
-impl crate::xfeatures2d::DAISY for PtrOfDAISY {
-    fn as_raw_DAISY(&self) -> *mut c_void {
-        unsafe { cv_PtrOfDAISY_get(self.ptr) }
-    }
-}
-
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfDTrees_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfDTrees_delete(ptr: *mut c_void);
@@ -1283,30 +1169,6 @@ impl PtrOfEltwiseLayer {
 impl Drop for PtrOfEltwiseLayer {
     fn drop(&mut self) {
         unsafe { cv_PtrOfEltwiseLayer_delete(self.ptr) };
-    }
-}
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfFREAK_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfFREAK_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfFREAK {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfFREAK {
-    pub fn as_raw_PtrOfFREAK(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfFREAK {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfFREAK {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfFREAK_delete(self.ptr) };
     }
 }
 extern "C" {
@@ -1760,30 +1622,6 @@ impl crate::imgproc::GeneralizedHoughGuil for PtrOfGeneralizedHoughGuil {
 }
 
 extern "C" {
-    #[doc(hidden)] fn cv_PtrOfHarrisLaplaceFeatureDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfHarrisLaplaceFeatureDetector_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfHarrisLaplaceFeatureDetector {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfHarrisLaplaceFeatureDetector {
-    pub fn as_raw_PtrOfHarrisLaplaceFeatureDetector(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfHarrisLaplaceFeatureDetector {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfHarrisLaplaceFeatureDetector {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfHarrisLaplaceFeatureDetector_delete(self.ptr) };
-    }
-}
-extern "C" {
     #[doc(hidden)] fn cv_PtrOfHausdorffDistanceExtractor_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfHausdorffDistanceExtractor_delete(ptr: *mut c_void);
 }
@@ -2198,30 +2036,6 @@ impl core::Algorithm for PtrOfKernel {
 }
 
 extern "C" {
-    #[doc(hidden)] fn cv_PtrOfLATCH_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfLATCH_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfLATCH {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfLATCH {
-    pub fn as_raw_PtrOfLATCH(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfLATCH {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfLATCH {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfLATCH_delete(self.ptr) };
-    }
-}
-extern "C" {
     #[doc(hidden)] fn cv_PtrOfLRNLayer_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfLRNLayer_delete(ptr: *mut c_void);
 }
@@ -2287,30 +2101,6 @@ impl core::Algorithm for PtrOfLSTMLayer {
     }
 }
 
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfLUCID_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfLUCID_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfLUCID {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfLUCID {
-    pub fn as_raw_PtrOfLUCID(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfLUCID {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfLUCID {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfLUCID_delete(self.ptr) };
-    }
-}
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfLineSegmentDetector_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfLineSegmentDetector_delete(ptr: *mut c_void);
@@ -2389,30 +2179,6 @@ impl crate::ml::LogisticRegression for PtrOfLogisticRegression {
     }
 }
 
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfMSDDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfMSDDetector_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfMSDDetector {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfMSDDetector {
-    pub fn as_raw_PtrOfMSDDetector(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfMSDDetector {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfMSDDetector {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfMSDDetector_delete(self.ptr) };
-    }
-}
 extern "C" {
     #[doc(hidden)] fn cv_PtrOfMSER_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfMSER_delete(ptr: *mut c_void);
@@ -2854,78 +2620,6 @@ impl core::Algorithm for PtrOfORB {
 impl crate::features2d::ORB for PtrOfORB {
     fn as_raw_ORB(&self) -> *mut c_void {
         unsafe { cv_PtrOfORB_get(self.ptr) }
-    }
-}
-
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfPCTSignatures_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfPCTSignatures_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfPCTSignatures {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfPCTSignatures {
-    pub fn as_raw_PtrOfPCTSignatures(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfPCTSignatures {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfPCTSignatures {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfPCTSignatures_delete(self.ptr) };
-    }
-}
-impl core::Algorithm for PtrOfPCTSignatures {
-    fn as_raw_Algorithm(&self) -> *mut c_void {
-        unsafe { cv_PtrOfPCTSignatures_get(self.ptr) }
-    }
-}
-
-impl crate::xfeatures2d::PCTSignatures for PtrOfPCTSignatures {
-    fn as_raw_PCTSignatures(&self) -> *mut c_void {
-        unsafe { cv_PtrOfPCTSignatures_get(self.ptr) }
-    }
-}
-
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfPCTSignaturesSQFD_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfPCTSignaturesSQFD_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfPCTSignaturesSQFD {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfPCTSignaturesSQFD {
-    pub fn as_raw_PtrOfPCTSignaturesSQFD(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfPCTSignaturesSQFD {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfPCTSignaturesSQFD {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfPCTSignaturesSQFD_delete(self.ptr) };
-    }
-}
-impl crate::xfeatures2d::PCTSignaturesSQFD for PtrOfPCTSignaturesSQFD {
-    fn as_raw_PCTSignaturesSQFD(&self) -> *mut c_void {
-        unsafe { cv_PtrOfPCTSignaturesSQFD_get(self.ptr) }
-    }
-}
-
-impl core::Algorithm for PtrOfPCTSignaturesSQFD {
-    fn as_raw_Algorithm(&self) -> *mut c_void {
-        unsafe { cv_PtrOfPCTSignaturesSQFD_get(self.ptr) }
     }
 }
 
@@ -3488,60 +3182,6 @@ impl crate::bioinspired::RetinaFastToneMapping for PtrOfRetinaFastToneMapping {
 }
 
 extern "C" {
-    #[doc(hidden)] fn cv_PtrOfSIFT_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfSIFT_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfSIFT {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfSIFT {
-    pub fn as_raw_PtrOfSIFT(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfSIFT {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfSIFT {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfSIFT_delete(self.ptr) };
-    }
-}
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfSURF_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfSURF_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfSURF {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfSURF {
-    pub fn as_raw_PtrOfSURF(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfSURF {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfSURF {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfSURF_delete(self.ptr) };
-    }
-}
-impl crate::xfeatures2d::SURF for PtrOfSURF {
-    fn as_raw_SURF(&self) -> *mut c_void {
-        unsafe { cv_PtrOfSURF_get(self.ptr) }
-    }
-}
-
-extern "C" {
     #[doc(hidden)] fn cv_PtrOfSVM_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOfSVM_delete(ptr: *mut c_void);
 }
@@ -3851,30 +3491,6 @@ impl PtrOfSplitLayer {
 impl Drop for PtrOfSplitLayer {
     fn drop(&mut self) {
         unsafe { cv_PtrOfSplitLayer_delete(self.ptr) };
-    }
-}
-extern "C" {
-    #[doc(hidden)] fn cv_PtrOfStarDetector_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfStarDetector_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfStarDetector {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfStarDetector {
-    pub fn as_raw_PtrOfStarDetector(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfStarDetector {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfStarDetector {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfStarDetector_delete(self.ptr) };
     }
 }
 extern "C" {
@@ -4322,36 +3938,6 @@ impl crate::bioinspired::TransientAreasSegmentationModule for PtrOfTransientArea
 }
 
 extern "C" {
-    #[doc(hidden)] fn cv_PtrOfVGG_get(ptr: *mut c_void) -> *mut c_void;
-    #[doc(hidden)] fn cv_PtrOfVGG_delete(ptr: *mut c_void);
-}
-
-#[allow(dead_code)]
-pub struct PtrOfVGG {
-    pub(crate) ptr: *mut c_void
-}
-
-impl PtrOfVGG {
-    pub fn as_raw_PtrOfVGG(&self) -> *mut c_void { self.ptr }
-    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PtrOfVGG {
-            ptr
-        }
-    }
-}
-
-impl Drop for PtrOfVGG {
-    fn drop(&mut self) {
-        unsafe { cv_PtrOfVGG_delete(self.ptr) };
-    }
-}
-impl crate::xfeatures2d::VGG for PtrOfVGG {
-    fn as_raw_VGG(&self) -> *mut c_void {
-        unsafe { cv_PtrOfVGG_get(self.ptr) }
-    }
-}
-
-extern "C" {
     #[doc(hidden)] fn cv_PtrOffloat_get(ptr: *mut c_void) -> *mut c_void;
     #[doc(hidden)] fn cv_PtrOffloat_delete(ptr: *mut c_void);
 }
@@ -4510,71 +4096,6 @@ impl VectorOfDetectionROI {
     }
 
     pub fn to_vec(&self) -> Vec<crate::objdetect::DetectionROI> {
-        (0..self.len()).map(|x| self.get(x)).collect()
-    }
-}
-#[allow(dead_code)]
-pub struct VectorOfElliptic_KeyPoint {
-    pub(crate) ptr: *mut c_void
-}
-
-extern "C" {
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_new() -> *mut c_void;
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_clone(src: *mut c_void) -> *mut c_void;
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_delete(vec: *mut c_void);
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_reserve(vec: *mut c_void, n: size_t);
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_capacity(vec: *mut c_void) -> size_t;
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_push_back(vec: *mut c_void, val_ref: *const c_void);
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_size(vec: *mut c_void) -> size_t;
-   #[doc(hidden)] fn cv_VectorOfElliptic_KeyPoint_get(vec: *mut c_void, index: size_t) -> *mut c_void;
-}
-
-impl VectorOfElliptic_KeyPoint {
-    pub fn as_raw_VectorOfElliptic_KeyPoint(&self) -> *mut c_void { self.ptr }
-
-    pub fn new() -> Self {
-        unsafe { Self { ptr: cv_VectorOfElliptic_KeyPoint_new() } }
-    }
-
-    pub fn with_capacity(capacity: size_t) -> Self {
-        let mut out = Self::new();
-        out.reserve(capacity);
-        out
-    } 
-
-    pub fn len(&self) -> size_t {
-        unsafe { cv_VectorOfElliptic_KeyPoint_size(self.ptr) }
-    }
-
-    pub fn capacity(&self) -> size_t {
-        unsafe { cv_VectorOfElliptic_KeyPoint_capacity(self.ptr) }
-    }
-
-    pub fn reserve(&mut self, additional: size_t) {
-        unsafe { cv_VectorOfElliptic_KeyPoint_reserve(self.ptr, self.len() + additional) }
-    }
-}
-
-impl Drop for VectorOfElliptic_KeyPoint {
-    fn drop(&mut self) {
-        unsafe { cv_VectorOfElliptic_KeyPoint_delete(self.ptr) };
-    }
-}
-// BoxedClassTypeInfo
-impl VectorOfElliptic_KeyPoint {
-    pub fn push(&mut self, val: crate::xfeatures2d::Elliptic_KeyPoint) {
-        unsafe { cv_VectorOfElliptic_KeyPoint_push_back(self.ptr, val.ptr) }
-    }
-
-    pub fn get(&self, index: size_t) -> crate::xfeatures2d::Elliptic_KeyPoint {
-        crate::xfeatures2d::Elliptic_KeyPoint { ptr: unsafe { cv_VectorOfElliptic_KeyPoint_get(self.ptr, index) } }
-    }
-
-    pub fn get_mut(&mut self, index: size_t) -> crate::xfeatures2d::Elliptic_KeyPoint {
-        crate::xfeatures2d::Elliptic_KeyPoint { ptr: unsafe { cv_VectorOfElliptic_KeyPoint_get(self.ptr, index) } }
-    }
-
-    pub fn to_vec(&self) -> Vec<crate::xfeatures2d::Elliptic_KeyPoint> {
         (0..self.len()).map(|x| self.get(x)).collect()
     }
 }

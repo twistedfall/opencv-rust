@@ -406,6 +406,12 @@ class_ignore_list = (
 
     ### dnn ###
     "cv::dnn::_Range",
+
+    ### xfeatures2d ###
+    # Requires opencv to be configured with -DOPENCV_ENABLE_NONFREE=ON
+    # and needs some gen_rust.py changes to build correctly.
+    "cv::xfeatures2d",
+    ""
 )
 
 # list of constants to skip, elements are regular expressions for re.match() against ConstInfo.name
