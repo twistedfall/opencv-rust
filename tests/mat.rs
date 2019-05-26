@@ -34,7 +34,42 @@ fn mat_at_2d_CV_32FC1() {
     assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 1.23);
     *mat.at_2d_mut::<f32>(0, 0).unwrap() = 1.;
     assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
+}
+
+#[test]
+fn mat_at_with_wrong_type_is_err() {
+    // This will fail in non-debug builds since we don't check the type otherwise
+    let mat =
+        Mat::new_rows_cols_with_default(100, 100, core::CV_32FC1, Scalar::all(1.23)).unwrap();
     assert_is_err(mat.at::<i32>(0));
+
+}
+
+#[test]
+fn set_1d() {
+    let mut mat =
+        Mat::new_rows_cols_with_default(10, 10, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+    mat.set::<f32>(0, 2.22).unwrap();
+    assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 2.22);
+}
+
+#[test]
+fn set_2d() {
+    let mut mat =
+        Mat::new_rows_cols_with_default(10, 10, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+    mat.set_2d::<f32>(2, 3, 2.22).unwrap();
+    assert_almost_eq(*mat.at_2d::<f32>(2, 3).unwrap(), 2.22);
+}
+
+#[test]
+fn set_3d() {
+    let mut dims = VectorOfint::new();
+    dims.push(3);
+    dims.push(3);
+    dims.push(3);
+    let mut mat = Mat::new_nd_with_default(&dims, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+    mat.set_3d::<f32>(0, 1, 2, 2.22);
+    assert_almost_eq(*mat.at_3d::<f32>(0, 1, 2).unwrap(), 2.22);
 }
 
 #[test]

@@ -84,34 +84,79 @@ impl Mat {
 
     #[inline(always)]
     pub(crate) fn _at<T: DataType>(&self, i0: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| self.ptr(i0).map(|x| unsafe { &*(x as *const _ as *const T) }))
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        self.ptr(i0).map(|x| unsafe { &*(x as *const _ as *const T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| self.ptr_mut(i0).map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        self.ptr_mut(i0).map(|x| unsafe { &mut *(x as *mut _ as *mut T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_2d<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| self.ptr_2d(row, col).map(|x| unsafe { &*(x as *const _ as *const T) }))
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        self.ptr_2d(row, col).map(|x| unsafe { &*(x as *const _ as *const T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_2d_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| self.ptr_2d_mut(row, col).map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        self.ptr_2d_mut(row, col).map(|x| unsafe { &mut *(x as *mut _ as *mut T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_3d<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| self.ptr_3d(i0, i1, i2).map(|x| unsafe { &*(x as *const _ as *const T) }))
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        self.ptr_3d(i0, i1, i2).map(|x| unsafe { &*(x as *const _ as *const T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_3d_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| self.ptr_3d_mut(i0, i1, i2).map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        self.ptr_3d_mut(i0, i1, i2).map(|x| unsafe { &mut *(x as *mut _ as *mut T) })
     }
 
+    /// Set a matrix element at a given location on the 0th dimension.
+    pub fn set<T: DataType>(&mut self, i0: i32, value: T) -> Result<()> {
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        *(self.ptr_mut(i0).map(|x| unsafe {&mut *(x as *mut _ as *mut T)}) ?) = value;
+        Ok(())
+    }
+
+    /// Set a matrix element at a given 2D location
+    pub fn set_2d<T: DataType>(&mut self, i0: i32, i1: i32, value: T) -> Result<()> {
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        *(self.ptr_2d_mut(i0, i1).map(|x| unsafe {&mut *(x as *mut _ as *mut T)}) ?) = value;
+        Ok(())
+    }
+
+    /// Set a matrix element at a given 3D location
+    pub fn set_3d<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32, value: T) -> Result<()> {
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        *(self.ptr_3d_mut(i0, i1, i2).map(|x| unsafe {&mut *(x as *mut _ as *mut T)}) ?) = value;
+        Ok(())
+    }
+    
     pub fn at_row<T: DataType>(&self, i0: i32) -> Result<&[T]> {
         let width = self.size()?.width as usize;
         self._at(i0).map(|x| unsafe { slice::from_raw_parts(x, width) })
@@ -157,37 +202,38 @@ impl Mat {
     }
 
     pub fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
-        self.match_format::<T>().and_then(|_| {
-            let dims = self.dims()?;
-            if dims > 2 {
-                return Err(Error::new(core::StsUnmatchedSizes, format!("Cannot convert Mat with dims: {} to 2D Vec", dims)));
-            }
-            let size = self.size()?;
-            let width = size.width as usize;
-            if self.is_continuous()? {
-                let data = self.data_typed()?;
-                Ok((0..size.height)
-                    .map(|row_n| {
-                        let row_n = row_n as usize;
-                        let mut row = Vec::with_capacity(width);
-                        row.extend_from_slice(&data[row_n * width..(row_n + 1) * width]);
-                        row
-                    })
-                    .collect()
-                )
-            } else {
-                Ok((0..size.height)
-                    .map(|row_n| {
-                        self.at_row(row_n).map(|src_row| {
-                            let mut row = Vec::with_capacity(width);
-                            row.extend_from_slice(src_row);
-                            row
-                        })
-                    })
-                    .collect::<Result<_>>()?
-                )
-            }
-        })
+        if cfg!(debug_assertions) {
+            self.match_format::<T>()?;
+        }
+        let dims = self.dims()?;
+        if dims > 2 {
+            return Err(Error::new(core::StsUnmatchedSizes, format!("Cannot convert Mat with dims: {} to 2D Vec", dims)));
+        }
+        let size = self.size()?;
+        let width = size.width as usize;
+        if self.is_continuous()? {
+            let data = self.data_typed()?;
+            Ok((0..size.height)
+               .map(|row_n| {
+                   let row_n = row_n as usize;
+                   let mut row = Vec::with_capacity(width);
+                   row.extend_from_slice(&data[row_n * width..(row_n + 1) * width]);
+                   row
+               })
+               .collect()
+            )
+        } else {
+            Ok((0..size.height)
+               .map(|row_n| {
+                   self.at_row(row_n).map(|src_row| {
+                       let mut row = Vec::with_capacity(width);
+                       row.extend_from_slice(src_row);
+                       row
+                   })
+               })
+               .collect::<Result<_>>()?
+            )
+        }
     }
 }
 
