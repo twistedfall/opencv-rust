@@ -3,6 +3,9 @@ use std::mem::transmute;
 use opencv::core::{self, DataType, Mat, Rect, Scalar, Size, Vec2b, Vec3d};
 use opencv::types::{VectorOfint, VectorOfMat};
 
+mod common;
+use common::*;
+
 const PIXEL: &[u8] = include_bytes!("../pixel.png");
 
 #[test]
@@ -23,30 +26,51 @@ fn mat_for_rows_and_cols() {
     assert_eq!(120000, mat.total().unwrap());
 }
 
-#[test]
-fn mat_at() {
-    let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(0.)).unwrap();
-    assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 0.);
-    *mat.at_2d_mut::<f32>(0, 0).unwrap() = 1.;
-    assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
 
-    if let Ok(..) = mat.at::<i32>(0) {
-        assert!(false, "different types");
-    }
+#[test]
+fn mat_at_2d_CV_32FC1() {
+    let mut mat =
+        Mat::new_rows_cols_with_default(100, 100, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+    assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 1.23);
+    *mat.at_2d_mut::<f32>(0, 0).unwrap() = 1.;
+    assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
+    assert_is_err(mat.at::<i32>(0));
+}
+
+#[test]
+fn mat_at_2d_CV_32FC3() {
+    let mut mat =
+        Mat::new_rows_cols_with_default(100, 100, core::CV_32FC3, Scalar::all(1.23)).unwrap();
+    let pix = *mat.at_2d::<core::Vec3f>(0, 0).unwrap();
+    assert_almost_eq(pix[0], 1.23);
+    assert_almost_eq(pix[1], 1.23);
+    assert_almost_eq(pix[2], 1.23);
+
+    *mat.at_2d_mut::<core::Vec3f>(0, 0).unwrap() = core::Vec3f::from([1.1, 2.2, 3.3]);
+    
+    let pix = *mat.at_2d::<core::Vec3f>(0, 0).unwrap();
+    assert_almost_eq(pix[0], 1.1);
+    assert_almost_eq(pix[1], 2.2);
+    assert_almost_eq(pix[2], 3.3);
+}
+
+#[test]
+fn mat_at_row_CV_32FC1() {
+    let mut mat = Mat::new_rows_cols_with_default(100, 100, core::CV_32FC1, Scalar::all(1.23)).unwrap();
 
     let row = mat.at_row::<f32>(0).unwrap();
     assert_eq!(row.len(), 100);
-    assert_eq!(row[0], 1.);
+    assert_eq!(row[0], 1.23);
 
     let row = mat.at_row_mut::<f32>(1).unwrap();
     row[0..4].copy_from_slice(&[10., 20., 30., 40.]);
 
     let data = mat.data_typed::<f32>().unwrap();
-    assert_eq!(data[0], 1.);
-    assert_eq!(data[100], 10.);
-    assert_eq!(data[103], 40.);
-
-    // todo unallocated Mat, zero sized Mat
+    assert_almost_eq(data[0], 1.23);
+    assert_almost_eq(data[100], 10.);
+    assert_almost_eq(data[101], 20.);
+    assert_almost_eq(data[102], 30.);
+    assert_almost_eq(data[103], 40.);
 }
 
 #[test]
