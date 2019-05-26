@@ -56,7 +56,7 @@ cmake \
     -DINSTALL_TESTS=OFF \
     -DBUILD_DOCS=OFF \
     -DBUILD_EXAMPLES=OFF \
-    -DBUILD_opencv_apps= \
+    -DBUILD_opencv_apps=ALL \
     -DWITH_IPP=OFF \
     -DPYTHON_EXECUTABLE=OFF \
     -DINSTALL_PYTHON_EXAMPLES=OFF \
