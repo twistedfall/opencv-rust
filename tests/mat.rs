@@ -26,6 +26,23 @@ fn mat_for_rows_and_cols() {
     assert_eq!(120000, mat.total().unwrap());
 }
 
+#[test]
+fn mat_at_1d_refers_to_rows() {
+    let mut mat =
+        Mat::new_rows_cols_with_default(100, 100, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+    *mat.at_mut::<f32>(5).unwrap() = 1.;
+    assert_almost_eq(*mat.at_2d::<f32>(5, 0).unwrap(), 1.);
+}
+
+#[test]
+fn mat_2d_i0_is_rows_i1_is_cols() {
+    // Just a sanity check about which Mat dimension corresponds to which in Size
+    let mut mat =
+        Mat::new_rows_cols_with_default(5, 6, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+    let size = mat.size().unwrap();
+    assert_eq!(size.width, 6);
+    assert_eq!(size.height, 5);
+}
 
 #[test]
 fn mat_at_2d_CV_32FC1() {
@@ -35,6 +52,7 @@ fn mat_at_2d_CV_32FC1() {
     *mat.at_2d_mut::<f32>(0, 0).unwrap() = 1.;
     assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
     assert_is_err(mat.at::<i32>(0));
+    assert_is_err(mat.at::<f32>(100));
 }
 
 #[test]
@@ -52,6 +70,10 @@ fn mat_at_2d_CV_32FC3() {
     assert_almost_eq(pix[0], 1.1);
     assert_almost_eq(pix[1], 2.2);
     assert_almost_eq(pix[2], 3.3);
+
+    assert_is_err(mat.at_2d::<i32>(0, 0));
+    assert_is_err(mat.at_2d::<core::Vec3f>(100, 1));
+    assert_is_err(mat.at_2d::<core::Vec3f>(1, 100));
 }
 
 #[test]
@@ -71,6 +93,11 @@ fn mat_at_row_CV_32FC1() {
     assert_almost_eq(data[101], 20.);
     assert_almost_eq(data[102], 30.);
     assert_almost_eq(data[103], 40.);
+
+    assert_is_err(mat.at_row::<i32>(0));
+    assert_is_err(mat.at_row::<i32>(100));
+    assert_is_err(mat.at_row_mut::<i32>(0));
+    assert_is_err(mat.at_row_mut::<i32>(100));
 }
 
 #[test]

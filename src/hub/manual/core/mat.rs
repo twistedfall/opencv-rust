@@ -83,43 +83,133 @@ impl Mat {
     }
 
     #[inline(always)]
-    pub(crate) fn _at<T: DataType>(&self, i0: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| self.ptr(i0).map(|x| unsafe { &*(x as *const _ as *const T) }))
+    pub(crate) fn _at<T: DataType>(&self, row: i32) -> Result<&T> {
+        self.match_format::<T>()?;
+        let size = self.size()?;
+        if row >= size.height {
+            return Err(Error::new(
+                core::StsOutOfRange,
+                format!("Given coordinate is out of bounds. \
+                         Mat has size {:?} but was given row: {}", size, row)));
+        }
+        unsafe { self.at_unchecked(row) }
+    }
+
+    /// Like `Mat::at()` but performs no bounds or type checks
+    ///
+    /// Note that this (and `Mat::at()`) differs from the behavior of OpenCV's
+    /// `_Tp& cv::Mat::at(int i0 = 0)`, in that it only looks up by row, and
+    /// does not look up by column in the case of single-row Mats, as OpenCV's
+    /// `Mat::at()` does.
+    /// (This upstream behavior is documented at https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html#aa5d20fc86d41d59e4d71ae93daee9726)
+    pub unsafe fn at_unchecked<T: DataType>(&self, row: i32) -> Result<&T> {
+        self.ptr(row).map(|x| unsafe { &*(x as *const _ as *const T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| self.ptr_mut(i0).map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
+        self.match_format::<T>()?;
+        let size = self.size()?;
+        if i0 >= size.height {
+            return Err(Error::new(
+                core::StsOutOfRange,
+                format!("Given coordinate is out of bounds. \
+                         Mat has size {:?} but was given i0: {}", size, i0)));
+        }
+        unsafe { self.at_mut_unchecked(i0) }
+    }
+
+    /// Like `Mat::at_mut()` but performs no bounds or type checks
+    pub unsafe fn at_mut_unchecked<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
+        self.ptr_mut(i0).map(|x| unsafe { &mut *(x as *mut _ as *mut T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_2d<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| self.ptr_2d(row, col).map(|x| unsafe { &*(x as *const _ as *const T) }))
+        self.match_format::<T>()?;
+        let size = self.size()?;
+        if row >= size.height || col >= size.width {
+            return Err(Error::new(
+                core::StsOutOfRange,
+                format!("Given coordinate is out of bounds. \
+                         Mat has size {:?} but was given row: {}, col: {}", size, row, col)));
+        }
+        unsafe { self.at_2d_unchecked(row, col) }
+    }
+
+    /// Like `Mat::at_2d()` but performs no bounds or type checks
+    pub unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
+        self.ptr_2d(row, col).map(|x| unsafe { &*(x as *const _ as *const T) })
     }
 
     #[inline(always)]
     pub(crate) fn _at_2d_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| self.ptr_2d_mut(row, col).map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
+        self.match_format::<T>()?;
+        let size = self.size()?;
+        if row >= size.height || col >= size.width {
+            return Err(Error::new(
+                core::StsOutOfRange,
+                format!("Given coordinate is out of bounds. \
+                         Mat has size {:?} but was given row: {}, col: {}", size, row, col)));
+        }
+        unsafe { self.at_2d_mut_unchecked(row, col) }
     }
 
+    /// Like `Mat::at_2d_mut()` but performs no bounds or type checks
+    pub unsafe fn at_2d_mut_unchecked<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
+        self.ptr_2d_mut(row, col).map(|x| unsafe { &mut *(x as *mut _ as *mut T) })
+    }
+
+    /// Note that since the bindings are set up to wrap all Mat sizes in our custom `Size` struct
+    /// instead of a `MatSize` smart pointer, we don't have a good way to check bounds on Mats with
+    /// more than 2 dimensions, so we can't perform a real bounds check here.
     #[inline(always)]
     pub(crate) fn _at_3d<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
         self.match_format::<T>().and_then(|_| self.ptr_3d(i0, i1, i2).map(|x| unsafe { &*(x as *const _ as *const T) }))
     }
 
+    /// See safety caveats of `Mat::_at_3d()`
     #[inline(always)]
     pub(crate) fn _at_3d_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
         self.match_format::<T>().and_then(|_| self.ptr_3d_mut(i0, i1, i2).map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
     }
 
-    pub fn at_row<T: DataType>(&self, i0: i32) -> Result<&[T]> {
-        let width = self.size()?.width as usize;
-        self._at(i0).map(|x| unsafe { slice::from_raw_parts(x, width) })
+    /// Return a complete read-only row
+    pub fn at_row<T: DataType>(&self, row: i32) -> Result<&[T]> {
+        self.match_format::<T>()?;
+        let size = self.size()?;
+        if row >= size.height {
+            return Err(Error::new(
+                core::StsOutOfRange,
+                format!("Given coordinate is out of bounds. \
+                         Mat has size {:?} but was given row: {}", size, row)));
+        }
+        unsafe { self.at_row_unchecked(row) }
     }
 
-    pub fn at_row_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut [T]> {
+    /// Like `Mat::at_row()` but performs no bounds or type checks
+    pub unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
         let width = self.size()?.width as usize;
-        self._at_mut(i0).map(|x| unsafe { slice::from_raw_parts_mut(x, width) })
+        self.at_unchecked(row).map(|x| slice::from_raw_parts(x, width))
+    }
+
+    /// Return a complete writeable row
+    pub fn at_row_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
+        self.match_format::<T>()?;
+        let size = self.size()?;
+        if row >= size.height {
+            return Err(Error::new(
+                core::StsOutOfRange,
+                format!("Given coordinate is out of bounds. \
+                         Mat has size {:?} but was given row: {}", size, row)));
+        }
+        unsafe { self.at_row_mut_unchecked(row) }
+    }
+
+    /// Like `Mat::at_row_mut()` but performs no bounds or type checks
+    pub unsafe fn at_row_mut_unchecked<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
+        let width = self.size()?.width as usize;
+        self.at_mut_unchecked(row).map(|x| slice::from_raw_parts_mut(x, width))
     }
 
     pub fn data_typed<T: DataType>(&self) -> Result<&[T]> {
