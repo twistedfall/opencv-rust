@@ -1610,7 +1610,10 @@ class TypeInfo(object):
 
     def cpp_method_return(self, is_constructor):
         if self.is_by_ptr:
-            return "return { Error::Code::StsOk, NULL, ret };"
+            if is_constructor:
+                return "return { Error::Code::StsOk, NULL, ret };"
+            else:
+                return "return {{ Error::Code::StsOk, NULL, new {}(ret) }};".format(self.cpptype)
         return "return {{ Error::Code::StsOk, NULL, *reinterpret_cast<{}*>(&ret) }};".format(self.cpp_extern)
 
     def rust_cpp_return_wrapper_type(self):
@@ -1796,11 +1799,6 @@ class BoxedClassTypeInfo(TypeInfo):
             return "{}* ret = new {}({});".format(self.cpptype, call_name, call_args)
         return super(BoxedClassTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, is_property)
 
-    def cpp_method_return(self, is_constructor):
-        if not is_constructor:
-            return "return {{ Error::Code::StsOk, NULL, new {}(ret) }};".format(self.cpptype)
-        return super(BoxedClassTypeInfo, self).cpp_method_return(is_constructor)
-
     def __str__(self):
         return "%s (boxed)"%(self.typeid)
 
@@ -1979,9 +1977,6 @@ class VectorTypeInfo(TypeInfo):
             self.cpp_extern = "void*"
             self.c_safe_id = "void_X"
             self.inner_cpptype = inner.cpptype
-            if isinstance(self.inner, SmartPtrTypeInfo):
-                self.outer_cpptype = "std::vector<%s>" % (self.inner.outer_cpptype)
-                self.inner_outer_cpptype = self.inner.outer_cpptype
             self.cpptype = "std::vector<%s>" % (inner.cpptype)
             self.rust_safe_id = self.rust_local = "VectorOf"+inner.rust_safe_id
             self.rust_full = "types::" + self.rust_local
@@ -1999,12 +1994,7 @@ class VectorTypeInfo(TypeInfo):
                     f.write(VectorTypeInfo.TEMPLATES["rust_non_bool"].substitute(self.__dict__))
 
         write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
-        if isinstance(self.inner, SmartPtrTypeInfo):
-            template_vars = self.__dict__.copy()
-            template_vars["cpptype"] = self.outer_cpptype
-            template_vars["inner_cpptype"] = self.inner_outer_cpptype
-        else:
-            template_vars = self.__dict__
+        template_vars = self.__dict__
         externs = VectorTypeInfo.TEMPLATES["cpp_externs"].substitute(template_vars)
         if self.inner.typeid == "bool":
             externs += VectorTypeInfo.TEMPLATES["cpp_externs_bool"].substitute(template_vars)
@@ -2014,14 +2004,6 @@ class VectorTypeInfo(TypeInfo):
             "{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id),
             lambda f: f.write(T_CPP_MODULE.substitute(code=externs, includes=""))
         )
-
-    def cpp_arg_func_call(self, var_name, is_output=False):
-        if isinstance(self.inner, SmartPtrTypeInfo):
-            return "*reinterpret_cast<{}*>({})".format(self.outer_cpptype.replace("&", ""), var_name)
-        return super(VectorTypeInfo, self).cpp_arg_func_call(var_name, is_output)
-
-    def cpp_method_return(self, is_constructor):
-        return "return {{ Error::Code::StsOk, NULL, (void *)new {}(ret) }};".format(self.cpptype)
 
     def __str__(self):
         return "Vector[%s]" % (self.inner)
@@ -2067,10 +2049,10 @@ class SmartPtrTypeInfo(TypeInfo):
 
         "cpp_externs": template("""
                 void* cv_${rust_safe_id}_get(${cpp_extern} ptr) {
-                    return reinterpret_cast<${outer_cpptype}*>(ptr)->get();
+                    return reinterpret_cast<${cpptype}*>(ptr)->get();
                 }
                 void  cv_${rust_safe_id}_delete(${cpp_extern} ptr) {
-                    delete reinterpret_cast<${outer_cpptype}*>(ptr);
+                    delete reinterpret_cast<${cpptype}*>(ptr);
                 }
             """),
     }
@@ -2089,12 +2071,9 @@ class SmartPtrTypeInfo(TypeInfo):
             self.cpp_extern = "void*"
             self.c_safe_id = "void_X"
             self.rust_extern = "*mut c_void"
-            self.cpptype = self.inner.cpptype
-            self.outer_cpptype = "Ptr<{}>".format(self.inner.cpptype)
+            self.cpptype = "Ptr<{}>".format(self.inner.cpptype)
             self.rust_local = self.rust_safe_id = "PtrOf{}".format(inner.rust_safe_id)
             self.rust_full = "types::{}".format(self.rust_local)
-            self.inner_rust_full = inner.rust_full
-            self.inner_local = inner.rust_local
 
     def gen_wrappers(self):
         def write_rust(f):
@@ -2117,12 +2096,6 @@ class SmartPtrTypeInfo(TypeInfo):
             "{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id),
             lambda f: f.write(T_CPP_MODULE.substitute(code=SmartPtrTypeInfo.TEMPLATES["cpp_externs"].substitute(self.__dict__), includes=""))
         )
-
-    def cpp_arg_func_call(self, var_name, is_output=False):
-        return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
-
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
-        return "Ptr<{}> *ret = new Ptr<{}>({}({}));".format(self.cpptype, self.cpptype, call_name, call_args, is_property)
 
     def __str__(self):
         return "SmartPtr[%s]" % (self.inner)
