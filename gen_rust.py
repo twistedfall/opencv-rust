@@ -804,7 +804,7 @@ class FuncInfo(GeneralInfo):
 
         "rust_safe": template("""
                 ${doc_comment}${visibility}${unsafety_decl}fn ${r_name}${generic_decl}(${args}) -> Result<$rv_rust_full> {${pre_call_args}
-                    ${unsafety_call}{ sys::${identifier}(${call_args}) }.into_result()${rv}
+                    ${prefix}${unsafety_call}{ sys::${identifier}(${call_args}) }.into_result()${suffix}${rv}${post_call_args}
                 }
                 
             """),
@@ -1065,6 +1065,7 @@ class FuncInfo(GeneralInfo):
         call_args = []
         forward_args = []
         pre_call_args = []
+        post_call_args = []
 
         lifetimes = set()  # todo implement lifetime elision rules, type should specify only &type and do replacement of & with &'a
         # if self.rv_type().rust_lifetimes:
@@ -1092,6 +1093,9 @@ class FuncInfo(GeneralInfo):
             pre_call_arg = arg.type.rust_arg_pre_call(arg.rsname)
             if pre_call_arg:
                 pre_call_args.append(pre_call_arg)
+            post_call_arg = arg.type.rust_arg_post_call(arg.rsname)
+            if post_call_arg:
+                post_call_args.append(post_call_arg)
             gdecl = arg.type.rust_generic_decl()
             if gdecl:
                 generic_decls.append(gdecl)
@@ -1113,6 +1117,13 @@ class FuncInfo(GeneralInfo):
             if attr_pos == -1:
                 attr_pos = len(doc_comment)
             doc_comment = doc_comment[:attr_pos] + defattr_doc_comment + doc_comment[attr_pos:]
+        prefix = ""
+        suffix = ""
+        if len(post_call_args) > 0:
+            post_call_args.append("return out")
+            prefix = "let out = "
+            suffix = ";"
+
         template_vars = combine_dicts(self.__dict__, {
             "doc_comment": doc_comment,
             "rv_rust_full": self.rv_type().rust_full,
@@ -1120,8 +1131,11 @@ class FuncInfo(GeneralInfo):
             "unsafety_call": "unsafe " if self.is_safe else "",
             "visibility": pub,
             "generic_decl": "<{}>".format(", ".join(generic_decls)) if len(generic_decls) >= 1 else "",
+            "prefix": prefix,
+            "suffix": suffix,
             "args": ", ".join(args),
             "pre_call_args": "".join("\n" + indent(x) + ";" for x in pre_call_args),
+            "post_call_args": "".join("\n" + indent(x) + ";" for x in post_call_args),
             "r_name": self.r_name(),
             "call_args": ", ".join(call_args),
             "forward_args": ", ".join(forward_args),
@@ -1560,6 +1574,14 @@ class TypeInfo(object):
         if not self.is_by_ptr and self.is_by_ref and not self.is_const:
             return "{}: &mut {}".format(var_name, self.rust_extern)
         return "{}: {}".format(var_name, self.rust_extern)
+
+    def rust_arg_post_call(self, var_name, is_output=False):
+        """
+        :type var_name: str
+        :type is_output: bool
+        :rtype: str
+        """
+        return ""
 
     def rust_cpp_return_wrapper_type(self):
         """
