@@ -944,14 +944,14 @@ class FuncInfo(GeneralInfo):
         if self.identifier in self.gen.generated:
             return "already there"
 
+        if func_rename.get(self.identifier) == "-":
+            return "ignored by rename table"
+
         if self.identifier in func_manual:
             return None
 
         if self.name.startswith("operator"):
             return "can not map %s yet"%(self.name)
-
-        if func_rename.get(self.identifier) == "-":
-            return "ignored by renamed table"
 
         if not self.rv_type():
             return "rv_header_type returns None. this is an error. (class not found ?)"
