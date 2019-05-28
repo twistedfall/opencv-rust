@@ -612,6 +612,21 @@ reserved_rename = {
 # list of modules that are imported into every other module so there is no need to reference them using full path, elements are module names
 static_modules = ("core", "sys", "types")
 
+
+def decl_patch(module, decl):
+    if module == "objdetect":
+        # replace Mat with explicit vector because detect functions only accept vector InputArray
+        if decl[0] == "cv.QRCodeDetector.detect" or decl[0] == "cv.QRCodeDetector.detectAndDecode":
+            pts_arg = decl[3][1]
+            if pts_arg[0] == "OutputArray" and pts_arg[1] == "points":
+                decl[3][1][0] = "std::vector<Point>&"
+        elif decl[0] == "cv.QRCodeDetector.decode" or decl[0] == "cv.decodeQRCode":
+            pts_arg = decl[3][1]
+            if pts_arg[0] == "InputArray" and pts_arg[1] == "points":
+                decl[3][1][0] = "const std::vector<Point>&"
+    return decl
+
+
 #
 #       TEMPLATES
 #
@@ -2423,6 +2438,7 @@ class RustWrapperGenerator(object):
         return None
 
     def add_decl(self, module, decl):
+        decl = decl_patch(module, decl)
         if decl[0] == "cv.String.String" or decl[0] == 'cv.Exception.~Exception':
             return
         if decl[0] == "cv.Algorithm":
