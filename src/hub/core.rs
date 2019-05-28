@@ -1234,6 +1234,11 @@ pub fn depth_to_string_(depth: i32) -> Result<String> {
     unsafe { sys::cv_detail_depthToString__int(depth) }.into_result().map(crate::templ::receive_string)
 }
 
+/// Returns string of cv::Mat depth value: CV_8UC3 -> "CV_8UC3" or cv::String()
+pub fn type_to_string_(_type: i32) -> Result<String> {
+    unsafe { sys::cv_detail_typeToString__int(_type) }.into_result().map(crate::templ::receive_string)
+}
+
 /// Returns the determinant of a square floating-point matrix.
 /// 
 /// The function cv::determinant calculates and returns the determinant of the
@@ -1707,6 +1712,19 @@ pub fn gemm(src1: &core::Mat, src2: &core::Mat, alpha: f64, src3: &core::Mat, be
 /// architecture.
 pub fn get_build_information() -> Result<String> {
     unsafe { sys::cv_getBuildInformation() }.into_result().map(crate::templ::receive_string)
+}
+
+/// Returns list of CPU features enabled during compilation.
+/// 
+/// Returned value is a string containing space separated list of CPU features with following markers:
+/// 
+/// - no markers - baseline features
+/// - prefix `*` - features enabled in dispatcher
+/// - suffix `?` - features enabled but not available in HW
+/// 
+/// Example: `SSE SSE2 SSE3 *SSE4.1 *SSE4.2 *FP16 *AVX *AVX2 *AVX512-SKX?`
+pub fn get_cpu_features_line() -> Result<String> {
+    unsafe { sys::cv_getCPUFeaturesLine() }.into_result().map(crate::templ::receive_string_mut)
 }
 
 /// Returns the number of CPU ticks.
@@ -2946,6 +2964,71 @@ pub fn round_up(a: i32, b: u32) -> Result<i32> {
 /// ## Overloaded parameters
 pub fn round_up_1(a: size_t, b: u32) -> Result<size_t> {
     unsafe { sys::cv_roundUp_size_t_unsigned_int(a, b) }.into_result()
+}
+
+/// Override search data path by adding new search location
+/// 
+/// Use this only to override default behavior
+/// Passed paths are used in LIFO order.
+/// 
+/// ## Parameters
+/// * path: Path to used samples data
+pub fn add_samples_data_search_path(path: &str) -> Result<()> {
+    string_arg!(path);
+    unsafe { sys::cv_samples_addSamplesDataSearchPath_String(path.as_ptr()) }.into_result()
+}
+
+/// Append samples search data sub directory
+/// 
+/// General usage is to add OpenCV modules name (`<opencv_contrib>/modules/<name>/samples/data` -> `<name>/samples/data` + `modules/<name>/samples/data`).
+/// Passed subdirectories are used in LIFO order.
+/// 
+/// ## Parameters
+/// * subdir: samples data sub directory
+pub fn add_samples_data_search_sub_directory(subdir: &str) -> Result<()> {
+    string_arg!(subdir);
+    unsafe { sys::cv_samples_addSamplesDataSearchSubDirectory_String(subdir.as_ptr()) }.into_result()
+}
+
+///
+/// ## C++ default parameters
+/// * silent_mode: false
+pub fn find_file_or_keep(relative_path: &str, silent_mode: bool) -> Result<String> {
+    string_arg!(relative_path);
+    unsafe { sys::cv_samples_findFileOrKeep_String_bool(relative_path.as_ptr(), silent_mode) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+/// Try to find requested data file
+/// 
+/// Search directories:
+/// 
+/// 1. Directories passed via `addSamplesDataSearchPath()`
+/// 2. OPENCV_SAMPLES_DATA_PATH_HINT environment variable
+/// 3. OPENCV_SAMPLES_DATA_PATH environment variable
+/// If parameter value is not empty and nothing is found then stop searching.
+/// 4. Detects build/install path based on:
+/// a. current working directory (CWD)
+/// b. and/or binary module location (opencv_core/opencv_world, doesn't work with static linkage)
+/// 5. Scan `<source>/{,data,samples/data}` directories if build directory is detected or the current directory is in source tree.
+/// 6. Scan `<install>/share/OpenCV` directory if install directory is detected.
+/// 
+/// @see cv::utils::findDataFile
+/// 
+/// ## Parameters
+/// * relative_path: Relative path to data file
+/// * required: Specify "file not found" handling.
+/// If true, function prints information message and raises cv::Exception.
+/// If false, function returns empty result
+/// * silentMode: Disables messages
+/// ## Returns
+/// Returns path (absolute or relative to the current directory) or empty string if file is not found
+///
+/// ## C++ default parameters
+/// * required: true
+/// * silent_mode: false
+pub fn find_file(relative_path: &str, required: bool, silent_mode: bool) -> Result<String> {
+    string_arg!(relative_path);
+    unsafe { sys::cv_samples_findFile_String_bool_bool(relative_path.as_ptr(), required, silent_mode) }.into_result().map(crate::templ::receive_string_mut)
 }
 
 /// Calculates the sum of a scaled array and another array.
@@ -5451,6 +5534,11 @@ impl Mat {
     /// pointer to the data
     pub fn data(&mut self) -> Result<&mut u8> {
         unsafe { sys::cv_Mat_data(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// pointer to the data
+    pub unsafe fn set_data(&mut self, val: &mut u8) -> Result<()> {
+        { sys::cv_Mat_set_data_uchar_X(self.as_raw_Mat(), val) }.into_result()
     }
     
     /// helper fields used in locateROI and adjustROI

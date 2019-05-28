@@ -72,6 +72,22 @@ pub fn create_face_detection_mask_generator() -> Result<types::PtrOfMaskGenerato
     unsafe { sys::cv_createFaceDetectionMaskGenerator() }.into_result().map(|x| types::PtrOfMaskGenerator { ptr: x })
 }
 
+/// Decode QR code in image and return text that is encrypted in QR code.
+/// ## Parameters
+/// * in: Matrix of the type CV_8UC1 containing an image where QR code are detected.
+/// * points: Input vector of vertices of a quadrangle of minimal area that describes QR code.
+/// * decoded_info: String information that is encrypted in QR code.
+/// * straight_qrcode: Matrix of the type CV_8UC1 containing an binary straight QR code.
+///
+/// ## C++ default parameters
+/// * straight_qrcode: noArray()
+pub fn decode_qr_code(_in: &core::Mat, points: &types::VectorOfPoint, decoded_info: &mut String, straight_qrcode: &mut core::Mat) -> Result<bool> {
+    string_arg_output_send!(via decoded_info_via);
+    let out = unsafe { sys::cv_decodeQRCode_Mat_VectorOfPoint_std_string_Mat(_in.as_raw_Mat(), points.as_raw_VectorOfPoint(), &mut decoded_info_via, straight_qrcode.as_raw_Mat()) }.into_result();
+    string_arg_output_receive!(decoded_info_via => decoded_info);
+    return out;
+}
+
 /// Detect QR code in image and return minimum area of quadrangle that describes QR code.
 /// ## Parameters
 /// * in: Matrix of the type CV_8UC1 containing an image where QR code are detected.
@@ -130,7 +146,7 @@ pub fn group_rectangles_levels(rect_list: &mut types::VectorOfRect, reject_level
 ///
 /// ## C++ default parameters
 /// * eps: 0.2
-pub fn group_rectangle_weights(rect_list: &mut types::VectorOfRect, weights: &mut types::VectorOfint, group_threshold: i32, eps: f64) -> Result<()> {
+pub fn group_rectangles_weights(rect_list: &mut types::VectorOfRect, weights: &mut types::VectorOfint, group_threshold: i32, eps: f64) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_VectorOfint_int_double(rect_list.as_raw_VectorOfRect(), weights.as_raw_VectorOfint(), group_threshold, eps) }.into_result()
 }
 
@@ -152,7 +168,7 @@ pub fn group_rectangle_weights(rect_list: &mut types::VectorOfRect, weights: &mu
 ///
 /// ## C++ default parameters
 /// * eps: 0.2
-pub fn group_rectangle(rect_list: &mut types::VectorOfRect, group_threshold: i32, eps: f64) -> Result<()> {
+pub fn group_rectangles(rect_list: &mut types::VectorOfRect, group_threshold: i32, eps: f64) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_int_double(rect_list.as_raw_VectorOfRect(), group_threshold, eps) }.into_result()
 }
 
@@ -173,7 +189,7 @@ pub fn group_rectangle(rect_list: &mut types::VectorOfRect, group_threshold: i32
 /// cluster, the average rectangle is computed and put into the output rectangle list.
 /// 
 /// ## Overloaded parameters
-pub fn group_rectangle_levelweights(rect_list: &mut types::VectorOfRect, group_threshold: i32, eps: f64, weights: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble) -> Result<()> {
+pub fn group_rectangles_levelweights(rect_list: &mut types::VectorOfRect, group_threshold: i32, eps: f64, weights: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_int_double_VectorOfint_VectorOfdouble(rect_list.as_raw_VectorOfRect(), group_threshold, eps, weights.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble()) }.into_result()
 }
 
@@ -660,7 +676,7 @@ impl HOGDescriptor {
     /// Sets coefficients for the linear SVM classifier.
     /// ## Parameters
     /// * _svmdetector: coefficients for the linear SVM classifier.
-    pub fn set_svm_detector(&mut self, _svmdetector: &core::Mat) -> Result<()> {
+    pub fn set_svm_detector_mat(&mut self, _svmdetector: &core::Mat) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_setSVMDetector_Mat(self.as_raw_HOGDescriptor(), _svmdetector.as_raw_Mat()) }.into_result()
     }
     
@@ -934,6 +950,16 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_gammaCorrection_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    /// coefficients for the linear SVM classifier.
+    pub fn svm_detector(&mut self) -> Result<types::VectorOffloat> {
+        unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|x| types::VectorOffloat { ptr: x })
+    }
+    
+    /// coefficients for the linear SVM classifier.
+    pub fn set_svm_detector(&mut self, val: &types::VectorOffloat) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_svmDetector_VectorOffloat(self.as_raw_HOGDescriptor(), val.as_raw_VectorOffloat()) }.into_result()
+    }
+    
     /// Maximum number of detection window increases. Default value is 64
     pub fn nlevels(&self) -> Result<i32> {
         unsafe { sys::cv_HOGDescriptor_nlevels_const(self.as_raw_HOGDescriptor()) }.into_result()
@@ -991,8 +1017,36 @@ impl QRCodeDetector {
     /// ## Parameters
     /// * img: grayscale or color (BGR) image containing (or not) QR code.
     /// * points: Output vector of vertices of the minimum-area quadrangle containing the code.
-    pub fn detect(&self, img: &core::Mat, points: &mut core::Mat) -> Result<bool> {
-        unsafe { sys::cv_QRCodeDetector_detect_const_Mat_Mat(self.as_raw_QRCodeDetector(), img.as_raw_Mat(), points.as_raw_Mat()) }.into_result()
+    pub fn detect(&self, img: &core::Mat, points: &mut types::VectorOfPoint) -> Result<bool> {
+        unsafe { sys::cv_QRCodeDetector_detect_const_Mat_VectorOfPoint(self.as_raw_QRCodeDetector(), img.as_raw_Mat(), points.as_raw_VectorOfPoint()) }.into_result()
+    }
+    
+    /// Decodes QR code in image once it's found by the detect() method.
+    /// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
+    /// 
+    /// ## Parameters
+    /// * img: grayscale or color (BGR) image containing QR code.
+    /// * points: Quadrangle vertices found by detect() method (or some other algorithm).
+    /// * straight_qrcode: The optional output image containing rectified and binarized QR code
+    ///
+    /// ## C++ default parameters
+    /// * straight_qrcode: noArray()
+    pub fn decode(&mut self, img: &core::Mat, points: &types::VectorOfPoint, straight_qrcode: &mut core::Mat) -> Result<String> {
+        unsafe { sys::cv_QRCodeDetector_decode_Mat_VectorOfPoint_Mat(self.as_raw_QRCodeDetector(), img.as_raw_Mat(), points.as_raw_VectorOfPoint(), straight_qrcode.as_raw_Mat()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Both detects and decodes QR code
+    /// 
+    /// ## Parameters
+    /// * img: grayscale or color (BGR) image containing QR code.
+    /// * points: opiotnal output array of vertices of the found QR code quadrangle. Will be empty if not found.
+    /// * straight_qrcode: The optional output image containing rectified and binarized QR code
+    ///
+    /// ## C++ default parameters
+    /// * points: noArray()
+    /// * straight_qrcode: noArray()
+    pub fn detect_and_decode(&mut self, img: &core::Mat, points: &mut types::VectorOfPoint, straight_qrcode: &mut core::Mat) -> Result<String> {
+        unsafe { sys::cv_QRCodeDetector_detectAndDecode_Mat_VectorOfPoint_Mat(self.as_raw_QRCodeDetector(), img.as_raw_Mat(), points.as_raw_VectorOfPoint(), straight_qrcode.as_raw_Mat()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }

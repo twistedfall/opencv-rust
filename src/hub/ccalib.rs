@@ -476,6 +476,11 @@ impl MultiCameraCalibration {
         unsafe { sys::cv_multicalib_MultiCameraCalibration_run(self.as_raw_MultiCameraCalibration()) }.into_result()
     }
     
+    pub fn write_parameters(&mut self, filename: &str) -> Result<()> {
+        string_arg!(filename);
+        unsafe { sys::cv_multicalib_MultiCameraCalibration_writeParameters_std_string(self.as_raw_MultiCameraCalibration(), filename.as_ptr()) }.into_result()
+    }
+    
 }
 
 // boxed class cv::multicalib::MultiCameraCalibration::edge

@@ -155,6 +155,13 @@ pub fn clamp(ax: i32, dims: i32) -> Result<i32> {
     unsafe { sys::cv_dnn_clamp_int_int(ax, dims) }.into_result()
 }
 
+/// Returns Inference Engine VPU type.
+/// 
+/// See values of `CV_DNN_INFERENCE_ENGINE_VPU_TYPE_*` macros.
+pub fn get_inference_engine_vpu_type() -> Result<String> {
+    unsafe { sys::cv_dnn_getInferenceEngineVPUType() }.into_result().map(crate::templ::receive_string_mut)
+}
+
 pub fn get_plane(m: &core::Mat, n: i32, cn: i32) -> Result<core::Mat> {
     unsafe { sys::cv_dnn_getPlane_Mat_int_int(m.as_raw_Mat(), n, cn) }.into_result().map(|x| core::Mat { ptr: x })
 }
@@ -1672,14 +1679,30 @@ impl LayerParams {
         unsafe { sys::cv_dnn_LayerParams_blobs(self.as_raw_LayerParams()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
     }
     
+    pub fn set_blobs(&mut self, val: &types::VectorOfMat) -> Result<()> {
+        unsafe { sys::cv_dnn_LayerParams_set_blobs_VectorOfMat(self.as_raw_LayerParams(), val.as_raw_VectorOfMat()) }.into_result()
+    }
+    
     /// < List of learned parameters stored as blobs.
     pub fn name(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_LayerParams_name(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
+    /// < List of learned parameters stored as blobs.
+    pub fn set_name(&mut self, val: &str) -> Result<()> {
+        string_arg!(mut val);
+        unsafe { sys::cv_dnn_LayerParams_set_name_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
+    }
+    
     /// < Name of the layer instance (optional, can be used internal purposes).
     pub fn _type(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_LayerParams_type(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// < Name of the layer instance (optional, can be used internal purposes).
+    pub fn set_type(&mut self, val: &str) -> Result<()> {
+        string_arg!(mut val);
+        unsafe { sys::cv_dnn_LayerParams_set_type_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
     }
     
 }

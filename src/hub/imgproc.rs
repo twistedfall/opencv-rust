@@ -3219,7 +3219,7 @@ pub fn good_features_to_track(image: &core::Mat, corners: &mut core::Mat, max_co
 /// ## C++ default parameters
 /// * use_harris_detector: false
 /// * k: 0.04
-pub fn good_features_to_track_1(image: &core::Mat, corners: &mut core::Mat, max_corners: i32, quality_level: f64, min_distance: f64, mask: &core::Mat, block_size: i32, gradient_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
+pub fn good_features_to_track_with_gradient(image: &core::Mat, corners: &mut core::Mat, max_corners: i32, quality_level: f64, min_distance: f64, mask: &core::Mat, block_size: i32, gradient_size: i32, use_harris_detector: bool, k: f64) -> Result<()> {
     unsafe { sys::cv_goodFeaturesToTrack_Mat_Mat_int_double_double_Mat_int_int_bool_double(image.as_raw_Mat(), corners.as_raw_Mat(), max_corners, quality_level, min_distance, mask.as_raw_Mat(), block_size, gradient_size, use_harris_detector, k) }.into_result()
 }
 
@@ -5096,7 +5096,7 @@ impl Subdiv2D {
     /// 
     /// The function inserts a vector of points into a subdivision and modifies the subdivision topology
     /// appropriately.
-    pub fn insert_n(&mut self, ptvec: &types::VectorOfPoint2f) -> Result<()> {
+    pub fn insert_multiple(&mut self, ptvec: &types::VectorOfPoint2f) -> Result<()> {
         unsafe { sys::cv_Subdiv2D_insert_VectorOfPoint2f(self.as_raw_Subdiv2D(), ptvec.as_raw_VectorOfPoint2f()) }.into_result()
     }
     

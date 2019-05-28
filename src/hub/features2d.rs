@@ -1159,7 +1159,7 @@ pub trait Feature2D : core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * masks: noArray()
-    fn detect_n(&mut self, images: &types::VectorOfMat, keypoints: &mut types::VectorOfVectorOfKeyPoint, masks: &types::VectorOfMat) -> Result<()> {
+    fn detect_multiple(&mut self, images: &types::VectorOfMat, keypoints: &mut types::VectorOfVectorOfKeyPoint, masks: &types::VectorOfMat) -> Result<()> {
         unsafe { sys::cv_Feature2D_detect_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat(self.as_raw_Feature2D(), images.as_raw_VectorOfMat(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), masks.as_raw_VectorOfMat()) }.into_result()
     }
     
@@ -1842,3 +1842,4 @@ impl SimpleBlobDetector_Params {
     
 }
 
+pub use crate::hub::manual::features2d::*;

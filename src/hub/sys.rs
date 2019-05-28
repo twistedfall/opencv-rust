@@ -128,6 +128,7 @@ pub fn cv_cv_abs_ushort(x: u16) -> cv_return_value_int;
 pub fn cv_dct_Mat_Mat_int(src: *mut c_void, dst: *mut c_void, flags: i32) -> cv_return_value_void;
 pub fn cv_depthToString_int(depth: i32) -> cv_return_value_const_char_X;
 pub fn cv_detail_depthToString__int(depth: i32) -> cv_return_value_const_char_X;
+pub fn cv_detail_typeToString__int(_type: i32) -> cv_return_value_const_char_X;
 pub fn cv_determinant_Mat(mtx: *mut c_void) -> cv_return_value_double;
 pub fn cv_dft_Mat_Mat_int_int(src: *mut c_void, dst: *mut c_void, flags: i32, nonzero_rows: i32) -> cv_return_value_void;
 pub fn cv_directx_getTypeFromD3DFORMAT_int(i_d3_dformat: i32) -> cv_return_value_int;
@@ -146,6 +147,7 @@ pub fn cv_findNonZero_Mat_Mat(src: *mut c_void, idx: *mut c_void) -> cv_return_v
 pub fn cv_flip_Mat_Mat_int(src: *mut c_void, dst: *mut c_void, flip_code: i32) -> cv_return_value_void;
 pub fn cv_gemm_Mat_Mat_double_Mat_double_Mat_int(src1: *mut c_void, src2: *mut c_void, alpha: f64, src3: *mut c_void, beta: f64, dst: *mut c_void, flags: i32) -> cv_return_value_void;
 pub fn cv_getBuildInformation() -> cv_return_value_const_char_X;
+pub fn cv_getCPUFeaturesLine() -> cv_return_value_char_X;
 pub fn cv_getCPUTickCount() -> cv_return_value_int64;
 pub fn cv_getElemSize_int(_type: i32) -> cv_return_value_std_size_t;
 pub fn cv_getHardwareFeatureName_int(feature: i32) -> cv_return_value_char_X;
@@ -216,6 +218,10 @@ pub fn cv_repeat_Mat_int_int_Mat(src: *mut c_void, ny: i32, nx: i32, dst: *mut c
 pub fn cv_rotate_Mat_Mat_int(src: *mut c_void, dst: *mut c_void, rotate_code: i32) -> cv_return_value_void;
 pub fn cv_roundUp_int_unsigned_int(a: i32, b: u32) -> cv_return_value_int;
 pub fn cv_roundUp_size_t_unsigned_int(a: size_t, b: u32) -> cv_return_value_std_size_t;
+pub fn cv_samples_addSamplesDataSearchPath_String(path: *const c_char) -> cv_return_value_void;
+pub fn cv_samples_addSamplesDataSearchSubDirectory_String(subdir: *const c_char) -> cv_return_value_void;
+pub fn cv_samples_findFileOrKeep_String_bool(relative_path: *const c_char, silent_mode: bool) -> cv_return_value_char_X;
+pub fn cv_samples_findFile_String_bool_bool(relative_path: *const c_char, required: bool, silent_mode: bool) -> cv_return_value_char_X;
 pub fn cv_scaleAdd_Mat_double_Mat_Mat(src1: *mut c_void, alpha: f64, src2: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
 pub fn cv_setBreakOnError_bool(flag: bool) -> cv_return_value_bool;
 pub fn cv_setIdentity_Mat_Scalar(mtx: *mut c_void, s: core::Scalar) -> cv_return_value_void;
@@ -378,6 +384,7 @@ pub fn cv_Mat_dims_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_Mat_rows_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_Mat_cols_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_Mat_data(instance: *mut c_void) -> cv_return_value_unsigned_char_X;
+pub fn cv_Mat_set_data_uchar_X(instance: *mut c_void, val: *mut u8) -> cv_return_value_void;
 pub fn cv_Mat_datastart_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
 pub fn cv_Mat_dataend_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
 pub fn cv_Mat_datalimit_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
@@ -666,6 +673,7 @@ pub fn cv_multicalib_MultiCameraCalibration_loadImages(instance: *mut c_void) ->
 pub fn cv_multicalib_MultiCameraCalibration_initialize(instance: *mut c_void) -> cv_return_value_void;
 pub fn cv_multicalib_MultiCameraCalibration_optimizeExtrinsics(instance: *mut c_void) -> cv_return_value_double;
 pub fn cv_multicalib_MultiCameraCalibration_run(instance: *mut c_void) -> cv_return_value_double;
+pub fn cv_multicalib_MultiCameraCalibration_writeParameters_std_string(instance: *mut c_void, filename: *const c_char) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_MultiCameraCalibration_edge_delete(ptr : *mut c_void);
 pub fn cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv: i32, pv: i32, pi: i32, trans: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_MultiCameraCalibration_vertex_delete(ptr : *mut c_void);
@@ -735,6 +743,7 @@ pub fn cv_dnn_blobFromImages_VectorOfMat_Mat_double_Size_Scalar_bool_bool_int(im
 pub fn cv_dnn_blobFromImages_VectorOfMat_double_Size_Scalar_bool_bool_int(images: *mut c_void, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> cv_return_value_void_X;
 pub fn cv_dnn_clamp_Range_int(r: *mut c_void, axis_size: i32) -> cv_return_value_void_X;
 pub fn cv_dnn_clamp_int_int(ax: i32, dims: i32) -> cv_return_value_int;
+pub fn cv_dnn_getInferenceEngineVPUType() -> cv_return_value_char_X;
 pub fn cv_dnn_getPlane_Mat_int_int(m: *mut c_void, n: i32, cn: i32) -> cv_return_value_void_X;
 pub fn cv_dnn_imagesFromBlob_Mat_VectorOfMat(blob_: *mut c_void, images_: *mut c_void) -> cv_return_value_void;
 pub fn cv_dnn_readNetFromCaffe_String_String(prototxt: *const c_char, caffe_model: *const c_char) -> cv_return_value_void_X;
@@ -841,8 +850,11 @@ pub fn cv_dnn_LayerFactory_unregisterLayer_String(_type: *const c_char) -> cv_re
 #[doc(hidden)] pub fn cv_LayerParams_delete(ptr : *mut c_void);
 pub fn cv_dnn_LayerParams_LayerParams() -> cv_return_value_void_X;
 pub fn cv_dnn_LayerParams_blobs(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_dnn_LayerParams_set_blobs_VectorOfMat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_dnn_LayerParams_name(instance: *mut c_void) -> cv_return_value_char_X;
+pub fn cv_dnn_LayerParams_set_name_String(instance: *mut c_void, val: *mut c_char) -> cv_return_value_void;
 pub fn cv_dnn_LayerParams_type(instance: *mut c_void) -> cv_return_value_char_X;
+pub fn cv_dnn_LayerParams_set_type_String(instance: *mut c_void, val: *mut c_char) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_MVNLayer_delete(ptr : *mut c_void);
 pub fn cv_dnn_MVNLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_MaxUnpoolLayer_delete(ptr : *mut c_void);
@@ -1670,6 +1682,7 @@ pub fn cv_ml_TrainData_create_Mat_int_Mat_Mat_Mat_Mat_Mat(samples: *mut c_void, 
 }
 extern "C" {
 pub fn cv_createFaceDetectionMaskGenerator() -> cv_return_value_void_X;
+pub fn cv_decodeQRCode_Mat_VectorOfPoint_std_string_Mat(_in: *mut c_void, points: *mut c_void, decoded_info: *mut *mut c_char, straight_qrcode: *mut c_void) -> cv_return_value_bool;
 pub fn cv_detectQRCode_Mat_VectorOfPoint_double_double(_in: *mut c_void, points: *mut c_void, eps_x: f64, eps_y: f64) -> cv_return_value_bool;
 pub fn cv_groupRectangles_VectorOfRect_VectorOfint_VectorOfdouble_int_double(rect_list: *mut c_void, reject_levels: *mut c_void, level_weights: *mut c_void, group_threshold: i32, eps: f64) -> cv_return_value_void;
 pub fn cv_groupRectangles_VectorOfRect_VectorOfint_int_double(rect_list: *mut c_void, weights: *mut c_void, group_threshold: i32, eps: f64) -> cv_return_value_void;
@@ -1759,13 +1772,17 @@ pub fn cv_HOGDescriptor_winSigma_const(instance: *const c_void) -> cv_return_val
 pub fn cv_HOGDescriptor_histogramNormType_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_HOGDescriptor_L2HysThreshold_const(instance: *const c_void) -> cv_return_value_double;
 pub fn cv_HOGDescriptor_gammaCorrection_const(instance: *const c_void) -> cv_return_value_bool;
+pub fn cv_HOGDescriptor_svmDetector(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_HOGDescriptor_set_svmDetector_VectorOffloat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_HOGDescriptor_nlevels_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_HOGDescriptor_signedGradient_const(instance: *const c_void) -> cv_return_value_bool;
 #[doc(hidden)] pub fn cv_QRCodeDetector_delete(ptr : *mut c_void);
 pub fn cv_QRCodeDetector_QRCodeDetector() -> cv_return_value_void_X;
 pub fn cv_QRCodeDetector_setEpsX_double(instance: *mut c_void, eps_x: f64) -> cv_return_value_void;
 pub fn cv_QRCodeDetector_setEpsY_double(instance: *mut c_void, eps_y: f64) -> cv_return_value_void;
-pub fn cv_QRCodeDetector_detect_const_Mat_Mat(instance: *const c_void, img: *mut c_void, points: *mut c_void) -> cv_return_value_bool;
+pub fn cv_QRCodeDetector_detect_const_Mat_VectorOfPoint(instance: *const c_void, img: *mut c_void, points: *mut c_void) -> cv_return_value_bool;
+pub fn cv_QRCodeDetector_decode_Mat_VectorOfPoint_Mat(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> cv_return_value_char_X;
+pub fn cv_QRCodeDetector_detectAndDecode_Mat_VectorOfPoint_Mat(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> cv_return_value_char_X;
 #[doc(hidden)] pub fn cv_SimilarRects_delete(ptr : *mut c_void);
 }
 extern "C" {
@@ -2109,15 +2126,25 @@ pub fn cv_KalmanFilter_init_int_int_int_int(instance: *mut c_void, dynam_params:
 pub fn cv_KalmanFilter_predict_Mat(instance: *mut c_void, control: *mut c_void) -> cv_return_value_void_X;
 pub fn cv_KalmanFilter_correct_Mat(instance: *mut c_void, measurement: *mut c_void) -> cv_return_value_void_X;
 pub fn cv_KalmanFilter_statePre(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_statePre_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_statePost(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_statePost_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_transitionMatrix(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_transitionMatrix_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_controlMatrix(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_controlMatrix_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_measurementMatrix(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_measurementMatrix_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_processNoiseCov(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_processNoiseCov_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_measurementNoiseCov(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_measurementNoiseCov_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_errorCovPre(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_errorCovPre_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_gain(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_gain_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_KalmanFilter_errorCovPost(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_KalmanFilter_set_errorCovPost_Mat(instance: *mut c_void, val: *mut c_void) -> cv_return_value_void;
 pub fn cv_SparseOpticalFlow_calc_Mat_Mat_Mat_Mat_Mat_Mat(instance: *mut c_void, prev_img: *mut c_void, next_img: *mut c_void, prev_pts: *mut c_void, next_pts: *mut c_void, status: *mut c_void, err: *mut c_void) -> cv_return_value_void;
 pub fn cv_SparsePyrLKOpticalFlow_getWinSize_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
 pub fn cv_SparsePyrLKOpticalFlow_setWinSize_Size(instance: *mut c_void, win_size: core::Size) -> cv_return_value_void;
