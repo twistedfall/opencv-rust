@@ -5,7 +5,7 @@ use opencv::{
     imgcodecs,
 };
 
-const PIXEL: &[u8] = include_bytes!("../pixel.png");
+const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
 fn decode() {

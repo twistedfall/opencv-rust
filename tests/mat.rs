@@ -1,12 +1,12 @@
 use std::mem::transmute;
 
-use opencv::core::{self, DataType, Mat, Rect, Scalar, Size, Vec2b, Vec3d};
+use opencv::core::{self, DataType, Mat, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f};
 use opencv::types::{VectorOfint, VectorOfMat};
 
 mod common;
 use common::*;
 
-const PIXEL: &[u8] = include_bytes!("../pixel.png");
+const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
 fn mat_for_rows_and_cols() {
@@ -29,56 +29,54 @@ fn mat_for_rows_and_cols() {
 #[test]
 fn mat_at_1d_refers_to_rows() {
     let mut mat =
-        Mat::new_rows_cols_with_default(100, 100, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+        Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(1.23)).unwrap();
     *mat.at_mut::<f32>(5).unwrap() = 1.;
-    assert_almost_eq(*mat.at_2d::<f32>(5, 0).unwrap(), 1.);
+    assert_eq!(*mat.at_2d::<f32>(5, 0).unwrap(), 1.);
 }
 
 #[test]
 fn mat_2d_i0_is_rows_i1_is_cols() {
     // Just a sanity check about which Mat dimension corresponds to which in Size
-    let mut mat =
-        Mat::new_rows_cols_with_default(5, 6, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+    let mat =
+        Mat::new_rows_cols_with_default(5, 6, f32::typ(), Scalar::all(1.23)).unwrap();
     let size = mat.size().unwrap();
     assert_eq!(size.width, 6);
     assert_eq!(size.height, 5);
 }
 
 #[test]
-fn mat_at_2d_CV_32FC1() {
-    let mut mat =
-        Mat::new_rows_cols_with_default(100, 100, core::CV_32FC1, Scalar::all(1.23)).unwrap();
-    assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 1.23);
+fn mat_at_2d() {
+    let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(1.23)).unwrap();
+    assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 1.23);
     *mat.at_2d_mut::<f32>(0, 0).unwrap() = 1.;
-    assert_almost_eq(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
+    assert_eq!(*mat.at_2d::<f32>(0, 0).unwrap(), 1.);
     assert_is_err(mat.at::<i32>(0));
     assert_is_err(mat.at::<f32>(100));
 }
 
 #[test]
-fn mat_at_2d_CV_32FC3() {
-    let mut mat =
-        Mat::new_rows_cols_with_default(100, 100, core::CV_32FC3, Scalar::all(1.23)).unwrap();
-    let pix = *mat.at_2d::<core::Vec3f>(0, 0).unwrap();
-    assert_almost_eq(pix[0], 1.23);
-    assert_almost_eq(pix[1], 1.23);
-    assert_almost_eq(pix[2], 1.23);
+fn mat_at_2d_multichannel() {
+    let mut mat = Mat::new_rows_cols_with_default(100, 100, Vec3f::typ(), Scalar::all(1.23)).unwrap();
+    let pix = *mat.at_2d::<Vec3f>(0, 0).unwrap();
+    assert_eq!(pix[0], 1.23);
+    assert_eq!(pix[1], 1.23);
+    assert_eq!(pix[2], 1.23);
 
-    *mat.at_2d_mut::<core::Vec3f>(0, 0).unwrap() = core::Vec3f::from([1.1, 2.2, 3.3]);
-    
-    let pix = *mat.at_2d::<core::Vec3f>(0, 0).unwrap();
-    assert_almost_eq(pix[0], 1.1);
-    assert_almost_eq(pix[1], 2.2);
-    assert_almost_eq(pix[2], 3.3);
+    *mat.at_2d_mut::<Vec3f>(0, 0).unwrap() = Vec3f::from([1.1, 2.2, 3.3]);
+
+    let pix = *mat.at_2d::<Vec3f>(0, 0).unwrap();
+    assert_eq!(pix[0], 1.1);
+    assert_eq!(pix[1], 2.2);
+    assert_eq!(pix[2], 3.3);
 
     assert_is_err(mat.at_2d::<i32>(0, 0));
-    assert_is_err(mat.at_2d::<core::Vec3f>(100, 1));
-    assert_is_err(mat.at_2d::<core::Vec3f>(1, 100));
+    assert_is_err(mat.at_2d::<Vec3f>(100, 1));
+    assert_is_err(mat.at_2d::<Vec3f>(1, 100));
 }
 
 #[test]
-fn mat_at_row_CV_32FC1() {
-    let mut mat = Mat::new_rows_cols_with_default(100, 100, core::CV_32FC1, Scalar::all(1.23)).unwrap();
+fn mat_at_row() {
+    let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(1.23)).unwrap();
 
     let row = mat.at_row::<f32>(0).unwrap();
     assert_eq!(row.len(), 100);
@@ -88,11 +86,11 @@ fn mat_at_row_CV_32FC1() {
     row[0..4].copy_from_slice(&[10., 20., 30., 40.]);
 
     let data = mat.data_typed::<f32>().unwrap();
-    assert_almost_eq(data[0], 1.23);
-    assert_almost_eq(data[100], 10.);
-    assert_almost_eq(data[101], 20.);
-    assert_almost_eq(data[102], 30.);
-    assert_almost_eq(data[103], 40.);
+    assert_eq!(data[0], 1.23);
+    assert_eq!(data[100], 10.);
+    assert_eq!(data[101], 20.);
+    assert_eq!(data[102], 30.);
+    assert_eq!(data[103], 40.);
 
     assert_is_err(mat.at_row::<i32>(0));
     assert_is_err(mat.at_row::<i32>(100));

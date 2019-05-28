@@ -21,7 +21,7 @@ fn min_enclosing() {
 #[test]
 fn ellipse() {
     let mut pts = VectorOfPoint::new();
-    imgproc::ellipse_2_poly(Point::new(100, 100), Size::new(200, 200), 0, 45, 90, 10, &mut pts);
+    imgproc::ellipse_2_poly(Point::new(100, 100), Size::new(200, 200), 0, 45, 90, 10, &mut pts).unwrap();
     assert_eq!(6, pts.len());
     assert_eq!(Point::new(241, 241), *pts.get(0));
     assert_eq!(Point::new(100, 300), *pts.get(5));
