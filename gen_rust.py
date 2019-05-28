@@ -13,6 +13,8 @@ from string import Template
 
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme add getcpufeaturesline
+# fixme consume arg for by_ptr settable properties
+# fixme field comments //! in the end are transferred to the next field
 
 if sys.version_info[0] >= 3:
     from io import StringIO
@@ -176,6 +178,8 @@ func_rename = {  # todo check if any "new" is required
     "cv_Mat_reshape_const_int_VectorOfint": "reshape_nd",
     "cv_Mat_total_const_int_int": "total_slice",
     "cv_Mat_size": "-",  # doesn't have any use, dims() and Size are already accessible through other methods
+    "cv_Mat_set_size_MatSize": "-",  # -"-
+    "cv_Mat_set_step_MatStep": "-",  # doesn't allow writing
     "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",
     "cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp": "copy",
@@ -418,6 +422,7 @@ func_unsafe_list = {
     "cv_Mat_Mat_int_int_int",
     "cv_Mat_Mat_Size_int",
     "cv_Mat_Mat_VectorOfint_int",
+    "cv_Mat_set_data_uchar_X",
 }
 
 # dict of types to replace if cannot be handled automatically
@@ -863,7 +868,11 @@ class FuncInfo(GeneralInfo):
 
         self.is_const = "/C" in decl[2]
         self.is_static = "/S" in decl[2]
-        self.attr_getter = "/ATTRGETTER" in decl[2]
+        self.attr_accessor_type = None
+        if "/ATTRGETTER" in decl[2]:
+            self.attr_accessor_type = "r"
+        elif "/ATTRSETTER" in decl[2]:
+            self.attr_accessor_type = "w"
         self.has_callback_arg = False
         has_userdata_arg = False
 
@@ -1009,7 +1018,7 @@ class FuncInfo(GeneralInfo):
             call_name = self.ci.type_info().cpp_method_call_name(self.cppname)
 
         # actual call
-        code = self.rv_type().cpp_method_call_invoke(call_name, ", ".join(call_cpp_args), self.is_constructor(), self.attr_getter) + "\n"
+        code = self.rv_type().cpp_method_call_invoke(call_name, ", ".join(call_cpp_args), self.is_constructor(), self.attr_accessor_type) + "\n"
 
         # return value
         code += self.rv_type().cpp_method_return(self.is_constructor())
@@ -1580,20 +1589,22 @@ class TypeInfo(object):
         """
         return "reinterpret_cast<{}*>(&instance)->{}".format(self.cpptype, method_name)
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
         """
         :type call_name: str
         :type call_args: str
         :type is_constructor: bool
-        :type is_property: bool
+        :type attr_type: str|None
         :rtype: str
         """
         if is_constructor:
             if call_args == "":
                 return "{} ret;".format(self.cpptype)
             return "{} ret({});".format(self.cpptype, call_args)
-        if is_property:
+        if attr_type == "r":
             return "{} ret = {};".format(self.cpptype, call_name)
+        elif attr_type == "w":
+            return "{} = {};".format(call_name.replace("set_", ""), call_args)
         return "{} ret = {}({});".format(self.cpptype, call_name, call_args)
 
     def cpp_method_return(self, is_constructor):
@@ -1673,10 +1684,11 @@ class PrimitiveTypeInfo(TypeInfo):
     def cpp_arg_func_call(self, var_name, is_output=False):
         return var_name
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
+        out = super(PrimitiveTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
         if self.cpptype == "void":
-            return "{}({});".format(call_name, call_args)
-        return super(PrimitiveTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, is_property)
+            out = re.sub("^.+ ret = ", "", out)
+        return out
 
     def cpp_method_return(self, is_constructor):
         if self.cpptype == "void":
@@ -1776,10 +1788,10 @@ class BoxedClassTypeInfo(TypeInfo):
     def cpp_method_call_name(self, method_name):
         return "reinterpret_cast<{}*>(instance)->{}".format(self.cpptype, method_name)
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
         if is_constructor:
             return "{}* ret = new {}({});".format(self.cpptype, call_name, call_args)
-        return super(BoxedClassTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, is_property)
+        return super(BoxedClassTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
 
     def __str__(self):
         return "%s (boxed)"%(self.typeid)
@@ -2162,10 +2174,10 @@ class RawPtrTypeInfo(TypeInfo):
             return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
         return "reinterpret_cast<{}*>(&{})".format(self.inner.cpptype, var_name)
 
-    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, is_property):
+    def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
         if self.is_by_ptr:
             return "{}* ret = {}({});".format(self.cpptype, call_name, call_args)
-        return super(RawPtrTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, is_property)
+        return super(RawPtrTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
 
     def cpp_method_return(self, is_constructor):
         if self.is_string():
@@ -2563,7 +2575,7 @@ class RustWrapperGenerator(object):
         :type fi: FuncInfo
         :return:
         """
-        if fi.kind == fi.KIND_FUNCTION or fi.attr_getter:
+        if fi.kind == fi.KIND_FUNCTION or fi.attr_accessor_type:
             for item in self.generated_functions:
                 if item.fullname == fi.fullname and str(item.args) == str(fi.args):
                     return
@@ -2767,9 +2779,41 @@ class RustWrapperGenerator(object):
                 for prop in ci.props:
                     attrs = ["/ATTRGETTER"]
                     prop_type = self.get_type_info(prop.ctype)
-                    if prop_type.is_const or prop_type.is_copy:
+                    is_const = prop_type.is_const or prop_type.is_copy
+                    if is_const:
                         attrs.append("/C")
-                    self.gen_func(FuncInfo(self, ci.module, ["{}.{}".format(ci.fullname, prop.name), prop.ctype, attrs, [], None, prop.comment], self.namespaces))
+                    read_func = FuncInfo(
+                        self,
+                        ci.module,
+                        [
+                            "{}.{}".format(ci.fullname, prop.name),
+                            prop.ctype,
+                            attrs,
+                            [],
+                            None,
+                            prop.comment
+                        ],
+                        self.namespaces)
+                    if not read_func.is_ignored and not read_func.rv_type().is_ignored:
+                        self.gen_func(read_func)
+                        if not is_const:
+                            attrs = ["/ATTRSETTER"]
+                            write_func = FuncInfo(
+                                self,
+                                ci.module,
+                                [
+                                    "{}.set_{}".format(ci.fullname, prop.name),
+                                    "void",
+                                    attrs,
+                                    (
+                                        [prop_type.cpptype, "val", "", []],
+                                    ),
+                                    None,
+                                    prop.comment
+                                ],
+                                self.namespaces
+                            )
+                            self.gen_func(write_func)
             if has_impl:
                 self.moduleSafeRust.write("}\n\n")
 
