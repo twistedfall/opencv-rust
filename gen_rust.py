@@ -12,7 +12,6 @@ from string import Template
 
 
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
-# fixme add getcpufeaturesline
 # fixme consume arg for by_ptr settable properties
 # fixme field comments //! in the end are transferred to the next field
 
@@ -2229,7 +2228,7 @@ def parse_type(gen, typeid):
         return RawPtrTypeInfo(gen, full_typeid, gen.get_type_info(typeid[:-1].strip()))
     elif typeid.endswith("[]"):
         return RawPtrTypeInfo(gen, full_typeid, gen.get_type_info(typeid[:-2].strip()))
-    elif typeid == "string" or typeid == "String":
+    elif typeid in ("string", "String", "std::string", "cv::String"):
         return StringTypeInfo(gen, full_typeid)
     elif typeid == "":
         raise NameError("empty type detected")
