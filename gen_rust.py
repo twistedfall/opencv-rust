@@ -792,8 +792,9 @@ class FuncInfo(GeneralInfo):
                 // as:     ${repr}
                 ${args}// Return value: ${rv_type}
                 ${return_wrapper_type} ${identifier}(${decl_cpp_args}) {
-                    try {
-                ${code}
+                    try {${pre_call_args}
+                ${call}${post_call_args}
+                ${rv}
                     } CVRS_CATCH(${return_wrapper_type})
                 }
 
@@ -984,26 +985,35 @@ class FuncInfo(GeneralInfo):
 
     def gen_cpp(self):
         decl_cpp_args = []
+        pre_call_args = []
+        post_call_args = []
         args = ""
         if self.is_instance_method():
             # fixme? add RawPtr handling
             decl_cpp_args.append(self.ci.type_info().cpp_extern + " instance")
 
         call_cpp_args = []
-        for a in self.args:
+        for arg in self.args:
             ignored = ptr = ""
-            if a.type.is_ignored:
+            if arg.type.is_ignored:
                 ignored = " (ignored)"
-            if isinstance(a.type, RawPtrTypeInfo):
+            if isinstance(arg.type, RawPtrTypeInfo):
                 ptr = " (ptr)"
-            args += FuncInfo.TEMPLATES["cpp_doc_arg"].substitute(combine_dicts(a.__dict__, {
-                "repr": repr(a),
+            pre_call_arg = arg.type.cpp_arg_pre_call(arg.rsname)
+            if pre_call_arg:
+                pre_call_args.append(pre_call_arg)
+            post_call_arg = arg.type.cpp_arg_post_call(arg.rsname)
+            if post_call_arg:
+                post_call_args.append(post_call_arg)
+
+            args += FuncInfo.TEMPLATES["cpp_doc_arg"].substitute(combine_dicts(arg.__dict__, {
+                "repr": repr(arg),
                 "ptr": ptr,
                 "ignored": ignored
             }))
 
-            decl_cpp_args.append(a.type.cpp_arg_func_decl(a.name, a.is_output()))
-            call_cpp_args.append(a.type.cpp_arg_func_call(a.name, a.is_output()))
+            decl_cpp_args.append(arg.type.cpp_arg_func_decl(arg.name, arg.is_output()))
+            call_cpp_args.append(arg.type.cpp_arg_func_call(arg.name, arg.is_output()))
 
         # cpp method call with prefix
         if self.is_constructor():
@@ -1017,10 +1027,7 @@ class FuncInfo(GeneralInfo):
             call_name = self.ci.type_info().cpp_method_call_name(self.cppname)
 
         # actual call
-        code = self.rv_type().cpp_method_call_invoke(call_name, ", ".join(call_cpp_args), self.is_constructor(), self.attr_accessor_type) + "\n"
-
-        # return value
-        code += self.rv_type().cpp_method_return(self.is_constructor())
+        call = self.rv_type().cpp_method_call_invoke(call_name, ", ".join(call_cpp_args), self.is_constructor(), self.attr_accessor_type)
 
         template_vars = combine_dicts(self.__dict__, {
             "repr": repr(self),
@@ -1028,7 +1035,10 @@ class FuncInfo(GeneralInfo):
             "args": args,
             "return_wrapper_type": self.rv_type().rust_cpp_return_wrapper_type(),
             "decl_cpp_args": ", ".join(decl_cpp_args),
-            "code": indent(code, 2),
+            "pre_call_args": "".join("\n" + indent(x, 2) + ";" for x in pre_call_args),
+            "post_call_args": "".join("\n" + indent(x, 2) + ";" for x in post_call_args),
+            "call": indent(call, 2),
+            "rv": indent(self.rv_type().cpp_method_return(self.is_constructor()), 2),
         })
 
         tmpl = self._get_manual_implementation_tpl("cpp")
@@ -1571,6 +1581,14 @@ class TypeInfo(object):
                 return "{}* {}".format(self.cpp_extern, var_name)
         return "{} {}".format(self.cpp_extern, var_name)
 
+    def cpp_arg_pre_call(self, var_name, is_output=False):
+        """
+        :type var_name: str
+        :type is_output: bool
+        :rtype: str
+        """
+        return ""
+
     def cpp_arg_func_call(self, var_name, is_output=False):
         """
         :type var_name: str
@@ -1580,6 +1598,14 @@ class TypeInfo(object):
         if self.is_by_ptr:
             return "*reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
         return "*reinterpret_cast<{}*>(&{})".format(self.cpptype, var_name)
+
+    def cpp_arg_post_call(self, var_name, is_output=False):
+        """
+        :type var_name: str
+        :type is_output: bool
+        :rtype: str
+        """
+        return ""
 
     def cpp_method_call_name(self, method_name):
         """
