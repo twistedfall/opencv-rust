@@ -521,7 +521,7 @@ ${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&m
 # dict of functions with manual implementations
 # key: FuncInfo.identifier
 # value: dict
-#   keys: "rust_safe", "rust_externs", "cpp", missing key means skip particular implementation
+#   keys: "rust_safe", "rust_extern", "cpp", missing key means skip particular implementation
 #   values: template to use for manual implementation or "~" to use default implementation
 func_manual = {
     "cv_Mat_at_int": {
@@ -836,7 +836,7 @@ class FuncInfo(GeneralInfo):
 
         "rust_safe_rv_other": template(""""""),
 
-        "rust_externs": template("""
+        "rust_extern": template("""
             pub fn ${identifier}(${args}) -> ${return_wrapper_type};
          """),
     }
@@ -919,15 +919,15 @@ class FuncInfo(GeneralInfo):
             logging.info("ignore %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
 
-    def _get_manual_implementation(self, section, template_vars):
-        templ = func_manual.get(self.identifier)
-        if templ is not None:
-            if section in templ:
-                if templ[section] == "~":
-                    return None
-                return templ[section].substitute(template_vars)
-            else:
-                return ""
+    def _get_manual_implementation_tpl(self, section):
+        params = func_manual.get(self.identifier)
+        if params is not None:
+            tmpl = params.get(section)
+            if tmpl is None:
+                return template("")
+            elif tmpl == "~":
+                return None
+            return tmpl
         return None
 
     def is_constructor(self):
@@ -980,14 +980,14 @@ class FuncInfo(GeneralInfo):
         return None
 
     def r_name(self):
-        out = func_rename.get(self.identifier)
-        if out is not None:
-            if "+" in out:
-                name = out.replace("+", self.name)
-                return camel_case_to_snake_case(reserved_rename.get(name, name))
-            return out
-        name = "new" if self.is_constructor() else self.name
-
+        name = func_rename.get(self.identifier)
+        if name is None:
+            name = "new" if self.is_constructor() else self.name
+        else:
+            if "+" in name:
+                name = name.replace("+", self.name)
+                name = camel_case_to_snake_case(reserved_rename.get(name, name))
+            return name
         return camel_case_to_snake_case(reserved_rename.get(name, name))
 
     def gen_cpp(self):
@@ -1039,12 +1039,11 @@ class FuncInfo(GeneralInfo):
             "code": indent(code, 2),
         })
 
-        manual = self._get_manual_implementation("cpp", template_vars)
-        if manual is None:
+        tmpl = self._get_manual_implementation_tpl("cpp")
+        if tmpl is None:
             self.rv_type().gen_return_wrappers(self.gen.cpp_dir, self.gen.rust_dir)
-            return FuncInfo.TEMPLATES["cpp"].substitute(template_vars)
-        else:
-            return manual
+            tmpl = FuncInfo.TEMPLATES["cpp"]
+        return tmpl.substitute(template_vars)
 
     def gen_rust_extern(self):
         args = []
@@ -1056,8 +1055,8 @@ class FuncInfo(GeneralInfo):
             "args": ", ".join(args),
             "return_wrapper_type": self.rv_type().rust_cpp_return_wrapper_type(),
         })
-        manual = self._get_manual_implementation("rust_externs", template_vars)
-        return FuncInfo.TEMPLATES["rust_externs"].substitute(template_vars) if manual is None else manual
+        tmpl = self._get_manual_implementation_tpl("rust_extern") or FuncInfo.TEMPLATES["rust_extern"]
+        return tmpl.substitute(template_vars)
 
     def gen_safe_rust(self):
         args = []
@@ -1139,9 +1138,8 @@ class FuncInfo(GeneralInfo):
 
         template_vars["rv"] = rv_rust
 
-        block = self._get_manual_implementation("rust_safe", template_vars)
-        if block is None:
-            block = FuncInfo.TEMPLATES["rust_safe"].substitute(template_vars)
+        block = self._get_manual_implementation_tpl("rust_safe") or FuncInfo.TEMPLATES["rust_safe"]
+        block = block.substitute(template_vars)
 
         if self.kind == self.KIND_FUNCTION:
             return block
@@ -1244,17 +1242,17 @@ class ClassInfo(GeneralInfo):
         """
         return self.gen.get_type_info(self.fullname)
 
-    def get_manual_declaration_template(self, section):
+    def get_manual_declaration_tpl(self, section):
         if self.module in type_manual:
             module_types = type_manual[self.module]
-            if self.name in module_types:
-                templ = module_types[self.name]
-                if section in templ:
-                    if templ[section] == "~":
-                        return None
-                    return templ[section]
-                else:
+            params = module_types.get(self.name)
+            if params is not None:
+                tmpl = params.get(section)
+                if tmpl is None:
                     return template("")
+                elif tmpl == "~":
+                    return None
+                return tmpl
         return None
 
 
@@ -1477,38 +1475,19 @@ class TypeInfo(object):
             lambda f: f.write(self.base_templates["rust_void" if self.cpp_extern == "void" else "rust_non_void"].substitute(template_vars))
         )
 
-    def rust_arg_forward(self, var_name, is_output=False):
-        """
-        :type var_name: str
-        :type is_output: bool
-        :rtype: str
-        """
-        return var_name
-
-    def rust_arg_pre_call(self, var_name, is_output=False):
-        """
-        :type var_name: str
-        :type is_output: bool
-        :rtype: str
-        """
+    def rust_generic_decl(self):
         return ""
 
-    def rust_arg_func_call(self, var_name, is_output=False):
+    def rust_self_func_decl(self, is_output=False):
         """
-        :type var_name: str
         :type is_output: bool
         :rtype: str
         """
         if self.is_by_ptr:
-            # if isinstance(a.type, RawPtrTypeInfo):
-            #     typ = a.type.inner
-            # else:
-            #     typ = a.type
-            return "{}.as_raw_{}()".format(var_name, self.rust_local)
-        return var_name
-
-    def rust_generic_decl(self):
-        return ""
+            if is_output:
+                return "&mut self"
+            return "&self"
+        return "self"
 
     def rust_arg_func_decl(self, var_name, is_output=False):
         """
@@ -1524,16 +1503,13 @@ class TypeInfo(object):
             return "{}: &mut {}".format(var_name, self.rust_full)
         return "{}: {}".format(var_name, self.rust_full)
 
-    def rust_self_func_decl(self, is_output=False):
+    def rust_arg_pre_call(self, var_name, is_output=False):
         """
+        :type var_name: str
         :type is_output: bool
         :rtype: str
         """
-        if self.is_by_ptr:
-            if is_output:
-                return "&mut self"
-            return "&self"
-        return "self"
+        return ""
 
     def rust_self_func_call(self, is_output=False):
         """
@@ -1541,6 +1517,37 @@ class TypeInfo(object):
         :rtype: str
         """
         return self.rust_arg_func_call("self", is_output)
+
+    def rust_arg_func_call(self, var_name, is_output=False):
+        """
+        :type var_name: str
+        :type is_output: bool
+        :rtype: str
+        """
+        if self.is_by_ptr:
+            # if isinstance(a.type, RawPtrTypeInfo):
+            #     typ = a.type.inner
+            # else:
+            #     typ = a.type
+            return "{}.as_raw_{}()".format(var_name, self.rust_local)
+        return var_name
+
+    def rust_arg_forward(self, var_name, is_output=False):
+        """
+        :type var_name: str
+        :type is_output: bool
+        :rtype: str
+        """
+        return var_name
+
+    def rust_extern_self_func_decl(self, is_output=False):
+        """
+        :type is_output: bool
+        :rtype: str
+        """
+        if self.is_by_ptr:
+            return "instance: *{} c_void".format("mut" if is_output else "const")
+        return "instance: {}".format(self.rust_full)
 
     def rust_extern_arg_func_decl(self, var_name, is_output=False):
         """
@@ -1552,14 +1559,11 @@ class TypeInfo(object):
             return "{}: &mut {}".format(var_name, self.rust_extern)
         return "{}: {}".format(var_name, self.rust_extern)
 
-    def rust_extern_self_func_decl(self, is_output=False):
+    def rust_cpp_return_wrapper_type(self):
         """
-        :type is_output: bool
         :rtype: str
         """
-        if self.is_by_ptr:
-            return "instance: *{} c_void".format("mut" if is_output else "const")
-        return "instance: {}".format(self.rust_full)
+        return "cv_return_value_{}".format(self.c_safe_id)
 
     def cpp_arg_func_decl(self, var_name, is_output=False):
         """
@@ -1616,12 +1620,6 @@ class TypeInfo(object):
                 return "return {{ Error::Code::StsOk, NULL, new {}(ret) }};".format(self.cpptype)
         return "return {{ Error::Code::StsOk, NULL, ret }};".format(self.cpp_extern)
 
-    def rust_cpp_return_wrapper_type(self):
-        """
-        :rtype: str
-        """
-        return "cv_return_value_{}".format(self.c_safe_id)
-
 
 class StringTypeInfo(TypeInfo):
     def __init__(self, gen, typeid):
@@ -1635,13 +1633,10 @@ class StringTypeInfo(TypeInfo):
         self.rust_full = "String"
         if self.is_const:
             self.c_safe_id = "const_char_X"
-            self.rust_local = "*const c_char"  # fixme, not used?
             self.rust_extern = "*const c_char"
         else:
             self.c_safe_id = "char_X"
-            self.rust_local = "*mut c_char"  # fixme, not used?
             self.rust_extern = "*mut c_char"
-        self.rust_safe_id = "String"
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         return "{}({})".format(self.cpptype, var_name)
@@ -1720,14 +1715,13 @@ class SimpleClassTypeInfo(TypeInfo):
             self.is_ignored = True
         if self.ci:
             self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
-            if self.ci.get_manual_declaration_template("rust") is None:
+            if self.ci.get_manual_declaration_tpl("rust") is None:
                 self.cpp_extern = self.ci.fullname
                 self.c_safe_id = self.rust_local
             else:
                 self.cpp_extern = "{}Wrapper".format(self.ci.name)
                 self.c_safe_id = self.cpp_extern
             self.rust_extern = self.rust_full
-            self.is_trait = False
             self.is_copy = True
 
     def cpp_method_return(self, is_constructor):
@@ -1754,7 +1748,12 @@ class CallbackTypeInfo(TypeInfo):
             self.cpp_extern = self.ci.fullname
             self.c_safe_id = self.rust_local
             self.rust_extern = "{}Extern".format(self.rust_full)
-            self.is_trait = False
+
+    def rust_arg_func_decl(self, var_name, is_output=False):
+        callback_info = self.gen.get_callback(self.typeid)
+        if callback_info is None or callback_info.is_ignored:
+            return super(CallbackTypeInfo, self).rust_arg_func_decl(var_name, is_output)
+        return "{}: Option<Box<{}>>".format(var_name, self.rust_full)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
         callback_info = self.gen.get_callback(self.typeid)
@@ -1767,12 +1766,6 @@ class CallbackTypeInfo(TypeInfo):
             if arg.name != "userdata":
                 rust_args.append(arg.type.rust_arg_func_decl(arg.rsname, arg.is_output()))
         return "callback_arg!({}({}) via userdata => ({}))".format(var_name, ", ".join(extern_args), ", ".join(rust_args))
-
-    def rust_arg_func_decl(self, var_name, is_output=False):
-        callback_info = self.gen.get_callback(self.typeid)
-        if callback_info is None or callback_info.is_ignored:
-            return super(CallbackTypeInfo, self).rust_arg_func_decl(var_name, is_output)
-        return "{}: Option<Box<{}>>".format(var_name, self.rust_full)
 
     def __str__(self):
         return "{} (callback)".format(self.cpptype)
@@ -1981,25 +1974,27 @@ class VectorTypeInfo(TypeInfo):
         if not self.is_ignored:
             self.cpp_extern = "void*"
             self.c_safe_id = "void_X"
-            self.inner_cpptype = inner.cpptype
             self.cpptype = "std::vector<%s>" % (inner.cpptype)
             self.rust_safe_id = self.rust_local = "VectorOf"+inner.rust_safe_id
             self.rust_full = "types::" + self.rust_local
             self.rust_extern = "*mut c_void"
-            self.inner_rust_full = inner.rust_full
 
     def gen_wrappers(self):
+        template_vars = combine_dicts(self.__dict__, {
+            "inner_cpptype": self.inner.cpptype,
+            "inner_rust_full": self.inner.rust_full,
+        })
+
         def write_rust(f):
-            f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(self.__dict__))
+            f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(template_vars))
             if isinstance(self.inner, BoxedClassTypeInfo) or self.inner.is_by_ptr:
-                f.write(VectorTypeInfo.TEMPLATES["rust_boxed"].substitute(self.__dict__))
+                f.write(VectorTypeInfo.TEMPLATES["rust_boxed"].substitute(template_vars))
             else:
-                f.write(VectorTypeInfo.TEMPLATES["rust_non_boxed"].substitute(self.__dict__))
+                f.write(VectorTypeInfo.TEMPLATES["rust_non_boxed"].substitute(template_vars))
                 if self.inner.typeid != "bool":
-                    f.write(VectorTypeInfo.TEMPLATES["rust_non_bool"].substitute(self.__dict__))
+                    f.write(VectorTypeInfo.TEMPLATES["rust_non_bool"].substitute(template_vars))
 
         write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
-        template_vars = self.__dict__
         externs = VectorTypeInfo.TEMPLATES["cpp_externs"].substitute(template_vars)
         if self.inner.typeid == "bool":
             externs += VectorTypeInfo.TEMPLATES["cpp_externs_bool"].substitute(template_vars)
@@ -2422,10 +2417,10 @@ class RustWrapperGenerator(object):
         if not isinstance(item.alias_typ(), UnknownTypeInfo) and isinstance(item.typ(), UnknownTypeInfo):
             self.set_type_info(item.name, item.alias_typ())
 
-    def add_callback_decl(self, _module, decl):
+    def add_callback_decl(self, module, decl):
         item = CallbackInfo(self, decl, frozenset(self.namespaces))
         if not item.is_ignored:
-            self.add_decl(_module, ("class {}".format(item.fullname.replace("::", ".")), "", ["/Ghost", "/Callback"], []))
+            self.add_decl(module, ("class {}".format(item.fullname.replace("::", ".")), "", ["/Ghost", "/Callback"], []))
             self.callbacks.append(item)
 
     def add_func_decl(self, module, decl):
@@ -2661,14 +2656,14 @@ class RustWrapperGenerator(object):
             rust_fields += rust_field
             cpp_fields += cpp_field
 
-        templ = ci.get_manual_declaration_template("rust")
+        templ = ci.get_manual_declaration_tpl("rust")
         if templ is None:
             templ = RustWrapperGenerator.TEMPLATES["simple_class"]["rust_struct"]
         self.moduleSafeRust.write(templ.substitute(combine_dicts(ci.type_info().__dict__, {
             "doc_comment": self.reformat_doc(ci.comment).rstrip(),
             "fields": indent(rust_fields.rstrip()),
         })))
-        templ = ci.get_manual_declaration_template("cpp")
+        templ = ci.get_manual_declaration_tpl("cpp")
         if templ is None:
             templ = RustWrapperGenerator.TEMPLATES["simple_class"]["cpp_struct"]
         self.moduleCppTypes.write(templ.substitute(combine_dicts(ci.type_info().__dict__, {
