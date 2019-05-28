@@ -1614,7 +1614,7 @@ class TypeInfo(object):
                 return "return { Error::Code::StsOk, NULL, ret };"
             else:
                 return "return {{ Error::Code::StsOk, NULL, new {}(ret) }};".format(self.cpptype)
-        return "return {{ Error::Code::StsOk, NULL, *reinterpret_cast<{}*>(&ret) }};".format(self.cpp_extern)
+        return "return {{ Error::Code::StsOk, NULL, ret }};".format(self.cpp_extern)
 
     def rust_cpp_return_wrapper_type(self):
         """
@@ -1729,6 +1729,11 @@ class SimpleClassTypeInfo(TypeInfo):
             self.rust_extern = self.rust_full
             self.is_trait = False
             self.is_copy = True
+
+    def cpp_method_return(self, is_constructor):
+        if self.cpp_extern.endswith("Wrapper"):
+            return "return {{ Error::Code::StsOk, NULL, *reinterpret_cast<{}*>(&ret) }};".format(self.cpp_extern)
+        return super(SimpleClassTypeInfo, self).cpp_method_return(is_constructor)
 
     def __str__(self):
         return "%s (simple)"%(self.cpptype)
