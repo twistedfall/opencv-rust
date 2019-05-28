@@ -12,6 +12,18 @@ macro_rules! string_arg {
     };
 }
 
+macro_rules! string_arg_output_send {
+    (via $name_via: ident) => {
+        let mut $name_via = ::std::ptr::null_mut();
+    };
+}
+
+macro_rules! string_arg_output_receive {
+    ($name_via: ident => $name: ident) => {
+        *$name = $crate::templ::receive_string_mut($name_via);
+    };
+}
+
 macro_rules! callback_arg {
     ($callback_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) via $userdata_name: ident => ($($fw_arg_name: ident: $fw_arg_type: ty),*)) => {
         ::lazy_static::lazy_static!(

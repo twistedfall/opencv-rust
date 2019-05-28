@@ -1695,19 +1695,55 @@ class StringTypeInfo(TypeInfo):
             self.c_safe_id = "char_X"
             self.rust_extern = "*mut c_char"
 
-    def cpp_arg_func_call(self, var_name, is_output=False):
-        return "{}({})".format(self.cpptype, var_name)
+    def is_output(self):
+        return self.is_by_ref and not self.is_const
+
+    def rust_arg_func_decl(self, var_name, is_output=False):
+        if self.is_output():
+            return "{}: &mut String".format(var_name)
+        return "{}: &str".format(var_name)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
+        if self.is_output():
+            return "string_arg_output_send!(via {}_via)".format(var_name)
         return "string_arg!({}{})".format("" if self.is_const else "mut ", var_name)
 
     def rust_arg_func_call(self, var_name, is_output=False):
+        if self.is_output():
+            return "&mut {}_via".format(var_name)
         if self.is_const:
             return "{}.as_ptr()".format(var_name)
         return "{}.as_ptr() as _".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
 
-    def rust_arg_func_decl(self, var_name, is_output=False):
-        return "{}: &str".format(var_name)
+    def rust_extern_arg_func_decl(self, var_name, is_output=False):
+        if self.is_output():
+            return "{}: *mut {}".format(var_name, self.rust_extern)
+        return super(StringTypeInfo, self).rust_extern_arg_func_decl(var_name, is_output)
+
+    def rust_arg_post_call(self, var_name, is_output=False):
+        if self.is_output():
+            return "string_arg_output_receive!({}_via => {})".format(var_name, var_name)
+        return super(StringTypeInfo, self).rust_arg_post_call(var_name, is_output)
+
+    def cpp_arg_func_decl(self, var_name, is_output=False):
+        if self.is_output():
+            return "{}* {}".format(self.cpp_extern, var_name)
+        return super(StringTypeInfo, self).cpp_arg_func_decl(var_name, is_output)
+
+    def cpp_arg_pre_call(self, var_name, is_output=False):
+        if self.is_output():
+            return "std::string {}_out".format(var_name)
+        return super(StringTypeInfo, self).cpp_arg_pre_call(var_name, is_output)
+
+    def cpp_arg_func_call(self, var_name, is_output=False):
+        if self.is_output():
+            return "{}_out".format(var_name)
+        return "{}({})".format(self.cpptype, var_name)
+
+    def cpp_arg_post_call(self, var_name, is_output=False):
+        if self.is_output():
+            return "*{} = strdup({}_out.c_str())".format(var_name, var_name)
+        return super(StringTypeInfo, self).cpp_arg_post_call(var_name, is_output)
 
     def cpp_method_return(self, is_constructor):
         return "return { Error::Code::StsOk, NULL, strdup(ret.c_str()) };"
