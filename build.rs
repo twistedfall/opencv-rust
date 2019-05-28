@@ -133,7 +133,8 @@ fn build_wrapper(opencv: pkg_config::Library) {
         "core/opengl.hpp", // ?
         "core/cvstd.hpp",
         "core/eigen.hpp",
-        "core/fast_math.hpp", // contains functions with Rust native counterpart
+        "core/fast_math.hpp", // contains functions with Rust native counterparts
+        "core/utils/filesystem.hpp", // contains functions with Rust native counterparts
         "ios.h",
         "ippasync.hpp",
         "ocl.hpp",
