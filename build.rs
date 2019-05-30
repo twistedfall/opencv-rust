@@ -82,11 +82,9 @@ fn build_wrapper(opencv: pkg_config::Library) {
 
     let mut gcc = cc::Build::new();
     gcc.cpp(true)
-        .flag("-std=c++0x")
-        .flag("-Wno-deprecated-declarations")
-        .flag("-Wno-class-memaccess")
-        .flag("-fno-strict-aliasing");
-//        .flag("-Wno-c++11-extensions");
+        .flag_if_supported("-Wno-deprecated-declarations")
+        .flag_if_supported("-Wno-class-memaccess")
+    ;
     for path in &opencv.include_paths {
         gcc.include(path);
     }
@@ -131,7 +129,7 @@ fn build_wrapper(opencv: pkg_config::Library) {
         "core/cv_cpu_dispatch.h", // ?
         "core/ocl_genbase.hpp", // ?
         "core/opengl.hpp", // ?
-        "core/cvstd.hpp",
+        "core/cvstd.hpp", // contains functions with Rust native counterparts and c++ specific classes
         "core/eigen.hpp",
         "core/fast_math.hpp", // contains functions with Rust native counterparts
         "core/utils/filesystem.hpp", // contains functions with Rust native counterparts

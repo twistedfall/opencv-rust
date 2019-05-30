@@ -103,7 +103,7 @@ impl Mat {
     /// `Mat::at()` does.
     /// (This upstream behavior is documented at https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html#aa5d20fc86d41d59e4d71ae93daee9726)
     pub unsafe fn at_unchecked<T: DataType>(&self, row: i32) -> Result<&T> {
-        self.ptr(row).map(|x| unsafe { &*(x as *const _ as *const T) })
+        self.ptr(row).map(|x| &*(x as *const _ as *const T))
     }
 
     #[inline(always)]
@@ -121,7 +121,7 @@ impl Mat {
 
     /// Like `Mat::at_mut()` but performs no bounds or type checks
     pub unsafe fn at_mut_unchecked<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
-        self.ptr_mut(i0).map(|x| unsafe { &mut *(x as *mut _ as *mut T) })
+        self.ptr_mut(i0).map(|x| &mut *(x as *mut _ as *mut T))
     }
 
     #[inline(always)]
@@ -139,7 +139,7 @@ impl Mat {
 
     /// Like `Mat::at_2d()` but performs no bounds or type checks
     pub unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
-        self.ptr_2d(row, col).map(|x| unsafe { &*(x as *const _ as *const T) })
+        self.ptr_2d(row, col).map(|x| &*(x as *const _ as *const T))
     }
 
     #[inline(always)]
@@ -157,7 +157,7 @@ impl Mat {
 
     /// Like `Mat::at_2d_mut()` but performs no bounds or type checks
     pub unsafe fn at_2d_mut_unchecked<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
-        self.ptr_2d_mut(row, col).map(|x| unsafe { &mut *(x as *mut _ as *mut T) })
+        self.ptr_2d_mut(row, col).map(|x| &mut *(x as *mut _ as *mut T))
     }
 
     /// Note that since the bindings are set up to wrap all Mat sizes in our custom `Size` struct

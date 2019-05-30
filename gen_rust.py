@@ -14,6 +14,11 @@ from string import Template
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme consume arg for by_ptr settable properties
 # fixme field comments //! in the end are transferred to the next field
+# fixme dnn::net::Dict needs set method (generic or only DictValue?), DictValue needs constructors
+# fixme test VectorOfString
+# fixme test get_mut method on VectorOf...
+# fixme get_mut of VectorOf... for non boxed types seem to leak memory
+# fixme long term storage of string might not work properly
 
 def template(text):
     """
@@ -632,22 +637,14 @@ T_CPP_MODULE = template("""
 
 #include "stdint.h"
 #include "common.h"
-
-typedef int64_t int64;
-
-#include <iostream>
-#include "opencv2/opencv_modules.hpp"
 #include <string>
 #include "common_opencv.h"
-
 using namespace cv;
 #include "types.h"
+#include "return_types.h"
 $includes
 
-
 extern "C" {
-
-#include "return_types.h"
 
 $code
 
@@ -729,7 +726,7 @@ class GeneralInfo:
         self.fullname, self.namespace, self.classpath, self.classname, self.name = self.do_parse_name(name, namespaces)
         logging.info(
             "parse_name: %s with %s -> fullname:%s namespace:%s classpath:%s classname:%s name:%s" %
-            (name, namespaces, self.fullname, self.namespace, self.classpath, self.classname, self.name)
+            (name, sorted(namespaces), self.fullname, self.namespace, self.classpath, self.classname, self.name)
         )
 
     def do_parse_name(self, name, namespaces):
@@ -830,7 +827,7 @@ class FuncInfo(GeneralInfo):
         "rust_safe_rv_mut_raw_ptr": template("""
             .and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
 
-        "rust_safe_rv_vector_box_ptr": template(""".map(|x| ${rv_rust_full} { ptr: x })"""),
+        "rust_safe_rv_vector_box_ptr": template(""".map(|ptr| ${rv_rust_full} { ptr })"""),
 
         "rust_safe_rv_other": template(""""""),
 
@@ -1892,11 +1889,6 @@ class BoxedClassTypeInfo(TypeInfo):
 class VectorTypeInfo(TypeInfo):
     TEMPLATES = {
         "rust_common": template("""
-                #[allow(dead_code)]
-                pub struct ${rust_local} {
-                    pub(crate) ptr: ${rust_extern}
-                }
-                
                 extern "C" {
                    #[doc(hidden)] fn cv_${rust_safe_id}_new() -> ${rust_extern};
                    #[doc(hidden)] fn cv_${rust_safe_id}_clone(src: ${rust_extern}) -> ${rust_extern};
@@ -1908,8 +1900,12 @@ class VectorTypeInfo(TypeInfo):
                    #[doc(hidden)] fn cv_${rust_safe_id}_get(vec: ${rust_extern}, index: size_t) -> ${rust_extern};
                 }
                 
+                pub struct ${rust_local} {
+                    pub(crate) ptr: ${rust_extern}
+                }
+                
                 impl ${rust_local} {
-                    pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
+                    #[inline(always)] pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
 
                     pub fn new() -> Self {
                         unsafe { Self { ptr: cv_${rust_safe_id}_new() } }
@@ -2023,23 +2019,15 @@ class VectorTypeInfo(TypeInfo):
                     size_t cv_${rust_safe_id}_size(${cpp_extern} vec) {
                         return reinterpret_cast<${cpptype}*>(vec)->size();
                     }
-            """),
 
-        "cpp_externs_bool": template("""
-
-                ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
-                    ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(vec)->at(index);
-                    return new ${inner_cpptype}(val);
-                }
+                    ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
+                        ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(vec)->at(index);
+                        return new ${inner_cpptype}(val);
+                    }
             """),
 
         "cpp_externs_non_bool": template("""
 
-                ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
-                    ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(vec)->at(index);
-                    return new ${inner_cpptype}(val);
-                }
-                
                 ${cpp_extern}* cv_${rust_safe_id}_data(${cpp_extern} vec) {
                     return reinterpret_cast<${cpp_extern}*>(reinterpret_cast<${cpptype}*>(vec)->data());
                 }
@@ -2051,6 +2039,7 @@ class VectorTypeInfo(TypeInfo):
         """
         :type gen: RustWrapperGenerator
         :type typeid: str
+        :type inner: TypeInfo
         """
         super(VectorTypeInfo, self).__init__(gen, typeid)
         self.is_by_ptr = True
@@ -2075,7 +2064,7 @@ class VectorTypeInfo(TypeInfo):
 
         def write_rust(f):
             f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(template_vars))
-            if isinstance(self.inner, BoxedClassTypeInfo) or self.inner.is_by_ptr:
+            if self.inner.is_by_ptr:
                 f.write(VectorTypeInfo.TEMPLATES["rust_boxed"].substitute(template_vars))
             else:
                 f.write(VectorTypeInfo.TEMPLATES["rust_non_boxed"].substitute(template_vars))
@@ -2084,9 +2073,7 @@ class VectorTypeInfo(TypeInfo):
 
         write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
         externs = VectorTypeInfo.TEMPLATES["cpp_externs"].substitute(template_vars)
-        if self.inner.typeid == "bool":
-            externs += VectorTypeInfo.TEMPLATES["cpp_externs_bool"].substitute(template_vars)
-        else:
+        if self.inner.typeid != "bool":
             externs += VectorTypeInfo.TEMPLATES["cpp_externs_non_bool"].substitute(template_vars)
         write_exc(
             "{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id),
@@ -2105,17 +2092,15 @@ class SmartPtrTypeInfo(TypeInfo):
                     #[doc(hidden)] fn cv_${rust_safe_id}_delete(ptr: ${rust_extern});
                 }
 
-                #[allow(dead_code)]
                 pub struct ${rust_local} {
                     pub(crate) ptr: ${rust_extern}
                 }
 
                 impl ${rust_local} {
-                    pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} { self.ptr }
+                    #[inline(always)] pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} { self.ptr }
+                    
                     pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
-                        ${rust_local} {
-                            ptr
-                        }
+                        Self { ptr }
                     }
                 }
 
@@ -2128,7 +2113,7 @@ class SmartPtrTypeInfo(TypeInfo):
 
         "rust_trait_cast": template("""
                 impl ${base_full} for ${rust_local} {
-                    fn as_raw_${base_local}(&self) -> ${rust_extern} {
+                    #[inline(always)] fn as_raw_${base_local}(&self) -> ${rust_extern} {
                         unsafe { cv_${rust_safe_id}_get(self.ptr) }
                     }
                 }
@@ -2168,7 +2153,7 @@ class SmartPtrTypeInfo(TypeInfo):
             f.write(SmartPtrTypeInfo.TEMPLATES["rust"].substitute(self.__dict__))
             if not isinstance(self.inner, PrimitiveTypeInfo) and self.inner.ci.is_trait:
                 bases = self.gen.all_bases(self.inner.ci.name).union({self.inner.typeid})
-                for base in bases:
+                for base in sorted(bases):
                     cibase = self.gen.get_type_info(base)
                     if not isinstance(cibase, UnknownTypeInfo):
                         f.write(SmartPtrTypeInfo.TEMPLATES["rust_trait_cast"].substitute(
@@ -2550,7 +2535,7 @@ class RustWrapperGenerator(object):
             decls = parser.parse(hdr, False)
             self.namespaces = set(str(x.replace(".", "::")) for x in parser.namespaces)
             logging.info("\n\n=============== Header: %s ================\n\n", hdr)
-            logging.info("Namespaces: %s", parser.namespaces)
+            logging.info("Namespaces: %s", sorted(parser.namespaces))
             logging.info("Comment: %s", parser.module_comment)
             includes.append('#include "' + hdr + '"')
             for decl in decls:
@@ -2610,7 +2595,6 @@ class RustWrapperGenerator(object):
 
         with open("{}/{}.consts.cpp".format(cpp_dir, module), "w") as f:
             f.write("""#include <cstdio>\n""")
-            f.write("""#include "opencv2/opencv_modules.hpp"\n""")
             f.write("""#include "opencv2/%s.hpp"\n"""%(module))
             for include in includes:
                 f.write(include+"\n")
@@ -2658,11 +2642,6 @@ class RustWrapperGenerator(object):
             if re.match(c, type_name):
                 return True
         return False
-
-    def gen_vector_struct_for(self, name):
-        struct_name = "cv_vector_of_"+name
-        self.defined_in_types_h.appand(struct_name)
-        self.moduleCppTypes.write
 
     def gen_func(self, fi):
         """
@@ -2790,24 +2769,22 @@ class RustWrapperGenerator(object):
                 }
             }
             impl $rust_full {
-                pub fn as_raw_${rust_local}(&self) -> *mut c_void { self.ptr }
+                #[inline(always)] pub fn as_raw_${rust_local}(&self) -> *mut c_void { self.ptr }
+                
                 pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
-                    ${rust_local} {
-                        ptr
-                    }
+                    Self { ptr }
                 }
             }
             
             """).substitute(typ.__dict__))
 
-        bases = self.all_bases(name)
-        for base in bases:
+        for base in sorted(self.all_bases(name)):
             cibase = self.get_class(base)
             if cibase is not None:
                 cibase = cibase.type_info()
                 self.moduleSafeRust.write(template("""
                     impl $base_full for ${rust_local} {
-                        fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
+                        #[inline(always)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
                     }
                     
                 """).substitute(rust_local=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
@@ -2842,15 +2819,15 @@ class RustWrapperGenerator(object):
             return
         if t.is_trait:
             if len(ci.bases):
-                bases = (x.rust_full for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
-                bases = " : " + " + ".join(bases)
+                bases = sorted(x.rust_full for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
+                bases = ": " + " + ".join(bases)
             else:
                 bases = ""
             logging.info("Generating impl for trait %s", ci)
             self.moduleSafeRust.write("// Generating impl for trait %s\n" % (ci))
             self.moduleSafeRust.write(self.reformat_doc(ci.comment))
             self.moduleSafeRust.write("pub trait %s%s {\n" % (t.rust_local, bases))
-            self.moduleSafeRust.write("    #[doc(hidden)] fn as_raw_%s(&self) -> *mut c_void;\n" % (t.rust_local))
+            self.moduleSafeRust.write("    #[inline(always)] fn as_raw_%s(&self) -> *mut c_void;\n" % (t.rust_local))
             for fi in ci.methods:
                 if not fi.is_static:
                     self.gen_func(fi)
@@ -2989,17 +2966,17 @@ def main():
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARNING)
     logging.getLogger().addHandler(handler)
-    print(("Generating module '" + module + "' from headers:\n\t" + "\n\t".join(srcfiles)))
+    print("Generating module '" + module + "' from headers:\n\t" + "\n\t".join(srcfiles))
     generator = RustWrapperGenerator()
     generator.gen(srcfiles, module, cpp_dir, rust_dir)
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 5:
-        print(("Usage:\n", \
+        print("Usage:\n", \
               os.path.basename(sys.argv[0]), \
-              "<full path to hdr_parser.py> <cpp_out_dir> <rust_out_dir> <module name> <C++ header> [<C++ header>...]"))
-        print(("Current args are: ", ", ".join(["'"+a+"'" for a in sys.argv])))
+              "<full path to hdr_parser.py> <cpp_out_dir> <rust_out_dir> <module name> <C++ header> [<C++ header>...]")
+        print("Current args are: ", ", ".join(["'"+a+"'" for a in sys.argv]))
         exit(0)
 
     hdr_parser_path = os.path.abspath(sys.argv[1])
