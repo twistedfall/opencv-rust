@@ -19,12 +19,12 @@ use crate::{Error, Result, core, sys, types};
 /// 
 /// The function createFreeType2 create instance to draw UTF-8 strings.
 pub fn create_free_type2() -> Result<types::PtrOfFreeType2> {
-    unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|x| types::PtrOfFreeType2 { ptr: x })
+    unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|ptr| types::PtrOfFreeType2 { ptr })
 }
 
 // Generating impl for trait cv::freetype::FreeType2 (trait)
-pub trait FreeType2 : core::Algorithm {
-    #[doc(hidden)] fn as_raw_FreeType2(&self) -> *mut c_void;
+pub trait FreeType2: core::Algorithm {
+    #[inline(always)] fn as_raw_FreeType2(&self) -> *mut c_void;
     /// Load font data.
     /// 
     /// The function loadFontData loads font data.

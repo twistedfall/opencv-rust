@@ -2907,7 +2907,7 @@ pub fn reduce(src: &core::Mat, dst: &mut core::Mat, dim: i32, rtype: i32, dtype:
 /// * nx: Flag to specify how many times the `src` is repeated along the
 /// horizontal axis.
 pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_repeat_Mat_int_int(src.as_raw_Mat(), ny, nx) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_repeat_Mat_int_int(src.as_raw_Mat(), ny, nx) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Fills the output array with repeated copies of the input array.
@@ -3615,7 +3615,7 @@ pub fn vconcat(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
 /// @snippet snippets/core_various.cpp Algorithm
 pub trait Algorithm {
-    #[doc(hidden)] fn as_raw_Algorithm(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void;
     /// Clears the algorithm state
     fn clear(&mut self) -> Result<()> {
         unsafe { sys::cv_Algorithm_clear(self.as_raw_Algorithm()) }.into_result()
@@ -3656,17 +3656,16 @@ impl Drop for core::AutoLock {
     }
 }
 impl core::AutoLock {
-    pub fn as_raw_AutoLock(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_AutoLock(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        AutoLock {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 // Generating impl for trait cv::BufferPoolController (trait)
 pub trait BufferPoolController {
-    #[doc(hidden)] fn as_raw_BufferPoolController(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_BufferPoolController(&self) -> *mut c_void;
     fn get_reserved_size(&self) -> Result<size_t> {
         unsafe { sys::cv_BufferPoolController_getReservedSize_const(self.as_raw_BufferPoolController()) }.into_result()
     }
@@ -3778,11 +3777,10 @@ impl Drop for core::CommandLineParser {
     }
 }
 impl core::CommandLineParser {
-    pub fn as_raw_CommandLineParser(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_CommandLineParser(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        CommandLineParser {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -3790,7 +3788,7 @@ impl CommandLineParser {
 
     /// Copy constructor
     pub fn new(parser: &core::CommandLineParser) -> Result<core::CommandLineParser> {
-        unsafe { sys::cv_CommandLineParser_CommandLineParser_CommandLineParser(parser.as_raw_CommandLineParser()) }.into_result().map(|x| core::CommandLineParser { ptr: x })
+        unsafe { sys::cv_CommandLineParser_CommandLineParser_CommandLineParser(parser.as_raw_CommandLineParser()) }.into_result().map(|ptr| core::CommandLineParser { ptr })
     }
     
     /// Returns application path
@@ -3897,20 +3895,19 @@ impl Drop for core::ConjGradSolver {
     }
 }
 impl core::ConjGradSolver {
-    pub fn as_raw_ConjGradSolver(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_ConjGradSolver(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        ConjGradSolver {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl core::Algorithm for ConjGradSolver {
-    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl core::MinProblemSolver for ConjGradSolver {
-    fn as_raw_MinProblemSolver(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_MinProblemSolver(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConjGradSolver {
@@ -3933,7 +3930,7 @@ impl ConjGradSolver {
     /// * f: Ptr<ConjGradSolver::Function>()
     /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
     pub fn create(f: &types::PtrOfFunction, termcrit: &core::TermCriteria) -> Result<types::PtrOfConjGradSolver> {
-        unsafe { sys::cv_ConjGradSolver_create_PtrOfFunction_TermCriteria(f.as_raw_PtrOfFunction(), termcrit.as_raw_TermCriteria()) }.into_result().map(|x| types::PtrOfConjGradSolver { ptr: x })
+        unsafe { sys::cv_ConjGradSolver_create_PtrOfFunction_TermCriteria(f.as_raw_PtrOfFunction(), termcrit.as_raw_TermCriteria()) }.into_result().map(|ptr| types::PtrOfConjGradSolver { ptr })
     }
     
 }
@@ -3986,8 +3983,8 @@ impl DMatch {
 /// ```ignore
 /// termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 /// ```
-pub trait DownhillSolver : core::MinProblemSolver {
-    #[doc(hidden)] fn as_raw_DownhillSolver(&self) -> *mut c_void;
+pub trait DownhillSolver: core::MinProblemSolver {
+    #[inline(always)] fn as_raw_DownhillSolver(&self) -> *mut c_void;
     /// Returns the initial step that will be used in downhill simplex algorithm.
     /// 
     /// ## Parameters
@@ -4042,7 +4039,7 @@ impl<'a> DownhillSolver + 'a {
     /// * init_step: Mat_<double>(1,1,0.0)
     /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
     pub fn create(f: &types::PtrOfFunction, init_step: &core::Mat, termcrit: &core::TermCriteria) -> Result<types::PtrOfDownhillSolver> {
-        unsafe { sys::cv_DownhillSolver_create_PtrOfFunction_Mat_TermCriteria(f.as_raw_PtrOfFunction(), init_step.as_raw_Mat(), termcrit.as_raw_TermCriteria()) }.into_result().map(|x| types::PtrOfDownhillSolver { ptr: x })
+        unsafe { sys::cv_DownhillSolver_create_PtrOfFunction_Mat_TermCriteria(f.as_raw_PtrOfFunction(), init_step.as_raw_Mat(), termcrit.as_raw_TermCriteria()) }.into_result().map(|ptr| types::PtrOfDownhillSolver { ptr })
     }
     
 }
@@ -4050,7 +4047,7 @@ impl<'a> DownhillSolver + 'a {
 // Generating impl for trait cv::Formatted (trait)
 /// @todo document
 pub trait Formatted {
-    #[doc(hidden)] fn as_raw_Formatted(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_Formatted(&self) -> *mut c_void;
     fn next(&mut self) -> Result<String> {
         unsafe { sys::cv_Formatted_next(self.as_raw_Formatted()) }.into_result().map(crate::templ::receive_string)
     }
@@ -4068,9 +4065,9 @@ impl<'a> Formatted + 'a {
 // Generating impl for trait cv::Formatter (trait)
 /// @todo document
 pub trait Formatter {
-    #[doc(hidden)] fn as_raw_Formatter(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_Formatter(&self) -> *mut c_void;
     fn format(&self, mtx: &core::Mat) -> Result<types::PtrOfFormatted> {
-        unsafe { sys::cv_Formatter_format_const_Mat(self.as_raw_Formatter(), mtx.as_raw_Mat()) }.into_result().map(|x| types::PtrOfFormatted { ptr: x })
+        unsafe { sys::cv_Formatter_format_const_Mat(self.as_raw_Formatter(), mtx.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfFormatted { ptr })
     }
     
     ///
@@ -4102,7 +4099,7 @@ impl<'a> Formatter + 'a {
     /// ## C++ default parameters
     /// * fmt: FMT_DEFAULT
     pub fn get(fmt: i32) -> Result<types::PtrOfFormatter> {
-        unsafe { sys::cv_Formatter_get_int(fmt) }.into_result().map(|x| types::PtrOfFormatter { ptr: x })
+        unsafe { sys::cv_Formatter_get_int(fmt) }.into_result().map(|ptr| types::PtrOfFormatter { ptr })
     }
     
 }
@@ -4119,11 +4116,10 @@ impl Drop for core::Hamming {
     }
 }
 impl core::Hamming {
-    pub fn as_raw_Hamming(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Hamming(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Hamming {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -4230,11 +4226,10 @@ impl Drop for core::LDA {
     }
 }
 impl core::LDA {
-    pub fn as_raw_LDA(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_LDA(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        LDA {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -4246,7 +4241,7 @@ impl LDA {
     /// ## C++ default parameters
     /// * num_components: 0
     pub fn new(num_components: i32) -> Result<core::LDA> {
-        unsafe { sys::cv_LDA_LDA_int(num_components) }.into_result().map(|x| core::LDA { ptr: x })
+        unsafe { sys::cv_LDA_LDA_int(num_components) }.into_result().map(|ptr| core::LDA { ptr })
     }
     
     /// Initializes and performs a Discriminant Analysis with Fisher's
@@ -4257,7 +4252,7 @@ impl LDA {
     /// ## C++ default parameters
     /// * num_components: 0
     pub fn new_with_data(src: &types::VectorOfMat, labels: &core::Mat, num_components: i32) -> Result<core::LDA> {
-        unsafe { sys::cv_LDA_LDA_VectorOfMat_Mat_int(src.as_raw_VectorOfMat(), labels.as_raw_Mat(), num_components) }.into_result().map(|x| core::LDA { ptr: x })
+        unsafe { sys::cv_LDA_LDA_VectorOfMat_Mat_int(src.as_raw_VectorOfMat(), labels.as_raw_Mat(), num_components) }.into_result().map(|ptr| core::LDA { ptr })
     }
     
     /// Serializes this object to a given filename.
@@ -4280,31 +4275,31 @@ impl LDA {
     /// Projects samples into the LDA subspace.
     /// src may be one or more row aligned samples.
     pub fn project(&mut self, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_project_Mat(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_LDA_project_Mat(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Reconstructs projections from the LDA subspace.
     /// src may be one or more row aligned projections.
     pub fn reconstruct(&mut self, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_reconstruct_Mat(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_LDA_reconstruct_Mat(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Returns the eigenvectors of this LDA.
     pub fn eigenvectors(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_eigenvectors_const(self.as_raw_LDA()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_LDA_eigenvectors_const(self.as_raw_LDA()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Returns the eigenvalues of this LDA.
     pub fn eigenvalues(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_eigenvalues_const(self.as_raw_LDA()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_LDA_eigenvalues_const(self.as_raw_LDA()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     pub fn subspace_project(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_subspaceProject_Mat_Mat_Mat(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_LDA_subspaceProject_Mat_Mat_Mat(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     pub fn subspace_reconstruct(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_subspaceReconstruct_Mat_Mat_Mat(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_LDA_subspaceReconstruct_Mat_Mat_Mat(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -4523,11 +4518,10 @@ impl Drop for core::Mat {
     }
 }
 impl core::Mat {
-    pub fn as_raw_Mat(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Mat(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Mat {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -4538,7 +4532,7 @@ impl Mat {
     /// The constructed matrix can further be assigned to another matrix or matrix expression or can be
     /// allocated with Mat::create . In the former case, the old content is de-referenced.
     pub fn new() -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat() }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat() }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4547,7 +4541,7 @@ impl Mat {
     /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
     /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
     pub unsafe fn new_rows_cols(rows: i32, cols: i32, _type: i32) -> Result<core::Mat> {
-        { sys::cv_Mat_Mat_int_int_int(rows, cols, _type) }.into_result().map(|x| core::Mat { ptr: x })
+        { sys::cv_Mat_Mat_int_int_int(rows, cols, _type) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4556,7 +4550,7 @@ impl Mat {
     /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
     /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
     pub unsafe fn new_size(size: core::Size, _type: i32) -> Result<core::Mat> {
-        { sys::cv_Mat_Mat_Size_int(size, _type) }.into_result().map(|x| core::Mat { ptr: x })
+        { sys::cv_Mat_Mat_Size_int(size, _type) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4568,7 +4562,7 @@ impl Mat {
     /// the particular value after the construction, use the assignment operator
     /// Mat::operator=(const Scalar& value) .
     pub fn new_rows_cols_with_default(rows: i32, cols: i32, _type: i32, s: core::Scalar) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_int_int_int_Scalar(rows, cols, _type, s) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_int_int_int_Scalar(rows, cols, _type, s) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4580,7 +4574,7 @@ impl Mat {
     /// the particular value after the construction, use the assignment operator
     /// Mat::operator=(const Scalar& value) .
     pub fn new_size_with_default(size: core::Size, _type: i32, s: core::Scalar) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_Size_int_Scalar(size, _type, s) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_Size_int_Scalar(size, _type, s) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4588,7 +4582,7 @@ impl Mat {
     /// * type: Array type. Use CV_8UC1, ..., CV_64FC4 to create 1-4 channel matrices, or
     /// CV_8UC(n), ..., CV_64FC(n) to create multi-channel (up to CV_CN_MAX channels) matrices.
     pub unsafe fn new_nd(sizes: &types::VectorOfint, _type: i32) -> Result<core::Mat> {
-        { sys::cv_Mat_Mat_VectorOfint_int(sizes.as_raw_VectorOfint(), _type) }.into_result().map(|x| core::Mat { ptr: x })
+        { sys::cv_Mat_Mat_VectorOfint_int(sizes.as_raw_VectorOfint(), _type) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4599,7 +4593,7 @@ impl Mat {
     /// the particular value after the construction, use the assignment operator
     /// Mat::operator=(const Scalar& value) .
     pub fn new_nd_with_default(sizes: &types::VectorOfint, _type: i32, s: core::Scalar) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_VectorOfint_int_Scalar(sizes.as_raw_VectorOfint(), _type, s) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_VectorOfint_int_Scalar(sizes.as_raw_VectorOfint(), _type, s) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4609,7 +4603,7 @@ impl Mat {
     /// formed using such a constructor, you also modify the corresponding elements of m . If you want to
     /// have an independent copy of the sub-array, use Mat::clone() .
     pub fn copy(m: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_Mat(m.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4629,7 +4623,7 @@ impl Mat {
     /// ## C++ default parameters
     /// * step: AUTO_STEP
     pub fn new_rows_cols_with_data(rows: i32, cols: i32, _type: i32, data: &mut c_void, step: size_t) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_int_int_int_void_X_size_t(rows, cols, _type, data, step) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_int_int_int_void_X_size_t(rows, cols, _type, data, step) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4649,7 +4643,7 @@ impl Mat {
     /// ## C++ default parameters
     /// * step: AUTO_STEP
     pub fn new_size_with_data(size: core::Size, _type: i32, data: &mut c_void, step: size_t) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_Size_int_void_X_size_t(size, _type, data, step) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_Size_int_void_X_size_t(size, _type, data, step) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4667,7 +4661,7 @@ impl Mat {
     /// ## C++ default parameters
     /// * steps: 0
     pub fn new_nd_with_data(sizes: &types::VectorOfint, _type: i32, data: &mut c_void, steps: &size_t) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X(sizes.as_raw_VectorOfint(), _type, data, steps) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X(sizes.as_raw_VectorOfint(), _type, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4683,7 +4677,7 @@ impl Mat {
     /// ## C++ default parameters
     /// * col_range: Range::all()
     pub fn rowscols(m: &core::Mat, row_range: &core::Range, col_range: &core::Range) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_Mat_Range_Range(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_Mat_Range_Range(m.as_raw_Mat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4694,7 +4688,7 @@ impl Mat {
     /// have an independent copy of the sub-array, use Mat::clone() .
     /// * roi: Region of interest.
     pub fn roi(m: &core::Mat, roi: core::Rect) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_Mat_Rect(m.as_raw_Mat(), roi) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_Mat_Rect(m.as_raw_Mat(), roi) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4705,7 +4699,7 @@ impl Mat {
     /// have an independent copy of the sub-array, use Mat::clone() .
     /// * ranges: Array of selected ranges of m along each dimensionality.
     pub fn ranges(m: &core::Mat, ranges: &types::VectorOfRange) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_Mat_VectorOfRange(m.as_raw_Mat(), ranges.as_raw_VectorOfRange()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_Mat_Mat_VectorOfRange(m.as_raw_Mat(), ranges.as_raw_VectorOfRange()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Creates a matrix header for the specified matrix row.
@@ -4746,7 +4740,7 @@ impl Mat {
     /// ## Parameters
     /// * y: A 0-based row index.
     pub fn row(&self, y: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_row_const_int(self.as_raw_Mat(), y) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_row_const_int(self.as_raw_Mat(), y) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Creates a matrix header for the specified matrix column.
@@ -4757,7 +4751,7 @@ impl Mat {
     /// ## Parameters
     /// * x: A 0-based column index.
     pub fn col(&self, x: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_col_const_int(self.as_raw_Mat(), x) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_col_const_int(self.as_raw_Mat(), x) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Creates a matrix header for the specified row span.
@@ -4768,13 +4762,13 @@ impl Mat {
     /// * startrow: An inclusive 0-based start index of the row span.
     /// * endrow: An exclusive 0-based ending index of the row span.
     pub fn rowbounds(&self, startrow: i32, endrow: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_rowRange_const_int_int(self.as_raw_Mat(), startrow, endrow) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_rowRange_const_int_int(self.as_raw_Mat(), startrow, endrow) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
     /// * r: Range structure containing both the start and the end indices.
     pub fn row_range(&self, r: &core::Range) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_rowRange_const_Range(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_rowRange_const_Range(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Creates a matrix header for the specified column span.
@@ -4785,13 +4779,13 @@ impl Mat {
     /// * startcol: An inclusive 0-based start index of the column span.
     /// * endcol: An exclusive 0-based ending index of the column span.
     pub fn colbounds(&self, startcol: i32, endcol: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_colRange_const_int_int(self.as_raw_Mat(), startcol, endcol) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_colRange_const_int_int(self.as_raw_Mat(), startcol, endcol) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
     /// * r: Range structure containing both the start and the end indices.
     pub fn colrange(&self, r: &core::Range) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_colRange_const_Range(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_colRange_const_Range(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Extracts a diagonal from a matrix
@@ -4833,7 +4827,7 @@ impl Mat {
     /// ## C++ default parameters
     /// * d: 0
     pub fn diag(&self, d: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_diag_const_int(self.as_raw_Mat(), d) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_diag_const_int(self.as_raw_Mat(), d) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// creates a diagonal matrix
@@ -4842,7 +4836,7 @@ impl Mat {
     /// ## Parameters
     /// * d: One-dimensional matrix that represents the main diagonal.
     pub fn diag_new_mat(d: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_diag_Mat(d.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_diag_Mat(d.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Creates a full copy of the array and the underlying data.
@@ -4850,7 +4844,7 @@ impl Mat {
     /// The method creates a full copy of the array. The original step[] is not taken into account. So, the
     /// array copy is a continuous array occupying total()*elemSize() bytes.
     pub fn clone(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_clone_const(self.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_clone_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Copies the matrix to another one.
@@ -4927,7 +4921,7 @@ impl Mat {
     /// ## C++ default parameters
     /// * mask: noArray()
     pub fn set_to(&mut self, value: &core::Mat, mask: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_setTo_Mat_Mat(self.as_raw_Mat(), value.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_setTo_Mat_Mat(self.as_raw_Mat(), value.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
@@ -4959,11 +4953,11 @@ impl Mat {
     /// ## C++ default parameters
     /// * rows: 0
     pub fn reshape(&self, cn: i32, rows: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_reshape_const_int_int(self.as_raw_Mat(), cn, rows) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_reshape_const_int_int(self.as_raw_Mat(), cn, rows) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     pub fn reshape_nd(&self, cn: i32, newshape: &types::VectorOfint) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_reshape_const_int_VectorOfint(self.as_raw_Mat(), cn, newshape.as_raw_VectorOfint()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_reshape_const_int_VectorOfint(self.as_raw_Mat(), cn, newshape.as_raw_VectorOfint()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Computes a cross-product of two 3-element vectors.
@@ -4974,7 +4968,7 @@ impl Mat {
     /// ## Parameters
     /// * m: Another cross-product operand.
     pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_cross_const_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_cross_const_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Computes a dot-product of two vectors.
@@ -5188,7 +5182,7 @@ impl Mat {
     /// ## See also
     /// copyMakeBorder
     pub fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_adjustROI_int_int_int_int(self.as_raw_Mat(), dtop, dbottom, dleft, dright) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_Mat_adjustROI_int_int_int_int(self.as_raw_Mat(), dtop, dbottom, dleft, dright) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Reports whether the matrix is continuous or not.
@@ -5555,7 +5549,7 @@ impl Mat {
     }
     
     pub fn step(&mut self) -> Result<core::MatStep> {
-        unsafe { sys::cv_Mat_step(self.as_raw_Mat()) }.into_result().map(|x| core::MatStep { ptr: x })
+        unsafe { sys::cv_Mat_step(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatStep { ptr })
     }
     
 }
@@ -5617,11 +5611,10 @@ impl Drop for core::MatExpr {
     }
 }
 impl core::MatExpr {
-    pub fn as_raw_MatExpr(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_MatExpr(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        MatExpr {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -5636,7 +5629,7 @@ impl MatExpr {
     }
     
     pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_MatExpr_cross_const_Mat(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_MatExpr_cross_const_Mat(self.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     pub fn dot(&self, m: &core::Mat) -> Result<f64> {
@@ -5647,7 +5640,7 @@ impl MatExpr {
 
 // Generating impl for trait cv::MatOp (trait)
 pub trait MatOp {
-    #[doc(hidden)] fn as_raw_MatOp(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_MatOp(&self) -> *mut c_void;
 }
 
 impl<'a> MatOp + 'a {
@@ -5665,18 +5658,17 @@ impl Drop for core::MatSize {
     }
 }
 impl core::MatSize {
-    pub fn as_raw_MatSize(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_MatSize(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        MatSize {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl MatSize {
 
     pub fn new(_p: &mut i32) -> Result<core::MatSize> {
-        unsafe { sys::cv_MatSize_MatSize_int_X(_p) }.into_result().map(|x| core::MatSize { ptr: x })
+        unsafe { sys::cv_MatSize_MatSize_int_X(_p) }.into_result().map(|ptr| core::MatSize { ptr })
     }
     
     pub fn dims(&self) -> Result<i32> {
@@ -5696,22 +5688,21 @@ impl Drop for core::MatStep {
     }
 }
 impl core::MatStep {
-    pub fn as_raw_MatStep(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_MatStep(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        MatStep {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl MatStep {
 
     pub fn default() -> Result<core::MatStep> {
-        unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|x| core::MatStep { ptr: x })
+        unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|ptr| core::MatStep { ptr })
     }
     
     pub fn new(s: size_t) -> Result<core::MatStep> {
-        unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|x| core::MatStep { ptr: x })
+        unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|ptr| core::MatStep { ptr })
     }
     
 }
@@ -5728,22 +5719,21 @@ impl Drop for core::Matx_AddOp {
     }
 }
 impl core::Matx_AddOp {
-    pub fn as_raw_Matx_AddOp(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Matx_AddOp(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Matx_AddOp {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Matx_AddOp {
 
     pub fn new() -> Result<core::Matx_AddOp> {
-        unsafe { sys::cv_Matx_AddOp_Matx_AddOp() }.into_result().map(|x| core::Matx_AddOp { ptr: x })
+        unsafe { sys::cv_Matx_AddOp_Matx_AddOp() }.into_result().map(|ptr| core::Matx_AddOp { ptr })
     }
     
     pub fn copy(unnamed_arg: &core::Matx_AddOp) -> Result<core::Matx_AddOp> {
-        unsafe { sys::cv_Matx_AddOp_Matx_AddOp_Matx_AddOp(unnamed_arg.as_raw_Matx_AddOp()) }.into_result().map(|x| core::Matx_AddOp { ptr: x })
+        unsafe { sys::cv_Matx_AddOp_Matx_AddOp_Matx_AddOp(unnamed_arg.as_raw_Matx_AddOp()) }.into_result().map(|ptr| core::Matx_AddOp { ptr })
     }
     
 }
@@ -5759,22 +5749,21 @@ impl Drop for core::Matx_DivOp {
     }
 }
 impl core::Matx_DivOp {
-    pub fn as_raw_Matx_DivOp(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Matx_DivOp(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Matx_DivOp {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Matx_DivOp {
 
     pub fn new() -> Result<core::Matx_DivOp> {
-        unsafe { sys::cv_Matx_DivOp_Matx_DivOp() }.into_result().map(|x| core::Matx_DivOp { ptr: x })
+        unsafe { sys::cv_Matx_DivOp_Matx_DivOp() }.into_result().map(|ptr| core::Matx_DivOp { ptr })
     }
     
     pub fn copy(unnamed_arg: &core::Matx_DivOp) -> Result<core::Matx_DivOp> {
-        unsafe { sys::cv_Matx_DivOp_Matx_DivOp_Matx_DivOp(unnamed_arg.as_raw_Matx_DivOp()) }.into_result().map(|x| core::Matx_DivOp { ptr: x })
+        unsafe { sys::cv_Matx_DivOp_Matx_DivOp_Matx_DivOp(unnamed_arg.as_raw_Matx_DivOp()) }.into_result().map(|ptr| core::Matx_DivOp { ptr })
     }
     
 }
@@ -5790,22 +5779,21 @@ impl Drop for core::Matx_MatMulOp {
     }
 }
 impl core::Matx_MatMulOp {
-    pub fn as_raw_Matx_MatMulOp(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Matx_MatMulOp(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Matx_MatMulOp {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Matx_MatMulOp {
 
     pub fn new() -> Result<core::Matx_MatMulOp> {
-        unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp() }.into_result().map(|x| core::Matx_MatMulOp { ptr: x })
+        unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp() }.into_result().map(|ptr| core::Matx_MatMulOp { ptr })
     }
     
     pub fn copy(unnamed_arg: &core::Matx_MatMulOp) -> Result<core::Matx_MatMulOp> {
-        unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp(unnamed_arg.as_raw_Matx_MatMulOp()) }.into_result().map(|x| core::Matx_MatMulOp { ptr: x })
+        unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp(unnamed_arg.as_raw_Matx_MatMulOp()) }.into_result().map(|ptr| core::Matx_MatMulOp { ptr })
     }
     
 }
@@ -5821,22 +5809,21 @@ impl Drop for core::Matx_MulOp {
     }
 }
 impl core::Matx_MulOp {
-    pub fn as_raw_Matx_MulOp(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Matx_MulOp(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Matx_MulOp {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Matx_MulOp {
 
     pub fn new() -> Result<core::Matx_MulOp> {
-        unsafe { sys::cv_Matx_MulOp_Matx_MulOp() }.into_result().map(|x| core::Matx_MulOp { ptr: x })
+        unsafe { sys::cv_Matx_MulOp_Matx_MulOp() }.into_result().map(|ptr| core::Matx_MulOp { ptr })
     }
     
     pub fn copy(unnamed_arg: &core::Matx_MulOp) -> Result<core::Matx_MulOp> {
-        unsafe { sys::cv_Matx_MulOp_Matx_MulOp_Matx_MulOp(unnamed_arg.as_raw_Matx_MulOp()) }.into_result().map(|x| core::Matx_MulOp { ptr: x })
+        unsafe { sys::cv_Matx_MulOp_Matx_MulOp_Matx_MulOp(unnamed_arg.as_raw_Matx_MulOp()) }.into_result().map(|ptr| core::Matx_MulOp { ptr })
     }
     
 }
@@ -5852,22 +5839,21 @@ impl Drop for core::Matx_ScaleOp {
     }
 }
 impl core::Matx_ScaleOp {
-    pub fn as_raw_Matx_ScaleOp(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Matx_ScaleOp(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Matx_ScaleOp {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Matx_ScaleOp {
 
     pub fn new() -> Result<core::Matx_ScaleOp> {
-        unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp() }.into_result().map(|x| core::Matx_ScaleOp { ptr: x })
+        unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp() }.into_result().map(|ptr| core::Matx_ScaleOp { ptr })
     }
     
     pub fn copy(unnamed_arg: &core::Matx_ScaleOp) -> Result<core::Matx_ScaleOp> {
-        unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp(unnamed_arg.as_raw_Matx_ScaleOp()) }.into_result().map(|x| core::Matx_ScaleOp { ptr: x })
+        unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp(unnamed_arg.as_raw_Matx_ScaleOp()) }.into_result().map(|ptr| core::Matx_ScaleOp { ptr })
     }
     
 }
@@ -5883,22 +5869,21 @@ impl Drop for core::Matx_SubOp {
     }
 }
 impl core::Matx_SubOp {
-    pub fn as_raw_Matx_SubOp(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Matx_SubOp(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Matx_SubOp {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Matx_SubOp {
 
     pub fn new() -> Result<core::Matx_SubOp> {
-        unsafe { sys::cv_Matx_SubOp_Matx_SubOp() }.into_result().map(|x| core::Matx_SubOp { ptr: x })
+        unsafe { sys::cv_Matx_SubOp_Matx_SubOp() }.into_result().map(|ptr| core::Matx_SubOp { ptr })
     }
     
     pub fn copy(unnamed_arg: &core::Matx_SubOp) -> Result<core::Matx_SubOp> {
-        unsafe { sys::cv_Matx_SubOp_Matx_SubOp_Matx_SubOp(unnamed_arg.as_raw_Matx_SubOp()) }.into_result().map(|x| core::Matx_SubOp { ptr: x })
+        unsafe { sys::cv_Matx_SubOp_Matx_SubOp_Matx_SubOp(unnamed_arg.as_raw_Matx_SubOp()) }.into_result().map(|ptr| core::Matx_SubOp { ptr })
     }
     
 }
@@ -5914,30 +5899,29 @@ impl Drop for core::Matx_TOp {
     }
 }
 impl core::Matx_TOp {
-    pub fn as_raw_Matx_TOp(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Matx_TOp(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Matx_TOp {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Matx_TOp {
 
     pub fn new() -> Result<core::Matx_TOp> {
-        unsafe { sys::cv_Matx_TOp_Matx_TOp() }.into_result().map(|x| core::Matx_TOp { ptr: x })
+        unsafe { sys::cv_Matx_TOp_Matx_TOp() }.into_result().map(|ptr| core::Matx_TOp { ptr })
     }
     
     pub fn copy(unnamed_arg: &core::Matx_TOp) -> Result<core::Matx_TOp> {
-        unsafe { sys::cv_Matx_TOp_Matx_TOp_Matx_TOp(unnamed_arg.as_raw_Matx_TOp()) }.into_result().map(|x| core::Matx_TOp { ptr: x })
+        unsafe { sys::cv_Matx_TOp_Matx_TOp_Matx_TOp(unnamed_arg.as_raw_Matx_TOp()) }.into_result().map(|ptr| core::Matx_TOp { ptr })
     }
     
 }
 
 // Generating impl for trait cv::MinProblemSolver (trait)
 /// Basic interface for all solvers
-pub trait MinProblemSolver : core::Algorithm {
-    #[doc(hidden)] fn as_raw_MinProblemSolver(&self) -> *mut c_void;
+pub trait MinProblemSolver: core::Algorithm {
+    #[inline(always)] fn as_raw_MinProblemSolver(&self) -> *mut c_void;
     /// Getter for the optimized function.
     /// 
     /// The optimized function is represented by Function interface, which requires derivatives to
@@ -5947,7 +5931,7 @@ pub trait MinProblemSolver : core::Algorithm {
     /// Smart-pointer to an object that implements Function interface - it represents the
     /// function that is being optimized. It can be empty, if no function was given so far.
     fn get_function(&self) -> Result<types::PtrOfFunction> {
-        unsafe { sys::cv_MinProblemSolver_getFunction_const(self.as_raw_MinProblemSolver()) }.into_result().map(|x| types::PtrOfFunction { ptr: x })
+        unsafe { sys::cv_MinProblemSolver_getFunction_const(self.as_raw_MinProblemSolver()) }.into_result().map(|ptr| types::PtrOfFunction { ptr })
     }
     
     /// Setter for the optimized function.
@@ -5965,7 +5949,7 @@ pub trait MinProblemSolver : core::Algorithm {
     /// ## Returns
     /// Deep copy of the terminal criteria used at the moment.
     fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-        unsafe { sys::cv_MinProblemSolver_getTermCriteria_const(self.as_raw_MinProblemSolver()) }.into_result().map(|x| core::TermCriteria { ptr: x })
+        unsafe { sys::cv_MinProblemSolver_getTermCriteria_const(self.as_raw_MinProblemSolver()) }.into_result().map(|ptr| core::TermCriteria { ptr })
     }
     
     /// Set terminal criteria for solver.
@@ -6009,7 +5993,7 @@ impl<'a> MinProblemSolver + 'a {
 // Generating impl for trait cv::MinProblemSolver::Function (trait)
 /// Represents function being optimized
 pub trait MinProblemSolver_Function {
-    #[doc(hidden)] fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void;
     fn get_dims(&self) -> Result<i32> {
         unsafe { sys::cv_MinProblemSolver_Function_getDims_const(self.as_raw_MinProblemSolver_Function()) }.into_result()
     }
@@ -6116,11 +6100,10 @@ impl Drop for core::NAryMatIterator {
     }
 }
 impl core::NAryMatIterator {
-    pub fn as_raw_NAryMatIterator(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_NAryMatIterator(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        NAryMatIterator {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6128,7 +6111,7 @@ impl NAryMatIterator {
 
     /// the default constructor
     pub fn new() -> Result<core::NAryMatIterator> {
-        unsafe { sys::cv_NAryMatIterator_NAryMatIterator() }.into_result().map(|x| core::NAryMatIterator { ptr: x })
+        unsafe { sys::cv_NAryMatIterator_NAryMatIterator() }.into_result().map(|ptr| core::NAryMatIterator { ptr })
     }
     
 }
@@ -6210,11 +6193,10 @@ impl Drop for core::PCA {
     }
 }
 impl core::PCA {
-    pub fn as_raw_PCA(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_PCA(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        PCA {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6225,7 +6207,7 @@ impl PCA {
     /// The default constructor initializes an empty %PCA structure. The other
     /// constructors initialize the structure and call PCA::operator()().
     pub fn default() -> Result<core::PCA> {
-        unsafe { sys::cv_PCA_PCA() }.into_result().map(|x| core::PCA { ptr: x })
+        unsafe { sys::cv_PCA_PCA() }.into_result().map(|ptr| core::PCA { ptr })
     }
     
     /// ## Parameters
@@ -6240,7 +6222,7 @@ impl PCA {
     /// ## C++ default parameters
     /// * max_components: 0
     pub fn new_mat_max(data: &core::Mat, mean: &core::Mat, flags: i32, max_components: i32) -> Result<core::PCA> {
-        unsafe { sys::cv_PCA_PCA_Mat_Mat_int_int(data.as_raw_Mat(), mean.as_raw_Mat(), flags, max_components) }.into_result().map(|x| core::PCA { ptr: x })
+        unsafe { sys::cv_PCA_PCA_Mat_Mat_int_int(data.as_raw_Mat(), mean.as_raw_Mat(), flags, max_components) }.into_result().map(|ptr| core::PCA { ptr })
     }
     
     /// ## Parameters
@@ -6253,7 +6235,7 @@ impl PCA {
     /// Using this parameter will let the PCA decided how many components to
     /// retain but it will always keep at least 2.
     pub fn new_mat_variance(data: &core::Mat, mean: &core::Mat, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-        unsafe { sys::cv_PCA_PCA_Mat_Mat_int_double(data.as_raw_Mat(), mean.as_raw_Mat(), flags, retained_variance) }.into_result().map(|x| core::PCA { ptr: x })
+        unsafe { sys::cv_PCA_PCA_Mat_Mat_int_double(data.as_raw_Mat(), mean.as_raw_Mat(), flags, retained_variance) }.into_result().map(|ptr| core::PCA { ptr })
     }
     
     /// Projects vector(s) to the principal component subspace.
@@ -6271,7 +6253,7 @@ impl PCA {
     /// (vector dimensionality) and `vec.rows` is the number of vectors to
     /// project, and the same is true for the PCA::DATA_AS_COL case.
     pub fn project(&self, vec: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_PCA_project_const_Mat(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_PCA_project_const_Mat(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -6303,7 +6285,7 @@ impl PCA {
     /// subspace, the layout and size are the same as of PCA::project output
     /// vectors.
     pub fn back_project(&self, vec: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_PCA_backProject_const_Mat(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_PCA_backProject_const_Mat(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -6321,7 +6303,7 @@ impl PCA {
 // Generating impl for trait cv::ParallelLoopBody (trait)
 /// Base class for parallel data processors
 pub trait ParallelLoopBody {
-    #[doc(hidden)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
 }
 
 impl<'a> ParallelLoopBody + 'a {
@@ -6339,16 +6321,15 @@ impl Drop for core::ParallelLoopBodyLambdaWrapper {
     }
 }
 impl core::ParallelLoopBodyLambdaWrapper {
-    pub fn as_raw_ParallelLoopBodyLambdaWrapper(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_ParallelLoopBodyLambdaWrapper(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        ParallelLoopBodyLambdaWrapper {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl core::ParallelLoopBody for ParallelLoopBodyLambdaWrapper {
-    fn as_raw_ParallelLoopBody(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void { self.ptr }
 }
 
 // boxed class cv::Param
@@ -6362,11 +6343,10 @@ impl Drop for core::Param {
     }
 }
 impl core::Param {
-    pub fn as_raw_Param(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Param(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Param {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6403,22 +6383,21 @@ impl Drop for core::Range {
     }
 }
 impl core::Range {
-    pub fn as_raw_Range(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Range(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Range {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl Range {
 
     pub fn default() -> Result<core::Range> {
-        unsafe { sys::cv_Range_Range() }.into_result().map(|x| core::Range { ptr: x })
+        unsafe { sys::cv_Range_Range() }.into_result().map(|ptr| core::Range { ptr })
     }
     
     pub fn new(_start: i32, _end: i32) -> Result<core::Range> {
-        unsafe { sys::cv_Range_Range_int_int(_start, _end) }.into_result().map(|x| core::Range { ptr: x })
+        unsafe { sys::cv_Range_Range_int_int(_start, _end) }.into_result().map(|ptr| core::Range { ptr })
     }
     
     pub fn size(&self) -> Result<i32> {
@@ -6430,7 +6409,7 @@ impl Range {
     }
     
     pub fn all() -> Result<core::Range> {
-        unsafe { sys::cv_Range_all() }.into_result().map(|x| core::Range { ptr: x })
+        unsafe { sys::cv_Range_all() }.into_result().map(|ptr| core::Range { ptr })
     }
     
     pub fn start(&self) -> Result<i32> {
@@ -6465,11 +6444,10 @@ impl Drop for core::RotatedRect {
     }
 }
 impl core::RotatedRect {
-    pub fn as_raw_RotatedRect(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_RotatedRect(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        RotatedRect {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6477,7 +6455,7 @@ impl RotatedRect {
 
     /// default constructor
     pub fn default() -> Result<core::RotatedRect> {
-        unsafe { sys::cv_RotatedRect_RotatedRect() }.into_result().map(|x| core::RotatedRect { ptr: x })
+        unsafe { sys::cv_RotatedRect_RotatedRect() }.into_result().map(|ptr| core::RotatedRect { ptr })
     }
     
     /// full constructor
@@ -6487,13 +6465,13 @@ impl RotatedRect {
     /// * angle: The rotation angle in a clockwise direction. When the angle is 0, 90, 180, 270 etc.,
     /// the rectangle becomes an up-right rectangle.
     pub fn new(center: core::Point2f, size: core::Size2f, angle: f32) -> Result<core::RotatedRect> {
-        unsafe { sys::cv_RotatedRect_RotatedRect_Point2f_Size2f_float(center, size, angle) }.into_result().map(|x| core::RotatedRect { ptr: x })
+        unsafe { sys::cv_RotatedRect_RotatedRect_Point2f_Size2f_float(center, size, angle) }.into_result().map(|ptr| core::RotatedRect { ptr })
     }
     
     /// Any 3 end points of the RotatedRect. They must be given in order (either clockwise or
     /// anticlockwise).
     pub fn for_points(point1: core::Point2f, point2: core::Point2f, point3: core::Point2f) -> Result<core::RotatedRect> {
-        unsafe { sys::cv_RotatedRect_RotatedRect_Point2f_Point2f_Point2f(point1, point2, point3) }.into_result().map(|x| core::RotatedRect { ptr: x })
+        unsafe { sys::cv_RotatedRect_RotatedRect_Point2f_Point2f_Point2f(point1, point2, point3) }.into_result().map(|ptr| core::RotatedRect { ptr })
     }
     
     /// returns 4 vertices of the rectangle
@@ -6545,11 +6523,10 @@ impl Drop for core::TermCriteria {
     }
 }
 impl core::TermCriteria {
-    pub fn as_raw_TermCriteria(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_TermCriteria(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        TermCriteria {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6557,7 +6534,7 @@ impl TermCriteria {
 
     /// default constructor
     pub fn default() -> Result<core::TermCriteria> {
-        unsafe { sys::cv_TermCriteria_TermCriteria() }.into_result().map(|x| core::TermCriteria { ptr: x })
+        unsafe { sys::cv_TermCriteria_TermCriteria() }.into_result().map(|ptr| core::TermCriteria { ptr })
     }
     
     /// ## Parameters
@@ -6565,7 +6542,7 @@ impl TermCriteria {
     /// * maxCount: The maximum number of iterations or elements to compute.
     /// * epsilon: The desired accuracy or change in parameters at which the iterative algorithm stops.
     pub fn new(_type: i32, max_count: i32, epsilon: f64) -> Result<core::TermCriteria> {
-        unsafe { sys::cv_TermCriteria_TermCriteria_int_int_double(_type, max_count, epsilon) }.into_result().map(|x| core::TermCriteria { ptr: x })
+        unsafe { sys::cv_TermCriteria_TermCriteria_int_int_double(_type, max_count, epsilon) }.into_result().map(|ptr| core::TermCriteria { ptr })
     }
     
     pub fn is_valid(&self) -> Result<bool> {
@@ -6627,11 +6604,10 @@ impl Drop for core::TickMeter {
     }
 }
 impl core::TickMeter {
-    pub fn as_raw_TickMeter(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_TickMeter(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        TickMeter {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6639,7 +6615,7 @@ impl TickMeter {
 
     /// the default constructor
     pub fn new() -> Result<core::TickMeter> {
-        unsafe { sys::cv_TickMeter_TickMeter() }.into_result().map(|x| core::TickMeter { ptr: x })
+        unsafe { sys::cv_TickMeter_TickMeter() }.into_result().map(|ptr| core::TickMeter { ptr })
     }
     
     /// starts counting ticks.
@@ -6696,18 +6672,17 @@ impl Drop for core::UMat {
     }
 }
 impl core::UMat {
-    pub fn as_raw_UMat(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_UMat(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        UMat {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl UMat {
 
     pub fn get_mat(&self, flags: i32) -> Result<core::Mat> {
-        unsafe { sys::cv_UMat_getMat_const_int(self.as_raw_UMat(), flags) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_UMat_getMat_const_int(self.as_raw_UMat(), flags) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// copies the matrix content to "m".
@@ -6855,11 +6830,10 @@ impl Drop for core::UMatData {
     }
 }
 impl core::UMatData {
-    pub fn as_raw_UMatData(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_UMatData(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        UMatData {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6922,11 +6896,10 @@ impl Drop for core::CheckContext {
     }
 }
 impl core::CheckContext {
-    pub fn as_raw_CheckContext(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_CheckContext(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        CheckContext {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -6941,18 +6914,17 @@ impl Drop for core::NodeData {
     }
 }
 impl core::NodeData {
-    pub fn as_raw_NodeData(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_NodeData(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        NodeData {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl NodeData {
 
     pub fn new(_ref: &mut core::NodeData) -> Result<core::NodeData> {
-        unsafe { sys::cv_instr_NodeData_NodeData_NodeData(_ref.as_raw_NodeData()) }.into_result().map(|x| core::NodeData { ptr: x })
+        unsafe { sys::cv_instr_NodeData_NodeData_NodeData(_ref.as_raw_NodeData()) }.into_result().map(|ptr| core::NodeData { ptr })
     }
     
     pub fn get_total_ms(&self) -> Result<f64> {
@@ -6976,18 +6948,17 @@ impl Drop for core::NodeDataTls {
     }
 }
 impl core::NodeDataTls {
-    pub fn as_raw_NodeDataTls(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_NodeDataTls(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        NodeDataTls {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl NodeDataTls {
 
     pub fn new() -> Result<core::NodeDataTls> {
-        unsafe { sys::cv_instr_NodeDataTls_NodeDataTls() }.into_result().map(|x| core::NodeDataTls { ptr: x })
+        unsafe { sys::cv_instr_NodeDataTls_NodeDataTls() }.into_result().map(|ptr| core::NodeDataTls { ptr })
     }
     
 }

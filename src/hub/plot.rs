@@ -5,8 +5,8 @@ use crate::{Error, Result, core, sys, types};
 
 
 // Generating impl for trait cv::plot::Plot2d (trait)
-pub trait Plot2d : core::Algorithm {
-    #[doc(hidden)] fn as_raw_Plot2d(&self) -> *mut c_void;
+pub trait Plot2d: core::Algorithm {
+    #[inline(always)] fn as_raw_Plot2d(&self) -> *mut c_void;
     fn set_min_x(&mut self, _plot_min_x: f64) -> Result<()> {
         unsafe { sys::cv_plot_Plot2d_setMinX_double(self.as_raw_Plot2d(), _plot_min_x) }.into_result()
     }
@@ -98,7 +98,7 @@ impl<'a> Plot2d + 'a {
     /// * data: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix containing <span lang='latex'>Y</span> values of points to plot. <span lang='latex'>X</span> values
     /// will be equal to indexes of correspondind elements in data matrix.
     pub fn create(data: &core::Mat) -> Result<types::PtrOfPlot2d> {
-        unsafe { sys::cv_plot_Plot2d_create_Mat(data.as_raw_Mat()) }.into_result().map(|x| types::PtrOfPlot2d { ptr: x })
+        unsafe { sys::cv_plot_Plot2d_create_Mat(data.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
     }
     
     /// Creates Plot2d object
@@ -107,7 +107,7 @@ impl<'a> Plot2d + 'a {
     /// * dataX: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix <span lang='latex'>X</span> values of points to plot.
     /// * dataY: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix containing <span lang='latex'>Y</span> values of points to plot.
     pub fn create_1(data_x: &core::Mat, data_y: &core::Mat) -> Result<types::PtrOfPlot2d> {
-        unsafe { sys::cv_plot_Plot2d_create_Mat_Mat(data_x.as_raw_Mat(), data_y.as_raw_Mat()) }.into_result().map(|x| types::PtrOfPlot2d { ptr: x })
+        unsafe { sys::cv_plot_Plot2d_create_Mat_Mat(data_x.as_raw_Mat(), data_y.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
     }
     
 }

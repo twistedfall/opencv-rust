@@ -37,7 +37,7 @@ use crate::{Error, Result, core, sys, types};
 // Generating impl for trait cv::dpm::DPMDetector (trait)
 /// This is a C++ abstract class, it provides external user API to work with DPM.
 pub trait DPMDetector {
-    #[doc(hidden)] fn as_raw_DPMDetector(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_DPMDetector(&self) -> *mut c_void;
     fn is_empty(&self) -> Result<bool> {
         unsafe { sys::cv_dpm_DPMDetector_isEmpty_const(self.as_raw_DPMDetector()) }.into_result()
     }
@@ -73,25 +73,24 @@ impl Drop for crate::dpm::DPMDetector_ObjectDetection {
     }
 }
 impl crate::dpm::DPMDetector_ObjectDetection {
-    pub fn as_raw_DPMDetector_ObjectDetection(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_DPMDetector_ObjectDetection(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        DPMDetector_ObjectDetection {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl DPMDetector_ObjectDetection {
 
     pub fn new() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-        unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection() }.into_result().map(|x| crate::dpm::DPMDetector_ObjectDetection { ptr: x })
+        unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection() }.into_result().map(|ptr| crate::dpm::DPMDetector_ObjectDetection { ptr })
     }
     
     ///
     /// ## C++ default parameters
     /// * class_id: -1
     pub fn new_1(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
-        unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_Rect_float_int(rect, score, class_id) }.into_result().map(|x| crate::dpm::DPMDetector_ObjectDetection { ptr: x })
+        unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_Rect_float_int(rect, score, class_id) }.into_result().map(|ptr| crate::dpm::DPMDetector_ObjectDetection { ptr })
     }
     
 }

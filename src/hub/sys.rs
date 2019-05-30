@@ -23,6 +23,9 @@ pub type cv_return_value_Point2fWrapper = cv_return_value<core::Point2f>;
 // cv::Point
 pub type cv_return_value_PointWrapper = cv_return_value<core::Point>;
 
+// cv::Rect2d
+pub type cv_return_value_Rect2dWrapper = cv_return_value<core::Rect2d>;
+
 // cv::Rect2f
 pub type cv_return_value_Rect2fWrapper = cv_return_value<core::Rect2f>;
 
@@ -47,8 +50,17 @@ pub type cv_return_value_Vec2dWrapper = cv_return_value<core::Vec2d>;
 // cv::Vec3d
 pub type cv_return_value_Vec3dWrapper = cv_return_value<core::Vec3d>;
 
+// cv::Vec4f
+pub type cv_return_value_Vec4fWrapper = cv_return_value<core::Vec4f>;
+
+// cv::Vec6f
+pub type cv_return_value_Vec6fWrapper = cv_return_value<core::Vec6f>;
+
 // bool
 pub type cv_return_value_bool = cv_return_value<bool>;
+
+// char
+pub type cv_return_value_char = cv_return_value<i8>;
 
 // String
 pub type cv_return_value_char_X = cv_return_value<*mut c_char>;
@@ -74,6 +86,9 @@ pub type cv_return_value_int64 = cv_return_value<i64>;
 // size_t
 pub type cv_return_value_std_size_t = cv_return_value<size_t>;
 
+// uchar
+pub type cv_return_value_unsigned_char = cv_return_value<u8>;
+
 // uchar*
 pub type cv_return_value_unsigned_char_X = cv_return_value<*mut u8>;
 
@@ -83,7 +98,7 @@ pub type cv_return_value_unsigned_long_long = cv_return_value<u64>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// Ptr<HistogramPhaseUnwrapping>
+// Ptr<AffineTransformer>
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {

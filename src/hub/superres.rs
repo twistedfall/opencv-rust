@@ -12,21 +12,21 @@ use crate::{Error, Result, core, sys, types};
 /// ## C++ default parameters
 /// * device_id: 0
 pub fn create_frame_source__camera(device_id: i32) -> Result<types::PtrOfFrameSource> {
-    unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id) }.into_result().map(|x| types::PtrOfFrameSource { ptr: x })
+    unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id) }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }
 
 pub fn create_frame_source__empty() -> Result<types::PtrOfFrameSource> {
-    unsafe { sys::cv_superres_createFrameSource_Empty() }.into_result().map(|x| types::PtrOfFrameSource { ptr: x })
+    unsafe { sys::cv_superres_createFrameSource_Empty() }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }
 
 pub fn create_frame_source__video_cuda(file_name: &str) -> Result<types::PtrOfFrameSource> {
     string_arg!(file_name);
-    unsafe { sys::cv_superres_createFrameSource_Video_CUDA_String(file_name.as_ptr()) }.into_result().map(|x| types::PtrOfFrameSource { ptr: x })
+    unsafe { sys::cv_superres_createFrameSource_Video_CUDA_String(file_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }
 
 pub fn create_frame_source__video(file_name: &str) -> Result<types::PtrOfFrameSource> {
     string_arg!(file_name);
-    unsafe { sys::cv_superres_createFrameSource_Video_String(file_name.as_ptr()) }.into_result().map(|x| types::PtrOfFrameSource { ptr: x })
+    unsafe { sys::cv_superres_createFrameSource_Video_String(file_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }
 
 /// Create Bilateral TV-L1 Super Resolution.
@@ -48,16 +48,16 @@ pub fn create_frame_source__video(file_name: &str) -> Result<types::PtrOfFrameSo
 /// *   **int temporalAreaRadius** Radius of the temporal search area.
 /// *   **Ptr\<DenseOpticalFlowExt\> opticalFlow** Dense optical flow algorithm.
 pub fn create_super_resolution_btvl1() -> Result<types::PtrOfSuperResolution> {
-    unsafe { sys::cv_superres_createSuperResolution_BTVL1() }.into_result().map(|x| types::PtrOfSuperResolution { ptr: x })
+    unsafe { sys::cv_superres_createSuperResolution_BTVL1() }.into_result().map(|ptr| types::PtrOfSuperResolution { ptr })
 }
 
 pub fn create_super_resolution_btvl1_cuda() -> Result<types::PtrOfSuperResolution> {
-    unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result().map(|x| types::PtrOfSuperResolution { ptr: x })
+    unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result().map(|ptr| types::PtrOfSuperResolution { ptr })
 }
 
 // Generating impl for trait cv::superres::FrameSource (trait)
 pub trait FrameSource {
-    #[doc(hidden)] fn as_raw_FrameSource(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_FrameSource(&self) -> *mut c_void;
     fn next_frame(&mut self, frame: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_superres_FrameSource_nextFrame_Mat(self.as_raw_FrameSource(), frame.as_raw_Mat()) }.into_result()
     }
@@ -77,8 +77,8 @@ impl<'a> FrameSource + 'a {
 /// 
 /// The class is only used to define the common interface for the whole family of Super Resolution
 /// algorithms.
-pub trait SuperResolution : core::Algorithm + crate::superres::FrameSource {
-    #[doc(hidden)] fn as_raw_SuperResolution(&self) -> *mut c_void;
+pub trait SuperResolution: core::Algorithm + crate::superres::FrameSource {
+    #[inline(always)] fn as_raw_SuperResolution(&self) -> *mut c_void;
     /// Set input frame source for Super Resolution algorithm.
     /// 
     /// ## Parameters

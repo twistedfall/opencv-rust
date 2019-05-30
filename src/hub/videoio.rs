@@ -375,11 +375,10 @@ impl Drop for crate::videoio::VideoCapture {
     }
 }
 impl crate::videoio::VideoCapture {
-    pub fn as_raw_VideoCapture(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_VideoCapture(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        VideoCapture {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -391,7 +390,7 @@ impl VideoCapture {
     /// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
     /// destructor.
     pub fn default() -> Result<crate::videoio::VideoCapture> {
-        unsafe { sys::cv_VideoCapture_VideoCapture() }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
+        unsafe { sys::cv_VideoCapture_VideoCapture() }.into_result().map(|ptr| crate::videoio::VideoCapture { ptr })
     }
     
     /// Open video file or a capturing device or a IP video stream for video capturing
@@ -399,7 +398,7 @@ impl VideoCapture {
     /// Same as VideoCapture(const String& filename, int apiPreference) but using default Capture API backends
     pub fn new_from_file(filename: &str) -> Result<crate::videoio::VideoCapture> {
         string_arg!(filename);
-        unsafe { sys::cv_VideoCapture_VideoCapture_String(filename.as_ptr()) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
+        unsafe { sys::cv_VideoCapture_VideoCapture_String(filename.as_ptr()) }.into_result().map(|ptr| crate::videoio::VideoCapture { ptr })
     }
     
     /// Open video file or a capturing device or a IP video stream for video capturing with API Preference
@@ -417,7 +416,7 @@ impl VideoCapture {
     /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn new_from_file_with_backend(filename: &str, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
         string_arg!(filename);
-        unsafe { sys::cv_VideoCapture_VideoCapture_String_int(filename.as_ptr(), api_preference) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
+        unsafe { sys::cv_VideoCapture_VideoCapture_String_int(filename.as_ptr(), api_preference) }.into_result().map(|ptr| crate::videoio::VideoCapture { ptr })
     }
     
     /// Open a camera for video capturing
@@ -430,7 +429,7 @@ impl VideoCapture {
     /// ## See also
     /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn new(index: i32) -> Result<crate::videoio::VideoCapture> {
-        unsafe { sys::cv_VideoCapture_VideoCapture_int(index) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
+        unsafe { sys::cv_VideoCapture_VideoCapture_int(index) }.into_result().map(|ptr| crate::videoio::VideoCapture { ptr })
     }
     
     /// Opens a camera for video capturing
@@ -444,7 +443,7 @@ impl VideoCapture {
     /// ## See also
     /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn new_with_backend(index: i32, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
-        unsafe { sys::cv_VideoCapture_VideoCapture_int_int(index, api_preference) }.into_result().map(|x| crate::videoio::VideoCapture { ptr: x })
+        unsafe { sys::cv_VideoCapture_VideoCapture_int_int(index, api_preference) }.into_result().map(|ptr| crate::videoio::VideoCapture { ptr })
     }
     
     /// Open video file or a capturing device or a IP video stream for video capturing
@@ -649,11 +648,10 @@ impl Drop for crate::videoio::VideoWriter {
     }
 }
 impl crate::videoio::VideoWriter {
-    pub fn as_raw_VideoWriter(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_VideoWriter(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        VideoWriter {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -666,7 +664,7 @@ impl VideoWriter {
     /// *   On Windows FFMPEG or VFW is used;
     /// *   On MacOSX QTKit is used.
     pub fn default() -> Result<crate::videoio::VideoWriter> {
-        unsafe { sys::cv_VideoWriter_VideoWriter() }.into_result().map(|x| crate::videoio::VideoWriter { ptr: x })
+        unsafe { sys::cv_VideoWriter_VideoWriter() }.into_result().map(|ptr| crate::videoio::VideoWriter { ptr })
     }
     
     /// ## Parameters
@@ -694,7 +692,7 @@ impl VideoWriter {
     /// * is_color: true
     pub fn new(filename: &str, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
         string_arg!(filename);
-        unsafe { sys::cv_VideoWriter_VideoWriter_String_int_double_Size_bool(filename.as_ptr(), fourcc, fps, frame_size, is_color) }.into_result().map(|x| crate::videoio::VideoWriter { ptr: x })
+        unsafe { sys::cv_VideoWriter_VideoWriter_String_int_double_Size_bool(filename.as_ptr(), fourcc, fps, frame_size, is_color) }.into_result().map(|ptr| crate::videoio::VideoWriter { ptr })
     }
     
     /// The `apiPreference` parameter allows to specify API backends to use. Can be used to enforce a specific reader implementation
@@ -704,7 +702,7 @@ impl VideoWriter {
     /// * is_color: true
     pub fn new_with_backend(filename: &str, api_preference: i32, fourcc: i32, fps: f64, frame_size: core::Size, is_color: bool) -> Result<crate::videoio::VideoWriter> {
         string_arg!(filename);
-        unsafe { sys::cv_VideoWriter_VideoWriter_String_int_int_double_Size_bool(filename.as_ptr(), api_preference, fourcc, fps, frame_size, is_color) }.into_result().map(|x| crate::videoio::VideoWriter { ptr: x })
+        unsafe { sys::cv_VideoWriter_VideoWriter_String_int_int_double_Size_bool(filename.as_ptr(), api_preference, fourcc, fps, frame_size, is_color) }.into_result().map(|ptr| crate::videoio::VideoWriter { ptr })
     }
     
     /// Initializes or reinitializes video writer.

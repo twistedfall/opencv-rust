@@ -311,22 +311,21 @@ impl Drop for crate::ccalib::CustomPattern {
     }
 }
 impl crate::ccalib::CustomPattern {
-    pub fn as_raw_CustomPattern(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_CustomPattern(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        CustomPattern {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl core::Algorithm for CustomPattern {
-    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl CustomPattern {
 
     pub fn new() -> Result<crate::ccalib::CustomPattern> {
-        unsafe { sys::cv_ccalib_CustomPattern_CustomPattern() }.into_result().map(|x| crate::ccalib::CustomPattern { ptr: x })
+        unsafe { sys::cv_ccalib_CustomPattern_CustomPattern() }.into_result().map(|ptr| crate::ccalib::CustomPattern { ptr })
     }
     
     ///
@@ -450,11 +449,10 @@ impl Drop for crate::ccalib::MultiCameraCalibration {
     }
 }
 impl crate::ccalib::MultiCameraCalibration {
-    pub fn as_raw_MultiCameraCalibration(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_MultiCameraCalibration(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        MultiCameraCalibration {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -494,18 +492,17 @@ impl Drop for crate::ccalib::MultiCameraCalibration_edge {
     }
 }
 impl crate::ccalib::MultiCameraCalibration_edge {
-    pub fn as_raw_MultiCameraCalibration_edge(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_MultiCameraCalibration_edge(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        MultiCameraCalibration_edge {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl MultiCameraCalibration_edge {
 
     pub fn new(cv: i32, pv: i32, pi: i32, trans: &core::Mat) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
-        unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_Mat()) }.into_result().map(|x| crate::ccalib::MultiCameraCalibration_edge { ptr: x })
+        unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_Mat()) }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration_edge { ptr })
     }
     
 }
@@ -521,22 +518,21 @@ impl Drop for crate::ccalib::MultiCameraCalibration_vertex {
     }
 }
 impl crate::ccalib::MultiCameraCalibration_vertex {
-    pub fn as_raw_MultiCameraCalibration_vertex(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_MultiCameraCalibration_vertex(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        MultiCameraCalibration_vertex {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl MultiCameraCalibration_vertex {
 
     pub fn new(po: &core::Mat, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
-        unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_Mat(), ts) }.into_result().map(|x| crate::ccalib::MultiCameraCalibration_vertex { ptr: x })
+        unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_Mat(), ts) }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration_vertex { ptr })
     }
     
     pub fn new_1() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
-        unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex() }.into_result().map(|x| crate::ccalib::MultiCameraCalibration_vertex { ptr: x })
+        unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex() }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration_vertex { ptr })
     }
     
 }
@@ -561,11 +557,10 @@ impl Drop for crate::ccalib::RandomPatternCornerFinder {
     }
 }
 impl crate::ccalib::RandomPatternCornerFinder {
-    pub fn as_raw_RandomPatternCornerFinder(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_RandomPatternCornerFinder(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        RandomPatternCornerFinder {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -584,15 +579,15 @@ impl RandomPatternCornerFinder {
     }
     
     pub fn compute_object_image_points_for_single(&mut self, input_image: &core::Mat) -> Result<types::VectorOfMat> {
-        unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePointsForSingle_Mat(self.as_raw_RandomPatternCornerFinder(), input_image.as_raw_Mat()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
+        unsafe { sys::cv_randpattern_RandomPatternCornerFinder_computeObjectImagePointsForSingle_Mat(self.as_raw_RandomPatternCornerFinder(), input_image.as_raw_Mat()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
     }
     
     pub fn get_object_points(&mut self) -> Result<types::VectorOfMat> {
-        unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getObjectPoints(self.as_raw_RandomPatternCornerFinder()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
+        unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getObjectPoints(self.as_raw_RandomPatternCornerFinder()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
     }
     
     pub fn get_image_points(&mut self) -> Result<types::VectorOfMat> {
-        unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getImagePoints(self.as_raw_RandomPatternCornerFinder()) }.into_result().map(|x| types::VectorOfMat { ptr: x })
+        unsafe { sys::cv_randpattern_RandomPatternCornerFinder_getImagePoints(self.as_raw_RandomPatternCornerFinder()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
     }
     
 }
@@ -608,18 +603,17 @@ impl Drop for crate::ccalib::RandomPatternGenerator {
     }
 }
 impl crate::ccalib::RandomPatternGenerator {
-    pub fn as_raw_RandomPatternGenerator(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_RandomPatternGenerator(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        RandomPatternGenerator {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl RandomPatternGenerator {
 
     pub fn new(image_width: i32, image_height: i32) -> Result<crate::ccalib::RandomPatternGenerator> {
-        unsafe { sys::cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width, image_height) }.into_result().map(|x| crate::ccalib::RandomPatternGenerator { ptr: x })
+        unsafe { sys::cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width, image_height) }.into_result().map(|ptr| crate::ccalib::RandomPatternGenerator { ptr })
     }
     
     pub fn generate_pattern(&mut self) -> Result<()> {
@@ -627,7 +621,7 @@ impl RandomPatternGenerator {
     }
     
     pub fn get_pattern(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_randpattern_RandomPatternGenerator_getPattern(self.as_raw_RandomPatternGenerator()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_randpattern_RandomPatternGenerator_getPattern(self.as_raw_RandomPatternGenerator()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }

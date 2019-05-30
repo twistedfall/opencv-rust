@@ -19,7 +19,7 @@ pub fn emdl1(signature1: &core::Mat, signature2: &core::Mat) -> Result<f32> {
 
 /// Complete constructor
 pub fn create_affine_transformer(full_affine: bool) -> Result<types::PtrOfAffineTransformer> {
-    unsafe { sys::cv_createAffineTransformer_bool(full_affine) }.into_result().map(|x| types::PtrOfAffineTransformer { ptr: x })
+    unsafe { sys::cv_createAffineTransformer_bool(full_affine) }.into_result().map(|ptr| types::PtrOfAffineTransformer { ptr })
 }
 
 ///
@@ -27,7 +27,7 @@ pub fn create_affine_transformer(full_affine: bool) -> Result<types::PtrOfAffine
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_chi_histogram_cost_extractor(n_dummies: i32, default_cost: f32) -> Result<types::PtrOfHistogramCostExtractor> {
-    unsafe { sys::cv_createChiHistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|x| types::PtrOfHistogramCostExtractor { ptr: x })
+    unsafe { sys::cv_createChiHistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|ptr| types::PtrOfHistogramCostExtractor { ptr })
 }
 
 ///
@@ -36,7 +36,7 @@ pub fn create_chi_histogram_cost_extractor(n_dummies: i32, default_cost: f32) ->
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_emd_histogram_cost_extractor(flag: i32, n_dummies: i32, default_cost: f32) -> Result<types::PtrOfHistogramCostExtractor> {
-    unsafe { sys::cv_createEMDHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|x| types::PtrOfHistogramCostExtractor { ptr: x })
+    unsafe { sys::cv_createEMDHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|ptr| types::PtrOfHistogramCostExtractor { ptr })
 }
 
 ///
@@ -44,7 +44,7 @@ pub fn create_emd_histogram_cost_extractor(flag: i32, n_dummies: i32, default_co
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_emdl1_histogram_cost_extractor(n_dummies: i32, default_cost: f32) -> Result<types::PtrOfHistogramCostExtractor> {
-    unsafe { sys::cv_createEMDL1HistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|x| types::PtrOfHistogramCostExtractor { ptr: x })
+    unsafe { sys::cv_createEMDL1HistogramCostExtractor_int_float(n_dummies, default_cost) }.into_result().map(|ptr| types::PtrOfHistogramCostExtractor { ptr })
 }
 
 ///
@@ -52,7 +52,7 @@ pub fn create_emdl1_histogram_cost_extractor(n_dummies: i32, default_cost: f32) 
 /// * distance_flag: cv::NORM_L2
 /// * rank_prop: 0.6f
 pub fn create_hausdorff_distance_extractor(distance_flag: i32, rank_prop: f32) -> Result<types::PtrOfHausdorffDistanceExtractor> {
-    unsafe { sys::cv_createHausdorffDistanceExtractor_int_float(distance_flag, rank_prop) }.into_result().map(|x| types::PtrOfHausdorffDistanceExtractor { ptr: x })
+    unsafe { sys::cv_createHausdorffDistanceExtractor_int_float(distance_flag, rank_prop) }.into_result().map(|ptr| types::PtrOfHausdorffDistanceExtractor { ptr })
 }
 
 ///
@@ -61,7 +61,7 @@ pub fn create_hausdorff_distance_extractor(distance_flag: i32, rank_prop: f32) -
 /// * n_dummies: 25
 /// * default_cost: 0.2f
 pub fn create_norm_histogram_cost_extractor(flag: i32, n_dummies: i32, default_cost: f32) -> Result<types::PtrOfHistogramCostExtractor> {
-    unsafe { sys::cv_createNormHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|x| types::PtrOfHistogramCostExtractor { ptr: x })
+    unsafe { sys::cv_createNormHistogramCostExtractor_int_int_float(flag, n_dummies, default_cost) }.into_result().map(|ptr| types::PtrOfHistogramCostExtractor { ptr })
 }
 
 /// Complete constructor
@@ -69,13 +69,13 @@ pub fn create_norm_histogram_cost_extractor(flag: i32, n_dummies: i32, default_c
 /// ## C++ default parameters
 /// * regularization_parameter: 0
 pub fn create_thin_plate_spline_shape_transformer(regularization_parameter: f64) -> Result<types::PtrOfThinPlateSplineShapeTransformer> {
-    unsafe { sys::cv_createThinPlateSplineShapeTransformer_double(regularization_parameter) }.into_result().map(|x| types::PtrOfThinPlateSplineShapeTransformer { ptr: x })
+    unsafe { sys::cv_createThinPlateSplineShapeTransformer_double(regularization_parameter) }.into_result().map(|ptr| types::PtrOfThinPlateSplineShapeTransformer { ptr })
 }
 
 // Generating impl for trait cv::AffineTransformer (trait)
 /// Wrapper class for the OpenCV Affine Transformation algorithm. :
-pub trait AffineTransformer : crate::shape::ShapeTransformer {
-    #[doc(hidden)] fn as_raw_AffineTransformer(&self) -> *mut c_void;
+pub trait AffineTransformer: crate::shape::ShapeTransformer {
+    #[inline(always)] fn as_raw_AffineTransformer(&self) -> *mut c_void;
     fn set_full_affine(&mut self, full_affine: bool) -> Result<()> {
         unsafe { sys::cv_AffineTransformer_setFullAffine_bool(self.as_raw_AffineTransformer(), full_affine) }.into_result()
     }
@@ -102,26 +102,25 @@ impl Drop for crate::shape::ChiHistogramCostExtractor {
     }
 }
 impl crate::shape::ChiHistogramCostExtractor {
-    pub fn as_raw_ChiHistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_ChiHistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        ChiHistogramCostExtractor {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl core::Algorithm for ChiHistogramCostExtractor {
-    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::shape::HistogramCostExtractor for ChiHistogramCostExtractor {
-    fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
 }
 
 // Generating impl for trait cv::EMDHistogramCostExtractor (trait)
 /// An EMD based cost extraction. :
-pub trait EMDHistogramCostExtractor : crate::shape::HistogramCostExtractor {
-    #[doc(hidden)] fn as_raw_EMDHistogramCostExtractor(&self) -> *mut c_void;
+pub trait EMDHistogramCostExtractor: crate::shape::HistogramCostExtractor {
+    #[inline(always)] fn as_raw_EMDHistogramCostExtractor(&self) -> *mut c_void;
     fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
         unsafe { sys::cv_EMDHistogramCostExtractor_setNormFlag_int(self.as_raw_EMDHistogramCostExtractor(), flag) }.into_result()
     }
@@ -148,20 +147,19 @@ impl Drop for crate::shape::EMDL1HistogramCostExtractor {
     }
 }
 impl crate::shape::EMDL1HistogramCostExtractor {
-    pub fn as_raw_EMDL1HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_EMDL1HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        EMDL1HistogramCostExtractor {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl core::Algorithm for EMDL1HistogramCostExtractor {
-    fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl crate::shape::HistogramCostExtractor for EMDL1HistogramCostExtractor {
-    fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void { self.ptr }
 }
 
 // Generating impl for trait cv::HausdorffDistanceExtractor (trait)
@@ -169,8 +167,8 @@ impl crate::shape::HistogramCostExtractor for EMDL1HistogramCostExtractor {
 /// 
 /// according to the paper "Comparing Images using the Hausdorff distance." by D.P. Huttenlocher, G.A.
 /// Klanderman, and W.J. Rucklidge. (PAMI 1993). :
-pub trait HausdorffDistanceExtractor : crate::shape::ShapeDistanceExtractor {
-    #[doc(hidden)] fn as_raw_HausdorffDistanceExtractor(&self) -> *mut c_void;
+pub trait HausdorffDistanceExtractor: crate::shape::ShapeDistanceExtractor {
+    #[inline(always)] fn as_raw_HausdorffDistanceExtractor(&self) -> *mut c_void;
     /// Set the norm used to compute the Hausdorff value between two shapes. It can be L1 or L2 norm.
     /// 
     /// ## Parameters
@@ -206,8 +204,8 @@ impl<'a> HausdorffDistanceExtractor + 'a {
 
 // Generating impl for trait cv::HistogramCostExtractor (trait)
 /// Abstract base class for histogram cost algorithms.
-pub trait HistogramCostExtractor : core::Algorithm {
-    #[doc(hidden)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void;
+pub trait HistogramCostExtractor: core::Algorithm {
+    #[inline(always)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void;
     fn build_cost_matrix(&mut self, descriptors1: &core::Mat, descriptors2: &core::Mat, cost_matrix: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix_Mat_Mat_Mat(self.as_raw_HistogramCostExtractor(), descriptors1.as_raw_Mat(), descriptors2.as_raw_Mat(), cost_matrix.as_raw_Mat()) }.into_result()
     }
@@ -236,8 +234,8 @@ impl<'a> HistogramCostExtractor + 'a {
 
 // Generating impl for trait cv::NormHistogramCostExtractor (trait)
 /// A norm based cost extraction. :
-pub trait NormHistogramCostExtractor : crate::shape::HistogramCostExtractor {
-    #[doc(hidden)] fn as_raw_NormHistogramCostExtractor(&self) -> *mut c_void;
+pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor {
+    #[inline(always)] fn as_raw_NormHistogramCostExtractor(&self) -> *mut c_void;
     fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
         unsafe { sys::cv_NormHistogramCostExtractor_setNormFlag_int(self.as_raw_NormHistogramCostExtractor(), flag) }.into_result()
     }
@@ -258,8 +256,8 @@ impl<'a> NormHistogramCostExtractor + 'a {
 /// proposed by Belongie et al. in "Shape Matching and Object Recognition Using Shape Contexts" (PAMI
 /// 2002). This implementation is packaged in a generic scheme, in order to allow you the
 /// implementation of the common variations of the original pipeline.
-pub trait ShapeContextDistanceExtractor : crate::shape::ShapeDistanceExtractor {
-    #[doc(hidden)] fn as_raw_ShapeContextDistanceExtractor(&self) -> *mut c_void;
+pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
+    #[inline(always)] fn as_raw_ShapeContextDistanceExtractor(&self) -> *mut c_void;
     /// Establish the number of angular bins for the Shape Context Descriptor used in the shape matching
     /// pipeline.
     /// 
@@ -397,7 +395,7 @@ pub trait ShapeContextDistanceExtractor : crate::shape::ShapeDistanceExtractor {
     }
     
     fn get_cost_extractor(&self) -> Result<types::PtrOfHistogramCostExtractor> {
-        unsafe { sys::cv_ShapeContextDistanceExtractor_getCostExtractor_const(self.as_raw_ShapeContextDistanceExtractor()) }.into_result().map(|x| types::PtrOfHistogramCostExtractor { ptr: x })
+        unsafe { sys::cv_ShapeContextDistanceExtractor_getCostExtractor_const(self.as_raw_ShapeContextDistanceExtractor()) }.into_result().map(|ptr| types::PtrOfHistogramCostExtractor { ptr })
     }
     
     /// Set the value of the standard deviation for the Gaussian window for the image appearance cost.
@@ -420,8 +418,8 @@ impl<'a> ShapeContextDistanceExtractor + 'a {
 
 // Generating impl for trait cv::ShapeDistanceExtractor (trait)
 /// Abstract base class for shape distance algorithms.
-pub trait ShapeDistanceExtractor : core::Algorithm {
-    #[doc(hidden)] fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void;
+pub trait ShapeDistanceExtractor: core::Algorithm {
+    #[inline(always)] fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void;
     /// Compute the shape distance between two shapes defined by its contours.
     /// 
     /// ## Parameters
@@ -439,8 +437,8 @@ impl<'a> ShapeDistanceExtractor + 'a {
 
 // Generating impl for trait cv::ShapeTransformer (trait)
 /// Abstract base class for shape transformation algorithms.
-pub trait ShapeTransformer : core::Algorithm {
-    #[doc(hidden)] fn as_raw_ShapeTransformer(&self) -> *mut c_void;
+pub trait ShapeTransformer: core::Algorithm {
+    #[inline(always)] fn as_raw_ShapeTransformer(&self) -> *mut c_void;
     /// Estimate the transformation parameters of the current transformer algorithm, based on point matches.
     /// 
     /// ## Parameters
@@ -491,8 +489,8 @@ impl<'a> ShapeTransformer + 'a {
 /// 
 /// occupied in the paper "Principal Warps: Thin-Plate Splines and Decomposition of Deformations", by
 /// F.L. Bookstein (PAMI 1989). :
-pub trait ThinPlateSplineShapeTransformer : crate::shape::ShapeTransformer {
-    #[doc(hidden)] fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *mut c_void;
+pub trait ThinPlateSplineShapeTransformer: crate::shape::ShapeTransformer {
+    #[inline(always)] fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *mut c_void;
     /// Set the regularization parameter for relaxing the exact interpolation requirements of the TPS
     /// algorithm.
     /// 

@@ -400,7 +400,7 @@ pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()>
 /// * spacing: 0
 pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<crate::highgui::QtFont> {
     string_arg!(name_font);
-    unsafe { sys::cv_fontQt_String_int_Scalar_int_int_int(name_font.as_ptr(), point_size, color, weight, style, spacing) }.into_result().map(|x| crate::highgui::QtFont { ptr: x })
+    unsafe { sys::cv_fontQt_String_int_Scalar_int_int_int(name_font.as_ptr(), point_size, color, weight, style, spacing) }.into_result().map(|ptr| crate::highgui::QtFont { ptr })
 }
 
 /// Gets the mouse-wheel motion delta, when handling mouse-wheel events cv::EVENT_MOUSEWHEEL and
@@ -931,11 +931,10 @@ impl Drop for crate::highgui::QtFont {
     }
 }
 impl crate::highgui::QtFont {
-    pub fn as_raw_QtFont(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_QtFont(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        QtFont {
-            ptr
-        }
+        Self { ptr }
     }
 }
 

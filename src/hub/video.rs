@@ -34,7 +34,7 @@ pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 /// *   (Python) A sample explaining the camshift tracking algorithm can be found at
 /// opencv_source_code/samples/python/camshift.py
 pub fn cam_shift(prob_image: &core::Mat, window: &mut core::Rect, criteria: &core::TermCriteria) -> Result<core::RotatedRect> {
-    unsafe { sys::cv_CamShift_Mat_Rect_TermCriteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result().map(|x| core::RotatedRect { ptr: x })
+    unsafe { sys::cv_CamShift_Mat_Rect_TermCriteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result().map(|ptr| core::RotatedRect { ptr })
 }
 
 /// Constructs the image pyramid which can be passed to calcOpticalFlowPyrLK.
@@ -196,7 +196,7 @@ pub fn compute_ecc(template_image: &core::Mat, input_image: &core::Mat, input_ma
 /// * dist2_threshold: 400.0
 /// * detect_shadows: true
 pub fn create_background_subtractor_knn(history: i32, dist2_threshold: f64, detect_shadows: bool) -> Result<types::PtrOfBackgroundSubtractorKNN> {
-    unsafe { sys::cv_createBackgroundSubtractorKNN_int_double_bool(history, dist2_threshold, detect_shadows) }.into_result().map(|x| types::PtrOfBackgroundSubtractorKNN { ptr: x })
+    unsafe { sys::cv_createBackgroundSubtractorKNN_int_double_bool(history, dist2_threshold, detect_shadows) }.into_result().map(|ptr| types::PtrOfBackgroundSubtractorKNN { ptr })
 }
 
 /// Creates MOG2 Background Subtractor
@@ -214,12 +214,12 @@ pub fn create_background_subtractor_knn(history: i32, dist2_threshold: f64, dete
 /// * var_threshold: 16
 /// * detect_shadows: true
 pub fn create_background_subtractor_mog2(history: i32, var_threshold: f64, detect_shadows: bool) -> Result<types::PtrOfBackgroundSubtractorMOG2> {
-    unsafe { sys::cv_createBackgroundSubtractorMOG2_int_double_bool(history, var_threshold, detect_shadows) }.into_result().map(|x| types::PtrOfBackgroundSubtractorMOG2 { ptr: x })
+    unsafe { sys::cv_createBackgroundSubtractorMOG2_int_double_bool(history, var_threshold, detect_shadows) }.into_result().map(|ptr| types::PtrOfBackgroundSubtractorMOG2 { ptr })
 }
 
 /// Creates instance of cv::DenseOpticalFlow
 pub fn create_opt_flow__dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
-    unsafe { sys::cv_createOptFlow_DualTVL1() }.into_result().map(|x| types::PtrOfDualTVL1OpticalFlow { ptr: x })
+    unsafe { sys::cv_createOptFlow_DualTVL1() }.into_result().map(|ptr| types::PtrOfDualTVL1OpticalFlow { ptr })
 }
 
 /// Computes an optimal affine transformation between two 2D point sets.
@@ -250,11 +250,11 @@ pub fn create_opt_flow__dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
 /// ## See also
 /// estimateAffine2D, estimateAffinePartial2D, getAffineTransform, getPerspectiveTransform, findHomography
 pub fn estimate_rigid_transform(src: &core::Mat, dst: &core::Mat, full_affine: bool) -> Result<core::Mat> {
-    unsafe { sys::cv_estimateRigidTransform_Mat_Mat_bool(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_estimateRigidTransform_Mat_Mat_bool(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 pub fn estimate_rigid_transform_1(src: &core::Mat, dst: &core::Mat, full_affine: bool, ransac_max_iters: i32, ransac_good_ratio: f64, ransac_size0: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_estimateRigidTransform_Mat_Mat_bool_int_double_int(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine, ransac_max_iters, ransac_good_ratio, ransac_size0) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_estimateRigidTransform_Mat_Mat_bool_int_double_int(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine, ransac_max_iters, ransac_good_ratio, ransac_size0) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_EP08) .
@@ -401,8 +401,8 @@ pub fn mean_shift(prob_image: &core::Mat, window: &mut core::Rect, criteria: &co
 /// 
 /// The class is only used to define the common interface for the whole family of background/foreground
 /// segmentation algorithms.
-pub trait BackgroundSubtractor : core::Algorithm {
-    #[doc(hidden)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void;
+pub trait BackgroundSubtractor: core::Algorithm {
+    #[inline(always)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void;
     /// Computes a foreground mask.
     /// 
     /// ## Parameters
@@ -442,8 +442,8 @@ impl<'a> BackgroundSubtractor + 'a {
 /// 
 /// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 /// Very efficient if number of foreground pixels is low.
-pub trait BackgroundSubtractorKNN : crate::video::BackgroundSubtractor {
-    #[doc(hidden)] fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
+pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
+    #[inline(always)] fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
     /// Returns the number of last frames that affect the background model
     fn get_history(&self) -> Result<i32> {
         unsafe { sys::cv_BackgroundSubtractorKNN_getHistory_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
@@ -544,8 +544,8 @@ impl<'a> BackgroundSubtractorKNN + 'a {
 /// 
 /// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zivkovic2004)
 /// and [Zivkovic2006](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
-pub trait BackgroundSubtractorMOG2 : crate::video::BackgroundSubtractor {
-    #[doc(hidden)] fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
+pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
+    #[inline(always)] fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
     /// Returns the number of last frames that affect the background model
     fn get_history(&self) -> Result<i32> {
         unsafe { sys::cv_BackgroundSubtractorMOG2_getHistory_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
@@ -715,8 +715,8 @@ impl<'a> BackgroundSubtractorMOG2 + 'a {
 }
 
 // Generating impl for trait cv::DenseOpticalFlow (trait)
-pub trait DenseOpticalFlow : core::Algorithm {
-    #[doc(hidden)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
+pub trait DenseOpticalFlow: core::Algorithm {
+    #[inline(always)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
     /// Calculates an optical flow.
     /// 
     /// ## Parameters
@@ -780,8 +780,8 @@ impl<'a> DenseOpticalFlow + 'a {
 /// 
 /// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
 /// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
-pub trait DualTVL1OpticalFlow : crate::video::DenseOpticalFlow {
-    #[doc(hidden)] fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void;
+pub trait DualTVL1OpticalFlow: crate::video::DenseOpticalFlow {
+    #[inline(always)] fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void;
     /// @see setTau
     fn get_tau(&self) -> Result<f64> {
         unsafe { sys::cv_DualTVL1OpticalFlow_getTau_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
@@ -922,15 +922,15 @@ impl<'a> DualTVL1OpticalFlow + 'a {
     /// * median_filtering: 5
     /// * use_initial_flow: false
     pub fn create(tau: f64, lambda: f64, theta: f64, nscales: i32, warps: i32, epsilon: f64, innner_iterations: i32, outer_iterations: i32, scale_step: f64, gamma: f64, median_filtering: i32, use_initial_flow: bool) -> Result<types::PtrOfDualTVL1OpticalFlow> {
-        unsafe { sys::cv_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow) }.into_result().map(|x| types::PtrOfDualTVL1OpticalFlow { ptr: x })
+        unsafe { sys::cv_DualTVL1OpticalFlow_create_double_double_double_int_int_double_int_int_double_double_int_bool(tau, lambda, theta, nscales, warps, epsilon, innner_iterations, outer_iterations, scale_step, gamma, median_filtering, use_initial_flow) }.into_result().map(|ptr| types::PtrOfDualTVL1OpticalFlow { ptr })
     }
     
 }
 
 // Generating impl for trait cv::FarnebackOpticalFlow (trait)
 /// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
-pub trait FarnebackOpticalFlow : crate::video::DenseOpticalFlow {
-    #[doc(hidden)] fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
+pub trait FarnebackOpticalFlow: crate::video::DenseOpticalFlow {
+    #[inline(always)] fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
     fn get_num_levels(&self) -> Result<i32> {
         unsafe { sys::cv_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
@@ -1010,7 +1010,7 @@ impl<'a> FarnebackOpticalFlow + 'a {
     /// * poly_sigma: 1.1
     /// * flags: 0
     pub fn create(num_levels: i32, pyr_scale: f64, fast_pyramids: bool, win_size: i32, num_iters: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<types::PtrOfFarnebackOpticalFlow> {
-        unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags) }.into_result().map(|x| types::PtrOfFarnebackOpticalFlow { ptr: x })
+        unsafe { sys::cv_FarnebackOpticalFlow_create_int_double_bool_int_int_int_double_int(num_levels, pyr_scale, fast_pyramids, win_size, num_iters, poly_n, poly_sigma, flags) }.into_result().map(|ptr| types::PtrOfFarnebackOpticalFlow { ptr })
     }
     
 }
@@ -1034,18 +1034,17 @@ impl Drop for crate::video::KalmanFilter {
     }
 }
 impl crate::video::KalmanFilter {
-    pub fn as_raw_KalmanFilter(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_KalmanFilter(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        KalmanFilter {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl KalmanFilter {
 
     pub fn default() -> Result<crate::video::KalmanFilter> {
-        unsafe { sys::cv_KalmanFilter_KalmanFilter() }.into_result().map(|x| crate::video::KalmanFilter { ptr: x })
+        unsafe { sys::cv_KalmanFilter_KalmanFilter() }.into_result().map(|ptr| crate::video::KalmanFilter { ptr })
     }
     
     /// ## Parameters
@@ -1058,7 +1057,7 @@ impl KalmanFilter {
     /// * control_params: 0
     /// * _type: CV_32F
     pub fn new(dynam_params: i32, measure_params: i32, control_params: i32, _type: i32) -> Result<crate::video::KalmanFilter> {
-        unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, _type) }.into_result().map(|x| crate::video::KalmanFilter { ptr: x })
+        unsafe { sys::cv_KalmanFilter_KalmanFilter_int_int_int_int(dynam_params, measure_params, control_params, _type) }.into_result().map(|ptr| crate::video::KalmanFilter { ptr })
     }
     
     /// Re-initializes Kalman filter. The previous content is destroyed.
@@ -1084,7 +1083,7 @@ impl KalmanFilter {
     /// ## C++ default parameters
     /// * control: Mat()
     pub fn predict(&mut self, control: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_predict_Mat(self.as_raw_KalmanFilter(), control.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_predict_Mat(self.as_raw_KalmanFilter(), control.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Updates the predicted state from the measurement.
@@ -1092,104 +1091,104 @@ impl KalmanFilter {
     /// ## Parameters
     /// * measurement: The measured system parameters
     pub fn correct(&mut self, measurement: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_correct_Mat(self.as_raw_KalmanFilter(), measurement.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_correct_Mat(self.as_raw_KalmanFilter(), measurement.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     pub fn state_pre(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_statePre(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_statePre(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-    pub fn set_state_pre(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_state_pre(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_statePre_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
     pub fn state_post(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_statePost(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_statePost(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
-    pub fn set_state_post(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_state_post(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_statePost_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
     pub fn transition_matrix(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_transitionMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_transitionMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
-    pub fn set_transition_matrix(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_transition_matrix(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_transitionMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < state transition matrix (A)
     pub fn control_matrix(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_controlMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_controlMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < state transition matrix (A)
-    pub fn set_control_matrix(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_control_matrix(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_controlMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < control matrix (B) (not used if there is no control)
     pub fn measurement_matrix(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_measurementMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_measurementMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < control matrix (B) (not used if there is no control)
-    pub fn set_measurement_matrix(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_measurement_matrix(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_measurementMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < measurement matrix (H)
     pub fn process_noise_cov(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_processNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_processNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < measurement matrix (H)
-    pub fn set_process_noise_cov(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_process_noise_cov(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_processNoiseCov_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < process noise covariance matrix (Q)
     pub fn measurement_noise_cov(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_measurementNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_measurementNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < process noise covariance matrix (Q)
-    pub fn set_measurement_noise_cov(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_measurement_noise_cov(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_measurementNoiseCov_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < measurement noise covariance matrix (R)
     pub fn error_cov_pre(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_errorCovPre(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_errorCovPre(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < measurement noise covariance matrix (R)
-    pub fn set_error_cov_pre(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_error_cov_pre(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_errorCovPre_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
     pub fn gain(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_gain(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_gain(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
-    pub fn set_gain(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_gain(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_gain_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
     /// < Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
     pub fn error_cov_post(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_errorCovPost(self.as_raw_KalmanFilter()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_KalmanFilter_errorCovPost(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// < Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
-    pub fn set_error_cov_post(&mut self, val: &core::Mat) -> Result<()> {
+    pub fn set_error_cov_post(&mut self, val: core::Mat) -> Result<()> {
         unsafe { sys::cv_KalmanFilter_set_errorCovPost_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
@@ -1197,8 +1196,8 @@ impl KalmanFilter {
 
 // Generating impl for trait cv::SparseOpticalFlow (trait)
 /// Base interface for sparse optical flow algorithms.
-pub trait SparseOpticalFlow : core::Algorithm {
-    #[doc(hidden)] fn as_raw_SparseOpticalFlow(&self) -> *mut c_void;
+pub trait SparseOpticalFlow: core::Algorithm {
+    #[inline(always)] fn as_raw_SparseOpticalFlow(&self) -> *mut c_void;
     /// Calculates a sparse optical flow.
     /// 
     /// ## Parameters
@@ -1230,8 +1229,8 @@ impl<'a> SparseOpticalFlow + 'a {
 /// 
 /// ## See also
 /// calcOpticalFlowPyrLK
-pub trait SparsePyrLKOpticalFlow : crate::video::SparseOpticalFlow {
-    #[doc(hidden)] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void;
+pub trait SparsePyrLKOpticalFlow: crate::video::SparseOpticalFlow {
+    #[inline(always)] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void;
     fn get_win_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result()
     }
@@ -1249,7 +1248,7 @@ pub trait SparsePyrLKOpticalFlow : crate::video::SparseOpticalFlow {
     }
     
     fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-        unsafe { sys::cv_SparsePyrLKOpticalFlow_getTermCriteria_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result().map(|x| core::TermCriteria { ptr: x })
+        unsafe { sys::cv_SparsePyrLKOpticalFlow_getTermCriteria_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result().map(|ptr| core::TermCriteria { ptr })
     }
     
     fn set_term_criteria(&mut self, crit: &mut core::TermCriteria) -> Result<()> {
@@ -1284,7 +1283,7 @@ impl<'a> SparsePyrLKOpticalFlow + 'a {
     /// * flags: 0
     /// * min_eig_threshold: 1e-4
     pub fn create(win_size: core::Size, max_level: i32, crit: &core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<types::PtrOfSparsePyrLKOpticalFlow> {
-        unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size, max_level, crit.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result().map(|x| types::PtrOfSparsePyrLKOpticalFlow { ptr: x })
+        unsafe { sys::cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(win_size, max_level, crit.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result().map(|ptr| types::PtrOfSparsePyrLKOpticalFlow { ptr })
     }
     
 }

@@ -69,7 +69,7 @@ pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
 pub const HOGDescriptor_L2Hys: i32 = 0;
 
 pub fn create_face_detection_mask_generator() -> Result<types::PtrOfMaskGenerator> {
-    unsafe { sys::cv_createFaceDetectionMaskGenerator() }.into_result().map(|x| types::PtrOfMaskGenerator { ptr: x })
+    unsafe { sys::cv_createFaceDetectionMaskGenerator() }.into_result().map(|ptr| types::PtrOfMaskGenerator { ptr })
 }
 
 /// Decode QR code in image and return text that is encrypted in QR code.
@@ -202,8 +202,8 @@ pub fn group_rectangles_meanshift(rect_list: &mut types::VectorOfRect, found_wei
 }
 
 // Generating impl for trait cv::BaseCascadeClassifier (trait)
-pub trait BaseCascadeClassifier : core::Algorithm {
-    #[doc(hidden)] fn as_raw_BaseCascadeClassifier(&self) -> *mut c_void;
+pub trait BaseCascadeClassifier: core::Algorithm {
+    #[inline(always)] fn as_raw_BaseCascadeClassifier(&self) -> *mut c_void;
     fn empty(&self) -> Result<bool> {
         unsafe { sys::cv_BaseCascadeClassifier_empty_const(self.as_raw_BaseCascadeClassifier()) }.into_result()
     }
@@ -246,7 +246,7 @@ pub trait BaseCascadeClassifier : core::Algorithm {
     }
     
     fn get_mask_generator(&mut self) -> Result<types::PtrOfMaskGenerator> {
-        unsafe { sys::cv_BaseCascadeClassifier_getMaskGenerator(self.as_raw_BaseCascadeClassifier()) }.into_result().map(|x| types::PtrOfMaskGenerator { ptr: x })
+        unsafe { sys::cv_BaseCascadeClassifier_getMaskGenerator(self.as_raw_BaseCascadeClassifier()) }.into_result().map(|ptr| types::PtrOfMaskGenerator { ptr })
     }
     
 }
@@ -257,9 +257,9 @@ impl<'a> BaseCascadeClassifier + 'a {
 
 // Generating impl for trait cv::BaseCascadeClassifier::MaskGenerator (trait)
 pub trait BaseCascadeClassifier_MaskGenerator {
-    #[doc(hidden)] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void;
     fn generate_mask(&mut self, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_generateMask_Mat(self.as_raw_BaseCascadeClassifier_MaskGenerator(), src.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_generateMask_Mat(self.as_raw_BaseCascadeClassifier_MaskGenerator(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     fn initialize_mask(&mut self, unnamed_arg: &core::Mat) -> Result<()> {
@@ -284,18 +284,17 @@ impl Drop for crate::objdetect::CascadeClassifier {
     }
 }
 impl crate::objdetect::CascadeClassifier {
-    pub fn as_raw_CascadeClassifier(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_CascadeClassifier(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        CascadeClassifier {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl CascadeClassifier {
 
     pub fn default() -> Result<crate::objdetect::CascadeClassifier> {
-        unsafe { sys::cv_CascadeClassifier_CascadeClassifier() }.into_result().map(|x| crate::objdetect::CascadeClassifier { ptr: x })
+        unsafe { sys::cv_CascadeClassifier_CascadeClassifier() }.into_result().map(|ptr| crate::objdetect::CascadeClassifier { ptr })
     }
     
     /// Loads a classifier from a file.
@@ -304,7 +303,7 @@ impl CascadeClassifier {
     /// * filename: Name of the file from which the classifier is loaded.
     pub fn new(filename: &str) -> Result<crate::objdetect::CascadeClassifier> {
         string_arg!(filename);
-        unsafe { sys::cv_CascadeClassifier_CascadeClassifier_String(filename.as_ptr()) }.into_result().map(|x| crate::objdetect::CascadeClassifier { ptr: x })
+        unsafe { sys::cv_CascadeClassifier_CascadeClassifier_String(filename.as_ptr()) }.into_result().map(|ptr| crate::objdetect::CascadeClassifier { ptr })
     }
     
     /// Checks whether the classifier has been loaded.
@@ -434,7 +433,7 @@ impl CascadeClassifier {
     }
     
     pub fn get_mask_generator(&mut self) -> Result<types::PtrOfMaskGenerator> {
-        unsafe { sys::cv_CascadeClassifier_getMaskGenerator(self.as_raw_CascadeClassifier()) }.into_result().map(|x| types::PtrOfMaskGenerator { ptr: x })
+        unsafe { sys::cv_CascadeClassifier_getMaskGenerator(self.as_raw_CascadeClassifier()) }.into_result().map(|ptr| types::PtrOfMaskGenerator { ptr })
     }
     
 }
@@ -450,11 +449,10 @@ impl Drop for crate::objdetect::DetectionBasedTracker {
     }
 }
 impl crate::objdetect::DetectionBasedTracker {
-    pub fn as_raw_DetectionBasedTracker(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_DetectionBasedTracker(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        DetectionBasedTracker {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -481,7 +479,7 @@ impl DetectionBasedTracker {
     }
     
     pub fn get_parameters(&self) -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
-        unsafe { sys::cv_DetectionBasedTracker_getParameters_const(self.as_raw_DetectionBasedTracker()) }.into_result().map(|x| crate::objdetect::DetectionBasedTracker_Parameters { ptr: x })
+        unsafe { sys::cv_DetectionBasedTracker_getParameters_const(self.as_raw_DetectionBasedTracker()) }.into_result().map(|ptr| crate::objdetect::DetectionBasedTracker_Parameters { ptr })
     }
     
     pub fn get_objects(&self, result: &mut types::VectorOfRect) -> Result<()> {
@@ -509,17 +507,16 @@ impl Drop for crate::objdetect::DetectionBasedTracker_ExtObject {
     }
 }
 impl crate::objdetect::DetectionBasedTracker_ExtObject {
-    pub fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        DetectionBasedTracker_ExtObject {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 // Generating impl for trait cv::DetectionBasedTracker::IDetector (trait)
 pub trait DetectionBasedTracker_IDetector {
-    #[doc(hidden)] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *mut c_void;
+    #[inline(always)] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *mut c_void;
     fn detect(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect) -> Result<()> {
         unsafe { sys::cv_DetectionBasedTracker_IDetector_detect_Mat_VectorOfRect(self.as_raw_DetectionBasedTracker_IDetector(), image.as_raw_Mat(), objects.as_raw_VectorOfRect()) }.into_result()
     }
@@ -573,18 +570,17 @@ impl Drop for crate::objdetect::DetectionBasedTracker_Parameters {
     }
 }
 impl crate::objdetect::DetectionBasedTracker_Parameters {
-    pub fn as_raw_DetectionBasedTracker_Parameters(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_DetectionBasedTracker_Parameters(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        DetectionBasedTracker_Parameters {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl DetectionBasedTracker_Parameters {
 
     pub fn new() -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
-        unsafe { sys::cv_DetectionBasedTracker_Parameters_Parameters() }.into_result().map(|x| crate::objdetect::DetectionBasedTracker_Parameters { ptr: x })
+        unsafe { sys::cv_DetectionBasedTracker_Parameters_Parameters() }.into_result().map(|ptr| crate::objdetect::DetectionBasedTracker_Parameters { ptr })
     }
     
 }
@@ -601,11 +597,10 @@ impl Drop for crate::objdetect::DetectionROI {
     }
 }
 impl crate::objdetect::DetectionROI {
-    pub fn as_raw_DetectionROI(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_DetectionROI(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        DetectionROI {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -635,11 +630,10 @@ impl Drop for crate::objdetect::HOGDescriptor {
     }
 }
 impl crate::objdetect::HOGDescriptor {
-    pub fn as_raw_HOGDescriptor(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_HOGDescriptor(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        HOGDescriptor {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -649,13 +643,13 @@ impl HOGDescriptor {
     /// * filename: the file name containing  HOGDescriptor properties and coefficients of the trained classifier
     pub fn new(filename: &str) -> Result<crate::objdetect::HOGDescriptor> {
         string_arg!(filename);
-        unsafe { sys::cv_HOGDescriptor_HOGDescriptor_String(filename.as_ptr()) }.into_result().map(|x| crate::objdetect::HOGDescriptor { ptr: x })
+        unsafe { sys::cv_HOGDescriptor_HOGDescriptor_String(filename.as_ptr()) }.into_result().map(|ptr| crate::objdetect::HOGDescriptor { ptr })
     }
     
     /// ## Parameters
     /// * d: the HOGDescriptor which cloned to create a new one.
     pub fn copy(d: &crate::objdetect::HOGDescriptor) -> Result<crate::objdetect::HOGDescriptor> {
-        unsafe { sys::cv_HOGDescriptor_HOGDescriptor_HOGDescriptor(d.as_raw_HOGDescriptor()) }.into_result().map(|x| crate::objdetect::HOGDescriptor { ptr: x })
+        unsafe { sys::cv_HOGDescriptor_HOGDescriptor_HOGDescriptor(d.as_raw_HOGDescriptor()) }.into_result().map(|ptr| crate::objdetect::HOGDescriptor { ptr })
     }
     
     /// Returns the number of coefficients required for the classification.
@@ -838,12 +832,12 @@ impl HOGDescriptor {
     
     /// Returns coefficients of the classifier trained for people detection (for 64x128 windows).
     pub fn get_default_people_detector() -> Result<types::VectorOffloat> {
-        unsafe { sys::cv_HOGDescriptor_getDefaultPeopleDetector() }.into_result().map(|x| types::VectorOffloat { ptr: x })
+        unsafe { sys::cv_HOGDescriptor_getDefaultPeopleDetector() }.into_result().map(|ptr| types::VectorOffloat { ptr })
     }
     
     /// Returns coefficients of the classifier trained for people detection (for 48x96 windows).
     pub fn get_daimler_people_detector() -> Result<types::VectorOffloat> {
-        unsafe { sys::cv_HOGDescriptor_getDaimlerPeopleDetector() }.into_result().map(|x| types::VectorOffloat { ptr: x })
+        unsafe { sys::cv_HOGDescriptor_getDaimlerPeopleDetector() }.into_result().map(|ptr| types::VectorOffloat { ptr })
     }
     
     /// evaluate specified ROI and return confidence value for each location
@@ -952,11 +946,11 @@ impl HOGDescriptor {
     
     /// coefficients for the linear SVM classifier.
     pub fn svm_detector(&mut self) -> Result<types::VectorOffloat> {
-        unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|x| types::VectorOffloat { ptr: x })
+        unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|ptr| types::VectorOffloat { ptr })
     }
     
     /// coefficients for the linear SVM classifier.
-    pub fn set_svm_detector(&mut self, val: &types::VectorOffloat) -> Result<()> {
+    pub fn set_svm_detector(&mut self, val: types::VectorOffloat) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_set_svmDetector_VectorOffloat(self.as_raw_HOGDescriptor(), val.as_raw_VectorOffloat()) }.into_result()
     }
     
@@ -983,18 +977,17 @@ impl Drop for crate::objdetect::QRCodeDetector {
     }
 }
 impl crate::objdetect::QRCodeDetector {
-    pub fn as_raw_QRCodeDetector(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_QRCodeDetector(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        QRCodeDetector {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
 impl QRCodeDetector {
 
     pub fn new() -> Result<crate::objdetect::QRCodeDetector> {
-        unsafe { sys::cv_QRCodeDetector_QRCodeDetector() }.into_result().map(|x| crate::objdetect::QRCodeDetector { ptr: x })
+        unsafe { sys::cv_QRCodeDetector_QRCodeDetector() }.into_result().map(|ptr| crate::objdetect::QRCodeDetector { ptr })
     }
     
     /// sets the epsilon used during the horizontal scan of QR code stop marker detection.
@@ -1064,11 +1057,10 @@ impl Drop for crate::objdetect::SimilarRects {
     }
 }
 impl crate::objdetect::SimilarRects {
-    pub fn as_raw_SimilarRects(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_SimilarRects(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        SimilarRects {
-            ptr
-        }
+        Self { ptr }
     }
 }
 

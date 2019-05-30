@@ -61,7 +61,7 @@ pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 /// * buf: Input array or vector of bytes.
 /// * flags: The same flags as in cv::imread, see cv::ImreadModes.
 pub fn imdecode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_imdecode_Mat_int(buf.as_raw_Mat(), flags) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_imdecode_Mat_int(buf.as_raw_Mat(), flags) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Reads an image from a buffer in memory.
@@ -84,7 +84,7 @@ pub fn imdecode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
 /// * dst: The optional output placeholder for the decoded matrix. It can save the image
 /// reallocations when the function is called repeatedly for images of the same size.
 pub fn imdecode_to(buf: &core::Mat, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_imdecode_Mat_int_Mat(buf.as_raw_Mat(), flags, dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_imdecode_Mat_int_Mat(buf.as_raw_Mat(), flags, dst.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Encodes an image into a memory buffer.
@@ -159,7 +159,7 @@ pub fn imencode(ext: &str, img: &core::Mat, buf: &mut types::VectorOfuchar, para
 /// * flags: IMREAD_COLOR
 pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
     string_arg!(filename);
-    unsafe { sys::cv_imread_String_int(filename.as_ptr(), flags) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_imread_String_int(filename.as_ptr(), flags) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Loads a multi-page image from a file.

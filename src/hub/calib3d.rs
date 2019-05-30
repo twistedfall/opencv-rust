@@ -898,7 +898,7 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// * confidence: 0.99
 /// * refine_iters: 10
 pub fn estimate_affine_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-    unsafe { sys::cv_estimateAffine2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_estimateAffine2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Computes an optimal affine transformation between two 3D point sets.
@@ -1012,7 +1012,7 @@ pub fn estimate_affine_3d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 /// * confidence: 0.99
 /// * refine_iters: 10
 pub fn estimate_affine_partial_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-    unsafe { sys::cv_estimateAffinePartial2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_estimateAffinePartial2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Filters homography decompositions based on additional information.
@@ -1157,7 +1157,7 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 /// * threshold: 1.0
 /// * mask: noArray()
 pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, method: i32, prob: f64, threshold: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat(points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat(points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -1228,7 +1228,7 @@ pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camer
 /// * threshold: 1.0
 /// * mask: noArray()
 pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_findEssentialMat_Mat_Mat_double_Point2d_int_double_double_Mat(points1.as_raw_Mat(), points2.as_raw_Mat(), focal, pp, method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_findEssentialMat_Mat_Mat_double_Point2d_int_double_double_Mat(points1.as_raw_Mat(), points2.as_raw_Mat(), focal, pp, method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
@@ -1290,7 +1290,7 @@ pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, 
 /// * ransac_reproj_threshold: 3.
 /// * confidence: 0.99
 pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_findFundamentalMat_Mat_Mat_Mat_int_double_double(points1.as_raw_Mat(), points2.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold, confidence) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_findFundamentalMat_Mat_Mat_Mat_int_double_double(points1.as_raw_Mat(), points2.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold, confidence) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Finds a perspective transformation between two planes.
@@ -1359,7 +1359,7 @@ pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut
 /// * method: 0
 /// * ransac_reproj_threshold: 3
 pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mut core::Mat, method: i32, ransac_reproj_threshold: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_findHomography_Mat_Mat_Mat_int_double(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_findHomography_Mat_Mat_Mat_int_double(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Finds a perspective transformation between two planes.
@@ -1429,7 +1429,7 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 /// * max_iters: 2000
 /// * confidence: 0.995
 pub fn find_homography_full(src_points: &core::Mat, dst_points: &core::Mat, method: i32, ransac_reproj_threshold: f64, mask: &mut core::Mat, max_iters: i32, confidence: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_findHomography_Mat_Mat_int_double_Mat_int_double(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), method, ransac_reproj_threshold, mask.as_raw_Mat(), max_iters, confidence) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_findHomography_Mat_Mat_int_double_Mat_int_double(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), method, ransac_reproj_threshold, mask.as_raw_Mat(), max_iters, confidence) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Performs camera calibaration
@@ -1731,7 +1731,7 @@ pub fn fisheye_undistort_points(distorted: &core::Mat, undistorted: &mut core::M
 /// * valid_pix_roi: 0
 /// * center_principal_point: false
 pub fn get_optimal_new_camera_matrix(camera_matrix: &core::Mat, dist_coeffs: &core::Mat, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: &mut core::Rect, center_principal_point: bool) -> Result<core::Mat> {
-    unsafe { sys::cv_getOptimalNewCameraMatrix_Mat_Mat_Size_double_Size_Rect_X_bool(camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_size, alpha, new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getOptimalNewCameraMatrix_Mat_Mat_Size_double_Size_Rect_X_bool(camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_size, alpha, new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// computes valid disparity ROI from the valid ROIs of the rectified images (that are returned by cv::stereoRectify())
@@ -1758,7 +1758,7 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 /// ## C++ default parameters
 /// * aspect_ratio: 1.0
 pub fn init_camera_matrix_2d(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_initCameraMatrix2D_VectorOfMat_VectorOfMat_Size_double(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, aspect_ratio) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_initCameraMatrix2D_VectorOfMat_VectorOfMat_Size_double(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, aspect_ratio) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Computes partial derivatives of the matrix product for each multiplied matrix.
@@ -2618,8 +2618,8 @@ impl CirclesGridFinderParameters2 {
 // Generating impl for trait cv::StereoBM (trait)
 /// Class for computing stereo correspondence using the block matching algorithm, introduced and
 /// contributed to OpenCV by K. Konolige.
-pub trait StereoBM : crate::calib3d::StereoMatcher {
-    #[doc(hidden)] fn as_raw_StereoBM(&self) -> *mut c_void;
+pub trait StereoBM: crate::calib3d::StereoMatcher {
+    #[inline(always)] fn as_raw_StereoBM(&self) -> *mut c_void;
     fn get_pre_filter_type(&self) -> Result<i32> {
         unsafe { sys::cv_StereoBM_getPreFilterType_const(self.as_raw_StereoBM()) }.into_result()
     }
@@ -2706,15 +2706,15 @@ impl<'a> StereoBM + 'a {
     /// * num_disparities: 0
     /// * block_size: 21
     pub fn create(num_disparities: i32, block_size: i32) -> Result<types::PtrOfStereoBM> {
-        unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size) }.into_result().map(|x| types::PtrOfStereoBM { ptr: x })
+        unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size) }.into_result().map(|ptr| types::PtrOfStereoBM { ptr })
     }
     
 }
 
 // Generating impl for trait cv::StereoMatcher (trait)
 /// The base class for stereo correspondence algorithms.
-pub trait StereoMatcher : core::Algorithm {
-    #[doc(hidden)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
+pub trait StereoMatcher: core::Algorithm {
+    #[inline(always)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
     /// Computes disparity map for the specified stereo pair
     /// 
     /// ## Parameters
@@ -2800,8 +2800,8 @@ impl<'a> StereoMatcher + 'a {
 /// Note:
 /// *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
 /// at opencv_source_code/samples/python/stereo_match.py
-pub trait StereoSGBM : crate::calib3d::StereoMatcher {
-    #[doc(hidden)] fn as_raw_StereoSGBM(&self) -> *mut c_void;
+pub trait StereoSGBM: crate::calib3d::StereoMatcher {
+    #[inline(always)] fn as_raw_StereoSGBM(&self) -> *mut c_void;
     fn get_pre_filter_cap(&self) -> Result<i32> {
         unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM()) }.into_result()
     }
@@ -2897,7 +2897,7 @@ impl<'a> StereoSGBM + 'a {
     /// * speckle_range: 0
     /// * mode: StereoSGBM::MODE_SGBM
     pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<types::PtrOfStereoSGBM> {
-        unsafe { sys::cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode) }.into_result().map(|x| types::PtrOfStereoSGBM { ptr: x })
+        unsafe { sys::cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode) }.into_result().map(|ptr| types::PtrOfStereoSGBM { ptr })
     }
     
 }

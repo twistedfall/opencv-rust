@@ -35,8 +35,8 @@ pub const RETINA_COLOR_RANDOM: i32 = 0;
 /// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
 /// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
 /// more informations in the above cited Jeanny Heraults's book.
-pub trait Retina : core::Algorithm {
-    #[doc(hidden)] fn as_raw_Retina(&self) -> *mut c_void;
+pub trait Retina: core::Algorithm {
+    #[inline(always)] fn as_raw_Retina(&self) -> *mut c_void;
     /// Retreive retina input buffer size
     /// ## Returns
     /// the retina input buffer size
@@ -80,7 +80,7 @@ pub trait Retina : core::Algorithm {
     /// ## Returns
     /// the current parameters setup
     fn get_parameters(&mut self) -> Result<crate::bioinspired::RetinaParameters> {
-        unsafe { sys::cv_bioinspired_Retina_getParameters(self.as_raw_Retina()) }.into_result().map(|x| crate::bioinspired::RetinaParameters { ptr: x })
+        unsafe { sys::cv_bioinspired_Retina_getParameters(self.as_raw_Retina()) }.into_result().map(|ptr| crate::bioinspired::RetinaParameters { ptr })
     }
     
     /// Outputs a string showing the used parameters setup
@@ -261,11 +261,11 @@ pub trait Retina : core::Algorithm {
     }
     
     fn get_magno_raw_1(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const(self.as_raw_Retina()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const(self.as_raw_Retina()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     fn get_parvo_raw_1(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const(self.as_raw_Retina()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const(self.as_raw_Retina()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Activate color saturation as the final step of the color demultiplexing process -\> this
@@ -314,7 +314,7 @@ pub trait Retina : core::Algorithm {
 impl<'a> Retina + 'a {
 
     pub fn create(input_size: core::Size) -> Result<types::PtrOfRetina> {
-        unsafe { sys::cv_bioinspired_Retina_create_Size(input_size) }.into_result().map(|x| types::PtrOfRetina { ptr: x })
+        unsafe { sys::cv_bioinspired_Retina_create_Size(input_size) }.into_result().map(|ptr| types::PtrOfRetina { ptr })
     }
     
     /// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
@@ -340,7 +340,7 @@ impl<'a> Retina + 'a {
     /// * reduction_factor: 1.0f
     /// * sampling_strenght: 10.0f
     pub fn create_1(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strenght: f32) -> Result<types::PtrOfRetina> {
-        unsafe { sys::cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(input_size, color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strenght) }.into_result().map(|x| types::PtrOfRetina { ptr: x })
+        unsafe { sys::cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(input_size, color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strenght) }.into_result().map(|ptr| types::PtrOfRetina { ptr })
     }
     
 }
@@ -360,8 +360,8 @@ impl<'a> Retina + 'a {
 /// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
 /// regarding spatio-temporal filter and the bigger retina model :
 /// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-pub trait RetinaFastToneMapping : core::Algorithm {
-    #[doc(hidden)] fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void;
+pub trait RetinaFastToneMapping: core::Algorithm {
+    #[inline(always)] fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void;
     /// applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
     /// 
     /// using only the 2 local adaptation stages of the retina parvocellular channel : photoreceptors
@@ -403,7 +403,7 @@ pub trait RetinaFastToneMapping : core::Algorithm {
 impl<'a> RetinaFastToneMapping + 'a {
 
     pub fn create(input_size: core::Size) -> Result<types::PtrOfRetinaFastToneMapping> {
-        unsafe { sys::cv_bioinspired_RetinaFastToneMapping_create_Size(input_size) }.into_result().map(|x| types::PtrOfRetinaFastToneMapping { ptr: x })
+        unsafe { sys::cv_bioinspired_RetinaFastToneMapping_create_Size(input_size) }.into_result().map(|ptr| types::PtrOfRetinaFastToneMapping { ptr })
     }
     
 }
@@ -478,11 +478,10 @@ impl Drop for crate::bioinspired::RetinaParameters {
     }
 }
 impl crate::bioinspired::RetinaParameters {
-    pub fn as_raw_RetinaParameters(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_RetinaParameters(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        RetinaParameters {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -498,11 +497,10 @@ impl Drop for crate::bioinspired::RetinaParameters_IplMagnoParameters {
     }
 }
 impl crate::bioinspired::RetinaParameters_IplMagnoParameters {
-    pub fn as_raw_RetinaParameters_IplMagnoParameters(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_RetinaParameters_IplMagnoParameters(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        RetinaParameters_IplMagnoParameters {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -518,11 +516,10 @@ impl Drop for crate::bioinspired::RetinaParameters_OPLandIplParvoParameters {
     }
 }
 impl crate::bioinspired::RetinaParameters_OPLandIplParvoParameters {
-    pub fn as_raw_RetinaParameters_OPLandIplParvoParameters(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_RetinaParameters_OPLandIplParvoParameters(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        RetinaParameters_OPLandIplParvoParameters {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -538,11 +535,10 @@ impl Drop for crate::bioinspired::SegmentationParameters {
     }
 }
 impl crate::bioinspired::SegmentationParameters {
-    pub fn as_raw_SegmentationParameters(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_SegmentationParameters(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        SegmentationParameters {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -550,7 +546,7 @@ impl crate::bioinspired::SegmentationParameters {
 /// class which provides a transient/moving areas segmentation module
 /// 
 /// perform a locally adapted segmentation by using the retina magno input data Based on Alexandre
-/// BENOIT thesis: "Le systme visuel humain au secours de la vision par ordinateur"
+/// BENOIT thesis: "Le système visuel humain au secours de la vision par ordinateur"
 /// 
 /// 3 spatio temporal filters are used:
 /// - a first one which filters the noise and local variations of the input motion energy
@@ -559,8 +555,8 @@ impl crate::bioinspired::SegmentationParameters {
 /// to the neighborhood otion energy, then the area is considered as moving and is segmented
 /// - a stronger third low pass filter helps decision by providing a smooth information about the
 /// "motion context" in a wider area
-pub trait TransientAreasSegmentationModule : core::Algorithm {
-    #[doc(hidden)] fn as_raw_TransientAreasSegmentationModule(&self) -> *mut c_void;
+pub trait TransientAreasSegmentationModule: core::Algorithm {
+    #[inline(always)] fn as_raw_TransientAreasSegmentationModule(&self) -> *mut c_void;
     /// return the sze of the manage input and output images
     fn get_size(&mut self) -> Result<core::Size> {
         unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSize(self.as_raw_TransientAreasSegmentationModule()) }.into_result()
@@ -594,7 +590,7 @@ pub trait TransientAreasSegmentationModule : core::Algorithm {
     
     /// return the current parameters setup
     fn get_parameters(&mut self) -> Result<crate::bioinspired::SegmentationParameters> {
-        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getParameters(self.as_raw_TransientAreasSegmentationModule()) }.into_result().map(|x| crate::bioinspired::SegmentationParameters { ptr: x })
+        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getParameters(self.as_raw_TransientAreasSegmentationModule()) }.into_result().map(|ptr| crate::bioinspired::SegmentationParameters { ptr })
     }
     
     /// parameters setup display method
@@ -643,7 +639,7 @@ impl<'a> TransientAreasSegmentationModule + 'a {
     /// ## Parameters
     /// * inputSize: : size of the images input to segment (output will be the same size)
     pub fn create(input_size: core::Size) -> Result<types::PtrOfTransientAreasSegmentationModule> {
-        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_create_Size(input_size) }.into_result().map(|x| types::PtrOfTransientAreasSegmentationModule { ptr: x })
+        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_create_Size(input_size) }.into_result().map(|ptr| types::PtrOfTransientAreasSegmentationModule { ptr })
     }
     
 }

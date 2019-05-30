@@ -75,7 +75,7 @@ pub fn color_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, red_
 /// * exclude_range: 4
 /// * cut: true
 pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<types::PtrOfAlignMTB> {
-    unsafe { sys::cv_createAlignMTB_int_int_bool(max_bits, exclude_range, cut) }.into_result().map(|x| types::PtrOfAlignMTB { ptr: x })
+    unsafe { sys::cv_createAlignMTB_int_int_bool(max_bits, exclude_range, cut) }.into_result().map(|ptr| types::PtrOfAlignMTB { ptr })
 }
 
 /// Creates CalibrateDebevec object
@@ -92,7 +92,7 @@ pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<
 /// * lambda: 10.0f
 /// * random: false
 pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Result<types::PtrOfCalibrateDebevec> {
-    unsafe { sys::cv_createCalibrateDebevec_int_float_bool(samples, lambda, random) }.into_result().map(|x| types::PtrOfCalibrateDebevec { ptr: x })
+    unsafe { sys::cv_createCalibrateDebevec_int_float_bool(samples, lambda, random) }.into_result().map(|ptr| types::PtrOfCalibrateDebevec { ptr })
 }
 
 /// Creates CalibrateRobertson object
@@ -105,12 +105,12 @@ pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Resu
 /// * max_iter: 30
 /// * threshold: 0.01f
 pub fn create_calibrate_robertson(max_iter: i32, threshold: f32) -> Result<types::PtrOfCalibrateRobertson> {
-    unsafe { sys::cv_createCalibrateRobertson_int_float(max_iter, threshold) }.into_result().map(|x| types::PtrOfCalibrateRobertson { ptr: x })
+    unsafe { sys::cv_createCalibrateRobertson_int_float(max_iter, threshold) }.into_result().map(|ptr| types::PtrOfCalibrateRobertson { ptr })
 }
 
 /// Creates MergeDebevec object
 pub fn create_merge_debevec() -> Result<types::PtrOfMergeDebevec> {
-    unsafe { sys::cv_createMergeDebevec() }.into_result().map(|x| types::PtrOfMergeDebevec { ptr: x })
+    unsafe { sys::cv_createMergeDebevec() }.into_result().map(|ptr| types::PtrOfMergeDebevec { ptr })
 }
 
 /// Creates MergeMertens object
@@ -125,12 +125,12 @@ pub fn create_merge_debevec() -> Result<types::PtrOfMergeDebevec> {
 /// * saturation_weight: 1.0f
 /// * exposure_weight: 0.0f
 pub fn create_merge_mertens(contrast_weight: f32, saturation_weight: f32, exposure_weight: f32) -> Result<types::PtrOfMergeMertens> {
-    unsafe { sys::cv_createMergeMertens_float_float_float(contrast_weight, saturation_weight, exposure_weight) }.into_result().map(|x| types::PtrOfMergeMertens { ptr: x })
+    unsafe { sys::cv_createMergeMertens_float_float_float(contrast_weight, saturation_weight, exposure_weight) }.into_result().map(|ptr| types::PtrOfMergeMertens { ptr })
 }
 
 /// Creates MergeRobertson object
 pub fn create_merge_robertson() -> Result<types::PtrOfMergeRobertson> {
-    unsafe { sys::cv_createMergeRobertson() }.into_result().map(|x| types::PtrOfMergeRobertson { ptr: x })
+    unsafe { sys::cv_createMergeRobertson() }.into_result().map(|ptr| types::PtrOfMergeRobertson { ptr })
 }
 
 /// Creates TonemapDrago object
@@ -147,7 +147,7 @@ pub fn create_merge_robertson() -> Result<types::PtrOfMergeRobertson> {
 /// * saturation: 1.0f
 /// * bias: 0.85f
 pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<types::PtrOfTonemapDrago> {
-    unsafe { sys::cv_createTonemapDrago_float_float_float(gamma, saturation, bias) }.into_result().map(|x| types::PtrOfTonemapDrago { ptr: x })
+    unsafe { sys::cv_createTonemapDrago_float_float_float(gamma, saturation, bias) }.into_result().map(|ptr| types::PtrOfTonemapDrago { ptr })
 }
 
 /// Creates TonemapMantiuk object
@@ -163,7 +163,7 @@ pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<ty
 /// * scale: 0.7f
 /// * saturation: 1.0f
 pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result<types::PtrOfTonemapMantiuk> {
-    unsafe { sys::cv_createTonemapMantiuk_float_float_float(gamma, scale, saturation) }.into_result().map(|x| types::PtrOfTonemapMantiuk { ptr: x })
+    unsafe { sys::cv_createTonemapMantiuk_float_float_float(gamma, scale, saturation) }.into_result().map(|ptr| types::PtrOfTonemapMantiuk { ptr })
 }
 
 /// Creates TonemapReinhard object
@@ -182,7 +182,7 @@ pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result
 /// * light_adapt: 1.0f
 /// * color_adapt: 0.0f
 pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, color_adapt: f32) -> Result<types::PtrOfTonemapReinhard> {
-    unsafe { sys::cv_createTonemapReinhard_float_float_float_float(gamma, intensity, light_adapt, color_adapt) }.into_result().map(|x| types::PtrOfTonemapReinhard { ptr: x })
+    unsafe { sys::cv_createTonemapReinhard_float_float_float_float(gamma, intensity, light_adapt, color_adapt) }.into_result().map(|ptr| types::PtrOfTonemapReinhard { ptr })
 }
 
 /// Creates simple linear mapper with gamma correction
@@ -195,7 +195,7 @@ pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, col
 /// ## C++ default parameters
 /// * gamma: 1.0f
 pub fn create_tonemap(gamma: f32) -> Result<types::PtrOfTonemap> {
-    unsafe { sys::cv_createTonemap_float(gamma) }.into_result().map(|x| types::PtrOfTonemap { ptr: x })
+    unsafe { sys::cv_createTonemap_float(gamma) }.into_result().map(|ptr| types::PtrOfTonemap { ptr })
 }
 
 /// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
@@ -602,8 +602,8 @@ pub fn texture_flattening(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat
 
 // Generating impl for trait cv::AlignExposures (trait)
 /// The base class for algorithms that align images of the same scene with different exposures
-pub trait AlignExposures : core::Algorithm {
-    #[doc(hidden)] fn as_raw_AlignExposures(&self) -> *mut c_void;
+pub trait AlignExposures: core::Algorithm {
+    #[inline(always)] fn as_raw_AlignExposures(&self) -> *mut c_void;
     /// Aligns images
     /// 
     /// ## Parameters
@@ -631,8 +631,8 @@ impl<'a> AlignExposures + 'a {
 /// In this implementation new image regions are filled with zeros.
 /// 
 /// For more information see [GW03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_GW03) .
-pub trait AlignMTB : crate::photo::AlignExposures {
-    #[doc(hidden)] fn as_raw_AlignMTB(&self) -> *mut c_void;
+pub trait AlignMTB: crate::photo::AlignExposures {
+    #[inline(always)] fn as_raw_AlignMTB(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut types::VectorOfMat, times: &core::Mat, response: &core::Mat) -> Result<()> {
         unsafe { sys::cv_AlignMTB_process_VectorOfMat_VectorOfMat_Mat_Mat(self.as_raw_AlignMTB(), src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
     }
@@ -708,8 +708,8 @@ impl<'a> AlignMTB + 'a {
 
 // Generating impl for trait cv::CalibrateCRF (trait)
 /// The base class for camera response calibration algorithms.
-pub trait CalibrateCRF : core::Algorithm {
-    #[doc(hidden)] fn as_raw_CalibrateCRF(&self) -> *mut c_void;
+pub trait CalibrateCRF: core::Algorithm {
+    #[inline(always)] fn as_raw_CalibrateCRF(&self) -> *mut c_void;
     /// Recovers inverse camera response.
     /// 
     /// ## Parameters
@@ -732,8 +732,8 @@ impl<'a> CalibrateCRF + 'a {
 /// in all images, extra term is added to make the result smoother.
 /// 
 /// For more information see [DM97](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM97) .
-pub trait CalibrateDebevec : crate::photo::CalibrateCRF {
-    #[doc(hidden)] fn as_raw_CalibrateDebevec(&self) -> *mut c_void;
+pub trait CalibrateDebevec: crate::photo::CalibrateCRF {
+    #[inline(always)] fn as_raw_CalibrateDebevec(&self) -> *mut c_void;
     fn get_lambda(&self) -> Result<f32> {
         unsafe { sys::cv_CalibrateDebevec_getLambda_const(self.as_raw_CalibrateDebevec()) }.into_result()
     }
@@ -769,8 +769,8 @@ impl<'a> CalibrateDebevec + 'a {
 /// function as linear system. This algorithm uses all image pixels.
 /// 
 /// For more information see [RB99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RB99) .
-pub trait CalibrateRobertson : crate::photo::CalibrateCRF {
-    #[doc(hidden)] fn as_raw_CalibrateRobertson(&self) -> *mut c_void;
+pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
+    #[inline(always)] fn as_raw_CalibrateRobertson(&self) -> *mut c_void;
     fn get_max_iter(&self) -> Result<i32> {
         unsafe { sys::cv_CalibrateRobertson_getMaxIter_const(self.as_raw_CalibrateRobertson()) }.into_result()
     }
@@ -788,7 +788,7 @@ pub trait CalibrateRobertson : crate::photo::CalibrateCRF {
     }
     
     fn get_radiance(&self) -> Result<core::Mat> {
-        unsafe { sys::cv_CalibrateRobertson_getRadiance_const(self.as_raw_CalibrateRobertson()) }.into_result().map(|x| core::Mat { ptr: x })
+        unsafe { sys::cv_CalibrateRobertson_getRadiance_const(self.as_raw_CalibrateRobertson()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -802,8 +802,8 @@ impl<'a> CalibrateRobertson + 'a {
 /// values and camera response.
 /// 
 /// For more information see [DM97](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM97) .
-pub trait MergeDebevec : crate::photo::MergeExposures {
-    #[doc(hidden)] fn as_raw_MergeDebevec(&self) -> *mut c_void;
+pub trait MergeDebevec: crate::photo::MergeExposures {
+    #[inline(always)] fn as_raw_MergeDebevec(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat, response: &core::Mat) -> Result<()> {
         unsafe { sys::cv_MergeDebevec_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeDebevec(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
     }
@@ -820,8 +820,8 @@ impl<'a> MergeDebevec + 'a {
 
 // Generating impl for trait cv::MergeExposures (trait)
 /// The base class algorithms that can merge exposure sequence to a single image.
-pub trait MergeExposures : core::Algorithm {
-    #[doc(hidden)] fn as_raw_MergeExposures(&self) -> *mut c_void;
+pub trait MergeExposures: core::Algorithm {
+    #[inline(always)] fn as_raw_MergeExposures(&self) -> *mut c_void;
     /// Merges images.
     /// 
     /// ## Parameters
@@ -851,8 +851,8 @@ impl<'a> MergeExposures + 'a {
 /// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
 /// 
 /// For more information see [MK07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MK07) .
-pub trait MergeMertens : crate::photo::MergeExposures {
-    #[doc(hidden)] fn as_raw_MergeMertens(&self) -> *mut c_void;
+pub trait MergeMertens: crate::photo::MergeExposures {
+    #[inline(always)] fn as_raw_MergeMertens(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat, response: &core::Mat) -> Result<()> {
         unsafe { sys::cv_MergeMertens_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeMertens(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
     }
@@ -901,8 +901,8 @@ impl<'a> MergeMertens + 'a {
 /// values and camera response.
 /// 
 /// For more information see [RB99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RB99) .
-pub trait MergeRobertson : crate::photo::MergeExposures {
-    #[doc(hidden)] fn as_raw_MergeRobertson(&self) -> *mut c_void;
+pub trait MergeRobertson: crate::photo::MergeExposures {
+    #[inline(always)] fn as_raw_MergeRobertson(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat, response: &core::Mat) -> Result<()> {
         unsafe { sys::cv_MergeRobertson_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeRobertson(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
     }
@@ -919,8 +919,8 @@ impl<'a> MergeRobertson + 'a {
 
 // Generating impl for trait cv::Tonemap (trait)
 /// Base class for tonemapping algorithms - tools that are used to map HDR image to 8-bit range.
-pub trait Tonemap : core::Algorithm {
-    #[doc(hidden)] fn as_raw_Tonemap(&self) -> *mut c_void;
+pub trait Tonemap: core::Algorithm {
+    #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void;
     /// Tonemaps image
     /// 
     /// ## Parameters
@@ -954,8 +954,8 @@ impl<'a> Tonemap + 'a {
 /// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_FL02) .
 /// 
 /// For more information see [DM03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM03) .
-pub trait TonemapDrago : crate::photo::Tonemap {
-    #[doc(hidden)] fn as_raw_TonemapDrago(&self) -> *mut c_void;
+pub trait TonemapDrago: crate::photo::Tonemap {
+    #[inline(always)] fn as_raw_TonemapDrago(&self) -> *mut c_void;
     fn get_saturation(&self) -> Result<f32> {
         unsafe { sys::cv_TonemapDrago_getSaturation_const(self.as_raw_TonemapDrago()) }.into_result()
     }
@@ -984,8 +984,8 @@ impl<'a> TonemapDrago + 'a {
 /// reconstructed from new contrast values.
 /// 
 /// For more information see [MM06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MM06) .
-pub trait TonemapMantiuk : crate::photo::Tonemap {
-    #[doc(hidden)] fn as_raw_TonemapMantiuk(&self) -> *mut c_void;
+pub trait TonemapMantiuk: crate::photo::Tonemap {
+    #[inline(always)] fn as_raw_TonemapMantiuk(&self) -> *mut c_void;
     fn get_scale(&self) -> Result<f32> {
         unsafe { sys::cv_TonemapMantiuk_getScale_const(self.as_raw_TonemapMantiuk()) }.into_result()
     }
@@ -1015,8 +1015,8 @@ impl<'a> TonemapMantiuk + 'a {
 /// color adaptation.
 /// 
 /// For more information see [RD05](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RD05) .
-pub trait TonemapReinhard : crate::photo::Tonemap {
-    #[doc(hidden)] fn as_raw_TonemapReinhard(&self) -> *mut c_void;
+pub trait TonemapReinhard: crate::photo::Tonemap {
+    #[inline(always)] fn as_raw_TonemapReinhard(&self) -> *mut c_void;
     fn get_intensity(&self) -> Result<f32> {
         unsafe { sys::cv_TonemapReinhard_getIntensity_const(self.as_raw_TonemapReinhard()) }.into_result()
     }

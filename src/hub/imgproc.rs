@@ -1809,17 +1809,17 @@ pub fn corner_sub_pix(image: &core::Mat, corners: &mut core::Mat, win_size: core
 /// * clip_limit: 40.0
 /// * tile_grid_size: Size(8, 8)
 pub fn create_clahe(clip_limit: f64, tile_grid_size: core::Size) -> Result<types::PtrOfCLAHE> {
-    unsafe { sys::cv_createCLAHE_double_Size(clip_limit, tile_grid_size) }.into_result().map(|x| types::PtrOfCLAHE { ptr: x })
+    unsafe { sys::cv_createCLAHE_double_Size(clip_limit, tile_grid_size) }.into_result().map(|ptr| types::PtrOfCLAHE { ptr })
 }
 
 /// Creates a smart pointer to a cv::GeneralizedHoughBallard class and initializes it.
 pub fn create_generalized_hough_ballard() -> Result<types::PtrOfGeneralizedHoughBallard> {
-    unsafe { sys::cv_createGeneralizedHoughBallard() }.into_result().map(|x| types::PtrOfGeneralizedHoughBallard { ptr: x })
+    unsafe { sys::cv_createGeneralizedHoughBallard() }.into_result().map(|ptr| types::PtrOfGeneralizedHoughBallard { ptr })
 }
 
 /// Creates a smart pointer to a cv::GeneralizedHoughGuil class and initializes it.
 pub fn create_generalized_hough_guil() -> Result<types::PtrOfGeneralizedHoughGuil> {
-    unsafe { sys::cv_createGeneralizedHoughGuil() }.into_result().map(|x| types::PtrOfGeneralizedHoughGuil { ptr: x })
+    unsafe { sys::cv_createGeneralizedHoughGuil() }.into_result().map(|ptr| types::PtrOfGeneralizedHoughGuil { ptr })
 }
 
 /// This function computes a Hanning window coefficients in two dimensions.
@@ -1871,7 +1871,7 @@ pub fn create_hanning_window(dst: &mut core::Mat, win_size: core::Size, _type: i
 /// * _density_th: 0.7
 /// * _n_bins: 1024
 pub fn create_line_segment_detector(_refine: i32, _scale: f64, _sigma_scale: f64, _quant: f64, _ang_th: f64, _log_eps: f64, _density_th: f64, _n_bins: i32) -> Result<types::PtrOfLineSegmentDetector> {
-    unsafe { sys::cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(_refine, _scale, _sigma_scale, _quant, _ang_th, _log_eps, _density_th, _n_bins) }.into_result().map(|x| types::PtrOfLineSegmentDetector { ptr: x })
+    unsafe { sys::cv_createLineSegmentDetector_int_double_double_double_double_double_double_int(_refine, _scale, _sigma_scale, _quant, _ang_th, _log_eps, _density_th, _n_bins) }.into_result().map(|ptr| types::PtrOfLineSegmentDetector { ptr })
 }
 
 /// Converts an image from one color space to another where the source image is
@@ -2595,7 +2595,7 @@ pub fn find_contours(image: &mut core::Mat, contours: &mut types::VectorOfMat, m
 /// ## Parameters
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 pub fn fit_ellipse_ams(points: &core::Mat) -> Result<core::RotatedRect> {
-    unsafe { sys::cv_fitEllipseAMS_Mat(points.as_raw_Mat()) }.into_result().map(|x| core::RotatedRect { ptr: x })
+    unsafe { sys::cv_fitEllipseAMS_Mat(points.as_raw_Mat()) }.into_result().map(|ptr| core::RotatedRect { ptr })
 }
 
 /// Fits an ellipse around a set of 2D points.
@@ -2641,7 +2641,7 @@ pub fn fit_ellipse_ams(points: &core::Mat) -> Result<core::RotatedRect> {
 /// ## Parameters
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 pub fn fit_ellipse_direct(points: &core::Mat) -> Result<core::RotatedRect> {
-    unsafe { sys::cv_fitEllipseDirect_Mat(points.as_raw_Mat()) }.into_result().map(|x| core::RotatedRect { ptr: x })
+    unsafe { sys::cv_fitEllipseDirect_Mat(points.as_raw_Mat()) }.into_result().map(|ptr| core::RotatedRect { ptr })
 }
 
 /// Fits an ellipse around a set of 2D points.
@@ -2655,7 +2655,7 @@ pub fn fit_ellipse_direct(points: &core::Mat) -> Result<core::RotatedRect> {
 /// ## Parameters
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
 pub fn fit_ellipse(points: &core::Mat) -> Result<core::RotatedRect> {
-    unsafe { sys::cv_fitEllipse_Mat(points.as_raw_Mat()) }.into_result().map(|x| core::RotatedRect { ptr: x })
+    unsafe { sys::cv_fitEllipse_Mat(points.as_raw_Mat()) }.into_result().map(|ptr| core::RotatedRect { ptr })
 }
 
 /// Fits a line to a 2D or 3D point set.
@@ -2868,7 +2868,7 @@ pub fn flood_fill_1(image: &mut core::Mat, seed_point: core::Point, new_val: cor
 }
 
 pub fn get_affine_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_getAffineTransform_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getAffineTransform_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Calculates an affine transform from three pairs of the corresponding points.
@@ -2888,7 +2888,7 @@ pub fn get_affine_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Ma
 /// ## See also
 /// warpAffine, transform
 pub fn get_affine_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Result<core::Mat> {
-    unsafe { sys::cv_getAffineTransform_const_Point2f_X_const_Point2f_X(src, dst) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getAffineTransform_const_Point2f_X_const_Point2f_X(src, dst) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Returns the default new camera matrix.
@@ -2918,7 +2918,7 @@ pub fn get_affine_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Resul
 /// * imgsize: Size()
 /// * center_principal_point: false
 pub fn get_default_new_camera_matrix(camera_matrix: &core::Mat, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
-    unsafe { sys::cv_getDefaultNewCameraMatrix_Mat_Size_bool(camera_matrix.as_raw_Mat(), imgsize, center_principal_point) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getDefaultNewCameraMatrix_Mat_Size_bool(camera_matrix.as_raw_Mat(), imgsize, center_principal_point) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Returns filter coefficients for computing spatial image derivatives.
@@ -2982,7 +2982,7 @@ pub fn get_font_scale_from_height(font_face: i32, pixel_height: i32, thickness: 
 /// * psi: CV_PI*0.5
 /// * ktype: CV_64F
 pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, gamma: f64, psi: f64, ktype: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_getGaborKernel_Size_double_double_double_double_double_int(ksize, sigma, theta, lambd, gamma, psi, ktype) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getGaborKernel_Size_double_double_double_double_double_int(ksize, sigma, theta, lambd, gamma, psi, ktype) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Returns Gaussian filter coefficients.
@@ -3008,7 +3008,7 @@ pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, g
 /// ## C++ default parameters
 /// * ktype: CV_64F
 pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_getGaussianKernel_int_double_int(ksize, sigma, ktype) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getGaussianKernel_int_double_int(ksize, sigma, ktype) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Calculates a perspective transform from four pairs of the corresponding points.
@@ -3028,12 +3028,12 @@ pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::M
 /// ## See also
 /// findHomography, warpPerspective, perspectiveTransform
 pub fn get_perspective_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_getPerspectiveTransform_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getPerspectiveTransform_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// returns 3x3 perspective transformation for the corresponding 4 point pairs.
 pub fn get_perspective_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Result<core::Mat> {
-    unsafe { sys::cv_getPerspectiveTransform_const_Point2f_X_const_Point2f_X(src, dst) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getPerspectiveTransform_const_Point2f_X_const_Point2f_X(src, dst) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Retrieves a pixel rectangle from an image with sub-pixel accuracy.
@@ -3085,7 +3085,7 @@ pub fn get_rect_sub_pix(image: &core::Mat, patch_size: core::Size, center: core:
 /// ## See also
 /// getAffineTransform, warpAffine, transform
 pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(center, angle, scale) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(center, angle, scale) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Returns a structuring element of the specified size and shape for morphological operations.
@@ -3105,7 +3105,7 @@ pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> 
 /// ## C++ default parameters
 /// * anchor: Point(-1,-1)
 pub fn get_structuring_element(shape: i32, ksize: core::Size, anchor: core::Point) -> Result<core::Mat> {
-    unsafe { sys::cv_getStructuringElement_int_Size_Point(shape, ksize, anchor) }.into_result().map(|x| core::Mat { ptr: x })
+    unsafe { sys::cv_getStructuringElement_int_Size_Point(shape, ksize, anchor) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Calculates the width and height of a text string.
@@ -3675,7 +3675,7 @@ pub fn median_blur(src: &core::Mat, dst: &mut core::Mat, ksize: i32) -> Result<(
 /// ## Parameters
 /// * points: Input vector of 2D points, stored in std::vector\<\> or Mat
 pub fn min_area_rect(points: &core::Mat) -> Result<core::RotatedRect> {
-    unsafe { sys::cv_minAreaRect_Mat(points.as_raw_Mat()) }.into_result().map(|x| core::RotatedRect { ptr: x })
+    unsafe { sys::cv_minAreaRect_Mat(points.as_raw_Mat()) }.into_result().map(|ptr| core::RotatedRect { ptr })
 }
 
 /// Finds a circle of the minimum area enclosing a 2D point set.
@@ -4602,8 +4602,8 @@ pub fn wrapper_emd(signature1: &core::Mat, signature2: &core::Mat, dist_type: i3
 
 // Generating impl for trait cv::CLAHE (trait)
 /// Base class for Contrast Limited Adaptive Histogram Equalization.
-pub trait CLAHE : core::Algorithm {
-    #[doc(hidden)] fn as_raw_CLAHE(&self) -> *mut c_void;
+pub trait CLAHE: core::Algorithm {
+    #[inline(always)] fn as_raw_CLAHE(&self) -> *mut c_void;
     /// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
     /// 
     /// ## Parameters
@@ -4652,8 +4652,8 @@ impl<'a> CLAHE + 'a {
 
 // Generating impl for trait cv::GeneralizedHough (trait)
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
-pub trait GeneralizedHough : core::Algorithm {
-    #[doc(hidden)] fn as_raw_GeneralizedHough(&self) -> *mut c_void;
+pub trait GeneralizedHough: core::Algorithm {
+    #[inline(always)] fn as_raw_GeneralizedHough(&self) -> *mut c_void;
     /// set template to search
     ///
     /// ## C++ default parameters
@@ -4739,8 +4739,8 @@ impl<'a> GeneralizedHough + 'a {
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
 /// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ballard1981) .
-pub trait GeneralizedHoughBallard : crate::imgproc::GeneralizedHough {
-    #[doc(hidden)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
+pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
+    #[inline(always)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
     /// R-Table levels.
     fn set_levels(&mut self, levels: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughBallard_setLevels_int(self.as_raw_GeneralizedHoughBallard(), levels) }.into_result()
@@ -4769,8 +4769,8 @@ impl<'a> GeneralizedHoughBallard + 'a {
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
 /// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Guil1999) .
-pub trait GeneralizedHoughGuil : crate::imgproc::GeneralizedHough {
-    #[doc(hidden)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
+pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
+    #[inline(always)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
     /// Angle difference in degrees between two points in feature.
     fn set_xi(&mut self, xi: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setXi_double(self.as_raw_GeneralizedHoughGuil(), xi) }.into_result()
@@ -4927,11 +4927,10 @@ impl Drop for crate::imgproc::LineIterator {
     }
 }
 impl crate::imgproc::LineIterator {
-    pub fn as_raw_LineIterator(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_LineIterator(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        LineIterator {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -4950,7 +4949,7 @@ impl LineIterator {
     /// * connectivity: 8
     /// * left_to_right: false
     pub fn new(img: &core::Mat, pt1: core::Point, pt2: core::Point, connectivity: i32, left_to_right: bool) -> Result<crate::imgproc::LineIterator> {
-        unsafe { sys::cv_LineIterator_LineIterator_Mat_Point_Point_int_bool(img.as_raw_Mat(), pt1, pt2, connectivity, left_to_right) }.into_result().map(|x| crate::imgproc::LineIterator { ptr: x })
+        unsafe { sys::cv_LineIterator_LineIterator_Mat_Point_Point_int_bool(img.as_raw_Mat(), pt1, pt2, connectivity, left_to_right) }.into_result().map(|ptr| crate::imgproc::LineIterator { ptr })
     }
     
     /// returns coordinates of the current pixel
@@ -4967,8 +4966,8 @@ impl LineIterator {
 /// 
 /// 
 /// Note: Implementation has been removed due original code license conflict
-pub trait LineSegmentDetector : core::Algorithm {
-    #[doc(hidden)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
+pub trait LineSegmentDetector: core::Algorithm {
+    #[inline(always)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
     /// Finds lines in the input image.
     /// 
     /// This is the output of the default parameters of the algorithm on the above shown image.
@@ -5039,11 +5038,10 @@ impl Drop for crate::imgproc::Subdiv2D {
     }
 }
 impl crate::imgproc::Subdiv2D {
-    pub fn as_raw_Subdiv2D(&self) -> *mut c_void { self.ptr }
+    #[inline(always)] pub fn as_raw_Subdiv2D(&self) -> *mut c_void { self.ptr }
+
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-        Subdiv2D {
-            ptr
-        }
+        Self { ptr }
     }
 }
 
@@ -5052,7 +5050,7 @@ impl Subdiv2D {
     /// creates an empty Subdiv2D object.
     /// To create a new empty Delaunay subdivision you need to use the #initDelaunay function.
     pub fn default() -> Result<crate::imgproc::Subdiv2D> {
-        unsafe { sys::cv_Subdiv2D_Subdiv2D() }.into_result().map(|x| crate::imgproc::Subdiv2D { ptr: x })
+        unsafe { sys::cv_Subdiv2D_Subdiv2D() }.into_result().map(|ptr| crate::imgproc::Subdiv2D { ptr })
     }
     
     /// ## Parameters
@@ -5062,7 +5060,7 @@ impl Subdiv2D {
     /// insert() . All of the points to be added must be within the specified rectangle, otherwise a runtime
     /// error is raised.
     pub fn new(rect: core::Rect) -> Result<crate::imgproc::Subdiv2D> {
-        unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(rect) }.into_result().map(|x| crate::imgproc::Subdiv2D { ptr: x })
+        unsafe { sys::cv_Subdiv2D_Subdiv2D_Rect(rect) }.into_result().map(|ptr| crate::imgproc::Subdiv2D { ptr })
     }
     
     /// Creates a new empty Delaunay subdivision
