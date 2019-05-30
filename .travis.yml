@@ -8,7 +8,7 @@ cache:
   cargo: true
   ccache: true
   directories:
-    - opencv
+    - $HOME/build/opencv
 
 sudo: true
 dist: xenial
