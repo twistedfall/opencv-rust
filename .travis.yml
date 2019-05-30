@@ -45,7 +45,7 @@ env:
     - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
 
 before_script:
-  - mkdir ~/build/opencv
+  - mkdir ~/build/opencv ; true
   - wget -O- https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz | tar -xzC ~/build/opencv
   - wget -O- https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz | tar -xzC ~/build/opencv
   - mkdir -p ~/build/opencv/opencv-$OPENCV_VERSION-build
