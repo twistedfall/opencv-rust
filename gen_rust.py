@@ -12,7 +12,6 @@ from string import Template
 
 
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
-# fixme consume arg for by_ptr settable properties
 # fixme field comments //! in the end are transferred to the next field
 # fixme dnn::net::Dict needs set method (generic or only DictValue?), DictValue needs constructors
 # fixme test VectorOfString
@@ -1107,7 +1106,7 @@ class FuncInfo(GeneralInfo):
                 generic_decls.append(gdecl)
             if self.has_callback_arg and arg.name == "userdata":
                 continue
-            args.append(arg.type.rust_arg_func_decl(arg.rsname, arg.is_output()))
+            args.append(arg.type.rust_arg_func_decl(arg.rsname, arg.is_output(), self.attr_accessor_type))
 
         pub = "" if self.ci and self.ci.type_info().is_trait and not self.is_static else "pub "
 
@@ -1511,13 +1510,14 @@ class TypeInfo(object):
             return "&self"
         return "self"
 
-    def rust_arg_func_decl(self, var_name, is_output=False):
+    def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         """
         :type var_name: str
         :type is_output: bool
+        :type attr_type: str|None
         :rtype: str
         """
-        if self.is_by_ptr:
+        if self.is_by_ptr and attr_type != "w":
             if is_output:
                 return "{}: &mut {}".format(var_name, self.rust_full)
             return "{}: &{}".format(var_name, self.rust_full)
@@ -1689,7 +1689,7 @@ class StringTypeInfo(TypeInfo):
     def is_output(self):
         return self.is_by_ref and not self.is_const
 
-    def rust_arg_func_decl(self, var_name, is_output=False):
+    def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         if self.is_output():
             return "{}: &mut String".format(var_name)
         return "{}: &str".format(var_name)
@@ -1834,10 +1834,10 @@ class CallbackTypeInfo(TypeInfo):
             self.c_safe_id = self.rust_local
             self.rust_extern = "{}Extern".format(self.rust_full)
 
-    def rust_arg_func_decl(self, var_name, is_output=False):
+    def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         callback_info = self.gen.get_callback(self.typeid)
         if callback_info is None or callback_info.is_ignored:
-            return super(CallbackTypeInfo, self).rust_arg_func_decl(var_name, is_output)
+            return super(CallbackTypeInfo, self).rust_arg_func_decl(var_name, is_output, attr_type)
         return "{}: Option<Box<{}>>".format(var_name, self.rust_full)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
@@ -2227,10 +2227,10 @@ class RawPtrTypeInfo(TypeInfo):
     def is_string(self):
         return isinstance(self.inner, PrimitiveTypeInfo) and self.inner.cpptype == "char"
 
-    def rust_arg_func_decl(self, var_name, is_output=False):
+    def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         if self.is_string():
             return "{}: &{}str".format(var_name, "mut " if is_output else "")
-        return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_output or not self.is_const)
+        return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_output or not self.is_const, attr_type)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
         if self.is_string():
