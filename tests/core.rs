@@ -1,4 +1,7 @@
-use opencv::core::{self, CV_32S, CV_32SC3, CV_64F, CV_64FC1, CV_8U, CV_8UC2, MAKETYPE, Moments};
+use opencv::{
+    core::{self, CV_32S, CV_32SC3, CV_64F, CV_64FC1, CV_8U, CV_8UC2, MAKETYPE, Moments},
+    Result,
+};
 
 #[test]
 fn make_type() {
@@ -8,15 +11,17 @@ fn make_type() {
 }
 
 #[test]
-fn moments() {
-    let moments = Moments::default().unwrap();
+fn moments() -> Result<()> {
+    let moments = Moments::default()?;
     assert_eq!(0., moments.m00);
     assert_eq!(0., moments.m12);
     assert_eq!(0., moments.mu30);
+    Ok(())
 }
 
 #[test]
-fn cpu_features_line() {
-    let cpu_feats = core::get_cpu_features_line().unwrap();
+fn cpu_features_line() -> Result<()> {
+    let cpu_feats = core::get_cpu_features_line()?;
     assert!(cpu_feats.is_ascii());
+    Ok(())
 }

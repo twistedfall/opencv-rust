@@ -1,10 +1,11 @@
 use opencv::{
     core::{DataType, Mat, Point2d, Scalar},
+    Result,
     types::{VectorOfbool, VectorOfint, VectorOfMat, VectorOfPoint2d},
 };
 
 #[test]
-fn types() {
+fn types() -> Result<()> {
     {
         let mut vec = VectorOfint::with_capacity(10);
         vec.push(1);
@@ -27,15 +28,15 @@ fn types() {
 
     {
         let mut vec = VectorOfMat::new();
-        vec.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.)).unwrap());
-        vec.push(Mat::new_rows_cols_with_default(1, 3, u16::typ(), Scalar::all(2.)).unwrap());
-        vec.push(Mat::new_rows_cols_with_default(1, 3, i32::typ(), Scalar::all(3.)).unwrap());
-        assert_eq!(u8::typ(), vec.get(0).typ().unwrap());
-        assert_eq!(1, *vec.get(0).at_2d::<u8>(0, 1).unwrap());
-        assert_eq!(u16::typ(), vec.get(1).typ().unwrap());
-        assert_eq!(2, *vec.get(1).at_2d::<u16>(0, 1).unwrap());
-        assert_eq!(i32::typ(), vec.get(2).typ().unwrap());
-        assert_eq!(3, *vec.get(2).at_2d::<i32>(0, 1).unwrap());
+        vec.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.))?);
+        vec.push(Mat::new_rows_cols_with_default(1, 3, u16::typ(), Scalar::all(2.))?);
+        vec.push(Mat::new_rows_cols_with_default(1, 3, i32::typ(), Scalar::all(3.))?);
+        assert_eq!(u8::typ(), vec.get(0).typ()?);
+        assert_eq!(1, *vec.get(0).at_2d::<u8>(0, 1)?);
+        assert_eq!(u16::typ(), vec.get(1).typ()?);
+        assert_eq!(2, *vec.get(1).at_2d::<u16>(0, 1)?);
+        assert_eq!(i32::typ(), vec.get(2).typ()?);
+        assert_eq!(3, *vec.get(2).at_2d::<i32>(0, 1)?);
     }
 
     {
@@ -47,6 +48,8 @@ fn types() {
         assert_eq!(Point2d::new(20., 20.), *vec.get(1));
         assert_eq!(Point2d::new(30., 30.), *vec.get(2));
     }
+
+    Ok(())
 }
 
 #[test]

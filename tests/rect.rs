@@ -1,5 +1,4 @@
-use opencv::core;
-use opencv::core::{Rect2d, Point2d, Size2d};
+use opencv::core::{self, Point2d, Rect2d, Size2d};
 
 #[test]
 fn rect_add() {

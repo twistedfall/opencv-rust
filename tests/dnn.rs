@@ -1,20 +1,24 @@
-use opencv::dnn::{Net, LayerParams};
+use opencv::{
+    dnn::{LayerParams, Net},
+    Result,
+};
 
 #[test]
-fn net() {
-    let mut net = Net::new().unwrap();
-    assert!(net.empty().unwrap());
-    net.enable_fusion(false).unwrap();
-    let mut params = LayerParams::new().unwrap();
-    assert_eq!(params.name().unwrap(), "");
-    assert_eq!(params._type().unwrap(), "");
-    params.set_name("param name").unwrap();
-    params.set_type("param type").unwrap();
-    assert_eq!(params.name().unwrap(), "param name");
-    assert_eq!(params._type().unwrap(), "param type");
-    let blobs = params.blobs().unwrap();
+fn net() -> Result<()> {
+    let mut net = Net::new()?;
+    assert!(net.empty()?);
+    net.enable_fusion(false)?;
+    let mut params = LayerParams::new()?;
+    assert_eq!(params.name()?, "");
+    assert_eq!(params._type()?, "");
+    params.set_name("param name")?;
+    params.set_type("param type")?;
+    assert_eq!(params.name()?, "param name");
+    assert_eq!(params._type()?, "param type");
+    let blobs = params.blobs()?;
     assert_eq!(0, blobs.len());
-    let res = net.add_layer("layer", "type", &mut params).unwrap();
+    let res = net.add_layer("layer", "type", &mut params)?;
     assert_ne!(-1, res);
-    assert!(!net.empty().unwrap());
+    assert!(!net.empty()?);
+    Ok(())
 }
