@@ -1,5 +1,6 @@
 use std::{
     collections::HashSet,
+    error::Error,
     ffi::OsString,
     fs::{self, File, OpenOptions, read_dir},
     io::{self, Write},
@@ -8,18 +9,19 @@ use std::{
     process::Command,
 };
 
-use glob::glob;
 use rayon::prelude::*;
 
-fn link_wrapper() -> pkg_config::Library {
-    let opencv = pkg_config::Config::new().probe("opencv").unwrap();
+use glob::glob;
+
+fn link_wrapper() -> Result<pkg_config::Library, Box<dyn Error>> {
+    let opencv = pkg_config::Config::new().probe("opencv")?;
 
     // add 3rdparty lib dit. pkgconfig forgets it somehow.
-    let third_party_dir = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::Config::get_variable("opencv", "prefix").unwrap());
+    let third_party_dir = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::Config::get_variable("opencv", "prefix")?);
     println!("cargo:rustc-link-search=native={}", third_party_dir);
 
-    for path in &opencv.link_paths {
-        println!("cargo:rustc-link-search=native={}", path.to_str().unwrap());
+    for path in opencv.link_paths.iter().filter_map(|path| path.to_str()) {
+        println!("cargo:rustc-link-search=native={}", path);
     }
 
     // now, this is a nightmare.
@@ -53,16 +55,16 @@ fn link_wrapper() -> pkg_config::Library {
     ];
     third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dir, x));
 
-    opencv
+    Ok(opencv)
 }
 
-fn build_wrapper(opencv: pkg_config::Library) {
+fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
     println!("cargo:rerun-if-changed=hdr_parser.py");
     println!("cargo:rerun-if-changed=gen_rust.py");
 
-    let out_dir = PathBuf::from(std::env::var("OUT_DIR").unwrap());
+    let out_dir = PathBuf::from(std::env::var("OUT_DIR")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
-    let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR").unwrap()).join("src");
+    let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR")?).join("src");
     let module_dir = hub_dir.join("hub");
     let manual_dir = module_dir.join("manual");
 
@@ -89,8 +91,8 @@ fn build_wrapper(opencv: pkg_config::Library) {
         gcc.include(path);
     }
 
-    for entry in glob(&format!("{}/*", out_dir_as_str)).unwrap() {
-        let _ = fs::remove_file(entry.unwrap());
+    for entry in glob(&format!("{}/*", out_dir_as_str))? {
+        let _ = fs::remove_file(entry?);
     }
 
     let opencv_dir_as_string = opencv_dir.to_string_lossy();
@@ -148,7 +150,7 @@ fn build_wrapper(opencv: pkg_config::Library) {
         "core/opencl/",
         "cuda",
     ];
-    let mut modules = glob(&format!("{}/*.hpp", opencv_dir_as_string)).unwrap()
+    let mut modules = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
         .map(|entry| {
              let entry = entry.unwrap();
              let mut files = vec!(entry.to_str().unwrap().to_string());
@@ -172,19 +174,19 @@ fn build_wrapper(opencv: pkg_config::Library) {
     }
 
     {
-        let mut types = File::create(out_dir.join("common_opencv.h")).unwrap();
+        let mut types = File::create(out_dir.join("common_opencv.h"))?;
         for m in &modules {
-            write!(&mut types, "#include <opencv2/{}.hpp>\n", m.0).unwrap();
+            write!(&mut types, "#include <opencv2/{}.hpp>\n", m.0)?;
             if m.0 == "dnn" {
                 // include it manually, otherwise it's not included
-                write!(&mut types, "#include <opencv2/{}/all_layers.hpp>\n", m.0).unwrap();
+                write!(&mut types, "#include <opencv2/{}/all_layers.hpp>\n", m.0)?;
             }
         }
     }
 
     {
-        let mut types = File::create(out_dir.join("types.h")).unwrap();
-        write!(&mut types, "#include <cstddef>\n").unwrap();
+        let mut types = File::create(out_dir.join("types.h"))?;
+        write!(&mut types, "#include <cstddef>\n")?;
     }
 
     modules.par_iter_mut().for_each(|module| {
@@ -232,11 +234,11 @@ fn build_wrapper(opencv: pkg_config::Library) {
     });
 
     {
-        let mut types_file = File::create(out_dir.join("types.h")).unwrap();
+        let mut types_file = File::create(out_dir.join("types.h"))?;
         for module in &modules {
             gcc.file(out_dir.join(format!("{}.cpp", module.0)));
             let src = out_dir.join(format!("{}.types.h", module.0));
-            io::copy(&mut File::open(&src).unwrap(), &mut types_file).unwrap();
+            io::copy(&mut File::open(&src)?, &mut types_file)?;
             let _ = fs::remove_file(src);
         }
     }
@@ -245,21 +247,21 @@ fn build_wrapper(opencv: pkg_config::Library) {
     let _ = fs::remove_file("hdr_parser.pyc");
 
     {
-        let mut hub_return_types = File::create(out_dir.join("return_types.h")).unwrap();
-        for entry in glob(&format!("{}/cv_return_value_*.type.h", out_dir_as_str)).unwrap() {
+        let mut hub_return_types = File::create(out_dir.join("return_types.h"))?;
+        for entry in glob(&format!("{}/cv_return_value_*.type.h", out_dir_as_str))? {
             writeln!(
                 &mut hub_return_types,
                 r#"#include "{}""#,
                 entry.unwrap().file_name().unwrap().to_str().unwrap()
-            ).unwrap();
+            )?;
         }
     }
 
-    for entry in glob("native/*.cpp").unwrap() {
-        gcc.file(entry.unwrap());
+    for entry in glob("native/*.cpp")? {
+        gcc.file(entry?);
     }
-    for entry in glob(&format!("{}/*.type.cpp", out_dir_as_str)).unwrap() {
-        gcc.file(entry.unwrap());
+    for entry in glob(&format!("{}/*.type.cpp", out_dir_as_str))? {
+        gcc.file(entry?);
     }
 
     gcc.include(".")
@@ -269,81 +271,83 @@ fn build_wrapper(opencv: pkg_config::Library) {
 
     if cfg!(feature = "buildtime_bindgen") {
         if !module_dir.exists() {
-            fs::create_dir(&module_dir).unwrap();
+            fs::create_dir(&module_dir)?;
         }
 
-        for entry in glob(&format!("{}/*.rs", module_dir.to_str().unwrap())).unwrap() {
-            let _ = fs::remove_file(entry.unwrap());
+        for entry in glob(&format!("{}/*.rs", module_dir.to_str().unwrap()))? {
+            let _ = fs::remove_file(entry?);
         }
 
-        let add_manual = |file: &mut File, mod_name: &str| {
+        let add_manual = |file: &mut File, mod_name: &str| -> Result<bool, Box<dyn Error>> {
             if manual_dir.join(format!("{}.rs", mod_name)).exists() {
-                writeln!(file, "pub use crate::hub::manual::{}::*;", mod_name).unwrap();
-                let mut m = OpenOptions::new().create(true).append(true).open(&module_dir.join("manual.rs")).unwrap();
-                writeln!(&mut m, "pub mod {};", mod_name).unwrap();
-                true
+                writeln!(file, "pub use crate::hub::manual::{}::*;", mod_name)?;
+                let mut m = OpenOptions::new().create(true).append(true).open(&module_dir.join("manual.rs"))?;
+                writeln!(&mut m, "pub mod {};", mod_name)?;
+                Ok(true)
             } else {
-                false
+                Ok(false)
             }
         };
 
         {
-            let mut hub = File::create(hub_dir.join("hub.rs")).unwrap();
+            let mut hub = File::create(hub_dir.join("hub.rs"))?;
             let mut manual_writen = false;
             for ref module in &modules {
-                writeln!(&mut hub, r#"pub mod {};"#, module.0).unwrap();
+                writeln!(&mut hub, r#"pub mod {};"#, module.0)?;
                 let module_filename = format!("{}.rs", module.0);
                 let target_file = module_dir.join(&module_filename);
-                fs::rename(out_dir.join(&module_filename), &target_file).unwrap();
-                let mut f = OpenOptions::new().append(true).open(&target_file).unwrap();
-                if add_manual(&mut f, &module.0) {
+                fs::rename(out_dir.join(&module_filename), &target_file)?;
+                let mut f = OpenOptions::new().append(true).open(&target_file)?;
+                if let Ok(true) = add_manual(&mut f, &module.0) {
                     if !manual_writen {
-                        writeln!(&mut hub, "mod manual;").unwrap();
+                        writeln!(&mut hub, "mod manual;")?;
                         manual_writen = true;
                     }
                 }
             }
-            writeln!(&mut hub, "pub mod types;").unwrap();
-            writeln!(&mut hub, "#[doc(hidden)] pub mod sys;").unwrap();
+            writeln!(&mut hub, "pub mod types;")?;
+            writeln!(&mut hub, "#[doc(hidden)] pub mod sys;")?;
         }
 
         {
-            let mut types = File::create(module_dir.join("types.rs")).unwrap();
-            writeln!(&mut types, "use libc::{{c_void, c_char, size_t}};").unwrap();
-            writeln!(&mut types, "use crate::{{core, types}};").unwrap();
-            writeln!(&mut types, "").unwrap();
-            for entry in glob(&format!("{}/*.type.rs", out_dir_as_str)).unwrap() {
-                let entry = entry.unwrap();
-                io::copy(&mut File::open(&entry).unwrap(), &mut types).unwrap();
+            let mut types = File::create(module_dir.join("types.rs"))?;
+            writeln!(&mut types, "use libc::{{c_void, c_char, size_t}};")?;
+            writeln!(&mut types, "use crate::{{core, types}};")?;
+            writeln!(&mut types, "")?;
+            for entry in glob(&format!("{}/*.type.rs", out_dir_as_str))? {
+                let entry = entry?;
+                io::copy(&mut File::open(&entry)?, &mut types)?;
             }
-            add_manual(&mut types, "types");
+            add_manual(&mut types, "types")?;
         }
 
         {
-            let mut sys = File::create(module_dir.join("sys.rs")).unwrap();
-            writeln!(&mut sys, "use std::os::raw::{{c_char, c_void}};").unwrap();
-            writeln!(&mut sys, "use libc::size_t;").unwrap();
-            writeln!(&mut sys, "use crate::{{core, Error, Result}};").unwrap();
-            writeln!(&mut sys, "").unwrap();
-            for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str)).unwrap() {
-                let entry = entry.unwrap();
-                io::copy(&mut File::open(&entry).unwrap(), &mut sys).unwrap();
+            let mut sys = File::create(module_dir.join("sys.rs"))?;
+            writeln!(&mut sys, "use std::os::raw::{{c_char, c_void}};")?;
+            writeln!(&mut sys, "use libc::size_t;")?;
+            writeln!(&mut sys, "use crate::{{core, Error, Result}};")?;
+            writeln!(&mut sys, "")?;
+            for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str))? {
+                let entry = entry?;
+                io::copy(&mut File::open(&entry)?, &mut sys)?;
             }
             for module in &modules {
                 let path = out_dir.join(format!("{}.externs.rs", module.0));
-                io::copy(&mut File::open(&path).unwrap(), &mut sys).unwrap();
+                io::copy(&mut File::open(&path)?, &mut sys)?;
             }
-            add_manual(&mut sys, "sys");
+            add_manual(&mut sys, "sys")?;
         }
     }
-    for entry in glob(&format!("{}/*.rs", out_dir_as_str)).unwrap() {
-        let _ = fs::remove_file(entry.unwrap());
+    for entry in glob(&format!("{}/*.rs", out_dir_as_str))? {
+        let _ = fs::remove_file(entry?);
     }
+    Ok(())
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn Error>> {
     // detect building for docs.rs
-    if !std::env::var("OUT_DIR").unwrap().starts_with("/home/cratesfyi/cratesfyi/debug/build/") {
-        build_wrapper(link_wrapper());
+    if !std::env::var("OUT_DIR")?.starts_with("/home/cratesfyi/cratesfyi/debug/build/") {
+        build_wrapper(link_wrapper()?)?;
     }
+    Ok(())
 }
