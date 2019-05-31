@@ -53,12 +53,17 @@ fn link_wrapper() -> pkg_config::Library {
     let third_party_deps = [
         "IlmImf",
         "tiff",
+        "ippiw",
         "ippicv",
+        "ittnotify",
         "jpeg",
+        "jpeg-turbo",
         "png",
         "jasper",
+        "tbb",
         "webp",
         "z",
+        "zlib",
     ];
     third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dirs, x));
 
