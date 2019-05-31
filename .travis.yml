@@ -16,28 +16,10 @@ dist: xenial
 addons:
   apt:
     packages:
-      - unzip
       - build-essential
       - cmake
-      - libgtk2.0-dev
-      - libavcodec-dev
-      - libavformat-dev
-      - libswscale-dev
-      - libavresample-dev
-      - libtbb-dev
-      - libjpeg-dev
-      - libpng-dev
-      - libtiff-dev
-      - libjasper-dev
-      - libwebp-dev
-      - libopenexr-dev
-      - libdc1394-22-dev
-      - libatlas-base-dev
-      - liblapacke-dev
-      - libeigen3-dev
-      - python-dev
-      - python-numpy
       - tree
+      - unzip
 
 env:
   global:
@@ -45,6 +27,9 @@ env:
   matrix:
     - OPENCV_VERSION=3.4.6 OPENCV_PKGCONFIG=opencv BUILD_SHARD_LIBS=ON MORE_OPTIONS=""
     - OPENCV_VERSION=4.1.0 OPENCV_PKGCONFIG=opencv4 BUILD_SHARD_LIBS=OFF MORE_OPTIONS="-DOPENCV_FORCE_3RDPARTY_BUILD=ON -DOPENCV_GENERATE_PKGCONFIG=ON -DWITH_ADE=OFF"
+
+before_install:
+  - if [ $BUILD_SHARD_LIBS = ON ]; then sudo apt-get install libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libavresample-dev libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libwebp-dev libopenexr-dev libdc1394-22-dev libatlas-base-dev liblapacke-dev libeigen3-dev python-dev python-numpy; fi
 
 before_script:
   - mkdir ~/build/opencv ; true
