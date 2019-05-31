@@ -41,8 +41,10 @@ addons:
 
 env:
   global:
-    - OPENCV_VERSION=3.4.6
     - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
+  matrix:
+    - OPENCV_VERSION=3.4.6 OPENCV_PKGCONFIG=opencv MORE_OPTIONS=""
+    - OPENCV_VERSION=4.1.0 OPENCV_PKGCONFIG=opencv4 MORE_OPTIONS="-DOPENCV_GENERATE_PKGCONFIG=ON -DWITH_ADE=OFF"
 
 before_script:
   - mkdir ~/build/opencv ; true
@@ -50,13 +52,14 @@ before_script:
   - wget -O- https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz | tar -xzC ~/build/opencv
   - mkdir -p ~/build/opencv/opencv-$OPENCV_VERSION-build
   - pushd ~/build/opencv/opencv-$OPENCV_VERSION-build
-  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DINSTALL_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_opencv_apps=ALL -DWITH_IPP=OFF -DPYTHON_EXECUTABLE=OFF -DINSTALL_PYTHON_EXAMPLES=OFF -DWITH_LAPACK=ON -DWITH_EIGEN=ON -DBUILD_SHARED_LIBS=ON -DWITH_TBB=ON -DOPENCV_ENABLE_NONFREE=ON -DCMAKE_INSTALL_PREFIX=/usr -DOPENCV_EXTRA_MODULES_PATH=~/build/opencv/opencv_contrib-$OPENCV_VERSION/modules ~/build/opencv/opencv-$OPENCV_VERSION
+  - cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DINSTALL_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_opencv_apps=ALL -DWITH_IPP=OFF -DPYTHON_EXECUTABLE=OFF -DINSTALL_PYTHON_EXAMPLES=OFF -DWITH_LAPACK=ON -DWITH_EIGEN=ON -DBUILD_SHARED_LIBS=ON -DWITH_TBB=ON -DOPENCV_ENABLE_NONFREE=ON ${MORE_OPTIONS} -DCMAKE_INSTALL_PREFIX=/usr -DOPENCV_EXTRA_MODULES_PATH=~/build/opencv/opencv_contrib-$OPENCV_VERSION/modules ~/build/opencv/opencv-$OPENCV_VERSION
   - sudo make -j4 install
   - tree .
   - popd
-  - pkg-config --cflags opencv
-  - pkg-config --libs opencv
+  - pkg-config --cflags $OPENCV_PKGCONFIG
+  - pkg-config --libs $OPENCV_PKGCONFIG
 
 matrix:
   allow_failures:
     - rust: nightly
+  fast_finish: true

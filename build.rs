@@ -12,11 +12,20 @@ use glob::glob;
 use rayon::prelude::*;
 
 fn link_wrapper() -> pkg_config::Library {
-    let opencv = pkg_config::Config::new().probe("opencv").unwrap();
+    let (opencv, pkg_name) = if let Ok(library) = pkg_config::probe_library("opencv") {
+        (library, "opencv")
+    } else if let Ok(library) = pkg_config::probe_library("opencv4") {
+        (library, "opencv4")
+    } else {
+        panic!("package opencv is not found by pkg-config")
+    };
 
     // add 3rdparty lib dit. pkgconfig forgets it somehow.
-    let third_party_dir = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::Config::get_variable("opencv", "prefix").unwrap());
-    println!("cargo:rustc-link-search=native={}", third_party_dir);
+    let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix").unwrap());
+    println!("cargo:rustc-link-search=native={}", third_party_dir1);
+    let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(pkg_name, "libdir").unwrap(), pkg_name);
+    println!("cargo:rustc-link-search=native={}", third_party_dir2);
+    let third_party_dirs: [&str; 2] = [&third_party_dir1, &third_party_dir2];
 
     for path in &opencv.link_paths {
         println!("cargo:rustc-link-search=native={}", path.to_str().unwrap());
@@ -26,9 +35,9 @@ fn link_wrapper() -> pkg_config::Library {
     // opencv will embark these as .a when they are not available, or
     // use the one from the system
     // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
-    fn lookup_lib(third_party_dir: &str, search: &str) {
+    fn lookup_lib(third_party_dirs: &[&str], search: &str) {
         for prefix in &["lib", "liblib"] {
-            for &path in vec![third_party_dir].iter().chain(&["/usr/lib", "/usr/local/lib", "/usr/lib/x86_64-linux-gnu/"]) {
+            for &path in third_party_dirs.iter().chain(&["/usr/lib", "/usr/lib64", "/usr/local/lib", "/usr/local/lib64", "/usr/lib/x86_64-linux-gnu/"]) {
                 for ext in &[".a", ".dylib", ".so"] {
                     let name = format!("{}{}", prefix, search);
                     let filename = PathBuf::from(format!("{}/{}{}", path, name, ext));
@@ -51,7 +60,7 @@ fn link_wrapper() -> pkg_config::Library {
         "webp",
         "z",
     ];
-    third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dir, x));
+    third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dirs, x));
 
     opencv
 }
