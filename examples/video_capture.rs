@@ -7,11 +7,10 @@ use opencv::videoio;
 fn run() -> opencv::Result<()> {
     let window = "video capture";
     highgui::named_window(window, 1)?;
-    let mut cam = videoio::VideoCapture::new(1)?;
+    let mut cam = videoio::VideoCapture::new(0)?;  // 0 is the default camera
     let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
-        println!("Using different camera");
-        cam = videoio::VideoCapture::new(0)?;
+        panic!("Unable to open default camera!");
     }
     loop {
         let mut frame = core::Mat::new()?;
