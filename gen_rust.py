@@ -6,6 +6,7 @@ import shutil
 import sys
 import textwrap
 from collections import OrderedDict
+from io import StringIO
 from itertools import chain
 from pprint import pformat
 from string import Template
@@ -14,12 +15,6 @@ from string import Template
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme consume arg for by_ptr settable properties
 # fixme field comments //! in the end are transferred to the next field
-
-if sys.version_info[0] >= 3:
-    from io import StringIO
-else:
-    from cStringIO import StringIO
-
 
 def template(text):
     """
@@ -692,7 +687,7 @@ def bump_counter(name):
     :rtype: str
     """
     pos = len(name) - 1
-    for pos in xrange(len(name) - 1, 0, -1):
+    for pos in range(len(name) - 1, 0, -1):
         if not name[pos].isdigit():
             break
     base_name = name[:pos + 1]
@@ -912,7 +907,7 @@ class FuncInfo(GeneralInfo):
             self.is_ignored = True
 
         if len(decl) > 5:
-            self.comment = decl[5].encode("ascii", "ignore")
+            self.comment = decl[5]
         else:
             self.comment = ""
 
@@ -1189,7 +1184,7 @@ class ClassPropInfo:
         self.is_const = "/C" in decl[3]
         self.ctype = "{}{}".format("const " if self.is_const else "", decl[0])
         self.name = decl[1]
-        self.comment = decl[2].encode("ascii", "ignore")
+        self.comment = decl[2]
         self.rw = "/RW" in decl[3]
 
     def __repr__(self):
@@ -1213,7 +1208,7 @@ class ClassInfo(GeneralInfo):
         self.classname = self.name
         self.comment = ""
         if len(decl) > 5:
-            self.comment = decl[5].encode("ascii", "ignore")
+            self.comment = decl[5]
         for m in decl[2]:
             if (m == "/Simple" or m == "/Map") and self.fullname not in force_class_not_simple:
                 self.is_simple = True
@@ -1366,7 +1361,7 @@ class TypedefInfo(GeneralInfo):
         self.alias = decl[1]
         self.comment = ""
         if len(decl) > 5:
-            self.comment = decl[5].encode("ascii", "ignore")
+            self.comment = decl[5]
 
     def typ(self):
         return self.gen.get_type_info(self.name)
@@ -1403,7 +1398,7 @@ class CallbackInfo(GeneralInfo):
             self.args.append(ai)
 
         if len(decl) > 5:
-            self.comment = decl[5].encode("ascii", "ignore")
+            self.comment = decl[5]
         else:
             self.comment = ""
 
@@ -2547,7 +2542,7 @@ class RustWrapperGenerator(object):
         self.namespaces = set(x for x in parser.namespaces)
         self.namespaces.add("cv")
 
-        for m, decls in decls_manual_pre.iteritems():
+        for m, decls in decls_manual_pre.items():
             for decl in decls:
                 logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                 self.add_decl(m, decl)
@@ -2563,7 +2558,7 @@ class RustWrapperGenerator(object):
                 logging.info("\n--- Incoming ---\n%s", pformat(decl, 4))
                 self.add_decl(module, decl)
 
-        for m, decls in decls_manual_post.iteritems():
+        for m, decls in decls_manual_post.items():
             for decl in decls:
                 logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                 self.add_decl(m, decl)
@@ -2575,7 +2570,8 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust = StringIO()
         self.moduleRustExterns = StringIO()
 
-        self.moduleSafeRust.write(self.reformat_doc(parser.module_comment.get(module, ""), None, "//!"))
+        module_comment = self.reformat_doc(parser.module_comment.get(module, ""), None, "//!")
+        self.moduleSafeRust.write(module_comment)
 
         self.moduleSafeRust.write(template("""
             use std::os::raw::{c_char, c_void};
@@ -2595,11 +2591,11 @@ class RustWrapperGenerator(object):
         for cb in self.callbacks:
             self.gen_callback(cb)
 
-        for t in self.type_infos.values():
+        for t in list(self.type_infos.values()):
             if not t.is_ignored:
                 t.gen_wrappers()
 
-        for c in self.classes.values():
+        for c in list(self.classes.values()):
             if c.is_simple and not c.is_ignored and not c.is_ghost and c.module == module:
                 self.gen_simple_class(c)
 
@@ -2607,7 +2603,7 @@ class RustWrapperGenerator(object):
             if not fi.is_ignored:
                 self.gen_func(fi)
 
-        for ci in sorted(self.classes.values(), key=lambda ci:ci.fullname):
+        for ci in sorted(list(self.classes.values()), key=lambda ci:ci.fullname):
             self.gen_class(ci)
 
         with open("{}/{}.types.h".format(cpp_dir, module), "w") as f:
@@ -2982,7 +2978,7 @@ class RustWrapperGenerator(object):
             text = re.sub("^", comment_prefix + " ", text.strip(), 0, re.M) + "\n"
         if deprecated is not None:
             text += "#[deprecated = \"{}\"]\n".format(deprecated)
-        return text.encode("utf-8")
+        return text
 
 
 def main():
@@ -2994,17 +2990,17 @@ def main():
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARNING)
     logging.getLogger().addHandler(handler)
-    print("Generating module '" + module + "' from headers:\n\t" + "\n\t".join(srcfiles))
+    print(("Generating module '" + module + "' from headers:\n\t" + "\n\t".join(srcfiles)))
     generator = RustWrapperGenerator()
     generator.gen(srcfiles, module, cpp_dir, rust_dir)
 
 
 if __name__ == "__main__":
     if len(sys.argv) < 5:
-        print("Usage:\n", \
+        print(("Usage:\n", \
               os.path.basename(sys.argv[0]), \
-              "<full path to hdr_parser.py> <cpp_out_dir> <rust_out_dir> <module name> <C++ header> [<C++ header>...]")
-        print("Current args are: ", ", ".join(["'"+a+"'" for a in sys.argv]))
+              "<full path to hdr_parser.py> <cpp_out_dir> <rust_out_dir> <module name> <C++ header> [<C++ header>...]"))
+        print(("Current args are: ", ", ".join(["'"+a+"'" for a in sys.argv])))
         exit(0)
 
     hdr_parser_path = os.path.abspath(sys.argv[1])
