@@ -2270,47 +2270,39 @@ class VectorTypeInfo(TypeInfo):
 class SmartPtrTypeInfo(TypeInfo):
     TEMPLATES = {
         "rust": template("""
-                extern "C" {
-                    #[doc(hidden)] fn cv_${rust_safe_id}_get(ptr: ${rust_extern}) -> ${rust_extern};
-                    #[doc(hidden)] fn cv_${rust_safe_id}_delete(ptr: ${rust_extern});
-                }
+            pub struct ${rust_local} {
+                pub(crate) ptr: ${rust_extern}
+            }
 
-                pub struct ${rust_local} {
-                    pub(crate) ptr: ${rust_extern}
+            impl ${rust_local} {
+                #[inline(always)] pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} { self.ptr }
+                
+                pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
+                    Self { ptr }
                 }
+            }
 
-                impl ${rust_local} {
-                    #[inline(always)] pub fn as_raw_${rust_safe_id}(&self) -> ${rust_extern} { self.ptr }
-                    
-                    pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
-                        Self { ptr }
-                    }
+            impl Drop for ${rust_local} {
+                fn drop(&mut self) {
+                    let me = self.ptr;
+                    cpp!(unsafe [me as "${cpptype}*"] {
+                        delete me;
+                    })
                 }
-
-                impl Drop for ${rust_local} {
-                    fn drop(&mut self) {
-                        unsafe { cv_${rust_safe_id}_delete(self.ptr) };
-                    }
-                }
-            """),
+            }
+        """),
 
         "rust_trait_cast": template("""
-                impl ${base_full} for ${rust_local} {
-                    #[inline(always)] fn as_raw_${base_local}(&self) -> ${rust_extern} {
-                        unsafe { cv_${rust_safe_id}_get(self.ptr) }
-                    }
+            impl ${base_rust_full} for ${rust_local} {
+                #[inline(always)] fn as_raw_${base_rust_local}(&self) -> ${rust_extern} {
+                    let me${rust_local} = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
+                    cpp!(unsafe [me${rust_local} as "cv::Ptr<${base_cpp_type}>*"] -> ${rust_extern} as "${cpp_extern}" {
+                        return me${rust_local}->get();
+                    })
                 }
-                
-            """),
-
-        "cpp_externs": template("""
-                void* cv_${rust_safe_id}_get(${cpp_extern} ptr) {
-                    return reinterpret_cast<${cpptype}*>(ptr)->get();
-                }
-                void  cv_${rust_safe_id}_delete(${cpp_extern} ptr) {
-                    delete reinterpret_cast<${cpptype}*>(ptr);
-                }
-            """),
+            }
+            
+        """),
     }
 
     def __init__(self, gen, typeid, inner):
@@ -2339,19 +2331,13 @@ class SmartPtrTypeInfo(TypeInfo):
                 for base in sorted(bases):
                     cibase = self.gen.get_type_info(base)
                     if not isinstance(cibase, UnknownTypeInfo):
-                        f.write(SmartPtrTypeInfo.TEMPLATES["rust_trait_cast"].substitute(
-                            rust_local=self.rust_local,
-                            rust_safe_id=self.rust_safe_id,
-                            rust_extern=self.rust_extern,
-                            base_local=cibase.rust_local,
-                            base_full=cibase.rust_full
-                        ))
+                        f.write(SmartPtrTypeInfo.TEMPLATES["rust_trait_cast"].substitute(combine_dicts(self.__dict__ , {
+                            "base_rust_local": cibase.rust_local,
+                            "base_rust_full": cibase.rust_full,
+                            "base_cpp_type": cibase.cpptype,
+                        })))
 
         write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
-        write_exc(
-            "{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id),
-            lambda f: f.write(T_CPP_MODULE.substitute(code=SmartPtrTypeInfo.TEMPLATES["cpp_externs"].substitute(self.__dict__), includes=""))
-        )
 
     def __str__(self):
         return "SmartPtr[%s]" % (self.inner)
@@ -2966,11 +2952,11 @@ class RustWrapperGenerator(object):
             if cibase is not None:
                 cibase = cibase.type_info()
                 self.moduleSafeRust.write(template("""
-                    impl $base_full for ${rust_local} {
-                        #[inline(always)] fn as_raw_$base_local(&self) -> *mut c_void { self.ptr }
+                    impl $base_rust_full for ${rust_local} {
+                        #[inline(always)] fn as_raw_$base_rust_local(&self) -> *mut c_void { self.ptr }
                     }
                     
-                """).substitute(rust_local=typ.rust_local, base_local=cibase.rust_local, base_full=cibase.rust_full))
+                """).substitute(rust_local=typ.rust_local, base_rust_local=cibase.rust_local, base_rust_full=cibase.rust_full))
 
     # all your bases...
     def all_bases(self, name):
