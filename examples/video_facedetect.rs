@@ -8,11 +8,10 @@ fn run() -> opencv::Result<()> {
     let window = "video capture";
     let xml = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml";
     highgui::named_window(window, 1)?;
-    let mut cam = videoio::VideoCapture::new(1)?;
+    let mut cam = videoio::VideoCapture::new(0)?;  // 0 is the default camera
     let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
-        println!("Using different camera");
-        cam = videoio::VideoCapture::new(0)?;
+        panic!("Unable to open default camera!");
     }
     let mut face = objdetect::CascadeClassifier::new(xml)?;
     loop {
