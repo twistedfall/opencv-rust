@@ -191,7 +191,7 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
 
     modules.par_iter_mut().for_each(|module| {
         if !Command::new("python3")
-            .args(&["gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0])
+            .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0])
             .args(
                 &(module
                     .1
@@ -242,9 +242,6 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
             let _ = fs::remove_file(src);
         }
     }
-
-    let _ = fs::remove_file("gen_rust.pyc");
-    let _ = fs::remove_file("hdr_parser.pyc");
 
     {
         let mut hub_return_types = File::create(out_dir.join("return_types.h"))?;
