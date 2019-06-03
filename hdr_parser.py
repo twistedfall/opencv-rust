@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
+
 
 import io
 import re
@@ -979,7 +979,7 @@ class CppHeaderParser(object):
                                 # If function takes as one of arguments Mat or vector<Mat> - we want to create the
                                 # same declaration working with UMat (this is important for T-Api access)
                                 args = decl[3]
-                                has_mat = len(list(filter(lambda x: x[0] in {"Mat", "vector_Mat"}, args))) > 0
+                                has_mat = len([x for x in args if x[0] in {"Mat", "vector_Mat"}]) > 0
                                 if has_mat:
                                     _, _, _, umat_decl = self.parse_stmt(stmt, token, use_umat=True, docstring=docstring)
                                     decls.append(umat_decl)

@@ -190,7 +190,7 @@ fn build_wrapper(opencv: pkg_config::Library) {
     }
 
     modules.par_iter_mut().for_each(|module| {
-        if !Command::new("python2.7")
+        if !Command::new("python3")
             .args(&["gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0])
             .args(
                 &(module

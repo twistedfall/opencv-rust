@@ -35,8 +35,8 @@ addons:
       - libatlas-base-dev
       - liblapacke-dev
       - libeigen3-dev
-      - python-dev
-      - python-numpy
+      - python3-dev
+      - python3-numpy
       - tree
 
 env:
