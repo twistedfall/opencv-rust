@@ -1,5 +1,5 @@
 use opencv::{
-    core::Mat,
+    prelude::*,
     dnn::{Dict, LayerParams, Net},
     Result,
     types::VectorOfMat,

@@ -1,7 +1,7 @@
 use std::path::PathBuf;
 
 use opencv::{
-    core::Mat,
+    prelude::*,
     features2d::{Feature2D, ORB},
     imgcodecs,
     Result,

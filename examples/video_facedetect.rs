@@ -1,3 +1,4 @@
+use opencv::prelude::*;
 use opencv::core;
 use opencv::highgui;
 use opencv::imgproc;
@@ -57,7 +58,7 @@ fn run() -> opencv::Result<()> {
             }
         )?;
         println!("faces: {}", faces.len());
-        for face in faces.iter() {
+        for face in faces {
             println!("face {:?}", face);
             let scaled_face = core::Rect {
                 x: face.x * 4,

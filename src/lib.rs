@@ -1,3 +1,8 @@
+#![recursion_limit="128"]
+
+#[macro_use]
+extern crate cpp;
+
 pub use error::{Error, Result};
 
 pub use self::hub::*;
@@ -12,5 +17,13 @@ mod hub;
 
 mod error;
 
+pub mod prelude {
+    pub use crate::{
+        core::{DataType, Mat},
+        templ::Vector,
+    };
+}
+
 #[cfg(test)]
 mod test;
+

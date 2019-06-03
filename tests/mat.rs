@@ -2,7 +2,8 @@ use std::mem::transmute;
 
 use common::*;
 use opencv::{
-    core::{self, DataType, Mat, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f},
+    prelude::*,
+    core::{self, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f},
     Result,
     types::{VectorOfint, VectorOfMat},
 };
@@ -217,11 +218,11 @@ fn mat_operations() -> Result<()> {
         let mut split = VectorOfMat::new();
         core::split(&merged, &mut split)?;
         assert_eq!(2, split.len());
-        let mat = split.get(0);
+        let mat = split.get(0)?;
         assert_eq!(u8::typ(), mat.typ()?);
         assert_eq!(1, mat.channels()?);
         assert_eq!(1, *mat.at_2d::<u8>(0, 2)?);
-        let mat = split.get(1);
+        let mat = split.get(1)?;
         assert_eq!(u8::typ(), mat.typ()?);
         assert_eq!(1, mat.channels()?);
         assert_eq!(2, *mat.at_2d::<u8>(0, 0)?);

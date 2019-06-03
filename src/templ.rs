@@ -3,6 +3,10 @@ use std::{
     os::raw::c_char,
 };
 
+pub use vector::*;
+
+mod vector;
+
 macro_rules! string_arg {
     (mut $name: ident) => {
         let $name = ::std::ffi::CString::new($name).map_err(|e| $crate::Error::new($crate::core::StsBadArg, format!("{}: {}", stringify!($name), e)))?;

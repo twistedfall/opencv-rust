@@ -1,6 +1,7 @@
 use opencv::{
-    core::{self, DataType, Mat, Point, Scalar, Size},
+    core::{self, Point, Scalar, Size},
     imgproc,
+    prelude::*,
     Result,
     types,
 };

@@ -1,5 +1,6 @@
 use opencv::{
-    core::{DataType, Mat, Point, Point2f, Scalar, Size, Vec2f},
+    prelude::*,
+    core::{Point, Point2f, Scalar, Size, Vec2f},
     imgproc,
     Result,
     types::VectorOfPoint,
@@ -25,7 +26,7 @@ fn ellipse() -> Result<()> {
     let mut pts = VectorOfPoint::new();
     imgproc::ellipse_2_poly(Point::new(100, 100), Size::new(200, 200), 0, 45, 90, 10, &mut pts)?;
     assert_eq!(6, pts.len());
-    assert_eq!(Point::new(241, 241), *pts.get(0));
-    assert_eq!(Point::new(100, 300), *pts.get(5));
+    assert_eq!(Point::new(241, 241), pts.get(0)?);
+    assert_eq!(Point::new(100, 300), pts.get(5)?);
     Ok(())
 }

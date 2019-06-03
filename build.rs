@@ -310,6 +310,13 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
             let mut types = File::create(module_dir.join("types.rs"))?;
             writeln!(&mut types, "use libc::{{c_void, c_char, size_t}};")?;
             writeln!(&mut types, "use crate::{{core, types}};")?;
+            writeln!(&mut types, "cpp!{{{{")?;
+            writeln!(&mut types, "    #include \"../common_opencv.h\"")?;
+            writeln!(&mut types, "    using namespace cv;")?;
+            writeln!(&mut types, "    #include \"common.h\"")?;
+            writeln!(&mut types, "    #include \"../types.h\"")?;
+            writeln!(&mut types, "    #include \"../return_types.h\"")?;
+            writeln!(&mut types, "}}}}")?;
             writeln!(&mut types, "")?;
             for entry in glob(&format!("{}/*.type.rs", out_dir_as_str))? {
                 let entry = entry?;
@@ -345,6 +352,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     // detect building for docs.rs
     if !std::env::var("OUT_DIR")?.starts_with("/home/cratesfyi/cratesfyi/debug/build/") {
         build_wrapper(link_wrapper()?)?;
+        let mut config = cpp_build::Config::new();
+        config.flag_if_supported("-Wno-class-memaccess");
+        config.build("src/lib.rs");
     }
     Ok(())
 }

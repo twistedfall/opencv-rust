@@ -15,6 +15,7 @@ build = "build.rs"
 travis-ci = { repository = "twistedfall/opencv-rust", branch = "master" }
 
 [dependencies]
+cpp = { version = "0.5", git = "https://github.com/mystor/rust-cpp", rev = "f9c804683749935bbc62472f85741c74251b4004" }
 lazy_static = "1.0"
 libc = "0.2"
 num = "0.2"
@@ -22,9 +23,13 @@ slab = "0.4"
 
 [build-dependencies]
 cc = {version = "1.0", features = ["parallel"]}
+cpp_build = { version = "0.5", git = "https://github.com/mystor/rust-cpp", rev = "f9c804683749935bbc62472f85741c74251b4004" }
 glob = "0.3"
 pkg-config = "0.3"
 rayon = "1.0"
+
+[dev-dependencies]
+matches = "0.1"
 
 [features]
 buildtime_bindgen = []

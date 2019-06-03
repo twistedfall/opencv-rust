@@ -14,10 +14,7 @@ from string import Template
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme field comments //! in the end are transferred to the next field
 # fixme dnn::net::Dict needs set method (generic or only DictValue?), DictValue needs constructors
-# fixme test VectorOfString
-# fixme test get_mut method on VectorOf...
-# fixme get_mut of VectorOf... for non boxed types seem to leak memory
-# fixme long term storage of string might not work properly
+# fixme VectorOfMat::get allows to mutate?
 
 def template(text):
     """
@@ -1889,150 +1886,334 @@ class BoxedClassTypeInfo(TypeInfo):
 class VectorTypeInfo(TypeInfo):
     TEMPLATES = {
         "rust_common": template("""
-                extern "C" {
-                   #[doc(hidden)] fn cv_${rust_safe_id}_new() -> ${rust_extern};
-                   #[doc(hidden)] fn cv_${rust_safe_id}_clone(src: ${rust_extern}) -> ${rust_extern};
-                   #[doc(hidden)] fn cv_${rust_safe_id}_delete(vec: ${rust_extern});
-                   #[doc(hidden)] fn cv_${rust_safe_id}_reserve(vec: ${rust_extern}, n: size_t);
-                   #[doc(hidden)] fn cv_${rust_safe_id}_capacity(vec: ${rust_extern}) -> size_t;
-                   #[doc(hidden)] fn cv_${rust_safe_id}_push_back(vec: ${rust_extern}, val_ref: *const c_void);
-                   #[doc(hidden)] fn cv_${rust_safe_id}_size(vec: ${rust_extern}) -> size_t;
-                   #[doc(hidden)] fn cv_${rust_safe_id}_get(vec: ${rust_extern}, index: size_t) -> ${rust_extern};
+            pub struct ${rust_local} {
+                pub(crate) ptr: ${rust_extern}
+            }
+            
+            impl ${rust_local} {
+                #[inline(always)] pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
+                
+                #[inline(always)]
+                fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
+                    if index >= len {
+                        Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
+                    } else {
+                        Ok(())
+                    }
                 }
                 
-                pub struct ${rust_local} {
-                    pub(crate) ptr: ${rust_extern}
+                #[inline]
+                pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+                    crate::templ::VectorRefIterator::new(self)
                 }
-                
-                impl ${rust_local} {
-                    #[inline(always)] pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
-
-                    pub fn new() -> Self {
-                        unsafe { Self { ptr: cv_${rust_safe_id}_new() } }
-                    }
-                    
-                    pub fn with_capacity(capacity: size_t) -> Self {
-                        let mut out = Self::new();
-                        out.reserve(capacity);
-                        out
-                    } 
-                    
-                    pub fn len(&self) -> size_t {
-                        unsafe { cv_${rust_safe_id}_size(self.ptr) }
-                    }
-                    
-                    pub fn capacity(&self) -> size_t {
-                        unsafe { cv_${rust_safe_id}_capacity(self.ptr) }
-                    }
-                    
-                    pub fn reserve(&mut self, additional: size_t) {
-                        unsafe { cv_${rust_safe_id}_reserve(self.ptr, self.len() + additional) }
-                    }
+            ${inherent_methods}}
+            
+            impl Drop for ${rust_local} {
+                #[inline]
+                fn drop(&mut self) {
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "${cpptype}*"] {
+                        delete vec;
+                    })
                 }
-
-                impl Drop for $rust_local {
-                    fn drop(&mut self) {
-                        unsafe { cv_${rust_safe_id}_delete(self.ptr) };
-                    }
+            }
+            
+            impl IntoIterator for ${rust_local} {
+                type Item = ${inner_rust_full};
+                type IntoIter = crate::templ::VectorIterator<Self>;
+            
+                #[inline]
+                fn into_iter(self) -> Self::IntoIter {
+                    Self::IntoIter::new(self)
                 }
-            """),
+            }
 
-        "rust_boxed": template("""
-                // BoxedClassTypeInfo
-                impl ${rust_local} {
-                    pub fn push(&mut self, val: ${inner_rust_full}) {
-                        unsafe { cv_${rust_safe_id}_push_back(self.ptr, val.ptr) }
-                    }
-                    
-                    pub fn get(&self, index: size_t) -> ${inner_rust_full} {
-                        ${inner_rust_full} { ptr: unsafe { cv_${rust_safe_id}_get(self.ptr, index) } }
-                    }
-                    
-                    pub fn get_mut(&mut self, index: size_t) -> ${inner_rust_full} {
-                        ${inner_rust_full} { ptr: unsafe { cv_${rust_safe_id}_get(self.ptr, index) } }
-                    }
-                    
-                    pub fn to_vec(&self) -> Vec<$inner_rust_full> {
-                        (0..self.len()).map(|x| self.get(x)).collect()
-                    }
+            impl<'i> IntoIterator for &'i ${rust_local} {
+                type Item = ${inner_rust_full};
+                type IntoIter = crate::templ::VectorRefIterator<'i, ${rust_local}>;
+            
+                #[inline]
+                fn into_iter(self) -> Self::IntoIter {
+                    self.iter()
                 }
-            """),
+            }
 
-        "rust_non_boxed": template("""
-                impl ${rust_local} {
-                    pub fn push(&mut self, val: ${inner_rust_full}) {
-                        unsafe { cv_${rust_safe_id}_push_back(self.ptr, &val as *const _ as _) }
-                    }
-                    
-                    pub fn get(&self, index: size_t) -> &$inner_rust_full {
-                        unsafe { (cv_${rust_safe_id}_get(self.ptr, index) as *mut ${inner_rust_full}).as_mut().unwrap() }
-                    }
+            impl<'i> crate::templ::Vector<'i> for ${rust_local} {
+                type Storage = ${inner_rust_full};
 
-                    pub fn get_mut(&mut self, index: size_t) -> &mut $inner_rust_full {
-                        unsafe { (cv_${rust_safe_id}_get(self.ptr, index) as *mut ${inner_rust_full}).as_mut().unwrap() }
-                    }
-                }
-            """),
-
-        "rust_non_bool": template("""
-                extern "C" { #[doc(hidden)] fn cv_${rust_safe_id}_data(ptr: ${rust_extern}) -> ${rust_extern}; }
-                
-                impl ::std::ops::Deref for ${rust_local} {
-                    type Target = [${inner_rust_full}];
-                    
-                    fn deref(&self) -> &Self::Target {
-                        unsafe {
-                            let length = cv_${rust_safe_id}_size(self.ptr);
-                            let data = cv_${rust_safe_id}_data(self.ptr);
-                            ::std::slice::from_raw_parts(::std::mem::transmute(data), length)
-                        }
-                    }
-                }
-            """),
-
-        "cpp_externs": template("""
-                    ${cpp_extern} cv_${rust_safe_id}_new() {
+                #[inline]
+                fn new() -> Self {
+                    Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
                         return new ${cpptype}();
-                    }
-                    
-                    ${cpp_extern} cv_${rust_safe_id}_clone(${cpp_extern} src) {
-                        return new ${cpptype}(*reinterpret_cast<${cpptype}*>(src));
-                    }
-                    
-                    void cv_${rust_safe_id}_delete(${cpp_extern} vec) {
-                        delete reinterpret_cast<${cpptype}*>(vec);
-                    }
-                    
-                    void cv_${rust_safe_id}_reserve(${cpp_extern} vec, size_t n) {
-                        reinterpret_cast<${cpptype}*>(vec)->reserve(n);
-                    }
-
-                    size_t cv_${rust_safe_id}_capacity(${cpp_extern} vec) {
-                        return reinterpret_cast<${cpptype}*>(vec)->capacity();
-                    }
-                    
-                    void cv_${rust_safe_id}_push_back(${cpp_extern} vec, void* val_ref) {
-                        ${inner_cpptype}* val = reinterpret_cast<${inner_cpptype}*>(val_ref);
-                        reinterpret_cast<${cpptype}*>(vec)->push_back(*val);
-                    }
-                    
-                    size_t cv_${rust_safe_id}_size(${cpp_extern} vec) {
-                        return reinterpret_cast<${cpptype}*>(vec)->size();
-                    }
-
-                    ${inner_cpptype}* cv_${rust_safe_id}_get(${cpp_extern} vec, size_t index) {
-                        ${inner_cpptype} val = reinterpret_cast<${cpptype}*>(vec)->at(index);
-                        return new ${inner_cpptype}(val);
-                    }
-            """),
-
-        "cpp_externs_non_bool": template("""
-
-                ${cpp_extern}* cv_${rust_safe_id}_data(${cpp_extern} vec) {
-                    return reinterpret_cast<${cpp_extern}*>(reinterpret_cast<${cpptype}*>(vec)->data());
+                    })}
                 }
-            """),
+                
+                #[inline]
+                fn len(&self) -> size_t {
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "const ${cpptype}*"] -> size_t as "size_t" {
+                        return vec->size();
+                    })
+                }
 
+                #[inline]
+                fn is_empty(&self) -> bool {
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "const ${cpptype}*"] -> bool as "bool" {
+                        return vec->empty();
+                    })
+                }
+
+                #[inline]
+                fn capacity(&self) -> size_t {
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "const ${cpptype}*"] -> size_t as "size_t" {
+                        return vec->capacity();
+                    })
+                }
+                
+                #[inline]
+                fn shrink_to_fit(&mut self) {
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "${cpptype}*"] {
+                        return vec->shrink_to_fit();
+                    })
+                }                
+
+                #[inline]
+                fn reserve(&mut self, additional: size_t) {
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "${cpptype}*", additional as "size_t"] {
+                        vec->reserve(vec->size() + additional);
+                    })
+                }
+                
+                #[inline]
+                fn remove(&mut self, index: size_t) -> crate::Result<()> {
+                    self.index_check(index, self.len())?;
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "${cpptype}*", index as "size_t"] {
+                        vec->erase(vec->begin() + index);
+                    });
+                    Ok(())
+                }
+                
+                #[inline]
+                fn clear(&mut self) {
+                    let vec = self.as_raw_${rust_local}();
+                    cpp!(unsafe [vec as "${cpptype}*"] {
+                        vec->clear();
+                    })
+                }
+                
+            ${vector_methods}}
+        
+        """),
+
+        "rust_methods_boxed": template("""
+            type Arg = ${inner_rust_full};
+
+            #[inline]
+            fn push(&mut self, val: Self::Arg) {
+                let vec = self.as_raw_${rust_local}();
+                let val = val.ptr; // fixme use method
+                cpp!(unsafe [vec as "${cpptype}*", val as "${inner_cpptype}*"] {
+                    vec->push_back(*val);
+                })
+            }
+            
+            #[inline]
+            fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+                self.index_check(index, self.len() + 1)?;
+                let vec = self.as_raw_${rust_local}();
+                let val = val.as_raw_${inner_rust_local}();
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}*"] {
+                    vec->insert(vec->begin() + index, *val);
+                });
+                Ok(())
+            }
+            
+            #[inline]
+            fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "const ${cpptype}*", index as "size_t"] -> crate::sys::${return_wrapper_type} as "${return_wrapper_type}" {
+                    try {
+                        return { Error::Code::StsOk, NULL, new ${inner_cpptype}(vec->at(index)) };
+                    } VEC_CATCH(${return_wrapper_type})
+                }).into_result().map(|ptr| ${inner_rust_full} { ptr })
+            }
+
+            #[inline]
+            unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+                let vec_unchkd = self.as_raw_${rust_local}();
+                ${inner_rust_full} { ptr: cpp!(unsafe [vec_unchkd as "const ${cpptype}*", index as "size_t"] -> ${rust_extern} as "${cpp_extern}" {
+                    return new ${inner_cpptype}((*vec_unchkd)[index]);
+                })}
+            }
+            
+            #[inline]
+            fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+                let vec = self.as_raw_${rust_local}();
+                let val = val.ptr;
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                    try {
+                        vec->at(index) = *val;
+                        return { Error::Code::StsOk, NULL };
+                    } VEC_CATCH(cv_return_value_void)
+                }).into_result()
+            }
+            
+            #[inline]
+            unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+                let vec = self.as_raw_${rust_local}();
+                let val = val.ptr;
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}*"] {
+                    (*vec)[index] = *val;
+                })
+            }
+        """),
+
+        "rust_methods_string": template("""
+            type Arg = &'i str;
+            
+            #[inline]
+            fn push(&mut self, val: Self::Arg) {
+                let vec = self.as_raw_${rust_local}();
+                let val = ::std::ffi::CString::new(val).unwrap();
+                let val = val.as_ptr();
+                cpp!(unsafe [vec as "${cpptype}*", val as "${inner_cpp_extern}"] {
+                    vec->push_back(String(val));
+                })
+            }
+            
+            #[inline]
+            fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+                self.index_check(index, self.len() + 1)?;
+                let vec = self.as_raw_${rust_local}();
+                let val = ::std::ffi::CString::new(val).unwrap();
+                let val = val.as_ptr();
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpp_extern}"] {
+                    vec->insert(vec->begin() + index, String(val));
+                });
+                Ok(())
+            }
+            
+            #[inline]
+            fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "const ${cpptype}*", index as "size_t"] -> crate::sys::${return_wrapper_type} as "${return_wrapper_type}" {
+                    try {
+                        return { Error::Code::StsOk, NULL, vec->at(index).c_str() };
+                    } VEC_CATCH(${return_wrapper_type})
+                }).into_result().map(|x| unsafe { ::std::ffi::CStr::from_ptr(x) }.to_string_lossy().into_owned())
+            }
+
+            #[inline]
+            unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+                let vec_unchkd = self.as_raw_${rust_local}();
+                ::std::ffi::CStr::from_ptr(cpp!(unsafe [vec_unchkd as "const ${cpptype}*", index as "size_t"] -> ${inner_rust_extern} as "${inner_cpp_extern}" {
+                    return (*vec_unchkd)[index].c_str();
+                })).to_string_lossy().into_owned()
+            }
+
+            #[inline]
+            fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+                let vec = self.as_raw_${rust_local}();
+                let val = ::std::ffi::CString::new(val).unwrap();
+                let val = val.as_ptr();
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpp_extern}"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                    try {
+                        vec->at(index) = String(val);
+                        return { Error::Code::StsOk, NULL };
+                    } VEC_CATCH(cv_return_value_void)
+                }).into_result()
+            }
+
+            #[inline]
+            unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+                let vec = self.as_raw_${rust_local}();
+                let val = ::std::ffi::CString::new(val).unwrap();
+                let val = val.as_ptr();
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpp_extern}"] {
+                    (*vec)[index] = String(val);
+                })
+            }
+        """),
+
+        "rust_methods_non_boxed": template("""
+            type Arg = ${inner_rust_full};
+
+            #[inline]
+            fn push(&mut self, val: Self::Arg) {
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "${cpptype}*", val as "${inner_cpptype}"] {
+                    vec->push_back(val);
+                })
+            }
+            
+            #[inline]
+            fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+                self.index_check(index, self.len() + 1)?;
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}"] {
+                    vec->insert(vec->begin() + index, val);
+                });
+                Ok(())
+            }
+            
+            #[inline]
+            fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "const std::vector<${inner_cpp_extern}>*", index as "size_t"] -> crate::sys::${return_wrapper_type} as "${return_wrapper_type}" {
+                    try {
+                        return { Error::Code::StsOk, NULL, vec->at(index) };
+                    } VEC_CATCH(${return_wrapper_type})
+                }).into_result()
+            }
+
+            #[inline]
+            unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+                let vec_unchkd = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec_unchkd as "const std::vector<${inner_cpp_extern}>*", index as "size_t"] -> ${inner_rust_extern} as "${inner_cpp_extern}" {
+                    return (*vec_unchkd)[index];
+                })
+            }
+
+            #[inline]
+            fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                    try {
+                        vec->at(index) = val;
+                        return { Error::Code::StsOk, NULL };
+                    } VEC_CATCH(cv_return_value_void)
+                }).into_result()
+            }
+
+            #[inline]
+            unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}"] {
+                    (*vec)[index] = val;
+                })
+            }
+        """),
+
+        "rust_copy_non_bool": template("""
+                
+            fn to_slice(&self) -> &[${inner_rust_full}] {
+                unsafe {
+                    let vec_d = self.as_raw_${rust_local}();
+                    let data = cpp!(unsafe [vec_d as "${cpptype}*"] -> *const ${rust_extern} as "${cpp_extern}*" {
+                        return reinterpret_cast<${cpp_extern}*>(vec_d->data());
+                    });
+                    let len = cpp!(unsafe [vec_d as "${cpptype}*"] -> size_t as "size_t" {
+                        return vec_d->size();
+                    });
+                    ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
+                }
+            }
+        """),
     }
 
     def __init__(self, gen, typeid, inner):
@@ -2059,26 +2240,28 @@ class VectorTypeInfo(TypeInfo):
     def gen_wrappers(self):
         template_vars = combine_dicts(self.__dict__, {
             "inner_cpptype": self.inner.cpptype,
+            "inner_cpp_extern": self.inner.cpp_extern,
+            "inner_rust_extern": self.inner.rust_extern,
+            "inner_rust_local": self.inner.rust_local,
             "inner_rust_full": self.inner.rust_full,
+            "return_wrapper_type": self.inner.rust_cpp_return_wrapper_type(),
         })
+        vector_methods = ""
+        inherent_methods = ""
+        if self.inner.is_by_ptr:
+            vector_methods += VectorTypeInfo.TEMPLATES["rust_methods_boxed"].substitute(template_vars)
+        elif isinstance(self.inner, StringTypeInfo):
+            vector_methods += VectorTypeInfo.TEMPLATES["rust_methods_string"].substitute(template_vars)
+        else:
+            vector_methods += VectorTypeInfo.TEMPLATES["rust_methods_non_boxed"].substitute(template_vars)
+            if self.inner.is_copy and self.inner.typeid != "bool":
+                inherent_methods += VectorTypeInfo.TEMPLATES["rust_copy_non_bool"].substitute(template_vars)
 
-        def write_rust(f):
-            f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(template_vars))
-            if self.inner.is_by_ptr:
-                f.write(VectorTypeInfo.TEMPLATES["rust_boxed"].substitute(template_vars))
-            else:
-                f.write(VectorTypeInfo.TEMPLATES["rust_non_boxed"].substitute(template_vars))
-                if self.inner.typeid != "bool":
-                    f.write(VectorTypeInfo.TEMPLATES["rust_non_bool"].substitute(template_vars))
-
-        write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
-        externs = VectorTypeInfo.TEMPLATES["cpp_externs"].substitute(template_vars)
-        if self.inner.typeid != "bool":
-            externs += VectorTypeInfo.TEMPLATES["cpp_externs_non_bool"].substitute(template_vars)
-        write_exc(
-            "{}/{}.type.cpp".format(self.gen.cpp_dir, self.rust_safe_id),
-            lambda f: f.write(T_CPP_MODULE.substitute(code=externs, includes=""))
-        )
+        self.inner.gen_return_wrappers(self.gen.cpp_dir, self.gen.rust_dir)
+        write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), lambda f: f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(combine_dicts(template_vars, {
+            "vector_methods": indent(vector_methods),
+            "inherent_methods": indent(inherent_methods),
+        }))))
 
     def __str__(self):
         return "Vector[%s]" % (self.inner)
