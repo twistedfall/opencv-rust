@@ -33,3 +33,6 @@ matches = "0.1"
 
 [features]
 buildtime_bindgen = []
+
+[package.metadata.docs.rs]
+features = [ "docs-only" ]

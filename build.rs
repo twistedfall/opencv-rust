@@ -349,8 +349,7 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    // detect building for docs.rs
-    if !std::env::var("OUT_DIR")?.starts_with("/home/cratesfyi/cratesfyi/debug/build/") {
+    if !cfg!(feature = "docs-only") {
         build_wrapper(link_wrapper()?)?;
         let mut config = cpp_build::Config::new();
         config.flag_if_supported("-Wno-class-memaccess");
