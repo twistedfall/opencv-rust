@@ -17,6 +17,7 @@ addons:
   apt:
     packages:
       - build-essential
+      - wget
       - cmake
       - libgtk2.0-dev
       - libavcodec-dev
@@ -42,6 +43,7 @@ env:
   global:
     - OPENCV_VERSION=3.4.6
     - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
+    - LC_CTYPE=C.UTF-8
 
 before_script:
   - mkdir -p ~/build/opencv
