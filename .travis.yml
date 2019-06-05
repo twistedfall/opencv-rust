@@ -5,6 +5,7 @@ rust:
   - nightly
 
 cache:
+  timeout: 600
   cargo: true
   ccache: true
   directories:
