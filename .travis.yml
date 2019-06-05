@@ -43,7 +43,7 @@ env:
   global:
     - OPENCV_VERSION=3.4.6
     - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
-    - LC_CTYPE=C.UTF-8
+    - LC_CTYPE=C.UTF-8 # makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
 
 before_script:
   - mkdir -p ~/build/opencv
