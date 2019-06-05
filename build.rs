@@ -84,6 +84,7 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
 
     let mut gcc = cc::Build::new();
     gcc.cpp(true)
+        .flag("-std=c++11")
         .flag_if_supported("-Wno-deprecated-declarations")
         .flag_if_supported("-Wno-class-memaccess")
     ;
