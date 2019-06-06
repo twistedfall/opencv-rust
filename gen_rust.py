@@ -1142,7 +1142,7 @@ class FuncInfo(GeneralInfo):
             "call_args": ", ".join(call_args),
             "forward_args": ", ".join(forward_args),
         })
-        if isinstance(self.rv_type(), StringTypeInfo) or isinstance(self.rv_type(), RawPtrTypeInfo) and self.rv_type().is_string():
+        if isinstance(self.rv_type(), StringTypeInfo) or isinstance(self.rv_type(), RawPtrTypeInfo) and self.rv_type().is_string:
             if self.rv_type().is_const:
                 rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_string"].substitute(template_vars)
             else:
@@ -2352,6 +2352,8 @@ class RawPtrTypeInfo(TypeInfo):
         """
         super(RawPtrTypeInfo, self).__init__(gen, typeid)
         self.inner = inner
+        self.is_slice = self.typeid.endswith("[]")
+        self.is_string = isinstance(self.inner, PrimitiveTypeInfo) and self.inner.cpptype == "char"
         if self.inner.is_ignored or isinstance(self.inner, RawPtrTypeInfo):  # fixme double pointer
             self.is_ignored = True
         else:
@@ -2381,11 +2383,14 @@ class RawPtrTypeInfo(TypeInfo):
                 if isinstance(self.inner, PrimitiveTypeInfo) and self.inner.cpptype == "void":
                     self.rust_full += "c_void"
                     self.rust_extern += "c_void"
-                elif self.is_string():
+                elif self.is_string:
                     self.rust_full = "String"
                     self.rust_extern += "c_char"
                 else:
-                    self.rust_full += self.inner.rust_full
+                    if self.is_slice:
+                        self.rust_full += "[{}]".format(self.inner.rust_full)
+                    else:
+                        self.rust_full += self.inner.rust_full
                     self.rust_extern += self.inner.rust_extern
             if self.is_const:
                 self.c_safe_id = "const_" + self.c_safe_id
@@ -2393,24 +2398,25 @@ class RawPtrTypeInfo(TypeInfo):
                 self.cpp_extern = "const " + self.cpp_extern
                 self.rust_safe_id = "const_" + self.rust_safe_id
 
-    def is_string(self):
-        return isinstance(self.inner, PrimitiveTypeInfo) and self.inner.cpptype == "char"
-
     def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
-        if self.is_string():
+        if self.is_string:
             return "{}: &{}str".format(var_name, "mut " if is_output else "")
         return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_output or not self.is_const, attr_type)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
-        if self.is_string():
+        if self.is_string:
             return "string_arg!({})".format(var_name)
         return super(RawPtrTypeInfo, self).rust_arg_pre_call(var_name, is_output)
 
     def rust_arg_func_call(self, var_name, is_output=False):
-        if self.is_string():
+        if self.is_string:
             if self.is_const:
                 return "{}.as_ptr()".format(var_name)
             return "{}.as_ptr() as _".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
+        elif self.is_slice:
+            if self.is_const:
+                return "{}.as_ptr()".format(var_name)
+            return "{}.as_mut_ptr()".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
         return super(RawPtrTypeInfo, self).rust_arg_func_call(var_name, is_output)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
@@ -2426,7 +2432,7 @@ class RawPtrTypeInfo(TypeInfo):
         return super(RawPtrTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
 
     def cpp_method_return(self, is_constructor):
-        if self.is_string():
+        if self.is_string:
             return "return { Error::Code::StsOk, NULL, strdup(ret) };"
         return super(RawPtrTypeInfo, self).cpp_method_return(is_constructor)
 
