@@ -422,6 +422,14 @@ func_unsafe_list = {
     "cv_Mat_Mat_Size_int",
     "cv_Mat_Mat_VectorOfint_int",
     "cv_Mat_set_data_uchar_X",
+    "cv_Mat_ptr_int",
+    "cv_Mat_ptr_const_int",
+    "cv_Mat_ptr_int_int",
+    "cv_Mat_ptr_const_int_int",
+    "cv_Mat_ptr_int_int_int",
+    "cv_Mat_ptr_const_int_int_int",
+    "cv_Mat_ptr_const_int_X",
+    "cv_Mat_ptr_const_const_int_X",
 }
 
 # dict of types to replace if cannot be handled automatically
@@ -823,10 +831,10 @@ class FuncInfo(GeneralInfo):
                 .map(crate::templ::receive_string_mut)"""),
 
         "rust_safe_rv_const_raw_ptr": template("""
-            .and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
+            .and_then(|x| ${unsafety_call}{ x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
 
         "rust_safe_rv_mut_raw_ptr": template("""
-            .and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
+            .and_then(|x| ${unsafety_call}{ x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
 
         "rust_safe_rv_vector_box_ptr": template(""".map(|ptr| ${rv_rust_full} { ptr })"""),
 

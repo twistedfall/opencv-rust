@@ -165,13 +165,13 @@ impl Mat {
     /// more than 2 dimensions, so we can't perform a real bounds check here.
     #[inline(always)]
     pub(crate) fn _at_3d<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| self.ptr_3d(i0, i1, i2).map(|x| unsafe { &*(x as *const _ as *const T) }))
+        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d(i0, i1, i2) }.map(|x| unsafe { &*(x as *const _ as *const T) }))
     }
 
     /// See safety caveats of `Mat::_at_3d()`
     #[inline(always)]
     pub(crate) fn _at_3d_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| self.ptr_3d_mut(i0, i1, i2).map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
+        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d_mut(i0, i1, i2) }.map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
     }
 
     /// Return a complete read-only row
