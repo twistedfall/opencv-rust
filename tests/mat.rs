@@ -14,19 +14,26 @@ const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
 fn mat_for_rows_and_cols() -> Result<()> {
-    let typ = Vec3d::typ();
-    let mat = unsafe { Mat::new_rows_cols(400, 300, typ) }?;
-    assert_eq!(mat.typ()?, typ);
+    let mat = unsafe { Mat::new_rows_cols(400, 300, Vec3d::typ()) }?;
+    assert_eq!(Vec3d::typ(), mat.typ()?);
+    assert_eq!(Vec3d::depth(), mat.depth()?);
+    assert_eq!(Vec3d::channels(), mat.channels()?);
     assert!(mat.is_continuous()?);
     assert!(!mat.is_submatrix()?);
-    assert_eq!(mat.size()?, Size::new(300, 400));
-    assert_eq!(mat.rows()?, 400);
-    assert_eq!(mat.cols()?, 300);
-    assert_eq!(Vec3d::depth(), mat.depth()?);
+    assert_eq!(Size::new(300, 400), mat.size()?);
+    assert_eq!(400, mat.rows()?);
+    assert_eq!(300, mat.cols()?);
+    assert_eq!(2, mat.mat_size()?.len());
+    assert_eq!(400, mat.mat_size()?[0]);
+    assert_eq!(300, mat.mat_size()?[1]);
     assert_eq!(2, mat.dims()?);
-    assert_eq!(3, mat.channels()?);
+    assert_eq!(2, mat.mat_step()?.len());
+    assert_eq!(7200, mat.mat_step()?[0]);
+    assert_eq!(24, mat.mat_step()?[1]);
     assert_eq!(24, mat.elem_size()?);
     assert_eq!(8, mat.elem_size1()?);
+    assert_eq!(900, mat.step1(0)?);
+    assert_eq!(3, mat.step1(1)?);
     assert_eq!(120000, mat.total()?);
     Ok(())
 }

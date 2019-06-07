@@ -97,9 +97,6 @@ decls_manual_pre = {
 # key: module name
 # value: list of declarations as supplied by hdr_parser
 decls_manual_post = {
-    "core": [
-        ("cv.Mat.size", "Size", ["/C"], []),
-    ],
     "dnn": [
         ("cv.dnn.LayerParams.LayerParams", "", [], []),
     ],
@@ -171,9 +168,10 @@ func_rename = {  # todo check if any "new" is required
     "cv_Mat_reshape_const_int_int_const_int_X": "-",  # duplicate of cv_Mat_reshape_const_int_VectorOfint, but with pointers
     "cv_Mat_reshape_const_int_VectorOfint": "reshape_nd",
     "cv_Mat_total_const_int_int": "total_slice",
-    "cv_Mat_size": "-",  # doesn't have any use, dims() and Size are already accessible through other methods
-    "cv_Mat_set_size_MatSize": "-",  # -"-
-    "cv_Mat_set_step_MatStep": "-",  # doesn't allow writing
+    "cv_Mat_size_const": "mat_size",
+    "cv_Mat_step_const": "mat_step",
+    "cv_Mat_set_size_MatSize": "-",  # doesn't allow writing
+    "cv_Mat_set_step_MatStep": "-",  # same as above
     "cv_Mat_push_back__const_void_X": "-",  # internal method
     "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",
@@ -3033,7 +3031,7 @@ class RustWrapperGenerator(object):
                     attrs = ["/ATTRGETTER"]
                     prop_type = self.get_type_info(prop.ctype)
                     is_const = prop_type.is_const or prop_type.is_copy
-                    if is_const:
+                    if is_const or ci.fullname == "cv::Mat" and (prop.name == "size" or prop.name == "step"):
                         attrs.append("/C")
                     read_func = FuncInfo(
                         self,

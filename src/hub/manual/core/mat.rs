@@ -1,8 +1,15 @@
-use std::{fmt, slice};
+use std::{
+    ffi::c_void,
+    fmt,
+    ops::Deref,
+    slice,
+};
+
+use libc::size_t;
 
 use crate::{
     Error,
-    hub::core::{self, Mat},
+    hub::core::{self, Mat, MatSize, MatStep},
     Result,
     sys,
 };
@@ -212,6 +219,16 @@ impl Mat {
         self.at_mut_unchecked(row).map(|x| slice::from_raw_parts_mut(x, width))
     }
 
+    pub fn size(&self) -> Result<core::Size> {
+        let me = self.as_raw_Mat();
+        cpp!(unsafe [me as "const cv::Mat*"] -> sys::cv_return_value_SizeWrapper as "cv_return_value_SizeWrapper" {
+            try {
+                cv::Size ret = me->size();
+                return { Error::Code::StsOk, NULL, *reinterpret_cast<SizeWrapper*>(&ret) };
+            } CVRS_CATCH(cv_return_value_SizeWrapper)
+        }).into_result()
+    }
+
     pub fn data_typed<T: DataType>(&self) -> Result<&[T]> {
         let total = self.total()?;
         self._at(0).map(|x| unsafe { slice::from_raw_parts(x, total) })
@@ -306,6 +323,43 @@ impl Default for Mat {
         Mat::new().unwrap()
     }
 }
+
+impl Deref for MatSize {
+    type Target = [i32];
+
+    fn deref(&self) -> &Self::Target {
+        let me = self.as_raw_MatSize();
+        let ptr = cpp!(unsafe [me as "const MatSize*"] -> &i32 as "const int*" {
+            return me->p;
+        });
+        unsafe { slice::from_raw_parts(ptr, self.dims().expect("Cannot get dims") as usize) }
+    }
+}
+
+impl fmt::Debug for MatSize {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        writeln!(f, "{:#?}", self.deref())
+    }
+}
+
+impl Deref for MatStep {
+    type Target = [size_t];
+
+    fn deref(&self) -> &Self::Target {
+        let me = self.as_raw_MatStep();
+        let ptr = cpp!(unsafe [me as "const MatStep*"] -> &size_t as "const size_t*" {
+            return me->p;
+        });
+        unsafe { slice::from_raw_parts(ptr, 2) }
+    }
+}
+
+impl fmt::Debug for MatStep {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        writeln!(f, "{:#?}", self.deref())
+    }
+}
+
 
 mod private {
     pub trait Sealed {}
