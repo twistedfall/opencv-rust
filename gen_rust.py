@@ -2424,7 +2424,7 @@ class RawPtrTypeInfo(TypeInfo):
             return var_name
         if self.is_by_ptr:
             return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
-        return "reinterpret_cast<{}*>(&{})".format(self.inner.cpptype, var_name)
+        return "reinterpret_cast<{}>({})".format(self.cpptype, var_name)
 
     def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
         if self.is_by_ptr:

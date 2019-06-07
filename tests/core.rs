@@ -1,5 +1,6 @@
 use opencv::{
     core::{self, CV_32S, CV_32SC3, CV_64F, CV_64FC1, CV_8U, CV_8UC2, MAKETYPE, Moments},
+    core::{Point2f, RotatedRect, Size2f},
     Result,
 };
 
@@ -23,5 +24,17 @@ fn moments() -> Result<()> {
 fn cpu_features_line() -> Result<()> {
     let cpu_feats = core::get_cpu_features_line()?;
     assert!(cpu_feats.is_ascii());
+    Ok(())
+}
+
+#[test]
+fn rotated_rect() -> Result<()> {
+    let rect = RotatedRect::new(Point2f::new(100., 100.), Size2f::new(100., 100.), 90.)?;
+    let mut pts = [Point2f::default(); 4];
+    rect.points(&mut pts)?;
+    assert_eq!(Point2f::new(50., 50.), pts[0]);
+    assert_eq!(Point2f::new(150., 50.), pts[1]);
+    assert_eq!(Point2f::new(150., 150.), pts[2]);
+    assert_eq!(Point2f::new(50., 150.), pts[3]);
     Ok(())
 }
