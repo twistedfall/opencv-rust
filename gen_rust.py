@@ -492,12 +492,12 @@ primitives = {
     "double": {"cpp_extern": "double", "rust_local": "f64"},
 }
 
-_forward_const_rust_safe = template("""
-${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
-            
-""")
 _forward_mut_rust_safe = template("""
 ${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&mut T> { ${pre_call_args}self._${r_name}(${forward_args}) }
+
+""")
+_forward_const_rust_safe = template("""
+${doc_comment}${visibility}fn ${r_name}<T: core::DataType>(${args}) -> Result<&T> { ${pre_call_args}self._${r_name}(${forward_args}) }
 
 """)
 
@@ -1976,7 +1976,7 @@ class VectorTypeInfo(TypeInfo):
                 fn shrink_to_fit(&mut self) {
                     let vec = self.as_raw_${rust_local}();
                     cpp!(unsafe [vec as "${cpptype}*"] {
-                        return vec->shrink_to_fit();
+                        vec->shrink_to_fit();
                     })
                 }                
 
@@ -2644,7 +2644,7 @@ class RustWrapperGenerator(object):
         # register
         logging.info("register class %s (%s)%s%s", item.fullname, decl,
                      " [ignored]" if item.is_ignored else "",
-                     " impl:"+",".join(item.bases) if len(item.bases) else "")
+                     " impl:"+",".join(sorted(item.bases)) if len(item.bases) else "")
         self.classes[item.fullname] = item
 
     def add_const_decl(self, _module, decl):
@@ -3001,11 +3001,14 @@ class RustWrapperGenerator(object):
                 if not fi.is_static:
                     self.gen_func(fi)
             self.moduleSafeRust.write("}\n\n")
-            self.moduleSafeRust.write("impl<'a> %s + 'a {\n\n" % (t.rust_local))
-            for fi in ci.methods:
-                if fi.is_static:
-                    self.gen_func(fi)
-            self.moduleSafeRust.write("}\n\n")
+            has_static = False
+            for fi in (fi for fi in ci.methods if fi.is_static):
+                if not has_static:
+                    has_static = True
+                    self.moduleSafeRust.write("impl dyn {} + '_ {{\n\n".format(t.rust_local))
+                self.gen_func(fi)
+            if has_static:
+                self.moduleSafeRust.write("}\n\n")
         else:
             if isinstance(t, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.fullname)

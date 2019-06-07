@@ -27,7 +27,7 @@ impl<T: ValidRectType + ValidPointType> Rect_<T> {
     }
 }
 
-impl<T: ValidRectType + ValidPointType + Add<T, Output=T>> Rect_<T> {
+impl<T: ValidRectType + ValidPointType + Add<Output=T>> Rect_<T> {
     #[inline]
     pub fn br(&self) -> Point_<T> {
         Point_::new(self.x + self.width, self.y + self.height)
@@ -41,7 +41,7 @@ impl<T: ValidRectType + ValidSizeType> Rect_<T> {
     }
 }
 
-impl<T: ValidRectType + Mul<T, Output=T>> Rect_<T> {
+impl<T: ValidRectType + Mul<Output=T>> Rect_<T> {
     #[inline]
     pub fn area(&self) -> T {
         self.width * self.height
@@ -55,7 +55,7 @@ impl<T: ValidRectType + Zero + PartialOrd> Rect_<T> {
     }
 }
 
-impl<T: ValidRectType + ValidPointType + Add<T, Output=T> + PartialOrd> Rect_<T> {
+impl<T: ValidRectType + ValidPointType + Add<Output=T> + PartialOrd> Rect_<T> {
     #[inline]
     pub fn contains(&self, pt: Point_<T>) -> bool {
         self.x <= pt.x && pt.x < self.x + self.width && self.y <= pt.y && pt.y < self.y + self.height
