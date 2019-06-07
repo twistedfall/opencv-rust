@@ -196,10 +196,6 @@ pub trait ImgHashBase: core::Algorithm {
     #[inline(always)] fn as_raw_ImgHashBase(&self) -> *mut c_void;
 }
 
-impl<'a> ImgHashBase + 'a {
-
-}
-
 // boxed class cv::img_hash::MarrHildrethHash
 /// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
 /// 

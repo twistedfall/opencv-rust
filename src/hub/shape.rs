@@ -86,10 +86,6 @@ pub trait AffineTransformer: crate::shape::ShapeTransformer {
     
 }
 
-impl<'a> AffineTransformer + 'a {
-
-}
-
 // boxed class cv::ChiHistogramCostExtractor
 /// An Chi based cost extraction. :
 #[allow(dead_code)]
@@ -129,10 +125,6 @@ pub trait EMDHistogramCostExtractor: crate::shape::HistogramCostExtractor {
         unsafe { sys::cv_EMDHistogramCostExtractor_getNormFlag_const(self.as_raw_EMDHistogramCostExtractor()) }.into_result()
     }
     
-}
-
-impl<'a> EMDHistogramCostExtractor + 'a {
-
 }
 
 // boxed class cv::EMDL1HistogramCostExtractor
@@ -198,10 +190,6 @@ pub trait HausdorffDistanceExtractor: crate::shape::ShapeDistanceExtractor {
     
 }
 
-impl<'a> HausdorffDistanceExtractor + 'a {
-
-}
-
 // Generating impl for trait cv::HistogramCostExtractor (trait)
 /// Abstract base class for histogram cost algorithms.
 pub trait HistogramCostExtractor: core::Algorithm {
@@ -228,10 +216,6 @@ pub trait HistogramCostExtractor: core::Algorithm {
     
 }
 
-impl<'a> HistogramCostExtractor + 'a {
-
-}
-
 // Generating impl for trait cv::NormHistogramCostExtractor (trait)
 /// A norm based cost extraction. :
 pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor {
@@ -244,10 +228,6 @@ pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor {
         unsafe { sys::cv_NormHistogramCostExtractor_getNormFlag_const(self.as_raw_NormHistogramCostExtractor()) }.into_result()
     }
     
-}
-
-impl<'a> NormHistogramCostExtractor + 'a {
-
 }
 
 // Generating impl for trait cv::ShapeContextDistanceExtractor (trait)
@@ -412,10 +392,6 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
     
 }
 
-impl<'a> ShapeContextDistanceExtractor + 'a {
-
-}
-
 // Generating impl for trait cv::ShapeDistanceExtractor (trait)
 /// Abstract base class for shape distance algorithms.
 pub trait ShapeDistanceExtractor: core::Algorithm {
@@ -429,10 +405,6 @@ pub trait ShapeDistanceExtractor: core::Algorithm {
         unsafe { sys::cv_ShapeDistanceExtractor_computeDistance_Mat_Mat(self.as_raw_ShapeDistanceExtractor(), contour1.as_raw_Mat(), contour2.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> ShapeDistanceExtractor + 'a {
-
 }
 
 // Generating impl for trait cv::ShapeTransformer (trait)
@@ -480,10 +452,6 @@ pub trait ShapeTransformer: core::Algorithm {
     
 }
 
-impl<'a> ShapeTransformer + 'a {
-
-}
-
 // Generating impl for trait cv::ThinPlateSplineShapeTransformer (trait)
 /// Definition of the transformation
 /// 
@@ -504,9 +472,5 @@ pub trait ThinPlateSplineShapeTransformer: crate::shape::ShapeTransformer {
         unsafe { sys::cv_ThinPlateSplineShapeTransformer_getRegularizationParameter_const(self.as_raw_ThinPlateSplineShapeTransformer()) }.into_result()
     }
     
-}
-
-impl<'a> ThinPlateSplineShapeTransformer + 'a {
-
 }
 

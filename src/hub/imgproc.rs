@@ -2867,7 +2867,7 @@ pub fn flood_fill_1(image: &mut core::Mat, seed_point: core::Point, new_val: cor
     unsafe { sys::cv_floodFill_Mat_Point_Scalar_Rect_X_Scalar_Scalar_int(image.as_raw_Mat(), seed_point, new_val, rect, lo_diff, up_diff, flags) }.into_result()
 }
 
-pub fn get_affine_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Mat> {
+pub fn get_affine_transform_mat(src: &core::Mat, dst: &core::Mat) -> Result<core::Mat> {
     unsafe { sys::cv_getAffineTransform_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
@@ -2887,8 +2887,8 @@ pub fn get_affine_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Ma
 /// 
 /// ## See also
 /// warpAffine, transform
-pub fn get_affine_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Result<core::Mat> {
-    unsafe { sys::cv_getAffineTransform_const_Point2f_X_const_Point2f_X(src, dst) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn get_affine_transform(src: &[core::Point2f], dst: &[core::Point2f]) -> Result<core::Mat> {
+    unsafe { sys::cv_getAffineTransform_const_Point2f_X_const_Point2f_X(src.as_ptr(), dst.as_ptr()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Returns the default new camera matrix.
@@ -3027,13 +3027,13 @@ pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::M
 /// 
 /// ## See also
 /// findHomography, warpPerspective, perspectiveTransform
-pub fn get_perspective_transform(src: &core::Mat, dst: &core::Mat) -> Result<core::Mat> {
+pub fn get_perspective_transform_mat(src: &core::Mat, dst: &core::Mat) -> Result<core::Mat> {
     unsafe { sys::cv_getPerspectiveTransform_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// returns 3x3 perspective transformation for the corresponding 4 point pairs.
-pub fn get_perspective_transform_1(src: &core::Point2f, dst: &core::Point2f) -> Result<core::Mat> {
-    unsafe { sys::cv_getPerspectiveTransform_const_Point2f_X_const_Point2f_X(src, dst) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn get_perspective_transform(src: &[core::Point2f], dst: &[core::Point2f]) -> Result<core::Mat> {
+    unsafe { sys::cv_getPerspectiveTransform_const_Point2f_X_const_Point2f_X(src.as_ptr(), dst.as_ptr()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Retrieves a pixel rectangle from an image with sub-pixel accuracy.
@@ -4646,10 +4646,6 @@ pub trait CLAHE: core::Algorithm {
     
 }
 
-impl<'a> CLAHE + 'a {
-
-}
-
 // Generating impl for trait cv::GeneralizedHough (trait)
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 pub trait GeneralizedHough: core::Algorithm {
@@ -4731,10 +4727,6 @@ pub trait GeneralizedHough: core::Algorithm {
     
 }
 
-impl<'a> GeneralizedHough + 'a {
-
-}
-
 // Generating impl for trait cv::GeneralizedHoughBallard (trait)
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
@@ -4759,10 +4751,6 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughBallard_getVotesThreshold_const(self.as_raw_GeneralizedHoughBallard()) }.into_result()
     }
     
-}
-
-impl<'a> GeneralizedHoughBallard + 'a {
-
 }
 
 // Generating impl for trait cv::GeneralizedHoughGuil (trait)
@@ -4879,10 +4867,6 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
         unsafe { sys::cv_GeneralizedHoughGuil_getPosThresh_const(self.as_raw_GeneralizedHoughGuil()) }.into_result()
     }
     
-}
-
-impl<'a> GeneralizedHoughGuil + 'a {
-
 }
 
 // boxed class cv::LineIterator
@@ -5021,10 +5005,6 @@ pub trait LineSegmentDetector: core::Algorithm {
         unsafe { sys::cv_LineSegmentDetector_compareSegments_Size_Mat_Mat_Mat(self.as_raw_LineSegmentDetector(), size, lines1.as_raw_Mat(), lines2.as_raw_Mat(), _image.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> LineSegmentDetector + 'a {
-
 }
 
 // boxed class cv::Subdiv2D

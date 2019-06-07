@@ -618,10 +618,6 @@ pub trait AlignExposures: core::Algorithm {
     
 }
 
-impl<'a> AlignExposures + 'a {
-
-}
-
 // Generating impl for trait cv::AlignMTB (trait)
 /// This algorithm converts images to median threshold bitmaps (1 for pixels brighter than median
 /// luminance and 0 otherwise) and than aligns the resulting bitmaps using bit operations.
@@ -702,10 +698,6 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     
 }
 
-impl<'a> AlignMTB + 'a {
-
-}
-
 // Generating impl for trait cv::CalibrateCRF (trait)
 /// The base class for camera response calibration algorithms.
 pub trait CalibrateCRF: core::Algorithm {
@@ -720,10 +712,6 @@ pub trait CalibrateCRF: core::Algorithm {
         unsafe { sys::cv_CalibrateCRF_process_VectorOfMat_Mat_Mat(self.as_raw_CalibrateCRF(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> CalibrateCRF + 'a {
-
 }
 
 // Generating impl for trait cv::CalibrateDebevec (trait)
@@ -760,10 +748,6 @@ pub trait CalibrateDebevec: crate::photo::CalibrateCRF {
     
 }
 
-impl<'a> CalibrateDebevec + 'a {
-
-}
-
 // Generating impl for trait cv::CalibrateRobertson (trait)
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. This algorithm uses all image pixels.
@@ -793,10 +777,6 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
     
 }
 
-impl<'a> CalibrateRobertson + 'a {
-
-}
-
 // Generating impl for trait cv::MergeDebevec (trait)
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
@@ -812,10 +792,6 @@ pub trait MergeDebevec: crate::photo::MergeExposures {
         unsafe { sys::cv_MergeDebevec_process_VectorOfMat_Mat_Mat(self.as_raw_MergeDebevec(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> MergeDebevec + 'a {
-
 }
 
 // Generating impl for trait cv::MergeExposures (trait)
@@ -834,10 +810,6 @@ pub trait MergeExposures: core::Algorithm {
         unsafe { sys::cv_MergeExposures_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeExposures(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> MergeExposures + 'a {
-
 }
 
 // Generating impl for trait cv::MergeMertens (trait)
@@ -892,10 +864,6 @@ pub trait MergeMertens: crate::photo::MergeExposures {
     
 }
 
-impl<'a> MergeMertens + 'a {
-
-}
-
 // Generating impl for trait cv::MergeRobertson (trait)
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
@@ -911,10 +879,6 @@ pub trait MergeRobertson: crate::photo::MergeExposures {
         unsafe { sys::cv_MergeRobertson_process_VectorOfMat_Mat_Mat(self.as_raw_MergeRobertson(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> MergeRobertson + 'a {
-
 }
 
 // Generating impl for trait cv::Tonemap (trait)
@@ -938,10 +902,6 @@ pub trait Tonemap: core::Algorithm {
         unsafe { sys::cv_Tonemap_setGamma_float(self.as_raw_Tonemap(), gamma) }.into_result()
     }
     
-}
-
-impl<'a> Tonemap + 'a {
-
 }
 
 // Generating impl for trait cv::TonemapDrago (trait)
@@ -974,10 +934,6 @@ pub trait TonemapDrago: crate::photo::Tonemap {
     
 }
 
-impl<'a> TonemapDrago + 'a {
-
-}
-
 // Generating impl for trait cv::TonemapMantiuk (trait)
 /// This algorithm transforms image to contrast using gradients on all levels of gaussian pyramid,
 /// transforms contrast values to HVS response and scales the response. After this the image is
@@ -1002,10 +958,6 @@ pub trait TonemapMantiuk: crate::photo::Tonemap {
         unsafe { sys::cv_TonemapMantiuk_setSaturation_float(self.as_raw_TonemapMantiuk(), saturation) }.into_result()
     }
     
-}
-
-impl<'a> TonemapMantiuk + 'a {
-
 }
 
 // Generating impl for trait cv::TonemapReinhard (trait)
@@ -1041,9 +993,5 @@ pub trait TonemapReinhard: crate::photo::Tonemap {
         unsafe { sys::cv_TonemapReinhard_setColorAdaptation_float(self.as_raw_TonemapReinhard(), color_adapt) }.into_result()
     }
     
-}
-
-impl<'a> TonemapReinhard + 'a {
-
 }
 

@@ -251,10 +251,6 @@ pub trait BaseCascadeClassifier: core::Algorithm {
     
 }
 
-impl<'a> BaseCascadeClassifier + 'a {
-
-}
-
 // Generating impl for trait cv::BaseCascadeClassifier::MaskGenerator (trait)
 pub trait BaseCascadeClassifier_MaskGenerator {
     #[inline(always)] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void;
@@ -266,10 +262,6 @@ pub trait BaseCascadeClassifier_MaskGenerator {
         unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_initializeMask_Mat(self.as_raw_BaseCascadeClassifier_MaskGenerator(), unnamed_arg.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> BaseCascadeClassifier_MaskGenerator + 'a {
-
 }
 
 // boxed class cv::CascadeClassifier
@@ -553,10 +545,6 @@ pub trait DetectionBasedTracker_IDetector {
         unsafe { sys::cv_DetectionBasedTracker_IDetector_setMinNeighbours_int(self.as_raw_DetectionBasedTracker_IDetector(), value) }.into_result()
     }
     
-}
-
-impl<'a> DetectionBasedTracker_IDetector + 'a {
-
 }
 
 // boxed class cv::DetectionBasedTracker::Parameters

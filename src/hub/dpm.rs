@@ -58,7 +58,7 @@ pub trait DPMDetector {
     
 }
 
-impl<'a> DPMDetector + 'a {
+impl dyn DPMDetector + '_ {
 
 }
 

@@ -433,10 +433,6 @@ pub trait BackgroundSubtractor: core::Algorithm {
     
 }
 
-impl<'a> BackgroundSubtractor + 'a {
-
-}
-
 // Generating impl for trait cv::BackgroundSubtractorKNN (trait)
 /// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 /// 
@@ -533,10 +529,6 @@ pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
         unsafe { sys::cv_BackgroundSubtractorKNN_setShadowThreshold_double(self.as_raw_BackgroundSubtractorKNN(), threshold) }.into_result()
     }
     
-}
-
-impl<'a> BackgroundSubtractorKNN + 'a {
-
 }
 
 // Generating impl for trait cv::BackgroundSubtractorMOG2 (trait)
@@ -710,10 +702,6 @@ pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
     
 }
 
-impl<'a> BackgroundSubtractorMOG2 + 'a {
-
-}
-
 // Generating impl for trait cv::DenseOpticalFlow (trait)
 pub trait DenseOpticalFlow: core::Algorithm {
     #[inline(always)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
@@ -732,10 +720,6 @@ pub trait DenseOpticalFlow: core::Algorithm {
         unsafe { sys::cv_DenseOpticalFlow_collectGarbage(self.as_raw_DenseOpticalFlow()) }.into_result()
     }
     
-}
-
-impl<'a> DenseOpticalFlow + 'a {
-
 }
 
 // Generating impl for trait cv::DualTVL1OpticalFlow (trait)
@@ -904,7 +888,7 @@ pub trait DualTVL1OpticalFlow: crate::video::DenseOpticalFlow {
     
 }
 
-impl<'a> DualTVL1OpticalFlow + 'a {
+impl dyn DualTVL1OpticalFlow + '_ {
 
     /// Creates instance of cv::DualTVL1OpticalFlow
     ///
@@ -997,7 +981,7 @@ pub trait FarnebackOpticalFlow: crate::video::DenseOpticalFlow {
     
 }
 
-impl<'a> FarnebackOpticalFlow + 'a {
+impl dyn FarnebackOpticalFlow + '_ {
 
     ///
     /// ## C++ default parameters
@@ -1217,10 +1201,6 @@ pub trait SparseOpticalFlow: core::Algorithm {
     
 }
 
-impl<'a> SparseOpticalFlow + 'a {
-
-}
-
 // Generating impl for trait cv::SparsePyrLKOpticalFlow (trait)
 /// Class used for calculating a sparse optical flow.
 /// 
@@ -1273,7 +1253,7 @@ pub trait SparsePyrLKOpticalFlow: crate::video::SparseOpticalFlow {
     
 }
 
-impl<'a> SparsePyrLKOpticalFlow + 'a {
+impl dyn SparsePyrLKOpticalFlow + '_ {
 
     ///
     /// ## C++ default parameters

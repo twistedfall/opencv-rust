@@ -289,7 +289,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
     
 }
 
-impl<'a> ANN_MLP + 'a {
+impl dyn ANN_MLP + '_ {
 
     /// Creates empty model
     /// 
@@ -362,10 +362,6 @@ pub trait ANN_MLP_ANNEAL: crate::ml::ANN_MLP {
     
 }
 
-impl<'a> ANN_MLP_ANNEAL + 'a {
-
-}
-
 // Generating impl for trait cv::ml::Boost (trait)
 /// Boosted tree classifier derived from DTrees
 /// 
@@ -405,7 +401,7 @@ pub trait Boost: crate::ml::DTrees {
     
 }
 
-impl<'a> Boost + 'a {
+impl dyn Boost + '_ {
 
     /// Creates the empty model.
     /// Use StatModel::train to train the model, Algorithm::load\<Boost\>(filename) to load the pre-trained model.
@@ -563,7 +559,7 @@ pub trait DTrees: crate::ml::StatModel {
     
 }
 
-impl<'a> DTrees + 'a {
+impl dyn DTrees + '_ {
 
     /// Creates the empty model
     /// 
@@ -843,7 +839,7 @@ pub trait EM: crate::ml::StatModel {
     
 }
 
-impl<'a> EM + 'a {
+impl dyn EM + '_ {
 
     /// Creates empty %EM model.
     /// The model should be trained then using StatModel::train(traindata, flags) method. Alternatively, you
@@ -955,7 +951,7 @@ pub trait KNearest: crate::ml::StatModel {
     
 }
 
-impl<'a> KNearest + 'a {
+impl dyn KNearest + '_ {
 
     /// Creates the empty model
     /// 
@@ -1058,7 +1054,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
     
 }
 
-impl<'a> LogisticRegression + 'a {
+impl dyn LogisticRegression + '_ {
 
     /// Creates empty model.
     /// 
@@ -1110,7 +1106,7 @@ pub trait NormalBayesClassifier: crate::ml::StatModel {
     
 }
 
-impl<'a> NormalBayesClassifier + 'a {
+impl dyn NormalBayesClassifier + '_ {
 
     /// Creates empty model
     /// Use StatModel::train to train the model after creation.
@@ -1269,7 +1265,7 @@ pub trait RTrees: crate::ml::DTrees {
     
 }
 
-impl<'a> RTrees + 'a {
+impl dyn RTrees + '_ {
 
     /// Creates the empty model.
     /// Use StatModel::train to train the model, StatModel::train to create and train the model,
@@ -1541,7 +1537,7 @@ pub trait SVM: crate::ml::StatModel {
     
 }
 
-impl<'a> SVM + 'a {
+impl dyn SVM + '_ {
 
     /// Generates a grid for %SVM parameters.
     /// 
@@ -1599,10 +1595,6 @@ pub trait SVM_Kernel: core::Algorithm {
         unsafe { sys::cv_ml_SVM_Kernel_calc_int_int_const_float_X_const_float_X_float_X(self.as_raw_SVM_Kernel(), vcount, n, vecs, another, results) }.into_result()
     }
     
-}
-
-impl<'a> SVM_Kernel + 'a {
-
 }
 
 // Generating impl for trait cv::ml::SVMSGD (trait)
@@ -1696,7 +1688,7 @@ pub trait SVMSGD: crate::ml::StatModel {
     
 }
 
-impl<'a> SVMSGD + 'a {
+impl dyn SVMSGD + '_ {
 
     /// Creates empty model.
     /// Use StatModel::train to train the model. Since %SVMSGD has several parameters, you may want to
@@ -1803,10 +1795,6 @@ pub trait StatModel: core::Algorithm {
         unsafe { sys::cv_ml_StatModel_predict_const_Mat_Mat_int(self.as_raw_StatModel(), samples.as_raw_Mat(), results.as_raw_Mat(), flags) }.into_result()
     }
     
-}
-
-impl<'a> StatModel + 'a {
-
 }
 
 // Generating impl for trait cv::ml::TrainData (trait)
@@ -2023,7 +2011,7 @@ pub trait TrainData {
     
 }
 
-impl<'a> TrainData + 'a {
+impl dyn TrainData + '_ {
 
     /// Extract from 1D vector elements specified by passed indexes.
     /// ## Parameters

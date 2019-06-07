@@ -311,7 +311,7 @@ pub trait Retina: core::Algorithm {
     
 }
 
-impl<'a> Retina + 'a {
+impl dyn Retina + '_ {
 
     pub fn create(input_size: core::Size) -> Result<types::PtrOfRetina> {
         unsafe { sys::cv_bioinspired_Retina_create_Size(input_size) }.into_result().map(|ptr| types::PtrOfRetina { ptr })
@@ -400,7 +400,7 @@ pub trait RetinaFastToneMapping: core::Algorithm {
     
 }
 
-impl<'a> RetinaFastToneMapping + 'a {
+impl dyn RetinaFastToneMapping + '_ {
 
     pub fn create(input_size: core::Size) -> Result<types::PtrOfRetinaFastToneMapping> {
         unsafe { sys::cv_bioinspired_RetinaFastToneMapping_create_Size(input_size) }.into_result().map(|ptr| types::PtrOfRetinaFastToneMapping { ptr })
@@ -633,7 +633,7 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     
 }
 
-impl<'a> TransientAreasSegmentationModule + 'a {
+impl dyn TransientAreasSegmentationModule + '_ {
 
     /// allocator
     /// ## Parameters

@@ -238,10 +238,6 @@ pub trait DeblurerBase {
     
 }
 
-impl<'a> DeblurerBase + 'a {
-
-}
-
 // boxed class cv::videostab::FastMarchingMethod
 /// Describes the Fast Marching Method implementation.
 /// 
@@ -373,10 +369,6 @@ pub trait IDenseOptFlowEstimator {
     
 }
 
-impl<'a> IDenseOptFlowEstimator + 'a {
-
-}
-
 // Generating impl for trait cv::videostab::IFrameSource (trait)
 pub trait IFrameSource {
     #[inline(always)] fn as_raw_IFrameSource(&self) -> *mut c_void;
@@ -390,26 +382,14 @@ pub trait IFrameSource {
     
 }
 
-impl<'a> IFrameSource + 'a {
-
-}
-
 // Generating impl for trait cv::videostab::ILog (trait)
 pub trait ILog {
     #[inline(always)] fn as_raw_ILog(&self) -> *mut c_void;
 }
 
-impl<'a> ILog + 'a {
-
-}
-
 // Generating impl for trait cv::videostab::IMotionStabilizer (trait)
 pub trait IMotionStabilizer {
     #[inline(always)] fn as_raw_IMotionStabilizer(&self) -> *mut c_void;
-}
-
-impl<'a> IMotionStabilizer + 'a {
-
 }
 
 // Generating impl for trait cv::videostab::IOutlierRejector (trait)
@@ -421,10 +401,6 @@ pub trait IOutlierRejector {
     
 }
 
-impl<'a> IOutlierRejector + 'a {
-
-}
-
 // Generating impl for trait cv::videostab::ISparseOptFlowEstimator (trait)
 pub trait ISparseOptFlowEstimator {
     #[inline(always)] fn as_raw_ISparseOptFlowEstimator(&self) -> *mut c_void;
@@ -432,10 +408,6 @@ pub trait ISparseOptFlowEstimator {
         unsafe { sys::cv_videostab_ISparseOptFlowEstimator_run_Mat_Mat_Mat_Mat_Mat_Mat(self.as_raw_ISparseOptFlowEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), points0.as_raw_Mat(), points1.as_raw_Mat(), status.as_raw_Mat(), errors.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> ISparseOptFlowEstimator + 'a {
-
 }
 
 // Generating impl for trait cv::videostab::ImageMotionEstimatorBase (trait)
@@ -449,10 +421,6 @@ pub trait ImageMotionEstimatorBase {
         unsafe { sys::cv_videostab_ImageMotionEstimatorBase_estimate_Mat_Mat_bool_X(self.as_raw_ImageMotionEstimatorBase(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-}
-
-impl<'a> ImageMotionEstimatorBase + 'a {
-
 }
 
 // Generating impl for trait cv::videostab::InpainterBase (trait)
@@ -502,10 +470,6 @@ pub trait InpainterBase {
         unsafe { sys::cv_videostab_InpainterBase_stabilizationMotions_const(self.as_raw_InpainterBase()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
     }
     
-}
-
-impl<'a> InpainterBase + 'a {
-
 }
 
 // boxed class cv::videostab::InpaintingPipeline
@@ -752,10 +716,6 @@ pub trait MoreAccurateMotionWobbleSuppressorBase: crate::videostab::WobbleSuppre
     
 }
 
-impl<'a> MoreAccurateMotionWobbleSuppressorBase + 'a {
-
-}
-
 // Generating impl for trait cv::videostab::MotionEstimatorBase (trait)
 /// Base class for all global motion estimation methods.
 pub trait MotionEstimatorBase {
@@ -775,10 +735,6 @@ pub trait MotionEstimatorBase {
         unsafe { sys::cv_videostab_MotionEstimatorBase_estimate_Mat_Mat_bool_X(self.as_raw_MotionEstimatorBase(), points0.as_raw_Mat(), points1.as_raw_Mat(), ok) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-}
-
-impl<'a> MotionEstimatorBase + 'a {
-
 }
 
 // boxed class cv::videostab::MotionEstimatorL1
@@ -863,10 +819,6 @@ impl MotionEstimatorRansacL2 {
 // Generating impl for trait cv::videostab::MotionFilterBase (trait)
 pub trait MotionFilterBase: crate::videostab::IMotionStabilizer {
     #[inline(always)] fn as_raw_MotionFilterBase(&self) -> *mut c_void;
-}
-
-impl<'a> MotionFilterBase + 'a {
-
 }
 
 // boxed class cv::videostab::MotionInpainter
@@ -1212,10 +1164,6 @@ pub trait PyrLkOptFlowEstimatorBase {
     
 }
 
-impl<'a> PyrLkOptFlowEstimatorBase + 'a {
-
-}
-
 // boxed class cv::videostab::RansacParams
 /// Describes RANSAC method parameters.
 #[allow(dead_code)]
@@ -1354,10 +1302,6 @@ pub trait StabilizerBase {
         unsafe { sys::cv_videostab_StabilizerBase_inpainter_const(self.as_raw_StabilizerBase()) }.into_result().map(|ptr| types::PtrOfInpainterBase { ptr })
     }
     
-}
-
-impl<'a> StabilizerBase + 'a {
-
 }
 
 // boxed class cv::videostab::ToFileMotionWriter
@@ -1645,9 +1589,5 @@ pub trait WobbleSuppressorBase {
         unsafe { sys::cv_videostab_WobbleSuppressorBase_stabilizationMotions_const(self.as_raw_WobbleSuppressorBase()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
     }
     
-}
-
-impl<'a> WobbleSuppressorBase + 'a {
-
 }
 

@@ -1229,16 +1229,6 @@ pub fn depth_to_string(depth: i32) -> Result<String> {
     unsafe { sys::cv_depthToString_int(depth) }.into_result().map(crate::templ::receive_string)
 }
 
-/// Returns string of cv::Mat depth value: CV_8U -> "CV_8U" or NULL
-pub fn depth_to_string_(depth: i32) -> Result<String> {
-    unsafe { sys::cv_detail_depthToString__int(depth) }.into_result().map(crate::templ::receive_string)
-}
-
-/// Returns string of cv::Mat depth value: CV_8UC3 -> "CV_8UC3" or cv::String()
-pub fn type_to_string_(_type: i32) -> Result<String> {
-    unsafe { sys::cv_detail_typeToString__int(_type) }.into_result().map(crate::templ::receive_string)
-}
-
 /// Returns the determinant of a square floating-point matrix.
 /// 
 /// The function cv::determinant calculates and returns the determinant of the
@@ -3641,10 +3631,6 @@ pub trait Algorithm {
     
 }
 
-impl<'a> Algorithm + 'a {
-
-}
-
 // boxed class cv::AutoLock
 #[allow(dead_code)]
 pub struct AutoLock {
@@ -3682,10 +3668,6 @@ pub trait BufferPoolController {
         unsafe { sys::cv_BufferPoolController_freeAllReservedBuffers(self.as_raw_BufferPoolController()) }.into_result()
     }
     
-}
-
-impl<'a> BufferPoolController + 'a {
-
 }
 
 // boxed class cv::CommandLineParser
@@ -4015,7 +3997,7 @@ pub trait DownhillSolver: core::MinProblemSolver {
     
 }
 
-impl<'a> DownhillSolver + 'a {
+impl dyn DownhillSolver + '_ {
 
     /// This function returns the reference to the ready-to-use DownhillSolver object.
     /// 
@@ -4058,10 +4040,6 @@ pub trait Formatted {
     
 }
 
-impl<'a> Formatted + 'a {
-
-}
-
 // Generating impl for trait cv::Formatter (trait)
 /// @todo document
 pub trait Formatter {
@@ -4093,7 +4071,7 @@ pub trait Formatter {
     
 }
 
-impl<'a> Formatter + 'a {
+impl dyn Formatter + '_ {
 
     ///
     /// ## C++ default parameters
@@ -5018,22 +4996,22 @@ impl Mat {
     /// * rows: New number of rows.
     /// * cols: New number of columns.
     /// * type: New matrix type.
-    pub fn create_rows_cols(&mut self, rows: i32, cols: i32, _type: i32) -> Result<()> {
-        unsafe { sys::cv_Mat_create_int_int_int(self.as_raw_Mat(), rows, cols, _type) }.into_result()
+    pub unsafe fn create_rows_cols(&mut self, rows: i32, cols: i32, _type: i32) -> Result<()> {
+        { sys::cv_Mat_create_int_int_int(self.as_raw_Mat(), rows, cols, _type) }.into_result()
     }
     
     /// ## Parameters
     /// * size: Alternative new matrix size specification: Size(cols, rows)
     /// * type: New matrix type.
-    pub fn create_size(&mut self, size: core::Size, _type: i32) -> Result<()> {
-        unsafe { sys::cv_Mat_create_Size_int(self.as_raw_Mat(), size, _type) }.into_result()
+    pub unsafe fn create_size(&mut self, size: core::Size, _type: i32) -> Result<()> {
+        { sys::cv_Mat_create_Size_int(self.as_raw_Mat(), size, _type) }.into_result()
     }
     
     /// ## Parameters
     /// * sizes: Array of integers specifying a new array shape.
     /// * type: New matrix type.
-    pub fn create_nd(&mut self, sizes: &types::VectorOfint, _type: i32) -> Result<()> {
-        unsafe { sys::cv_Mat_create_VectorOfint_int(self.as_raw_Mat(), sizes.as_raw_VectorOfint(), _type) }.into_result()
+    pub unsafe fn create_nd(&mut self, sizes: &types::VectorOfint, _type: i32) -> Result<()> {
+        { sys::cv_Mat_create_VectorOfint_int(self.as_raw_Mat(), sizes.as_raw_VectorOfint(), _type) }.into_result()
     }
     
     /// Increments the reference counter.
@@ -5111,11 +5089,6 @@ impl Mat {
     /// * s: Value assigned to the newly added elements.
     pub fn resize_with_default(&mut self, sz: size_t, s: core::Scalar) -> Result<()> {
         unsafe { sys::cv_Mat_resize_size_t_Scalar(self.as_raw_Mat(), sz, s) }.into_result()
-    }
-    
-    /// internal function
-    pub fn push_back_(&mut self, elem: &c_void) -> Result<()> {
-        unsafe { sys::cv_Mat_push_back__const_void_X(self.as_raw_Mat(), elem) }.into_result()
     }
     
     /// ## Parameters
@@ -5391,45 +5364,45 @@ impl Mat {
     ///
     /// ## C++ default parameters
     /// * i0: 0
-    pub fn ptr_mut(&mut self, i0: i32) -> Result<&mut u8> {
-        unsafe { sys::cv_Mat_ptr_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr_mut(&mut self, i0: i32) -> Result<&mut u8> {
+        { sys::cv_Mat_ptr_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
     ///
     /// ## C++ default parameters
     /// * i0: 0
-    pub fn ptr(&self, i0: i32) -> Result<&u8> {
-        unsafe { sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr(&self, i0: i32) -> Result<&u8> {
+        { sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
     /// ## Parameters
     /// * row: Index along the dimension 0
     /// * col: Index along the dimension 1
-    pub fn ptr_2d_mut(&mut self, row: i32, col: i32) -> Result<&mut u8> {
-        unsafe { sys::cv_Mat_ptr_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr_2d_mut(&mut self, row: i32, col: i32) -> Result<&mut u8> {
+        { sys::cv_Mat_ptr_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
     /// ## Parameters
     /// * row: Index along the dimension 0
     /// * col: Index along the dimension 1
-    pub fn ptr_2d(&self, row: i32, col: i32) -> Result<&u8> {
-        unsafe { sys::cv_Mat_ptr_const_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr_2d(&self, row: i32, col: i32) -> Result<&u8> {
+        { sys::cv_Mat_ptr_const_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
-    pub fn ptr_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut u8> {
-        unsafe { sys::cv_Mat_ptr_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut u8> {
+        { sys::cv_Mat_ptr_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
-    pub fn ptr_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<&u8> {
-        unsafe { sys::cv_Mat_ptr_const_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<&u8> {
+        { sys::cv_Mat_ptr_const_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
-    pub fn ptr_nd_mut(&mut self, idx: &i32) -> Result<&mut u8> {
-        unsafe { sys::cv_Mat_ptr_const_int_X(self.as_raw_Mat(), idx) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr_nd_mut(&mut self, idx: &[i32]) -> Result<&mut u8> {
+        { sys::cv_Mat_ptr_const_int_X(self.as_raw_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
-    pub fn ptr_nd(&self, idx: &i32) -> Result<&u8> {
-        unsafe { sys::cv_Mat_ptr_const_const_int_X(self.as_raw_Mat(), idx) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub unsafe fn ptr_nd(&self, idx: &[i32]) -> Result<&u8> {
+        { sys::cv_Mat_ptr_const_const_int_X(self.as_raw_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
     /// Returns a reference to the specified array element.
@@ -5497,13 +5470,17 @@ impl Mat {
     /// * i2: Index along the dimension 2
     pub fn at_3d<T: core::DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> { self._at_3d(i0, i1, i2) }
     
+    /// ## Parameters
+    /// * idx: Array of Mat::dims indices.
+    pub fn at_nd_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> { self._at_nd_mut(idx) }
+    
+    /// ## Parameters
+    /// * idx: Array of Mat::dims indices.
+    pub fn at_nd<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> { self._at_nd(idx) }
+    
     /// internal use method: updates the continuity flag
     pub fn update_continuity_flag(&mut self) -> Result<()> {
         unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_Mat()) }.into_result()
-    }
-    
-    pub fn size(&self) -> Result<core::Size> {
-        unsafe { sys::cv_Mat_size_const(self.as_raw_Mat()) }.into_result()
     }
     
     pub fn flags(&self) -> Result<i32> {
@@ -5526,7 +5503,7 @@ impl Mat {
     }
     
     /// pointer to the data
-    pub fn data(&mut self) -> Result<&mut u8> {
+    pub fn data_mut(&mut self) -> Result<&mut u8> {
         unsafe { sys::cv_Mat_data(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
@@ -5548,8 +5525,12 @@ impl Mat {
         unsafe { sys::cv_Mat_datalimit_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
     
-    pub fn step(&mut self) -> Result<core::MatStep> {
-        unsafe { sys::cv_Mat_step(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatStep { ptr })
+    pub fn mat_size(&self) -> Result<core::MatSize> {
+        unsafe { sys::cv_Mat_size_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatSize { ptr })
+    }
+    
+    pub fn mat_step(&self) -> Result<core::MatStep> {
+        unsafe { sys::cv_Mat_step_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatStep { ptr })
     }
     
 }
@@ -5641,10 +5622,6 @@ impl MatExpr {
 // Generating impl for trait cv::MatOp (trait)
 pub trait MatOp {
     #[inline(always)] fn as_raw_MatOp(&self) -> *mut c_void;
-}
-
-impl<'a> MatOp + 'a {
-
 }
 
 // boxed class cv::MatSize
@@ -5986,10 +5963,6 @@ pub trait MinProblemSolver: core::Algorithm {
     
 }
 
-impl<'a> MinProblemSolver + 'a {
-
-}
-
 // Generating impl for trait cv::MinProblemSolver::Function (trait)
 /// Represents function being optimized
 pub trait MinProblemSolver_Function {
@@ -6010,10 +5983,6 @@ pub trait MinProblemSolver_Function {
         unsafe { sys::cv_MinProblemSolver_Function_getGradient_const_double_X_double_X(self.as_raw_MinProblemSolver_Function(), x, grad) }.into_result()
     }
     
-}
-
-impl<'a> MinProblemSolver_Function + 'a {
-
 }
 
 impl Moments {
@@ -6306,10 +6275,6 @@ pub trait ParallelLoopBody {
     #[inline(always)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
 }
 
-impl<'a> ParallelLoopBody + 'a {
-
-}
-
 // boxed class cv::ParallelLoopBodyLambdaWrapper
 #[allow(dead_code)]
 pub struct ParallelLoopBodyLambdaWrapper {
@@ -6477,8 +6442,8 @@ impl RotatedRect {
     /// returns 4 vertices of the rectangle
     /// ## Parameters
     /// * pts: The points array for storing rectangle vertices. The order is bottomLeft, topLeft, topRight, bottomRight.
-    pub fn points(&self, pts: &mut core::Point2f) -> Result<()> {
-        unsafe { sys::cv_RotatedRect_points_const_Point2f_X(self.as_raw_RotatedRect(), pts) }.into_result()
+    pub fn points(&self, pts: &mut [core::Point2f]) -> Result<()> {
+        unsafe { sys::cv_RotatedRect_points_const_Point2f_X(self.as_raw_RotatedRect(), pts.as_mut_ptr()) }.into_result()
     }
     
     /// returns the minimal up-right integer rectangle containing the rotated rectangle

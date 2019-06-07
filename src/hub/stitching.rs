@@ -519,7 +519,3 @@ pub trait WarperCreator {
     #[inline(always)] fn as_raw_WarperCreator(&self) -> *mut c_void;
 }
 
-impl<'a> WarperCreator + 'a {
-
-}
-

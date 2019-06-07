@@ -1,12 +1,6 @@
-use libc::{c_void, c_char, size_t};
+use std::os::raw::{c_char, c_void};
+use libc::size_t;
 use crate::{core, types};
-cpp!{{
-    #include "../common_opencv.h"
-    using namespace cv;
-    #include "common.h"
-    #include "../types.h"
-    #include "../return_types.h"
-}}
 
 pub struct PtrOfAKAZE {
     pub(crate) ptr: *mut c_void
@@ -4035,15 +4029,6 @@ pub struct VectorOfDMatch {
 impl VectorOfDMatch {
     #[inline(always)] pub fn as_raw_VectorOfDMatch(&self) -> *mut c_void { self.ptr }
 
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
-
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
         crate::templ::VectorRefIterator::new(self)
@@ -4131,7 +4116,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<cv::DMatch>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -4145,7 +4130,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<cv::DMatch>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -4173,7 +4158,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<cv::DMatch>*", index as "size_t", val as "cv::DMatch"] {
             vec->insert(vec->begin() + index, val);
@@ -4225,15 +4210,6 @@ pub struct VectorOfDetectionROI {
 
 impl VectorOfDetectionROI {
     #[inline(always)] pub fn as_raw_VectorOfDetectionROI(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -4309,7 +4285,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfDetectionROI();
         cpp!(unsafe [vec as "std::vector<cv::DetectionROI>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -4323,7 +4299,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfDetectionROI();
         cpp!(unsafe [vec as "std::vector<cv::DetectionROI>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -4352,7 +4328,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfDetectionROI();
         let val = val.as_raw_DetectionROI();
         cpp!(unsafe [vec as "std::vector<cv::DetectionROI>*", index as "size_t", val as "cv::DetectionROI*"] {
@@ -4407,15 +4383,6 @@ pub struct VectorOfExtObject {
 
 impl VectorOfExtObject {
     #[inline(always)] pub fn as_raw_VectorOfExtObject(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -4491,7 +4458,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfExtObject();
         cpp!(unsafe [vec as "std::vector<cv::DetectionBasedTracker::ExtObject>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -4505,7 +4472,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfExtObject();
         cpp!(unsafe [vec as "std::vector<cv::DetectionBasedTracker::ExtObject>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -4534,7 +4501,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfExtObject();
         let val = val.as_raw_DetectionBasedTracker_ExtObject();
         cpp!(unsafe [vec as "std::vector<cv::DetectionBasedTracker::ExtObject>*", index as "size_t", val as "cv::DetectionBasedTracker::ExtObject*"] {
@@ -4589,15 +4556,6 @@ pub struct VectorOfKeyPoint {
 
 impl VectorOfKeyPoint {
     #[inline(always)] pub fn as_raw_VectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -4686,7 +4644,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -4700,7 +4658,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -4728,7 +4686,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*", index as "size_t", val as "cv::KeyPoint"] {
             vec->insert(vec->begin() + index, val);
@@ -4780,15 +4738,6 @@ pub struct VectorOfMat {
 
 impl VectorOfMat {
     #[inline(always)] pub fn as_raw_VectorOfMat(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -4864,7 +4813,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfMat();
         cpp!(unsafe [vec as "std::vector<cv::Mat>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -4878,7 +4827,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfMat();
         cpp!(unsafe [vec as "std::vector<cv::Mat>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -4907,7 +4856,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfMat();
         let val = val.as_raw_Mat();
         cpp!(unsafe [vec as "std::vector<cv::Mat>*", index as "size_t", val as "cv::Mat*"] {
@@ -4962,15 +4911,6 @@ pub struct VectorOfNode {
 
 impl VectorOfNode {
     #[inline(always)] pub fn as_raw_VectorOfNode(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -5046,7 +4986,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfNode();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Node>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -5060,7 +5000,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfNode();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Node>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -5089,7 +5029,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfNode();
         let val = val.as_raw_DTrees_Node();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Node>*", index as "size_t", val as "cv::ml::DTrees::Node*"] {
@@ -5144,15 +5084,6 @@ pub struct VectorOfObjectDetection {
 
 impl VectorOfObjectDetection {
     #[inline(always)] pub fn as_raw_VectorOfObjectDetection(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -5228,7 +5159,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfObjectDetection();
         cpp!(unsafe [vec as "std::vector<cv::dpm::DPMDetector::ObjectDetection>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -5242,7 +5173,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfObjectDetection();
         cpp!(unsafe [vec as "std::vector<cv::dpm::DPMDetector::ObjectDetection>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -5271,7 +5202,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfObjectDetection();
         let val = val.as_raw_DPMDetector_ObjectDetection();
         cpp!(unsafe [vec as "std::vector<cv::dpm::DPMDetector::ObjectDetection>*", index as "size_t", val as "cv::dpm::DPMDetector::ObjectDetection*"] {
@@ -5326,15 +5257,6 @@ pub struct VectorOfPoint {
 
 impl VectorOfPoint {
     #[inline(always)] pub fn as_raw_VectorOfPoint(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -5423,7 +5345,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<cv::Point>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -5437,7 +5359,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<cv::Point>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -5465,7 +5387,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<cv::Point>*", index as "size_t", val as "cv::Point"] {
             vec->insert(vec->begin() + index, val);
@@ -5517,15 +5439,6 @@ pub struct VectorOfPoint2d {
 
 impl VectorOfPoint2d {
     #[inline(always)] pub fn as_raw_VectorOfPoint2d(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -5614,7 +5527,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [vec as "std::vector<cv::Point2d>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -5628,7 +5541,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [vec as "std::vector<cv::Point2d>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -5656,7 +5569,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [vec as "std::vector<cv::Point2d>*", index as "size_t", val as "cv::Point2d"] {
             vec->insert(vec->begin() + index, val);
@@ -5708,15 +5621,6 @@ pub struct VectorOfPoint2f {
 
 impl VectorOfPoint2f {
     #[inline(always)] pub fn as_raw_VectorOfPoint2f(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -5805,7 +5709,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<cv::Point2f>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -5819,7 +5723,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<cv::Point2f>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -5847,7 +5751,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<cv::Point2f>*", index as "size_t", val as "cv::Point2f"] {
             vec->insert(vec->begin() + index, val);
@@ -5899,15 +5803,6 @@ pub struct VectorOfPtrOfBackendWrapper {
 
 impl VectorOfPtrOfBackendWrapper {
     #[inline(always)] pub fn as_raw_VectorOfPtrOfBackendWrapper(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -5983,7 +5878,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfPtrOfBackendWrapper();
         cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendWrapper>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -5997,7 +5892,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPtrOfBackendWrapper();
         cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendWrapper>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -6026,7 +5921,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPtrOfBackendWrapper();
         let val = val.as_raw_PtrOfBackendWrapper();
         cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendWrapper>>*", index as "size_t", val as "Ptr<cv::dnn::BackendWrapper>*"] {
@@ -6081,15 +5976,6 @@ pub struct VectorOfRange {
 
 impl VectorOfRange {
     #[inline(always)] pub fn as_raw_VectorOfRange(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -6165,7 +6051,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfRange();
         cpp!(unsafe [vec as "std::vector<cv::Range>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -6179,7 +6065,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRange();
         cpp!(unsafe [vec as "std::vector<cv::Range>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -6208,7 +6094,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRange();
         let val = val.as_raw_Range();
         cpp!(unsafe [vec as "std::vector<cv::Range>*", index as "size_t", val as "cv::Range*"] {
@@ -6263,15 +6149,6 @@ pub struct VectorOfRect {
 
 impl VectorOfRect {
     #[inline(always)] pub fn as_raw_VectorOfRect(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -6360,7 +6237,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<cv::Rect>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -6374,7 +6251,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<cv::Rect>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -6402,7 +6279,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<cv::Rect>*", index as "size_t", val as "cv::Rect"] {
             vec->insert(vec->begin() + index, val);
@@ -6454,15 +6331,6 @@ pub struct VectorOfRect2d {
 
 impl VectorOfRect2d {
     #[inline(always)] pub fn as_raw_VectorOfRect2d(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -6551,7 +6419,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [vec as "std::vector<cv::Rect2d>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -6565,7 +6433,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [vec as "std::vector<cv::Rect2d>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -6593,7 +6461,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [vec as "std::vector<cv::Rect2d>*", index as "size_t", val as "cv::Rect2d"] {
             vec->insert(vec->begin() + index, val);
@@ -6645,15 +6513,6 @@ pub struct VectorOfRotatedRect {
 
 impl VectorOfRotatedRect {
     #[inline(always)] pub fn as_raw_VectorOfRotatedRect(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -6729,7 +6588,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfRotatedRect();
         cpp!(unsafe [vec as "std::vector<cv::RotatedRect>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -6743,7 +6602,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRotatedRect();
         cpp!(unsafe [vec as "std::vector<cv::RotatedRect>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -6772,7 +6631,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRotatedRect();
         let val = val.as_raw_RotatedRect();
         cpp!(unsafe [vec as "std::vector<cv::RotatedRect>*", index as "size_t", val as "cv::RotatedRect*"] {
@@ -6827,15 +6686,6 @@ pub struct VectorOfSplit {
 
 impl VectorOfSplit {
     #[inline(always)] pub fn as_raw_VectorOfSplit(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -6911,7 +6761,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfSplit();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Split>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -6925,7 +6775,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfSplit();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Split>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -6954,7 +6804,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfSplit();
         let val = val.as_raw_DTrees_Split();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Split>*", index as "size_t", val as "cv::ml::DTrees::Split*"] {
@@ -7009,15 +6859,6 @@ pub struct VectorOfString {
 
 impl VectorOfString {
     #[inline(always)] pub fn as_raw_VectorOfString(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -7093,7 +6934,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfString();
         cpp!(unsafe [vec as "std::vector<String>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -7107,7 +6948,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfString();
         cpp!(unsafe [vec as "std::vector<String>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -7137,7 +6978,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfString();
         let val = ::std::ffi::CString::new(val).unwrap();
         let val = val.as_ptr();
@@ -7195,15 +7036,6 @@ pub struct VectorOfVec4f {
 
 impl VectorOfVec4f {
     #[inline(always)] pub fn as_raw_VectorOfVec4f(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -7292,7 +7124,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [vec as "std::vector<cv::Vec4f>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -7306,7 +7138,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [vec as "std::vector<cv::Vec4f>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -7334,7 +7166,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [vec as "std::vector<cv::Vec4f>*", index as "size_t", val as "cv::Vec4f"] {
             vec->insert(vec->begin() + index, val);
@@ -7386,15 +7218,6 @@ pub struct VectorOfVec6f {
 
 impl VectorOfVec6f {
     #[inline(always)] pub fn as_raw_VectorOfVec6f(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -7483,7 +7306,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVec6f();
         cpp!(unsafe [vec as "std::vector<cv::Vec6f>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -7497,7 +7320,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVec6f();
         cpp!(unsafe [vec as "std::vector<cv::Vec6f>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -7525,7 +7348,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVec6f();
         cpp!(unsafe [vec as "std::vector<cv::Vec6f>*", index as "size_t", val as "cv::Vec6f"] {
             vec->insert(vec->begin() + index, val);
@@ -7577,15 +7400,6 @@ pub struct VectorOfVectorOfDMatch {
 
 impl VectorOfVectorOfDMatch {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfDMatch(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -7661,7 +7475,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::DMatch>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -7675,7 +7489,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::DMatch>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -7704,7 +7518,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfDMatch();
         let val = val.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::DMatch>>*", index as "size_t", val as "std::vector<cv::DMatch>*"] {
@@ -7759,15 +7573,6 @@ pub struct VectorOfVectorOfKeyPoint {
 
 impl VectorOfVectorOfKeyPoint {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfKeyPoint(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -7843,7 +7648,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::KeyPoint>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -7857,7 +7662,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::KeyPoint>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -7886,7 +7691,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
         let val = val.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::KeyPoint>>*", index as "size_t", val as "std::vector<cv::KeyPoint>*"] {
@@ -7941,15 +7746,6 @@ pub struct VectorOfVectorOfMat {
 
 impl VectorOfVectorOfMat {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfMat(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -8025,7 +7821,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfMat();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Mat>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -8039,7 +7835,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfMat();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Mat>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -8068,7 +7864,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfMat();
         let val = val.as_raw_VectorOfMat();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Mat>>*", index as "size_t", val as "std::vector<cv::Mat>*"] {
@@ -8123,15 +7919,6 @@ pub struct VectorOfVectorOfPoint {
 
 impl VectorOfVectorOfPoint {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfPoint(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -8207,7 +7994,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -8221,7 +8008,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -8250,7 +8037,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfPoint();
         let val = val.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point>>*", index as "size_t", val as "std::vector<cv::Point>*"] {
@@ -8305,15 +8092,6 @@ pub struct VectorOfVectorOfPoint2f {
 
 impl VectorOfVectorOfPoint2f {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfPoint2f(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -8389,7 +8167,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point2f>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -8403,7 +8181,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point2f>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -8432,7 +8210,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
         let val = val.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point2f>>*", index as "size_t", val as "std::vector<cv::Point2f>*"] {
@@ -8487,15 +8265,6 @@ pub struct VectorOfVectorOfRect {
 
 impl VectorOfVectorOfRect {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfRect(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -8571,7 +8340,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfRect();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Rect>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -8585,7 +8354,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfRect();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Rect>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -8614,7 +8383,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfRect();
         let val = val.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Rect>>*", index as "size_t", val as "std::vector<cv::Rect>*"] {
@@ -8669,15 +8438,6 @@ pub struct VectorOfVectorOfVectorOfint {
 
 impl VectorOfVectorOfVectorOfint {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -8753,7 +8513,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfVectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<std::vector<int>>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -8767,7 +8527,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfVectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<std::vector<int>>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -8796,7 +8556,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfVectorOfint();
         let val = val.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<std::vector<int>>>*", index as "size_t", val as "std::vector<std::vector<int>>*"] {
@@ -8851,15 +8611,6 @@ pub struct VectorOfVectorOfbool {
 
 impl VectorOfVectorOfbool {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfbool(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -8935,7 +8686,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfbool();
         cpp!(unsafe [vec as "std::vector<std::vector<bool>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -8949,7 +8700,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfbool();
         cpp!(unsafe [vec as "std::vector<std::vector<bool>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -8978,7 +8729,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfbool();
         let val = val.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "std::vector<std::vector<bool>>*", index as "size_t", val as "std::vector<bool>*"] {
@@ -9033,15 +8784,6 @@ pub struct VectorOfVectorOfchar {
 
 impl VectorOfVectorOfchar {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfchar(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -9117,7 +8859,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfchar();
         cpp!(unsafe [vec as "std::vector<std::vector<char>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -9131,7 +8873,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfchar();
         cpp!(unsafe [vec as "std::vector<std::vector<char>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -9160,7 +8902,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfchar();
         let val = val.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<std::vector<char>>*", index as "size_t", val as "std::vector<char>*"] {
@@ -9215,15 +8957,6 @@ pub struct VectorOfVectorOfint {
 
 impl VectorOfVectorOfint {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfint(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -9299,7 +9032,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<int>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -9313,7 +9046,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<int>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -9342,7 +9075,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfint();
         let val = val.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<int>>*", index as "size_t", val as "std::vector<int>*"] {
@@ -9397,15 +9130,6 @@ pub struct VectorOfVectorOfuchar {
 
 impl VectorOfVectorOfuchar {
     #[inline(always)] pub fn as_raw_VectorOfVectorOfuchar(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -9481,7 +9205,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfVectorOfuchar();
         cpp!(unsafe [vec as "std::vector<std::vector<uchar>>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -9495,7 +9219,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfuchar();
         cpp!(unsafe [vec as "std::vector<std::vector<uchar>>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -9524,7 +9248,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfuchar();
         let val = val.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<std::vector<uchar>>*", index as "size_t", val as "std::vector<uchar>*"] {
@@ -9579,15 +9303,6 @@ pub struct VectorOfbool {
 
 impl VectorOfbool {
     #[inline(always)] pub fn as_raw_VectorOfbool(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -9663,7 +9378,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "std::vector<bool>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -9677,7 +9392,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "std::vector<bool>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -9705,7 +9420,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "std::vector<bool>*", index as "size_t", val as "bool"] {
             vec->insert(vec->begin() + index, val);
@@ -9757,15 +9472,6 @@ pub struct VectorOfchar {
 
 impl VectorOfchar {
     #[inline(always)] pub fn as_raw_VectorOfchar(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -9854,7 +9560,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<char>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -9868,7 +9574,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<char>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -9896,7 +9602,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<char>*", index as "size_t", val as "char"] {
             vec->insert(vec->begin() + index, val);
@@ -9948,15 +9654,6 @@ pub struct VectorOfdouble {
 
 impl VectorOfdouble {
     #[inline(always)] pub fn as_raw_VectorOfdouble(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -10045,7 +9742,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfdouble();
         cpp!(unsafe [vec as "std::vector<double>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -10059,7 +9756,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfdouble();
         cpp!(unsafe [vec as "std::vector<double>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -10087,7 +9784,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfdouble();
         cpp!(unsafe [vec as "std::vector<double>*", index as "size_t", val as "double"] {
             vec->insert(vec->begin() + index, val);
@@ -10139,15 +9836,6 @@ pub struct VectorOffloat {
 
 impl VectorOffloat {
     #[inline(always)] pub fn as_raw_VectorOffloat(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -10236,7 +9924,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOffloat();
         cpp!(unsafe [vec as "std::vector<float>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -10250,7 +9938,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOffloat();
         cpp!(unsafe [vec as "std::vector<float>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -10278,7 +9966,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOffloat();
         cpp!(unsafe [vec as "std::vector<float>*", index as "size_t", val as "float"] {
             vec->insert(vec->begin() + index, val);
@@ -10330,15 +10018,6 @@ pub struct VectorOfint {
 
 impl VectorOfint {
     #[inline(always)] pub fn as_raw_VectorOfint(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -10427,7 +10106,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<int>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -10441,7 +10120,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<int>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -10469,7 +10148,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<int>*", index as "size_t", val as "int"] {
             vec->insert(vec->begin() + index, val);
@@ -10521,15 +10200,6 @@ pub struct VectorOfsize_t {
 
 impl VectorOfsize_t {
     #[inline(always)] pub fn as_raw_VectorOfsize_t(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -10618,7 +10288,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfsize_t();
         cpp!(unsafe [vec as "std::vector<size_t>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -10632,7 +10302,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfsize_t();
         cpp!(unsafe [vec as "std::vector<size_t>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -10660,7 +10330,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfsize_t();
         cpp!(unsafe [vec as "std::vector<size_t>*", index as "size_t", val as "size_t"] {
             vec->insert(vec->begin() + index, val);
@@ -10712,15 +10382,6 @@ pub struct VectorOfuchar {
 
 impl VectorOfuchar {
     #[inline(always)] pub fn as_raw_VectorOfuchar(&self) -> *mut c_void { self.ptr }
-
-    #[inline(always)]
-    fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
-    }
 
     #[inline]
     pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
@@ -10809,7 +10470,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
     fn shrink_to_fit(&mut self) {
         let vec = self.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<uchar>*"] {
-            return vec->shrink_to_fit();
+            vec->shrink_to_fit();
         })
     }                
 
@@ -10823,7 +10484,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
 
     #[inline]
     fn remove(&mut self, index: size_t) -> crate::Result<()> {
-        self.index_check(index, self.len())?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<uchar>*", index as "size_t"] {
             vec->erase(vec->begin() + index);
@@ -10851,7 +10512,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
     
     #[inline]
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-        self.index_check(index, self.len() + 1)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<uchar>*", index as "size_t", val as "uchar"] {
             vec->insert(vec->begin() + index, val);

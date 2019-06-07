@@ -68,10 +68,6 @@ pub trait FrameSource {
     
 }
 
-impl<'a> FrameSource + 'a {
-
-}
-
 // Generating impl for trait cv::superres::SuperResolution (trait)
 /// Base class for Super Resolution algorithms.
 /// 
@@ -194,9 +190,5 @@ pub trait SuperResolution: core::Algorithm + crate::superres::FrameSource {
         unsafe { sys::cv_superres_SuperResolution_setTemporalAreaRadius_int(self.as_raw_SuperResolution(), val) }.into_result()
     }
     
-}
-
-impl<'a> SuperResolution + 'a {
-
 }
 

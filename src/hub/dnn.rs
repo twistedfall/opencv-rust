@@ -577,10 +577,6 @@ pub trait ActivationLayer: crate::dnn::Layer {
     
 }
 
-impl<'a> ActivationLayer + 'a {
-
-}
-
 // boxed class cv::dnn::BNLLLayer
 #[allow(dead_code)]
 pub struct BNLLLayer {
@@ -662,17 +658,9 @@ pub trait BackendWrapper {
     
 }
 
-impl<'a> BackendWrapper + 'a {
-
-}
-
 // Generating impl for trait cv::dnn::BaseConvolutionLayer (trait)
 pub trait BaseConvolutionLayer: crate::dnn::Layer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
-}
-
-impl<'a> BaseConvolutionLayer + 'a {
-
 }
 
 // boxed class cv::dnn::BatchNormLayer
@@ -1070,10 +1058,6 @@ pub trait Dict {
     
 }
 
-impl<'a> Dict + 'a {
-
-}
-
 // boxed class cv::dnn::DictValue
 /// This struct stores the scalar value (or array) of one of the following type: double, cv::String or int64.
 ///  @todo Maybe int64 is useless because double type exactly stores at least 2^52 integers.
@@ -1430,7 +1414,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
     
 }
 
-impl<'a> LSTMLayer + 'a {
+impl dyn LSTMLayer + '_ {
 
     /// Creates instance of LSTM layer
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLSTMLayer> {
@@ -1586,10 +1570,6 @@ pub trait Layer: core::Algorithm {
         unsafe { sys::cv_dnn_Layer_setParamsFrom_LayerParams(self.as_raw_Layer(), params.as_raw_LayerParams()) }.into_result()
     }
     
-}
-
-impl<'a> Layer + 'a {
-
 }
 
 // boxed class cv::dnn::LayerFactory
@@ -2437,7 +2417,7 @@ pub trait RNNLayer: crate::dnn::Layer {
     
 }
 
-impl<'a> RNNLayer + 'a {
+impl dyn RNNLayer + '_ {
 
     /// Creates instance of RNNLayer
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfRNNLayer> {

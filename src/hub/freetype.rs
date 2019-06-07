@@ -131,7 +131,3 @@ pub trait FreeType2: core::Algorithm {
     
 }
 
-impl<'a> FreeType2 + 'a {
-
-}
-

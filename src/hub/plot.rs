@@ -90,7 +90,7 @@ pub trait Plot2d: core::Algorithm {
     
 }
 
-impl<'a> Plot2d + 'a {
+impl dyn Plot2d + '_ {
 
     /// Creates Plot2d object
     /// 

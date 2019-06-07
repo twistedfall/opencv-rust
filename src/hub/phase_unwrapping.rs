@@ -41,7 +41,7 @@ pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
     
 }
 
-impl<'a> HistogramPhaseUnwrapping + 'a {
+impl dyn HistogramPhaseUnwrapping + '_ {
 
     /// Constructor
     /// 
@@ -107,9 +107,5 @@ pub trait PhaseUnwrapping: core::Algorithm {
         unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_Mat_Mat_Mat(self.as_raw_PhaseUnwrapping(), wrapped_phase_map.as_raw_Mat(), unwrapped_phase_map.as_raw_Mat(), shadow_mask.as_raw_Mat()) }.into_result()
     }
     
-}
-
-impl<'a> PhaseUnwrapping + 'a {
-
 }
 

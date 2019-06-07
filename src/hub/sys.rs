@@ -98,7 +98,7 @@ pub type cv_return_value_unsigned_long_long = cv_return_value<u64>;
 // void
 pub type cv_return_value_void = cv_return_value<crate::types::Unit, ()>;
 
-// Ptr<AffineTransformer>
+// cv::bioinspired::RetinaParameters
 pub type cv_return_value_void_X = cv_return_value<*mut c_void>;
 
 extern "C" {
@@ -142,8 +142,6 @@ pub fn cv_cv_abs_schar(x: i8) -> cv_return_value_int;
 pub fn cv_cv_abs_ushort(x: u16) -> cv_return_value_int;
 pub fn cv_dct_Mat_Mat_int(src: *mut c_void, dst: *mut c_void, flags: i32) -> cv_return_value_void;
 pub fn cv_depthToString_int(depth: i32) -> cv_return_value_const_char_X;
-pub fn cv_detail_depthToString__int(depth: i32) -> cv_return_value_const_char_X;
-pub fn cv_detail_typeToString__int(_type: i32) -> cv_return_value_const_char_X;
 pub fn cv_determinant_Mat(mtx: *mut c_void) -> cv_return_value_double;
 pub fn cv_dft_Mat_Mat_int_int(src: *mut c_void, dst: *mut c_void, flags: i32, nonzero_rows: i32) -> cv_return_value_void;
 pub fn cv_directx_getTypeFromD3DFORMAT_int(i_d3_dformat: i32) -> cv_return_value_int;
@@ -367,7 +365,6 @@ pub fn cv_Mat_reserve_size_t(instance: *mut c_void, sz: size_t) -> cv_return_val
 pub fn cv_Mat_reserveBuffer_size_t(instance: *mut c_void, sz: size_t) -> cv_return_value_void;
 pub fn cv_Mat_resize_size_t(instance: *mut c_void, sz: size_t) -> cv_return_value_void;
 pub fn cv_Mat_resize_size_t_Scalar(instance: *mut c_void, sz: size_t, s: core::Scalar) -> cv_return_value_void;
-pub fn cv_Mat_push_back__const_void_X(instance: *mut c_void, elem: *const c_void) -> cv_return_value_void;
 pub fn cv_Mat_push_back_Mat(instance: *mut c_void, m: *mut c_void) -> cv_return_value_void;
 pub fn cv_Mat_pop_back_size_t(instance: *mut c_void, nelems: size_t) -> cv_return_value_void;
 pub fn cv_Mat_locateROI_const_Size_Point(instance: *const c_void, whole_size: &mut core::Size, ofs: &mut core::Point) -> cv_return_value_void;
@@ -393,7 +390,6 @@ pub fn cv_Mat_ptr_const_int_int_int(instance: *const c_void, i0: i32, i1: i32, i
 pub fn cv_Mat_ptr_const_int_X(instance: *mut c_void, idx: *const i32) -> cv_return_value_unsigned_char_X;
 pub fn cv_Mat_ptr_const_const_int_X(instance: *const c_void, idx: *const i32) -> cv_return_value_const_unsigned_char_X;
 pub fn cv_Mat_updateContinuityFlag(instance: *mut c_void) -> cv_return_value_void;
-pub fn cv_Mat_size_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
 pub fn cv_Mat_flags_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_Mat_dims_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_Mat_rows_const(instance: *const c_void) -> cv_return_value_int;
@@ -403,7 +399,8 @@ pub fn cv_Mat_set_data_uchar_X(instance: *mut c_void, val: *mut u8) -> cv_return
 pub fn cv_Mat_datastart_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
 pub fn cv_Mat_dataend_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
 pub fn cv_Mat_datalimit_const(instance: *const c_void) -> cv_return_value_const_unsigned_char_X;
-pub fn cv_Mat_step(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_Mat_size_const(instance: *const c_void) -> cv_return_value_void_X;
+pub fn cv_Mat_step_const(instance: *const c_void) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_MatExpr_delete(ptr : *mut c_void);
 pub fn cv_MatExpr_size_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
 pub fn cv_MatExpr_type_const(instance: *const c_void) -> cv_return_value_int;

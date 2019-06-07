@@ -382,7 +382,7 @@ pub trait AKAZE: crate::features2d::Feature2D {
     
 }
 
-impl<'a> AKAZE + 'a {
+impl dyn AKAZE + '_ {
 
     /// The AKAZE constructor
     /// 
@@ -445,7 +445,7 @@ pub trait AgastFeatureDetector: crate::features2d::Feature2D {
     
 }
 
-impl<'a> AgastFeatureDetector + 'a {
+impl dyn AgastFeatureDetector + '_ {
 
     ///
     /// ## C++ default parameters
@@ -734,10 +734,6 @@ pub trait BOWTrainer {
         unsafe { sys::cv_BOWTrainer_cluster_const_Mat(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-}
-
-impl<'a> BOWTrainer + 'a {
-
 }
 
 // boxed class cv::BRISK
@@ -1035,7 +1031,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     
 }
 
-impl<'a> DescriptorMatcher + 'a {
+impl dyn DescriptorMatcher + '_ {
 
     /// Creates a descriptor matcher of a given type with the default parameters (using default
     /// constructor).
@@ -1113,7 +1109,7 @@ pub trait FastFeatureDetector: crate::features2d::Feature2D {
     
 }
 
-impl<'a> FastFeatureDetector + 'a {
+impl dyn FastFeatureDetector + '_ {
 
     ///
     /// ## C++ default parameters
@@ -1224,10 +1220,6 @@ pub trait Feature2D: core::Algorithm {
         unsafe { sys::cv_Feature2D_getDefaultName_const(self.as_raw_Feature2D()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-}
-
-impl<'a> Feature2D + 'a {
-
 }
 
 // boxed class cv::FlannBasedMatcher
@@ -1351,7 +1343,7 @@ pub trait GFTTDetector: crate::features2d::Feature2D {
     
 }
 
-impl<'a> GFTTDetector + 'a {
+impl dyn GFTTDetector + '_ {
 
     ///
     /// ## C++ default parameters
@@ -1438,7 +1430,7 @@ pub trait KAZE: crate::features2d::Feature2D {
     
 }
 
-impl<'a> KAZE + 'a {
+impl dyn KAZE + '_ {
 
     /// The KAZE constructor
     /// 
@@ -1587,7 +1579,7 @@ pub trait MSER: crate::features2d::Feature2D {
     
 }
 
-impl<'a> MSER + 'a {
+impl dyn MSER + '_ {
 
     /// Full consturctor for %MSER detector
     /// 
@@ -1705,7 +1697,7 @@ pub trait ORB: crate::features2d::Feature2D {
     
 }
 
-impl<'a> ORB + 'a {
+impl dyn ORB + '_ {
 
     /// The ORB constructor
     /// 

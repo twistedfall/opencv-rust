@@ -2686,7 +2686,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
     
 }
 
-impl<'a> StereoBM + 'a {
+impl dyn StereoBM + '_ {
 
     /// Creates StereoBM object
     /// 
@@ -2777,10 +2777,6 @@ pub trait StereoMatcher: core::Algorithm {
     
 }
 
-impl<'a> StereoMatcher + 'a {
-
-}
-
 // Generating impl for trait cv::StereoSGBM (trait)
 /// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 /// one as follows:
@@ -2844,7 +2840,7 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
     
 }
 
-impl<'a> StereoSGBM + 'a {
+impl dyn StereoSGBM + '_ {
 
     /// Creates StereoSGBM object
     /// 
