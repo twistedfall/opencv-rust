@@ -16,7 +16,7 @@ pub trait DataType: Copy + private::Sealed {
 
 macro_rules! data_type {
     ($rust_type: ty, $mat_depth: expr, $channels: expr) => {
-        impl DataType for $rust_type {
+        impl $crate::core::DataType for $rust_type {
             #[inline(always)]
             fn depth() -> i32 { $mat_depth }
 
@@ -78,7 +78,7 @@ impl Mat {
         if mat_type == out_type {
             Ok(())
         } else {
-            Err(Error::new(core::StsUnmatchedFormats, format!("Mat type is: {}, but requested type is: {}", mat_type, out_type)))
+            Err(Error::new(core::StsUnmatchedFormats, format!("Mat type is: {}, but requested type is: {}", core::type_to_string(mat_type)?, core::type_to_string(out_type)?)))
         }
     }
 
@@ -284,17 +284,17 @@ impl Mat {
 impl fmt::Debug for Mat {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         f.debug_struct("Mat")
-            .field("type", &self.typ().map_err(|_| fmt::Error)?)
-            .field("channels", &self.channels().map_err(|_| fmt::Error)?)
-            .field("depth", &self.depth().map_err(|_| fmt::Error)?)
-            .field("dims", &self.dims().map_err(|_| fmt::Error)?)
+            .field("type", &self.typ().and_then(core::type_to_string).map_err(|_| fmt::Error)?)
             .field("flags", &self.flags().map_err(|_| fmt::Error)?)
-            .field("elem_size", &self.elem_size().map_err(|_| fmt::Error)?)
-            .field("elem_size1", &self.elem_size1().map_err(|_| fmt::Error)?)
-            .field("total", &self.total().map_err(|_| fmt::Error)?)
+            .field("channels", &self.channels().map_err(|_| fmt::Error)?)
+            .field("depth", &self.depth().and_then(core::depth_to_string).map_err(|_| fmt::Error)?)
+            .field("dims", &self.dims().map_err(|_| fmt::Error)?)
             .field("size", &self.size().map_err(|_| fmt::Error)?)
             .field("rows", &self.rows().map_err(|_| fmt::Error)?)
             .field("cols", &self.cols().map_err(|_| fmt::Error)?)
+            .field("elem_size", &self.elem_size().map_err(|_| fmt::Error)?)
+            .field("elem_size1", &self.elem_size1().map_err(|_| fmt::Error)?)
+            .field("total", &self.total().map_err(|_| fmt::Error)?)
             .field("is_continuous", &self.is_continuous().map_err(|_| fmt::Error)?)
             .field("is_submatrix", &self.is_submatrix().map_err(|_| fmt::Error)?)
             .finish()
