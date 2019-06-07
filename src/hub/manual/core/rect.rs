@@ -1,7 +1,11 @@
-use std::ops::{Add, AddAssign, Mul, Sub, SubAssign};
+use std::{
+    fmt,
+    ops::{Add, AddAssign, Mul, Sub, SubAssign},
+};
+
 use num::Zero;
 
-use crate::core::{Point_, Size_, ValidPointType, ValidSizeType};
+use crate::core::{Point_, RotatedRect, Size_, ValidPointType, ValidSizeType};
 
 valid_types!(ValidRectType, i32, f32, f64);
 
@@ -161,5 +165,15 @@ impl<S, R> SubAssign<Size_<S>> for Rect_<R>
     fn sub_assign(&mut self, rhs: Size_<S>) {
         self.width -= rhs.width;
         self.height -= rhs.height;
+    }
+}
+
+impl fmt::Debug for RotatedRect {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        f.debug_struct("RotatedRect")
+            .field("angle", &self.angle().map_err(|_| fmt::Error)?)
+            .field("center", &self.center().map_err(|_| fmt::Error)?)
+            .field("size", &self.size().map_err(|_| fmt::Error)?)
+            .finish()
     }
 }
