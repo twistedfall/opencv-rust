@@ -174,6 +174,7 @@ func_rename = {  # todo check if any "new" is required
     "cv_Mat_size": "-",  # doesn't have any use, dims() and Size are already accessible through other methods
     "cv_Mat_set_size_MatSize": "-",  # -"-
     "cv_Mat_set_step_MatStep": "-",  # doesn't allow writing
+    "cv_Mat_push_back__const_void_X": "-",  # internal method
     "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",
     "cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp": "copy",
@@ -228,6 +229,8 @@ func_rename = {  # todo check if any "new" is required
     "cv_mixChannels_VectorOfMat_VectorOfMat_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
     "cv_mixChannels_const_Mat_size_t_Mat_size_t_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
     "cv_noArray": "-",  # fixme: conversion from ‘const cv::_InputOutputArray’ to non-scalar type ‘cv::Mat’ requested
+    "cv_detail_typeToString__int": "-",  # detail function
+    "cv_detail_depthToString__int": "-",  # detail function
 
     ### features2d ###
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
@@ -282,6 +285,8 @@ func_rename = {  # todo check if any "new" is required
     "cv_integral_Mat_Mat_Mat_int_int": "+_sq_depth",
     "cv_GeneralizedHough_detect_Mat_Mat_Mat_Mat_Mat": "+_with_edges",
     "cv_goodFeaturesToTrack_Mat_Mat_int_double_double_Mat_int_int_bool_double": "+_with_gradient",
+    "cv_getAffineTransform_Mat_Mat": "+_mat",
+    "cv_getPerspectiveTransform_Mat_Mat": "+_mat",
 
     ### ml ###
     "cv_ml_ParamGrid_ParamGrid_double_double_double": "for_range",
