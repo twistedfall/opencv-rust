@@ -1,4 +1,4 @@
-#![recursion_limit="128"]
+#![recursion_limit = "128"]
 
 #[macro_use]
 extern crate cpp;
@@ -27,3 +27,11 @@ pub mod prelude {
 #[cfg(test)]
 mod test;
 
+
+cpp! {{
+    #include "../common_opencv.h"
+    using namespace cv;
+    #include "common.h"
+    #include "../types.h"
+    #include "../return_types.h"
+}}
