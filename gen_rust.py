@@ -174,6 +174,7 @@ func_rename = {  # todo check if any "new" is required
     "cv_Mat_step_const": "mat_step",
     "cv_Mat_set_size_MatSize": "-",  # doesn't allow writing
     "cv_Mat_set_step_MatStep": "-",  # same as above
+    "cv_Mat_data": "+_mut",
     "cv_Mat_push_back__const_void_X": "-",  # internal method
     "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",

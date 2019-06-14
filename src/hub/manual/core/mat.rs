@@ -290,14 +290,24 @@ impl Mat {
         }).into_result()
     }
 
+    pub fn data(&self) -> Result<&u8> {
+        let me = self.as_raw_Mat();
+        cpp!(unsafe [me as "const cv::Mat*"] -> sys::cv_return_value_const_unsigned_char_X as "cv_return_value_const_unsigned_char_X" {
+            try {
+                return { Error::Code::StsOk, NULL, me->data };
+            } CVRS_CATCH(cv_return_value_const_unsigned_char_X)
+        }).into_result()
+            .and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+
     pub fn data_typed<T: DataType>(&self) -> Result<&[T]> {
         let total = self.total()?;
-        self._at(0).map(|x| unsafe { slice::from_raw_parts(x, total) })
+        self.data().map(|x| unsafe { slice::from_raw_parts(x as *const _ as *const _, total) })
     }
 
     pub fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
         let total = self.total()?;
-        self.data().map(|x| unsafe { slice::from_raw_parts_mut(x as *mut _ as *mut _, total) })
+        self.data_mut().map(|x| unsafe { slice::from_raw_parts_mut(x as *mut _ as *mut _, total) })
     }
 
     #[inline]
