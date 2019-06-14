@@ -1,14 +1,14 @@
 use std::mem::transmute;
 
-use common::*;
+use matches::assert_matches;
+
 use opencv::{
+    core::{self, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f, Vec4w},
+    Error,
     prelude::*,
-    core::{self, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f},
     Result,
     types::{VectorOfint, VectorOfMat},
 };
-
-mod common;
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
@@ -57,8 +57,8 @@ fn mat_at_2d() -> Result<()> {
     assert_eq!(*mat.at_2d::<f32>(0, 0)?, 1.23);
     *mat.at_2d_mut::<f32>(0, 0)? = 1.;
     assert_eq!(*mat.at_2d::<f32>(0, 0)?, 1.);
-    assert_is_err(mat.at::<i32>(0));
-    assert_is_err(mat.at::<f32>(100));
+    assert_matches!(mat.at::<i32>(0), Err(Error { code: core::StsUnmatchedFormats, ..}));
+    assert_matches!(mat.at::<f32>(100), Err(Error { code: core::StsOutOfRange, ..}));
     Ok(())
 }
 
@@ -77,9 +77,9 @@ fn mat_at_2d_multichannel() -> Result<()> {
     assert_eq!(pix[1], 2.2);
     assert_eq!(pix[2], 3.3);
 
-    assert_is_err(mat.at_2d::<i32>(0, 0));
-    assert_is_err(mat.at_2d::<Vec3f>(100, 1));
-    assert_is_err(mat.at_2d::<Vec3f>(1, 100));
+    assert_matches!(mat.at_2d::<i32>(0, 0), Err(Error {code: core::StsUnmatchedFormats, ..}));
+    assert_matches!(mat.at_2d::<Vec3f>(100, 1), Err(Error {code: core::StsOutOfRange, ..}));
+    assert_matches!(mat.at_2d::<Vec3f>(1, 100), Err(Error {code: core::StsOutOfRange, ..}));
     Ok(())
 }
 
@@ -101,10 +101,10 @@ fn mat_at_row() -> Result<()> {
     assert_eq!(data[102], 30.);
     assert_eq!(data[103], 40.);
 
-    assert_is_err(mat.at_row::<i32>(0));
-    assert_is_err(mat.at_row::<i32>(100));
-    assert_is_err(mat.at_row_mut::<i32>(0));
-    assert_is_err(mat.at_row_mut::<i32>(100));
+    assert_matches!(mat.at_row::<i32>(0), Err(Error {code: core::StsUnmatchedFormats, ..}));
+    assert_matches!(mat.at_row::<f32>(100), Err(Error {code: core::StsOutOfRange, ..}));
+    assert_matches!(mat.at_row_mut::<i32>(0), Err(Error {code: core::StsUnmatchedFormats, ..}));
+    assert_matches!(mat.at_row_mut::<f32>(100), Err(Error {code: core::StsOutOfRange, ..}));
     Ok(())
 }
 

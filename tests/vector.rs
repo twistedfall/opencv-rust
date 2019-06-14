@@ -1,9 +1,10 @@
 use matches::assert_matches;
 
 use opencv::{
-    core::{Point2d, Scalar},
+    core::{self, Point2d, Scalar},
     prelude::*,
     Result,
+    Error,
     types::{VectorOfbool, VectorOfchar, VectorOfdouble, VectorOfint, VectorOfMat, VectorOfPoint2d, VectorOfString},
 };
 
@@ -156,7 +157,7 @@ fn insert() -> Result<()> {
     assert_eq!(5, vec.len());
     assert_eq!(8, vec.get(0)?);
     assert_eq!(1, vec.get(1)?);
-    assert_matches!(vec.insert(10, 10), Err(..));
+    assert_matches!(vec.insert(10, 10), Err(Error { code: core::StsOutOfRange, .. }));
     vec.insert(5, 10)?;
     assert_eq!(6, vec.len());
     assert_eq!(10, vec.get(5)?);
@@ -181,18 +182,18 @@ fn remove() -> Result<()> {
     vec.clear();
     assert_eq!(0, vec.len());
     assert_eq!(10, vec.capacity());
-    assert_matches!(vec.remove(0), Err(..));
+    assert_matches!(vec.remove(0), Err(Error { code: core::StsOutOfRange, .. }));
     Ok(())
 }
 
 #[test]
 fn out_of_bounds() -> Result<()> {
     let mut vec = VectorOfdouble::new();
-    assert_matches!(vec.get(0), Err(..));
+    assert_matches!(vec.get(0), Err(Error { code: core::StsOutOfRange, .. }));
     vec.push(1.);
     vec.push(2.);
-    assert_matches!(vec.get(3), Err(..));
-    assert_matches!(vec.set(3, 5.), Err(..));
+    assert_matches!(vec.get(3), Err(Error { code: core::StsOutOfRange, .. }));
+    assert_matches!(vec.set(3, 5.), Err(Error { code: core::StsOutOfRange, .. }));
     Ok(())
 }
 
