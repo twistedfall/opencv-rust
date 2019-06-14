@@ -4,7 +4,7 @@ pub trait Vector<'i> {
     type Storage;
     type Arg;
 
-    fn new() -> Self;
+    fn new() -> Self where Self: Sized;
 
     #[inline]
     fn from_iter(s: impl IntoIterator<Item=Self::Arg>) -> Self where Self: Sized {
@@ -52,6 +52,17 @@ pub trait Vector<'i> {
     }
 }
 
+impl<S, A> dyn Vector<'_, Storage=S, Arg=A> + '_ {
+    #[inline(always)]
+    pub(crate) fn index_check(index: size_t, len: size_t) -> crate::Result<()> {
+        if index >= len {
+            Err(crate::Error::new(crate::core::StsOutOfRange, format!("Index: {} out of bounds: 0..{}", index, len)))
+        } else {
+            Ok(())
+        }
+    }
+}
+
 pub struct VectorIterator<T> {
     vec: T,
     i: size_t,
@@ -76,7 +87,7 @@ impl<T, S> Iterator for VectorIterator<T>
     }
 }
 
-pub struct VectorRefIterator<'v, T: 'v> {
+pub struct VectorRefIterator<'v, T> {
     vec: &'v T,
     i: size_t,
 }

@@ -1898,15 +1898,6 @@ class VectorTypeInfo(TypeInfo):
             impl ${rust_local} {
                 #[inline(always)] pub fn as_raw_${rust_local}(&self) -> ${rust_extern} { self.ptr }
                 
-                #[inline(always)]
-                fn index_check(&self, index: size_t, len: size_t) -> crate::Result<()> {
-                    if index >= len {
-                        Err(crate::Error::new(crate::core::StsOutOfRange, format!("index: {} out of bounds: 0..{}", index, len)))
-                    } else {
-                        Ok(())
-                    }
-                }
-                
                 #[inline]
                 pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
                     crate::templ::VectorRefIterator::new(self)
@@ -1995,7 +1986,7 @@ class VectorTypeInfo(TypeInfo):
                 
                 #[inline]
                 fn remove(&mut self, index: size_t) -> crate::Result<()> {
-                    self.index_check(index, self.len())?;
+                    crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
                     let vec = self.as_raw_${rust_local}();
                     cpp!(unsafe [vec as "${cpptype}*", index as "size_t"] {
                         vec->erase(vec->begin() + index);
@@ -2029,7 +2020,7 @@ class VectorTypeInfo(TypeInfo):
             
             #[inline]
             fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-                self.index_check(index, self.len() + 1)?;
+                crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
                 let vec = self.as_raw_${rust_local}();
                 let val = val.as_raw_${inner_rust_local}();
                 cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}*"] {
@@ -2093,7 +2084,7 @@ class VectorTypeInfo(TypeInfo):
             
             #[inline]
             fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-                self.index_check(index, self.len() + 1)?;
+                crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
                 let vec = self.as_raw_${rust_local}();
                 let val = ::std::ffi::CString::new(val).unwrap();
                 let val = val.as_ptr();
@@ -2158,7 +2149,7 @@ class VectorTypeInfo(TypeInfo):
             
             #[inline]
             fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
-                self.index_check(index, self.len() + 1)?;
+                crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
                 let vec = self.as_raw_${rust_local}();
                 cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}"] {
                     vec->insert(vec->begin() + index, val);
