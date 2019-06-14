@@ -68,6 +68,37 @@ fn mat_for_rows_and_cols() -> Result<()> {
 }
 
 #[test]
+fn mat_nd() -> Result<()> {
+    {
+        let dims = VectorOfint::from_iter(vec![3, 3, 3]);
+        let mut mat = Mat::new_nd_with_default(&dims, Vec4w::typ(), Scalar::default())?;
+        assert_eq!(0, mat.at_3d::<Vec4w>(1, 1, 1)?[0]);
+        *mat.at_3d_mut::<Vec4w>(1, 1, 1)? = Vec4w::all(10);
+        assert_eq!(10, mat.at_3d::<Vec4w>(1, 1, 1)?[0]);
+        assert_eq!(0, mat.at_3d::<Vec4w>(1, 1, 2)?[2]);
+        assert_eq!(3, mat.dims()?);
+        assert_eq!([3, 3, 3], *mat.mat_size()?);
+    }
+
+    {
+        let dims = VectorOfint::from_iter(vec![2, 3, 4, 5, 6, 7]);
+        let mut mat = Mat::new_nd_with_default(&dims, Vec4w::typ(), Scalar::default())?;
+        assert_eq!(-1, mat.rows()?);
+        assert_eq!(-1, mat.cols()?);
+        assert_matches!(mat.at_nd::<Vec4w>(&[1, 1, 1]), Err(Error { code: core::StsUnmatchedSizes, ..}));
+        assert_matches!(mat.at_nd::<Vec4w>(&[1, 1, 1, 1, 1, 1, 1]), Err(Error { code: core::StsUnmatchedSizes, ..}));
+        assert_matches!(mat.at_nd::<Vec4w>(&[10, 10, 10, 10, 10, 10]), Err(Error { code: core::StsOutOfRange, ..}));
+        assert_matches!(mat.at_nd::<Vec4w>(&[-1, 10, 10, 10, 10, 10]), Err(Error { code: core::StsOutOfRange, ..}));
+        assert_matches!(mat.at_nd::<Vec4w>(&[2, 3, 4, 5, 10, 10]), Err(Error { code: core::StsOutOfRange, ..}));
+        assert_matches!(mat.at_nd::<Vec4w>(&[2, 3, 4, 5, 6, 10]), Err(Error { code: core::StsOutOfRange, ..}));
+        assert_eq!(Vec4w::default(), *mat.at_nd::<Vec4w>(&[1, 2, 3, 4, 5, 6])?);
+        *mat.at_nd_mut::<Vec4w>(&[1, 2, 3, 4, 5, 6])? = Vec4w::from([5, 6, 7, 8]);
+        assert_eq!(Vec4w::from([5, 6, 7, 8]), *mat.at_nd::<Vec4w>(&[1, 2, 3, 4, 5, 6])?);
+    }
+    Ok(())
+}
+
+#[test]
 fn mat_at_1d_refers_to_rows() -> Result<()> {
     let mut mat =
         Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(1.23))?;
@@ -266,7 +297,6 @@ fn mat_operations() -> Result<()> {
 
     Ok(())
 }
-
 
 #[test]
 fn mat_from_data() -> Result<()> {

@@ -84,6 +84,29 @@ impl Mat {
         }
     }
 
+    fn match_dims(&self, dims: usize) -> Result<()> {
+        let mat_dims = self.dims()? as usize;
+        if mat_dims == dims {
+            Ok(())
+        } else {
+            Err(Error::new(core::StsUnmatchedSizes, format!("Mat dims is: {}, but requested dims is: {}", mat_dims, dims)))
+        }
+    }
+
+    #[inline(always)]
+    fn match_indices(&self, idx: &[i32]) -> Result<()> {
+        let size = self.mat_size()?;
+        self.match_dims(idx.len())?;
+        let mut out_of_bounds = size.iter()
+            .enumerate()
+            .filter(|&(i, &x)| idx[i] < 0 || idx[i] >= x);
+        if let Some((out_dim, out_size)) = out_of_bounds.next() {
+            Err(Error::new(core::StsOutOfRange, format!("Index: {} along dimension: {} out of bounds 0..{}", idx[out_dim], out_dim, out_size)))
+        } else {
+            Ok(())
+        }
+    }
+
     #[inline(always)]
     fn convert_ptr<T>(r: &u8) -> &T {
         unsafe { &*(r as *const _ as *const T) }
@@ -138,15 +161,9 @@ impl Mat {
 
     #[inline(always)]
     pub(crate) fn _at_2d<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
-        self.match_format::<T>()?;
-        let size = self.size()?;
-        if row >= size.height || col >= size.width {
-            return Err(Error::new(
-                core::StsOutOfRange,
-                format!("Given coordinate is out of bounds. \
-                         Mat has size {:?} but was given row: {}, col: {}", size, row, col)));
-        }
-        unsafe { self.at_2d_unchecked(row, col) }
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(&[row, col]))
+            .and_then(|_| unsafe { self.at_2d_unchecked(row, col) })
     }
 
     /// Like `Mat::at_2d()` but performs no bounds or type checks
@@ -157,14 +174,8 @@ impl Mat {
 
     #[inline(always)]
     pub(crate) fn _at_2d_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
-        self.match_format::<T>()?;
-        let size = self.size()?;
-        if row >= size.height || col >= size.width {
-            return Err(Error::new(
-                core::StsOutOfRange,
-                format!("Given coordinate is out of bounds. \
-                         Mat has size {:?} but was given row: {}, col: {}", size, row, col)));
-        }
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(&[row, col]))?;
         unsafe { self.at_2d_mut_unchecked(row, col) }
     }
 
@@ -174,31 +185,59 @@ impl Mat {
             .map(Self::convert_ptr_mut)
     }
 
-    /// Note that since the bindings are set up to wrap all Mat sizes in our custom `Size` struct
-    /// instead of a `MatSize` smart pointer, we don't have a good way to check bounds on Mats with
-    /// more than 2 dimensions, so we can't perform a real bounds check here.
     #[inline(always)]
     pub(crate) fn _at_3d<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d(i0, i1, i2) }.map(Self::convert_ptr))
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(&[i0, i1, i2]))
+            .and_then(|_| unsafe { self.at_3d_unchecked(i0, i1, i2) })
     }
 
-    /// See safety caveats of `Mat::_at_3d()`
+    pub unsafe fn at_3d_unchecked<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
+        self.ptr_3d(i0, i1, i2)
+            .map(Self::convert_ptr)
+    }
+
     #[inline(always)]
     pub(crate) fn _at_3d_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d_mut(i0, i1, i2) }.map(Self::convert_ptr_mut))
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(&[i0, i1, i2]))?;
+        unsafe { self.at_3d_mut_unchecked(i0, i1, i2) }
+    }
+
+    pub unsafe fn at_3d_mut_unchecked<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
+        self.ptr_3d_mut(i0, i1, i2)
+            .map(Self::convert_ptr_mut)
+    }
+
+    #[inline(always)]
+    pub(crate) fn _at_nd<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(idx))
+            .and_then(|_| unsafe { self.at_nd_unchecked(idx) })
+    }
+
+    pub unsafe fn at_nd_unchecked<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
+        self.ptr_nd(idx)
+            .map(Self::convert_ptr)
+    }
+
+    #[inline(always)]
+    pub(crate) fn _at_nd_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(idx))?;
+        unsafe { self.at_nd_mut_unchecked(idx) }
+    }
+
+    pub unsafe fn at_nd_mut_unchecked<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
+        self.ptr_nd_mut(idx)
+            .map(Self::convert_ptr_mut)
     }
 
     /// Return a complete read-only row
     pub fn at_row<T: DataType>(&self, row: i32) -> Result<&[T]> {
-        self.match_format::<T>()?;
-        let size = self.size()?;
-        if row >= size.height {
-            return Err(Error::new(
-                core::StsOutOfRange,
-                format!("Given coordinate is out of bounds. \
-                         Mat has size {:?} but was given row: {}", size, row)));
-        }
-        unsafe { self.at_row_unchecked(row) }
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(&[row, 0]))
+            .and_then(|_| unsafe { self.at_row_unchecked(row) })
     }
 
     /// Like `Mat::at_row()` but performs no bounds or type checks
@@ -209,14 +248,8 @@ impl Mat {
 
     /// Return a complete writeable row
     pub fn at_row_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
-        self.match_format::<T>()?;
-        let size = self.size()?;
-        if row >= size.height {
-            return Err(Error::new(
-                core::StsOutOfRange,
-                format!("Given coordinate is out of bounds. \
-                         Mat has size {:?} but was given row: {}", size, row)));
-        }
+        self.match_format::<T>()
+            .and_then(|_| self.match_indices(&[row, 0]))?;
         unsafe { self.at_row_mut_unchecked(row) }
     }
 
@@ -292,11 +325,7 @@ impl Mat {
     }
 
     pub fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
-        self.match_format::<T>().and_then(|_| {
-            let dims = self.dims()?;
-            if dims > 2 {
-                return Err(Error::new(core::StsUnmatchedSizes, format!("Cannot convert Mat with dims: {} to 2D Vec", dims)));
-            }
+        self.match_format::<T>().and_then(|_| self.match_dims(2)).and_then(|_| {
             let size = self.size()?;
             let width = size.width as usize;
             if self.is_continuous()? {
@@ -387,7 +416,6 @@ impl fmt::Debug for MatStep {
         writeln!(f, "{:#?}", self.deref())
     }
 }
-
 
 mod private {
     pub trait Sealed {}

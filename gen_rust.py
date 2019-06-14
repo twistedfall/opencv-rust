@@ -162,6 +162,8 @@ func_rename = {  # todo check if any "new" is required
     "cv_Mat_at_const_int_int": "at_2d",
     "cv_Mat_at_int_int_int": "at_3d_mut",
     "cv_Mat_at_const_int_int_int": "at_3d",
+    "cv_Mat_at_const_int_X": "at_nd_mut",
+    "cv_Mat_at_const_const_int_X": "at_nd",
     "cv_Mat_resize_size_t_Scalar": "resize_with_default",
     "cv_Mat_rowRange_const_int_int": "rowbounds",
     "cv_Mat_type_const": "typ",
@@ -529,16 +531,22 @@ func_manual = {
     "cv_Mat_at_const_int": {
         "rust_safe": _forward_const_rust_safe,
     },
+    "cv_Mat_at_int_int": {
+        "rust_safe": _forward_mut_rust_safe,
+    },
+    "cv_Mat_at_const_int_int": {
+        "rust_safe": _forward_const_rust_safe,
+    },
     "cv_Mat_at_int_int_int": {
         "rust_safe": _forward_mut_rust_safe,
     },
     "cv_Mat_at_const_int_int_int":  {
         "rust_safe": _forward_const_rust_safe,
     },
-    "cv_Mat_at_int_int": {
+    "cv_Mat_at_const_int_X": {
         "rust_safe": _forward_mut_rust_safe,
     },
-    "cv_Mat_at_const_int_int": {
+    "cv_Mat_at_const_const_int_X": {
         "rust_safe": _forward_const_rust_safe,
     },
 }
@@ -635,6 +643,12 @@ def decl_patch(module, decl):
             pts_arg = decl[3][1]
             if pts_arg[0] == "InputArray" and pts_arg[1] == "points":
                 decl[3][1][0] = "const std::vector<Point>&"
+    elif module == "core":
+        # replace pointers with slices for nd Mat access methods
+        if (decl[0] == "cv.Mat.at" or decl[0] == "cv.Mat.ptr") and len(decl[3]) == 1:
+            idx_arg = decl[3][0]
+            if idx_arg[0] == "const int*" and idx_arg[1] == "idx":
+                decl[3][0][0] = "const int[]"
     return decl
 
 
