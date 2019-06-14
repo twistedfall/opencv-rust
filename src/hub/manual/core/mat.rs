@@ -85,6 +85,16 @@ impl Mat {
     }
 
     #[inline(always)]
+    fn convert_ptr<T>(r: &u8) -> &T {
+        unsafe { &*(r as *const _ as *const T) }
+    }
+
+    #[inline(always)]
+    fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
+        unsafe { &mut *(r as *mut _ as *mut T) }
+    }
+
+    #[inline(always)]
     pub(crate) fn _at<T: DataType>(&self, row: i32) -> Result<&T> {
         self.match_format::<T>()?;
         let size = self.size()?;
@@ -105,7 +115,7 @@ impl Mat {
     /// `Mat::at()` does.
     /// (This upstream behavior is documented at https://docs.opencv.org/3.4/d3/d63/classcv_1_1Mat.html#aa5d20fc86d41d59e4d71ae93daee9726)
     pub unsafe fn at_unchecked<T: DataType>(&self, row: i32) -> Result<&T> {
-        self.ptr(row).map(|x| &*(x as *const _ as *const T))
+        self.ptr(row).map(Self::convert_ptr)
     }
 
     #[inline(always)]
@@ -123,7 +133,7 @@ impl Mat {
 
     /// Like `Mat::at_mut()` but performs no bounds or type checks
     pub unsafe fn at_mut_unchecked<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
-        self.ptr_mut(i0).map(|x| &mut *(x as *mut _ as *mut T))
+        self.ptr_mut(i0).map(Self::convert_ptr_mut)
     }
 
     #[inline(always)]
@@ -141,7 +151,8 @@ impl Mat {
 
     /// Like `Mat::at_2d()` but performs no bounds or type checks
     pub unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
-        self.ptr_2d(row, col).map(|x| &*(x as *const _ as *const T))
+        self.ptr_2d(row, col)
+            .map(Self::convert_ptr)
     }
 
     #[inline(always)]
@@ -159,7 +170,8 @@ impl Mat {
 
     /// Like `Mat::at_2d_mut()` but performs no bounds or type checks
     pub unsafe fn at_2d_mut_unchecked<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
-        self.ptr_2d_mut(row, col).map(|x| &mut *(x as *mut _ as *mut T))
+        self.ptr_2d_mut(row, col)
+            .map(Self::convert_ptr_mut)
     }
 
     /// Note that since the bindings are set up to wrap all Mat sizes in our custom `Size` struct
@@ -167,13 +179,13 @@ impl Mat {
     /// more than 2 dimensions, so we can't perform a real bounds check here.
     #[inline(always)]
     pub(crate) fn _at_3d<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
-        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d(i0, i1, i2) }.map(|x| unsafe { &*(x as *const _ as *const T) }))
+        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d(i0, i1, i2) }.map(Self::convert_ptr))
     }
 
     /// See safety caveats of `Mat::_at_3d()`
     #[inline(always)]
     pub(crate) fn _at_3d_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
-        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d_mut(i0, i1, i2) }.map(|x| unsafe { &mut *(x as *mut _ as *mut T) }))
+        self.match_format::<T>().and_then(|_| unsafe { self.ptr_3d_mut(i0, i1, i2) }.map(Self::convert_ptr_mut))
     }
 
     /// Return a complete read-only row
