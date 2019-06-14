@@ -145,10 +145,10 @@ func_rename = {  # todo check if any "new" is required
     "cv_Mat_colRange_const_Range": "colrange",
     "cv_Mat_colRange_const_int_int": "colbounds",
     "cv_Mat_copyTo_const_Mat_Mat": "copy_to_masked",
-    "cv_Mat_create_int_int_int": "create_rows_cols",
-    "cv_Mat_create_Size_int": "create_size",
+    "cv_Mat_create_int_int_int": "+_rows_cols",
+    "cv_Mat_create_Size_int": "+_size",
+    "cv_Mat_create_VectorOfint_int": "+_nd",
     "cv_Mat_create_int_const_int_X_int": "-",  # duplicate of cv_Mat_create_VectorOfint_int, but with pointers
-    "cv_Mat_create_VectorOfint_int": "create_nd",
     "cv_Mat_diag_Mat": "diag_new_mat",
     "cv_Mat_ptr_int": "ptr_mut",
     "cv_Mat_ptr_int_int": "ptr_2d_mut",
@@ -419,7 +419,12 @@ func_unsafe_list = {
     "cv_Mat_Mat_int_int_int",
     "cv_Mat_Mat_Size_int",
     "cv_Mat_Mat_VectorOfint_int",
+    "cv_Mat_create_int_int_int",
+    "cv_Mat_create_Size_int",
+    "cv_Mat_create_VectorOfint_int",
+    # allows passing arbitrary data
     "cv_Mat_set_data_uchar_X",
+    # no bounds checking
     "cv_Mat_ptr_int",
     "cv_Mat_ptr_const_int",
     "cv_Mat_ptr_int_int",

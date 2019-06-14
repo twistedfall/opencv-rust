@@ -1,15 +1,10 @@
-use std::{
-    ffi::c_void,
-    fmt,
-    ops::Deref,
-    slice,
-};
+use std::{fmt, ops::Deref, slice};
 
 use libc::size_t;
 
 use crate::{
     Error,
-    hub::core::{self, Mat, MatSize, MatStep},
+    hub::core::{self, Mat, MatSize, MatStep, Scalar},
     Result,
     sys,
 };
@@ -226,6 +221,27 @@ impl Mat {
                 cv::Size ret = me->size();
                 return { Error::Code::StsOk, NULL, *reinterpret_cast<SizeWrapper*>(&ret) };
             } CVRS_CATCH(cv_return_value_SizeWrapper)
+        }).into_result()
+    }
+
+    pub fn is_allocated(&self) -> bool {
+        let me = self.as_raw_Mat();
+        cpp!(unsafe [me as "const cv::Mat*"] -> bool as "bool" {
+            return me->data != NULL;
+        })
+    }
+
+    /// Sets all or some of the array elements to the specified value.
+    ///
+    /// ## Parameters
+    /// * s: Assigned scalar converted to the actual array type.
+    pub fn set(&mut self, s: Scalar) -> Result<()> {
+        let me = self.as_raw_Mat();
+        cpp!(unsafe [me as "cv::Mat*", s as "cv::Scalar"] -> sys::cv_return_value_void as "cv_return_value_void" {
+            try {
+                *me = s;
+                return { Error::Code::StsOk, NULL };
+            } CVRS_CATCH(cv_return_value_void)
         }).into_result()
     }
 

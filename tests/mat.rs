@@ -13,6 +13,35 @@ use opencv::{
 const PIXEL: &[u8] = include_bytes!("pixel.png");
 
 #[test]
+fn mat_default() -> Result<()> {
+    let mat = Mat::new()?;
+    assert_eq!(u8::typ(), mat.typ()?);
+    assert_eq!(u8::depth(), mat.depth()?);
+    assert_eq!(u8::channels(), mat.channels()?);
+    assert_eq!(Size::new(0, 0), mat.size()?);
+    assert_eq!(0, mat.dims()?);
+    assert!(!mat.is_allocated());
+    assert_matches!(mat.data(), Err(Error { code: core::StsNullPtr, ..}));
+    Ok(())
+}
+
+#[test]
+fn mat_create() -> Result<()> {
+    let mut mat = Mat::new()?;
+    unsafe { mat.create_rows_cols(10, 10, u16::typ())? };
+    assert!(mat.is_allocated());
+    mat.set(Scalar::all(7.))?;
+    assert_eq!(7, *mat.at_2d::<u16>(0, 0)?);
+    assert_eq!(7, *mat.at_2d::<u16>(3, 3)?);
+    assert_eq!(7, *mat.at_2d::<u16>(9, 9)?);
+    mat.release()?;
+    assert!(!mat.is_allocated());
+    assert_eq!(Size::new(0, 0), mat.size()?);
+    assert_eq!(2, mat.dims()?);
+    Ok(())
+}
+
+#[test]
 fn mat_for_rows_and_cols() -> Result<()> {
     let mat = unsafe { Mat::new_rows_cols(400, 300, Vec3d::typ()) }?;
     assert_eq!(Vec3d::typ(), mat.typ()?);
