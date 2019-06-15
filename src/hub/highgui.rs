@@ -1,86 +1,86 @@
 //! # High-level GUI
-//! 
+//!
 //! While OpenCV was designed for use in full-scale applications and can be used within functionally
 //! rich UI frameworks (such as Qt\*, WinForms\*, or Cocoa\*) or without any UI at all, sometimes there
 //! it is required to try functionality quickly and visualize the results. This is what the HighGUI
 //! module has been designed for.
-//! 
+//!
 //! It provides easy interface to:
-//! 
+//!
 //! *   Create and manipulate windows that can display images and "remember" their content (no need to
 //! handle repaint events from OS).
 //! *   Add trackbars to the windows, handle simple mouse events as well as keyboard commands.
 //! # OpenGL support
 //! # Qt New Functions
-//! 
+//!
 //! ![image](https://docs.opencv.org/3.4.6/qtgui.png)
-//! 
+//!
 //! This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 //! a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
 //! If you cannot see the control panel, press Ctrl+P or right-click any Qt window and select **Display
 //! properties window**.
-//! 
+//!
 //! *   To attach a trackbar, the window name parameter must be NULL.
-//! 
+//!
 //! *   To attach a buttonbar, a button must be created. If the last bar attached to the control panel
 //! is a buttonbar, the new button is added to the right of the last button. If the last bar
 //! attached to the control panel is a trackbar, or the control panel is empty, a new buttonbar is
 //! created. Then, a new button is attached to it.
-//! 
+//!
 //! See below the example used to generate the figure:
 //! ```ignore
 //! int main(int argc, char *argv[])
 //! {
-//! 
+//!
 //! int value = 50;
 //! int value2 = 0;
-//! 
-//! 
+//!
+//!
 //! namedWindow("main1",WINDOW_NORMAL);
 //! namedWindow("main2",WINDOW_AUTOSIZE | CV_GUI_NORMAL);
 //! createTrackbar( "track1", "main1", &value, 255,  NULL);
-//! 
+//!
 //! String nameb1 = "button1";
 //! String nameb2 = "button2";
-//! 
+//!
 //! createButton(nameb1,callbackButton,&nameb1,QT_CHECKBOX,1);
 //! createButton(nameb2,callbackButton,NULL,QT_CHECKBOX,0);
 //! createTrackbar( "track2", NULL, &value2, 255, NULL);
 //! createButton("button5",callbackButton1,NULL,QT_RADIOBOX,0);
 //! createButton("button6",callbackButton2,NULL,QT_RADIOBOX,1);
-//! 
+//!
 //! setMouseCallback( "main2",on_mouse,NULL );
-//! 
+//!
 //! Mat img1 = imread("files/flower.jpg");
 //! VideoCapture video;
 //! video.open("files/hockey.avi");
-//! 
+//!
 //! Mat img2,img3;
-//! 
+//!
 //! while( waitKey(33) != 27 )
 //! {
 //! img1.convertTo(img2,-1,1,value);
 //! video >> img3;
-//! 
+//!
 //! imshow("main1",img2);
 //! imshow("main2",img3);
 //! }
-//! 
+//!
 //! destroyAllWindows();
-//! 
+//!
 //! return 0;
 //! }
 //! ```
-//! 
-//! 
-//! 
+//!
+//!
+//!
 //! # WinRT support
-//! 
+//!
 //! This figure explains new functionality implemented with WinRT GUI. The new GUI provides an Image control,
 //! and a slider panel. Slider panel holds trackbars attached to it.
-//! 
+//!
 //! Sliders are attached below the image control. Every new slider is added below the previous one.
-//! 
+//!
 //! See below the example used to generate the figure:
 //! ```ignore
 //! void sample_app::MainPage::ShowWindow()
@@ -88,12 +88,12 @@
 //! static cv::String windowName("sample");
 //! cv::winrt_initContainer(this->cvContainer);
 //! cv::namedWindow(windowName); // not required
-//! 
+//!
 //! cv::Mat image = cv::imread("Assets/sample.jpg");
 //! cv::Mat converted = cv::Mat(image.rows, image.cols, CV_8UC4);
 //! cv::cvtColor(image, converted, COLOR_BGR2BGRA);
 //! cv::imshow(windowName, converted); // this will create window if it hasn't been created before
-//! 
+//!
 //! int state = 42;
 //! cv::TrackbarCallback callback = [](int pos, void* userdata)
 //! {
@@ -111,8 +111,8 @@
 //! cv::createTrackbar("Twin brother", windowName, &state, 100, callbackTwin);
 //! }
 //! ```
-//! 
-//! 
+//!
+//!
 //! # C API
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -193,10 +193,10 @@ pub type ButtonCallback = dyn FnMut(i32) + Send + Sync + 'static;
 #[doc(hidden)] pub type ButtonCallbackExtern = Option<extern "C" fn(state: i32, userdata: *mut c_void)>;
 
 /// Draws a text on the image.
-/// 
+///
 /// The function addText draws *text* on the image *img* using a specific font *font* (see example cv::fontQt
 /// )
-/// 
+///
 /// ## Parameters
 /// * img: 8-bit 3-channel image where the text should be drawn.
 /// * text: Text to write on an image.
@@ -208,7 +208,7 @@ pub fn add_text_with_font(img: &core::Mat, text: &str, org: core::Point, font: &
 }
 
 /// Draws a text on the image.
-/// 
+///
 /// ## Parameters
 /// * img: 8-bit 3-channel image where the text should be drawn.
 /// * text: Text to write on an image.
@@ -235,12 +235,12 @@ pub fn add_text(img: &core::Mat, text: &str, org: core::Point, name_font: &str, 
 }
 
 /// Attaches a button to the control panel.
-/// 
+///
 /// The function createButton attaches a button to the control panel. Each button is added to a
 /// buttonbar to the right of the last button. A new buttonbar is created if nothing was attached to the
 /// control panel before, or if the last element attached to the control panel was a trackbar or if the
 /// QT_NEW_BUTTONBAR flag is added to the type.
-/// 
+///
 /// See below various examples of the cv::createButton function call: :
 /// ```ignore
 /// createButton(NULL,callbackButton);//create a push button "button 0", that will call callbackButton.
@@ -250,8 +250,8 @@ pub fn add_text(img: &core::Mat, text: &str, org: core::Point, name_font: &str, 
 /// createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON,1);
 /// createButton("button6",callbackButton2,NULL,QT_PUSH_BUTTON|QT_NEW_BUTTONBAR);// create a push button in a new row
 /// ```
-/// 
-/// 
+///
+///
 /// ## Parameters
 /// * bar_name: Name of the button.
 /// * on_change: Pointer to the function to be called every time the button changes its state.
@@ -273,20 +273,20 @@ pub fn create_button(bar_name: &str, on_change: Option<Box<crate::highgui::Butto
 }
 
 /// Creates a trackbar and attaches it to the specified window.
-/// 
+///
 /// The function createTrackbar creates a trackbar (a slider or range control) with the specified name
 /// and range, assigns a variable value to be a position synchronized with the trackbar and specifies
 /// the callback function onChange to be called on the trackbar position change. The created trackbar is
 /// displayed in the specified window winname.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// [__Qt Backend Only__] winname can be empty (or NULL) if the trackbar should be attached to the
 /// control panel.
-/// 
+///
 /// Clicking the label of each trackbar enables editing the trackbar values manually.
-/// 
+///
 /// ## Parameters
 /// * trackbarname: Name of the created trackbar.
 /// * winname: Name of the window that will be used as a parent of the created trackbar.
@@ -311,16 +311,16 @@ pub fn create_trackbar(trackbarname: &str, winname: &str, value: &mut i32, count
 }
 
 /// Destroys all of the HighGUI windows.
-/// 
+///
 /// The function destroyAllWindows destroys all of the opened HighGUI windows.
 pub fn destroy_all_windows() -> Result<()> {
     unsafe { sys::cv_destroyAllWindows() }.into_result()
 }
 
 /// Destroys the specified window.
-/// 
+///
 /// The function destroyWindow destroys the window with the given name.
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window to be destroyed.
 pub fn destroy_window(winname: &str) -> Result<()> {
@@ -329,11 +329,11 @@ pub fn destroy_window(winname: &str) -> Result<()> {
 }
 
 /// Displays a text on a window image as an overlay for a specified duration.
-/// 
+///
 /// The function displayOverlay displays useful information/tips on top of the window for a certain
 /// amount of time *delayms*. The function does not modify the image, displayed in the window, that is,
 /// after the specified delay the original content of the window is restored.
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * text: Overlay text to write on a window image.
@@ -350,11 +350,11 @@ pub fn display_overlay(winname: &str, text: &str, delayms: i32) -> Result<()> {
 }
 
 /// Displays a text on the window statusbar during the specified period of time.
-/// 
+///
 /// The function displayStatusBar displays useful information/tips on top of the window for a certain
 /// amount of time *delayms* . This information is displayed on the window statusbar (the window must be
 /// created with the CV_GUI_EXPANDED flags).
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * text: Text to write on the window statusbar.
@@ -371,16 +371,16 @@ pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()>
 }
 
 /// Creates the font to draw a text on an image.
-/// 
+///
 /// The function fontQt creates a cv::QtFont object. This cv::QtFont is not compatible with putText .
-/// 
+///
 /// A basic usage of this function is the following: :
 /// ```ignore
 /// QtFont font = fontQt("Times");
 /// addText( img1, "Hello World !", Point(50,50), font);
 /// ```
-/// 
-/// 
+///
+///
 /// ## Parameters
 /// * nameFont: Name of the font. The name should match the name of a system font (such as
 /// *Times*). If the font is not found, a default one is used.
@@ -405,23 +405,23 @@ pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i3
 
 /// Gets the mouse-wheel motion delta, when handling mouse-wheel events cv::EVENT_MOUSEWHEEL and
 /// cv::EVENT_MOUSEHWHEEL.
-/// 
+///
 /// For regular mice with a scroll-wheel, delta will be a multiple of 120. The value 120 corresponds to
 /// a one notch rotation of the wheel or the threshold for action to be taken and one such action should
 /// occur for each delta. Some high-precision mice with higher-resolution freely-rotating wheels may
 /// generate smaller values.
-/// 
+///
 /// For cv::EVENT_MOUSEWHEEL positive and negative values mean forward and backward scrolling,
 /// respectively. For cv::EVENT_MOUSEHWHEEL, where available, positive and negative values mean right and
 /// left scrolling, respectively.
-/// 
+///
 /// With the C API, the macro CV_GET_WHEEL_DELTA(flags) can be used alternatively.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// Mouse-wheel events are currently supported only on Windows.
-/// 
+///
 /// ## Parameters
 /// * flags: The mouse callback flags parameter.
 pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
@@ -429,15 +429,15 @@ pub fn get_mouse_wheel_delta(flags: i32) -> Result<i32> {
 }
 
 /// Returns the trackbar position.
-/// 
+///
 /// The function returns the current position of the specified trackbar.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// [__Qt Backend Only__] winname can be empty (or NULL) if the trackbar is attached to the control
 /// panel.
-/// 
+///
 /// ## Parameters
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of the trackbar.
@@ -448,12 +448,12 @@ pub fn get_trackbar_pos(trackbarname: &str, winname: &str) -> Result<i32> {
 }
 
 /// Provides rectangle of image in the window.
-/// 
+///
 /// The function getWindowImageRect returns the client screen coordinates, width and height of the image rendering area.
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
-/// 
+///
 /// ## See also
 /// resizeWindow moveWindow
 pub fn get_window_image_rect(winname: &str) -> Result<core::Rect> {
@@ -462,13 +462,13 @@ pub fn get_window_image_rect(winname: &str) -> Result<core::Rect> {
 }
 
 /// Provides parameters of a window.
-/// 
+///
 /// The function getWindowProperty returns properties of a window.
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * prop_id: Window property to retrieve. The following operation flags are available: (cv::WindowPropertyFlags)
-/// 
+///
 /// ## See also
 /// setWindowProperty
 pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
@@ -477,38 +477,38 @@ pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 }
 
 /// Displays an image in the specified window.
-/// 
+///
 /// The function imshow displays an image in the specified window. If the window was created with the
 /// cv::WINDOW_AUTOSIZE flag, the image is shown with its original size, however it is still limited by the screen resolution.
 /// Otherwise, the image is scaled to fit the window. The function may scale the image, depending on its depth:
-/// 
+///
 /// *   If the image is 8-bit unsigned, it is displayed as is.
 /// *   If the image is 16-bit unsigned or 32-bit integer, the pixels are divided by 256. That is, the
 /// value range [0,255\*256] is mapped to [0,255].
 /// *   If the image is 32-bit or 64-bit floating-point, the pixel values are multiplied by 255. That is, the
 /// value range [0,1] is mapped to [0,255].
-/// 
+///
 /// If window was created with OpenGL support, cv::imshow also support ogl::Buffer , ogl::Texture2D and
 /// cuda::GpuMat as input.
-/// 
+///
 /// If the window was not created before this function, it is assumed creating a window with cv::WINDOW_AUTOSIZE.
-/// 
+///
 /// If you need to show an image that is bigger than the screen resolution, you will need to call namedWindow("", WINDOW_NORMAL) before the imshow.
-/// 
-/// 
+///
+///
 /// Note: This function should be followed by cv::waitKey function which displays the image for specified
 /// milliseconds. Otherwise, it won't display the image. For example, **waitKey(0)** will display the window
 /// infinitely until any keypress (it is suitable for image display). **waitKey(25)** will display a frame
 /// for 25 ms, after which display will be automatically closed. (If you put it in a loop to read
 /// videos, it will display the video frame-by-frame)
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// [__Windows Backend Only__] Pressing Ctrl+C will copy the image to the clipboard.
-/// 
+///
 /// [__Windows Backend Only__] Pressing Ctrl+S will show a dialog to save the image.
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * mat: Image to be shown.
@@ -518,10 +518,10 @@ pub fn imshow(winname: &str, mat: &core::Mat) -> Result<()> {
 }
 
 /// Loads parameters of the specified window.
-/// 
+///
 /// The function loadWindowParameters loads size, location, flags, trackbars value, zoom and panning
 /// location of the window windowName.
-/// 
+///
 /// ## Parameters
 /// * windowName: Name of the window.
 pub fn load_window_parameters(window_name: &str) -> Result<()> {
@@ -530,7 +530,7 @@ pub fn load_window_parameters(window_name: &str) -> Result<()> {
 }
 
 /// Moves window to the specified position
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * x: The new x-coordinate of the window.
@@ -541,19 +541,19 @@ pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
 }
 
 /// Creates a window.
-/// 
+///
 /// The function namedWindow creates a window that can be used as a placeholder for images and
 /// trackbars. Created windows are referred to by their names.
-/// 
+///
 /// If a window with the same name already exists, the function does nothing.
-/// 
+///
 /// You can call cv::destroyWindow or cv::destroyAllWindows to close the window and de-allocate any associated
 /// memory usage. For a simple program, you do not really have to call these functions because all the
 /// resources and windows of the application are closed automatically by the operating system upon exit.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// Qt backend supports additional flags:
 /// *   **WINDOW_NORMAL or WINDOW_AUTOSIZE:** WINDOW_NORMAL enables you to resize the
 /// window, whereas WINDOW_AUTOSIZE adjusts automatically the window size to fit the
@@ -563,7 +563,7 @@ pub fn move_window(winname: &str, x: i32, y: i32) -> Result<()> {
 /// *   **WINDOW_GUI_NORMAL or WINDOW_GUI_EXPANDED:** WINDOW_GUI_NORMAL is the old way to draw the window
 /// without statusbar and toolbar, whereas WINDOW_GUI_EXPANDED is a new enhanced GUI.
 /// By default, flags == WINDOW_AUTOSIZE | WINDOW_KEEPRATIO | WINDOW_GUI_EXPANDED
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window in the window caption that may be used as a window identifier.
 /// * flags: Flags of the window. The supported flags are: (cv::WindowFlags)
@@ -576,20 +576,20 @@ pub fn named_window(winname: &str, flags: i32) -> Result<()> {
 }
 
 /// Resizes window to the specified size
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// *   The specified window size is for the image area. Toolbars are not counted.
 /// *   Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
-/// 
+///
 /// ## Parameters
 /// * winname: Window name.
 /// * width: The new window width.
 /// * height: The new window height.
-/// 
+///
 /// ## Overloaded parameters
-/// 
+///
 /// * winname: Window name.
 /// * size: The new window size.
 pub fn resize_window(winname: &str, size: core::Size) -> Result<()> {
@@ -598,13 +598,13 @@ pub fn resize_window(winname: &str, size: core::Size) -> Result<()> {
 }
 
 /// Resizes window to the specified size
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// *   The specified window size is for the image area. Toolbars are not counted.
 /// *   Only windows created without cv::WINDOW_AUTOSIZE flag can be resized.
-/// 
+///
 /// ## Parameters
 /// * winname: Window name.
 /// * width: The new window width.
@@ -615,10 +615,10 @@ pub fn resize_window_1(winname: &str, width: i32, height: i32) -> Result<()> {
 }
 
 /// Saves parameters of the specified window.
-/// 
+///
 /// The function saveWindowParameters saves size, location, flags, trackbars value, zoom and panning
 /// location of the window windowName.
-/// 
+///
 /// ## Parameters
 /// * windowName: Name of the window.
 pub fn save_window_parameters(window_name: &str) -> Result<()> {
@@ -629,7 +629,7 @@ pub fn save_window_parameters(window_name: &str) -> Result<()> {
 /// Selects ROI on the given image.
 /// Function creates a window and allows user to select a ROI using mouse.
 /// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
-/// 
+///
 /// ## Parameters
 /// * windowName: name of the window where selection process will be shown.
 /// * img: image to select a ROI.
@@ -638,11 +638,11 @@ pub fn save_window_parameters(window_name: &str) -> Result<()> {
 /// selection rectangle will correspont to the initial mouse position.
 /// ## Returns
 /// selected ROI or empty rect if selection canceled.
-/// 
-/// 
+///
+///
 /// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 /// After finish of work an empty callback will be set for the used window.
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -655,7 +655,7 @@ pub fn select_roi(img: &core::Mat, show_crosshair: bool, from_center: bool) -> R
 /// Selects ROI on the given image.
 /// Function creates a window and allows user to select a ROI using mouse.
 /// Controls: use `space` or `enter` to finish selection, use key `c` to cancel selection (function will return the zero cv::Rect).
-/// 
+///
 /// ## Parameters
 /// * windowName: name of the window where selection process will be shown.
 /// * img: image to select a ROI.
@@ -664,8 +664,8 @@ pub fn select_roi(img: &core::Mat, show_crosshair: bool, from_center: bool) -> R
 /// selection rectangle will correspont to the initial mouse position.
 /// ## Returns
 /// selected ROI or empty rect if selection canceled.
-/// 
-/// 
+///
+///
 /// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 /// After finish of work an empty callback will be set for the used window.
 ///
@@ -681,7 +681,7 @@ pub fn select_roi_for_window(window_name: &str, img: &core::Mat, show_crosshair:
 /// Function creates a window and allows user to select a ROIs using mouse.
 /// Controls: use `space` or `enter` to finish current selection and start a new one,
 /// use `esc` to terminate multiple ROI selection process.
-/// 
+///
 /// ## Parameters
 /// * windowName: name of the window where selection process will be shown.
 /// * img: image to select a ROI.
@@ -689,8 +689,8 @@ pub fn select_roi_for_window(window_name: &str, img: &core::Mat, show_crosshair:
 /// * showCrosshair: if true crosshair of selection rectangle will be shown.
 /// * fromCenter: if true center of selection will match initial mouse position. In opposite case a corner of
 /// selection rectangle will correspont to the initial mouse position.
-/// 
-/// 
+///
+///
 /// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 /// After finish of work an empty callback will be set for the used window.
 ///
@@ -703,7 +703,7 @@ pub fn select_rois(window_name: &str, img: &core::Mat, bounding_boxes: &mut type
 }
 
 /// Sets mouse handler for the specified window
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * onMouse: Callback function for mouse events. See OpenCV samples on how to specify and use the callback.
@@ -718,7 +718,7 @@ pub fn set_mouse_callback(winname: &str, on_mouse: Option<Box<crate::highgui::Mo
 }
 
 /// Sets the specified window as current OpenGL context.
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 pub fn set_open_gl_context(winname: &str) -> Result<()> {
@@ -727,20 +727,20 @@ pub fn set_open_gl_context(winname: &str) -> Result<()> {
 }
 
 /// Sets a callback function to be called to draw on top of displayed image.
-/// 
+///
 /// The function setOpenGlDrawCallback can be used to draw 3D data on the window. See the example of
 /// callback function below:
 /// ```ignore
 /// void on_opengl(void* param)
 /// {
 /// glLoadIdentity();
-/// 
+///
 /// glTranslated(0.0, 0.0, -1.0);
-/// 
+///
 /// glRotatef( 55, 1, 0, 0 );
 /// glRotatef( 45, 0, 1, 0 );
 /// glRotatef( 0, 0, 0, 1 );
-/// 
+///
 /// static const int coords[6][4][3] = {
 /// { { +1, -1, -1 }, { -1, -1, -1 }, { -1, +1, -1 }, { +1, +1, -1 } },
 /// { { +1, +1, -1 }, { -1, +1, -1 }, { -1, +1, +1 }, { +1, +1, +1 } },
@@ -749,7 +749,7 @@ pub fn set_open_gl_context(winname: &str) -> Result<()> {
 /// { { +1, -1, +1 }, { -1, -1, +1 }, { -1, -1, -1 }, { +1, -1, -1 } },
 /// { { -1, -1, +1 }, { +1, -1, +1 }, { +1, +1, +1 }, { -1, +1, +1 } }
 /// };
-/// 
+///
 /// for (int i = 0; i < 6; ++i) {
 /// glColor3ub( i*20, 100+i*10, i*42 );
 /// glBegin(GL_QUADS);
@@ -760,8 +760,8 @@ pub fn set_open_gl_context(winname: &str) -> Result<()> {
 /// }
 /// }
 /// ```
-/// 
-/// 
+///
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * onOpenGlDraw: Pointer to the function to be called every frame. This function should be
@@ -777,15 +777,15 @@ pub fn set_open_gl_draw_callback(winname: &str, on_open_gl_draw: Option<Box<crat
 }
 
 /// Sets the trackbar maximum position.
-/// 
+///
 /// The function sets the maximum position of the specified trackbar in the specified window.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// [__Qt Backend Only__] winname can be empty (or NULL) if the trackbar is attached to the control
 /// panel.
-/// 
+///
 /// ## Parameters
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of trackbar.
@@ -797,15 +797,15 @@ pub fn set_trackbar_max(trackbarname: &str, winname: &str, maxval: i32) -> Resul
 }
 
 /// Sets the trackbar minimum position.
-/// 
+///
 /// The function sets the minimum position of the specified trackbar in the specified window.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// [__Qt Backend Only__] winname can be empty (or NULL) if the trackbar is attached to the control
 /// panel.
-/// 
+///
 /// ## Parameters
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of trackbar.
@@ -817,15 +817,15 @@ pub fn set_trackbar_min(trackbarname: &str, winname: &str, minval: i32) -> Resul
 }
 
 /// Sets the trackbar position.
-/// 
+///
 /// The function sets the position of the specified trackbar in the specified window.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// [__Qt Backend Only__] winname can be empty (or NULL) if the trackbar is attached to the control
 /// panel.
-/// 
+///
 /// ## Parameters
 /// * trackbarname: Name of the trackbar.
 /// * winname: Name of the window that is the parent of trackbar.
@@ -837,9 +837,9 @@ pub fn set_trackbar_pos(trackbarname: &str, winname: &str, pos: i32) -> Result<(
 }
 
 /// Changes parameters of a window dynamically.
-/// 
+///
 /// The function setWindowProperty enables changing properties of a window.
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 /// * prop_id: Window property to edit. The supported operation flags are: (cv::WindowPropertyFlags)
@@ -868,7 +868,7 @@ pub fn stop_loop() -> Result<()> {
 }
 
 /// Force window to redraw its context and call draw callback ( See cv::setOpenGlDrawCallback ).
-/// 
+///
 /// ## Parameters
 /// * winname: Name of the window.
 pub fn update_window(winname: &str) -> Result<()> {
@@ -877,10 +877,10 @@ pub fn update_window(winname: &str) -> Result<()> {
 }
 
 /// Similar to #waitKey, but returns full key code.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// Key code is implementation specific and depends on used backend: QT/GTK/Win32/etc
 ///
 /// ## C++ default parameters
@@ -890,26 +890,26 @@ pub fn wait_key_ex(delay: i32) -> Result<i32> {
 }
 
 /// Waits for a pressed key.
-/// 
+///
 /// The function waitKey waits for a key event infinitely (when <span lang='latex'>\texttt{delay}\leq 0</span> ) or for delay
 /// milliseconds, when it is positive. Since the OS has a minimum time between switching threads, the
 /// function will not wait exactly delay ms, it will wait at least delay ms, depending on what else is
 /// running on your computer at that time. It returns the code of the pressed key or -1 if no key was
 /// pressed before the specified time had elapsed.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// This function is the only method in HighGUI that can fetch and handle events, so it needs to be
 /// called periodically for normal event processing unless HighGUI is used within an environment that
 /// takes care of event processing.
-/// 
-/// 
+///
+///
 /// Note:
-/// 
+///
 /// The function only works if there is at least one HighGUI window created and the window is active.
 /// If there are several HighGUI windows, any of them can be active.
-/// 
+///
 /// ## Parameters
 /// * delay: Delay in milliseconds. 0 is the special value that means "forever".
 ///

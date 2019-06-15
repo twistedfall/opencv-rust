@@ -1,8 +1,8 @@
 //! # Deformable Part-based Models
-//! 
+//!
 //! Discriminatively Trained Part Based Models for Object Detection
 //! ---------------------------------------------------------------
-//! 
+//!
 //! The object detector described below has been initially proposed by P.F. Felzenszwalb in
 //! [Felzenszwalb2010a](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
 //! of oriented gradients (HOG) features to represent an object category. This detector uses a sliding
@@ -18,7 +18,7 @@
 //! class of models by a mixture of star models. The score of a mixture model at a particular position
 //! and scale is the maximum over components, of the score of that component model at the given
 //! location.
-//! 
+//!
 //! The detector was dramatically speeded-up with cascade algorithm proposed by P.F. Felzenszwalb in
 //! [Felzenszwalb2010b](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
 //! basic idea of the algorithm is to use a hierarchy of models defined by an ordering of the original
@@ -27,7 +27,7 @@
 //! Using this hierarchy, low scoring hypotheses can be pruned after looking at the best configuration
 //! of a subset of the parts. Hypotheses that score high under a weak model are evaluated further using
 //! a richer model.
-//! 
+//!
 //! In OpenCV there is an C++ implementation of DPM cascade detector.
 use std::os::raw::{c_char, c_void};
 use libc::size_t;

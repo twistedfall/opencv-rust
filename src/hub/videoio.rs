@@ -1,7 +1,7 @@
 //! # Video I/O
-//! 
+//!
 //!  Read and write video or images sequence with OpenCV
-//! 
+//!
 //! ### See also:
 //! - @ref videoio_overview
 //! - Tutorials: @ref tutorial_table_of_content_videoio
@@ -347,15 +347,15 @@ pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 
 // boxed class cv::VideoCapture
 /// Class for video capturing from video files, image sequences or cameras.
-/// 
+///
 /// The class provides C++ API for capturing video from cameras or for reading video files and image sequences.
-/// 
+///
 /// Here is how the class can be used:
 /// @include samples/cpp/videocapture_basic.cpp
-/// 
-/// 
+///
+///
 /// Note: In @ref videoio_c "C API" the black-box structure `CvCapture` is used instead of %VideoCapture.
-/// 
+///
 /// Note:
 /// *   (C++) A basic sample on using the %VideoCapture interface can be found at
 /// `OPENCV_SOURCE_CODE/samples/cpp/videocapture_starter.cpp`
@@ -385,7 +385,7 @@ impl crate::videoio::VideoCapture {
 impl VideoCapture {
 
     /// Default constructor
-    /// 
+    ///
     /// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
     /// cvReleaseCapture(), or use Ptr\<CvCapture\> that calls cvReleaseCapture() automatically in the
     /// destructor.
@@ -394,7 +394,7 @@ impl VideoCapture {
     }
     
     /// Open video file or a capturing device or a IP video stream for video capturing
-    /// 
+    ///
     /// Same as VideoCapture(const String& filename, int apiPreference) but using default Capture API backends
     pub fn new_from_file(filename: &str) -> Result<crate::videoio::VideoCapture> {
         string_arg!(filename);
@@ -402,7 +402,7 @@ impl VideoCapture {
     }
     
     /// Open video file or a capturing device or a IP video stream for video capturing with API Preference
-    /// 
+    ///
     /// ## Parameters
     /// * filename: it can be:
     /// - name of video file (eg. `video.avi`)
@@ -420,12 +420,12 @@ impl VideoCapture {
     }
     
     /// Open a camera for video capturing
-    /// 
+    ///
     /// ## Parameters
     /// * index: camera_id + domain_offset (CAP_*) id of the video capturing device to open. To open default camera using default backend just pass 0.
     /// Use a `domain_offset` to enforce a specific reader implementation if multiple are available like cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
     /// e.g. to open Camera 1 using the MS Media Foundation API use `index = 1 + cv::CAP_MSMF`
-    /// 
+    ///
     /// ## See also
     /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn new(index: i32) -> Result<crate::videoio::VideoCapture> {
@@ -433,13 +433,13 @@ impl VideoCapture {
     }
     
     /// Opens a camera for video capturing
-    /// 
+    ///
     /// ## Parameters
     /// * index: id of the video capturing device to open. To open default camera using default backend just pass 0.
     /// (to backward compatibility usage of camera_id + domain_offset (CAP_*) is valid when apiPreference is CAP_ANY)
     /// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
     /// implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L2.
-    /// 
+    ///
     /// ## See also
     /// The list of supported API backends cv::VideoCaptureAPIs
     pub fn new_with_backend(index: i32, api_preference: i32) -> Result<crate::videoio::VideoCapture> {
@@ -447,13 +447,13 @@ impl VideoCapture {
     }
     
     /// Open video file or a capturing device or a IP video stream for video capturing
-    /// 
-    /// 
-    /// 
+    ///
+    ///
+    ///
     /// Parameters are same as the constructor VideoCapture(const String& filename)
     /// ## Returns
     /// `true` if the file has been successfully opened
-    /// 
+    ///
     /// The method first calls VideoCapture::release to close the already opened file or camera.
     pub fn open_file(&mut self, filename: &str) -> Result<bool> {
         string_arg!(filename);
@@ -461,22 +461,22 @@ impl VideoCapture {
     }
     
     /// Open a camera for video capturing
-    /// 
-    /// 
-    /// 
+    ///
+    ///
+    ///
     /// Parameters are same as the constructor VideoCapture(int index)
     /// ## Returns
     /// `true` if the camera has been successfully opened.
-    /// 
+    ///
     /// The method first calls VideoCapture::release to close the already opened file or camera.
     pub fn open(&mut self, index: i32) -> Result<bool> {
         unsafe { sys::cv_VideoCapture_open_int(self.as_raw_VideoCapture(), index) }.into_result()
     }
     
     /// Open a camera for video capturing
-    /// 
-    /// 
-    /// 
+    ///
+    ///
+    ///
     /// Parameters are similar as the constructor VideoCapture(int index),except it takes an additional argument apiPreference.
     /// Definitely, is same as open(int index) where `index=cameraNum + apiPreference`
     /// ## Returns
@@ -486,7 +486,7 @@ impl VideoCapture {
     }
     
     /// Returns true if video capturing has been initialized already.
-    /// 
+    ///
     /// If the previous call to VideoCapture constructor or VideoCapture::open() succeeded, the method returns
     /// true.
     pub fn is_opened(&self) -> Result<bool> {
@@ -494,54 +494,54 @@ impl VideoCapture {
     }
     
     /// Closes video file or capturing device.
-    /// 
+    ///
     /// The method is automatically called by subsequent VideoCapture::open and by VideoCapture
     /// destructor.
-    /// 
+    ///
     /// The C function also deallocates memory and clears \*capture pointer.
     pub fn release(&mut self) -> Result<()> {
         unsafe { sys::cv_VideoCapture_release(self.as_raw_VideoCapture()) }.into_result()
     }
     
     /// Grabs the next frame from video file or capturing device.
-    /// 
+    ///
     /// ## Returns
     /// `true` (non-zero) in the case of success.
-    /// 
+    ///
     /// The method/function grabs the next frame from video file or camera and returns true (non-zero) in
     /// the case of success.
-    /// 
+    ///
     /// The primary use of the function is in multi-camera environments, especially when the cameras do not
     /// have hardware synchronization. That is, you call VideoCapture::grab() for each camera and after that
     /// call the slower method VideoCapture::retrieve() to decode and get frame from each camera. This way
     /// the overhead on demosaicing or motion jpeg decompression etc. is eliminated and the retrieved frames
     /// from different cameras will be closer in time.
-    /// 
+    ///
     /// Also, when a connected camera is multi-head (for example, a stereo camera or a Kinect device), the
     /// correct way of retrieving data from it is to call VideoCapture::grab() first and then call
     /// VideoCapture::retrieve() one or more times with different values of the channel parameter.
-    /// 
+    ///
     /// @ref tutorial_kinect_openni
     pub fn grab(&mut self) -> Result<bool> {
         unsafe { sys::cv_VideoCapture_grab(self.as_raw_VideoCapture()) }.into_result()
     }
     
     /// Decodes and returns the grabbed video frame.
-    /// 
+    ///
     /// ## Parameters
     /// * image: [out] the video frame is returned here. If no frames has been grabbed the image will be empty.
     /// * flag: it could be a frame index or a driver specific flag
     /// ## Returns
     /// `false` if no frames has been grabbed
-    /// 
+    ///
     /// The method decodes and returns the just grabbed frame. If no frames has been grabbed
     /// (camera has been disconnected, or there are no more frames in video file), the method returns false
     /// and the function returns an empty image (with %cv::Mat, test it with Mat::empty()).
-    /// 
+    ///
     /// ## See also
     /// read()
-    /// 
-    /// 
+    ///
+    ///
     /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
     /// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
     /// cvCloneImage and then do whatever you want with the copy.
@@ -553,18 +553,18 @@ impl VideoCapture {
     }
     
     /// Grabs, decodes and returns the next video frame.
-    /// 
+    ///
     /// ## Parameters
     /// * image: [out] the video frame is returned here. If no frames has been grabbed the image will be empty.
     /// ## Returns
     /// `false` if no frames has been grabbed
-    /// 
+    ///
     /// The method/function combines VideoCapture::grab() and VideoCapture::retrieve() in one call. This is the
     /// most convenient method for reading video files or capturing data from decode and returns the just
     /// grabbed frame. If no frames has been grabbed (camera has been disconnected, or there are no more
     /// frames in video file), the method returns false and the function returns empty image (with %cv::Mat, test it with Mat::empty()).
-    /// 
-    /// 
+    ///
+    ///
     /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
     /// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
     /// cvCloneImage and then do whatever you want with the copy.
@@ -573,14 +573,14 @@ impl VideoCapture {
     }
     
     /// Sets a property in the VideoCapture.
-    /// 
+    ///
     /// ## Parameters
     /// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
     /// or one from @ref videoio_flags_others
     /// * value: Value of the property.
     /// ## Returns
     /// `true` if the property is supported by backend used by the VideoCapture instance.
-    /// 
+    ///
     /// Note: Even if it returns `true` this doesn't ensure that the property
     /// value has been accepted by the capture device. See note in VideoCapture::get()
     pub fn set(&mut self, prop_id: i32, value: f64) -> Result<bool> {
@@ -588,21 +588,21 @@ impl VideoCapture {
     }
     
     /// Returns the specified VideoCapture property
-    /// 
+    ///
     /// ## Parameters
     /// * propId: Property identifier from cv::VideoCaptureProperties (eg. cv::CAP_PROP_POS_MSEC, cv::CAP_PROP_POS_FRAMES, ...)
     /// or one from @ref videoio_flags_others
     /// ## Returns
     /// Value for the specified property. Value 0 is returned when querying a property that is
     /// not supported by the backend used by the VideoCapture instance.
-    /// 
-    /// 
+    ///
+    ///
     /// Note: Reading / writing properties involves many layers. Some unexpected result might happens
     /// along this chain.
     /// ```ignore {.txt}
     /// `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
     /// ```
-    /// 
+    ///
     /// The returned value might be different from what really used by the device or it could be encoded
     /// using device dependent rules (eg. steps or percentage). Effective behaviour depends from device
     /// driver and API Backend
@@ -611,13 +611,13 @@ impl VideoCapture {
     }
     
     /// Open video file or a capturing device or a IP video stream for video capturing with API Preference
-    /// 
-    /// 
-    /// 
+    ///
+    ///
+    ///
     /// Parameters are same as the constructor VideoCapture(const String& filename, int apiPreference)
     /// ## Returns
     /// `true` if the file has been successfully opened
-    /// 
+    ///
     /// The method first calls VideoCapture::release to close the already opened file or camera.
     pub fn open_file_with_backend(&mut self, filename: &str, api_preference: i32) -> Result<bool> {
         string_arg!(filename);
@@ -625,8 +625,8 @@ impl VideoCapture {
     }
     
     /// Returns used backend API name
-    /// 
-    /// 
+    ///
+    ///
     /// Note: Stream should be opened.
     pub fn get_backend_name(&self) -> Result<String> {
         unsafe { sys::cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture()) }.into_result().map(crate::templ::receive_string_mut)
@@ -636,7 +636,7 @@ impl VideoCapture {
 
 // boxed class cv::VideoWriter
 /// Video writer class.
-/// 
+///
 /// The class provides C++ API for writing video files or image sequences.
 #[allow(dead_code)]
 pub struct VideoWriter {
@@ -658,7 +658,7 @@ impl crate::videoio::VideoWriter {
 impl VideoWriter {
 
     /// Default constructors
-    /// 
+    ///
     /// The constructors/functions initialize video writers.
     /// *   On Linux FFMPEG is used to write videos;
     /// *   On Windows FFMPEG or VFW is used;
@@ -679,7 +679,7 @@ impl VideoWriter {
     /// * frameSize: Size of the video frames.
     /// * isColor: If it is not zero, the encoder will expect and encode color frames, otherwise it
     /// will work with grayscale frames (the flag is currently supported on Windows only).
-    /// 
+    ///
     /// @b Tips:
     /// - With some backends `fourcc=-1` pops up the codec selection dialog from the system.
     /// - To save image sequence use a proper filename (eg. `img_%02d.jpg`) and `fourcc=0`
@@ -706,12 +706,12 @@ impl VideoWriter {
     }
     
     /// Initializes or reinitializes video writer.
-    /// 
+    ///
     /// The method opens video writer. Parameters are the same as in the constructor
     /// VideoWriter::VideoWriter.
     /// ## Returns
     /// `true` if video writer has been successfully initialized
-    /// 
+    ///
     /// The method first calls VideoWriter::release to close the already opened file.
     ///
     /// ## C++ default parameters
@@ -735,7 +735,7 @@ impl VideoWriter {
     }
     
     /// Closes the video writer.
-    /// 
+    ///
     /// The method is automatically called by subsequent VideoWriter::open and by the VideoWriter
     /// destructor.
     pub fn release(&mut self) -> Result<()> {
@@ -743,10 +743,10 @@ impl VideoWriter {
     }
     
     /// Writes the next video frame
-    /// 
+    ///
     /// ## Parameters
     /// * image: The written frame. In general, color images are expected in BGR format.
-    /// 
+    ///
     /// The function/method writes the specified image to video file. It must have the same size as has
     /// been specified when opening the video writer.
     pub fn write(&mut self, image: &core::Mat) -> Result<()> {
@@ -754,11 +754,11 @@ impl VideoWriter {
     }
     
     /// Sets a property in the VideoWriter.
-    /// 
+    ///
     /// ## Parameters
     /// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
     /// or one of @ref videoio_flags_others
-    /// 
+    ///
     /// * value: Value of the property.
     /// ## Returns
     /// `true` if the property is supported by the backend used by the VideoWriter instance.
@@ -767,11 +767,11 @@ impl VideoWriter {
     }
     
     /// Returns the specified VideoWriter property
-    /// 
+    ///
     /// ## Parameters
     /// * propId: Property identifier from cv::VideoWriterProperties (eg. cv::VIDEOWRITER_PROP_QUALITY)
     /// or one of @ref videoio_flags_others
-    /// 
+    ///
     /// ## Returns
     /// Value for the specified property. Value 0 is returned when querying a property that is
     /// not supported by the backend used by the VideoWriter instance.
@@ -780,10 +780,10 @@ impl VideoWriter {
     }
     
     /// Concatenates 4 chars to a fourcc code
-    /// 
+    ///
     /// ## Returns
     /// a fourcc code
-    /// 
+    ///
     /// This static method constructs the fourcc code of the codec to be used in the constructor
     /// VideoWriter::VideoWriter or VideoWriter::open.
     pub fn fourcc(c1: i8, c2: i8, c3: i8, c4: i8) -> Result<i32> {
@@ -791,8 +791,8 @@ impl VideoWriter {
     }
     
     /// Returns used backend API name
-    /// 
-    /// 
+    ///
+    ///
     /// Note: Stream should be opened.
     pub fn get_backend_name(&self) -> Result<String> {
         unsafe { sys::cv_VideoWriter_getBackendName_const(self.as_raw_VideoWriter()) }.into_result().map(crate::templ::receive_string_mut)

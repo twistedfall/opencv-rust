@@ -1,31 +1,31 @@
 //! # Computational Photography
-//! 
+//!
 //! This module includes photo processing algorithms
 //! # Inpainting
 //! # Denoising
 //! # HDR imaging
-//! 
+//!
 //! This section describes high dynamic range imaging algorithms namely tonemapping, exposure alignment,
 //! camera calibration with multiple exposures and exposure fusion.
-//! 
+//!
 //! # Contrast Preserving Decolorization
-//! 
+//!
 //! Useful links:
-//! 
+//!
 //! http://www.cse.cuhk.edu.hk/leojia/projects/color2gray/index.html
-//! 
+//!
 //! # Seamless Cloning
-//! 
+//!
 //! Useful links:
-//! 
+//!
 //! https://www.learnopencv.com/seamless-cloning-using-opencv-python-cpp
-//! 
+//!
 //! # Non-Photorealistic Rendering
-//! 
+//!
 //! Useful links:
-//! 
+//!
 //! http://www.inf.ufrgs.br/~eslgastal/DomainTransform
-//! 
+//!
 //! https://www.learnopencv.com/non-photorealistic-rendering-using-opencv-python-c/
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -42,7 +42,7 @@ pub const RECURS_FILTER: i32 = 1;
 
 /// Given an original color image, two differently colored versions of this image can be mixed
 /// seamlessly.
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * mask: Input 8-bit 1 or 3-channel image.
@@ -50,7 +50,7 @@ pub const RECURS_FILTER: i32 = 1;
 /// * red_mul: R-channel multiply factor.
 /// * green_mul: G-channel multiply factor.
 /// * blue_mul: B-channel multiply factor.
-/// 
+///
 /// Multiplication factor is between .5 to 2.5.
 ///
 /// ## C++ default parameters
@@ -62,7 +62,7 @@ pub fn color_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, red_
 }
 
 /// Creates AlignMTB object
-/// 
+///
 /// ## Parameters
 /// * max_bits: logarithm to the base 2 of maximal shift in each dimension. Values of 5 and 6 are
 /// usually good enough (31 and 63 pixels shift respectively).
@@ -79,7 +79,7 @@ pub fn create_align_mtb(max_bits: i32, exclude_range: i32, cut: bool) -> Result<
 }
 
 /// Creates CalibrateDebevec object
-/// 
+///
 /// ## Parameters
 /// * samples: number of pixel locations to use
 /// * lambda: smoothness term weight. Greater values produce smoother results, but can alter the
@@ -96,7 +96,7 @@ pub fn create_calibrate_debevec(samples: i32, lambda: f32, random: bool) -> Resu
 }
 
 /// Creates CalibrateRobertson object
-/// 
+///
 /// ## Parameters
 /// * max_iter: maximal number of Gauss-Seidel solver iterations.
 /// * threshold: target difference between results of two successive steps of the minimization.
@@ -114,7 +114,7 @@ pub fn create_merge_debevec() -> Result<types::PtrOfMergeDebevec> {
 }
 
 /// Creates MergeMertens object
-/// 
+///
 /// ## Parameters
 /// * contrast_weight: contrast measure weight. See MergeMertens.
 /// * saturation_weight: saturation measure weight
@@ -134,7 +134,7 @@ pub fn create_merge_robertson() -> Result<types::PtrOfMergeRobertson> {
 }
 
 /// Creates TonemapDrago object
-/// 
+///
 /// ## Parameters
 /// * gamma: gamma value for gamma correction. See createTonemap
 /// * saturation: positive saturation enhancement value. 1.0 preserves saturation, values greater
@@ -151,7 +151,7 @@ pub fn create_tonemap_drago(gamma: f32, saturation: f32, bias: f32) -> Result<ty
 }
 
 /// Creates TonemapMantiuk object
-/// 
+///
 /// ## Parameters
 /// * gamma: gamma value for gamma correction. See createTonemap
 /// * scale: contrast scale factor. HVS response is multiplied by this parameter, thus compressing
@@ -167,7 +167,7 @@ pub fn create_tonemap_mantiuk(gamma: f32, scale: f32, saturation: f32) -> Result
 }
 
 /// Creates TonemapReinhard object
-/// 
+///
 /// ## Parameters
 /// * gamma: gamma value for gamma correction. See createTonemap
 /// * intensity: result intensity in [-8, 8] range. Greater intensity produces brighter results.
@@ -186,7 +186,7 @@ pub fn create_tonemap_reinhard(gamma: f32, intensity: f32, light_adapt: f32, col
 }
 
 /// Creates simple linear mapper with gamma correction
-/// 
+///
 /// ## Parameters
 /// * gamma: positive value for gamma correction. Gamma value of 1.0 implies no correction, gamma
 /// equal to 2.2f is suitable for most displays.
@@ -201,12 +201,12 @@ pub fn create_tonemap(gamma: f32) -> Result<types::PtrOfTonemap> {
 /// Transforms a color image to a grayscale image. It is a basic tool in digital printing, stylized
 /// black-and-white photograph rendering, and in many single channel image processing applications
 /// [CL12](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_CL12) .
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * grayscale: Output 8-bit 1-channel image.
 /// * color_boost: Output 8-bit 3-channel image.
-/// 
+///
 /// This function is to be applied on color images.
 pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_decolor_Mat_Mat_Mat(src.as_raw_Mat(), grayscale.as_raw_Mat(), color_boost.as_raw_Mat()) }.into_result()
@@ -216,12 +216,12 @@ pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut cor
 /// finding a function to minimize some functional). As the image denoising, in particular, may be seen
 /// as the variational problem, primal-dual algorithm then can be used to perform denoising and this is
 /// exactly what is implemented.
-/// 
+///
 /// It should be noted, that this implementation was taken from the July 2013 blog entry
 /// [MA13](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MA13) , which also contained (slightly more general) ready-to-use source code on Python.
 /// Subsequently, that code was rewritten on C++ with the usage of openCV by Vadim Pisarevsky at the end
 /// of July 2013 and finally it was slightly adapted by later authors.
-/// 
+///
 /// Although the thorough discussion and justification of the algorithm involved may be found in
 /// [ChambolleEtAl](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MA13) . To begin
 /// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
@@ -229,14 +229,14 @@ pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut cor
 /// <span lang='latex'>\left\{(x,y)\in\mathbb{N}\times\mathbb{N}\mid 1\leq x\leq n,\;1\leq y\leq m\right\}</span> for some
 /// <span lang='latex'>m,\;n\in\mathbb{N}</span>) into <span lang='latex'>\{0,1,\dots,255\}</span>. We shall denote the noised images as <span lang='latex'>f_i</span> and with
 /// this view, given some image <span lang='latex'>x</span> of the same size, we may measure how bad it is by the formula
-/// 
+///
 /// <div lang='latex'>\left\|\left\|\nabla x\right\|\right\| + \lambda\sum_i\left\|\left\|x-f_i\right\|\right\|</div>
-/// 
+///
 /// <span lang='latex'>\|\|\cdot\|\|</span> here denotes <span lang='latex'>L_2</span>-norm and as you see, the first addend states that we want our
 /// image to be smooth (ideally, having zero gradient, thus being constant) and the second states that
 /// we want our result to be close to the observations we've got. If we treat <span lang='latex'>x</span> as a function, this is
 /// exactly the functional what we seek to minimize and here the Primal-Dual algorithm comes into play.
-/// 
+///
 /// ## Parameters
 /// * observations: This array should contain one or more noised versions of the image that is to
 /// be restored.
@@ -258,7 +258,7 @@ pub fn denoise_tvl1(observations: &types::VectorOfMat, result: &mut core::Mat, l
 }
 
 /// This filter enhances the details of a particular image.
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Output image with the same size and type as src.
@@ -274,7 +274,7 @@ pub fn detail_enhance(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_
 
 /// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
 /// filters are used in many different applications [EM11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_EM11) .
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Output 8-bit 3-channel image.
@@ -291,7 +291,7 @@ pub fn edge_preserving_filter(src: &core::Mat, dst: &mut core::Mat, flags: i32, 
 }
 
 /// Modification of fastNlMeansDenoisingMulti function for colored images sequences
-/// 
+///
 /// ## Parameters
 /// * srcImgs: Input 8-bit 3-channel images sequence. All images should have the same type and
 /// size.
@@ -310,7 +310,7 @@ pub fn edge_preserving_filter(src: &core::Mat, dst: &mut core::Mat, flags: i32, 
 /// removes noise but also removes image details, smaller h value preserves details but also preserves
 /// some noise.
 /// * hColor: The same as h but for color components.
-/// 
+///
 /// The function converts images to CIELAB colorspace and then separately denoise L and AB components
 /// with given h parameters using fastNlMeansDenoisingMulti function.
 ///
@@ -324,7 +324,7 @@ pub fn fast_nl_means_denoising_colored_multi(src_imgs: &types::VectorOfMat, dst:
 }
 
 /// Modification of fastNlMeansDenoising function for colored images
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Output image with the same size and type as src .
@@ -338,7 +338,7 @@ pub fn fast_nl_means_denoising_colored_multi(src_imgs: &types::VectorOfMat, dst:
 /// some noise
 /// * hColor: The same as h but for color components. For most images value equals 10
 /// will be enough to remove colored noise and do not distort colors
-/// 
+///
 /// The function converts image to CIELAB colorspace and then separately denoise L and AB components
 /// with given h parameters using fastNlMeansDenoising function.
 ///
@@ -355,7 +355,7 @@ pub fn fast_nl_means_denoising_color(src: &core::Mat, dst: &mut core::Mat, h: f3
 /// captured in small period of time. For example video. This version of the function is for grayscale
 /// images or for manual manipulation with colorspaces. For more details see
 /// <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394>
-/// 
+///
 /// ## Parameters
 /// * srcImgs: Input 8-bit or 16-bit (only with NORM_L1) 1-channel,
 /// 2-channel, 3-channel or 4-channel images sequence. All images should
@@ -389,7 +389,7 @@ pub fn fast_nl_means_denoising_multi(src_imgs: &types::VectorOfMat, dst: &mut co
 /// captured in small period of time. For example video. This version of the function is for grayscale
 /// images or for manual manipulation with colorspaces. For more details see
 /// <http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.131.6394>
-/// 
+///
 /// ## Parameters
 /// * srcImgs: Input 8-bit 1-channel, 2-channel, 3-channel or
 /// 4-channel images sequence. All images should have the same type and
@@ -420,7 +420,7 @@ pub fn fast_nl_means_denoising_multi_1(src_imgs: &types::VectorOfMat, dst: &mut 
 /// Perform image denoising using Non-local Means Denoising algorithm
 /// <http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/> with several computational
 /// optimizations. Noise expected to be a gaussian white noise
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit or 16-bit (only with NORM_L1) 1-channel,
 /// 2-channel, 3-channel or 4-channel image.
@@ -435,7 +435,7 @@ pub fn fast_nl_means_denoising_multi_1(src_imgs: &types::VectorOfMat, dst: &mut 
 /// perfectly removes noise but also removes image details, smaller h
 /// value preserves details but also preserves some noise
 /// * normType: Type of norm used for weight calculation. Can be either NORM_L2 or NORM_L1
-/// 
+///
 /// This function expected to be applied to grayscale images. For colored images look at
 /// fastNlMeansDenoisingColored. Advanced usage of this functions can be manual denoising of colored
 /// image in different colorspaces. Such approach is used in fastNlMeansDenoisingColored by converting
@@ -453,7 +453,7 @@ pub fn fast_nl_means_denoising_vec(src: &core::Mat, dst: &mut core::Mat, h: &typ
 /// Perform image denoising using Non-local Means Denoising algorithm
 /// <http://www.ipol.im/pub/algo/bcm_non_local_means_denoising/> with several computational
 /// optimizations. Noise expected to be a gaussian white noise
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 1-channel, 2-channel, 3-channel or 4-channel image.
 /// * dst: Output image with the same size and type as src .
@@ -464,7 +464,7 @@ pub fn fast_nl_means_denoising_vec(src: &core::Mat, dst: &mut core::Mat, h: &typ
 /// denoising time. Recommended value 21 pixels
 /// * h: Parameter regulating filter strength. Big h value perfectly removes noise but also
 /// removes image details, smaller h value preserves details but also preserves some noise
-/// 
+///
 /// This function expected to be applied to grayscale images. For colored images look at
 /// fastNlMeansDenoisingColored. Advanced usage of this functions can be manual denoising of colored
 /// image in different colorspaces. Such approach is used in fastNlMeansDenoisingColored by converting
@@ -481,14 +481,14 @@ pub fn fast_nl_means_denoising_window(src: &core::Mat, dst: &mut core::Mat, h: f
 
 /// Applying an appropriate non-linear transformation to the gradient field inside the selection and
 /// then integrating back with a Poisson solver, modifies locally the apparent illumination of an image.
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * mask: Input 8-bit 1 or 3-channel image.
 /// * dst: Output image with the same size and type as src.
 /// * alpha: Value ranges between 0-2.
 /// * beta: Value ranges between 0-2.
-/// 
+///
 /// This is useful to highlight under-exposed foreground objects or to reduce specular reflections.
 ///
 /// ## C++ default parameters
@@ -499,7 +499,7 @@ pub fn illumination_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Ma
 }
 
 /// Restores the selected region in an image using the region neighborhood.
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit, 16-bit unsigned or 32-bit float 1-channel or 8-bit 3-channel image.
 /// * inpaintMask: Inpainting mask, 8-bit 1-channel image. Non-zero pixels indicate the area that
@@ -508,12 +508,12 @@ pub fn illumination_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Ma
 /// * inpaintRadius: Radius of a circular neighborhood of each point inpainted that is considered
 /// by the algorithm.
 /// * flags: Inpainting method that could be cv::INPAINT_NS or cv::INPAINT_TELEA
-/// 
+///
 /// The function reconstructs the selected image area from the pixel near the area boundary. The
 /// function may be used to remove dust and scratches from a scanned photo, or to remove undesirable
 /// objects from still images or video. See <http://en.wikipedia.org/wiki/Inpainting> for more details.
-/// 
-/// 
+///
+///
 /// Note:
 /// *   An example using the inpainting technique can be found at
 /// opencv_source_code/samples/cpp/inpaint.cpp
@@ -524,7 +524,7 @@ pub fn inpaint(src: &core::Mat, inpaint_mask: &core::Mat, dst: &mut core::Mat, i
 }
 
 /// Pencil-like non-photorealistic line drawing
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst1: Output 8-bit 1-channel image.
@@ -546,7 +546,7 @@ pub fn pencil_sketch(src: &core::Mat, dst1: &mut core::Mat, dst2: &mut core::Mat
 /// changes, ones that are restricted to a region manually selected (ROI), in a seamless and effortless
 /// manner. The extent of the changes ranges from slight distortions to complete replacement by novel
 /// content [PM03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_PM03) .
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Input 8-bit 3-channel image.
@@ -561,7 +561,7 @@ pub fn seamless_clone(src: &core::Mat, dst: &core::Mat, mask: &core::Mat, p: cor
 /// Stylization aims to produce digital imagery with a wide variety of effects not focused on
 /// photorealism. Edge-aware filters are ideal for stylization, as they can abstract regions of low
 /// contrast while preserving, or enhancing, high-contrast features.
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * dst: Output image with the same size and type as src.
@@ -577,7 +577,7 @@ pub fn stylization(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_r: 
 
 /// By retaining only the gradients at edge locations, before integrating with the Poisson solver, one
 /// washes out the texture of the selected region, giving its contents a flat aspect. Here Canny Edge %Detector is used.
-/// 
+///
 /// ## Parameters
 /// * src: Input 8-bit 3-channel image.
 /// * mask: Input 8-bit 1 or 3-channel image.
@@ -585,8 +585,8 @@ pub fn stylization(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_r: 
 /// * low_threshold: %Range from 0 to 100.
 /// * high_threshold: Value \> 100.
 /// * kernel_size: The size of the Sobel kernel to be used.
-/// 
-/// 
+///
+///
 /// Note:
 /// The algorithm assumes that the color of the source image is close to that of the destination. This
 /// assumption means that when the colors don't match, the source image color gets tinted toward the
@@ -605,7 +605,7 @@ pub fn texture_flattening(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat
 pub trait AlignExposures: core::Algorithm {
     #[inline(always)] fn as_raw_AlignExposures(&self) -> *mut c_void;
     /// Aligns images
-    /// 
+    ///
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: vector of aligned images
@@ -621,11 +621,11 @@ pub trait AlignExposures: core::Algorithm {
 // Generating impl for trait cv::AlignMTB (trait)
 /// This algorithm converts images to median threshold bitmaps (1 for pixels brighter than median
 /// luminance and 0 otherwise) and than aligns the resulting bitmaps using bit operations.
-/// 
+///
 /// It is invariant to exposure, so exposure values and camera response are not necessary.
-/// 
+///
 /// In this implementation new image regions are filled with zeros.
-/// 
+///
 /// For more information see [GW03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_GW03) .
 pub trait AlignMTB: crate::photo::AlignExposures {
     #[inline(always)] fn as_raw_AlignMTB(&self) -> *mut c_void;
@@ -634,7 +634,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     }
     
     /// Short version of process, that doesn't take extra arguments.
-    /// 
+    ///
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: vector of aligned images
@@ -644,7 +644,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     
     /// Calculates shift between two images, i. e. how to shift the second image to correspond it with the
     /// first.
-    /// 
+    ///
     /// ## Parameters
     /// * img0: first image
     /// * img1: second image
@@ -653,7 +653,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     }
     
     /// Helper function, that shift Mat filling new regions with zeros.
-    /// 
+    ///
     /// ## Parameters
     /// * src: input image
     /// * dst: result image
@@ -663,7 +663,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     }
     
     /// Computes median threshold and exclude bitmaps of given image.
-    /// 
+    ///
     /// ## Parameters
     /// * img: input image
     /// * tb: median threshold bitmap
@@ -703,7 +703,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 pub trait CalibrateCRF: core::Algorithm {
     #[inline(always)] fn as_raw_CalibrateCRF(&self) -> *mut c_void;
     /// Recovers inverse camera response.
-    /// 
+    ///
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: 256x1 matrix with inverse camera response function
@@ -718,7 +718,7 @@ pub trait CalibrateCRF: core::Algorithm {
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. Objective function is constructed using pixel values on the same position
 /// in all images, extra term is added to make the result smoother.
-/// 
+///
 /// For more information see [DM97](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait CalibrateDebevec: crate::photo::CalibrateCRF {
     #[inline(always)] fn as_raw_CalibrateDebevec(&self) -> *mut c_void;
@@ -751,7 +751,7 @@ pub trait CalibrateDebevec: crate::photo::CalibrateCRF {
 // Generating impl for trait cv::CalibrateRobertson (trait)
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. This algorithm uses all image pixels.
-/// 
+///
 /// For more information see [RB99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
     #[inline(always)] fn as_raw_CalibrateRobertson(&self) -> *mut c_void;
@@ -780,7 +780,7 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
 // Generating impl for trait cv::MergeDebevec (trait)
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
-/// 
+///
 /// For more information see [DM97](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait MergeDebevec: crate::photo::MergeExposures {
     #[inline(always)] fn as_raw_MergeDebevec(&self) -> *mut c_void;
@@ -799,7 +799,7 @@ pub trait MergeDebevec: crate::photo::MergeExposures {
 pub trait MergeExposures: core::Algorithm {
     #[inline(always)] fn as_raw_MergeExposures(&self) -> *mut c_void;
     /// Merges images.
-    /// 
+    ///
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: result image
@@ -815,13 +815,13 @@ pub trait MergeExposures: core::Algorithm {
 // Generating impl for trait cv::MergeMertens (trait)
 /// Pixels are weighted using contrast, saturation and well-exposedness measures, than images are
 /// combined using laplacian pyramids.
-/// 
+///
 /// The resulting image weight is constructed as weighted average of contrast, saturation and
 /// well-exposedness measures.
-/// 
+///
 /// The resulting image doesn't require tonemapping and can be converted to 8-bit image by multiplying
 /// by 255, but it's recommended to apply gamma correction and/or linear tonemapping.
-/// 
+///
 /// For more information see [MK07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MK07) .
 pub trait MergeMertens: crate::photo::MergeExposures {
     #[inline(always)] fn as_raw_MergeMertens(&self) -> *mut c_void;
@@ -830,7 +830,7 @@ pub trait MergeMertens: crate::photo::MergeExposures {
     }
     
     /// Short version of process, that doesn't take extra arguments.
-    /// 
+    ///
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: result image
@@ -867,7 +867,7 @@ pub trait MergeMertens: crate::photo::MergeExposures {
 // Generating impl for trait cv::MergeRobertson (trait)
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
-/// 
+///
 /// For more information see [RB99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait MergeRobertson: crate::photo::MergeExposures {
     #[inline(always)] fn as_raw_MergeRobertson(&self) -> *mut c_void;
@@ -886,7 +886,7 @@ pub trait MergeRobertson: crate::photo::MergeExposures {
 pub trait Tonemap: core::Algorithm {
     #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void;
     /// Tonemaps image
-    /// 
+    ///
     /// ## Parameters
     /// * src: source image - CV_32FC3 Mat (float 32 bits 3 channels)
     /// * dst: destination image - CV_32FC3 Mat with values in [0, 1] range
@@ -907,12 +907,12 @@ pub trait Tonemap: core::Algorithm {
 // Generating impl for trait cv::TonemapDrago (trait)
 /// Adaptive logarithmic mapping is a fast global tonemapping algorithm that scales the image in
 /// logarithmic domain.
-/// 
+///
 /// Since it's a global operator the same function is applied to all the pixels, it is controlled by the
 /// bias parameter.
-/// 
+///
 /// Optional saturation enhancement is possible as described in [FL02](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_FL02) .
-/// 
+///
 /// For more information see [DM03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_DM03) .
 pub trait TonemapDrago: crate::photo::Tonemap {
     #[inline(always)] fn as_raw_TonemapDrago(&self) -> *mut c_void;
@@ -938,7 +938,7 @@ pub trait TonemapDrago: crate::photo::Tonemap {
 /// This algorithm transforms image to contrast using gradients on all levels of gaussian pyramid,
 /// transforms contrast values to HVS response and scales the response. After this the image is
 /// reconstructed from new contrast values.
-/// 
+///
 /// For more information see [MM06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_MM06) .
 pub trait TonemapMantiuk: crate::photo::Tonemap {
     #[inline(always)] fn as_raw_TonemapMantiuk(&self) -> *mut c_void;
@@ -962,10 +962,10 @@ pub trait TonemapMantiuk: crate::photo::Tonemap {
 
 // Generating impl for trait cv::TonemapReinhard (trait)
 /// This is a global tonemapping operator that models human visual system.
-/// 
+///
 /// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and
 /// color adaptation.
-/// 
+///
 /// For more information see [RD05](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RD05) .
 pub trait TonemapReinhard: crate::photo::Tonemap {
     #[inline(always)] fn as_raw_TonemapReinhard(&self) -> *mut c_void;

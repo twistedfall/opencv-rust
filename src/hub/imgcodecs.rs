@@ -49,13 +49,13 @@ pub const IMWRITE_TIFF_YDPI: i32 = 258;
 pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 
 /// Reads an image from a buffer in memory.
-/// 
+///
 /// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
 /// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
-/// 
+///
 /// See cv::imread for the list of supported formats and flags description.
-/// 
-/// 
+///
+///
 /// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 /// ## Parameters
 /// * buf: Input array or vector of bytes.
@@ -65,22 +65,22 @@ pub fn imdecode(buf: &core::Mat, flags: i32) -> Result<core::Mat> {
 }
 
 /// Reads an image from a buffer in memory.
-/// 
+///
 /// The function imdecode reads an image from the specified buffer in the memory. If the buffer is too short or
 /// contains invalid data, the function returns an empty matrix ( Mat::data==NULL ).
-/// 
+///
 /// See cv::imread for the list of supported formats and flags description.
-/// 
-/// 
+///
+///
 /// Note: In the case of color images, the decoded images will have the channels stored in **B G R** order.
 /// ## Parameters
 /// * buf: Input array or vector of bytes.
 /// * flags: The same flags as in cv::imread, see cv::ImreadModes.
-/// 
+///
 /// ## Overloaded parameters
-/// 
-/// * buf: 
-/// * flags: 
+///
+/// * buf:
+/// * flags:
 /// * dst: The optional output placeholder for the decoded matrix. It can save the image
 /// reallocations when the function is called repeatedly for images of the same size.
 pub fn imdecode_to(buf: &core::Mat, flags: i32, dst: &mut core::Mat) -> Result<core::Mat> {
@@ -88,10 +88,10 @@ pub fn imdecode_to(buf: &core::Mat, flags: i32, dst: &mut core::Mat) -> Result<c
 }
 
 /// Encodes an image into a memory buffer.
-/// 
+///
 /// The function imencode compresses the image and stores it in the memory buffer that is resized to fit the
 /// result. See cv::imwrite for the list of supported formats and flags description.
-/// 
+///
 /// ## Parameters
 /// * ext: File extension that defines the output format.
 /// * img: Image to be written.
@@ -106,15 +106,15 @@ pub fn imencode(ext: &str, img: &core::Mat, buf: &mut types::VectorOfuchar, para
 }
 
 /// Loads an image from a file.
-/// 
+///
 /// @anchor imread
-/// 
+///
 /// The function imread loads an image from the specified file and returns it. If the image cannot be
 /// read (because of missing file, improper permissions, unsupported or invalid format), the function
 /// returns an empty matrix ( Mat::data==NULL ).
-/// 
+///
 /// Currently, the following file formats are supported:
-/// 
+///
 /// *   Windows bitmaps - \*.bmp, \*.dib (always supported)
 /// *   JPEG files - \*.jpeg, \*.jpg, \*.jpe (see the *Note* section)
 /// *   JPEG 2000 files - \*.jp2 (see the *Note* section)
@@ -126,8 +126,8 @@ pub fn imencode(ext: &str, img: &core::Mat, buf: &mut types::VectorOfuchar, para
 /// *   OpenEXR Image files - \*.exr (see the *Note* section)
 /// *   Radiance HDR - \*.hdr, \*.pic (always supported)
 /// *   Raster and Vector geospatial data supported by GDAL (see the *Note* section)
-/// 
-/// 
+///
+///
 /// Note:
 /// *   The function determines the type of an image by the content, not by the file extension.
 /// *   In the case of color images, the decoded images will have the channels stored in **B G R** order.
@@ -150,7 +150,7 @@ pub fn imencode(ext: &str, img: &core::Mat, buf: &mut types::VectorOfuchar, para
 /// and thus the image will be rotated accordingly except if the flag @ref IMREAD_IGNORE_ORIENTATION is passed.
 /// *   By default number of pixels must be less than 2^30. Limit can be set using system
 /// variable OPENCV_IO_MAX_IMAGE_PIXELS
-/// 
+///
 /// ## Parameters
 /// * filename: Name of file to be loaded.
 /// * flags: Flag that can take values of cv::ImreadModes
@@ -163,7 +163,7 @@ pub fn imread(filename: &str, flags: i32) -> Result<core::Mat> {
 }
 
 /// Loads a multi-page image from a file.
-/// 
+///
 /// The function imreadmulti loads a multi-page image from the specified file into a vector of Mat objects.
 /// ## Parameters
 /// * filename: Name of file to be loaded.
@@ -180,23 +180,23 @@ pub fn imreadmulti(filename: &str, mats: &mut types::VectorOfMat, flags: i32) ->
 }
 
 /// Saves an image to a specified file.
-/// 
+///
 /// The function imwrite saves the image to the specified file. The image format is chosen based on the
 /// filename extension (see cv::imread for the list of extensions). In general, only 8-bit
 /// single-channel or 3-channel (with 'BGR' channel order) images
 /// can be saved using this function, with these exceptions:
-/// 
+///
 /// - 16-bit unsigned (CV_16U) images can be saved in the case of PNG, JPEG 2000, and TIFF formats
 /// - 32-bit float (CV_32F) images can be saved in TIFF, OpenEXR, and Radiance HDR formats; 3-channel
 /// (CV_32FC3) TIFF images will be saved using the LogLuv high dynamic range encoding (4 bytes per pixel)
 /// - PNG images with an alpha channel can be saved using this function. To do this, create
 /// 8-bit (or 16-bit) 4-channel image BGRA, where the alpha channel goes last. Fully transparent pixels
 /// should have alpha set to 0, fully opaque pixels should have alpha set to 255/65535 (see the code sample below).
-/// 
+///
 /// If the format, depth or channel order is different, use
 /// Mat::convertTo and cv::cvtColor to convert it before saving. Or, use the universal FileStorage I/O
 /// functions to save the image to XML or YAML format.
-/// 
+///
 /// The sample below shows how to create a BGRA image and save it to a PNG file. It also demonstrates how to set custom
 /// compression parameters:
 /// @include snippets/imgcodecs_imwrite.cpp

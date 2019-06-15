@@ -1,12 +1,12 @@
 //! # Camera Calibration and 3D Reconstruction
-//! 
+//!
 //! The functions in this section use a so-called pinhole camera model. In this model, a scene view is
 //! formed by projecting 3D points into the image plane using a perspective transformation.
-//! 
+//!
 //! <div lang='latex'>s  \; m' = A [R|t] M'</div>
-//! 
+//!
 //! or
-//! 
+//!
 //! <div lang='latex'>s  \vecthree{u}{v}{1} = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}
 //! \begin{bmatrix}
 //! r_{11} & r_{12} & r_{13} & t_1  \\
@@ -19,15 +19,15 @@
 //! Z \\
 //! 1
 //! \end{bmatrix}</div>
-//! 
+//!
 //! where:
-//! 
+//!
 //! *   <span lang='latex'>(X, Y, Z)</span> are the coordinates of a 3D point in the world coordinate space
 //! *   <span lang='latex'>(u, v)</span> are the coordinates of the projection point in pixels
 //! *   <span lang='latex'>A</span> is a camera matrix, or a matrix of intrinsic parameters
 //! *   <span lang='latex'>(cx, cy)</span> is a principal point that is usually at the image center
 //! *   <span lang='latex'>fx, fy</span> are the focal lengths expressed in pixel units.
-//! 
+//!
 //! Thus, if an image from the camera is scaled by a factor, all of these parameters should be scaled
 //! (multiplied/divided, respectively) by the same factor. The matrix of intrinsic parameters does not
 //! depend on the scene viewed. So, once estimated, it can be re-used as long as the focal length is
@@ -36,7 +36,7 @@
 //! rigid motion of an object in front of a still camera. That is, <span lang='latex'>[R|t]</span> translates coordinates of a
 //! point <span lang='latex'>(X, Y, Z)</span> to a coordinate system, fixed with respect to the camera. The transformation above
 //! is equivalent to the following (when <span lang='latex'>z \ne 0</span> ):
-//! 
+//!
 //! <div lang='latex'>\begin{array}{l}
 //! \vecthree{x}{y}{z} = R  \vecthree{X}{Y}{Z} + t \\
 //! x' = x/z \\
@@ -44,14 +44,14 @@
 //! u = f_x*x' + c_x \\
 //! v = f_y*y' + c_y
 //! \end{array}</div>
-//! 
+//!
 //! The following figure illustrates the pinhole camera model.
-//! 
+//!
 //! ![Pinhole camera model](https://docs.opencv.org/3.4.6/pinhole_camera_model.png)
-//! 
+//!
 //! Real lenses usually have some distortion, mostly radial distortion and slight tangential distortion.
 //! So, the above model is extended as:
-//! 
+//!
 //! <div lang='latex'>\begin{array}{l}
 //! \vecthree{x}{y}{z} = R  \vecthree{X}{Y}{Z} + t \\
 //! x' = x/z \\
@@ -62,21 +62,21 @@
 //! u = f_x*x'' + c_x \\
 //! v = f_y*y'' + c_y
 //! \end{array}</div>
-//! 
+//!
 //! <span lang='latex'>k_1</span>, <span lang='latex'>k_2</span>, <span lang='latex'>k_3</span>, <span lang='latex'>k_4</span>, <span lang='latex'>k_5</span>, and <span lang='latex'>k_6</span> are radial distortion coefficients. <span lang='latex'>p_1</span> and <span lang='latex'>p_2</span> are
 //! tangential distortion coefficients. <span lang='latex'>s_1</span>, <span lang='latex'>s_2</span>, <span lang='latex'>s_3</span>, and <span lang='latex'>s_4</span>, are the thin prism distortion
 //! coefficients. Higher-order coefficients are not considered in OpenCV.
-//! 
+//!
 //! The next figures show two common types of radial distortion: barrel distortion (typically <span lang='latex'> k_1 < 0 </span>) and pincushion distortion (typically <span lang='latex'> k_1 > 0 </span>).
-//! 
+//!
 //! ![](https://docs.opencv.org/3.4.6/distortion_examples.png)
 //! ![](https://docs.opencv.org/3.4.6/distortion_examples2.png)
-//! 
+//!
 //! In some cases the image sensor may be tilted in order to focus an oblique plane in front of the
 //! camera (Scheimpfug condition). This can be useful for particle image velocimetry (PIV) or
 //! triangulation with a laser fan. The tilt causes a perspective distortion of <span lang='latex'>x''</span> and
 //! <span lang='latex'>y''</span>. This distortion can be modelled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Louhichi07).
-//! 
+//!
 //! <div lang='latex'>\begin{array}{l}
 //! s\vecthree{x'''}{y'''}{1} =
 //! \vecthreethree{R_{33}(\tau_x, \tau_y)}{0}{-R_{13}(\tau_x, \tau_y)}
@@ -85,10 +85,10 @@
 //! u = f_x*x''' + c_x \\
 //! v = f_y*y''' + c_y
 //! \end{array}</div>
-//! 
+//!
 //! where the matrix <span lang='latex'>R(\tau_x, \tau_y)</span> is defined by two rotations with angular parameter <span lang='latex'>\tau_x</span>
 //! and <span lang='latex'>\tau_y</span>, respectively,
-//! 
+//!
 //! <div lang='latex'>
 //! R(\tau_x, \tau_y) =
 //! \vecthreethree{\cos(\tau_y)}{0}{-\sin(\tau_y)}{0}{1}{0}{\sin(\tau_y)}{0}{\cos(\tau_y)}
@@ -97,20 +97,20 @@
 //! {0}{\cos(\tau_x)}{\sin(\tau_x)}
 //! {\sin(\tau_y)}{-\cos(\tau_y)\sin(\tau_x)}{\cos(\tau_y)\cos(\tau_x)}.
 //! </div>
-//! 
+//!
 //! In the functions below the coefficients are passed or returned as
-//! 
+//!
 //! <div lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</div>
-//! 
+//!
 //! vector. That is, if the vector contains four elements, it means that <span lang='latex'>k_3=0</span> . The distortion
 //! coefficients do not depend on the scene viewed. Thus, they also belong to the intrinsic camera
 //! parameters. And they remain the same regardless of the captured image resolution. If, for example, a
 //! camera has been calibrated on images of 320 x 240 resolution, absolutely the same distortion
 //! coefficients can be used for 640 x 480 images from the same camera while <span lang='latex'>f_x</span>, <span lang='latex'>f_y</span>, <span lang='latex'>c_x</span>, and
 //! <span lang='latex'>c_y</span> need to be scaled appropriately.
-//! 
+//!
 //! The functions below use the above model to do the following:
-//! 
+//!
 //! *   Project 3D points to the image plane given intrinsic and extrinsic parameters.
 //! *   Compute extrinsic parameters given intrinsic parameters, a few 3D points, and their
 //! projections.
@@ -118,8 +118,8 @@
 //! pattern (every view is described by several 3D-2D point correspondences).
 //! *   Estimate the relative position and orientation of the stereo camera "heads" and compute the
 //! *rectification* transformation that makes the camera optical axes parallel.
-//! 
-//! 
+//!
+//!
 //! Note:
 //! *   A calibration sample for 3 cameras in horizontal position can be found at
 //! opencv_source_code/samples/cpp/3calibration.cpp
@@ -134,34 +134,34 @@
 //! *   (Python) A camera calibration sample can be found at
 //! opencv_source_code/samples/python/calibrate.py
 //! # Fisheye camera model
-//! 
+//!
 //! Definitions: Let P be a point in 3D of coordinates X in the world reference frame (stored in the
 //! matrix X) The coordinate vector of P in the camera reference frame is:
-//! 
+//!
 //! <div lang='latex'>Xc = R X + T</div>
-//! 
+//!
 //! where R is the rotation matrix corresponding to the rotation vector om: R = rodrigues(om); call x, y
 //! and z the 3 coordinates of Xc:
-//! 
+//!
 //! <div lang='latex'>x = Xc_1 \\ y = Xc_2 \\ z = Xc_3</div>
-//! 
+//!
 //! The pinhole projection coordinates of P is [a; b] where
-//! 
+//!
 //! <div lang='latex'>a = x / z \ and \ b = y / z \\ r^2 = a^2 + b^2 \\ \theta = atan(r)</div>
-//! 
+//!
 //! Fisheye distortion:
-//! 
+//!
 //! <div lang='latex'>\theta_d = \theta (1 + k_1 \theta^2 + k_2 \theta^4 + k_3 \theta^6 + k_4 \theta^8)</div>
-//! 
+//!
 //! The distorted point coordinates are [x'; y'] where
-//! 
+//!
 //! <div lang='latex'>x' = (\theta_d / r) a \\ y' = (\theta_d / r) b </div>
-//! 
+//!
 //! Finally, conversion into pixel coordinates: The final pixel coordinates vector [u; v] where:
-//! 
+//!
 //! <div lang='latex'>u = f_x (x' + \alpha y') + c_x \\
 //! v = f_y y' + c_y</div>
-//! 
+//!
 //! # C API
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -257,7 +257,7 @@ pub struct CirclesGridFinderParameters2 {
 }
 
 /// Computes an RQ decomposition of 3x3 matrices.
-/// 
+///
 /// ## Parameters
 /// * src: 3x3 input matrix.
 /// * mtxR: Output 3x3 upper-triangular matrix.
@@ -265,11 +265,11 @@ pub struct CirclesGridFinderParameters2 {
 /// * Qx: Optional output 3x3 rotation matrix around x-axis.
 /// * Qy: Optional output 3x3 rotation matrix around y-axis.
 /// * Qz: Optional output 3x3 rotation matrix around z-axis.
-/// 
+///
 /// The function computes a RQ decomposition using the given rotations. This function is used in
 /// decomposeProjectionMatrix to decompose the left 3x3 submatrix of a projection matrix into a camera
 /// and a rotation matrix.
-/// 
+///
 /// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 /// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 /// sequence of rotations about the three principal axes that results in the same orientation of an
@@ -285,19 +285,19 @@ pub fn rq_decomp3x3(src: &core::Mat, mtx_r: &mut core::Mat, mtx_q: &mut core::Ma
 }
 
 /// Converts a rotation matrix to a rotation vector or vice versa.
-/// 
+///
 /// ## Parameters
 /// * src: Input rotation vector (3x1 or 1x3) or rotation matrix (3x3).
 /// * dst: Output rotation matrix (3x3) or rotation vector (3x1 or 1x3), respectively.
 /// * jacobian: Optional output Jacobian matrix, 3x9 or 9x3, which is a matrix of partial
 /// derivatives of the output array components with respect to the input array components.
-/// 
+///
 /// <div lang='latex'>\begin{array}{l} \theta \leftarrow norm(r) \\ r  \leftarrow r/ \theta \\ R =  \cos{\theta} I + (1- \cos{\theta} ) r r^T +  \sin{\theta} \vecthreethree{0}{-r_z}{r_y}{r_z}{0}{-r_x}{-r_y}{r_x}{0} \end{array}</div>
-/// 
+///
 /// Inverse transformation can be also done easily, since
-/// 
+///
 /// <div lang='latex'>\sin ( \theta ) \vecthreethree{0}{-r_z}{r_y}{r_z}{0}{-r_x}{-r_y}{r_x}{0} = \frac{R - R^T}{2}</div>
-/// 
+///
 /// A rotation vector is a convenient and most compact representation of a rotation matrix (since any
 /// rotation matrix has just 3 degrees of freedom). The representation is used in the global 3D geometry
 /// optimization procedures like calibrateCamera, stereoCalibrate, or solvePnP .
@@ -309,7 +309,7 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: In the new interface it is a vector of vectors of calibration pattern points in
 /// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>>). The outer
@@ -385,10 +385,10 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 /// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
-/// 
+///
 /// ## Returns
 /// the overall RMS re-projection error.
-/// 
+///
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
 /// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
@@ -398,29 +398,29 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 /// (when CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
 /// patterns (where Z-coordinates of the object points must be all zeros). 3D calibration rigs can also
 /// be used as long as initial cameraMatrix is provided.
-/// 
+///
 /// The algorithm performs the following steps:
-/// 
+///
 /// *   Compute the initial intrinsic parameters (the option only available for planar calibration
 /// patterns) or read them from the input parameters. The distortion coefficients are all set to
 /// zeros initially unless some of CALIB_FIX_K? are specified.
-/// 
+///
 /// *   Estimate the initial camera pose as if the intrinsic parameters have been already known. This is
 /// done using solvePnP .
-/// 
+///
 /// *   Run the global Levenberg-Marquardt optimization algorithm to minimize the reprojection error,
 /// that is, the total sum of squared distances between the observed feature points imagePoints and
 /// the projected (using the current estimates for camera parameters and the poses) object points
 /// objectPoints. See projectPoints for details.
-/// 
-/// 
+///
+///
 /// Note:
 /// If you use a non-square (=non-NxN) grid and findChessboardCorners for calibration, and
 /// calibrateCamera returns bad values (zero distortion coefficients, an image center very far from
 /// (w/2-0.5,h/2-0.5), and/or large differences between <span lang='latex'>f_x</span> and <span lang='latex'>f_y</span> (ratios of 10:1 or more)),
 /// then you have probably used patternSize=cvSize(rows,cols) instead of using
 /// patternSize=cvSize(cols,rows) in findChessboardCorners .
-/// 
+///
 /// ## See also
 /// findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
 ///
@@ -432,7 +432,7 @@ pub fn calibrate_camera_with_stddev(object_points: &types::VectorOfMat, image_po
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: In the new interface it is a vector of vectors of calibration pattern points in
 /// the calibration pattern coordinate space (e.g. std::vector<std::vector<cv::Vec3f>>). The outer
@@ -508,10 +508,10 @@ pub fn calibrate_camera_with_stddev(object_points: &types::VectorOfMat, image_po
 /// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
-/// 
+///
 /// ## Returns
 /// the overall RMS re-projection error.
-/// 
+///
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
 /// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
@@ -521,32 +521,32 @@ pub fn calibrate_camera_with_stddev(object_points: &types::VectorOfMat, image_po
 /// (when CALIB_USE_INTRINSIC_GUESS is not set) is only implemented for planar calibration
 /// patterns (where Z-coordinates of the object points must be all zeros). 3D calibration rigs can also
 /// be used as long as initial cameraMatrix is provided.
-/// 
+///
 /// The algorithm performs the following steps:
-/// 
+///
 /// *   Compute the initial intrinsic parameters (the option only available for planar calibration
 /// patterns) or read them from the input parameters. The distortion coefficients are all set to
 /// zeros initially unless some of CALIB_FIX_K? are specified.
-/// 
+///
 /// *   Estimate the initial camera pose as if the intrinsic parameters have been already known. This is
 /// done using solvePnP .
-/// 
+///
 /// *   Run the global Levenberg-Marquardt optimization algorithm to minimize the reprojection error,
 /// that is, the total sum of squared distances between the observed feature points imagePoints and
 /// the projected (using the current estimates for camera parameters and the poses) object points
 /// objectPoints. See projectPoints for details.
-/// 
-/// 
+///
+///
 /// Note:
 /// If you use a non-square (=non-NxN) grid and findChessboardCorners for calibration, and
 /// calibrateCamera returns bad values (zero distortion coefficients, an image center very far from
 /// (w/2-0.5,h/2-0.5), and/or large differences between <span lang='latex'>f_x</span> and <span lang='latex'>f_y</span> (ratios of 10:1 or more)),
 /// then you have probably used patternSize=cvSize(rows,cols) instead of using
 /// patternSize=cvSize(cols,rows) in findChessboardCorners .
-/// 
+///
 /// ## See also
 /// findChessboardCorners, solvePnP, initCameraMatrix2D, stereoCalibrate, undistort
-/// 
+///
 /// ## Overloaded parameters
 ///  double calibrateCamera( InputArrayOfArrays objectPoints,
 /// InputArrayOfArrays imagePoints, Size imageSize,
@@ -564,7 +564,7 @@ pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types
 }
 
 /// Computes useful camera characteristics from the camera matrix.
-/// 
+///
 /// ## Parameters
 /// * cameraMatrix: Input camera matrix that can be estimated by calibrateCamera or
 /// stereoCalibrate .
@@ -576,11 +576,11 @@ pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types
 /// * focalLength: Focal length of the lens in mm.
 /// * principalPoint: Principal point in mm.
 /// * aspectRatio: <span lang='latex'>f_y/f_x</span>
-/// 
+///
 /// The function computes various useful camera characteristics from the previously estimated camera
 /// matrix.
-/// 
-/// 
+///
+///
 /// Note:
 /// Do keep in mind that the unity measure 'mm' stands for whatever unit of measure one chooses for
 /// the chessboard pitch (it can thus be any value).
@@ -589,7 +589,7 @@ pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Si
 }
 
 /// Combines two rotation-and-shift transformations.
-/// 
+///
 /// ## Parameters
 /// * rvec1: First rotation vector.
 /// * tvec1: First translation vector.
@@ -597,23 +597,23 @@ pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Si
 /// * tvec2: Second translation vector.
 /// * rvec3: Output rotation vector of the superposition.
 /// * tvec3: Output translation vector of the superposition.
-/// * dr3dr1: 
-/// * dr3dt1: 
-/// * dr3dr2: 
-/// * dr3dt2: 
-/// * dt3dr1: 
-/// * dt3dt1: 
-/// * dt3dr2: 
+/// * dr3dr1:
+/// * dr3dt1:
+/// * dr3dr2:
+/// * dr3dt2:
+/// * dt3dr1:
+/// * dt3dt1:
+/// * dt3dr2:
 /// * dt3dt2: Optional output derivatives of rvec3 or tvec3 with regard to rvec1, rvec2, tvec1 and
 /// tvec2, respectively.
-/// 
+///
 /// The functions compute:
-/// 
+///
 /// <div lang='latex'>\begin{array}{l} \texttt{rvec3} =  \mathrm{rodrigues} ^{-1} \left ( \mathrm{rodrigues} ( \texttt{rvec2} )  \cdot \mathrm{rodrigues} ( \texttt{rvec1} ) \right )  \\ \texttt{tvec3} =  \mathrm{rodrigues} ( \texttt{rvec2} )  \cdot \texttt{tvec1} +  \texttt{tvec2} \end{array} ,</div>
-/// 
+///
 /// where <span lang='latex'>\mathrm{rodrigues}</span> denotes a rotation vector to a rotation matrix transformation, and
 /// <span lang='latex'>\mathrm{rodrigues}^{-1}</span> denotes the inverse transformation. See Rodrigues for details.
-/// 
+///
 /// Also, the functions can compute the derivatives of the output vectors with regards to the input
 /// vectors (see matMulDeriv ). The functions are used inside stereoCalibrate but can also be used in
 /// your own code where Levenberg-Marquardt or another gradient-based solver is used to optimize a
@@ -633,7 +633,7 @@ pub fn compose_rt(rvec1: &core::Mat, tvec1: &core::Mat, rvec2: &core::Mat, tvec2
 }
 
 /// For points in an image of a stereo pair, computes the corresponding epilines in the other image.
-/// 
+///
 /// ## Parameters
 /// * points: Input points. <span lang='latex'>N \times 1</span> or <span lang='latex'>1 \times N</span> matrix of type CV_32FC2 or
 /// vector\<Point2f\> .
@@ -641,30 +641,30 @@ pub fn compose_rt(rvec1: &core::Mat, tvec1: &core::Mat, rvec2: &core::Mat, tvec2
 /// * F: Fundamental matrix that can be estimated using findFundamentalMat or stereoRectify .
 /// * lines: Output vector of the epipolar lines corresponding to the points in the other image.
 /// Each line <span lang='latex'>ax + by + c=0</span> is encoded by 3 numbers <span lang='latex'>(a, b, c)</span> .
-/// 
+///
 /// For every point in one of the two images of a stereo pair, the function finds the equation of the
 /// corresponding epipolar line in the other image.
-/// 
+///
 /// From the fundamental matrix definition (see findFundamentalMat ), line <span lang='latex'>l^{(2)}_i</span> in the second
 /// image for the point <span lang='latex'>p^{(1)}_i</span> in the first image (when whichImage=1 ) is computed as:
-/// 
+///
 /// <div lang='latex'>l^{(2)}_i = F p^{(1)}_i</div>
-/// 
+///
 /// And vice versa, when whichImage=2, <span lang='latex'>l^{(1)}_i</span> is computed from <span lang='latex'>p^{(2)}_i</span> as:
-/// 
+///
 /// <div lang='latex'>l^{(1)}_i = F^T p^{(2)}_i</div>
-/// 
+///
 /// Line coefficients are defined up to a scale. They are normalized so that <span lang='latex'>a_i^2+b_i^2=1</span> .
 pub fn compute_correspond_epilines(points: &core::Mat, which_image: i32, f: &core::Mat, lines: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_computeCorrespondEpilines_Mat_int_Mat_Mat(points.as_raw_Mat(), which_image, f.as_raw_Mat(), lines.as_raw_Mat()) }.into_result()
 }
 
 /// Converts points from homogeneous to Euclidean space.
-/// 
+///
 /// ## Parameters
 /// * src: Input vector of N-dimensional points.
 /// * dst: Output vector of N-1-dimensional points.
-/// 
+///
 /// The function converts points homogeneous to Euclidean space using perspective projection. That is,
 /// each point (x1, x2, ... x(n-1), xn) is converted to (x1/xn, x2/xn, ..., x(n-1)/xn). When xn=0, the
 /// output point coordinates will be (0,0,0,...).
@@ -673,26 +673,26 @@ pub fn convert_points_from_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> 
 }
 
 /// Converts points to/from homogeneous coordinates.
-/// 
+///
 /// ## Parameters
 /// * src: Input array or vector of 2D, 3D, or 4D points.
 /// * dst: Output vector of 2D, 3D, or 4D points.
-/// 
+///
 /// The function converts 2D or 3D points from/to homogeneous coordinates by calling either
 /// convertPointsToHomogeneous or convertPointsFromHomogeneous.
-/// 
-/// 
+///
+///
 /// Note: The function is obsolete. Use one of the previous two functions instead.
 pub fn convert_points_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_convertPointsHomogeneous_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
 /// Converts points from Euclidean to homogeneous space.
-/// 
+///
 /// ## Parameters
 /// * src: Input vector of N-dimensional points.
 /// * dst: Output vector of N+1-dimensional points.
-/// 
+///
 /// The function converts points from Euclidean to homogeneous space by appending 1's to the tuple of
 /// point coordinates. That is, each point (x1, x2, ..., xn) is converted to (x1, x2, ..., xn, 1).
 pub fn convert_points_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
@@ -700,14 +700,14 @@ pub fn convert_points_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Re
 }
 
 /// Refines coordinates of corresponding points.
-/// 
+///
 /// ## Parameters
 /// * F: 3x3 fundamental matrix.
 /// * points1: 1xN array containing the first set of points.
 /// * points2: 1xN array containing the second set of points.
 /// * newPoints1: The optimized points1.
 /// * newPoints2: The optimized points2.
-/// 
+///
 /// The function implements the Optimal Triangulation Method (see Multiple View Geometry for details).
 /// For each given point correspondence points1[i] \<-\> points2[i], and a fundamental matrix F, it
 /// computes the corrected correspondences newPoints1[i] \<-\> newPoints2[i] that minimize the geometric
@@ -719,13 +719,13 @@ pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, 
 }
 
 /// Decompose an essential matrix to possible rotations and translation.
-/// 
+///
 /// ## Parameters
 /// * E: The input essential matrix.
 /// * R1: One possible rotation matrix.
 /// * R2: Another possible rotation matrix.
 /// * t: One possible translation.
-/// 
+///
 /// This function decompose an essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HartleyZ00) . Generally 4
 /// possible poses exists for a given E. They are <span lang='latex'>[R_1, t]</span>, <span lang='latex'>[R_1, -t]</span>, <span lang='latex'>[R_2, t]</span>, <span lang='latex'>[R_2, -t]</span>. By
 /// decomposing E, you can only get the direction of the translation, so the function returns unit t.
@@ -734,14 +734,14 @@ pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core:
 }
 
 /// Decompose a homography matrix to rotation(s), translation(s) and plane normal(s).
-/// 
+///
 /// ## Parameters
 /// * H: The input homography matrix between two images.
 /// * K: The input intrinsic camera calibration matrix.
 /// * rotations: Array of rotation matrices.
 /// * translations: Array of translation matrices.
 /// * normals: Array of plane normal matrices.
-/// 
+///
 /// This function extracts relative camera motion between two views observing a planar object from the
 /// homography H induced by the plane. The intrinsic camera matrix K must also be provided. The function
 /// may return up to four mathematical solution sets. At least two of the solutions may further be
@@ -752,7 +752,7 @@ pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut ty
 }
 
 /// Decomposes a projection matrix into a rotation matrix and a camera matrix.
-/// 
+///
 /// ## Parameters
 /// * projMatrix: 3x4 input projection matrix P.
 /// * cameraMatrix: Output 3x3 camera matrix K.
@@ -763,15 +763,15 @@ pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut ty
 /// * rotMatrixZ: Optional 3x3 rotation matrix around z-axis.
 /// * eulerAngles: Optional three-element vector containing three Euler angles of rotation in
 /// degrees.
-/// 
+///
 /// The function computes a decomposition of a projection matrix into a calibration and a rotation
 /// matrix and the position of a camera.
-/// 
+///
 /// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 /// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
 /// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 /// tree rotation matrices and corresponding three Euler angles are only one of the possible solutions.
-/// 
+///
 /// The function is based on RQDecomp3x3 .
 ///
 /// ## C++ default parameters
@@ -784,7 +784,7 @@ pub fn decompose_projection_matrix(proj_matrix: &core::Mat, camera_matrix: &mut 
 }
 
 /// Renders the detected chessboard corners.
-/// 
+///
 /// ## Parameters
 /// * image: Destination image. It must be an 8-bit color image.
 /// * patternSize: Number of inner corners per a chessboard row and column
@@ -792,7 +792,7 @@ pub fn decompose_projection_matrix(proj_matrix: &core::Mat, camera_matrix: &mut 
 /// * corners: Array of detected corners, the output of findChessboardCorners.
 /// * patternWasFound: Parameter indicating whether the complete board was found or not. The
 /// return value of findChessboardCorners should be passed here.
-/// 
+///
 /// The function draws individual chessboard corners detected either as red circles if the board was not
 /// found, or as colored corners connected with lines if the board was found.
 pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, corners: &core::Mat, pattern_was_found: bool) -> Result<()> {
@@ -801,7 +801,7 @@ pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, 
 
 /// Draw axes of the world/object coordinate system from pose estimation. ## See also
 /// solvePnP
-/// 
+///
 /// ## Parameters
 /// * image: Input/output image. It must have 1 or 3 channels. The number of channels is not altered.
 /// * cameraMatrix: Input 3x3 floating-point matrix of camera intrinsic parameters.
@@ -814,7 +814,7 @@ pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, 
 /// * tvec: Translation vector.
 /// * length: Length of the painted axes in the same unit than tvec (usually in meters).
 /// * thickness: Line thickness of the painted axes.
-/// 
+///
 /// This function draws the axes of the world/object coordinate system w.r.t. to the camera frame.
 /// OX is drawn in red, OY in green and OZ in blue.
 ///
@@ -825,7 +825,7 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 }
 
 /// Computes an optimal affine transformation between two 2D point sets.
-/// 
+///
 /// It computes
 /// <div lang='latex'>
 /// \begin{bmatrix}
@@ -847,7 +847,7 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// b_2\\
 /// \end{bmatrix}
 /// </div>
-/// 
+///
 /// ## Parameters
 /// * from: First input 2D point set containing <span lang='latex'>(X,Y)</span>.
 /// * to: Second input 2D point set containing <span lang='latex'>(x,y)</span>.
@@ -864,7 +864,7 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
 /// * refineIters: Maximum number of iterations of refining algorithm (Levenberg-Marquardt).
 /// Passing 0 will disable refining, so the output matrix will be output of robust method.
-/// 
+///
 /// ## Returns
 /// Output 2D affine transformation matrix <span lang='latex'>2 \times 3</span> or empty matrix if transformation
 /// could not be estimated. The returned matrix has the following form:
@@ -874,19 +874,19 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// a_{21} & a_{22} & b_2\\
 /// \end{bmatrix}
 /// </div>
-/// 
+///
 /// The function estimates an optimal 2D affine transformation between two 2D point sets using the
 /// selected robust algorithm.
-/// 
+///
 /// The computed transformation is then refined further (using only inliers) with the
 /// Levenberg-Marquardt method to reduce the re-projection error even more.
-/// 
-/// 
+///
+///
 /// Note:
 /// The RANSAC method can handle practically any ratio of outliers but needs a threshold to
 /// distinguish inliers from outliers. The method LMeDS does not need any threshold but it works
 /// correctly only when there are more than 50% of inliers.
-/// 
+///
 /// ## See also
 /// estimateAffinePartial2D, getAffineTransform
 ///
@@ -902,7 +902,7 @@ pub fn estimate_affine_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::
 }
 
 /// Computes an optimal affine transformation between two 3D point sets.
-/// 
+///
 /// It computes
 /// <div lang='latex'>
 /// \begin{bmatrix}
@@ -928,7 +928,7 @@ pub fn estimate_affine_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::
 /// b_3\\
 /// \end{bmatrix}
 /// </div>
-/// 
+///
 /// ## Parameters
 /// * src: First input 3D point set containing <span lang='latex'>(X,Y,Z)</span>.
 /// * dst: Second input 3D point set containing <span lang='latex'>(x,y,z)</span>.
@@ -946,7 +946,7 @@ pub fn estimate_affine_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::
 /// * confidence: Confidence level, between 0 and 1, for the estimated transformation. Anything
 /// between 0.95 and 0.99 is usually good enough. Values too close to 1 can slow down the estimation
 /// significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
-/// 
+///
 /// The function estimates an optimal 3D affine transformation between two 3D point sets using the
 /// RANSAC algorithm.
 ///
@@ -959,7 +959,7 @@ pub fn estimate_affine_3d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 
 /// Computes an optimal limited affine transformation with 4 degrees of freedom between
 /// two 2D point sets.
-/// 
+///
 /// ## Parameters
 /// * from: First input 2D point set.
 /// * to: Second input 2D point set.
@@ -976,31 +976,31 @@ pub fn estimate_affine_3d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 /// significantly. Values lower than 0.8-0.9 can result in an incorrectly estimated transformation.
 /// * refineIters: Maximum number of iterations of refining algorithm (Levenberg-Marquardt).
 /// Passing 0 will disable refining, so the output matrix will be output of robust method.
-/// 
+///
 /// ## Returns
 /// Output 2D affine transformation (4 degrees of freedom) matrix <span lang='latex'>2 \times 3</span> or
 /// empty matrix if transformation could not be estimated.
-/// 
+///
 /// The function estimates an optimal 2D affine transformation with 4 degrees of freedom limited to
 /// combinations of translation, rotation, and uniform scaling. Uses the selected algorithm for robust
 /// estimation.
-/// 
+///
 /// The computed transformation is then refined further (using only inliers) with the
 /// Levenberg-Marquardt method to reduce the re-projection error even more.
-/// 
+///
 /// Estimated transformation matrix is:
 /// <div lang='latex'> \begin{bmatrix} \cos(\theta) \cdot s & -\sin(\theta) \cdot s & t_x \\
 /// \sin(\theta) \cdot s & \cos(\theta) \cdot s & t_y
 /// \end{bmatrix} </div>
 /// Where <span lang='latex'> \theta </span> is the rotation angle, <span lang='latex'> s </span> the scaling factor and <span lang='latex'> t_x, t_y </span> are
 /// translations in <span lang='latex'> x, y </span> axes respectively.
-/// 
-/// 
+///
+///
 /// Note:
 /// The RANSAC method can handle practically any ratio of outliers but need a threshold to
 /// distinguish inliers from outliers. The method LMeDS does not need any threshold but it works
 /// correctly only when there are more than 50% of inliers.
-/// 
+///
 /// ## See also
 /// estimateAffine2D, getAffineTransform
 ///
@@ -1016,7 +1016,7 @@ pub fn estimate_affine_partial_2d(from: &core::Mat, to: &core::Mat, inliers: &mu
 }
 
 /// Filters homography decompositions based on additional information.
-/// 
+///
 /// ## Parameters
 /// * rotations: Vector of rotation matrices.
 /// * normals: Vector of plane normal matrices.
@@ -1024,7 +1024,7 @@ pub fn estimate_affine_partial_2d(from: &core::Mat, to: &core::Mat, inliers: &mu
 /// * afterPoints: Vector of (rectified) visible reference points after the homography is applied
 /// * possibleSolutions: Vector of int indices representing the viable solution set after filtering
 /// * pointsMask: optional Mat/Vector of 8u type representing the mask for the inliers as given by the findHomography function
-/// 
+///
 /// This function is intended to filter the output of the decomposeHomographyMat based on additional
 /// information as described in [Malis](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Malis) . The summary of the method: the decomposeHomographyMat function
 /// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
@@ -1040,7 +1040,7 @@ pub fn filter_homography_decomp_by_visible_refpoints(rotations: &types::VectorOf
 }
 
 /// Filters off small noise blobs (speckles) in the disparity map
-/// 
+///
 /// ## Parameters
 /// * img: The input 16-bit signed disparity image
 /// * newVal: The disparity value used to paint-off the speckles
@@ -1064,7 +1064,7 @@ pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region
 }
 
 /// Finds the positions of internal corners of the chessboard.
-/// 
+///
 /// ## Parameters
 /// * image: Source chessboard view. It must be an 8-bit grayscale or color image.
 /// * patternSize: Number of inner corners per a chessboard row and column
@@ -1080,7 +1080,7 @@ pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region
 /// *   **CALIB_CB_FAST_CHECK** Run a fast check on the image that looks for chessboard corners,
 /// and shortcut the call if none is found. This can drastically speed up the call in the
 /// degenerate condition when no chessboard is observed.
-/// 
+///
 /// The function attempts to determine whether the input image is a view of the chessboard pattern and
 /// locate the internal chessboard corners. The function returns a non-zero value if all of the corners
 /// are found and they are placed in a certain order (row by row, left to right in every row).
@@ -1089,27 +1089,27 @@ pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region
 /// squares touch each other. The detected coordinates are approximate, and to determine their positions
 /// more accurately, the function calls cornerSubPix. You also may use the function cornerSubPix with
 /// different parameters if returned coordinates are not accurate enough.
-/// 
+///
 /// Sample usage of detecting and drawing chessboard corners: :
 /// ```ignore
 /// Size patternsize(8,6); //interior number of corners
 /// Mat gray = ....; //source image
 /// vector<Point2f> corners; //this will be filled by the detected corners
-/// 
+///
 /// //CALIB_CB_FAST_CHECK saves a lot of time on images
 /// //that do not contain any chessboard corners
 /// bool patternfound = findChessboardCorners(gray, patternsize, corners,
 /// CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE
 /// + CALIB_CB_FAST_CHECK);
-/// 
+///
 /// if(patternfound)
 /// cornerSubPix(gray, corners, Size(11, 11), Size(-1, -1),
 /// TermCriteria(CV_TERMCRIT_EPS + CV_TERMCRIT_ITER, 30, 0.1));
-/// 
+///
 /// drawChessboardCorners(img, patternsize, Mat(corners), patternfound);
 /// ```
-/// 
-/// 
+///
+///
 /// Note: The function requires white space (like a square-thick border, the wider the better) around
 /// the board to make the detection more robust in various environments. Otherwise, if there is no
 /// border and the background is dark, the outer black squares cannot be segmented properly and so the
@@ -1122,7 +1122,7 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
-/// 
+///
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
@@ -1141,12 +1141,12 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 /// point localization, image resolution, and the image noise.
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
-/// 
+///
 /// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
 /// [SteweniusCFS](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
-/// 
+///
 /// <div lang='latex'>[p_2; 1]^T K^{-T} E K^{-1} [p_1; 1] = 0</div>
-/// 
+///
 /// where <span lang='latex'>E</span> is an essential matrix, <span lang='latex'>p_1</span> and <span lang='latex'>p_2</span> are corresponding points in the first and the
 /// second images, respectively. The result of this function may be passed further to
 /// decomposeEssentialMat or recoverPose to recover the relative pose between cameras.
@@ -1161,7 +1161,7 @@ pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camer
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
-/// 
+///
 /// ## Parameters
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
@@ -1180,18 +1180,18 @@ pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camer
 /// point localization, image resolution, and the image noise.
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
-/// 
+///
 /// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
 /// [SteweniusCFS](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
-/// 
+///
 /// <div lang='latex'>[p_2; 1]^T K^{-T} E K^{-1} [p_1; 1] = 0</div>
-/// 
+///
 /// where <span lang='latex'>E</span> is an essential matrix, <span lang='latex'>p_1</span> and <span lang='latex'>p_2</span> are corresponding points in the first and the
 /// second images, respectively. The result of this function may be passed further to
 /// decomposeEssentialMat or recoverPose to recover the relative pose between cameras.
-/// 
+///
 /// ## Overloaded parameters
-/// 
+///
 /// * points1: Array of N (N \>= 5) 2D points from the first image. The point coordinates should
 /// be floating-point (single or double precision).
 /// * points2: Array of the second image points of the same size and format as points1 .
@@ -1209,10 +1209,10 @@ pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camer
 /// confidence (probability) that the estimated matrix is correct.
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
-/// 
+///
 /// This function differs from the one above that it computes camera matrix from focal length and
 /// principal point:
-/// 
+///
 /// <div lang='latex'>K =
 /// \begin{bmatrix}
 /// f & 0 & x_{pp}  \\
@@ -1232,7 +1232,7 @@ pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, 
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
-/// 
+///
 /// ## Parameters
 /// * points1: Array of N points from the first image. The point coordinates should be
 /// floating-point (single or double precision).
@@ -1248,20 +1248,20 @@ pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, 
 /// point localization, image resolution, and the image noise.
 /// * confidence: Parameter used for the RANSAC and LMedS methods only. It specifies a desirable level
 /// of confidence (probability) that the estimated matrix is correct.
-/// * mask: 
-/// 
+/// * mask:
+///
 /// The epipolar geometry is described by the following equation:
-/// 
+///
 /// <div lang='latex'>[p_2; 1]^T F [p_1; 1] = 0</div>
-/// 
+///
 /// where <span lang='latex'>F</span> is a fundamental matrix, <span lang='latex'>p_1</span> and <span lang='latex'>p_2</span> are corresponding points in the first and the
 /// second images, respectively.
-/// 
+///
 /// The function calculates the fundamental matrix using one of four methods listed above and returns
 /// the found fundamental matrix. Normally just one matrix is found. But in case of the 7-point
 /// algorithm, the function may return up to 3 solutions ( <span lang='latex'>9 \times 3</span> matrix that stores all 3
 /// matrices sequentially).
-/// 
+///
 /// The calculated fundamental matrix may be passed further to computeCorrespondEpilines that finds the
 /// epipolar lines corresponding to the specified points. It can also be passed to
 /// stereoRectifyUncalibrated to compute the rectification transformation. :
@@ -1270,19 +1270,19 @@ pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, 
 /// int point_count = 100;
 /// vector<Point2f> points1(point_count);
 /// vector<Point2f> points2(point_count);
-/// 
+///
 /// // initialize the points here ...
 /// for( int i = 0; i < point_count; i++ )
 /// {
 /// points1[i] = ...;
 /// points2[i] = ...;
 /// }
-/// 
+///
 /// Mat fundamental_matrix =
 /// findFundamentalMat(points1, points2, FM_RANSAC, 3, 0.99);
 /// ```
-/// 
-/// 
+///
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -1294,7 +1294,7 @@ pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut
 }
 
 /// Finds a perspective transformation between two planes.
-/// 
+///
 /// ## Parameters
 /// * srcPoints: Coordinates of the points in the original plane, a matrix of the type CV_32FC2
 /// or vector\<Point2f\> .
@@ -1314,19 +1314,19 @@ pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut
 /// mask values are ignored.
 /// * maxIters: The maximum number of RANSAC iterations.
 /// * confidence: Confidence level, between 0 and 1.
-/// 
+///
 /// The function finds and returns the perspective transformation <span lang='latex'>H</span> between the source and the
 /// destination planes:
-/// 
+///
 /// <div lang='latex'>s_i  \vecthree{x'_i}{y'_i}{1} \sim H  \vecthree{x_i}{y_i}{1}</div>
-/// 
+///
 /// so that the back-projection error
-/// 
+///
 /// <div lang='latex'>\sum _i \left ( x'_i- \frac{h_{11} x_i + h_{12} y_i + h_{13}}{h_{31} x_i + h_{32} y_i + h_{33}} \right )^2+ \left ( y'_i- \frac{h_{21} x_i + h_{22} y_i + h_{23}}{h_{31} x_i + h_{32} y_i + h_{33}} \right )^2</div>
-/// 
+///
 /// is minimized. If the parameter method is set to the default value 0, the function uses all the point
 /// pairs to compute an initial homography estimate with a simple least-squares scheme.
-/// 
+///
 /// However, if not all of the point pairs ( <span lang='latex'>srcPoints_i</span>, <span lang='latex'>dstPoints_i</span> ) fit the rigid perspective
 /// transformation (that is, there are some outliers), this initial estimate will be poor. In this case,
 /// you can use one of the three robust methods. The methods RANSAC, LMeDS and RHO try many different
@@ -1335,24 +1335,24 @@ pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut
 /// computed homography (which is the number of inliers for RANSAC or the least median re-projection error for
 /// LMeDS). The best subset is then used to produce the initial estimate of the homography matrix and
 /// the mask of inliers/outliers.
-/// 
+///
 /// Regardless of the method, robust or not, the computed homography matrix is refined further (using
 /// inliers only in case of a robust method) with the Levenberg-Marquardt method to reduce the
 /// re-projection error even more.
-/// 
+///
 /// The methods RANSAC and RHO can handle practically any ratio of outliers but need a threshold to
 /// distinguish inliers from outliers. The method LMeDS does not need any threshold but it works
 /// correctly only when there are more than 50% of inliers. Finally, if there are no outliers and the
 /// noise is rather small, use the default method (method=0).
-/// 
+///
 /// The function is used to find initial intrinsic and extrinsic matrices. Homography matrix is
 /// determined up to a scale. Thus, it is normalized so that <span lang='latex'>h_{33}=1</span>. Note that whenever an <span lang='latex'>H</span> matrix
 /// cannot be estimated, an empty one will be returned.
-/// 
+///
 /// ## See also
 /// getAffineTransform, estimateAffine2D, estimateAffinePartial2D, getPerspectiveTransform, warpPerspective,
 /// perspectiveTransform
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -1363,7 +1363,7 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 }
 
 /// Finds a perspective transformation between two planes.
-/// 
+///
 /// ## Parameters
 /// * srcPoints: Coordinates of the points in the original plane, a matrix of the type CV_32FC2
 /// or vector\<Point2f\> .
@@ -1383,19 +1383,19 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 /// mask values are ignored.
 /// * maxIters: The maximum number of RANSAC iterations.
 /// * confidence: Confidence level, between 0 and 1.
-/// 
+///
 /// The function finds and returns the perspective transformation <span lang='latex'>H</span> between the source and the
 /// destination planes:
-/// 
+///
 /// <div lang='latex'>s_i  \vecthree{x'_i}{y'_i}{1} \sim H  \vecthree{x_i}{y_i}{1}</div>
-/// 
+///
 /// so that the back-projection error
-/// 
+///
 /// <div lang='latex'>\sum _i \left ( x'_i- \frac{h_{11} x_i + h_{12} y_i + h_{13}}{h_{31} x_i + h_{32} y_i + h_{33}} \right )^2+ \left ( y'_i- \frac{h_{21} x_i + h_{22} y_i + h_{23}}{h_{31} x_i + h_{32} y_i + h_{33}} \right )^2</div>
-/// 
+///
 /// is minimized. If the parameter method is set to the default value 0, the function uses all the point
 /// pairs to compute an initial homography estimate with a simple least-squares scheme.
-/// 
+///
 /// However, if not all of the point pairs ( <span lang='latex'>srcPoints_i</span>, <span lang='latex'>dstPoints_i</span> ) fit the rigid perspective
 /// transformation (that is, there are some outliers), this initial estimate will be poor. In this case,
 /// you can use one of the three robust methods. The methods RANSAC, LMeDS and RHO try many different
@@ -1404,20 +1404,20 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 /// computed homography (which is the number of inliers for RANSAC or the least median re-projection error for
 /// LMeDS). The best subset is then used to produce the initial estimate of the homography matrix and
 /// the mask of inliers/outliers.
-/// 
+///
 /// Regardless of the method, robust or not, the computed homography matrix is refined further (using
 /// inliers only in case of a robust method) with the Levenberg-Marquardt method to reduce the
 /// re-projection error even more.
-/// 
+///
 /// The methods RANSAC and RHO can handle practically any ratio of outliers but need a threshold to
 /// distinguish inliers from outliers. The method LMeDS does not need any threshold but it works
 /// correctly only when there are more than 50% of inliers. Finally, if there are no outliers and the
 /// noise is rather small, use the default method (method=0).
-/// 
+///
 /// The function is used to find initial intrinsic and extrinsic matrices. Homography matrix is
 /// determined up to a scale. Thus, it is normalized so that <span lang='latex'>h_{33}=1</span>. Note that whenever an <span lang='latex'>H</span> matrix
 /// cannot be estimated, an empty one will be returned.
-/// 
+///
 /// ## See also
 /// getAffineTransform, estimateAffine2D, estimateAffinePartial2D, getPerspectiveTransform, warpPerspective,
 /// perspectiveTransform
@@ -1433,7 +1433,7 @@ pub fn find_homography_full(src_points: &core::Mat, dst_points: &core::Mat, meth
 }
 
 /// Performs camera calibaration
-/// 
+///
 /// ## Parameters
 /// * objectPoints: vector of vectors of calibration pattern points in the calibration pattern
 /// coordinate space.
@@ -1474,7 +1474,7 @@ pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::Vecto
 }
 
 /// Distorts 2D points using fisheye model.
-/// 
+///
 /// ## Parameters
 /// * undistorted: Array of object points, 1xN/Nx1 2-channel (or vector\<Point2f\> ), where N is
 /// the number of points in the view.
@@ -1482,7 +1482,7 @@ pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::Vecto
 /// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
 /// * alpha: The skew coefficient.
 /// * distorted: Output array of image points, 1xN/Nx1 2-channel, or vector\<Point2f\> .
-/// 
+///
 /// Note that the function assumes the camera matrix of the undistorted points to be identity.
 /// This means if you want to transform back points undistorted with undistortPoints() you have to
 /// multiply them with <span lang='latex'>P^{-1}</span>.
@@ -1494,17 +1494,17 @@ pub fn distort_points(undistorted: &core::Mat, distorted: &mut core::Mat, k: &co
 }
 
 /// Estimates new camera matrix for undistortion or rectification.
-/// 
+///
 /// ## Parameters
 /// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
-/// * image_size: 
+/// * image_size:
 /// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
 /// * R: Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3
 /// 1-channel or 1x1 3-channel
 /// * P: New camera matrix (3x3) or new projection matrix (3x4)
 /// * balance: Sets the new focal length in range between the min focal length and the max focal
 /// length. Balance is in range of [0, 1].
-/// * new_size: 
+/// * new_size:
 /// * fov_scale: Divisor for new focal length.
 ///
 /// ## C++ default parameters
@@ -1517,7 +1517,7 @@ pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &core::Mat, d: &core:
 
 /// Computes undistortion and rectification maps for image transform by cv::remap(). If D is empty zero
 /// distortion is used, if R or P is empty identity matrixes are used.
-/// 
+///
 /// ## Parameters
 /// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
 /// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
@@ -1534,13 +1534,13 @@ pub fn init_undistort_rectify_map(k: &core::Mat, d: &core::Mat, r: &core::Mat, p
 }
 
 /// Projects points using fisheye model
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Array of object points, 1xN/Nx1 3-channel (or vector\<Point3f\> ), where N is
 /// the number of points in the view.
 /// * imagePoints: Output array of image points, 2xN/Nx2 1-channel or 1xN/Nx1 2-channel, or
 /// vector\<Point2f\>.
-/// * affine: 
+/// * affine:
 /// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
 /// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
 /// * alpha: The skew coefficient.
@@ -1548,12 +1548,12 @@ pub fn init_undistort_rectify_map(k: &core::Mat, d: &core::Mat, r: &core::Mat, p
 /// to components of the focal lengths, coordinates of the principal point, distortion coefficients,
 /// rotation vector, translation vector, and the skew. In the old interface different components of
 /// the jacobian are returned via different output parameters.
-/// 
+///
 /// The function computes projections of 3D points to the image plane given intrinsic and extrinsic
 /// camera parameters. Optionally, the function computes Jacobians - matrices of partial derivatives of
 /// image points coordinates (as functions of all the input parameters) with respect to the particular
 /// parameters, intrinsic and/or extrinsic.
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -1564,7 +1564,7 @@ pub fn fisheye_project_points(object_points: &core::Mat, image_points: &mut core
 }
 
 /// Performs stereo calibration
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points.
 /// * imagePoints1: Vector of vectors of the projections of the calibration pattern points,
@@ -1604,7 +1604,7 @@ pub fn stereo_calibrate(object_points: &types::VectorOfMat, image_points1: &type
 }
 
 /// Stereo rectification for fisheye camera model
-/// 
+///
 /// ## Parameters
 /// * K1: First camera matrix.
 /// * D1: First camera distortion parameters.
@@ -1643,7 +1643,7 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 }
 
 /// Transforms an image to compensate for fisheye lens distortion.
-/// 
+///
 /// ## Parameters
 /// * distorted: image with fisheye lens distortion.
 /// * undistorted: Output image with compensated fisheye lens distortion.
@@ -1651,24 +1651,24 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 /// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
 /// * Knew: Camera matrix of the distorted image. By default, it is the identity matrix but you
 /// may additionally scale and shift the result by using a different matrix.
-/// * new_size: 
-/// 
+/// * new_size:
+///
 /// The function transforms an image to compensate radial and tangential lens distortion.
-/// 
+///
 /// The function is simply a combination of fisheye::initUndistortRectifyMap (with unity R ) and remap
 /// (with bilinear interpolation). See the former function for details of the transformation being
 /// performed.
-/// 
+///
 /// See below the results of undistortImage.
 /// *   a\) result of undistort of perspective camera model (all possible coefficients (k_1, k_2, k_3,
 /// k_4, k_5, k_6) of distortion were optimized under calibration)
 /// *   b\) result of fisheye::undistortImage of fisheye camera model (all possible coefficients (k_1, k_2,
 /// k_3, k_4) of fisheye distortion were optimized under calibration)
 /// *   c\) original image was captured with fisheye lens
-/// 
+///
 /// Pictures a) and b) almost the same. But if we consider points of image located far from the center
 /// of image, we can notice that on image a) these points are distorted.
-/// 
+///
 /// ![image](https://docs.opencv.org/3.4.6/fisheye_undistorted.jpg)
 ///
 /// ## C++ default parameters
@@ -1679,7 +1679,7 @@ pub fn fisheye_undistort_image(distorted: &core::Mat, undistorted: &mut core::Ma
 }
 
 /// Undistorts 2D points using fisheye model
-/// 
+///
 /// ## Parameters
 /// * distorted: Array of object points, 1xN/Nx1 2-channel (or vector\<Point2f\> ), where N is the
 /// number of points in the view.
@@ -1698,7 +1698,7 @@ pub fn fisheye_undistort_points(distorted: &core::Mat, undistorted: &mut core::M
 }
 
 /// Returns the new camera matrix based on the free scaling parameter.
-/// 
+///
 /// ## Parameters
 /// * cameraMatrix: Input camera matrix.
 /// * distCoeffs: Input vector of distortion coefficients
@@ -1717,7 +1717,7 @@ pub fn fisheye_undistort_points(distorted: &core::Mat, undistorted: &mut core::M
 /// best fit a subset of the source image (determined by alpha) to the corrected image.
 /// ## Returns
 /// new_camera_matrix Output new camera matrix.
-/// 
+///
 /// The function computes and returns the optimal new camera matrix based on the free scaling parameter.
 /// By varying this parameter, you may retrieve only sensible pixels alpha=0 , keep all the original
 /// image pixels if there is valuable information in the corners alpha=1 , or get something in between.
@@ -1740,7 +1740,7 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 }
 
 /// Finds an initial camera matrix from 3D-2D point correspondences.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points in the calibration pattern
 /// coordinate space. In the old interface all the per-view vectors are concatenated. See
@@ -1750,7 +1750,7 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 /// * imageSize: Image size in pixels used to initialize the principal point.
 /// * aspectRatio: If it is zero or negative, both <span lang='latex'>f_x</span> and <span lang='latex'>f_y</span> are estimated independently.
 /// Otherwise, <span lang='latex'>f_x = f_y * \texttt{aspectRatio}</span> .
-/// 
+///
 /// The function estimates and returns an initial camera matrix for the camera calibration process.
 /// Currently, the function only supports planar calibration patterns, which are patterns where each
 /// object point has z-coordinate =0.
@@ -1762,7 +1762,7 @@ pub fn init_camera_matrix_2d(object_points: &types::VectorOfMat, image_points: &
 }
 
 /// Computes partial derivatives of the matrix product for each multiplied matrix.
-/// 
+///
 /// ## Parameters
 /// * A: First multiplied matrix.
 /// * B: Second multiplied matrix.
@@ -1770,7 +1770,7 @@ pub fn init_camera_matrix_2d(object_points: &types::VectorOfMat, image_points: &
 /// <span lang='latex'>\texttt{A.rows*B.cols} \times {A.rows*A.cols}</span> .
 /// * dABdB: Second output derivative matrix d(A\*B)/dB of size
 /// <span lang='latex'>\texttt{A.rows*B.cols} \times {B.rows*B.cols}</span> .
-/// 
+///
 /// The function computes partial derivatives of the elements of the matrix product <span lang='latex'>A*B</span> with regard to
 /// the elements of each of the two input matrices. The function is used to compute the Jacobian
 /// matrices in stereoCalibrate but can also be used in any other similar optimization function.
@@ -1779,7 +1779,7 @@ pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a
 }
 
 /// Projects 3D points to an image plane.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Array of object points, 3xN/Nx3 1-channel or 1xN/Nx1 3-channel (or
 /// vector\<Point3f\> ), where N is the number of points in the view.
@@ -1798,15 +1798,15 @@ pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a
 /// * aspectRatio: Optional "fixed aspect ratio" parameter. If the parameter is not 0, the
 /// function assumes that the aspect ratio (*fx/fy*) is fixed and correspondingly adjusts the jacobian
 /// matrix.
-/// 
+///
 /// The function computes projections of 3D points to the image plane given intrinsic and extrinsic
 /// camera parameters. Optionally, the function computes Jacobians - matrices of partial derivatives of
 /// image points coordinates (as functions of all the input parameters) with respect to the particular
 /// parameters, intrinsic and/or extrinsic. The Jacobians are used during the global optimization in
 /// calibrateCamera, solvePnP, and stereoCalibrate . The function itself can also be used to compute a
 /// re-projection error given the current intrinsic and extrinsic parameters.
-/// 
-/// 
+///
+///
 /// Note: By setting rvec=tvec=(0,0,0) or by setting cameraMatrix to a 3x3 identity matrix, or by
 /// passing zero distortion coefficients, you can get various useful partial cases of the function. This
 /// means that you can compute the distorted coordinates for a sparse set of points or apply a
@@ -1822,7 +1822,7 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 /// Recover relative camera rotation and translation from an estimated essential matrix and the
 /// corresponding points in two images, using cheirality check. Returns the number of inliers which pass
 /// the check.
-/// 
+///
 /// ## Parameters
 /// * E: The input essential matrix.
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
@@ -1840,7 +1840,7 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 /// This function decomposes an essential matrix using decomposeEssentialMat and then verifies possible
 /// pose hypotheses by doing cheirality check. The cheirality check basically means that the
 /// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
-/// 
+///
 /// This function can be used to process output E and mask from findEssentialMat. In this scenario,
 /// points1 and points2 are the same input for findEssentialMat. :
 /// ```ignore
@@ -1848,19 +1848,19 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 /// int point_count = 100;
 /// vector<Point2f> points1(point_count);
 /// vector<Point2f> points2(point_count);
-/// 
+///
 /// // initialize the points here ...
 /// for( int i = 0; i < point_count; i++ )
 /// {
 /// points1[i] = ...;
 /// points2[i] = ...;
 /// }
-/// 
+///
 /// // cametra matrix with both focal lengths = 1, and principal point = (0, 0)
 /// Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
-/// 
+///
 /// Mat E, R, t, mask;
-/// 
+///
 /// E = findEssentialMat(points1, points2, cameraMatrix, RANSAC, 0.999, 1.0, mask);
 /// recoverPose(E, points1, points2, cameraMatrix, R, t, mask);
 /// ```
@@ -1874,7 +1874,7 @@ pub fn recover_pose_camera_with_points(e: &core::Mat, points1: &core::Mat, point
 /// Recover relative camera rotation and translation from an estimated essential matrix and the
 /// corresponding points in two images, using cheirality check. Returns the number of inliers which pass
 /// the check.
-/// 
+///
 /// ## Parameters
 /// * E: The input essential matrix.
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
@@ -1892,7 +1892,7 @@ pub fn recover_pose_camera_with_points(e: &core::Mat, points1: &core::Mat, point
 /// This function decomposes an essential matrix using decomposeEssentialMat and then verifies possible
 /// pose hypotheses by doing cheirality check. The cheirality check basically means that the
 /// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
-/// 
+///
 /// This function can be used to process output E and mask from findEssentialMat. In this scenario,
 /// points1 and points2 are the same input for findEssentialMat. :
 /// ```ignore
@@ -1900,26 +1900,26 @@ pub fn recover_pose_camera_with_points(e: &core::Mat, points1: &core::Mat, point
 /// int point_count = 100;
 /// vector<Point2f> points1(point_count);
 /// vector<Point2f> points2(point_count);
-/// 
+///
 /// // initialize the points here ...
 /// for( int i = 0; i < point_count; i++ )
 /// {
 /// points1[i] = ...;
 /// points2[i] = ...;
 /// }
-/// 
+///
 /// // cametra matrix with both focal lengths = 1, and principal point = (0, 0)
 /// Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
-/// 
+///
 /// Mat E, R, t, mask;
-/// 
+///
 /// E = findEssentialMat(points1, points2, cameraMatrix, RANSAC, 0.999, 1.0, mask);
 /// recoverPose(E, points1, points2, cameraMatrix, R, t, mask);
 /// ```
-/// 
-/// 
+///
+///
 /// ## Overloaded parameters
-/// 
+///
 /// * E: The input essential matrix.
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
 /// floating-point (single or double precision).
@@ -1946,7 +1946,7 @@ pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// Recover relative camera rotation and translation from an estimated essential matrix and the
 /// corresponding points in two images, using cheirality check. Returns the number of inliers which pass
 /// the check.
-/// 
+///
 /// ## Parameters
 /// * E: The input essential matrix.
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
@@ -1964,7 +1964,7 @@ pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// This function decomposes an essential matrix using decomposeEssentialMat and then verifies possible
 /// pose hypotheses by doing cheirality check. The cheirality check basically means that the
 /// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
-/// 
+///
 /// This function can be used to process output E and mask from findEssentialMat. In this scenario,
 /// points1 and points2 are the same input for findEssentialMat. :
 /// ```ignore
@@ -1972,26 +1972,26 @@ pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// int point_count = 100;
 /// vector<Point2f> points1(point_count);
 /// vector<Point2f> points2(point_count);
-/// 
+///
 /// // initialize the points here ...
 /// for( int i = 0; i < point_count; i++ )
 /// {
 /// points1[i] = ...;
 /// points2[i] = ...;
 /// }
-/// 
+///
 /// // cametra matrix with both focal lengths = 1, and principal point = (0, 0)
 /// Mat cameraMatrix = Mat::eye(3, 3, CV_64F);
-/// 
+///
 /// Mat E, R, t, mask;
-/// 
+///
 /// E = findEssentialMat(points1, points2, cameraMatrix, RANSAC, 0.999, 1.0, mask);
 /// recoverPose(E, points1, points2, cameraMatrix, R, t, mask);
 /// ```
-/// 
-/// 
+///
+///
 /// ## Overloaded parameters
-/// 
+///
 /// * E: The input essential matrix.
 /// * points1: Array of N 2D points from the first image. The point coordinates should be
 /// floating-point (single or double precision).
@@ -2005,10 +2005,10 @@ pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// :   If it is not empty, then it marks inliers in points1 and points2 for then given essential
 /// matrix E. Only these inliers will be used to recover pose. In the output mask only inliers
 /// which pass the cheirality check.
-/// 
+///
 /// This function differs from the one above that it computes camera matrix from focal length and
 /// principal point:
-/// 
+///
 /// <div lang='latex'>K =
 /// \begin{bmatrix}
 /// f & 0 & x_{pp}  \\
@@ -2030,7 +2030,7 @@ pub fn rectify3_collinear(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, 
 }
 
 /// Reprojects a disparity image to 3D space.
-/// 
+///
 /// ## Parameters
 /// * disparity: Input single-channel 8-bit unsigned, 16-bit signed, 32-bit signed or 32-bit
 /// floating-point disparity image. If 16-bit signed format is used, the values are assumed to have no
@@ -2045,13 +2045,13 @@ pub fn rectify3_collinear(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, 
 /// to 3D points with a very large Z value (currently set to 10000).
 /// * ddepth: The optional output array depth. If it is -1, the output image will have CV_32F
 /// depth. ddepth can also be set to CV_16S, CV_32S or CV_32F.
-/// 
+///
 /// The function transforms a single-channel disparity map to a 3-channel image representing a 3D
 /// surface. That is, for each pixel (x,y) and the corresponding disparity d=disparity(x,y) , it
 /// computes:
-/// 
+///
 /// <div lang='latex'>\begin{array}{l} [X \; Y \; Z \; W]^T =  \texttt{Q} *[x \; y \; \texttt{disparity} (x,y) \; 1]^T  \\ \texttt{\_3dImage} (x,y) = (X/W, \; Y/W, \; Z/W) \end{array}</div>
-/// 
+///
 /// The matrix Q can be an arbitrary <span lang='latex'>4 \times 4</span> matrix (for example, the one computed by
 /// stereoRectify). To reproject a sparse set of points {(x,y,d),...} to 3D space, use
 /// perspectiveTransform .
@@ -2064,7 +2064,7 @@ pub fn reproject_image_to_3d(disparity: &core::Mat, _3d_image: &mut core::Mat, q
 }
 
 /// Calculates the Sampson Distance between two points.
-/// 
+///
 /// The function cv::sampsonDistance calculates and returns the first order approximation of the geometric error as:
 /// <div lang='latex'>
 /// sd( \texttt{pt1} , \texttt{pt2} )=
@@ -2086,7 +2086,7 @@ pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Resu
 }
 
 /// Finds an object pose from 3 3D-2D point correspondences.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, 3x3 1-channel or
 /// 1x3/3x1 3-channel. vector\<Point3f\> can be also passed here.
@@ -2105,7 +2105,7 @@ pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Resu
 /// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// *   **SOLVEPNP_AP3P** Method is based on the paper of Tong Ke and Stergios I. Roumeliotis.
 /// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)).
-/// 
+///
 /// The function estimates the object pose given 3 object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients.
 pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32) -> Result<i32> {
@@ -2113,7 +2113,7 @@ pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
 /// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3f\> can be also passed here.
@@ -2137,14 +2137,14 @@ pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// * confidence: The probability that the algorithm produces a useful result.
 /// * inliers: Output vector that contains indices of inliers in objectPoints and imagePoints .
 /// * flags: Method for solving a PnP problem (see solvePnP ).
-/// 
+///
 /// The function estimates an object pose given a set of object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients. This function finds such
 /// a pose that minimizes reprojection error, that is, the sum of squared distances between the observed
 /// projections imagePoints and the projected (using projectPoints ) objectPoints. The use of RANSAC
 /// makes the function resistant to outliers.
-/// 
-/// 
+///
+///
 /// Note:
 /// *   An example of how to use solvePNPRansac for object detection can be found at
 /// opencv_source_code/samples/cpp/tutorial_code/calib3d/real_time_pose_estimation/
@@ -2168,7 +2168,7 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
 /// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3f\> can be also passed here.
@@ -2208,17 +2208,17 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 /// *   **SOLVEPNP_AP3P** Method is based on the paper of Tong Ke and Stergios I. Roumeliotis.
 /// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)). In this case the
 /// function requires exactly four object and image points.
-/// 
+///
 /// The function estimates the object pose given a set of object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients, see the figure below
 /// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
 /// and the Z-axis forward).
-/// 
+///
 /// ![](https://docs.opencv.org/3.4.6/pnp.jpg)
-/// 
+///
 /// Points expressed in the world frame <span lang='latex'> \bf{X}_w </span> are projected into the image plane <span lang='latex'> \left[ u, v \right] </span>
 /// using the perspective projection model <span lang='latex'> \Pi </span> and the camera intrinsic parameters matrix <span lang='latex'> \bf{A} </span>:
-/// 
+///
 /// <div lang='latex'>
 /// \begin{align*}
 /// \begin{bmatrix}
@@ -2262,10 +2262,10 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 /// \end{bmatrix}
 /// \end{align*}
 /// </div>
-/// 
+///
 /// The estimated pose is thus the rotation (`rvec`) and the translation (`tvec`) vectors that allow to transform
 /// a 3D point expressed in the world frame into the camera frame:
-/// 
+///
 /// <div lang='latex'>
 /// \begin{align*}
 /// \begin{bmatrix}
@@ -2301,8 +2301,8 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 /// \end{bmatrix}
 /// \end{align*}
 /// </div>
-/// 
-/// 
+///
+///
 /// Note:
 /// *   An example of how to use solvePnP for planar augmented reality can be found at
 /// opencv_source_code/samples/python/plane_ar.py
@@ -2334,7 +2334,7 @@ pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 }
 
 /// Calibrates the stereo camera.
-/// 
+///
 /// ## Parameters
 /// * objectPoints: Vector of vectors of the calibration pattern points.
 /// * imagePoints1: Vector of vectors of the projections of the calibration pattern points,
@@ -2394,7 +2394,7 @@ pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// the optimization. If CALIB_USE_INTRINSIC_GUESS is set, the coefficient from the
 /// supplied distCoeffs matrix is used. Otherwise, it is set to 0.
 /// * criteria: Termination criteria for the iterative optimization algorithm.
-/// 
+///
 /// The function estimates transformation between two cameras making a stereo pair. If you have a stereo
 /// camera where the relative position and orientation of two cameras is fixed, and if you computed
 /// poses of an object relative to the first camera and to the second camera, (R1, T1) and (R2, T2),
@@ -2402,19 +2402,19 @@ pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// This means that, given ( <span lang='latex'>R_1</span>,<span lang='latex'>T_1</span> ), it should be possible to compute ( <span lang='latex'>R_2</span>,<span lang='latex'>T_2</span> ). You only
 /// need to know the position and orientation of the second camera relative to the first camera. This is
 /// what the described function does. It computes ( <span lang='latex'>R</span>,<span lang='latex'>T</span> ) so that:
-/// 
+///
 /// <div lang='latex'>R_2=R*R_1</div>
 /// <div lang='latex'>T_2=R*T_1 + T,</div>
-/// 
+///
 /// Optionally, it computes the essential matrix E:
-/// 
+///
 /// <div lang='latex'>E= \vecthreethree{0}{-T_2}{T_1}{T_2}{0}{-T_0}{-T_1}{T_0}{0} *R</div>
-/// 
+///
 /// where <span lang='latex'>T_i</span> are components of the translation vector <span lang='latex'>T</span> : <span lang='latex'>T=[T_0, T_1, T_2]^T</span> . And the function
 /// can also compute the fundamental matrix F:
-/// 
+///
 /// <div lang='latex'>F = cameraMatrix2^{-T} E cameraMatrix1^{-1}</div>
-/// 
+///
 /// Besides the stereo-related information, the function can also perform a full calibration of each of
 /// two cameras. However, due to the high dimensionality of the parameter space and noise in the input
 /// data, the function can diverge from the correct solution. If the intrinsic parameters can be
@@ -2424,7 +2424,7 @@ pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// estimated at once, it makes sense to restrict some parameters, for example, pass
 /// CALIB_SAME_FOCAL_LENGTH and CALIB_ZERO_TANGENT_DIST flags, which is usually a
 /// reasonable assumption.
-/// 
+///
 /// Similarly to calibrateCamera , the function minimizes the total re-projection error for all the
 /// points in all the available views from both cameras. The function returns the final value of the
 /// re-projection error.
@@ -2445,7 +2445,7 @@ pub fn stereo_calibrate_camera(object_points: &types::VectorOfMat, image_points1
 }
 
 /// Computes a rectification transform for an uncalibrated stereo camera.
-/// 
+///
 /// ## Parameters
 /// * points1: Array of feature points in the first image.
 /// * points2: The corresponding points in the second image. The same formats as in
@@ -2459,14 +2459,14 @@ pub fn stereo_calibrate_camera(object_points: &types::VectorOfMat, image_points1
 /// than zero, all the point pairs that do not comply with the epipolar geometry (that is, the points
 /// for which <span lang='latex'>|\texttt{points2[i]}^T*\texttt{F}*\texttt{points1[i]}|>\texttt{threshold}</span> ) are
 /// rejected prior to computing the homographies. Otherwise, all the points are considered inliers.
-/// 
+///
 /// The function computes the rectification transformations without knowing intrinsic parameters of the
 /// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 /// related difference from stereoRectify is that the function outputs not the rectification
 /// transformations in the object (3D) space, but the planar perspective transformations encoded by the
 /// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Hartley99) .
-/// 
-/// 
+///
+///
 /// Note:
 /// While the algorithm does not need to know the intrinsic parameters of the cameras, it heavily
 /// depends on the epipolar geometry. Therefore, if the camera lenses have a significant distortion,
@@ -2482,7 +2482,7 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 }
 
 /// Computes rectification transforms for each head of a calibrated stereo camera.
-/// 
+///
 /// ## Parameters
 /// * cameraMatrix1: First camera matrix.
 /// * distCoeffs1: First camera distortion parameters.
@@ -2520,45 +2520,45 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 /// * validPixROI2: Optional output rectangles inside the rectified images where all the pixels
 /// are valid. If alpha=0 , the ROIs cover the whole images. Otherwise, they are likely to be smaller
 /// (see the picture below).
-/// 
+///
 /// The function computes the rotation matrices for each camera that (virtually) make both camera image
 /// planes the same plane. Consequently, this makes all the epipolar lines parallel and thus simplifies
 /// the dense stereo correspondence problem. The function takes the matrices computed by stereoCalibrate
 /// as input. As output, it provides two rotation matrices and also two projection matrices in the new
 /// coordinates. The function distinguishes the following two cases:
-/// 
+///
 /// *   **Horizontal stereo**: the first and the second camera views are shifted relative to each other
 /// mainly along the x axis (with possible small vertical shift). In the rectified images, the
 /// corresponding epipolar lines in the left and right cameras are horizontal and have the same
 /// y-coordinate. P1 and P2 look like:
-/// 
+///
 /// <div lang='latex'>\texttt{P1} = \begin{bmatrix} f & 0 & cx_1 & 0 \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}</div>
-/// 
+///
 /// <div lang='latex'>\texttt{P2} = \begin{bmatrix} f & 0 & cx_2 & T_x*f \\ 0 & f & cy & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix} ,</div>
-/// 
+///
 /// where <span lang='latex'>T_x</span> is a horizontal shift between the cameras and <span lang='latex'>cx_1=cx_2</span> if
 /// CALIB_ZERO_DISPARITY is set.
-/// 
+///
 /// *   **Vertical stereo**: the first and the second camera views are shifted relative to each other
 /// mainly in vertical direction (and probably a bit in the horizontal direction too). The epipolar
 /// lines in the rectified images are vertical and have the same x-coordinate. P1 and P2 look like:
-/// 
+///
 /// <div lang='latex'>\texttt{P1} = \begin{bmatrix} f & 0 & cx & 0 \\ 0 & f & cy_1 & 0 \\ 0 & 0 & 1 & 0 \end{bmatrix}</div>
-/// 
+///
 /// <div lang='latex'>\texttt{P2} = \begin{bmatrix} f & 0 & cx & 0 \\ 0 & f & cy_2 & T_y*f \\ 0 & 0 & 1 & 0 \end{bmatrix} ,</div>
-/// 
+///
 /// where <span lang='latex'>T_y</span> is a vertical shift between the cameras and <span lang='latex'>cy_1=cy_2</span> if CALIB_ZERO_DISPARITY is
 /// set.
-/// 
+///
 /// As you can see, the first three columns of P1 and P2 will effectively be the new "rectified" camera
 /// matrices. The matrices, together with R1 and R2 , can then be passed to initUndistortRectifyMap to
 /// initialize the rectification map for each camera.
-/// 
+///
 /// See below the screenshot from the stereo_calib.cpp sample. Some red horizontal lines pass through
 /// the corresponding image regions. This means that the images are well rectified, which is what most
 /// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 /// their interiors are all valid pixels.
-/// 
+///
 /// ![image](https://docs.opencv.org/3.4.6/stereo_undistort.jpg)
 ///
 /// ## C++ default parameters
@@ -2572,7 +2572,7 @@ pub fn stereo_rectify_camera(camera_matrix1: &core::Mat, dist_coeffs1: &core::Ma
 }
 
 /// Reconstructs points by triangulation.
-/// 
+///
 /// ## Parameters
 /// * projMatr1: 3x4 projection matrix of the first camera.
 /// * projMatr2: 3x4 projection matrix of the second camera.
@@ -2581,14 +2581,14 @@ pub fn stereo_rectify_camera(camera_matrix1: &core::Mat, dist_coeffs1: &core::Ma
 /// * projPoints2: 2xN array of corresponding points in the second image. In case of c++ version
 /// it can be also a vector of feature points or two-channel matrix of size 1xN or Nx1.
 /// * points4D: 4xN array of reconstructed points in homogeneous coordinates.
-/// 
+///
 /// The function reconstructs 3-dimensional points (in homogeneous coordinates) by using their
 /// observations with a stereo camera. Projections matrices can be obtained from stereoRectify.
-/// 
-/// 
+///
+///
 /// Note:
 /// Keep in mind that all input data should be of float type in order for this function to work.
-/// 
+///
 /// ## See also
 /// reprojectImageTo3D
 pub fn triangulate_points(proj_matr1: &core::Mat, proj_matr2: &core::Mat, proj_points1: &core::Mat, proj_points2: &core::Mat, points4_d: &mut core::Mat) -> Result<()> {
@@ -2689,7 +2689,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 impl dyn StereoBM + '_ {
 
     /// Creates StereoBM object
-    /// 
+    ///
     /// ## Parameters
     /// * numDisparities: the disparity search range. For each pixel algorithm will find the best
     /// disparity from 0 (default minimum disparity) to numDisparities. The search range can then be
@@ -2698,7 +2698,7 @@ impl dyn StereoBM + '_ {
     /// (as the block is centered at the current pixel). Larger block size implies smoother, though less
     /// accurate disparity map. Smaller block size gives more detailed disparity map, but there is higher
     /// chance for algorithm to find a wrong correspondence.
-    /// 
+    ///
     /// The function create StereoBM object. You can then call StereoBM::compute() to compute disparity for
     /// a specific stereo pair.
     ///
@@ -2716,7 +2716,7 @@ impl dyn StereoBM + '_ {
 pub trait StereoMatcher: core::Algorithm {
     #[inline(always)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
     /// Computes disparity map for the specified stereo pair
-    /// 
+    ///
     /// ## Parameters
     /// * left: Left 8-bit single-channel image.
     /// * right: Right image of the same size and the same type as the left one.
@@ -2780,7 +2780,7 @@ pub trait StereoMatcher: core::Algorithm {
 // Generating impl for trait cv::StereoSGBM (trait)
 /// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 /// one as follows:
-/// 
+///
 /// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
 /// instead of 8. Set mode=StereoSGBM::MODE_HH in createStereoSGBM to run the full variant of the
 /// algorithm but beware that it may consume a lot of memory.
@@ -2791,8 +2791,8 @@ pub trait StereoMatcher: core::Algorithm {
 /// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
 /// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
 /// check, quadratic interpolation and speckle filtering).
-/// 
-/// 
+///
+///
 /// Note:
 /// *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
 /// at opencv_source_code/samples/python/stereo_match.py
@@ -2843,7 +2843,7 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
 impl dyn StereoSGBM + '_ {
 
     /// Creates StereoSGBM object
-    /// 
+    ///
     /// ## Parameters
     /// * minDisparity: Minimum possible disparity value. Normally, it is zero but sometimes
     /// rectification algorithms can shift images, so this parameter needs to be adjusted accordingly.
@@ -2875,7 +2875,7 @@ impl dyn StereoSGBM + '_ {
     /// * mode: Set it to StereoSGBM::MODE_HH to run the full-scale two-pass dynamic programming
     /// algorithm. It will consume O(W\*H\*numDisparities) bytes, which is large for 640x480 stereo and
     /// huge for HD-size pictures. By default, it is set to false .
-    /// 
+    ///
     /// The first constructor initializes StereoSGBM with all the default parameters. So, you only have to
     /// set StereoSGBM::numDisparities at minimum. The second constructor enables you to set each parameter
     /// to a custom value.

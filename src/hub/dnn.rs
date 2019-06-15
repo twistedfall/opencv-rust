@@ -4,7 +4,7 @@
 //! - set of built-in most-useful Layers;
 //! - API to construct and modify comprehensive neural networks from layers;
 //! - functionality for loading serialized networks models from different frameworks.
-//! 
+//!
 //! Functionality of this module is designed only for forward pass computations (i.e. network testing).
 //! A network training is in principle not supported.
 use std::os::raw::{c_char, c_void};
@@ -33,7 +33,7 @@ pub fn nms_boxes_f64(bboxes: &types::VectorOfRect2d, scores: &types::VectorOfflo
 }
 
 /// Performs non maximum suppression given boxes and corresponding scores.
-/// 
+///
 /// ## Parameters
 /// * bboxes: a set of bounding boxes to apply NMS.
 /// * scores: a set of corresponding confidences.
@@ -156,7 +156,7 @@ pub fn clamp(ax: i32, dims: i32) -> Result<i32> {
 }
 
 /// Returns Inference Engine VPU type.
-/// 
+///
 /// See values of `CV_DNN_INFERENCE_ENGINE_VPU_TYPE_*` macros.
 pub fn get_inference_engine_vpu_type() -> Result<String> {
     unsafe { sys::cv_dnn_getInferenceEngineVPUType() }.into_result().map(crate::templ::receive_string_mut)
@@ -353,14 +353,14 @@ pub fn read_net_from_tensorflow_str(buffer_model: &str, len_model: size_t, buffe
 /// * evaluate: specifies testing phase of network. If true, it's similar to evaluate() method in Torch.
 /// ## Returns
 /// Net object.
-/// 
-///  
+///
+///
 /// Note: Ascii mode of Torch serializer is more preferable, because binary mode extensively use `long` type of C language,
 ///  which has various bit-length on different systems.
-/// 
+///
 /// The loading file must contain serialized <a href="https://github.com/torch/nn/blob/master/doc/module.md">nn.Module</a> object
 /// with importing network. Try to eliminate a custom objects from serialazing data to avoid importing errors.
-/// 
+///
 /// List of supported layers (i.e. object instances derived from Torch nn.Module class):
 /// - nn.Sequential
 /// - nn.Parallel
@@ -371,7 +371,7 @@ pub fn read_net_from_tensorflow_str(buffer_model: &str, len_model: size_t, buffe
 /// - nn.ReLU, nn.TanH, nn.Sigmoid
 /// - nn.Reshape
 /// - nn.SoftMax, nn.LogSoftMax
-/// 
+///
 /// Also some equivalents of these classes from cunn, cudnn, and fbcunn may be successfully imported.
 ///
 /// ## C++ default parameters
@@ -400,7 +400,7 @@ pub fn read_net_from_torch(model: &str, is_binary: bool, evaluate: bool) -> Resu
 /// * framework: Explicit framework name tag to determine a format.
 /// ## Returns
 /// Net object.
-/// 
+///
 /// This function automatically detects an origin framework of trained model
 /// and calls an appropriate function such @ref readNetFromCaffe, @ref readNetFromTensorflow,
 /// @ref readNetFromTorch or @ref readNetFromDarknet. An order of @p model and @p config
@@ -454,7 +454,7 @@ pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<core::Mat> {
 }
 
 /// Release a Myriad device (binded by OpenCV).
-/// 
+///
 /// Single Myriad device cannot be shared across multiple processes which uses
 /// Inference Engine's Myriad plugin.
 pub fn reset_myriad_device() -> Result<()> {
@@ -486,8 +486,8 @@ pub fn shape_3d(a0: i32, a1: i32, a2: i32, a3: i32) -> Result<types::VectorOfint
 /// * layersTypes: Set of layers types which parameters will be converted.
 ///                    By default, converts only Convolutional and Fully-Connected layers'
 ///                    weights.
-/// 
-/// 
+///
+///
 /// Note: Shrinked model has no origin float32 weights so it can't be used
 ///       in origin Caffe framework anymore. However the structure of data
 ///       is taken from NVidia's Caffe fork: https://github.com/NVIDIA/caffe.
@@ -521,8 +521,8 @@ pub fn slice_4d(m: &core::Mat, r0: &core::Range, r1: &core::Range, r2: &core::Ra
 /// ## Parameters
 /// * model: A path to binary network.
 /// * output: A path to output text file to be created.
-/// 
-///  
+///
+///
 /// Note: To reduce output file size, trained weights are not included.
 pub fn write_text_graph(model: &str, output: &str) -> Result<()> {
     string_arg!(model);
@@ -704,11 +704,11 @@ impl BatchNormLayer {
 // boxed class cv::dnn::BlankLayer
 /// # Partial List of Implemented Layers
 /// This subsection of dnn module contains information about built-in layers and their descriptions.
-/// 
+///
 /// Classes listed here, in fact, provides C++ API for creating instances of built-in layers.
 /// In addition to this way of layers instantiation, there is a more common factory API (see @ref dnnLayerFactory), it allows to create layers dynamically (by name) and register new ones.
 /// You can use both API, but factory API is less convenient for native C++ programming and basically designed for use inside importers (see @ref readNetFromCaffe(), @ref readNetFromTorch(), @ref readNetFromTensorflow()).
-/// 
+///
 /// Built-in layers partially reproduce functionality of corresponding Caffe and Torch7 layers.
 /// In particular, the following layers and Caffe importer were tested to reproduce <a href="http://caffe.berkeleyvision.org/tutorial/layers.html">Caffe</a> functionality:
 /// - Convolution
@@ -1266,7 +1266,7 @@ impl InnerProductLayer {
 
 // boxed class cv::dnn::InterpLayer
 /// Bilinear resize layer from https://github.com/cdmh/deeplab-public
-/// 
+///
 /// It differs from @ref ResizeLayer in output shape and resize scales computations.
 #[allow(dead_code)]
 pub struct InterpLayer {
@@ -1336,11 +1336,11 @@ impl LRNLayer {
 pub trait LSTMLayer: crate::dnn::Layer {
     #[inline(always)] fn as_raw_LSTMLayer(&self) -> *mut c_void;
     /// **Deprecated**: Use LayerParams::blobs instead.
-    /// 
+    ///
     ///  Set trained weights for LSTM layer.
-    /// 
+    ///
     /// LSTM behavior on each step is defined by current input, previous output, previous cell state and learned weights.
-    /// 
+    ///
     /// Let @f$x_t@f$ be current input, @f$h_t@f$ be current output, @f$c_t@f$ be current state.
     /// Than current output and current cell state is computed as follows:
     /// @f{eqnarray*}{
@@ -1348,7 +1348,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
     /// c_t &= f_t \odot c_{t-1} + i_t \odot g_t, \\
     /// @f}
     /// where @f$\odot@f$ is per-element multiply operation and @f$i_t, f_t, o_t, g_t@f$ is internal gates that are computed using learned wights.
-    /// 
+    ///
     /// Gates are computed as follows:
     /// @f{eqnarray*}{
     /// i_t &= sigmoid&(W_{xi} x_t + W_{hi} h_{t-1} + b_i), \\
@@ -1358,12 +1358,12 @@ pub trait LSTMLayer: crate::dnn::Layer {
     /// @f}
     /// where @f$W_{x?}@f$, @f$W_{h?}@f$ and @f$b_{?}@f$ are learned weights represented as matrices:
     /// @f$W_{x?} \in R^{N_h \times N_x}@f$, @f$W_{h?} \in R^{N_h \times N_h}@f$, @f$b_? \in R^{N_h}@f$.
-    /// 
+    ///
     /// For simplicity and performance purposes we use @f$ W_x = [W_{xi}; W_{xf}; W_{xo}, W_{xg}] @f$
     /// (i.e. @f$W_x@f$ is vertical concatenation of @f$ W_{x?} @f$), @f$ W_x \in R^{4N_h \times N_x} @f$.
     /// The same for @f$ W_h = [W_{hi}; W_{hf}; W_{ho}, W_{hg}], W_h \in R^{4N_h \times N_h} @f$
     /// and for @f$ b = [b_i; b_f, b_o, b_g]@f$, @f$b \in R^{4N_h} @f$.
-    /// 
+    ///
     /// ## Parameters
     /// * Wh: is matrix defining how previous output is transformed to internal gates (i.e. according to above mentioned notation is @f$ W_h @f$)
     /// * Wx: is matrix defining how current input is transformed to internal gates (i.e. according to above mentioned notation is @f$ W_x @f$)
@@ -1374,12 +1374,12 @@ pub trait LSTMLayer: crate::dnn::Layer {
     }
     
     /// **Deprecated**: Use flag `produce_cell_output` in LayerParams.
-    /// 
+    ///
     ///  Specifies either interpret first dimension of input blob as timestamp dimenion either as sample.
-    /// 
+    ///
     /// If flag is set to true then shape of input blob will be interpreted as [`T`, `N`, `[data dims]`] where `T` specifies number of timestamps, `N` is number of independent streams.
     /// In this case each forward() call will iterate through `T` timestamps and update layer's state `T` times.
-    /// 
+    ///
     /// If flag is set to false then shape of input blob will be interpreted as [`N`, `[data dims]`].
     /// In this case each forward() call will make one iteration and produce one timestamp with shape [`N`, `[out dims]`].
     ///
@@ -1391,7 +1391,7 @@ pub trait LSTMLayer: crate::dnn::Layer {
     }
     
     /// **Deprecated**: Use flag `use_timestamp_dim` in LayerParams.
-    /// 
+    ///
     ///  If this flag is set to true then layer will produce @f$ c_t @f$ as second output.
     /// @details Shape of the second output is the same as first output.
     ///
@@ -1425,7 +1425,7 @@ impl dyn LSTMLayer + '_ {
 
 // Generating impl for trait cv::dnn::Layer (trait)
 /// This interface class allows to build new Layers - are building blocks of networks.
-/// 
+///
 /// Each class, derived from Layer, must implement allocate() methods to declare own outputs and forward() to compute outputs.
 /// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
 pub trait Layer: core::Algorithm {
@@ -1434,7 +1434,7 @@ pub trait Layer: core::Algorithm {
     /// ## Parameters
     /// * inputs: vector of already allocated input blobs
     /// * outputs: [out] vector of already allocated output blobs
-    /// 
+    ///
     /// If this method is called after network has allocated all memory for input and output blobs
     /// and before inferencing.
     fn finalize_to(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat) -> Result<()> {
@@ -1475,7 +1475,7 @@ pub trait Layer: core::Algorithm {
     /// Returns index of input blob into the input array.
     /// ## Parameters
     /// * inputName: label of input blob
-    /// 
+    ///
     /// Each layer input and output can be labeled to easily identify them using "%<layer_name%>[.output_name]" notation.
     /// This method maps label of input blob to its index into input vector.
     fn input_name_to_index(&mut self, input_name: &str) -> Result<i32> {
@@ -1502,7 +1502,7 @@ pub trait Layer: core::Algorithm {
     /// ## Parameters
     /// * inputs: Input Halide buffers.
     /// @see BackendNode, BackendWrapper
-    /// 
+    ///
     /// Input buffers should be exactly the same that will be used in forward invocations.
     /// Despite we can use Halide::ImageParam based on input shape only,
     /// it helps prevent some memory management issues (if something wrong,
@@ -1519,7 +1519,7 @@ pub trait Layer: core::Algorithm {
     /// ## Parameters
     /// * node: Backend node of bottom layer.
     /// @see BackendNode
-    /// 
+    ///
     /// Actual for graph-based backends. If layer attached successfully,
     /// returns non-empty cv::Ptr to node of the same backend.
     /// Fuse only over the last function.
@@ -1530,7 +1530,7 @@ pub trait Layer: core::Algorithm {
     /// Tries to attach to the layer the subsequent activation layer, i.e. do the layer fusion in a partial case.
     /// ## Parameters
     /// * layer: The subsequent activation layer.
-    /// 
+    ///
     /// Returns true if the activation layer has been attached successfully.
     fn set_activation(&mut self, layer: &types::PtrOfActivationLayer) -> Result<bool> {
         unsafe { sys::cv_dnn_Layer_setActivation_PtrOfActivationLayer(self.as_raw_Layer(), layer.as_raw_PtrOfActivationLayer()) }.into_result()
@@ -1542,7 +1542,7 @@ pub trait Layer: core::Algorithm {
     ///                   be equal to number of channels.
     /// * shift: [out] Channel-wise offsets. Total number of values should
     ///                   be equal to number of channels.
-    /// 
+    ///
     /// Some layers can fuse their transformations with further layers.
     /// In example, convolution + batch normalization. This way base layer
     /// use weights from layer after it. Fused layer is skipped.
@@ -1603,7 +1603,7 @@ impl LayerFactory {
 
 // boxed class cv::dnn::LayerParams
 /// This class provides all data needed to initialize layer.
-/// 
+///
 /// It includes dictionary with scalar params (which can be read by using Dict interface),
 /// blob params #blobs and optional meta information: #name and #type of layer instance.
 #[allow(dead_code)]
@@ -1735,13 +1735,13 @@ impl MaxUnpoolLayer {
 
 // boxed class cv::dnn::Net
 /// This class allows to create and manipulate comprehensive artificial neural networks.
-/// 
+///
 /// Neural network is presented as directed acyclic graph (DAG), where vertices are Layer instances,
 /// and edges specify relationships between layers inputs and outputs.
-/// 
+///
 /// Each network layer has unique integer id and unique string name inside its network.
 /// LayerId can store either layer name or layer id.
-/// 
+///
 /// This class supports reference counting of its instances, i. e. copies point to the same instance.
 #[allow(dead_code)]
 pub struct Net {
@@ -1820,14 +1820,14 @@ impl Net {
     /// ## Parameters
     /// * outPin: descriptor of the first layer output.
     /// * inpPin: descriptor of the second layer input.
-    /// 
+    ///
     /// Descriptors have the following template <DFN>&lt;layer_name&gt;[.input_number]</DFN>:
     /// - the first part of the template <DFN>layer_name</DFN> is sting name of the added layer.
     ///   If this part is empty then the network input pseudo layer will be used;
     /// - the second optional part of the template <DFN>input_number</DFN>
     ///   is either number of the layer input, either label one.
     ///   If this part is omitted then the first layer input will be used.
-    /// 
+    ///
     ///  @see setNetInputs(), Layer::inputNameToIndex(), Layer::outputNameToIndex()
     pub fn connect_first_second(&mut self, out_pin: &str, inp_pin: &str) -> Result<()> {
         string_arg!(mut out_pin);
@@ -1846,7 +1846,7 @@ impl Net {
     }
     
     /// Sets outputs names of the network input pseudo layer.
-    /// 
+    ///
     /// Each net always has special own the network input pseudo layer with id=0.
     /// This layer stores the user blobs only and don't make any computations.
     /// In fact, this layer provides the only way to pass user data into the network.
@@ -1902,7 +1902,7 @@ impl Net {
     /// ## Parameters
     /// * scheduler: Path to YAML file with scheduling directives.
     /// @see setPreferableBackend
-    /// 
+    ///
     /// Schedule layers that support Halide backend. Then compile them for
     /// specific target. For layers that not represented in scheduling file
     /// or if no manual scheduling used at all, automatic scheduling will be applied.
@@ -1915,7 +1915,7 @@ impl Net {
     /// ## Parameters
     /// * backendId: backend identifier.
     /// @see Backend
-    /// 
+    ///
     /// If OpenCV is compiled with Intel's Inference Engine library, DNN_BACKEND_DEFAULT
     /// means DNN_BACKEND_INFERENCE_ENGINE. Otherwise it equals to DNN_BACKEND_OPENCV.
     pub fn set_preferable_backend(&mut self, backend_id: i32) -> Result<()> {
@@ -1926,7 +1926,7 @@ impl Net {
     /// ## Parameters
     /// * targetId: target identifier.
     /// @see Target
-    /// 
+    ///
     /// List of supported combinations backend / target:
     /// |                        | DNN_BACKEND_OPENCV | DNN_BACKEND_INFERENCE_ENGINE | DNN_BACKEND_HALIDE |
     /// |------------------------|--------------------|------------------------------|--------------------|
@@ -1946,7 +1946,7 @@ impl Net {
     /// * scalefactor: An optional normalization scale.
     /// * mean: An optional mean subtraction values.
     ///  @see connect(String, String) to know format of the descriptor.
-    /// 
+    ///
     ///  If scale or mean values are specified, a final input blob is computed
     ///  as:
     /// <div lang='latex'>input(n,c,h,w) = scalefactor \times (blob(n,c,h,w) - mean_c)</div>
@@ -1966,7 +1966,7 @@ impl Net {
     /// * numParam: index of the layer parameter in the Layer::blobs array.
     /// * blob: the new value.
     ///  @see Layer::blobs
-    ///  
+    ///
     /// Note: If shape of the new blob differs from the previous shape,
     ///  then the following forward pass may fail.
     pub fn set_param(&mut self, layer: &crate::dnn::DictValue, num_param: i32, blob: &core::Mat) -> Result<()> {
@@ -2095,21 +2095,21 @@ impl Net {
 /// * eps: Parameter <span lang='latex'> \epsilon </span> to prevent a division by zero.
 /// * across_spatial: If true, normalize an input across all non-batch dimensions.
 ///                       Otherwise normalize an every channel separately.
-/// 
+///
 /// Across spatial:
 /// @f[
 /// norm = \sqrt[p]{\epsilon + \sum_{x, y, c} |src(x, y, c)|^p } \\
 /// dst(x, y, c) = \frac{ src(x, y, c) }{norm}
 /// @f]
-/// 
+///
 /// Channel wise normalization:
 /// @f[
 /// norm(c) = \sqrt[p]{\epsilon + \sum_{x, y} |src(x, y, c)|^p } \\
 /// dst(x, y, c) = \frac{ src(x, y, c) }{norm(c)}
 /// @f]
-/// 
+///
 /// Where `x, y` - spatial coordinates, `c` - channel.
-/// 
+///
 /// An every sample in the batch is normalized separately. Optionally,
 /// output is scaled by the trained parameters.
 #[allow(dead_code)]
@@ -2155,7 +2155,7 @@ impl NormalizeBBoxLayer {
 ///                   ...
 ///                   pad_before, pad_after ] // [n]th dimension
 ///     ```
-/// 
+///
 ///     that represents number of padded values at every dimension
 ///     starting from the first one. The rest of dimensions won't
 ///     be padded.
@@ -2375,27 +2375,27 @@ impl ProposalLayer {
 
 // Generating impl for trait cv::dnn::RNNLayer (trait)
 /// Classical recurrent layer
-/// 
+///
 /// Accepts two inputs @f$x_t@f$ and @f$h_{t-1}@f$ and compute two outputs @f$o_t@f$ and @f$h_t@f$.
-/// 
+///
 /// - input: should contain packed input @f$x_t@f$.
 /// - output: should contain output @f$o_t@f$ (and @f$h_t@f$ if setProduceHiddenOutput() is set to true).
-/// 
+///
 /// input[0] should have shape [`T`, `N`, `data_dims`] where `T` and `N` is number of timestamps and number of independent samples of @f$x_t@f$ respectively.
-/// 
+///
 /// output[0] will have shape [`T`, `N`, @f$N_o@f$], where @f$N_o@f$ is number of rows in @f$ W_{xo} @f$ matrix.
-/// 
+///
 /// If setProduceHiddenOutput() is set to true then @p output[1] will contain a Mat with shape [`T`, `N`, @f$N_h@f$], where @f$N_h@f$ is number of rows in @f$ W_{hh} @f$ matrix.
 pub trait RNNLayer: crate::dnn::Layer {
     #[inline(always)] fn as_raw_RNNLayer(&self) -> *mut c_void;
     /// Setups learned weights.
-    /// 
+    ///
     /// Recurrent-layer behavior on each step is defined by current input @f$ x_t @f$, previous state @f$ h_t @f$ and learned weights as follows:
     /// @f{eqnarray*}{
     /// h_t &= tanh&(W_{hh} h_{t-1} + W_{xh} x_t + b_h),  \\
     /// o_t &= tanh&(W_{ho} h_t + b_o),
     /// @f}
-    /// 
+    ///
     /// ## Parameters
     /// * Wxh: is @f$ W_{xh} @f$ matrix
     /// * bh: is @f$ b_{h}  @f$ vector
@@ -2606,7 +2606,7 @@ impl ReshapeLayer {
 
 // boxed class cv::dnn::ResizeLayer
 /// Resize input 4-dimensional blob by nearest neighbor or bilinear strategy.
-/// 
+///
 /// Layer is used to support TensorFlow's resize_nearest_neighbor and resize_bilinear ops.
 #[allow(dead_code)]
 pub struct ResizeLayer {
@@ -2710,7 +2710,7 @@ impl ShiftLayer {
 /// ## Parameters
 /// * group: Number of groups to split input channels and pick in turns
 ///              into output blob.
-/// 
+///
 /// <div lang='latex'> groupSize = \frac{number\ of\ channels}{group} </div>
 /// <div lang='latex'> output(n, c, h, w) = input(n, groupSize \times (c \% group) + \lfloor \frac{c}{group} \rfloor, h, w) </div>
 /// Read more at https://arxiv.org/pdf/1707.01083.pdf
@@ -2787,23 +2787,23 @@ impl SigmoidLayer {
 /// ## Parameters
 /// * axis: Axis of split operation
 /// * slice_point: Array of split points
-/// 
+///
 /// Number of output blobs equals to number of split points plus one. The
 /// first blob is a slice on input from 0 to @p slice_point[0] - 1 by @p axis,
 /// the second output blob is a slice of input from @p slice_point[0] to
 /// @p slice_point[1] - 1 by @p axis and the last output blob is a slice of
 /// input from @p slice_point[-1] up to the end of @p axis size.
-/// 
+///
 /// 2. TensorFlow mode
 /// * begin: Vector of start indices
 /// * size: Vector of sizes
-/// 
+///
 /// More convenient numpy-like slice. One and only output blob
 /// is a slice `input[begin[0]:begin[0]+size[0], begin[1]:begin[1]+size[1], ...]`
-/// 
+///
 /// 3. Torch mode
 /// * axis: Axis of split operation
-/// 
+///
 /// Split input blob on the equal parts by @p axis.
 #[allow(dead_code)]
 pub struct SliceLayer {

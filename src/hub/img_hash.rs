@@ -1,61 +1,61 @@
 //! # The module brings implementations of different image hashing algorithms.
-//! 
+//!
 //! Provide algorithms to extract the hash of images and fast way to figure out most similar images in
 //! huge data set.
-//! 
+//!
 //! Namespace for all functions is cv::img_hash.
-//! 
+//!
 //! ### Supported Algorithms
-//! 
+//!
 //! - Average hash (also called Different hash)
 //! - PHash (also called Perceptual hash)
 //! - Marr Hildreth Hash
 //! - Radial Variance Hash
 //! - Block Mean Hash (modes 0 and 1)
 //! - Color Moment Hash (this is the one and only hash algorithm resist to rotation attack(-90~90 degree))
-//! 
+//!
 //! You can study more about image hashing from following paper and websites:
-//! 
+//!
 //! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_zauner2010implementation)
 //! - "Looks Like It" [lookslikeit](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_lookslikeit)
-//! 
+//!
 //! ### Code Example
-//! 
+//!
 //! @include samples/hash_samples.cpp
-//! 
+//!
 //! ### Performance under different attacks
-//! 
+//!
 //! ![Performance chart](https://docs.opencv.org/3.4.6/img_hash/doc/attack_performance.JPG)
-//! 
+//!
 //! ### Speed comparison with PHash library (100 images from ukbench)
-//! 
+//!
 //! ![Hash Computation chart](https://docs.opencv.org/3.4.6/img_hash/doc/hash_computation_chart.JPG)
 //! ![Hash comparison chart](https://docs.opencv.org/3.4.6/img_hash/doc/hash_comparison_chart.JPG)
-//! 
+//!
 //! As you can see, hash computation speed of img_hash module outperform [PHash library](http://www.phash.org/) a lot.
-//! 
+//!
 //! PS : I do not list out the comparison of Average hash, PHash and Color Moment hash, because I cannot
 //! find them in PHash.
-//! 
+//!
 //! ### Motivation
-//! 
+//!
 //! Collects useful image hash algorithms into opencv, so we do not need to rewrite them by ourselves
 //! again and again or rely on another 3rd party library(ex : PHash library). BOVW or correlation
 //! matching are good and robust, but they are very slow compare with image hash, if you need to deal
 //! with large scale CBIR(content based image retrieval) problem, image hash is a more reasonable
 //! solution.
-//! 
+//!
 //! ### More info
-//! 
+//!
 //! You can learn more about img_hash modules from following links, these links show you how to find
 //! similar image from ukbench dataset, provide thorough benchmark of different attacks(contrast, blur,
 //! noise(gaussion,pepper and salt), jpeg compression, watermark, resize).
-//! 
+//!
 //! [Introduction to image hash module of opencv](http://qtandopencv.blogspot.my/2016/06/introduction-to-image-hash-module-of.html)
 //! [Speed up image hashing of opencv(img_hash) and introduce color moment hash](http://qtandopencv.blogspot.my/2016/06/speed-up-image-hashing-of-opencvimghash.html)
-//! 
+//!
 //! ### Contributors
-//! 
+//!
 //! Tham Ngap Wei, thamngapwei@gmail.com
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -66,7 +66,7 @@ pub const BLOCK_MEAN_HASH_MODE_1: i32 = 1;
 
 // boxed class cv::img_hash::AverageHash
 /// Computes average hash value of the input image
-/// 
+///
 /// This is a fast image hashing algorithm, but only work on simple case. For more details, please
 /// refer to [lookslikeit](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_lookslikeit)
 #[allow(dead_code)]
@@ -104,7 +104,7 @@ impl AverageHash {
 
 // boxed class cv::img_hash::BlockMeanHash
 /// Image hash based on block mean.
-/// 
+///
 /// See [zauner2010implementation](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 #[allow(dead_code)]
 pub struct BlockMeanHash {
@@ -155,7 +155,7 @@ impl BlockMeanHash {
 
 // boxed class cv::img_hash::ColorMomentHash
 /// Image hash based on color moments.
-/// 
+///
 /// See [tang2012perceptual](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 #[allow(dead_code)]
 pub struct ColorMomentHash {
@@ -198,7 +198,7 @@ pub trait ImgHashBase: core::Algorithm {
 
 // boxed class cv::img_hash::MarrHildrethHash
 /// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
-/// 
+///
 /// See [zauner2010implementation](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 #[allow(dead_code)]
 pub struct MarrHildrethHash {
@@ -260,9 +260,9 @@ impl MarrHildrethHash {
 
 // boxed class cv::img_hash::PHash
 /// pHash
-/// 
+///
 /// Slower than average_hash, but tolerant of minor modifications
-/// 
+///
 /// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_lookslikeit)
 #[allow(dead_code)]
 pub struct PHash {
@@ -299,7 +299,7 @@ impl PHash {
 
 // boxed class cv::img_hash::RadialVarianceHash
 /// Image hash based on Radon transform.
-/// 
+///
 /// See [tang2012perceptual](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 #[allow(dead_code)]
 pub struct RadialVarianceHash {

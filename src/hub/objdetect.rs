@@ -1,16 +1,16 @@
 //! # Object Detection
-//! 
+//!
 //! Haar Feature-based Cascade Classifier for Object Detection
 //! ----------------------------------------------------------
-//! 
+//!
 //! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Viola01) and
 //! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Lienhart02) .
-//! 
+//!
 //! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 //! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
 //! positive examples, that are scaled to the same size (say, 20x20), and negative examples - arbitrary
 //! images of the same size.
-//! 
+//!
 //! After a classifier is trained, it can be applied to a region of interest (of the same size as used
 //! during the training) in an input image. The classifier outputs a "1" if the region is likely to show
 //! the object (i.e., face/car), and "0" otherwise. To search for the object in the whole image one can
@@ -19,7 +19,7 @@
 //! interest at different sizes, which is more efficient than resizing the image itself. So, to find an
 //! object of an unknown size in the image the scan procedure should be done several times at different
 //! scales.
-//! 
+//!
 //! The word "cascade" in the classifier name means that the resultant classifier consists of several
 //! simpler classifiers (*stages*) that are applied subsequently to a region of interest until at some
 //! stage the candidate is rejected or all the stages are passed. The word "boosted" means that the
@@ -29,9 +29,9 @@
 //! decision-tree classifiers with at least 2 leaves. Haar-like features are the input to the basic
 //! classifiers, and are calculated as described below. The current algorithm uses the following
 //! Haar-like features:
-//! 
+//!
 //! ![image](https://docs.opencv.org/3.4.6/haarfeatures.png)
-//! 
+//!
 //! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 //! the region of interest and the scale (this scale is not the same as the scale used at the detection
 //! stage, though these two scales are multiplied). For example, in the case of the third line feature
@@ -40,14 +40,14 @@
 //! middle) and the sum of the image pixels under the black stripe multiplied by 3 in order to
 //! compensate for the differences in the size of areas. The sums of pixel values over a rectangular
 //! regions are calculated rapidly using integral images (see below and the integral description).
-//! 
+//!
 //! To see the object detector at work, have a look at the facedetect demo:
 //! <https://github.com/opencv/opencv/tree/3.4/samples/cpp/dbt_face_detection.cpp>
-//! 
+//!
 //! The following reference is for the detection part only. There is a separate application called
 //! opencv_traincascade that can train a cascade of boosted classifiers from a set of samples.
-//! 
-//! 
+//!
+//!
 //! Note: In the new C++ interface it is also possible to use LBP (local binary pattern) features in
 //! addition to Haar-like features. .. [Viola01] Paul Viola and Michael J. Jones. Rapid Object Detection
 //! using a Boosted Cascade of Simple Features. IEEE CVPR, 2001. The paper is available online at
@@ -103,21 +103,21 @@ pub fn detect_qr_code(_in: &core::Mat, points: &mut types::VectorOfPoint, eps_x:
 }
 
 /// Groups the object candidate rectangles.
-/// 
+///
 /// ## Parameters
 /// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
 /// rectangles. (The Python list is not modified in place.)
 /// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
 /// group of rectangles to retain it.
 /// * eps: Relative difference between sides of the rectangles to merge them into a group.
-/// 
+///
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
 /// <span lang='latex'>\texttt{eps}\rightarrow +\inf</span> , all the rectangles are put in one cluster. Then, the small
 /// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
 /// cluster, the average rectangle is computed and put into the output rectangle list.
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -127,21 +127,21 @@ pub fn group_rectangles_levels(rect_list: &mut types::VectorOfRect, reject_level
 }
 
 /// Groups the object candidate rectangles.
-/// 
+///
 /// ## Parameters
 /// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
 /// rectangles. (The Python list is not modified in place.)
 /// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
 /// group of rectangles to retain it.
 /// * eps: Relative difference between sides of the rectangles to merge them into a group.
-/// 
+///
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
 /// <span lang='latex'>\texttt{eps}\rightarrow +\inf</span> , all the rectangles are put in one cluster. Then, the small
 /// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
 /// cluster, the average rectangle is computed and put into the output rectangle list.
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -151,14 +151,14 @@ pub fn group_rectangles_weights(rect_list: &mut types::VectorOfRect, weights: &m
 }
 
 /// Groups the object candidate rectangles.
-/// 
+///
 /// ## Parameters
 /// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
 /// rectangles. (The Python list is not modified in place.)
 /// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
 /// group of rectangles to retain it.
 /// * eps: Relative difference between sides of the rectangles to merge them into a group.
-/// 
+///
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
@@ -173,21 +173,21 @@ pub fn group_rectangles(rect_list: &mut types::VectorOfRect, group_threshold: i3
 }
 
 /// Groups the object candidate rectangles.
-/// 
+///
 /// ## Parameters
 /// * rectList: Input/output vector of rectangles. Output vector includes retained and grouped
 /// rectangles. (The Python list is not modified in place.)
 /// * groupThreshold: Minimum possible number of rectangles minus 1. The threshold is used in a
 /// group of rectangles to retain it.
 /// * eps: Relative difference between sides of the rectangles to merge them into a group.
-/// 
+///
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
 /// <span lang='latex'>\texttt{eps}\rightarrow +\inf</span> , all the rectangles are put in one cluster. Then, the small
 /// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
 /// cluster, the average rectangle is computed and put into the output rectangle list.
-/// 
+///
 /// ## Overloaded parameters
 pub fn group_rectangles_levelweights(rect_list: &mut types::VectorOfRect, group_threshold: i32, eps: f64, weights: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble) -> Result<()> {
     unsafe { sys::cv_groupRectangles_VectorOfRect_int_double_VectorOfint_VectorOfdouble(rect_list.as_raw_VectorOfRect(), group_threshold, eps, weights.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble()) }.into_result()
@@ -290,7 +290,7 @@ impl CascadeClassifier {
     }
     
     /// Loads a classifier from a file.
-    /// 
+    ///
     /// ## Parameters
     /// * filename: Name of the file from which the classifier is loaded.
     pub fn new(filename: &str) -> Result<crate::objdetect::CascadeClassifier> {
@@ -304,7 +304,7 @@ impl CascadeClassifier {
     }
     
     /// Loads a classifier from a file.
-    /// 
+    ///
     /// ## Parameters
     /// * filename: Name of the file from which the classifier is loaded. The file may contain an old
     /// HAAR classifier trained by the haartraining application or a new cascade classifier trained by the
@@ -316,7 +316,7 @@ impl CascadeClassifier {
     
     /// Detects objects of different sizes in the input image. The detected objects are returned as a list
     /// of rectangles.
-    /// 
+    ///
     /// ## Parameters
     /// * image: Matrix of the type CV_8U containing an image where objects are detected.
     /// * objects: Vector of rectangles where each rectangle contains the detected object, the
@@ -328,10 +328,10 @@ impl CascadeClassifier {
     /// cvHaarDetectObjects. It is not used for a new cascade.
     /// * minSize: Minimum possible object size. Objects smaller than that are ignored.
     /// * maxSize: Maximum possible object size. Objects larger than that are ignored. If `maxSize == minSize` model is evaluated on single scale.
-    /// 
+    ///
     /// The function is parallelized with the TBB library.
-    /// 
-    /// 
+    ///
+    ///
     /// Note:
     /// *   (Python) A face detection example using cascade classifiers can be found at
     /// opencv_source_code/samples/python/facedetect.py
@@ -375,7 +375,7 @@ impl CascadeClassifier {
     /// For this, one needs to set `outputRejectLevels` on true and provide the `rejectLevels` and `levelWeights` parameter.
     /// For each resulting detection, `levelWeights` will then contain the certainty of classification at the final stage.
     /// This value can then be used to separate strong from weaker classifications.
-    /// 
+    ///
     /// A code sample on how to use it efficiently can be found below:
     /// ```ignore
     /// Mat img;
@@ -594,19 +594,19 @@ impl crate::objdetect::DetectionROI {
 
 // boxed class cv::HOGDescriptor
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
-/// 
+///
 /// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Dalal2005) .
-/// 
+///
 /// useful links:
-/// 
+///
 /// https://hal.inria.fr/inria-00548512/document/
-/// 
+///
 /// https://en.wikipedia.org/wiki/Histogram_of_oriented_gradients
-/// 
+///
 /// https://software.intel.com/en-us/ipp-dev-reference-histogram-of-oriented-gradients-hog-descriptor
-/// 
+///
 /// http://www.learnopencv.com/histogram-of-oriented-gradients
-/// 
+///
 /// http://www.learnopencv.com/handwritten-digits-classification-an-opencv-c-python-tutorial
 #[allow(dead_code)]
 pub struct HOGDescriptor {
@@ -1004,7 +1004,7 @@ impl QRCodeDetector {
     
     /// Decodes QR code in image once it's found by the detect() method.
     /// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
-    /// 
+    ///
     /// ## Parameters
     /// * img: grayscale or color (BGR) image containing QR code.
     /// * points: Quadrangle vertices found by detect() method (or some other algorithm).
@@ -1017,7 +1017,7 @@ impl QRCodeDetector {
     }
     
     /// Both detects and decodes QR code
-    /// 
+    ///
     /// ## Parameters
     /// * img: grayscale or color (BGR) image containing QR code.
     /// * points: opiotnal output array of vertices of the found QR code quadrangle. Will be empty if not found.

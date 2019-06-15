@@ -1,8 +1,8 @@
 //! # Biologically inspired vision models and derivated tools
-//! 
+//!
 //! The module provides biological visual systems models (human visual system and others). It also
 //! provides derivated objects that take advantage of those bio-inspired models.
-//! 
+//!
 //! @ref bioinspired_retina
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -14,22 +14,22 @@ pub const RETINA_COLOR_RANDOM: i32 = 0;
 
 // Generating impl for trait cv::bioinspired::Retina (trait)
 /// class which allows the Gipsa/Listic Labs model to be used with OpenCV.
-/// 
+///
 /// This retina model allows spatio-temporal image processing (applied on still images, video sequences).
 /// As a summary, these are the retina model properties:
 /// - It applies a spectral whithening (mid-frequency details enhancement)
 /// - high frequency spatio-temporal noise reduction
 /// - low frequency luminance to be reduced (luminance range compression)
 /// - local logarithmic luminance compression allows details to be enhanced in low light conditions
-/// 
+///
 /// USE : this model can be used basically for spatio-temporal video effects but also for :
 /// _using the getParvo method output matrix : texture analysiswith enhanced signal to noise ratio and enhanced details robust against input images luminance ranges
 /// _using the getMagno method output matrix : motion analysis also with the previously cited properties
-/// 
+///
 /// for more information, reer to the following papers :
 /// Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
 /// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
-/// 
+///
 /// The retina filter includes the research contributions of phd/research collegues from which code has been redrawn by the author :
 /// take a look at the retinacolor.hpp module to discover Brice Chaix de Lavarene color mosaicing/demosaicing and the reference paper:
 /// B. Chaix de Lavarene, D. Alleysson, B. Durette, J. Herault (2007). "Efficient demosaicing through recursive filtering", IEEE International Conference on Image Processing ICIP 2007
@@ -53,13 +53,13 @@ pub trait Retina: core::Algorithm {
     }
     
     /// Try to open an XML retina parameters file to adjust current retina instance setup
-    /// 
+    ///
     /// - if the xml file does not exist, then default setup is applied
     /// - warning, Exceptions are thrown if read XML file is not valid
     /// ## Parameters
     /// * retinaParameterFile: the parameters filename
     /// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
-    /// 
+    ///
     /// You can retrieve the current parameters structure using the method Retina::getParameters and update
     /// it before running method Retina::setup.
     ///
@@ -100,7 +100,7 @@ pub trait Retina: core::Algorithm {
     }
     
     /// Setup the OPL and IPL parvo channels (see biologocal model)
-    /// 
+    ///
     /// OPL is referred as Outer Plexiform Layer of the retina, it allows the spatio-temporal filtering
     /// which withens the spectrum and reduces spatio-temporal noise while attenuating global luminance
     /// (low frequency energy) IPL parvo is the OPL next processing stage, it refers to a part of the
@@ -149,11 +149,11 @@ pub trait Retina: core::Algorithm {
     }
     
     /// Set parameters values for the Inner Plexiform Layer (IPL) magnocellular channel
-    /// 
+    ///
     /// this channel processes signals output from OPL processing stage in peripheral vision, it allows
     /// motion information enhancement. It is decorrelated from the details channel. See reference
     /// papers for more details.
-    /// 
+    ///
     /// ## Parameters
     /// * normaliseOutput: specifies if (true) output is rescaled between 0 and 255 of not (false)
     /// * parasolCells_beta: the low pass filter gain used for local contrast adaptation at the
@@ -188,7 +188,7 @@ pub trait Retina: core::Algorithm {
     }
     
     /// Method which allows retina to be applied on an input image,
-    /// 
+    ///
     /// after run, encapsulated retina module is ready to deliver its outputs using dedicated
     /// acccessors, see getParvo and getMagno methods
     /// ## Parameters
@@ -200,16 +200,16 @@ pub trait Retina: core::Algorithm {
     
     /// Method which processes an image in the aim to correct its luminance correct
     /// backlight problems, enhance details in shadows.
-    /// 
+    ///
     /// This method is designed to perform High Dynamic Range image tone mapping (compress \>8bit/pixel
     /// images to 8bit/pixel). This is a simplified version of the Retina Parvocellular model
     /// (simplified version of the run/getParvo methods call) since it does not include the
     /// spatio-temporal filter modelling the Outer Plexiform Layer of the retina that performs spectral
     /// whitening and many other stuff. However, it works great for tone mapping and in a faster way.
-    /// 
+    ///
     /// Check the demos and experiments section to see examples and the way to perform tone mapping
     /// using the original retina model and the method.
-    /// 
+    ///
     /// ## Parameters
     /// * inputImage: the input image to process (should be coded in float format : CV_32F,
     /// CV_32FC1, CV_32F_C3, CV_32F_C4, the 4th channel won't be considered).
@@ -219,10 +219,10 @@ pub trait Retina: core::Algorithm {
     }
     
     /// Accessor of the details channel of the retina (models foveal vision).
-    /// 
+    ///
     /// Warning, getParvoRAW methods return buffers that are not rescaled within range [0;255] while
     /// the non RAW method allows a normalized matrix to be retrieved.
-    /// 
+    ///
     /// ## Parameters
     /// * retinaOutput_parvo: the output buffer (reallocated if necessary), format can be :
     /// *   a Mat, this output is rescaled for standard 8bits image processing use in OpenCV
@@ -241,7 +241,7 @@ pub trait Retina: core::Algorithm {
     }
     
     /// Accessor of the motion channel of the retina (models peripheral vision).
-    /// 
+    ///
     /// Warning, getMagnoRAW methods return buffers that are not rescaled within range [0;255] while
     /// the non RAW method allows a normalized matrix to be retrieved.
     /// ## Parameters
@@ -283,7 +283,7 @@ pub trait Retina: core::Algorithm {
     }
     
     /// Clears all retina buffers
-    /// 
+    ///
     /// (equivalent to opening the eyes after a long period of eye close ;o) whatchout the temporal
     /// transition occuring just after this method call.
     fn clear_buffers(&mut self) -> Result<()> {
@@ -318,7 +318,7 @@ impl dyn Retina + '_ {
     }
     
     /// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
-    /// 
+    ///
     /// ## Parameters
     /// * inputSize: the input frame size
     /// * colorMode: the chosen processing mode : with or without color processing
@@ -347,7 +347,7 @@ impl dyn Retina + '_ {
 
 // Generating impl for trait cv::bioinspired::RetinaFastToneMapping (trait)
 /// a wrapper class which allows the tone mapping algorithm of Meylan&al(2007) to be used with OpenCV.
-/// 
+///
 /// This algorithm is already implemented in thre Retina class (retina::applyFastToneMapping) but used it does not require all the retina model to be allocated. This allows a light memory use for low memory devices (smartphones, etc.
 /// As a summary, these are the model properties:
 /// - 2 stages of local luminance adaptation with a different local neighborhood for each.
@@ -355,7 +355,7 @@ impl dyn Retina + '_ {
 /// - second stage models th ganglion cells local information adaptation
 /// - compared to the initial publication, this class uses spatio-temporal low pass filters instead of spatial only filters.
 /// this can help noise robustness and temporal stability for video sequence use cases.
-/// 
+///
 /// for more information, read to the following papers :
 /// Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816Benoit A., Caplier A., Durette B., Herault, J., "USING HUMAN VISUAL SYSTEM MODELING FOR BIO-INSPIRED LOW LEVEL IMAGE PROCESSING", Elsevier, Computer Vision and Image Understanding 114 (2010), pp. 758-773, DOI: http://dx.doi.org/10.1016/j.cviu.2010.01.011
 /// regarding spatio-temporal filter and the bigger retina model :
@@ -363,7 +363,7 @@ impl dyn Retina + '_ {
 pub trait RetinaFastToneMapping: core::Algorithm {
     #[inline(always)] fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void;
     /// applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
-    /// 
+    ///
     /// using only the 2 local adaptation stages of the retina parvocellular channel : photoreceptors
     /// level and ganlion cells level. Spatio temporal filtering is applied but limited to temporal
     /// smoothing and eventually high frequencies attenuation. This is a lighter method than the one
@@ -374,7 +374,7 @@ pub trait RetinaFastToneMapping: core::Algorithm {
     /// work, please cite: -> Meylan L., Alleysson D., and Susstrunk S., A Model of Retinal Local
     /// Adaptation for the Tone Mapping of Color Filter Array Images, Journal of Optical Society of
     /// America, A, Vol. 24, N 9, September, 1st, 2007, pp. 2807-2816
-    /// 
+    ///
     /// ## Parameters
     /// * inputImage: the input image to process RGB or gray levels
     /// * outputToneMappedImage: the output tone mapped image
@@ -383,7 +383,7 @@ pub trait RetinaFastToneMapping: core::Algorithm {
     }
     
     /// updates tone mapping behaviors by adjusing the local luminance computation area
-    /// 
+    ///
     /// ## Parameters
     /// * photoreceptorsNeighborhoodRadius: the first stage local adaptation area
     /// * ganglioncellsNeighborhoodRadius: the second stage local adaptation area
@@ -410,12 +410,12 @@ impl dyn RetinaFastToneMapping + '_ {
 
 // boxed class cv::bioinspired::RetinaParameters
 /// retina model parameters structure
-/// 
+///
 /// For better clarity, check explenations on the comments of methods : setupOPLandIPLParvoChannel and setupIPLMagnoChannel
-/// 
+///
 /// Here is the default configuration file of the retina module. It gives results such as the first
 /// retina output shown on the top of this page.
-/// 
+///
 /// ```ignore{xml}
 /// <?xml version="1.0"?>
 /// <opencv_storage>
@@ -440,10 +440,10 @@ impl dyn RetinaFastToneMapping + '_ {
 /// <localAdaptintegration_k>7.</localAdaptintegration_k></IPLmagno>
 /// </opencv_storage>
 /// ```
-/// 
-/// 
+///
+///
 /// Here is the 'realistic" setup used to obtain the second retina output shown on the top of this page.
-/// 
+///
 /// ```ignore{xml}
 /// <?xml version="1.0"?>
 /// <opencv_storage>
@@ -544,10 +544,10 @@ impl crate::bioinspired::SegmentationParameters {
 
 // Generating impl for trait cv::bioinspired::TransientAreasSegmentationModule (trait)
 /// class which provides a transient/moving areas segmentation module
-/// 
+///
 /// perform a locally adapted segmentation by using the retina magno input data Based on Alexandre
 /// BENOIT thesis: "Le système visuel humain au secours de la vision par ordinateur"
-/// 
+///
 /// 3 spatio temporal filters are used:
 /// - a first one which filters the noise and local variations of the input motion energy
 /// - a second (more powerfull low pass spatial filter) which gives the neighborhood motion energy the
@@ -563,7 +563,7 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     }
     
     /// try to open an XML segmentation parameters file to adjust current segmentation instance setup
-    /// 
+    ///
     /// - if the xml file does not exist, then default setup is applied
     /// - warning, Exceptions are thrown if read XML file is not valid
     /// ## Parameters
@@ -579,7 +579,7 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     }
     
     /// try to open an XML segmentation parameters file to adjust current segmentation instance setup
-    /// 
+    ///
     /// - if the xml file does not exist, then default setup is applied
     /// - warning, Exceptions are thrown if read XML file is not valid
     /// ## Parameters

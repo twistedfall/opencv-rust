@@ -1,13 +1,13 @@
 //! # 2D Features Framework
 //! # Feature Detection and Description
 //! # Descriptor Matchers
-//! 
+//!
 //! Matchers of keypoint descriptors in OpenCV have wrappers with a common interface that enables you to
 //! easily switch between different algorithms solving the same problem. This section is devoted to
 //! matching descriptors that are represented as vectors in a multidimensional space. All objects that
 //! implement vector descriptor matchers inherit the DescriptorMatcher interface.
-//! 
-//! 
+//!
+//!
 //! Note:
 //! *   An example explaining keypoint matching can be found at
 //! opencv_source_code/samples/cpp/descriptor_extractor_matcher.cpp
@@ -15,13 +15,13 @@
 //! opencv_source_code/samples/cpp/detector_descriptor_matcher_evaluation.cpp
 //! *   An example on one to many image matching can be found at
 //! opencv_source_code/samples/cpp/matching_to_many_images.cpp
-//! 
+//!
 //! # Drawing Function of Keypoints and Matches
 //! # Object Categorization
-//! 
+//!
 //! This section describes approaches based on local 2D features and used to categorize objects.
-//! 
-//! 
+//!
+//!
 //! Note:
 //! *   A complete Bag-Of-Words sample can be found at
 //! opencv_source_code/samples/cpp/bagofwords_classification.cpp
@@ -92,7 +92,7 @@ pub struct SimpleBlobDetector_Params {
 }
 
 /// Detects corners using the AGAST algorithm
-/// 
+///
 /// ## Parameters
 /// * image: grayscale image where keypoints (corners) are detected.
 /// * keypoints: keypoints detected on the image.
@@ -103,12 +103,12 @@ pub struct SimpleBlobDetector_Params {
 /// * type: one of the four neighborhoods as defined in the paper:
 /// AgastFeatureDetector::AGAST_5_8, AgastFeatureDetector::AGAST_7_12d,
 /// AgastFeatureDetector::AGAST_7_12s, AgastFeatureDetector::OAST_9_16
-/// 
+///
 /// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 /// The 32-bit binary tree tables were generated automatically from original code using perl script.
 /// The perl script and examples of tree generation are placed in features2d/doc folder.
 /// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_mair2010_agast) .
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -118,7 +118,7 @@ pub fn AGAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, thresho
 }
 
 /// Detects corners using the AGAST algorithm
-/// 
+///
 /// ## Parameters
 /// * image: grayscale image where keypoints (corners) are detected.
 /// * keypoints: keypoints detected on the image.
@@ -129,7 +129,7 @@ pub fn AGAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, thresho
 /// * type: one of the four neighborhoods as defined in the paper:
 /// AgastFeatureDetector::AGAST_5_8, AgastFeatureDetector::AGAST_7_12d,
 /// AgastFeatureDetector::AGAST_7_12s, AgastFeatureDetector::OAST_9_16
-/// 
+///
 /// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 /// The 32-bit binary tree tables were generated automatically from original code using perl script.
 /// The perl script and examples of tree generation are placed in features2d/doc folder.
@@ -139,7 +139,7 @@ pub fn AGAST_with_type(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoin
 }
 
 /// Detects corners using the FAST algorithm
-/// 
+///
 /// ## Parameters
 /// * image: grayscale image where keypoints (corners) are detected.
 /// * keypoints: keypoints detected on the image.
@@ -150,14 +150,14 @@ pub fn AGAST_with_type(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoin
 /// * type: one of the three neighborhoods as defined in the paper:
 /// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 /// FastFeatureDetector::TYPE_5_8
-/// 
+///
 /// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Rosten06) .
-/// 
-/// 
+///
+///
 /// Note: In Python API, types are given as cv2.FAST_FEATURE_DETECTOR_TYPE_5_8,
 /// cv2.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv2.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
 /// detection, use cv2.FAST.detect() method.
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -167,7 +167,7 @@ pub fn FAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, threshol
 }
 
 /// Detects corners using the FAST algorithm
-/// 
+///
 /// ## Parameters
 /// * image: grayscale image where keypoints (corners) are detected.
 /// * keypoints: keypoints detected on the image.
@@ -178,10 +178,10 @@ pub fn FAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, threshol
 /// * type: one of the three neighborhoods as defined in the paper:
 /// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 /// FastFeatureDetector::TYPE_5_8
-/// 
+///
 /// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Rosten06) .
-/// 
-/// 
+///
+///
 /// Note: In Python API, types are given as cv2.FAST_FEATURE_DETECTOR_TYPE_5_8,
 /// cv2.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv2.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
 /// detection, use cv2.FAST.detect() method.
@@ -194,7 +194,7 @@ pub fn compute_recall_precision_curve(matches1to2: &types::VectorOfVectorOfDMatc
 }
 
 /// Draws keypoints.
-/// 
+///
 /// ## Parameters
 /// * image: Source image.
 /// * keypoints: Keypoints from the source image.
@@ -203,8 +203,8 @@ pub fn compute_recall_precision_curve(matches1to2: &types::VectorOfVectorOfDMatc
 /// * color: Color of keypoints.
 /// * flags: Flags setting drawing features. Possible flags bit values are defined by
 /// DrawMatchesFlags. See details above in drawMatches .
-/// 
-/// 
+///
+///
 /// Note:
 /// For Python API, flags are modified as cv2.DRAW_MATCHES_FLAGS_DEFAULT,
 /// cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS, cv2.DRAW_MATCHES_FLAGS_DRAW_OVER_OUTIMG,
@@ -218,7 +218,7 @@ pub fn draw_keypoints(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, ou
 }
 
 /// Draws the found matches of keypoints from two images.
-/// 
+///
 /// ## Parameters
 /// * img1: First source image.
 /// * keypoints1: Keypoints from the first source image.
@@ -236,7 +236,7 @@ pub fn draw_keypoints(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, ou
 /// drawn.
 /// * flags: Flags setting drawing features. Possible flags bit values are defined by
 /// DrawMatchesFlags.
-/// 
+///
 /// This function draws matches of keypoints from two images in the output image. Match is a line
 /// connecting two keypoints (circles). See cv::DrawMatchesFlags.
 ///
@@ -250,7 +250,7 @@ pub fn draw_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoint, img2
 }
 
 /// Draws the found matches of keypoints from two images.
-/// 
+///
 /// ## Parameters
 /// * img1: First source image.
 /// * keypoints1: Keypoints from the first source image.
@@ -268,10 +268,10 @@ pub fn draw_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoint, img2
 /// drawn.
 /// * flags: Flags setting drawing features. Possible flags bit values are defined by
 /// DrawMatchesFlags.
-/// 
+///
 /// This function draws matches of keypoints from two images in the output image. Match is a line
 /// connecting two keypoints (circles). See cv::DrawMatchesFlags.
-/// 
+///
 /// ## Overloaded parameters
 ///
 /// ## C++ default parameters
@@ -302,19 +302,19 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
 
 // Generating impl for trait cv::AKAZE (trait)
 /// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_ANB13).
-/// 
+///
 /// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
-/// 
-/// 
+///
+///
 /// Note: When you need descriptors use Feature2D::detectAndCompute, which
 /// provides better performance. When using Feature2D::detect followed by
 /// Feature2D::compute scale space pyramid is computed twice.
-/// 
-/// 
+///
+///
 /// Note: AKAZE implements T-API. When image is passed as UMat some parts of the algorithm
 /// will use OpenCL.
-/// 
-/// 
+///
+///
 /// Note: [ANB13] Fast Explicit Diffusion for Accelerated Features in Nonlinear
 /// Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien Bartoli. In
 /// British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
@@ -385,7 +385,7 @@ pub trait AKAZE: crate::features2d::Feature2D {
 impl dyn AKAZE + '_ {
 
     /// The AKAZE constructor
-    /// 
+    ///
     /// ## Parameters
     /// * descriptor_type: Type of the extracted descriptor: DESCRIPTOR_KAZE,
     /// DESCRIPTOR_KAZE_UPRIGHT, DESCRIPTOR_MLDB or DESCRIPTOR_MLDB_UPRIGHT.
@@ -460,7 +460,7 @@ impl dyn AgastFeatureDetector + '_ {
 
 // boxed class cv::BFMatcher
 /// Brute-force descriptor matcher.
-/// 
+///
 /// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
 /// by trying each one. This descriptor matcher supports masking permissible matches of descriptor
 /// sets.
@@ -535,9 +535,9 @@ impl BFMatcher {
 
 // boxed class cv::BOWImgDescriptorExtractor
 /// Class to compute an image descriptor using the *bag of visual words*.
-/// 
+///
 /// Such a computation consists of the following steps:
-/// 
+///
 /// 1.  Compute descriptors for a given image and its keypoints set.
 /// 2.  Find the nearest visual words from the vocabulary for each keypoint descriptor.
 /// 3.  Compute the bag-of-words image descriptor as is a normalized histogram of vocabulary words
@@ -563,7 +563,7 @@ impl crate::features2d::BOWImgDescriptorExtractor {
 impl BOWImgDescriptorExtractor {
 
     /// The constructor.
-    /// 
+    ///
     /// ## Parameters
     /// * dextractor: Descriptor extractor that is used to compute descriptors for an input image and
     /// its keypoints.
@@ -578,7 +578,7 @@ impl BOWImgDescriptorExtractor {
     }
     
     /// Sets a visual vocabulary.
-    /// 
+    ///
     /// ## Parameters
     /// * vocabulary: Vocabulary (can be trained using the inheritor of BOWTrainer ). Each row of the
     /// vocabulary is a visual word (cluster center).
@@ -592,7 +592,7 @@ impl BOWImgDescriptorExtractor {
     }
     
     /// Computes an image descriptor using the set visual vocabulary.
-    /// 
+    ///
     /// ## Parameters
     /// * image: Image, for which the descriptor is computed.
     /// * keypoints: Keypoints detected in the input image.
@@ -664,7 +664,7 @@ impl crate::features2d::BOWTrainer for BOWKMeansTrainer {
 impl BOWKMeansTrainer {
 
     /// The constructor.
-    /// 
+    ///
     /// @see cv::kmeans
     ///
     /// ## C++ default parameters
@@ -687,17 +687,17 @@ impl BOWKMeansTrainer {
 
 // Generating impl for trait cv::BOWTrainer (trait)
 /// Abstract base class for training the *bag of visual words* vocabulary from a set of descriptors.
-/// 
+///
 /// For details, see, for example, *Visual Categorization with Bags of Keypoints* by Gabriella Csurka,
 /// Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray, 2004. :
 pub trait BOWTrainer {
     #[inline(always)] fn as_raw_BOWTrainer(&self) -> *mut c_void;
     /// Adds descriptors to a training set.
-    /// 
+    ///
     /// ## Parameters
     /// * descriptors: Descriptors to add to a training set. Each row of the descriptors matrix is a
     /// descriptor.
-    /// 
+    ///
     /// The training set is clustered using clustermethod to construct the vocabulary.
     fn add(&mut self, descriptors: &core::Mat) -> Result<()> {
         unsafe { sys::cv_BOWTrainer_add_Mat(self.as_raw_BOWTrainer(), descriptors.as_raw_Mat()) }.into_result()
@@ -722,11 +722,11 @@ pub trait BOWTrainer {
     }
     
     /// Clusters train descriptors.
-    /// 
+    ///
     /// ## Parameters
     /// * descriptors: Descriptors to cluster. Each row of the descriptors matrix is a descriptor.
     /// Descriptors are not added to the inner train descriptor set.
-    /// 
+    ///
     /// The vocabulary consists of cluster centers. So, this method returns the vocabulary. In the first
     /// variant of the method, train descriptors stored in the object are clustered. In the second variant,
     /// input descriptors are clustered.
@@ -766,7 +766,7 @@ impl crate::features2d::Feature2D for BRISK {
 impl BRISK {
 
     /// The BRISK constructor
-    /// 
+    ///
     /// ## Parameters
     /// * thresh: AGAST detection threshold score.
     /// * octaves: detection octaves. Use 0 to do single scale.
@@ -782,7 +782,7 @@ impl BRISK {
     }
     
     /// The BRISK constructor for a custom pattern
-    /// 
+    ///
     /// ## Parameters
     /// * radiusList: defines the radii (in pixels) where the samples around a keypoint are taken (for
     /// keypoint scale 1).
@@ -803,7 +803,7 @@ impl BRISK {
     }
     
     /// The BRISK constructor for a custom pattern, detection threshold and octaves
-    /// 
+    ///
     /// ## Parameters
     /// * thresh: AGAST detection threshold score.
     /// * octaves: detection octaves. Use 0 to do single scale.
@@ -833,16 +833,16 @@ impl BRISK {
 
 // Generating impl for trait cv::DescriptorMatcher (trait)
 /// Abstract base class for matching keypoint descriptors.
-/// 
+///
 /// It has two groups of match methods: for matching descriptors of an image with another image or with
 /// an image set.
 pub trait DescriptorMatcher: core::Algorithm {
     #[inline(always)] fn as_raw_DescriptorMatcher(&self) -> *mut c_void;
     /// Adds descriptors to train a CPU(trainDescCollectionis) or GPU(utrainDescCollectionis) descriptor
     /// collection.
-    /// 
+    ///
     /// If the collection is not empty, the new descriptors are added to existing train descriptors.
-    /// 
+    ///
     /// ## Parameters
     /// * descriptors: Descriptors to add. Each descriptors[i] is a set of descriptors from the same
     /// train image.
@@ -871,7 +871,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     }
     
     /// Trains a descriptor matcher
-    /// 
+    ///
     /// Trains a descriptor matcher (for example, the flann index). In all methods to match, the method
     /// train() is run every time before matching. Some descriptor matchers (for example, BruteForceMatcher)
     /// have an empty implementation of this method. Other matchers really train their inner structures (for
@@ -881,7 +881,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     }
     
     /// Finds the best match for each descriptor from a query set.
-    /// 
+    ///
     /// ## Parameters
     /// * queryDescriptors: Query set of descriptors.
     /// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -890,7 +890,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// descriptor. So, matches size may be smaller than the query descriptors count.
     /// * mask: Mask specifying permissible matches between an input query and train matrices of
     /// descriptors.
-    /// 
+    ///
     /// In the first variant of this method, the train descriptors are passed as an input argument. In the
     /// second variant of the method, train descriptors collection that was set by DescriptorMatcher::add is
     /// used. Optional mask (or masks) can be passed to specify which query and training descriptors can be
@@ -904,7 +904,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     }
     
     /// Finds the k best matches for each descriptor from a query set.
-    /// 
+    ///
     /// ## Parameters
     /// * queryDescriptors: Query set of descriptors.
     /// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -917,7 +917,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// * compactResult: Parameter used when the mask (or masks) is not empty. If compactResult is
     /// false, the matches vector has the same size as queryDescriptors rows. If compactResult is true,
     /// the matches vector does not contain matches for fully masked-out query descriptors.
-    /// 
+    ///
     /// These extended variants of DescriptorMatcher::match methods find several best matches for each query
     /// descriptor. The matches are returned in the distance increasing order. See DescriptorMatcher::match
     /// for the details about query and train descriptors.
@@ -930,7 +930,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     }
     
     /// For each query descriptor, finds the training descriptors not farther than the specified distance.
-    /// 
+    ///
     /// ## Parameters
     /// * queryDescriptors: Query set of descriptors.
     /// * trainDescriptors: Train set of descriptors. This set is not added to the train descriptors
@@ -944,7 +944,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// in Pixels)!
     /// * mask: Mask specifying permissible matches between an input query and train matrices of
     /// descriptors.
-    /// 
+    ///
     /// For each query descriptor, the methods find such training descriptors that the distance between the
     /// query descriptor and the training descriptor is equal or smaller than maxDistance. Found matches are
     /// returned in the distance increasing order.
@@ -1017,7 +1017,7 @@ pub trait DescriptorMatcher: core::Algorithm {
     }
     
     /// Clones the matcher.
-    /// 
+    ///
     /// ## Parameters
     /// * emptyTrainData: If emptyTrainData is false, the method creates a deep copy of the object,
     /// that is, copies both parameters and train data. If emptyTrainData is true, the method creates an
@@ -1035,7 +1035,7 @@ impl dyn DescriptorMatcher + '_ {
 
     /// Creates a descriptor matcher of a given type with the default parameters (using default
     /// constructor).
-    /// 
+    ///
     /// ## Parameters
     /// * descriptorMatcherType: Descriptor matcher type. Now the following matcher types are
     /// supported:
@@ -1127,7 +1127,7 @@ impl dyn FastFeatureDetector + '_ {
 pub trait Feature2D: core::Algorithm {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void;
     /// Detects keypoints in an image (first variant) or image set (second variant).
-    /// 
+    ///
     /// ## Parameters
     /// * image: Image.
     /// * keypoints: The detected keypoints. In the second variant of the method keypoints[i] is a set
@@ -1156,7 +1156,7 @@ pub trait Feature2D: core::Algorithm {
     
     /// Computes the descriptors for a set of keypoints detected in an image (first variant) or image set
     /// (second variant).
-    /// 
+    ///
     /// ## Parameters
     /// * image: Image.
     /// * keypoints: Input collection of keypoints. Keypoints for which a descriptor cannot be
@@ -1224,7 +1224,7 @@ pub trait Feature2D: core::Algorithm {
 
 // boxed class cv::FlannBasedMatcher
 /// Flann-based descriptor matcher.
-/// 
+///
 /// This matcher trains cv::flann::Index on a train descriptor collection and calls its nearest search
 /// methods to find the best matches. So, this matcher may be faster when matching a large train
 /// collection than the brute force matcher. FlannBasedMatcher does not support masking permissible
@@ -1369,8 +1369,8 @@ impl dyn GFTTDetector + '_ {
 
 // Generating impl for trait cv::KAZE (trait)
 /// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_ABD12) .
-/// 
-/// 
+///
+///
 /// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
 /// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
 /// (ECCV), Fiorenze, Italy, October 2012.
@@ -1433,7 +1433,7 @@ pub trait KAZE: crate::features2d::Feature2D {
 impl dyn KAZE + '_ {
 
     /// The KAZE constructor
-    /// 
+    ///
     /// ## Parameters
     /// * extended: Set to enable extraction of extended (128-byte) descriptor.
     /// * upright: Set to enable use of upright descriptors (non rotation-invariant).
@@ -1458,7 +1458,7 @@ impl dyn KAZE + '_ {
 
 // boxed class cv::KeyPointsFilter
 /// A class filters a vector of keypoints.
-/// 
+///
 /// Because now it is difficult to provide a convenient interface for all usage scenarios of the
 /// keypoints filter class, it has only several needed by now static methods.
 #[allow(dead_code)]
@@ -1515,24 +1515,24 @@ impl KeyPointsFilter {
 
 // Generating impl for trait cv::MSER (trait)
 /// Maximally stable extremal region extractor
-/// 
+///
 /// The class encapsulates all the parameters of the %MSER extraction algorithm (see [wiki
 /// article](http://en.wikipedia.org/wiki/Maximally_stable_extremal_regions)).
-/// 
+///
 /// - there are two different implementation of %MSER: one for grey image, one for color image
-/// 
+///
 /// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 /// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
-/// 
+///
 /// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 /// than grey image method ( 3~4 times ); the chi_table.h file is taken directly from paper's source
 /// code which is distributed under GPL.
-/// 
+///
 /// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
 pub trait MSER: crate::features2d::Feature2D {
     #[inline(always)] fn as_raw_MSER(&self) -> *mut c_void;
     /// Detect %MSER regions
-    /// 
+    ///
     /// ## Parameters
     /// * image: input image (8UC1, 8UC3 or 8UC4, must be greater or equal than 3x3)
     /// * msers: resulting list of point sets
@@ -1582,7 +1582,7 @@ pub trait MSER: crate::features2d::Feature2D {
 impl dyn MSER + '_ {
 
     /// Full consturctor for %MSER detector
-    /// 
+    ///
     /// ## Parameters
     /// * _delta: it compares <span lang='latex'>(size_{i}-size_{i-delta})/size_{i-delta}</span>
     /// * _min_area: prune the area which smaller than minArea
@@ -1612,7 +1612,7 @@ impl dyn MSER + '_ {
 
 // Generating impl for trait cv::ORB (trait)
 /// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
-/// 
+///
 /// described in [RRKB11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 /// the strongest features using FAST or Harris response, finds their orientation using first-order
 /// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
@@ -1700,7 +1700,7 @@ pub trait ORB: crate::features2d::Feature2D {
 impl dyn ORB + '_ {
 
     /// The ORB constructor
-    /// 
+    ///
     /// ## Parameters
     /// * nfeatures: The maximum number of features to retain.
     /// * scaleFactor: Pyramid decimation ratio, greater than 1. scaleFactor==2 means the classical
@@ -1749,9 +1749,9 @@ impl dyn ORB + '_ {
 
 // boxed class cv::SimpleBlobDetector
 /// Class for extracting blobs from an image. :
-/// 
+///
 /// The class implements a simple algorithm for extracting blobs from an image:
-/// 
+///
 /// 1.  Convert the source image to binary images by applying thresholding with several thresholds from
 /// minThreshold (inclusive) to maxThreshold (exclusive) with distance thresholdStep between
 /// neighboring thresholds.
@@ -1761,10 +1761,10 @@ impl dyn ORB + '_ {
 /// corresponds to one blob, which is controlled by the minDistBetweenBlobs parameter.
 /// 4.  From the groups, estimate final centers of blobs and their radiuses and return as locations and
 /// sizes of keypoints.
-/// 
+///
 /// This class performs several filtrations of returned blobs. You should set filterBy\* to true/false
 /// to turn on/off corresponding filtration. Available filtrations:
-/// 
+///
 /// *   **By color**. This filter compares the intensity of a binary image at the center of a blob to
 /// blobColor. If they differ, the blob is filtered out. Use blobColor = 0 to extract dark blobs
 /// and blobColor = 255 to extract light blobs.
@@ -1776,7 +1776,7 @@ impl dyn ORB + '_ {
 /// between minInertiaRatio (inclusive) and maxInertiaRatio (exclusive).
 /// *   **By convexity**. Extracted blobs have convexity (area / area of blob convex hull) between
 /// minConvexity (inclusive) and maxConvexity (exclusive).
-/// 
+///
 /// Default values of parameters are tuned to extract dark circular blobs.
 #[allow(dead_code)]
 pub struct SimpleBlobDetector {

@@ -1,13 +1,13 @@
 //! # Machine Learning
-//! 
+//!
 //! The Machine Learning Library (MLL) is a set of classes and functions for statistical
 //! classification, regression, and clustering of data.
-//! 
+//!
 //! Most of the classification and regression algorithms are implemented as C++ classes. As the
 //! algorithms have different sets of features (like an ability to handle missing measurements or
 //! categorical input variables), there is a little common ground between the classes. This common
 //! ground is defined by the class cv::ml::StatModel that all the other ML classes are derived from.
-//! 
+//!
 //! See detailed overview here: @ref ml_intro.
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -88,7 +88,7 @@ pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasse
 }
 
 /// Generates _sample_ from multivariate normal distribution
-/// 
+///
 /// ## Parameters
 /// * mean: an average row vector
 /// * cov: symmetric covariation matrix
@@ -100,15 +100,15 @@ pub fn rand_mv_normal(mean: &core::Mat, cov: &core::Mat, nsamples: i32, samples:
 
 // Generating impl for trait cv::ml::ANN_MLP (trait)
 /// Artificial Neural Networks - Multi-Layer Perceptrons.
-/// 
+///
 /// Unlike many other models in ML that are constructed and trained at once, in the MLP model these
 /// steps are separated. First, a network with the specified topology is created using the non-default
 /// constructor or the method ANN_MLP::create. All the weights are set to zeros. Then, the network is
 /// trained using a set of input and output vectors. The training procedure can be repeated more than
 /// once, that is, the weights can be adjusted based on the new training data.
-/// 
+///
 /// Additional flags for StatModel::train are available: ANN_MLP::TrainFlags.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_ann
 pub trait ANN_MLP: crate::ml::StatModel {
@@ -292,7 +292,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 impl dyn ANN_MLP + '_ {
 
     /// Creates empty model
-    /// 
+    ///
     /// Use StatModel::train to train the model, Algorithm::load\<ANN_MLP\>(filename) to load the pre-trained model.
     /// Note that the train method has optional flags: ANN_MLP::TrainFlags.
     pub fn create() -> Result<types::PtrOfANN_MLP> {
@@ -300,10 +300,10 @@ impl dyn ANN_MLP + '_ {
     }
     
     /// Loads and creates a serialized ANN from a file
-    /// 
+    ///
     /// Use ANN::save to serialize and store an ANN to disk.
     /// Load the ANN from this file again, by calling this function with the path to the file.
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized ANN
     pub fn load(filepath: &str) -> Result<types::PtrOfANN_MLP> {
@@ -315,7 +315,7 @@ impl dyn ANN_MLP + '_ {
 
 // Generating impl for trait cv::ml::ANN_MLP_ANNEAL (trait)
 /// Artificial Neural Networks - Multi-Layer Perceptrons.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_ann
 pub trait ANN_MLP_ANNEAL: crate::ml::ANN_MLP {
@@ -364,7 +364,7 @@ pub trait ANN_MLP_ANNEAL: crate::ml::ANN_MLP {
 
 // Generating impl for trait cv::ml::Boost (trait)
 /// Boosted tree classifier derived from DTrees
-/// 
+///
 /// ## See also
 /// @ref ml_intro_boost
 pub trait Boost: crate::ml::DTrees {
@@ -410,11 +410,11 @@ impl dyn Boost + '_ {
     }
     
     /// Loads and creates a serialized Boost from a file
-    /// 
+    ///
     /// Use Boost::save to serialize and store an RTree to disk.
     /// Load the Boost from this file again, by calling this function with the path to the file.
     /// Optionally specify the node for the file containing the classifier
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized Boost
     /// * nodeName: name of node containing the classifier
@@ -431,12 +431,12 @@ impl dyn Boost + '_ {
 
 // Generating impl for trait cv::ml::DTrees (trait)
 /// The class represents a single decision tree or a collection of decision trees.
-/// 
+///
 /// The current public interface of the class allows user to train only a single decision tree, however
 /// the class is capable of storing multiple decision trees and using them for prediction (by summing
 /// responses or using a voting schemes), and the derived from DTrees classes (such as RTrees and Boost)
 /// use this capability to implement decision tree ensembles.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_trees
 pub trait DTrees: crate::ml::StatModel {
@@ -537,21 +537,21 @@ pub trait DTrees: crate::ml::StatModel {
     }
     
     /// Returns all the nodes
-    /// 
+    ///
     /// all the node indices are indices in the returned vector
     fn get_nodes(&self) -> Result<types::VectorOfNode> {
         unsafe { sys::cv_ml_DTrees_getNodes_const(self.as_raw_DTrees()) }.into_result().map(|ptr| types::VectorOfNode { ptr })
     }
     
     /// Returns all the splits
-    /// 
+    ///
     /// all the split indices are indices in the returned vector
     fn get_splits(&self) -> Result<types::VectorOfSplit> {
         unsafe { sys::cv_ml_DTrees_getSplits_const(self.as_raw_DTrees()) }.into_result().map(|ptr| types::VectorOfSplit { ptr })
     }
     
     /// Returns all the bitsets for categorical splits
-    /// 
+    ///
     /// Split::subsetOfs is an offset in the returned vector
     fn get_subsets(&self) -> Result<types::VectorOfint> {
         unsafe { sys::cv_ml_DTrees_getSubsets_const(self.as_raw_DTrees()) }.into_result().map(|ptr| types::VectorOfint { ptr })
@@ -562,7 +562,7 @@ pub trait DTrees: crate::ml::StatModel {
 impl dyn DTrees + '_ {
 
     /// Creates the empty model
-    /// 
+    ///
     /// The static method creates empty decision tree with the specified parameters. It should be then
     /// trained using train method (see StatModel::train). Alternatively, you can load the model from
     /// file using Algorithm::load\<DTrees\>(filename).
@@ -571,11 +571,11 @@ impl dyn DTrees + '_ {
     }
     
     /// Loads and creates a serialized DTrees from a file
-    /// 
+    ///
     /// Use DTree::save to serialize and store an DTree to disk.
     /// Load the DTree from this file again, by calling this function with the path to the file.
     /// Optionally specify the node for the file containing the classifier
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized DTree
     /// * nodeName: name of node containing the classifier
@@ -646,7 +646,7 @@ impl DTrees_Split {
 
 // Generating impl for trait cv::ml::EM (trait)
 /// The class implements the Expectation Maximization algorithm.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_em
 pub trait EM: crate::ml::StatModel {
@@ -682,14 +682,14 @@ pub trait EM: crate::ml::StatModel {
     }
     
     /// Returns weights of the mixtures
-    /// 
+    ///
     /// Returns vector with the number of elements equal to the number of mixtures.
     fn get_weights(&self) -> Result<core::Mat> {
         unsafe { sys::cv_ml_EM_getWeights_const(self.as_raw_EM()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Returns the cluster centers (means of the Gaussian mixture)
-    /// 
+    ///
     /// Returns matrix with the number of rows equal to the number of mixtures and number of columns
     /// equal to the space dimensionality.
     fn get_means(&self) -> Result<core::Mat> {
@@ -697,7 +697,7 @@ pub trait EM: crate::ml::StatModel {
     }
     
     /// Returns covariation matrices
-    /// 
+    ///
     /// Returns vector of covariation matrices. Number of matrices is the number of gaussian mixtures,
     /// each matrix is a square floating-point matrix NxN, where N is the space dimensionality.
     fn get_covs(&self, covs: &mut types::VectorOfMat) -> Result<()> {
@@ -705,7 +705,7 @@ pub trait EM: crate::ml::StatModel {
     }
     
     /// Returns posterior probabilities for the provided samples
-    /// 
+    ///
     /// ## Parameters
     /// * samples: The input samples, floating-point matrix
     /// * results: The optional output <span lang='latex'> nSamples \times nClusters</span> matrix of results. It contains
@@ -721,13 +721,13 @@ pub trait EM: crate::ml::StatModel {
     
     /// Returns a likelihood logarithm value and an index of the most probable mixture component
     /// for the given sample.
-    /// 
+    ///
     /// ## Parameters
     /// * sample: A sample for classification. It should be a one-channel matrix of
     /// <span lang='latex'>1 \times dims</span> or <span lang='latex'>dims \times 1</span> size.
     /// * probs: Optional output matrix that contains posterior probabilities of each component
     /// given the sample. It has <span lang='latex'>1 \times nclusters</span> size and CV_64FC1 type.
-    /// 
+    ///
     /// The method returns a two-element double vector. Zero element is a likelihood logarithm value for
     /// the sample. First element is an index of the most probable mixture component for the given
     /// sample.
@@ -736,10 +736,10 @@ pub trait EM: crate::ml::StatModel {
     }
     
     /// Estimate the Gaussian mixture parameters from a samples set.
-    /// 
+    ///
     /// This variation starts with Expectation step. Initial values of the model parameters will be
     /// estimated by the k-means algorithm.
-    /// 
+    ///
     /// Unlike many of the ML models, %EM is an unsupervised learning algorithm and it does not take
     /// responses (class labels or function values) as input. Instead, it computes the *Maximum
     /// Likelihood Estimate* of the Gaussian mixture parameters from an input sample set, stores all the
@@ -747,10 +747,10 @@ pub trait EM: crate::ml::StatModel {
     /// covs[k], <span lang='latex'>\pi_k</span> in weights , and optionally computes the output "class label" for each
     /// sample: <span lang='latex'>\texttt{labels}_i=\texttt{arg max}_k(p_{i,k}), i=1..N</span> (indices of the most
     /// probable mixture component for each sample).
-    /// 
+    ///
     /// The trained model can be used further for prediction, just like any other classifier. The
     /// trained model is similar to the NormalBayesClassifier.
-    /// 
+    ///
     /// ## Parameters
     /// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
     /// one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -773,11 +773,11 @@ pub trait EM: crate::ml::StatModel {
     }
     
     /// Estimate the Gaussian mixture parameters from a samples set.
-    /// 
+    ///
     /// This variation starts with Expectation step. You need to provide initial means <span lang='latex'>a_k</span> of
     /// mixture components. Optionally you can pass initial weights <span lang='latex'>\pi_k</span> and covariance matrices
     /// <span lang='latex'>S_k</span> of mixture components.
-    /// 
+    ///
     /// ## Parameters
     /// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
     /// one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
@@ -811,15 +811,15 @@ pub trait EM: crate::ml::StatModel {
     }
     
     /// Estimate the Gaussian mixture parameters from a samples set.
-    /// 
+    ///
     /// This variation starts with Maximization step. You need to provide initial probabilities
     /// <span lang='latex'>p_{i,k}</span> to use this option.
-    /// 
+    ///
     /// ## Parameters
     /// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
     /// one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
     /// it will be converted to the inner matrix of such type for the further computing.
-    /// * probs0: 
+    /// * probs0:
     /// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
     /// each sample. It has <span lang='latex'>nsamples \times 1</span> size and CV_64FC1 type.
     /// * labels: The optional output "class label" for each sample:
@@ -849,11 +849,11 @@ impl dyn EM + '_ {
     }
     
     /// Loads and creates a serialized EM from a file
-    /// 
+    ///
     /// Use EM::save to serialize and store an EM to disk.
     /// Load the EM from this file again, by calling this function with the path to the file.
     /// Optionally specify the node for the file containing the classifier
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized EM
     /// * nodeName: name of node containing the classifier
@@ -870,7 +870,7 @@ impl dyn EM + '_ {
 
 // Generating impl for trait cv::ml::KNearest (trait)
 /// The class implements K-Nearest Neighbors model
-/// 
+///
 /// ## See also
 /// @ref ml_intro_knn
 pub trait KNearest: crate::ml::StatModel {
@@ -916,7 +916,7 @@ pub trait KNearest: crate::ml::StatModel {
     }
     
     /// Finds the neighbors and predicts responses for input vectors.
-    /// 
+    ///
     /// ## Parameters
     /// * samples: Input samples stored by rows. It is a single-precision floating-point matrix of
     /// `<number_of_samples> * k` size.
@@ -927,19 +927,19 @@ pub trait KNearest: crate::ml::StatModel {
     /// precision floating-point matrix of `<number_of_samples> * k` size.
     /// * dist: Optional output distances from the input vectors to the corresponding neighbors. It
     /// is a single-precision floating-point matrix of `<number_of_samples> * k` size.
-    /// 
+    ///
     /// For each input vector (a row of the matrix samples), the method finds the k nearest neighbors.
     /// In case of regression, the predicted result is a mean value of the particular vector's neighbor
     /// responses. In case of classification, the class is determined by voting.
-    /// 
+    ///
     /// For each input vector, the neighbors are sorted by their distances to the vector.
-    /// 
+    ///
     /// In case of C++ interface you can use output pointers to empty matrices and the function will
     /// allocate memory itself.
-    /// 
+    ///
     /// If only a single input vector is passed, all output matrices are optional and the predicted
     /// value is returned by the method.
-    /// 
+    ///
     /// The function is parallelized with the TBB library.
     ///
     /// ## C++ default parameters
@@ -954,7 +954,7 @@ pub trait KNearest: crate::ml::StatModel {
 impl dyn KNearest + '_ {
 
     /// Creates the empty model
-    /// 
+    ///
     /// The static method creates empty %KNearest classifier. It should be then trained using StatModel::train method.
     pub fn create() -> Result<types::PtrOfKNearest> {
         unsafe { sys::cv_ml_KNearest_create() }.into_result().map(|ptr| types::PtrOfKNearest { ptr })
@@ -964,7 +964,7 @@ impl dyn KNearest + '_ {
 
 // Generating impl for trait cv::ml::LogisticRegression (trait)
 /// Implements Logistic Regression classifier.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_lr
 pub trait LogisticRegression: crate::ml::StatModel {
@@ -1030,7 +1030,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
     }
     
     /// Predicts responses for input samples and returns a float type.
-    /// 
+    ///
     /// ## Parameters
     /// * samples: The input data for the prediction algorithm. Matrix [m x n], where each row
     /// contains variables (features) of one object being classified. Should have data type CV_32F.
@@ -1045,7 +1045,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
     }
     
     /// This function returns the trained parameters arranged across rows.
-    /// 
+    ///
     /// For a two class classifcation problem, it returns a row matrix. It returns learnt parameters of
     /// the Logistic Regression as a matrix of type CV_32F.
     fn get_learnt_thetas(&self) -> Result<core::Mat> {
@@ -1057,18 +1057,18 @@ pub trait LogisticRegression: crate::ml::StatModel {
 impl dyn LogisticRegression + '_ {
 
     /// Creates empty model.
-    /// 
+    ///
     /// Creates Logistic Regression model with parameters given.
     pub fn create() -> Result<types::PtrOfLogisticRegression> {
         unsafe { sys::cv_ml_LogisticRegression_create() }.into_result().map(|ptr| types::PtrOfLogisticRegression { ptr })
     }
     
     /// Loads and creates a serialized LogisticRegression from a file
-    /// 
+    ///
     /// Use LogisticRegression::save to serialize and store an LogisticRegression to disk.
     /// Load the LogisticRegression from this file again, by calling this function with the path to the file.
     /// Optionally specify the node for the file containing the classifier
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized LogisticRegression
     /// * nodeName: name of node containing the classifier
@@ -1085,13 +1085,13 @@ impl dyn LogisticRegression + '_ {
 
 // Generating impl for trait cv::ml::NormalBayesClassifier (trait)
 /// Bayes classifier for normally distributed data.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_bayes
 pub trait NormalBayesClassifier: crate::ml::StatModel {
     #[inline(always)] fn as_raw_NormalBayesClassifier(&self) -> *mut c_void;
     /// Predicts the response for sample(s).
-    /// 
+    ///
     /// The method estimates the most probable classes for input vectors. Input vectors (one or more)
     /// are stored as rows of the matrix inputs. In case of multiple input vectors, there should be one
     /// output vector outputs. The predicted class for a single input vector is returned by the method.
@@ -1115,11 +1115,11 @@ impl dyn NormalBayesClassifier + '_ {
     }
     
     /// Loads and creates a serialized NormalBayesClassifier from a file
-    /// 
+    ///
     /// Use NormalBayesClassifier::save to serialize and store an NormalBayesClassifier to disk.
     /// Load the NormalBayesClassifier from this file again, by calling this function with the path to the file.
     /// Optionally specify the node for the file containing the classifier
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized NormalBayesClassifier
     /// * nodeName: name of node containing the classifier
@@ -1136,7 +1136,7 @@ impl dyn NormalBayesClassifier + '_ {
 
 // boxed class cv::ml::ParamGrid
 /// The structure represents the logarithmic grid range of statmodel parameters.
-/// 
+///
 /// It is used for optimizing statmodel accuracy by varying model parameters, the accuracy estimate
 /// being computed by cross-validation.
 #[allow(dead_code)]
@@ -1169,7 +1169,7 @@ impl ParamGrid {
     }
     
     /// Creates a ParamGrid Ptr that can be given to the %SVM::trainAuto method
-    /// 
+    ///
     /// ## Parameters
     /// * minVal: minimum value of the parameter grid
     /// * maxVal: maximum value of the parameter grid
@@ -1193,7 +1193,7 @@ impl ParamGrid {
     }
     
     /// Logarithmic step for iterating the statmodel parameter.
-    /// 
+    ///
     /// The grid determines the following iteration sequence of the statmodel parameter values:
     /// <div lang='latex'>(minVal, minVal*step, minVal*{step}^2, \dots,  minVal*{logStep}^n),</div>
     /// where <span lang='latex'>n</span> is the maximal index satisfying
@@ -1207,7 +1207,7 @@ impl ParamGrid {
 
 // Generating impl for trait cv::ml::RTrees (trait)
 /// The class implements the random forest predictor.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_rtrees
 pub trait RTrees: crate::ml::DTrees {
@@ -1275,11 +1275,11 @@ impl dyn RTrees + '_ {
     }
     
     /// Loads and creates a serialized RTree from a file
-    /// 
+    ///
     /// Use RTree::save to serialize and store an RTree to disk.
     /// Load the RTree from this file again, by calling this function with the path to the file.
     /// Optionally specify the node for the file containing the classifier
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized RTree
     /// * nodeName: name of node containing the classifier
@@ -1296,7 +1296,7 @@ impl dyn RTrees + '_ {
 
 // Generating impl for trait cv::ml::SVM (trait)
 /// Support Vector Machines.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_svm
 pub trait SVM: crate::ml::StatModel {
@@ -1410,7 +1410,7 @@ pub trait SVM: crate::ml::StatModel {
     }
     
     /// Trains an %SVM with optimal parameters.
-    /// 
+    ///
     /// ## Parameters
     /// * data: the training data that can be constructed using TrainData::create or
     /// TrainData::loadFromCSV.
@@ -1426,20 +1426,20 @@ pub trait SVM: crate::ml::StatModel {
     /// * balanced: If true and the problem is 2-class classification then the method creates more
     /// balanced cross-validation subsets that is proportions between classes in subsets are close
     /// to such proportion in the whole train dataset.
-    /// 
+    ///
     /// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
     /// nu, coef0, degree. Parameters are considered optimal when the cross-validation
     /// estimate of the test set error is minimal.
-    /// 
+    ///
     /// If there is no need to optimize a parameter, the corresponding grid step should be set to any
     /// value less than or equal to 1. For example, to avoid optimization in gamma, set `gammaGrid.step
     /// = 0`, `gammaGrid.minVal`, `gamma_grid.maxVal` as arbitrary numbers. In this case, the value
     /// `Gamma` is taken for gamma.
-    /// 
+    ///
     /// And, finally, if the optimization in a parameter is required but the corresponding grid is
     /// unknown, you may call the function SVM::getDefaultGrid. To generate a grid, for example, for
     /// gamma, call `SVM::getDefaultGrid(SVM::GAMMA)`.
-    /// 
+    ///
     /// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
     /// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
     /// the usual %SVM with parameters specified in params is executed.
@@ -1458,7 +1458,7 @@ pub trait SVM: crate::ml::StatModel {
     }
     
     /// Trains an %SVM with optimal parameters
-    /// 
+    ///
     /// ## Parameters
     /// * samples: training samples
     /// * layout: See ml::SampleTypes.
@@ -1474,14 +1474,14 @@ pub trait SVM: crate::ml::StatModel {
     /// * balanced: If true and the problem is 2-class classification then the method creates more
     /// balanced cross-validation subsets that is proportions between classes in subsets are close
     /// to such proportion in the whole train dataset.
-    /// 
+    ///
     /// The method trains the %SVM model automatically by choosing the optimal parameters C, gamma, p,
     /// nu, coef0, degree. Parameters are considered optimal when the cross-validation
     /// estimate of the test set error is minimal.
-    /// 
+    ///
     /// This function only makes use of SVM::getDefaultGrid for parameter optimization and thus only
     /// offers rudimentary parameter options.
-    /// 
+    ///
     /// This function works for the classification (SVM::C_SVC or SVM::NU_SVC) as well as for the
     /// regression (SVM::EPS_SVR or SVM::NU_SVR). If it is SVM::ONE_CLASS, no optimization is made and
     /// the usual %SVM with parameters specified in params is executed.
@@ -1500,7 +1500,7 @@ pub trait SVM: crate::ml::StatModel {
     }
     
     /// Retrieves all the support vectors
-    /// 
+    ///
     /// The method returns all the support vectors as a floating-point matrix, where support vectors are
     /// stored as matrix rows.
     fn get_support_vectors(&self) -> Result<core::Mat> {
@@ -1508,7 +1508,7 @@ pub trait SVM: crate::ml::StatModel {
     }
     
     /// Retrieves all the uncompressed support vectors of a linear %SVM
-    /// 
+    ///
     /// The method returns all the uncompressed support vectors of a linear %SVM that the compressed
     /// support vector, used for prediction, was derived from. They are returned in a floating-point
     /// matrix, where the support vectors are stored as matrix rows.
@@ -1517,7 +1517,7 @@ pub trait SVM: crate::ml::StatModel {
     }
     
     /// Retrieves the decision function
-    /// 
+    ///
     /// ## Parameters
     /// * i: the index of the decision function. If the problem solved is regression, 1-class or
     /// 2-class classification, then there will be just one decision function and the index should
@@ -1528,7 +1528,7 @@ pub trait SVM: crate::ml::StatModel {
     /// * svidx: the optional output vector of indices of support vectors within the matrix of
     /// support vectors (which can be retrieved by SVM::getSupportVectors). In the case of linear
     /// %SVM each decision function consists of a single "compressed" support vector.
-    /// 
+    ///
     /// The method returns rho parameter of the decision function, a scalar subtracted from the weighted
     /// sum of kernel responses.
     fn get_decision_function(&self, i: i32, alpha: &mut core::Mat, svidx: &mut core::Mat) -> Result<f64> {
@@ -1540,11 +1540,11 @@ pub trait SVM: crate::ml::StatModel {
 impl dyn SVM + '_ {
 
     /// Generates a grid for %SVM parameters.
-    /// 
+    ///
     /// ## Parameters
     /// * param_id: %SVM parameters IDs that must be one of the SVM::ParamTypes. The grid is
     /// generated for the parameter with this ID.
-    /// 
+    ///
     /// The function generates a grid for the specified parameter of the %SVM algorithm. The grid may be
     /// passed to the function SVM::trainAuto.
     pub fn get_default_grid(param_id: i32) -> Result<crate::ml::ParamGrid> {
@@ -1552,11 +1552,11 @@ impl dyn SVM + '_ {
     }
     
     /// Generates a grid for %SVM parameters.
-    /// 
+    ///
     /// ## Parameters
     /// * param_id: %SVM parameters IDs that must be one of the SVM::ParamTypes. The grid is
     /// generated for the parameter with this ID.
-    /// 
+    ///
     /// The function generates a grid pointer for the specified parameter of the %SVM algorithm.
     /// The grid may be passed to the function SVM::trainAuto.
     pub fn get_default_grid_ptr(param_id: i32) -> Result<types::PtrOfParamGrid> {
@@ -1571,10 +1571,10 @@ impl dyn SVM + '_ {
     }
     
     /// Loads and creates a serialized svm from a file
-    /// 
+    ///
     /// Use SVM::save to serialize and store an SVM to disk.
     /// Load the SVM from this file again, by calling this function with the path to the file.
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized svm
     pub fn load(filepath: &str) -> Result<types::PtrOfSVM> {
@@ -1698,11 +1698,11 @@ impl dyn SVMSGD + '_ {
     }
     
     /// Loads and creates a serialized SVMSGD from a file
-    /// 
+    ///
     /// Use SVMSGD::save to serialize and store an SVMSGD to disk.
     /// Load the SVMSGD from this file again, by calling this function with the path to the file.
     /// Optionally specify the node for the file containing the classifier
-    /// 
+    ///
     /// ## Parameters
     /// * filepath: path to serialized SVMSGD
     /// * nodeName: name of node containing the classifier
@@ -1741,7 +1741,7 @@ pub trait StatModel: core::Algorithm {
     }
     
     /// Trains the statistical model
-    /// 
+    ///
     /// ## Parameters
     /// * trainData: training data that can be loaded from file using TrainData::loadFromCSV or
     /// created with TrainData::create.
@@ -1755,7 +1755,7 @@ pub trait StatModel: core::Algorithm {
     }
     
     /// Trains the statistical model
-    /// 
+    ///
     /// ## Parameters
     /// * samples: training samples
     /// * layout: See ml::SampleTypes.
@@ -1765,7 +1765,7 @@ pub trait StatModel: core::Algorithm {
     }
     
     /// Computes error on the training or test dataset
-    /// 
+    ///
     /// ## Parameters
     /// * data: the training data
     /// * test: if true, the error is computed over the test subset of the data, otherwise it's
@@ -1774,7 +1774,7 @@ pub trait StatModel: core::Algorithm {
     /// the test subset at all with TrainData::setTrainTestSplitRatio and specify test=false, so
     /// that the error is computed for the whole new set. Yes, this sounds a bit confusing.
     /// * resp: the optional output responses.
-    /// 
+    ///
     /// The method uses StatModel::predict to compute the error. For regression models the error is
     /// computed as RMS, for classifiers - as a percent of missclassified samples (0%-100%).
     fn calc_error(&self, data: &types::PtrOfTrainData, test: bool, resp: &mut core::Mat) -> Result<f32> {
@@ -1782,7 +1782,7 @@ pub trait StatModel: core::Algorithm {
     }
     
     /// Predicts response(s) for the provided sample(s)
-    /// 
+    ///
     /// ## Parameters
     /// * samples: The input samples, floating-point matrix
     /// * results: The optional output matrix of results.
@@ -1799,12 +1799,12 @@ pub trait StatModel: core::Algorithm {
 
 // Generating impl for trait cv::ml::TrainData (trait)
 /// Class encapsulating training data.
-/// 
+///
 /// Please note that the class only specifies the interface of training data, but not implementation.
 /// All the statistical model classes in _ml_ module accepts Ptr\<TrainData\> as parameter. In other
 /// words, you can create your own class derived from TrainData and pass smart pointer to the instance
 /// of this class into StatModel::train.
-/// 
+///
 /// ## See also
 /// @ref ml_intro_data
 pub trait TrainData {
@@ -1850,7 +1850,7 @@ pub trait TrainData {
     }
     
     /// Returns matrix of train samples
-    /// 
+    ///
     /// ## Parameters
     /// * layout: The requested layout. If it's different from the initial one, the matrix is
     /// transposed. See ml::SampleTypes.
@@ -1858,7 +1858,7 @@ pub trait TrainData {
     /// sampleIdx)
     /// * compressVars: if true, the function returns the shorter training samples, containing only
     /// the active variables.
-    /// 
+    ///
     /// In current implementation the function tries to avoid physical data copying and returns the
     /// matrix stored inside TrainData (unless the transposition or compression is needed).
     ///
@@ -1871,7 +1871,7 @@ pub trait TrainData {
     }
     
     /// Returns the vector of responses
-    /// 
+    ///
     /// The function returns ordered or the original categorical responses. Usually it's used in
     /// regression algorithms.
     fn get_train_responses(&self) -> Result<core::Mat> {
@@ -1879,7 +1879,7 @@ pub trait TrainData {
     }
     
     /// Returns the vector of normalized categorical responses
-    /// 
+    ///
     /// The function returns vector of responses. Each response is integer from `0` to `<number of
     /// classes>-1`. The actual label value can be retrieved then from the class label vector, see
     /// TrainData::getClassLabels.
@@ -1956,7 +1956,7 @@ pub trait TrainData {
     }
     
     /// Returns the vector of class labels
-    /// 
+    ///
     /// The function returns vector of unique labels occurred in the responses.
     fn get_class_labels(&self) -> Result<core::Mat> {
         unsafe { sys::cv_ml_TrainData_getClassLabels_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
@@ -1981,7 +1981,7 @@ pub trait TrainData {
     }
     
     /// Splits the training data into the training and test parts
-    /// 
+    ///
     /// The function selects a subset of specified relative size and then returns it as the training
     /// set. If the function is not called, all the data is used for training. Please, note that for
     /// each of TrainData::getTrain\* there is corresponding TrainData::getTest\*, so that the test
@@ -2031,7 +2031,7 @@ impl dyn TrainData + '_ {
     }
     
     /// Creates training data from in-memory arrays.
-    /// 
+    ///
     /// ## Parameters
     /// * samples: matrix of samples. It should have CV_32F type.
     /// * layout: see ml::SampleTypes.

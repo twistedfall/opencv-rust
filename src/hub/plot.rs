@@ -28,7 +28,7 @@ pub trait Plot2d: core::Algorithm {
     }
     
     /// Switches data visualization mode
-    /// 
+    ///
     /// ## Parameters
     /// * _needPlotLine: if true then neighbour plot points will be connected by lines.
     /// In other case data will be plotted as a set of standalone points.
@@ -77,7 +77,7 @@ pub trait Plot2d: core::Algorithm {
     }
     
     /// Sets the index of a point which coordinates will be printed on the top left corner of the plot (if ShowText flag is true).
-    /// 
+    ///
     /// ## Parameters
     /// * pointIdx: index of the required point in data array.
     fn set_point_idx_to_print(&mut self, point_idx: i32) -> Result<()> {
@@ -93,7 +93,7 @@ pub trait Plot2d: core::Algorithm {
 impl dyn Plot2d + '_ {
 
     /// Creates Plot2d object
-    /// 
+    ///
     /// ## Parameters
     /// * data: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix containing <span lang='latex'>Y</span> values of points to plot. <span lang='latex'>X</span> values
     /// will be equal to indexes of correspondind elements in data matrix.
@@ -102,7 +102,7 @@ impl dyn Plot2d + '_ {
     }
     
     /// Creates Plot2d object
-    /// 
+    ///
     /// ## Parameters
     /// * dataX: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix <span lang='latex'>X</span> values of points to plot.
     /// * dataY: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix containing <span lang='latex'>Y</span> values of points to plot.

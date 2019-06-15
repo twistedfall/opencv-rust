@@ -1,32 +1,32 @@
 //! # Images stitching
-//! 
+//!
 //! This figure illustrates the stitching module pipeline implemented in the Stitcher class. Using that
 //! class it's possible to configure/remove some steps, i.e. adjust the stitching pipeline according to
 //! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 //! one can combine and use them separately.
-//! 
+//!
 //! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BL07) .
-//! 
+//!
 //! ![stitching pipeline](https://docs.opencv.org/3.4.6/StitchingPipeline.jpg)
-//! 
+//!
 //! Camera models
 //! -------------
-//! 
+//!
 //! There are currently 2 camera models implemented in stitching pipeline.
-//! 
+//!
 //! - _Homography model_ expecting perspective transformations between images
 //! implemented in @ref cv::detail::BestOf2NearestMatcher cv::detail::HomographyBasedEstimator
 //! cv::detail::BundleAdjusterReproj cv::detail::BundleAdjusterRay
 //! - _Affine model_ expecting affine transformation with 6 DOF or 4 DOF implemented in
 //! @ref cv::detail::AffineBestOf2NearestMatcher cv::detail::AffineBasedEstimator
 //! cv::detail::BundleAdjusterAffine cv::detail::BundleAdjusterAffinePartial cv::AffineWarper
-//! 
+//!
 //! Homography model is useful for creating photo panoramas captured by camera,
 //! while affine-based model can be used to stitch scans and object captured by
 //! specialized devices. Use @ref cv::Stitcher::create to get preconfigured pipeline for one
 //! of those models.
-//! 
-//! 
+//!
+//!
 //! Note:
 //! Certain detailed settings of @ref cv::Stitcher might not make sense. Especially
 //! you should not mix classes implementing affine model and classes implementing
@@ -394,12 +394,12 @@ impl StereographicWarper {
 
 // boxed class cv::Stitcher
 /// High level image stitcher.
-/// 
+///
 /// It's possible to use this class without being aware of the entire stitching pipeline. However, to
 /// be able to achieve higher stitching stability and quality of the final images at least being
 /// familiar with the theory is recommended.
-/// 
-/// 
+///
+///
 /// Note:
 /// *   A basic example on image stitching can be found at
 /// opencv_source_code/samples/cpp/stitching.cpp
@@ -425,7 +425,7 @@ impl crate::stitching::Stitcher {
 impl Stitcher {
 
     /// Creates a stitcher with the default parameters.
-    /// 
+    ///
     /// ## Parameters
     /// * try_use_gpu: Flag indicating whether GPU should be used whenever it's possible.
     /// ## Returns

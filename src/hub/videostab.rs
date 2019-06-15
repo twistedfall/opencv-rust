@@ -1,25 +1,25 @@
 //! # Video Stabilization
-//! 
+//!
 //! The video stabilization module contains a set of functions and classes that can be used to solve the
 //! problem of video stabilization. There are a few methods implemented, most of them are described in
 //! the papers [OF06](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 //! paper methods.
-//! 
+//!
 //! ### References
-//! 
+//!
 //! 1. "Full-Frame Video Stabilization with Motion Inpainting"
 //! Yasuyuki Matsushita, Eyal Ofek, Weina Ge, Xiaoou Tang, Senior Member, and Heung-Yeung Shum
 //! 2. "Auto-Directed Video Stabilization with Robust L1 Optimal Camera Paths"
 //! Matthias Grundmann, Vivek Kwatra, Irfan Essa
 //! # Global Motion Estimation
-//! 
+//!
 //! The video stabilization module contains a set of functions and classes for global motion estimation
 //! between point clouds or between images. In the last case features are extracted and matched
 //! internally. For the sake of convenience the motion estimation functions are wrapped into classes.
 //! Both the functions and the classes are available.
-//! 
+//!
 //! # Fast Marching Method
-//! 
+//!
 //! The Fast Marching Method [Telea04](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 //! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 use std::os::raw::{c_char, c_void};
@@ -52,10 +52,10 @@ pub fn ensure_inclusion_constraint(m: &core::Mat, size: core::Size, trim_ratio: 
 }
 
 /// Estimates best global motion between two 2D point clouds in the least-squares sense.
-/// 
-/// 
+///
+///
 /// Note: Works in-place and changes input point arrays.
-/// 
+///
 /// ## Parameters
 /// * points0: Source set of 2D points (32F).
 /// * points1: Destination set of 2D points (32F).
@@ -76,7 +76,7 @@ pub fn estimate_optimal_trim_ratio(m: &core::Mat, size: core::Size) -> Result<f3
 }
 
 /// Computes motion between two frames assuming that all the intermediate motions are known.
-/// 
+///
 /// ## Parameters
 /// * from: Source frame index.
 /// * to: Destination frame index.
@@ -240,7 +240,7 @@ pub trait DeblurerBase {
 
 // boxed class cv::videostab::FastMarchingMethod
 /// Describes the Fast Marching Method implementation.
-/// 
+///
 /// See http://iwi.eldoc.ub.rug.nl/FILES/root/2004/JGraphToolsTelea/2004JGraphToolsTelea.pdf
 #[allow(dead_code)]
 pub struct FastMarchingMethod {
@@ -721,7 +721,7 @@ pub trait MoreAccurateMotionWobbleSuppressorBase: crate::videostab::WobbleSuppre
 pub trait MotionEstimatorBase {
     #[inline(always)] fn as_raw_MotionEstimatorBase(&self) -> *mut c_void;
     /// Estimates global motion between two 2D point clouds.
-    /// 
+    ///
     /// ## Parameters
     /// * points0: Source set of 2D points (32F).
     /// * points1: Destination set of 2D points (32F).
@@ -739,8 +739,8 @@ pub trait MotionEstimatorBase {
 
 // boxed class cv::videostab::MotionEstimatorL1
 /// Describes a global 2D motion estimation method which minimizes L1 error.
-/// 
-/// 
+///
+///
 /// Note: To be able to use this method you must build OpenCV with CLP library support. :
 #[allow(dead_code)]
 pub struct MotionEstimatorL1 {

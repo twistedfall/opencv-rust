@@ -27,7 +27,6 @@ pub mod prelude {
 #[cfg(test)]
 mod test;
 
-
 cpp! {{
     #include "../common_opencv.h"
     using namespace cv;

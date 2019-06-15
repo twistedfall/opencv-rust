@@ -1,17 +1,17 @@
 //! # Phase Unwrapping API
-//! 
+//!
 //! Two-dimensional phase unwrapping is found in different applications like terrain elevation estimation
 //! in synthetic aperture radar (SAR), field mapping in magnetic resonance imaging or as a way of finding
 //! corresponding pixels in structured light reconstruction with sinusoidal patterns.
-//! 
+//!
 //! Given a phase map, wrapped between [-pi; pi], phase unwrapping aims at finding the "true" phase map
 //! by adding the right number of 2*pi to each pixel.
-//! 
+//!
 //! The problem is straightforward for perfect wrapped phase map, but real data are usually not noise-free.
 //! Among the different algorithms that were developed, quality-guided phase unwrapping methods are fast
 //! and efficient. They follow a path that unwraps high quality pixels first,
 //! avoiding error propagation from the start.
-//! 
+//!
 //! In this module, a quality-guided phase unwrapping is implemented following the approach described in [histogramUnwrapping](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_histogramUnwrapping) .
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
@@ -27,12 +27,12 @@ use crate::{Error, Result, core, sys, types};
 /// horizontally or vertically. Its reliability is found by adding the the reliabilities of the
 /// two pixels connected through it. Edges are sorted in a histogram based on their reliability values.
 /// This histogram is then used to unwrap pixels, starting from the highest quality pixel.
-/// 
+///
 /// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
 pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
     #[inline(always)] fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void;
     /// Get the reliability map computed from the wrapped phase map.
-    /// 
+    ///
     /// ## Parameters
     /// * reliabilityMap: Image where the reliability map is stored.
     fn get_inverse_reliability_map(&mut self, reliability_map: &mut core::Mat) -> Result<()> {
@@ -44,7 +44,7 @@ pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
 impl dyn HistogramPhaseUnwrapping + '_ {
 
     /// Constructor
-    /// 
+    ///
     /// ## Parameters
     /// * parameters: HistogramPhaseUnwrapping parameters HistogramPhaseUnwrapping::Params: width,height of the phase map and histogram characteristics.
     ///
@@ -58,7 +58,7 @@ impl dyn HistogramPhaseUnwrapping + '_ {
 
 // boxed class cv::phase_unwrapping::HistogramPhaseUnwrapping::Params
 /// Parameters of phaseUnwrapping constructor.
-/// 
+///
 /// ## Parameters
 /// * width: Phase map width.
 /// * height: Phase map height.
@@ -95,7 +95,7 @@ impl HistogramPhaseUnwrapping_Params {
 pub trait PhaseUnwrapping: core::Algorithm {
     #[inline(always)] fn as_raw_PhaseUnwrapping(&self) -> *mut c_void;
     /// Unwraps a 2D phase map.
-    /// 
+    ///
     /// ## Parameters
     /// * wrappedPhaseMap: The wrapped phase map that needs to be unwrapped.
     /// * unwrappedPhaseMap: The unwrapped phase map.

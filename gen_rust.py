@@ -3154,6 +3154,8 @@ class RustWrapperGenerator(object):
             text = re.sub("^", comment_prefix + " ", text.strip(), 0, re.M) + "\n"
         if deprecated is not None:
             text += "#[deprecated = \"{}\"]\n".format(deprecated)
+        # rstrip all lines, this helps with ignoring doctests
+        text = "\n".join(x.rstrip() for x in text.splitlines()) + "\n"
         return text
 
 

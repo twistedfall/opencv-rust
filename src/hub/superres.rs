@@ -1,5 +1,5 @@
 //! # Super Resolution
-//! 
+//!
 //! The Super Resolution module contains a set of functions and classes that can be used to solve the
 //! problem of resolution enhancement. There are a few methods implemented, most of them are described in
 //! the papers [Farsiu03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Mitzel09) .
@@ -30,13 +30,13 @@ pub fn create_frame_source__video(file_name: &str) -> Result<types::PtrOfFrameSo
 }
 
 /// Create Bilateral TV-L1 Super Resolution.
-/// 
+///
 /// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Farsiu03) and
 /// [Mitzel09](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Mitzel09) .
-/// 
+///
 /// Here are important members of the class that control the algorithm, which you can set after
 /// constructing the class instance:
-/// 
+///
 /// *   **int scale** Scale factor.
 /// *   **int iterations** Iteration count.
 /// *   **double tau** Asymptotic value of steepest descent method.
@@ -70,13 +70,13 @@ pub trait FrameSource {
 
 // Generating impl for trait cv::superres::SuperResolution (trait)
 /// Base class for Super Resolution algorithms.
-/// 
+///
 /// The class is only used to define the common interface for the whole family of Super Resolution
 /// algorithms.
 pub trait SuperResolution: core::Algorithm + crate::superres::FrameSource {
     #[inline(always)] fn as_raw_SuperResolution(&self) -> *mut c_void;
     /// Set input frame source for Super Resolution algorithm.
-    /// 
+    ///
     /// ## Parameters
     /// * frameSource: Input frame source
     fn set_input(&mut self, frame_source: &types::PtrOfFrameSource) -> Result<()> {
@@ -84,7 +84,7 @@ pub trait SuperResolution: core::Algorithm + crate::superres::FrameSource {
     }
     
     /// Process next frame from input and return output result.
-    /// 
+    ///
     /// ## Parameters
     /// * frame: Output result
     fn next_frame(&mut self, frame: &mut core::Mat) -> Result<()> {
