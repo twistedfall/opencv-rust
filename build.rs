@@ -1,8 +1,9 @@
 use std::{
+    env,
     collections::HashSet,
     error::Error,
     ffi::OsString,
-    fs::{self, File, OpenOptions, read_dir},
+    fs::{self, File, OpenOptions},
     io::{self, Write},
     iter::FromIterator,
     path::PathBuf,
@@ -58,26 +59,17 @@ fn link_wrapper() -> Result<pkg_config::Library, Box<dyn Error>> {
     Ok(opencv)
 }
 
-fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
+fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     println!("cargo:rerun-if-changed=hdr_parser.py");
     println!("cargo:rerun-if-changed=gen_rust.py");
 
-    let out_dir = PathBuf::from(std::env::var("OUT_DIR")?);
+    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
-    let hub_dir = PathBuf::from(std::env::var("CARGO_MANIFEST_DIR")?).join("src");
+    let hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
     let module_dir = hub_dir.join("hub");
     let manual_dir = module_dir.join("manual");
 
-    let search_opencv = opencv.include_paths
-        .iter()
-        .chain(&[PathBuf::from("/usr/include")])
-        .map(|p| {
-            let mut path = PathBuf::from(p);
-            path.push("opencv2");
-            path
-        })
-        .find(|path| read_dir(path).is_ok());
-    let opencv_dir = search_opencv.expect("Could not find opencv2 dir in pkg-config includes");
+    let opencv_dir = opencv_header_dir.join("opencv2");
 
     println!("OpenCV lives in {}", opencv_dir.display());
     println!("Generating code in {}", out_dir_as_str);
@@ -87,10 +79,8 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
         .flag("-std=c++11")
         .flag_if_supported("-Wno-deprecated-declarations")
         .flag_if_supported("-Wno-class-memaccess")
+        .include(&opencv_header_dir)
     ;
-    for path in &opencv.include_paths {
-        gcc.include(path);
-    }
 
     for entry in glob(&format!("{}/*", out_dir_as_str))? {
         let _ = fs::remove_file(entry?);
@@ -153,17 +143,17 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
     ];
     let mut modules = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
         .map(|entry| {
-             let entry = entry.unwrap();
-             let mut files = vec!(entry.to_str().unwrap().to_string());
+            let entry = entry.unwrap();
+            let mut files = vec!(entry.to_str().unwrap().to_string());
 
-             let module = entry.file_stem().unwrap().to_string_lossy();
+            let module = entry.file_stem().unwrap().to_string_lossy();
 
-             files.extend(
-                 glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
-                 .map(|file| file.unwrap().to_string_lossy().into_owned())
-                 .filter(|f| !ignore_header_suffix.iter().any(|&x| f.ends_with(x)) && !ignore_header_substring.iter().any(|&x| f.contains(x)))
-             );
-             (module.into_owned(), files)
+            files.extend(
+                glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
+                    .map(|file| file.unwrap().to_string_lossy().into_owned())
+                    .filter(|f| !ignore_header_suffix.iter().any(|&x| f.ends_with(x)) && !ignore_header_substring.iter().any(|&x| f.contains(x)))
+            );
+            (module.into_owned(), files)
          })
         .filter(|module| !ignore_modules.contains(&module.0.as_ref()))
         .collect::<Vec<(String,Vec<String>)>>();
@@ -344,11 +334,25 @@ fn build_wrapper(opencv: pkg_config::Library) -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
+    let opencv_header_dir = env::var("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|_| {
+        let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR must be set"));
+        if cfg!(feature = "opencv_34") {
+            manifest_dir.join("headers/3.4")
+        } else if cfg!(feature = "opencv_41") {
+            manifest_dir.join("headers/4.1")
+        } else {
+            panic!("Please select one OpenCV major version using one of the opencv_* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
+        }
+    });
+
     if !cfg!(feature = "docs-only") {
-        build_wrapper(link_wrapper()?)?;
-        let mut config = cpp_build::Config::new();
-        config.flag_if_supported("-Wno-class-memaccess");
-        config.build("src/lib.rs");
+        link_wrapper()?;
     }
+    build_wrapper(&opencv_header_dir)?;
+
+    let mut config = cpp_build::Config::new();
+    config.flag_if_supported("-Wno-class-memaccess");
+    config.include(opencv_header_dir);
+    config.build("src/lib.rs");
     Ok(())
 }
