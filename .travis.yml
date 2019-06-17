@@ -18,6 +18,7 @@ addons:
   apt:
     packages:
       - build-essential
+      - pkg-config
       - wget
       - cmake
       - libgtk2.0-dev
