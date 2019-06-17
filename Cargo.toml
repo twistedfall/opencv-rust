@@ -32,8 +32,10 @@ rayon = "1.0"
 matches = "0.1"
 
 [features]
-docs-only = []
+default = ["opencv_34"]
 buildtime_bindgen = []
+opencv_34 = []
+opencv_41 = [] # not useful yet
 
 [package.metadata.docs.rs]
 features = [ "docs-only" ]
