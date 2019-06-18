@@ -2044,6 +2044,8 @@ class VectorTypeInfo(TypeInfo):
                 }
                 
             ${vector_methods}}
+            
+            unsafe impl Send for ${rust_local} {}
         
         """),
 
@@ -2327,6 +2329,9 @@ class SmartPtrTypeInfo(TypeInfo):
                     })
                 }
             }
+            
+            unsafe impl Send for ${rust_local} {}
+            
         """),
 
         "rust_trait_cast": template("""
@@ -2968,10 +2973,10 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write("// boxed class %s\n"%(typ.typeid))
         self.moduleSafeRust.write(self.reformat_doc(ci.comment))
         self.moduleSafeRust.write(template("""
-            #[allow(dead_code)]
-            pub struct $rust_local {
+            pub struct ${rust_local} {
                 #[doc(hidden)] pub(crate) ptr: *mut c_void
             }
+            
             impl Drop for $rust_full {
                 fn drop(&mut self) {
                     unsafe { sys::cv_${rust_local}_delete(self.ptr) };
@@ -2984,6 +2989,8 @@ class RustWrapperGenerator(object):
                     Self { ptr }
                 }
             }
+            
+            unsafe impl Send for ${rust_local} {}
             
             """).substitute(typ.__dict__))
 
