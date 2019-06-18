@@ -187,6 +187,37 @@ fn remove() -> Result<()> {
 }
 
 #[test]
+fn swap() -> Result<()> {
+    {
+        let mut vec = VectorOfint::from_iter(vec![1, 2, 3]);
+        vec.swap(0, 0)?;
+        vec.swap(0, 1)?;
+        assert_eq!(2, vec.get(0)?);
+        assert_eq!(1, vec.get(1)?);
+
+        vec.swap(2, 0)?;
+        assert_eq!(3, vec.get(0)?);
+        assert_eq!(1, vec.get(1)?);
+
+        assert_matches!(vec.swap(0, 4), Err(Error { code: core::StsOutOfRange, .. }));
+        assert_matches!(vec.swap(6, 1), Err(Error { code: core::StsOutOfRange, .. }));
+    }
+
+    {
+        let mut vec = VectorOfString::new();
+        vec.push("123");
+        vec.push("456");
+        vec.push("789");
+        vec.swap(0, 2)?;
+        assert_eq!("789", vec.get(0)?);
+        assert_eq!("456", vec.get(1)?);
+        assert_eq!("123", vec.get(2)?);
+    }
+
+    Ok(())
+}
+
+#[test]
 fn out_of_bounds() -> Result<()> {
     let mut vec = VectorOfdouble::new();
     assert_matches!(vec.get(0), Err(Error { code: core::StsOutOfRange, .. }));

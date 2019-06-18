@@ -52,6 +52,9 @@ pub trait Vector<'i> {
     /// Remove the element at the specified `index`
     fn remove(&mut self, index: size_t) -> crate::Result<()>;
 
+    /// Swaps 2 elements in the Vector
+    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()>;
+
     /// Get element at the specified `index`
     fn get(&self, index: size_t) -> crate::Result<Self::Storage>;
 

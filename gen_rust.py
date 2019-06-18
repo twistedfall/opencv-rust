@@ -2020,6 +2020,21 @@ class VectorTypeInfo(TypeInfo):
                     Ok(())
                 }
                 
+                /// Swaps values of 2 elements
+                #[inline]
+                fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+                    let len = self.len();
+                    crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+                    crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+                    if index1 != index2 {
+                        let vec = self.as_raw_${rust_local}();
+                        cpp!(unsafe [vec as "${cpptype}*", index1 as "size_t", index2 as "size_t"] {
+                            swap((*vec)[index1], (*vec)[index2]);
+                        });
+                    }
+                    Ok(())
+                }
+                
                 #[inline]
                 fn clear(&mut self) {
                     let vec = self.as_raw_${rust_local}();
