@@ -42,6 +42,35 @@ fn mat_create() -> Result<()> {
 }
 
 #[test]
+fn mat_from_iter() -> Result<()> {
+    {
+        let mut vec = VectorOfint::new();
+        vec.push(1);
+        vec.push(2);
+        vec.push(3);
+        let mat = Mat::from_exact_iter(vec.into_iter())?;
+        assert_eq!(3, mat.rows()?);
+        assert_eq!(1, mat.cols()?);
+        assert_eq!(i32::typ(), mat.typ()?);
+        assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
+        assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
+        assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
+    }
+
+    {
+        let vec: Vec<i32> = vec![1, 2, 3];
+        let mat = Mat::from_exact_iter(vec.into_iter())?;
+        assert_eq!(3, mat.rows()?);
+        assert_eq!(1, mat.cols()?);
+        assert_eq!(i32::typ(), mat.typ()?);
+        assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
+        assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
+        assert_eq!(3, *mat.at_2d::<i32>(2, 0)?);
+    }
+    Ok(())
+}
+
+#[test]
 fn mat_for_rows_and_cols() -> Result<()> {
     let mat = unsafe { Mat::new_rows_cols(400, 300, Vec3d::typ()) }?;
     assert_eq!(Vec3d::typ(), mat.typ()?);

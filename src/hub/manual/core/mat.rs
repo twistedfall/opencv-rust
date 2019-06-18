@@ -127,6 +127,15 @@ impl Mat {
         unsafe { &mut *(r as *mut _ as *mut T) }
     }
 
+    /// Create new `Mat` from the iterator of known size
+    pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item=T>) -> Result<Self> {
+        let mut out = unsafe { Self::new_rows_cols(s.len() as _, 1, T::typ()) }?;
+        for (i, x) in s.enumerate() {
+            *out.at_2d_mut::<T>(i as _, 0)? = x;
+        }
+        Ok(out)
+    }
+
     #[inline(always)]
     pub(crate) fn _at<T: DataType>(&self, i0: i32) -> Result<&T> {
         self.match_format::<T>()
