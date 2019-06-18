@@ -4,8 +4,10 @@ pub trait Vector<'i> {
     type Storage;
     type Arg;
 
+    /// Create a new Vector
     fn new() -> Self where Self: Sized;
 
+    /// Create a Vector from iterator
     #[inline]
     fn from_iter(s: impl IntoIterator<Item=Self::Arg>) -> Self where Self: Sized {
         let s = s.into_iter();
@@ -15,6 +17,7 @@ pub trait Vector<'i> {
         out
     }
 
+    /// Create a Vector with pre-defined capacity
     #[inline]
     fn with_capacity(capacity: size_t) -> Self where Self: Sized {
         let mut out = Self::new();
@@ -22,30 +25,46 @@ pub trait Vector<'i> {
         out
     }
 
+    /// Return Vector length
     fn len(&self) -> size_t;
 
+    /// Return true if Vector is empty
     fn is_empty(&self) -> bool;
 
+    /// Return Vector current capacity
     fn capacity(&self) -> size_t;
 
+    /// Free extra capacity
     fn shrink_to_fit(&mut self);
 
+    /// Reserve capacity for `additinal` new elements
     fn reserve(&mut self, additional: size_t);
 
+    /// Remove all elements
     fn clear(&mut self);
 
+    /// Add new element
     fn push(&mut self, val: Self::Arg);
 
+    /// Insert a new element at the specified `index`
     fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()>;
 
+    /// Remove the element at the specified `index`
     fn remove(&mut self, index: size_t) -> crate::Result<()>;
 
+    /// Get element at the specified `index`
     fn get(&self, index: size_t) -> crate::Result<Self::Storage>;
+
+    /// Same as `get()` but without bounds checking
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage;
 
+    /// Set element at the specified `index`
     fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()>;
+
+    /// Same as `set()` but without bounds checking
     unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg);
 
+    /// Convert to Rust `Vec`
     #[inline]
     fn to_vec(&self) -> Vec<Self::Storage> {
         (0..self.len()).map(|x| unsafe { self.get_unchecked(x) }).collect()
