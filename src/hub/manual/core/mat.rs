@@ -72,6 +72,21 @@ data_type!(core::Vec4d, core::CV_64F, 4);
 // scalar
 data_type!(core::Scalar, core::CV_64F, 4);
 
+// point
+data_type!(core::Point2i, core::CV_32S, 2);
+data_type!(core::Point2f, core::CV_32F, 2);
+data_type!(core::Point2d, core::CV_64F, 2);
+
+// size
+data_type!(core::Size2i, core::CV_32S, 2);
+data_type!(core::Size2f, core::CV_32F, 2);
+data_type!(core::Size2d, core::CV_64F, 2);
+
+// rect
+data_type!(core::Rect2i, core::CV_32S, 4);
+data_type!(core::Rect2f, core::CV_32F, 4);
+data_type!(core::Rect2d, core::CV_64F, 4);
+
 impl Mat {
     #[inline(always)]
     fn match_format<T: DataType>(&self) -> Result<()> {
