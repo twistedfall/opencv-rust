@@ -1,6 +1,6 @@
 use std::{
-    env,
     collections::HashSet,
+    env,
     error::Error,
     ffi::OsString,
     fs::{self, File, OpenOptions},
@@ -11,6 +11,7 @@ use std::{
 };
 
 use rayon::prelude::*;
+use semver::{Version, VersionReq};
 
 use glob::glob;
 
@@ -22,6 +23,16 @@ fn link_wrapper() -> Result<pkg_config::Library, Box<dyn Error>> {
     } else {
         panic!("package opencv is not found by pkg-config")
     };
+
+    if cfg!(feature = "opencv_34") {
+        if !VersionReq::parse("~3.4")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 3.4 branch because of the feature: opencv_34", opencv.version);
+        }
+    } else if cfg!(feature = "opencv_4") {
+        if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv_41", opencv.version);
+        }
+    }
 
     // add 3rdparty lib dit. pkgconfig forgets it somehow.
     let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);

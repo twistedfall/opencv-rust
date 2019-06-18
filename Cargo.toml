@@ -27,6 +27,7 @@ cpp_build = "0.5.2"
 glob = "0.3"
 pkg-config = "0.3"
 rayon = "1.0"
+semver = "0.9"
 
 [dev-dependencies]
 matches = "0.1"
@@ -35,7 +36,7 @@ matches = "0.1"
 default = ["opencv_34"]
 buildtime_bindgen = []
 opencv_34 = []
-opencv_41 = [] # not useful yet
+opencv_41 = []
 
 [package.metadata.docs.rs]
 rustc-args = [ "--cfg feature=\"docs-only\"" ]
