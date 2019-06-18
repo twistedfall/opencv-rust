@@ -107,6 +107,19 @@ impl<T, S> Iterator for VectorIterator<T>
         self.i += 1;
         out.ok()
     }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        (self.vec.len(), None)
+    }
+}
+
+impl<T, S> ExactSizeIterator for VectorIterator<T>
+    where
+        T: for<'i> Vector<'i, Storage=S>
+{
+    fn len(&self) -> usize {
+        self.vec.len()
+    }
 }
 
 pub struct VectorRefIterator<'v, T> {
@@ -131,6 +144,17 @@ impl<T, S> Iterator for VectorRefIterator<'_, T>
         self.i += 1;
         out.ok()
     }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        (self.vec.len(), None)
+    }
 }
 
-
+impl<T, S> ExactSizeIterator for VectorRefIterator<'_, T>
+    where
+        T: for<'i> Vector<'i, Storage=S>
+{
+    fn len(&self) -> usize {
+        self.vec.len()
+    }
+}
