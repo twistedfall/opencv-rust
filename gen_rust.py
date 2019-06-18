@@ -103,8 +103,7 @@ decls_manual_post = {
 }
 
 # dict of functions to rename or skip, key is FuncInfo.identifier, value is new name ("+" will be replaces by old name) or "-" to skip
-func_rename = {  # todo check if any "new" is required
-    # fixme remove entries that don't actually change name
+func_rename = {
     ### calib3d ###
     "cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat": "+_matrix",
     "cv_findHomography_Mat_Mat_int_double_Mat_int_double": "+_full",
@@ -1337,27 +1336,29 @@ class ConstInfo(GeneralInfo):
         return False
 
     def gen_rust(self):
-        name = self.rustname
-        value = self.value
+        params = {
+            "name": self.rustname,
+            "value": self.value,
+        }
         while True:
-            doccomment = ""
-            m = re.match(r"^(.+?)\s*(?://\s*(.+)|/\*+\s*(.+?)\s*\*+/)$", value)  # xxx // comment OR xxx /** comment **/
+            params["doccomment"] = ""
+            m = re.match(r"^(.+?)\s*(?://\s*(.+)|/\*+\s*(.+?)\s*\*+/)$", params["value"])  # xxx // comment OR xxx /** comment */
             if m:
-                value = m.group(1)
-                doccomment = "/// {}\n".format(m.group(3) if m.group(2) is None else m.group(2))
-            if value.startswith('"'):
-                return ConstInfo.TEMPLATES["rust_string"].substitute(doccomment=doccomment, name=name, value=value)
-            elif name in ("Mat_AUTO_STEP", ""):
-                return ConstInfo.TEMPLATES["rust_usize"].substitute(doccomment=doccomment, name=name, value=value)
-            elif re.match(r"^(-?[0-9]+|0x[0-9A-Fa-f]+)$", value):  # decimal or hexadecimal
-                return ConstInfo.TEMPLATES["rust_int"].substitute(doccomment=doccomment, name=name, value=value)
-            elif re.match(r"^\(?\s*(\d+\s*<<\s*\d+)\s*\)?$", value):  # (1 << 24)
-                return ConstInfo.TEMPLATES["rust_int"].substitute(doccomment=doccomment, name=name, value=value)
-            elif re.match(r"^\s*(\d+\s*\+\s*\d+)\s*$", value):  # 0 + 3
-                return ConstInfo.TEMPLATES["rust_int"].substitute(doccomment=doccomment, name=name, value=value)
-            ref_const = self.gen.get_const(value)
+                params["value"] = m.group(1)
+                params["doccomment"] = "/// {}\n".format(m.group(3) if m.group(2) is None else m.group(2))
+            if params["value"].startswith('"'):
+                return ConstInfo.TEMPLATES["rust_string"].substitute(params)
+            elif self.rustname in ("Mat_AUTO_STEP",):
+                return ConstInfo.TEMPLATES["rust_usize"].substitute(params)
+            elif re.match(r"^(-?[0-9]+|0x[0-9A-Fa-f]+)$", params["value"]):  # decimal or hexadecimal
+                return ConstInfo.TEMPLATES["rust_int"].substitute(params)
+            elif re.match(r"^\(?\s*(\d+\s*<<\s*\d+)\s*\)?$", params["value"]):  # (1 << 24)
+                return ConstInfo.TEMPLATES["rust_int"].substitute(params)
+            elif re.match(r"^\s*(\d+\s*\+\s*\d+)\s*$", params["value"]):  # 0 + 3
+                return ConstInfo.TEMPLATES["rust_int"].substitute(params)
+            ref_const = self.gen.get_const(params["value"])
             if ref_const is not None:
-                value = ref_const.value
+                params["value"] = ref_const.value
                 continue
             return None
 
@@ -1396,8 +1397,8 @@ class TypedefInfo(GeneralInfo):
 class CallbackInfo(GeneralInfo):
     TEMPLATES = {
         "rust": template("""
-        ${doc_comment}pub type ${name} = dyn FnMut(${args}) + Send + Sync + 'static;
-        #[doc(hidden)] pub type ${name}Extern = Option<extern "C" fn(${extern_args})>;
+            ${doc_comment}pub type ${name} = dyn FnMut(${args}) + Send + Sync + 'static;
+            #[doc(hidden)] pub type ${name}Extern = Option<extern "C" fn(${extern_args})>;
         
         """),
     }
@@ -1492,15 +1493,11 @@ class TypeInfo(object):
             """),
 
             "rust_void": template("""
-                // $typeid
                 pub type ${return_wrapper_type} = cv_return_value<crate::types::Unit, ${rust_extern}>;
-                
             """),
 
             "rust_non_void": template("""
-                // $typeid
                 pub type ${return_wrapper_type} = cv_return_value<${rust_extern}>;
-                
             """),
         }
 
@@ -1703,7 +1700,7 @@ class StringTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        super(StringTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.cpp_extern = "const char*"
         self.cpptype = "String"
         self.rust_full = "String"
@@ -1737,22 +1734,22 @@ class StringTypeInfo(TypeInfo):
     def rust_extern_arg_func_decl(self, var_name, is_output=False):
         if self.is_output():
             return "{}: *mut {}".format(var_name, self.rust_extern)
-        return super(StringTypeInfo, self).rust_extern_arg_func_decl(var_name, is_output)
+        return super().rust_extern_arg_func_decl(var_name, is_output)
 
     def rust_arg_post_call(self, var_name, is_output=False):
         if self.is_output():
             return "string_arg_output_receive!({}_via => {})".format(var_name, var_name)
-        return super(StringTypeInfo, self).rust_arg_post_call(var_name, is_output)
+        return super().rust_arg_post_call(var_name, is_output)
 
     def cpp_arg_func_decl(self, var_name, is_output=False):
         if self.is_output():
             return "{}* {}".format(self.cpp_extern, var_name)
-        return super(StringTypeInfo, self).cpp_arg_func_decl(var_name, is_output)
+        return super().cpp_arg_func_decl(var_name, is_output)
 
     def cpp_arg_pre_call(self, var_name, is_output=False):
         if self.is_output():
             return "std::string {}_out".format(var_name)
-        return super(StringTypeInfo, self).cpp_arg_pre_call(var_name, is_output)
+        return super().cpp_arg_pre_call(var_name, is_output)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         if self.is_output():
@@ -1762,7 +1759,7 @@ class StringTypeInfo(TypeInfo):
     def cpp_arg_post_call(self, var_name, is_output=False):
         if self.is_output():
             return "*{} = strdup({}_out.c_str())".format(var_name, var_name)
-        return super(StringTypeInfo, self).cpp_arg_post_call(var_name, is_output)
+        return super().cpp_arg_post_call(var_name, is_output)
 
     def cpp_method_return(self, is_constructor):
         return "return { Error::Code::StsOk, NULL, strdup(ret.c_str()) };"
@@ -1777,7 +1774,7 @@ class IgnoredTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        super(IgnoredTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.is_ignored = True
 
     def __str__(self):
@@ -1790,7 +1787,7 @@ class PrimitiveTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        super(PrimitiveTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         primitive = primitives[self.typeid]
         self.cpp_extern = primitive["cpp_extern"]
         self.rust_extern = self.rust_full = self.rust_local = primitive["rust_local"]
@@ -1802,7 +1799,7 @@ class PrimitiveTypeInfo(TypeInfo):
         return var_name
 
     def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
-        out = super(PrimitiveTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
+        out = super().cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
         if self.cpptype == "void":
             out = re.sub("^.+ ret = ", "", out)
         return out
@@ -1810,7 +1807,7 @@ class PrimitiveTypeInfo(TypeInfo):
     def cpp_method_return(self, is_constructor):
         if self.cpptype == "void":
             return "return { Error::Code::StsOk, NULL };"
-        return super(PrimitiveTypeInfo, self).cpp_method_return(is_constructor)
+        return super().cpp_method_return(is_constructor)
 
     def __str__(self):
         return "Primitive(%s)" % (self.cpptype)
@@ -1822,11 +1819,10 @@ class SimpleClassTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        super(SimpleClassTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.ci = gen.get_class(self.typeid)
-        if self.ci and self.ci.is_ignored:
-            self.is_ignored = True
         if self.ci:
+            self.is_ignored = self.ci.is_ignored
             self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
             if self.ci.get_manual_declaration_tpl("rust") is None:
                 self.cpp_extern = self.ci.fullname
@@ -1840,7 +1836,7 @@ class SimpleClassTypeInfo(TypeInfo):
     def cpp_method_return(self, is_constructor):
         if self.cpp_extern.endswith("Wrapper"):
             return "return {{ Error::Code::StsOk, NULL, *reinterpret_cast<{}*>(&ret) }};".format(self.cpp_extern)
-        return super(SimpleClassTypeInfo, self).cpp_method_return(is_constructor)
+        return super().cpp_method_return(is_constructor)
 
     def __str__(self):
         return "%s (simple)"%(self.cpptype)
@@ -1852,11 +1848,10 @@ class CallbackTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        super(CallbackTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.ci = gen.get_class(self.typeid)
-        if self.ci and self.ci.is_ignored:
-            self.is_ignored = True
         if self.ci:
+            self.is_ignored = self.ci.is_ignored
             self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
             self.cpp_extern = self.ci.fullname
             self.c_safe_id = self.rust_local
@@ -1865,13 +1860,13 @@ class CallbackTypeInfo(TypeInfo):
     def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         callback_info = self.gen.get_callback(self.typeid)
         if callback_info is None or callback_info.is_ignored:
-            return super(CallbackTypeInfo, self).rust_arg_func_decl(var_name, is_output, attr_type)
+            return super().rust_arg_func_decl(var_name, is_output, attr_type)
         return "{}: Option<Box<{}>>".format(var_name, self.rust_full)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
         callback_info = self.gen.get_callback(self.typeid)
         if callback_info is None or callback_info.is_ignored:
-            return super(CallbackTypeInfo, self).rust_generic_decl()
+            return super().rust_generic_decl()
         extern_args = []
         rust_args = []
         for arg in callback_info.args:
@@ -1890,7 +1885,7 @@ class BoxedClassTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        super(BoxedClassTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.ci = gen.get_class(self.typeid)
         self.cpptype = self.ci.fullname
         self.rust_extern = "*mut c_void"
@@ -1908,7 +1903,7 @@ class BoxedClassTypeInfo(TypeInfo):
     def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
         if is_constructor:
             return "{}* ret = new {}({});".format(self.cpptype, call_name, call_args)
-        return super(BoxedClassTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
+        return super().cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
 
     def __str__(self):
         return "%s (boxed)"%(self.typeid)
@@ -2244,7 +2239,7 @@ class VectorTypeInfo(TypeInfo):
         :type typeid: str
         :type inner: TypeInfo
         """
-        super(VectorTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.is_by_ptr = True
         self.inner = inner
         if isinstance(self.inner, RawPtrTypeInfo):  # fixme, lifetimes required
@@ -2333,7 +2328,7 @@ class SmartPtrTypeInfo(TypeInfo):
         :type typeid: str
         :type inner: TypeInfo
         """
-        super(SmartPtrTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.is_by_ptr = True
         self.inner = inner
         self.is_ignored = self.inner.is_ignored
@@ -2372,7 +2367,7 @@ class RawPtrTypeInfo(TypeInfo):
         :type typeid: str
         :type inner: TypeInfo
         """
-        super(RawPtrTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.inner = inner
         self.is_slice = self.typeid.endswith("[]")
         self.is_string = isinstance(self.inner, PrimitiveTypeInfo) and self.inner.cpptype == "char"
@@ -2423,12 +2418,12 @@ class RawPtrTypeInfo(TypeInfo):
     def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         if self.is_string:
             return "{}: &{}str".format(var_name, "mut " if is_output else "")
-        return super(RawPtrTypeInfo, self).rust_arg_func_decl(var_name, is_output or not self.is_const, attr_type)
+        return super().rust_arg_func_decl(var_name, is_output or not self.is_const, attr_type)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
         if self.is_string:
             return "string_arg!({})".format(var_name)
-        return super(RawPtrTypeInfo, self).rust_arg_pre_call(var_name, is_output)
+        return super().rust_arg_pre_call(var_name, is_output)
 
     def rust_arg_func_call(self, var_name, is_output=False):
         if self.is_string:
@@ -2439,7 +2434,7 @@ class RawPtrTypeInfo(TypeInfo):
             if self.is_const:
                 return "{}.as_ptr()".format(var_name)
             return "{}.as_mut_ptr()".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
-        return super(RawPtrTypeInfo, self).rust_arg_func_call(var_name, is_output)
+        return super().rust_arg_func_call(var_name, is_output)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         if isinstance(self.inner, PrimitiveTypeInfo):
@@ -2451,12 +2446,12 @@ class RawPtrTypeInfo(TypeInfo):
     def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
         if self.is_by_ptr:
             return "{}* ret = {}({});".format(self.cpptype, call_name, call_args)
-        return super(RawPtrTypeInfo, self).cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
+        return super().cpp_method_call_invoke(call_name, call_args, is_constructor, attr_type)
 
     def cpp_method_return(self, is_constructor):
         if self.is_string:
             return "return { Error::Code::StsOk, NULL, strdup(ret) };"
-        return super(RawPtrTypeInfo, self).cpp_method_return(is_constructor)
+        return super().cpp_method_return(is_constructor)
 
     def __str__(self):
         return "RawPtr[%s]" % (self.inner)
@@ -2468,7 +2463,7 @@ class UnknownTypeInfo(TypeInfo):
         :type gen: RustWrapperGenerator
         :type typeid: str
         """
-        super(UnknownTypeInfo, self).__init__(gen, typeid)
+        super().__init__(gen, typeid)
         self.is_ignored = True
         logging.info("Registering an unknown type: %s", self.typeid)
 
@@ -2521,19 +2516,9 @@ def parse_type(gen, typeid):
             raise NameError("inner type `%s' not found" % (typeid[12:-1].strip()))
         return VectorTypeInfo(gen, full_typeid, inner)
     else:
-        ci = gen.get_class(typeid)
-        if ci and not ci.is_ignored:
-            reconst_full_typeid = "{}{}{}".format("const " if is_const else "", ci.fullname, "&" if is_by_ref else "")
-            if ci.is_simple:
-                return SimpleClassTypeInfo(gen, reconst_full_typeid)
-            elif ci.is_callback:
-                return CallbackTypeInfo(gen, reconst_full_typeid)
-            else:
-                return BoxedClassTypeInfo(gen, reconst_full_typeid)
-        actual = type_replace.get(typeid)
-        if actual:
-            ci = gen.get_class(actual)
-            if ci:
+        def get_class_type_info(typeid, const):
+            ci = gen.get_class(typeid)
+            if ci and not ci.is_ignored:
                 reconst_full_typeid = "{}{}{}".format("const " if is_const else "", ci.fullname, "&" if is_by_ref else "")
                 if ci.is_simple:
                     return SimpleClassTypeInfo(gen, reconst_full_typeid)
@@ -2541,6 +2526,16 @@ def parse_type(gen, typeid):
                     return CallbackTypeInfo(gen, reconst_full_typeid)
                 else:
                     return BoxedClassTypeInfo(gen, reconst_full_typeid)
+            return None
+
+        ci = get_class_type_info(typeid, is_const)
+        if ci:
+            return ci
+        actual = type_replace.get(typeid)
+        if actual:
+            ci = get_class_type_info(actual, is_const)
+            if ci:
+                return ci
             return parse_type(gen, actual)
     return UnknownTypeInfo(gen, full_typeid)
 
@@ -2594,7 +2589,7 @@ class RustWrapperGenerator(object):
         self.functions = []
         self.ported_func_list = []
         self.skipped_func_list = []
-        self.consts = []
+        self.consts = []  # type: list[ConstInfo]
         self.type_infos = {}
         self.callbacks = []  # type: list[CallbackInfo]
         self.namespaces = set()
@@ -2699,13 +2694,10 @@ class RustWrapperGenerator(object):
         if not item.is_ignored:
             # register self to class or generator
             if item.kind == item.KIND_FUNCTION:
-                self.register_function(item)
+                logging.info("register %s %s (%s)"%(item.kind, item.name, item.identifier))
+                self.functions.append(item)
             else:
                 item.ci.add_method(item)
-
-    def register_function(self, f):
-        logging.info("register %s %s (%s)"%(f.kind, f.name, f.identifier))
-        self.functions.append(f)
 
     def gen(self, srcfiles, module, cpp_dir, rust_dir):
         """

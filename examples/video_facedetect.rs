@@ -1,9 +1,14 @@
-use opencv::prelude::*;
-use opencv::core;
-use opencv::highgui;
-use opencv::imgproc;
-use opencv::objdetect;
-use opencv::videoio;
+use std::{thread, time::Duration};
+
+use opencv::{
+    core,
+    highgui,
+    imgproc,
+    objdetect,
+    prelude::*,
+    types,
+    videoio,
+};
 
 fn run() -> opencv::Result<()> {
     let window = "video capture";
@@ -16,20 +21,20 @@ fn run() -> opencv::Result<()> {
     }
     let mut face = objdetect::CascadeClassifier::new(xml)?;
     loop {
-        let mut frame = core::Mat::new()?;
+        let mut frame = Mat::new()?;
         cam.read(&mut frame)?;
         if frame.size()?.width == 0 {
-            ::std::thread::sleep(::std::time::Duration::from_secs(50));
+            thread::sleep(Duration::from_secs(50));
             continue;
         }
-        let mut gray = core::Mat::new()?;
+        let mut gray = Mat::new()?;
         imgproc::cvt_color(
             &frame,
             &mut gray,
             imgproc::COLOR_BGR2GRAY,
             0
         )?;
-        let mut reduced = core::Mat::new()?;
+        let mut reduced = Mat::new()?;
         imgproc::resize(
             &gray,
             &mut reduced,
@@ -41,7 +46,7 @@ fn run() -> opencv::Result<()> {
             0.25f64,
             imgproc::INTER_LINEAR
         )?;
-        let mut faces = ::opencv::types::VectorOfRect::new();
+        let mut faces = types::VectorOfRect::new();
         face.detect_multi_scale(
             &reduced,
             &mut faces,
