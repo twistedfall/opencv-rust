@@ -1,7 +1,6 @@
 use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
-use std::process::Output;
 
-use crate::hub::manual::core::size::ValidSizeType;
+use crate::manual::core::size::ValidSizeType;
 
 valid_types!(ValidPointType, i32, i64, f32, f64);
 

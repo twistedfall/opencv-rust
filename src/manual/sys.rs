@@ -1,7 +1,4 @@
-use std::{
-    ffi::CStr,
-    os::raw::c_char,
-};
+use std::os::raw::c_char;
 use std::marker::PhantomData;
 
 use crate::{Error, Result};

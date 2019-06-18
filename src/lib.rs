@@ -15,6 +15,8 @@ mod templ;
 #[allow(non_camel_case_types)]
 mod hub;
 
+mod manual;
+
 mod error;
 
 pub mod prelude {

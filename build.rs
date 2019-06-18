@@ -88,7 +88,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     let out_dir_as_str = out_dir.to_str().unwrap();
     let hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
     let module_dir = hub_dir.join("hub");
-    let manual_dir = module_dir.join("manual");
+    let manual_dir = hub_dir.join("manual");
 
     let opencv_dir = opencv_header_dir.join("opencv2");
 
@@ -289,9 +289,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 
         let add_manual = |file: &mut File, mod_name: &str| -> Result<bool, Box<dyn Error>> {
             if manual_dir.join(format!("{}.rs", mod_name)).exists() {
-                writeln!(file, "pub use crate::hub::manual::{}::*;", mod_name)?;
-                let mut m = OpenOptions::new().create(true).append(true).open(&module_dir.join("manual.rs"))?;
-                writeln!(&mut m, "pub mod {};", mod_name)?;
+                writeln!(file, "pub use crate::manual::{}::*;", mod_name)?;
                 Ok(true)
             } else {
                 Ok(false)
@@ -300,19 +298,13 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 
         {
             let mut hub = File::create(hub_dir.join("hub.rs"))?;
-            let mut manual_writen = false;
             for ref module in &modules {
                 writeln!(&mut hub, r#"pub mod {};"#, module.0)?;
                 let module_filename = format!("{}.rs", module.0);
                 let target_file = module_dir.join(&module_filename);
                 fs::rename(out_dir.join(&module_filename), &target_file)?;
                 let mut f = OpenOptions::new().append(true).open(&target_file)?;
-                if let Ok(true) = add_manual(&mut f, &module.0) {
-                    if !manual_writen {
-                        writeln!(&mut hub, "mod manual;")?;
-                        manual_writen = true;
-                    }
-                }
+                add_manual(&mut f, &module.0)?;
             }
             writeln!(&mut hub, "pub mod types;")?;
             writeln!(&mut hub, "#[doc(hidden)] pub mod sys;")?;
