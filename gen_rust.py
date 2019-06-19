@@ -2684,6 +2684,9 @@ class RustWrapperGenerator(object):
             self.add_typedef_decl(module, decl)
         elif name.startswith("callback"):
             self.add_callback_decl(module, decl)
+        elif name.startswith("enum"):
+            for const_decl in decl[3]:
+                self.add_const_decl(module, const_decl)
         else:
             self.add_func_decl(module, decl)
 
