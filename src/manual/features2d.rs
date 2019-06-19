@@ -1,5 +1,5 @@
 use crate::{
-    hub::features2d::{self, ORB},
+    features2d::{self, ORB},
     Result,
     types::PtrOfORB,
 };

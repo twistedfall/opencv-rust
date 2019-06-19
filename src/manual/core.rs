@@ -29,11 +29,11 @@ mod vec;
 #[inline(always)]
 pub const fn MAT_DEPTH(flags: i32) -> i32 {
     #![allow(non_snake_case)]
-    flags & crate::hub::core::Mat_DEPTH_MASK
+    flags & crate::core::Mat_DEPTH_MASK
 }
 
 #[inline(always)]
 pub const fn MAKETYPE(depth: i32, cn: i32) -> i32 {
     #![allow(non_snake_case)]
-    MAT_DEPTH(depth) + ((cn - 1) << crate::hub::core::CV_CN_SHIFT)
+    MAT_DEPTH(depth) + ((cn - 1) << crate::core::CV_CN_SHIFT)
 }

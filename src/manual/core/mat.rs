@@ -4,7 +4,7 @@ use libc::size_t;
 
 use crate::{
     Error,
-    hub::core::{self, Mat, MatSize, MatStep, Scalar},
+    core::{self, Mat, MatSize, MatStep, Scalar},
     Result,
     sys,
 };
@@ -26,7 +26,7 @@ macro_rules! data_type {
             fn channels() -> i32 { $channels }
 
             #[inline(always)]
-            fn typ() -> i32 { $crate::hub::core::MAKETYPE($mat_depth, $channels) }
+            fn typ() -> i32 { $crate::core::MAKETYPE($mat_depth, $channels) }
         }
 
         impl private::Sealed for $rust_type {}

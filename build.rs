@@ -86,9 +86,12 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 
     let out_dir = PathBuf::from(env::var("OUT_DIR")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
-    let hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
-    let module_dir = hub_dir.join("hub");
+    let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
     let manual_dir = hub_dir.join("manual");
+    if cfg!(feature = "opencv_34") {
+        hub_dir.push("opencv_34");
+    }
+    let module_dir = hub_dir.join("hub");
 
     let opencv_dir = opencv_header_dir.join("opencv2");
 

@@ -1,6 +1,6 @@
 use std::{ffi::c_void, mem::size_of};
 
-use crate::hub::{core::Mat, sys::cv_return_value};
+use crate::{core::Mat, sys::cv_return_value};
 
 #[test]
 fn cv_return_type() {
