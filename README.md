@@ -14,6 +14,40 @@ translated from OpenCV's doxygen docs. Most likely you'll want to
 refer to the official [OpenCV C++
 documentation](https://docs.opencv.org/3.4.6/) as well.
 
+### OpenCV version support
+The following OpenCV versions are supported at the moment:
+* 3.2
+* 3.4
+* 4.1
+
+You can choose the target OpenCV version with the following Cargo features:
+* opencv-32
+* opencv-34 (default)
+* opencv-41
+
+### Quickstart
+Make sure the supported OpenCV version is installed in your system along with `pkg_config`
+files or `-dev` packages.
+
+Update your Cargo.toml
+```toml
+opencv = "0.16"
+```
+
+Select OpenCV version if different from default in Cargo.toml:
+```toml
+opencv = {version = "0.16", default-features = false, features = "opencv-41"}
+```
+
+Import prelude
+```rust
+use opencv::prelude::*;
+```
+
+### Platform support
+Currently development and testing of the crate is only performed on Linux, please feel
+free to submit support for other platforms.
+
 ### Functionality
 
 Generally the crate tries to only wrap OpenCV API and provide some convenience functions
@@ -97,7 +131,8 @@ cmake \
 ```
 
 ## Contrib modules
-The following modules require contrib installed:
+The following modules require [`opencv_contrib`](https://github.com/opencv/opencv_contrib/)
+installed:
  * bioinspired
  * ccalib
  * dpm
