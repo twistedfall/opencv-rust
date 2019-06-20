@@ -23,10 +23,6 @@ fn link_wrapper() -> Result<pkg_config::Library, Box<dyn Error>> {
         panic!("package opencv is not found by pkg-config")
     };
 
-    for path in opencv.link_paths.iter().filter_map(|path| path.to_str()) {
-        println!("cargo:rustc-link-search=native={}", path);
-    }
-
     // add 3rdparty lib dit. pkgconfig forgets it somehow.
     let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);
     println!("cargo:rustc-link-search=native={}", third_party_dir1);
