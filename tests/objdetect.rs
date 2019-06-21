@@ -1,9 +1,9 @@
 use std::path::PathBuf;
 
 use opencv::{
-    prelude::*,
     imgcodecs,
     objdetect,
+    prelude::*,
     Result,
     types::VectorOfPoint,
 };
@@ -12,6 +12,7 @@ use opencv::{
 fn qr_code() -> Result<()> {
     let qr_path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/qr.png");
 
+    #[cfg(not(feature = "opencv-32"))]
     {
         let mut detector = objdetect::QRCodeDetector::new()?;
         let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
@@ -23,6 +24,7 @@ fn qr_code() -> Result<()> {
         assert!(!straight.empty()?);
     }
 
+    #[cfg(not(feature = "opencv-32"))]
     {
         let mut detector = objdetect::QRCodeDetector::new()?;
         let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;

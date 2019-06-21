@@ -3,8 +3,8 @@ use std::{fmt, ops::Deref, slice};
 use libc::size_t;
 
 use crate::{
-    Error,
     core::{self, Mat, MatSize, MatStep, Scalar},
+    Error,
     Result,
     sys,
 };
@@ -95,7 +95,11 @@ impl Mat {
         if mat_type == out_type {
             Ok(())
         } else {
-            Err(Error::new(core::StsUnmatchedFormats, format!("Mat type is: {}, but requested type is: {}", core::type_to_string(mat_type)?, core::type_to_string(out_type)?)))
+            #[cfg(not(feature = "opencv-32"))]
+            let mat_type = core::type_to_string(mat_type)?;
+            #[cfg(not(feature = "opencv-32"))]
+            let out_type = core::type_to_string(out_type)?;
+            Err(Error::new(core::StsUnmatchedFormats, format!("Mat type is: {}, but requested type is: {}", mat_type, out_type)))
         }
     }
 
@@ -407,11 +411,17 @@ impl Mat {
 
 impl fmt::Debug for Mat {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let typ = self.typ();
+        let depth = self.depth();
+        #[cfg(not(feature = "opencv-32"))]
+        let typ = typ.and_then(core::type_to_string);
+        #[cfg(not(feature = "opencv-32"))]
+        let depth = depth.and_then(core::depth_to_string);
         f.debug_struct("Mat")
-            .field("type", &self.typ().and_then(core::type_to_string).map_err(|_| fmt::Error)?)
+            .field("type", &typ.map_err(|_| fmt::Error)?)
             .field("flags", &self.flags().map_err(|_| fmt::Error)?)
             .field("channels", &self.channels().map_err(|_| fmt::Error)?)
-            .field("depth", &self.depth().and_then(core::depth_to_string).map_err(|_| fmt::Error)?)
+            .field("depth", &depth.map_err(|_| fmt::Error)?)
             .field("dims", &self.dims().map_err(|_| fmt::Error)?)
             .field("size", &self.size().map_err(|_| fmt::Error)?)
             .field("rows", &self.rows().map_err(|_| fmt::Error)?)
@@ -428,6 +438,16 @@ impl fmt::Debug for Mat {
 impl Default for Mat {
     fn default() -> Self {
         Mat::new().unwrap()
+    }
+}
+
+#[cfg(feature = "opencv-32")]
+impl MatSize {
+    pub fn dims(&self) -> Result<i32> {
+        let me = self.as_raw_MatSize();
+        Ok(cpp!(unsafe [me as "const MatSize*"] -> i32 as "const int" {
+            return *(me->p - 1);
+        }))
     }
 }
 

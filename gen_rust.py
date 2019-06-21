@@ -111,6 +111,10 @@ decls_manual_post = {
 
 # dict of functions to rename or skip, key is FuncInfo.identifier, value is new name ("+" will be replaces by old name) or "-" to skip
 func_rename = {
+    ### bioinspired ###
+    "cv_bioinspired_createRetina_OCL_Size": "-",  # requires opencl
+    "cv_bioinspired_createRetina_OCL_Size_bool_int_bool_float_float": "-",  # requires opencl
+
     ### calib3d ###
     "cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat": "+_matrix",
     "cv_findHomography_Mat_Mat_int_double_Mat_int_double": "+_full",
@@ -432,7 +436,7 @@ const_ignore_list = (
     "CV_SUPPRESS_DEPRECATED_START",
     "CV_SUPPRESS_DEPRECATED_END",
     "__CV_BEGIN__", "__CV_END__", "__CV_EXIT__",
-    "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN",
+    "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN", "CV_IPP_CHECK_COND", "IPP_INITIALIZER_AUTO", "IPP_VERSION_X100",
     "CV_TRY", "CV_CATCH_ALL",
     "CV__DEBUG_NS_",
     "UINT64_1",
@@ -446,6 +450,7 @@ const_ignore_list = (
     "ENUM_LOG_LEVEL_FORCE_INT",
     "DEPTH_MASK_16F", "DEPTH_MASK_ALL_16F",
     "CV_USRTYPE1",
+    "CV_INSTRUMENT_GET_RETURN_ADDRESS",
 )
 
 # set of functions that should have unsafe in their declaration, element is FuncInfo.identifier

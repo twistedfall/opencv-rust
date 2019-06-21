@@ -16,13 +16,16 @@ use semver::{Version, VersionReq};
 use glob::glob;
 
 fn link_wrapper() -> Result<pkg_config::Library, Box<dyn Error>> {
-    let (opencv, pkg_name) = if cfg!(feature = "opencv-34") {
+    let (opencv, pkg_name) = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
         let (opencv, pkg_name) = if let Ok(opencv) = pkg_config::probe_library("opencv") {
             (opencv, "opencv")
         } else {
             panic!("package opencv is not found by pkg-config")
         };
-        if !VersionReq::parse("~3")?.matches(&Version::parse(&opencv.version)?) {
+        if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 3.2 branch because of the feature: opencv-32", opencv.version);
+        }
+        if cfg!(feature = "opencv-34") && !VersionReq::parse("~3.4")?.matches(&Version::parse(&opencv.version)?) {
             panic!("OpenCV version from pkg-config: {} must be from 3.4 branch because of the feature: opencv-34", opencv.version);
         }
         (opencv, pkg_name)
@@ -96,7 +99,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     let out_dir_as_str = out_dir.to_str().unwrap();
     let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
     let manual_dir = hub_dir.join("manual");
-    if cfg!(feature = "opencv-34") {
+    if cfg!(feature = "opencv-32") {
+        hub_dir.push("opencv_32");
+    } else if cfg!(feature = "opencv-34") {
         hub_dir.push("opencv_34");
     } else if cfg!(feature = "opencv-41") {
         hub_dir.push("opencv_41");
@@ -164,7 +169,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         "core/cvstd_wrapper.hpp",
         "core/eigen.hpp",
         "core/fast_math.hpp", // contains functions with Rust native counterparts
+        "core/private.hpp",
         "core/utils/filesystem.hpp", // contains functions with Rust native counterparts
+        "dnn/blob.hpp",
         "ios.h",
         "ippasync.hpp",
         "ocl.hpp",
@@ -368,14 +375,16 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let features = [cfg!(feature = "opencv-34"), cfg!(feature = "opencv-41")].iter().map(|&x| if x { 1 } else { 0 }).sum::<i32>();
+    let features = [cfg!(feature = "opencv-32"), cfg!(feature = "opencv-34"), cfg!(feature = "opencv-41")].iter().map(|&x| if x { 1 } else { 0 }).sum::<i32>();
     if features != 1 {
         // todo: allow building with custom headers
-        panic!("Please select exactly one of the features: opencv-34, opencv-41");
+        panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
     }
     let opencv_header_dir = env::var("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|_| {
         let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR must be set"));
-        if cfg!(feature = "opencv-34") {
+        if cfg!(feature = "opencv-32") {
+            manifest_dir.join("headers/3.2")
+        } else if cfg!(feature = "opencv-34") {
             manifest_dir.join("headers/3.4")
         } else if cfg!(feature = "opencv-41") {
             manifest_dir.join("headers/4.1")

@@ -44,12 +44,14 @@ env:
     - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
     - LC_CTYPE=C.UTF-8 # makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
   matrix:
+    - OPENCV_VERSION=3.2.0 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-32
     - OPENCV_VERSION=3.4.6 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-34
     - OPENCV_VERSION=4.1.0 OPENCV_PKGCONFIG=opencv4 CARGO_FEATURES=opencv-41
 
 before_script:
   - mkdir -p ~/build/opencv
   - wget -O- https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz | tar -xzC ~/build/opencv
+  - if [[ "$OPENCV_VERSION" == "3.2.0" ]]; then wget -O- https://patch-diff.githubusercontent.com/raw/opencv/opencv/pull/9228.patch | patch -p1 -d ~/build/opencv/opencv-$OPENCV_VERSION; fi
   - wget -O- https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz | tar -xzC ~/build/opencv
   - mkdir -p ~/build/opencv/opencv-$OPENCV_VERSION-build
   - pushd ~/build/opencv/opencv-$OPENCV_VERSION-build
