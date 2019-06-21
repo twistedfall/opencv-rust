@@ -13,7 +13,7 @@ from string import Template
 
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme field comments //! in the end are transferred to the next field
-# fixme dnn::net::Dict needs set method (generic or only DictValue?), DictValue needs constructors
+# fixme add support for arrays in dnn::DictValue
 # fixme VectorOfMat::get allows to mutate?
 
 def template(text):
@@ -379,6 +379,13 @@ func_rename = {
     "cv_dnn_readNetFromDarknet_const_char_X_size_t_const_char_X_size_t": "read_net_from_darknet_str",
     "cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t": "get_memory_consumption_for_layer",
     "cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t": "get_memory_consumption_for_layers",
+    "cv_dnn_DictValue_DictValue_bool": "from_bool",
+    "cv_dnn_DictValue_DictValue_int64": "from_i64",
+    "cv_dnn_DictValue_DictValue_int": "from_i32",
+    "cv_dnn_DictValue_DictValue_unsigned": "from_u32",
+    "cv_dnn_DictValue_DictValue_double": "from_f64",
+    "cv_dnn_DictValue_DictValue_const_char_X": "from_str",
+    "cv_dnn_DictValue_DictValue_String": "-",  # effectively duplicate of cv_dnn_DictValue_DictValue_const_char_X
 }
 
 # list of classes to skip, elements are regular expressions for re.match() against ClassInfo.fullname
@@ -729,6 +736,11 @@ def decl_patch(module, decl):
             idx_arg = decl[3][0]
             if idx_arg[0] == "const int*" and idx_arg[1] == "idx":
                 decl[3][0][0] = "const int[]"
+    elif module == "dnn":
+        # set method takes generic, force it to take DictValue wrapper
+        if decl[0] == "cv.dnn.Dict.set":
+            decl[1] = "DictValue&"
+            decl[3][1][0] = "DictValue&"
     elif module == "ml":
         # loadFromCSV is not parsed correctly due to default value being a comma
         if decl[0] == "cv.ml.TrainData.loadFromCSV" and len(decl[3]) == 8 and decl[3][6][0] == "'":
