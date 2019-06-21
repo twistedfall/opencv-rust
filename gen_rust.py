@@ -70,6 +70,10 @@ def write_exc(filename, action):
         pass
 
 
+def make_safe_id(extern_id):
+    return extern_id.replace(" ", "_").replace("*", "X").replace("::", "_")
+
+
 #
 #       EXCEPTIONS TO AUTO GENERATION
 #
@@ -617,6 +621,16 @@ force_class_not_simple = {
     "cv::dnn::Net",  # marked as Simple, but it's actually boxed
 }
 
+# set of enum's that need to be generated, other enums are just expanded to constants, elements are EnumInfo.fullname
+enum_generate = {
+}
+
+# dict of enum discriminants to exclude from the bindings (e.g. due to duplicate values)
+# key: EnumInfo.fullname
+# value: set of ConstInfo.name
+enum_ignore_discriminant = {
+}
+
 # dict of reserved Rust keywords and their replacement to be used in var, function and class names
 # key: reserved keyword
 # value: replacement
@@ -755,6 +769,10 @@ class GeneralInfo:
         """
         self.gen = gen
         self.fullname, self.namespace, self.classpath, self.classname, self.name = self.do_parse_name(name, namespaces)
+        if self.fullname.startswith("cv::"):
+            self.short_fullname = self.fullname[4:]  # without cv:: prefix
+        else:
+            self.short_fullname = self.fullname
         logging.info(
             "parse_name: %s with %s -> fullname:%s namespace:%s classpath:%s classname:%s name:%s" %
             (name, sorted(namespaces), self.fullname, self.namespace, self.classpath, self.classname, self.name)
@@ -772,6 +790,7 @@ class GeneralInfo:
             .replace("class ", "") \
             .replace("typedef ", "") \
             .replace("callback ", "") \
+            .replace("enum ", "") \
             .replace(".", "::")
         space_name, local_name = split_known_namespace(name, namespaces)
         pieces = local_name.split("::")
@@ -792,7 +811,7 @@ class ArgInfo:
         :param arg_tuple:
         """
         self.gen = gen
-        typ = arg_tuple[0]
+        typ = arg_tuple[0].replace("enum ", "")
         self.type = self.gen.get_type_info(typ)
         self.name = arg_tuple[1]
         if not self.name:
@@ -1447,6 +1466,60 @@ class CallbackInfo(GeneralInfo):
         }))
 
 
+class EnumInfo(GeneralInfo):
+    TEMPLATES = {
+        "rust": template("""
+            ${doc_comment}#[repr(C)]
+            #[derive(Debug)]
+            pub enum ${name} {
+            ${consts}}
+        
+        """),
+        "rust_const": template("""
+            ${name} = ${rustname} as isize,
+        """),
+        "rust_const_ignored": template("""
+            // ${name} = ${rustname} as isize, // duplicate discriminant
+        """),
+    }
+
+    def __init__(self, gen, module, decl, namespaces):
+        """
+        :type gen: RustWrapperGenerator
+        :type module: str
+        :type decl: list
+        :type namespaces: frozenset
+        """
+        super().__init__(gen, decl[0], namespaces)
+        self.module = module
+        if self.classname:
+            self.name = "{}_{}".format(self.classname, self.name)
+        self.consts = []
+        self.is_ignored = False
+        for const_decl in decl[3]:
+            ci = ConstInfo(gen, const_decl, namespaces)
+            self.consts.append(ci)
+
+        if len(decl) > 5:
+            self.comment = decl[5]
+        else:
+            self.comment = ""
+
+    def gen_rust(self):
+        consts = []
+        ignore_discriminants = enum_ignore_discriminant.get(self.fullname, set())
+        for const in self.consts:
+            if const.name in ignore_discriminants:
+                tpl = EnumInfo.TEMPLATES["rust_const_ignored"]
+            else:
+                tpl = EnumInfo.TEMPLATES["rust_const"]
+            consts.append(tpl.substitute(const.__dict__))
+        return EnumInfo.TEMPLATES["rust"].substitute(combine_dicts(self.__dict__, {
+            "doc_comment": self.gen.reformat_doc(self.comment),
+            "consts": indent("".join(consts)),
+        }))
+
+
 class TypeInfo(object):
     def __init__(self, gen, typeid):
         """
@@ -1797,7 +1870,7 @@ class PrimitiveTypeInfo(TypeInfo):
         self.cpp_extern = primitive["cpp_extern"]
         self.rust_extern = self.rust_full = self.rust_local = primitive["rust_local"]
         self.rust_safe_id = self.typeid.replace(" ", "_")
-        self.c_safe_id = self.cpp_extern.replace(" ", "_").replace("*", "X").replace("::", "_")
+        self.c_safe_id = make_safe_id(self.cpp_extern)
         self.is_copy = True
 
     def cpp_arg_func_call(self, var_name, is_output=False):
@@ -1882,6 +1955,27 @@ class CallbackTypeInfo(TypeInfo):
 
     def __str__(self):
         return "{} (callback)".format(self.cpptype)
+
+
+class EnumTypeInfo(TypeInfo):
+    def __init__(self, gen, typeid):
+        """
+        :type gen: RustWrapperGenerator
+        :type typeid: str
+        """
+        super().__init__(gen, typeid)
+        self.ei = gen.get_enum(self.typeid)
+        if self.ei:
+            self.is_ignored = self.ei.is_ignored
+            self.rust_full = ("crate::" if self.ei.module not in static_modules else "") + self.ei.module + "::" + self.rust_local
+            self.cpptype = self.ei.short_fullname
+            self.cpp_extern = self.cpptype
+            self.c_safe_id = make_safe_id(self.cpp_extern)
+            self.rust_extern = self.rust_full
+            self.is_copy = True
+
+    def __str__(self):
+        return "{} (enum)".format(self.cpptype)
 
 
 class BoxedClassTypeInfo(TypeInfo):
@@ -2542,6 +2636,10 @@ def parse_type(gen, typeid):
         return VectorTypeInfo(gen, full_typeid, inner)
     else:
         def get_class_type_info(typeid, const):
+            ei = gen.get_enum(typeid)
+            if ei is not None:
+                reconst_full_typeid = "{}{}{}".format("const " if is_const else "", ei.fullname, "&" if is_by_ref else "")
+                return EnumTypeInfo(gen, reconst_full_typeid)
             ci = gen.get_class(typeid)
             if ci and not ci.is_ignored:
                 reconst_full_typeid = "{}{}{}".format("const " if is_const else "", ci.fullname, "&" if is_by_ref else "")
@@ -2617,6 +2715,7 @@ class RustWrapperGenerator(object):
         self.consts = []  # type: list[ConstInfo]
         self.type_infos = {}
         self.callbacks = []  # type: list[CallbackInfo]
+        self.enums = []  # type: list[EnumInfo]
         self.namespaces = set()
         self.generated = set()
         self.generated_functions = []
@@ -2669,6 +2768,16 @@ class RustWrapperGenerator(object):
                 return x
         return None
 
+    def get_enum(self, name):
+        """
+        :type name: str
+        :rtype: EnumInfo
+        """
+        for x in self.enums:
+            if classes_equal(name, x.fullname):
+                return x
+        return None
+
     def add_decl(self, module, decl):
         decl = decl_patch(module, decl)
         if decl[0] == "cv.String.String" or decl[0] == 'cv.Exception.~Exception':
@@ -2687,6 +2796,8 @@ class RustWrapperGenerator(object):
         elif name.startswith("enum"):
             for const_decl in decl[3]:
                 self.add_const_decl(module, const_decl)
+            if not decl[0].endswith("<unnamed>"):
+                self.add_enum_decl(module, decl)
         else:
             self.add_func_decl(module, decl)
 
@@ -2726,6 +2837,11 @@ class RustWrapperGenerator(object):
                 self.functions.append(item)
             else:
                 item.ci.add_method(item)
+
+    def add_enum_decl(self, module, decl):
+        item = EnumInfo(self, module, decl, self.namespaces)
+        if not item.is_ignored and item.fullname in enum_generate:
+            self.enums.append(item)
 
     def gen(self, srcfiles, module, cpp_dir, rust_dir):
         """
@@ -2788,6 +2904,11 @@ class RustWrapperGenerator(object):
                 self.moduleCppConsts.write(co.gen_cpp_for_complex())
 
         self.moduleSafeRust.write("\n")
+
+        for enm in sorted(self.enums, key=lambda x: x.name):
+            rust = enm.gen_rust()
+            if rust:
+                self.moduleSafeRust.write(rust)
 
         for cb in self.callbacks:
             self.gen_callback(cb)
