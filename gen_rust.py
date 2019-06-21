@@ -649,6 +649,11 @@ def decl_patch(module, decl):
             idx_arg = decl[3][0]
             if idx_arg[0] == "const int*" and idx_arg[1] == "idx":
                 decl[3][0][0] = "const int[]"
+    elif module == "ml":
+        # loadFromCSV is not parsed correctly due to default value being a comma
+        if decl[0] == "cv.ml.TrainData.loadFromCSV" and len(decl[3]) == 8 and decl[3][6][0] == "'":
+            decl[3][5][2] = "','"
+            del decl[3][6]
     return decl
 
 
