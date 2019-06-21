@@ -308,11 +308,11 @@ class CppHeaderParser(object):
         while "  " in fdecl:
             fdecl = fdecl.replace("  ", " ")
         fname = fdecl[:fdecl.find("(")].strip()
-        fnpos = fname.rfind(" ")
+        fnpos = max((fname.rfind(" "), fname.rfind("*"), fname.rfind("&")))
         if fnpos < 0:
             fnpos = 0
-        fname = fname[fnpos:].strip()
-        rettype = fdecl[:fnpos].strip()
+        fname = fname[fnpos + 1:].strip()
+        rettype = fdecl[:fnpos + 1].strip()
 
         if rettype.endswith("operator"):
             fname = ("operator " + fname).strip()

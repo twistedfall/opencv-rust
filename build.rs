@@ -391,6 +391,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let mut config = cpp_build::Config::new();
     config.flag_if_supported("-Wno-class-memaccess");
+    config.flag_if_supported("-Wignored-qualifiers");
     config.include(opencv_header_dir);
     config.build("src/lib.rs");
     Ok(())

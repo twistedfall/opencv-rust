@@ -461,6 +461,9 @@ func_unsafe_list = {
     "cv_Mat_ptr_const_int_int_int",
     "cv_Mat_ptr_const_int_X",
     "cv_Mat_ptr_const_const_int_X",
+    # pointer to internal data
+    "cv_dnn_Dict_ptr_String",
+    "cv_dnn_Dict_ptr_const_String",
 }
 
 # dict of types to replace if cannot be handled automatically
@@ -940,7 +943,7 @@ class FuncInfo(GeneralInfo):
         "rust_safe_rv_mut_raw_ptr": template("""
             .and_then(|x| ${unsafety_call}{ x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
 
-        "rust_safe_rv_vector_box_ptr": template(""".map(|ptr| ${rv_rust_full} { ptr })"""),
+        "rust_safe_rv_by_ptr": template(""".map(|ptr| ${rv_rust_full} { ptr })"""),
 
         "rust_safe_rv_other": template(""""""),
 
@@ -1264,10 +1267,10 @@ class FuncInfo(GeneralInfo):
                 rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_string"].substitute(template_vars)
             else:
                 rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_string_mut"].substitute(template_vars)
-        elif isinstance(self.rv_type(), RawPtrTypeInfo):
-                rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_const_raw_ptr" if self.rv_type().is_const else "rust_safe_rv_mut_raw_ptr"].substitute(template_vars)
         elif self.rv_type().is_by_ptr:
-            rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_vector_box_ptr"].substitute(template_vars)
+            rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_by_ptr"].substitute(template_vars)
+        elif isinstance(self.rv_type(), RawPtrTypeInfo):
+            rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_const_raw_ptr" if self.rv_type().is_const else "rust_safe_rv_mut_raw_ptr"].substitute(template_vars)
         else:
             rv_rust = FuncInfo.TEMPLATES["rust_safe_rv_other"].substitute(template_vars)
 
@@ -2643,6 +2646,8 @@ class RawPtrTypeInfo(TypeInfo):
     def cpp_method_return(self, is_constructor):
         if self.is_string:
             return "return { Error::Code::StsOk, NULL, strdup(ret) };"
+        elif self.is_by_ptr:
+            return "return {{ Error::Code::StsOk, NULL, new {}(*ret) }};".format(self.cpptype)
         return super().cpp_method_return(is_constructor)
 
     def __str__(self):
