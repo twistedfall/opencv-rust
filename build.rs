@@ -98,6 +98,8 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     let out_dir = PathBuf::from(env::var("OUT_DIR")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
     let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
+    let target_hub_dir = hub_dir.join("opencv");
+    let target_module_dir = target_hub_dir.join("hub");
     let manual_dir = hub_dir.join("manual");
     if cfg!(feature = "opencv-32") {
         hub_dir.push("opencv_32");
@@ -370,6 +372,17 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     }
     for entry in glob(&format!("{}/*.rs", out_dir_as_str))? {
         let _ = fs::remove_file(entry?);
+    }
+    for entry in glob(&format!("{}/*.rs", target_module_dir.to_str().unwrap()))? {
+        let _ = fs::remove_file(entry?);
+    }
+    for entry in glob(&format!("{}/*.rs", hub_dir.to_str().unwrap()))? {
+        let entry = entry?;
+        let _ = fs::copy(&entry, target_hub_dir.join(entry.file_name().unwrap()))?;
+    }
+    for entry in glob(&format!("{}/*.rs", module_dir.to_str().unwrap()))? {
+        let entry = entry?;
+        let _ = fs::copy(&entry, target_module_dir.join(entry.file_name().unwrap()))?;
     }
     Ok(())
 }
