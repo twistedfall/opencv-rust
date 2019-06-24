@@ -25,6 +25,7 @@ slab = "0.4"
 cc = {version = "1.0", features = ["parallel"]}
 cpp_build = "0.5.2"
 glob = "0.3"
+once_cell = "0.2"
 pkg-config = "0.3"
 rayon = "1.0"
 semver = "0.9"

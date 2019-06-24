@@ -10,97 +10,17 @@ use std::{
     process::Command,
 };
 
+use once_cell::sync::OnceCell;
 use rayon::prelude::*;
 use semver::{Version, VersionReq};
 
 use glob::glob;
 
-fn link_wrapper() -> Result<pkg_config::Library, Box<dyn Error>> {
-    let (opencv, pkg_name) = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
-        let (opencv, pkg_name) = if let Ok(opencv) = pkg_config::probe_library("opencv") {
-            (opencv, "opencv")
-        } else {
-            panic!("package opencv is not found by pkg-config")
-        };
-        if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 3.2 branch because of the feature: opencv-32", opencv.version);
-        }
-        if cfg!(feature = "opencv-34") && !VersionReq::parse("~3.4")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 3.4 branch because of the feature: opencv-34", opencv.version);
-        }
-        (opencv, pkg_name)
-    } else if cfg!(feature = "opencv-41") {
-        let (opencv, pkg_name) = if let Ok(opencv) = pkg_config::probe_library("opencv4") {
-            (opencv, "opencv4")
-        } else {
-            panic!("package opencv4 is not found by pkg-config")
-        };
-        if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv-41", opencv.version);
-        }
-        (opencv, pkg_name)
-    } else {
-        unreachable!("Cannot be until we allow custom headers");
-    };
+static MODULES: OnceCell<Vec<(String, Vec<String>)>> = OnceCell::new();
 
-    eprintln!("Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(pkg_name, "libdir")?);
-
-    // add 3rdparty lib dit. pkgconfig forgets it somehow.
-    let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);
-    println!("cargo:rustc-link-search=native={}", third_party_dir1);
-    let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(pkg_name, "libdir")?, pkg_name);
-    println!("cargo:rustc-link-search=native={}", third_party_dir2);
-    let third_party_dirs: [&str; 2] = [&third_party_dir1, &third_party_dir2];
-
-    // now, this is a nightmare.
-    // opencv will embark these as .a when they are not available, or
-    // use the one from the system
-    // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
-    fn lookup_lib(third_party_dirs: &[&str], search: &str) {
-        for prefix in &["lib", "liblib"] {
-            for &path in third_party_dirs.iter().chain(&["/usr/lib", "/usr/lib64", "/usr/local/lib", "/usr/local/lib64", "/usr/lib/x86_64-linux-gnu/"]) {
-                for ext in &[".a", ".dylib", ".so"] {
-                    let name = format!("{}{}", prefix, search);
-                    let filename = PathBuf::from(format!("{}/{}{}", path, name, ext));
-                    if filename.exists() {
-                        println!("cargo:rustc-link-lib={}", &name[3..]);
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-    let third_party_deps = [
-        "IlmImf",
-        "tiff",
-        "ippiw",
-        "ippicv",
-        "ittnotify",
-        "jpeg",
-        "jpeg-turbo",
-        "png",
-        "jasper",
-        "tbb",
-        "webp",
-        "z",
-        "zlib",
-    ];
-    third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dirs, x));
-
-    Ok(opencv)
-}
-
-fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
-    println!("cargo:rerun-if-changed=hdr_parser.py");
-    println!("cargo:rerun-if-changed=gen_rust.py");
-
-    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
-    let out_dir_as_str = out_dir.to_str().unwrap();
-    let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
-    let target_hub_dir = hub_dir.join("opencv");
-    let target_module_dir = target_hub_dir.join("hub");
-    let manual_dir = hub_dir.join("manual");
+fn get_versioned_hub_dir() -> PathBuf {
+    let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var"));
+    hub_dir.push("src");
     if cfg!(feature = "opencv-32") {
         hub_dir.push("opencv_32");
     } else if cfg!(feature = "opencv-34") {
@@ -108,29 +28,13 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     } else if cfg!(feature = "opencv-41") {
         hub_dir.push("opencv_41");
     }
-    let module_dir = hub_dir.join("hub");
+    hub_dir
+}
 
-    let opencv_dir = opencv_header_dir.join("opencv2");
-
-    eprintln!("Using OpenCV headers from: {}", opencv_dir.display());
-    eprintln!("Generating code in: {}", out_dir_as_str);
-    if cfg!(feature = "buildtime-bindgen") {
-        eprintln!("Placing generated bindings into: {}", hub_dir.display());
+fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<String>)>, Box<dyn Error>> {
+    if let Some(modules) = MODULES.get() {
+        return Ok(modules);
     }
-
-    let mut gcc = cc::Build::new();
-    gcc.cpp(true)
-        .flag("-std=c++11")
-        .flag_if_supported("-Wno-deprecated-declarations")
-        .flag_if_supported("-Wno-class-memaccess")
-        .include(&opencv_header_dir)
-    ;
-
-    for entry in glob(&format!("{}/*", out_dir_as_str))? {
-        let _ = fs::remove_file(entry?);
-    }
-
-    let opencv_dir_as_string = opencv_dir.to_string_lossy();
     let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
         "aruco",
         "bgsegm",
@@ -189,32 +93,160 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         "core/opencl/",
         "cuda",
     ];
+
     let mut modules = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
-        .map(|entry| {
+        .filter_map(|entry| {
             let entry = entry.unwrap();
-            let mut files = vec!(entry.to_str().unwrap().to_string());
-
             let module = entry.file_stem().unwrap().to_string_lossy();
-
-            files.extend(
-                glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
-                    .map(|file| file.unwrap().to_string_lossy().into_owned())
-                    .filter(|f| !ignore_header_suffix.iter().any(|&x| f.ends_with(x)) && !ignore_header_substring.iter().any(|&x| f.contains(x)))
-            );
-            (module.into_owned(), files)
-         })
-        .filter(|module| !ignore_modules.contains(&module.0.as_ref()))
-        .collect::<Vec<(String,Vec<String>)>>();
+            if ignore_modules.contains(module.as_ref()) {
+                None
+            } else {
+                let mut files = vec![entry.to_string_lossy().into_owned()];
+                files.extend(
+                    glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
+                        .filter_map(|file| {
+                            let f = file.unwrap();
+                            let f = f.to_string_lossy();
+                            if !ignore_header_suffix.iter().any(|&x| f.ends_with(x)) && !ignore_header_substring.iter().any(|&x| f.contains(x)) {
+                                Some(f.into_owned())
+                            } else {
+                                None
+                            }
+                        })
+                );
+                Some((module.into_owned(), files))
+            }
+        })
+        .collect::<Vec<_>>();
 
     if let Some(core_idx) = modules.iter().position(|x| x.0 == "core") {
         if core_idx != 0 {
             modules.swap(0, core_idx);
         }
     }
+    MODULES.set(modules).expect("Cannot assign module cache");
+    Ok(MODULES.get().unwrap())
+}
+
+fn build_pkg_config_args((opencv, pkg_name): (&pkg_config::Library, &str)) -> Vec<String> {
+    let mut out = Vec::with_capacity(60);
+    opencv.link_paths.iter().for_each(|x| out.push(format!("-L{}", x.to_string_lossy())));
+    if let Ok(prefix) = pkg_config::get_variable(pkg_name, "prefix") {
+        out.push(format!("-L{}/share/OpenCV/3rdparty/lib", prefix))
+    }
+    if let Ok(libdir) = pkg_config::get_variable(pkg_name, "libdir") {
+        out.push(format!("-L{}/{}/3rdparty", libdir, pkg_name));
+    }
+    opencv.framework_paths.iter().for_each(|x| out.push(format!("-F{}", x.to_string_lossy())));
+    opencv.include_paths.iter().for_each(|x| out.push(format!("-I{}", x.to_string_lossy())));
+    opencv.libs.iter().for_each(|x| out.push(format!("-l{}", x)));
+    out
+}
+
+fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
+    let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Can't get OUT_DIR env var"));
+    let mut out = cc::Build::new();
+    out.cpp(true)
+        .flag("-std=c++11")
+        .flag_if_supported("-Wno-deprecated-declarations")
+        .flag_if_supported("-Wno-class-memaccess")
+        .include(opencv_header_dir)
+        .include(&out_dir)
+        .include(".");
+    out
+}
+
+fn link_wrapper() -> Result<(pkg_config::Library, &'static str), Box<dyn Error>> {
+    let (opencv, pkg_name) = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
+        let pkg_name = "opencv";
+        let opencv = pkg_config::probe_library(pkg_name).expect("package opencv is not found by pkg-config");
+        if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 3.2 branch because of the feature: opencv-32", opencv.version);
+        }
+        if cfg!(feature = "opencv-34") && !VersionReq::parse("~3.4")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 3.4 branch because of the feature: opencv-34", opencv.version);
+        }
+        (opencv, pkg_name)
+    } else if cfg!(feature = "opencv-41") {
+        let pkg_name = "opencv4";
+        let opencv = pkg_config::probe_library(pkg_name).expect("package opencv4 is not found by pkg-config");
+        if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv-41", opencv.version);
+        }
+        (opencv, pkg_name)
+    } else {
+        unreachable!("Cannot be until we allow custom headers");
+    };
+
+    eprintln!("=== Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(pkg_name, "libdir")?);
+
+    // add 3rdparty lib dit. pkgconfig forgets it somehow.
+    let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);
+    println!("cargo:rustc-link-search=native={}", third_party_dir1);
+    let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(pkg_name, "libdir")?, pkg_name);
+    println!("cargo:rustc-link-search=native={}", third_party_dir2);
+    let third_party_dirs: [&str; 2] = [&third_party_dir1, &third_party_dir2];
+
+    // now, this is a nightmare.
+    // opencv will embark these as .a when they are not available, or
+    // use the one from the system
+    // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
+    fn lookup_lib(third_party_dirs: &[&str], search: &str) {
+        for prefix in &["lib", "liblib"] {
+            for &path in third_party_dirs.iter().chain(&["/usr/lib", "/usr/lib64", "/usr/local/lib", "/usr/local/lib64", "/usr/lib/x86_64-linux-gnu/"]) {
+                for ext in &[".a", ".dylib", ".so"] {
+                    let name = format!("{}{}", prefix, search);
+                    let filename = PathBuf::from(format!("{}/{}{}", path, name, ext));
+                    if filename.exists() {
+                        println!("cargo:rustc-link-lib={}", &name[3..]);
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    let third_party_deps = [
+        "IlmImf",
+        "tiff",
+        "ippiw",
+        "ippicv",
+        "ittnotify",
+        "jpeg",
+        "jpeg-turbo",
+        "png",
+        "jasper",
+        "tbb",
+        "webp",
+        "z",
+        "zlib",
+    ];
+    third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dirs, x));
+
+    Ok((opencv, pkg_name))
+}
+
+fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
+    println!("cargo:rerun-if-changed=hdr_parser.py");
+    println!("cargo:rerun-if-changed=gen_rust.py");
+
+    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
+    let out_dir_as_str = out_dir.to_str().unwrap();
+
+    let opencv_dir = opencv_header_dir.join("opencv2");
+
+    eprintln!("=== Using OpenCV headers from: {}", opencv_dir.display());
+    eprintln!("=== Generating code in: {}", out_dir_as_str);
+
+    for entry in glob(&format!("{}/*", out_dir_as_str))? {
+        let _ = fs::remove_file(entry?);
+    }
+
+    let modules = get_modules(&opencv_dir.to_string_lossy())?;
 
     {
         let mut types = File::create(out_dir.join("common_opencv.h"))?;
-        for m in &modules {
+        for m in modules {
             write!(&mut types, "#include <opencv2/{}.hpp>\n", m.0)?;
             if m.0 == "dnn" {
                 // include it manually, otherwise it's not included
@@ -231,11 +263,11 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         write!(&mut types, "#include <cstddef>\n")?;
     }
 
-    modules.par_iter_mut().for_each(|module| {
+    modules.par_iter().for_each(|module| {
         if !Command::new("python3")
             .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0])
             .args(
-                &(module
+                module
                     .1
                     .iter()
                     .map(|p| {
@@ -243,7 +275,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
                         path.push(p);
                         path.into_os_string()
                     })
-                    .collect::<Vec<OsString>>()[..]),
+                    .collect::<Vec<OsString>>().as_slice(),
             )
             .status()
             .unwrap()
@@ -251,34 +283,14 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         {
             panic!();
         }
-
-        if cfg!(feature = "buildtime-bindgen") {
-            let e = Command::new("sh")
-               .current_dir(&out_dir)
-               .arg("-c")
-               .arg(format!(
-                   "g++ {}.consts.cpp -o {}.consts `pkg-config --cflags --libs opencv` -L`pkg-config --variable=prefix opencv`/share/OpenCV/3rdparty/lib",
-                   module.0, module.0
-               ))
-               .status()
-               .unwrap();
-            assert!(e.success());
-            let e = Command::new("sh")
-               .current_dir(&out_dir)
-               .arg("-c")
-               .arg(format!("./{}.consts >> {}.rs", module.0, module.0))
-               .status()
-               .unwrap();
-            assert!(e.success());
-            let _ = fs::remove_file(out_dir.join(format!("{}.consts", module.0)));
-        }
-        let _ = fs::remove_file(out_dir.join(format!("{}.consts.cpp", module.0)));
     });
+
+    let mut cc = build_compiler(opencv_header_dir);
 
     {
         let mut types_file = File::create(out_dir.join("types.h"))?;
-        for module in &modules {
-            gcc.file(out_dir.join(format!("{}.cpp", module.0)));
+        for module in modules {
+            cc.file(out_dir.join(format!("{}.cpp", module.0)));
             let src = out_dir.join(format!("{}.types.h", module.0));
             io::copy(&mut File::open(&src)?, &mut types_file)?;
             let _ = fs::remove_file(src);
@@ -296,94 +308,147 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         }
     }
 
-    for entry in glob("native/*.cpp")? {
-        gcc.file(entry?);
-    }
     for entry in glob(&format!("{}/*.type.cpp", out_dir_as_str))? {
-        gcc.file(entry?);
+        cc.file(entry?);
     }
 
-    gcc.include(".")
-        .include(&out_dir);
+    cc.compile("ocvrs");
+    Ok(())
+}
 
-    gcc.compile("ocvrs");
-
-    if cfg!(feature = "buildtime-bindgen") {
-        if !module_dir.exists() {
-            fs::create_dir(&module_dir)?;
-        }
-
-        for entry in glob(&format!("{}/*.rs", module_dir.to_str().unwrap()))? {
-            let _ = fs::remove_file(entry?);
-        }
-
-        let add_manual = |file: &mut File, mod_name: &str| -> Result<bool, Box<dyn Error>> {
-            if manual_dir.join(format!("{}.rs", mod_name)).exists() {
-                writeln!(file, "pub use crate::manual::{}::*;", mod_name)?;
-                Ok(true)
-            } else {
-                Ok(false)
-            }
-        };
-
-        {
-            let mut hub = File::create(hub_dir.join("hub.rs"))?;
-            for ref module in &modules {
-                writeln!(&mut hub, r#"pub mod {};"#, module.0)?;
-                let module_filename = format!("{}.rs", module.0);
-                let target_file = module_dir.join(&module_filename);
-                fs::rename(out_dir.join(&module_filename), &target_file)?;
-                let mut f = OpenOptions::new().append(true).open(&target_file)?;
-                add_manual(&mut f, &module.0)?;
-            }
-            writeln!(&mut hub, "pub mod types;")?;
-            writeln!(&mut hub, "#[doc(hidden)] pub mod sys;")?;
-        }
-
-        {
-            let mut types = File::create(module_dir.join("types.rs"))?;
-            writeln!(&mut types, "use std::os::raw::{{c_char, c_void}};")?;
-            writeln!(&mut types, "use libc::size_t;")?;
-            writeln!(&mut types, "use crate::{{core, types}};")?;
-            writeln!(&mut types, "")?;
-            for entry in glob(&format!("{}/*.type.rs", out_dir_as_str))? {
-                let entry = entry?;
-                io::copy(&mut File::open(&entry)?, &mut types)?;
-            }
-            add_manual(&mut types, "types")?;
-        }
-
-        {
-            let mut sys = File::create(module_dir.join("sys.rs"))?;
-            writeln!(&mut sys, "use std::os::raw::{{c_char, c_void}};")?;
-            writeln!(&mut sys, "use libc::size_t;")?;
-            writeln!(&mut sys, "use crate::{{core, Error, Result}};")?;
-            writeln!(&mut sys, "")?;
-            for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str))? {
-                let entry = entry?;
-                io::copy(&mut File::open(&entry)?, &mut sys)?;
-            }
-            for module in &modules {
-                let path = out_dir.join(format!("{}.externs.rs", module.0));
-                io::copy(&mut File::open(&path)?, &mut sys)?;
-            }
-            add_manual(&mut sys, "sys")?;
-        }
-    }
-    for entry in glob(&format!("{}/*.rs", out_dir_as_str))? {
-        let _ = fs::remove_file(entry?);
-    }
+fn install_wrapper() -> Result<(), Box<dyn Error>> {
+    let src_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
+    let hub_dir = get_versioned_hub_dir();
+    let target_hub_dir = src_dir.join("opencv");
+    let target_module_dir = target_hub_dir.join("hub");
     for entry in glob(&format!("{}/*.rs", target_module_dir.to_str().unwrap()))? {
         let _ = fs::remove_file(entry?);
     }
-    for entry in glob(&format!("{}/*.rs", hub_dir.to_str().unwrap()))? {
-        let entry = entry?;
-        let _ = fs::copy(&entry, target_hub_dir.join(entry.file_name().unwrap()))?;
+    for entry in glob(&format!("{}/**/*.rs", hub_dir.to_str().unwrap())).unwrap() {
+        let entry: PathBuf = entry?;
+        let target_file = target_hub_dir.join(entry.strip_prefix(&hub_dir)?);
+        if let Some(target_dir) = target_file.parent() {
+            if !target_dir.exists() {
+                fs::create_dir_all(target_dir)?;
+            }
+        }
+        fs::copy(&entry, target_file)?;
     }
+    Ok(())
+}
+
+fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
+    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
+    let out_dir_as_str = out_dir.to_str().unwrap();
+    let src_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
+    let hub_dir = get_versioned_hub_dir();
+    let module_dir = hub_dir.join("hub");
+    let manual_dir = src_dir.join("manual");
+    let opencv_dir = opencv_header_dir.join("opencv2");
+
+    eprintln!("=== Placing generated bindings into: {}", hub_dir.display());
+
+    let compiler = build_compiler(opencv_header_dir).get_compiler();
+    let pkg_config_args = build_pkg_config_args((opencv, pkg_name));
+    let modules = get_modules(&opencv_dir.to_string_lossy())?;
+    modules.par_iter().for_each(|module| {
+        let e = compiler.to_command()
+            .current_dir(&out_dir)
+            .args(&[
+                format!("{}.consts.cpp", module.0),
+                "-o".into(),
+                format!("{}.consts", module.0)
+            ])
+            .args(&pkg_config_args)
+            .status()
+            .unwrap();
+        assert!(e.success());
+        let output = Command::new(format!("./{}.consts", module.0))
+            .current_dir(&out_dir)
+            .output()
+            .unwrap();
+        assert!(output.status.success());
+        {
+            let mut module_file = OpenOptions::new().append(true).open(out_dir.join(format!("{}.rs", module.0))).expect("Cannot open module file for append");
+            io::copy(&mut output.stdout.as_slice(), &mut module_file).expect("Cannot write constant data to module file");
+        }
+    });
+
+    if !module_dir.exists() {
+        fs::create_dir(&module_dir)?;
+    }
+
     for entry in glob(&format!("{}/*.rs", module_dir.to_str().unwrap()))? {
-        let entry = entry?;
-        let _ = fs::copy(&entry, target_module_dir.join(entry.file_name().unwrap()))?;
+        let _ = fs::remove_file(entry?);
     }
+
+    let add_manual = |file: &mut File, mod_name: &str| -> Result<bool, Box<dyn Error>> {
+        if manual_dir.join(format!("{}.rs", mod_name)).exists() {
+            writeln!(file, "pub use crate::manual::{}::*;", mod_name)?;
+            Ok(true)
+        } else {
+            Ok(false)
+        }
+    };
+
+    {
+        let mut hub = File::create(hub_dir.join("hub.rs"))?;
+        for ref module in modules {
+            writeln!(&mut hub, "pub mod {};", module.0)?;
+            let module_filename = format!("{}.rs", module.0);
+            let target_file = module_dir.join(&module_filename);
+            fs::rename(out_dir.join(&module_filename), &target_file)?;
+            let mut f = OpenOptions::new().append(true).open(&target_file)?;
+            add_manual(&mut f, &module.0)?;
+        }
+        writeln!(&mut hub, "pub mod types;")?;
+        writeln!(&mut hub, "#[doc(hidden)] pub mod sys;")?;
+    }
+
+    {
+        let mut types = File::create(module_dir.join("types.rs"))?;
+        writeln!(&mut types, "use std::os::raw::{{c_char, c_void}};")?;
+        writeln!(&mut types, "use libc::size_t;")?;
+        writeln!(&mut types, "use crate::{{core, types}};")?;
+        writeln!(&mut types, "")?;
+        for entry in glob(&format!("{}/*.type.rs", out_dir_as_str))? {
+            let entry = entry?;
+            io::copy(&mut File::open(&entry)?, &mut types)?;
+        }
+        add_manual(&mut types, "types")?;
+    }
+
+    {
+        let mut sys = File::create(module_dir.join("sys.rs"))?;
+        writeln!(&mut sys, "use std::os::raw::{{c_char, c_void}};")?;
+        writeln!(&mut sys, "use libc::size_t;")?;
+        writeln!(&mut sys, "use crate::core;")?;
+        writeln!(&mut sys, "")?;
+        for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str))? {
+            let entry = entry?;
+            io::copy(&mut File::open(&entry)?, &mut sys)?;
+        }
+        for module in modules {
+            let path = out_dir.join(format!("{}.externs.rs", module.0));
+            io::copy(&mut File::open(&path)?, &mut sys)?;
+        }
+        add_manual(&mut sys, "sys")?;
+    }
+
+    Ok(())
+}
+
+fn cleanup(opencv_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
+    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
+    let modules = get_modules(&opencv_dir.to_string_lossy())?;
+    modules.par_iter().for_each(|module| {
+        let _ = fs::remove_file(out_dir.join(format!("{}.consts", module.0)));
+        let _ = fs::remove_file(out_dir.join(format!("{}.consts.cpp", module.0)));
+    });
+    for entry in glob(&format!("{}/*.rs", out_dir.to_string_lossy()))? {
+        let _ = fs::remove_file(entry?);
+    }
+
     Ok(())
 }
 
@@ -406,12 +471,18 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
-    if !cfg!(feature = "docs-only") {
-        link_wrapper()?;
-    }
     build_wrapper(&opencv_header_dir)?;
+    if !cfg!(feature = "docs-only") {
+        let opencv = link_wrapper()?;
+        if cfg!(feature = "buildtime-bindgen") {
+            gen_wrapper((&opencv.0, opencv.1), &opencv_header_dir)?;
+        }
+    }
+    install_wrapper()?;
+    cleanup(&opencv_header_dir)?;
 
     let mut config = cpp_build::Config::new();
+
     config.flag_if_supported("-Wno-class-memaccess");
     config.flag_if_supported("-Wno-ignored-qualifiers");
     config.include(opencv_header_dir);
