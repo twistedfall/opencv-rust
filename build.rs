@@ -114,7 +114,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 
     eprintln!("Using OpenCV headers from: {}", opencv_dir.display());
     eprintln!("Generating code in: {}", out_dir_as_str);
-    if cfg!(feature = "buildtime_bindgen") {
+    if cfg!(feature = "buildtime-bindgen") {
         eprintln!("Placing generated bindings into: {}", hub_dir.display());
     }
 
@@ -252,7 +252,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
             panic!();
         }
 
-        if cfg!(feature = "buildtime_bindgen") {
+        if cfg!(feature = "buildtime-bindgen") {
             let e = Command::new("sh")
                .current_dir(&out_dir)
                .arg("-c")
@@ -308,7 +308,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 
     gcc.compile("ocvrs");
 
-    if cfg!(feature = "buildtime_bindgen") {
+    if cfg!(feature = "buildtime-bindgen") {
         if !module_dir.exists() {
             fs::create_dir(&module_dir)?;
         }

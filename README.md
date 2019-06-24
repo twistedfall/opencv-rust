@@ -141,7 +141,7 @@ The crate itself, as imported by users, consists of generated rust
 code in [src](src) committed to the repo. This way, users don't have
 to handle the code generation overhead in their builds. When
 developing this crate, you can test changes to the binding generation
-using `cargo build -vv --features buildtime_bindgen`. When changing
+using `cargo build -vv --features buildtime-bindgen`. When changing
 the codegen, be sure to push changes to the generated code!
 
 `hdr_parser.py` comes from OpenCV python/java generator. We've tried
