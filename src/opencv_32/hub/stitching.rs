@@ -39,7 +39,7 @@
 //! # Exposure Compensation
 //! # Image Blenders
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const Stitcher_ERR_CAMERA_PARAMS_ADJUST_FAIL: i32 = 3;
@@ -525,6 +525,14 @@ impl Stitcher {
     
     pub fn set_wave_correction(&mut self, flag: bool) -> Result<()> {
         unsafe { sys::cv_Stitcher_setWaveCorrection_bool(self.as_raw_Stitcher(), flag) }.into_result()
+    }
+    
+    pub fn matching_mask(&self) -> Result<core::UMat> {
+        unsafe { sys::cv_Stitcher_matchingMask_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn set_matching_mask(&mut self, mask: &core::UMat) -> Result<()> {
+        unsafe { sys::cv_Stitcher_setMatchingMask_UMat(self.as_raw_Stitcher(), mask.as_raw_UMat()) }.into_result()
     }
     
     pub fn estimate_transform(&mut self, images: &types::VectorOfMat) -> Result<crate::stitching::Stitcher_Status> {

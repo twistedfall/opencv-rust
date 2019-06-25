@@ -39,7 +39,7 @@
 //! # Exposure Compensation
 //! # Image Blenders
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const Stitcher_ERR_CAMERA_PARAMS_ADJUST_FAIL: i32 = 3;
@@ -630,6 +630,14 @@ impl Stitcher {
         unsafe { sys::cv_Stitcher_setWaveCorrection_bool(self.as_raw_Stitcher(), flag) }.into_result()
     }
     
+    pub fn matching_mask(&self) -> Result<core::UMat> {
+        unsafe { sys::cv_Stitcher_matchingMask_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn set_matching_mask(&mut self, mask: &core::UMat) -> Result<()> {
+        unsafe { sys::cv_Stitcher_setMatchingMask_UMat(self.as_raw_Stitcher(), mask.as_raw_UMat()) }.into_result()
+    }
+    
     /// These functions try to match the given images and to estimate rotations of each camera.
     ///
     ///
@@ -691,6 +699,10 @@ impl Stitcher {
     
     pub fn work_scale(&self) -> Result<f64> {
         unsafe { sys::cv_Stitcher_workScale_const(self.as_raw_Stitcher()) }.into_result()
+    }
+    
+    pub fn result_mask(&self) -> Result<core::UMat> {
+        unsafe { sys::cv_Stitcher_resultMask_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
 }

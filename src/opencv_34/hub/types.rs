@@ -7878,6 +7878,196 @@ impl<'i> crate::templ::Vector<'i> for VectorOfTarget {
 
 unsafe impl Send for VectorOfTarget {}
 
+pub struct VectorOfUMat {
+    pub(crate) ptr: *mut c_void
+}
+
+impl VectorOfUMat {
+    #[inline(always)] pub fn as_raw_VectorOfUMat(&self) -> *mut c_void { self.ptr }
+
+    #[inline]
+    pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+        crate::templ::VectorRefIterator::new(self)
+    }
+}
+
+impl Drop for VectorOfUMat {
+    #[inline]
+    fn drop(&mut self) {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*"] {
+            delete vec;
+        })
+    }
+}
+
+impl IntoIterator for VectorOfUMat {
+    type Item = core::UMat;
+    type IntoIter = crate::templ::VectorIterator<Self>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(self)
+    }
+}
+
+impl<'i> IntoIterator for &'i VectorOfUMat {
+    type Item = core::UMat;
+    type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfUMat>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
+    type Storage = core::UMat;
+
+    #[inline]
+    fn new() -> Self {
+        Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+            return new std::vector<cv::UMat>();
+        })}
+    }
+
+    #[inline]
+    fn len(&self) -> size_t {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "const std::vector<cv::UMat>*"] -> size_t as "size_t" {
+            return vec->size();
+        })
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "const std::vector<cv::UMat>*"] -> bool as "bool" {
+            return vec->empty();
+        })
+    }
+
+    #[inline]
+    fn capacity(&self) -> size_t {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "const std::vector<cv::UMat>*"] -> size_t as "size_t" {
+            return vec->capacity();
+        })
+    }
+
+    #[inline]
+    fn shrink_to_fit(&mut self) {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*"] {
+            vec->shrink_to_fit();
+        })
+    }                
+
+    #[inline]
+    fn reserve(&mut self, additional: size_t) {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*", additional as "size_t"] {
+            vec->reserve(vec->size() + additional);
+        })
+    }
+
+    #[inline]
+    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*", index as "size_t"] {
+            vec->erase(vec->begin() + index);
+        });
+        Ok(())
+    }
+
+    /// Swaps values of 2 elements
+    #[inline]
+    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+        let len = self.len();
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+        if index1 != index2 {
+            let vec = self.as_raw_VectorOfUMat();
+            cpp!(unsafe [vec as "std::vector<cv::UMat>*", index1 as "size_t", index2 as "size_t"] {
+                swap((*vec)[index1], (*vec)[index2]);
+            });
+        }
+        Ok(())
+    }
+
+    #[inline]
+    fn clear(&mut self) {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*"] {
+            vec->clear();
+        })
+    }
+
+    type Arg = core::UMat;
+    
+    #[inline]
+    fn push(&mut self, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfUMat();
+        let val = val.ptr; // fixme use method
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*", val as "cv::UMat*"] {
+            vec->push_back(*val);
+        })
+    }
+    
+    #[inline]
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+        let vec = self.as_raw_VectorOfUMat();
+        let val = val.as_raw_UMat();
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*", index as "size_t", val as "cv::UMat*"] {
+            vec->insert(vec->begin() + index, *val);
+        });
+        Ok(())
+    }
+    
+    #[inline]
+    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+        let vec = self.as_raw_VectorOfUMat();
+        cpp!(unsafe [vec as "const std::vector<cv::UMat>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new cv::UMat(vec->at(index)) };
+            } VEC_CATCH(cv_return_value_void_X)
+        }).into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    #[inline]
+    unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+        let vec_unchkd = self.as_raw_VectorOfUMat();
+        core::UMat { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::UMat>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::UMat((*vec_unchkd)[index]);
+        })}
+    }
+    
+    #[inline]
+    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        let vec = self.as_raw_VectorOfUMat();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*", index as "size_t", val as "cv::UMat*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+            try {
+                vec->at(index) = *val;
+                return { Error::Code::StsOk, NULL };
+            } VEC_CATCH(cv_return_value_void)
+        }).into_result()
+    }
+    
+    #[inline]
+    unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfUMat();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<cv::UMat>*", index as "size_t", val as "cv::UMat*"] {
+            (*vec)[index] = *val;
+        })
+    }
+}
+
+unsafe impl Send for VectorOfUMat {}
+
 pub struct VectorOfVec4f {
     pub(crate) ptr: *mut c_void
 }

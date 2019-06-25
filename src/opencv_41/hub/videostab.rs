@@ -23,7 +23,7 @@
 //! The Fast Marching Method [Telea04](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 //! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const MM_AFFINE: i32 = 5;

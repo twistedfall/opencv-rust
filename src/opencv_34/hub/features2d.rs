@@ -28,7 +28,7 @@
 //! *   (Python) An example using the features2D framework to perform object categorization can be
 //! found at opencv_source_code/samples/python/find_obj.py
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const AKAZE_DESCRIPTOR_KAZE: i32 = 3;
@@ -48,9 +48,13 @@ pub const DescriptorMatcher_BRUTEFORCE_HAMMINGLUT: i32 = 5;
 pub const DescriptorMatcher_BRUTEFORCE_L1: i32 = 3;
 pub const DescriptorMatcher_BRUTEFORCE_SL2: i32 = 6;
 pub const DescriptorMatcher_FLANNBASED: i32 = 1;
+/// Output image matrix will be created (Mat::create),
 pub const DrawMatchesFlags_DEFAULT: i32 = 0;
+/// Output image matrix will not be created (Mat::create).
 pub const DrawMatchesFlags_DRAW_OVER_OUTIMG: i32 = 1;
+/// For each keypoint the circle around keypoint with keypoint size and
 pub const DrawMatchesFlags_DRAW_RICH_KEYPOINTS: i32 = 4;
+/// Single keypoints will not be drawn.
 pub const DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS: i32 = 2;
 pub const FastFeatureDetector_FAST_N: i32 = 10002;
 pub const FastFeatureDetector_NONMAX_SUPPRESSION: i32 = 10001;

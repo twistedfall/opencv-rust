@@ -1,6 +1,6 @@
 //! # Custom Calibration Pattern for 3D reconstruction
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const CALIB_FIX_CENTER: i32 = 256;

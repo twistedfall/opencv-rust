@@ -5,11 +5,14 @@
 //!
 //! @ref bioinspired_retina
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// standard bayer sampling
 pub const RETINA_COLOR_BAYER: i32 = 2;
+/// color sampling is RGBRGBRGB..., line 2 BRGBRGBRG..., line 3, GBRGBRGBR...
 pub const RETINA_COLOR_DIAGONAL: i32 = 1;
+/// each pixel position is either R, G or B in a random choice
 pub const RETINA_COLOR_RANDOM: i32 = 0;
 
 /// @relates bioinspired::RetinaFastToneMapping

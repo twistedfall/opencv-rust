@@ -143,58 +143,98 @@
 //! # Functions
 //! # Interface
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
+/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 pub const CCL_DEFAULT: i32 = -1;
+/// BBDT algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 pub const CCL_GRANA: i32 = 1;
+/// SAUF algorithm for 8-way connectivity, SAUF algorithm for 4-way connectivity
 pub const CCL_WU: i32 = 0;
+/// The total area (in pixels) of the connected component
 pub const CC_STAT_AREA: i32 = 4;
+/// The vertical size of the bounding box
 pub const CC_STAT_HEIGHT: i32 = 3;
+/// The leftmost (x) coordinate which is the inclusive start of the bounding
 pub const CC_STAT_LEFT: i32 = 0;
 pub const CC_STAT_MAX: i32 = 5;
+/// The topmost (y) coordinate which is the inclusive start of the bounding
 pub const CC_STAT_TOP: i32 = 1;
+/// The horizontal size of the bounding box
 pub const CC_STAT_WIDTH: i32 = 2;
 pub const CHAIN_APPROX_NONE: i32 = 1;
 pub const CHAIN_APPROX_SIMPLE: i32 = 2;
 pub const CHAIN_APPROX_TC89_KCOS: i32 = 4;
 pub const CHAIN_APPROX_TC89_L1: i32 = 3;
+/// ![autumn](https://docs.opencv.org/4.1.0/colormaps/colorscale_autumn.jpg)
 pub const COLORMAP_AUTUMN: i32 = 0;
+/// ![bone](https://docs.opencv.org/4.1.0/colormaps/colorscale_bone.jpg)
 pub const COLORMAP_BONE: i32 = 1;
+/// ![cividis](https://docs.opencv.org/4.1.0/colormaps/colorscale_cividis.jpg)
 pub const COLORMAP_CIVIDIS: i32 = 17;
+/// ![cool](https://docs.opencv.org/4.1.0/colormaps/colorscale_cool.jpg)
 pub const COLORMAP_COOL: i32 = 8;
+/// ![hot](https://docs.opencv.org/4.1.0/colormaps/colorscale_hot.jpg)
 pub const COLORMAP_HOT: i32 = 11;
+/// ![HSV](https://docs.opencv.org/4.1.0/colormaps/colorscale_hsv.jpg)
 pub const COLORMAP_HSV: i32 = 9;
+/// ![inferno](https://docs.opencv.org/4.1.0/colormaps/colorscale_inferno.jpg)
 pub const COLORMAP_INFERNO: i32 = 14;
+/// ![jet](https://docs.opencv.org/4.1.0/colormaps/colorscale_jet.jpg)
 pub const COLORMAP_JET: i32 = 2;
+/// ![magma](https://docs.opencv.org/4.1.0/colormaps/colorscale_magma.jpg)
 pub const COLORMAP_MAGMA: i32 = 13;
+/// ![ocean](https://docs.opencv.org/4.1.0/colormaps/colorscale_ocean.jpg)
 pub const COLORMAP_OCEAN: i32 = 5;
+/// ![parula](https://docs.opencv.org/4.1.0/colormaps/colorscale_parula.jpg)
 pub const COLORMAP_PARULA: i32 = 12;
+/// ![pink](https://docs.opencv.org/4.1.0/colormaps/colorscale_pink.jpg)
 pub const COLORMAP_PINK: i32 = 10;
+/// ![plasma](https://docs.opencv.org/4.1.0/colormaps/colorscale_plasma.jpg)
 pub const COLORMAP_PLASMA: i32 = 15;
+/// ![rainbow](https://docs.opencv.org/4.1.0/colormaps/colorscale_rainbow.jpg)
 pub const COLORMAP_RAINBOW: i32 = 4;
+/// ![spring](https://docs.opencv.org/4.1.0/colormaps/colorscale_spring.jpg)
 pub const COLORMAP_SPRING: i32 = 7;
+/// ![summer](https://docs.opencv.org/4.1.0/colormaps/colorscale_summer.jpg)
 pub const COLORMAP_SUMMER: i32 = 6;
+/// ![twilight](https://docs.opencv.org/4.1.0/colormaps/colorscale_twilight.jpg)
 pub const COLORMAP_TWILIGHT: i32 = 18;
+/// ![twilight shifted](https://docs.opencv.org/4.1.0/colormaps/colorscale_twilight_shifted.jpg)
 pub const COLORMAP_TWILIGHT_SHIFTED: i32 = 19;
+/// ![viridis](https://docs.opencv.org/4.1.0/colormaps/colorscale_viridis.jpg)
 pub const COLORMAP_VIRIDIS: i32 = 16;
+/// ![winter](https://docs.opencv.org/4.1.0/colormaps/colorscale_winter.jpg)
 pub const COLORMAP_WINTER: i32 = 3;
+/// convert between RGB/BGR and BGR555 (16-bit images)
 pub const COLOR_BGR2BGR555: i32 = 22;
+/// convert between RGB/BGR and BGR565 (16-bit images)
 pub const COLOR_BGR2BGR565: i32 = 12;
+/// add alpha channel to RGB or BGR image
 pub const COLOR_BGR2BGRA: i32 = 0;
+/// convert between RGB/BGR and grayscale, @ref color_convert_rgb_gray "color conversions"
 pub const COLOR_BGR2GRAY: i32 = 6;
+/// convert RGB/BGR to HLS (hue lightness saturation), @ref color_convert_rgb_hls "color conversions"
 pub const COLOR_BGR2HLS: i32 = 52;
 pub const COLOR_BGR2HLS_FULL: i32 = 68;
+/// convert RGB/BGR to HSV (hue saturation value), @ref color_convert_rgb_hsv "color conversions"
 pub const COLOR_BGR2HSV: i32 = 40;
 pub const COLOR_BGR2HSV_FULL: i32 = 66;
+/// convert RGB/BGR to CIE Lab, @ref color_convert_rgb_lab "color conversions"
 pub const COLOR_BGR2Lab: i32 = 44;
+/// convert RGB/BGR to CIE Luv, @ref color_convert_rgb_luv "color conversions"
 pub const COLOR_BGR2Luv: i32 = 50;
 pub const COLOR_BGR2RGB: i32 = 4;
+/// convert between RGB and BGR color spaces (with or without alpha channel)
 pub const COLOR_BGR2RGBA: i32 = 2;
+/// convert RGB/BGR to CIE XYZ, @ref color_convert_rgb_xyz "color conversions"
 pub const COLOR_BGR2XYZ: i32 = 32;
+/// convert RGB/BGR to luma-chroma (aka YCC), @ref color_convert_rgb_ycrcb "color conversions"
 pub const COLOR_BGR2YCrCb: i32 = 36;
+/// convert between RGB/BGR and YUV
 pub const COLOR_BGR2YUV: i32 = 82;
 pub const COLOR_BGR2YUV_I420: i32 = 128;
 pub const COLOR_BGR2YUV_IYUV: i32 = 128;
@@ -209,6 +249,7 @@ pub const COLOR_BGR5652BGRA: i32 = 18;
 pub const COLOR_BGR5652GRAY: i32 = 21;
 pub const COLOR_BGR5652RGB: i32 = 15;
 pub const COLOR_BGR5652RGBA: i32 = 19;
+/// remove alpha channel from RGB or BGR image
 pub const COLOR_BGRA2BGR: i32 = 1;
 pub const COLOR_BGRA2BGR555: i32 = 26;
 pub const COLOR_BGRA2BGR565: i32 = 16;
@@ -256,7 +297,9 @@ pub const COLOR_BayerRG2RGB_EA: i32 = 135;
 pub const COLOR_BayerRG2RGB_VNG: i32 = 62;
 pub const COLOR_COLORCVT_MAX: i32 = 143;
 pub const COLOR_GRAY2BGR: i32 = 8;
+/// convert between grayscale and BGR555 (16-bit images)
 pub const COLOR_GRAY2BGR555: i32 = 30;
+/// convert between grayscale to BGR565 (16-bit images)
 pub const COLOR_GRAY2BGR565: i32 = 20;
 pub const COLOR_GRAY2BGRA: i32 = 9;
 pub const COLOR_GRAY2RGB: i32 = 8;
@@ -265,6 +308,7 @@ pub const COLOR_HLS2BGR: i32 = 60;
 pub const COLOR_HLS2BGR_FULL: i32 = 72;
 pub const COLOR_HLS2RGB: i32 = 61;
 pub const COLOR_HLS2RGB_FULL: i32 = 73;
+/// backward conversions to RGB/BGR
 pub const COLOR_HSV2BGR: i32 = 54;
 pub const COLOR_HSV2BGR_FULL: i32 = 70;
 pub const COLOR_HSV2RGB: i32 = 55;
@@ -387,8 +431,11 @@ pub const COLOR_YUV420sp2GRAY: i32 = 106;
 pub const COLOR_YUV420sp2RGB: i32 = 92;
 pub const COLOR_YUV420sp2RGBA: i32 = 96;
 pub const COLOR_mRGBA2RGBA: i32 = 126;
+/// <div lang='latex'>I_1(A,B) =  \sum _{i=1...7}  \left |  \frac{1}{m^A_i} -  \frac{1}{m^B_i} \right |</div>
 pub const CONTOURS_MATCH_I1: i32 = 1;
+/// <div lang='latex'>I_2(A,B) =  \sum _{i=1...7}  \left | m^A_i - m^B_i  \right |</div>
 pub const CONTOURS_MATCH_I2: i32 = 2;
+/// <div lang='latex'>I_3(A,B) =  \max _{i=1...7}  \frac{ \left| m^A_i - m^B_i \right| }{ \left| m^A_i \right| }</div>
 pub const CONTOURS_MATCH_I3: i32 = 3;
 pub const CV_HAL_ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 pub const CV_HAL_ADAPTIVE_THRESH_MEAN_C: i32 = 0;
@@ -407,53 +454,81 @@ pub const CV_HAL_THRESH_TOZERO: i32 = 3;
 pub const CV_HAL_THRESH_TOZERO_INV: i32 = 4;
 pub const CV_HAL_THRESH_TRIANGLE: i32 = 16;
 pub const CV_HAL_THRESH_TRUNC: i32 = 2;
+/// distance = max(|x1-x2|,|y1-y2|)
 pub const DIST_C: i32 = 3;
+/// distance = c^2(|x|/c-log(1+|x|/c)), c = 1.3998
 pub const DIST_FAIR: i32 = 5;
+/// distance = |x|<c ? x^2/2 : c(|x|-c/2), c=1.345
 pub const DIST_HUBER: i32 = 7;
+/// distance = |x1-x2| + |y1-y2|
 pub const DIST_L1: i32 = 1;
+/// L1-L2 metric: distance = 2(sqrt(1+x*x/2) - 1))
 pub const DIST_L12: i32 = 4;
+/// the simple euclidean distance
 pub const DIST_L2: i32 = 2;
 pub const DIST_LABEL_CCOMP: i32 = 0;
 pub const DIST_LABEL_PIXEL: i32 = 1;
+/// mask=3
 pub const DIST_MASK_3: i32 = 3;
+/// mask=5
 pub const DIST_MASK_5: i32 = 5;
 pub const DIST_MASK_PRECISE: i32 = 0;
+/// User defined distance
 pub const DIST_USER: i32 = -1;
+/// distance = c^2/2(1-exp(-(x/c)^2)), c = 2.9846
 pub const DIST_WELSCH: i32 = 6;
 pub const FILLED: i32 = -1;
 pub const FILTER_SCHARR: i32 = -1;
 pub const FLOODFILL_FIXED_RANGE: i32 = 1 << 16;
 pub const FLOODFILL_MASK_ONLY: i32 = 1 << 17;
+/// normal size serif font
 pub const FONT_HERSHEY_COMPLEX: i32 = 3;
+/// smaller version of FONT_HERSHEY_COMPLEX
 pub const FONT_HERSHEY_COMPLEX_SMALL: i32 = 5;
+/// normal size sans-serif font (more complex than FONT_HERSHEY_SIMPLEX)
 pub const FONT_HERSHEY_DUPLEX: i32 = 2;
+/// small size sans-serif font
 pub const FONT_HERSHEY_PLAIN: i32 = 1;
+/// more complex variant of FONT_HERSHEY_SCRIPT_SIMPLEX
 pub const FONT_HERSHEY_SCRIPT_COMPLEX: i32 = 7;
+/// hand-writing style font
 pub const FONT_HERSHEY_SCRIPT_SIMPLEX: i32 = 6;
+/// normal size sans-serif font
 pub const FONT_HERSHEY_SIMPLEX: i32 = 0;
+/// normal size serif font (more complex than FONT_HERSHEY_COMPLEX)
 pub const FONT_HERSHEY_TRIPLEX: i32 = 4;
+/// flag for italic font
 pub const FONT_ITALIC: i32 = 16;
+/// an obvious background pixels
 pub const GC_BGD: i32 = 0;
 pub const GC_EVAL: i32 = 2;
 pub const GC_EVAL_FREEZE_MODEL: i32 = 3;
+/// an obvious foreground (object) pixel
 pub const GC_FGD: i32 = 1;
 pub const GC_INIT_WITH_MASK: i32 = 1;
 pub const GC_INIT_WITH_RECT: i32 = 0;
+/// a possible background pixel
 pub const GC_PR_BGD: i32 = 2;
+/// a possible foreground pixel
 pub const GC_PR_FGD: i32 = 3;
 pub const HISTCMP_BHATTACHARYYA: i32 = 3;
 pub const HISTCMP_CHISQR: i32 = 1;
 pub const HISTCMP_CHISQR_ALT: i32 = 4;
 pub const HISTCMP_CORREL: i32 = 0;
+/// Synonym for HISTCMP_BHATTACHARYYA
 pub const HISTCMP_HELLINGER: i32 = 3;
 pub const HISTCMP_INTERSECT: i32 = 2;
 pub const HISTCMP_KL_DIV: i32 = 5;
+/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_Yuen90)
 pub const HOUGH_GRADIENT: i32 = 3;
 pub const HOUGH_MULTI_SCALE: i32 = 2;
 pub const HOUGH_PROBABILISTIC: i32 = 1;
 pub const HOUGH_STANDARD: i32 = 0;
+/// One of the rectangle is fully enclosed in the other
 pub const INTERSECT_FULL: i32 = 2;
+/// No intersection
 pub const INTERSECT_NONE: i32 = 0;
+/// There is a partial intersection
 pub const INTERSECT_PARTIAL: i32 = 1;
 pub const INTER_AREA: i32 = 3;
 pub const INTER_BITS: i32 = 5;
@@ -463,29 +538,53 @@ pub const INTER_LINEAR: i32 = 1;
 pub const INTER_LINEAR_EXACT: i32 = 5;
 pub const INTER_MAX: i32 = 7;
 pub const INTER_NEAREST: i32 = 0;
+/// 4-connected line
 pub const LINE_4: i32 = 4;
+/// 8-connected line
 pub const LINE_8: i32 = 8;
+/// antialiased line
 pub const LINE_AA: i32 = 16;
+/// Advanced refinement. Number of false alarms is calculated, lines are
 pub const LSD_REFINE_ADV: i32 = 2;
+/// No refinement applied
 pub const LSD_REFINE_NONE: i32 = 0;
+/// Standard refinement is applied. E.g. breaking arches into smaller straighter line approximations.
 pub const LSD_REFINE_STD: i32 = 1;
+/// A crosshair marker shape
 pub const MARKER_CROSS: i32 = 0;
+/// A diamond marker shape
 pub const MARKER_DIAMOND: i32 = 3;
+/// A square marker shape
 pub const MARKER_SQUARE: i32 = 4;
+/// A star marker shape, combination of cross and tilted cross
 pub const MARKER_STAR: i32 = 2;
+/// A 45 degree tilted crosshair marker shape
 pub const MARKER_TILTED_CROSS: i32 = 1;
+/// A downwards pointing triangle marker shape
 pub const MARKER_TRIANGLE_DOWN: i32 = 6;
+/// An upwards pointing triangle marker shape
 pub const MARKER_TRIANGLE_UP: i32 = 5;
+/// "black hat"
 pub const MORPH_BLACKHAT: i32 = 6;
+/// a closing operation
 pub const MORPH_CLOSE: i32 = 3;
+/// a cross-shaped structuring element:
 pub const MORPH_CROSS: i32 = 1;
+/// see #dilate
 pub const MORPH_DILATE: i32 = 1;
+/// an elliptic structuring element, that is, a filled ellipse inscribed
 pub const MORPH_ELLIPSE: i32 = 2;
+/// see #erode
 pub const MORPH_ERODE: i32 = 0;
+/// a morphological gradient
 pub const MORPH_GRADIENT: i32 = 4;
+/// "hit or miss"
 pub const MORPH_HITMISS: i32 = 7;
+/// an opening operation
 pub const MORPH_OPEN: i32 = 2;
+/// a rectangular structuring element:  <div lang='latex'>E_{ij}=1</div>
 pub const MORPH_RECT: i32 = 0;
+/// "top hat"
 pub const MORPH_TOPHAT: i32 = 5;
 pub const RETR_CCOMP: i32 = 2;
 pub const RETR_EXTERNAL: i32 = 0;
@@ -500,24 +599,42 @@ pub const Subdiv2D_PREV_AROUND_DST: i32 = 0x33;
 pub const Subdiv2D_PREV_AROUND_LEFT: i32 = 0x20;
 pub const Subdiv2D_PREV_AROUND_ORG: i32 = 0x11;
 pub const Subdiv2D_PREV_AROUND_RIGHT: i32 = 0x02;
+/// Point location error
 pub const Subdiv2D_PTLOC_ERROR: i32 = -2;
+/// Point inside some facet
 pub const Subdiv2D_PTLOC_INSIDE: i32 = 0;
+/// Point on some edge
 pub const Subdiv2D_PTLOC_ON_EDGE: i32 = 2;
+/// Point outside the subdivision bounding rect
 pub const Subdiv2D_PTLOC_OUTSIDE_RECT: i32 = -1;
+/// Point coincides with one of the subdivision vertices
 pub const Subdiv2D_PTLOC_VERTEX: i32 = 1;
+/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{\texttt{maxval}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}</div>
 pub const THRESH_BINARY: i32 = 0;
+/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{maxval}}{otherwise}</div>
 pub const THRESH_BINARY_INV: i32 = 1;
 pub const THRESH_MASK: i32 = 7;
+/// flag, use Otsu algorithm to choose the optimal threshold value
 pub const THRESH_OTSU: i32 = 8;
+/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{\texttt{src}(x,y)}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}</div>
 pub const THRESH_TOZERO: i32 = 3;
+/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}</div>
 pub const THRESH_TOZERO_INV: i32 = 4;
+/// flag, use Triangle algorithm to choose the optimal threshold value
 pub const THRESH_TRIANGLE: i32 = 16;
+/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{\texttt{threshold}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}</div>
 pub const THRESH_TRUNC: i32 = 2;
+/// <div lang='latex'>R(x,y)= \sum _{x',y'} (T'(x',y')  \cdot I'(x+x',y+y'))</div>
 pub const TM_CCOEFF: i32 = 4;
+/// <div lang='latex'>R(x,y)= \frac{ \sum_{x',y'} (T'(x',y') \cdot I'(x+x',y+y')) }{ \sqrt{\sum_{x',y'}T'(x',y')^2 \cdot \sum_{x',y'} I'(x+x',y+y')^2} }</div>
 pub const TM_CCOEFF_NORMED: i32 = 5;
+/// <div lang='latex'>R(x,y)= \sum _{x',y'} (T(x',y')  \cdot I(x+x',y+y'))</div>
 pub const TM_CCORR: i32 = 2;
+/// <div lang='latex'>R(x,y)= \frac{\sum_{x',y'} (T(x',y') \cdot I(x+x',y+y'))}{\sqrt{\sum_{x',y'}T(x',y')^2 \cdot \sum_{x',y'} I(x+x',y+y')^2}}</div>
 pub const TM_CCORR_NORMED: i32 = 3;
+/// <div lang='latex'>R(x,y)= \sum _{x',y'} (T(x',y')-I(x+x',y+y'))^2</div>
 pub const TM_SQDIFF: i32 = 0;
+/// <div lang='latex'>R(x,y)= \frac{\sum_{x',y'} (T(x',y')-I(x+x',y+y'))^2}{\sqrt{\sum_{x',y'}T(x',y')^2 \cdot \sum_{x',y'} I(x+x',y+y')^2}}</div>
 pub const TM_SQDIFF_NORMED: i32 = 1;
 pub const WARP_FILL_OUTLIERS: i32 = 8;
 pub const WARP_INVERSE_MAP: i32 = 16;

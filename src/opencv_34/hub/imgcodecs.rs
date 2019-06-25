@@ -2,29 +2,50 @@
 //! # C API
 //! # iOS glue
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// If set, the image is read in any possible color format.
 pub const IMREAD_ANYCOLOR: i32 = 4;
+/// If set, return 16-bit/32-bit image when the input has the corresponding depth, otherwise convert it to 8-bit.
 pub const IMREAD_ANYDEPTH: i32 = 2;
+/// If set, always convert image to the 3 channel BGR color image.
 pub const IMREAD_COLOR: i32 = 1;
+/// If set, always convert image to the single channel grayscale image (codec internal conversion).
 pub const IMREAD_GRAYSCALE: i32 = 0;
+/// If set, do not rotate the image according to EXIF's orientation flag.
 pub const IMREAD_IGNORE_ORIENTATION: i32 = 128;
+/// If set, use the gdal driver for loading the image.
 pub const IMREAD_LOAD_GDAL: i32 = 8;
+/// If set, always convert image to the 3 channel BGR color image and the image size reduced 1/2.
 pub const IMREAD_REDUCED_COLOR_2: i32 = 17;
+/// If set, always convert image to the 3 channel BGR color image and the image size reduced 1/4.
 pub const IMREAD_REDUCED_COLOR_4: i32 = 33;
+/// If set, always convert image to the 3 channel BGR color image and the image size reduced 1/8.
 pub const IMREAD_REDUCED_COLOR_8: i32 = 65;
+/// If set, always convert image to the single channel grayscale image and the image size reduced 1/2.
 pub const IMREAD_REDUCED_GRAYSCALE_2: i32 = 16;
+/// If set, always convert image to the single channel grayscale image and the image size reduced 1/4.
 pub const IMREAD_REDUCED_GRAYSCALE_4: i32 = 32;
+/// If set, always convert image to the single channel grayscale image and the image size reduced 1/8.
 pub const IMREAD_REDUCED_GRAYSCALE_8: i32 = 64;
+/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped).
 pub const IMREAD_UNCHANGED: i32 = -1;
+/// store as FP32 (default)
 pub const IMWRITE_EXR_TYPE_FLOAT: i32 = 2;
+/// store as HALF (FP16)
 pub const IMWRITE_EXR_TYPE_HALF: i32 = 1;
+/// Separate chroma quality level, 0 - 100, default is 0 - don't use.
 pub const IMWRITE_JPEG_CHROMA_QUALITY: i32 = 6;
+/// Separate luma quality level, 0 - 100, default is 0 - don't use.
 pub const IMWRITE_JPEG_LUMA_QUALITY: i32 = 5;
+/// Enable JPEG features, 0 or 1, default is False.
 pub const IMWRITE_JPEG_OPTIMIZE: i32 = 3;
+/// Enable JPEG features, 0 or 1, default is False.
 pub const IMWRITE_JPEG_PROGRESSIVE: i32 = 2;
+/// For JPEG, it can be a quality from 0 to 100 (the higher is the better). Default value is 95.
 pub const IMWRITE_JPEG_QUALITY: i32 = 1;
+/// JPEG restart interval, 0 - 65535, default is 0 - no restart.
 pub const IMWRITE_JPEG_RST_INTERVAL: i32 = 4;
 pub const IMWRITE_PAM_FORMAT_BLACKANDWHITE: i32 = 1;
 pub const IMWRITE_PAM_FORMAT_GRAYSCALE: i32 = 2;
@@ -32,20 +53,35 @@ pub const IMWRITE_PAM_FORMAT_GRAYSCALE_ALPHA: i32 = 3;
 pub const IMWRITE_PAM_FORMAT_NULL: i32 = 0;
 pub const IMWRITE_PAM_FORMAT_RGB: i32 = 4;
 pub const IMWRITE_PAM_FORMAT_RGB_ALPHA: i32 = 5;
+/// For PAM, sets the TUPLETYPE field to the corresponding string value that is defined for the format
 pub const IMWRITE_PAM_TUPLETYPE: i32 = 128;
+/// Binary level PNG, 0 or 1, default is 0.
 pub const IMWRITE_PNG_BILEVEL: i32 = 18;
+/// For PNG, it can be the compression level from 0 to 9. A higher value means a smaller size and longer compression time. If specified, strategy is changed to IMWRITE_PNG_STRATEGY_DEFAULT (Z_DEFAULT_STRATEGY). Default value is 1 (best speed setting).
 pub const IMWRITE_PNG_COMPRESSION: i32 = 16;
+/// One of cv::ImwritePNGFlags, default is IMWRITE_PNG_STRATEGY_RLE.
 pub const IMWRITE_PNG_STRATEGY: i32 = 17;
+/// Use this value for normal data.
 pub const IMWRITE_PNG_STRATEGY_DEFAULT: i32 = 0;
+/// Use this value for data produced by a filter (or predictor).Filtered data consists mostly of small values with a somewhat random distribution. In this case, the compression algorithm is tuned to compress them better.
 pub const IMWRITE_PNG_STRATEGY_FILTERED: i32 = 1;
+/// Using this value prevents the use of dynamic Huffman codes, allowing for a simpler decoder for special applications.
 pub const IMWRITE_PNG_STRATEGY_FIXED: i32 = 4;
+/// Use this value to force Huffman encoding only (no string match).
 pub const IMWRITE_PNG_STRATEGY_HUFFMAN_ONLY: i32 = 2;
+/// Use this value to limit match distances to one (run-length encoding).
 pub const IMWRITE_PNG_STRATEGY_RLE: i32 = 3;
+/// For PPM, PGM, or PBM, it can be a binary format flag, 0 or 1. Default value is 1.
 pub const IMWRITE_PXM_BINARY: i32 = 32;
+/// For TIFF, use to specify the image compression scheme. See libtiff for integer constants corresponding to compression formats. Note, for images whose depth is CV_32F, only libtiff's SGILOG compression scheme is used. For other supported depths, the compression scheme can be specified by this flag; LZW compression is the default.
 pub const IMWRITE_TIFF_COMPRESSION: i32 = 259;
+/// For TIFF, use to specify which DPI resolution unit to set; see libtiff documentation for valid values.
 pub const IMWRITE_TIFF_RESUNIT: i32 = 256;
+/// For TIFF, use to specify the X direction DPI.
 pub const IMWRITE_TIFF_XDPI: i32 = 257;
+/// For TIFF, use to specify the Y direction DPI.
 pub const IMWRITE_TIFF_YDPI: i32 = 258;
+/// For WEBP, it can be a quality from 1 to 100 (the higher is the better). By default (without any parameter) and for quality above 100 the lossless compression is used.
 pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 
 /// Reads an image from a buffer in memory.

@@ -10,21 +10,28 @@
 //!
 //! See detailed overview here: @ref ml_intro.
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// The back-propagation algorithm.
 pub const ANN_MLP_BACKPROP: i32 = 0;
 pub const ANN_MLP_GAUSSIAN: i32 = 2;
 pub const ANN_MLP_IDENTITY: i32 = 0;
 pub const ANN_MLP_NO_INPUT_SCALE: i32 = 2;
 pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
+/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 pub const ANN_MLP_RPROP: i32 = 1;
 pub const ANN_MLP_SIGMOID_SYM: i32 = 1;
 pub const ANN_MLP_UPDATE_WEIGHTS: i32 = 1;
+/// Discrete AdaBoost.
 pub const Boost_DISCRETE: i32 = 0;
+/// Gentle AdaBoost. It puts less weight on outlier data points and for that
 pub const Boost_GENTLE: i32 = 3;
+/// LogitBoost. It can produce good regression fits.
 pub const Boost_LOGIT: i32 = 2;
+/// Real AdaBoost. It is a technique that utilizes confidence-rated predictions
 pub const Boost_REAL: i32 = 1;
+/// each training sample occupies a column of samples
 pub const COL_SAMPLE: i32 = 1;
 pub const DTrees_PREDICT_AUTO: i32 = 0;
 pub const DTrees_PREDICT_MASK: i32 = (3<<8);
@@ -42,14 +49,23 @@ pub const EM_START_M_STEP: i32 = 2;
 pub const KNearest_BRUTE_FORCE: i32 = 1;
 pub const KNearest_KDTREE: i32 = 2;
 pub const LogisticRegression_BATCH: i32 = 0;
+/// Set MiniBatchSize to a positive integer when using this method.
 pub const LogisticRegression_MINI_BATCH: i32 = 1;
+/// Regularization disabled
 pub const LogisticRegression_REG_DISABLE: i32 = -1;
+/// %L1 norm
 pub const LogisticRegression_REG_L1: i32 = 0;
+/// %L2 norm
 pub const LogisticRegression_REG_L2: i32 = 1;
+/// each training sample is a row of samples
 pub const ROW_SAMPLE: i32 = 0;
+/// Average Stochastic Gradient Descent
 pub const SVMSGD_ASGD: i32 = 1;
+/// More accurate for the case of linearly separable sets.
 pub const SVMSGD_HARD_MARGIN: i32 = 1;
+/// Stochastic Gradient Descent
 pub const SVMSGD_SGD: i32 = 0;
+/// General case, suits to the case of non-linearly separable sets, allows outliers.
 pub const SVMSGD_SOFT_MARGIN: i32 = 0;
 pub const SVM_C: i32 = 0;
 pub const SVM_CHI2: i32 = 4;
@@ -71,12 +87,16 @@ pub const SVM_RBF: i32 = 2;
 pub const SVM_SIGMOID: i32 = 3;
 pub const StatModel_COMPRESSED_INPUT: i32 = 2;
 pub const StatModel_PREPROCESSED_INPUT: i32 = 4;
+/// makes the method return the raw results (the sum), not the class label
 pub const StatModel_RAW_OUTPUT: i32 = 1;
 pub const StatModel_UPDATE_MODEL: i32 = 1;
 pub const TEST_ERROR: i32 = 0;
 pub const TRAIN_ERROR: i32 = 1;
+/// categorical variables
 pub const VAR_CATEGORICAL: i32 = 1;
+/// same as VAR_ORDERED
 pub const VAR_NUMERICAL: i32 = 0;
+/// ordered variables
 pub const VAR_ORDERED: i32 = 0;
 
 /// Creates test set

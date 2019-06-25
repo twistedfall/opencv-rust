@@ -54,7 +54,7 @@
 //! <http://research.microsoft.com/en-us/um/people/viola/Pubs/Detect/violaJones_CVPR2001.pdf>
 //! # C API
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
@@ -584,6 +584,62 @@ unsafe impl Send for HOGDescriptor {}
 
 impl HOGDescriptor {
 
+    pub fn win_size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_winSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn block_size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_blockSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn block_stride(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_blockStride_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn cell_size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_cellSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn nbins(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_nbins_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn deriv_aperture(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_derivAperture_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn win_sigma(&self) -> Result<f64> {
+        unsafe { sys::cv_HOGDescriptor_winSigma_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn histogram_norm_type(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_histogramNormType_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn l2_hys_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_HOGDescriptor_L2HysThreshold_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn gamma_correction(&self) -> Result<bool> {
+        unsafe { sys::cv_HOGDescriptor_gammaCorrection_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn svm_detector(&mut self) -> Result<types::VectorOffloat> {
+        unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|ptr| types::VectorOffloat { ptr })
+    }
+    
+    pub fn set_svm_detector(&mut self, val: types::VectorOffloat) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_svmDetector_VectorOffloat(self.as_raw_HOGDescriptor(), val.as_raw_VectorOffloat()) }.into_result()
+    }
+    
+    pub fn nlevels(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_nlevels_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn signed_gradient(&self) -> Result<bool> {
+        unsafe { sys::cv_HOGDescriptor_signedGradient_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
     pub fn default() -> Result<crate::objdetect::HOGDescriptor> {
         unsafe { sys::cv_HOGDescriptor_HOGDescriptor() }.into_result().map(|ptr| crate::objdetect::HOGDescriptor { ptr })
     }
@@ -748,62 +804,6 @@ impl HOGDescriptor {
     
     pub fn group_rectangles(&self, rect_list: &mut types::VectorOfRect, weights: &mut types::VectorOfdouble, group_threshold: i32, eps: f64) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_groupRectangles_const_VectorOfRect_VectorOfdouble_int_double(self.as_raw_HOGDescriptor(), rect_list.as_raw_VectorOfRect(), weights.as_raw_VectorOfdouble(), group_threshold, eps) }.into_result()
-    }
-    
-    pub fn win_size(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_winSize_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn block_size(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_blockSize_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn block_stride(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_blockStride_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn cell_size(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_cellSize_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn nbins(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_nbins_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn deriv_aperture(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_derivAperture_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn win_sigma(&self) -> Result<f64> {
-        unsafe { sys::cv_HOGDescriptor_winSigma_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn histogram_norm_type(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_histogramNormType_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn l2_hys_threshold(&self) -> Result<f64> {
-        unsafe { sys::cv_HOGDescriptor_L2HysThreshold_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn gamma_correction(&self) -> Result<bool> {
-        unsafe { sys::cv_HOGDescriptor_gammaCorrection_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn svm_detector(&mut self) -> Result<types::VectorOffloat> {
-        unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|ptr| types::VectorOffloat { ptr })
-    }
-    
-    pub fn set_svm_detector(&mut self, val: types::VectorOffloat) -> Result<()> {
-        unsafe { sys::cv_HOGDescriptor_set_svmDetector_VectorOffloat(self.as_raw_HOGDescriptor(), val.as_raw_VectorOffloat()) }.into_result()
-    }
-    
-    pub fn nlevels(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_nlevels_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    pub fn signed_gradient(&self) -> Result<bool> {
-        unsafe { sys::cv_HOGDescriptor_signedGradient_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
 }

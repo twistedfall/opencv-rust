@@ -165,7 +165,7 @@
 //!
 //! # C API
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;
@@ -195,21 +195,34 @@ pub const CALIB_SAME_FOCAL_LENGTH: i32 = 0x00200;
 pub const CALIB_THIN_PRISM_MODEL: i32 = 0x08000;
 pub const CALIB_TILTED_MODEL: i32 = 0x40000;
 pub const CALIB_USE_INTRINSIC_GUESS: i32 = 0x00001;
+/// use LU instead of SVD decomposition for solving. much faster but potentially less precise
 pub const CALIB_USE_LU: i32 = (1 << 17);
+/// use QR instead of SVD decomposition for solving. Faster but potentially less precise
 pub const CALIB_USE_QR: i32 = 0x100000;
 pub const CALIB_ZERO_DISPARITY: i32 = 0x00400;
 pub const CALIB_ZERO_TANGENT_DIST: i32 = 0x00008;
+/// 7-point algorithm
 pub const FM_7POINT: i32 = 1;
+/// 8-point algorithm
 pub const FM_8POINT: i32 = 2;
+/// least-median algorithm
 pub const FM_LMEDS: i32 = 4;
+/// RANSAC algorithm
 pub const FM_RANSAC: i32 = 8;
+/// least-median algorithm
 pub const LMEDS: i32 = 4;
+/// RANSAC algorithm
 pub const RANSAC: i32 = 8;
+/// RHO algorithm
 pub const RHO: i32 = 16;
+/// A Direct Least-Squares (DLS) Method for PnP  [hesch2011direct](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_hesch2011direct)
 pub const SOLVEPNP_DLS: i32 = 3;
+/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 pub const SOLVEPNP_EPNP: i32 = 1;
 pub const SOLVEPNP_ITERATIVE: i32 = 0;
+/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_gao2003complete)
 pub const SOLVEPNP_P3P: i32 = 2;
+/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 pub const SOLVEPNP_UPNP: i32 = 4;
 pub const StereoBM_PREFILTER_NORMALIZED_RESPONSE: i32 = 0;
 pub const StereoBM_PREFILTER_XSOBEL: i32 = 1;

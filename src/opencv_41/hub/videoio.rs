@@ -12,80 +12,133 @@
 //! # WinRT glue for video I/O
 //! # Query I/O API backends registry
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// Android - not used
 pub const CAP_ANDROID: i32 = 1000;
+/// Auto detect == 0
 pub const CAP_ANY: i32 = 0;
+/// Aravis SDK
 pub const CAP_ARAVIS: i32 = 2100;
+/// AVFoundation framework for iOS (OS X Lion will have the same API)
 pub const CAP_AVFOUNDATION: i32 = 1200;
+/// Same value as CAP_FIREWIRE
 pub const CAP_CMU1394: i32 = 300;
+/// Same value as CAP_FIREWIRE
 pub const CAP_DC1394: i32 = 300;
+/// DirectShow (via videoInput)
 pub const CAP_DSHOW: i32 = 700;
+/// Open and record video file or stream using the FFMPEG library
 pub const CAP_FFMPEG: i32 = 1900;
+/// Same value as CAP_FIREWIRE
 pub const CAP_FIREWARE: i32 = 300;
+/// IEEE 1394 drivers
 pub const CAP_FIREWIRE: i32 = 300;
+/// Smartek Giganetix GigEVisionSDK
 pub const CAP_GIGANETIX: i32 = 1300;
+/// gPhoto2 connection
 pub const CAP_GPHOTO2: i32 = 1700;
+/// GStreamer
 pub const CAP_GSTREAMER: i32 = 1800;
+/// Same value as CAP_FIREWIRE
 pub const CAP_IEEE1394: i32 = 300;
+/// OpenCV Image Sequence (e.g. img_%02d.jpg)
 pub const CAP_IMAGES: i32 = 2000;
+/// RealSense (former Intel Perceptual Computing SDK)
 pub const CAP_INTELPERC: i32 = 1500;
 pub const CAP_INTELPERC_DEPTH_GENERATOR: i32 = 1 << 29;
+/// Each pixel is a 16-bit integer. The value indicates the distance from an object to the camera's XY plane or the Cartesian depth.
 pub const CAP_INTELPERC_DEPTH_MAP: i32 = 0;
 pub const CAP_INTELPERC_IMAGE: i32 = 3;
 pub const CAP_INTELPERC_IMAGE_GENERATOR: i32 = 1 << 28;
 pub const CAP_INTELPERC_IR_GENERATOR: i32 = 1 << 27;
+/// Each pixel is a 16-bit integer. The value indicates the intensity of the reflected laser beam.
 pub const CAP_INTELPERC_IR_MAP: i32 = 2;
+/// Each pixel contains two 32-bit floating point values in the range of 0-1, representing the mapping of depth coordinates to the color coordinates.
 pub const CAP_INTELPERC_UVDEPTH_MAP: i32 = 1;
+/// Intel MediaSDK
 pub const CAP_INTEL_MFX: i32 = 2300;
+/// Microsoft Media Foundation (via videoInput)
 pub const CAP_MSMF: i32 = 1400;
+/// Built-in OpenCV MotionJPEG codec
 pub const CAP_OPENCV_MJPEG: i32 = 2200;
+/// OpenNI (for Kinect)
 pub const CAP_OPENNI: i32 = 900;
+/// OpenNI2 (for Kinect)
 pub const CAP_OPENNI2: i32 = 1600;
+/// OpenNI2 (for Asus Xtion and Occipital Structure sensors)
 pub const CAP_OPENNI2_ASUS: i32 = 1610;
+/// OpenNI (for Asus Xtion)
 pub const CAP_OPENNI_ASUS: i32 = 910;
+/// Data given from RGB image generator
 pub const CAP_OPENNI_BGR_IMAGE: i32 = 5;
 pub const CAP_OPENNI_DEPTH_GENERATOR: i32 = 1 << 31;
+/// Depth values in mm (CV_16UC1)
 pub const CAP_OPENNI_DEPTH_MAP: i32 = 0;
+/// Disparity in pixels (CV_8UC1)
 pub const CAP_OPENNI_DISPARITY_MAP: i32 = 2;
+/// Disparity in pixels (CV_32FC1)
 pub const CAP_OPENNI_DISPARITY_MAP_32F: i32 = 3;
+/// Data given from RGB image generator
 pub const CAP_OPENNI_GRAY_IMAGE: i32 = 6;
 pub const CAP_OPENNI_IMAGE_GENERATOR: i32 = 1 << 30;
 pub const CAP_OPENNI_IR_GENERATOR: i32 = 1 << 29;
+/// Data given from IR image generator
 pub const CAP_OPENNI_IR_IMAGE: i32 = 7;
+/// XYZ in meters (CV_32FC3)
 pub const CAP_OPENNI_POINT_CLOUD_MAP: i32 = 1;
 pub const CAP_OPENNI_QVGA_30HZ: i32 = 3;
 pub const CAP_OPENNI_QVGA_60HZ: i32 = 4;
 pub const CAP_OPENNI_SXGA_15HZ: i32 = 1;
 pub const CAP_OPENNI_SXGA_30HZ: i32 = 2;
+/// CV_8UC1
 pub const CAP_OPENNI_VALID_DEPTH_MASK: i32 = 4;
 pub const CAP_OPENNI_VGA_30HZ: i32 = 0;
+/// Aperture. Can be readonly, depends on camera program.
 pub const CAP_PROP_APERTURE: i32 = 17008;
 pub const CAP_PROP_AUTOFOCUS: i32 = 39;
+/// DC1394: exposure control done by camera, user can adjust reference level using this feature.
 pub const CAP_PROP_AUTO_EXPOSURE: i32 = 21;
+/// enable/ disable auto white-balance
 pub const CAP_PROP_AUTO_WB: i32 = 44;
+/// Current backend (enum VideoCaptureAPIs). Read-only property
 pub const CAP_PROP_BACKEND: i32 = 42;
 pub const CAP_PROP_BACKLIGHT: i32 = 32;
+/// Brightness of the image (only for those cameras that support).
 pub const CAP_PROP_BRIGHTNESS: i32 = 10;
 pub const CAP_PROP_BUFFERSIZE: i32 = 38;
+/// Video input or Channel Number (only for those cameras that support)
 pub const CAP_PROP_CHANNEL: i32 = 43;
+/// Contrast of the image (only for cameras).
 pub const CAP_PROP_CONTRAST: i32 = 11;
+/// Boolean flags indicating whether images should be converted to RGB.
 pub const CAP_PROP_CONVERT_RGB: i32 = 16;
 pub const CAP_PROP_DC1394_MAX: i32 = 31;
 pub const CAP_PROP_DC1394_MODE_AUTO: i32 = -2;
+/// set automatically when a value of the feature is set by the user.
 pub const CAP_PROP_DC1394_MODE_MANUAL: i32 = -3;
 pub const CAP_PROP_DC1394_MODE_ONE_PUSH_AUTO: i32 = -1;
+/// turn the feature off (not controlled manually nor automatically).
 pub const CAP_PROP_DC1394_OFF: i32 = -4;
+/// Exposure (only for those cameras that support).
 pub const CAP_PROP_EXPOSURE: i32 = 15;
+/// Camera exposure program.
 pub const CAP_PROP_EXPOSUREPROGRAM: i32 = 17009;
 pub const CAP_PROP_FOCUS: i32 = 28;
+/// Format of the %Mat objects returned by VideoCapture::retrieve().
 pub const CAP_PROP_FORMAT: i32 = 8;
+/// 4-character code of codec. see VideoWriter::fourcc .
 pub const CAP_PROP_FOURCC: i32 = 6;
+/// Frame rate.
 pub const CAP_PROP_FPS: i32 = 5;
+/// Number of frames in the video file.
 pub const CAP_PROP_FRAME_COUNT: i32 = 7;
+/// Height of the frames in the video stream.
 pub const CAP_PROP_FRAME_HEIGHT: i32 = 4;
+/// Width of the frames in the video stream.
 pub const CAP_PROP_FRAME_WIDTH: i32 = 3;
+/// Gain of the image (only for those cameras that support).
 pub const CAP_PROP_GAIN: i32 = 14;
 pub const CAP_PROP_GAMMA: i32 = 22;
 pub const CAP_PROP_GIGA_FRAME_HEIGH_MAX: i32 = 10004;
@@ -94,14 +147,22 @@ pub const CAP_PROP_GIGA_FRAME_OFFSET_Y: i32 = 10002;
 pub const CAP_PROP_GIGA_FRAME_SENS_HEIGH: i32 = 10006;
 pub const CAP_PROP_GIGA_FRAME_SENS_WIDTH: i32 = 10005;
 pub const CAP_PROP_GIGA_FRAME_WIDTH_MAX: i32 = 10003;
+/// Collect messages with details.
 pub const CAP_PROP_GPHOTO2_COLLECT_MSGS: i32 = 17005;
+/// Readonly, returns (const char *).
 pub const CAP_PROP_GPHOTO2_FLUSH_MSGS: i32 = 17006;
+/// Capture only preview from liveview mode.
 pub const CAP_PROP_GPHOTO2_PREVIEW: i32 = 17001;
+/// Trigger, only by set. Reload camera settings.
 pub const CAP_PROP_GPHOTO2_RELOAD_CONFIG: i32 = 17003;
+/// Reload all settings on set.
 pub const CAP_PROP_GPHOTO2_RELOAD_ON_CHANGE: i32 = 17004;
+/// Readonly, returns (const char *).
 pub const CAP_PROP_GPHOTO2_WIDGET_ENUMERATE: i32 = 17002;
+/// Default is 1
 pub const CAP_PROP_GSTREAMER_QUEUE_LENGTH: i32 = 200;
 pub const CAP_PROP_GUID: i32 = 29;
+/// Hue of the image (only for cameras).
 pub const CAP_PROP_HUE: i32 = 13;
 pub const CAP_PROP_IMAGES_BASE: i32 = 18000;
 pub const CAP_PROP_IMAGES_LAST: i32 = 19000;
@@ -119,265 +180,502 @@ pub const CAP_PROP_IOS_DEVICE_TORCH: i32 = 9005;
 pub const CAP_PROP_IOS_DEVICE_WHITEBALANCE: i32 = 9004;
 pub const CAP_PROP_IRIS: i32 = 36;
 pub const CAP_PROP_ISO_SPEED: i32 = 30;
+/// Backend-specific value indicating the current capture mode.
 pub const CAP_PROP_MODE: i32 = 9;
 pub const CAP_PROP_MONOCHROME: i32 = 19;
 pub const CAP_PROP_OPENNI2_MIRROR: i32 = 111;
 pub const CAP_PROP_OPENNI2_SYNC: i32 = 110;
 pub const CAP_PROP_OPENNI_APPROX_FRAME_SYNC: i32 = 105;
+/// In mm
 pub const CAP_PROP_OPENNI_BASELINE: i32 = 102;
 pub const CAP_PROP_OPENNI_CIRCLE_BUFFER: i32 = 107;
+/// In pixels
 pub const CAP_PROP_OPENNI_FOCAL_LENGTH: i32 = 103;
+/// In mm
 pub const CAP_PROP_OPENNI_FRAME_MAX_DEPTH: i32 = 101;
 pub const CAP_PROP_OPENNI_GENERATOR_PRESENT: i32 = 109;
 pub const CAP_PROP_OPENNI_MAX_BUFFER_SIZE: i32 = 106;
 pub const CAP_PROP_OPENNI_MAX_TIME_DURATION: i32 = 108;
 pub const CAP_PROP_OPENNI_OUTPUT_MODE: i32 = 100;
+/// Flag that synchronizes the remapping depth map to image map
 pub const CAP_PROP_OPENNI_REGISTRATION: i32 = 104;
 pub const CAP_PROP_OPENNI_REGISTRATION_ON: i32 = 104;
 pub const CAP_PROP_PAN: i32 = 33;
+/// Relative position of the video file: 0=start of the film, 1=end of the film.
 pub const CAP_PROP_POS_AVI_RATIO: i32 = 2;
+/// 0-based index of the frame to be decoded/captured next.
 pub const CAP_PROP_POS_FRAMES: i32 = 1;
+/// Current position of the video file in milliseconds.
 pub const CAP_PROP_POS_MSEC: i32 = 0;
+/// Horizontal binning factor.
 pub const CAP_PROP_PVAPI_BINNINGX: i32 = 304;
+/// Vertical binning factor.
 pub const CAP_PROP_PVAPI_BINNINGY: i32 = 305;
+/// Horizontal sub-sampling of the image.
 pub const CAP_PROP_PVAPI_DECIMATIONHORIZONTAL: i32 = 302;
+/// Vertical sub-sampling of the image.
 pub const CAP_PROP_PVAPI_DECIMATIONVERTICAL: i32 = 303;
+/// FrameStartTriggerMode: Determines how a frame is initiated.
 pub const CAP_PROP_PVAPI_FRAMESTARTTRIGGERMODE: i32 = 301;
+/// IP for enable multicast master mode. 0 for disable multicast.
 pub const CAP_PROP_PVAPI_MULTICASTIP: i32 = 300;
+/// Pixel format.
 pub const CAP_PROP_PVAPI_PIXELFORMAT: i32 = 306;
+/// Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently).
 pub const CAP_PROP_RECTIFICATION: i32 = 18;
 pub const CAP_PROP_ROLL: i32 = 35;
+/// Sample aspect ratio: num/den (den)
 pub const CAP_PROP_SAR_DEN: i32 = 41;
+/// Sample aspect ratio: num/den (num)
 pub const CAP_PROP_SAR_NUM: i32 = 40;
+/// Saturation of the image (only for cameras).
 pub const CAP_PROP_SATURATION: i32 = 12;
+/// Pop up video/camera filter dialog (note: only supported by DSHOW backend currently. The property value is ignored)
 pub const CAP_PROP_SETTINGS: i32 = 37;
 pub const CAP_PROP_SHARPNESS: i32 = 20;
+/// Exposure speed. Can be readonly, depends on camera program.
 pub const CAP_PROP_SPEED: i32 = 17007;
 pub const CAP_PROP_TEMPERATURE: i32 = 23;
 pub const CAP_PROP_TILT: i32 = 34;
 pub const CAP_PROP_TRIGGER: i32 = 24;
 pub const CAP_PROP_TRIGGER_DELAY: i32 = 25;
+/// Enter liveview mode.
 pub const CAP_PROP_VIEWFINDER: i32 = 17010;
+/// white-balance color temperature
 pub const CAP_PROP_WB_TEMPERATURE: i32 = 45;
+/// Currently unsupported.
 pub const CAP_PROP_WHITE_BALANCE_BLUE_U: i32 = 17;
 pub const CAP_PROP_WHITE_BALANCE_RED_V: i32 = 26;
+/// Acquisition buffer size in buffer_size_unit. Default bytes.
 pub const CAP_PROP_XI_ACQ_BUFFER_SIZE: i32 = 548;
+/// Acquisition buffer size unit in bytes. Default 1. E.g. Value 1024 means that buffer_size is in KiBytes.
 pub const CAP_PROP_XI_ACQ_BUFFER_SIZE_UNIT: i32 = 549;
+/// Sets number of frames acquired by burst. This burst is used only if trigger is set to FrameBurstStart.
 pub const CAP_PROP_XI_ACQ_FRAME_BURST_COUNT: i32 = 499;
+/// Type of sensor frames timing.
 pub const CAP_PROP_XI_ACQ_TIMING_MODE: i32 = 538;
+/// Number of buffers to commit to low level.
 pub const CAP_PROP_XI_ACQ_TRANSPORT_BUFFER_COMMIT: i32 = 552;
+/// Acquisition transport buffer size in bytes.
 pub const CAP_PROP_XI_ACQ_TRANSPORT_BUFFER_SIZE: i32 = 550;
+/// Automatic exposure/gain.
 pub const CAP_PROP_XI_AEAG: i32 = 415;
+/// Average intensity of output signal AEAG should achieve(in %).
 pub const CAP_PROP_XI_AEAG_LEVEL: i32 = 419;
+/// Automatic exposure/gain ROI Height.
 pub const CAP_PROP_XI_AEAG_ROI_HEIGHT: i32 = 442;
+/// Automatic exposure/gain ROI offset X.
 pub const CAP_PROP_XI_AEAG_ROI_OFFSET_X: i32 = 439;
+/// Automatic exposure/gain ROI offset Y.
 pub const CAP_PROP_XI_AEAG_ROI_OFFSET_Y: i32 = 440;
+/// Automatic exposure/gain ROI Width.
 pub const CAP_PROP_XI_AEAG_ROI_WIDTH: i32 = 441;
+/// Maximum limit of exposure in AEAG procedure.
 pub const CAP_PROP_XI_AE_MAX_LIMIT: i32 = 417;
+/// Maximum limit of gain in AEAG procedure.
 pub const CAP_PROP_XI_AG_MAX_LIMIT: i32 = 418;
+/// Enable applying of CMS profiles to xiGetImage (see XI_PRM_INPUT_CMS_PROFILE, XI_PRM_OUTPUT_CMS_PROFILE).
 pub const CAP_PROP_XI_APPLY_CMS: i32 = 471;
+/// Automatic bandwidth calculation.
 pub const CAP_PROP_XI_AUTO_BANDWIDTH_CALCULATION: i32 = 573;
+/// Automatic white balance.
 pub const CAP_PROP_XI_AUTO_WB: i32 = 414;
+/// Calculate and returns available interface bandwidth(int Megabits).
 pub const CAP_PROP_XI_AVAILABLE_BANDWIDTH: i32 = 539;
+/// Horizontal Binning - number of horizontal photo-sensitive cells to combine together.
 pub const CAP_PROP_XI_BINNING_HORIZONTAL: i32 = 429;
+/// Binning pattern type.
 pub const CAP_PROP_XI_BINNING_PATTERN: i32 = 430;
+/// Binning engine selector.
 pub const CAP_PROP_XI_BINNING_SELECTOR: i32 = 427;
+/// Vertical Binning - number of vertical photo-sensitive cells to combine together.
 pub const CAP_PROP_XI_BINNING_VERTICAL: i32 = 428;
+/// Correction of bad pixels.
 pub const CAP_PROP_XI_BPC: i32 = 445;
+/// Queue of field/frame buffers.
 pub const CAP_PROP_XI_BUFFERS_QUEUE_SIZE: i32 = 551;
+/// Data move policy.
 pub const CAP_PROP_XI_BUFFER_POLICY: i32 = 540;
+/// Color Correction Matrix element [0][0].
 pub const CAP_PROP_XI_CC_MATRIX_00: i32 = 479;
+/// Color Correction Matrix element [0][1].
 pub const CAP_PROP_XI_CC_MATRIX_01: i32 = 480;
+/// Color Correction Matrix element [0][2].
 pub const CAP_PROP_XI_CC_MATRIX_02: i32 = 481;
+/// Color Correction Matrix element [0][3].
 pub const CAP_PROP_XI_CC_MATRIX_03: i32 = 482;
+/// Color Correction Matrix element [1][0].
 pub const CAP_PROP_XI_CC_MATRIX_10: i32 = 483;
+/// Color Correction Matrix element [1][1].
 pub const CAP_PROP_XI_CC_MATRIX_11: i32 = 484;
+/// Color Correction Matrix element [1][2].
 pub const CAP_PROP_XI_CC_MATRIX_12: i32 = 485;
+/// Color Correction Matrix element [1][3].
 pub const CAP_PROP_XI_CC_MATRIX_13: i32 = 486;
+/// Color Correction Matrix element [2][0].
 pub const CAP_PROP_XI_CC_MATRIX_20: i32 = 487;
+/// Color Correction Matrix element [2][1].
 pub const CAP_PROP_XI_CC_MATRIX_21: i32 = 488;
+/// Color Correction Matrix element [2][2].
 pub const CAP_PROP_XI_CC_MATRIX_22: i32 = 489;
+/// Color Correction Matrix element [2][3].
 pub const CAP_PROP_XI_CC_MATRIX_23: i32 = 490;
+/// Color Correction Matrix element [3][0].
 pub const CAP_PROP_XI_CC_MATRIX_30: i32 = 491;
+/// Color Correction Matrix element [3][1].
 pub const CAP_PROP_XI_CC_MATRIX_31: i32 = 492;
+/// Color Correction Matrix element [3][2].
 pub const CAP_PROP_XI_CC_MATRIX_32: i32 = 493;
+/// Color Correction Matrix element [3][3].
 pub const CAP_PROP_XI_CC_MATRIX_33: i32 = 494;
+/// Camera sensor temperature.
 pub const CAP_PROP_XI_CHIP_TEMP: i32 = 468;
+/// Mode of color management system.
 pub const CAP_PROP_XI_CMS: i32 = 470;
+/// Returns color filter array type of RAW data.
 pub const CAP_PROP_XI_COLOR_FILTER_ARRAY: i32 = 475;
+/// Correction of column FPN.
 pub const CAP_PROP_XI_COLUMN_FPN_CORRECTION: i32 = 555;
+/// Start camera cooling.
 pub const CAP_PROP_XI_COOLING: i32 = 466;
+/// Select counter.
 pub const CAP_PROP_XI_COUNTER_SELECTOR: i32 = 536;
+/// Counter status.
 pub const CAP_PROP_XI_COUNTER_VALUE: i32 = 537;
+/// Output data format.
 pub const CAP_PROP_XI_DATA_FORMAT: i32 = 401;
+/// Enable/Disable debounce to selected GPI.
 pub const CAP_PROP_XI_DEBOUNCE_EN: i32 = 507;
+/// Debounce polarity (pol = 1 t0 - falling edge, t1 - rising edge).
 pub const CAP_PROP_XI_DEBOUNCE_POL: i32 = 510;
+/// Debounce time (x * 10us).
 pub const CAP_PROP_XI_DEBOUNCE_T0: i32 = 508;
+/// Debounce time (x * 10us).
 pub const CAP_PROP_XI_DEBOUNCE_T1: i32 = 509;
+/// Set debug level.
 pub const CAP_PROP_XI_DEBUG_LEVEL: i32 = 572;
+/// Horizontal Decimation - horizontal sub-sampling of the image - reduces the horizontal resolution of the image by the specified vertical decimation factor.
 pub const CAP_PROP_XI_DECIMATION_HORIZONTAL: i32 = 433;
+/// Decimation pattern type.
 pub const CAP_PROP_XI_DECIMATION_PATTERN: i32 = 434;
+/// Decimation engine selector.
 pub const CAP_PROP_XI_DECIMATION_SELECTOR: i32 = 431;
+/// Vertical Decimation - vertical sub-sampling of the image - reduces the vertical resolution of the image by the specified vertical decimation factor.
 pub const CAP_PROP_XI_DECIMATION_VERTICAL: i32 = 432;
+/// Set default Color Correction Matrix.
 pub const CAP_PROP_XI_DEFAULT_CC_MATRIX: i32 = 495;
+/// Returns device model id.
 pub const CAP_PROP_XI_DEVICE_MODEL_ID: i32 = 521;
+/// Resets the camera to default state.
 pub const CAP_PROP_XI_DEVICE_RESET: i32 = 554;
+/// Returns device serial number.
 pub const CAP_PROP_XI_DEVICE_SN: i32 = 522;
+/// Change image resolution by binning or skipping.
 pub const CAP_PROP_XI_DOWNSAMPLING: i32 = 400;
+/// Change image downsampling type.
 pub const CAP_PROP_XI_DOWNSAMPLING_TYPE: i32 = 426;
+/// Exposure time in microseconds.
 pub const CAP_PROP_XI_EXPOSURE: i32 = 421;
+/// Sets the number of times of exposure in one frame.
 pub const CAP_PROP_XI_EXPOSURE_BURST_COUNT: i32 = 422;
+/// Exposure priority (0.5 - exposure 50%, gain 50%).
 pub const CAP_PROP_XI_EXP_PRIORITY: i32 = 416;
+/// Setting of key enables file operations on some cameras.
 pub const CAP_PROP_XI_FFS_ACCESS_KEY: i32 = 583;
+/// File number.
 pub const CAP_PROP_XI_FFS_FILE_ID: i32 = 594;
+/// Size of file.
 pub const CAP_PROP_XI_FFS_FILE_SIZE: i32 = 580;
+/// Define framerate in Hz.
 pub const CAP_PROP_XI_FRAMERATE: i32 = 535;
+/// Size of free camera FFS.
 pub const CAP_PROP_XI_FREE_FFS_SIZE: i32 = 581;
+/// Gain in dB.
 pub const CAP_PROP_XI_GAIN: i32 = 424;
+/// Gain selector for parameter Gain allows to select different type of gains.
 pub const CAP_PROP_XI_GAIN_SELECTOR: i32 = 423;
+/// Chromaticity gamma.
 pub const CAP_PROP_XI_GAMMAC: i32 = 477;
+/// Luminosity gamma.
 pub const CAP_PROP_XI_GAMMAY: i32 = 476;
+/// Get general purpose level.
 pub const CAP_PROP_XI_GPI_LEVEL: i32 = 408;
+/// Set general purpose input mode.
 pub const CAP_PROP_XI_GPI_MODE: i32 = 407;
+/// Selects general purpose input.
 pub const CAP_PROP_XI_GPI_SELECTOR: i32 = 406;
+/// Set general purpose output mode.
 pub const CAP_PROP_XI_GPO_MODE: i32 = 410;
+/// Selects general purpose output.
 pub const CAP_PROP_XI_GPO_SELECTOR: i32 = 409;
+/// Enable High Dynamic Range feature.
 pub const CAP_PROP_XI_HDR: i32 = 559;
+/// The number of kneepoints in the PWLR.
 pub const CAP_PROP_XI_HDR_KNEEPOINT_COUNT: i32 = 560;
+/// Position of first kneepoint(in % of XI_PRM_EXPOSURE).
 pub const CAP_PROP_XI_HDR_T1: i32 = 561;
+/// Position of second kneepoint (in % of XI_PRM_EXPOSURE).
 pub const CAP_PROP_XI_HDR_T2: i32 = 562;
+/// Height of the Image provided by the device (in pixels).
 pub const CAP_PROP_XI_HEIGHT: i32 = 452;
+/// Camera housing back side temperature.
 pub const CAP_PROP_XI_HOUS_BACK_SIDE_TEMP: i32 = 590;
+/// Camera housing temperature.
 pub const CAP_PROP_XI_HOUS_TEMP: i32 = 469;
+/// Returns hardware revision number.
 pub const CAP_PROP_XI_HW_REVISION: i32 = 571;
+/// Last image black level counts. Can be used for Offline processing to recall it.
 pub const CAP_PROP_XI_IMAGE_BLACK_LEVEL: i32 = 565;
+/// bitdepth of data returned by function xiGetImage.
 pub const CAP_PROP_XI_IMAGE_DATA_BIT_DEPTH: i32 = 462;
+/// Output data format.
 pub const CAP_PROP_XI_IMAGE_DATA_FORMAT: i32 = 435;
+/// The alpha channel of RGB32 output image format.
 pub const CAP_PROP_XI_IMAGE_DATA_FORMAT_RGB32_ALPHA: i32 = 529;
+/// Returns 1 for color cameras.
 pub const CAP_PROP_XI_IMAGE_IS_COLOR: i32 = 474;
+/// Buffer size in bytes sufficient for output image returned by xiGetImage.
 pub const CAP_PROP_XI_IMAGE_PAYLOAD_SIZE: i32 = 530;
+/// Returns 1 for cameras that support cooling.
 pub const CAP_PROP_XI_IS_COOLED: i32 = 465;
+/// Returns 1 if camera connected and works properly.
 pub const CAP_PROP_XI_IS_DEVICE_EXIST: i32 = 547;
+/// Value of first kneepoint (% of sensor saturation).
 pub const CAP_PROP_XI_KNEEPOINT1: i32 = 563;
+/// Value of second kneepoint (% of sensor saturation).
 pub const CAP_PROP_XI_KNEEPOINT2: i32 = 564;
+/// Define camera signalling LED functionality.
 pub const CAP_PROP_XI_LED_MODE: i32 = 412;
+/// Selects camera signalling LED.
 pub const CAP_PROP_XI_LED_SELECTOR: i32 = 411;
+/// Current lens aperture value in stops. Examples: 2.8, 4, 5.6, 8, 11.
 pub const CAP_PROP_XI_LENS_APERTURE_VALUE: i32 = 512;
+/// Allows access to lens feature value currently selected by XI_PRM_LENS_FEATURE_SELECTOR.
 pub const CAP_PROP_XI_LENS_FEATURE: i32 = 518;
+/// Selects the current feature which is accessible by XI_PRM_LENS_FEATURE.
 pub const CAP_PROP_XI_LENS_FEATURE_SELECTOR: i32 = 517;
+/// Lens focal distance in mm.
 pub const CAP_PROP_XI_LENS_FOCAL_LENGTH: i32 = 516;
+/// Lens focus distance in cm.
 pub const CAP_PROP_XI_LENS_FOCUS_DISTANCE: i32 = 515;
+/// Moves lens focus motor by steps set in XI_PRM_LENS_FOCUS_MOVEMENT_VALUE.
 pub const CAP_PROP_XI_LENS_FOCUS_MOVE: i32 = 514;
+/// Lens current focus movement value to be used by XI_PRM_LENS_FOCUS_MOVE in motor steps.
 pub const CAP_PROP_XI_LENS_FOCUS_MOVEMENT_VALUE: i32 = 513;
+/// Status of lens control interface. This shall be set to XI_ON before any Lens operations.
 pub const CAP_PROP_XI_LENS_MODE: i32 = 511;
+/// Set/get bandwidth(datarate)(in Megabits).
 pub const CAP_PROP_XI_LIMIT_BANDWIDTH: i32 = 459;
+/// Activates LUT.
 pub const CAP_PROP_XI_LUT_EN: i32 = 541;
+/// Control the index (offset) of the coefficient to access in the LUT.
 pub const CAP_PROP_XI_LUT_INDEX: i32 = 542;
+/// Value at entry LUTIndex of the LUT.
 pub const CAP_PROP_XI_LUT_VALUE: i32 = 543;
+/// Calculates White Balance(must be called during acquisition).
 pub const CAP_PROP_XI_MANUAL_WB: i32 = 413;
+/// Horizontal offset from the origin to the area of interest (in pixels).
 pub const CAP_PROP_XI_OFFSET_X: i32 = 402;
+/// Vertical offset from the origin to the area of interest (in pixels).
 pub const CAP_PROP_XI_OFFSET_Y: i32 = 403;
+/// Device output data bit depth.
 pub const CAP_PROP_XI_OUTPUT_DATA_BIT_DEPTH: i32 = 461;
+/// Device output data packing (or grouping) enabled. Packing could be enabled if output_data_bit_depth > 8 and packing capability is available.
 pub const CAP_PROP_XI_OUTPUT_DATA_PACKING: i32 = 463;
+/// Data packing type. Some cameras supports only specific packing type.
 pub const CAP_PROP_XI_OUTPUT_DATA_PACKING_TYPE: i32 = 464;
+/// GetImage returns most recent frame.
 pub const CAP_PROP_XI_RECENT_FRAME: i32 = 553;
+/// Activates/deactivates Region selected by Region Selector.
 pub const CAP_PROP_XI_REGION_MODE: i32 = 595;
+/// Selects Region in Multiple ROI which parameters are set by width, height, ... ,region mode.
 pub const CAP_PROP_XI_REGION_SELECTOR: i32 = 589;
+/// Correction of row FPN.
 pub const CAP_PROP_XI_ROW_FPN_CORRECTION: i32 = 591;
+/// Camera sensor board temperature.
 pub const CAP_PROP_XI_SENSOR_BOARD_TEMP: i32 = 596;
+/// Sensor clock frequency in Hz.
 pub const CAP_PROP_XI_SENSOR_CLOCK_FREQ_HZ: i32 = 532;
+/// Sensor clock frequency index. Sensor with selected frequencies have possibility to set the frequency only by this index.
 pub const CAP_PROP_XI_SENSOR_CLOCK_FREQ_INDEX: i32 = 533;
+/// Sensor output data bit depth.
 pub const CAP_PROP_XI_SENSOR_DATA_BIT_DEPTH: i32 = 460;
+/// Selects the current feature which is accessible by XI_PRM_SENSOR_FEATURE_VALUE.
 pub const CAP_PROP_XI_SENSOR_FEATURE_SELECTOR: i32 = 585;
+/// Allows access to sensor feature value currently selected by XI_PRM_SENSOR_FEATURE_SELECTOR.
 pub const CAP_PROP_XI_SENSOR_FEATURE_VALUE: i32 = 586;
+/// Current sensor mode. Allows to select sensor mode by one integer. Setting of this parameter affects: image dimensions and downsampling.
 pub const CAP_PROP_XI_SENSOR_MODE: i32 = 558;
+/// Number of output channels from sensor used for data transfer.
 pub const CAP_PROP_XI_SENSOR_OUTPUT_CHANNEL_COUNT: i32 = 534;
+/// Number of taps.
 pub const CAP_PROP_XI_SENSOR_TAPS: i32 = 437;
+/// Sharpness Strength.
 pub const CAP_PROP_XI_SHARPNESS: i32 = 478;
+/// Change sensor shutter type(CMOS sensor).
 pub const CAP_PROP_XI_SHUTTER_TYPE: i32 = 436;
+/// Set sensor target temperature for cooling.
 pub const CAP_PROP_XI_TARGET_TEMP: i32 = 467;
+/// Selects which test pattern type is generated by the selected generator.
 pub const CAP_PROP_XI_TEST_PATTERN: i32 = 588;
+/// Selects which test pattern generator is controlled by the TestPattern feature.
 pub const CAP_PROP_XI_TEST_PATTERN_GENERATOR_SELECTOR: i32 = 587;
+/// Image capture timeout in milliseconds.
 pub const CAP_PROP_XI_TIMEOUT: i32 = 420;
+/// Current format of pixels on transport layer.
 pub const CAP_PROP_XI_TRANSPORT_PIXEL_FORMAT: i32 = 531;
+/// Specifies the delay in microseconds (us) to apply after the trigger reception before activating it.
 pub const CAP_PROP_XI_TRG_DELAY: i32 = 544;
+/// Selects the type of trigger.
 pub const CAP_PROP_XI_TRG_SELECTOR: i32 = 498;
+/// Generates an internal trigger. PRM_TRG_SOURCE must be set to TRG_SOFTWARE.
 pub const CAP_PROP_XI_TRG_SOFTWARE: i32 = 405;
+/// Defines source of trigger.
 pub const CAP_PROP_XI_TRG_SOURCE: i32 = 404;
+/// Defines how time stamp reset engine will be armed.
 pub const CAP_PROP_XI_TS_RST_MODE: i32 = 545;
+/// Defines which source will be used for timestamp reset. Writing this parameter will trigger settings of engine (arming).
 pub const CAP_PROP_XI_TS_RST_SOURCE: i32 = 546;
+/// Size of used camera FFS.
 pub const CAP_PROP_XI_USED_FFS_SIZE: i32 = 582;
+/// White balance blue coefficient.
 pub const CAP_PROP_XI_WB_KB: i32 = 450;
+/// White balance green coefficient.
 pub const CAP_PROP_XI_WB_KG: i32 = 449;
+/// White balance red coefficient.
 pub const CAP_PROP_XI_WB_KR: i32 = 448;
+/// Width of the Image provided by the device (in pixels).
 pub const CAP_PROP_XI_WIDTH: i32 = 451;
 pub const CAP_PROP_ZOOM: i32 = 27;
+/// PvAPI, Prosilica GigE SDK
 pub const CAP_PVAPI: i32 = 800;
+/// 2 out of 16 decimation
 pub const CAP_PVAPI_DECIMATION_2OUTOF16: i32 = 8;
+/// 2 out of 4 decimation
 pub const CAP_PVAPI_DECIMATION_2OUTOF4: i32 = 2;
+/// 2 out of 8 decimation
 pub const CAP_PVAPI_DECIMATION_2OUTOF8: i32 = 4;
+/// Off
 pub const CAP_PVAPI_DECIMATION_OFF: i32 = 1;
+/// FixedRate
 pub const CAP_PVAPI_FSTRIGMODE_FIXEDRATE: i32 = 3;
+/// Freerun
 pub const CAP_PVAPI_FSTRIGMODE_FREERUN: i32 = 0;
+/// Software
 pub const CAP_PVAPI_FSTRIGMODE_SOFTWARE: i32 = 4;
+/// SyncIn1
 pub const CAP_PVAPI_FSTRIGMODE_SYNCIN1: i32 = 1;
+/// SyncIn2
 pub const CAP_PVAPI_FSTRIGMODE_SYNCIN2: i32 = 2;
+/// Bayer16
 pub const CAP_PVAPI_PIXELFORMAT_BAYER16: i32 = 4;
+/// Bayer8
 pub const CAP_PVAPI_PIXELFORMAT_BAYER8: i32 = 3;
+/// Bgr24
 pub const CAP_PVAPI_PIXELFORMAT_BGR24: i32 = 6;
+/// Bgra32
 pub const CAP_PVAPI_PIXELFORMAT_BGRA32: i32 = 8;
+/// Mono16
 pub const CAP_PVAPI_PIXELFORMAT_MONO16: i32 = 2;
+/// Mono8
 pub const CAP_PVAPI_PIXELFORMAT_MONO8: i32 = 1;
+/// Rgb24
 pub const CAP_PVAPI_PIXELFORMAT_RGB24: i32 = 5;
+/// Rgba32
 pub const CAP_PVAPI_PIXELFORMAT_RGBA32: i32 = 7;
+/// QuickTime (obsolete, removed)
 pub const CAP_QT: i32 = 500;
+/// Synonym for CAP_INTELPERC
 pub const CAP_REALSENSE: i32 = 1500;
+/// Unicap drivers (obsolete, removed)
 pub const CAP_UNICAP: i32 = 600;
+/// V4L/V4L2 capturing support
 pub const CAP_V4L: i32 = 200;
+/// Same as CAP_V4L
 pub const CAP_V4L2: i32 = 200;
+/// Video For Windows (obsolete, removed)
 pub const CAP_VFW: i32 = 200;
+/// Microsoft Windows Runtime using Media Foundation
 pub const CAP_WINRT: i32 = 1410;
+/// XIMEA Camera API
 pub const CAP_XIAPI: i32 = 1100;
+/// XINE engine (Linux)
 pub const CAP_XINE: i32 = 2400;
+/// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
+/// Number of stripes for parallel encoding. -1 for auto detection.
 pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
+/// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
 pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 
 #[repr(C)]
 #[derive(Debug)]
 pub enum VideoCaptureAPIs {
+    /// Auto detect == 0
     CAP_ANY = CAP_ANY as isize,
+    // Video For Windows (obsolete, removed)
     // CAP_VFW = CAP_VFW as isize, // duplicate discriminant
+    /// V4L/V4L2 capturing support
     CAP_V4L = CAP_V4L as isize,
+    // Same as CAP_V4L
     // CAP_V4L2 = CAP_V4L2 as isize, // duplicate discriminant
+    /// IEEE 1394 drivers
     CAP_FIREWIRE = CAP_FIREWIRE as isize,
+    // Same value as CAP_FIREWIRE
     // CAP_FIREWARE = CAP_FIREWARE as isize, // duplicate discriminant
+    // Same value as CAP_FIREWIRE
     // CAP_IEEE1394 = CAP_IEEE1394 as isize, // duplicate discriminant
+    // Same value as CAP_FIREWIRE
     // CAP_DC1394 = CAP_DC1394 as isize, // duplicate discriminant
+    // Same value as CAP_FIREWIRE
     // CAP_CMU1394 = CAP_CMU1394 as isize, // duplicate discriminant
+    /// QuickTime (obsolete, removed)
     CAP_QT = CAP_QT as isize,
+    /// Unicap drivers (obsolete, removed)
     CAP_UNICAP = CAP_UNICAP as isize,
+    /// DirectShow (via videoInput)
     CAP_DSHOW = CAP_DSHOW as isize,
+    /// PvAPI, Prosilica GigE SDK
     CAP_PVAPI = CAP_PVAPI as isize,
+    /// OpenNI (for Kinect)
     CAP_OPENNI = CAP_OPENNI as isize,
+    /// OpenNI (for Asus Xtion)
     CAP_OPENNI_ASUS = CAP_OPENNI_ASUS as isize,
+    /// Android - not used
     CAP_ANDROID = CAP_ANDROID as isize,
+    /// XIMEA Camera API
     CAP_XIAPI = CAP_XIAPI as isize,
+    /// AVFoundation framework for iOS (OS X Lion will have the same API)
     CAP_AVFOUNDATION = CAP_AVFOUNDATION as isize,
+    /// Smartek Giganetix GigEVisionSDK
     CAP_GIGANETIX = CAP_GIGANETIX as isize,
+    /// Microsoft Media Foundation (via videoInput)
     CAP_MSMF = CAP_MSMF as isize,
+    /// Microsoft Windows Runtime using Media Foundation
     CAP_WINRT = CAP_WINRT as isize,
+    /// RealSense (former Intel Perceptual Computing SDK)
     CAP_INTELPERC = CAP_INTELPERC as isize,
+    // Synonym for CAP_INTELPERC
     // CAP_REALSENSE = CAP_REALSENSE as isize, // duplicate discriminant
+    /// OpenNI2 (for Kinect)
     CAP_OPENNI2 = CAP_OPENNI2 as isize,
+    /// OpenNI2 (for Asus Xtion and Occipital Structure sensors)
     CAP_OPENNI2_ASUS = CAP_OPENNI2_ASUS as isize,
+    /// gPhoto2 connection
     CAP_GPHOTO2 = CAP_GPHOTO2 as isize,
+    /// GStreamer
     CAP_GSTREAMER = CAP_GSTREAMER as isize,
+    /// Open and record video file or stream using the FFMPEG library
     CAP_FFMPEG = CAP_FFMPEG as isize,
+    /// OpenCV Image Sequence (e.g. img_%02d.jpg)
     CAP_IMAGES = CAP_IMAGES as isize,
+    /// Aravis SDK
     CAP_ARAVIS = CAP_ARAVIS as isize,
+    /// Built-in OpenCV MotionJPEG codec
     CAP_OPENCV_MJPEG = CAP_OPENCV_MJPEG as isize,
+    /// Intel MediaSDK
     CAP_INTEL_MFX = CAP_INTEL_MFX as isize,
+    /// XINE engine (Linux)
     CAP_XINE = CAP_XINE as isize,
 }
 

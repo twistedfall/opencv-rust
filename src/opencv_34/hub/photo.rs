@@ -28,16 +28,20 @@
 //!
 //! https://www.learnopencv.com/non-photorealistic-rendering-using-opencv-python-c/
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// Use Navier-Stokes based method
 pub const INPAINT_NS: i32 = 0;
+/// Use the algorithm proposed by Alexandru Telea [Telea04](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Telea04)
 pub const INPAINT_TELEA: i32 = 1;
 pub const LDR_SIZE: i32 = 256;
 pub const MIXED_CLONE: i32 = 2;
 pub const MONOCHROME_TRANSFER: i32 = 3;
 pub const NORMAL_CLONE: i32 = 1;
+/// Normalized Convolution Filtering
 pub const NORMCONV_FILTER: i32 = 2;
+/// Recursive Filtering
 pub const RECURS_FILTER: i32 = 1;
 
 /// Given an original color image, two differently colored versions of this image can be mixed

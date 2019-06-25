@@ -115,73 +115,129 @@
 //!
 //! # C API
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// indicates that ALT Key is pressed.
 pub const EVENT_FLAG_ALTKEY: i32 = 32;
+/// indicates that CTRL Key is pressed.
 pub const EVENT_FLAG_CTRLKEY: i32 = 8;
+/// indicates that the left mouse button is down.
 pub const EVENT_FLAG_LBUTTON: i32 = 1;
+/// indicates that the middle mouse button is down.
 pub const EVENT_FLAG_MBUTTON: i32 = 4;
+/// indicates that the right mouse button is down.
 pub const EVENT_FLAG_RBUTTON: i32 = 2;
+/// indicates that SHIFT Key is pressed.
 pub const EVENT_FLAG_SHIFTKEY: i32 = 16;
+/// indicates that left mouse button is double clicked.
 pub const EVENT_LBUTTONDBLCLK: i32 = 7;
+/// indicates that the left mouse button is pressed.
 pub const EVENT_LBUTTONDOWN: i32 = 1;
+/// indicates that left mouse button is released.
 pub const EVENT_LBUTTONUP: i32 = 4;
+/// indicates that middle mouse button is double clicked.
 pub const EVENT_MBUTTONDBLCLK: i32 = 9;
+/// indicates that the middle mouse button is pressed.
 pub const EVENT_MBUTTONDOWN: i32 = 3;
+/// indicates that middle mouse button is released.
 pub const EVENT_MBUTTONUP: i32 = 6;
+/// positive and negative values mean right and left scrolling, respectively.
 pub const EVENT_MOUSEHWHEEL: i32 = 11;
+/// indicates that the mouse pointer has moved over the window.
 pub const EVENT_MOUSEMOVE: i32 = 0;
+/// positive and negative values mean forward and backward scrolling, respectively.
 pub const EVENT_MOUSEWHEEL: i32 = 10;
+/// indicates that right mouse button is double clicked.
 pub const EVENT_RBUTTONDBLCLK: i32 = 8;
+/// indicates that the right mouse button is pressed.
 pub const EVENT_RBUTTONDOWN: i32 = 2;
+/// indicates that right mouse button is released.
 pub const EVENT_RBUTTONUP: i32 = 5;
+/// Checkbox button.
 pub const QT_CHECKBOX: i32 = 1;
+/// Weight of 87
 pub const QT_FONT_BLACK: i32 = 87;
+/// Weight of 75
 pub const QT_FONT_BOLD: i32 = 75;
+/// Weight of 63
 pub const QT_FONT_DEMIBOLD: i32 = 63;
+/// Weight of 25
 pub const QT_FONT_LIGHT: i32 = 25;
+/// Weight of 50
 pub const QT_FONT_NORMAL: i32 = 50;
+/// Button should create a new buttonbar
 pub const QT_NEW_BUTTONBAR: i32 = 1024;
+/// Push button.
 pub const QT_PUSH_BUTTON: i32 = 0;
+/// Radiobox button.
 pub const QT_RADIOBOX: i32 = 2;
+/// Italic font.
 pub const QT_STYLE_ITALIC: i32 = 1;
+/// Normal font.
 pub const QT_STYLE_NORMAL: i32 = 0;
+/// Oblique font.
 pub const QT_STYLE_OBLIQUE: i32 = 2;
+/// the user cannot resize the window, the size is constrainted by the image displayed.
 pub const WINDOW_AUTOSIZE: i32 = 0x00000001;
+/// the image expends as much as it can (no ratio constraint).
 pub const WINDOW_FREERATIO: i32 = 0x00000100;
+/// change the window to fullscreen.
 pub const WINDOW_FULLSCREEN: i32 = 1;
+/// status bar and tool bar
 pub const WINDOW_GUI_EXPANDED: i32 = 0x00000000;
+/// old fashious way
 pub const WINDOW_GUI_NORMAL: i32 = 0x00000010;
+/// the ratio of the image is respected.
 pub const WINDOW_KEEPRATIO: i32 = 0x00000000;
+/// the user can resize the window (no constraint) / also use to switch a fullscreen window to a normal size.
 pub const WINDOW_NORMAL: i32 = 0x00000000;
+/// window with opengl support.
 pub const WINDOW_OPENGL: i32 = 0x00001000;
+/// window's aspect ration (can be set to WINDOW_FREERATIO or WINDOW_KEEPRATIO).
 pub const WND_PROP_ASPECT_RATIO: i32 = 2;
+/// autosize property      (can be WINDOW_NORMAL or WINDOW_AUTOSIZE).
 pub const WND_PROP_AUTOSIZE: i32 = 1;
+/// fullscreen property    (can be WINDOW_NORMAL or WINDOW_FULLSCREEN).
 pub const WND_PROP_FULLSCREEN: i32 = 0;
+/// opengl support.
 pub const WND_PROP_OPENGL: i32 = 3;
+/// checks whether the window exists and is visible
 pub const WND_PROP_VISIBLE: i32 = 4;
 
 #[repr(C)]
 #[derive(Debug)]
 pub enum WindowFlags {
+    /// the user can resize the window (no constraint) / also use to switch a fullscreen window to a normal size.
     WINDOW_NORMAL = WINDOW_NORMAL as isize,
+    /// the user cannot resize the window, the size is constrainted by the image displayed.
     WINDOW_AUTOSIZE = WINDOW_AUTOSIZE as isize,
+    /// window with opengl support.
     WINDOW_OPENGL = WINDOW_OPENGL as isize,
+    // change the window to fullscreen.
     // WINDOW_FULLSCREEN = WINDOW_FULLSCREEN as isize, // duplicate discriminant
+    /// the image expends as much as it can (no ratio constraint).
     WINDOW_FREERATIO = WINDOW_FREERATIO as isize,
+    // the ratio of the image is respected.
     // WINDOW_KEEPRATIO = WINDOW_KEEPRATIO as isize, // duplicate discriminant
+    // status bar and tool bar
     // WINDOW_GUI_EXPANDED = WINDOW_GUI_EXPANDED as isize, // duplicate discriminant
+    /// old fashious way
     WINDOW_GUI_NORMAL = WINDOW_GUI_NORMAL as isize,
 }
 
 #[repr(C)]
 #[derive(Debug)]
 pub enum WindowPropertyFlags {
+    /// fullscreen property    (can be WINDOW_NORMAL or WINDOW_FULLSCREEN).
     WND_PROP_FULLSCREEN = WND_PROP_FULLSCREEN as isize,
+    /// autosize property      (can be WINDOW_NORMAL or WINDOW_AUTOSIZE).
     WND_PROP_AUTOSIZE = WND_PROP_AUTOSIZE as isize,
+    /// window's aspect ration (can be set to WINDOW_FREERATIO or WINDOW_KEEPRATIO).
     WND_PROP_ASPECT_RATIO = WND_PROP_ASPECT_RATIO as isize,
+    /// opengl support.
     WND_PROP_OPENGL = WND_PROP_OPENGL as isize,
+    /// checks whether the window exists and is visible
     WND_PROP_VISIBLE = WND_PROP_VISIBLE as isize,
 }
 

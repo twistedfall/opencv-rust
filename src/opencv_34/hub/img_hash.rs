@@ -58,10 +58,12 @@
 //!
 //! Tham Ngap Wei, thamngapwei@gmail.com
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// use fewer block and generate 16*16/8 uchar hash value
 pub const BLOCK_MEAN_HASH_MODE_0: i32 = 0;
+/// use block blocks(step sizes/2), generate 31*31/8 + 1 uchar hash value
 pub const BLOCK_MEAN_HASH_MODE_1: i32 = 1;
 
 // boxed class cv::img_hash::AverageHash

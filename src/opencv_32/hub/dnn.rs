@@ -8,7 +8,7 @@
 //! Functionality of this module is designed only for forward pass computations (i. e. network testing).
 //! A network training is in principle not supported.
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const EltwiseLayer_PROD: i32 = 0;
@@ -165,6 +165,31 @@ impl BNLLLayer {
 // Generating impl for trait cv::dnn::BaseConvolutionLayer (trait)
 pub trait BaseConvolutionLayer: crate::dnn::Layer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
+    fn kernel(&self) -> Result<core::Size> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_kernel_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
+    }
+    
+    fn stride(&self) -> Result<core::Size> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_stride_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
+    }
+    
+    fn pad(&self) -> Result<core::Size> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_pad_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
+    }
+    
+    fn dilation(&self) -> Result<core::Size> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_dilation_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
+    }
+    
+    fn pad_mode(&mut self) -> Result<String> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_padMode(self.as_raw_BaseConvolutionLayer()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    fn set_pad_mode(&mut self, val: &str) -> Result<()> {
+        string_arg!(mut val);
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_set_padMode_String(self.as_raw_BaseConvolutionLayer(), val.as_ptr() as _) }.into_result()
+    }
+    
 }
 
 // boxed class cv::dnn::ConcatLayer
@@ -270,12 +295,12 @@ impl crate::dnn::Layer for CropLayer {
 
 impl CropLayer {
 
-    pub fn create(start_axis: i32, offset: &types::VectorOfint) -> Result<types::PtrOfCropLayer> {
-        unsafe { sys::cv_dnn_CropLayer_create_int_VectorOfint(start_axis, offset.as_raw_VectorOfint()) }.into_result().map(|ptr| types::PtrOfCropLayer { ptr })
-    }
-    
     pub fn start_axis(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_CropLayer_startAxis_const(self.as_raw_CropLayer()) }.into_result()
+    }
+    
+    pub fn create(start_axis: i32, offset: &types::VectorOfint) -> Result<types::PtrOfCropLayer> {
+        unsafe { sys::cv_dnn_CropLayer_create_int_VectorOfint(start_axis, offset.as_raw_VectorOfint()) }.into_result().map(|ptr| types::PtrOfCropLayer { ptr })
     }
     
 }
@@ -380,6 +405,7 @@ impl DictValue {
         unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
+    /// Constructs integer scalar
     ///
     /// ## C++ default parameters
     /// * i: 0
@@ -387,28 +413,26 @@ impl DictValue {
         unsafe { sys::cv_dnn_DictValue_DictValue_int64(i) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs integer scalar
+    /// Constructs integer scalar
     pub fn from_i32(i: i32) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_int(i) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs integer scalar
+    /// Constructs integer scalar
     pub fn from_u32(p: u32) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_unsigned(p) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs integer scalar
+    /// Constructs floating point scalar
     pub fn from_f64(p: f64) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_double(p) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs string scalar
     pub fn from_str(s: &str) -> Result<crate::dnn::DictValue> {
         string_arg!(s);
         unsafe { sys::cv_dnn_DictValue_DictValue_const_char_X(s.as_ptr()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Tries to convert array element with specified index to requested type and returns its.
     pub fn size(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_DictValue_size_const(self.as_raw_DictValue()) }.into_result()
     }
@@ -492,15 +516,15 @@ impl crate::dnn::Layer for InnerProductLayer {
 
 impl InnerProductLayer {
 
+    pub fn axis(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_InnerProductLayer_axis_const(self.as_raw_InnerProductLayer()) }.into_result()
+    }
+    
     ///
     /// ## C++ default parameters
     /// * axis: 1
     pub fn create(axis: i32) -> Result<types::PtrOfInnerProductLayer> {
         unsafe { sys::cv_dnn_InnerProductLayer_create_int(axis) }.into_result().map(|ptr| types::PtrOfInnerProductLayer { ptr })
-    }
-    
-    pub fn axis(&self) -> Result<i32> {
-        unsafe { sys::cv_dnn_InnerProductLayer_axis_const(self.as_raw_InnerProductLayer()) }.into_result()
     }
     
 }
@@ -531,18 +555,6 @@ impl crate::dnn::Layer for LRNLayer {
 
 impl LRNLayer {
 
-    ///
-    /// ## C++ default parameters
-    /// * _type: LRNLayer::CHANNEL_NRM
-    /// * size: 5
-    /// * alpha: 1
-    /// * beta: 0.75
-    /// * bias: 1
-    /// * norm_by_size: true
-    pub fn create(_type: i32, size: i32, alpha: f64, beta: f64, bias: f64, norm_by_size: bool) -> Result<types::PtrOfLRNLayer> {
-        unsafe { sys::cv_dnn_LRNLayer_create_int_int_double_double_double_bool(_type, size, alpha, beta, bias, norm_by_size) }.into_result().map(|ptr| types::PtrOfLRNLayer { ptr })
-    }
-    
     pub fn _type(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_LRNLayer_type_const(self.as_raw_LRNLayer()) }.into_result()
     }
@@ -565,6 +577,18 @@ impl LRNLayer {
     
     pub fn norm_by_size(&self) -> Result<bool> {
         unsafe { sys::cv_dnn_LRNLayer_normBySize_const(self.as_raw_LRNLayer()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * _type: LRNLayer::CHANNEL_NRM
+    /// * size: 5
+    /// * alpha: 1
+    /// * beta: 0.75
+    /// * bias: 1
+    /// * norm_by_size: true
+    pub fn create(_type: i32, size: i32, alpha: f64, beta: f64, bias: f64, norm_by_size: bool) -> Result<types::PtrOfLRNLayer> {
+        unsafe { sys::cv_dnn_LRNLayer_create_int_int_double_double_double_bool(_type, size, alpha, beta, bias, norm_by_size) }.into_result().map(|ptr| types::PtrOfLRNLayer { ptr })
     }
     
 }
@@ -644,6 +668,28 @@ impl dyn LSTMLayer + '_ {
 /// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
 pub trait Layer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void;
+    /// Name of the layer instance, can be used for logging or other internal purposes.
+    fn name(&mut self) -> Result<String> {
+        unsafe { sys::cv_dnn_Layer_name(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Name of the layer instance, can be used for logging or other internal purposes.
+    fn set_name(&mut self, val: &str) -> Result<()> {
+        string_arg!(mut val);
+        unsafe { sys::cv_dnn_Layer_set_name_String(self.as_raw_Layer(), val.as_ptr() as _) }.into_result()
+    }
+    
+    /// Type name which was used for creating layer by layer factory.
+    fn _type(&mut self) -> Result<String> {
+        unsafe { sys::cv_dnn_Layer_type(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Type name which was used for creating layer by layer factory.
+    fn set_type(&mut self, val: &str) -> Result<()> {
+        string_arg!(mut val);
+        unsafe { sys::cv_dnn_Layer_set_type_String(self.as_raw_Layer(), val.as_ptr() as _) }.into_result()
+    }
+    
     /// Returns index of input blob into the input array.
     /// ## Parameters
     /// * inputName: label of input blob
@@ -662,7 +708,7 @@ pub trait Layer {
         unsafe { sys::cv_dnn_Layer_outputNameToIndex_String(self.as_raw_Layer(), output_name.as_ptr() as _) }.into_result()
     }
     
-    /// < Initializes only #name, #type and #blobs fields.
+    /// Initializes only #name, #type and #blobs fields.
     fn set_params_from(&mut self, params: &crate::dnn::LayerParams) -> Result<()> {
         unsafe { sys::cv_dnn_Layer_setParamsFrom_LayerParams(self.as_raw_Layer(), params.as_raw_LayerParams()) }.into_result()
     }
@@ -739,30 +785,30 @@ impl crate::dnn::Dict for LayerParams {
 
 impl LayerParams {
 
-    pub fn new() -> Result<crate::dnn::LayerParams> {
-        unsafe { sys::cv_dnn_LayerParams_LayerParams() }.into_result().map(|ptr| crate::dnn::LayerParams { ptr })
-    }
-    
-    /// < List of learned parameters stored as blobs.
+    /// Name of the layer instance (optional, can be used internal purposes).
     pub fn name(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_LayerParams_name(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-    /// < List of learned parameters stored as blobs.
+    /// Name of the layer instance (optional, can be used internal purposes).
     pub fn set_name(&mut self, val: &str) -> Result<()> {
         string_arg!(mut val);
         unsafe { sys::cv_dnn_LayerParams_set_name_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
     }
     
-    /// < Name of the layer instance (optional, can be used internal purposes).
+    /// Type name which was used for creating layer by layer factory (optional).
     pub fn _type(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_LayerParams_type(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-    /// < Name of the layer instance (optional, can be used internal purposes).
+    /// Type name which was used for creating layer by layer factory (optional).
     pub fn set_type(&mut self, val: &str) -> Result<()> {
         string_arg!(mut val);
         unsafe { sys::cv_dnn_LayerParams_set_type_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
+    }
+    
+    pub fn new() -> Result<crate::dnn::LayerParams> {
+        unsafe { sys::cv_dnn_LayerParams_LayerParams() }.into_result().map(|ptr| crate::dnn::LayerParams { ptr })
     }
     
 }
@@ -793,15 +839,6 @@ impl crate::dnn::Layer for MVNLayer {
 
 impl MVNLayer {
 
-    ///
-    /// ## C++ default parameters
-    /// * norm_variance: true
-    /// * across_channels: false
-    /// * eps: 1e-9
-    pub fn create(norm_variance: bool, across_channels: bool, eps: f64) -> Result<types::PtrOfMVNLayer> {
-        unsafe { sys::cv_dnn_MVNLayer_create_bool_bool_double(norm_variance, across_channels, eps) }.into_result().map(|ptr| types::PtrOfMVNLayer { ptr })
-    }
-    
     pub fn eps(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_MVNLayer_eps_const(self.as_raw_MVNLayer()) }.into_result()
     }
@@ -812,6 +849,15 @@ impl MVNLayer {
     
     pub fn across_channels(&self) -> Result<bool> {
         unsafe { sys::cv_dnn_MVNLayer_acrossChannels_const(self.as_raw_MVNLayer()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * norm_variance: true
+    /// * across_channels: false
+    /// * eps: 1e-9
+    pub fn create(norm_variance: bool, across_channels: bool, eps: f64) -> Result<types::PtrOfMVNLayer> {
+        unsafe { sys::cv_dnn_MVNLayer_create_bool_bool_double(norm_variance, across_channels, eps) }.into_result().map(|ptr| types::PtrOfMVNLayer { ptr })
     }
     
 }
@@ -847,6 +893,7 @@ unsafe impl Send for Net {}
 
 impl Net {
 
+    /// Default constructor.
     pub fn new() -> Result<crate::dnn::Net> {
         unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| crate::dnn::Net { ptr })
     }
@@ -1000,25 +1047,6 @@ impl crate::dnn::Layer for PoolingLayer {
 
 impl PoolingLayer {
 
-    ///
-    /// ## C++ default parameters
-    /// * _type: PoolingLayer::MAX
-    /// * kernel: Size(2, 2)
-    /// * stride: Size(1, 1)
-    /// * pad: Size(0, 0)
-    /// * pad_mode: ""
-    pub fn create(_type: i32, kernel: core::Size, stride: core::Size, pad: core::Size, pad_mode: &str) -> Result<types::PtrOfPoolingLayer> {
-        string_arg!(pad_mode);
-        unsafe { sys::cv_dnn_PoolingLayer_create_int_Size_Size_Size_String(_type, kernel, stride, pad, pad_mode.as_ptr()) }.into_result().map(|ptr| types::PtrOfPoolingLayer { ptr })
-    }
-    
-    ///
-    /// ## C++ default parameters
-    /// * _type: PoolingLayer::MAX
-    pub fn create_global(_type: i32) -> Result<types::PtrOfPoolingLayer> {
-        unsafe { sys::cv_dnn_PoolingLayer_createGlobal_int(_type) }.into_result().map(|ptr| types::PtrOfPoolingLayer { ptr })
-    }
-    
     pub fn _type(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_PoolingLayer_type_const(self.as_raw_PoolingLayer()) }.into_result()
     }
@@ -1046,6 +1074,25 @@ impl PoolingLayer {
     pub fn set_pad_mode(&mut self, val: &str) -> Result<()> {
         string_arg!(mut val);
         unsafe { sys::cv_dnn_PoolingLayer_set_padMode_String(self.as_raw_PoolingLayer(), val.as_ptr() as _) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * _type: PoolingLayer::MAX
+    /// * kernel: Size(2, 2)
+    /// * stride: Size(1, 1)
+    /// * pad: Size(0, 0)
+    /// * pad_mode: ""
+    pub fn create(_type: i32, kernel: core::Size, stride: core::Size, pad: core::Size, pad_mode: &str) -> Result<types::PtrOfPoolingLayer> {
+        string_arg!(pad_mode);
+        unsafe { sys::cv_dnn_PoolingLayer_create_int_Size_Size_Size_String(_type, kernel, stride, pad, pad_mode.as_ptr()) }.into_result().map(|ptr| types::PtrOfPoolingLayer { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * _type: PoolingLayer::MAX
+    pub fn create_global(_type: i32) -> Result<types::PtrOfPoolingLayer> {
+        unsafe { sys::cv_dnn_PoolingLayer_createGlobal_int(_type) }.into_result().map(|ptr| types::PtrOfPoolingLayer { ptr })
     }
     
 }
@@ -1076,15 +1123,6 @@ impl crate::dnn::Layer for PowerLayer {
 
 impl PowerLayer {
 
-    ///
-    /// ## C++ default parameters
-    /// * power: 1
-    /// * scale: 1
-    /// * shift: 0
-    pub fn create(power: f64, scale: f64, shift: f64) -> Result<types::PtrOfPowerLayer> {
-        unsafe { sys::cv_dnn_PowerLayer_create_double_double_double(power, scale, shift) }.into_result().map(|ptr| types::PtrOfPowerLayer { ptr })
-    }
-    
     pub fn power(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_PowerLayer_power_const(self.as_raw_PowerLayer()) }.into_result()
     }
@@ -1095,6 +1133,15 @@ impl PowerLayer {
     
     pub fn shift(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_PowerLayer_shift_const(self.as_raw_PowerLayer()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * power: 1
+    /// * scale: 1
+    /// * shift: 0
+    pub fn create(power: f64, scale: f64, shift: f64) -> Result<types::PtrOfPowerLayer> {
+        unsafe { sys::cv_dnn_PowerLayer_create_double_double_double(power, scale, shift) }.into_result().map(|ptr| types::PtrOfPowerLayer { ptr })
     }
     
 }
@@ -1149,15 +1196,15 @@ impl crate::dnn::Layer for ReLULayer {
 
 impl ReLULayer {
 
+    pub fn negative_slope(&self) -> Result<f64> {
+        unsafe { sys::cv_dnn_ReLULayer_negativeSlope_const(self.as_raw_ReLULayer()) }.into_result()
+    }
+    
     ///
     /// ## C++ default parameters
     /// * negative_slope: 0
     pub fn create(negative_slope: f64) -> Result<types::PtrOfReLULayer> {
         unsafe { sys::cv_dnn_ReLULayer_create_double(negative_slope) }.into_result().map(|ptr| types::PtrOfReLULayer { ptr })
-    }
-    
-    pub fn negative_slope(&self) -> Result<f64> {
-        unsafe { sys::cv_dnn_ReLULayer_negativeSlope_const(self.as_raw_ReLULayer()) }.into_result()
     }
     
 }
@@ -1256,16 +1303,16 @@ impl crate::dnn::Layer for SliceLayer {
 
 impl SliceLayer {
 
+    pub fn axis(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_SliceLayer_axis_const(self.as_raw_SliceLayer()) }.into_result()
+    }
+    
     pub fn create(axis: i32) -> Result<types::PtrOfSliceLayer> {
         unsafe { sys::cv_dnn_SliceLayer_create_int(axis) }.into_result().map(|ptr| types::PtrOfSliceLayer { ptr })
     }
     
     pub fn create_1(axis: i32, slice_indices: &types::VectorOfint) -> Result<types::PtrOfSliceLayer> {
         unsafe { sys::cv_dnn_SliceLayer_create_int_VectorOfint(axis, slice_indices.as_raw_VectorOfint()) }.into_result().map(|ptr| types::PtrOfSliceLayer { ptr })
-    }
-    
-    pub fn axis(&self) -> Result<i32> {
-        unsafe { sys::cv_dnn_SliceLayer_axis_const(self.as_raw_SliceLayer()) }.into_result()
     }
     
 }
@@ -1331,7 +1378,6 @@ impl crate::dnn::Layer for SplitLayer {
 
 impl SplitLayer {
 
-    /// < Number of copies that will be produced (is ignored when negative).
     ///
     /// ## C++ default parameters
     /// * outputs_count: -1

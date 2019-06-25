@@ -164,7 +164,7 @@
 //!
 //! # C API
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;
@@ -189,37 +189,58 @@ pub const CALIB_FIX_S1_S2_S3_S4: i32 = 0x10000;
 pub const CALIB_FIX_SKEW: i32 = 1 << 3;
 pub const CALIB_FIX_TANGENT_DIST: i32 = 0x200000;
 pub const CALIB_FIX_TAUX_TAUY: i32 = 0x80000;
+/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Andreff99)
 pub const CALIB_HAND_EYE_ANDREFF: i32 = 3;
+/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Daniilidis98)
 pub const CALIB_HAND_EYE_DANIILIDIS: i32 = 4;
+/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Horaud95)
 pub const CALIB_HAND_EYE_HORAUD: i32 = 2;
+/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Park94)
 pub const CALIB_HAND_EYE_PARK: i32 = 1;
+/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Tsai89)
 pub const CALIB_HAND_EYE_TSAI: i32 = 0;
 pub const CALIB_RATIONAL_MODEL: i32 = 0x04000;
 pub const CALIB_RECOMPUTE_EXTRINSIC: i32 = 1 << 1;
 pub const CALIB_SAME_FOCAL_LENGTH: i32 = 0x00200;
 pub const CALIB_THIN_PRISM_MODEL: i32 = 0x08000;
 pub const CALIB_TILTED_MODEL: i32 = 0x40000;
+/// for stereoCalibrate
 pub const CALIB_USE_EXTRINSIC_GUESS: i32 = (1 << 22);
 pub const CALIB_USE_INTRINSIC_GUESS: i32 = 0x00001;
+/// use LU instead of SVD decomposition for solving. much faster but potentially less precise
 pub const CALIB_USE_LU: i32 = (1 << 17);
+/// use QR instead of SVD decomposition for solving. Faster but potentially less precise
 pub const CALIB_USE_QR: i32 = 0x100000;
 pub const CALIB_ZERO_DISPARITY: i32 = 0x00400;
 pub const CALIB_ZERO_TANGENT_DIST: i32 = 0x00008;
 pub const CirclesGridFinderParameters_ASYMMETRIC_GRID: i32 = 1;
 pub const CirclesGridFinderParameters_SYMMETRIC_GRID: i32 = 0;
+/// 7-point algorithm
 pub const FM_7POINT: i32 = 1;
+/// 8-point algorithm
 pub const FM_8POINT: i32 = 2;
+/// least-median algorithm. 7-point algorithm is used.
 pub const FM_LMEDS: i32 = 4;
+/// RANSAC algorithm. It needs at least 15 points. 7-point algorithm is used.
 pub const FM_RANSAC: i32 = 8;
+/// least-median of squares algorithm
 pub const LMEDS: i32 = 4;
+/// RANSAC algorithm
 pub const RANSAC: i32 = 8;
+/// RHO algorithm
 pub const RHO: i32 = 16;
+/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)
 pub const SOLVEPNP_AP3P: i32 = 5;
+/// A Direct Least-Squares (DLS) Method for PnP  [hesch2011direct](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_hesch2011direct)
 pub const SOLVEPNP_DLS: i32 = 3;
+/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 pub const SOLVEPNP_EPNP: i32 = 1;
 pub const SOLVEPNP_ITERATIVE: i32 = 0;
+/// Used for count
 pub const SOLVEPNP_MAX_COUNT: i32 = 5+1;
+/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_gao2003complete)
 pub const SOLVEPNP_P3P: i32 = 2;
+/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 pub const SOLVEPNP_UPNP: i32 = 4;
 pub const StereoBM_PREFILTER_NORMALIZED_RESPONSE: i32 = 0;
 pub const StereoBM_PREFILTER_XSOBEL: i32 = 1;
@@ -232,10 +253,15 @@ pub const StereoSGBM_MODE_SGBM_3WAY: i32 = 2;
 #[repr(C)]
 #[derive(Debug)]
 pub enum HandEyeCalibrationMethod {
+    /// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Tsai89)
     CALIB_HAND_EYE_TSAI = CALIB_HAND_EYE_TSAI as isize,
+    /// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Park94)
     CALIB_HAND_EYE_PARK = CALIB_HAND_EYE_PARK as isize,
+    /// Hand-eye Calibration [Horaud95](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Horaud95)
     CALIB_HAND_EYE_HORAUD = CALIB_HAND_EYE_HORAUD as isize,
+    /// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Andreff99)
     CALIB_HAND_EYE_ANDREFF = CALIB_HAND_EYE_ANDREFF as isize,
+    /// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Daniilidis98)
     CALIB_HAND_EYE_DANIILIDIS = CALIB_HAND_EYE_DANIILIDIS as isize,
 }
 

@@ -21,7 +21,7 @@
 //! # Universal intrinsics
 //! # Private implementation helpers
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const ACCESS_FAST: i32 = 1<<26;
@@ -29,14 +29,23 @@ pub const ACCESS_MASK: i32 = 3<<24;
 pub const ACCESS_READ: i32 = 1<<24;
 pub const ACCESS_RW: i32 = 3<<24;
 pub const ACCESS_WRITE: i32 = 1<<25;
+/// `iiiiii|abcdefgh|iiiiiii`  with some specified `i`
 pub const BORDER_CONSTANT: i32 = 0;
+/// same as BORDER_REFLECT_101
 pub const BORDER_DEFAULT: i32 = 4;
+/// do not look outside of ROI
 pub const BORDER_ISOLATED: i32 = 16;
+/// `fedcba|abcdefgh|hgfedcb`
 pub const BORDER_REFLECT: i32 = 2;
+/// same as BORDER_REFLECT_101
 pub const BORDER_REFLECT101: i32 = 4;
+/// `gfedcb|abcdefgh|gfedcba`
 pub const BORDER_REFLECT_101: i32 = 4;
+/// `aaaaaa|abcdefgh|hhhhhhh`
 pub const BORDER_REPLICATE: i32 = 1;
+/// `uvwxyz|absdefgh|ijklmno`
 pub const BORDER_TRANSPARENT: i32 = 5;
+/// `cdefgh|abcdefgh|abcdefg`
 pub const BORDER_WRAP: i32 = 3;
 pub const BadAlign: i32 = -21;
 pub const BadAlphaChannel: i32 = -18;
@@ -44,21 +53,29 @@ pub const BadCOI: i32 = -24;
 pub const BadCallBack: i32 = -22;
 pub const BadDataPtr: i32 = -12;
 pub const BadDepth: i32 = -17;
+/// image size is invalid
 pub const BadImageSize: i32 = -10;
 pub const BadModelOrChSeq: i32 = -14;
 pub const BadNumChannel1U: i32 = -16;
 pub const BadNumChannels: i32 = -15;
+/// offset is invalid
 pub const BadOffset: i32 = -11;
 pub const BadOrder: i32 = -19;
 pub const BadOrigin: i32 = -20;
 pub const BadROISize: i32 = -25;
 pub const BadStep: i32 = -13;
 pub const BadTileSize: i32 = -23;
+/// src1 is equal to src2.
 pub const CMP_EQ: i32 = 0;
+/// src1 is greater than or equal to src2.
 pub const CMP_GE: i32 = 2;
+/// src1 is greater than src2.
 pub const CMP_GT: i32 = 1;
+/// src1 is less than or equal to src2.
 pub const CMP_LE: i32 = 4;
+/// src1 is less than src2.
 pub const CMP_LT: i32 = 3;
+/// src1 is unequal to src2.
 pub const CMP_NE: i32 = 5;
 pub const COVAR_COLS: i32 = 16;
 pub const COVAR_NORMAL: i32 = 1;
@@ -180,14 +197,23 @@ pub const FILLED: i32 = -1;
 pub const FLAGS_EXPAND_SAME_NAMES: i32 = 0x02;
 pub const FLAGS_MAPPING: i32 = 0x01;
 pub const FLAGS_NONE: i32 = 0;
+/// normal size serif font
 pub const FONT_HERSHEY_COMPLEX: i32 = 3;
+/// smaller version of FONT_HERSHEY_COMPLEX
 pub const FONT_HERSHEY_COMPLEX_SMALL: i32 = 5;
+/// normal size sans-serif font (more complex than FONT_HERSHEY_SIMPLEX)
 pub const FONT_HERSHEY_DUPLEX: i32 = 2;
+/// small size sans-serif font
 pub const FONT_HERSHEY_PLAIN: i32 = 1;
+/// more complex variant of FONT_HERSHEY_SCRIPT_SIMPLEX
 pub const FONT_HERSHEY_SCRIPT_COMPLEX: i32 = 7;
+/// hand-writing style font
 pub const FONT_HERSHEY_SCRIPT_SIMPLEX: i32 = 6;
+/// normal size sans-serif font
 pub const FONT_HERSHEY_SIMPLEX: i32 = 0;
+/// normal size serif font (more complex than FONT_HERSHEY_COMPLEX)
 pub const FONT_HERSHEY_TRIPLEX: i32 = 4;
+/// flag for italic font
 pub const FONT_ITALIC: i32 = 16;
 pub const Formatter_FMT_C: i32 = 5;
 pub const Formatter_FMT_CSV: i32 = 2;
@@ -195,12 +221,16 @@ pub const Formatter_FMT_DEFAULT: i32 = 0;
 pub const Formatter_FMT_MATLAB: i32 = 1;
 pub const Formatter_FMT_NUMPY: i32 = 4;
 pub const Formatter_FMT_PYTHON: i32 = 3;
+/// transposes src1
 pub const GEMM_1_T: i32 = 1;
+/// transposes src2
 pub const GEMM_2_T: i32 = 2;
+/// transposes src3
 pub const GEMM_3_T: i32 = 4;
 pub const GpuApiCallError: i32 = -217;
 pub const GpuNotSupported: i32 = -216;
 pub const Hamming_normType: i32 = 6;
+/// image header is NULL
 pub const HeaderIsNull: i32 = -9;
 pub const IMPL_IPP: i32 = 0+1;
 pub const IMPL_OPENCL: i32 = 0+2;
@@ -208,8 +238,11 @@ pub const IMPL_PLAIN: i32 = 0;
 pub const KMEANS_PP_CENTERS: i32 = 2;
 pub const KMEANS_RANDOM_CENTERS: i32 = 0;
 pub const KMEANS_USE_INITIAL_LABELS: i32 = 1;
+/// 4-connected line
 pub const LINE_4: i32 = 4;
+/// 8-connected line
 pub const LINE_8: i32 = 8;
+/// antialiased line
 pub const LINE_AA: i32 = 16;
 pub const MaskIsTiled: i32 = -26;
 pub const Mat_AUTO_STEP: usize = 0;
@@ -223,7 +256,9 @@ pub const NORM_INF: i32 = 1;
 pub const NORM_L1: i32 = 2;
 pub const NORM_L2: i32 = 4;
 pub const NORM_L2SQR: i32 = 5;
+/// flag
 pub const NORM_MINMAX: i32 = 32;
+/// flag
 pub const NORM_RELATIVE: i32 = 8;
 pub const NORM_TYPE_MASK: i32 = 7;
 pub const OPENCV_ABI_COMPATIBILITY: i32 = 300;
@@ -233,7 +268,9 @@ pub const OpenCLInitError: i32 = -222;
 pub const OpenCLNoAMDBlasFft: i32 = -223;
 pub const OpenGlApiCallError: i32 = -219;
 pub const OpenGlNotSupported: i32 = -218;
+/// indicates that the input samples are stored as matrix columns
 pub const PCA_DATA_AS_COL: i32 = 1;
+/// indicates that the input samples are stored as matrix rows
 pub const PCA_DATA_AS_ROW: i32 = 0;
 pub const PCA_USE_AVG: i32 = 2;
 pub const Param_ALGORITHM: i32 = 6;
@@ -247,22 +284,34 @@ pub const Param_STRING: i32 = 3;
 pub const Param_UCHAR: i32 = 11;
 pub const Param_UINT64: i32 = 9;
 pub const Param_UNSIGNED_INT: i32 = 8;
+/// the output is the mean vector of all rows/columns of the matrix.
 pub const REDUCE_AVG: i32 = 1;
+/// the output is the maximum (column/row-wise) of all rows/columns of the matrix.
 pub const REDUCE_MAX: i32 = 2;
+/// the output is the minimum (column/row-wise) of all rows/columns of the matrix.
 pub const REDUCE_MIN: i32 = 3;
+/// the output is the sum of all rows/columns of the matrix.
 pub const REDUCE_SUM: i32 = 0;
 pub const RNG_NORMAL: i32 = 1;
 pub const RNG_UNIFORM: i32 = 0;
 pub const ROTATE_180: i32 = 1;
 pub const ROTATE_90_CLOCKWISE: i32 = 0;
 pub const ROTATE_90_COUNTERCLOCKWISE: i32 = 2;
+/// there are multiple maxima for target function - the arbitrary one is returned
 pub const SOLVELP_MULTI: i32 = 1;
+/// there is only one maximum for target function
 pub const SOLVELP_SINGLE: i32 = 0;
+/// problem is unbounded (target function can achieve arbitrary high values)
 pub const SOLVELP_UNBOUNDED: i32 = -2;
+/// problem is unfeasible (there are no points that satisfy all the constraints imposed)
 pub const SOLVELP_UNFEASIBLE: i32 = -1;
+/// each matrix row is sorted in the ascending
 pub const SORT_ASCENDING: i32 = 0;
+/// each matrix row is sorted in the
 pub const SORT_DESCENDING: i32 = 16;
+/// each matrix column is sorted
 pub const SORT_EVERY_COLUMN: i32 = 1;
+/// each matrix row is sorted independently
 pub const SORT_EVERY_ROW: i32 = 0;
 pub const SVD_FULL_UV: i32 = 4;
 pub const SVD_MODIFY_A: i32 = 1;
@@ -270,41 +319,73 @@ pub const SVD_NO_UV: i32 = 2;
 pub const SparseMat_HASH_BIT: i32 = 0x80000000;
 pub const SparseMat_HASH_SCALE: i32 = 0x5bd1e995;
 pub const SparseMat_MAX_DIM: i32 = 32;
+/// assertion failed
 pub const StsAssert: i32 = -215;
+/// tracing
 pub const StsAutoTrace: i32 = -8;
+/// pseudo error for back trace
 pub const StsBackTrace: i32 = -1;
+/// function arg/param is bad
 pub const StsBadArg: i32 = -5;
+/// flag is wrong or not supported
 pub const StsBadFlag: i32 = -206;
+/// unsupported function
 pub const StsBadFunc: i32 = -6;
+/// bad format of mask (neither 8uC1 nor 8sC1)
 pub const StsBadMask: i32 = -208;
+/// an allocated block has been corrupted
 pub const StsBadMemBlock: i32 = -214;
+/// bad CvPoint
 pub const StsBadPoint: i32 = -207;
+/// the input/output structure size is incorrect
 pub const StsBadSize: i32 = -201;
+/// division by zero
 pub const StsDivByZero: i32 = -202;
+/// unknown /unspecified error
 pub const StsError: i32 = -2;
+/// incorrect filter ofset value
 pub const StsFilterOffsetErr: i32 = -31;
+/// incorr. filter structure content
 pub const StsFilterStructContentErr: i32 = -29;
+/// in-place operation is not supported
 pub const StsInplaceNotSupported: i32 = -203;
+/// internal error (bad state)
 pub const StsInternal: i32 = -3;
+/// incorr. transform kernel content
 pub const StsKernelStructContentErr: i32 = -30;
+/// iter. didn't converge
 pub const StsNoConv: i32 = -7;
+/// insufficient memory
 pub const StsNoMem: i32 = -4;
+/// the requested function/feature is not implemented
 pub const StsNotImplemented: i32 = -213;
+/// null pointer
 pub const StsNullPtr: i32 = -27;
+/// request can't be completed
 pub const StsObjectNotFound: i32 = -204;
+/// everithing is ok
 pub const StsOk: i32 = 0;
+/// some of parameters are out of range
 pub const StsOutOfRange: i32 = -211;
+/// invalid syntax/structure of the parsed file
 pub const StsParseError: i32 = -212;
+/// formats of input/output arrays differ
 pub const StsUnmatchedFormats: i32 = -205;
+/// sizes of input/output structures do not match
 pub const StsUnmatchedSizes: i32 = -209;
+/// the data format/type is not supported by the function
 pub const StsUnsupportedFormat: i32 = -210;
+/// incorrect vector length
 pub const StsVecLengthErr: i32 = -28;
 pub const TYPE_FUN: i32 = 0+3;
 pub const TYPE_GENERAL: i32 = 0;
 pub const TYPE_MARKER: i32 = 0+1;
 pub const TYPE_WRAPPER: i32 = 0+2;
+/// the maximum number of iterations or elements to compute
 pub const TermCriteria_COUNT: i32 = 1;
+/// the desired accuracy or change in parameters at which the iterative algorithm stops
 pub const TermCriteria_EPS: i32 = 2;
+/// ditto
 pub const TermCriteria_MAX_ITER: i32 = 1;
 pub const UMatData_COPY_ON_MAP: i32 = 1;
 pub const UMatData_DEVICE_COPY_OBSOLETE: i32 = 4;
@@ -1467,7 +1548,7 @@ pub fn error_no_return(_code: i32, _err: &str, _func: &str, _file: &str, _line: 
     unsafe { sys::cv_errorNoReturn_int_String_const_char_X_const_char_X_int(_code, _err.as_ptr(), _func.as_ptr(), _file.as_ptr(), _line) }.into_result()
 }
 
-/// @cond IGNORED@endcond
+/// @endcond
 pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Result<()> {
     string_arg!(_err);
     string_arg!(_func);
@@ -2091,6 +2172,26 @@ pub fn max(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()
     unsafe { sys::cv_max_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
+/// Calculates per-element maximum of two arrays or an array and a scalar.
+///
+/// The function cv::max calculates the per-element maximum of two arrays:
+/// <div lang='latex'>\texttt{dst} (I)= \max ( \texttt{src1} (I), \texttt{src2} (I))</div>
+/// or array and a scalar:
+/// <div lang='latex'>\texttt{dst} (I)= \max ( \texttt{src1} (I), \texttt{value} )</div>
+/// ## Parameters
+/// * src1: first input array.
+/// * src2: second input array of the same size and type as src1 .
+/// * dst: output array of the same size and type as src1.
+/// ## See also
+/// min, compare, inRange, minMaxLoc, @ref MatrixExpressions
+///
+/// ## Overloaded parameters
+///
+/// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
+pub fn max_umat(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
+    unsafe { sys::cv_max_UMat_UMat_UMat(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_UMat()) }.into_result()
+}
+
 /// Calculates a mean and standard deviation of array elements.
 ///
 /// The function cv::meanStdDev calculates the mean and the standard deviation M
@@ -2243,6 +2344,26 @@ pub fn min_max_loc(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_lo
 /// max, compare, inRange, minMaxLoc
 pub fn min(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_min_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+}
+
+/// Calculates per-element minimum of two arrays or an array and a scalar.
+///
+/// The function cv::min calculates the per-element minimum of two arrays:
+/// <div lang='latex'>\texttt{dst} (I)= \min ( \texttt{src1} (I), \texttt{src2} (I))</div>
+/// or array and a scalar:
+/// <div lang='latex'>\texttt{dst} (I)= \min ( \texttt{src1} (I), \texttt{value} )</div>
+/// ## Parameters
+/// * src1: first input array.
+/// * src2: second input array of the same size and type as src1.
+/// * dst: output array of the same size and type as src1.
+/// ## See also
+/// max, compare, inRange, minMaxLoc
+///
+/// ## Overloaded parameters
+///
+/// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
+pub fn min_umat(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
+    unsafe { sys::cv_min_UMat_UMat_UMat(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_UMat()) }.into_result()
 }
 
 /// Copies specified channels from input arrays to the specified channels of
@@ -3167,6 +3288,13 @@ pub fn sum(src: &core::Mat) -> Result<core::Scalar> {
 /// Swaps two matrices
 pub fn swap(a: &mut core::Mat, b: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_swap_Mat_Mat(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result()
+}
+
+/// Swaps two matrices
+///
+/// ## Overloaded parameters
+pub fn swap_umat(a: &mut core::UMat, b: &mut core::UMat) -> Result<()> {
+    unsafe { sys::cv_swap_UMat_UMat(a.as_raw_UMat(), b.as_raw_UMat()) }.into_result()
 }
 
 ///
@@ -4306,6 +4434,56 @@ unsafe impl Send for Mat {}
 
 impl Mat {
 
+    pub fn flags(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_flags_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the matrix dimensionality, >= 2
+    pub fn dims(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_dims_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn rows(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_rows_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn cols(&self) -> Result<i32> {
+        unsafe { sys::cv_Mat_cols_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// pointer to the data
+    pub fn data_mut(&mut self) -> Result<&mut u8> {
+        unsafe { sys::cv_Mat_data(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// pointer to the data
+    pub unsafe fn set_data(&mut self, val: &mut u8) -> Result<()> {
+        { sys::cv_Mat_set_data_uchar_X(self.as_raw_Mat(), val) }.into_result()
+    }
+    
+    /// helper fields used in locateROI and adjustROI
+    pub fn datastart(&self) -> Result<&u8> {
+        unsafe { sys::cv_Mat_datastart_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn dataend(&self) -> Result<&u8> {
+        unsafe { sys::cv_Mat_dataend_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn datalimit(&self) -> Result<&u8> {
+        unsafe { sys::cv_Mat_datalimit_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn mat_size(&self) -> Result<core::MatSize> {
+        unsafe { sys::cv_Mat_size_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatSize { ptr })
+    }
+    
+    pub fn mat_step(&self) -> Result<core::MatStep> {
+        unsafe { sys::cv_Mat_step_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatStep { ptr })
+    }
+    
     /// These are various constructors that form a matrix. As noted in the AutomaticAllocation, often
     /// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
     /// The constructed matrix can further be assigned to another matrix or matrix expression or can be
@@ -4439,8 +4617,8 @@ impl Mat {
     ///
     /// ## C++ default parameters
     /// * steps: 0
-    pub fn new_nd_with_data(sizes: &types::VectorOfint, _type: i32, data: &mut c_void, steps: &size_t) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X(sizes.as_raw_VectorOfint(), _type, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn new_nd_with_data(sizes: &types::VectorOfint, _type: i32, data: &mut c_void, steps: &[size_t]) -> Result<core::Mat> {
+        unsafe { sys::cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X(sizes.as_raw_VectorOfint(), _type, data, steps.as_ptr()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -4479,6 +4657,14 @@ impl Mat {
     /// * ranges: Array of selected ranges of m along each dimensionality.
     pub fn ranges(m: &core::Mat, ranges: &types::VectorOfRange) -> Result<core::Mat> {
         unsafe { sys::cv_Mat_Mat_Mat_VectorOfRange(m.as_raw_Mat(), ranges.as_raw_VectorOfRange()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// retrieve UMat from Mat
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub fn get_umat(&self, access_flags: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        unsafe { sys::cv_Mat_getUMat_const_int_UMatUsageFlags(self.as_raw_Mat(), access_flags, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
     /// Creates a matrix header for the specified matrix row.
@@ -4540,7 +4726,7 @@ impl Mat {
     /// ## Parameters
     /// * startrow: An inclusive 0-based start index of the row span.
     /// * endrow: An exclusive 0-based ending index of the row span.
-    pub fn rowbounds(&self, startrow: i32, endrow: i32) -> Result<core::Mat> {
+    pub fn row_bounds(&self, startrow: i32, endrow: i32) -> Result<core::Mat> {
         unsafe { sys::cv_Mat_rowRange_const_int_int(self.as_raw_Mat(), startrow, endrow) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
@@ -4557,13 +4743,13 @@ impl Mat {
     /// ## Parameters
     /// * startcol: An inclusive 0-based start index of the column span.
     /// * endcol: An exclusive 0-based ending index of the column span.
-    pub fn colbounds(&self, startcol: i32, endcol: i32) -> Result<core::Mat> {
+    pub fn col_bounds(&self, startcol: i32, endcol: i32) -> Result<core::Mat> {
         unsafe { sys::cv_Mat_colRange_const_int_int(self.as_raw_Mat(), startcol, endcol) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
     /// * r: Range structure containing both the start and the end indices.
-    pub fn colrange(&self, r: &core::Range) -> Result<core::Mat> {
+    pub fn col_range(&self, r: &core::Range) -> Result<core::Mat> {
         unsafe { sys::cv_Mat_colRange_const_Range(self.as_raw_Mat(), r.as_raw_Range()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
@@ -4817,11 +5003,6 @@ impl Mat {
     /// deallocates the matrix data
     pub fn deallocate(&mut self) -> Result<()> {
         unsafe { sys::cv_Mat_deallocate(self.as_raw_Mat()) }.into_result()
-    }
-    
-    /// internal use function; properly re-allocates _size, _step arrays
-    pub fn copy_size(&mut self, m: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_Mat_copySize_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
     }
     
     /// Reserves space for the certain number of rows.
@@ -5210,54 +5391,89 @@ impl Mat {
     /// * idx: Array of Mat::dims indices.
     pub fn at_nd<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> { self._at_nd(idx) }
     
-    pub fn flags(&self) -> Result<i32> {
-        unsafe { sys::cv_Mat_flags_const(self.as_raw_Mat()) }.into_result()
+}
+
+// boxed class cv::MatConstIterator
+pub struct MatConstIterator {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::MatConstIterator {
+    fn drop(&mut self) {
+        unsafe { sys::cv_MatConstIterator_delete(self.ptr) };
+    }
+}
+impl core::MatConstIterator {
+    #[inline(always)] pub fn as_raw_MatConstIterator(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for MatConstIterator {}
+
+impl MatConstIterator {
+
+    /// default constructor
+    pub fn new() -> Result<core::MatConstIterator> {
+        unsafe { sys::cv_MatConstIterator_MatConstIterator() }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
-    /// the matrix dimensionality, >= 2
-    pub fn dims(&self) -> Result<i32> {
-        unsafe { sys::cv_Mat_dims_const(self.as_raw_Mat()) }.into_result()
+    /// constructor that sets the iterator to the beginning of the matrix
+    pub fn over(_m: &core::Mat) -> Result<core::MatConstIterator> {
+        unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat(_m.as_raw_Mat()) }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
-    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
-    pub fn rows(&self) -> Result<i32> {
-        unsafe { sys::cv_Mat_rows_const(self.as_raw_Mat()) }.into_result()
+    /// constructor that sets the iterator to the specified element of the matrix
+    ///
+    /// ## C++ default parameters
+    /// * _col: 0
+    pub fn with_rows_cols(_m: &core::Mat, _row: i32, _col: i32) -> Result<core::MatConstIterator> {
+        unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat_int_int(_m.as_raw_Mat(), _row, _col) }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
-    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
-    pub fn cols(&self) -> Result<i32> {
-        unsafe { sys::cv_Mat_cols_const(self.as_raw_Mat()) }.into_result()
+    /// constructor that sets the iterator to the specified element of the matrix
+    pub fn with_start(_m: &core::Mat, _pt: core::Point) -> Result<core::MatConstIterator> {
+        unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat_Point(_m.as_raw_Mat(), _pt) }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
-    /// pointer to the data
-    pub fn data_mut(&mut self) -> Result<&mut u8> {
-        unsafe { sys::cv_Mat_data(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    /// constructor that sets the iterator to the specified element of the matrix
+    pub fn with_idx(_m: &core::Mat, _idx: &i32) -> Result<core::MatConstIterator> {
+        unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat_const_int_X(_m.as_raw_Mat(), _idx) }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
-    /// pointer to the data
-    pub unsafe fn set_data(&mut self, val: &mut u8) -> Result<()> {
-        { sys::cv_Mat_set_data_uchar_X(self.as_raw_Mat(), val) }.into_result()
+    /// copy constructor
+    pub fn copy(it: &core::MatConstIterator) -> Result<core::MatConstIterator> {
+        unsafe { sys::cv_MatConstIterator_MatConstIterator_MatConstIterator(it.as_raw_MatConstIterator()) }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
-    /// helper fields used in locateROI and adjustROI
-    pub fn datastart(&self) -> Result<&u8> {
-        unsafe { sys::cv_Mat_datastart_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    /// returns the current iterator position
+    pub fn pos(&self) -> Result<core::Point> {
+        unsafe { sys::cv_MatConstIterator_pos_const(self.as_raw_MatConstIterator()) }.into_result()
     }
     
-    pub fn dataend(&self) -> Result<&u8> {
-        unsafe { sys::cv_Mat_dataend_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    /// returns the current iterator position
+    pub fn pos_to(&self, _idx: &mut i32) -> Result<()> {
+        unsafe { sys::cv_MatConstIterator_pos_const_int_X(self.as_raw_MatConstIterator(), _idx) }.into_result()
     }
     
-    pub fn datalimit(&self) -> Result<&u8> {
-        unsafe { sys::cv_Mat_datalimit_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    pub fn lpos(&self) -> Result<ptrdiff_t> {
+        unsafe { sys::cv_MatConstIterator_lpos_const(self.as_raw_MatConstIterator()) }.into_result()
     }
     
-    pub fn mat_size(&self) -> Result<core::MatSize> {
-        unsafe { sys::cv_Mat_size_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatSize { ptr })
+    ///
+    /// ## C++ default parameters
+    /// * relative: false
+    pub fn seek(&mut self, ofs: ptrdiff_t, relative: bool) -> Result<()> {
+        unsafe { sys::cv_MatConstIterator_seek_ptrdiff_t_bool(self.as_raw_MatConstIterator(), ofs, relative) }.into_result()
     }
     
-    pub fn mat_step(&self) -> Result<core::MatStep> {
-        unsafe { sys::cv_Mat_step_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatStep { ptr })
+    ///
+    /// ## C++ default parameters
+    /// * relative: false
+    pub fn seek_idx(&mut self, _idx: &i32, relative: bool) -> Result<()> {
+        unsafe { sys::cv_MatConstIterator_seek_const_int_X_bool(self.as_raw_MatConstIterator(), _idx, relative) }.into_result()
     }
     
 }
@@ -6002,6 +6218,14 @@ unsafe impl Send for Range {}
 
 impl Range {
 
+    pub fn start(&self) -> Result<i32> {
+        unsafe { sys::cv_Range_start_const(self.as_raw_Range()) }.into_result()
+    }
+    
+    pub fn end(&self) -> Result<i32> {
+        unsafe { sys::cv_Range_end_const(self.as_raw_Range()) }.into_result()
+    }
+    
     pub fn default() -> Result<core::Range> {
         unsafe { sys::cv_Range_Range() }.into_result().map(|ptr| core::Range { ptr })
     }
@@ -6020,14 +6244,6 @@ impl Range {
     
     pub fn all() -> Result<core::Range> {
         unsafe { sys::cv_Range_all() }.into_result().map(|ptr| core::Range { ptr })
-    }
-    
-    pub fn start(&self) -> Result<i32> {
-        unsafe { sys::cv_Range_start_const(self.as_raw_Range()) }.into_result()
-    }
-    
-    pub fn end(&self) -> Result<i32> {
-        unsafe { sys::cv_Range_end_const(self.as_raw_Range()) }.into_result()
     }
     
 }
@@ -6080,6 +6296,18 @@ unsafe impl Send for RotatedRect {}
 
 impl RotatedRect {
 
+    pub fn center(&self) -> Result<core::Point2f> {
+        unsafe { sys::cv_RotatedRect_center_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
+    pub fn size(&self) -> Result<core::Size2f> {
+        unsafe { sys::cv_RotatedRect_size_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
+    pub fn angle(&self) -> Result<f32> {
+        unsafe { sys::cv_RotatedRect_angle_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
     /// various constructors
     pub fn default() -> Result<core::RotatedRect> {
         unsafe { sys::cv_RotatedRect_RotatedRect() }.into_result().map(|ptr| core::RotatedRect { ptr })
@@ -6117,16 +6345,425 @@ impl RotatedRect {
         unsafe { sys::cv_RotatedRect_boundingRect2f_const(self.as_raw_RotatedRect()) }.into_result()
     }
     
-    pub fn center(&self) -> Result<core::Point2f> {
-        unsafe { sys::cv_RotatedRect_center_const(self.as_raw_RotatedRect()) }.into_result()
+}
+
+// boxed class cv::SparseMat
+/// The class SparseMat represents multi-dimensional sparse numerical arrays.
+///
+/// Such a sparse array can store elements of any type that Mat can store. *Sparse* means that only
+/// non-zero elements are stored (though, as a result of operations on a sparse matrix, some of its
+/// stored elements can actually become 0. It is up to you to detect such elements and delete them
+/// using SparseMat::erase ). The non-zero elements are stored in a hash table that grows when it is
+/// filled so that the search time is O(1) in average (regardless of whether element is there or not).
+/// Elements can be accessed using the following methods:
+/// *   Query operations (SparseMat::ptr and the higher-level SparseMat::ref, SparseMat::value and
+/// SparseMat::find), for example:
+/// ```ignore
+/// const int dims = 5;
+/// int size[5] = {10, 10, 10, 10, 10};
+/// SparseMat sparse_mat(dims, size, CV_32F);
+/// for(int i = 0; i < 1000; i++)
+/// {
+/// int idx[dims];
+/// for(int k = 0; k < dims; k++)
+/// idx[k] = rand() % size[k];
+/// sparse_mat.ref<float>(idx) += 1.f;
+/// }
+/// cout << "nnz = " << sparse_mat.nzcount() << endl;
+/// ```
+///
+/// *   Sparse matrix iterators. They are similar to MatIterator but different from NAryMatIterator.
+/// That is, the iteration loop is familiar to STL users:
+/// ```ignore
+/// // prints elements of a sparse floating-point matrix
+/// // and the sum of elements.
+/// SparseMatConstIterator_<float>
+/// it = sparse_mat.begin<float>(),
+/// it_end = sparse_mat.end<float>();
+/// double s = 0;
+/// int dims = sparse_mat.dims();
+/// for(; it != it_end; ++it)
+/// {
+/// // print element indices and the element value
+/// const SparseMat::Node* n = it.node();
+/// printf("(");
+/// for(int i = 0; i < dims; i++)
+/// printf("%d%s", n->idx[i], i < dims-1 ? ", " : ")");
+/// printf(": %g\n", it.value<float>());
+/// s += *it;
+/// }
+/// printf("Element sum is %g\n", s);
+/// ```
+///
+/// If you run this loop, you will notice that elements are not enumerated in a logical order
+/// (lexicographical, and so on). They come in the same order as they are stored in the hash table
+/// (semi-randomly). You may collect pointers to the nodes and sort them to get the proper ordering.
+/// Note, however, that pointers to the nodes may become invalid when you add more elements to the
+/// matrix. This may happen due to possible buffer reallocation.
+/// *   Combination of the above 2 methods when you need to process 2 or more sparse matrices
+/// simultaneously. For example, this is how you can compute unnormalized cross-correlation of the 2
+/// floating-point sparse matrices:
+/// ```ignore
+/// double cross_corr(const SparseMat& a, const SparseMat& b)
+/// {
+/// const SparseMat *_a = &a, *_b = &b;
+/// // if b contains less elements than a,
+/// // it is faster to iterate through b
+/// if(_a->nzcount() > _b->nzcount())
+/// std::swap(_a, _b);
+/// SparseMatConstIterator_<float> it = _a->begin<float>(),
+/// it_end = _a->end<float>();
+/// double ccorr = 0;
+/// for(; it != it_end; ++it)
+/// {
+/// // take the next element from the first matrix
+/// float avalue = *it;
+/// const Node* anode = it.node();
+/// // and try to find an element with the same index in the second matrix.
+/// // since the hash value depends only on the element index,
+/// // reuse the hash value stored in the node
+/// float bvalue = _b->value<float>(anode->idx,&anode->hashval);
+/// ccorr += avalue*bvalue;
+/// }
+/// return ccorr;
+/// }
+/// ```
+pub struct SparseMat {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::SparseMat {
+    fn drop(&mut self) {
+        unsafe { sys::cv_SparseMat_delete(self.ptr) };
+    }
+}
+impl core::SparseMat {
+    #[inline(always)] pub fn as_raw_SparseMat(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for SparseMat {}
+
+impl SparseMat {
+
+    /// Various SparseMat constructors.
+    pub fn new() -> Result<core::SparseMat> {
+        unsafe { sys::cv_SparseMat_SparseMat() }.into_result().map(|ptr| core::SparseMat { ptr })
     }
     
-    pub fn size(&self) -> Result<core::Size2f> {
-        unsafe { sys::cv_RotatedRect_size_const(self.as_raw_RotatedRect()) }.into_result()
+    /// ## Parameters
+    /// * dims: Array dimensionality.
+    /// * _sizes: Sparce matrix size on all dementions.
+    /// * _type: Sparse matrix data type.
+    pub fn new_1(dims: i32, _sizes: &i32, _type: i32) -> Result<core::SparseMat> {
+        unsafe { sys::cv_SparseMat_SparseMat_int_const_int_X_int(dims, _sizes, _type) }.into_result().map(|ptr| core::SparseMat { ptr })
     }
     
-    pub fn angle(&self) -> Result<f32> {
-        unsafe { sys::cv_RotatedRect_angle_const(self.as_raw_RotatedRect()) }.into_result()
+    /// ## Parameters
+    /// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
+    /// to sparse representation.
+    pub fn new_2(m: &core::Mat) -> Result<core::SparseMat> {
+        unsafe { sys::cv_SparseMat_SparseMat_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::SparseMat { ptr })
+    }
+    
+    /// creates full copy of the matrix
+    pub fn clone(&self) -> Result<core::SparseMat> {
+        unsafe { sys::cv_SparseMat_clone_const(self.as_raw_SparseMat()) }.into_result().map(|ptr| core::SparseMat { ptr })
+    }
+    
+    /// converts sparse matrix to dense matrix.
+    pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_SparseMat_copyTo_const_Mat(self.as_raw_SparseMat(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    /// converts sparse matrix to dense n-dim matrix with optional type conversion and scaling.
+    ///
+    /// ## C++ default parameters
+    /// * alpha: 1
+    /// * beta: 0
+    pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+        unsafe { sys::cv_SparseMat_convertTo_const_Mat_int_double_double(self.as_raw_SparseMat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
+    }
+    
+    /// reallocates sparse matrix.
+    pub fn create(&mut self, dims: i32, _sizes: &i32, _type: i32) -> Result<()> {
+        unsafe { sys::cv_SparseMat_create_int_const_int_X_int(self.as_raw_SparseMat(), dims, _sizes, _type) }.into_result()
+    }
+    
+    /// sets all the sparse matrix elements to 0, which means clearing the hash table.
+    pub fn clear(&mut self) -> Result<()> {
+        unsafe { sys::cv_SparseMat_clear(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// manually increments the reference counter to the header.
+    pub fn addref(&mut self) -> Result<()> {
+        unsafe { sys::cv_SparseMat_addref(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_SparseMat_release(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// converts sparse matrix to the old-style representation; all the elements are copied.
+    /// returns the size of each element in bytes (not including the overhead - the space occupied by SparseMat::Node elements)
+    pub fn elem_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_SparseMat_elemSize_const(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// returns elemSize()/channels()
+    pub fn elem_size1(&self) -> Result<size_t> {
+        unsafe { sys::cv_SparseMat_elemSize1_const(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// returns type of sparse matrix elements
+    pub fn _type(&self) -> Result<i32> {
+        unsafe { sys::cv_SparseMat_type_const(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// returns the depth of sparse matrix elements
+    pub fn depth(&self) -> Result<i32> {
+        unsafe { sys::cv_SparseMat_depth_const(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// returns the number of channels
+    pub fn channels(&self) -> Result<i32> {
+        unsafe { sys::cv_SparseMat_channels_const(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// returns the array of sizes, or NULL if the matrix is not allocated
+    pub fn size(&self) -> Result<&i32> {
+        unsafe { sys::cv_SparseMat_size_const(self.as_raw_SparseMat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// returns the size of i-th matrix dimension (or 0)
+    pub fn size_1(&self, i: i32) -> Result<i32> {
+        unsafe { sys::cv_SparseMat_size_const_int(self.as_raw_SparseMat(), i) }.into_result()
+    }
+    
+    /// returns the matrix dimensionality
+    pub fn dims(&self) -> Result<i32> {
+        unsafe { sys::cv_SparseMat_dims_const(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// returns the number of non-zero elements (=the number of hash table nodes)
+    pub fn nzcount(&self) -> Result<size_t> {
+        unsafe { sys::cv_SparseMat_nzcount_const(self.as_raw_SparseMat()) }.into_result()
+    }
+    
+    /// computes the element hash value (1D case)
+    pub fn hash(&self, i0: i32) -> Result<size_t> {
+        unsafe { sys::cv_SparseMat_hash_const_int(self.as_raw_SparseMat(), i0) }.into_result()
+    }
+    
+    /// computes the element hash value (2D case)
+    pub fn hash_1(&self, i0: i32, i1: i32) -> Result<size_t> {
+        unsafe { sys::cv_SparseMat_hash_const_int_int(self.as_raw_SparseMat(), i0, i1) }.into_result()
+    }
+    
+    /// computes the element hash value (3D case)
+    pub fn hash_2(&self, i0: i32, i1: i32, i2: i32) -> Result<size_t> {
+        unsafe { sys::cv_SparseMat_hash_const_int_int_int(self.as_raw_SparseMat(), i0, i1, i2) }.into_result()
+    }
+    
+    /// computes the element hash value (nD case)
+    pub fn hash_3(&self, idx: &i32) -> Result<size_t> {
+        unsafe { sys::cv_SparseMat_hash_const_const_int_X(self.as_raw_SparseMat(), idx) }.into_result()
+    }
+    
+    /// returns pointer to the specified element (1D case)
+    ///
+    /// ## C++ default parameters
+    /// * hashval: 0
+    pub fn ptr(&mut self, i0: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
+        unsafe { sys::cv_SparseMat_ptr_int_bool_size_t_X(self.as_raw_SparseMat(), i0, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// returns pointer to the specified element (2D case)
+    ///
+    /// ## C++ default parameters
+    /// * hashval: 0
+    pub fn ptr_1(&mut self, i0: i32, i1: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
+        unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_t_X(self.as_raw_SparseMat(), i0, i1, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// returns pointer to the specified element (3D case)
+    ///
+    /// ## C++ default parameters
+    /// * hashval: 0
+    pub fn ptr_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
+        unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_t_X(self.as_raw_SparseMat(), i0, i1, i2, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// returns pointer to the specified element (nD case)
+    ///
+    /// ## C++ default parameters
+    /// * hashval: 0
+    pub fn ptr_3(&mut self, idx: &i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
+        unsafe { sys::cv_SparseMat_ptr_const_int_X_bool_size_t_X(self.as_raw_SparseMat(), idx, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// erases the specified element (2D case)
+    ///
+    /// ## C++ default parameters
+    /// * hashval: 0
+    pub fn erase(&mut self, i0: i32, i1: i32, hashval: &mut size_t) -> Result<()> {
+        unsafe { sys::cv_SparseMat_erase_int_int_size_t_X(self.as_raw_SparseMat(), i0, i1, hashval) }.into_result()
+    }
+    
+    /// erases the specified element (3D case)
+    ///
+    /// ## C++ default parameters
+    /// * hashval: 0
+    pub fn erase_1(&mut self, i0: i32, i1: i32, i2: i32, hashval: &mut size_t) -> Result<()> {
+        unsafe { sys::cv_SparseMat_erase_int_int_int_size_t_X(self.as_raw_SparseMat(), i0, i1, i2, hashval) }.into_result()
+    }
+    
+    /// erases the specified element (nD case)
+    ///
+    /// ## C++ default parameters
+    /// * hashval: 0
+    pub fn erase_2(&mut self, idx: &i32, hashval: &mut size_t) -> Result<()> {
+        unsafe { sys::cv_SparseMat_erase_const_int_X_size_t_X(self.as_raw_SparseMat(), idx, hashval) }.into_result()
+    }
+    
+    pub fn node(&mut self, nidx: size_t) -> Result<core::SparseMat_Node> {
+        unsafe { sys::cv_SparseMat_node_size_t(self.as_raw_SparseMat(), nidx) }.into_result().map(|ptr| core::SparseMat_Node { ptr })
+    }
+    
+    pub fn node_1(&self, nidx: size_t) -> Result<core::SparseMat_Node> {
+        unsafe { sys::cv_SparseMat_node_const_size_t(self.as_raw_SparseMat(), nidx) }.into_result().map(|ptr| core::SparseMat_Node { ptr })
+    }
+    
+    pub fn new_node(&mut self, idx: &i32, hashval: size_t) -> Result<&mut u8> {
+        unsafe { sys::cv_SparseMat_newNode_const_int_X_size_t(self.as_raw_SparseMat(), idx, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn remove_node(&mut self, hidx: size_t, nidx: size_t, previdx: size_t) -> Result<()> {
+        unsafe { sys::cv_SparseMat_removeNode_size_t_size_t_size_t(self.as_raw_SparseMat(), hidx, nidx, previdx) }.into_result()
+    }
+    
+    pub fn resize_hash_tab(&mut self, newsize: size_t) -> Result<()> {
+        unsafe { sys::cv_SparseMat_resizeHashTab_size_t(self.as_raw_SparseMat(), newsize) }.into_result()
+    }
+    
+}
+
+// boxed class cv::SparseMat::Hdr
+/// the sparse matrix header
+pub struct SparseMat_Hdr {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::SparseMat_Hdr {
+    fn drop(&mut self) {
+        unsafe { sys::cv_SparseMat_Hdr_delete(self.ptr) };
+    }
+}
+impl core::SparseMat_Hdr {
+    #[inline(always)] pub fn as_raw_SparseMat_Hdr(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for SparseMat_Hdr {}
+
+impl SparseMat_Hdr {
+
+    pub fn new(_dims: i32, _sizes: &i32, _type: i32) -> Result<core::SparseMat_Hdr> {
+        unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_int_X_int(_dims, _sizes, _type) }.into_result().map(|ptr| core::SparseMat_Hdr { ptr })
+    }
+    
+    pub fn clear(&mut self) -> Result<()> {
+        unsafe { sys::cv_SparseMat_Hdr_clear(self.as_raw_SparseMat_Hdr()) }.into_result()
+    }
+    
+}
+
+// boxed class cv::SparseMat::Node
+/// sparse matrix node - element of a hash table
+pub struct SparseMat_Node {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::SparseMat_Node {
+    fn drop(&mut self) {
+        unsafe { sys::cv_SparseMat_Node_delete(self.ptr) };
+    }
+}
+impl core::SparseMat_Node {
+    #[inline(always)] pub fn as_raw_SparseMat_Node(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for SparseMat_Node {}
+
+// Generating impl for trait cv::SparseMatConstIterator (trait)
+/// Read-Only Sparse Matrix Iterator.
+///
+/// Here is how to use the iterator to compute the sum of floating-point sparse matrix elements:
+///
+/// \code
+/// SparseMatConstIterator it = m.begin(), it_end = m.end();
+/// double s = 0;
+/// CV_Assert( m.type() == CV_32F );
+/// for( ; it != it_end; ++it )
+/// s += it.value<float>();
+/// \endcode
+pub trait SparseMatConstIterator {
+    #[inline(always)] fn as_raw_SparseMatConstIterator(&self) -> *mut c_void;
+    /// returns the current node of the sparse matrix. it.node->idx is the current element index
+    fn node(&self) -> Result<core::SparseMat_Node> {
+        unsafe { sys::cv_SparseMatConstIterator_node_const(self.as_raw_SparseMatConstIterator()) }.into_result().map(|ptr| core::SparseMat_Node { ptr })
+    }
+    
+    /// moves iterator to the element after the last element
+    fn seek_end(&mut self) -> Result<()> {
+        unsafe { sys::cv_SparseMatConstIterator_seekEnd(self.as_raw_SparseMatConstIterator()) }.into_result()
+    }
+    
+}
+
+// boxed class cv::SparseMatIterator
+/// Read-write Sparse Matrix Iterator
+///
+/// The class is similar to cv::SparseMatConstIterator,
+/// but can be used for in-place modification of the matrix elements.
+pub struct SparseMatIterator {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::SparseMatIterator {
+    fn drop(&mut self) {
+        unsafe { sys::cv_SparseMatIterator_delete(self.ptr) };
+    }
+}
+impl core::SparseMatIterator {
+    #[inline(always)] pub fn as_raw_SparseMatIterator(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for SparseMatIterator {}
+
+impl core::SparseMatConstIterator for SparseMatIterator {
+    #[inline(always)] fn as_raw_SparseMatConstIterator(&self) -> *mut c_void { self.ptr }
+}
+
+impl SparseMatIterator {
+
+    /// returns pointer to the current sparse matrix node. it.node->idx is the index of the current element (do not modify it!)
+    pub fn node(&self) -> Result<core::SparseMat_Node> {
+        unsafe { sys::cv_SparseMatIterator_node_const(self.as_raw_SparseMatIterator()) }.into_result().map(|ptr| core::SparseMat_Node { ptr })
     }
     
 }
@@ -6157,6 +6794,19 @@ unsafe impl Send for TermCriteria {}
 
 impl TermCriteria {
 
+    /// the type of termination criteria: COUNT, EPS or COUNT + EPS
+    pub fn _type(&self) -> Result<i32> {
+        unsafe { sys::cv_TermCriteria_type_const(self.as_raw_TermCriteria()) }.into_result()
+    }
+    
+    pub fn max_count(&self) -> Result<i32> {
+        unsafe { sys::cv_TermCriteria_maxCount_const(self.as_raw_TermCriteria()) }.into_result()
+    }
+    
+    pub fn epsilon(&self) -> Result<f64> {
+        unsafe { sys::cv_TermCriteria_epsilon_const(self.as_raw_TermCriteria()) }.into_result()
+    }
+    
     /// default constructor
     pub fn default() -> Result<core::TermCriteria> {
         unsafe { sys::cv_TermCriteria_TermCriteria() }.into_result().map(|ptr| core::TermCriteria { ptr })
@@ -6168,19 +6818,6 @@ impl TermCriteria {
     /// * epsilon: The desired accuracy or change in parameters at which the iterative algorithm stops.
     pub fn new(_type: i32, max_count: i32, epsilon: f64) -> Result<core::TermCriteria> {
         unsafe { sys::cv_TermCriteria_TermCriteria_int_int_double(_type, max_count, epsilon) }.into_result().map(|ptr| core::TermCriteria { ptr })
-    }
-    
-    pub fn _type(&self) -> Result<i32> {
-        unsafe { sys::cv_TermCriteria_type_const(self.as_raw_TermCriteria()) }.into_result()
-    }
-    
-    /// < the type of termination criteria: COUNT, EPS or COUNT + EPS
-    pub fn max_count(&self) -> Result<i32> {
-        unsafe { sys::cv_TermCriteria_maxCount_const(self.as_raw_TermCriteria()) }.into_result()
-    }
-    
-    pub fn epsilon(&self) -> Result<f64> {
-        unsafe { sys::cv_TermCriteria_epsilon_const(self.as_raw_TermCriteria()) }.into_result()
     }
     
 }
@@ -6291,8 +6928,163 @@ unsafe impl Send for UMat {}
 
 impl UMat {
 
+    pub fn flags(&self) -> Result<i32> {
+        unsafe { sys::cv_UMat_flags_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    /// the matrix dimensionality, >= 2
+    pub fn dims(&self) -> Result<i32> {
+        unsafe { sys::cv_UMat_dims_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn rows(&self) -> Result<i32> {
+        unsafe { sys::cv_UMat_rows_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn cols(&self) -> Result<i32> {
+        unsafe { sys::cv_UMat_cols_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    pub fn usage_flags(&self) -> Result<core::UMatUsageFlags> {
+        unsafe { sys::cv_UMat_usageFlags_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    pub fn offset(&self) -> Result<size_t> {
+        unsafe { sys::cv_UMat_offset_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    pub fn mat_size(&self) -> Result<core::MatSize> {
+        unsafe { sys::cv_UMat_size_const(self.as_raw_UMat()) }.into_result().map(|ptr| core::MatSize { ptr })
+    }
+    
+    pub fn mat_step(&self) -> Result<core::MatStep> {
+        unsafe { sys::cv_UMat_step_const(self.as_raw_UMat()) }.into_result().map(|ptr| core::MatStep { ptr })
+    }
+    
+    /// default constructor
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub fn new(usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_UMatUsageFlags(usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// constructs 2D matrix of the specified size and type
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub unsafe fn new_rows_cols(rows: i32, cols: i32, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        { sys::cv_UMat_UMat_int_int_int_UMatUsageFlags(rows, cols, _type, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub unsafe fn new_size(size: core::Size, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        { sys::cv_UMat_UMat_Size_int_UMatUsageFlags(size, _type, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// constucts 2D matrix and fills it with the specified value _s.
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub fn new_rows_cols_with_default(rows: i32, cols: i32, _type: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_int_int_int_Scalar_UMatUsageFlags(rows, cols, _type, s, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub fn new_size_with_default(size: core::Size, _type: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_Size_int_Scalar_UMatUsageFlags(size, _type, s, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// constructs n-dimensional matrix
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub unsafe fn new_nd(ndims: i32, sizes: &[i32], _type: i32, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        { sys::cv_UMat_UMat_int_const_int_X_int_UMatUsageFlags(ndims, sizes.as_ptr(), _type, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * usage_flags: USAGE_DEFAULT
+    pub fn new_nd_with_default(ndims: i32, sizes: &[i32], _type: i32, s: core::Scalar, usage_flags: core::UMatUsageFlags) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_int_const_int_X_int_Scalar_UMatUsageFlags(ndims, sizes.as_ptr(), _type, s, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// copy constructor
+    pub fn copy(m: &core::UMat) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_UMat(m.as_raw_UMat()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// creates a matrix header for a part of the bigger matrix
+    ///
+    /// ## C++ default parameters
+    /// * col_range: Range::all()
+    pub fn rowscols(m: &core::UMat, row_range: &core::Range, col_range: &core::Range) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_UMat_Range_Range(m.as_raw_UMat(), row_range.as_raw_Range(), col_range.as_raw_Range()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn roi(m: &core::UMat, roi: core::Rect) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_UMat_Rect(m.as_raw_UMat(), roi) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn ranges(m: &core::UMat, ranges: &types::VectorOfRange) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_UMat_UMat_VectorOfRange(m.as_raw_UMat(), ranges.as_raw_VectorOfRange()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
     pub fn get_mat(&self, flags: i32) -> Result<core::Mat> {
         unsafe { sys::cv_UMat_getMat_const_int(self.as_raw_UMat(), flags) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// returns a new matrix header for the specified row
+    pub fn row(&self, y: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_row_const_int(self.as_raw_UMat(), y) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// returns a new matrix header for the specified column
+    pub fn col(&self, x: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_col_const_int(self.as_raw_UMat(), x) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// ... for the specified row span
+    pub fn row_bounds(&self, startrow: i32, endrow: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_rowRange_const_int_int(self.as_raw_UMat(), startrow, endrow) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn row_range(&self, r: &core::Range) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_rowRange_const_Range(self.as_raw_UMat(), r.as_raw_Range()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// ... for the specified column span
+    pub fn col_bounds(&self, startcol: i32, endcol: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_colRange_const_int_int(self.as_raw_UMat(), startcol, endcol) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn col_range(&self, r: &core::Range) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_colRange_const_Range(self.as_raw_UMat(), r.as_raw_Range()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// ... for the specified diagonal
+    ///
+    /// ## C++ default parameters
+    /// * d: 0
+    pub fn diag(&self, d: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_diag_const_int(self.as_raw_UMat(), d) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// constructs a square diagonal matrix which main diagonal is vector "d"
+    pub fn diag_1(d: &core::UMat) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_diag_UMat(d.as_raw_UMat()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// returns deep copy of the matrix, i.e. the data is copied
+    pub fn clone(&self) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_clone_const(self.as_raw_UMat()) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
     /// copies the matrix content to "m".
@@ -6314,38 +7106,112 @@ impl UMat {
         unsafe { sys::cv_UMat_convertTo_const_Mat_int_double_double(self.as_raw_UMat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
     }
     
+    ///
+    /// ## C++ default parameters
+    /// * _type: -1
+    pub fn assign_to(&self, m: &mut core::UMat, _type: i32) -> Result<()> {
+        unsafe { sys::cv_UMat_assignTo_const_UMat_int(self.as_raw_UMat(), m.as_raw_UMat(), _type) }.into_result()
+    }
+    
+    /// sets some of the matrix elements to s, according to the mask
+    ///
+    /// ## C++ default parameters
+    /// * mask: noArray()
+    pub fn set_to(&mut self, value: &core::Mat, mask: &core::Mat) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_setTo_Mat_Mat(self.as_raw_UMat(), value.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// creates alternative matrix header for the same data, with different
+    ///
+    /// ## C++ default parameters
+    /// * rows: 0
+    pub fn reshape(&self, cn: i32, rows: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_reshape_const_int_int(self.as_raw_UMat(), cn, rows) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn reshape_1(&self, cn: i32, newndims: i32, newsz: &i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_reshape_const_int_int_const_int_X(self.as_raw_UMat(), cn, newndims, newsz) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// matrix transposition by means of matrix expressions
+    pub fn t(&self) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_t_const(self.as_raw_UMat()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// matrix inversion by means of matrix expressions
+    ///
+    /// ## C++ default parameters
+    /// * method: DECOMP_LU
+    pub fn inv(&self, method: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_inv_const_int(self.as_raw_UMat(), method) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// per-element matrix multiplication by means of matrix expressions
+    ///
+    /// ## C++ default parameters
+    /// * scale: 1
+    pub fn mul(&self, m: &core::Mat, scale: f64) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_mul_const_Mat_double(self.as_raw_UMat(), m.as_raw_Mat(), scale) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
     /// computes dot-product
     pub fn dot(&self, m: &core::Mat) -> Result<f64> {
         unsafe { sys::cv_UMat_dot_const_Mat(self.as_raw_UMat(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    /// Matlab-style matrix initialization
+    pub fn zeros(rows: i32, cols: i32, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_zeros_int_int_int(rows, cols, _type) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn zeros_1(size: core::Size, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_zeros_Size_int(size, _type) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn zeros_2(ndims: i32, sz: &i32, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_zeros_int_const_int_X_int(ndims, sz, _type) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn ones(rows: i32, cols: i32, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_ones_int_int_int(rows, cols, _type) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn ones_1(size: core::Size, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_ones_Size_int(size, _type) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn ones_2(ndims: i32, sz: &i32, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_ones_int_const_int_X_int(ndims, sz, _type) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn eye(rows: i32, cols: i32, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_eye_int_int_int(rows, cols, _type) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    pub fn eye_1(size: core::Size, _type: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_eye_Size_int(size, _type) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
     /// allocates new matrix data unless the matrix already has specified size and type.
     ///
     /// ## C++ default parameters
     /// * usage_flags: USAGE_DEFAULT
-    pub fn create(&mut self, rows: i32, cols: i32, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-        unsafe { sys::cv_UMat_create_int_int_int_UMatUsageFlags(self.as_raw_UMat(), rows, cols, _type, usage_flags) }.into_result()
+    pub unsafe fn create_rows_cols(&mut self, rows: i32, cols: i32, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
+        { sys::cv_UMat_create_int_int_int_UMatUsageFlags(self.as_raw_UMat(), rows, cols, _type, usage_flags) }.into_result()
     }
     
     ///
     /// ## C++ default parameters
     /// * usage_flags: USAGE_DEFAULT
-    pub fn create_1(&mut self, size: core::Size, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-        unsafe { sys::cv_UMat_create_Size_int_UMatUsageFlags(self.as_raw_UMat(), size, _type, usage_flags) }.into_result()
+    pub unsafe fn create_size(&mut self, size: core::Size, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
+        { sys::cv_UMat_create_Size_int_UMatUsageFlags(self.as_raw_UMat(), size, _type, usage_flags) }.into_result()
     }
     
     ///
     /// ## C++ default parameters
     /// * usage_flags: USAGE_DEFAULT
-    pub fn create_2(&mut self, ndims: i32, sizes: &i32, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-        unsafe { sys::cv_UMat_create_int_const_int_X_int_UMatUsageFlags(self.as_raw_UMat(), ndims, sizes, _type, usage_flags) }.into_result()
-    }
-    
-    ///
-    /// ## C++ default parameters
-    /// * usage_flags: USAGE_DEFAULT
-    pub fn create_3(&mut self, sizes: &types::VectorOfint, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
-        unsafe { sys::cv_UMat_create_VectorOfint_int_UMatUsageFlags(self.as_raw_UMat(), sizes.as_raw_VectorOfint(), _type, usage_flags) }.into_result()
+    pub unsafe fn create_nd(&mut self, sizes: &types::VectorOfint, _type: i32, usage_flags: core::UMatUsageFlags) -> Result<()> {
+        { sys::cv_UMat_create_VectorOfint_int_UMatUsageFlags(self.as_raw_UMat(), sizes.as_raw_VectorOfint(), _type, usage_flags) }.into_result()
     }
     
     /// increases the reference counter; use with care to avoid memleaks
@@ -6366,6 +7232,11 @@ impl UMat {
     /// locates matrix header within a parent matrix. See below
     pub fn locate_roi(&self, whole_size: &mut core::Size, ofs: &mut core::Point) -> Result<()> {
         unsafe { sys::cv_UMat_locateROI_const_Size_Point(self.as_raw_UMat(), whole_size, ofs) }.into_result()
+    }
+    
+    /// moves/resizes the current matrix ROI inside the parent matrix.
+    pub fn adjust_roi(&mut self, dtop: i32, dbottom: i32, dleft: i32, dright: i32) -> Result<core::UMat> {
+        unsafe { sys::cv_UMat_adjustROI_int_int_int_int(self.as_raw_UMat(), dtop, dbottom, dleft, dright) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
     /// returns true iff the matrix data is continuous
@@ -6441,19 +7312,6 @@ impl UMat {
 }
 
 // boxed class cv::UMatData
-/// Comma-separated Matrix Initializer
-///
-/// The class instances are usually not created explicitly.
-/// Instead, they are created on "matrix << firstValue" operator.
-///
-/// The sample below initializes 2x2 rotation matrix:
-///
-/// \code
-/// double angle = 30, a = cos(angle*CV_PI/180), b = sin(angle*CV_PI/180);
-/// Mat R = (Mat_<double>(2,2) << a, -b, b, a);
-/// \endcodethe constructor, created by "matrix << firstValue" operator, where matrix is cv::Mat
-/// the operator that takes the next value and put it to the matrix
-/// another form of conversion operator
 pub struct UMatData {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }

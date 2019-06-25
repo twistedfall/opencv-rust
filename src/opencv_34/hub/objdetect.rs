@@ -54,7 +54,7 @@
 //! <http://research.microsoft.com/en-us/um/people/viola/Pubs/Detect/violaJones_CVPR2001.pdf>
 //! # C API
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
@@ -65,7 +65,9 @@ pub const DetectionBasedTracker_DETECTED: i32 = 1;
 pub const DetectionBasedTracker_DETECTED_NOT_SHOWN_YET: i32 = 0;
 pub const DetectionBasedTracker_DETECTED_TEMPORARY_LOST: i32 = 2;
 pub const DetectionBasedTracker_WRONG_OBJECT: i32 = 3;
+/// Default nlevels value.
 pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
+/// Default histogramNormType
 pub const HOGDescriptor_L2Hys: i32 = 0;
 
 pub fn create_face_detection_mask_generator() -> Result<types::PtrOfMaskGenerator> {
@@ -643,6 +645,76 @@ unsafe impl Send for HOGDescriptor {}
 
 impl HOGDescriptor {
 
+    /// Detection window size. Align to block size and block stride. Default value is Size(64,128).
+    pub fn win_size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_winSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Block size in pixels. Align to cell size. Default value is Size(16,16).
+    pub fn block_size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_blockSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
+    pub fn block_stride(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_blockStride_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Cell size. Default value is Size(8,8).
+    pub fn cell_size(&self) -> Result<core::Size> {
+        unsafe { sys::cv_HOGDescriptor_cellSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Number of bins used in the calculation of histogram of gradients. Default value is 9.
+    pub fn nbins(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_nbins_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// not documented
+    pub fn deriv_aperture(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_derivAperture_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Gaussian smoothing window parameter.
+    pub fn win_sigma(&self) -> Result<f64> {
+        unsafe { sys::cv_HOGDescriptor_winSigma_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// histogramNormType
+    pub fn histogram_norm_type(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_histogramNormType_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// L2-Hys normalization method shrinkage.
+    pub fn l2_hys_threshold(&self) -> Result<f64> {
+        unsafe { sys::cv_HOGDescriptor_L2HysThreshold_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Flag to specify whether the gamma correction preprocessing is required or not.
+    pub fn gamma_correction(&self) -> Result<bool> {
+        unsafe { sys::cv_HOGDescriptor_gammaCorrection_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// coefficients for the linear SVM classifier.
+    pub fn svm_detector(&mut self) -> Result<types::VectorOffloat> {
+        unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|ptr| types::VectorOffloat { ptr })
+    }
+    
+    /// coefficients for the linear SVM classifier.
+    pub fn set_svm_detector(&mut self, val: types::VectorOffloat) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_svmDetector_VectorOffloat(self.as_raw_HOGDescriptor(), val.as_raw_VectorOffloat()) }.into_result()
+    }
+    
+    /// Maximum number of detection window increases. Default value is 64
+    pub fn nlevels(&self) -> Result<i32> {
+        unsafe { sys::cv_HOGDescriptor_nlevels_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Indicates signed gradient will be used or not
+    pub fn signed_gradient(&self) -> Result<bool> {
+        unsafe { sys::cv_HOGDescriptor_signedGradient_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
     /// Creates the HOG descriptor and detector with default params.
     ///
     /// aqual to HOGDescriptor(Size(64,128), Size(16,16), Size(8,8), Size(8,8), 9, 1 )
@@ -929,76 +1001,6 @@ impl HOGDescriptor {
     /// * eps: Relative difference between sides of the rectangles to merge them into a group.
     pub fn group_rectangles(&self, rect_list: &mut types::VectorOfRect, weights: &mut types::VectorOfdouble, group_threshold: i32, eps: f64) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_groupRectangles_const_VectorOfRect_VectorOfdouble_int_double(self.as_raw_HOGDescriptor(), rect_list.as_raw_VectorOfRect(), weights.as_raw_VectorOfdouble(), group_threshold, eps) }.into_result()
-    }
-    
-    /// Detection window size. Align to block size and block stride. Default value is Size(64,128).
-    pub fn win_size(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_winSize_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// Block size in pixels. Align to cell size. Default value is Size(16,16).
-    pub fn block_size(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_blockSize_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
-    pub fn block_stride(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_blockStride_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// Cell size. Default value is Size(8,8).
-    pub fn cell_size(&self) -> Result<core::Size> {
-        unsafe { sys::cv_HOGDescriptor_cellSize_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// Number of bins used in the calculation of histogram of gradients. Default value is 9.
-    pub fn nbins(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_nbins_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// not documented
-    pub fn deriv_aperture(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_derivAperture_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// Gaussian smoothing window parameter.
-    pub fn win_sigma(&self) -> Result<f64> {
-        unsafe { sys::cv_HOGDescriptor_winSigma_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// histogramNormType
-    pub fn histogram_norm_type(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_histogramNormType_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// L2-Hys normalization method shrinkage.
-    pub fn l2_hys_threshold(&self) -> Result<f64> {
-        unsafe { sys::cv_HOGDescriptor_L2HysThreshold_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// Flag to specify whether the gamma correction preprocessing is required or not.
-    pub fn gamma_correction(&self) -> Result<bool> {
-        unsafe { sys::cv_HOGDescriptor_gammaCorrection_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// coefficients for the linear SVM classifier.
-    pub fn svm_detector(&mut self) -> Result<types::VectorOffloat> {
-        unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|ptr| types::VectorOffloat { ptr })
-    }
-    
-    /// coefficients for the linear SVM classifier.
-    pub fn set_svm_detector(&mut self, val: types::VectorOffloat) -> Result<()> {
-        unsafe { sys::cv_HOGDescriptor_set_svmDetector_VectorOffloat(self.as_raw_HOGDescriptor(), val.as_raw_VectorOffloat()) }.into_result()
-    }
-    
-    /// Maximum number of detection window increases. Default value is 64
-    pub fn nlevels(&self) -> Result<i32> {
-        unsafe { sys::cv_HOGDescriptor_nlevels_const(self.as_raw_HOGDescriptor()) }.into_result()
-    }
-    
-    /// Indicates signed gradient will be used or not
-    pub fn signed_gradient(&self) -> Result<bool> {
-        unsafe { sys::cv_HOGDescriptor_signedGradient_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
 }

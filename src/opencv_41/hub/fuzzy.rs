@@ -13,13 +13,18 @@
 //!
 //! Image proceesing based on fuzzy mathematics namely F-transform.
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
+/// processing in several iterations
 pub const ITERATIVE: i32 = 3;
+/// linear (triangular) shape
 pub const LINEAR: i32 = 1;
+/// processing in multiple step
 pub const MULTI_STEP: i32 = 2;
+/// processing in one step
 pub const ONE_STEP: i32 = 1;
+/// sinusoidal shape
 pub const SINUS: i32 = 2;
 
 /// Sligtly less accurate version of <span lang='latex'>F^0</span>-transfrom computation optimized for higher speed. The methods counts with linear basic function.

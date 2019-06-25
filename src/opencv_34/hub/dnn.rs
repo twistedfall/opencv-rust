@@ -8,7 +8,7 @@
 //! Functionality of this module is designed only for forward pass computations (i.e. network testing).
 //! A network training is in principle not supported.
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_2: &'static str = "Myriad2";
@@ -486,6 +486,10 @@ pub fn reset_myriad_device() -> Result<()> {
 
 pub fn shape(mat: &core::Mat) -> Result<types::VectorOfint> {
     unsafe { sys::cv_dnn_shape_Mat(mat.as_raw_Mat()) }.into_result().map(|ptr| types::VectorOfint { ptr })
+}
+
+pub fn shape_umat(mat: &core::UMat) -> Result<types::VectorOfint> {
+    unsafe { sys::cv_dnn_shape_UMat(mat.as_raw_UMat()) }.into_result().map(|ptr| types::VectorOfint { ptr })
 }
 
 pub fn shape_nd(dims: &i32, n: i32) -> Result<types::VectorOfint> {
@@ -1141,11 +1145,12 @@ impl DictValue {
         unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
+    /// Constructs integer scalar
     pub fn from_bool(i: bool) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_bool(i) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs integer scalar
+    /// Constructs integer scalar
     ///
     /// ## C++ default parameters
     /// * i: 0
@@ -1153,28 +1158,26 @@ impl DictValue {
         unsafe { sys::cv_dnn_DictValue_DictValue_int64(i) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs integer scalar
+    /// Constructs integer scalar
     pub fn from_i32(i: i32) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_int(i) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs integer scalar
+    /// Constructs integer scalar
     pub fn from_u32(p: u32) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_unsigned(p) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs integer scalar
+    /// Constructs floating point scalar
     pub fn from_f64(p: f64) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_double(p) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Constructs string scalar
     pub fn from_str(s: &str) -> Result<crate::dnn::DictValue> {
         string_arg!(s);
         unsafe { sys::cv_dnn_DictValue_DictValue_const_char_X(s.as_ptr()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
-    /// < Tries to convert array element with specified index to requested type and returns its.
     pub fn size(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_DictValue_size_const(self.as_raw_DictValue()) }.into_result()
     }
@@ -1532,6 +1535,43 @@ impl dyn LSTMLayer + '_ {
 /// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
 pub trait Layer: core::Algorithm {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void;
+    /// List of learned parameters must be stored here to allow read them by using Net::getParam().
+    fn blobs(&mut self) -> Result<types::VectorOfMat> {
+        unsafe { sys::cv_dnn_Layer_blobs(self.as_raw_Layer()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
+    }
+    
+    /// List of learned parameters must be stored here to allow read them by using Net::getParam().
+    fn set_blobs(&mut self, val: types::VectorOfMat) -> Result<()> {
+        unsafe { sys::cv_dnn_Layer_set_blobs_VectorOfMat(self.as_raw_Layer(), val.as_raw_VectorOfMat()) }.into_result()
+    }
+    
+    /// Name of the layer instance, can be used for logging or other internal purposes.
+    fn name(&mut self) -> Result<String> {
+        unsafe { sys::cv_dnn_Layer_name(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Name of the layer instance, can be used for logging or other internal purposes.
+    fn set_name(&mut self, val: &str) -> Result<()> {
+        string_arg!(mut val);
+        unsafe { sys::cv_dnn_Layer_set_name_String(self.as_raw_Layer(), val.as_ptr() as _) }.into_result()
+    }
+    
+    /// Type name which was used for creating layer by layer factory.
+    fn _type(&mut self) -> Result<String> {
+        unsafe { sys::cv_dnn_Layer_type(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Type name which was used for creating layer by layer factory.
+    fn set_type(&mut self, val: &str) -> Result<()> {
+        string_arg!(mut val);
+        unsafe { sys::cv_dnn_Layer_set_type_String(self.as_raw_Layer(), val.as_ptr() as _) }.into_result()
+    }
+    
+    /// prefer target for layer forwarding
+    fn preferable_target(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Layer_preferableTarget_const(self.as_raw_Layer()) }.into_result()
+    }
+    
     /// Computes and sets internal parameters according to inputs, outputs and blobs.
     /// ## Parameters
     /// * inputs: vector of already allocated input blobs
@@ -1667,7 +1707,7 @@ pub trait Layer: core::Algorithm {
         unsafe { sys::cv_dnn_Layer_getFLOPS_const_VectorOfVectorOfint_VectorOfVectorOfint(self.as_raw_Layer(), inputs.as_raw_VectorOfVectorOfint(), outputs.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
-    /// < Initializes only #name, #type and #blobs fields.
+    /// Initializes only #name, #type and #blobs fields.
     fn set_params_from(&mut self, params: &crate::dnn::LayerParams) -> Result<()> {
         unsafe { sys::cv_dnn_Layer_setParamsFrom_LayerParams(self.as_raw_Layer(), params.as_raw_LayerParams()) }.into_result()
     }
@@ -1735,38 +1775,40 @@ impl crate::dnn::Dict for LayerParams {
 
 impl LayerParams {
 
-    pub fn new() -> Result<crate::dnn::LayerParams> {
-        unsafe { sys::cv_dnn_LayerParams_LayerParams() }.into_result().map(|ptr| crate::dnn::LayerParams { ptr })
-    }
-    
+    /// List of learned parameters stored as blobs.
     pub fn blobs(&mut self) -> Result<types::VectorOfMat> {
         unsafe { sys::cv_dnn_LayerParams_blobs(self.as_raw_LayerParams()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
     }
     
+    /// List of learned parameters stored as blobs.
     pub fn set_blobs(&mut self, val: types::VectorOfMat) -> Result<()> {
         unsafe { sys::cv_dnn_LayerParams_set_blobs_VectorOfMat(self.as_raw_LayerParams(), val.as_raw_VectorOfMat()) }.into_result()
     }
     
-    /// < List of learned parameters stored as blobs.
+    /// Name of the layer instance (optional, can be used internal purposes).
     pub fn name(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_LayerParams_name(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-    /// < List of learned parameters stored as blobs.
+    /// Name of the layer instance (optional, can be used internal purposes).
     pub fn set_name(&mut self, val: &str) -> Result<()> {
         string_arg!(mut val);
         unsafe { sys::cv_dnn_LayerParams_set_name_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
     }
     
-    /// < Name of the layer instance (optional, can be used internal purposes).
+    /// Type name which was used for creating layer by layer factory (optional).
     pub fn _type(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_LayerParams_type(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-    /// < Name of the layer instance (optional, can be used internal purposes).
+    /// Type name which was used for creating layer by layer factory (optional).
     pub fn set_type(&mut self, val: &str) -> Result<()> {
         string_arg!(mut val);
         unsafe { sys::cv_dnn_LayerParams_set_type_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
+    }
+    
+    pub fn new() -> Result<crate::dnn::LayerParams> {
+        unsafe { sys::cv_dnn_LayerParams_LayerParams() }.into_result().map(|ptr| crate::dnn::LayerParams { ptr })
     }
     
 }
@@ -1874,6 +1916,7 @@ unsafe impl Send for Net {}
 
 impl Net {
 
+    /// Default constructor.
     pub fn new() -> Result<crate::dnn::Net> {
         unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| crate::dnn::Net { ptr })
     }
@@ -3052,7 +3095,6 @@ impl crate::dnn::Layer for SplitLayer {
 
 impl SplitLayer {
 
-    /// < Number of copies that will be produced (is ignored when negative).
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfSplitLayer> {
         unsafe { sys::cv_dnn_SplitLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfSplitLayer { ptr })
     }

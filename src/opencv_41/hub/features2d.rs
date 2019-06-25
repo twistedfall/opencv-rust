@@ -28,7 +28,7 @@
 //! *   (Python) An example using the features2D framework to perform object categorization can be
 //! found at opencv_source_code/samples/python/find_obj.py
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const AKAZE_DESCRIPTOR_KAZE: i32 = 3;

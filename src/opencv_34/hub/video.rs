@@ -3,7 +3,7 @@
 //! # Object Tracking
 //! # C API
 use std::os::raw::{c_char, c_void};
-use libc::size_t;
+use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
 pub const MOTION_AFFINE: i32 = 2;
@@ -1029,6 +1029,106 @@ unsafe impl Send for KalmanFilter {}
 
 impl KalmanFilter {
 
+    /// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
+    pub fn state_pre(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_statePre(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
+    pub fn set_state_pre(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_statePre_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
+    pub fn state_post(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_statePost(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
+    pub fn set_state_post(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_statePost_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// state transition matrix (A)
+    pub fn transition_matrix(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_transitionMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// state transition matrix (A)
+    pub fn set_transition_matrix(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_transitionMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// control matrix (B) (not used if there is no control)
+    pub fn control_matrix(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_controlMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// control matrix (B) (not used if there is no control)
+    pub fn set_control_matrix(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_controlMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// measurement matrix (H)
+    pub fn measurement_matrix(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_measurementMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// measurement matrix (H)
+    pub fn set_measurement_matrix(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_measurementMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// process noise covariance matrix (Q)
+    pub fn process_noise_cov(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_processNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// process noise covariance matrix (Q)
+    pub fn set_process_noise_cov(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_processNoiseCov_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// measurement noise covariance matrix (R)
+    pub fn measurement_noise_cov(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_measurementNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// measurement noise covariance matrix (R)
+    pub fn set_measurement_noise_cov(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_measurementNoiseCov_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
+    pub fn error_cov_pre(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_errorCovPre(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
+    pub fn set_error_cov_pre(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_errorCovPre_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
+    pub fn gain(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_gain(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
+    pub fn set_gain(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_gain_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    /// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
+    pub fn error_cov_post(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_KalmanFilter_errorCovPost(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// posteriori error estimate covariance matrix (P(k)): P(k)=(I-K(k)*H)*P'(k)
+    pub fn set_error_cov_post(&mut self, val: core::Mat) -> Result<()> {
+        unsafe { sys::cv_KalmanFilter_set_errorCovPost_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
+    }
+    
     pub fn default() -> Result<crate::video::KalmanFilter> {
         unsafe { sys::cv_KalmanFilter_KalmanFilter() }.into_result().map(|ptr| crate::video::KalmanFilter { ptr })
     }
@@ -1078,104 +1178,6 @@ impl KalmanFilter {
     /// * measurement: The measured system parameters
     pub fn correct(&mut self, measurement: &core::Mat) -> Result<core::Mat> {
         unsafe { sys::cv_KalmanFilter_correct_Mat(self.as_raw_KalmanFilter(), measurement.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    pub fn state_pre(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_statePre(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    pub fn set_state_pre(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_statePre_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
-    pub fn state_post(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_statePost(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
-    pub fn set_state_post(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_statePost_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
-    pub fn transition_matrix(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_transitionMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < corrected state (x(k)): x(k)=x'(k)+K(k)*(z(k)-H*x'(k))
-    pub fn set_transition_matrix(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_transitionMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < state transition matrix (A)
-    pub fn control_matrix(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_controlMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < state transition matrix (A)
-    pub fn set_control_matrix(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_controlMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < control matrix (B) (not used if there is no control)
-    pub fn measurement_matrix(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_measurementMatrix(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < control matrix (B) (not used if there is no control)
-    pub fn set_measurement_matrix(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_measurementMatrix_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < measurement matrix (H)
-    pub fn process_noise_cov(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_processNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < measurement matrix (H)
-    pub fn set_process_noise_cov(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_processNoiseCov_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < process noise covariance matrix (Q)
-    pub fn measurement_noise_cov(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_measurementNoiseCov(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < process noise covariance matrix (Q)
-    pub fn set_measurement_noise_cov(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_measurementNoiseCov_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < measurement noise covariance matrix (R)
-    pub fn error_cov_pre(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_errorCovPre(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < measurement noise covariance matrix (R)
-    pub fn set_error_cov_pre(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_errorCovPre_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
-    pub fn gain(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_gain(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < priori error estimate covariance matrix (P'(k)): P'(k)=A*P(k-1)*At + Q)*/
-    pub fn set_gain(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_gain_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
-    }
-    
-    /// < Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
-    pub fn error_cov_post(&mut self) -> Result<core::Mat> {
-        unsafe { sys::cv_KalmanFilter_errorCovPost(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
-    }
-    
-    /// < Kalman gain matrix (K(k)): K(k)=P'(k)*Ht*inv(H*P'(k)*Ht+R)
-    pub fn set_error_cov_post(&mut self, val: core::Mat) -> Result<()> {
-        unsafe { sys::cv_KalmanFilter_set_errorCovPost_Mat(self.as_raw_KalmanFilter(), val.as_raw_Mat()) }.into_result()
     }
     
 }
