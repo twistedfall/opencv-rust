@@ -263,9 +263,18 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         write!(&mut types, "#include <cstddef>\n")?;
     }
 
+    let version = if cfg!(feature = "opencv-32") {
+        "3.2.0"
+    } else if cfg!(feature = "opencv-34") {
+        "3.4.6"
+    } else if cfg!(feature = "opencv-41") {
+        "4.1.0"
+    } else {
+        unreachable!();
+    };
     modules.par_iter().for_each(|module| {
         if !Command::new("python3")
-            .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0])
+            .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, &module.0, &version])
             .args(
                 module
                     .1

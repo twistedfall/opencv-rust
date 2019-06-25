@@ -2938,7 +2938,7 @@ class RustWrapperGenerator(object):
         if not item.is_ignored and item.fullname in enum_generate:
             self.enums.append(item)
 
-    def gen(self, srcfiles, module, cpp_dir, rust_dir):
+    def gen(self, srcfiles, module, opencv_version, cpp_dir, rust_dir):
         """
         :param srcfiles:
         :type module: str
@@ -2948,6 +2948,7 @@ class RustWrapperGenerator(object):
         """
         self.cpp_dir = cpp_dir
         self.rust_dir = rust_dir
+        self.opencv_version = opencv_version
         includes = []
 
         parser = hdr_parser.CppHeaderParser()
@@ -3358,9 +3359,9 @@ class RustWrapperGenerator(object):
         text = re.sub(r"@sa\s+", "## See also\n", text, 1, re.M)
         text = text.replace("@sa", "")
         # citation links
-        text = re.sub(r"@cite\s+(.+?)\b", r"[\1](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_\1)", text)
+        text = re.sub(r"@cite\s+(.+?)\b", r"[\1](https://docs.opencv.org/{}/d0/de3/citelist.html#CITEREF_\1)".format(self.opencv_version), text)
         # images
-        text = re.sub(r"!\[(.*?)\]\((?:pics/)?(.+)?\)", r"![\1](https://docs.opencv.org/3.4.6/\2)", text)
+        text = re.sub(r"!\[(.*?)\]\((?:pics/)?(.+)?\)", r"![\1](https://docs.opencv.org/{}/\2)".format(self.opencv_version), text)
         # ?
         text = re.sub(r".*\*\*\*\*\*", "", text, 0, re.M)
         # returns
@@ -3400,18 +3401,19 @@ def main():
     cpp_dir = sys.argv[2]
     rust_dir = sys.argv[3]
     module = sys.argv[4]
-    srcfiles = sys.argv[5:]
+    opencv_version = sys.argv[5]
+    srcfiles = sys.argv[6:]
     logging.basicConfig(filename='%s/%s.log' % (cpp_dir, module), format=None, filemode='w', level=logging.INFO)
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARNING)
     logging.getLogger().addHandler(handler)
     print("Generating module '" + module + "' from headers:\n\t" + "\n\t".join(srcfiles))
     generator = RustWrapperGenerator()
-    generator.gen(srcfiles, module, cpp_dir, rust_dir)
+    generator.gen(srcfiles, module, opencv_version, cpp_dir, rust_dir)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 5:
+    if len(sys.argv) < 6:
         print("Usage:\n", \
               os.path.basename(sys.argv[0]), \
               "<full path to hdr_parser.py> <cpp_out_dir> <rust_out_dir> <module name> <C++ header> [<C++ header>...]")
