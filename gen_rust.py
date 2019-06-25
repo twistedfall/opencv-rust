@@ -86,6 +86,7 @@ decls_manual_pre = {
     "core": [
         ("class cv.Range", "", ["/Ghost"], []),
         ("class cv.Mat", "", ["/Ghost"], []),
+        ("class cv.UMat", "", ["/Ghost"], []),
         ("class cv.Algorithm", "", ["/Ghost"], []),
         ("class cv.DMatch", "", ["/Ghost", "/Simple"], []),
         ("class cv.KeyPoint", "", ["/Ghost", "/Simple"], []),
@@ -139,38 +140,38 @@ func_rename = {
     ### core ###
     "cv_addImpl_int_const_char_X": "-",
     "cv_MatExpr_type_const": "typ",
-    "cv_Mat_Mat_int_int_int": "new_rows_cols",
-    "cv_Mat_Mat_Size_int": "new_size",
-    "cv_Mat_Mat_int_int_int_Scalar": "new_rows_cols_with_default",
-    "cv_Mat_Mat_Size_int_Scalar": "new_size_with_default",
+    "cv_Mat_Mat_int_int_int": "+_rows_cols",
+    "cv_Mat_Mat_Size_int": "+_size",
+    "cv_Mat_Mat_int_int_int_Scalar": "+_rows_cols_with_default",
+    "cv_Mat_Mat_Size_int_Scalar": "+_size_with_default",
     "cv_Mat_Mat_int_const_int_X_int": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int, but with pointers
-    "cv_Mat_Mat_VectorOfint_int": "new_nd",
-    "cv_Mat_Mat_int_const_int_X_int_Scalar": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_Scalar_s, but with pointers
-    "cv_Mat_Mat_VectorOfint_int_Scalar": "new_nd_with_default",
+    "cv_Mat_Mat_VectorOfint_int": "+_nd",
+    "cv_Mat_Mat_int_const_int_X_int_Scalar": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_Scalar, but with pointers
+    "cv_Mat_Mat_VectorOfint_int_Scalar": "+_nd_with_default",
     "cv_Mat_Mat_Mat": "copy",
     "cv_Mat_Mat_int_int_int_void_X_size_t": "new_rows_cols_with_data",
     "cv_Mat_Mat_Size_int_void_X_size_t": "new_size_with_data",
     "cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X, but with pointers
-    "cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X": "new_nd_with_data",
+    "cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X": "+_nd_with_data",
     "cv_Mat_Mat_Mat_Range_Range": "rowscols",
     "cv_Mat_Mat_Mat_Rect": "roi",
-    "cv_Mat_Mat_Mat_const_Range": "-",  # duplicate of cv_Mat_Mat_Mat_VectorOfRange_ranges, but with pointers
+    "cv_Mat_Mat_Mat_const_Range": "-",  # duplicate of cv_Mat_Mat_Mat_VectorOfRange, but with pointers
     "cv_Mat_Mat_Mat_VectorOfRange": "ranges",
-    "cv_Mat_colRange_const_Range": "colrange",
-    "cv_Mat_colRange_const_int_int": "colbounds",
-    "cv_Mat_copyTo_const_Mat_Mat": "copy_to_masked",
+    "cv_Mat_colRange_const_int_int": "col_bounds",
+    "cv_Mat_rowRange_const_int_int": "row_bounds",
+    "cv_Mat_copyTo_const_Mat_Mat": "+_masked",
     "cv_Mat_create_int_int_int": "+_rows_cols",
     "cv_Mat_create_Size_int": "+_size",
     "cv_Mat_create_VectorOfint_int": "+_nd",
     "cv_Mat_create_int_const_int_X_int": "-",  # duplicate of cv_Mat_create_VectorOfint_int, but with pointers
-    "cv_Mat_diag_Mat": "diag_new_mat",
-    "cv_Mat_ptr_int": "ptr_mut",
-    "cv_Mat_ptr_int_int": "ptr_2d_mut",
-    "cv_Mat_ptr_const_int_int": "ptr_2d",
-    "cv_Mat_ptr_int_int_int": "ptr_3d_mut",
-    "cv_Mat_ptr_const_int_int_int": "ptr_3d",
-    "cv_Mat_ptr_const_int_X": "ptr_nd_mut",
-    "cv_Mat_ptr_const_const_int_X": "ptr_nd",
+    "cv_Mat_diag_Mat": "+_new_mat",
+    "cv_Mat_ptr_int": "+_mut",
+    "cv_Mat_ptr_int_int": "+_2d_mut",
+    "cv_Mat_ptr_const_int_int": "+_2d",
+    "cv_Mat_ptr_int_int_int": "+_3d_mut",
+    "cv_Mat_ptr_const_int_int_int": "+_3d",
+    "cv_Mat_ptr_const_int_X": "+_nd_mut",
+    "cv_Mat_ptr_const_const_int_X": "+_nd",
     "cv_Mat_at_int": "at_mut",
     "cv_Mat_at_int_int": "at_2d_mut",
     "cv_Mat_at_const_int_int": "at_2d",
@@ -179,7 +180,6 @@ func_rename = {
     "cv_Mat_at_const_int_X": "at_nd_mut",
     "cv_Mat_at_const_const_int_X": "at_nd",
     "cv_Mat_resize_size_t_Scalar": "resize_with_default",
-    "cv_Mat_rowRange_const_int_int": "rowbounds",
     "cv_Mat_type_const": "typ",
     "cv_Mat_reshape_const_int_int_const_int_X": "-",  # duplicate of cv_Mat_reshape_const_int_VectorOfint, but with pointers
     "cv_Mat_reshape_const_int_VectorOfint": "reshape_nd",
@@ -189,6 +189,37 @@ func_rename = {
     "cv_Mat_set_size_MatSize": "-",  # doesn't allow writing
     "cv_Mat_set_step_MatStep": "-",  # same as above
     "cv_Mat_data": "+_mut",
+    "cv_Mat_copySize_Mat": "-",  # internal function
+    "cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags": "get_umat",
+    "cv_Mat_getUMat_const_int_UMatUsageFlags": "get_umat",  # 3.2 only
+    "cv_UMat_UMat_int_int_int_UMatUsageFlags": "+_rows_cols",
+    "cv_UMat_UMat_Size_int_UMatUsageFlags": "+_size",
+    "cv_UMat_UMat_int_int_int_Scalar_UMatUsageFlags": "+_rows_cols_with_default",
+    "cv_UMat_UMat_Size_int_Scalar_UMatUsageFlags": "+_size_with_default",
+    "cv_min_UMat_UMat_UMat": "+_umat",
+    "cv_max_UMat_UMat_UMat": "+_umat",
+    "cv_swap_UMat_UMat": "+_umat",
+    "cv_UMat_UMat_int_const_int_X_int_UMatUsageFlags": "+_nd",
+    "cv_UMat_UMat_int_const_int_X_int_Scalar_UMatUsageFlags": "+_nd_with_default",  # fixme
+    "cv_UMat_UMat_UMat": "copy",
+    "cv_UMat_UMat_UMat_Range_Range": "rowscols",
+    "cv_UMat_UMat_UMat_Rect": "roi",
+    "cv_UMat_UMat_UMat_const_Range": "-",  # duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
+    "cv_UMat_UMat_UMat_VectorOfRange": "ranges",
+    "cv_UMat_colRange_const_int_int": "col_bounds",
+    "cv_UMat_rowRange_const_int_int": "row_bounds",
+    "cv_UMat_size_const": "mat_size",
+    "cv_UMat_step_const": "mat_step",
+    "cv_UMat_set_size_MatSize": "-",  # doesn't allow writing
+    "cv_UMat_set_step_MatStep": "-",  # same as above
+    "cv_UMat_create_int_int_int_UMatUsageFlags": "+_rows_cols",
+    "cv_UMat_create_Size_int_UMatUsageFlags": "+_size",
+    "cv_UMat_create_VectorOfint_int_UMatUsageFlags": "+_nd",
+    "cv_UMat_create_int_const_int_X_int_UMatUsageFlags": "-",  # duplicate of cv_UMat_create_VectorOfint_int_UMatUsageFlags, but with pointers
+    "cv_UMat_type_const": "typ",
+    "cv_UMat_copyTo_const_Mat": "copy_to",
+    "cv_UMat_copyTo_const_Mat_Mat": "copy_to_masked",
+    "cv_UMat_copySize_UMat": "-",  # internal function
     "cv_Mat_push_back__const_void_X": "-",  # internal method
     "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
     "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",
@@ -211,9 +242,6 @@ func_rename = {
     "cv_RotatedRect_RotatedRect": "default",
     "cv_RotatedRect_RotatedRect_Point2f_Point2f_Point2f": "for_points",
     "cv_TermCriteria_TermCriteria": "default",
-    "cv_UMat_type_const": "typ",
-    "cv_UMat_copyTo_const_Mat": "copy_to",
-    "cv_UMat_copyTo_const_Mat_Mat": "copy_to_masked",
     "cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int": "-",  # duplicate of cv_calcCovarMatrix_Mat_Mat_Mat_int_int, but with pointers
     "cv_clipLine_Size_Point_Point": "clip_line_size",
     "cv_clipLine_Size2l_Point2l_Point2l": "clip_line_size_i64",
@@ -369,6 +397,7 @@ func_rename = {
     "cv_dnn_slice_Mat_Range_Range": "slice_2d",
     "cv_dnn_slice_Mat_Range_Range_Range": "slice_3d",
     "cv_dnn_slice_Mat_Range_Range_Range_Range": "slice_4d",
+    "cv_dnn_shape_UMat": "+_umat",
     "cv_dnn_shape_const_int_X_int": "shape_nd",
     "cv_dnn_shape_int_int_int_int": "shape_3d",
     "cv_dnn_blobFromImage_Mat_Mat_double_Size_Scalar_bool_bool_int": "blob_from_image_to",
@@ -462,6 +491,12 @@ func_unsafe_list = {
     "cv_Mat_create_int_int_int",
     "cv_Mat_create_Size_int",
     "cv_Mat_create_VectorOfint_int",
+    "cv_UMat_UMat_int_int_int_UMatUsageFlags",
+    "cv_UMat_UMat_Size_int_UMatUsageFlags",
+    "cv_UMat_UMat_int_const_int_X_int_UMatUsageFlags",
+    "cv_UMat_create_int_int_int_UMatUsageFlags",
+    "cv_UMat_create_Size_int_UMatUsageFlags",
+    "cv_UMat_create_VectorOfint_int_UMatUsageFlags",
     # allows passing arbitrary data
     "cv_Mat_set_data_uchar_X",
     # no bounds checking
@@ -678,6 +713,17 @@ force_slice = {
             "arg_count": 4,
             "arg_name": "steps",
         },
+        # accepts pointer to array of dimensions, make it slice
+        "cv.UMat.UMat": (
+            {
+                "arg_count": 4,
+                "arg_name": "sizes",
+            },
+            {
+                "arg_count": 5,
+                "arg_name": "sizes",
+            }
+        )
     },
 }
 
@@ -762,7 +808,7 @@ def decl_patch(module, decl):
                             decl[3][i][0] = decl[3][i][0].replace("*", "[]")
     if module == "core":
         # size() and step() of Mat and UMat should be const
-        if decl[0] == "cv.Mat.size" or decl[0] == "cv.Mat.step":
+        if decl[0] == "cv.Mat.size" or decl[0] == "cv.Mat.step" or decl[0] == "cv.UMat.size" or decl[0] == "cv.UMat.step":
             decl[2].append("/C")
     elif module == "dnn":
         # set method takes generic, force it to take DictValue wrapper
@@ -2954,19 +3000,18 @@ class RustWrapperGenerator(object):
                     None,
                     prop.comment
                 ])
-                if not read_func.is_ignored and not read_func.rv_type().is_ignored:
-                    if not is_const:
-                        attrs = ["/ATTRSETTER"]
-                        self.add_decl(module, [
-                            "{}.set_{}".format(item.fullname.replace("::", "."), prop.name),
-                            "void",
-                            attrs,
-                            (
-                                [prop_type.cpptype, "val", "", []],
-                            ),
-                            None,
-                            prop.comment
-                        ])
+                if not read_func.is_ignored and not read_func.rv_type().is_ignored and not is_const:
+                    attrs = ["/ATTRSETTER"]
+                    self.add_decl(module, [
+                        "{}.set_{}".format(item.fullname.replace("::", "."), prop.name),
+                        "void",
+                        attrs,
+                        (
+                            [prop_type.cpptype, "val", "", []],
+                        ),
+                        None,
+                        prop.comment
+                    ])
         return item
 
     def add_const_decl(self, _module, decl):

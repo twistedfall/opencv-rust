@@ -800,7 +800,7 @@ class CppHeaderParser(object):
         if (context == "struct" or context == "class") and end_token == ";" and stmt:
             # looks like it's member declaration; append the members to the class declaration
             class_decl = stack_top[self.CLASS_DECL]
-            if ("CV_PROP" in stmt) or class_decl[0] in ("class cv.Mat", "class cv.RotatedRect", "class cv.TermCriteria", "class cv.Range", "class cv.dnn.LayerParams"): # or (class_decl and ("/Map" in class_decl[2])):
+            if ("CV_PROP" in stmt) or class_decl[0] in ("class cv.Mat", "class cv.UMat", "class cv.RotatedRect", "class cv.TermCriteria", "class cv.Range", "class cv.dnn.LayerParams"): # or (class_decl and ("/Map" in class_decl[2])):
                 var_modlist = []
                 if "CV_PROP_RW" in stmt:
                     var_modlist.append("/RW")

@@ -3,7 +3,7 @@ use std::{fmt, ops::Deref, slice};
 use libc::size_t;
 
 use crate::{
-    core::{self, Mat, MatSize, MatStep, Scalar},
+    core::{self, Mat, MatSize, MatStep, Scalar, UMat},
     Error,
     Result,
     sys,
@@ -438,6 +438,19 @@ impl fmt::Debug for Mat {
 impl Default for Mat {
     fn default() -> Self {
         Mat::new().unwrap()
+    }
+}
+
+impl UMat {
+    #[inline]
+    pub fn size(&self) -> Result<core::Size> {
+        let me = self.as_raw_UMat();
+        cpp!(unsafe [me as "const cv::UMat*"] -> sys::cv_return_value_SizeWrapper as "cv_return_value_SizeWrapper" {
+            try {
+                cv::Size ret = me->size();
+                return { Error::Code::StsOk, NULL, *reinterpret_cast<SizeWrapper*>(&ret) };
+            } CVRS_CATCH(cv_return_value_SizeWrapper)
+        }).into_result()
     }
 }
 
