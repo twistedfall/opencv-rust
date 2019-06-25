@@ -12,17 +12,26 @@ use opencv::{
 
 fn run() -> opencv::Result<()> {
     let window = "video capture";
-    let xml = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml";
     highgui::named_window(window, 1)?;
     #[cfg(feature = "opencv-32")]
-    let mut cam = videoio::VideoCapture::new(0)?;  // 0 is the default camera
+    let (xml, mut cam) = {
+        (
+            "/usr/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml".to_owned(),
+            videoio::VideoCapture::new(0)?,  // 0 is the default camera
+        )
+    };
     #[cfg(not(feature = "opencv-32"))]
-    let mut cam = videoio::VideoCapture::new_with_backend(0, videoio::CAP_ANY)?;  // 0 is the default camera
+    let (xml, mut cam) = {
+        (
+            core::find_file("haarcascades/haarcascade_frontalface_alt.xml", true, false)?,
+            videoio::VideoCapture::new_with_backend(0, videoio::CAP_ANY)?,  // 0 is the default camera
+        )
+    };
     let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
         panic!("Unable to open default camera!");
     }
-    let mut face = objdetect::CascadeClassifier::new(xml)?;
+    let mut face = objdetect::CascadeClassifier::new(&xml)?;
     loop {
         let mut frame = Mat::new()?;
         cam.read(&mut frame)?;
