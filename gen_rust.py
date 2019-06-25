@@ -114,9 +114,11 @@ func_rename = {
     ### calib3d ###
     "cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat": "+_matrix",
     "cv_findHomography_Mat_Mat_int_double_Mat_int_double": "+_full",
+    "cv_undistortPoints_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria": "+_with_criteria",
     "cv_fisheye_projectPoints_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat": "fisheye_+",
     "cv_fisheye_undistortImage_Mat_Mat_Mat_Mat_Mat_Size": "fisheye_+",
     "cv_fisheye_undistortPoints_Mat_Mat_Mat_Mat_Mat_Mat": "fisheye_+",
+    "cv_fisheye_initUndistortRectifyMap_Mat_Mat_Mat_Mat_Size_int_Mat_Mat": "fisheye_+",
     "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_Mat": "+_camera_with_points",
     "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat_Mat": "+_camera",
     "cv_solvePnP_Mat_Mat_Mat_Mat_Mat_Mat_bool_int": "solve_pnp",
@@ -125,8 +127,10 @@ func_rename = {
     "cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria": "+_with_stddev",
     "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera",
     "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera_with_errors",
+    "cv_calibrateCameraRO_VectorOfMat_VectorOfMat_Size_int_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Mat_int_TermCriteria": "+_with_stddev",
     "cv_stereoRectify_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_int_double_Size_Rect_X_Rect_X": "+_camera",
     "cv_findFundamentalMat_Mat_Mat_int_double_double_Mat": "-",  # duplicate of cv_findFundamentalMat_Mat_Mat_Mat_int_double_double, but with different order of arguments
+    "cv_initWideAngleProjMap_Mat_Mat_Size_int_int_Mat_Mat_int_double": "+_with_type",
 
     ### core ###
     "cv_addImpl_int_const_char_X": "-",
@@ -241,7 +245,8 @@ func_rename = {
 
     ### features2d ###
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
-    "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_int": "AGAST_with_type",
+    "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_int": "AGAST_with_type",  # 3.x only
+    "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_AgastFeatureDetector_DetectorType": "AGAST_with_type",
     "cv_BOWKMeansTrainer_cluster_const": "default",
     "cv_BOWKMeansTrainer_cluster_const_Mat": "new",
     "cv_BOWKMeansTrainer_BOWKMeansTrainer_int_TermCriteria_int_int": "new_with_criteria",
@@ -255,7 +260,8 @@ func_rename = {
     "cv_DescriptorMatcher_radiusMatch_const_Mat_Mat_VectorOfVectorOfDMatch_float_Mat_bool": "train_radius_matches",
     "cv_DescriptorMatcher_radiusMatch_Mat_VectorOfVectorOfDMatch_float_VectorOfMat_bool": "radius_matches",
     "cv_FAST_Mat_VectorOfKeyPoint_int_bool": "FAST",
-    "cv_FAST_Mat_VectorOfKeyPoint_int_bool_int": "FAST_with_type",
+    "cv_FAST_Mat_VectorOfKeyPoint_int_bool_int": "FAST_with_type",  # 3.x only
+    "cv_FAST_Mat_VectorOfKeyPoint_int_bool_FastFeatureDetector_DetectorType": "FAST_with_type",
     "cv_Feature2D_detect_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "+_multiple",
     "cv_KeyPoint_KeyPoint": "default",
     "cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int": "new_point",
@@ -263,14 +269,15 @@ func_rename = {
     "cv_KeyPoint_convert_VectorOfKeyPoint_VectorOfPoint2f_VectorOfint": "convert_from",
     "cv_KeyPoint_convert_VectorOfPoint2f_VectorOfKeyPoint_float_float_int_int": "convert_to",
     "cv_MatStep_MatStep": "default",
-    "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfDMatch_Mat_Scalar_Scalar_VectorOfchar_int": "draw_matches",
-    "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int": "draw_vector_matches",
+    "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int": "+_vector",
+    "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_DrawMatchesFlags": "+_vector",
     "cv_BRISK_create_VectorOffloat_VectorOfint_float_float_VectorOfint": "create_with_pattern",
     "cv_BRISK_create_int_int_VectorOffloat_VectorOfint_float_float_VectorOfint": "create_with_pattern_threshold_octaves",
     "cv_BOWTrainer_cluster_const_Mat": "cluster_with_descriptors",
     "cv_GFTTDetector_create_int_double_double_int_int_bool_double": "+_with_gradient",
     "cv_Feature2D_compute_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "+_multiple",
-    "cv_DescriptorMatcher_create_int": "+_with_matcher_type",
+    "cv_DescriptorMatcher_create_int": "+_with_matcher_type",  # 3.x only
+    "cv_DescriptorMatcher_create_DescriptorMatcher_MatcherType": "+_with_matcher_type",
     "cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_PtrOfDescriptorMatcher": "new_with_dextractor",
     "cv_ORB_create": "default",
 
@@ -294,7 +301,8 @@ func_rename = {
     "cv_GeneralizedHough_detect_Mat_Mat_Mat_Mat_Mat": "+_with_edges",
     "cv_goodFeaturesToTrack_Mat_Mat_int_double_double_Mat_int_int_bool_double": "+_with_gradient",
     "cv_getAffineTransform_Mat_Mat": "+_mat",
-    "cv_getPerspectiveTransform_Mat_Mat": "+_mat",
+    "cv_getPerspectiveTransform_Mat_Mat": "+_mat",  # 3.x only
+    "cv_getPerspectiveTransform_Mat_Mat_int": "+_mat",
 
     ### ml ###
     "cv_ml_ParamGrid_ParamGrid_double_double_double": "for_range",
@@ -304,6 +312,8 @@ func_rename = {
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "detect_multi_scale_levels",
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size": "detect_multi_scale_num",
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size": "detect_multi_scale",
+    "cv_HOGDescriptor_HOGDescriptor": "default",
+    "cv_HOGDescriptor_HOGDescriptor_String": "new_from_file",
     "cv_HOGDescriptor_HOGDescriptor_HOGDescriptor": "copy",
     "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool": "detect_multi_scale",
     "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_double_Size_Size_double_double_bool": "detect_multi_scale_weights",
@@ -386,6 +396,9 @@ class_ignore_list = (
     "cv::MatConstIterator",
     "cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray",
 
+    ### features2d ###
+    "cv::DrawMatchesFlags",  # dummy type only used to contain anonymous enum, 3.x only
+
     ### stitching ###
     "cv::CylindricalWarperGpu", "cv::PlaneWarperGpu", "cv::SphericalWarperGpu",
 
@@ -421,6 +434,11 @@ const_ignore_list = (
     "CV__DNN_EXPERIMENTAL_NS_",
     "CV_Sts",
     "CV_ALWAYS_INLINE",
+    "CV_16FC",
+    "CV__DNN_INLINE_NS",
+    "ENUM_LOG_LEVEL_FORCE_INT",
+    "DEPTH_MASK_16F", "DEPTH_MASK_ALL_16F",
+    "CV_USRTYPE1",
 )
 
 # set of functions that should have unsafe in their declaration, element is FuncInfo.identifier
@@ -625,14 +643,55 @@ force_class_not_simple = {
     "cv::dnn::Net",  # marked as Simple, but it's actually boxed
 }
 
-# set of enum's that need to be generated, other enums are just expanded to constants, elements are EnumInfo.fullname
 enum_generate = {
+    ### calib3d ###
+    "cv::HandEyeCalibrationMethod",
+
+    ### core ###
+    "cv::AccessFlag",
+    "cv::Formatter::FormatType",
+    "cv::instr::FLAGS",
+    "cv::instr::IMPL",
+    "cv::instr::TYPE",
+    "cv::UMatUsageFlags",
+    "cv::UndistortTypes",
+    "cv::WindowFlags",
+    "cv::WindowPropertyFlags",
+
+    ### dnn ###
+    "cv::dnn::Backend",
+    "cv::dnn::Target",
+
+    ### features2d ###
+    "cv::AgastFeatureDetector::DetectorType",
+    "cv::AKAZE::DescriptorType",
+    "cv::DescriptorMatcher::MatcherType",
+    "cv::DrawMatchesFlags",
+    "cv::FastFeatureDetector::DetectorType",
+    "cv::KAZE::DiffusivityType",
+    "cv::ORB::ScoreType",
+
+    ### imgproc ###
+    "cv::InterpolationFlags",
+
+    ### objdetect ###
+    "cv::HOGDescriptor::HistogramNormType",
+
+    ### stitching ###
+    "cv::Stitcher::Mode",
+    "cv::Stitcher::Status",
+
+    ### videoio ###
+    "cv::VideoCaptureAPIs",
 }
 
 # dict of enum discriminants to exclude from the bindings (e.g. due to duplicate values)
 # key: EnumInfo.fullname
 # value: set of ConstInfo.name
 enum_ignore_discriminant = {
+    "cv::AccessFlag": {"ACCESS_MASK", },
+    "cv::WindowFlags": {"WINDOW_FULLSCREEN", "WINDOW_KEEPRATIO", "WINDOW_GUI_EXPANDED"},
+    "cv::VideoCaptureAPIs": {"CAP_VFW", "CAP_V4L2", "CAP_FIREWARE", "CAP_IEEE1394", "CAP_DC1394", "CAP_CMU1394", "CAP_REALSENSE"},
 }
 
 # dict of reserved Rust keywords and their replacement to be used in var, function and class names
@@ -2890,9 +2949,10 @@ class RustWrapperGenerator(object):
                 self.add_decl(module, decl)
 
         for m, decls in decls_manual_post.items():
-            for decl in decls:
-                logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
-                self.add_decl(m, decl)
+            if m == module:
+                for decl in decls:
+                    logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
+                    self.add_decl(m, decl)
 
         logging.info("\n\n===== Generating... =====")
         self.moduleCppTypes = StringIO()
@@ -2948,8 +3008,6 @@ class RustWrapperGenerator(object):
         with open("{}/{}.consts.cpp".format(cpp_dir, module), "w") as f:
             f.write("""#include <cstdio>\n""")
             f.write("""#include "opencv2/%s.hpp"\n"""%(module))
-            for include in includes:
-                f.write(include+"\n")
             f.write("""using namespace cv;\n""")
             f.write("int main(int, char**) {\n")
             f.write(self.moduleCppConsts.getvalue())

@@ -33,10 +33,10 @@ semver = "0.9"
 matches = "0.1"
 
 [features]
-default = ["opencv_34"]
+default = ["opencv-34"]
 buildtime_bindgen = []
-opencv_34 = []
-opencv_41 = []
+opencv-34 = []
+opencv-41 = []
 
 [package.metadata.docs.rs]
 rustc-args = [ "--cfg feature=\"docs-only\"" ]

@@ -234,7 +234,7 @@ class CppHeaderParser(object):
         if add_star:
             arg_type += "*"
 
-        arg_type = self.batch_replace(arg_type, [("std::", ""), ("cv::", ""), ("::", "_")])
+        arg_type = self.batch_replace(arg_type, [("std::", ""), ("cv::", "")])
 
         return arg_type, arg_name, modlist, argno
 
@@ -338,7 +338,6 @@ class CppHeaderParser(object):
         implmatch = re.match(r"(\(.*?\))\s*:\s*(\w+\(.*?\),?\s*)+", fdecl[apos:])
         if bool(implmatch):
             fdecl = fdecl[:apos] + implmatch.group(1)
-            decl[2].append("/I")
 
         args0str = fdecl[apos+1:fdecl.rfind(")")].strip()
 
@@ -459,7 +458,7 @@ class CppHeaderParser(object):
         # it means class methods, not instance methods
         decl_str = self.batch_replace(decl_str, [("static inline", ""), ("inline", ""),\
             ("CV_EXPORTS_W", ""), ("CV_EXPORTS", ""), ("CV_CDECL", ""), ("CV_WRAP ", " "), ("CV_INLINE", ""),
-            ("CV_DEPRECATED", ""), ("CV_DEPRECATED_EXTERNAL", "")]).strip()
+            ("CV_DEPRECATED", ""), ("CV_DEPRECATED_EXTERNAL", ""), ("CV_NORETURN", "")]).strip()
 
 
         if decl_str.strip().startswith('virtual'):

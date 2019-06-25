@@ -44,8 +44,8 @@ env:
     - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
     - LC_CTYPE=C.UTF-8 # makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
   matrix:
-    - OPENCV_VERSION=3.4.6 OPENCV_PKGCONFIG=opencv
-    - OPENCV_VERSION=4.1.0 OPENCV_PKGCONFIG=opencv4
+    - OPENCV_VERSION=3.4.6 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-34
+    - OPENCV_VERSION=4.1.0 OPENCV_PKGCONFIG=opencv4 CARGO_FEATURES=opencv-41
 
 before_script:
   - mkdir -p ~/build/opencv
@@ -59,6 +59,9 @@ before_script:
   - popd
   - pkg-config --cflags $OPENCV_PKGCONFIG
   - pkg-config --libs $OPENCV_PKGCONFIG
+
+script:
+  - cargo test --verbose --no-default-features --features $CARGO_FEATURES
 
 matrix:
   allow_failures:

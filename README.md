@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/twistedfall/opencv-rust.svg?branch=master)](https://travis-ci.org/twistedfall/opencv-rust)
 [![docs.rs](https://docs.rs/opencv/badge.svg)](https://docs.rs/opencv)
 
-Experimental Rust bindings for OpenCV 3.
+Experimental Rust bindings for OpenCV 3 and 4.
 
 The API is usable but unstable and not very battle-tested; use at your own risk.
 

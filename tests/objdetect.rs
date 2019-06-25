@@ -36,6 +36,7 @@ fn qr_code() -> Result<()> {
         assert!(!straight.empty()?);
     }
 
+    #[cfg(feature = "opencv-34")]
     {
         let src = imgcodecs::imread(qr_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
         let mut pts = VectorOfPoint::new();

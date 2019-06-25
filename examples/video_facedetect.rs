@@ -14,7 +14,7 @@ fn run() -> opencv::Result<()> {
     let window = "video capture";
     let xml = "/usr/local/share/OpenCV/haarcascades/haarcascade_frontalface_alt.xml";
     highgui::named_window(window, 1)?;
-    let mut cam = videoio::VideoCapture::new(0)?;  // 0 is the default camera
+    let mut cam = videoio::VideoCapture::new_with_backend(0, videoio::CAP_ANY)?;  // 0 is the default camera
     let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
         panic!("Unable to open default camera!");

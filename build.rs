@@ -16,23 +16,31 @@ use semver::{Version, VersionReq};
 use glob::glob;
 
 fn link_wrapper() -> Result<pkg_config::Library, Box<dyn Error>> {
-    let (opencv, pkg_name) = if let Ok(library) = pkg_config::probe_library("opencv") {
-        (library, "opencv")
-    } else if let Ok(library) = pkg_config::probe_library("opencv4") {
-        (library, "opencv4")
+    let (opencv, pkg_name) = if cfg!(feature = "opencv-34") {
+        let (opencv, pkg_name) = if let Ok(opencv) = pkg_config::probe_library("opencv") {
+            (opencv, "opencv")
+        } else {
+            panic!("package opencv is not found by pkg-config")
+        };
+        if !VersionReq::parse("~3")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 3.4 branch because of the feature: opencv-34", opencv.version);
+        }
+        (opencv, pkg_name)
+    } else if cfg!(feature = "opencv-41") {
+        let (opencv, pkg_name) = if let Ok(opencv) = pkg_config::probe_library("opencv4") {
+            (opencv, "opencv4")
+        } else {
+            panic!("package opencv4 is not found by pkg-config")
+        };
+        if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
+            panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv-41", opencv.version);
+        }
+        (opencv, pkg_name)
     } else {
-        panic!("package opencv is not found by pkg-config")
+        unreachable!("Cannot be until we allow custom headers");
     };
 
-    if cfg!(feature = "opencv_34") {
-        if !VersionReq::parse("~3.4")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 3.4 branch because of the feature: opencv_34", opencv.version);
-        }
-    } else if cfg!(feature = "opencv_4") {
-        if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv_41", opencv.version);
-        }
-    }
+    eprintln!("Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(pkg_name, "libdir")?);
 
     // add 3rdparty lib dit. pkgconfig forgets it somehow.
     let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);
@@ -88,15 +96,20 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     let out_dir_as_str = out_dir.to_str().unwrap();
     let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
     let manual_dir = hub_dir.join("manual");
-    if cfg!(feature = "opencv_34") {
+    if cfg!(feature = "opencv-34") {
         hub_dir.push("opencv_34");
+    } else if cfg!(feature = "opencv-41") {
+        hub_dir.push("opencv_41");
     }
     let module_dir = hub_dir.join("hub");
 
     let opencv_dir = opencv_header_dir.join("opencv2");
 
-    println!("OpenCV lives in {}", opencv_dir.display());
-    println!("Generating code in {}", out_dir_as_str);
+    eprintln!("Using OpenCV headers from: {}", opencv_dir.display());
+    eprintln!("Generating code in: {}", out_dir_as_str);
+    if cfg!(feature = "buildtime_bindgen") {
+        eprintln!("Placing generated bindings into: {}", hub_dir.display());
+    }
 
     let mut gcc = cc::Build::new();
     gcc.cpp(true)
@@ -117,6 +130,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         "core_detect",
         "face",
         "flann",
+        "gapi",
         "hal",
         "hdf", // includes platform-specific headers like /usr/include/x86_64-pc-linux-gnu/opencv2/hdf/hdf5.hpp
         "hfs",
@@ -125,6 +139,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         "opencv",
         "opencv_modules",
         "optflow",
+        "quality",
         "rgbd",
         "saliency",
         "stereo",
@@ -132,7 +147,6 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         "surface_matching",
         "text",
         "tracking",
-        "viz", // includes platform-specific headers like /usr/include/x86_64-pc-linux-gnu/opencv2/viz.hpp
         "xfeatures2d", // only appears in some builds, maybe platform or opencv compile flag specific
         "ximgproc",
         "xobjdetect",
@@ -147,6 +161,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         "core/ocl_genbase.hpp", // ?
         "core/opengl.hpp", // ?
         "core/cvstd.hpp", // contains functions with Rust native counterparts and c++ specific classes
+        "core/cvstd_wrapper.hpp",
         "core/eigen.hpp",
         "core/fast_math.hpp", // contains functions with Rust native counterparts
         "core/utils/filesystem.hpp", // contains functions with Rust native counterparts
@@ -194,6 +209,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
             write!(&mut types, "#include <opencv2/{}.hpp>\n", m.0)?;
             if m.0 == "dnn" {
                 // include it manually, otherwise it's not included
+                if cfg!(feature = "opencv-41") {
+                    write!(&mut types, "#include <opencv2/{}/version.hpp>\n", m.0)?;
+                }
                 write!(&mut types, "#include <opencv2/{}/all_layers.hpp>\n", m.0)?;
             }
         }
@@ -350,14 +368,19 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
+    let features = [cfg!(feature = "opencv-34"), cfg!(feature = "opencv-41")].iter().map(|&x| if x { 1 } else { 0 }).sum::<i32>();
+    if features != 1 {
+        // todo: allow building with custom headers
+        panic!("Please select exactly one of the features: opencv-34, opencv-41");
+    }
     let opencv_header_dir = env::var("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|_| {
         let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR must be set"));
-        if cfg!(feature = "opencv_34") {
+        if cfg!(feature = "opencv-34") {
             manifest_dir.join("headers/3.4")
-        } else if cfg!(feature = "opencv_41") {
+        } else if cfg!(feature = "opencv-41") {
             manifest_dir.join("headers/4.1")
         } else {
-            panic!("Please select one OpenCV major version using one of the opencv_* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
+            panic!("Please select one OpenCV major version using one of the opencv-* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
         }
     });
 

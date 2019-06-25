@@ -16,12 +16,14 @@ macro_rules! string_arg {
     };
 }
 
+#[cfg(feature = "opencv-34")]
 macro_rules! string_arg_output_send {
     (via $name_via: ident) => {
         let mut $name_via = ::std::ptr::null_mut();
     };
 }
 
+#[cfg(feature = "opencv-34")]
 macro_rules! string_arg_output_receive {
     ($name_via: ident => $name: ident) => {
         *$name = $crate::templ::receive_string_mut($name_via);

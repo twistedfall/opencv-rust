@@ -36,6 +36,10 @@ fn help() {
 static WINDOW_TITLE: &str = "Perspective Transformation Demo";
 static LABELS: [&str; 4] = ["TL", "TR", "BR", "BL"];
 
+#[cfg(not(feature = "opencv-41"))]
+use self::core::LINE_8;
+#[cfg(feature = "opencv-41")]
+use self::imgproc::LINE_8;
 
 fn main() -> Result<(), Box<Error>> {
     let roi_corners = Arc::new(Mutex::new(VectorOfPoint::new()));
@@ -105,11 +109,11 @@ fn main() -> Result<(), Box<Error>> {
             {
                 let roi_corners = roi_corners.lock().unwrap();
                 for i in 0..roi_corners_len {
-                    imgproc::circle(&mut image, roi_corners.get(i)?, 5, Scalar::new(0., 255., 0., 0.), 3, core::LINE_8, 0)?;
+                    imgproc::circle(&mut image, roi_corners.get(i)?, 5, Scalar::new(0., 255., 0., 0.), 3, LINE_8, 0)?;
                     if i > 0 {
-                        imgproc::line(&mut image, roi_corners.get(i - 1)?, roi_corners.get(i)?, Scalar::new(0., 0., 255., 0.), 2, core::LINE_8, 0)?;
-                        imgproc::circle(&mut image, roi_corners.get(i)?, 5, Scalar::new(0., 255., 0., 0.), 3, core::LINE_8, 0)?;
-                        imgproc::put_text(&mut image, LABELS[i], roi_corners.get(i)?, highgui::QT_FONT_NORMAL, 0.8, Scalar::new(255., 0., 0., 0.), 2, core::LINE_8, false)?;
+                        imgproc::line(&mut image, roi_corners.get(i - 1)?, roi_corners.get(i)?, Scalar::new(0., 0., 255., 0.), 2, LINE_8, 0)?;
+                        imgproc::circle(&mut image, roi_corners.get(i)?, 5, Scalar::new(0., 255., 0., 0.), 3, LINE_8, 0)?;
+                        imgproc::put_text(&mut image, LABELS[i], roi_corners.get(i)?, highgui::QT_FONT_NORMAL, 0.8, Scalar::new(255., 0., 0., 0.), 2, LINE_8, false)?;
                     }
                 }
             }
@@ -120,9 +124,9 @@ fn main() -> Result<(), Box<Error>> {
             {
                 let roi_corners = roi_corners.lock().unwrap();
                 for i in 0..4 {
-                    imgproc::line(&mut image, roi_corners.get(i)?, roi_corners.get((i + 1) % 4)?, Scalar::new(0., 0., 255., 0.), 2, core::LINE_8, 0)?;
-                    imgproc::circle(&mut image, roi_corners.get(i)?, 5, Scalar::new(0., 255., 0., 0.), 3, core::LINE_8, 0)?;
-                    imgproc::put_text(&mut image, LABELS[i], roi_corners.get(i)?, highgui::QT_FONT_NORMAL, 0.8, Scalar::new(255., 0., 0., 0.), 2, core::LINE_8, false)?;
+                    imgproc::line(&mut image, roi_corners.get(i)?, roi_corners.get((i + 1) % 4)?, Scalar::new(0., 0., 255., 0.), 2, LINE_8, 0)?;
+                    imgproc::circle(&mut image, roi_corners.get(i)?, 5, Scalar::new(0., 255., 0., 0.), 3, LINE_8, 0)?;
+                    imgproc::put_text(&mut image, LABELS[i], roi_corners.get(i)?, highgui::QT_FONT_NORMAL, 0.8, Scalar::new(255., 0., 0., 0.), 2, LINE_8, false)?;
                 }
                 highgui::imshow(WINDOW_TITLE, &image)?;
                 dst_corners.set(0, Point::new(0, 0))?;
