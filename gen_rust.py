@@ -1281,17 +1281,19 @@ class ClassInfo(GeneralInfo):
         else:
             self.bases = []
 
-        for base in self.bases:
-            typ = self.gen.get_class(base)
-            if typ:
-                typ.is_trait = True
+        self.is_ignored = self.is_ignored or self.gen.class_is_ignored(self.fullname)
+
+        if not self.is_ignored:
+            for base in self.bases:
+                typ = self.gen.get_class(base)
+                if typ:
+                    typ.is_trait = True
 
         # class props
         self.props = []
         for p in decl[3]:
             self.props.append(ClassPropInfo(p))
 
-        self.is_ignored = self.is_ignored or self.gen.class_is_ignored(self.fullname)
 
     def __repr__(self):
         attrs = []
@@ -1999,6 +2001,14 @@ class BoxedClassTypeInfo(TypeInfo):
         self.c_safe_id = "void_X"
         self.is_ignored = self.ci.is_ignored
         self.rust_safe_id = self.ci.name
+
+    def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
+        old_rust_full = self.rust_full
+        if self.is_trait:
+            self.rust_full = "dyn {}".format(self.rust_full)
+        out = super().rust_arg_func_decl(var_name, is_output, attr_type)
+        self.rust_full = old_rust_full
+        return out
 
     def cpp_method_call_name(self, method_name):
         return "reinterpret_cast<{}*>(instance)->{}".format(self.cpptype, method_name)
