@@ -101,6 +101,9 @@ decls_manual_pre = {
 # key: module name
 # value: list of declarations as supplied by hdr_parser
 decls_manual_post = {
+    "features2d": [
+        ("cv.ORB.create", "Ptr<ORB>", ["/S"], [], None, "@overload"),
+    ],
     "dnn": [
         ("cv.dnn.LayerParams.LayerParams", "", [], []),
     ],
@@ -269,6 +272,7 @@ func_rename = {
     "cv_Feature2D_compute_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "+_multiple",
     "cv_DescriptorMatcher_create_int": "+_with_matcher_type",
     "cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_PtrOfDescriptorMatcher": "new_with_dextractor",
+    "cv_ORB_create": "default",
 
     ### highgui ###
     "cv_addText_Mat_String_Point_QtFont": "+_with_font",
