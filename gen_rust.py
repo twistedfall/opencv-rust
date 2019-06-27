@@ -658,6 +658,7 @@ force_class_not_simple = {
     "cv::dnn::Net",  # marked as Simple, but it's actually boxed
 }
 
+# set of enum's that need to be generated, other enums are just expanded to constants, elements are EnumInfo.fullname
 enum_generate = {
     ### calib3d ###
     "cv::HandEyeCalibrationMethod",
