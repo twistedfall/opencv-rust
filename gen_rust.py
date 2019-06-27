@@ -151,7 +151,7 @@ func_rename = {
     "cv_Mat_Mat_int_int_int_void_X_size_t": "new_rows_cols_with_data",
     "cv_Mat_Mat_Size_int_void_X_size_t": "new_size_with_data",
     "cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X, but with pointers
-    "cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X": "new_nd_with_data",  # fixme steps should be slice
+    "cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X": "new_nd_with_data",
     "cv_Mat_Mat_Mat_Range_Range": "rowscols",
     "cv_Mat_Mat_Mat_Rect": "roi",
     "cv_Mat_Mat_Mat_const_Range": "-",  # duplicate of cv_Mat_Mat_Mat_VectorOfRange_ranges, but with pointers
@@ -658,6 +658,34 @@ force_class_not_simple = {
     "cv::dnn::Net",  # marked as Simple, but it's actually boxed
 }
 
+# dict of pointer arguments that need to be made into slices, the conversion only happens if an arg is a pointer
+# key: module name
+# value: dict
+#   key: function name as it comes from parse_hdr
+#   value: dict or tuple of dicts
+#     key: "arg_count"
+#     value: count of arguments that the function must have
+#     key: "arg_name"
+#     value: string name of the argument that needs converting to slice
+force_slice = {
+    "core": {
+        # replace pointers with slices for nd Mat access methods
+        "cv.Mat.at": {
+            "arg_count": 1,
+            "arg_name": "idx",
+        },
+        "cv.Mat.ptr": {
+            "arg_count": 1,
+            "arg_name": "idx",
+        },
+        # accepts pointer to array of steps, make it slice
+        "cv.Mat.Mat": {
+            "arg_count": 4,
+            "arg_name": "steps",
+        },
+    },
+}
+
 # set of enum's that need to be generated, other enums are just expanded to constants, elements are EnumInfo.fullname
 enum_generate = {
     ### calib3d ###
@@ -726,6 +754,17 @@ static_modules = ("core", "sys", "types")
 
 
 def decl_patch(module, decl):
+    force_slice_module_decls = force_slice.get(module)
+    if force_slice_module_decls is not None:
+        force_slice_fn_decls = force_slice_module_decls.get(decl[0])
+        if force_slice_fn_decls is not None:
+            if not isinstance(force_slice_fn_decls, tuple):
+                force_slice_fn_decls = (force_slice_fn_decls,)
+            for force_slice_decl in force_slice_fn_decls:
+                if len(decl[3]) == force_slice_decl["arg_count"]:
+                    for i, _ in enumerate(decl[3]):
+                        if decl[3][i][1] == force_slice_decl["arg_name"]:
+                            decl[3][i][0] = decl[3][i][0].replace("*", "[]")
     if module == "objdetect":
         # replace Mat with explicit vector because detect functions only accept vector InputArray
         if decl[0] == "cv.QRCodeDetector.detect" or decl[0] == "cv.QRCodeDetector.detectAndDecode":
@@ -736,12 +775,6 @@ def decl_patch(module, decl):
             pts_arg = decl[3][1]
             if pts_arg[0] == "InputArray" and pts_arg[1] == "points":
                 decl[3][1][0] = "const std::vector<Point>&"
-    elif module == "core":
-        # replace pointers with slices for nd Mat access methods
-        if (decl[0] == "cv.Mat.at" or decl[0] == "cv.Mat.ptr") and len(decl[3]) == 1:
-            idx_arg = decl[3][0]
-            if idx_arg[0] == "const int*" and idx_arg[1] == "idx":
-                decl[3][0][0] = "const int[]"
     elif module == "dnn":
         # set method takes generic, force it to take DictValue wrapper
         if decl[0] == "cv.dnn.Dict.set":
