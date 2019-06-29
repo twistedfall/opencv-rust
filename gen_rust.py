@@ -765,16 +765,10 @@ def decl_patch(module, decl):
                     for i, _ in enumerate(decl[3]):
                         if decl[3][i][1] == force_slice_decl["arg_name"]:
                             decl[3][i][0] = decl[3][i][0].replace("*", "[]")
-    if module == "objdetect":
-        # replace Mat with explicit vector because detect functions only accept vector InputArray
-        if decl[0] == "cv.QRCodeDetector.detect" or decl[0] == "cv.QRCodeDetector.detectAndDecode":
-            pts_arg = decl[3][1]
-            if pts_arg[0] == "OutputArray" and pts_arg[1] == "points":
-                decl[3][1][0] = "std::vector<Point>&"
-        elif decl[0] == "cv.QRCodeDetector.decode" or decl[0] == "cv.decodeQRCode":
-            pts_arg = decl[3][1]
-            if pts_arg[0] == "InputArray" and pts_arg[1] == "points":
-                decl[3][1][0] = "const std::vector<Point>&"
+    if module == "core":
+        # size() and step() of Mat and UMat should be const
+        if decl[0] == "cv.Mat.size" or decl[0] == "cv.Mat.step":
+            decl[2].append("/C")
     elif module == "dnn":
         # set method takes generic, force it to take DictValue wrapper
         if decl[0] == "cv.dnn.Dict.set":
@@ -785,6 +779,16 @@ def decl_patch(module, decl):
         if decl[0] == "cv.ml.TrainData.loadFromCSV" and len(decl[3]) == 8 and decl[3][6][0] == "'":
             decl[3][5][2] = "','"
             del decl[3][6]
+    elif module == "objdetect":
+        # replace Mat with explicit vector because detect functions only accept vector InputArray
+        if decl[0] == "cv.QRCodeDetector.detect" or decl[0] == "cv.QRCodeDetector.detectAndDecode":
+            pts_arg = decl[3][1]
+            if pts_arg[0] == "OutputArray" and pts_arg[1] == "points":
+                decl[3][1][0] = "std::vector<Point>&"
+        elif decl[0] == "cv.QRCodeDetector.decode" or decl[0] == "cv.decodeQRCode":
+            pts_arg = decl[3][1]
+            if pts_arg[0] == "InputArray" and pts_arg[1] == "points":
+                decl[3][1][0] = "const std::vector<Point>&"
     return decl
 
 
@@ -2915,20 +2919,20 @@ class RustWrapperGenerator(object):
             decl[0] = "cv.Algorithm.Algorithm"
         name = decl[0]  # type: str
         if name.startswith("struct") or name.startswith("class"):
-            self.add_class_decl(module, decl)
+            return self.add_class_decl(module, decl)
         elif name.startswith("const"):
-            self.add_const_decl(module, decl)
+            return self.add_const_decl(module, decl)
         elif name.startswith("typedef"):
-            self.add_typedef_decl(module, decl)
+            return self.add_typedef_decl(module, decl)
         elif name.startswith("callback"):
-            self.add_callback_decl(module, decl)
+            return self.add_callback_decl(module, decl)
         elif name.startswith("enum"):
             for const_decl in decl[3]:
                 self.add_const_decl(module, const_decl)
             if not decl[0].endswith("<unnamed>"):
-                self.add_enum_decl(module, decl)
+                return self.add_enum_decl(module, decl)
         else:
-            self.add_func_decl(module, decl)
+            return self.add_func_decl(module, decl)
 
     def add_class_decl(self, module, decl):
         item = ClassInfo(self, module, decl, frozenset(self.namespaces))
@@ -2937,6 +2941,35 @@ class RustWrapperGenerator(object):
                      " [ignored]" if item.is_ignored else "",
                      " impl:"+",".join(sorted(item.bases)) if len(item.bases) else "")
         self.classes[item.fullname] = item
+        if not item.is_callback and not item.is_simple:
+            for prop in item.props:
+                attrs = ["/ATTRGETTER"]
+                prop_type = self.get_type_info(prop.ctype)
+                is_const = prop_type.is_const or prop_type.is_copy
+                if is_const:
+                    attrs.append("/C")
+                read_func = self.add_decl(module, [
+                    "{}.{}".format(item.fullname.replace("::", "."), prop.name),
+                    prop.ctype,
+                    attrs,
+                    [],
+                    None,
+                    prop.comment
+                ])
+                if not read_func.is_ignored and not read_func.rv_type().is_ignored:
+                    if not is_const:
+                        attrs = ["/ATTRSETTER"]
+                        self.add_decl(module, [
+                            "{}.set_{}".format(item.fullname.replace("::", "."), prop.name),
+                            "void",
+                            attrs,
+                            (
+                                [prop_type.cpptype, "val", "", []],
+                            ),
+                            None,
+                            prop.comment
+                        ])
+        return item
 
     def add_const_decl(self, _module, decl):
         item = ConstInfo(self, decl, frozenset(self.namespaces))
@@ -2945,17 +2978,20 @@ class RustWrapperGenerator(object):
             logging.info('ignored: %s', item)
         elif not self.get_const(item.name):
             self.consts.append(item)
+        return item
 
     def add_typedef_decl(self, _module, decl):
         item = TypedefInfo(self, decl, frozenset(self.namespaces))
         if not isinstance(item.alias_typ(), UnknownTypeInfo) and isinstance(item.typ(), UnknownTypeInfo):
             self.set_type_info(item.name, item.alias_typ())
+        return item
 
     def add_callback_decl(self, module, decl):
         item = CallbackInfo(self, decl, frozenset(self.namespaces))
         if not item.is_ignored:
             self.add_decl(module, ("class {}".format(item.fullname.replace("::", ".")), "", ["/Ghost", "/Callback"], []))
             self.callbacks.append(item)
+        return item
 
     def add_func_decl(self, module, decl):
         item = FuncInfo(self, module, decl, frozenset(self.namespaces))
@@ -2966,11 +3002,13 @@ class RustWrapperGenerator(object):
                 self.functions.append(item)
             else:
                 item.ci.add_method(item)
+        return item
 
     def add_enum_decl(self, module, decl):
         item = EnumInfo(self, module, decl, self.namespaces)
         if not item.is_ignored and item.fullname in enum_generate:
             self.enums.append(item)
+        return item
 
     def gen(self, srcfiles, module, opencv_version, cpp_dir, rust_dir):
         """
@@ -3318,45 +3356,6 @@ class RustWrapperGenerator(object):
                 self.moduleSafeRust.write("impl %s {\n\n" % (t.rust_local))
             for fi in ci.methods:
                 self.gen_func(fi)
-            if isinstance(t, BoxedClassTypeInfo):
-                for prop in ci.props:
-                    attrs = ["/ATTRGETTER"]
-                    prop_type = self.get_type_info(prop.ctype)
-                    is_const = prop_type.is_const or prop_type.is_copy
-                    if is_const or ci.fullname == "cv::Mat" and (prop.name == "size" or prop.name == "step"):
-                        attrs.append("/C")
-                    read_func = FuncInfo(
-                        self,
-                        ci.module,
-                        [
-                            "{}.{}".format(ci.fullname, prop.name),
-                            prop.ctype,
-                            attrs,
-                            [],
-                            None,
-                            prop.comment
-                        ],
-                        self.namespaces)
-                    if not read_func.is_ignored and not read_func.rv_type().is_ignored:
-                        self.gen_func(read_func)
-                        if not is_const:
-                            attrs = ["/ATTRSETTER"]
-                            write_func = FuncInfo(
-                                self,
-                                ci.module,
-                                [
-                                    "{}.set_{}".format(ci.fullname, prop.name),
-                                    "void",
-                                    attrs,
-                                    (
-                                        [prop_type.cpptype, "val", "", []],
-                                    ),
-                                    None,
-                                    prop.comment
-                                ],
-                                self.namespaces
-                            )
-                            self.gen_func(write_func)
             if has_impl:
                 self.moduleSafeRust.write("}\n\n")
 

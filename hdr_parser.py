@@ -975,7 +975,12 @@ class CppHeaderParser(object):
                     stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, docstring=docstring)
                     if decl:
                         if stmt_type.startswith("enum"):
-                            decls.append([stmt_type + " " + self.get_dotted_name(name), "", [], decl, None, ""])
+                            enum_decl = [stmt_type + " " + self.get_dotted_name(name), "", [], decl, None, ""]
+                            # if enum is declared inside class then we need to put its declaration earlier in decls
+                            if len(decls) >= 1 and decls[-1][0].startswith("struct ") and enum_decl[0].replace("enum ", "").startswith(decls[-1][0].replace("struct ", "")):
+                                decls.insert(-1, enum_decl)
+                            else:
+                                decls.append(enum_decl)
                         else:
                             decls.append(decl)
 
