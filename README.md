@@ -15,6 +15,7 @@ refer to the official [OpenCV C++
 documentation](https://docs.opencv.org/3.4.6/) as well.
 
 ### OpenCV version support
+
 The following OpenCV versions are supported at the moment:
 * 3.2
 * 3.4
@@ -26,6 +27,7 @@ You can choose the target OpenCV version with the following Cargo features:
 * opencv-41
 
 ### Quickstart
+
 Make sure the supported OpenCV version is installed in your system along with `pkg_config`
 files or `-dev` packages.
 
@@ -45,6 +47,7 @@ use opencv::prelude::*;
 ```
 
 ### Platform support
+
 Currently development and testing of the crate is only performed on Linux, please feel
 free to submit support for other platforms.
 
@@ -77,9 +80,8 @@ of the crate's API as you would treat one of C++, use `clone()` when needed.
 ## Getting Started
 
 The following external dependencies are required:
-- python2.7
-- OpenCV 3.4.6 (other 3.4 versions may work, but development is done
-  against this version)
+- python3
+- OpenCV 3.2.0, 3.4.6 or 4.1.0
 
 OpenCV is a complicated dependency with a lot of different
 configurations that can break this crate since it relies on fragile
@@ -96,14 +98,26 @@ opencv_version
 
 ### Install OpenCV
 
-Install OpenCV 3.4.6. Check your platform's package manager or see the
+Install supported version of OpenCV. Check your platform's package manager or see the
 upstream OpenCV
-[installation guides](https://docs.opencv.org/3.4/df/d65/tutorial_table_of_content_introduction.html).
+[installation guides](https://docs.opencv.org/master/df/d65/tutorial_table_of_content_introduction.html).
+
+When your OpenCV is installed in a location that's not being picked up by build script
+you can try setting one or both of the following environment vars prior to trying to
+build the crate:
+
+```bash
+export PKG_CONFIG_PATH=/custom/prefix/lib/pkgconfig/
+export LD_LIBRARY_PATH=/custom/prefix/lib/
+```
+
+Path specified by `PKG_CONFIG_PATH` must contain `opencv.pc` or `opencv4.pc` (for OpenCV 4.x).
+Path specified by `LD_LIBRARY_PATH` must contain `libopencv_*.so` files.
 
 ### Compiling OpenCV
 
 See the [upstream
-guides](https://docs.opencv.org/3.4/df/d65/tutorial_table_of_content_introduction.html)
+guides](https://docs.opencv.org/master/df/d65/tutorial_table_of_content_introduction.html)
 for compiling OpenCV for your platform. Make sure to compile from the
 correct release tag! We recommend including opencv_contrib and
 configuring your build with the same flags the travis build uses:
@@ -131,6 +145,7 @@ cmake \
 ```
 
 ## Contrib modules
+
 The following modules require [`opencv_contrib`](https://github.com/opencv/opencv_contrib/)
 installed:
  * bioinspired
@@ -144,7 +159,7 @@ installed:
 
 ## OpenCV 2 support
 
-If you can't use OpenCV 3.4.6, the (no longer maintained) `0.2.4`
+If you can't use OpenCV 3.x or higher, the (no longer maintained) `0.2.4`
 version of this crate is known to work with OpenCV `2.4.7.13` (and probably other 2.4 versions).
 
 ## The binding strategy
