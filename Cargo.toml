@@ -36,6 +36,7 @@ matches = "0.1"
 [features]
 default = ["opencv-34"]
 buildtime-bindgen = []
+force-3rd-party-libs-discovery = []
 opencv-32 = []
 opencv-34 = []
 opencv-41 = []

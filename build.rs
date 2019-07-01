@@ -180,48 +180,53 @@ fn link_wrapper() -> Result<(pkg_config::Library, &'static str), Box<dyn Error>>
 
     eprintln!("=== Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(pkg_name, "libdir")?);
 
-    // add 3rdparty lib dit. pkgconfig forgets it somehow.
-    let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);
-    println!("cargo:rustc-link-search=native={}", third_party_dir1);
-    let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(pkg_name, "libdir")?, pkg_name);
-    println!("cargo:rustc-link-search=native={}", third_party_dir2);
-    let third_party_dirs: [&str; 2] = [&third_party_dir1, &third_party_dir2];
+    // fixme: I wonder whether that kind of forced discovery is needed at all now
+    // It sure messes with cross-building when a lib is present in host, but not in target platform
+    // So for now let's hide it behind a non-default feature and check the breakage reports
+    if cfg!(feature = "force-3rd-party-libs-discovery") {
+        // add 3rdparty lib dir. pkgconfig forgets it somehow.
+        let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);
+        println!("cargo:rustc-link-search=native={}", third_party_dir1);
+        let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(pkg_name, "libdir")?, pkg_name);
+        println!("cargo:rustc-link-search=native={}", third_party_dir2);
+        let third_party_dirs: [&str; 2] = [&third_party_dir1, &third_party_dir2];
 
-    // now, this is a nightmare.
-    // opencv will embark these as .a when they are not available, or
-    // use the one from the system
-    // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
-    fn lookup_lib(third_party_dirs: &[&str], search: &str) {
-        for prefix in &["lib", "liblib"] {
-            for &path in third_party_dirs.iter().chain(&["/usr/lib", "/usr/lib64", "/usr/local/lib", "/usr/local/lib64", "/usr/lib/x86_64-linux-gnu/"]) {
-                for ext in &[".a", ".dylib", ".so"] {
-                    let name = format!("{}{}", prefix, search);
-                    let filename = PathBuf::from(format!("{}/{}{}", path, name, ext));
-                    if filename.exists() {
-                        println!("cargo:rustc-link-lib={}", &name[3..]);
-                        return;
+        // now, this is a nightmare.
+        // opencv will embark these as .a when they are not available, or
+        // use the one from the system
+        // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
+        fn lookup_lib(third_party_dirs: &[&str], search: &str) {
+            for prefix in &["lib", "liblib"] {
+                for &path in third_party_dirs.iter().chain(&["/usr/lib", "/usr/lib64", "/usr/local/lib", "/usr/local/lib64", "/usr/lib/x86_64-linux-gnu/"]) {
+                    for ext in &[".a", ".dylib", ".so"] {
+                        let name = format!("{}{}", prefix, search);
+                        let filename = PathBuf::from(format!("{}/{}{}", path, name, ext));
+                        if filename.exists() {
+                            println!("cargo:rustc-link-lib={}", &name[3..]);
+                            return;
+                        }
                     }
                 }
             }
         }
-    }
 
-    let third_party_deps = [
-        "IlmImf",
-        "tiff",
-        "ippiw",
-        "ippicv",
-        "ittnotify",
-        "jpeg",
-        "jpeg-turbo",
-        "png",
-        "jasper",
-        "tbb",
-        "webp",
-        "z",
-        "zlib",
-    ];
-    third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dirs, x));
+        let third_party_deps = [
+            "IlmImf",
+            "tiff",
+            "ippiw",
+            "ippicv",
+            "ittnotify",
+            "jpeg",
+            "jpeg-turbo",
+            "png",
+            "jasper",
+            "tbb",
+            "webp",
+            "z",
+            "zlib",
+        ];
+        third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dirs, x));
+    }
 
     Ok((opencv, pkg_name))
 }
