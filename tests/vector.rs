@@ -218,6 +218,22 @@ fn swap() -> Result<()> {
 }
 
 #[test]
+fn nth() -> Result<()> {
+    {
+        let mut vec = VectorOfint::new();
+        assert_eq!(None, vec.iter().nth(0));
+        vec.push(1);
+        vec.push(2);
+        vec.push(3);
+        assert_eq!(Some(1), vec.iter().nth(0));
+        assert_eq!(Some(2), vec.iter().nth(1));
+        assert_eq!(Some(3), vec.iter().nth(2));
+    }
+
+    Ok(())
+}
+
+#[test]
 fn out_of_bounds() -> Result<()> {
     let mut vec = VectorOfdouble::new();
     assert_matches!(vec.get(0), Err(Error { code: core::StsOutOfRange, .. }));

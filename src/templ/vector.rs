@@ -1,3 +1,5 @@
+use std::iter::FusedIterator;
+
 use libc::size_t;
 
 pub trait Vector<'i> {
@@ -111,6 +113,10 @@ impl<T, S> Iterator for VectorIterator<T>
     fn size_hint(&self) -> (usize, Option<usize>) {
         (self.vec.len(), None)
     }
+
+    fn nth(&mut self, n: usize) -> Option<Self::Item> {
+        self.vec.get(n).ok()
+    }
 }
 
 impl<T, S> ExactSizeIterator for VectorIterator<T>
@@ -121,6 +127,10 @@ impl<T, S> ExactSizeIterator for VectorIterator<T>
         self.vec.len()
     }
 }
+
+impl<T, S> FusedIterator for VectorIterator<T>
+    where
+        T: for<'i> Vector<'i, Storage=S> {}
 
 pub struct VectorRefIterator<'v, T> {
     vec: &'v T,
@@ -148,6 +158,10 @@ impl<T, S> Iterator for VectorRefIterator<'_, T>
     fn size_hint(&self) -> (usize, Option<usize>) {
         (self.vec.len(), None)
     }
+
+    fn nth(&mut self, n: usize) -> Option<Self::Item> {
+        self.vec.get(n).ok()
+    }
 }
 
 impl<T, S> ExactSizeIterator for VectorRefIterator<'_, T>
@@ -158,3 +172,7 @@ impl<T, S> ExactSizeIterator for VectorRefIterator<'_, T>
         self.vec.len()
     }
 }
+
+impl<T, S> FusedIterator for VectorRefIterator<'_, T>
+    where
+        T: for<'i> Vector<'i, Storage=S> {}
