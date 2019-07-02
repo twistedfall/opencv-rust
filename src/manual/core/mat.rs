@@ -1,9 +1,14 @@
-use std::{fmt, ops::Deref, slice};
+use std::{
+    ffi::c_void,
+    fmt,
+    ops::Deref,
+    slice,
+};
 
-use libc::size_t;
+use libc::{c_uchar, size_t};
 
 use crate::{
-    core::{self, Mat, MatSize, MatStep, Scalar, UMat},
+    core::{self, Mat, MatConstIterator, MatSize, MatStep, Scalar, UMat},
     Error,
     Result,
     sys,
@@ -87,6 +92,16 @@ data_type!(core::Rect2i, core::CV_32S, 4);
 data_type!(core::Rect2f, core::CV_32F, 4);
 data_type!(core::Rect2d, core::CV_64F, 4);
 
+#[inline(always)]
+fn convert_ptr<T>(r: &u8) -> &T {
+    unsafe { &*(r as *const _ as *const T) }
+}
+
+#[inline(always)]
+fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
+    unsafe { &mut *(r as *mut _ as *mut T) }
+}
+
 impl Mat {
     #[inline(always)]
     fn match_format<T: DataType>(&self) -> Result<()> {
@@ -103,6 +118,7 @@ impl Mat {
         }
     }
 
+    #[inline(always)]
     fn match_dims(&self, dims: usize) -> Result<()> {
         let mat_dims = self.dims()? as usize;
         if mat_dims == dims {
@@ -136,16 +152,6 @@ impl Mat {
         }
     }
 
-    #[inline(always)]
-    fn convert_ptr<T>(r: &u8) -> &T {
-        unsafe { &*(r as *const _ as *const T) }
-    }
-
-    #[inline(always)]
-    fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
-        unsafe { &mut *(r as *mut _ as *mut T) }
-    }
-
     /// Create new `Mat` from the iterator of known size
     pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item=T>) -> Result<Self> {
         let mut out = unsafe { Self::new_rows_cols(s.len() as _, 1, T::typ()) }?;
@@ -176,7 +182,7 @@ impl Mat {
             (i, i0 - i * mat_size[1])
         };
         self.ptr_2d(i, j)
-            .map(Self::convert_ptr)
+            .map(convert_ptr)
     }
 
     #[inline(always)]
@@ -200,7 +206,7 @@ impl Mat {
             (i, i0 - i * mat_size[1])
         };
         self.ptr_2d_mut(i, j)
-            .map(Self::convert_ptr_mut)
+            .map(convert_ptr_mut)
     }
 
     #[inline(always)]
@@ -213,7 +219,7 @@ impl Mat {
     /// Like `Mat::at_2d()` but performs no bounds or type checks
     pub unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
         self.ptr_2d(row, col)
-            .map(Self::convert_ptr)
+            .map(convert_ptr)
     }
 
     #[inline(always)]
@@ -226,7 +232,7 @@ impl Mat {
     /// Like `Mat::at_2d_mut()` but performs no bounds or type checks
     pub unsafe fn at_2d_mut_unchecked<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
         self.ptr_2d_mut(row, col)
-            .map(Self::convert_ptr_mut)
+            .map(convert_ptr_mut)
     }
 
     #[inline(always)]
@@ -238,7 +244,7 @@ impl Mat {
 
     pub unsafe fn at_3d_unchecked<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
         self.ptr_3d(i0, i1, i2)
-            .map(Self::convert_ptr)
+            .map(convert_ptr)
     }
 
     #[inline(always)]
@@ -250,7 +256,7 @@ impl Mat {
 
     pub unsafe fn at_3d_mut_unchecked<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
         self.ptr_3d_mut(i0, i1, i2)
-            .map(Self::convert_ptr_mut)
+            .map(convert_ptr_mut)
     }
 
     #[inline(always)]
@@ -262,7 +268,7 @@ impl Mat {
 
     pub unsafe fn at_nd_unchecked<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
         self.ptr_nd(idx)
-            .map(Self::convert_ptr)
+            .map(convert_ptr)
     }
 
     #[inline(always)]
@@ -274,7 +280,7 @@ impl Mat {
 
     pub unsafe fn at_nd_mut_unchecked<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
         self.ptr_nd_mut(idx)
-            .map(Self::convert_ptr_mut)
+            .map(convert_ptr_mut)
     }
 
     /// Return a complete read-only row
@@ -287,7 +293,7 @@ impl Mat {
     /// Like `Mat::at_row()` but performs no bounds or type checks
     pub unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
         let width = self.size()?.width as usize;
-        self.ptr(row).map(Self::convert_ptr).map(|x| slice::from_raw_parts(x, width))
+        self.ptr(row).map(convert_ptr).map(|x| slice::from_raw_parts(x, width))
     }
 
     /// Return a complete writeable row
@@ -300,7 +306,7 @@ impl Mat {
     /// Like `Mat::at_row_mut()` but performs no bounds or type checks
     pub unsafe fn at_row_mut_unchecked<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
         let width = self.size()?.width as usize;
-        self.ptr_mut(row).map(Self::convert_ptr_mut).map(|x| slice::from_raw_parts_mut(x, width))
+        self.ptr_mut(row).map(convert_ptr_mut).map(|x| slice::from_raw_parts_mut(x, width))
     }
 
     pub fn size(&self) -> Result<core::Size> {
@@ -379,33 +385,35 @@ impl Mat {
     }
 
     pub fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
-        self.match_format::<T>().and_then(|_| self.match_dims(2)).and_then(|_| {
-            let size = self.size()?;
-            let width = size.width as usize;
-            if self.is_continuous()? {
-                let data = self.data_typed()?;
-                Ok((0..size.height)
-                    .map(|row_n| {
-                        let row_n = row_n as usize;
-                        let mut row = Vec::with_capacity(width);
-                        row.extend_from_slice(&data[row_n * width..(row_n + 1) * width]);
-                        row
-                    })
-                    .collect()
-                )
-            } else {
-                Ok((0..size.height)
-                    .map(|row_n| {
-                        self.at_row(row_n).map(|src_row| {
+        self.match_format::<T>()
+            .and_then(|_| self.match_dims(2))
+            .and_then(|_| {
+                let size = self.size()?;
+                let width = size.width as usize;
+                if self.is_continuous()? {
+                    let data = self.data_typed()?;
+                    Ok((0..size.height)
+                        .map(|row_n| {
+                            let row_n = row_n as usize;
                             let mut row = Vec::with_capacity(width);
-                            row.extend_from_slice(src_row);
+                            row.extend_from_slice(&data[row_n * width..(row_n + 1) * width]);
                             row
                         })
-                    })
-                    .collect::<Result<_>>()?
-                )
-            }
-        })
+                        .collect()
+                    )
+                } else {
+                    Ok((0..size.height)
+                        .map(|row_n| {
+                            self.at_row(row_n).map(|src_row| {
+                                let mut row = Vec::with_capacity(width);
+                                row.extend_from_slice(src_row);
+                                row
+                            })
+                        })
+                        .collect::<Result<_>>()?
+                    )
+                }
+            })
     }
 }
 
@@ -498,6 +506,45 @@ impl Deref for MatStep {
 impl fmt::Debug for MatStep {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         writeln!(f, "{:#?}", self.deref())
+    }
+}
+
+impl MatConstIterator {
+    #[inline]
+    fn m(&self) -> Mat {
+        let me = self.as_raw_MatConstIterator();
+        Mat {
+            ptr: cpp!(unsafe [me as "const MatConstIterator*"] -> *mut c_void as "const void*" {
+                return reinterpret_cast<const void*>(new cv::Mat(*me->m));
+            })
+        }
+    }
+
+    #[inline]
+    pub fn has_elements(&self) -> bool {
+        let me = self.as_raw_MatConstIterator();
+        cpp!(unsafe [me as "const MatConstIterator*"] -> bool as "bool" {
+            return me->ptr != me->sliceEnd;
+        })
+    }
+
+    pub fn get<T: DataType>(&self) -> Result<&T> {
+        self.m().match_format::<T>()?;
+        if self.has_elements() {
+            unsafe { self.get_unchecked() }
+        } else {
+            Err(Error::new(core::StsOutOfRange, "MatConstIterator doesn't have any more elements".to_owned()))
+        }
+    }
+
+    #[inline]
+    pub unsafe fn get_unchecked<T: DataType>(&self) -> Result<&T> {
+        let me = self.as_raw_MatConstIterator();
+        cpp!([me as "const MatConstIterator*"] -> *const c_uchar as "const uchar*" {
+            return me->ptr;
+        }).as_ref()
+            .map(convert_ptr)
+            .ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer")))
     }
 }
 

@@ -274,6 +274,13 @@ func_rename = {
     "cv_noArray": "-",  # fixme: conversion from ‘const cv::_InputOutputArray’ to non-scalar type ‘cv::Mat’ requested
     "cv_detail_typeToString__int": "-",  # detail function
     "cv_detail_depthToString__int": "-",  # detail function
+    "cv_MatConstIterator_MatConstIterator_const_Mat": "over",
+    "cv_MatConstIterator_MatConstIterator_const_Mat_int_int": "with_rows_cols",
+    "cv_MatConstIterator_MatConstIterator_const_Mat_Point": "with_start",
+    "cv_MatConstIterator_MatConstIterator_const_Mat_const_int_X": "with_idx",
+    "cv_MatConstIterator_MatConstIterator_MatConstIterator": "copy",
+    "cv_MatConstIterator_pos_const_int_X": "+_to",
+    "cv_MatConstIterator_seek_const_int_X_bool": "+_idx",
 
     ### features2d ###
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
@@ -431,9 +438,7 @@ class_ignore_list = (
     "cv::RNG.*",  # maybe
     "cv::SVD",
     "cv::MatAllocator",
-    "cv::SparseMat",  # fixme
     "cv::TLSDataContainer",
-    "cv::MatConstIterator",
     "cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray",
 
     ### features2d ###
@@ -572,6 +577,7 @@ primitives = {
     "uint32_t": {"cpp_extern": "uint32_t", "rust_local": "u32"},
 
     "size_t": {"cpp_extern": "std::size_t", "rust_local": "size_t"},
+    "ptrdiff_t": {"cpp_extern": "std::ptrdiff_t", "rust_local": "ptrdiff_t"},
 
     "int64": {"cpp_extern": "int64", "rust_local": "i64"},
     "__int64": {"cpp_extern": "int64", "rust_local": "i64"},
@@ -3104,7 +3110,7 @@ class RustWrapperGenerator(object):
 
         self.moduleSafeRust.write(template("""
             use std::os::raw::{c_char, c_void};
-            use libc::size_t;
+            use libc::{ptrdiff_t, size_t};
             use crate::{Error, Result, """ + ", ".join(static_modules) + """};
             
         """).substitute())

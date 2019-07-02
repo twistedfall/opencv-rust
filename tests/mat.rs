@@ -3,7 +3,7 @@ use std::mem::transmute;
 use matches::assert_matches;
 
 use opencv::{
-    core::{self, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f, Vec4w},
+    core::{self, MatConstIterator, Point, Rect, Scalar, Size, Vec2b, Vec3d, Vec3f, Vec4w},
     Error,
     prelude::*,
     Result,
@@ -384,5 +384,35 @@ fn mat_from_data() -> Result<()> {
     assert_eq!(row[0], 0x89);
     assert_eq!(row[11], 0x0D);
     assert_eq!(row[89], 0x82);
+    Ok(())
+}
+
+#[test]
+fn mat_iterator() -> Result<()> {
+    let mat = Mat::from_slice(&[1, 2, 3, 4])?;
+    let mut iter = MatConstIterator::over(&mat)?;
+    assert_eq!(1, *iter.get::<i32>()?);
+    assert_eq!(Point::new(0, 0), iter.pos()?);
+    assert!(iter.has_elements());
+    iter.seek(1, true)?;
+    assert_eq!(2, *iter.get::<i32>()?);
+    assert_eq!(Point::new(1, 0), iter.pos()?);
+    assert!(iter.has_elements());
+    iter.seek(1, true)?;
+    assert_eq!(3, *iter.get::<i32>()?);
+    assert_eq!(Point::new(2, 0), iter.pos()?);
+    assert!(iter.has_elements());
+    iter.seek(1, true)?;
+    assert_eq!(4, *iter.get::<i32>()?);
+    assert_eq!(Point::new(3, 0), iter.pos()?);
+    assert!(iter.has_elements());
+    iter.seek(1, true)?;
+    assert_matches!(iter.get::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+    assert_eq!(Point::new(0, 1), iter.pos()?);
+    assert!(!iter.has_elements());
+    iter.seek(1, true)?;
+    assert_matches!(iter.get::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+    assert_eq!(Point::new(0, 1), iter.pos()?);
+    assert!(!iter.has_elements());
     Ok(())
 }

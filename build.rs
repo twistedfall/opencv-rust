@@ -435,7 +435,7 @@ fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_d
     {
         let mut sys = File::create(module_dir.join("sys.rs"))?;
         writeln!(&mut sys, "use std::os::raw::{{c_char, c_void}};")?;
-        writeln!(&mut sys, "use libc::size_t;")?;
+        writeln!(&mut sys, "use libc::{{ptrdiff_t, size_t}};")?;
         writeln!(&mut sys, "use crate::core;")?;
         writeln!(&mut sys, "")?;
         for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str))? {
