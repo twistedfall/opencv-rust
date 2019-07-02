@@ -238,7 +238,7 @@ class CppHeaderParser(object):
 
         return arg_type, arg_name, modlist, argno
 
-    def parse_enum(self, decl_str):
+    def parse_enum(self, decl_str, enum_docstrings):
         l = decl_str
         ll = l.split(",")
         if ll[-1].strip() == "":
@@ -247,6 +247,7 @@ class CppHeaderParser(object):
         prev_val_delta = -1
         decl = []
         for pair in ll:
+            comment = enum_docstrings.get(pair.strip(), "")
             pv = pair.split("=")
             if len(pv) == 1:
                 prev_val_delta += 1
@@ -257,7 +258,7 @@ class CppHeaderParser(object):
             else:
                 prev_val_delta = 0
                 prev_val = val = pv[1].strip()
-            decl.append(["const " + self.get_dotted_name(pv[0].strip()), val, [], [], None, ""])
+            decl.append(["const " + self.get_dotted_name(pv[0].strip()), val, [], [], None, comment])
         return decl
 
     def parse_class_decl(self, decl_str):
@@ -694,7 +695,7 @@ class CppHeaderParser(object):
             return ["typedef {}".format(self.get_dotted_name(m.group(2))), m.group(1), "", [], None, docstring]
         return None
 
-    def parse_stmt(self, stmt, end_token, mat="Mat", docstring=""):
+    def parse_stmt(self, stmt, end_token, mat="Mat", docstring="", enum_docstrings={}):
         """
         parses the statement (ending with ';' or '}') or a block head (ending with '{')
 
@@ -776,7 +777,7 @@ class CppHeaderParser(object):
                 return "namespace", "", True, None
 
         if end_token == "}" and context.startswith("enum"):
-            decl = self.parse_enum(stmt)
+            decl = self.parse_enum(stmt, enum_docstrings)
             name = stack_top[self.BLOCK_NAME]
             return context, name, False, decl
 
@@ -855,6 +856,7 @@ class CppHeaderParser(object):
         self.block_stack = [["file", hname, True, True, None, True]]
         block_head = ""
         docstring = ""
+        enum_docstrings = {}
         self.lineno = 0
         self.wrap_mode = wmode
 
@@ -923,7 +925,8 @@ class CppHeaderParser(object):
                     break
 
                 if token == "//!":
-                    block_head += " " + l[:pos]
+                    stmt_add = l[:pos]
+                    block_head += " " + stmt_add
                     if self.block_stack[-1][self.PROCESS_FLAG]:
                         doc_line = l[pos+3:]
                         if doc_line and doc_line[0] == "<":
@@ -938,6 +941,8 @@ class CppHeaderParser(object):
                                         decl = stack_top[self.CLASS_DECL]
                                         if len(decl[3]) >= 1:
                                             decl[3][-1][2] += doc_line
+                                elif ctx_type == "enum":
+                                    enum_docstrings[" ".join(stmt_add.replace(",", "").split()).strip()] = doc_line + "\n"
                         else:
                             docstring += doc_line.lstrip() + "\n"
                     break
@@ -989,7 +994,8 @@ class CppHeaderParser(object):
                     # even if stack_top[PUBLIC_SECTION] is False, we still try to process the statement,
                     # since it can start with "public:"
                     docstring = docstring.strip()
-                    stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, docstring=docstring)
+                    stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, docstring=docstring, enum_docstrings=enum_docstrings)
+                    enum_docstrings = {}
                     if decl:
                         line_stmt_type = stmt_type
                         if stmt_type.startswith("enum"):

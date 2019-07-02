@@ -14,6 +14,8 @@ from string import Template
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
 # fixme add support for arrays in dnn::DictValue
 # fixme VectorOfMat::get allows to mutate?
+# fixme get comments from HOUGH_PROBABILISTIC in imgproc
+# fixme get multiline comments from LSD_REFINE_ADV in imgproc
 
 def template(text):
     """
@@ -1502,9 +1504,9 @@ class ClassInfo(GeneralInfo):
 
 class ConstInfo(GeneralInfo):
     TEMPLATES = {
-        "rust_string": template("${doccomment}pub const ${name}: &'static str = ${value};\n"),
-        "rust_int": template("${doccomment}pub const ${name}: i32 = ${value};\n"),
-        "rust_usize": template("${doccomment}pub const ${name}: usize = ${value};\n"),
+        "rust_string": template("${doc_comment}pub const ${name}: &'static str = ${value};\n"),
+        "rust_int": template("${doc_comment}pub const ${name}: i32 = ${value};\n"),
+        "rust_usize": template("${doc_comment}pub const ${name}: usize = ${value};\n"),
         "cpp_string": template("""    printf("pub static ${name}: &'static str = \\"%s\\";\\n", ${full_name});\n"""),
         "cpp_double": template("""    printf("pub const ${name}: f64 = %f;\\n", ${full_name});\n"""),
         "cpp_int": template("""    printf("pub const ${name}: i32 = 0x%x; // %i\\n", ${full_name}, ${full_name});\n"""),
@@ -1521,6 +1523,7 @@ class ConstInfo(GeneralInfo):
         self.rustname = self.rustname.replace("::", "_")
         self.cname = self.name.replace(".", "::")
         self.value = decl[1]
+        self.comment = decl[5] if len(decl) >= 6 else ""
 
     def __repr__(self):
         return template("CONST $name=$value").substitute(name=self.name, value=self.value)
@@ -1537,11 +1540,15 @@ class ConstInfo(GeneralInfo):
             "value": self.value,
         }
         while True:
-            params["doccomment"] = ""
+            if self.comment:
+                params["doc_comment"] = self.gen.reformat_doc(self.comment)
+            else:
+                params["doc_comment"] = ""
             m = re.match(r"^(.+?)\s*(?://\s*(.+)|/\*+\s*(.+?)\s*\*+/)$", params["value"])  # xxx // comment OR xxx /** comment */
             if m:
                 params["value"] = m.group(1)
-                params["doccomment"] = "/// {}\n".format(m.group(3) if m.group(2) is None else m.group(2))
+                if not self.comment:
+                    params["doc_comment"] = self.gen.reformat_doc(m.group(3) if m.group(2) is None else m.group(2))
             if params["value"].startswith('"'):
                 return ConstInfo.TEMPLATES["rust_string"].substitute(params)
             elif self.rustname in ("Mat_AUTO_STEP",):
@@ -1648,10 +1655,10 @@ class EnumInfo(GeneralInfo):
         
         """),
         "rust_const": template("""
-            ${name} = ${rustname} as isize,
+            ${doc_comment}${name} = ${rustname} as isize,
         """),
         "rust_const_ignored": template("""
-            // ${name} = ${rustname} as isize, // duplicate discriminant
+            ${doc_comment}// ${name} = ${rustname} as isize, // duplicate discriminant
         """),
     }
 
@@ -1682,10 +1689,14 @@ class EnumInfo(GeneralInfo):
         ignore_discriminants = enum_ignore_discriminant.get(self.fullname, set())
         for const in self.consts:
             if const.name in ignore_discriminants:
+                doc_comment = self.gen.reformat_doc(const.comment, comment_prefix="//")
                 tpl = EnumInfo.TEMPLATES["rust_const_ignored"]
             else:
+                doc_comment = self.gen.reformat_doc(const.comment)
                 tpl = EnumInfo.TEMPLATES["rust_const"]
-            consts.append(tpl.substitute(const.__dict__))
+            consts.append(tpl.substitute(combine_dicts(const.__dict__, {
+                "doc_comment": doc_comment,
+            })))
         return EnumInfo.TEMPLATES["rust"].substitute(combine_dicts(self.__dict__, {
             "doc_comment": self.gen.reformat_doc(self.comment),
             "consts": indent("".join(consts)),

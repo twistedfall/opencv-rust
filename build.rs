@@ -77,6 +77,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "core/fast_math.hpp", // contains functions with Rust native counterparts
         "core/private.hpp",
         "core/utils/filesystem.hpp", // contains functions with Rust native counterparts
+        "core/utils/logger.defines.hpp", // duplicate definitions of log values
         "dnn/blob.hpp",
         "ios.h",
         "ippasync.hpp",
