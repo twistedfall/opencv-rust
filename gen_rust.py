@@ -12,7 +12,6 @@ from string import Template
 
 
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
-# fixme field comments //! in the end are transferred to the next field
 # fixme add support for arrays in dnn::DictValue
 # fixme VectorOfMat::get allows to mutate?
 

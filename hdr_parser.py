@@ -904,6 +904,8 @@ class CppHeaderParser(object):
                 print("Error at %d: invalid state = %d" % (self.lineno, state))
                 sys.exit(-1)
 
+            line_stmt_type = None
+
             while 1:
                 token, pos = self.find_next_token(l, [";", "\"", "{", "}", "//!", "//", "/*"])
 
@@ -923,7 +925,21 @@ class CppHeaderParser(object):
                 if token == "//!":
                     block_head += " " + l[:pos]
                     if self.block_stack[-1][self.PROCESS_FLAG]:
-                        docstring += l[pos+3:].lstrip() + "\n"
+                        doc_line = l[pos+3:]
+                        if doc_line and doc_line[0] == "<":
+                            doc_line = doc_line[1:].lstrip()
+                            if doc_line:
+                                stack_top = self.block_stack[-1]
+                                ctx_type = stack_top[self.BLOCK_TYPE]
+                                if ctx_type == "struct" or ctx_type == "class":
+                                    if line_stmt_type is not None and doc_line and len(decls) >= 1 and len(decls[-1]) >= 6:
+                                        decls[-1][5] += doc_line + "\n"
+                                    else:
+                                        decl = stack_top[self.CLASS_DECL]
+                                        if len(decl[3]) >= 1:
+                                            decl[3][-1][2] += doc_line
+                        else:
+                            docstring += doc_line.lstrip() + "\n"
                     break
 
                 if token == "/*":
@@ -975,6 +991,7 @@ class CppHeaderParser(object):
                     docstring = docstring.strip()
                     stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, docstring=docstring)
                     if decl:
+                        line_stmt_type = stmt_type
                         if stmt_type.startswith("enum"):
                             enum_decl = [stmt_type + " " + self.get_dotted_name(name), "", [], decl, None, ""]
                             # if enum is declared inside class then we need to put its declaration earlier in decls
