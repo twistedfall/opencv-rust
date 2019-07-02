@@ -653,11 +653,6 @@ forced_class_trait = {
     "cv::dnn::Layer",
 }
 
-# set of types that must not be treated as simple, most probably will be treated as boxed, elements are ClassInfo.fullname
-force_class_not_simple = {
-    "cv::dnn::Net",  # marked as Simple, but it's actually boxed
-}
-
 # dict of pointer arguments that need to be made into slices, the conversion only happens if an arg is a pointer
 # key: module name
 # value: dict
@@ -774,6 +769,9 @@ def decl_patch(module, decl):
         if decl[0] == "cv.dnn.Dict.set":
             decl[1] = "DictValue&"
             decl[3][1][0] = "DictValue&"
+        # dnn::Net is incorrectly marked as simple
+        elif decl[0] == "class cv.dnn.Net" and "/Simple" in decl[2]:
+            decl[2].remove("/Simple")
     elif module == "ml":
         # loadFromCSV is not parsed correctly due to default value being a comma
         if decl[0] == "cv.ml.TrainData.loadFromCSV" and len(decl[3]) == 8 and decl[3][6][0] == "'":
@@ -1377,7 +1375,7 @@ class ClassInfo(GeneralInfo):
         if len(decl) > 5:
             self.comment = decl[5]
         for m in decl[2]:
-            if (m == "/Simple" or m == "/Map") and self.fullname not in force_class_not_simple:
+            if m == "/Simple" or m == "/Map":
                 self.is_simple = True
             if m == "/Hidden":
                 self.is_ignored = True
