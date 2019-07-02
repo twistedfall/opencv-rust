@@ -922,7 +922,8 @@ class CppHeaderParser(object):
 
                 if token == "//!":
                     block_head += " " + l[:pos]
-                    docstring += l[pos+3:].lstrip() + "\n"
+                    if self.block_stack[-1][self.PROCESS_FLAG]:
+                        docstring += l[pos+3:].lstrip() + "\n"
                     break
 
                 if token == "/*":
@@ -1001,9 +1002,7 @@ class CppHeaderParser(object):
                                 if has_mat:
                                     _, _, _, umat_decl = self.parse_stmt(stmt, token, mat="UMat", docstring=docstring)
                                     decls.append(umat_decl)
-                        docstring = ""
-                    elif parse_flag:
-                        docstring = ""
+                    docstring = ""
                     if stmt_type == "namespace":
                         chunks = [block[1] for block in self.block_stack if block[0] == 'namespace'] + [name]
                         self.namespaces.add('.'.join(chunks))
