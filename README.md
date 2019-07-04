@@ -36,7 +36,7 @@ opencv = "0.16"
 
 Select OpenCV version if different from default in Cargo.toml:
 ```toml
-opencv = {version = "0.16", default-features = false, features = "opencv-41"}
+opencv = {version = "0.16", default-features = false, features = ["opencv-41"]}
 ```
 
 Import prelude
