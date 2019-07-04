@@ -443,6 +443,7 @@ impl Default for Mat {
 
 #[cfg(feature = "opencv-32")]
 impl MatSize {
+    #[inline]
     pub fn dims(&self) -> Result<i32> {
         let me = self.as_raw_MatSize();
         Ok(cpp!(unsafe [me as "const MatSize*"] -> i32 as "const int" {

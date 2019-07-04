@@ -130,16 +130,16 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
 
 fn build_pkg_config_args((opencv, pkg_name): (&pkg_config::Library, &str)) -> Vec<String> {
     let mut out = Vec::with_capacity(60);
-    opencv.link_paths.iter().for_each(|x| out.push(format!("-L{}", x.to_string_lossy())));
+    out.extend(opencv.link_paths.iter().map(|x| format!("-L{}", x.to_string_lossy())));
     if let Ok(prefix) = pkg_config::get_variable(pkg_name, "prefix") {
         out.push(format!("-L{}/share/OpenCV/3rdparty/lib", prefix))
     }
     if let Ok(libdir) = pkg_config::get_variable(pkg_name, "libdir") {
         out.push(format!("-L{}/{}/3rdparty", libdir, pkg_name));
     }
-    opencv.framework_paths.iter().for_each(|x| out.push(format!("-F{}", x.to_string_lossy())));
-    opencv.include_paths.iter().for_each(|x| out.push(format!("-I{}", x.to_string_lossy())));
-    opencv.libs.iter().for_each(|x| out.push(format!("-l{}", x)));
+    out.extend(opencv.framework_paths.iter().map(|x| format!("-F{}", x.to_string_lossy())));
+    out.extend(opencv.include_paths.iter().map(|x| format!("-I{}", x.to_string_lossy())));
+    out.extend(opencv.libs.iter().map(|x| format!("-l{}", x)));
     out
 }
 
@@ -467,7 +467,7 @@ fn cleanup(opencv_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let features = [cfg!(feature = "opencv-32"), cfg!(feature = "opencv-34"), cfg!(feature = "opencv-41")].iter().map(|&x| if x { 1 } else { 0 }).sum::<i32>();
+    let features = [cfg!(feature = "opencv-32"), cfg!(feature = "opencv-34"), cfg!(feature = "opencv-41")].iter().map(|&x| i32::from(x)).sum::<i32>();
     if features != 1 {
         // todo: allow building with custom headers
         panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
@@ -496,7 +496,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     cleanup(&opencv_header_dir)?;
 
     let mut config = cpp_build::Config::new();
-
     config.flag_if_supported("-Wno-class-memaccess");
     config.flag_if_supported("-Wno-ignored-qualifiers");
     config.include(opencv_header_dir);

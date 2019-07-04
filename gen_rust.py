@@ -2645,7 +2645,7 @@ class RawPtrTypeInfo(TypeInfo):
         elif self.is_slice:
             if self.is_const:
                 return "{}.as_ptr()".format(var_name)
-            return "{}.as_mut_ptr()".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
+            return "{}.as_mut_ptr()".format(var_name)
         return super().rust_arg_func_call(var_name, is_output)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
