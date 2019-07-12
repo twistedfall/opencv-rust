@@ -85,7 +85,9 @@ fn rect_constructor() {
 fn rect_methods() {
     let mut rect = Rect2d::new(10., 20., 100., 200.);
     assert!(!rect.empty());
+    assert_eq!(rect.empty(), rect.size().empty());
     assert_eq!(20000., rect.area());
+    assert_eq!(rect.area(), rect.size().area());
     assert_eq!(Point2d::new(10., 20.), rect.tl());
     assert_eq!(Point2d::new(110., 220.), rect.br());
     assert_eq!(Size2d::new(100., 200.), rect.size());
@@ -93,6 +95,7 @@ fn rect_methods() {
     assert!(!rect.contains(Point2d::new(120., 120.)));
     rect.width = 0.;
     assert!(rect.empty());
+    assert_eq!(rect.empty(), rect.size().empty());
 }
 
 #[test]
