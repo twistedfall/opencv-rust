@@ -1,5 +1,4 @@
 use std::{
-    ffi::c_void,
     fmt,
     ops::Deref,
     slice,
@@ -102,23 +101,25 @@ fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
     unsafe { &mut *(r as *mut _ as *mut T) }
 }
 
+fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
+    let out_type = T::typ();
+    if mat_type == out_type {
+        Ok(())
+    } else {
+        #[cfg(not(feature = "opencv-32"))]
+        let mat_type = core::type_to_string(mat_type)?;
+        #[cfg(not(feature = "opencv-32"))]
+        let out_type = core::type_to_string(out_type)?;
+        Err(Error::new(core::StsUnmatchedFormats, format!("Mat type is: {}, but requested type is: {}", mat_type, out_type)))
+    }
+}
+
 impl Mat {
     #[inline(always)]
     fn match_format<T: DataType>(&self) -> Result<()> {
-        let mat_type = self.typ()?;
-        let out_type = T::typ();
-        if mat_type == out_type {
-            Ok(())
-        } else {
-            #[cfg(not(feature = "opencv-32"))]
-            let mat_type = core::type_to_string(mat_type)?;
-            #[cfg(not(feature = "opencv-32"))]
-            let out_type = core::type_to_string(out_type)?;
-            Err(Error::new(core::StsUnmatchedFormats, format!("Mat type is: {}, but requested type is: {}", mat_type, out_type)))
-        }
+        match_format::<T>(self.typ()?)
     }
 
-    #[inline(always)]
     fn match_dims(&self, dims: usize) -> Result<()> {
         let mat_dims = self.dims()? as usize;
         if mat_dims == dims {
@@ -128,7 +129,6 @@ impl Mat {
         }
     }
 
-    #[inline(always)]
     fn match_indices(&self, idx: &[i32]) -> Result<()> {
         let size = self.mat_size()?;
         self.match_dims(idx.len())?;
@@ -142,7 +142,6 @@ impl Mat {
         }
     }
 
-    #[inline(always)]
     fn match_total(&self, idx: i32) -> Result<()> {
         let size = self.total()?;
         if 0 <= idx && (idx as usize) < size {
@@ -519,14 +518,17 @@ impl fmt::Debug for MatStep {
 }
 
 impl MatConstIterator {
+    #[inline(always)]
+    fn match_format<T: DataType>(&self) -> Result<()> {
+        match_format::<T>(self.typ())
+    }
+
     #[inline]
-    fn m(&self) -> Mat {
+    pub fn typ(&self) -> i32 {
         let me = self.as_raw_MatConstIterator();
-        Mat {
-            ptr: cpp!(unsafe [me as "const MatConstIterator*"] -> *mut c_void as "const void*" {
-                return reinterpret_cast<const void*>(new cv::Mat(*me->m));
-            })
-        }
+        cpp!(unsafe [me as "const MatConstIterator*"] -> i32 as "int" {
+            return me->m->type();
+        })
     }
 
     #[inline]
@@ -538,7 +540,7 @@ impl MatConstIterator {
     }
 
     pub fn get<T: DataType>(&self) -> Result<&T> {
-        self.m().match_format::<T>()?;
+        self.match_format::<T>()?;
         if self.has_elements() {
             unsafe { self.get_unchecked() }
         } else {

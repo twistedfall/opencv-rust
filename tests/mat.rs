@@ -391,6 +391,7 @@ fn mat_from_data() -> Result<()> {
 fn mat_iterator() -> Result<()> {
     let mat = Mat::from_slice(&[1, 2, 3, 4])?;
     let mut iter = MatConstIterator::over(&mat)?;
+    assert_eq!(iter.typ(), mat.typ()?);
     assert_eq!(1, *iter.get::<i32>()?);
     assert_eq!(Point::new(0, 0), iter.pos()?);
     assert!(iter.has_elements());
