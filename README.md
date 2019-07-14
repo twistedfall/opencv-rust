@@ -33,18 +33,22 @@ files or `-dev` packages.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.16"
+opencv = "0.18"
 ```
 
 Select OpenCV version if different from default in Cargo.toml:
 ```toml
-opencv = {version = "0.16", default-features = false, features = ["opencv-41"]}
+opencv = {version = "0.18", default-features = false, features = ["opencv-41"]}
 ```
 
 Import prelude
 ```rust
 use opencv::prelude::*;
 ```
+
+### Minimum rustc version
+
+Generally you should use the latest stable rustc to compile this crate.
 
 ### Platform support
 
