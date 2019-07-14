@@ -152,11 +152,29 @@ impl Mat {
         }
     }
 
+    #[inline(always)]
+    fn idx_to_row_col(&self, i0: i32) -> Result<(i32, i32)> {
+        Ok(if self.is_continuous()? {
+            (0, i0)
+        } else {
+            let mat_size = self.mat_size()?;
+            let mat_size = mat_size.deref();
+            if mat_size[0] == 1 {
+                (0, i0)
+            } else if mat_size[1] == 1 {
+                (i0, 0)
+            } else {
+                let i = i0 / mat_size[1];
+                (i, i0 - i * mat_size[1])
+            }
+        })
+    }
+
     /// Create new `Mat` from the iterator of known size
     pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item=T>) -> Result<Self> {
         let mut out = unsafe { Self::new_rows_cols(s.len() as _, 1, T::typ()) }?;
         for (i, x) in s.enumerate() {
-            *out.at_2d_mut::<T>(i as _, 0)? = x;
+            unsafe { ({ out.at_mut_unchecked::<T>(i as _) }? as *mut T).write(x) };
         }
         Ok(out)
     }
@@ -195,16 +213,7 @@ impl Mat {
 
     /// Like `Mat::at_mut()` but performs no bounds or type checks
     pub unsafe fn at_mut_unchecked<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
-        let mat_size = self.mat_size()?;
-        let mat_size = mat_size.deref();
-        let (i, j) = if self.is_continuous()? || mat_size[0] == 1 {
-            (0, i0)
-        } else if mat_size[1] == 1 {
-            (i0, 0)
-        } else {
-            let i = i0 / mat_size[1];
-            (i, i0 - i * mat_size[1])
-        };
+        let (i, j) = self.idx_to_row_col(i0)?;
         self.ptr_2d_mut(i, j)
             .map(convert_ptr_mut)
     }
