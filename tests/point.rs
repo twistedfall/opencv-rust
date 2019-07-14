@@ -1,4 +1,4 @@
-use opencv::core::Point;
+use opencv::core::{Point, Point2d, Point2f, Point2l, Size2l, Point2i};
 
 #[test]
 fn point_add() {
@@ -38,18 +38,18 @@ fn point_sub() {
 
 #[test]
 fn point_mul() {
-    let src = Point::new(50, 50);
+    let src = Point2f::new(50., 50.);
 
-    let res = Point::new(100, 100);
+    let res = Point2f::new(100., 100.);
     {
         let src = src.clone();
-        let out = src * 2;
+        let out = src * 2.;
         assert_eq!(out, res);
     }
 
     {
         let mut out = src.clone();
-        out *= 2;
+        out *= 2.;
         assert_eq!(out, res);
     }
 }
@@ -73,7 +73,30 @@ fn point_div() {
 }
 
 #[test]
+fn point_constructor() {
+    let r = Point2l::from_size(Size2l::new(1, 2));
+    assert_eq!(1, r.x);
+    assert_eq!(2, r.y);
+}
+
+#[test]
 fn point_methods() {
     let pt = Point::new(2, 2);
     assert_eq!(2.8284271247461903, pt.norm());
+
+    assert_eq!(0., pt.cross(Point::new(2, 2)));
+    assert_eq!(0., pt.cross(Point::new(-4, -4)));
+    assert_eq!(16., pt.cross(Point::new(-4, 4)));
+
+    assert_eq!(8, pt.dot(Point::new(2, 2)));
+    assert_eq!(8., pt.ddot(Point::new(2, 2)));
+}
+
+#[test]
+fn point_conv() {
+    let ptf = Point2d::new(1.2, 2.3);
+    assert_eq!(Point2i::new(1, 2), ptf.to::<i32>().unwrap());
+    assert_eq!(Point2f::new(1.2, 2.3), ptf.to::<f32>().unwrap());
+    let pti = Point2i::new(1, 2);
+    assert_eq!(Point2f::new(1., 2.), pti.to::<f32>().unwrap());
 }
