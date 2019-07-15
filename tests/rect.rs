@@ -1,11 +1,11 @@
-use opencv::core::{self, Point2d, Point2i, Rect2d, Rect2f, Rect2i, Size2d, Size2i};
+use opencv::core::{self, Point2d, Point2i, Rect, Rect2d, Rect2f, Rect2i, Size2d, Size2i};
 
 #[test]
 fn rect_add() {
-    let src = core::Rect::new(0, 0, 100, 100);
+    let src = Rect::new(0, 0, 100, 100);
 
     // Point
-    let res = core::Rect::new(50, 50, 100, 100);
+    let res = Rect::new(50, 50, 100, 100);
     {
         let src = src.clone();
         let out = src + core::Point::new(50, 50);
@@ -19,7 +19,7 @@ fn rect_add() {
     }
 
     // Size
-    let res = core::Rect::new(0, 0, 200, 200);
+    let res = Rect::new(0, 0, 200, 200);
     {
         let src = src.clone();
         let out = src + core::Size::new(100, 100);
@@ -35,10 +35,10 @@ fn rect_add() {
 
 #[test]
 fn rect_sub() {
-    let src = core::Rect::new(50, 50, 100, 100);
+    let src = Rect::new(50, 50, 100, 100);
 
     // Point
-    let res = core::Rect::new(25, 25, 100, 100);
+    let res = Rect::new(25, 25, 100, 100);
     {
         let src = src.clone();
         let out = src - core::Point::new(25, 25);
@@ -52,7 +52,7 @@ fn rect_sub() {
     }
 
     // Size
-    let res = core::Rect::new(50, 50, 75, 75);
+    let res = Rect::new(50, 50, 75, 75);
     {
         let src = src.clone();
         let out = src - core::Size::new(25, 25);
@@ -63,6 +63,44 @@ fn rect_sub() {
         let mut out = src.clone();
         out -= core::Size::new(25, 25);
         assert_eq!(out, res);
+    }
+}
+
+#[test]
+fn rect_intersect() {
+    {
+        assert_eq!(Rect::new(50, 50, 100, 100), Rect::new(50, 50, 100, 100) & Rect::new(50, 50, 100, 100));
+        assert_eq!(Rect2d::new(149., 149., 1., 1.), Rect2d::new(50., 50., 100., 100.) & Rect2d::new(149., 149., 100., 100.));
+        assert_eq!(Rect2d::new(0., 0., 0., 0.), Rect2d::new(50., 50., 100., 100.) & Rect2d::new(150., 50., 100., 100.));
+        assert_eq!(Rect2f::new(0., 0., 0., 0.), Rect2f::new(50., 50., 100., 100.) & Rect2f::new(50., 150., 100., 100.));
+        assert_eq!(Rect2d::new(0., 0., 0., 0.), Rect2d::new(50., 50., 100., 100.) & Rect2d::new(-50., 50., 100., 100.));
+        assert_eq!(Rect::new(0, 0, 0, 0), Rect::new(50, 50, 100, 100) & Rect::new(50, -50, 100, 100));
+        assert_eq!(Rect2f::new(75., 75., 75., 75.), Rect2f::new(50., 50., 100., 100.) & Rect2f::new(75., 75., 100., 100.));
+    }
+
+    {
+        let mut r = Rect::new(50, 50, 100, 100);
+        r &= Rect::new(75, 75, 100, 10);
+        assert_eq!(Rect::new(75, 75, 75, 10), r);
+    }
+}
+
+#[test]
+fn rect_union() {
+    {
+        assert_eq!(Rect::new(50, 50, 100, 100), Rect::new(50, 50, 100, 100) | Rect::new(50, 50, 100, 100));
+        assert_eq!(Rect2d::new(50., 50., 199., 199.), Rect2d::new(50., 50., 100., 100.) | Rect2d::new(149., 149., 100., 100.));
+        assert_eq!(Rect2d::new(50., 50., 200., 100.), Rect2d::new(50., 50., 100., 100.) | Rect2d::new(150., 50., 100., 100.));
+        assert_eq!(Rect2f::new(50., 50., 100., 200.), Rect2f::new(50., 50., 100., 100.) | Rect2f::new(50., 150., 100., 100.));
+        assert_eq!(Rect2d::new(-50., 50., 200., 100.), Rect2d::new(50., 50., 100., 100.) | Rect2d::new(-50., 50., 100., 100.));
+        assert_eq!(Rect::new(50, -50, 100, 200), Rect::new(50, 50, 100, 100) | Rect::new(50, -50, 100, 100));
+        assert_eq!(Rect2f::new(50., 50., 125., 125.), Rect2f::new(50., 50., 100., 100.) | Rect2f::new(75., 75., 100., 100.));
+    }
+
+    {
+        let mut r = Rect::new(50, 50, 100, 100);
+        r |= Rect::new(75, 75, 100, 10);
+        assert_eq!(Rect::new(50, 50, 125, 100), r);
     }
 }
 

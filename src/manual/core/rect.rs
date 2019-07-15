@@ -2,6 +2,7 @@ use std::{
     fmt,
     ops::{Add, AddAssign, Sub, SubAssign},
 };
+use std::ops::{BitAnd, BitAndAssign, BitOr, BitOrAssign};
 
 use num::{NumCast, ToPrimitive};
 
@@ -135,6 +136,24 @@ impl<S, R> Sub<Size_<S>> for Rect_<R>
     }
 }
 
+impl<T: ValidRectType> BitOr for Rect_<T> {
+    type Output = Rect_<T>;
+
+    fn bitor(mut self, rhs: Self) -> Self::Output {
+        self |= rhs;
+        self
+    }
+}
+
+impl<T: ValidRectType> BitAnd for Rect_<T> {
+    type Output = Rect_<T>;
+
+    fn bitand(mut self, rhs: Self) -> Self::Output {
+        self &= rhs;
+        self
+    }
+}
+
 impl<P, R> AddAssign<Point_<P>> for Rect_<R>
     where
         P: ValidPointType,
@@ -176,6 +195,35 @@ impl<S, R> SubAssign<Size_<S>> for Rect_<R>
     fn sub_assign(&mut self, rhs: Size_<S>) {
         self.width -= rhs.width;
         self.height -= rhs.height;
+    }
+}
+
+impl<T: ValidRectType> BitOrAssign for Rect_<T> {
+    fn bitor_assign(&mut self, rhs: Self) {
+        if self.empty() {
+            *self = rhs;
+        } else if !rhs.empty() {
+            let x1 = partial_min(self.x, rhs.x);
+            let y1 = partial_min(self.y, rhs.y);
+            self.width = partial_max(self.x + self.width, rhs.x + rhs.width) - x1;
+            self.height = partial_max(self.y + self.height, rhs.y + rhs.height) - y1;
+            self.x = x1;
+            self.y = y1;
+        }
+    }
+}
+
+impl<T: ValidRectType> BitAndAssign for Rect_<T> {
+    fn bitand_assign(&mut self, rhs: Self) {
+        let x1 = partial_max(self.x, rhs.x);
+        let y1 = partial_max(self.y, rhs.y);
+        self.width = partial_min(self.x + self.width, rhs.x + rhs.width) - x1;
+        self.height = partial_min(self.y + self.height, rhs.y + rhs.height) - y1;
+        self.x = x1;
+        self.y = y1;
+        if self.empty() {
+            *self = Rect_::default();
+        }
     }
 }
 
