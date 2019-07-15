@@ -7,7 +7,7 @@ use crate::core::{Rect_, Size_, ValidRectType, ValidSizeType};
 valid_types!(ValidPointType, i32, i64, f32, f64);
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 /// [docs.opencv.org](https://docs.opencv.org/master/db/d4e/classcv_1_1Point__.html)
 pub struct Point_<T: ValidPointType> {
     pub x: T,
@@ -35,7 +35,7 @@ impl<T: ValidPointType> Point_<T> {
     }
 
     #[inline]
-    pub fn dot(self, pt: Point_<T>) -> T where T: Mul<Output=T> + Add<Output=T> {
+    pub fn dot(self, pt: Point_<T>) -> T {
         self.x * pt.x + self.y * pt.y
     }
 
@@ -49,7 +49,7 @@ impl<T: ValidPointType> Point_<T> {
     }
 
     #[inline]
-    pub fn inside(self, rect: Rect_<T>) -> bool where T: ValidRectType + Add<Output=T> + PartialOrd {
+    pub fn inside(self, rect: Rect_<T>) -> bool where T: ValidRectType {
         rect.contains(self)
     }
 
@@ -63,12 +63,6 @@ impl<T: ValidPointType> Point_<T> {
     #[inline]
     pub fn to<D: ValidPointType + NumCast>(self) -> Option<Point_<D>> where T: ToPrimitive {
         Some(Point_ { x: D::from(self.x)?, y: D::from(self.y)? })
-    }
-}
-
-impl<T: ValidPointType + Default> Default for Point_<T> {
-    fn default() -> Self {
-        Self { x: Default::default(), y: Default::default() }
     }
 }
 

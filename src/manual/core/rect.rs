@@ -1,9 +1,9 @@
 use std::{
     fmt,
-    ops::{Add, AddAssign, Mul, Sub, SubAssign},
+    ops::{Add, AddAssign, Sub, SubAssign},
 };
 
-use num::{NumCast, ToPrimitive, Zero};
+use num::{NumCast, ToPrimitive};
 
 use crate::core::{Point_, RotatedRect, Size_, ValidPointType, ValidSizeType};
 
@@ -20,7 +20,7 @@ fn partial_max<T: PartialOrd>(a: T, b: T) -> T {
 }
 
 #[repr(C)]
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 /// [docs.opencv.org](https://docs.opencv.org/master/d2/d44/classcv_1_1Rect__.html)
 pub struct Rect_<T: ValidRectType> {
     pub x: T,
@@ -41,7 +41,7 @@ impl<T: ValidRectType> Rect_<T> {
     }
 
     #[inline]
-    pub fn from_points(pt1: Point_<T>, pt2: Point_<T>) -> Self where T: ValidPointType + PartialOrd + Sub<Output=T> {
+    pub fn from_points(pt1: Point_<T>, pt2: Point_<T>) -> Self where T: ValidPointType {
         let x = partial_min(pt1.x, pt2.x);
         let y = partial_min(pt1.y, pt2.y);
         Self::new(x, y, partial_max(pt1.x, pt2.x) - x, partial_max(pt1.y, pt2.y) - y)
@@ -53,7 +53,7 @@ impl<T: ValidRectType> Rect_<T> {
     }
 
     #[inline]
-    pub fn br(&self) -> Point_<T> where T: ValidPointType + Add<Output=T> {
+    pub fn br(&self) -> Point_<T> where T: ValidPointType {
         Point_::new(self.x + self.width, self.y + self.height)
     }
 
@@ -63,29 +63,23 @@ impl<T: ValidRectType> Rect_<T> {
     }
 
     #[inline]
-    pub fn area(&self) -> T where T: Mul<Output=T> {
+    pub fn area(&self) -> T {
         self.width * self.height
     }
 
     #[inline]
-    pub fn empty(&self) -> bool where T: Zero + PartialOrd {
+    pub fn empty(&self) -> bool {
         self.width <= T::zero() || self.height <= T::zero()
     }
 
     #[inline]
-    pub fn contains(&self, pt: Point_<T>) -> bool where T: ValidPointType + Add<Output=T> + PartialOrd {
+    pub fn contains(&self, pt: Point_<T>) -> bool where T: ValidPointType {
         self.x <= pt.x && pt.x < self.x + self.width && self.y <= pt.y && pt.y < self.y + self.height
     }
 
     #[inline]
     pub fn to<D: ValidRectType + NumCast>(&self) -> Option<Rect_<D>> where T: ToPrimitive {
         Some(Rect_ { x: D::from(self.x)?, y: D::from(self.y)?, width: D::from(self.width)?, height: D::from(self.height)? })
-    }
-}
-
-impl<T: ValidRectType + Default> Default for Rect_<T> {
-    fn default() -> Self {
-        Self { x: Default::default(), y: Default::default(), width: Default::default(), height: Default::default() }
     }
 }
 
