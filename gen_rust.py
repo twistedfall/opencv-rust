@@ -321,6 +321,9 @@ func_rename = {
     "cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_PtrOfDescriptorMatcher": "new_with_dextractor",
     "cv_ORB_create": "default",
 
+    ### hdf ###
+    "cv_hdf_HDF5_atread_String_X_String": "-",  # fixme allow receiving data into &mut String arg
+
     ### highgui ###
     "cv_addText_Mat_String_Point_QtFont": "+_with_font",
     "cv_selectROIs_String_Mat_VectorOfRect_bool_bool": "select_rois",
@@ -3163,6 +3166,7 @@ class RustWrapperGenerator(object):
 
         with open("{}/{}.consts.cpp".format(cpp_dir, module), "w") as f:
             f.write("""#include <cstdio>\n""")
+            f.write("""#include <opencv2/core.hpp>\n""")  # for hdf in opencv-3.2
             f.write("""#include <opencv2/%s.hpp>\n"""%(module))
             f.write("""using namespace cv;\n""")
             f.write("int main(int, char**) {\n")

@@ -158,6 +158,7 @@ installed:
  * dpm
  * freetype
  * fuzzy
+ * hdf
  * img_hash
  * phase_unwrapping
  * plot

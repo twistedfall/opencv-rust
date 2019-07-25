@@ -43,7 +43,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "flann",
         "gapi",
         "hal",
-        "hdf", // includes platform-specific headers like /usr/include/x86_64-pc-linux-gnu/opencv2/hdf/hdf5.hpp
         "hfs",
         "ippicv",
         "line_descriptor",
