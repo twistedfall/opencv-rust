@@ -253,20 +253,20 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     {
         let mut types = File::create(out_dir.join("common_opencv.h"))?;
         for m in modules {
-            write!(&mut types, "#include <opencv2/{}.hpp>\n", m.0)?;
+            writeln!(&mut types, "#include <opencv2/{}.hpp>", m.0)?;
             if m.0 == "dnn" {
                 // include it manually, otherwise it's not included
                 if cfg!(feature = "opencv-41") {
-                    write!(&mut types, "#include <opencv2/{}/version.hpp>\n", m.0)?;
+                    writeln!(&mut types, "#include <opencv2/{}/version.hpp>", m.0)?;
                 }
-                write!(&mut types, "#include <opencv2/{}/all_layers.hpp>\n", m.0)?;
+                writeln!(&mut types, "#include <opencv2/{}/all_layers.hpp>", m.0)?;
             }
         }
     }
 
     {
         let mut types = File::create(out_dir.join("types.h"))?;
-        write!(&mut types, "#include <cstddef>\n")?;
+        writeln!(&mut types, "#include <cstddef>")?;
     }
 
     let version = if cfg!(feature = "opencv-32") {

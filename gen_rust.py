@@ -2340,7 +2340,7 @@ class VectorTypeInfo(TypeInfo):
             #[inline]
             fn push(&mut self, val: Self::Arg) {
                 let vec = self.as_raw_${rust_local}();
-                let val = val.ptr; // fixme use method
+                let val = val.as_raw_${inner_rust_local}();
                 cpp!(unsafe [vec as "${cpptype}*", val as "${inner_cpptype}*"] {
                     vec->push_back(*val);
                 })
@@ -2369,9 +2369,9 @@ class VectorTypeInfo(TypeInfo):
 
             #[inline]
             unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-                let vec_unchkd = self.as_raw_${rust_local}();
-                ${inner_rust_full} { ptr: cpp!(unsafe [vec_unchkd as "const ${cpptype}*", index as "size_t"] -> ${rust_extern} as "${cpp_extern}" {
-                    return new ${inner_cpptype}((*vec_unchkd)[index]);
+                let vec = self.as_raw_${rust_local}();
+                ${inner_rust_full} { ptr: cpp!(unsafe [vec as "const ${cpptype}*", index as "size_t"] -> ${rust_extern} as "${cpp_extern}" {
+                    return new ${inner_cpptype}((*vec)[index]);
                 })}
             }
             
@@ -2434,9 +2434,9 @@ class VectorTypeInfo(TypeInfo):
 
             #[inline]
             unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-                let vec_unchkd = self.as_raw_${rust_local}();
-                ::std::ffi::CStr::from_ptr(cpp!(unsafe [vec_unchkd as "const ${cpptype}*", index as "size_t"] -> ${inner_rust_extern} as "${inner_cpp_extern}" {
-                    return (*vec_unchkd)[index].c_str();
+                let vec = self.as_raw_${rust_local}();
+                ::std::ffi::CStr::from_ptr(cpp!(unsafe [vec as "const ${cpptype}*", index as "size_t"] -> ${inner_rust_extern} as "${inner_cpp_extern}" {
+                    return (*vec)[index].c_str();
                 })).to_string_lossy().into_owned()
             }
 
@@ -2497,9 +2497,9 @@ class VectorTypeInfo(TypeInfo):
 
             #[inline]
             unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-                let vec_unchkd = self.as_raw_${rust_local}();
-                cpp!(unsafe [vec_unchkd as "const std::vector<${inner_cpp_extern}>*", index as "size_t"] -> ${inner_rust_extern} as "${inner_cpp_extern}" {
-                    return (*vec_unchkd)[index];
+                let vec = self.as_raw_${rust_local}();
+                cpp!(unsafe [vec as "const std::vector<${inner_cpp_extern}>*", index as "size_t"] -> ${inner_rust_extern} as "${inner_cpp_extern}" {
+                    return (*vec)[index];
                 })
             }
 
@@ -2527,12 +2527,12 @@ class VectorTypeInfo(TypeInfo):
                 
             fn to_slice(&self) -> &[${inner_rust_full}] {
                 unsafe {
-                    let vec_d = self.as_raw_${rust_local}();
-                    let data = cpp!(unsafe [vec_d as "${cpptype}*"] -> *const ${rust_extern} as "${cpp_extern}*" {
-                        return reinterpret_cast<${cpp_extern}*>(vec_d->data());
+                    let vec = self.as_raw_${rust_local}();
+                    let data = cpp!(unsafe [vec as "${cpptype}*"] -> *const ${rust_extern} as "${cpp_extern}*" {
+                        return reinterpret_cast<${cpp_extern}*>(vec->data());
                     });
-                    let len = cpp!(unsafe [vec_d as "${cpptype}*"] -> size_t as "size_t" {
-                        return vec_d->size();
+                    let len = cpp!(unsafe [vec as "${cpptype}*"] -> size_t as "size_t" {
+                        return vec->size();
                     });
                     ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
                 }
@@ -2557,7 +2557,7 @@ class VectorTypeInfo(TypeInfo):
             self.cpp_extern = "void*"
             self.c_safe_id = "void_X"
             self.cpptype = "std::vector<%s>" % (inner.cpptype)
-            self.rust_safe_id = self.rust_local = "VectorOf"+inner.rust_safe_id
+            self.rust_safe_id = self.rust_local = "VectorOf" + inner.rust_safe_id
             self.rust_full = "types::" + self.rust_local
             self.rust_extern = "*mut c_void"
 
@@ -2622,9 +2622,9 @@ class SmartPtrTypeInfo(TypeInfo):
         "rust_trait_cast": template("""
             impl ${base_rust_full} for ${rust_local} {
                 #[inline(always)] fn as_raw_${base_rust_local}(&self) -> ${rust_extern} {
-                    let me${rust_local} = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-                    cpp!(unsafe [me${rust_local} as "cv::Ptr<${base_cpp_type}>*"] -> ${rust_extern} as "${cpp_extern}" {
-                        return me${rust_local}->get();
+                    let me = self.ptr;
+                    cpp!(unsafe [me as "cv::Ptr<${base_cpp_type}>*"] -> ${rust_extern} as "${cpp_extern}" {
+                        return me->get();
                     })
                 }
             }
@@ -3161,7 +3161,7 @@ class RustWrapperGenerator(object):
 
         with open("{}/{}.consts.cpp".format(cpp_dir, module), "w") as f:
             f.write("""#include <cstdio>\n""")
-            f.write("""#include "opencv2/%s.hpp"\n"""%(module))
+            f.write("""#include <opencv2/%s.hpp>\n"""%(module))
             f.write("""using namespace cv;\n""")
             f.write("int main(int, char**) {\n")
             f.write(self.moduleCppConsts.getvalue())

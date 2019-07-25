@@ -15,7 +15,7 @@ build = "build.rs"
 travis-ci = { repository = "twistedfall/opencv-rust", branch = "master" }
 
 [dependencies]
-cpp = "0.5.2"
+cpp = "0.5.3"
 lazy_static = "1.0"
 libc = "0.2"
 num = "0.2"
@@ -23,7 +23,7 @@ slab = "0.4"
 
 [build-dependencies]
 cc = {version = "1.0", features = ["parallel"]}
-cpp_build = "0.5.2"
+cpp_build = "0.5.3"
 glob = "0.3"
 once_cell = "0.2"
 pkg-config = "0.3"
