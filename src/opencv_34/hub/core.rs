@@ -3,6 +3,7 @@
 //! # C structures and operations
 //! # Connections with C++
 //! # Operations on arrays
+//! # Asynchronous API
 //! # XML/YAML Persistence
 //! # Clustering
 //! # Utility and system functions and macros
@@ -95,8 +96,23 @@ pub const COVAR_SCRAMBLED: i32 = 0;
 pub const COVAR_USE_AVG: i32 = 2;
 pub const CPU_AVX: i32 = 10;
 pub const CPU_AVX2: i32 = 11;
+/// Cascade Lake with AVX-512F/CD/BW/DQ/VL/IFMA/VBMI/VNNI
+pub const CPU_AVX512_CEL: i32 = 261;
+/// Cannon Lake with AVX-512F/CD/BW/DQ/VL/IFMA/VBMI
+pub const CPU_AVX512_CNL: i32 = 260;
+/// Common instructions AVX-512F/CD for all CPUs that support AVX-512
+pub const CPU_AVX512_COMMON: i32 = 257;
+/// Ice Lake with AVX-512F/CD/BW/DQ/VL/IFMA/VBMI/VNNI/VBMI2/BITALG/VPOPCNTDQ
+pub const CPU_AVX512_ICL: i32 = 262;
+/// Knights Landing with AVX-512F/CD/ER/PF
+pub const CPU_AVX512_KNL: i32 = 258;
+/// Knights Mill with AVX-512F/CD/ER/PF/4FMAPS/4VNNIW/VPOPCNTDQ
+pub const CPU_AVX512_KNM: i32 = 259;
 /// Skylake-X with AVX-512F/CD/BW/DQ/VL
 pub const CPU_AVX512_SKX: i32 = 256;
+pub const CPU_AVX_5124FMAPS: i32 = 27;
+pub const CPU_AVX_5124VNNIW: i32 = 26;
+pub const CPU_AVX_512BITALG: i32 = 24;
 pub const CPU_AVX_512BW: i32 = 14;
 pub const CPU_AVX_512CD: i32 = 15;
 pub const CPU_AVX_512DQ: i32 = 16;
@@ -106,7 +122,10 @@ pub const CPU_AVX_512IFMA: i32 = 18;
 pub const CPU_AVX_512IFMA512: i32 = 18;
 pub const CPU_AVX_512PF: i32 = 19;
 pub const CPU_AVX_512VBMI: i32 = 20;
+pub const CPU_AVX_512VBMI2: i32 = 22;
 pub const CPU_AVX_512VL: i32 = 21;
+pub const CPU_AVX_512VNNI: i32 = 23;
+pub const CPU_AVX_512VPOPCNTDQ: i32 = 25;
 pub const CPU_FMA3: i32 = 12;
 pub const CPU_FP16: i32 = 9;
 pub const CPU_MAX_FEATURE: i32 = 512;
@@ -132,7 +151,16 @@ pub const CV_CN_MAX: i32 = 512;
 pub const CV_CN_SHIFT: i32 = 3;
 pub const CV_CPU_AVX: i32 = 10;
 pub const CV_CPU_AVX2: i32 = 11;
+pub const CV_CPU_AVX512_CEL: i32 = 261;
+pub const CV_CPU_AVX512_CNL: i32 = 260;
+pub const CV_CPU_AVX512_COMMON: i32 = 257;
+pub const CV_CPU_AVX512_ICL: i32 = 262;
+pub const CV_CPU_AVX512_KNL: i32 = 258;
+pub const CV_CPU_AVX512_KNM: i32 = 259;
 pub const CV_CPU_AVX512_SKX: i32 = 256;
+pub const CV_CPU_AVX_5124FMAPS: i32 = 27;
+pub const CV_CPU_AVX_5124VNNIW: i32 = 26;
+pub const CV_CPU_AVX_512BITALG: i32 = 24;
 pub const CV_CPU_AVX_512BW: i32 = 14;
 pub const CV_CPU_AVX_512CD: i32 = 15;
 pub const CV_CPU_AVX_512DQ: i32 = 16;
@@ -143,7 +171,10 @@ pub const CV_CPU_AVX_512IFMA: i32 = 18;
 pub const CV_CPU_AVX_512IFMA512: i32 = 18;
 pub const CV_CPU_AVX_512PF: i32 = 19;
 pub const CV_CPU_AVX_512VBMI: i32 = 20;
+pub const CV_CPU_AVX_512VBMI2: i32 = 22;
 pub const CV_CPU_AVX_512VL: i32 = 21;
+pub const CV_CPU_AVX_512VNNI: i32 = 23;
+pub const CV_CPU_AVX_512VPOPCNTDQ: i32 = 25;
 pub const CV_CPU_FMA3: i32 = 12;
 pub const CV_CPU_FP16: i32 = 9;
 pub const CV_CPU_MMX: i32 = 1;
@@ -191,14 +222,28 @@ pub const CV_HAL_SVD_MODIFY_A: i32 = 4;
 pub const CV_HAL_SVD_NO_UV: i32 = 1;
 pub const CV_HAL_SVD_SHORT_UV: i32 = 2;
 pub const CV_HARDWARE_MAX_FEATURE: i32 = 512;
+/// !< Debug message. Disabled in the "Release" build.
+pub const CV_LOG_LEVEL_DEBUG: i32 = 5;
+/// !< Error message
+pub const CV_LOG_LEVEL_ERROR: i32 = 2;
+/// !< Fatal (critical) error (unrecoverable internal error)
+pub const CV_LOG_LEVEL_FATAL: i32 = 1;
+/// !< Info message
+pub const CV_LOG_LEVEL_INFO: i32 = 4;
+/// !< for using in setLogLevel() call
+pub const CV_LOG_LEVEL_SILENT: i32 = 0;
+/// !< Verbose (trace) messages. Requires verbosity level. Disabled in the "Release" build.
+pub const CV_LOG_LEVEL_VERBOSE: i32 = 6;
+/// !< Warning message
+pub const CV_LOG_LEVEL_WARN: i32 = 3;
 pub const CV_MAJOR_VERSION: i32 = 3;
 pub const CV_MAT_CONT_FLAG_SHIFT: i32 = 14;
 pub const CV_MINOR_VERSION: i32 = 4;
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
-pub const CV_SUBMINOR_VERSION: i32 = 6;
+pub const CV_SUBMINOR_VERSION: i32 = 7;
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
-pub const CV_VERSION_REVISION: i32 = 6;
+pub const CV_VERSION_REVISION: i32 = 7;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const DCT_INVERSE: i32 = 1;
 pub const DCT_ROWS: i32 = 4;
@@ -469,6 +514,26 @@ pub enum IMPL {
     IMPL_PLAIN = IMPL_PLAIN as isize,
     IMPL_IPP = IMPL_IPP as isize,
     IMPL_OPENCL = IMPL_OPENCL as isize,
+}
+
+#[repr(C)]
+#[derive(Debug)]
+pub enum LogLevel {
+    /// for using in setLogVevel() call
+    LOG_LEVEL_SILENT = LOG_LEVEL_SILENT as isize,
+    /// Fatal (critical) error (unrecoverable internal error)
+    LOG_LEVEL_FATAL = LOG_LEVEL_FATAL as isize,
+    /// Error message
+    LOG_LEVEL_ERROR = LOG_LEVEL_ERROR as isize,
+    /// Warning message
+    LOG_LEVEL_WARNING = LOG_LEVEL_WARNING as isize,
+    /// Info message
+    LOG_LEVEL_INFO = LOG_LEVEL_INFO as isize,
+    /// Debug message. Disabled in the "Release" build.
+    LOG_LEVEL_DEBUG = LOG_LEVEL_DEBUG as isize,
+    /// Verbose (trace) messages. Requires verbosity level. Disabled in the "Release" build.
+    LOG_LEVEL_VERBOSE = LOG_LEVEL_VERBOSE as isize,
+    // ENUM_LOG_LEVEL_FORCE_INT = ENUM_LOG_LEVEL_FORCE_INT as isize, // ignored discriminant
 }
 
 #[repr(C)]
@@ -1253,9 +1318,9 @@ pub fn convert_scale_abs(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta:
 /// * src: Source image.
 /// * dst: Destination image of the same type as src and the size Size(src.cols+left+right,
 /// src.rows+top+bottom) .
-/// * top:
-/// * bottom:
-/// * left:
+/// * top: the top pixels
+/// * bottom: the bottom pixels
+/// * left: the left pixels
 /// * right: Parameter specifying how many pixels in each direction from the source image rectangle
 /// to extrapolate. For example, top=1, bottom=1, left=1, right=1 mean that 1 pixel-wide border needs
 /// to be built.
@@ -2828,7 +2893,7 @@ pub fn norm_with_type(src1: &core::Mat, src2: &core::Mat, norm_type: i32, mask: 
 /// \f}
 /// The following graphic shows all values for the three norm functions <span lang='latex'>\| r(x) \|_{L_1}, \| r(x) \|_{L_2}</span> and <span lang='latex'>\| r(x) \|_{L_\infty}</span>.
 /// It is notable that the <span lang='latex'> L_{1} </span> norm forms the upper and the <span lang='latex'> L_{\infty} </span> norm forms the lower border for the example function <span lang='latex'> r(x) </span>.
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.6/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.7/NormTypes_OneArray_1-2-INF.png)
 ///
 /// When the mask parameter is specified and it is not empty, the norm is
 ///
@@ -3723,6 +3788,32 @@ pub fn get_thread_id() -> Result<i32> {
     unsafe { sys::cv_utils_getThreadID() }.into_result()
 }
 
+/// Get global logging level
+pub fn get_log_level() -> Result<core::LogLevel> {
+    unsafe { sys::cv_utils_logging_getLogLevel() }.into_result()
+}
+
+/// Write log message
+pub fn write_log_message(log_level: core::LogLevel, message: &str) -> Result<()> {
+    string_arg!(message);
+    unsafe { sys::cv_utils_logging_internal_writeLogMessage_LogLevel_const_char_X(log_level, message.as_ptr()) }.into_result()
+}
+
+/// Set global logging level
+/// ## Returns
+/// previous logging level
+pub fn set_log_level(log_level: core::LogLevel) -> Result<core::LogLevel> {
+    unsafe { sys::cv_utils_logging_setLogLevel_LogLevel(log_level) }.into_result()
+}
+
+pub fn test_async_array(argument: &core::Mat) -> Result<core::AsyncArray> {
+    unsafe { sys::cv_utils_testAsyncArray_Mat(argument.as_raw_Mat()) }.into_result().map(|ptr| core::AsyncArray { ptr })
+}
+
+pub fn test_async_exception() -> Result<core::AsyncArray> {
+    unsafe { sys::cv_utils_testAsyncException() }.into_result().map(|ptr| core::AsyncArray { ptr })
+}
+
 /// Converts VASurfaceID object to OutputArray.
 /// ## Parameters
 /// * display: - VADisplay object.
@@ -3873,6 +3964,93 @@ pub trait Algorithm {
     /// This string is used as top level xml/yml node tag when the object is saved to a file or string.
     fn get_default_name(&self) -> Result<String> {
         unsafe { sys::cv_Algorithm_getDefaultName_const(self.as_raw_Algorithm()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+}
+
+// boxed class cv::AsyncArray
+/// Returns result of asynchronous operations
+///
+/// Object has attached asynchronous state.
+/// Assignment operator doesn't clone asynchronous state (it is shared between all instances).
+///
+/// Result can be fetched via get() method only once.
+pub struct AsyncArray {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::AsyncArray {
+    fn drop(&mut self) {
+        unsafe { sys::cv_AsyncArray_delete(self.ptr) };
+    }
+}
+impl core::AsyncArray {
+    #[inline(always)] pub fn as_raw_AsyncArray(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for AsyncArray {}
+
+impl AsyncArray {
+
+    pub fn new() -> Result<core::AsyncArray> {
+        unsafe { sys::cv_AsyncArray_AsyncArray() }.into_result().map(|ptr| core::AsyncArray { ptr })
+    }
+    
+    pub fn copy(o: &core::AsyncArray) -> Result<core::AsyncArray> {
+        unsafe { sys::cv_AsyncArray_AsyncArray_AsyncArray(o.as_raw_AsyncArray()) }.into_result().map(|ptr| core::AsyncArray { ptr })
+    }
+    
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_AsyncArray_release(self.as_raw_AsyncArray()) }.into_result()
+    }
+    
+    /// Fetch the result.
+    /// ## Parameters
+    /// * dst: [out] destination array
+    ///
+    /// Waits for result until container has valid result.
+    /// Throws exception if exception was stored as a result.
+    ///
+    /// Throws exception on invalid container state.
+    ///
+    ///
+    /// Note: Result or stored exception can be fetched only once.
+    pub fn get(&self, dst: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_AsyncArray_get_const_Mat(self.as_raw_AsyncArray(), dst.as_raw_Mat()) }.into_result()
+    }
+    
+    /// Retrieving the result with timeout
+    /// ## Parameters
+    /// * dst: [out] destination array
+    /// * timeoutNs: timeout in nanoseconds, -1 for infinite wait
+    ///
+    /// ## Returns
+    /// true if result is ready, false if the timeout has expired
+    ///
+    ///
+    /// Note: Result or stored exception can be fetched only once.
+    pub fn get_with_timeout(&self, dst: &mut core::Mat, timeout_ns: i64) -> Result<bool> {
+        unsafe { sys::cv_AsyncArray_get_const_Mat_int64(self.as_raw_AsyncArray(), dst.as_raw_Mat(), timeout_ns) }.into_result()
+    }
+    
+    pub fn get_with_timeout_f64(&self, dst: &mut core::Mat, timeout_ns: f64) -> Result<bool> {
+        unsafe { sys::cv_AsyncArray_get_const_Mat_double(self.as_raw_AsyncArray(), dst.as_raw_Mat(), timeout_ns) }.into_result()
+    }
+    
+    pub fn wait_for(&self, timeout_ns: i64) -> Result<bool> {
+        unsafe { sys::cv_AsyncArray_wait_for_const_int64(self.as_raw_AsyncArray(), timeout_ns) }.into_result()
+    }
+    
+    pub fn wait_for_f64(&self, timeout_ns: f64) -> Result<bool> {
+        unsafe { sys::cv_AsyncArray_wait_for_const_double(self.as_raw_AsyncArray(), timeout_ns) }.into_result()
+    }
+    
+    pub fn valid(&self) -> Result<bool> {
+        unsafe { sys::cv_AsyncArray_valid_const(self.as_raw_AsyncArray()) }.into_result()
     }
     
 }
@@ -4106,10 +4284,10 @@ impl CommandLineParser {
 /// a function at any point, thus it is preferable to have analytic expression for gradient and
 /// computational burden should be born by the user.
 ///
-/// The latter responsibility is accompilished via the getGradient method of a
+/// The latter responsibility is accomplished via the getGradient method of a
 /// MinProblemSolver::Function interface (which represents function being optimized). This method takes
 /// point a point in *n*-dimensional space (first argument represents the array of coordinates of that
-/// point) and comput its gradient (it should be stored in the second argument as an array).
+/// point) and compute its gradient (it should be stored in the second argument as an array).
 ///
 ///
 /// Note: class ConjGradSolver thus does not add any new methods to the basic MinProblemSolver interface.
@@ -6779,7 +6957,7 @@ impl Range {
 ///
 /// The sample below demonstrates how to use RotatedRect:
 /// @snippet snippets/core_various.cpp RotatedRect_demo
-/// ![image](https://docs.opencv.org/3.4.6/rotatedrect.png)
+/// ![image](https://docs.opencv.org/3.4.7/rotatedrect.png)
 ///
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
@@ -8018,6 +8196,32 @@ impl NodeDataTls {
     
 }
 
+// Generating impl for trait cv::utils::AllocatorStatisticsInterface (trait)
+pub trait AllocatorStatisticsInterface {
+    #[inline(always)] fn as_raw_AllocatorStatisticsInterface(&self) -> *mut c_void;
+    fn get_current_usage(&self) -> Result<u64> {
+        unsafe { sys::cv_utils_AllocatorStatisticsInterface_getCurrentUsage_const(self.as_raw_AllocatorStatisticsInterface()) }.into_result()
+    }
+    
+    fn get_total_usage(&self) -> Result<u64> {
+        unsafe { sys::cv_utils_AllocatorStatisticsInterface_getTotalUsage_const(self.as_raw_AllocatorStatisticsInterface()) }.into_result()
+    }
+    
+    fn get_number_of_allocations(&self) -> Result<u64> {
+        unsafe { sys::cv_utils_AllocatorStatisticsInterface_getNumberOfAllocations_const(self.as_raw_AllocatorStatisticsInterface()) }.into_result()
+    }
+    
+    fn get_peak_usage(&self) -> Result<u64> {
+        unsafe { sys::cv_utils_AllocatorStatisticsInterface_getPeakUsage_const(self.as_raw_AllocatorStatisticsInterface()) }.into_result()
+    }
+    
+    /// set peak usage = current usage
+    fn reset_peak_usage(&mut self) -> Result<()> {
+        unsafe { sys::cv_utils_AllocatorStatisticsInterface_resetPeakUsage(self.as_raw_AllocatorStatisticsInterface()) }.into_result()
+    }
+    
+}
+
 pub const CV_16SC1: i32 = 0x3; // 3
 pub const CV_16SC2: i32 = 0xb; // 11
 pub const CV_16SC3: i32 = 0x13; // 19
@@ -8052,7 +8256,7 @@ pub const CV_MAT_CONT_FLAG: i32 = 0x4000; // 16384
 pub const CV_MAT_DEPTH_MASK: i32 = 0x7; // 7
 pub const CV_MAT_TYPE_MASK: i32 = 0xfff; // 4095
 pub const CV_SUBMAT_FLAG: i32 = 0x8000; // 32768
-pub static CV_VERSION: &'static str = "3.4.6";
+pub static CV_VERSION: &'static str = "3.4.7";
 pub const Mat_CONTINUOUS_FLAG: i32 = 0x4000; // 16384
 pub const Mat_SUBMATRIX_FLAG: i32 = 0x8000; // 32768
 pub const _InputArray_CUDA_GPU_MAT: i32 = 0x90000; // 589824

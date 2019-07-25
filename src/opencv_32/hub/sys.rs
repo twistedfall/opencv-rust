@@ -32,6 +32,8 @@ pub type cv_return_value_float = cv_return_value<f32>;
 pub type cv_return_value_instr_FLAGS = cv_return_value<core::FLAGS>;
 pub type cv_return_value_int = cv_return_value<i32>;
 pub type cv_return_value_int64 = cv_return_value<i64>;
+pub type cv_return_value_libmv_CameraIntrinsicsOptions = cv_return_value<crate::sfm::libmv_CameraIntrinsicsOptions>;
+pub type cv_return_value_libmv_ReconstructionOptions = cv_return_value<crate::sfm::libmv_ReconstructionOptions>;
 pub type cv_return_value_std_ptrdiff_t = cv_return_value<ptrdiff_t>;
 pub type cv_return_value_std_size_t = cv_return_value<size_t>;
 pub type cv_return_value_unsigned_char = cv_return_value<u8>;
@@ -739,6 +741,17 @@ pub fn cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_Ma
 pub fn cv_bioinspired_TransientAreasSegmentationModule_clearAllBuffers(instance: *mut c_void) -> cv_return_value_void;
 }
 extern "C" {
+pub fn cvv_debugMode() -> cv_return_value_bool;
+pub fn cvv_finalShow() -> cv_return_value_void;
+pub fn cvv_impl_finalShow() -> cv_return_value_void;
+pub fn cvv_impl_getDebugFlag() -> cv_return_value_bool;
+pub fn cvv_setDebugFlag_bool(active: bool) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_FinalShowCaller_delete(ptr : *mut c_void);
+#[doc(hidden)] pub fn cv_CallMetaData_delete(ptr : *mut c_void);
+pub fn cvv_impl_CallMetaData_CallMetaData() -> cv_return_value_void_X;
+pub fn cvv_impl_CallMetaData_CallMetaData_const_char_X_size_t_const_char_X(file: *const c_char, line: size_t, function: *const c_char) -> cv_return_value_void_X;
+}
+extern "C" {
 pub fn cv_dnn_createCaffeImporter_String_String(prototxt: *const c_char, caffe_model: *const c_char) -> cv_return_value_void_X;
 pub fn cv_dnn_createTensorflowImporter_String(model: *const c_char) -> cv_return_value_void_X;
 pub fn cv_dnn_createTorchImporter_String_bool(filename: *const c_char, is_binary: bool) -> cv_return_value_void_X;
@@ -1070,6 +1083,39 @@ pub fn cv_ft_filter_Mat_Mat_Mat(image: *mut c_void, kernel: *mut c_void, output:
 pub fn cv_ft_inpaint_Mat_Mat_Mat_int_int_int(image: *mut c_void, mask: *mut c_void, output: *mut c_void, radius: i32, function: i32, algorithm: i32) -> cv_return_value_void;
 }
 extern "C" {
+pub fn cv_hdf_open_String(hdf5_filename: *mut c_char) -> cv_return_value_void_X;
+pub fn cv_hdf_HDF5_close(instance: *mut c_void) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_grcreate_String(instance: *mut c_void, grlabel: *mut c_char) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_hlexists_const_String(instance: *const c_void, label: *mut c_char) -> cv_return_value_bool;
+pub fn cv_hdf_HDF5_dscreate_const_int_int_int_String(instance: *const c_void, rows: i32, cols: i32, _type: i32, dslabel: *mut c_char) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dscreate_const_int_int_int_String_int(instance: *const c_void, rows: i32, cols: i32, _type: i32, dslabel: *mut c_char, compresslevel: i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dscreate_const_int_int_int_String_int_VectorOfint(instance: *const c_void, rows: i32, cols: i32, _type: i32, dslabel: *mut c_char, compresslevel: i32, dims_chunks: *mut c_void) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dscreate_const_int_int_int_String_int_const_int_X(instance: *const c_void, rows: i32, cols: i32, _type: i32, dslabel: *mut c_char, compresslevel: i32, dims_chunks: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dscreate_const_int_const_int_X_int_String(instance: *const c_void, n_dims: i32, sizes: *const i32, _type: i32, dslabel: *mut c_char) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dscreate_const_int_const_int_X_int_String_int(instance: *const c_void, n_dims: i32, sizes: *const i32, _type: i32, dslabel: *mut c_char, compresslevel: i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dscreate_const_VectorOfint_int_String_int_VectorOfint(instance: *const c_void, sizes: *mut c_void, _type: i32, dslabel: *mut c_char, compresslevel: i32, dims_chunks: *mut c_void) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dscreate_const_int_const_int_X_int_String_int_const_int_X(instance: *const c_void, n_dims: i32, sizes: *const i32, _type: i32, dslabel: *mut c_char, compresslevel: i32, dims_chunks: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsgetsize_const_String_int(instance: *const c_void, dslabel: *mut c_char, dims_flag: i32) -> cv_return_value_void_X;
+pub fn cv_hdf_HDF5_dsgettype_const_String(instance: *const c_void, dslabel: *mut c_char) -> cv_return_value_int;
+pub fn cv_hdf_HDF5_dswrite_const_Mat_String(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dswrite_const_Mat_String_const_int_X(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dswrite_const_Mat_String_VectorOfint_VectorOfint(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *mut c_void, dims_counts: *mut c_void) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dswrite_const_Mat_String_const_int_X_const_int_X(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *const i32, dims_counts: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsinsert_const_Mat_String(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsinsert_const_Mat_String_const_int_X(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsinsert_const_Mat_String_VectorOfint_VectorOfint(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *mut c_void, dims_counts: *mut c_void) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsinsert_const_Mat_String_const_int_X_const_int_X(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *const i32, dims_counts: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsread_const_Mat_String(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsread_const_Mat_String_const_int_X(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsread_const_Mat_String_VectorOfint_VectorOfint(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *mut c_void, dims_counts: *mut c_void) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_dsread_const_Mat_String_const_int_X_const_int_X(instance: *const c_void, array: *mut c_void, dslabel: *mut c_char, dims_offset: *const i32, dims_counts: *const i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_kpgetsize_const_String_int(instance: *const c_void, kplabel: *mut c_char, dims_flag: i32) -> cv_return_value_int;
+pub fn cv_hdf_HDF5_kpcreate_const_int_String_int_int(instance: *const c_void, size: i32, kplabel: *mut c_char, compresslevel: i32, chunks: i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_kpwrite_const_VectorOfKeyPoint_String_int_int(instance: *const c_void, keypoints: *mut c_void, kplabel: *mut c_char, offset: i32, counts: i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_kpinsert_const_VectorOfKeyPoint_String_int_int(instance: *const c_void, keypoints: *mut c_void, kplabel: *mut c_char, offset: i32, counts: i32) -> cv_return_value_void;
+pub fn cv_hdf_HDF5_kpread_const_VectorOfKeyPoint_String_int_int(instance: *const c_void, keypoints: *mut c_void, kplabel: *mut c_char, offset: i32, counts: i32) -> cv_return_value_void;
+}
+extern "C" {
 pub fn cv_addText_Mat_String_Point_QtFont(img: *mut c_void, text: *const c_char, org: core::Point, font: *mut c_void) -> cv_return_value_void;
 pub fn cv_addText_Mat_String_Point_String_int_Scalar_int_int_int(img: *mut c_void, text: *const c_char, org: core::Point, name_font: *const c_char, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> cv_return_value_void;
 pub fn cv_createButton_String_ButtonCallback_void_X_int_bool(bar_name: *const c_char, on_change: crate::highgui::ButtonCallbackExtern, userdata: *mut c_void, _type: i32, initial_button_state: bool) -> cv_return_value_int;
@@ -1313,6 +1359,53 @@ pub fn cv_Subdiv2D_rotateEdge_const_int_int(instance: *const c_void, edge: i32, 
 pub fn cv_Subdiv2D_symEdge_const_int(instance: *const c_void, edge: i32) -> cv_return_value_int;
 pub fn cv_Subdiv2D_edgeOrg_const_int_Point2f_X(instance: *const c_void, edge: i32, orgpt: *mut core::Point2f) -> cv_return_value_int;
 pub fn cv_Subdiv2D_edgeDst_const_int_Point2f_X(instance: *const c_void, edge: i32, dstpt: *mut core::Point2f) -> cv_return_value_int;
+}
+extern "C" {
+pub fn cv_line_descriptor_drawKeylines_Mat_VectorOfKeyLine_Mat_Scalar_int(image: *mut c_void, keylines: *mut c_void, out_image: *mut c_void, color: core::Scalar, flags: i32) -> cv_return_value_void;
+pub fn cv_line_descriptor_drawLineMatches_Mat_VectorOfKeyLine_Mat_VectorOfKeyLine_VectorOfDMatch_Mat_Scalar_Scalar_VectorOfchar_int(img1: *mut c_void, keylines1: *mut c_void, img2: *mut c_void, keylines2: *mut c_void, matches1to2: *mut c_void, out_img: *mut c_void, match_color: core::Scalar, single_line_color: core::Scalar, matches_mask: *mut c_void, flags: i32) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_BinaryDescriptor_delete(ptr : *mut c_void);
+pub fn cv_line_descriptor_BinaryDescriptor_BinaryDescriptor_Params(parameters: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor() -> cv_return_value_void_X;
+pub fn cv_line_descriptor_BinaryDescriptor_createBinaryDescriptor_Params(parameters: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_line_descriptor_BinaryDescriptor_getNumOfOctaves(instance: *mut c_void) -> cv_return_value_int;
+pub fn cv_line_descriptor_BinaryDescriptor_setNumOfOctaves_int(instance: *mut c_void, octaves: i32) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptor_getWidthOfBand(instance: *mut c_void) -> cv_return_value_int;
+pub fn cv_line_descriptor_BinaryDescriptor_setWidthOfBand_int(instance: *mut c_void, width: i32) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptor_getReductionRatio(instance: *mut c_void) -> cv_return_value_int;
+pub fn cv_line_descriptor_BinaryDescriptor_setReductionRatio_int(instance: *mut c_void, r_ratio: i32) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptor_detect_Mat_VectorOfKeyLine_Mat(instance: *mut c_void, image: *mut c_void, keypoints: *mut c_void, mask: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptor_detect_const_VectorOfMat_VectorOfVectorOfKeyLine_VectorOfMat(instance: *const c_void, images: *mut c_void, keylines: *mut c_void, masks: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptor_compute_const_Mat_VectorOfKeyLine_Mat_bool(instance: *const c_void, image: *mut c_void, keylines: *mut c_void, descriptors: *mut c_void, return_float_descr: bool) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptor_compute_const_VectorOfMat_VectorOfVectorOfKeyLine_VectorOfMat_bool(instance: *const c_void, images: *mut c_void, keylines: *mut c_void, descriptors: *mut c_void, return_float_descr: bool) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptor_descriptorSize_const(instance: *const c_void) -> cv_return_value_int;
+pub fn cv_line_descriptor_BinaryDescriptor_descriptorType_const(instance: *const c_void) -> cv_return_value_int;
+pub fn cv_line_descriptor_BinaryDescriptor_defaultNorm_const(instance: *const c_void) -> cv_return_value_int;
+#[doc(hidden)] pub fn cv_BinaryDescriptor_Params_delete(ptr : *mut c_void);
+pub fn cv_line_descriptor_BinaryDescriptor_Params_Params() -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_BinaryDescriptorMatcher_delete(ptr : *mut c_void);
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_match_const_Mat_Mat_VectorOfDMatch_Mat(instance: *const c_void, query_descriptors: *mut c_void, train_descriptors: *mut c_void, matches: *mut c_void, mask: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_match_Mat_VectorOfDMatch_VectorOfMat(instance: *mut c_void, query_descriptors: *mut c_void, matches: *mut c_void, masks: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_const_Mat_Mat_VectorOfVectorOfDMatch_int_Mat_bool(instance: *const c_void, query_descriptors: *mut c_void, train_descriptors: *mut c_void, matches: *mut c_void, k: i32, mask: *mut c_void, compact_result: bool) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_knnMatch_Mat_VectorOfVectorOfDMatch_int_VectorOfMat_bool(instance: *mut c_void, query_descriptors: *mut c_void, matches: *mut c_void, k: i32, masks: *mut c_void, compact_result: bool) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_const_Mat_Mat_VectorOfVectorOfDMatch_float_Mat_bool(instance: *const c_void, query_descriptors: *mut c_void, train_descriptors: *mut c_void, matches: *mut c_void, max_distance: f32, mask: *mut c_void, compact_result: bool) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_radiusMatch_Mat_VectorOfVectorOfDMatch_float_VectorOfMat_bool(instance: *mut c_void, query_descriptors: *mut c_void, matches: *mut c_void, max_distance: f32, masks: *mut c_void, compact_result: bool) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_add_VectorOfMat(instance: *mut c_void, descriptors: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_train(instance: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_createBinaryDescriptorMatcher() -> cv_return_value_void_X;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_clear(instance: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_DrawLinesMatchesFlags_delete(ptr : *mut c_void);
+#[doc(hidden)] pub fn cv_KeyLine_delete(ptr : *mut c_void);
+pub fn cv_line_descriptor_KeyLine_getStartPoint_const(instance: *const c_void) -> cv_return_value_Point2fWrapper;
+pub fn cv_line_descriptor_KeyLine_getEndPoint_const(instance: *const c_void) -> cv_return_value_Point2fWrapper;
+pub fn cv_line_descriptor_KeyLine_getStartPointInOctave_const(instance: *const c_void) -> cv_return_value_Point2fWrapper;
+pub fn cv_line_descriptor_KeyLine_getEndPointInOctave_const(instance: *const c_void) -> cv_return_value_Point2fWrapper;
+pub fn cv_line_descriptor_KeyLine_KeyLine() -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_LSDDetector_delete(ptr : *mut c_void);
+pub fn cv_line_descriptor_LSDDetector_LSDDetector() -> cv_return_value_void_X;
+pub fn cv_line_descriptor_LSDDetector_createLSDDetector() -> cv_return_value_void_X;
+pub fn cv_line_descriptor_LSDDetector_detect_Mat_VectorOfKeyLine_int_int_Mat(instance: *mut c_void, image: *mut c_void, keypoints: *mut c_void, scale: i32, num_octaves: i32, mask: *mut c_void) -> cv_return_value_void;
+pub fn cv_line_descriptor_LSDDetector_detect_const_VectorOfMat_VectorOfVectorOfKeyLine_int_int_VectorOfMat(instance: *const c_void, images: *mut c_void, keylines: *mut c_void, scale: i32, num_octaves: i32, masks: *mut c_void) -> cv_return_value_void;
 }
 extern "C" {
 pub fn cv_ml_createConcentricSpheresTestSet_int_int_int_Mat_Mat(nsamples: i32, nfeatures: i32, nclasses: i32, samples: *mut c_void, responses: *mut c_void) -> cv_return_value_void;
@@ -1739,6 +1832,62 @@ pub fn cv_plot_Plot2d_setPlotSize_int_int(instance: *mut c_void, _plot_size_widt
 pub fn cv_plot_Plot2d_render_Mat(instance: *mut c_void, _plot_result: *mut c_void) -> cv_return_value_void;
 }
 extern "C" {
+pub fn cv_sfm_KRtFromProjection_Mat_Mat_Mat_Mat(p: *mut c_void, k: *mut c_void, r: *mut c_void, t: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_applyTransformationToPoints_Mat_Mat_Mat(points: *mut c_void, t: *mut c_void, transformed_points: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_computeOrientation_VectorOfMat_VectorOfMat_Mat_Mat_double(x1: *mut c_void, x2: *mut c_void, r: *mut c_void, t: *mut c_void, s: f64) -> cv_return_value_void;
+pub fn cv_sfm_depth_Mat_Mat_Mat(r: *mut c_void, t: *mut c_void, x: *mut c_void) -> cv_return_value_double;
+pub fn cv_sfm_essentialFromFundamental_Mat_Mat_Mat_Mat(f: *mut c_void, k1: *mut c_void, k2: *mut c_void, e: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_essentialFromRt_Mat_Mat_Mat_Mat_Mat(r1: *mut c_void, t1: *mut c_void, r2: *mut c_void, t2: *mut c_void, e: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_euclideanToHomogeneous_Mat_Mat(src: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_fundamentalFromCorrespondences7PointRobust_Mat_Mat_double_Mat_Mat_double(x1: *mut c_void, x2: *mut c_void, max_error: f64, f: *mut c_void, inliers: *mut c_void, outliers_probability: f64) -> cv_return_value_double;
+pub fn cv_sfm_fundamentalFromCorrespondences8PointRobust_Mat_Mat_double_Mat_Mat_double(x1: *mut c_void, x2: *mut c_void, max_error: f64, f: *mut c_void, inliers: *mut c_void, outliers_probability: f64) -> cv_return_value_double;
+pub fn cv_sfm_fundamentalFromEssential_Mat_Mat_Mat_Mat(e: *mut c_void, k1: *mut c_void, k2: *mut c_void, f: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_fundamentalFromProjections_Mat_Mat_Mat(p1: *mut c_void, p2: *mut c_void, f: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_homogeneousToEuclidean_Mat_Mat(src: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_importReconstruction_String_VectorOfMat_VectorOfMat_VectorOfMat_Mat_int(file: *const c_char, rs: *mut c_void, ts: *mut c_void, ks: *mut c_void, points3d: *mut c_void, file_format: i32) -> cv_return_value_void;
+pub fn cv_sfm_isotropicPreconditionerFromPoints_Mat_Mat(points: *mut c_void, t: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_meanAndVarianceAlongRows_Mat_Mat_Mat(a: *mut c_void, mean: *mut c_void, variance: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_motionFromEssentialChooseSolution_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat(rs: *mut c_void, ts: *mut c_void, k1: *mut c_void, x1: *mut c_void, k2: *mut c_void, x2: *mut c_void) -> cv_return_value_int;
+pub fn cv_sfm_motionFromEssential_Mat_VectorOfMat_VectorOfMat(e: *mut c_void, rs: *mut c_void, ts: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_normalizeFundamental_Mat_Mat(f: *mut c_void, f_normalized: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_normalizeIsotropicPoints_Mat_Mat_Mat(points: *mut c_void, normalized_points: *mut c_void, t: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_normalizePoints_Mat_Mat_Mat(points: *mut c_void, normalized_points: *mut c_void, t: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_normalizedEightPointSolver_Mat_Mat_Mat(x1: *mut c_void, x2: *mut c_void, f: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_preconditionerFromPoints_Mat_Mat(points: *mut c_void, t: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_projectionFromKRt_Mat_Mat_Mat_Mat(k: *mut c_void, r: *mut c_void, t: *mut c_void, p: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_projectionsFromFundamental_Mat_Mat_Mat(f: *mut c_void, p1: *mut c_void, p2: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_reconstruct_VectorOfMat_Mat_Mat_Mat_Mat_bool(points2d: *mut c_void, rs: *mut c_void, ts: *mut c_void, k: *mut c_void, points3d: *mut c_void, is_projective: bool) -> cv_return_value_void;
+pub fn cv_sfm_reconstruct_VectorOfMat_Mat_Mat_Mat_bool(points2d: *mut c_void, ps: *mut c_void, points3d: *mut c_void, k: *mut c_void, is_projective: bool) -> cv_return_value_void;
+pub fn cv_sfm_reconstruct_VectorOfstd_string_Mat_Mat_Mat_Mat_bool(images: *mut c_void, rs: *mut c_void, ts: *mut c_void, k: *mut c_void, points3d: *mut c_void, is_projective: bool) -> cv_return_value_void;
+pub fn cv_sfm_reconstruct_VectorOfstd_string_Mat_Mat_Mat_bool(images: *mut c_void, ps: *mut c_void, points3d: *mut c_void, k: *mut c_void, is_projective: bool) -> cv_return_value_void;
+pub fn cv_sfm_relativeCameraMotion_Mat_Mat_Mat_Mat_Mat_Mat(r1: *mut c_void, t1: *mut c_void, r2: *mut c_void, t2: *mut c_void, r: *mut c_void, t: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_skew_Mat(x: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_sfm_triangulatePoints_VectorOfMat_VectorOfMat_Mat(points2d: *mut c_void, projection_matrices: *mut c_void, points3d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_run_VectorOfMat(instance: *mut c_void, points2d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_run_VectorOfMat_Mat_Mat_Mat_Mat(instance: *mut c_void, points2d: *mut c_void, k: *mut c_void, rs: *mut c_void, ts: *mut c_void, points3d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_run_VectorOfstd_string(instance: *mut c_void, images: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_run_VectorOfstd_string_Mat_Mat_Mat_Mat(instance: *mut c_void, images: *mut c_void, k: *mut c_void, rs: *mut c_void, ts: *mut c_void, points3d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_getError_const(instance: *const c_void) -> cv_return_value_double;
+pub fn cv_sfm_BaseSFM_getPoints_Mat(instance: *mut c_void, points3d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_getIntrinsics_const(instance: *const c_void) -> cv_return_value_void_X;
+pub fn cv_sfm_BaseSFM_getCameras_Mat_Mat(instance: *mut c_void, rs: *mut c_void, ts: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_setReconstructionOptions_libmv_ReconstructionOptions(instance: *mut c_void, libmv_reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> cv_return_value_void;
+pub fn cv_sfm_BaseSFM_setCameraIntrinsicOptions_libmv_CameraIntrinsicsOptions(instance: *mut c_void, libmv_camera_intrinsics_options: crate::sfm::libmv_CameraIntrinsicsOptions) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfMat(instance: *mut c_void, points2d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfMat_Mat_Mat_Mat_Mat(instance: *mut c_void, points2d: *mut c_void, k: *mut c_void, rs: *mut c_void, ts: *mut c_void, points3d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfstd_string(instance: *mut c_void, images: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfstd_string_Mat_Mat_Mat_Mat(instance: *mut c_void, images: *mut c_void, k: *mut c_void, rs: *mut c_void, ts: *mut c_void, points3d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_getError_const(instance: *const c_void) -> cv_return_value_double;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_getPoints_Mat(instance: *mut c_void, points3d: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_getIntrinsics_const(instance: *const c_void) -> cv_return_value_void_X;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_getCameras_Mat_Mat(instance: *mut c_void, rs: *mut c_void, ts: *mut c_void) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_setReconstructionOptions_libmv_ReconstructionOptions(instance: *mut c_void, libmv_reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_setCameraIntrinsicOptions_libmv_CameraIntrinsicsOptions(instance: *mut c_void, libmv_camera_intrinsics_options: crate::sfm::libmv_CameraIntrinsicsOptions) -> cv_return_value_void;
+pub fn cv_sfm_SFMLibmvEuclideanReconstruction_create_libmv_CameraIntrinsicsOptions_libmv_ReconstructionOptions(camera_instrinsic_options: crate::sfm::libmv_CameraIntrinsicsOptions, reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> cv_return_value_void_X;
+pub fn cv_sfm_libmv_CameraIntrinsicsOptions_libmv_CameraIntrinsicsOptions_int_double_double_double_double_double_double_double_double(_distortion_model: i32, _focal_length: f64, _principal_point_x: f64, _principal_point_y: f64, _polynomial_k1: f64, _polynomial_k2: f64, _polynomial_k3: f64, _polynomial_p1: f64, _polynomial_p2: f64) -> cv_return_value_libmv_CameraIntrinsicsOptions;
+pub fn cv_sfm_libmv_ReconstructionOptions_libmv_ReconstructionOptions_int_int_int_int_int(_keyframe1: i32, _keyframe2: i32, _refine_intrinsics: i32, _select_keyframes: i32, _verbosity_level: i32) -> cv_return_value_libmv_ReconstructionOptions;
+}
+extern "C" {
 pub fn cv_EMDL1_Mat_Mat(signature1: *mut c_void, signature2: *mut c_void) -> cv_return_value_float;
 pub fn cv_createAffineTransformer_bool(full_affine: bool) -> cv_return_value_void_X;
 pub fn cv_createChiHistogramCostExtractor_int_float(n_dummies: i32, default_cost: f32) -> cv_return_value_void_X;
@@ -1836,6 +1985,26 @@ pub fn cv_Stitcher_stitch_VectorOfMat_VectorOfVectorOfRect_Mat(instance: *mut c_
 pub fn cv_Stitcher_component_const(instance: *const c_void) -> cv_return_value_void_X;
 pub fn cv_Stitcher_workScale_const(instance: *const c_void) -> cv_return_value_double;
 #[doc(hidden)] pub fn cv_TransverseMercatorWarper_delete(ptr : *mut c_void);
+}
+extern "C" {
+pub fn cv_structured_light_GrayCodePattern_getNumberOfPatternImages_const(instance: *const c_void) -> cv_return_value_std_size_t;
+pub fn cv_structured_light_GrayCodePattern_setWhiteThreshold_size_t(instance: *mut c_void, value: size_t) -> cv_return_value_void;
+pub fn cv_structured_light_GrayCodePattern_setBlackThreshold_size_t(instance: *mut c_void, value: size_t) -> cv_return_value_void;
+pub fn cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const_Mat_Mat(instance: *const c_void, black_image: *mut c_void, white_image: *mut c_void) -> cv_return_value_void;
+pub fn cv_structured_light_GrayCodePattern_getProjPixel_const_VectorOfMat_int_int_Point(instance: *const c_void, pattern_images: *mut c_void, x: i32, y: i32, proj_pix: &mut core::Point) -> cv_return_value_bool;
+pub fn cv_structured_light_GrayCodePattern_create_Params(parameters: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_structured_light_GrayCodePattern_create_int_int(width: i32, height: i32) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_GrayCodePattern_Params_delete(ptr : *mut c_void);
+pub fn cv_structured_light_GrayCodePattern_Params_Params() -> cv_return_value_void_X;
+pub fn cv_structured_light_SinusoidalPattern_computePhaseMap_VectorOfMat_Mat_Mat_Mat(instance: *mut c_void, pattern_images: *mut c_void, wrapped_phase_map: *mut c_void, shadow_mask: *mut c_void, fundamental: *mut c_void) -> cv_return_value_void;
+pub fn cv_structured_light_SinusoidalPattern_unwrapPhaseMap_VectorOfMat_Mat_Size_Mat(instance: *mut c_void, wrapped_phase_map: *mut c_void, unwrapped_phase_map: *mut c_void, cam_size: core::Size, shadow_mask: *mut c_void) -> cv_return_value_void;
+pub fn cv_structured_light_SinusoidalPattern_findProCamMatches_Mat_Mat_VectorOfMat(instance: *mut c_void, proj_unwrapped_phase_map: *mut c_void, cam_unwrapped_phase_map: *mut c_void, matches: *mut c_void) -> cv_return_value_void;
+pub fn cv_structured_light_SinusoidalPattern_computeDataModulationTerm_VectorOfMat_Mat_Mat(instance: *mut c_void, pattern_images: *mut c_void, data_modulation_term: *mut c_void, shadow_mask: *mut c_void) -> cv_return_value_void;
+pub fn cv_structured_light_SinusoidalPattern_create_Params(parameters: *mut c_void) -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_SinusoidalPattern_Params_delete(ptr : *mut c_void);
+pub fn cv_structured_light_SinusoidalPattern_Params_Params() -> cv_return_value_void_X;
+pub fn cv_structured_light_StructuredLightPattern_generate_VectorOfMat(instance: *mut c_void, pattern_images: *mut c_void) -> cv_return_value_bool;
+pub fn cv_structured_light_StructuredLightPattern_decode_const_VectorOfMat_Mat_VectorOfMat_VectorOfMat_int(instance: *const c_void, pattern_images: *mut c_void, disparity_map: *mut c_void, black_images: *mut c_void, white_images: *mut c_void, flags: i32) -> cv_return_value_bool;
 }
 extern "C" {
 pub fn cv_superres_createFrameSource_Camera_int(device_id: i32) -> cv_return_value_void_X;

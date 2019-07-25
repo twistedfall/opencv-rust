@@ -16,9 +16,11 @@ pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_X: &'static str = "MyriadX";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_UNSPECIFIED: &'static str = "";
 pub const DNN_BACKEND_DEFAULT: i32 = 0;
 pub const DNN_BACKEND_HALIDE: i32 = 1;
+/// Intel's Inference Engine computational backend.
 pub const DNN_BACKEND_INFERENCE_ENGINE: i32 = 2;
 pub const DNN_BACKEND_OPENCV: i32 = 3;
 pub const DNN_TARGET_CPU: i32 = 0;
+/// FPGA device with CPU fallbacks using Inference Engine's Heterogeneous plugin.
 pub const DNN_TARGET_FPGA: i32 = 4;
 pub const DNN_TARGET_MYRIAD: i32 = 3;
 pub const DNN_TARGET_OPENCL: i32 = 1;
@@ -29,6 +31,7 @@ pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 pub enum Backend {
     DNN_BACKEND_DEFAULT = DNN_BACKEND_DEFAULT as isize,
     DNN_BACKEND_HALIDE = DNN_BACKEND_HALIDE as isize,
+    /// Intel's Inference Engine computational backend.
     DNN_BACKEND_INFERENCE_ENGINE = DNN_BACKEND_INFERENCE_ENGINE as isize,
     DNN_BACKEND_OPENCV = DNN_BACKEND_OPENCV as isize,
 }
@@ -40,6 +43,7 @@ pub enum Target {
     DNN_TARGET_OPENCL = DNN_TARGET_OPENCL as isize,
     DNN_TARGET_OPENCL_FP16 = DNN_TARGET_OPENCL_FP16 as isize,
     DNN_TARGET_MYRIAD = DNN_TARGET_MYRIAD as isize,
+    /// FPGA device with CPU fallbacks using Inference Engine's Heterogeneous plugin.
     DNN_TARGET_FPGA = DNN_TARGET_FPGA as isize,
 }
 
@@ -321,6 +325,30 @@ pub fn read_net_from_onnx(onnx_file: &str) -> Result<crate::dnn::Net> {
     unsafe { sys::cv_dnn_readNetFromONNX_String(onnx_file.as_ptr()) }.into_result().map(|ptr| crate::dnn::Net { ptr })
 }
 
+/// Reads a network model from <a href="https://onnx.ai/">ONNX</a>
+///   in-memory buffer.
+/// ## Parameters
+/// * buffer: in-memory buffer that stores the ONNX model bytes.
+/// ## Returns
+/// Network object that ready to do forward, throw an exception
+///        in failure cases.
+pub fn read_net_from_onnx_buffer(buffer: &types::VectorOfuchar) -> Result<crate::dnn::Net> {
+    unsafe { sys::cv_dnn_readNetFromONNX_VectorOfuchar(buffer.as_raw_VectorOfuchar()) }.into_result().map(|ptr| crate::dnn::Net { ptr })
+}
+
+/// Reads a network model from <a href="https://onnx.ai/">ONNX</a>
+///   in-memory buffer.
+/// ## Parameters
+/// * buffer: memory address of the first byte of the buffer.
+/// * sizeBuffer: size of the buffer.
+/// ## Returns
+/// Network object that ready to do forward, throw an exception
+///        in failure cases.
+pub fn read_net_from_onnx_str(buffer: &str, size_buffer: size_t) -> Result<crate::dnn::Net> {
+    string_arg!(buffer);
+    unsafe { sys::cv_dnn_readNetFromONNX_const_char_X_size_t(buffer.as_ptr(), size_buffer) }.into_result().map(|ptr| crate::dnn::Net { ptr })
+}
+
 /// Reads a network model stored in <a href="https://www.tensorflow.org/">TensorFlow</a> framework's format.
 /// ## Parameters
 /// * model: path to the .pb file with binary protobuf description of the network architecture
@@ -414,6 +442,7 @@ pub fn read_net_from_torch(model: &str, is_binary: bool, evaluate: bool) -> Resu
 ///                  * `*.t7` | `*.net` (Torch, http://torch.ch/)
 ///                  * `*.weights` (Darknet, https://pjreddie.com/darknet/)
 ///                  * `*.bin` (DLDT, https://software.intel.com/openvino-toolkit)
+///                  * `*.onnx` (ONNX, https://onnx.ai/)
 /// * config: Text file contains network configuration. It could be a
 ///                   file with the following extensions:
 ///                  * `*.prototxt` (Caffe, http://caffe.berkeleyvision.org/)
@@ -994,10 +1023,6 @@ impl crate::dnn::Layer for CropLayer {
 
 impl CropLayer {
 
-    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfCropLayer> {
-        unsafe { sys::cv_dnn_CropLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfCropLayer { ptr })
-    }
-    
 }
 
 // boxed class cv::dnn::DeconvolutionLayer
@@ -1366,7 +1391,7 @@ impl InnerProductLayer {
 }
 
 // boxed class cv::dnn::InterpLayer
-/// Bilinear resize layer from https://github.com/cdmh/deeplab-public
+/// Bilinear resize layer from https://github.com/cdmh/deeplab-public-ver2
 ///
 /// It differs from @ref ResizeLayer in output shape and resize scales computations.
 pub struct InterpLayer {
@@ -1936,6 +1961,23 @@ impl Net {
     /// Returns true if there are no layers in the network.
     pub fn empty(&self) -> Result<bool> {
         unsafe { sys::cv_dnn_Net_empty_const(self.as_raw_Net()) }.into_result()
+    }
+    
+    /// Dump net to String
+    /// ## Returns
+    /// String with structure, hyperparameters, backend, target and fusion
+    ///  Call method after setInput(). To see correct backend, target and fusion run after forward().
+    pub fn dump(&mut self) -> Result<String> {
+        unsafe { sys::cv_dnn_Net_dump(self.as_raw_Net()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Dump net structure, hyperparameters, backend, target and fusion to dot file
+    /// ## Parameters
+    /// * path: path to output file with .dot extension
+    ///  @see dump()
+    pub fn dump_to_file(&mut self, path: &str) -> Result<()> {
+        string_arg!(path);
+        unsafe { sys::cv_dnn_Net_dumpToFile_String(self.as_raw_Net(), path.as_ptr()) }.into_result()
     }
     
     /// Adds new layer to the net.

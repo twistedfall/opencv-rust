@@ -2,7 +2,7 @@
 //!
 //! The video stabilization module contains a set of functions and classes that can be used to solve the
 //! problem of video stabilization. There are a few methods implemented, most of them are described in
-//! the papers [OF06](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+//! the papers [OF06](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 //! paper methods.
 //!
 //! ### References
@@ -20,7 +20,7 @@
 //!
 //! # Fast Marching Method
 //!
-//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 //! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
@@ -430,6 +430,10 @@ pub trait ISparseOptFlowEstimator {
 /// Base class for global 2D motion estimation methods which take frames as input.
 pub trait ImageMotionEstimatorBase {
     #[inline(always)] fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void;
+    fn set_frame_mask(&mut self, mask: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_videostab_ImageMotionEstimatorBase_setFrameMask_Mat(self.as_raw_ImageMotionEstimatorBase(), mask.as_raw_Mat()) }.into_result()
+    }
+    
     ///
     /// ## C++ default parameters
     /// * ok: 0
@@ -580,6 +584,10 @@ impl KeypointBasedMotionEstimator {
         unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_KeypointBasedMotionEstimator_PtrOfMotionEstimatorBase(estimator.as_raw_PtrOfMotionEstimatorBase()) }.into_result().map(|ptr| crate::videostab::KeypointBasedMotionEstimator { ptr })
     }
     
+    pub fn set_frame_mask(&mut self, mask: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setFrameMask_Mat(self.as_raw_KeypointBasedMotionEstimator(), mask.as_raw_Mat()) }.into_result()
+    }
+    
     ///
     /// ## C++ default parameters
     /// * ok: 0
@@ -689,6 +697,46 @@ impl LpMotionStabilizer {
     
     pub fn weight4(&self) -> Result<f32> {
         unsafe { sys::cv_videostab_LpMotionStabilizer_weight4_const(self.as_raw_LpMotionStabilizer()) }.into_result()
+    }
+    
+}
+
+// boxed class cv::videostab::MaskFrameSource
+pub struct MaskFrameSource {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for crate::videostab::MaskFrameSource {
+    fn drop(&mut self) {
+        unsafe { sys::cv_MaskFrameSource_delete(self.ptr) };
+    }
+}
+impl crate::videostab::MaskFrameSource {
+    #[inline(always)] pub fn as_raw_MaskFrameSource(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for MaskFrameSource {}
+
+impl crate::videostab::IFrameSource for MaskFrameSource {
+    #[inline(always)] fn as_raw_IFrameSource(&self) -> *mut c_void { self.ptr }
+}
+
+impl MaskFrameSource {
+
+    pub fn new(source: &types::PtrOfIFrameSource) -> Result<crate::videostab::MaskFrameSource> {
+        unsafe { sys::cv_videostab_MaskFrameSource_MaskFrameSource_PtrOfIFrameSource(source.as_raw_PtrOfIFrameSource()) }.into_result().map(|ptr| crate::videostab::MaskFrameSource { ptr })
+    }
+    
+    pub fn reset(&mut self) -> Result<()> {
+        unsafe { sys::cv_videostab_MaskFrameSource_reset(self.as_raw_MaskFrameSource()) }.into_result()
+    }
+    
+    pub fn next_frame(&mut self) -> Result<core::Mat> {
+        unsafe { sys::cv_videostab_MaskFrameSource_nextFrame(self.as_raw_MaskFrameSource()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -1306,6 +1354,14 @@ pub trait StabilizerBase {
         unsafe { sys::cv_videostab_StabilizerBase_frameSource_const(self.as_raw_StabilizerBase()) }.into_result().map(|ptr| types::PtrOfIFrameSource { ptr })
     }
     
+    fn set_mask_source(&mut self, val: &types::PtrOfIFrameSource) -> Result<()> {
+        unsafe { sys::cv_videostab_StabilizerBase_setMaskSource_PtrOfIFrameSource(self.as_raw_StabilizerBase(), val.as_raw_PtrOfIFrameSource()) }.into_result()
+    }
+    
+    fn mask_source(&self) -> Result<types::PtrOfIFrameSource> {
+        unsafe { sys::cv_videostab_StabilizerBase_maskSource_const(self.as_raw_StabilizerBase()) }.into_result().map(|ptr| types::PtrOfIFrameSource { ptr })
+    }
+    
     fn set_motion_estimator(&mut self, val: &types::PtrOfImageMotionEstimatorBase) -> Result<()> {
         unsafe { sys::cv_videostab_StabilizerBase_setMotionEstimator_PtrOfImageMotionEstimatorBase(self.as_raw_StabilizerBase(), val.as_raw_PtrOfImageMotionEstimatorBase()) }.into_result()
     }
@@ -1385,6 +1441,10 @@ impl ToFileMotionWriter {
     pub fn new(path: &str, estimator: &types::PtrOfImageMotionEstimatorBase) -> Result<crate::videostab::ToFileMotionWriter> {
         string_arg!(path);
         unsafe { sys::cv_videostab_ToFileMotionWriter_ToFileMotionWriter_String_PtrOfImageMotionEstimatorBase(path.as_ptr(), estimator.as_raw_PtrOfImageMotionEstimatorBase()) }.into_result().map(|ptr| crate::videostab::ToFileMotionWriter { ptr })
+    }
+    
+    pub fn set_frame_mask(&mut self, mask: &core::Mat) -> Result<()> {
+        unsafe { sys::cv_videostab_ToFileMotionWriter_setFrameMask_Mat(self.as_raw_ToFileMotionWriter(), mask.as_raw_Mat()) }.into_result()
     }
     
     ///

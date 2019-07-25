@@ -13,7 +13,7 @@ use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 
-/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 pub const ANN_MLP_ANNEAL: i32 = 2;
 /// The back-propagation algorithm.
 pub const ANN_MLP_BACKPROP: i32 = 0;
@@ -23,7 +23,7 @@ pub const ANN_MLP_LEAKYRELU: i32 = 4;
 pub const ANN_MLP_NO_INPUT_SCALE: i32 = 2;
 pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
 pub const ANN_MLP_RELU: i32 = 3;
-/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 pub const ANN_MLP_RPROP: i32 = 1;
 pub const ANN_MLP_SIGMOID_SYM: i32 = 1;
 pub const ANN_MLP_UPDATE_WEIGHTS: i32 = 1;
@@ -795,7 +795,7 @@ pub trait EM: crate::ml::StatModel {
     /// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
     /// one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
     /// it will be converted to the inner matrix of such type for the further computing.
-    /// * probs0:
+    /// * probs0: the probabilities
     /// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
     /// each sample. It has <span lang='latex'>nsamples \times 1</span> size and CV_64FC1 type.
     /// * labels: The optional output "class label" for each sample:
@@ -934,6 +934,18 @@ impl dyn KNearest + '_ {
     /// The static method creates empty %KNearest classifier. It should be then trained using StatModel::train method.
     pub fn create() -> Result<types::PtrOfKNearest> {
         unsafe { sys::cv_ml_KNearest_create() }.into_result().map(|ptr| types::PtrOfKNearest { ptr })
+    }
+    
+    /// Loads and creates a serialized knearest from a file
+    ///
+    /// Use KNearest::save to serialize and store an KNearest to disk.
+    /// Load the KNearest from this file again, by calling this function with the path to the file.
+    ///
+    /// ## Parameters
+    /// * filepath: path to serialized KNearest
+    pub fn load(filepath: &str) -> Result<types::PtrOfKNearest> {
+        string_arg!(filepath);
+        unsafe { sys::cv_ml_KNearest_load_String(filepath.as_ptr()) }.into_result().map(|ptr| types::PtrOfKNearest { ptr })
     }
     
 }

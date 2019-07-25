@@ -47,7 +47,7 @@
 //!
 //! The following figure illustrates the pinhole camera model.
 //!
-//! ![Pinhole camera model](https://docs.opencv.org/3.4.6/pinhole_camera_model.png)
+//! ![Pinhole camera model](https://docs.opencv.org/3.4.7/pinhole_camera_model.png)
 //!
 //! Real lenses usually have some distortion, mostly radial distortion and slight tangential distortion.
 //! So, the above model is extended as:
@@ -69,13 +69,13 @@
 //!
 //! The next figures show two common types of radial distortion: barrel distortion (typically <span lang='latex'> k_1 < 0 </span>) and pincushion distortion (typically <span lang='latex'> k_1 > 0 </span>).
 //!
-//! ![](https://docs.opencv.org/3.4.6/distortion_examples.png)
-//! ![](https://docs.opencv.org/3.4.6/distortion_examples2.png)
+//! ![](https://docs.opencv.org/3.4.7/distortion_examples.png)
+//! ![](https://docs.opencv.org/3.4.7/distortion_examples2.png)
 //!
 //! In some cases the image sensor may be tilted in order to focus an oblique plane in front of the
 //! camera (Scheimpfug condition). This can be useful for particle image velocimetry (PIV) or
 //! triangulation with a laser fan. The tilt causes a perspective distortion of <span lang='latex'>x''</span> and
-//! <span lang='latex'>y''</span>. This distortion can be modelled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Louhichi07).
+//! <span lang='latex'>y''</span>. This distortion can be modelled in the following way, see e.g. [Louhichi07](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Louhichi07).
 //!
 //! <div lang='latex'>\begin{array}{l}
 //! s\vecthree{x'''}{y'''}{1} =
@@ -189,15 +189,15 @@ pub const CALIB_FIX_S1_S2_S3_S4: i32 = 0x10000;
 pub const CALIB_FIX_SKEW: i32 = 1 << 3;
 pub const CALIB_FIX_TANGENT_DIST: i32 = 0x200000;
 pub const CALIB_FIX_TAUX_TAUY: i32 = 0x80000;
-/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Andreff99)
+/// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Andreff99)
 pub const CALIB_HAND_EYE_ANDREFF: i32 = 3;
-/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Daniilidis98)
+/// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Daniilidis98)
 pub const CALIB_HAND_EYE_DANIILIDIS: i32 = 4;
-/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Horaud95)
+/// Hand-eye Calibration [Horaud95](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Horaud95)
 pub const CALIB_HAND_EYE_HORAUD: i32 = 2;
-/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Park94)
+/// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Park94)
 pub const CALIB_HAND_EYE_PARK: i32 = 1;
-/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Tsai89)
+/// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Tsai89)
 pub const CALIB_HAND_EYE_TSAI: i32 = 0;
 pub const CALIB_RATIONAL_MODEL: i32 = 0x04000;
 pub const CALIB_RECOMPUTE_EXTRINSIC: i32 = 1 << 1;
@@ -229,18 +229,22 @@ pub const LMEDS: i32 = 4;
 pub const RANSAC: i32 = 8;
 /// RHO algorithm
 pub const RHO: i32 = 16;
-/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)
+/// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Ke17)
 pub const SOLVEPNP_AP3P: i32 = 5;
-/// A Direct Least-Squares (DLS) Method for PnP  [hesch2011direct](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_hesch2011direct)
+/// A Direct Least-Squares (DLS) Method for PnP  [hesch2011direct](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_hesch2011direct)
 pub const SOLVEPNP_DLS: i32 = 3;
-/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+/// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
 pub const SOLVEPNP_EPNP: i32 = 1;
+/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14) \n
+pub const SOLVEPNP_IPPE: i32 = 6;
+/// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14) \n
+pub const SOLVEPNP_IPPE_SQUARE: i32 = 7;
 pub const SOLVEPNP_ITERATIVE: i32 = 0;
 /// Used for count
-pub const SOLVEPNP_MAX_COUNT: i32 = 5+1;
-/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_gao2003complete)
+pub const SOLVEPNP_MAX_COUNT: i32 = 7+1;
+/// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_gao2003complete)
 pub const SOLVEPNP_P3P: i32 = 2;
-/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
+/// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
 pub const SOLVEPNP_UPNP: i32 = 4;
 pub const StereoBM_PREFILTER_NORMALIZED_RESPONSE: i32 = 0;
 pub const StereoBM_PREFILTER_XSOBEL: i32 = 1;
@@ -253,15 +257,15 @@ pub const StereoSGBM_MODE_SGBM_3WAY: i32 = 2;
 #[repr(C)]
 #[derive(Debug)]
 pub enum HandEyeCalibrationMethod {
-    /// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Tsai89)
+    /// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Tsai89)
     CALIB_HAND_EYE_TSAI = CALIB_HAND_EYE_TSAI as isize,
-    /// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Park94)
+    /// Robot Sensor Calibration: Solving AX = XB on the Euclidean Group [Park94](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Park94)
     CALIB_HAND_EYE_PARK = CALIB_HAND_EYE_PARK as isize,
-    /// Hand-eye Calibration [Horaud95](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Horaud95)
+    /// Hand-eye Calibration [Horaud95](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Horaud95)
     CALIB_HAND_EYE_HORAUD = CALIB_HAND_EYE_HORAUD as isize,
-    /// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Andreff99)
+    /// On-line Hand-Eye Calibration [Andreff99](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Andreff99)
     CALIB_HAND_EYE_ANDREFF = CALIB_HAND_EYE_ANDREFF as isize,
-    /// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Daniilidis98)
+    /// Hand-Eye Calibration Using Dual Quaternions [Daniilidis98](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Daniilidis98)
     CALIB_HAND_EYE_DANIILIDIS = CALIB_HAND_EYE_DANIILIDIS as isize,
 }
 
@@ -309,7 +313,7 @@ pub struct CirclesGridFinderParameters2 {
 /// It optionally returns three rotation matrices, one for each axis, and the three Euler angles in
 /// degrees (as the return value) that could be used in OpenGL. Note, there is always more than one
 /// sequence of rotations about the three principal axes that results in the same orientation of an
-/// object, e.g. see [Slabaugh](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned tree rotation matrices and corresponding three Euler angles
+/// object, e.g. see [Slabaugh](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned tree rotation matrices and corresponding three Euler angles
 /// are only one of the possible solutions.
 ///
 /// ## C++ default parameters
@@ -426,7 +430,7 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 /// the overall RMS re-projection error.
 ///
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
+/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
 /// by using an object with a known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -549,7 +553,7 @@ pub fn calibrate_camera_with_stddev(object_points: &types::VectorOfMat, image_po
 /// the overall RMS re-projection error.
 ///
 /// The function estimates the intrinsic camera parameters and extrinsic parameters for each of the
-/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
+/// views. The algorithm is based on [Zhang2000](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Zhang2000) and [BouguetMCT](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_BouguetMCT) . The coordinates of 3D object
 /// points and their corresponding 2D projections in each view must be specified. That may be achieved
 /// by using an object with a known geometry and easily detectable feature points. Such an object is
 /// called a calibration rig or calibration pattern, and OpenCV has built-in support for a chessboard as
@@ -638,7 +642,7 @@ pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types
 /// The following picture describes the Hand-Eye calibration problem where the transformation between a camera ("eye")
 /// mounted on a robot gripper ("hand") has to be estimated.
 ///
-/// ![](https://docs.opencv.org/3.4.6/hand-eye_figure.png)
+/// ![](https://docs.opencv.org/3.4.7/hand-eye_figure.png)
 ///
 /// The calibration procedure is the following:
 /// - a static calibration pattern is used to estimate the transformation between the target frame
@@ -767,15 +771,14 @@ pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Si
 /// * tvec2: Second translation vector.
 /// * rvec3: Output rotation vector of the superposition.
 /// * tvec3: Output translation vector of the superposition.
-/// * dr3dr1:
-/// * dr3dt1:
-/// * dr3dr2:
-/// * dr3dt2:
-/// * dt3dr1:
-/// * dt3dt1:
-/// * dt3dr2:
-/// * dt3dt2: Optional output derivatives of rvec3 or tvec3 with regard to rvec1, rvec2, tvec1 and
-/// tvec2, respectively.
+/// * dr3dr1: Optional output derivative of rvec3 with regard to rvec1
+/// * dr3dt1: Optional output derivative of rvec3 with regard to tvec1
+/// * dr3dr2: Optional output derivative of rvec3 with regard to rvec2
+/// * dr3dt2: Optional output derivative of rvec3 with regard to tvec2
+/// * dt3dr1: Optional output derivative of tvec3 with regard to rvec1
+/// * dt3dt1: Optional output derivative of tvec3 with regard to tvec1
+/// * dt3dr2: Optional output derivative of tvec3 with regard to rvec2
+/// * dt3dt2: Optional output derivative of tvec3 with regard to tvec2
 ///
 /// The functions compute:
 ///
@@ -896,7 +899,7 @@ pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, 
 /// * R2: Another possible rotation matrix.
 /// * t: One possible translation.
 ///
-/// This function decompose an essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HartleyZ00) . Generally 4
+/// This function decompose an essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) . Generally 4
 /// possible poses exists for a given E. They are <span lang='latex'>[R_1, t]</span>, <span lang='latex'>[R_1, -t]</span>, <span lang='latex'>[R_2, t]</span>, <span lang='latex'>[R_2, -t]</span>. By
 /// decomposing E, you can only get the direction of the translation, so the function returns unit t.
 pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
@@ -916,7 +919,7 @@ pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core:
 /// homography H induced by the plane. The intrinsic camera matrix K must also be provided. The function
 /// may return up to four mathematical solution sets. At least two of the solutions may further be
 /// invalidated if point correspondences are available by applying positive depth constraint (all points
-/// must be in front of the camera). The decomposition method is described in detail in [Malis](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Malis) .
+/// must be in front of the camera). The decomposition method is described in detail in [Malis](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Malis) .
 pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut types::VectorOfMat, translations: &mut types::VectorOfMat, normals: &mut types::VectorOfMat) -> Result<i32> {
     unsafe { sys::cv_decomposeHomographyMat_Mat_Mat_VectorOfMat_VectorOfMat_VectorOfMat(h.as_raw_Mat(), k.as_raw_Mat(), rotations.as_raw_VectorOfMat(), translations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat()) }.into_result()
 }
@@ -939,7 +942,7 @@ pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut ty
 ///
 /// It optionally returns three rotation matrices, one for each axis, and three Euler angles that could
 /// be used in OpenGL. Note, there is always more than one sequence of rotations about the three
-/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
+/// principal axes that results in the same orientation of an object, e.g. see [Slabaugh](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Slabaugh) . Returned
 /// tree rotation matrices and corresponding three Euler angles are only one of the possible solutions.
 ///
 /// The function is based on RQDecomp3x3 .
@@ -979,7 +982,7 @@ pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, 
 /// * distCoeffs: Input vector of distortion coefficients
 /// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
 /// 4, 5, 8, 12 or 14 elements. If the vector is empty, the zero distortion coefficients are assumed.
-/// * rvec: Rotation vector (see @ref Rodrigues ) that, together with tvec , brings points from
+/// * rvec: Rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvec: Translation vector.
 /// * length: Length of the painted axes in the same unit than tvec (usually in meters).
@@ -1196,7 +1199,7 @@ pub fn estimate_affine_partial_2d(from: &core::Mat, to: &core::Mat, inliers: &mu
 /// * pointsMask: optional Mat/Vector of 8u type representing the mask for the inliers as given by the findHomography function
 ///
 /// This function is intended to filter the output of the decomposeHomographyMat based on additional
-/// information as described in [Malis](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Malis) . The summary of the method: the decomposeHomographyMat function
+/// information as described in [Malis](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Malis) . The summary of the method: the decomposeHomographyMat function
 /// returns 2 unique solutions and their "opposites" for a total of 4 solutions. If we have access to the
 /// sets of points visible in the camera frame before and after the homography transformation is applied,
 /// we can determine which are the true potential solutions and which are the opposites by verifying which
@@ -1312,8 +1315,8 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 ///
-/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
-/// [SteweniusCFS](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 ///
 /// <div lang='latex'>[p_2; 1]^T K^{-T} E K^{-1} [p_1; 1] = 0</div>
 ///
@@ -1351,8 +1354,8 @@ pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camer
 /// * mask: Output array of N elements, every element of which is set to 0 for outliers and to 1
 /// for the other points. The array is computed only in the RANSAC and LMedS methods.
 ///
-/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
-/// [SteweniusCFS](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
+/// This function estimates essential matrix based on the five-point algorithm solver in [Nister03](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Nister03) .
+/// [SteweniusCFS](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_SteweniusCFS) is also a related. The epipolar geometry is described by the following equation:
 ///
 /// <div lang='latex'>[p_2; 1]^T K^{-T} E K^{-1} [p_1; 1] = 0</div>
 ///
@@ -1667,14 +1670,14 @@ pub fn distort_points(undistorted: &core::Mat, distorted: &mut core::Mat, k: &co
 ///
 /// ## Parameters
 /// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
-/// * image_size:
+/// * image_size: Size of the image
 /// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
 /// * R: Rectification transformation in the object space: 3x3 1-channel, or vector: 3x1/1x3
 /// 1-channel or 1x1 3-channel
 /// * P: New camera matrix (3x3) or new projection matrix (3x4)
 /// * balance: Sets the new focal length in range between the min focal length and the max focal
 /// length. Balance is in range of [0, 1].
-/// * new_size:
+/// * new_size: the new size
 /// * fov_scale: Divisor for new focal length.
 ///
 /// ## C++ default parameters
@@ -1821,7 +1824,7 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 /// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, k_3, k_4)</span>.
 /// * Knew: Camera matrix of the distorted image. By default, it is the identity matrix but you
 /// may additionally scale and shift the result by using a different matrix.
-/// * new_size:
+/// * new_size: the new size
 ///
 /// The function transforms an image to compensate radial and tangential lens distortion.
 ///
@@ -1839,7 +1842,7 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 /// Pictures a) and b) almost the same. But if we consider points of image located far from the center
 /// of image, we can notice that on image a) these points are distorted.
 ///
-/// ![image](https://docs.opencv.org/3.4.6/fisheye_undistorted.jpg)
+/// ![image](https://docs.opencv.org/3.4.7/fisheye_undistorted.jpg)
 ///
 /// ## C++ default parameters
 /// * knew: cv::noArray()
@@ -1959,7 +1962,7 @@ pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a
 /// * distCoeffs: Input vector of distortion coefficients
 /// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
 /// 4, 5, 8, 12 or 14 elements. If the vector is empty, the zero distortion coefficients are assumed.
-/// * imagePoints: Output array of image points, 2xN/Nx2 1-channel or 1xN/Nx1 2-channel, or
+/// * imagePoints: Output array of image points, 1xN/Nx1 2-channel, or
 /// vector\<Point2f\> .
 /// * jacobian: Optional output 2Nx(10+\<numDistCoeffs\>) jacobian matrix of derivatives of image
 /// points with respect to components of the rotation vector, translation vector, focal lengths,
@@ -2009,7 +2012,7 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 /// which pass the cheirality check.
 /// This function decomposes an essential matrix using decomposeEssentialMat and then verifies possible
 /// pose hypotheses by doing cheirality check. The cheirality check basically means that the
-/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Nister03) .
 ///
 /// This function can be used to process output E and mask from findEssentialMat. In this scenario,
 /// points1 and points2 are the same input for findEssentialMat. :
@@ -2061,7 +2064,7 @@ pub fn recover_pose_camera_with_points(e: &core::Mat, points1: &core::Mat, point
 /// which pass the cheirality check.
 /// This function decomposes an essential matrix using decomposeEssentialMat and then verifies possible
 /// pose hypotheses by doing cheirality check. The cheirality check basically means that the
-/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Nister03) .
 ///
 /// This function can be used to process output E and mask from findEssentialMat. In this scenario,
 /// points1 and points2 are the same input for findEssentialMat. :
@@ -2133,7 +2136,7 @@ pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// which pass the cheirality check.
 /// This function decomposes an essential matrix using decomposeEssentialMat and then verifies possible
 /// pose hypotheses by doing cheirality check. The cheirality check basically means that the
-/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Nister03) .
+/// triangulated 3D points should have positive depth. Some details can be found in [Nister03](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Nister03) .
 ///
 /// This function can be used to process output E and mask from findEssentialMat. In this scenario,
 /// points1 and points2 are the same input for findEssentialMat. :
@@ -2244,7 +2247,7 @@ pub fn reproject_image_to_3d(disparity: &core::Mat, _3d_image: &mut core::Mat, q
 /// ((\texttt{F}^t \cdot \texttt{pt2})(0))^2 +
 /// ((\texttt{F}^t \cdot \texttt{pt2})(1))^2}
 /// </div>
-/// The fundamental matrix may be calculated using the cv::findFundamentalMat function. See [HartleyZ00](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
+/// The fundamental matrix may be calculated using the cv::findFundamentalMat function. See [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.4.3 for details.
 /// ## Parameters
 /// * pt1: first homogeneous 2d point
 /// * pt2: second homogeneous 2d point
@@ -2267,17 +2270,21 @@ pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Resu
 /// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
 /// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvecs: Output rotation vectors (see Rodrigues ) that, together with tvecs , brings points from
+/// * rvecs: Output rotation vectors (see @ref Rodrigues ) that, together with tvecs, brings points from
 /// the model coordinate system to the camera coordinate system. A P3P problem has up to 4 solutions.
 /// * tvecs: Output translation vectors.
 /// * flags: Method for solving a P3P problem:
 /// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_gao2003complete)).
-/// *   **SOLVEPNP_AP3P** Method is based on the paper of Tong Ke and Stergios I. Roumeliotis.
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)).
+/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_gao2003complete)).
+/// *   **SOLVEPNP_AP3P** Method is based on the paper of T. Ke and S. Roumeliotis.
+/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Ke17)).
 ///
 /// The function estimates the object pose given 3 object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients.
+///
+///
+/// Note:
+/// The solutions are sorted by reprojection errors (lowest to highest).
 pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32) -> Result<i32> {
     unsafe { sys::cv_solveP3P_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_int(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags) }.into_result()
 }
@@ -2294,10 +2301,10 @@ pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
 /// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvec: Output rotation vector (see Rodrigues ) that, together with tvec , brings points from
+/// * rvec: Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvec: Output translation vector.
-/// * useExtrinsicGuess: Parameter used for SOLVEPNP_ITERATIVE. If true (1), the function uses
+/// * useExtrinsicGuess: Parameter used for @ref SOLVEPNP_ITERATIVE. If true (1), the function uses
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
 /// * iterationsCount: Number of iterations.
@@ -2306,12 +2313,12 @@ pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// an inlier.
 /// * confidence: The probability that the algorithm produces a useful result.
 /// * inliers: Output vector that contains indices of inliers in objectPoints and imagePoints .
-/// * flags: Method for solving a PnP problem (see solvePnP ).
+/// * flags: Method for solving a PnP problem (see @ref solvePnP ).
 ///
 /// The function estimates an object pose given a set of object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients. This function finds such
 /// a pose that minimizes reprojection error, that is, the sum of squared distances between the observed
-/// projections imagePoints and the projected (using projectPoints ) objectPoints. The use of RANSAC
+/// projections imagePoints and the projected (using @ref projectPoints ) objectPoints. The use of RANSAC
 /// makes the function resistant to outliers.
 ///
 ///
@@ -2337,7 +2344,81 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
     unsafe { sys::cv_solvePnPRansac_Mat_Mat_Mat_Mat_Mat_Mat_bool_int_float_double_Mat_int(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw_Mat(), flags) }.into_result()
 }
 
+/// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
+/// to the camera coordinate frame) from a 3D-2D point correspondences and starting from an initial solution.
+///
+/// ## Parameters
+/// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or 1xN/Nx1 3-channel,
+/// where N is the number of points. vector\<Point3f\> can also be passed here.
+/// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
+/// where N is the number of points. vector\<Point2f\> can also be passed here.
+/// * cameraMatrix: Input camera matrix <span lang='latex'>A = \vecthreethree{fx}{0}{cx}{0}{fy}{cy}{0}{0}{1}</span> .
+/// * distCoeffs: Input vector of distortion coefficients
+/// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
+/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// assumed.
+/// * rvec: Input/Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
+/// the model coordinate system to the camera coordinate system. Input values are used as an initial solution.
+/// * tvec: Input/Output translation vector. Input values are used as an initial solution.
+/// * criteria: Criteria when to stop the Levenberg-Marquard iterative algorithm.
+///
+/// The function refines the object pose given at least 3 object points, their corresponding image
+/// projections, an initial solution for the rotation and translation vector,
+/// as well as the camera matrix and the distortion coefficients.
+/// The function minimizes the projection error with respect to the rotation and the translation vectors, according
+/// to a Levenberg-Marquardt iterative minimization [Madsen04](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Madsen04) [Eade13](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Eade13) process.
+///
+/// ## C++ default parameters
+/// * criteria: TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 20, FLT_EPSILON)
+pub fn solve_pnp_refine_lm(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, criteria: &core::TermCriteria) -> Result<()> {
+    unsafe { sys::cv_solvePnPRefineLM_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), criteria.as_raw_TermCriteria()) }.into_result()
+}
+
+/// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
+/// to the camera coordinate frame) from a 3D-2D point correspondences and starting from an initial solution.
+///
+/// ## Parameters
+/// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or 1xN/Nx1 3-channel,
+/// where N is the number of points. vector\<Point3f\> can also be passed here.
+/// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
+/// where N is the number of points. vector\<Point2f\> can also be passed here.
+/// * cameraMatrix: Input camera matrix <span lang='latex'>A = \vecthreethree{fx}{0}{cx}{0}{fy}{cy}{0}{0}{1}</span> .
+/// * distCoeffs: Input vector of distortion coefficients
+/// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
+/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// assumed.
+/// * rvec: Input/Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
+/// the model coordinate system to the camera coordinate system. Input values are used as an initial solution.
+/// * tvec: Input/Output translation vector. Input values are used as an initial solution.
+/// * criteria: Criteria when to stop the Levenberg-Marquard iterative algorithm.
+/// * VVSlambda: Gain for the virtual visual servoing control law, equivalent to the <span lang='latex'>\alpha</span>
+/// gain in the Damped Gauss-Newton formulation.
+///
+/// The function refines the object pose given at least 3 object points, their corresponding image
+/// projections, an initial solution for the rotation and translation vector,
+/// as well as the camera matrix and the distortion coefficients.
+/// The function minimizes the projection error with respect to the rotation and the translation vectors, using a
+/// virtual visual servoing (VVS) [Chaumette06](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Chaumette06) [Marchand16](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Marchand16) scheme.
+///
+/// ## C++ default parameters
+/// * criteria: TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 20, FLT_EPSILON)
+/// * vv_slambda: 1
+pub fn solve_pnp_refine_vvs(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, criteria: &core::TermCriteria, vv_slambda: f64) -> Result<()> {
+    unsafe { sys::cv_solvePnPRefineVVS_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria_double(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), criteria.as_raw_TermCriteria(), vv_slambda) }.into_result()
+}
+
 /// Finds an object pose from 3D-2D point correspondences.
+/// This function returns the rotation and the translation vectors that transform a 3D point expressed in the object
+/// coordinate frame to the camera coordinate frame, using different methods:
+/// - P3P methods (@ref SOLVEPNP_P3P, @ref SOLVEPNP_AP3P): need 4 input points to return a unique solution.
+/// - @ref SOLVEPNP_IPPE Input points must be >= 4 and object points must be coplanar.
+/// - @ref SOLVEPNP_IPPE_SQUARE Special case suitable for marker pose estimation.
+/// Number of input points must be 4. Object points must be defined in the following order:
+/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
+/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
+/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
+/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
+/// - for all the other flags, number of input points must be >= 4 and object points can be in any configuration.
 ///
 /// ## Parameters
 /// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
@@ -2349,42 +2430,48 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 /// <span lang='latex'>(k_1, k_2, p_1, p_2[, k_3[, k_4, k_5, k_6 [, s_1, s_2, s_3, s_4[, \tau_x, \tau_y]]]])</span> of
 /// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
 /// assumed.
-/// * rvec: Output rotation vector (see @ref Rodrigues ) that, together with tvec , brings points from
+/// * rvec: Output rotation vector (see @ref Rodrigues ) that, together with tvec, brings points from
 /// the model coordinate system to the camera coordinate system.
 /// * tvec: Output translation vector.
 /// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
 /// the provided rvec and tvec values as initial approximations of the rotation and translation
 /// vectors, respectively, and further optimizes them.
 /// * flags: Method for solving a PnP problem:
-/// *   **SOLVEPNP_ITERATIVE** Iterative method is based on Levenberg-Marquardt optimization. In
+/// *   **SOLVEPNP_ITERATIVE** Iterative method is based on a Levenberg-Marquardt optimization. In
 /// this case the function finds such a pose that minimizes reprojection error, that is the sum
 /// of squared distances between the observed projections imagePoints and the projected (using
 /// projectPoints ) objectPoints .
 /// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
-/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_gao2003complete)).
+/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_gao2003complete)).
 /// In this case the function requires exactly four object and image points.
 /// *   **SOLVEPNP_AP3P** Method is based on the paper of T. Ke, S. Roumeliotis
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)).
+/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Ke17)).
 /// In this case the function requires exactly four object and image points.
-/// *   **SOLVEPNP_EPNP** Method has been introduced by F.Moreno-Noguer, V.Lepetit and P.Fua in the
-/// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
-/// *   **SOLVEPNP_DLS** Method is based on the paper of Joel A. Hesch and Stergios I. Roumeliotis.
-/// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_hesch2011direct)).
-/// *   **SOLVEPNP_UPNP** Method is based on the paper of A.Penate-Sanchez, J.Andrade-Cetto,
-/// F.Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
-/// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters <span lang='latex'>f_x</span> and <span lang='latex'>f_y</span>
+/// *   **SOLVEPNP_EPNP** Method has been introduced by F. Moreno-Noguer, V. Lepetit and P. Fua in the
+/// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
+/// *   **SOLVEPNP_DLS** Method is based on the paper of J. Hesch and S. Roumeliotis.
+/// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_hesch2011direct)).
+/// *   **SOLVEPNP_UPNP** Method is based on the paper of A. Penate-Sanchez, J. Andrade-Cetto,
+/// F. Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
+/// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters <span lang='latex'>f_x</span> and <span lang='latex'>f_y</span>
 /// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
 /// focal length.
-/// *   **SOLVEPNP_AP3P** Method is based on the paper of Tong Ke and Stergios I. Roumeliotis.
-/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Ke17)). In this case the
-/// function requires exactly four object and image points.
+/// *   **SOLVEPNP_IPPE** Method is based on the paper of T. Collins and A. Bartoli.
+/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14)). This method requires coplanar object points.
+/// *   **SOLVEPNP_IPPE_SQUARE** Method is based on the paper of Toby Collins and Adrien Bartoli.
+/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14)). This method is suitable for marker pose estimation.
+/// It requires 4 coplanar object points defined in the following order:
+/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
+/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
+/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
+/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
 ///
 /// The function estimates the object pose given a set of object points, their corresponding image
 /// projections, as well as the camera matrix and the distortion coefficients, see the figure below
 /// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
 /// and the Z-axis forward).
 ///
-/// ![](https://docs.opencv.org/3.4.6/pnp.jpg)
+/// ![](https://docs.opencv.org/3.4.7/pnp.jpg)
 ///
 /// Points expressed in the world frame <span lang='latex'> \bf{X}_w </span> are projected into the image plane <span lang='latex'> \left[ u, v \right] </span>
 /// using the perspective projection model <span lang='latex'> \Pi </span> and the camera intrinsic parameters matrix <span lang='latex'> \bf{A} </span>:
@@ -2433,7 +2520,7 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 /// \end{align*}
 /// </div>
 ///
-/// The estimated pose is thus the rotation (`rvec`) and the translation (`tvec`) vectors that allow to transform
+/// The estimated pose is thus the rotation (`rvec`) and the translation (`tvec`) vectors that allow transforming
 /// a 3D point expressed in the world frame into the camera frame:
 ///
 /// <div lang='latex'>
@@ -2495,6 +2582,13 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 /// *   With **SOLVEPNP_ITERATIVE** method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
 /// are sufficient to compute a pose but there are up to 4 solutions). The initial solution should be close to the
 /// global solution to converge.
+/// *   With **SOLVEPNP_IPPE** input points must be >= 4 and object points must be coplanar.
+/// *   With **SOLVEPNP_IPPE_SQUARE** this is a special case suitable for marker pose estimation.
+/// Number of input points must be 4. Object points must be defined in the following order:
+/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
+/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
+/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
+/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
 ///
 /// ## C++ default parameters
 /// * use_extrinsic_guess: false
@@ -2634,7 +2728,7 @@ pub fn stereo_calibrate_camera(object_points: &types::VectorOfMat, image_points1
 /// cameras and their relative position in the space, which explains the suffix "uncalibrated". Another
 /// related difference from stereoRectify is that the function outputs not the rectification
 /// transformations in the object (3D) space, but the planar perspective transformations encoded by the
-/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_Hartley99) .
+/// homography matrices H1 and H2 . The function implements the algorithm [Hartley99](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Hartley99) .
 ///
 ///
 /// Note:
@@ -2729,7 +2823,7 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 /// stereo correspondence algorithms rely on. The green rectangles are roi1 and roi2 . You see that
 /// their interiors are all valid pixels.
 ///
-/// ![image](https://docs.opencv.org/3.4.6/stereo_undistort.jpg)
+/// ![image](https://docs.opencv.org/3.4.7/stereo_undistort.jpg)
 ///
 /// ## C++ default parameters
 /// * flags: CALIB_ZERO_DISPARITY
@@ -2948,7 +3042,7 @@ pub trait StereoMatcher: core::Algorithm {
 }
 
 // Generating impl for trait cv::StereoSGBM (trait)
-/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
+/// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 /// one as follows:
 ///
 /// *   By default, the algorithm is single-pass, which means that you consider only 5 directions
@@ -2957,7 +3051,7 @@ pub trait StereoMatcher: core::Algorithm {
 /// *   The algorithm matches blocks, not individual pixels. Though, setting blockSize=1 reduces the
 /// blocks to single pixels.
 /// *   Mutual information cost function is not implemented. Instead, a simpler Birchfield-Tomasi
-/// sub-pixel metric from [BT98](https://docs.opencv.org/3.4.6/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
+/// sub-pixel metric from [BT98](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_BT98) is used. Though, the color images are supported as well.
 /// *   Some pre- and post- processing steps from K. Konolige algorithm StereoBM are included, for
 /// example: pre-filtering (StereoBM::PREFILTER_XSOBEL type) and post-filtering (uniqueness
 /// check, quadratic interpolation and speckle filtering).

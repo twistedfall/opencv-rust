@@ -619,21 +619,21 @@ pub enum VideoCaptureAPIs {
     /// Auto detect == 0
     CAP_ANY = CAP_ANY as isize,
     // Video For Windows (platform native)
-    // CAP_VFW = CAP_VFW as isize, // duplicate discriminant
+    // CAP_VFW = CAP_VFW as isize, // ignored discriminant
     /// V4L/V4L2 capturing support via libv4l
     CAP_V4L = CAP_V4L as isize,
     // Same as CAP_V4L
-    // CAP_V4L2 = CAP_V4L2 as isize, // duplicate discriminant
+    // CAP_V4L2 = CAP_V4L2 as isize, // ignored discriminant
     /// IEEE 1394 drivers
     CAP_FIREWIRE = CAP_FIREWIRE as isize,
     // Same as CAP_FIREWIRE
-    // CAP_FIREWARE = CAP_FIREWARE as isize, // duplicate discriminant
+    // CAP_FIREWARE = CAP_FIREWARE as isize, // ignored discriminant
     // Same as CAP_FIREWIRE
-    // CAP_IEEE1394 = CAP_IEEE1394 as isize, // duplicate discriminant
+    // CAP_IEEE1394 = CAP_IEEE1394 as isize, // ignored discriminant
     // Same as CAP_FIREWIRE
-    // CAP_DC1394 = CAP_DC1394 as isize, // duplicate discriminant
+    // CAP_DC1394 = CAP_DC1394 as isize, // ignored discriminant
     // Same as CAP_FIREWIRE
-    // CAP_CMU1394 = CAP_CMU1394 as isize, // duplicate discriminant
+    // CAP_CMU1394 = CAP_CMU1394 as isize, // ignored discriminant
     /// QuickTime
     CAP_QT = CAP_QT as isize,
     /// Unicap drivers
@@ -965,8 +965,8 @@ impl VideoCapture {
     ///
     /// Note: Reading / writing properties involves many layers. Some unexpected result might happens
     /// along this chain.
-    /// ```ignore {.txt}
-    /// `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
+    /// ```ignore{.txt}
+    /// VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware
     /// ```
     ///
     /// The returned value might be different from what really used by the device or it could be encoded

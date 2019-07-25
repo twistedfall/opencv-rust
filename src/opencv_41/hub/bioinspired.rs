@@ -655,8 +655,7 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     }
     
     /// access function
-    /// ## Returns
-    /// the last segmentation result: a boolean picture which is resampled between 0 and 255 for a display purpose
+    /// return the last segmentation result: a boolean picture which is resampled between 0 and 255 for a display purpose
     fn get_segmentation_picture(&mut self, transient_areas: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_Mat(self.as_raw_TransientAreasSegmentationModule(), transient_areas.as_raw_Mat()) }.into_result()
     }

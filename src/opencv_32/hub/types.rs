@@ -27,27 +27,27 @@ unsafe impl Send for PtrOfAKAZE {}
 
 impl crate::features2d::AKAZE for PtrOfAKAZE {
     #[inline(always)] fn as_raw_AKAZE(&self) -> *mut c_void {
-        let mePtrOfAKAZE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAKAZE as "cv::Ptr<cv::AKAZE>*"] -> *mut c_void as "void*" {
-            return mePtrOfAKAZE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::AKAZE>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl core::Algorithm for PtrOfAKAZE {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfAKAZE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAKAZE as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfAKAZE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfAKAZE {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfAKAZE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAKAZE as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfAKAZE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -77,27 +77,27 @@ unsafe impl Send for PtrOfANN_MLP {}
 
 impl core::Algorithm for PtrOfANN_MLP {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfANN_MLP = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfANN_MLP as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfANN_MLP->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::ANN_MLP for PtrOfANN_MLP {
     #[inline(always)] fn as_raw_ANN_MLP(&self) -> *mut c_void {
-        let mePtrOfANN_MLP = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfANN_MLP as "cv::Ptr<cv::ml::ANN_MLP>*"] -> *mut c_void as "void*" {
-            return mePtrOfANN_MLP->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::ANN_MLP>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfANN_MLP {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfANN_MLP = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfANN_MLP as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfANN_MLP->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -150,27 +150,27 @@ unsafe impl Send for PtrOfAffineTransformer {}
 
 impl crate::shape::AffineTransformer for PtrOfAffineTransformer {
     #[inline(always)] fn as_raw_AffineTransformer(&self) -> *mut c_void {
-        let mePtrOfAffineTransformer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAffineTransformer as "cv::Ptr<cv::AffineTransformer>*"] -> *mut c_void as "void*" {
-            return mePtrOfAffineTransformer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::AffineTransformer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl core::Algorithm for PtrOfAffineTransformer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfAffineTransformer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAffineTransformer as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfAffineTransformer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::ShapeTransformer for PtrOfAffineTransformer {
     #[inline(always)] fn as_raw_ShapeTransformer(&self) -> *mut c_void {
-        let mePtrOfAffineTransformer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAffineTransformer as "cv::Ptr<cv::ShapeTransformer>*"] -> *mut c_void as "void*" {
-            return mePtrOfAffineTransformer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ShapeTransformer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -200,27 +200,27 @@ unsafe impl Send for PtrOfAgastFeatureDetector {}
 
 impl crate::features2d::AgastFeatureDetector for PtrOfAgastFeatureDetector {
     #[inline(always)] fn as_raw_AgastFeatureDetector(&self) -> *mut c_void {
-        let mePtrOfAgastFeatureDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAgastFeatureDetector as "cv::Ptr<cv::AgastFeatureDetector>*"] -> *mut c_void as "void*" {
-            return mePtrOfAgastFeatureDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::AgastFeatureDetector>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl core::Algorithm for PtrOfAgastFeatureDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfAgastFeatureDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAgastFeatureDetector as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfAgastFeatureDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfAgastFeatureDetector {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfAgastFeatureDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAgastFeatureDetector as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfAgastFeatureDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -250,27 +250,27 @@ unsafe impl Send for PtrOfAlignMTB {}
 
 impl core::Algorithm for PtrOfAlignMTB {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfAlignMTB = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAlignMTB as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfAlignMTB->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::AlignExposures for PtrOfAlignMTB {
     #[inline(always)] fn as_raw_AlignExposures(&self) -> *mut c_void {
-        let mePtrOfAlignMTB = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAlignMTB as "cv::Ptr<cv::AlignExposures>*"] -> *mut c_void as "void*" {
-            return mePtrOfAlignMTB->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::AlignExposures>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::AlignMTB for PtrOfAlignMTB {
     #[inline(always)] fn as_raw_AlignMTB(&self) -> *mut c_void {
-        let mePtrOfAlignMTB = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfAlignMTB as "cv::Ptr<cv::AlignMTB>*"] -> *mut c_void as "void*" {
-            return mePtrOfAlignMTB->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::AlignMTB>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -369,27 +369,27 @@ unsafe impl Send for PtrOfBackgroundSubtractorKNN {}
 
 impl core::Algorithm for PtrOfBackgroundSubtractorKNN {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfBackgroundSubtractorKNN = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBackgroundSubtractorKNN as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfBackgroundSubtractorKNN->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorKNN {
     #[inline(always)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void {
-        let mePtrOfBackgroundSubtractorKNN = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBackgroundSubtractorKNN as "cv::Ptr<cv::BackgroundSubtractor>*"] -> *mut c_void as "void*" {
-            return mePtrOfBackgroundSubtractorKNN->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::BackgroundSubtractor>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::BackgroundSubtractorKNN for PtrOfBackgroundSubtractorKNN {
     #[inline(always)] fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void {
-        let mePtrOfBackgroundSubtractorKNN = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBackgroundSubtractorKNN as "cv::Ptr<cv::BackgroundSubtractorKNN>*"] -> *mut c_void as "void*" {
-            return mePtrOfBackgroundSubtractorKNN->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::BackgroundSubtractorKNN>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -419,27 +419,27 @@ unsafe impl Send for PtrOfBackgroundSubtractorMOG2 {}
 
 impl core::Algorithm for PtrOfBackgroundSubtractorMOG2 {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfBackgroundSubtractorMOG2 = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBackgroundSubtractorMOG2 as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfBackgroundSubtractorMOG2->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::BackgroundSubtractor for PtrOfBackgroundSubtractorMOG2 {
     #[inline(always)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void {
-        let mePtrOfBackgroundSubtractorMOG2 = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBackgroundSubtractorMOG2 as "cv::Ptr<cv::BackgroundSubtractor>*"] -> *mut c_void as "void*" {
-            return mePtrOfBackgroundSubtractorMOG2->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::BackgroundSubtractor>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::BackgroundSubtractorMOG2 for PtrOfBackgroundSubtractorMOG2 {
     #[inline(always)] fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void {
-        let mePtrOfBackgroundSubtractorMOG2 = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBackgroundSubtractorMOG2 as "cv::Ptr<cv::BackgroundSubtractorMOG2>*"] -> *mut c_void as "void*" {
-            return mePtrOfBackgroundSubtractorMOG2->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::BackgroundSubtractorMOG2>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -469,21 +469,67 @@ unsafe impl Send for PtrOfBaseConvolutionLayer {}
 
 impl crate::dnn::BaseConvolutionLayer for PtrOfBaseConvolutionLayer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void {
-        let mePtrOfBaseConvolutionLayer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBaseConvolutionLayer as "cv::Ptr<cv::dnn::BaseConvolutionLayer>*"] -> *mut c_void as "void*" {
-            return mePtrOfBaseConvolutionLayer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::BaseConvolutionLayer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::dnn::Layer for PtrOfBaseConvolutionLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void {
-        let mePtrOfBaseConvolutionLayer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBaseConvolutionLayer as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
-            return mePtrOfBaseConvolutionLayer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
+
+pub struct PtrOfBinaryDescriptor {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBinaryDescriptor {
+    #[inline(always)] pub fn as_raw_PtrOfBinaryDescriptor(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBinaryDescriptor {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::line_descriptor::BinaryDescriptor>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBinaryDescriptor {}
+
+pub struct PtrOfBinaryDescriptorMatcher {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBinaryDescriptorMatcher {
+    #[inline(always)] pub fn as_raw_PtrOfBinaryDescriptorMatcher(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBinaryDescriptorMatcher {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::line_descriptor::BinaryDescriptorMatcher>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBinaryDescriptorMatcher {}
 
 pub struct PtrOfBoost {
     pub(crate) ptr: *mut c_void
@@ -510,36 +556,36 @@ unsafe impl Send for PtrOfBoost {}
 
 impl core::Algorithm for PtrOfBoost {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfBoost = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBoost as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfBoost->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::Boost for PtrOfBoost {
     #[inline(always)] fn as_raw_Boost(&self) -> *mut c_void {
-        let mePtrOfBoost = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBoost as "cv::Ptr<cv::ml::Boost>*"] -> *mut c_void as "void*" {
-            return mePtrOfBoost->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::Boost>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::DTrees for PtrOfBoost {
     #[inline(always)] fn as_raw_DTrees(&self) -> *mut c_void {
-        let mePtrOfBoost = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBoost as "cv::Ptr<cv::ml::DTrees>*"] -> *mut c_void as "void*" {
-            return mePtrOfBoost->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::DTrees>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfBoost {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfBoost = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfBoost as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfBoost->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -569,18 +615,18 @@ unsafe impl Send for PtrOfCLAHE {}
 
 impl core::Algorithm for PtrOfCLAHE {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfCLAHE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCLAHE as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfCLAHE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::imgproc::CLAHE for PtrOfCLAHE {
     #[inline(always)] fn as_raw_CLAHE(&self) -> *mut c_void {
-        let mePtrOfCLAHE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCLAHE as "cv::Ptr<cv::CLAHE>*"] -> *mut c_void as "void*" {
-            return mePtrOfCLAHE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::CLAHE>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -610,27 +656,27 @@ unsafe impl Send for PtrOfCalibrateDebevec {}
 
 impl core::Algorithm for PtrOfCalibrateDebevec {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfCalibrateDebevec = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCalibrateDebevec as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfCalibrateDebevec->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::CalibrateCRF for PtrOfCalibrateDebevec {
     #[inline(always)] fn as_raw_CalibrateCRF(&self) -> *mut c_void {
-        let mePtrOfCalibrateDebevec = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCalibrateDebevec as "cv::Ptr<cv::CalibrateCRF>*"] -> *mut c_void as "void*" {
-            return mePtrOfCalibrateDebevec->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::CalibrateCRF>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::CalibrateDebevec for PtrOfCalibrateDebevec {
     #[inline(always)] fn as_raw_CalibrateDebevec(&self) -> *mut c_void {
-        let mePtrOfCalibrateDebevec = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCalibrateDebevec as "cv::Ptr<cv::CalibrateDebevec>*"] -> *mut c_void as "void*" {
-            return mePtrOfCalibrateDebevec->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::CalibrateDebevec>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -660,27 +706,27 @@ unsafe impl Send for PtrOfCalibrateRobertson {}
 
 impl core::Algorithm for PtrOfCalibrateRobertson {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfCalibrateRobertson = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCalibrateRobertson as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfCalibrateRobertson->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::CalibrateCRF for PtrOfCalibrateRobertson {
     #[inline(always)] fn as_raw_CalibrateCRF(&self) -> *mut c_void {
-        let mePtrOfCalibrateRobertson = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCalibrateRobertson as "cv::Ptr<cv::CalibrateCRF>*"] -> *mut c_void as "void*" {
-            return mePtrOfCalibrateRobertson->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::CalibrateCRF>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::CalibrateRobertson for PtrOfCalibrateRobertson {
     #[inline(always)] fn as_raw_CalibrateRobertson(&self) -> *mut c_void {
-        let mePtrOfCalibrateRobertson = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfCalibrateRobertson as "cv::Ptr<cv::CalibrateRobertson>*"] -> *mut c_void as "void*" {
-            return mePtrOfCalibrateRobertson->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::CalibrateRobertson>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -779,27 +825,27 @@ unsafe impl Send for PtrOfDTrees {}
 
 impl core::Algorithm for PtrOfDTrees {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfDTrees = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDTrees as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfDTrees->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::DTrees for PtrOfDTrees {
     #[inline(always)] fn as_raw_DTrees(&self) -> *mut c_void {
-        let mePtrOfDTrees = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDTrees as "cv::Ptr<cv::ml::DTrees>*"] -> *mut c_void as "void*" {
-            return mePtrOfDTrees->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::DTrees>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfDTrees {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfDTrees = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDTrees as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfDTrees->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -829,9 +875,9 @@ unsafe impl Send for PtrOfDeblurerBase {}
 
 impl crate::videostab::DeblurerBase for PtrOfDeblurerBase {
     #[inline(always)] fn as_raw_DeblurerBase(&self) -> *mut c_void {
-        let mePtrOfDeblurerBase = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDeblurerBase as "cv::Ptr<cv::videostab::DeblurerBase>*"] -> *mut c_void as "void*" {
-            return mePtrOfDeblurerBase->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::DeblurerBase>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -861,18 +907,18 @@ unsafe impl Send for PtrOfDescriptorMatcher {}
 
 impl core::Algorithm for PtrOfDescriptorMatcher {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfDescriptorMatcher = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDescriptorMatcher as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfDescriptorMatcher->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::DescriptorMatcher for PtrOfDescriptorMatcher {
     #[inline(always)] fn as_raw_DescriptorMatcher(&self) -> *mut c_void {
-        let mePtrOfDescriptorMatcher = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDescriptorMatcher as "cv::Ptr<cv::DescriptorMatcher>*"] -> *mut c_void as "void*" {
-            return mePtrOfDescriptorMatcher->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::DescriptorMatcher>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -902,27 +948,27 @@ unsafe impl Send for PtrOfDownhillSolver {}
 
 impl core::Algorithm for PtrOfDownhillSolver {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfDownhillSolver = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDownhillSolver as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfDownhillSolver->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl core::DownhillSolver for PtrOfDownhillSolver {
     #[inline(always)] fn as_raw_DownhillSolver(&self) -> *mut c_void {
-        let mePtrOfDownhillSolver = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDownhillSolver as "cv::Ptr<cv::DownhillSolver>*"] -> *mut c_void as "void*" {
-            return mePtrOfDownhillSolver->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::DownhillSolver>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl core::MinProblemSolver for PtrOfDownhillSolver {
     #[inline(always)] fn as_raw_MinProblemSolver(&self) -> *mut c_void {
-        let mePtrOfDownhillSolver = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDownhillSolver as "cv::Ptr<cv::MinProblemSolver>*"] -> *mut c_void as "void*" {
-            return mePtrOfDownhillSolver->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MinProblemSolver>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -952,27 +998,27 @@ unsafe impl Send for PtrOfDualTVL1OpticalFlow {}
 
 impl core::Algorithm for PtrOfDualTVL1OpticalFlow {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfDualTVL1OpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDualTVL1OpticalFlow as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfDualTVL1OpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::DenseOpticalFlow for PtrOfDualTVL1OpticalFlow {
     #[inline(always)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void {
-        let mePtrOfDualTVL1OpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDualTVL1OpticalFlow as "cv::Ptr<cv::DenseOpticalFlow>*"] -> *mut c_void as "void*" {
-            return mePtrOfDualTVL1OpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::DenseOpticalFlow>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::DualTVL1OpticalFlow for PtrOfDualTVL1OpticalFlow {
     #[inline(always)] fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void {
-        let mePtrOfDualTVL1OpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfDualTVL1OpticalFlow as "cv::Ptr<cv::DualTVL1OpticalFlow>*"] -> *mut c_void as "void*" {
-            return mePtrOfDualTVL1OpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::DualTVL1OpticalFlow>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1002,27 +1048,27 @@ unsafe impl Send for PtrOfEM {}
 
 impl core::Algorithm for PtrOfEM {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfEM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfEM as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfEM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::EM for PtrOfEM {
     #[inline(always)] fn as_raw_EM(&self) -> *mut c_void {
-        let mePtrOfEM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfEM as "cv::Ptr<cv::ml::EM>*"] -> *mut c_void as "void*" {
-            return mePtrOfEM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::EM>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfEM {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfEM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfEM as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfEM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1075,27 +1121,27 @@ unsafe impl Send for PtrOfFarnebackOpticalFlow {}
 
 impl core::Algorithm for PtrOfFarnebackOpticalFlow {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfFarnebackOpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFarnebackOpticalFlow as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfFarnebackOpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::DenseOpticalFlow for PtrOfFarnebackOpticalFlow {
     #[inline(always)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void {
-        let mePtrOfFarnebackOpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFarnebackOpticalFlow as "cv::Ptr<cv::DenseOpticalFlow>*"] -> *mut c_void as "void*" {
-            return mePtrOfFarnebackOpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::DenseOpticalFlow>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::FarnebackOpticalFlow for PtrOfFarnebackOpticalFlow {
     #[inline(always)] fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void {
-        let mePtrOfFarnebackOpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFarnebackOpticalFlow as "cv::Ptr<cv::FarnebackOpticalFlow>*"] -> *mut c_void as "void*" {
-            return mePtrOfFarnebackOpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::FarnebackOpticalFlow>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1125,27 +1171,27 @@ unsafe impl Send for PtrOfFastFeatureDetector {}
 
 impl core::Algorithm for PtrOfFastFeatureDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfFastFeatureDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFastFeatureDetector as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfFastFeatureDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::FastFeatureDetector for PtrOfFastFeatureDetector {
     #[inline(always)] fn as_raw_FastFeatureDetector(&self) -> *mut c_void {
-        let mePtrOfFastFeatureDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFastFeatureDetector as "cv::Ptr<cv::FastFeatureDetector>*"] -> *mut c_void as "void*" {
-            return mePtrOfFastFeatureDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::FastFeatureDetector>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfFastFeatureDetector {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfFastFeatureDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFastFeatureDetector as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfFastFeatureDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1175,18 +1221,18 @@ unsafe impl Send for PtrOfFeature2D {}
 
 impl core::Algorithm for PtrOfFeature2D {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfFeature2D = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFeature2D as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfFeature2D->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfFeature2D {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfFeature2D = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFeature2D as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfFeature2D->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1239,9 +1285,9 @@ unsafe impl Send for PtrOfFormatted {}
 
 impl core::Formatted for PtrOfFormatted {
     #[inline(always)] fn as_raw_Formatted(&self) -> *mut c_void {
-        let mePtrOfFormatted = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFormatted as "cv::Ptr<cv::Formatted>*"] -> *mut c_void as "void*" {
-            return mePtrOfFormatted->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Formatted>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1271,9 +1317,9 @@ unsafe impl Send for PtrOfFormatter {}
 
 impl core::Formatter for PtrOfFormatter {
     #[inline(always)] fn as_raw_Formatter(&self) -> *mut c_void {
-        let mePtrOfFormatter = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFormatter as "cv::Ptr<cv::Formatter>*"] -> *mut c_void as "void*" {
-            return mePtrOfFormatter->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Formatter>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1303,9 +1349,9 @@ unsafe impl Send for PtrOfFrameSource {}
 
 impl crate::superres::FrameSource for PtrOfFrameSource {
     #[inline(always)] fn as_raw_FrameSource(&self) -> *mut c_void {
-        let mePtrOfFrameSource = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFrameSource as "cv::Ptr<cv::superres::FrameSource>*"] -> *mut c_void as "void*" {
-            return mePtrOfFrameSource->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::superres::FrameSource>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1335,18 +1381,18 @@ unsafe impl Send for PtrOfFreeType2 {}
 
 impl core::Algorithm for PtrOfFreeType2 {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfFreeType2 = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFreeType2 as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfFreeType2->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::freetype::FreeType2 for PtrOfFreeType2 {
     #[inline(always)] fn as_raw_FreeType2(&self) -> *mut c_void {
-        let mePtrOfFreeType2 = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFreeType2 as "cv::Ptr<cv::freetype::FreeType2>*"] -> *mut c_void as "void*" {
-            return mePtrOfFreeType2->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::freetype::FreeType2>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1376,9 +1422,9 @@ unsafe impl Send for PtrOfFunction {}
 
 impl core::MinProblemSolver_Function for PtrOfFunction {
     #[inline(always)] fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void {
-        let mePtrOfFunction = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfFunction as "cv::Ptr<cv::MinProblemSolver::Function>*"] -> *mut c_void as "void*" {
-            return mePtrOfFunction->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MinProblemSolver::Function>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1408,27 +1454,27 @@ unsafe impl Send for PtrOfGFTTDetector {}
 
 impl core::Algorithm for PtrOfGFTTDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfGFTTDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGFTTDetector as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfGFTTDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfGFTTDetector {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfGFTTDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGFTTDetector as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfGFTTDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::GFTTDetector for PtrOfGFTTDetector {
     #[inline(always)] fn as_raw_GFTTDetector(&self) -> *mut c_void {
-        let mePtrOfGFTTDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGFTTDetector as "cv::Ptr<cv::GFTTDetector>*"] -> *mut c_void as "void*" {
-            return mePtrOfGFTTDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::GFTTDetector>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1458,27 +1504,27 @@ unsafe impl Send for PtrOfGeneralizedHoughBallard {}
 
 impl core::Algorithm for PtrOfGeneralizedHoughBallard {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfGeneralizedHoughBallard = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGeneralizedHoughBallard as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfGeneralizedHoughBallard->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::imgproc::GeneralizedHough for PtrOfGeneralizedHoughBallard {
     #[inline(always)] fn as_raw_GeneralizedHough(&self) -> *mut c_void {
-        let mePtrOfGeneralizedHoughBallard = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGeneralizedHoughBallard as "cv::Ptr<cv::GeneralizedHough>*"] -> *mut c_void as "void*" {
-            return mePtrOfGeneralizedHoughBallard->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::GeneralizedHough>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::imgproc::GeneralizedHoughBallard for PtrOfGeneralizedHoughBallard {
     #[inline(always)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void {
-        let mePtrOfGeneralizedHoughBallard = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGeneralizedHoughBallard as "cv::Ptr<cv::GeneralizedHoughBallard>*"] -> *mut c_void as "void*" {
-            return mePtrOfGeneralizedHoughBallard->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::GeneralizedHoughBallard>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1508,27 +1554,109 @@ unsafe impl Send for PtrOfGeneralizedHoughGuil {}
 
 impl core::Algorithm for PtrOfGeneralizedHoughGuil {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfGeneralizedHoughGuil = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGeneralizedHoughGuil as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfGeneralizedHoughGuil->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::imgproc::GeneralizedHough for PtrOfGeneralizedHoughGuil {
     #[inline(always)] fn as_raw_GeneralizedHough(&self) -> *mut c_void {
-        let mePtrOfGeneralizedHoughGuil = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGeneralizedHoughGuil as "cv::Ptr<cv::GeneralizedHough>*"] -> *mut c_void as "void*" {
-            return mePtrOfGeneralizedHoughGuil->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::GeneralizedHough>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::imgproc::GeneralizedHoughGuil for PtrOfGeneralizedHoughGuil {
     #[inline(always)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void {
-        let mePtrOfGeneralizedHoughGuil = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfGeneralizedHoughGuil as "cv::Ptr<cv::GeneralizedHoughGuil>*"] -> *mut c_void as "void*" {
-            return mePtrOfGeneralizedHoughGuil->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::GeneralizedHoughGuil>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfGrayCodePattern {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfGrayCodePattern {
+    #[inline(always)] pub fn as_raw_PtrOfGrayCodePattern(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfGrayCodePattern {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::structured_light::GrayCodePattern>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfGrayCodePattern {}
+
+impl core::Algorithm for PtrOfGrayCodePattern {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::structured_light::GrayCodePattern for PtrOfGrayCodePattern {
+    #[inline(always)] fn as_raw_GrayCodePattern(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::structured_light::GrayCodePattern>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::structured_light::StructuredLightPattern for PtrOfGrayCodePattern {
+    #[inline(always)] fn as_raw_StructuredLightPattern(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::structured_light::StructuredLightPattern>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfHDF5 {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfHDF5 {
+    #[inline(always)] pub fn as_raw_PtrOfHDF5(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfHDF5 {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::hdf::HDF5>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfHDF5 {}
+
+impl crate::hdf::HDF5 for PtrOfHDF5 {
+    #[inline(always)] fn as_raw_HDF5(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::hdf::HDF5>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1558,27 +1686,27 @@ unsafe impl Send for PtrOfHausdorffDistanceExtractor {}
 
 impl core::Algorithm for PtrOfHausdorffDistanceExtractor {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfHausdorffDistanceExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHausdorffDistanceExtractor as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfHausdorffDistanceExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::HausdorffDistanceExtractor for PtrOfHausdorffDistanceExtractor {
     #[inline(always)] fn as_raw_HausdorffDistanceExtractor(&self) -> *mut c_void {
-        let mePtrOfHausdorffDistanceExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHausdorffDistanceExtractor as "cv::Ptr<cv::HausdorffDistanceExtractor>*"] -> *mut c_void as "void*" {
-            return mePtrOfHausdorffDistanceExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::HausdorffDistanceExtractor>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::ShapeDistanceExtractor for PtrOfHausdorffDistanceExtractor {
     #[inline(always)] fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void {
-        let mePtrOfHausdorffDistanceExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHausdorffDistanceExtractor as "cv::Ptr<cv::ShapeDistanceExtractor>*"] -> *mut c_void as "void*" {
-            return mePtrOfHausdorffDistanceExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ShapeDistanceExtractor>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1608,18 +1736,18 @@ unsafe impl Send for PtrOfHistogramCostExtractor {}
 
 impl core::Algorithm for PtrOfHistogramCostExtractor {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfHistogramCostExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHistogramCostExtractor as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfHistogramCostExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::HistogramCostExtractor for PtrOfHistogramCostExtractor {
     #[inline(always)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void {
-        let mePtrOfHistogramCostExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHistogramCostExtractor as "cv::Ptr<cv::HistogramCostExtractor>*"] -> *mut c_void as "void*" {
-            return mePtrOfHistogramCostExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::HistogramCostExtractor>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1649,27 +1777,27 @@ unsafe impl Send for PtrOfHistogramPhaseUnwrapping {}
 
 impl core::Algorithm for PtrOfHistogramPhaseUnwrapping {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfHistogramPhaseUnwrapping = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHistogramPhaseUnwrapping as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfHistogramPhaseUnwrapping->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::phase_unwrapping::HistogramPhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
     #[inline(always)] fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void {
-        let mePtrOfHistogramPhaseUnwrapping = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHistogramPhaseUnwrapping as "cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping>*"] -> *mut c_void as "void*" {
-            return mePtrOfHistogramPhaseUnwrapping->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::phase_unwrapping::PhaseUnwrapping for PtrOfHistogramPhaseUnwrapping {
     #[inline(always)] fn as_raw_PhaseUnwrapping(&self) -> *mut c_void {
-        let mePtrOfHistogramPhaseUnwrapping = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfHistogramPhaseUnwrapping as "cv::Ptr<cv::phase_unwrapping::PhaseUnwrapping>*"] -> *mut c_void as "void*" {
-            return mePtrOfHistogramPhaseUnwrapping->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::phase_unwrapping::PhaseUnwrapping>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1699,9 +1827,9 @@ unsafe impl Send for PtrOfIFrameSource {}
 
 impl crate::videostab::IFrameSource for PtrOfIFrameSource {
     #[inline(always)] fn as_raw_IFrameSource(&self) -> *mut c_void {
-        let mePtrOfIFrameSource = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfIFrameSource as "cv::Ptr<cv::videostab::IFrameSource>*"] -> *mut c_void as "void*" {
-            return mePtrOfIFrameSource->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::IFrameSource>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1731,9 +1859,9 @@ unsafe impl Send for PtrOfILog {}
 
 impl crate::videostab::ILog for PtrOfILog {
     #[inline(always)] fn as_raw_ILog(&self) -> *mut c_void {
-        let mePtrOfILog = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfILog as "cv::Ptr<cv::videostab::ILog>*"] -> *mut c_void as "void*" {
-            return mePtrOfILog->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::ILog>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1763,9 +1891,9 @@ unsafe impl Send for PtrOfIMotionStabilizer {}
 
 impl crate::videostab::IMotionStabilizer for PtrOfIMotionStabilizer {
     #[inline(always)] fn as_raw_IMotionStabilizer(&self) -> *mut c_void {
-        let mePtrOfIMotionStabilizer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfIMotionStabilizer as "cv::Ptr<cv::videostab::IMotionStabilizer>*"] -> *mut c_void as "void*" {
-            return mePtrOfIMotionStabilizer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::IMotionStabilizer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1795,9 +1923,9 @@ unsafe impl Send for PtrOfImageMotionEstimatorBase {}
 
 impl crate::videostab::ImageMotionEstimatorBase for PtrOfImageMotionEstimatorBase {
     #[inline(always)] fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void {
-        let mePtrOfImageMotionEstimatorBase = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfImageMotionEstimatorBase as "cv::Ptr<cv::videostab::ImageMotionEstimatorBase>*"] -> *mut c_void as "void*" {
-            return mePtrOfImageMotionEstimatorBase->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::ImageMotionEstimatorBase>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1827,9 +1955,9 @@ unsafe impl Send for PtrOfImporter {}
 
 impl crate::dnn::Importer for PtrOfImporter {
     #[inline(always)] fn as_raw_Importer(&self) -> *mut c_void {
-        let mePtrOfImporter = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfImporter as "cv::Ptr<cv::dnn::Importer>*"] -> *mut c_void as "void*" {
-            return mePtrOfImporter->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::Importer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1882,9 +2010,9 @@ unsafe impl Send for PtrOfInpainterBase {}
 
 impl crate::videostab::InpainterBase for PtrOfInpainterBase {
     #[inline(always)] fn as_raw_InpainterBase(&self) -> *mut c_void {
-        let mePtrOfInpainterBase = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfInpainterBase as "cv::Ptr<cv::videostab::InpainterBase>*"] -> *mut c_void as "void*" {
-            return mePtrOfInpainterBase->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::InpainterBase>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1914,27 +2042,27 @@ unsafe impl Send for PtrOfKAZE {}
 
 impl core::Algorithm for PtrOfKAZE {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfKAZE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKAZE as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfKAZE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfKAZE {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfKAZE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKAZE as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfKAZE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::KAZE for PtrOfKAZE {
     #[inline(always)] fn as_raw_KAZE(&self) -> *mut c_void {
-        let mePtrOfKAZE = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKAZE as "cv::Ptr<cv::KAZE>*"] -> *mut c_void as "void*" {
-            return mePtrOfKAZE->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::KAZE>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -1964,27 +2092,27 @@ unsafe impl Send for PtrOfKNearest {}
 
 impl core::Algorithm for PtrOfKNearest {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfKNearest = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKNearest as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfKNearest->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::KNearest for PtrOfKNearest {
     #[inline(always)] fn as_raw_KNearest(&self) -> *mut c_void {
-        let mePtrOfKNearest = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKNearest as "cv::Ptr<cv::ml::KNearest>*"] -> *mut c_void as "void*" {
-            return mePtrOfKNearest->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::KNearest>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfKNearest {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfKNearest = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKNearest as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfKNearest->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2014,18 +2142,18 @@ unsafe impl Send for PtrOfKernel {}
 
 impl core::Algorithm for PtrOfKernel {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfKernel = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKernel as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfKernel->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::SVM_Kernel for PtrOfKernel {
     #[inline(always)] fn as_raw_SVM_Kernel(&self) -> *mut c_void {
-        let mePtrOfKernel = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfKernel as "cv::Ptr<cv::ml::SVM::Kernel>*"] -> *mut c_void as "void*" {
-            return mePtrOfKernel->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::SVM::Kernel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2053,6 +2181,29 @@ impl Drop for PtrOfLRNLayer {
 
 unsafe impl Send for PtrOfLRNLayer {}
 
+pub struct PtrOfLSDDetector {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfLSDDetector {
+    #[inline(always)] pub fn as_raw_PtrOfLSDDetector(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfLSDDetector {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::line_descriptor::LSDDetector>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfLSDDetector {}
+
 pub struct PtrOfLSTMLayer {
     pub(crate) ptr: *mut c_void
 }
@@ -2078,18 +2229,18 @@ unsafe impl Send for PtrOfLSTMLayer {}
 
 impl crate::dnn::LSTMLayer for PtrOfLSTMLayer {
     #[inline(always)] fn as_raw_LSTMLayer(&self) -> *mut c_void {
-        let mePtrOfLSTMLayer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLSTMLayer as "cv::Ptr<cv::dnn::LSTMLayer>*"] -> *mut c_void as "void*" {
-            return mePtrOfLSTMLayer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::LSTMLayer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::dnn::Layer for PtrOfLSTMLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void {
-        let mePtrOfLSTMLayer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLSTMLayer as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
-            return mePtrOfLSTMLayer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2119,9 +2270,9 @@ unsafe impl Send for PtrOfLayer {}
 
 impl crate::dnn::Layer for PtrOfLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void {
-        let mePtrOfLayer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLayer as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
-            return mePtrOfLayer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2151,18 +2302,18 @@ unsafe impl Send for PtrOfLineSegmentDetector {}
 
 impl core::Algorithm for PtrOfLineSegmentDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfLineSegmentDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLineSegmentDetector as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfLineSegmentDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::imgproc::LineSegmentDetector for PtrOfLineSegmentDetector {
     #[inline(always)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void {
-        let mePtrOfLineSegmentDetector = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLineSegmentDetector as "cv::Ptr<cv::LineSegmentDetector>*"] -> *mut c_void as "void*" {
-            return mePtrOfLineSegmentDetector->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::LineSegmentDetector>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2192,27 +2343,27 @@ unsafe impl Send for PtrOfLogisticRegression {}
 
 impl core::Algorithm for PtrOfLogisticRegression {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfLogisticRegression = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLogisticRegression as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfLogisticRegression->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::LogisticRegression for PtrOfLogisticRegression {
     #[inline(always)] fn as_raw_LogisticRegression(&self) -> *mut c_void {
-        let mePtrOfLogisticRegression = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLogisticRegression as "cv::Ptr<cv::ml::LogisticRegression>*"] -> *mut c_void as "void*" {
-            return mePtrOfLogisticRegression->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::LogisticRegression>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfLogisticRegression {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfLogisticRegression = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfLogisticRegression as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfLogisticRegression->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2242,27 +2393,27 @@ unsafe impl Send for PtrOfMSER {}
 
 impl core::Algorithm for PtrOfMSER {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfMSER = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMSER as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfMSER->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfMSER {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfMSER = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMSER as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfMSER->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::MSER for PtrOfMSER {
     #[inline(always)] fn as_raw_MSER(&self) -> *mut c_void {
-        let mePtrOfMSER = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMSER as "cv::Ptr<cv::MSER>*"] -> *mut c_void as "void*" {
-            return mePtrOfMSER->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MSER>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2315,9 +2466,9 @@ unsafe impl Send for PtrOfMaskGenerator {}
 
 impl crate::objdetect::BaseCascadeClassifier_MaskGenerator for PtrOfMaskGenerator {
     #[inline(always)] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void {
-        let mePtrOfMaskGenerator = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMaskGenerator as "cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*"] -> *mut c_void as "void*" {
-            return mePtrOfMaskGenerator->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2347,27 +2498,27 @@ unsafe impl Send for PtrOfMergeDebevec {}
 
 impl core::Algorithm for PtrOfMergeDebevec {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfMergeDebevec = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeDebevec as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeDebevec->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::MergeDebevec for PtrOfMergeDebevec {
     #[inline(always)] fn as_raw_MergeDebevec(&self) -> *mut c_void {
-        let mePtrOfMergeDebevec = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeDebevec as "cv::Ptr<cv::MergeDebevec>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeDebevec->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MergeDebevec>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::MergeExposures for PtrOfMergeDebevec {
     #[inline(always)] fn as_raw_MergeExposures(&self) -> *mut c_void {
-        let mePtrOfMergeDebevec = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeDebevec as "cv::Ptr<cv::MergeExposures>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeDebevec->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MergeExposures>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2397,27 +2548,27 @@ unsafe impl Send for PtrOfMergeMertens {}
 
 impl core::Algorithm for PtrOfMergeMertens {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfMergeMertens = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeMertens as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeMertens->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::MergeExposures for PtrOfMergeMertens {
     #[inline(always)] fn as_raw_MergeExposures(&self) -> *mut c_void {
-        let mePtrOfMergeMertens = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeMertens as "cv::Ptr<cv::MergeExposures>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeMertens->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MergeExposures>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::MergeMertens for PtrOfMergeMertens {
     #[inline(always)] fn as_raw_MergeMertens(&self) -> *mut c_void {
-        let mePtrOfMergeMertens = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeMertens as "cv::Ptr<cv::MergeMertens>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeMertens->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MergeMertens>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2447,27 +2598,27 @@ unsafe impl Send for PtrOfMergeRobertson {}
 
 impl core::Algorithm for PtrOfMergeRobertson {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfMergeRobertson = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeRobertson as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeRobertson->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::MergeExposures for PtrOfMergeRobertson {
     #[inline(always)] fn as_raw_MergeExposures(&self) -> *mut c_void {
-        let mePtrOfMergeRobertson = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeRobertson as "cv::Ptr<cv::MergeExposures>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeRobertson->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MergeExposures>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::MergeRobertson for PtrOfMergeRobertson {
     #[inline(always)] fn as_raw_MergeRobertson(&self) -> *mut c_void {
-        let mePtrOfMergeRobertson = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMergeRobertson as "cv::Ptr<cv::MergeRobertson>*"] -> *mut c_void as "void*" {
-            return mePtrOfMergeRobertson->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::MergeRobertson>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2497,9 +2648,9 @@ unsafe impl Send for PtrOfMotionEstimatorBase {}
 
 impl crate::videostab::MotionEstimatorBase for PtrOfMotionEstimatorBase {
     #[inline(always)] fn as_raw_MotionEstimatorBase(&self) -> *mut c_void {
-        let mePtrOfMotionEstimatorBase = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMotionEstimatorBase as "cv::Ptr<cv::videostab::MotionEstimatorBase>*"] -> *mut c_void as "void*" {
-            return mePtrOfMotionEstimatorBase->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::MotionEstimatorBase>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2529,18 +2680,18 @@ unsafe impl Send for PtrOfMotionFilterBase {}
 
 impl crate::videostab::IMotionStabilizer for PtrOfMotionFilterBase {
     #[inline(always)] fn as_raw_IMotionStabilizer(&self) -> *mut c_void {
-        let mePtrOfMotionFilterBase = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMotionFilterBase as "cv::Ptr<cv::videostab::IMotionStabilizer>*"] -> *mut c_void as "void*" {
-            return mePtrOfMotionFilterBase->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::IMotionStabilizer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::videostab::MotionFilterBase for PtrOfMotionFilterBase {
     #[inline(always)] fn as_raw_MotionFilterBase(&self) -> *mut c_void {
-        let mePtrOfMotionFilterBase = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfMotionFilterBase as "cv::Ptr<cv::videostab::MotionFilterBase>*"] -> *mut c_void as "void*" {
-            return mePtrOfMotionFilterBase->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::videostab::MotionFilterBase>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2570,27 +2721,27 @@ unsafe impl Send for PtrOfNormalBayesClassifier {}
 
 impl core::Algorithm for PtrOfNormalBayesClassifier {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfNormalBayesClassifier = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfNormalBayesClassifier as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfNormalBayesClassifier->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::NormalBayesClassifier for PtrOfNormalBayesClassifier {
     #[inline(always)] fn as_raw_NormalBayesClassifier(&self) -> *mut c_void {
-        let mePtrOfNormalBayesClassifier = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfNormalBayesClassifier as "cv::Ptr<cv::ml::NormalBayesClassifier>*"] -> *mut c_void as "void*" {
-            return mePtrOfNormalBayesClassifier->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::NormalBayesClassifier>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfNormalBayesClassifier {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfNormalBayesClassifier = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfNormalBayesClassifier as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfNormalBayesClassifier->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2620,27 +2771,27 @@ unsafe impl Send for PtrOfORB {}
 
 impl core::Algorithm for PtrOfORB {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfORB = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfORB as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfORB->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::Feature2D for PtrOfORB {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
-        let mePtrOfORB = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfORB as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
-            return mePtrOfORB->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::features2d::ORB for PtrOfORB {
     #[inline(always)] fn as_raw_ORB(&self) -> *mut c_void {
-        let mePtrOfORB = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfORB as "cv::Ptr<cv::ORB>*"] -> *mut c_void as "void*" {
-            return mePtrOfORB->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ORB>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2670,18 +2821,18 @@ unsafe impl Send for PtrOfPlot2d {}
 
 impl core::Algorithm for PtrOfPlot2d {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfPlot2d = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfPlot2d as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfPlot2d->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::plot::Plot2d for PtrOfPlot2d {
     #[inline(always)] fn as_raw_Plot2d(&self) -> *mut c_void {
-        let mePtrOfPlot2d = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfPlot2d as "cv::Ptr<cv::plot::Plot2d>*"] -> *mut c_void as "void*" {
-            return mePtrOfPlot2d->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::plot::Plot2d>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2757,18 +2908,18 @@ unsafe impl Send for PtrOfRNNLayer {}
 
 impl crate::dnn::Layer for PtrOfRNNLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void {
-        let mePtrOfRNNLayer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRNNLayer as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
-            return mePtrOfRNNLayer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::dnn::RNNLayer for PtrOfRNNLayer {
     #[inline(always)] fn as_raw_RNNLayer(&self) -> *mut c_void {
-        let mePtrOfRNNLayer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRNNLayer as "cv::Ptr<cv::dnn::RNNLayer>*"] -> *mut c_void as "void*" {
-            return mePtrOfRNNLayer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::RNNLayer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2798,36 +2949,36 @@ unsafe impl Send for PtrOfRTrees {}
 
 impl core::Algorithm for PtrOfRTrees {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfRTrees = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRTrees as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfRTrees->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::DTrees for PtrOfRTrees {
     #[inline(always)] fn as_raw_DTrees(&self) -> *mut c_void {
-        let mePtrOfRTrees = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRTrees as "cv::Ptr<cv::ml::DTrees>*"] -> *mut c_void as "void*" {
-            return mePtrOfRTrees->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::DTrees>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::RTrees for PtrOfRTrees {
     #[inline(always)] fn as_raw_RTrees(&self) -> *mut c_void {
-        let mePtrOfRTrees = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRTrees as "cv::Ptr<cv::ml::RTrees>*"] -> *mut c_void as "void*" {
-            return mePtrOfRTrees->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::RTrees>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfRTrees {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfRTrees = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRTrees as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfRTrees->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2903,18 +3054,18 @@ unsafe impl Send for PtrOfRetina {}
 
 impl core::Algorithm for PtrOfRetina {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfRetina = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRetina as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfRetina->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::bioinspired::Retina for PtrOfRetina {
     #[inline(always)] fn as_raw_Retina(&self) -> *mut c_void {
-        let mePtrOfRetina = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRetina as "cv::Ptr<cv::bioinspired::Retina>*"] -> *mut c_void as "void*" {
-            return mePtrOfRetina->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::bioinspired::Retina>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2944,18 +3095,59 @@ unsafe impl Send for PtrOfRetinaFastToneMapping {}
 
 impl core::Algorithm for PtrOfRetinaFastToneMapping {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfRetinaFastToneMapping = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRetinaFastToneMapping as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfRetinaFastToneMapping->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::bioinspired::RetinaFastToneMapping for PtrOfRetinaFastToneMapping {
     #[inline(always)] fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void {
-        let mePtrOfRetinaFastToneMapping = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfRetinaFastToneMapping as "cv::Ptr<cv::bioinspired::RetinaFastToneMapping>*"] -> *mut c_void as "void*" {
-            return mePtrOfRetinaFastToneMapping->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::bioinspired::RetinaFastToneMapping>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfSFMLibmvEuclideanReconstruction {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfSFMLibmvEuclideanReconstruction {
+    #[inline(always)] pub fn as_raw_PtrOfSFMLibmvEuclideanReconstruction(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfSFMLibmvEuclideanReconstruction {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::sfm::SFMLibmvEuclideanReconstruction>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfSFMLibmvEuclideanReconstruction {}
+
+impl crate::sfm::BaseSFM for PtrOfSFMLibmvEuclideanReconstruction {
+    #[inline(always)] fn as_raw_BaseSFM(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::sfm::BaseSFM>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::sfm::SFMLibmvEuclideanReconstruction for PtrOfSFMLibmvEuclideanReconstruction {
+    #[inline(always)] fn as_raw_SFMLibmvEuclideanReconstruction(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::sfm::SFMLibmvEuclideanReconstruction>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -2985,27 +3177,27 @@ unsafe impl Send for PtrOfSVM {}
 
 impl core::Algorithm for PtrOfSVM {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfSVM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSVM as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfSVM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::SVM for PtrOfSVM {
     #[inline(always)] fn as_raw_SVM(&self) -> *mut c_void {
-        let mePtrOfSVM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSVM as "cv::Ptr<cv::ml::SVM>*"] -> *mut c_void as "void*" {
-            return mePtrOfSVM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::SVM>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfSVM {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfSVM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSVM as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfSVM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3035,27 +3227,27 @@ unsafe impl Send for PtrOfSVMSGD {}
 
 impl core::Algorithm for PtrOfSVMSGD {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfSVMSGD = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSVMSGD as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfSVMSGD->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::SVMSGD for PtrOfSVMSGD {
     #[inline(always)] fn as_raw_SVMSGD(&self) -> *mut c_void {
-        let mePtrOfSVMSGD = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSVMSGD as "cv::Ptr<cv::ml::SVMSGD>*"] -> *mut c_void as "void*" {
-            return mePtrOfSVMSGD->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::SVMSGD>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::ml::StatModel for PtrOfSVMSGD {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void {
-        let mePtrOfSVMSGD = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSVMSGD as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
-            return mePtrOfSVMSGD->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::StatModel>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3085,27 +3277,27 @@ unsafe impl Send for PtrOfShapeContextDistanceExtractor {}
 
 impl core::Algorithm for PtrOfShapeContextDistanceExtractor {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfShapeContextDistanceExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfShapeContextDistanceExtractor as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfShapeContextDistanceExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::ShapeContextDistanceExtractor for PtrOfShapeContextDistanceExtractor {
     #[inline(always)] fn as_raw_ShapeContextDistanceExtractor(&self) -> *mut c_void {
-        let mePtrOfShapeContextDistanceExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfShapeContextDistanceExtractor as "cv::Ptr<cv::ShapeContextDistanceExtractor>*"] -> *mut c_void as "void*" {
-            return mePtrOfShapeContextDistanceExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ShapeContextDistanceExtractor>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::ShapeDistanceExtractor for PtrOfShapeContextDistanceExtractor {
     #[inline(always)] fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void {
-        let mePtrOfShapeContextDistanceExtractor = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfShapeContextDistanceExtractor as "cv::Ptr<cv::ShapeDistanceExtractor>*"] -> *mut c_void as "void*" {
-            return mePtrOfShapeContextDistanceExtractor->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ShapeDistanceExtractor>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3155,6 +3347,56 @@ impl Drop for PtrOfSimpleBlobDetector {
 }
 
 unsafe impl Send for PtrOfSimpleBlobDetector {}
+
+pub struct PtrOfSinusoidalPattern {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfSinusoidalPattern {
+    #[inline(always)] pub fn as_raw_PtrOfSinusoidalPattern(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfSinusoidalPattern {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::structured_light::SinusoidalPattern>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfSinusoidalPattern {}
+
+impl core::Algorithm for PtrOfSinusoidalPattern {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::structured_light::SinusoidalPattern for PtrOfSinusoidalPattern {
+    #[inline(always)] fn as_raw_SinusoidalPattern(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::structured_light::SinusoidalPattern>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::structured_light::StructuredLightPattern for PtrOfSinusoidalPattern {
+    #[inline(always)] fn as_raw_StructuredLightPattern(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::structured_light::StructuredLightPattern>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
 
 pub struct PtrOfSliceLayer {
     pub(crate) ptr: *mut c_void
@@ -3227,27 +3469,27 @@ unsafe impl Send for PtrOfSparsePyrLKOpticalFlow {}
 
 impl core::Algorithm for PtrOfSparsePyrLKOpticalFlow {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfSparsePyrLKOpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSparsePyrLKOpticalFlow as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfSparsePyrLKOpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::SparseOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
     #[inline(always)] fn as_raw_SparseOpticalFlow(&self) -> *mut c_void {
-        let mePtrOfSparsePyrLKOpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSparsePyrLKOpticalFlow as "cv::Ptr<cv::SparseOpticalFlow>*"] -> *mut c_void as "void*" {
-            return mePtrOfSparsePyrLKOpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::SparseOpticalFlow>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::video::SparsePyrLKOpticalFlow for PtrOfSparsePyrLKOpticalFlow {
     #[inline(always)] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void {
-        let mePtrOfSparsePyrLKOpticalFlow = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSparsePyrLKOpticalFlow as "cv::Ptr<cv::SparsePyrLKOpticalFlow>*"] -> *mut c_void as "void*" {
-            return mePtrOfSparsePyrLKOpticalFlow->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::SparsePyrLKOpticalFlow>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3300,27 +3542,27 @@ unsafe impl Send for PtrOfStereoBM {}
 
 impl core::Algorithm for PtrOfStereoBM {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfStereoBM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfStereoBM as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfStereoBM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::calib3d::StereoBM for PtrOfStereoBM {
     #[inline(always)] fn as_raw_StereoBM(&self) -> *mut c_void {
-        let mePtrOfStereoBM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfStereoBM as "cv::Ptr<cv::StereoBM>*"] -> *mut c_void as "void*" {
-            return mePtrOfStereoBM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::StereoBM>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::calib3d::StereoMatcher for PtrOfStereoBM {
     #[inline(always)] fn as_raw_StereoMatcher(&self) -> *mut c_void {
-        let mePtrOfStereoBM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfStereoBM as "cv::Ptr<cv::StereoMatcher>*"] -> *mut c_void as "void*" {
-            return mePtrOfStereoBM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::StereoMatcher>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3350,27 +3592,27 @@ unsafe impl Send for PtrOfStereoSGBM {}
 
 impl core::Algorithm for PtrOfStereoSGBM {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfStereoSGBM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfStereoSGBM as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfStereoSGBM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::calib3d::StereoMatcher for PtrOfStereoSGBM {
     #[inline(always)] fn as_raw_StereoMatcher(&self) -> *mut c_void {
-        let mePtrOfStereoSGBM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfStereoSGBM as "cv::Ptr<cv::StereoMatcher>*"] -> *mut c_void as "void*" {
-            return mePtrOfStereoSGBM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::StereoMatcher>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::calib3d::StereoSGBM for PtrOfStereoSGBM {
     #[inline(always)] fn as_raw_StereoSGBM(&self) -> *mut c_void {
-        let mePtrOfStereoSGBM = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfStereoSGBM as "cv::Ptr<cv::StereoSGBM>*"] -> *mut c_void as "void*" {
-            return mePtrOfStereoSGBM->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::StereoSGBM>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3423,27 +3665,27 @@ unsafe impl Send for PtrOfSuperResolution {}
 
 impl core::Algorithm for PtrOfSuperResolution {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfSuperResolution = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSuperResolution as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfSuperResolution->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::superres::FrameSource for PtrOfSuperResolution {
     #[inline(always)] fn as_raw_FrameSource(&self) -> *mut c_void {
-        let mePtrOfSuperResolution = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSuperResolution as "cv::Ptr<cv::superres::FrameSource>*"] -> *mut c_void as "void*" {
-            return mePtrOfSuperResolution->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::superres::FrameSource>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::superres::SuperResolution for PtrOfSuperResolution {
     #[inline(always)] fn as_raw_SuperResolution(&self) -> *mut c_void {
-        let mePtrOfSuperResolution = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfSuperResolution as "cv::Ptr<cv::superres::SuperResolution>*"] -> *mut c_void as "void*" {
-            return mePtrOfSuperResolution->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::superres::SuperResolution>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3496,27 +3738,27 @@ unsafe impl Send for PtrOfThinPlateSplineShapeTransformer {}
 
 impl core::Algorithm for PtrOfThinPlateSplineShapeTransformer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfThinPlateSplineShapeTransformer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfThinPlateSplineShapeTransformer as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfThinPlateSplineShapeTransformer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::ShapeTransformer for PtrOfThinPlateSplineShapeTransformer {
     #[inline(always)] fn as_raw_ShapeTransformer(&self) -> *mut c_void {
-        let mePtrOfThinPlateSplineShapeTransformer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfThinPlateSplineShapeTransformer as "cv::Ptr<cv::ShapeTransformer>*"] -> *mut c_void as "void*" {
-            return mePtrOfThinPlateSplineShapeTransformer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ShapeTransformer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::shape::ThinPlateSplineShapeTransformer for PtrOfThinPlateSplineShapeTransformer {
     #[inline(always)] fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *mut c_void {
-        let mePtrOfThinPlateSplineShapeTransformer = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfThinPlateSplineShapeTransformer as "cv::Ptr<cv::ThinPlateSplineShapeTransformer>*"] -> *mut c_void as "void*" {
-            return mePtrOfThinPlateSplineShapeTransformer->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ThinPlateSplineShapeTransformer>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3546,18 +3788,18 @@ unsafe impl Send for PtrOfTonemap {}
 
 impl core::Algorithm for PtrOfTonemap {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfTonemap = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemap as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemap->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemap {
     #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void {
-        let mePtrOfTonemap = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemap as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemap->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3587,27 +3829,27 @@ unsafe impl Send for PtrOfTonemapDrago {}
 
 impl core::Algorithm for PtrOfTonemapDrago {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfTonemapDrago = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapDrago as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapDrago->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemapDrago {
     #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void {
-        let mePtrOfTonemapDrago = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapDrago as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapDrago->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::TonemapDrago for PtrOfTonemapDrago {
     #[inline(always)] fn as_raw_TonemapDrago(&self) -> *mut c_void {
-        let mePtrOfTonemapDrago = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapDrago as "cv::Ptr<cv::TonemapDrago>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapDrago->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::TonemapDrago>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3637,27 +3879,27 @@ unsafe impl Send for PtrOfTonemapDurand {}
 
 impl core::Algorithm for PtrOfTonemapDurand {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfTonemapDurand = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapDurand as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapDurand->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemapDurand {
     #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void {
-        let mePtrOfTonemapDurand = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapDurand as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapDurand->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::TonemapDurand for PtrOfTonemapDurand {
     #[inline(always)] fn as_raw_TonemapDurand(&self) -> *mut c_void {
-        let mePtrOfTonemapDurand = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapDurand as "cv::Ptr<cv::TonemapDurand>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapDurand->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::TonemapDurand>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3687,27 +3929,27 @@ unsafe impl Send for PtrOfTonemapMantiuk {}
 
 impl core::Algorithm for PtrOfTonemapMantiuk {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfTonemapMantiuk = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapMantiuk as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapMantiuk->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemapMantiuk {
     #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void {
-        let mePtrOfTonemapMantiuk = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapMantiuk as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapMantiuk->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::TonemapMantiuk for PtrOfTonemapMantiuk {
     #[inline(always)] fn as_raw_TonemapMantiuk(&self) -> *mut c_void {
-        let mePtrOfTonemapMantiuk = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapMantiuk as "cv::Ptr<cv::TonemapMantiuk>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapMantiuk->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::TonemapMantiuk>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3737,27 +3979,27 @@ unsafe impl Send for PtrOfTonemapReinhard {}
 
 impl core::Algorithm for PtrOfTonemapReinhard {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfTonemapReinhard = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapReinhard as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapReinhard->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::Tonemap for PtrOfTonemapReinhard {
     #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void {
-        let mePtrOfTonemapReinhard = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapReinhard as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapReinhard->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Tonemap>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::photo::TonemapReinhard for PtrOfTonemapReinhard {
     #[inline(always)] fn as_raw_TonemapReinhard(&self) -> *mut c_void {
-        let mePtrOfTonemapReinhard = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTonemapReinhard as "cv::Ptr<cv::TonemapReinhard>*"] -> *mut c_void as "void*" {
-            return mePtrOfTonemapReinhard->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::TonemapReinhard>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3787,9 +4029,9 @@ unsafe impl Send for PtrOfTrainData {}
 
 impl crate::ml::TrainData for PtrOfTrainData {
     #[inline(always)] fn as_raw_TrainData(&self) -> *mut c_void {
-        let mePtrOfTrainData = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTrainData as "cv::Ptr<cv::ml::TrainData>*"] -> *mut c_void as "void*" {
-            return mePtrOfTrainData->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::ml::TrainData>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3819,18 +4061,18 @@ unsafe impl Send for PtrOfTransientAreasSegmentationModule {}
 
 impl core::Algorithm for PtrOfTransientAreasSegmentationModule {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
-        let mePtrOfTransientAreasSegmentationModule = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTransientAreasSegmentationModule as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
-            return mePtrOfTransientAreasSegmentationModule->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
 
 impl crate::bioinspired::TransientAreasSegmentationModule for PtrOfTransientAreasSegmentationModule {
     #[inline(always)] fn as_raw_TransientAreasSegmentationModule(&self) -> *mut c_void {
-        let mePtrOfTransientAreasSegmentationModule = self.ptr; // weird var name is needed to prevent rust-cpp from generating functions with identical names
-        cpp!(unsafe [mePtrOfTransientAreasSegmentationModule as "cv::Ptr<cv::bioinspired::TransientAreasSegmentationModule>*"] -> *mut c_void as "void*" {
-            return mePtrOfTransientAreasSegmentationModule->get();
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::bioinspired::TransientAreasSegmentationModule>*"] -> *mut c_void as "void*" {
+            return me->get();
         })
     }
 }
@@ -3849,12 +4091,12 @@ impl VectorOfDMatch {
     
     fn to_slice(&self) -> &[core::DMatch] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfDMatch();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::DMatch>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfDMatch();
+            let data = cpp!(unsafe [vec as "std::vector<cv::DMatch>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::DMatch>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::DMatch>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -4006,9 +4248,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfDMatch();
-        cpp!(unsafe [vec_unchkd as "const std::vector<cv::DMatch>*", index as "size_t"] -> core::DMatch as "cv::DMatch" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfDMatch();
+        cpp!(unsafe [vec as "const std::vector<cv::DMatch>*", index as "size_t"] -> core::DMatch as "cv::DMatch" {
+            return (*vec)[index];
         })
     }
     
@@ -4165,7 +4407,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfDetectionROI();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_DetectionROI();
         cpp!(unsafe [vec as "std::vector<cv::DetectionROI>*", val as "cv::DetectionROI*"] {
             vec->push_back(*val);
         })
@@ -4194,9 +4436,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfDetectionROI();
-        crate::objdetect::DetectionROI { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::DetectionROI>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::DetectionROI((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfDetectionROI();
+        crate::objdetect::DetectionROI { ptr: cpp!(unsafe [vec as "const std::vector<cv::DetectionROI>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::DetectionROI((*vec)[index]);
         })}
     }
     
@@ -4355,7 +4597,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDictValue {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfDictValue();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_DictValue();
         cpp!(unsafe [vec as "std::vector<cv::dnn::DictValue>*", val as "cv::dnn::DictValue*"] {
             vec->push_back(*val);
         })
@@ -4384,9 +4626,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDictValue {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfDictValue();
-        crate::dnn::DictValue { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::dnn::DictValue>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::dnn::DictValue((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfDictValue();
+        crate::dnn::DictValue { ptr: cpp!(unsafe [vec as "const std::vector<cv::dnn::DictValue>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::dnn::DictValue((*vec)[index]);
         })}
     }
     
@@ -4545,7 +4787,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfExtObject();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_DetectionBasedTracker_ExtObject();
         cpp!(unsafe [vec as "std::vector<cv::DetectionBasedTracker::ExtObject>*", val as "cv::DetectionBasedTracker::ExtObject*"] {
             vec->push_back(*val);
         })
@@ -4574,9 +4816,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfExtObject();
-        crate::objdetect::DetectionBasedTracker_ExtObject { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::DetectionBasedTracker::ExtObject>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::DetectionBasedTracker::ExtObject((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfExtObject();
+        crate::objdetect::DetectionBasedTracker_ExtObject { ptr: cpp!(unsafe [vec as "const std::vector<cv::DetectionBasedTracker::ExtObject>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::DetectionBasedTracker::ExtObject((*vec)[index]);
         })}
     }
     
@@ -4604,6 +4846,196 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
 
 unsafe impl Send for VectorOfExtObject {}
 
+pub struct VectorOfKeyLine {
+    pub(crate) ptr: *mut c_void
+}
+
+impl VectorOfKeyLine {
+    #[inline(always)] pub fn as_raw_VectorOfKeyLine(&self) -> *mut c_void { self.ptr }
+
+    #[inline]
+    pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+        crate::templ::VectorRefIterator::new(self)
+    }
+}
+
+impl Drop for VectorOfKeyLine {
+    #[inline]
+    fn drop(&mut self) {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*"] {
+            delete vec;
+        })
+    }
+}
+
+impl IntoIterator for VectorOfKeyLine {
+    type Item = crate::line_descriptor::KeyLine;
+    type IntoIter = crate::templ::VectorIterator<Self>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(self)
+    }
+}
+
+impl<'i> IntoIterator for &'i VectorOfKeyLine {
+    type Item = crate::line_descriptor::KeyLine;
+    type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfKeyLine>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
+    type Storage = crate::line_descriptor::KeyLine;
+
+    #[inline]
+    fn new() -> Self {
+        Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+            return new std::vector<cv::line_descriptor::KeyLine>();
+        })}
+    }
+
+    #[inline]
+    fn len(&self) -> size_t {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<cv::line_descriptor::KeyLine>*"] -> size_t as "size_t" {
+            return vec->size();
+        })
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<cv::line_descriptor::KeyLine>*"] -> bool as "bool" {
+            return vec->empty();
+        })
+    }
+
+    #[inline]
+    fn capacity(&self) -> size_t {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<cv::line_descriptor::KeyLine>*"] -> size_t as "size_t" {
+            return vec->capacity();
+        })
+    }
+
+    #[inline]
+    fn shrink_to_fit(&mut self) {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*"] {
+            vec->shrink_to_fit();
+        })
+    }                
+
+    #[inline]
+    fn reserve(&mut self, additional: size_t) {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", additional as "size_t"] {
+            vec->reserve(vec->size() + additional);
+        })
+    }
+
+    #[inline]
+    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index as "size_t"] {
+            vec->erase(vec->begin() + index);
+        });
+        Ok(())
+    }
+
+    /// Swaps values of 2 elements
+    #[inline]
+    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+        let len = self.len();
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+        if index1 != index2 {
+            let vec = self.as_raw_VectorOfKeyLine();
+            cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index1 as "size_t", index2 as "size_t"] {
+                swap((*vec)[index1], (*vec)[index2]);
+            });
+        }
+        Ok(())
+    }
+
+    #[inline]
+    fn clear(&mut self) {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*"] {
+            vec->clear();
+        })
+    }
+
+    type Arg = crate::line_descriptor::KeyLine;
+    
+    #[inline]
+    fn push(&mut self, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfKeyLine();
+        let val = val.as_raw_KeyLine();
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", val as "cv::line_descriptor::KeyLine*"] {
+            vec->push_back(*val);
+        })
+    }
+    
+    #[inline]
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+        let vec = self.as_raw_VectorOfKeyLine();
+        let val = val.as_raw_KeyLine();
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index as "size_t", val as "cv::line_descriptor::KeyLine*"] {
+            vec->insert(vec->begin() + index, *val);
+        });
+        Ok(())
+    }
+    
+    #[inline]
+    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+        let vec = self.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<cv::line_descriptor::KeyLine>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new cv::line_descriptor::KeyLine(vec->at(index)) };
+            } VEC_CATCH(cv_return_value_void_X)
+        }).into_result().map(|ptr| crate::line_descriptor::KeyLine { ptr })
+    }
+    
+    #[inline]
+    unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+        let vec = self.as_raw_VectorOfKeyLine();
+        crate::line_descriptor::KeyLine { ptr: cpp!(unsafe [vec as "const std::vector<cv::line_descriptor::KeyLine>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::line_descriptor::KeyLine((*vec)[index]);
+        })}
+    }
+    
+    #[inline]
+    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        let vec = self.as_raw_VectorOfKeyLine();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index as "size_t", val as "cv::line_descriptor::KeyLine*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+            try {
+                vec->at(index) = *val;
+                return { Error::Code::StsOk, NULL };
+            } VEC_CATCH(cv_return_value_void)
+        }).into_result()
+    }
+    
+    #[inline]
+    unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfKeyLine();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index as "size_t", val as "cv::line_descriptor::KeyLine*"] {
+            (*vec)[index] = *val;
+        })
+    }
+}
+
+unsafe impl Send for VectorOfKeyLine {}
+
 pub struct VectorOfKeyPoint {
     pub(crate) ptr: *mut c_void
 }
@@ -4618,12 +5050,12 @@ impl VectorOfKeyPoint {
     
     fn to_slice(&self) -> &[core::KeyPoint] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfKeyPoint();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::KeyPoint>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfKeyPoint();
+            let data = cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::KeyPoint>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -4775,9 +5207,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfKeyPoint();
-        cpp!(unsafe [vec_unchkd as "const std::vector<cv::KeyPoint>*", index as "size_t"] -> core::KeyPoint as "cv::KeyPoint" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfKeyPoint();
+        cpp!(unsafe [vec as "const std::vector<cv::KeyPoint>*", index as "size_t"] -> core::KeyPoint as "cv::KeyPoint" {
+            return (*vec)[index];
         })
     }
     
@@ -4934,7 +5366,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfMat();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_Mat();
         cpp!(unsafe [vec as "std::vector<cv::Mat>*", val as "cv::Mat*"] {
             vec->push_back(*val);
         })
@@ -4963,9 +5395,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfMat();
-        core::Mat { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::Mat>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::Mat((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfMat();
+        core::Mat { ptr: cpp!(unsafe [vec as "const std::vector<cv::Mat>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::Mat((*vec)[index]);
         })}
     }
     
@@ -5124,7 +5556,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfNode();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_DTrees_Node();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Node>*", val as "cv::ml::DTrees::Node*"] {
             vec->push_back(*val);
         })
@@ -5153,9 +5585,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfNode();
-        crate::ml::DTrees_Node { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::ml::DTrees::Node>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::ml::DTrees::Node((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfNode();
+        crate::ml::DTrees_Node { ptr: cpp!(unsafe [vec as "const std::vector<cv::ml::DTrees::Node>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::ml::DTrees::Node((*vec)[index]);
         })}
     }
     
@@ -5314,7 +5746,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfObjectDetection();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_DPMDetector_ObjectDetection();
         cpp!(unsafe [vec as "std::vector<cv::dpm::DPMDetector::ObjectDetection>*", val as "cv::dpm::DPMDetector::ObjectDetection*"] {
             vec->push_back(*val);
         })
@@ -5343,9 +5775,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfObjectDetection();
-        crate::dpm::DPMDetector_ObjectDetection { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::dpm::DPMDetector::ObjectDetection>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::dpm::DPMDetector::ObjectDetection((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfObjectDetection();
+        crate::dpm::DPMDetector_ObjectDetection { ptr: cpp!(unsafe [vec as "const std::vector<cv::dpm::DPMDetector::ObjectDetection>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::dpm::DPMDetector::ObjectDetection((*vec)[index]);
         })}
     }
     
@@ -5387,12 +5819,12 @@ impl VectorOfPoint {
     
     fn to_slice(&self) -> &[core::Point] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfPoint();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::Point>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfPoint();
+            let data = cpp!(unsafe [vec as "std::vector<cv::Point>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::Point>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::Point>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -5544,9 +5976,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfPoint();
-        cpp!(unsafe [vec_unchkd as "const std::vector<PointWrapper>*", index as "size_t"] -> core::Point as "PointWrapper" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfPoint();
+        cpp!(unsafe [vec as "const std::vector<PointWrapper>*", index as "size_t"] -> core::Point as "PointWrapper" {
+            return (*vec)[index];
         })
     }
     
@@ -5586,12 +6018,12 @@ impl VectorOfPoint2d {
     
     fn to_slice(&self) -> &[core::Point2d] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfPoint2d();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::Point2d>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfPoint2d();
+            let data = cpp!(unsafe [vec as "std::vector<cv::Point2d>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::Point2d>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::Point2d>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -5743,9 +6175,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfPoint2d();
-        cpp!(unsafe [vec_unchkd as "const std::vector<Point2dWrapper>*", index as "size_t"] -> core::Point2d as "Point2dWrapper" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfPoint2d();
+        cpp!(unsafe [vec as "const std::vector<Point2dWrapper>*", index as "size_t"] -> core::Point2d as "Point2dWrapper" {
+            return (*vec)[index];
         })
     }
     
@@ -5785,12 +6217,12 @@ impl VectorOfPoint2f {
     
     fn to_slice(&self) -> &[core::Point2f] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfPoint2f();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::Point2f>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfPoint2f();
+            let data = cpp!(unsafe [vec as "std::vector<cv::Point2f>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::Point2f>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::Point2f>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -5942,9 +6374,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfPoint2f();
-        cpp!(unsafe [vec_unchkd as "const std::vector<Point2fWrapper>*", index as "size_t"] -> core::Point2f as "Point2fWrapper" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfPoint2f();
+        cpp!(unsafe [vec as "const std::vector<Point2fWrapper>*", index as "size_t"] -> core::Point2f as "Point2fWrapper" {
+            return (*vec)[index];
         })
     }
     
@@ -6101,7 +6533,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfRange();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_Range();
         cpp!(unsafe [vec as "std::vector<cv::Range>*", val as "cv::Range*"] {
             vec->push_back(*val);
         })
@@ -6130,9 +6562,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfRange();
-        core::Range { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::Range>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::Range((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfRange();
+        core::Range { ptr: cpp!(unsafe [vec as "const std::vector<cv::Range>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::Range((*vec)[index]);
         })}
     }
     
@@ -6174,12 +6606,12 @@ impl VectorOfRect {
     
     fn to_slice(&self) -> &[core::Rect] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfRect();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::Rect>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfRect();
+            let data = cpp!(unsafe [vec as "std::vector<cv::Rect>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::Rect>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::Rect>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -6331,9 +6763,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfRect();
-        cpp!(unsafe [vec_unchkd as "const std::vector<RectWrapper>*", index as "size_t"] -> core::Rect as "RectWrapper" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfRect();
+        cpp!(unsafe [vec as "const std::vector<RectWrapper>*", index as "size_t"] -> core::Rect as "RectWrapper" {
+            return (*vec)[index];
         })
     }
     
@@ -6490,7 +6922,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfSplit();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_DTrees_Split();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Split>*", val as "cv::ml::DTrees::Split*"] {
             vec->push_back(*val);
         })
@@ -6519,9 +6951,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfSplit();
-        crate::ml::DTrees_Split { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::ml::DTrees::Split>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::ml::DTrees::Split((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfSplit();
+        crate::ml::DTrees_Split { ptr: cpp!(unsafe [vec as "const std::vector<cv::ml::DTrees::Split>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::ml::DTrees::Split((*vec)[index]);
         })}
     }
     
@@ -6711,9 +7143,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfString();
-        ::std::ffi::CStr::from_ptr(cpp!(unsafe [vec_unchkd as "const std::vector<String>*", index as "size_t"] -> *mut c_char as "const char*" {
-            return (*vec_unchkd)[index].c_str();
+        let vec = self.as_raw_VectorOfString();
+        ::std::ffi::CStr::from_ptr(cpp!(unsafe [vec as "const std::vector<String>*", index as "size_t"] -> *mut c_char as "const char*" {
+            return (*vec)[index].c_str();
         })).to_string_lossy().into_owned()
     }
     
@@ -6874,7 +7306,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfUMat();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_UMat();
         cpp!(unsafe [vec as "std::vector<cv::UMat>*", val as "cv::UMat*"] {
             vec->push_back(*val);
         })
@@ -6903,9 +7335,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfUMat();
-        core::UMat { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<cv::UMat>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new cv::UMat((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfUMat();
+        core::UMat { ptr: cpp!(unsafe [vec as "const std::vector<cv::UMat>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::UMat((*vec)[index]);
         })}
     }
     
@@ -6947,12 +7379,12 @@ impl VectorOfVec4f {
     
     fn to_slice(&self) -> &[core::Vec4f] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfVec4f();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::Vec4f>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfVec4f();
+            let data = cpp!(unsafe [vec as "std::vector<cv::Vec4f>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::Vec4f>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::Vec4f>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -7104,9 +7536,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVec4f();
-        cpp!(unsafe [vec_unchkd as "const std::vector<Vec4fWrapper>*", index as "size_t"] -> core::Vec4f as "Vec4fWrapper" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfVec4f();
+        cpp!(unsafe [vec as "const std::vector<Vec4fWrapper>*", index as "size_t"] -> core::Vec4f as "Vec4fWrapper" {
+            return (*vec)[index];
         })
     }
     
@@ -7146,12 +7578,12 @@ impl VectorOfVec6f {
     
     fn to_slice(&self) -> &[core::Vec6f] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfVec6f();
-            let data = cpp!(unsafe [vec_d as "std::vector<cv::Vec6f>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfVec6f();
+            let data = cpp!(unsafe [vec as "std::vector<cv::Vec6f>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<cv::Vec6f>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<cv::Vec6f>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -7303,9 +7735,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVec6f();
-        cpp!(unsafe [vec_unchkd as "const std::vector<Vec6fWrapper>*", index as "size_t"] -> core::Vec6f as "Vec6fWrapper" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfVec6f();
+        cpp!(unsafe [vec as "const std::vector<Vec6fWrapper>*", index as "size_t"] -> core::Vec6f as "Vec6fWrapper" {
+            return (*vec)[index];
         })
     }
     
@@ -7462,7 +7894,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfDMatch();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::DMatch>>*", val as "std::vector<cv::DMatch>*"] {
             vec->push_back(*val);
         })
@@ -7491,9 +7923,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfDMatch();
-        types::VectorOfDMatch { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<cv::DMatch>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<cv::DMatch>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfDMatch();
+        types::VectorOfDMatch { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<cv::DMatch>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<cv::DMatch>((*vec)[index]);
         })}
     }
     
@@ -7520,6 +7952,196 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
 }
 
 unsafe impl Send for VectorOfVectorOfDMatch {}
+
+pub struct VectorOfVectorOfKeyLine {
+    pub(crate) ptr: *mut c_void
+}
+
+impl VectorOfVectorOfKeyLine {
+    #[inline(always)] pub fn as_raw_VectorOfVectorOfKeyLine(&self) -> *mut c_void { self.ptr }
+
+    #[inline]
+    pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+        crate::templ::VectorRefIterator::new(self)
+    }
+}
+
+impl Drop for VectorOfVectorOfKeyLine {
+    #[inline]
+    fn drop(&mut self) {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*"] {
+            delete vec;
+        })
+    }
+}
+
+impl IntoIterator for VectorOfVectorOfKeyLine {
+    type Item = types::VectorOfKeyLine;
+    type IntoIter = crate::templ::VectorIterator<Self>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(self)
+    }
+}
+
+impl<'i> IntoIterator for &'i VectorOfVectorOfKeyLine {
+    type Item = types::VectorOfKeyLine;
+    type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfVectorOfKeyLine>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
+    type Storage = types::VectorOfKeyLine;
+
+    #[inline]
+    fn new() -> Self {
+        Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+            return new std::vector<std::vector<cv::line_descriptor::KeyLine>>();
+        })}
+    }
+
+    #[inline]
+    fn len(&self) -> size_t {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<std::vector<cv::line_descriptor::KeyLine>>*"] -> size_t as "size_t" {
+            return vec->size();
+        })
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<std::vector<cv::line_descriptor::KeyLine>>*"] -> bool as "bool" {
+            return vec->empty();
+        })
+    }
+
+    #[inline]
+    fn capacity(&self) -> size_t {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<std::vector<cv::line_descriptor::KeyLine>>*"] -> size_t as "size_t" {
+            return vec->capacity();
+        })
+    }
+
+    #[inline]
+    fn shrink_to_fit(&mut self) {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*"] {
+            vec->shrink_to_fit();
+        })
+    }                
+
+    #[inline]
+    fn reserve(&mut self, additional: size_t) {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", additional as "size_t"] {
+            vec->reserve(vec->size() + additional);
+        })
+    }
+
+    #[inline]
+    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t"] {
+            vec->erase(vec->begin() + index);
+        });
+        Ok(())
+    }
+
+    /// Swaps values of 2 elements
+    #[inline]
+    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+        let len = self.len();
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+        if index1 != index2 {
+            let vec = self.as_raw_VectorOfVectorOfKeyLine();
+            cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index1 as "size_t", index2 as "size_t"] {
+                swap((*vec)[index1], (*vec)[index2]);
+            });
+        }
+        Ok(())
+    }
+
+    #[inline]
+    fn clear(&mut self) {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*"] {
+            vec->clear();
+        })
+    }
+
+    type Arg = types::VectorOfKeyLine;
+    
+    #[inline]
+    fn push(&mut self, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        let val = val.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", val as "std::vector<cv::line_descriptor::KeyLine>*"] {
+            vec->push_back(*val);
+        })
+    }
+    
+    #[inline]
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        let val = val.as_raw_VectorOfKeyLine();
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t", val as "std::vector<cv::line_descriptor::KeyLine>*"] {
+            vec->insert(vec->begin() + index, *val);
+        });
+        Ok(())
+    }
+    
+    #[inline]
+    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        cpp!(unsafe [vec as "const std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new std::vector<cv::line_descriptor::KeyLine>(vec->at(index)) };
+            } VEC_CATCH(cv_return_value_void_X)
+        }).into_result().map(|ptr| types::VectorOfKeyLine { ptr })
+    }
+    
+    #[inline]
+    unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        types::VectorOfKeyLine { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<cv::line_descriptor::KeyLine>((*vec)[index]);
+        })}
+    }
+    
+    #[inline]
+    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t", val as "std::vector<cv::line_descriptor::KeyLine>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+            try {
+                vec->at(index) = *val;
+                return { Error::Code::StsOk, NULL };
+            } VEC_CATCH(cv_return_value_void)
+        }).into_result()
+    }
+    
+    #[inline]
+    unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfVectorOfKeyLine();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t", val as "std::vector<cv::line_descriptor::KeyLine>*"] {
+            (*vec)[index] = *val;
+        })
+    }
+}
+
+unsafe impl Send for VectorOfVectorOfKeyLine {}
 
 pub struct VectorOfVectorOfKeyPoint {
     pub(crate) ptr: *mut c_void
@@ -7652,7 +8274,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::KeyPoint>>*", val as "std::vector<cv::KeyPoint>*"] {
             vec->push_back(*val);
         })
@@ -7681,9 +8303,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfKeyPoint();
-        types::VectorOfKeyPoint { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<cv::KeyPoint>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<cv::KeyPoint>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfKeyPoint();
+        types::VectorOfKeyPoint { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<cv::KeyPoint>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<cv::KeyPoint>((*vec)[index]);
         })}
     }
     
@@ -7842,7 +8464,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfPoint();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point>>*", val as "std::vector<cv::Point>*"] {
             vec->push_back(*val);
         })
@@ -7871,9 +8493,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfPoint();
-        types::VectorOfPoint { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<cv::Point>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<cv::Point>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfPoint();
+        types::VectorOfPoint { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<cv::Point>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<cv::Point>((*vec)[index]);
         })}
     }
     
@@ -8032,7 +8654,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point2f>>*", val as "std::vector<cv::Point2f>*"] {
             vec->push_back(*val);
         })
@@ -8061,9 +8683,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfPoint2f();
-        types::VectorOfPoint2f { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<cv::Point2f>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<cv::Point2f>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfPoint2f();
+        types::VectorOfPoint2f { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<cv::Point2f>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<cv::Point2f>((*vec)[index]);
         })}
     }
     
@@ -8222,7 +8844,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfRect();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Rect>>*", val as "std::vector<cv::Rect>*"] {
             vec->push_back(*val);
         })
@@ -8251,9 +8873,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfRect();
-        types::VectorOfRect { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<cv::Rect>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<cv::Rect>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfRect();
+        types::VectorOfRect { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<cv::Rect>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<cv::Rect>((*vec)[index]);
         })}
     }
     
@@ -8412,7 +9034,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfchar();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<std::vector<char>>*", val as "std::vector<char>*"] {
             vec->push_back(*val);
         })
@@ -8441,9 +9063,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfchar();
-        types::VectorOfchar { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<char>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<char>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfchar();
+        types::VectorOfchar { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<char>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<char>((*vec)[index]);
         })}
     }
     
@@ -8602,7 +9224,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfint();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<int>>*", val as "std::vector<int>*"] {
             vec->push_back(*val);
         })
@@ -8631,9 +9253,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfint();
-        types::VectorOfint { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<int>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<int>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfint();
+        types::VectorOfint { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<int>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<int>((*vec)[index]);
         })}
     }
     
@@ -8792,7 +9414,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     #[inline]
     fn push(&mut self, val: Self::Arg) {
         let vec = self.as_raw_VectorOfVectorOfuchar();
-        let val = val.ptr; // fixme use method
+        let val = val.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<std::vector<uchar>>*", val as "std::vector<uchar>*"] {
             vec->push_back(*val);
         })
@@ -8821,9 +9443,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfVectorOfuchar();
-        types::VectorOfuchar { ptr: cpp!(unsafe [vec_unchkd as "const std::vector<std::vector<uchar>>*", index as "size_t"] -> *mut c_void as "void*" {
-            return new std::vector<uchar>((*vec_unchkd)[index]);
+        let vec = self.as_raw_VectorOfVectorOfuchar();
+        types::VectorOfuchar { ptr: cpp!(unsafe [vec as "const std::vector<std::vector<uchar>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new std::vector<uchar>((*vec)[index]);
         })}
     }
     
@@ -9009,9 +9631,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfbool();
-        cpp!(unsafe [vec_unchkd as "const std::vector<bool>*", index as "size_t"] -> bool as "bool" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfbool();
+        cpp!(unsafe [vec as "const std::vector<bool>*", index as "size_t"] -> bool as "bool" {
+            return (*vec)[index];
         })
     }
     
@@ -9051,12 +9673,12 @@ impl VectorOfchar {
     
     fn to_slice(&self) -> &[i8] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfchar();
-            let data = cpp!(unsafe [vec_d as "std::vector<char>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfchar();
+            let data = cpp!(unsafe [vec as "std::vector<char>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<char>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<char>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -9208,9 +9830,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfchar();
-        cpp!(unsafe [vec_unchkd as "const std::vector<char>*", index as "size_t"] -> i8 as "char" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfchar();
+        cpp!(unsafe [vec as "const std::vector<char>*", index as "size_t"] -> i8 as "char" {
+            return (*vec)[index];
         })
     }
     
@@ -9250,12 +9872,12 @@ impl VectorOfdouble {
     
     fn to_slice(&self) -> &[f64] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfdouble();
-            let data = cpp!(unsafe [vec_d as "std::vector<double>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfdouble();
+            let data = cpp!(unsafe [vec as "std::vector<double>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<double>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<double>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -9407,9 +10029,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfdouble();
-        cpp!(unsafe [vec_unchkd as "const std::vector<double>*", index as "size_t"] -> f64 as "double" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfdouble();
+        cpp!(unsafe [vec as "const std::vector<double>*", index as "size_t"] -> f64 as "double" {
+            return (*vec)[index];
         })
     }
     
@@ -9449,12 +10071,12 @@ impl VectorOffloat {
     
     fn to_slice(&self) -> &[f32] {
         unsafe {
-            let vec_d = self.as_raw_VectorOffloat();
-            let data = cpp!(unsafe [vec_d as "std::vector<float>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOffloat();
+            let data = cpp!(unsafe [vec as "std::vector<float>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<float>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<float>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -9606,9 +10228,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOffloat();
-        cpp!(unsafe [vec_unchkd as "const std::vector<float>*", index as "size_t"] -> f32 as "float" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOffloat();
+        cpp!(unsafe [vec as "const std::vector<float>*", index as "size_t"] -> f32 as "float" {
+            return (*vec)[index];
         })
     }
     
@@ -9648,12 +10270,12 @@ impl VectorOfint {
     
     fn to_slice(&self) -> &[i32] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfint();
-            let data = cpp!(unsafe [vec_d as "std::vector<int>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfint();
+            let data = cpp!(unsafe [vec as "std::vector<int>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<int>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<int>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -9805,9 +10427,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfint();
-        cpp!(unsafe [vec_unchkd as "const std::vector<int>*", index as "size_t"] -> i32 as "int" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfint();
+        cpp!(unsafe [vec as "const std::vector<int>*", index as "size_t"] -> i32 as "int" {
+            return (*vec)[index];
         })
     }
     
@@ -9833,6 +10455,200 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
 
 unsafe impl Send for VectorOfint {}
 
+pub struct VectorOfstd_string {
+    pub(crate) ptr: *mut c_void
+}
+
+impl VectorOfstd_string {
+    #[inline(always)] pub fn as_raw_VectorOfstd_string(&self) -> *mut c_void { self.ptr }
+
+    #[inline]
+    pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+        crate::templ::VectorRefIterator::new(self)
+    }
+}
+
+impl Drop for VectorOfstd_string {
+    #[inline]
+    fn drop(&mut self) {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "std::vector<String>*"] {
+            delete vec;
+        })
+    }
+}
+
+impl IntoIterator for VectorOfstd_string {
+    type Item = String;
+    type IntoIter = crate::templ::VectorIterator<Self>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(self)
+    }
+}
+
+impl<'i> IntoIterator for &'i VectorOfstd_string {
+    type Item = String;
+    type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfstd_string>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl<'i> crate::templ::Vector<'i> for VectorOfstd_string {
+    type Storage = String;
+
+    #[inline]
+    fn new() -> Self {
+        Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+            return new std::vector<String>();
+        })}
+    }
+
+    #[inline]
+    fn len(&self) -> size_t {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "const std::vector<String>*"] -> size_t as "size_t" {
+            return vec->size();
+        })
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "const std::vector<String>*"] -> bool as "bool" {
+            return vec->empty();
+        })
+    }
+
+    #[inline]
+    fn capacity(&self) -> size_t {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "const std::vector<String>*"] -> size_t as "size_t" {
+            return vec->capacity();
+        })
+    }
+
+    #[inline]
+    fn shrink_to_fit(&mut self) {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "std::vector<String>*"] {
+            vec->shrink_to_fit();
+        })
+    }                
+
+    #[inline]
+    fn reserve(&mut self, additional: size_t) {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "std::vector<String>*", additional as "size_t"] {
+            vec->reserve(vec->size() + additional);
+        })
+    }
+
+    #[inline]
+    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "std::vector<String>*", index as "size_t"] {
+            vec->erase(vec->begin() + index);
+        });
+        Ok(())
+    }
+
+    /// Swaps values of 2 elements
+    #[inline]
+    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+        let len = self.len();
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+        if index1 != index2 {
+            let vec = self.as_raw_VectorOfstd_string();
+            cpp!(unsafe [vec as "std::vector<String>*", index1 as "size_t", index2 as "size_t"] {
+                swap((*vec)[index1], (*vec)[index2]);
+            });
+        }
+        Ok(())
+    }
+
+    #[inline]
+    fn clear(&mut self) {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "std::vector<String>*"] {
+            vec->clear();
+        })
+    }
+
+    type Arg = &'i str;
+    
+    #[inline]
+    fn push(&mut self, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfstd_string();
+        let val = ::std::ffi::CString::new(val).unwrap();
+        let val = val.as_ptr();
+        cpp!(unsafe [vec as "std::vector<String>*", val as "const char*"] {
+            vec->push_back(String(val));
+        })
+    }
+    
+    #[inline]
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+        let vec = self.as_raw_VectorOfstd_string();
+        let val = ::std::ffi::CString::new(val).unwrap();
+        let val = val.as_ptr();
+        cpp!(unsafe [vec as "std::vector<String>*", index as "size_t", val as "const char*"] {
+            vec->insert(vec->begin() + index, String(val));
+        });
+        Ok(())
+    }
+    
+    #[inline]
+    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+        let vec = self.as_raw_VectorOfstd_string();
+        cpp!(unsafe [vec as "const std::vector<String>*", index as "size_t"] -> crate::sys::cv_return_value_char_X as "cv_return_value_char_X" {
+            try {
+                return { Error::Code::StsOk, NULL, vec->at(index).c_str() };
+            } VEC_CATCH(cv_return_value_char_X)
+        }).into_result().map(|x| unsafe { ::std::ffi::CStr::from_ptr(x) }.to_string_lossy().into_owned())
+    }
+    
+    #[inline]
+    unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+        let vec = self.as_raw_VectorOfstd_string();
+        ::std::ffi::CStr::from_ptr(cpp!(unsafe [vec as "const std::vector<String>*", index as "size_t"] -> *mut c_char as "const char*" {
+            return (*vec)[index].c_str();
+        })).to_string_lossy().into_owned()
+    }
+    
+    #[inline]
+    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        let vec = self.as_raw_VectorOfstd_string();
+        let val = ::std::ffi::CString::new(val).unwrap();
+        let val = val.as_ptr();
+        cpp!(unsafe [vec as "std::vector<String>*", index as "size_t", val as "const char*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+            try {
+                vec->at(index) = String(val);
+                return { Error::Code::StsOk, NULL };
+            } VEC_CATCH(cv_return_value_void)
+        }).into_result()
+    }
+    
+    #[inline]
+    unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfstd_string();
+        let val = ::std::ffi::CString::new(val).unwrap();
+        let val = val.as_ptr();
+        cpp!(unsafe [vec as "std::vector<String>*", index as "size_t", val as "const char*"] {
+            (*vec)[index] = String(val);
+        })
+    }
+}
+
+unsafe impl Send for VectorOfstd_string {}
+
 pub struct VectorOfuchar {
     pub(crate) ptr: *mut c_void
 }
@@ -9847,12 +10663,12 @@ impl VectorOfuchar {
     
     fn to_slice(&self) -> &[u8] {
         unsafe {
-            let vec_d = self.as_raw_VectorOfuchar();
-            let data = cpp!(unsafe [vec_d as "std::vector<uchar>*"] -> *const *mut c_void as "void**" {
-                return reinterpret_cast<void**>(vec_d->data());
+            let vec = self.as_raw_VectorOfuchar();
+            let data = cpp!(unsafe [vec as "std::vector<uchar>*"] -> *const *mut c_void as "void**" {
+                return reinterpret_cast<void**>(vec->data());
             });
-            let len = cpp!(unsafe [vec_d as "std::vector<uchar>*"] -> size_t as "size_t" {
-                return vec_d->size();
+            let len = cpp!(unsafe [vec as "std::vector<uchar>*"] -> size_t as "size_t" {
+                return vec->size();
             });
             ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
         }
@@ -10004,9 +10820,9 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
     
     #[inline]
     unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-        let vec_unchkd = self.as_raw_VectorOfuchar();
-        cpp!(unsafe [vec_unchkd as "const std::vector<unsigned char>*", index as "size_t"] -> u8 as "unsigned char" {
-            return (*vec_unchkd)[index];
+        let vec = self.as_raw_VectorOfuchar();
+        cpp!(unsafe [vec as "const std::vector<unsigned char>*", index as "size_t"] -> u8 as "unsigned char" {
+            return (*vec)[index];
         })
     }
     

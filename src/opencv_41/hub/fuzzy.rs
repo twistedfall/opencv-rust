@@ -181,7 +181,7 @@ pub fn ft12_d_polynomial(matrix: &core::Mat, kernel: &core::Mat, c00: &mut core:
 ///
 ///
 /// Note:
-/// F-transform technique of first degreee is described in paper [Vlas](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_Vlas):FT.
+/// F-transform technique of first degreee is described in paper [Vlas](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Vlas):FT.
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
@@ -242,7 +242,7 @@ pub fn filter(image: &core::Mat, kernel: &core::Mat, output: &mut core::Mat) -> 
 ///
 ///
 /// Note:
-/// The algorithms are described in paper [Perf](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_Perf):rec.
+/// The algorithms are described in paper [Perf](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Perf):rec.
 pub fn inpaint(image: &core::Mat, mask: &core::Mat, output: &mut core::Mat, radius: i32, function: i32, algorithm: i32) -> Result<()> {
     unsafe { sys::cv_ft_inpaint_Mat_Mat_Mat_int_int_int(image.as_raw_Mat(), mask.as_raw_Mat(), output.as_raw_Mat(), radius, function, algorithm) }.into_result()
 }

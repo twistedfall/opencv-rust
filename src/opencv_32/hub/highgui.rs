@@ -215,13 +215,13 @@ pub enum WindowFlags {
     /// window with opengl support.
     WINDOW_OPENGL = WINDOW_OPENGL as isize,
     // change the window to fullscreen.
-    // WINDOW_FULLSCREEN = WINDOW_FULLSCREEN as isize, // duplicate discriminant
+    // WINDOW_FULLSCREEN = WINDOW_FULLSCREEN as isize, // ignored discriminant
     /// the image expends as much as it can (no ratio constraint).
     WINDOW_FREERATIO = WINDOW_FREERATIO as isize,
     // the ratio of the image is respected.
-    // WINDOW_KEEPRATIO = WINDOW_KEEPRATIO as isize, // duplicate discriminant
+    // WINDOW_KEEPRATIO = WINDOW_KEEPRATIO as isize, // ignored discriminant
     // status bar and tool bar
-    // WINDOW_GUI_EXPANDED = WINDOW_GUI_EXPANDED as isize, // duplicate discriminant
+    // WINDOW_GUI_EXPANDED = WINDOW_GUI_EXPANDED as isize, // ignored discriminant
     /// old fashious way
     WINDOW_GUI_NORMAL = WINDOW_GUI_NORMAL as isize,
 }

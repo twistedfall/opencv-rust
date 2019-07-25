@@ -5,9 +5,9 @@
 //! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 //! one can combine and use them separately.
 //!
-//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.1.0/d0/de3/citelist.html#CITEREF_BL07) .
+//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_BL07) .
 //!
-//! ![stitching pipeline](https://docs.opencv.org/4.1.0/StitchingPipeline.jpg)
+//! ![stitching pipeline](https://docs.opencv.org/4.1.1/StitchingPipeline.jpg)
 //!
 //! Camera models
 //! -------------

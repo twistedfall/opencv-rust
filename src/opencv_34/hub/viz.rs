@@ -951,7 +951,7 @@ impl WCameraPosition {
 
     /// Creates camera coordinate frame at the origin.
     ///
-    /// ![Camera coordinate frame](https://docs.opencv.org/3.4.6/images/cpw1.png)
+    /// ![Camera coordinate frame](https://docs.opencv.org/3.4.7/images/cpw1.png)
     ///
     /// ## C++ default parameters
     /// * scale: 1.0
@@ -967,7 +967,7 @@ impl WCameraPosition {
     ///
     /// Creates viewing frustum of the camera based on its field of view fov.
     ///
-    /// ![Camera viewing frustum](https://docs.opencv.org/3.4.6/images/cpw2.png)
+    /// ![Camera viewing frustum](https://docs.opencv.org/3.4.7/images/cpw2.png)
     ///
     /// ## C++ default parameters
     /// * scale: 1.0
@@ -987,7 +987,7 @@ impl WCameraPosition {
     /// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
     /// the far end plane.
     ///
-    /// ![Camera viewing frustum with image](https://docs.opencv.org/3.4.6/images/cpw3.png)
+    /// ![Camera viewing frustum with image](https://docs.opencv.org/3.4.7/images/cpw3.png)
     ///
     /// ## C++ default parameters
     /// * scale: 1.0

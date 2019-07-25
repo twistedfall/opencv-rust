@@ -614,21 +614,21 @@ pub enum VideoCaptureAPIs {
     /// Auto detect == 0
     CAP_ANY = CAP_ANY as isize,
     // Video For Windows (obsolete, removed)
-    // CAP_VFW = CAP_VFW as isize, // duplicate discriminant
+    // CAP_VFW = CAP_VFW as isize, // ignored discriminant
     /// V4L/V4L2 capturing support
     CAP_V4L = CAP_V4L as isize,
     // Same as CAP_V4L
-    // CAP_V4L2 = CAP_V4L2 as isize, // duplicate discriminant
+    // CAP_V4L2 = CAP_V4L2 as isize, // ignored discriminant
     /// IEEE 1394 drivers
     CAP_FIREWIRE = CAP_FIREWIRE as isize,
     // Same value as CAP_FIREWIRE
-    // CAP_FIREWARE = CAP_FIREWARE as isize, // duplicate discriminant
+    // CAP_FIREWARE = CAP_FIREWARE as isize, // ignored discriminant
     // Same value as CAP_FIREWIRE
-    // CAP_IEEE1394 = CAP_IEEE1394 as isize, // duplicate discriminant
+    // CAP_IEEE1394 = CAP_IEEE1394 as isize, // ignored discriminant
     // Same value as CAP_FIREWIRE
-    // CAP_DC1394 = CAP_DC1394 as isize, // duplicate discriminant
+    // CAP_DC1394 = CAP_DC1394 as isize, // ignored discriminant
     // Same value as CAP_FIREWIRE
-    // CAP_CMU1394 = CAP_CMU1394 as isize, // duplicate discriminant
+    // CAP_CMU1394 = CAP_CMU1394 as isize, // ignored discriminant
     /// QuickTime (obsolete, removed)
     CAP_QT = CAP_QT as isize,
     /// Unicap drivers (obsolete, removed)
@@ -656,7 +656,7 @@ pub enum VideoCaptureAPIs {
     /// RealSense (former Intel Perceptual Computing SDK)
     CAP_INTELPERC = CAP_INTELPERC as isize,
     // Synonym for CAP_INTELPERC
-    // CAP_REALSENSE = CAP_REALSENSE as isize, // duplicate discriminant
+    // CAP_REALSENSE = CAP_REALSENSE as isize, // ignored discriminant
     /// OpenNI2 (for Kinect)
     CAP_OPENNI2 = CAP_OPENNI2 as isize,
     /// OpenNI2 (for Asus Xtion and Occipital Structure sensors)
@@ -679,14 +679,14 @@ pub enum VideoCaptureAPIs {
     CAP_XINE = CAP_XINE as isize,
 }
 
-/// Returns backend API name or "unknown"
+/// Returns backend API name or "UnknownVideoAPI(xxx)"
 /// ## Parameters
 /// * api: backend ID (#VideoCaptureAPIs)
 pub fn get_backend_name(api: crate::videoio::VideoCaptureAPIs) -> Result<String> {
     unsafe { sys::cv_videoio_registry_getBackendName_VideoCaptureAPIs(api) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-/// Returns list of all builtin backends
+/// Returns list of all available backends
 pub fn get_backends() -> Result<types::VectorOfVideoCaptureAPIs> {
     unsafe { sys::cv_videoio_registry_getBackends() }.into_result().map(|ptr| types::VectorOfVideoCaptureAPIs { ptr })
 }
@@ -946,8 +946,8 @@ impl VideoCapture {
     ///
     /// Note: Reading / writing properties involves many layers. Some unexpected result might happens
     /// along this chain.
-    /// ```ignore {.txt}
-    /// `VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware`
+    /// ```ignore{.txt}
+    /// VideoCapture -> API Backend -> Operating System -> Device Driver -> Device Hardware
     /// ```
     ///
     /// The returned value might be different from what really used by the device or it could be encoded
@@ -963,6 +963,17 @@ impl VideoCapture {
     /// Note: Stream should be opened.
     pub fn get_backend_name(&self) -> Result<String> {
         unsafe { sys::cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Switches exceptions mode
+    ///
+    /// methods raise exceptions if not successful instead of returning an error code
+    pub fn set_exception_mode(&mut self, enable: bool) -> Result<()> {
+        unsafe { sys::cv_VideoCapture_setExceptionMode_bool(self.as_raw_VideoCapture(), enable) }.into_result()
+    }
+    
+    pub fn get_exception_mode(&mut self) -> Result<bool> {
+        unsafe { sys::cv_VideoCapture_getExceptionMode(self.as_raw_VideoCapture()) }.into_result()
     }
     
 }
