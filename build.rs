@@ -45,7 +45,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "hal",
         "hfs",
         "ippicv",
-        "line_descriptor",
         "opencv",
         "opencv_modules",
         "optflow",

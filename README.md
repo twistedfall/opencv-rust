@@ -160,6 +160,7 @@ installed:
  * fuzzy
  * hdf
  * img_hash
+ * line_descriptor
  * phase_unwrapping
  * plot
  * sfm

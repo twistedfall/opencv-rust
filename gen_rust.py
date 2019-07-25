@@ -799,6 +799,7 @@ reserved_rename = {
     "ref": "_ref",
     "in": "_in",
     "use": "_use",
+    "match": "_match",
 }
 
 # list of modules that are imported into every other module so there is no need to reference them using full path, elements are module names
