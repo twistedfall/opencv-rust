@@ -72,16 +72,16 @@
 #define HAVE_FFMPEG
 
 /* Geospatial Data Abstraction Library */
-/* #undef HAVE_GDAL */
+#define HAVE_GDAL
 
 /* GStreamer multimedia framework */
 #define HAVE_GSTREAMER
 
 /* GTK+ 2.0 Thread support */
-#define HAVE_GTHREAD
+/* #undef HAVE_GTHREAD */
 
 /* GTK+ 2.x toolkit */
-#define HAVE_GTK
+/* #undef HAVE_GTK */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 /* #undef HAVE_INTTYPES_H */
@@ -97,7 +97,7 @@
 /* #undef HAVE_IPP_A */
 
 /* JPEG-2000 codec */
-#define HAVE_JASPER
+/* #undef HAVE_JASPER */
 
 /* IJG JPEG codec */
 #define HAVE_JPEG
@@ -123,13 +123,13 @@
 /* OpenCL Support */
 #define HAVE_OPENCL
 /* #undef HAVE_OPENCL_STATIC */
-/* #undef HAVE_OPENCL_SVM */
+#define HAVE_OPENCL_SVM
 
 /* OpenEXR codec */
 #define HAVE_OPENEXR
 
 /* OpenGL support*/
-/* #undef HAVE_OPENGL */
+#define HAVE_OPENGL
 
 /* OpenNI library */
 /* #undef HAVE_OPENNI */
@@ -147,10 +147,10 @@
 #define HAVE_PTHREADS_PF
 
 /* Qt support */
-/* #undef HAVE_QT */
+#define HAVE_QT
 
 /* Qt OpenGL support */
-/* #undef HAVE_QT_OPENGL */
+#define HAVE_QT_OPENGL
 
 /* QuickTime video libraries */
 /* #undef HAVE_QUICKTIME */
@@ -190,7 +190,7 @@
 #define HAVE_GPHOTO2
 
 /* VA library (libva) */
-/* #undef HAVE_VA */
+#define HAVE_VA
 
 /* Intel VA-API/OpenCL */
 /* #undef HAVE_VA_INTEL */

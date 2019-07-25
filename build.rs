@@ -252,6 +252,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 
     {
         let mut types = File::create(out_dir.join("common_opencv.h"))?;
+        writeln!(&mut types, "#define CERES_FOUND true")?; // for sfm module
         for m in modules {
             writeln!(&mut types, "#include <opencv2/{}.hpp>", m.0)?;
             if m.0 == "dnn" {

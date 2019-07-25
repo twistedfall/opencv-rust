@@ -486,6 +486,7 @@ const_ignore_list = (
     "DEPTH_MASK_16F", "DEPTH_MASK_ALL_16F",
     "CV_USRTYPE1",
     "CV_INSTRUMENT_GET_RETURN_ADDRESS",
+    "CVVISUAL_FUNCTION_NAME_MACRO", "CVVISUAL_LOCATION", "CVVISUAL_THREAD_LOCAL",
 )
 
 # set of functions that should have unsafe in their declaration, element is FuncInfo.identifier
@@ -3094,6 +3095,7 @@ class RustWrapperGenerator(object):
         for hdr in srcfiles:
             decls = parser.parse(hdr, False)
             self.namespaces = set(str(x.replace(".", "::")) for x in parser.namespaces)
+            self.namespaces.add("cv")
             logging.info("\n\n=============== Header: %s ================\n\n", hdr)
             logging.info("Namespaces: %s", sorted(parser.namespaces))
             logging.info("Comment: %s", parser.module_comment)

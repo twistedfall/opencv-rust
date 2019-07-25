@@ -154,12 +154,14 @@ The following modules require [`opencv_contrib`](https://github.com/opencv/openc
 installed:
  * bioinspired
  * ccalib
+ * cvv
  * dpm
  * freetype
  * fuzzy
  * img_hash
  * phase_unwrapping
  * plot
+ * sfm
 
 ## OpenCV 2 support
 
