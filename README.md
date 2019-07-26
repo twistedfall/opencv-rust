@@ -12,7 +12,7 @@ The API is usable but unstable and not very battle-tested; use at your own risk.
 [API Documentation](https://docs.rs/opencv) is, to varying success,
 translated from OpenCV's doxygen docs. Most likely you'll want to
 refer to the official [OpenCV C++
-documentation](https://docs.opencv.org/3.4.6/) as well.
+documentation](https://docs.opencv.org/master/) as well.
 
 ### OpenCV version support
 
@@ -85,7 +85,7 @@ of the crate's API as you would treat one of C++, use `clone()` when needed.
 
 The following external dependencies are required:
 - python3
-- OpenCV 3.2.0, 3.4.6 or 4.1.0
+- OpenCV 3.2.0, 3.4.7 or 4.1.1
 
 OpenCV is a complicated dependency with a lot of different
 configurations that can break this crate since it relies on fragile

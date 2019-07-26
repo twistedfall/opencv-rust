@@ -16,6 +16,7 @@ from string import Template
 # fixme VectorOfMat::get allows to mutate?
 # fixme get comments from HOUGH_PROBABILISTIC in imgproc
 # fixme get multiline comments from LSD_REFINE_ADV in imgproc
+# fixme implement PtrOf<Trait> see https://docs.opencv.org/3.4.7/d8/d53/classcv_1_1dnn_1_1CropAndResizeLayer.html#a8a42c6fa064f2071f58954c7723bd033
 
 def template(text):
     """
@@ -93,6 +94,7 @@ decls_manual_pre = {
         ("class cv.KeyPoint", "", ["/Ghost", "/Simple"], []),
         ("class cv.RotatedRect", "", ["/Ghost"], []),
         ("class cv.TermCriteria", "", ["/Ghost"], []),
+        ("class cv.utils.logging.LogTag", "", ["/Ghost"], []),
     ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
@@ -129,6 +131,8 @@ func_rename = {
     "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat_Mat": "+_camera",
     "cv_solvePnP_Mat_Mat_Mat_Mat_Mat_Mat_bool_int": "solve_pnp",
     "cv_solvePnPRansac_Mat_Mat_Mat_Mat_Mat_Mat_bool_int_float_double_Mat_int": "solve_pnp_ransac",
+    "cv_solvePnPRefineLM_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria": "solve_pnp_refine_lm",
+    "cv_solvePnPRefineVVS_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria_double": "solve_pnp_refine_vvs",
     "cv_solveP3P_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_int": "solve_p3p",
     "cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria": "+_with_stddev",
     "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera",
@@ -282,6 +286,11 @@ func_rename = {
     "cv_MatConstIterator_MatConstIterator_MatConstIterator": "copy",
     "cv_MatConstIterator_pos_const_int_X": "+_to",
     "cv_MatConstIterator_seek_const_int_X_bool": "+_idx",
+    "cv_AsyncArray_AsyncArray_AsyncArray": "copy",
+    "cv_AsyncArray_get_const_Mat_int64": "+_with_timeout",
+    "cv_AsyncArray_get_const_Mat_double": "+_with_timeout_f64",
+    "cv_AsyncArray_wait_for_const_double": "+_f64",
+    "cv_AsyncArray__getImpl_const": "-",
 
     ### features2d ###
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
@@ -415,12 +424,14 @@ func_rename = {
     "cv_dnn_clamp_Range_int": "clamp_range",
     "cv_dnn_Net_connect_String_String": "connect_first_second",
     "cv_dnn_Layer_finalize_VectorOfMat_VectorOfMat": "finalize_to",
-    "cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar": "read_net_from_caffe_buffer",
-    "cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t": "read_net_from_caffe_str",
-    "cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar": "read_net_from_tensorflow_buffer",
-    "cv_dnn_readNetFromTensorflow_const_char_X_size_t_const_char_X_size_t": "read_net_from_tensorflow_str",
-    "cv_dnn_readNetFromDarknet_VectorOfuchar_VectorOfuchar": "read_net_from_darknet_buffer",
-    "cv_dnn_readNetFromDarknet_const_char_X_size_t_const_char_X_size_t": "read_net_from_darknet_str",
+    "cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t": "+_str",
+    "cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromTensorflow_const_char_X_size_t_const_char_X_size_t": "+_str",
+    "cv_dnn_readNetFromDarknet_VectorOfuchar_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromDarknet_const_char_X_size_t_const_char_X_size_t": "+_str",
+    "cv_dnn_readNetFromONNX_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromONNX_const_char_X_size_t": "+_str",
     "cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t": "get_memory_consumption_for_layer",
     "cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t": "get_memory_consumption_for_layers",
     "cv_dnn_DictValue_DictValue_bool": "from_bool",
@@ -444,6 +455,7 @@ class_ignore_list = (
     "cv::MatAllocator",
     "cv::TLSDataContainer",
     "cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray",
+    "cv::utils::logging::LogTagAuto",  # inherits LogTag, can't really handle this particular case yet
 
     ### features2d ###
     "cv::DrawMatchesFlags",  # dummy type only used to contain anonymous enum, 3.x only
@@ -485,7 +497,7 @@ const_ignore_list = (
     "CV_ALWAYS_INLINE",
     "CV_16FC",
     "CV__DNN_INLINE_NS",
-    "ENUM_LOG_LEVEL_FORCE_INT",
+    "ENUM_LOG_LEVEL_FORCE_INT", "CV_LOGTAG_FALLBACK", "CV_LOGTAG_GLOBAL",
     "DEPTH_MASK_16F", "DEPTH_MASK_ALL_16F",
     "CV_USRTYPE1",
     "CV_INSTRUMENT_GET_RETURN_ADDRESS",
@@ -753,6 +765,7 @@ enum_generate = {
     "cv::UndistortTypes",
     "cv::WindowFlags",
     "cv::WindowPropertyFlags",
+    "cv::utils::logging::LogLevel",
 
     ### dnn ###
     "cv::dnn::Backend",
@@ -788,6 +801,7 @@ enum_ignore_discriminant = {
     "cv::AccessFlag": {"ACCESS_MASK", },
     "cv::WindowFlags": {"WINDOW_FULLSCREEN", "WINDOW_KEEPRATIO", "WINDOW_GUI_EXPANDED"},
     "cv::VideoCaptureAPIs": {"CAP_VFW", "CAP_V4L2", "CAP_FIREWARE", "CAP_IEEE1394", "CAP_DC1394", "CAP_CMU1394", "CAP_REALSENSE"},
+    "cv::utils::logging::LogLevel": {"ENUM_LOG_LEVEL_FORCE_INT"},
 }
 
 # dict of reserved Rust keywords and their replacement to be used in var, function and class names
@@ -1663,7 +1677,7 @@ class EnumInfo(GeneralInfo):
             ${doc_comment}${name} = ${rustname} as isize,
         """),
         "rust_const_ignored": template("""
-            ${doc_comment}// ${name} = ${rustname} as isize, // duplicate discriminant
+            ${doc_comment}// ${name} = ${rustname} as isize, // ignored discriminant
         """),
     }
 

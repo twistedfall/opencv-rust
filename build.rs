@@ -73,8 +73,8 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "core/eigen.hpp",
         "core/fast_math.hpp", // contains functions with Rust native counterparts
         "core/private.hpp",
+        "allocator_stats.impl.hpp",
         "core/utils/filesystem.hpp", // contains functions with Rust native counterparts
-        "core/utils/logger.defines.hpp", // duplicate definitions of log values
         "dnn/blob.hpp",
         "ios.h",
         "ippasync.hpp",
@@ -260,6 +260,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
                 writeln!(&mut types, "#include <opencv2/{}/all_layers.hpp>", m.0)?;
             }
         }
+        if !cfg!(feature = "opencv-32") {
+            writeln!(&mut types, "#include <opencv2/core/utils/logger.hpp>")?;
+        }
     }
 
     {
@@ -270,9 +273,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     let version = if cfg!(feature = "opencv-32") {
         "3.2.0"
     } else if cfg!(feature = "opencv-34") {
-        "3.4.6"
+        "3.4.7"
     } else if cfg!(feature = "opencv-41") {
-        "4.1.0"
+        "4.1.1"
     } else {
         unreachable!();
     };

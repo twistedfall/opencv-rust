@@ -21,22 +21,34 @@ addons:
       - pkg-config
       - wget
       - cmake
-      - libgtk2.0-dev
+      - libatlas-base-dev
       - libavcodec-dev
       - libavformat-dev
-      - libswscale-dev
       - libavresample-dev
-      - libtbb-dev
-      - libjpeg-dev
-      - libpng-dev
-      - libtiff-dev
-      - libjasper-dev
-      - libwebp-dev
-      - libopenexr-dev
+      - libceres-dev
       - libdc1394-22-dev
-      - libatlas-base-dev
-      - liblapacke-dev
       - libeigen3-dev
+      - libfreetype6-dev
+      - libgdal-dev
+      - libgflags-dev
+      - libgoogle-glog-dev
+      - libgphoto2-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libgstreamer1.0-dev
+      - libharfbuzz-dev
+      - libhdf5-dev
+      - libjpeg-dev
+      - liblapacke-dev
+      - libleptonica-dev
+      - libopenexr-dev
+      - libpng-dev
+      - libswscale-dev
+      - libtbb-dev
+      - libtesseract-dev
+      - libtiff-dev
+      - libvtk6-dev
+      - libwebp-dev
+      - qtbase5-dev
       - tree
 
 env:
@@ -45,8 +57,8 @@ env:
     - LC_CTYPE=C.UTF-8 # makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
   matrix:
     - OPENCV_VERSION=3.2.0 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-32
-    - OPENCV_VERSION=3.4.6 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-34
-    - OPENCV_VERSION=4.1.0 OPENCV_PKGCONFIG=opencv4 CARGO_FEATURES=opencv-41
+    - OPENCV_VERSION=3.4.7 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-34
+    - OPENCV_VERSION=4.1.1 OPENCV_PKGCONFIG=opencv4 CARGO_FEATURES=opencv-41
 
 before_script:
   - ci/install-opencv.sh

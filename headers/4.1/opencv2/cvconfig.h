@@ -34,11 +34,14 @@
 /* Cocoa API */
 /* #undef HAVE_COCOA */
 
+/* NVIDIA CUDA Runtime API*/
+/* #undef HAVE_CUDA */
+
 /* NVIDIA CUDA Basic Linear Algebra Subprograms (BLAS) API*/
 /* #undef HAVE_CUBLAS */
 
-/* NVIDIA CUDA Runtime API*/
-/* #undef HAVE_CUDA */
+/* NVIDIA CUDA Deep Neural Network (cuDNN) API*/
+/* #undef HAVE_CUDNN */
 
 /* NVIDIA CUDA Fast Fourier Transform (FFT) API*/
 /* #undef HAVE_CUFFT */
