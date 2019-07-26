@@ -164,6 +164,7 @@ installed:
  * phase_unwrapping
  * plot
  * sfm
+ * structured_light
 
 ## OpenCV 2 support
 

@@ -1075,7 +1075,7 @@ class FuncInfo(GeneralInfo):
 
         self.is_ignored = False
         if self.classname and not self.classname.startswith("operator"):
-            self.ci = gen.get_class(self.classname)
+            self.ci = gen.get_class(self.classpath)
             if not self.ci:
                 if self.classname == "std" or "<" in self.classname:
                     self.is_ignored = True
@@ -1086,7 +1086,7 @@ class FuncInfo(GeneralInfo):
             if self.classname == self.name:
                 self.kind = self.KIND_CONSTRUCTOR
                 self.name = "new"
-                self.type = gen.get_type_info(self.classname)
+                self.type = gen.get_type_info(self.classpath)
             else:
                 self.kind = self.KIND_METHOD
                 self.type = gen.get_type_info(decl[1])

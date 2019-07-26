@@ -52,7 +52,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "rgbd",
         "saliency",
         "stereo",
-        "structured_light",
         "surface_matching",
         "text",
         "tracking",
