@@ -153,7 +153,6 @@ func_rename = {
     "cv_Mat_Mat_VectorOfint_int": "+_nd",
     "cv_Mat_Mat_int_const_int_X_int_Scalar": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_Scalar, but with pointers
     "cv_Mat_Mat_VectorOfint_int_Scalar": "+_nd_with_default",
-    "cv_Mat_Mat_Mat": "copy",
     "cv_Mat_Mat_int_int_int_void_X_size_t": "new_rows_cols_with_data",
     "cv_Mat_Mat_Size_int_void_X_size_t": "new_size_with_data",
     "cv_Mat_Mat_int_const_int_X_int_void_X_const_size_t_X": "-",  # duplicate of cv_Mat_Mat_VectorOfint_int_void_X_const_size_t_X, but with pointers
@@ -206,7 +205,6 @@ func_rename = {
     "cv_swap_UMat_UMat": "+_umat",
     "cv_UMat_UMat_int_const_int_X_int_UMatUsageFlags": "+_nd",
     "cv_UMat_UMat_int_const_int_X_int_Scalar_UMatUsageFlags": "+_nd_with_default",  # fixme
-    "cv_UMat_UMat_UMat": "copy",
     "cv_UMat_UMat_UMat_Range_Range": "rowscols",
     "cv_UMat_UMat_UMat_Rect": "roi",
     "cv_UMat_UMat_UMat_const_Range": "-",  # duplicate of cv_UMat_UMat_UMat_VectorOfRange, but with pointers
@@ -227,14 +225,6 @@ func_rename = {
     "cv_UMat_copySize_UMat": "-",  # internal function
     "cv_Mat_push_back__const_void_X": "-",  # internal method
     "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
-    "cv_Matx_TOp_Matx_TOp_Matx_TOp": "copy",
-    "cv_Matx_ScaleOp_Matx_ScaleOp_Matx_ScaleOp": "copy",
-    "cv_Matx_MulOp_Matx_MulOp_Matx_MulOp": "copy",
-    "cv_Matx_DivOp_Matx_DivOp_Matx_DivOp": "copy",
-    "cv_Matx_AddOp_Matx_AddOp_Matx_AddOp": "copy",
-    "cv_Matx_SubOp_Matx_SubOp_Matx_SubOp": "copy",
-    "cv_Matx_MatMulOp_Matx_MatMulOp_Matx_MatMulOp": "copy",
-    "cv_PCA_PCA": "default",
     "cv_PCA_PCA_Mat_Mat_int_double": "new_mat_variance",
     "cv_PCA_PCA_Mat_Mat_int_int": "new_mat_max",
     "cv_PCA_backProject_const_Mat_Mat": "+_to",
@@ -242,11 +232,8 @@ func_rename = {
     "cv_PCACompute_Mat_Mat_Mat_double": "pca_compute_variance",
     "cv_PCACompute_Mat_Mat_Mat_Mat_double": "pca_compute_values_variance",
     "cv_PCACompute_Mat_Mat_Mat_Mat_int": "pca_compute_values",
-    "cv_Range_Range": "default",
     "cv_Range_Range_int_int": "new",
-    "cv_RotatedRect_RotatedRect": "default",
     "cv_RotatedRect_RotatedRect_Point2f_Point2f_Point2f": "for_points",
-    "cv_TermCriteria_TermCriteria": "default",
     "cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int": "-",  # duplicate of cv_calcCovarMatrix_Mat_Mat_Mat_int_int, but with pointers
     "cv_clipLine_Size_Point_Point": "clip_line_size",
     "cv_clipLine_Size2l_Point2l_Point2l": "clip_line_size_i64",
@@ -283,10 +270,8 @@ func_rename = {
     "cv_MatConstIterator_MatConstIterator_const_Mat_int_int": "with_rows_cols",
     "cv_MatConstIterator_MatConstIterator_const_Mat_Point": "with_start",
     "cv_MatConstIterator_MatConstIterator_const_Mat_const_int_X": "with_idx",
-    "cv_MatConstIterator_MatConstIterator_MatConstIterator": "copy",
     "cv_MatConstIterator_pos_const_int_X": "+_to",
     "cv_MatConstIterator_seek_const_int_X_bool": "+_idx",
-    "cv_AsyncArray_AsyncArray_AsyncArray": "copy",
     "cv_AsyncArray_get_const_Mat_int64": "+_with_timeout",
     "cv_AsyncArray_get_const_Mat_double": "+_with_timeout_f64",
     "cv_AsyncArray_wait_for_const_double": "+_f64",
@@ -296,11 +281,9 @@ func_rename = {
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_int": "AGAST_with_type",  # 3.x only
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_AgastFeatureDetector_DetectorType": "AGAST_with_type",
-    "cv_BOWKMeansTrainer_cluster_const": "default",
     "cv_BOWKMeansTrainer_cluster_const_Mat": "new",
     "cv_BOWKMeansTrainer_BOWKMeansTrainer_int_TermCriteria_int_int": "new_with_criteria",
     "cv_BOWImgDescriptorExtractor_compute_Mat_VectorOfKeyPoint_Mat_VectorOfVectorOfint_Mat": "compute_desc",
-    "cv_DMatch_DMatch": "default",
     "cv_DMatch_DMatch_int_int_int_float": "new_index",
     "cv_DescriptorMatcher_knnMatch_const_Mat_Mat_VectorOfVectorOfDMatch_int_Mat_bool": "knn_train_matches",
     "cv_DescriptorMatcher_knnMatch_Mat_VectorOfVectorOfDMatch_int_VectorOfMat_bool": "knn_matches",
@@ -312,12 +295,10 @@ func_rename = {
     "cv_FAST_Mat_VectorOfKeyPoint_int_bool_int": "FAST_with_type",  # 3.x only
     "cv_FAST_Mat_VectorOfKeyPoint_int_bool_FastFeatureDetector_DetectorType": "FAST_with_type",
     "cv_Feature2D_detect_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "+_multiple",
-    "cv_KeyPoint_KeyPoint": "default",
     "cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int": "new_point",
     "cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int": "new_coords",
     "cv_KeyPoint_convert_VectorOfKeyPoint_VectorOfPoint2f_VectorOfint": "convert_from",
     "cv_KeyPoint_convert_VectorOfPoint2f_VectorOfKeyPoint_float_float_int_int": "convert_to",
-    "cv_MatStep_MatStep": "default",
     "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int": "+_vector",
     "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_DrawMatchesFlags": "+_vector",
     "cv_BRISK_create_VectorOffloat_VectorOfint_float_float_VectorOfint": "create_with_pattern",
@@ -343,8 +324,6 @@ func_rename = {
 
     ### imgproc ###
     "cv_Canny_Mat_Mat_Mat_double_double_bool": "+_derivative",
-    "cv_Moments_Moments": "default",
-    "cv_Subdiv2D_Subdiv2D": "default",
     "cv_Subdiv2D_insert_VectorOfPoint2f": "+_multiple",
     "cv_findContours_Mat_VectorOfMat_Mat_int_int_Point": "+_with_hierarchy",
     "cv_distanceTransform_Mat_Mat_Mat_int_int_int": "+_labels",
@@ -360,13 +339,10 @@ func_rename = {
     "cv_ml_ParamGrid_ParamGrid_double_double_double": "for_range",
 
     ### objdetect ###
-    "cv_CascadeClassifier_CascadeClassifier": "default",
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "detect_multi_scale_levels",
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size": "detect_multi_scale_num",
     "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size": "detect_multi_scale",
-    "cv_HOGDescriptor_HOGDescriptor": "default",
     "cv_HOGDescriptor_HOGDescriptor_String": "new_from_file",
-    "cv_HOGDescriptor_HOGDescriptor_HOGDescriptor": "copy",
     "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool": "detect_multi_scale",
     "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_double_Size_Size_double_double_bool": "detect_multi_scale_weights",
     "cv_HOGDescriptor_detect_const_Mat_VectorOfPoint_VectorOfdouble_double_Size_Size_VectorOfPoint": "detect_weights",
@@ -387,18 +363,13 @@ func_rename = {
     "cv_MergeMertens_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
     "cv_MergeRobertson_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
 
-    ### video ###
-    "cv_KalmanFilter_KalmanFilter": "default",
-
     ### videoio ###
-    "cv_VideoCapture_VideoCapture": "default",
     "cv_VideoCapture_VideoCapture_int_int": "new_with_backend",
     "cv_VideoCapture_VideoCapture_String": "new_from_file",
     "cv_VideoCapture_VideoCapture_String_int": "new_from_file_with_backend",
     "cv_VideoCapture_open_int_int": "open_with_backend",
     "cv_VideoCapture_open_String": "open_file",
     "cv_VideoCapture_open_String_int": "open_file_with_backend",
-    "cv_VideoWriter_VideoWriter": "default",
     "cv_VideoWriter_VideoWriter_String_int_int_double_Size_bool": "new_with_backend",
     "cv_VideoWriter_open_String_int_int_double_Size_bool": "open_with_backend",
 
@@ -1086,7 +1057,12 @@ class FuncInfo(GeneralInfo):
                 self.ci.is_trait = True
             if self.classname == self.name:
                 self.kind = self.KIND_CONSTRUCTOR
-                self.name = "new"
+                if len(decl[3]) == 0:
+                    self.name = "default"
+                elif len(decl[3]) == 1 and decl[3][0][0].replace(" ", "").endswith("{}&".format(self.name)):
+                    self.name = "copy"
+                else:
+                    self.name = "new"
                 self.type = gen.get_type_info(self.classpath)
             else:
                 self.kind = self.KIND_METHOD
@@ -1209,7 +1185,7 @@ class FuncInfo(GeneralInfo):
     def r_name(self):
         name = func_rename.get(self.identifier)
         if name is None:
-            name = "new" if self.is_constructor() else self.name
+            name = self.name
         else:
             if "+" in name:
                 name = name.replace("+", self.name)
@@ -3247,7 +3223,7 @@ class RustWrapperGenerator(object):
         # to call it from rust code.
         # If duplicate functions have the same call arguments, we skip duplicate function.
         rust_func_name = fi.r_name()
-        classname = "" if fi.kind == fi.KIND_FUNCTION else fi.classname
+        classname = "" if fi.kind == fi.KIND_FUNCTION else fi.classpath
         renamed = False
         while classname + '::' + rust_func_name in self.func_names:
             rust_func_name = bump_counter(rust_func_name)

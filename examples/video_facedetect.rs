@@ -33,20 +33,20 @@ fn run() -> opencv::Result<()> {
     }
     let mut face = objdetect::CascadeClassifier::new(&xml)?;
     loop {
-        let mut frame = Mat::new()?;
+        let mut frame = Mat::default()?;
         cam.read(&mut frame)?;
         if frame.size()?.width == 0 {
             thread::sleep(Duration::from_secs(50));
             continue;
         }
-        let mut gray = Mat::new()?;
+        let mut gray = Mat::default()?;
         imgproc::cvt_color(
             &frame,
             &mut gray,
             imgproc::COLOR_BGR2GRAY,
             0
         )?;
-        let mut reduced = Mat::new()?;
+        let mut reduced = Mat::default()?;
         imgproc::resize(
             &gray,
             &mut reduced,

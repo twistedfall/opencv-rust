@@ -15,8 +15,8 @@ fn orb() -> Result<()> {
     let img = imgcodecs::imread(blox_path.to_str().unwrap(), imgcodecs::IMREAD_COLOR)?;
     let mut orb: PtrOfORB = ORB::default()?;
     let mut kp = VectorOfKeyPoint::new();
-    let mut des = Mat::new()?;
-    orb.detect_and_compute(&img, &Mat::new()?, &mut kp, &mut des, false)?;
+    let mut des = Mat::default()?;
+    orb.detect_and_compute(&img, &Mat::default()?, &mut kp, &mut des, false)?;
     let size = if cfg!(feature = "opencv-32") { 296 } else { 290 };
     assert_eq!(size, kp.len());
     assert_eq!(Size::new(32, size as i32), des.size()?);

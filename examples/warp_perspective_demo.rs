@@ -154,8 +154,8 @@ fn main() -> Result<(), Box<Error>> {
                 let warped_image_size = Size::new(dst_corners.get(2)?.x, dst_corners.get(2)?.y);
                 let roi_corners_mat = Mat::from_exact_iter(roi_corners.iter())?;
                 let dst_corners_mat = Mat::from_exact_iter(dst_corners.iter())?;
-                let h = calib3d::find_homography(&roi_corners_mat, &dst_corners_mat, &mut Mat::new()?, 0, 3.)?; //get homography
-                let mut warped_image = Mat::new()?;
+                let h = calib3d::find_homography(&roi_corners_mat, &dst_corners_mat, &mut Mat::default()?, 0, 3.)?; //get homography
+                let mut warped_image = Mat::default()?;
                 imgproc::warp_perspective(&original_image, &mut warped_image, &h, warped_image_size, imgproc::INTER_LINEAR, core::BORDER_CONSTANT, Scalar::default())?; // do perspective transformation
                 highgui::imshow("Warped Image", &warped_image)?;
             }

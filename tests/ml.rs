@@ -12,9 +12,9 @@ fn knn() -> Result<()> {
     let samp = Mat::new_rows_cols_with_default(1, 1, f32::typ(), Scalar::all(1.))?;
     let resp = Mat::new_rows_cols_with_default(1, 1, f32::typ(), Scalar::all(2.))?;
     knn.train(&samp, ml::ROW_SAMPLE, &resp)?;
-    let mut resp = Mat::new()?;
-    let mut neigh = Mat::new()?;
-    let mut dist = Mat::new()?;
+    let mut resp = Mat::default()?;
+    let mut neigh = Mat::default()?;
+    let mut dist = Mat::default()?;
     knn.find_nearest(&samp, 3, &mut resp, &mut neigh, &mut dist)?;
     assert_eq!(2., *resp.at_2d::<f32>(0, 0)?);
     assert_eq!(Size::new(1, 1), resp.size()?);

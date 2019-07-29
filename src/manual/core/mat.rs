@@ -451,12 +451,6 @@ impl fmt::Debug for Mat {
     }
 }
 
-impl Default for Mat {
-    fn default() -> Self {
-        Mat::new().unwrap()
-    }
-}
-
 impl UMat {
     #[inline]
     pub fn size(&self) -> Result<core::Size> {

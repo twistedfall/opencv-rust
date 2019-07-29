@@ -21,7 +21,7 @@ fn decode() -> Result<()> {
     {
         let mut bytes = PIXEL.to_vec();
         let src = Mat::new_rows_cols_with_data(1, PIXEL.len() as _, u8::typ(), unsafe { transmute(bytes.as_mut_ptr()) }, core::Mat_AUTO_STEP)?;
-        let mut dest = Mat::new()?;
+        let mut dest = Mat::default()?;
         imgcodecs::imdecode_to(&src, imgcodecs::IMREAD_COLOR, &mut dest)?;
         assert_eq!(dest.size()?, Size::new(1, 1));
         assert_eq!(dest.channels()?, 3);

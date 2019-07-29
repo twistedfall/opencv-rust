@@ -11,11 +11,11 @@ use opencv::{
 
 #[test]
 fn net() -> Result<()> {
-    let mut net = Net::new()?;
+    let mut net = Net::default()?;
     assert!(net.empty()?);
     #[cfg(not(feature = "opencv-32"))]
     net.enable_fusion(false)?;
-    let mut params = LayerParams::new()?;
+    let mut params = LayerParams::default()?;
     assert_eq!(params.name()?, "");
     assert_eq!(params._type()?, "");
     params.set_name("param name")?;
@@ -33,7 +33,7 @@ fn net() -> Result<()> {
     #[cfg(not(feature = "opencv-32"))]
     {
         let mut blobs = VectorOfMat::new();
-        blobs.push(Mat::new()?);
+        blobs.push(Mat::default()?);
         params.set_blobs(blobs)?;
         let blobs = params.blobs()?;
         assert_eq!(1, blobs.len());

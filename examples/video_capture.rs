@@ -16,7 +16,7 @@ fn run() -> opencv::Result<()> {
         panic!("Unable to open default camera!");
     }
     loop {
-        let mut frame = core::Mat::new()?;
+        let mut frame = core::Mat::default()?;
         cam.read(&mut frame)?;
         if frame.size()?.width > 0 {
             highgui::imshow(window, &mut frame)?;
