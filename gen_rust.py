@@ -276,6 +276,16 @@ func_rename = {
     "cv_AsyncArray_get_const_Mat_double": "+_with_timeout_f64",
     "cv_AsyncArray_wait_for_const_double": "+_f64",
     "cv_AsyncArray__getImpl_const": "-",
+    "cv_ocl_internal_isCLBuffer_UMat": "-",
+    "cv_ocl_internal_isOpenCLForced": "-",
+    "cv_ocl_internal_isPerformanceCheckBypassed": "-",
+    "cv_ocl_ProgramSource_ProgramSource_const_char_X": "-",
+    "cv_ocl_Context_Context_int": "+_with_type",
+    "cv_ocl_Context_create_int": "+_with_type",
+    "cv_ocl_Kernel_set_int_UMat": "+_umat",
+    "cv_ocl_Kernel_set_int_KernelArg": "+_kernel_arg",
+    "cv_ocl_Program_getPrefix_String": "+_build_flags",
+    "cv_ocl_ProgramSource_ProgramSource_String": "from_str",
 
     ### features2d ###
     "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
@@ -807,6 +817,8 @@ def decl_patch(module, decl):
         # size() and step() of Mat and UMat should be const
         if decl[0] == "cv.Mat.size" or decl[0] == "cv.Mat.step" or decl[0] == "cv.UMat.size" or decl[0] == "cv.UMat.step":
             decl[2].append("/C")
+        elif decl[0] == "class cv.ocl.Device" and "/Simple" in decl[2]:
+            decl[2].remove("/Simple")
     elif module == "dnn":
         # set method takes generic, force it to take DictValue wrapper
         if decl[0] == "cv.dnn.Dict.set":
@@ -1209,10 +1221,10 @@ class FuncInfo(GeneralInfo):
                 ignored = " (ignored)"
             if isinstance(arg.type, RawPtrTypeInfo):
                 ptr = " (ptr)"
-            pre_call_arg = arg.type.cpp_arg_pre_call(arg.rsname)
+            pre_call_arg = arg.type.cpp_arg_pre_call(arg.name)
             if pre_call_arg:
                 pre_call_args.append(pre_call_arg)
-            post_call_arg = arg.type.cpp_arg_post_call(arg.rsname)
+            post_call_arg = arg.type.cpp_arg_post_call(arg.name)
             if post_call_arg:
                 post_call_args.append(post_call_arg)
 
@@ -1944,6 +1956,7 @@ class StringTypeInfo(TypeInfo):
         :type typeid: str
         """
         super().__init__(gen, typeid)
+        self.is_std = "std::string" in typeid
         self.cpp_extern = "const char*"
         self.cpptype = "String"
         self.rust_full = "String"
@@ -1991,7 +2004,10 @@ class StringTypeInfo(TypeInfo):
 
     def cpp_arg_pre_call(self, var_name, is_output=False):
         if self.is_output():
-            return "std::string {}_out".format(var_name)
+            if self.is_std:
+                return "std::string {}_out".format(var_name)
+            else:
+                return "cv::String {}_out".format(var_name)
         return super().cpp_arg_pre_call(var_name, is_output)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
@@ -3146,6 +3162,7 @@ class RustWrapperGenerator(object):
             f.write("""#include <cstdio>\n""")
             f.write("""#include <opencv2/core.hpp>\n""")  # for hdf in opencv-3.2
             f.write("""#include <opencv2/%s.hpp>\n"""%(module))
+            f.write("""#include <opencv2/core/ocl.hpp>\n""")
             f.write("""using namespace cv;\n""")
             f.write("int main(int, char**) {\n")
             f.write(self.moduleCppConsts.getvalue())

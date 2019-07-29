@@ -66,7 +66,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "hal.hpp",
         "_c.h",
         "core/cv_cpu_dispatch.h", // ?
-        "core/ocl_genbase.hpp", // ?
         "core/opengl.hpp", // ?
         "core/cvstd.hpp", // contains functions with Rust native counterparts and c++ specific classes
         "core/cvstd_wrapper.hpp",
@@ -78,7 +77,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "dnn/blob.hpp",
         "ios.h",
         "ippasync.hpp",
-        "ocl.hpp",
         "operations.hpp",
         "persistence.hpp",
         "utils/trace.hpp",
@@ -258,6 +256,8 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
                     writeln!(&mut types, "#include <opencv2/{}/version.hpp>", m.0)?;
                 }
                 writeln!(&mut types, "#include <opencv2/{}/all_layers.hpp>", m.0)?;
+            } else if m.0 == "core" {
+                writeln!(&mut types, "#include <opencv2/{}/ocl.hpp>", m.0)?;
             }
         }
         if !cfg!(feature = "opencv-32") {
