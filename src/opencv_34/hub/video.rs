@@ -85,7 +85,7 @@ pub fn build_optical_flow_pyramid(img: &core::Mat, pyramid: &mut types::VectorOf
 /// good value would be poly_sigma=1.5.
 /// * flags: operation flags that can be a combination of the following:
 /// *   **OPTFLOW_USE_INITIAL_FLOW** uses the input flow as an initial flow approximation.
-/// *   **OPTFLOW_FARNEBACK_GAUSSIAN** uses the Gaussian <span lang='latex'>\texttt{winsize}\times\texttt{winsize}</span>
+/// *   **OPTFLOW_FARNEBACK_GAUSSIAN** uses the Gaussian ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bwinsize%7D%5Ctimes%5Ctexttt%7Bwinsize%7D)
 /// filter instead of a box filter of the same size for optical flow estimation; usually, this
 /// option gives z more accurate flow than with a box filter, at the cost of lower speed;
 /// normally, winsize for a Gaussian window should be set to a larger value to achieve the same
@@ -93,7 +93,7 @@ pub fn build_optical_flow_pyramid(img: &core::Mat, pyramid: &mut types::VectorOf
 ///
 /// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 ///
-/// <div lang='latex'>\texttt{prev} (y,x)  \sim \texttt{next} ( y + \texttt{flow} (y,x)[1],  x + \texttt{flow} (y,x)[0])</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 ///
 ///
 /// Note:
@@ -241,10 +241,10 @@ pub fn create_opt_flow__dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
 /// In case of point sets, the problem is formulated as follows: you need to find a 2x2 matrix *A* and
 /// 2x1 vector *b* so that:
 ///
-/// <div lang='latex'>[A^*|b^*] = arg  \min _{[A|b]}  \sum _i  \| \texttt{dst}[i] - A { \texttt{src}[i]}^T - b  \| ^2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5BA%5E%2A%7Cb%5E%2A%5D%20%3D%20arg%20%20%5Cmin%20_%7B%5BA%7Cb%5D%7D%20%20%5Csum%20_i%20%20%5C%7C%20%5Ctexttt%7Bdst%7D%5Bi%5D%20-%20A%20%7B%20%5Ctexttt%7Bsrc%7D%5Bi%5D%7D%5ET%20-%20b%20%20%5C%7C%20%5E2)
 /// where src[i] and dst[i] are the i-th points in src and dst, respectively
-/// <span lang='latex'>[A|b]</span> can be either arbitrary (when fullAffine=true ) or have a form of
-/// <div lang='latex'>\begin{bmatrix} a_{11} & a_{12} & b_1  \\ -a_{12} & a_{11} & b_2  \end{bmatrix}</div>
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5BA%7Cb%5D) can be either arbitrary (when fullAffine=true ) or have a form of
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20a_%7B11%7D%20%26%20a_%7B12%7D%20%26%20b_1%20%20%5C%5C%20-a_%7B12%7D%20%26%20a_%7B11%7D%20%26%20b_2%20%20%5Cend%7Bbmatrix%7D)
 /// when fullAffine=false.
 ///
 /// ## See also
@@ -263,17 +263,17 @@ pub fn estimate_rigid_transform_1(src: &core::Mat, dst: &core::Mat, full_affine:
 /// * templateImage: single-channel template image; CV_8U or CV_32F array.
 /// * inputImage: single-channel input image which should be warped with the final warpMatrix in
 /// order to provide an image similar to templateImage, same type as templateImage.
-/// * warpMatrix: floating-point <span lang='latex'>2\times 3</span> or <span lang='latex'>3\times 3</span> mapping matrix (warp).
+/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
 /// * motionType: parameter, specifying the type of motion:
-/// *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is <span lang='latex'>2\times 3</span> with
-/// the first <span lang='latex'>2\times 2</span> part being the unity matrix and the rest two parameters being
+/// *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) with
+/// the first ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%202) part being the unity matrix and the rest two parameters being
 /// estimated.
 /// *   **MOTION_EUCLIDEAN** sets a Euclidean (rigid) transformation as motion model; three
-/// parameters are estimated; warpMatrix is <span lang='latex'>2\times 3</span>.
+/// parameters are estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
 /// *   **MOTION_AFFINE** sets an affine motion model (DEFAULT); six parameters are estimated;
-/// warpMatrix is <span lang='latex'>2\times 3</span>.
+/// warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
 /// *   **MOTION_HOMOGRAPHY** sets a homography as a motion model; eight parameters are
-/// estimated;\`warpMatrix\` is <span lang='latex'>3\times 3</span>.
+/// estimated;\`warpMatrix\` is ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203).
 /// * criteria: parameter, specifying the termination criteria of the ECC algorithm;
 /// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
 /// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
@@ -284,15 +284,15 @@ pub fn estimate_rigid_transform_1(src: &core::Mat, dst: &core::Mat, full_affine:
 /// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
 /// ([EP08](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_EP08)), that is
 ///
-/// <div lang='latex'>\texttt{warpMatrix} = \texttt{warpMatrix} = \arg\max_{W} \texttt{ECC}(\texttt{templateImage}(x,y),\texttt{inputImage}(x',y'))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax_%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 ///
 /// where
 ///
-/// <div lang='latex'>\begin{bmatrix} x' \\ y' \end{bmatrix} = W \cdot \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20x%27%20%5C%5C%20y%27%20%5Cend%7Bbmatrix%7D%20%3D%20W%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%20%5C%5C%20y%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// (the equation holds with homogeneous coordinates for homography). It returns the final enhanced
 /// correlation coefficient, that is the correlation coefficient between the template image and the
-/// final warped input image. When a <span lang='latex'>3\times 3</span> matrix is given with motionType =0, 1 or 2, the third
+/// final warped input image. When a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) matrix is given with motionType =0, 1 or 2, the third
 /// row is ignored.
 ///
 /// Unlike findHomography and estimateRigidTransform, the function findTransformECC implements an
@@ -325,17 +325,17 @@ pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, w
 /// * templateImage: single-channel template image; CV_8U or CV_32F array.
 /// * inputImage: single-channel input image which should be warped with the final warpMatrix in
 /// order to provide an image similar to templateImage, same type as templateImage.
-/// * warpMatrix: floating-point <span lang='latex'>2\times 3</span> or <span lang='latex'>3\times 3</span> mapping matrix (warp).
+/// * warpMatrix: floating-point ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) or ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mapping matrix (warp).
 /// * motionType: parameter, specifying the type of motion:
-/// *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is <span lang='latex'>2\times 3</span> with
-/// the first <span lang='latex'>2\times 2</span> part being the unity matrix and the rest two parameters being
+/// *   **MOTION_TRANSLATION** sets a translational motion model; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) with
+/// the first ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%202) part being the unity matrix and the rest two parameters being
 /// estimated.
 /// *   **MOTION_EUCLIDEAN** sets a Euclidean (rigid) transformation as motion model; three
-/// parameters are estimated; warpMatrix is <span lang='latex'>2\times 3</span>.
+/// parameters are estimated; warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
 /// *   **MOTION_AFFINE** sets an affine motion model (DEFAULT); six parameters are estimated;
-/// warpMatrix is <span lang='latex'>2\times 3</span>.
+/// warpMatrix is ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203).
 /// *   **MOTION_HOMOGRAPHY** sets a homography as a motion model; eight parameters are
-/// estimated;\`warpMatrix\` is <span lang='latex'>3\times 3</span>.
+/// estimated;\`warpMatrix\` is ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203).
 /// * criteria: parameter, specifying the termination criteria of the ECC algorithm;
 /// criteria.epsilon defines the threshold of the increment in the correlation coefficient between two
 /// iterations (a negative criteria.epsilon makes criteria.maxcount the only termination criterion).
@@ -346,15 +346,15 @@ pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, w
 /// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
 /// ([EP08](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_EP08)), that is
 ///
-/// <div lang='latex'>\texttt{warpMatrix} = \texttt{warpMatrix} = \arg\max_{W} \texttt{ECC}(\texttt{templateImage}(x,y),\texttt{inputImage}(x',y'))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax_%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 ///
 /// where
 ///
-/// <div lang='latex'>\begin{bmatrix} x' \\ y' \end{bmatrix} = W \cdot \begin{bmatrix} x \\ y \\ 1 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20x%27%20%5C%5C%20y%27%20%5Cend%7Bbmatrix%7D%20%3D%20W%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%20%5C%5C%20y%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// (the equation holds with homogeneous coordinates for homography). It returns the final enhanced
 /// correlation coefficient, that is the correlation coefficient between the template image and the
-/// final warped input image. When a <span lang='latex'>3\times 3</span> matrix is given with motionType =0, 1 or 2, the third
+/// final warped input image. When a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) matrix is given with motionType =0, 1 or 2, the third
 /// row is ignored.
 ///
 /// Unlike findHomography and estimateRigidTransform, the function findTransformECC implements an
@@ -687,7 +687,7 @@ pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
     /// Computes a foreground mask.
     ///
     /// ## Parameters
-    /// * image: Next video frame. Floating point frame will be used without scaling and should be in range <span lang='latex'>[0,255]</span>.
+    /// * image: Next video frame. Floating point frame will be used without scaling and should be in range ![inline formula](https://latex.codecogs.com/png.latex?%5B0%2C255%5D).
     /// * fgmask: The output foreground mask as an 8-bit binary image.
     /// * learningRate: The value between 0 and 1 that indicates how fast the background model is
     /// learnt. Negative parameter value makes the algorithm to use some automatically chosen learning

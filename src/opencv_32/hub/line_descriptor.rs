@@ -20,49 +20,49 @@
 //! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
 //! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
 //! rectangular region centered at it and called *line support region (LSR)*. Such region is divided
-//! into a set of bands <span lang='latex'>\{B_1, B_2, ..., B_m\}</span>, whose length equals the one of line.
+//! into a set of bands ![inline formula](https://latex.codecogs.com/png.latex?%5C%7BB_1%2C%20B_2%2C%20...%2C%20B_m%5C%7D), whose length equals the one of line.
 //!
-//! If we indicate with <span lang='latex'>\bf{d}_L</span> the direction of line, the orthogonal and clockwise direction to line
-//! <span lang='latex'>\bf{d}_{\perp}</span> can be determined; these two directions, are used to construct a reference frame
-//! centered in the middle point of line. The gradients of pixels <span lang='latex'>\bf{g'}</span> inside LSR can be projected
+//! If we indicate with ![inline formula](https://latex.codecogs.com/png.latex?%5Cbf%7Bd%7D_L) the direction of line, the orthogonal and clockwise direction to line
+//! ![inline formula](https://latex.codecogs.com/png.latex?%5Cbf%7Bd%7D_%7B%5Cperp%7D) can be determined; these two directions, are used to construct a reference frame
+//! centered in the middle point of line. The gradients of pixels ![inline formula](https://latex.codecogs.com/png.latex?%5Cbf%7Bg%27%7D) inside LSR can be projected
 //! to the newly determined frame, obtaining their local equivalent
-//! <span lang='latex'>\bf{g'} = (\bf{g}^T \cdot \bf{d}_{\perp}, \bf{g}^T \cdot \bf{d}_L)^T \triangleq (\bf{g'}_{d_{\perp}}, \bf{g'}_{d_L})^T</span>.
+//! ![inline formula](https://latex.codecogs.com/png.latex?%5Cbf%7Bg%27%7D%20%3D%20%28%5Cbf%7Bg%7D%5ET%20%5Ccdot%20%5Cbf%7Bd%7D_%7B%5Cperp%7D%2C%20%5Cbf%7Bg%7D%5ET%20%5Ccdot%20%5Cbf%7Bd%7D_L%29%5ET%20%5Ctriangleq%20%28%5Cbf%7Bg%27%7D_%7Bd_%7B%5Cperp%7D%7D%2C%20%5Cbf%7Bg%27%7D_%7Bd_L%7D%29%5ET).
 //!
-//! Later on, a Gaussian function is applied to all LSR's pixels along <span lang='latex'>\bf{d}_\perp</span> direction; first,
-//! we assign a global weighting coefficient <span lang='latex'>f_g(i) = (1/\sqrt{2\pi}\sigma_g)e^{-d^2_i/2\sigma^2_g}</span> to
-//! *i*-th row in LSR, where <span lang='latex'>d_i</span> is the distance of *i*-th row from the center row in LSR,
-//! <span lang='latex'>\sigma_g = 0.5(m \cdot w - 1)</span> and <span lang='latex'>w</span> is the width of bands (the same for every band). Secondly,
-//! considering a band <span lang='latex'>B_j</span> and its neighbor bands <span lang='latex'>B_{j-1}, B_{j+1}</span>, we assign a local weighting
-//! <span lang='latex'>F_l(k) = (1/\sqrt{2\pi}\sigma_l)e^{-d'^2_k/2\sigma_l^2}</span>, where <span lang='latex'>d'_k</span> is the distance of *k*-th
-//! row from the center row in <span lang='latex'>B_j</span> and <span lang='latex'>\sigma_l = w</span>. Using the global and local weights, we obtain,
+//! Later on, a Gaussian function is applied to all LSR's pixels along ![inline formula](https://latex.codecogs.com/png.latex?%5Cbf%7Bd%7D_%5Cperp) direction; first,
+//! we assign a global weighting coefficient ![inline formula](https://latex.codecogs.com/png.latex?f_g%28i%29%20%3D%20%281%2F%5Csqrt%7B2%5Cpi%7D%5Csigma_g%29e%5E%7B-d%5E2_i%2F2%5Csigma%5E2_g%7D) to
+//! *i*-th row in LSR, where ![inline formula](https://latex.codecogs.com/png.latex?d_i) is the distance of *i*-th row from the center row in LSR,
+//! ![inline formula](https://latex.codecogs.com/png.latex?%5Csigma_g%20%3D%200.5%28m%20%5Ccdot%20w%20-%201%29) and ![inline formula](https://latex.codecogs.com/png.latex?w) is the width of bands (the same for every band). Secondly,
+//! considering a band ![inline formula](https://latex.codecogs.com/png.latex?B_j) and its neighbor bands ![inline formula](https://latex.codecogs.com/png.latex?B_%7Bj-1%7D%2C%20B_%7Bj%2B1%7D), we assign a local weighting
+//! ![inline formula](https://latex.codecogs.com/png.latex?F_l%28k%29%20%3D%20%281%2F%5Csqrt%7B2%5Cpi%7D%5Csigma_l%29e%5E%7B-d%27%5E2_k%2F2%5Csigma_l%5E2%7D), where ![inline formula](https://latex.codecogs.com/png.latex?d%27_k) is the distance of *k*-th
+//! row from the center row in ![inline formula](https://latex.codecogs.com/png.latex?B_j) and ![inline formula](https://latex.codecogs.com/png.latex?%5Csigma_l%20%3D%20w). Using the global and local weights, we obtain,
 //! at the same time, the reduction of role played by gradients far from line and of boundary effect,
 //! respectively.
 //!
-//! Each band <span lang='latex'>B_j</span> in LSR has an associated *band descriptor(BD)* which is computed considering
+//! Each band ![inline formula](https://latex.codecogs.com/png.latex?B_j) in LSR has an associated *band descriptor(BD)* which is computed considering
 //! previous and next band (top and bottom bands are ignored when computing descriptor for first and
 //! last band). Once each band has been assignen its BD, the LBD descriptor of line is simply given by
 //!
-//! <div lang='latex'>LBD = (BD_1^T, BD_2^T, ... , BD^T_m)^T.</div>
+//! ![block formula](https://latex.codecogs.com/png.latex?LBD%20%3D%20%28BD_1%5ET%2C%20BD_2%5ET%2C%20...%20%2C%20BD%5ET_m%29%5ET.)
 //!
-//! To compute a band descriptor <span lang='latex'>B_j</span>, each *k*-th row in it is considered and the gradients in such
+//! To compute a band descriptor ![inline formula](https://latex.codecogs.com/png.latex?B_j), each *k*-th row in it is considered and the gradients in such
 //! row are accumulated:
 //!
-//! <div lang='latex'>\begin{matrix} \bf{V1}^k_j = \lambda \sum\limits_{\bf{g}'_{d_\perp}>0}\bf{g}'_{d_\perp}, &  \bf{V2}^k_j = \lambda \sum\limits_{\bf{g}'_{d_\perp}<0} -\bf{g}'_{d_\perp}, \\ \bf{V3}^k_j = \lambda \sum\limits_{\bf{g}'_{d_L}>0}\bf{g}'_{d_L}, & \bf{V4}^k_j = \lambda \sum\limits_{\bf{g}'_{d_L}<0} -\bf{g}'_{d_L}\end{matrix}.</div>
+//! ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bmatrix%7D%20%5Cbf%7BV1%7D%5Ek_j%20%3D%20%5Clambda%20%5Csum%5Climits_%7B%5Cbf%7Bg%7D%27_%7Bd_%5Cperp%7D%3E0%7D%5Cbf%7Bg%7D%27_%7Bd_%5Cperp%7D%2C%20%26%20%20%5Cbf%7BV2%7D%5Ek_j%20%3D%20%5Clambda%20%5Csum%5Climits_%7B%5Cbf%7Bg%7D%27_%7Bd_%5Cperp%7D%3C0%7D%20-%5Cbf%7Bg%7D%27_%7Bd_%5Cperp%7D%2C%20%5C%5C%20%5Cbf%7BV3%7D%5Ek_j%20%3D%20%5Clambda%20%5Csum%5Climits_%7B%5Cbf%7Bg%7D%27_%7Bd_L%7D%3E0%7D%5Cbf%7Bg%7D%27_%7Bd_L%7D%2C%20%26%20%5Cbf%7BV4%7D%5Ek_j%20%3D%20%5Clambda%20%5Csum%5Climits_%7B%5Cbf%7Bg%7D%27_%7Bd_L%7D%3C0%7D%20-%5Cbf%7Bg%7D%27_%7Bd_L%7D%5Cend%7Bmatrix%7D.)
 //!
-//! with <span lang='latex'>\lambda = f_g(k)f_l(k)</span>.
+//! with ![inline formula](https://latex.codecogs.com/png.latex?%5Clambda%20%3D%20f_g%28k%29f_l%28k%29).
 //!
 //! By stacking previous results, we obtain the *band description matrix (BDM)*
 //!
-//! <div lang='latex'>BDM_j = \left(\begin{matrix} \bf{V1}_j^1 & \bf{V1}_j^2 & \ldots & \bf{V1}_j^n \\ \bf{V2}_j^1 & \bf{V2}_j^2 & \ldots & \bf{V2}_j^n \\ \bf{V3}_j^1 & \bf{V3}_j^2 & \ldots & \bf{V3}_j^n \\ \bf{V4}_j^1 & \bf{V4}_j^2 & \ldots & \bf{V4}_j^n \end{matrix} \right) \in \mathbb{R}^{4\times n},</div>
+//! ![block formula](https://latex.codecogs.com/png.latex?BDM_j%20%3D%20%5Cleft%28%5Cbegin%7Bmatrix%7D%20%5Cbf%7BV1%7D_j%5E1%20%26%20%5Cbf%7BV1%7D_j%5E2%20%26%20%5Cldots%20%26%20%5Cbf%7BV1%7D_j%5En%20%5C%5C%20%5Cbf%7BV2%7D_j%5E1%20%26%20%5Cbf%7BV2%7D_j%5E2%20%26%20%5Cldots%20%26%20%5Cbf%7BV2%7D_j%5En%20%5C%5C%20%5Cbf%7BV3%7D_j%5E1%20%26%20%5Cbf%7BV3%7D_j%5E2%20%26%20%5Cldots%20%26%20%5Cbf%7BV3%7D_j%5En%20%5C%5C%20%5Cbf%7BV4%7D_j%5E1%20%26%20%5Cbf%7BV4%7D_j%5E2%20%26%20%5Cldots%20%26%20%5Cbf%7BV4%7D_j%5En%20%5Cend%7Bmatrix%7D%20%5Cright%29%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B4%5Ctimes%20n%7D%2C)
 //!
-//! with <span lang='latex'>n</span> the number of rows in band <span lang='latex'>B_j</span>:
+//! with ![inline formula](https://latex.codecogs.com/png.latex?n) the number of rows in band ![inline formula](https://latex.codecogs.com/png.latex?B_j):
 //!
-//! <div lang='latex'>n = \begin{cases} 2w, & j = 1||m; \\ 3w, & \mbox{else}. \end{cases}</div>
+//! ![block formula](https://latex.codecogs.com/png.latex?n%20%3D%20%5Cbegin%7Bcases%7D%202w%2C%20%26%20j%20%3D%201%7C%7Cm%3B%20%5C%5C%203w%2C%20%26%20%5Cmbox%7Belse%7D.%20%5Cend%7Bcases%7D)
 //!
-//! Each <span lang='latex'>BD_j</span> can be obtained using the standard deviation vector <span lang='latex'>S_j</span> and mean vector <span lang='latex'>M_j</span> of
-//! <span lang='latex'>BDM_J</span>. Thus, finally:
+//! Each ![inline formula](https://latex.codecogs.com/png.latex?BD_j) can be obtained using the standard deviation vector ![inline formula](https://latex.codecogs.com/png.latex?S_j) and mean vector ![inline formula](https://latex.codecogs.com/png.latex?M_j) of
+//! ![inline formula](https://latex.codecogs.com/png.latex?BDM_J). Thus, finally:
 //!
-//! <div lang='latex'>LBD = (M_1^T, S_1^T, M_2^T, S_2^T, \ldots, M_m^T, S_m^T)^T \in \mathbb{R}^{8m}</div>
+//! ![block formula](https://latex.codecogs.com/png.latex?LBD%20%3D%20%28M_1%5ET%2C%20S_1%5ET%2C%20M_2%5ET%2C%20S_2%5ET%2C%20%5Cldots%2C%20M_m%5ET%2C%20S_m%5ET%29%5ET%20%5Cin%20%5Cmathbb%7BR%7D%5E%7B8m%7D)
 //!
 //! Once the LBD has been obtained, it must be converted into a binary form. For such purpose, we
 //! consider 32 possible pairs of BD inside it; each couple of BD is compared bit by bit and comparison
@@ -304,7 +304,7 @@ unsafe impl Send for BinaryDescriptor_Params {}
 
 impl BinaryDescriptor_Params {
 
-    pub fn new() -> Result<crate::line_descriptor::BinaryDescriptor_Params> {
+    pub fn default() -> Result<crate::line_descriptor::BinaryDescriptor_Params> {
         unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|ptr| crate::line_descriptor::BinaryDescriptor_Params { ptr })
     }
     
@@ -331,23 +331,23 @@ impl BinaryDescriptor_Params {
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
 /// validity by verifying that their full codes are not distant (in Hamming space) more than *r* bits
 /// from query code. In details, each binary code **h** composed of *b* bits is divided into *m*
-/// disjoint substrings <span lang='latex'>\mathbf{h}^{(1)}, ..., \mathbf{h}^{(m)}</span>, each with length
-/// <span lang='latex'>\lfloor b/m \rfloor</span> or <span lang='latex'>\lceil b/m \rceil</span> bits. Formally, when two codes **h** and **g** differ
+/// disjoint substrings ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathbf%7Bh%7D%5E%7B%281%29%7D%2C%20...%2C%20%5Cmathbf%7Bh%7D%5E%7B%28m%29%7D), each with length
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20b%2Fm%20%5Crfloor) or ![inline formula](https://latex.codecogs.com/png.latex?%5Clceil%20b%2Fm%20%5Crceil) bits. Formally, when two codes **h** and **g** differ
 /// by at the most *r* bits, in at the least one of their *m* substrings they differ by at the most
-/// <span lang='latex'>\lfloor r/m \rfloor</span> bits. In particular, when <span lang='latex'>||\mathbf{h}-\mathbf{g}||_H \le r</span> (where <span lang='latex'>||.||_H</span>
-/// is the Hamming norm), there must exist a substring *k* (with <span lang='latex'>1 \le k \le m</span>) such that
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20r%2Fm%20%5Crfloor) bits. In particular, when ![inline formula](https://latex.codecogs.com/png.latex?%7C%7C%5Cmathbf%7Bh%7D-%5Cmathbf%7Bg%7D%7C%7C_H%20%5Cle%20r) (where ![inline formula](https://latex.codecogs.com/png.latex?%7C%7C.%7C%7C_H)
+/// is the Hamming norm), there must exist a substring *k* (with ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Cle%20k%20%5Cle%20m)) such that
 ///
-/// <div lang='latex'>||\mathbf{h}^{(k)} - \mathbf{g}^{(k)}||_H \le \left\lfloor \frac{r}{m} \right\rfloor .</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%7C%7C%5Cmathbf%7Bh%7D%5E%7B%28k%29%7D%20-%20%5Cmathbf%7Bg%7D%5E%7B%28k%29%7D%7C%7C_H%20%5Cle%20%5Cleft%5Clfloor%20%5Cfrac%7Br%7D%7Bm%7D%20%5Cright%5Crfloor%20.)
 ///
 /// That means that if Hamming distance between each of the *m* substring is strictly greater than
-/// <span lang='latex'>\lfloor r/m \rfloor</span>, then <span lang='latex'>||\mathbf{h}-\mathbf{g}||_H</span> must be larger that *r* and that is a
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20r%2Fm%20%5Crfloor), then ![inline formula](https://latex.codecogs.com/png.latex?%7C%7C%5Cmathbf%7Bh%7D-%5Cmathbf%7Bg%7D%7C%7C_H) must be larger that *r* and that is a
 /// contradiction. If the codes in dataset are divided into *m* substrings, then *m* tables will be
-/// built. Given a query **q** with substrings <span lang='latex'>\{\mathbf{q}^{(i)}\}^m_{i=1}</span>, *i*-th hash table is
-/// searched for entries distant at the most <span lang='latex'>\lfloor r/m \rfloor</span> from <span lang='latex'>\mathbf{q}^{(i)}</span> and a set of
-/// candidates <span lang='latex'>\mathcal{N}_i(\mathbf{q})</span> is obtained. The union of sets
-/// <span lang='latex'>\mathcal{N}(\mathbf{q}) = \bigcup_i \mathcal{N}_i(\mathbf{q})</span> is a superset of the *r*-neighbors
+/// built. Given a query **q** with substrings ![inline formula](https://latex.codecogs.com/png.latex?%5C%7B%5Cmathbf%7Bq%7D%5E%7B%28i%29%7D%5C%7D%5Em_%7Bi%3D1%7D), *i*-th hash table is
+/// searched for entries distant at the most ![inline formula](https://latex.codecogs.com/png.latex?%5Clfloor%20r%2Fm%20%5Crfloor) from ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathbf%7Bq%7D%5E%7B%28i%29%7D) and a set of
+/// candidates ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D_i%28%5Cmathbf%7Bq%7D%29) is obtained. The union of sets
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D%28%5Cmathbf%7Bq%7D%29%20%3D%20%5Cbigcup_i%20%5Cmathcal%7BN%7D_i%28%5Cmathbf%7Bq%7D%29) is a superset of the *r*-neighbors
 /// of **q**. Then, last step of algorithm is computing the Hamming distance between **q** and each
-/// element in <span lang='latex'>\mathcal{N}(\mathbf{q})</span>, deleting the codes that are distant more that *r* from **q**.
+/// element in ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathcal%7BN%7D%28%5Cmathbf%7Bq%7D%29), deleting the codes that are distant more that *r* from **q**.
 pub struct BinaryDescriptorMatcher {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
@@ -507,7 +507,7 @@ impl BinaryDescriptorMatcher {
     /// Constructor.
     ///
     /// The BinaryDescriptorMatcher constructed is able to store and manage 256-bits long entries.
-    pub fn new() -> Result<crate::line_descriptor::BinaryDescriptorMatcher> {
+    pub fn default() -> Result<crate::line_descriptor::BinaryDescriptorMatcher> {
         unsafe { sys::cv_line_descriptor_BinaryDescriptorMatcher_BinaryDescriptorMatcher() }.into_result().map(|ptr| crate::line_descriptor::BinaryDescriptorMatcher { ptr })
     }
     
@@ -598,7 +598,7 @@ impl KeyLine {
     }
     
     /// constructor
-    pub fn new() -> Result<crate::line_descriptor::KeyLine> {
+    pub fn default() -> Result<crate::line_descriptor::KeyLine> {
         unsafe { sys::cv_line_descriptor_KeyLine_KeyLine() }.into_result().map(|ptr| crate::line_descriptor::KeyLine { ptr })
     }
     
@@ -645,7 +645,7 @@ impl core::Algorithm for LSDDetector {
 
 impl LSDDetector {
 
-    pub fn new() -> Result<crate::line_descriptor::LSDDetector> {
+    pub fn default() -> Result<crate::line_descriptor::LSDDetector> {
         unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector() }.into_result().map(|ptr| crate::line_descriptor::LSDDetector { ptr })
     }
     

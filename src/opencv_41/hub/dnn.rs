@@ -68,7 +68,7 @@ pub fn nms_boxes_f64(bboxes: &types::VectorOfRect2d, scores: &types::VectorOfflo
 /// * score_threshold: a threshold used to filter boxes by score.
 /// * nms_threshold: a threshold used in non maximum suppression.
 /// * indices: the kept indices of bboxes after NMS.
-/// * eta: a coefficient in adaptive threshold formula: <span lang='latex'>nms\_threshold_{i+1}=eta\cdot nms\_threshold_i</span>.
+/// * eta: a coefficient in adaptive threshold formula: ![inline formula](https://latex.codecogs.com/png.latex?nms%5C_threshold_%7Bi%2B1%7D%3Deta%5Ccdot%20nms%5C_threshold_i).
 /// * top_k: if `>0`, keep at most @p top_k picked indices.
 ///
 /// ## C++ default parameters
@@ -1171,7 +1171,7 @@ unsafe impl Send for DictValue {}
 
 impl DictValue {
 
-    pub fn new(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
+    pub fn copy(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
@@ -1841,7 +1841,7 @@ impl LayerParams {
         unsafe { sys::cv_dnn_LayerParams_set_type_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
     }
     
-    pub fn new() -> Result<crate::dnn::LayerParams> {
+    pub fn default() -> Result<crate::dnn::LayerParams> {
         unsafe { sys::cv_dnn_LayerParams_LayerParams() }.into_result().map(|ptr| crate::dnn::LayerParams { ptr })
     }
     
@@ -1951,7 +1951,7 @@ unsafe impl Send for Net {}
 impl Net {
 
     /// Default constructor.
-    pub fn new() -> Result<crate::dnn::Net> {
+    pub fn default() -> Result<crate::dnn::Net> {
         unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| crate::dnn::Net { ptr })
     }
     
@@ -2155,7 +2155,7 @@ impl Net {
     ///
     ///  If scale or mean values are specified, a final input blob is computed
     ///  as:
-    /// <div lang='latex'>input(n,c,h,w) = scalefactor \times (blob(n,c,h,w) - mean_c)</div>
+    /// ![block formula](https://latex.codecogs.com/png.latex?input%28n%2Cc%2Ch%2Cw%29%20%3D%20scalefactor%20%5Ctimes%20%28blob%28n%2Cc%2Ch%2Cw%29%20-%20mean_c%29)
     ///
     /// ## C++ default parameters
     /// * name: ""
@@ -2294,11 +2294,11 @@ impl Net {
 }
 
 // boxed class cv::dnn::NormalizeBBoxLayer
-/// <span lang='latex'> L_p </span> - normalization layer.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%20L_p%20) - normalization layer.
 /// ## Parameters
-/// * p: Normalization factor. The most common `p = 1` for <span lang='latex'> L_1 </span> -
-///          normalization or `p = 2` for <span lang='latex'> L_2 </span> - normalization or a custom one.
-/// * eps: Parameter <span lang='latex'> \epsilon </span> to prevent a division by zero.
+/// * p: Normalization factor. The most common `p = 1` for ![inline formula](https://latex.codecogs.com/png.latex?%20L_1%20) -
+///          normalization or `p = 2` for ![inline formula](https://latex.codecogs.com/png.latex?%20L_2%20) - normalization or a custom one.
+/// * eps: Parameter ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cepsilon%20) to prevent a division by zero.
 /// * across_spatial: If true, normalize an input across all non-batch dimensions.
 ///                       Otherwise normalize an every channel separately.
 ///
@@ -2947,8 +2947,8 @@ impl ShiftLayer {
 /// * group: Number of groups to split input channels and pick in turns
 ///              into output blob.
 ///
-/// <div lang='latex'> groupSize = \frac{number\ of\ channels}{group} </div>
-/// <div lang='latex'> output(n, c, h, w) = input(n, groupSize \times (c \% group) + \lfloor \frac{c}{group} \rfloor, h, w) </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%20groupSize%20%3D%20%5Cfrac%7Bnumber%5C%20of%5C%20channels%7D%7Bgroup%7D%20)
+/// ![block formula](https://latex.codecogs.com/png.latex?%20output%28n%2C%20c%2C%20h%2C%20w%29%20%3D%20input%28n%2C%20groupSize%20%5Ctimes%20%28c%20%5C%25%20group%29%20%2B%20%5Clfloor%20%5Cfrac%7Bc%7D%7Bgroup%7D%20%5Crfloor%2C%20h%2C%20w%29%20)
 /// Read more at https://arxiv.org/pdf/1707.01083.pdf
 pub struct ShuffleChannelLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void

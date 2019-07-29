@@ -116,7 +116,7 @@ pub fn detect_qr_code(_in: &core::Mat, points: &mut types::VectorOfPoint, eps_x:
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-/// <span lang='latex'>\texttt{eps}\rightarrow +\inf</span> , all the rectangles are put in one cluster. Then, the small
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
 /// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
 /// cluster, the average rectangle is computed and put into the output rectangle list.
 ///
@@ -140,7 +140,7 @@ pub fn group_rectangles_levels(rect_list: &mut types::VectorOfRect, reject_level
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-/// <span lang='latex'>\texttt{eps}\rightarrow +\inf</span> , all the rectangles are put in one cluster. Then, the small
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
 /// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
 /// cluster, the average rectangle is computed and put into the output rectangle list.
 ///
@@ -164,7 +164,7 @@ pub fn group_rectangles_weights(rect_list: &mut types::VectorOfRect, weights: &m
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-/// <span lang='latex'>\texttt{eps}\rightarrow +\inf</span> , all the rectangles are put in one cluster. Then, the small
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
 /// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
 /// cluster, the average rectangle is computed and put into the output rectangle list.
 ///
@@ -186,7 +186,7 @@ pub fn group_rectangles(rect_list: &mut types::VectorOfRect, group_threshold: i3
 /// The function is a wrapper for the generic function partition . It clusters all the input rectangles
 /// using the rectangle equivalence criteria that combines rectangles with similar sizes and similar
 /// locations. The similarity is defined by eps. When eps=0 , no clustering is done at all. If
-/// <span lang='latex'>\texttt{eps}\rightarrow +\inf</span> , all the rectangles are put in one cluster. Then, the small
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Beps%7D%5Crightarrow%20%2B%5Cinf) , all the rectangles are put in one cluster. Then, the small
 /// clusters containing less than or equal to groupThreshold rectangles are rejected. In each other
 /// cluster, the average rectangle is computed and put into the output rectangle list.
 ///
@@ -581,7 +581,7 @@ unsafe impl Send for DetectionBasedTracker_Parameters {}
 
 impl DetectionBasedTracker_Parameters {
 
-    pub fn new() -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
+    pub fn default() -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
         unsafe { sys::cv_DetectionBasedTracker_Parameters_Parameters() }.into_result().map(|ptr| crate::objdetect::DetectionBasedTracker_Parameters { ptr })
     }
     
@@ -1027,7 +1027,7 @@ unsafe impl Send for QRCodeDetector {}
 
 impl QRCodeDetector {
 
-    pub fn new() -> Result<crate::objdetect::QRCodeDetector> {
+    pub fn default() -> Result<crate::objdetect::QRCodeDetector> {
         unsafe { sys::cv_QRCodeDetector_QRCodeDetector() }.into_result().map(|ptr| crate::objdetect::QRCodeDetector { ptr })
     }
     

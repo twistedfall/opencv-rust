@@ -401,7 +401,7 @@ unsafe impl Send for DictValue {}
 
 impl DictValue {
 
-    pub fn new(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
+    pub fn copy(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
     
@@ -807,7 +807,7 @@ impl LayerParams {
         unsafe { sys::cv_dnn_LayerParams_set_type_String(self.as_raw_LayerParams(), val.as_ptr() as _) }.into_result()
     }
     
-    pub fn new() -> Result<crate::dnn::LayerParams> {
+    pub fn default() -> Result<crate::dnn::LayerParams> {
         unsafe { sys::cv_dnn_LayerParams_LayerParams() }.into_result().map(|ptr| crate::dnn::LayerParams { ptr })
     }
     
@@ -894,7 +894,7 @@ unsafe impl Send for Net {}
 impl Net {
 
     /// Default constructor.
-    pub fn new() -> Result<crate::dnn::Net> {
+    pub fn default() -> Result<crate::dnn::Net> {
         unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| crate::dnn::Net { ptr })
     }
     

@@ -5,17 +5,17 @@
 //!
 //! Functions and classes described in this section are used to perform various linear or non-linear
 //! filtering operations on 2D images (represented as Mat's). It means that for each pixel location
-//! <span lang='latex'>(x,y)</span> in the source image (normally, rectangular), its neighborhood is considered and used to
+//! ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) in the source image (normally, rectangular), its neighborhood is considered and used to
 //! compute the response. In case of a linear filter, it is a weighted sum of pixel values. In case of
 //! morphological operations, it is the minimum or maximum values, and so on. The computed response is
-//! stored in the destination image at the same location <span lang='latex'>(x,y)</span>. It means that the output image
+//! stored in the destination image at the same location ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29). It means that the output image
 //! will be of the same size as the input image. Normally, the functions support multi-channel arrays,
 //! in which case every channel is processed independently. Therefore, the output image will also have
 //! the same number of channels as the input one.
 //!
 //! Another common feature of the functions and classes described in this section is that, unlike
 //! simple arithmetic functions, they need to extrapolate values of some non-existing pixels. For
-//! example, if you want to smooth an image using a Gaussian <span lang='latex'>3 \times 3</span> filter, then, when
+//! example, if you want to smooth an image using a Gaussian ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) filter, then, when
 //! processing the left-most pixels in each row, you need pixels to the left of them, that is, outside
 //! of the image. You can let these pixels be the same as the left-most image pixels ("replicated
 //! border" extrapolation method), or assume that all the non-existing pixels are zeros ("constant
@@ -39,35 +39,33 @@
 //! The functions in this section perform various geometrical transformations of 2D images. They do not
 //! change the image content but deform the pixel grid and map this deformed grid to the destination
 //! image. In fact, to avoid sampling artifacts, the mapping is done in the reverse order, from
-//! destination to the source. That is, for each pixel <span lang='latex'>(x, y)</span> of the destination image, the
+//! destination to the source. That is, for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) of the destination image, the
 //! functions compute coordinates of the corresponding "donor" pixel in the source image and copy the
 //! pixel value:
 //!
-//! <div lang='latex'>\texttt{dst} (x,y)= \texttt{src} (f_x(x,y), f_y(x,y))</div>
+//! ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%3D%20%5Ctexttt%7Bsrc%7D%20%28f_x%28x%2Cy%29%2C%20f_y%28x%2Cy%29%29)
 //!
-//! In case when you specify the forward mapping \f$\left<g_x, g_y\right>: \texttt{src} \rightarrow
-//! \texttt{dst}\f$, the OpenCV functions first compute the corresponding inverse mapping
-//! <span lang='latex'>\left<f_x, f_y\right>: \texttt{dst} \rightarrow \texttt{src}</span> and then use the above formula.
+//! In case when you specify the forward mapping ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cg_x%2C%20g_y%5Cright%3E%3A%20%5Ctexttt%7Bsrc%7D%20%5Crightarrow%0A%5Ctexttt%7Bdst%7D), the OpenCV functions first compute the corresponding inverse mapping
+//! ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf_x%2C%20f_y%5Cright%3E%3A%20%5Ctexttt%7Bdst%7D%20%5Crightarrow%20%5Ctexttt%7Bsrc%7D) and then use the above formula.
 //!
 //! The actual implementations of the geometrical transformations, from the most generic remap and to
 //! the simplest and the fastest resize, need to solve two main problems with the above formula:
 //!
 //! - Extrapolation of non-existing pixels. Similarly to the filtering functions described in the
-//! previous section, for some <span lang='latex'>(x,y)</span>, either one of <span lang='latex'>f_x(x,y)</span>, or <span lang='latex'>f_y(x,y)</span>, or both
+//! previous section, for some ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29), either one of ![inline formula](https://latex.codecogs.com/png.latex?f_x%28x%2Cy%29), or ![inline formula](https://latex.codecogs.com/png.latex?f_y%28x%2Cy%29), or both
 //! of them may fall outside of the image. In this case, an extrapolation method needs to be used.
 //! OpenCV provides the same selection of extrapolation methods as in the filtering functions. In
 //! addition, it provides the method #BORDER_TRANSPARENT. This means that the corresponding pixels in
 //! the destination image will not be modified at all.
 //!
-//! - Interpolation of pixel values. Usually <span lang='latex'>f_x(x,y)</span> and <span lang='latex'>f_y(x,y)</span> are floating-point
-//! numbers. This means that <span lang='latex'>\left<f_x, f_y\right></span> can be either an affine or perspective
+//! - Interpolation of pixel values. Usually ![inline formula](https://latex.codecogs.com/png.latex?f_x%28x%2Cy%29) and ![inline formula](https://latex.codecogs.com/png.latex?f_y%28x%2Cy%29) are floating-point
+//! numbers. This means that ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%3Cf_x%2C%20f_y%5Cright%3E) can be either an affine or perspective
 //! transformation, or radial lens distortion correction, and so on. So, a pixel value at fractional
 //! coordinates needs to be retrieved. In the simplest case, the coordinates can be just rounded to the
 //! nearest integer coordinates and the corresponding pixel can be used. This is called a
 //! nearest-neighbor interpolation. However, a better result can be achieved by using more
 //! sophisticated [interpolation methods](http://en.wikipedia.org/wiki/Multivariate_interpolation) ,
-//! where a polynomial function is fit into some neighborhood of the computed pixel \f$(f_x(x,y),
-//! f_y(x,y))<span lang='latex'>, and then the value of the polynomial at </span>(f_x(x,y), f_y(x,y))\f$ is taken as the
+//! where a polynomial function is fit into some neighborhood of the computed pixel ![inline formula](https://latex.codecogs.com/png.latex?%28f_x%28x%2Cy%29%2C%0Af_y%28x%2Cy%29%29), and then the value of the polynomial at ![inline formula](https://latex.codecogs.com/png.latex?%28f_x%28x%2Cy%29%2C%20f_y%28x%2Cy%29%29) is taken as the
 //! interpolated pixel value. In OpenCV, you can choose between several interpolation methods. See
 //! resize for details.
 //!
@@ -84,7 +82,7 @@
 //! normally *Blue, Green, Red*. This is what imshow, imread, and imwrite expect. So, if you form a
 //! color using the Scalar constructor, it should look like:
 //!
-//! <div lang='latex'>\texttt{Scalar} (blue \_ component, green \_ component, red \_ component[, alpha \_ component])</div>
+//! ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BScalar%7D%20%28blue%20%5C_%20component%2C%20green%20%5C_%20component%2C%20red%20%5C_%20component%5B%2C%20alpha%20%5C_%20component%5D%29)
 //!
 //! If you are using your own image rendering and I/O functions, you can use any channel ordering. The
 //! drawing functions process each channel independently and do not depend on the channel order or even
@@ -95,7 +93,7 @@
 //! many drawing functions can handle pixel coordinates specified with sub-pixel accuracy. This means
 //! that the coordinates can be passed as fixed-point numbers encoded as integers. The number of
 //! fractional bits is specified by the shift parameter and the real point coordinates are calculated as
-//! <span lang='latex'>\texttt{Point}(x,y)\rightarrow\texttt{Point2f}(x*2^{-shift},y*2^{-shift})</span> . This feature is
+//! ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BPoint%7D%28x%2Cy%29%5Crightarrow%5Ctexttt%7BPoint2f%7D%28x%2A2%5E%7B-shift%7D%2Cy%2A2%5E%7B-shift%7D%29) . This feature is
 //! especially effective when rendering antialiased shapes.
 //!
 //!
@@ -431,11 +429,11 @@ pub const COLOR_YUV420sp2GRAY: i32 = 106;
 pub const COLOR_YUV420sp2RGB: i32 = 92;
 pub const COLOR_YUV420sp2RGBA: i32 = 96;
 pub const COLOR_mRGBA2RGBA: i32 = 126;
-/// <div lang='latex'>I_1(A,B) =  \sum _{i=1...7}  \left |  \frac{1}{m^A_i} -  \frac{1}{m^B_i} \right |</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?I_1%28A%2CB%29%20%3D%20%20%5Csum%20_%7Bi%3D1...7%7D%20%20%5Cleft%20%7C%20%20%5Cfrac%7B1%7D%7Bm%5EA_i%7D%20-%20%20%5Cfrac%7B1%7D%7Bm%5EB_i%7D%20%5Cright%20%7C)
 pub const CONTOURS_MATCH_I1: i32 = 1;
-/// <div lang='latex'>I_2(A,B) =  \sum _{i=1...7}  \left | m^A_i - m^B_i  \right |</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?I_2%28A%2CB%29%20%3D%20%20%5Csum%20_%7Bi%3D1...7%7D%20%20%5Cleft%20%7C%20m%5EA_i%20-%20m%5EB_i%20%20%5Cright%20%7C)
 pub const CONTOURS_MATCH_I2: i32 = 2;
-/// <div lang='latex'>I_3(A,B) =  \max _{i=1...7}  \frac{ \left| m^A_i - m^B_i \right| }{ \left| m^A_i \right| }</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?I_3%28A%2CB%29%20%3D%20%20%5Cmax%20_%7Bi%3D1...7%7D%20%20%5Cfrac%7B%20%5Cleft%7C%20m%5EA_i%20-%20m%5EB_i%20%5Cright%7C%20%7D%7B%20%5Cleft%7C%20m%5EA_i%20%5Cright%7C%20%7D)
 pub const CONTOURS_MATCH_I3: i32 = 3;
 pub const CV_HAL_ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 pub const CV_HAL_ADAPTIVE_THRESH_MEAN_C: i32 = 0;
@@ -582,7 +580,7 @@ pub const MORPH_GRADIENT: i32 = 4;
 pub const MORPH_HITMISS: i32 = 7;
 /// an opening operation
 pub const MORPH_OPEN: i32 = 2;
-/// a rectangular structuring element:  <div lang='latex'>E_{ij}=1</div>
+/// a rectangular structuring element:  ![block formula](https://latex.codecogs.com/png.latex?E_%7Bij%7D%3D1)
 pub const MORPH_RECT: i32 = 0;
 /// "top hat"
 pub const MORPH_TOPHAT: i32 = 5;
@@ -609,32 +607,32 @@ pub const Subdiv2D_PTLOC_ON_EDGE: i32 = 2;
 pub const Subdiv2D_PTLOC_OUTSIDE_RECT: i32 = -1;
 /// Point coincides with one of the subdivision vertices
 pub const Subdiv2D_PTLOC_VERTEX: i32 = 1;
-/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{\texttt{maxval}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bmaxval%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B0%7D%7Botherwise%7D)
 pub const THRESH_BINARY: i32 = 0;
-/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{maxval}}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bmaxval%7D%7D%7Botherwise%7D)
 pub const THRESH_BINARY_INV: i32 = 1;
 pub const THRESH_MASK: i32 = 7;
 /// flag, use Otsu algorithm to choose the optimal threshold value
 pub const THRESH_OTSU: i32 = 8;
-/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{\texttt{src}(x,y)}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{0}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bsrc%7D%28x%2Cy%29%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B0%7D%7Botherwise%7D)
 pub const THRESH_TOZERO: i32 = 3;
-/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{0}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bsrc%7D%28x%2Cy%29%7D%7Botherwise%7D)
 pub const THRESH_TOZERO_INV: i32 = 4;
 /// flag, use Triangle algorithm to choose the optimal threshold value
 pub const THRESH_TRIANGLE: i32 = 16;
-/// <div lang='latex'>\texttt{dst} (x,y) =  \fork{\texttt{threshold}}{if \(\texttt{src}(x,y) > \texttt{thresh}\)}{\texttt{src}(x,y)}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bthreshold%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%20%3E%20%5Ctexttt%7Bthresh%7D%5C%29%7D%7B%5Ctexttt%7Bsrc%7D%28x%2Cy%29%7D%7Botherwise%7D)
 pub const THRESH_TRUNC: i32 = 2;
-/// <div lang='latex'>R(x,y)= \sum _{x',y'} (T'(x',y')  \cdot I'(x+x',y+y'))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20_%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29)
 pub const TM_CCOEFF: i32 = 4;
-/// <div lang='latex'>R(x,y)= \frac{ \sum_{x',y'} (T'(x',y') \cdot I'(x+x',y+y')) }{ \sqrt{\sum_{x',y'}T'(x',y')^2 \cdot \sum_{x',y'} I'(x+x',y+y')^2} }</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%20%5Csum_%7Bx%27%2Cy%27%7D%20%28T%27%28x%27%2Cy%27%29%20%5Ccdot%20I%27%28x%2Bx%27%2Cy%2By%27%29%29%20%7D%7B%20%5Csqrt%7B%5Csum_%7Bx%27%2Cy%27%7DT%27%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum_%7Bx%27%2Cy%27%7D%20I%27%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%20%7D)
 pub const TM_CCOEFF_NORMED: i32 = 5;
-/// <div lang='latex'>R(x,y)= \sum _{x',y'} (T(x',y')  \cdot I(x+x',y+y'))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20_%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29)
 pub const TM_CCORR: i32 = 2;
-/// <div lang='latex'>R(x,y)= \frac{\sum_{x',y'} (T(x',y') \cdot I(x+x',y+y'))}{\sqrt{\sum_{x',y'}T(x',y')^2 \cdot \sum_{x',y'} I(x+x',y+y')^2}}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum_%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29%20%5Ccdot%20I%28x%2Bx%27%2Cy%2By%27%29%29%7D%7B%5Csqrt%7B%5Csum_%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum_%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
 pub const TM_CCORR_NORMED: i32 = 3;
-/// <div lang='latex'>R(x,y)= \sum _{x',y'} (T(x',y')-I(x+x',y+y'))^2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Csum%20_%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29-I%28x%2Bx%27%2Cy%2By%27%29%29%5E2)
 pub const TM_SQDIFF: i32 = 0;
-/// <div lang='latex'>R(x,y)= \frac{\sum_{x',y'} (T(x',y')-I(x+x',y+y'))^2}{\sqrt{\sum_{x',y'}T(x',y')^2 \cdot \sum_{x',y'} I(x+x',y+y')^2}}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?R%28x%2Cy%29%3D%20%5Cfrac%7B%5Csum_%7Bx%27%2Cy%27%7D%20%28T%28x%27%2Cy%27%29-I%28x%2Bx%27%2Cy%2By%27%29%29%5E2%7D%7B%5Csqrt%7B%5Csum_%7Bx%27%2Cy%27%7DT%28x%27%2Cy%27%29%5E2%20%5Ccdot%20%5Csum_%7Bx%27%2Cy%27%7D%20I%28x%2Bx%27%2Cy%2By%27%29%5E2%7D%7D)
 pub const TM_SQDIFF_NORMED: i32 = 1;
 pub const WARP_FILL_OUTLIERS: i32 = 8;
 pub const WARP_INVERSE_MAP: i32 = 16;
@@ -665,9 +663,9 @@ pub enum InterpolationFlags {
 /// * edges: output edge map; single channels 8-bit image, which has the same size as image .
 /// * threshold1: first threshold for the hysteresis procedure.
 /// * threshold2: second threshold for the hysteresis procedure.
-/// * L2gradient: a flag, indicating whether a more accurate <span lang='latex'>L_2</span> norm
-/// <span lang='latex'>=\sqrt{(dI/dx)^2 + (dI/dy)^2}</span> should be used to calculate the image gradient magnitude (
-/// L2gradient=true ), or whether the default <span lang='latex'>L_1</span> norm <span lang='latex'>=|dI/dx|+|dI/dy|</span> is enough (
+/// * L2gradient: a flag, indicating whether a more accurate ![inline formula](https://latex.codecogs.com/png.latex?L_2) norm
+/// ![inline formula](https://latex.codecogs.com/png.latex?%3D%5Csqrt%7B%28dI%2Fdx%29%5E2%20%2B%20%28dI%2Fdy%29%5E2%7D) should be used to calculate the image gradient magnitude (
+/// L2gradient=true ), or whether the default ![inline formula](https://latex.codecogs.com/png.latex?L_1) norm ![inline formula](https://latex.codecogs.com/png.latex?%3D%7CdI%2Fdx%7C%2B%7CdI%2Fdy%7C) is enough (
 /// L2gradient=false ).
 ///
 /// ## C++ default parameters
@@ -689,9 +687,9 @@ pub fn canny_derivative(dx: &core::Mat, dy: &core::Mat, edges: &mut core::Mat, t
 /// * threshold1: first threshold for the hysteresis procedure.
 /// * threshold2: second threshold for the hysteresis procedure.
 /// * apertureSize: aperture size for the Sobel operator.
-/// * L2gradient: a flag, indicating whether a more accurate <span lang='latex'>L_2</span> norm
-/// <span lang='latex'>=\sqrt{(dI/dx)^2 + (dI/dy)^2}</span> should be used to calculate the image gradient magnitude (
-/// L2gradient=true ), or whether the default <span lang='latex'>L_1</span> norm <span lang='latex'>=|dI/dx|+|dI/dy|</span> is enough (
+/// * L2gradient: a flag, indicating whether a more accurate ![inline formula](https://latex.codecogs.com/png.latex?L_2) norm
+/// ![inline formula](https://latex.codecogs.com/png.latex?%3D%5Csqrt%7B%28dI%2Fdx%29%5E2%20%2B%20%28dI%2Fdy%29%5E2%7D) should be used to calculate the image gradient magnitude (
+/// L2gradient=true ), or whether the default ![inline formula](https://latex.codecogs.com/png.latex?L_1) norm ![inline formula](https://latex.codecogs.com/png.latex?%3D%7CdI%2Fdx%7C%2B%7CdI%2Fdy%7C) is enough (
 /// L2gradient=false ).
 ///
 /// ## C++ default parameters
@@ -713,7 +711,7 @@ pub fn canny(image: &core::Mat, edges: &mut core::Mat, threshold1: f64, threshol
 /// same object.
 ///
 /// ## Parameters
-/// * signature1: First signature, a <span lang='latex'>\texttt{size1}\times \texttt{dims}+1</span> floating-point matrix.
+/// * signature1: First signature, a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsize1%7D%5Ctimes%20%5Ctexttt%7Bdims%7D%2B1) floating-point matrix.
 /// Each row stores the point weight followed by the point coordinates. The matrix is allowed to have
 /// a single column (weights only) if the user-defined cost matrix is used. The weights must be
 /// non-negative and have at least one non-zero value.
@@ -722,7 +720,7 @@ pub fn canny(image: &core::Mat, edges: &mut core::Mat, threshold1: f64, threshol
 /// to either signature1 or signature2. The weights must be non-negative and have at least one non-zero
 /// value.
 /// * distType: Used metric. See #DistanceTypes.
-/// * cost: User-defined <span lang='latex'>\texttt{size1}\times \texttt{size2}</span> cost matrix. Also, if a cost matrix
+/// * cost: User-defined ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsize1%7D%5Ctimes%20%5Ctexttt%7Bsize2%7D) cost matrix. Also, if a cost matrix
 /// is used, lower boundary lowerBound cannot be calculated because it needs a metric function.
 /// * lowerBound: Optional input/output parameter: lower boundary of a distance between the two
 /// signatures that is a distance between mass centers. The lower boundary may not be calculated if
@@ -733,8 +731,8 @@ pub fn canny(image: &core::Mat, edges: &mut core::Mat, threshold1: f64, threshol
 /// calculate EMD. In any case \*lowerBound is set to the calculated distance between mass centers on
 /// return. Thus, if you want to calculate both distance between mass centers and EMD, \*lowerBound
 /// should be set to 0.
-/// * flow: Resultant <span lang='latex'>\texttt{size1} \times \texttt{size2}</span> flow matrix: <span lang='latex'>\texttt{flow}_{i,j}</span> is
-/// a flow from <span lang='latex'>i</span> -th point of signature1 to <span lang='latex'>j</span> -th point of signature2 .
+/// * flow: Resultant ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsize1%7D%20%5Ctimes%20%5Ctexttt%7Bsize2%7D) flow matrix: ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bflow%7D_%7Bi%2Cj%7D) is
+/// a flow from ![inline formula](https://latex.codecogs.com/png.latex?i) -th point of signature1 to ![inline formula](https://latex.codecogs.com/png.latex?j) -th point of signature2 .
 ///
 /// ## C++ default parameters
 /// * cost: noArray()
@@ -789,7 +787,7 @@ pub fn gaussian_blur(src: &core::Mat, dst: &mut core::Mat, ksize: core::Size, si
 /// ## Parameters
 /// * image: 8-bit, single-channel, grayscale input image.
 /// * circles: Output vector of found circles. Each vector is encoded as  3 or 4 element
-/// floating-point vector <span lang='latex'>(x, y, radius)</span> or <span lang='latex'>(x, y, radius, votes)</span> .
+/// floating-point vector ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%2C%20radius%29) or ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%2C%20radius%2C%20votes%29) .
 /// * method: Detection method, see #HoughModes. Currently, the only implemented method is #HOUGH_GRADIENT
 /// * dp: Inverse ratio of the accumulator resolution to the image resolution. For example, if
 /// dp=1 , the accumulator has the same resolution as the input image. If dp=2 , the accumulator has
@@ -837,12 +835,12 @@ pub fn hough_circles(image: &core::Mat, circles: &mut core::Mat, method: i32, dp
 /// ## Parameters
 /// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
 /// * lines: Output vector of lines. Each line is represented by a 4-element vector
-/// <span lang='latex'>(x_1, y_1, x_2, y_2)</span> , where <span lang='latex'>(x_1,y_1)</span> and <span lang='latex'>(x_2, y_2)</span> are the ending points of each detected
+/// ![inline formula](https://latex.codecogs.com/png.latex?%28x_1%2C%20y_1%2C%20x_2%2C%20y_2%29) , where ![inline formula](https://latex.codecogs.com/png.latex?%28x_1%2Cy_1%29) and ![inline formula](https://latex.codecogs.com/png.latex?%28x_2%2C%20y_2%29) are the ending points of each detected
 /// line segment.
 /// * rho: Distance resolution of the accumulator in pixels.
 /// * theta: Angle resolution of the accumulator in radians.
 /// * threshold: Accumulator threshold parameter. Only those lines are returned that get enough
-/// votes ( <span lang='latex'>>\texttt{threshold}</span> ).
+/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
 /// * minLineLength: Minimum line length. Line segments shorter than that are rejected.
 /// * maxLineGap: Maximum allowed gap between points on the same line to link them.
 ///
@@ -861,12 +859,12 @@ pub fn hough_lines_p(image: &core::Mat, lines: &mut core::Mat, rho: f64, theta: 
 /// The function finds lines in a set of points using a modification of the Hough transform.
 /// @include snippets/imgproc_HoughLinesPointSet.cpp
 /// ## Parameters
-/// * _point: Input vector of points. Each vector must be encoded as a Point vector <span lang='latex'>(x,y)</span>. Type must be CV_32FC2 or CV_32SC2.
-/// * _lines: Output vector of found lines. Each vector is encoded as a vector<Vec3d> <span lang='latex'>(votes, rho, theta)</span>.
+/// * _point: Input vector of points. Each vector must be encoded as a Point vector ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29). Type must be CV_32FC2 or CV_32SC2.
+/// * _lines: Output vector of found lines. Each vector is encoded as a vector<Vec3d> ![inline formula](https://latex.codecogs.com/png.latex?%28votes%2C%20rho%2C%20theta%29).
 /// The larger the value of 'votes', the higher the reliability of the Hough line.
 /// * lines_max: Max count of hough lines.
 /// * threshold: Accumulator threshold parameter. Only those lines are returned that get enough
-/// votes ( <span lang='latex'>>\texttt{threshold}</span> )
+/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) )
 /// * min_rho: Minimum Distance value of the accumulator in pixels.
 /// * max_rho: Maximum Distance value of the accumulator in pixels.
 /// * rho_step: Distance resolution of the accumulator in pixels.
@@ -886,14 +884,14 @@ pub fn hough_lines_point_set(_point: &core::Mat, _lines: &mut core::Mat, lines_m
 /// ## Parameters
 /// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
 /// * lines: Output vector of lines. Each line is represented by a 2 or 3 element vector
-/// <span lang='latex'>(\rho, \theta)</span> or <span lang='latex'>(\rho, \theta, \textrm{votes})</span> . <span lang='latex'>\rho</span> is the distance from the coordinate origin <span lang='latex'>(0,0)</span> (top-left corner of
-/// the image). <span lang='latex'>\theta</span> is the line rotation angle in radians (
-/// <span lang='latex'>0 \sim \textrm{vertical line}, \pi/2 \sim \textrm{horizontal line}</span> ).
-/// <span lang='latex'>\textrm{votes}</span> is the value of accumulator.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%29) or ![inline formula](https://latex.codecogs.com/png.latex?%28%5Crho%2C%20%5Ctheta%2C%20%5Ctextrm%7Bvotes%7D%29) . ![inline formula](https://latex.codecogs.com/png.latex?%5Crho) is the distance from the coordinate origin ![inline formula](https://latex.codecogs.com/png.latex?%280%2C0%29) (top-left corner of
+/// the image). ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta) is the line rotation angle in radians (
+/// ![inline formula](https://latex.codecogs.com/png.latex?0%20%5Csim%20%5Ctextrm%7Bvertical%20line%7D%2C%20%5Cpi%2F2%20%5Csim%20%5Ctextrm%7Bhorizontal%20line%7D) ).
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctextrm%7Bvotes%7D) is the value of accumulator.
 /// * rho: Distance resolution of the accumulator in pixels.
 /// * theta: Angle resolution of the accumulator in radians.
 /// * threshold: Accumulator threshold parameter. Only those lines are returned that get enough
-/// votes ( <span lang='latex'>>\texttt{threshold}</span> ).
+/// votes ( ![inline formula](https://latex.codecogs.com/png.latex?%3E%5Ctexttt%7Bthreshold%7D) ).
 /// * srn: For the multi-scale Hough transform, it is a divisor for the distance resolution rho .
 /// The coarse accumulator distance resolution is rho and the accurate accumulator resolution is
 /// rho/srn . If both srn=0 and stn=0 , the classical Hough transform is used. Otherwise, both these
@@ -918,12 +916,12 @@ pub fn hough_lines(image: &core::Mat, lines: &mut core::Mat, rho: f64, theta: f6
 /// The function calculates the Laplacian of the source image by adding up the second x and y
 /// derivatives calculated using the Sobel operator:
 ///
-/// <div lang='latex'>\texttt{dst} =  \Delta \texttt{src} =  \frac{\partial^2 \texttt{src}}{\partial x^2} +  \frac{\partial^2 \texttt{src}}{\partial y^2}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5CDelta%20%5Ctexttt%7Bsrc%7D%20%3D%20%20%5Cfrac%7B%5Cpartial%5E2%20%5Ctexttt%7Bsrc%7D%7D%7B%5Cpartial%20x%5E2%7D%20%2B%20%20%5Cfrac%7B%5Cpartial%5E2%20%5Ctexttt%7Bsrc%7D%7D%7B%5Cpartial%20y%5E2%7D)
 ///
 /// This is done when `ksize > 1`. When `ksize == 1`, the Laplacian is computed by filtering the image
-/// with the following <span lang='latex'>3 \times 3</span> aperture:
+/// with the following ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) aperture:
 ///
-/// <div lang='latex'>\vecthreethree {0}{1}{0}{1}{-4}{1}{0}{1}{0}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%200%20%26%201%20%26%200%5C%5C%201%20%26%20-4%20%26%201%5C%5C%200%20%26%201%20%26%200%20%5Cend%7Bbmatrix%7D)
 ///
 /// ## Parameters
 /// * src: Source image.
@@ -952,11 +950,11 @@ pub fn laplacian(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, ksize: i32, 
 /// The function computes the first x- or y- spatial image derivative using the Scharr operator. The
 /// call
 ///
-/// <div lang='latex'>\texttt{Scharr(src, dst, ddepth, dx, dy, scale, delta, borderType)}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BScharr%28src%2C%20dst%2C%20ddepth%2C%20dx%2C%20dy%2C%20scale%2C%20delta%2C%20borderType%29%7D)
 ///
 /// is equivalent to
 ///
-/// <div lang='latex'>\texttt{Sobel(src, dst, ddepth, dx, dy, FILTER_SCHARR, scale, delta, borderType)} .</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BSobel%28src%2C%20dst%2C%20ddepth%2C%20dx%2C%20dy%2C%20FILTER_SCHARR%2C%20scale%2C%20delta%2C%20borderType%29%7D%20.)
 ///
 /// ## Parameters
 /// * src: input image.
@@ -981,32 +979,32 @@ pub fn scharr(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i3
 
 /// Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
 ///
-/// In all cases except one, the <span lang='latex'>\texttt{ksize} \times \texttt{ksize}</span> separable kernel is used to
-/// calculate the derivative. When <span lang='latex'>\texttt{ksize = 1}</span>, the <span lang='latex'>3 \times 1</span> or <span lang='latex'>1 \times 3</span>
+/// In all cases except one, the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%7D%20%5Ctimes%20%5Ctexttt%7Bksize%7D) separable kernel is used to
+/// calculate the derivative. When ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%20%3D%201%7D), the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%201) or ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%203)
 /// kernel is used (that is, no Gaussian smoothing is done). `ksize = 1` can only be used for the first
 /// or the second x- or y- derivatives.
 ///
-/// There is also the special value `ksize = #FILTER_SCHARR (-1)` that corresponds to the <span lang='latex'>3\times3</span> Scharr
-/// filter that may give more accurate results than the <span lang='latex'>3\times3</span> Sobel. The Scharr aperture is
+/// There is also the special value `ksize = #FILTER_SCHARR (-1)` that corresponds to the ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) Scharr
+/// filter that may give more accurate results than the ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes3) Sobel. The Scharr aperture is
 ///
-/// <div lang='latex'>\vecthreethree{-3}{0}{3}{-10}{0}{10}{-3}{0}{3}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20-3%20%26%200%20%26%203%5C%5C%20-10%20%26%200%20%26%2010%5C%5C%20-3%20%26%200%20%26%203%20%5Cend%7Bbmatrix%7D)
 ///
 /// for the x-derivative, or transposed for the y-derivative.
 ///
 /// The function calculates an image derivative by convolving the image with the appropriate kernel:
 ///
-/// <div lang='latex'>\texttt{dst} =  \frac{\partial^{xorder+yorder} \texttt{src}}{\partial x^{xorder} \partial y^{yorder}}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Cfrac%7B%5Cpartial%5E%7Bxorder%2Byorder%7D%20%5Ctexttt%7Bsrc%7D%7D%7B%5Cpartial%20x%5E%7Bxorder%7D%20%5Cpartial%20y%5E%7Byorder%7D%7D)
 ///
 /// The Sobel operators combine Gaussian smoothing and differentiation, so the result is more or less
 /// resistant to the noise. Most often, the function is called with ( xorder = 1, yorder = 0, ksize = 3)
 /// or ( xorder = 0, yorder = 1, ksize = 3) to calculate the first x- or y- image derivative. The first
 /// case corresponds to a kernel of:
 ///
-/// <div lang='latex'>\vecthreethree{-1}{0}{1}{-2}{0}{2}{-1}{0}{1}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20-1%20%26%200%20%26%201%5C%5C%20-2%20%26%200%20%26%202%5C%5C%20-1%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// The second case corresponds to a kernel of:
 ///
-/// <div lang='latex'>\vecthreethree{-1}{-2}{-1}{0}{0}{0}{1}{2}{1}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20-1%20%26%20-2%20%26%20-1%5C%5C%200%20%26%200%20%26%200%5C%5C%201%20%26%202%20%26%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// ## Parameters
 /// * src: input image.
@@ -1036,7 +1034,7 @@ pub fn sobel(src: &core::Mat, dst: &mut core::Mat, ddepth: i32, dx: i32, dy: i32
 ///
 /// The function adds the product of two images or their selected regions to the accumulator dst :
 ///
-/// <div lang='latex'>\texttt{dst} (x,y)  \leftarrow \texttt{dst} (x,y) +  \texttt{src1} (x,y)  \cdot \texttt{src2} (x,y)  \quad \text{if} \quad \texttt{mask} (x,y)  \ne 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%20%5Cleftarrow%20%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%2B%20%20%5Ctexttt%7Bsrc1%7D%20%28x%2Cy%29%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%28x%2Cy%29%20%20%5Cquad%20%5Ctext%7Bif%7D%20%5Cquad%20%5Ctexttt%7Bmask%7D%20%28x%2Cy%29%20%20%5Cne%200)
 ///
 /// The function supports multi-channel images. Each channel is processed independently.
 ///
@@ -1061,7 +1059,7 @@ pub fn accumulate_product(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Ma
 /// The function adds the input image src or its selected region, raised to a power of 2, to the
 /// accumulator dst :
 ///
-/// <div lang='latex'>\texttt{dst} (x,y)  \leftarrow \texttt{dst} (x,y) +  \texttt{src} (x,y)^2  \quad \text{if} \quad \texttt{mask} (x,y)  \ne 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%20%5Cleftarrow%20%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%2B%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%5E2%20%20%5Cquad%20%5Ctext%7Bif%7D%20%5Cquad%20%5Ctexttt%7Bmask%7D%20%28x%2Cy%29%20%20%5Cne%200)
 ///
 /// The function supports multi-channel images. Each channel is processed independently.
 ///
@@ -1085,7 +1083,7 @@ pub fn accumulate_square(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat)
 /// The function calculates the weighted sum of the input image src and the accumulator dst so that dst
 /// becomes a running average of a frame sequence:
 ///
-/// <div lang='latex'>\texttt{dst} (x,y)  \leftarrow (1- \texttt{alpha} )  \cdot \texttt{dst} (x,y) +  \texttt{alpha} \cdot \texttt{src} (x,y)  \quad \text{if} \quad \texttt{mask} (x,y)  \ne 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%20%5Cleftarrow%20%281-%20%5Ctexttt%7Balpha%7D%20%29%20%20%5Ccdot%20%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%2B%20%20%5Ctexttt%7Balpha%7D%20%5Ccdot%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cquad%20%5Ctext%7Bif%7D%20%5Cquad%20%5Ctexttt%7Bmask%7D%20%28x%2Cy%29%20%20%5Cne%200)
 ///
 /// That is, alpha regulates the update speed (how fast the accumulator "forgets" about earlier images).
 /// The function supports multi-channel images. Each channel is processed independently.
@@ -1110,7 +1108,7 @@ pub fn accumulate_weighted(src: &core::Mat, dst: &mut core::Mat, alpha: f64, mas
 ///
 /// The function adds src or some of its elements to dst :
 ///
-/// <div lang='latex'>\texttt{dst} (x,y)  \leftarrow \texttt{dst} (x,y) +  \texttt{src} (x,y)  \quad \text{if} \quad \texttt{mask} (x,y)  \ne 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%20%5Cleftarrow%20%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%2B%20%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cquad%20%5Ctext%7Bif%7D%20%5Cquad%20%5Ctexttt%7Bmask%7D%20%28x%2Cy%29%20%20%5Cne%200)
 ///
 /// The function supports multi-channel images. Each channel is processed independently.
 ///
@@ -1135,10 +1133,10 @@ pub fn accumulate(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Res
 ///
 /// The function transforms a grayscale image to a binary image according to the formulae:
 /// *   **THRESH_BINARY**
-/// <div lang='latex'>dst(x,y) =  \fork{\texttt{maxValue}}{if \(src(x,y) > T(x,y)\)}{0}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7BmaxValue%7D%7D%7Bif%20%5C%28src%28x%2Cy%29%20%3E%20T%28x%2Cy%29%5C%29%7D%7B0%7D%7Botherwise%7D)
 /// *   **THRESH_BINARY_INV**
-/// <div lang='latex'>dst(x,y) =  \fork{0}{if \(src(x,y) > T(x,y)\)}{\texttt{maxValue}}{otherwise}</div>
-/// where <span lang='latex'>T(x,y)</span> is a threshold calculated individually for each pixel (see adaptiveMethod parameter).
+/// ![block formula](https://latex.codecogs.com/png.latex?dst%28x%2Cy%29%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28src%28x%2Cy%29%20%3E%20T%28x%2Cy%29%5C%29%7D%7B%5Ctexttt%7BmaxValue%7D%7D%7Botherwise%7D)
+/// where ![inline formula](https://latex.codecogs.com/png.latex?T%28x%2Cy%29) is a threshold calculated individually for each pixel (see adaptiveMethod parameter).
 ///
 /// The function can process the image in-place.
 ///
@@ -1268,7 +1266,7 @@ pub fn bilateral_filter(src: &core::Mat, dst: &mut core::Mat, d: i32, sigma_colo
 }
 
 /// Performs linear blending of two images:
-/// <div lang='latex'> \texttt{dst}(i,j) = \texttt{weights1}(i,j)*\texttt{src1}(i,j) + \texttt{weights2}(i,j)*\texttt{src2}(i,j) </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%20%5Ctexttt%7Bdst%7D%28i%2Cj%29%20%3D%20%5Ctexttt%7Bweights1%7D%28i%2Cj%29%2A%5Ctexttt%7Bsrc1%7D%28i%2Cj%29%20%2B%20%5Ctexttt%7Bweights2%7D%28i%2Cj%29%2A%5Ctexttt%7Bsrc2%7D%28i%2Cj%29%20)
 /// ## Parameters
 /// * src1: It has a type of CV_8UC(n) or CV_32FC(n), where n is a positive integer.
 /// * src2: It has the same type and size as src1.
@@ -1283,7 +1281,7 @@ pub fn blend_linear(src1: &core::Mat, src2: &core::Mat, weights1: &core::Mat, we
 ///
 /// The function smooths an image using the kernel:
 ///
-/// <div lang='latex'>\texttt{K} =  \frac{1}{\texttt{ksize.width*ksize.height}} \begin{bmatrix} 1 & 1 & 1 &  \cdots & 1 & 1  \\ 1 & 1 & 1 &  \cdots & 1 & 1  \\ \hdotsfor{6} \\ 1 & 1 & 1 &  \cdots & 1 & 1  \\ \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BK%7D%20%3D%20%20%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize.width%2Aksize.height%7D%7D%20%5Cbegin%7Bbmatrix%7D%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cdots%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cend%7Bbmatrix%7D)
 ///
 /// The call `blur(src, dst, ksize, anchor, borderType)` is equivalent to `boxFilter(src, dst, src.type(),
 /// anchor, true, borderType)`.
@@ -1321,11 +1319,11 @@ pub fn bounding_rect(array: &core::Mat) -> Result<core::Rect> {
 ///
 /// The function smooths an image using the kernel:
 ///
-/// <div lang='latex'>\texttt{K} =  \alpha \begin{bmatrix} 1 & 1 & 1 &  \cdots & 1 & 1  \\ 1 & 1 & 1 &  \cdots & 1 & 1  \\ \hdotsfor{6} \\ 1 & 1 & 1 &  \cdots & 1 & 1 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BK%7D%20%3D%20%20%5Calpha%20%5Cbegin%7Bbmatrix%7D%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%20%5C%5C%20%5Cdots%20%5C%5C%201%20%26%201%20%26%201%20%26%20%20%5Ccdots%20%26%201%20%26%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// where
 ///
-/// <div lang='latex'>\alpha = \fork{\frac{1}{\texttt{ksize.width*ksize.height}}}{when \texttt{normalize=true}}{1}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Calpha%20%3D%20%5Cfork%7B%5Cfrac%7B1%7D%7B%5Ctexttt%7Bksize.width%2Aksize.height%7D%7D%7D%7Bwhen%20%5Ctexttt%7Bnormalize%3Dtrue%7D%7D%7B1%7D%7Botherwise%7D)
 ///
 /// Unnormalized box filter is useful for computing various integral characteristics over each pixel
 /// neighborhood, such as covariance matrices of image derivatives (used in dense optical flow
@@ -1450,12 +1448,12 @@ pub fn calc_back_project(images: &types::VectorOfMat, channels: &types::VectorOf
 /// * histSize: Array of histogram sizes in each dimension.
 /// * ranges: Array of the dims arrays of the histogram bin boundaries in each dimension. When the
 /// histogram is uniform ( uniform =true), then for each dimension i it is enough to specify the lower
-/// (inclusive) boundary <span lang='latex'>L_0</span> of the 0-th histogram bin and the upper (exclusive) boundary
-/// <span lang='latex'>U_{\texttt{histSize}[i]-1}</span> for the last histogram bin histSize[i]-1 . That is, in case of a
+/// (inclusive) boundary ![inline formula](https://latex.codecogs.com/png.latex?L_0) of the 0-th histogram bin and the upper (exclusive) boundary
+/// ![inline formula](https://latex.codecogs.com/png.latex?U_%7B%5Ctexttt%7BhistSize%7D%5Bi%5D-1%7D) for the last histogram bin histSize[i]-1 . That is, in case of a
 /// uniform histogram each of ranges[i] is an array of 2 elements. When the histogram is not uniform (
 /// uniform=false ), then each of ranges[i] contains histSize[i]+1 elements:
-/// <span lang='latex'>L_0, U_0=L_1, U_1=L_2, ..., U_{\texttt{histSize[i]}-2}=L_{\texttt{histSize[i]}-1}, U_{\texttt{histSize[i]}-1}</span>
-/// . The array elements, that are not between <span lang='latex'>L_0</span> and <span lang='latex'>U_{\texttt{histSize[i]}-1}</span> , are not
+/// ![inline formula](https://latex.codecogs.com/png.latex?L_0%2C%20U_0%3DL_1%2C%20U_1%3DL_2%2C%20...%2C%20U_%7B%5Ctexttt%7BhistSize%5Bi%5D%7D-2%7D%3DL_%7B%5Ctexttt%7BhistSize%5Bi%5D%7D-1%7D%2C%20U_%7B%5Ctexttt%7BhistSize%5Bi%5D%7D-1%7D)
+/// . The array elements, that are not between ![inline formula](https://latex.codecogs.com/png.latex?L_0) and ![inline formula](https://latex.codecogs.com/png.latex?U_%7B%5Ctexttt%7BhistSize%5Bi%5D%7D-1%7D) , are not
 /// counted in the histogram.
 /// * uniform: Flag indicating whether the histogram is uniform or not (see above).
 /// * accumulate: Accumulation flag. If it is set, the histogram is not cleared in the beginning
@@ -1546,7 +1544,7 @@ pub fn clip_line_size(img_size: core::Size, pt1: &mut core::Point, pt2: &mut cor
 ///
 /// The function cv::compareHist compares two dense or two sparse histograms using the specified method.
 ///
-/// The function returns <span lang='latex'>d(H_1, H_2)</span> .
+/// The function returns ![inline formula](https://latex.codecogs.com/png.latex?d%28H_1%2C%20H_2%29) .
 ///
 /// While the function works well with 1-, 2-, 3-dimensional dense histograms, it may not be suitable
 /// for high-dimensional sparse histograms. In such histograms, because of aliasing and sampling
@@ -1724,16 +1722,16 @@ pub fn contour_area(contour: &core::Mat, oriented: bool) -> Result<f64> {
 /// Converts image transformation maps from one representation to another.
 ///
 /// The function converts a pair of maps for remap from one representation to another. The following
-/// options ( (map1.type(), map2.type()) <span lang='latex'>\rightarrow</span> (dstmap1.type(), dstmap2.type()) ) are
+/// options ( (map1.type(), map2.type()) ![inline formula](https://latex.codecogs.com/png.latex?%5Crightarrow) (dstmap1.type(), dstmap2.type()) ) are
 /// supported:
 ///
-/// - <span lang='latex'>\texttt{(CV_32FC1, CV_32FC1)} \rightarrow \texttt{(CV_16SC2, CV_16UC1)}</span>. This is the
+/// - ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28CV_32FC1%2C%20CV_32FC1%29%7D%20%5Crightarrow%20%5Ctexttt%7B%28CV_16SC2%2C%20CV_16UC1%29%7D). This is the
 /// most frequently used conversion operation, in which the original floating-point maps (see remap )
 /// are converted to a more compact and much faster fixed-point representation. The first output array
 /// contains the rounded coordinates and the second array (created only when nninterpolation=false )
 /// contains indices in the interpolation tables.
 ///
-/// - <span lang='latex'>\texttt{(CV_32FC2)} \rightarrow \texttt{(CV_16SC2, CV_16UC1)}</span>. The same as above but
+/// - ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28CV_32FC2%29%7D%20%5Crightarrow%20%5Ctexttt%7B%28CV_16SC2%2C%20CV_16UC1%29%7D). The same as above but
 /// the original maps are stored in one 2-channel matrix.
 ///
 /// - Reverse conversion. Obviously, the reconstructed floating-point maps will not be exactly the same
@@ -1818,19 +1816,19 @@ pub fn convexity_defects(contour: &core::Mat, convexhull: &core::Mat, convexity_
 
 /// Calculates eigenvalues and eigenvectors of image blocks for corner detection.
 ///
-/// For every pixel <span lang='latex'>p</span> , the function cornerEigenValsAndVecs considers a blockSize <span lang='latex'>\times</span> blockSize
-/// neighborhood <span lang='latex'>S(p)</span> . It calculates the covariation matrix of derivatives over the neighborhood as:
+/// For every pixel ![inline formula](https://latex.codecogs.com/png.latex?p) , the function cornerEigenValsAndVecs considers a blockSize ![inline formula](https://latex.codecogs.com/png.latex?%5Ctimes) blockSize
+/// neighborhood ![inline formula](https://latex.codecogs.com/png.latex?S%28p%29) . It calculates the covariation matrix of derivatives over the neighborhood as:
 ///
-/// <div lang='latex'>M =  \begin{bmatrix} \sum _{S(p)}(dI/dx)^2 &  \sum _{S(p)}dI/dx dI/dy  \\ \sum _{S(p)}dI/dx dI/dy &  \sum _{S(p)}(dI/dy)^2 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?M%20%3D%20%20%5Cbegin%7Bbmatrix%7D%20%5Csum%20_%7BS%28p%29%7D%28dI%2Fdx%29%5E2%20%26%20%20%5Csum%20_%7BS%28p%29%7DdI%2Fdx%20dI%2Fdy%20%20%5C%5C%20%5Csum%20_%7BS%28p%29%7DdI%2Fdx%20dI%2Fdy%20%26%20%20%5Csum%20_%7BS%28p%29%7D%28dI%2Fdy%29%5E2%20%5Cend%7Bbmatrix%7D)
 ///
 /// where the derivatives are computed using the Sobel operator.
 ///
-/// After that, it finds eigenvectors and eigenvalues of <span lang='latex'>M</span> and stores them in the destination image as
-/// <span lang='latex'>(\lambda_1, \lambda_2, x_1, y_1, x_2, y_2)</span> where
+/// After that, it finds eigenvectors and eigenvalues of ![inline formula](https://latex.codecogs.com/png.latex?M) and stores them in the destination image as
+/// ![inline formula](https://latex.codecogs.com/png.latex?%28%5Clambda_1%2C%20%5Clambda_2%2C%20x_1%2C%20y_1%2C%20x_2%2C%20y_2%29) where
 ///
-/// *   <span lang='latex'>\lambda_1, \lambda_2</span> are the non-sorted eigenvalues of <span lang='latex'>M</span>
-/// *   <span lang='latex'>x_1, y_1</span> are the eigenvectors corresponding to <span lang='latex'>\lambda_1</span>
-/// *   <span lang='latex'>x_2, y_2</span> are the eigenvectors corresponding to <span lang='latex'>\lambda_2</span>
+/// *   ![inline formula](https://latex.codecogs.com/png.latex?%5Clambda_1%2C%20%5Clambda_2) are the non-sorted eigenvalues of ![inline formula](https://latex.codecogs.com/png.latex?M)
+/// *   ![inline formula](https://latex.codecogs.com/png.latex?x_1%2C%20y_1) are the eigenvectors corresponding to ![inline formula](https://latex.codecogs.com/png.latex?%5Clambda_1)
+/// *   ![inline formula](https://latex.codecogs.com/png.latex?x_2%2C%20y_2) are the eigenvectors corresponding to ![inline formula](https://latex.codecogs.com/png.latex?%5Clambda_2)
 ///
 /// The output of the function can be used for robust edge or corner detection.
 ///
@@ -1853,11 +1851,11 @@ pub fn corner_eigen_vals_and_vecs(src: &core::Mat, dst: &mut core::Mat, block_si
 /// Harris corner detector.
 ///
 /// The function runs the Harris corner detector on the image. Similarly to cornerMinEigenVal and
-/// cornerEigenValsAndVecs , for each pixel <span lang='latex'>(x, y)</span> it calculates a <span lang='latex'>2\times2</span> gradient covariance
-/// matrix <span lang='latex'>M^{(x,y)}</span> over a <span lang='latex'>\texttt{blockSize} \times \texttt{blockSize}</span> neighborhood. Then, it
+/// cornerEigenValsAndVecs , for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) it calculates a ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes2) gradient covariance
+/// matrix ![inline formula](https://latex.codecogs.com/png.latex?M%5E%7B%28x%2Cy%29%7D) over a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BblockSize%7D%20%5Ctimes%20%5Ctexttt%7BblockSize%7D) neighborhood. Then, it
 /// computes the following characteristic:
 ///
-/// <div lang='latex'>\texttt{dst} (x,y) =  \mathrm{det} M^{(x,y)} - k  \cdot \left ( \mathrm{tr} M^{(x,y)} \right )^2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmathrm%7Bdet%7D%20M%5E%7B%28x%2Cy%29%7D%20-%20k%20%20%5Ccdot%20%5Cleft%20%28%20%5Cmathrm%7Btr%7D%20M%5E%7B%28x%2Cy%29%7D%20%5Cright%20%29%5E2)
 ///
 /// Corners in the image can be found as the local maxima of this response map.
 ///
@@ -1879,7 +1877,7 @@ pub fn corner_harris(src: &core::Mat, dst: &mut core::Mat, block_size: i32, ksiz
 /// Calculates the minimal eigenvalue of gradient matrices for corner detection.
 ///
 /// The function is similar to cornerEigenValsAndVecs but it calculates and stores only the minimal
-/// eigenvalue of the covariance matrix of derivatives, that is, <span lang='latex'>\min(\lambda_1, \lambda_2)</span> in terms
+/// eigenvalue of the covariance matrix of derivatives, that is, ![inline formula](https://latex.codecogs.com/png.latex?%5Cmin%28%5Clambda_1%2C%20%5Clambda_2%29) in terms
 /// of the formulae in the cornerEigenValsAndVecs description.
 ///
 /// ## Parameters
@@ -1904,24 +1902,24 @@ pub fn corner_min_eigen_val(src: &core::Mat, dst: &mut core::Mat, block_size: i3
 ///
 /// ![image](https://docs.opencv.org/4.1.1/cornersubpix.png)
 ///
-/// Sub-pixel accurate corner locator is based on the observation that every vector from the center <span lang='latex'>q</span>
-/// to a point <span lang='latex'>p</span> located within a neighborhood of <span lang='latex'>q</span> is orthogonal to the image gradient at <span lang='latex'>p</span>
+/// Sub-pixel accurate corner locator is based on the observation that every vector from the center ![inline formula](https://latex.codecogs.com/png.latex?q)
+/// to a point ![inline formula](https://latex.codecogs.com/png.latex?p) located within a neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?q) is orthogonal to the image gradient at ![inline formula](https://latex.codecogs.com/png.latex?p)
 /// subject to image and measurement noise. Consider the expression:
 ///
-/// <div lang='latex'>\epsilon _i = {DI_{p_i}}^T  \cdot (q - p_i)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cepsilon%20_i%20%3D%20%7BDI_%7Bp_i%7D%7D%5ET%20%20%5Ccdot%20%28q%20-%20p_i%29)
 ///
-/// where <span lang='latex'>{DI_{p_i}}</span> is an image gradient at one of the points <span lang='latex'>p_i</span> in a neighborhood of <span lang='latex'>q</span> . The
-/// value of <span lang='latex'>q</span> is to be found so that <span lang='latex'>\epsilon_i</span> is minimized. A system of equations may be set up
-/// with <span lang='latex'>\epsilon_i</span> set to zero:
+/// where ![inline formula](https://latex.codecogs.com/png.latex?%7BDI_%7Bp_i%7D%7D) is an image gradient at one of the points ![inline formula](https://latex.codecogs.com/png.latex?p_i) in a neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?q) . The
+/// value of ![inline formula](https://latex.codecogs.com/png.latex?q) is to be found so that ![inline formula](https://latex.codecogs.com/png.latex?%5Cepsilon_i) is minimized. A system of equations may be set up
+/// with ![inline formula](https://latex.codecogs.com/png.latex?%5Cepsilon_i) set to zero:
 ///
-/// <div lang='latex'>\sum _i(DI_{p_i}  \cdot {DI_{p_i}}^T) \cdot q -  \sum _i(DI_{p_i}  \cdot {DI_{p_i}}^T  \cdot p_i)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20_i%28DI_%7Bp_i%7D%20%20%5Ccdot%20%7BDI_%7Bp_i%7D%7D%5ET%29%20%5Ccdot%20q%20-%20%20%5Csum%20_i%28DI_%7Bp_i%7D%20%20%5Ccdot%20%7BDI_%7Bp_i%7D%7D%5ET%20%20%5Ccdot%20p_i%29)
 ///
-/// where the gradients are summed within a neighborhood ("search window") of <span lang='latex'>q</span> . Calling the first
-/// gradient term <span lang='latex'>G</span> and the second gradient term <span lang='latex'>b</span> gives:
+/// where the gradients are summed within a neighborhood ("search window") of ![inline formula](https://latex.codecogs.com/png.latex?q) . Calling the first
+/// gradient term ![inline formula](https://latex.codecogs.com/png.latex?G) and the second gradient term ![inline formula](https://latex.codecogs.com/png.latex?b) gives:
 ///
-/// <div lang='latex'>q = G^{-1}  \cdot b</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?q%20%3D%20G%5E%7B-1%7D%20%20%5Ccdot%20b)
 ///
-/// The algorithm sets the center of the neighborhood window at this new center <span lang='latex'>q</span> and then iterates
+/// The algorithm sets the center of the neighborhood window at this new center ![inline formula](https://latex.codecogs.com/png.latex?q) and then iterates
 /// until the center stays within a set threshold.
 ///
 /// ## Parameters
@@ -1929,7 +1927,7 @@ pub fn corner_min_eigen_val(src: &core::Mat, dst: &mut core::Mat, block_size: i3
 /// * corners: Initial coordinates of the input corners and refined coordinates provided for
 /// output.
 /// * winSize: Half of the side length of the search window. For example, if winSize=Size(5,5) ,
-/// then a <span lang='latex'>(5*2+1) \times (5*2+1) = 11 \times 11</span> search window is used.
+/// then a ![inline formula](https://latex.codecogs.com/png.latex?%285%2A2%2B1%29%20%5Ctimes%20%285%2A2%2B1%29%20%3D%2011%20%5Ctimes%2011) search window is used.
 /// * zeroZone: Half of the size of the dead region in the middle of the search zone over which
 /// the summation in the formula below is not done. It is used sometimes to avoid possible
 /// singularities of the autocorrelation matrix. The value of (-1,-1) indicates that there is no such
@@ -2055,7 +2053,7 @@ pub fn cvt_color_two_plane(src1: &core::Mat, src2: &core::Mat, dst: &mut core::M
 ///
 /// In case of linear transformations, the range does not matter. But in case of a non-linear
 /// transformation, an input RGB image should be normalized to the proper value range to get the correct
-/// results, for example, for RGB <span lang='latex'>\rightarrow</span> L\*u\*v\* transformation. For example, if you have a
+/// results, for example, for RGB ![inline formula](https://latex.codecogs.com/png.latex?%5Crightarrow) L\*u\*v\* transformation. For example, if you have a
 /// 32-bit floating-point image directly converted from an 8-bit image without any scaling, then it will
 /// have the 0..255 value range instead of 0..1 assumed by the function. So, before calling #cvtColor ,
 /// you need first to scale the image down:
@@ -2130,7 +2128,7 @@ pub fn demosaicing(src: &core::Mat, dst: &mut core::Mat, code: i32, dst_cn: i32)
 ///
 /// The function dilates the source image using the specified structuring element that determines the
 /// shape of a pixel neighborhood over which the maximum is taken:
-/// <div lang='latex'>\texttt{dst} (x,y) =  \max _{(x',y'):  \, \texttt{element} (x',y') \ne0 } \texttt{src} (x+x',y+y')</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmax%20_%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 ///
 /// The function supports the in-place mode. Dilation can be applied several ( iterations ) times. In
 /// case of multi-channel images, each channel is processed independently.
@@ -2168,13 +2166,13 @@ pub fn dilate(src: &core::Mat, dst: &mut core::Mat, kernel: &core::Mat, anchor: 
 ///
 /// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 /// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
-/// diagonal, or knight's move (the latest is available for a <span lang='latex'>5\times 5</span> mask). The overall
+/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 /// distance is calculated as a sum of these basic distances. Since the distance function should be
 /// symmetric, all of the horizontal and vertical shifts must have the same cost (denoted as a ), all
 /// the diagonal shifts must have the same cost (denoted as `b`), and all knight's moves must have the
 /// same cost (denoted as `c`). For the #DIST_C and #DIST_L1 types, the distance is calculated
 /// precisely, whereas for #DIST_L2 (Euclidean distance) the distance can be calculated only with a
-/// relative error (a <span lang='latex'>5\times 5</span> mask gives more accurate results). For `a`,`b`, and `c`, OpenCV
+/// relative error (a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask gives more accurate results). For `a`,`b`, and `c`, OpenCV
 /// uses the values suggested in the original paper:
 /// - DIST_L1: `a = 1, b = 2`
 /// - DIST_L2:
@@ -2182,11 +2180,11 @@ pub fn dilate(src: &core::Mat, dst: &mut core::Mat, kernel: &core::Mat, anchor: 
 /// - `5 x 5`: `a=1, b=1.4, c=2.1969`
 /// - DIST_C: `a = 1, b = 1`
 ///
-/// Typically, for a fast, coarse distance estimation #DIST_L2, a <span lang='latex'>3\times 3</span> mask is used. For a
-/// more accurate distance estimation #DIST_L2, a <span lang='latex'>5\times 5</span> mask or the precise algorithm is used.
+/// Typically, for a fast, coarse distance estimation #DIST_L2, a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mask is used. For a
+/// more accurate distance estimation #DIST_L2, a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask or the precise algorithm is used.
 /// Note that both the precise and the approximate algorithms are linear on the number of pixels.
 ///
-/// This variant of the function does not only compute the minimum distance for each pixel <span lang='latex'>(x, y)</span>
+/// This variant of the function does not only compute the minimum distance for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29)
 /// but also identifies the nearest connected component consisting of zero pixels
 /// (labelType==#DIST_LABEL_CCOMP) or the nearest zero pixel (labelType==#DIST_LABEL_PIXEL). Index of the
 /// component/pixel is stored in `labels(x, y)`. When labelType==#DIST_LABEL_CCOMP, the function
@@ -2208,8 +2206,7 @@ pub fn dilate(src: &core::Mat, dst: &mut core::Mat, kernel: &core::Mat, anchor: 
 /// * distanceType: Type of distance, see #DistanceTypes
 /// * maskSize: Size of the distance transform mask, see #DistanceTransformMasks.
 /// #DIST_MASK_PRECISE is not supported by this variant. In case of the #DIST_L1 or #DIST_C distance type,
-/// the parameter is forced to 3 because a <span lang='latex'>3\times 3</span> mask gives the same result as \f$5\times
-/// 5\f$ or any larger aperture.
+/// the parameter is forced to 3 because a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mask gives the same result as ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%0A5) or any larger aperture.
 /// * labelType: Type of the label array to build, see #DistanceTransformLabelTypes.
 ///
 /// ## C++ default parameters
@@ -2228,13 +2225,13 @@ pub fn distance_transform_labels(src: &core::Mat, dst: &mut core::Mat, labels: &
 ///
 /// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 /// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
-/// diagonal, or knight's move (the latest is available for a <span lang='latex'>5\times 5</span> mask). The overall
+/// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 /// distance is calculated as a sum of these basic distances. Since the distance function should be
 /// symmetric, all of the horizontal and vertical shifts must have the same cost (denoted as a ), all
 /// the diagonal shifts must have the same cost (denoted as `b`), and all knight's moves must have the
 /// same cost (denoted as `c`). For the #DIST_C and #DIST_L1 types, the distance is calculated
 /// precisely, whereas for #DIST_L2 (Euclidean distance) the distance can be calculated only with a
-/// relative error (a <span lang='latex'>5\times 5</span> mask gives more accurate results). For `a`,`b`, and `c`, OpenCV
+/// relative error (a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask gives more accurate results). For `a`,`b`, and `c`, OpenCV
 /// uses the values suggested in the original paper:
 /// - DIST_L1: `a = 1, b = 2`
 /// - DIST_L2:
@@ -2242,11 +2239,11 @@ pub fn distance_transform_labels(src: &core::Mat, dst: &mut core::Mat, labels: &
 /// - `5 x 5`: `a=1, b=1.4, c=2.1969`
 /// - DIST_C: `a = 1, b = 1`
 ///
-/// Typically, for a fast, coarse distance estimation #DIST_L2, a <span lang='latex'>3\times 3</span> mask is used. For a
-/// more accurate distance estimation #DIST_L2, a <span lang='latex'>5\times 5</span> mask or the precise algorithm is used.
+/// Typically, for a fast, coarse distance estimation #DIST_L2, a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mask is used. For a
+/// more accurate distance estimation #DIST_L2, a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask or the precise algorithm is used.
 /// Note that both the precise and the approximate algorithms are linear on the number of pixels.
 ///
-/// This variant of the function does not only compute the minimum distance for each pixel <span lang='latex'>(x, y)</span>
+/// This variant of the function does not only compute the minimum distance for each pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29)
 /// but also identifies the nearest connected component consisting of zero pixels
 /// (labelType==#DIST_LABEL_CCOMP) or the nearest zero pixel (labelType==#DIST_LABEL_PIXEL). Index of the
 /// component/pixel is stored in `labels(x, y)`. When labelType==#DIST_LABEL_CCOMP, the function
@@ -2268,8 +2265,7 @@ pub fn distance_transform_labels(src: &core::Mat, dst: &mut core::Mat, labels: &
 /// * distanceType: Type of distance, see #DistanceTypes
 /// * maskSize: Size of the distance transform mask, see #DistanceTransformMasks.
 /// #DIST_MASK_PRECISE is not supported by this variant. In case of the #DIST_L1 or #DIST_C distance type,
-/// the parameter is forced to 3 because a <span lang='latex'>3\times 3</span> mask gives the same result as \f$5\times
-/// 5\f$ or any larger aperture.
+/// the parameter is forced to 3 because a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mask gives the same result as ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%0A5) or any larger aperture.
 /// * labelType: Type of the label array to build, see #DistanceTransformLabelTypes.
 ///
 /// ## Overloaded parameters
@@ -2279,8 +2275,8 @@ pub fn distance_transform_labels(src: &core::Mat, dst: &mut core::Mat, labels: &
 /// single-channel image of the same size as src .
 /// * distanceType: Type of distance, see #DistanceTypes
 /// * maskSize: Size of the distance transform mask, see #DistanceTransformMasks. In case of the
-/// #DIST_L1 or #DIST_C distance type, the parameter is forced to 3 because a <span lang='latex'>3\times 3</span> mask gives
-/// the same result as <span lang='latex'>5\times 5</span> or any larger aperture.
+/// #DIST_L1 or #DIST_C distance type, the parameter is forced to 3 because a ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) mask gives
+/// the same result as ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) or any larger aperture.
 /// * dstType: Type of output image. It can be CV_8U or CV_32F. Type CV_8U can be used only for
 /// the first variant of the function and distanceType == #DIST_L1.
 ///
@@ -2292,8 +2288,8 @@ pub fn distance_transform(src: &core::Mat, dst: &mut core::Mat, distance_type: i
 
 /// Draws contours outlines or filled contours.
 ///
-/// The function draws contour outlines in the image if <span lang='latex'>\texttt{thickness} \ge 0</span> or fills the area
-/// bounded by the contours if <span lang='latex'>\texttt{thickness}<0</span> . The example below shows how to retrieve
+/// The function draws contour outlines in the image if ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bthickness%7D%20%5Cge%200) or fills the area
+/// bounded by the contours if ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bthickness%7D%3C0) . The example below shows how to retrieve
 /// connected components from the binary image and label them: :
 /// @include snippets/imgproc_drawContours.cpp
 ///
@@ -2312,7 +2308,7 @@ pub fn distance_transform(src: &core::Mat, dst: &mut core::Mat, distance_type: i
 /// draws the contours, all the nested contours, all the nested-to-nested contours, and so on. This
 /// parameter is only taken into account when there is hierarchy available.
 /// * offset: Optional contour shift parameter. Shift all the drawn contours by the specified
-/// <span lang='latex'>\texttt{offset}=(dx,dy)</span> .
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Boffset%7D%3D%28dx%2Cdy%29) .
 ///
 /// Note: When thickness=#FILLED, the function is designed to handle connected components with holes correctly
 /// even when no hierarchy date is provided. This is done by analyzing all the outlines together
@@ -2480,11 +2476,11 @@ pub fn ellipse_new_rotated_rect(img: &mut core::Mat, _box: &core::RotatedRect, c
 ///
 /// The function equalizes the histogram of the input image using the following algorithm:
 ///
-/// - Calculate the histogram <span lang='latex'>H</span> for src .
+/// - Calculate the histogram ![inline formula](https://latex.codecogs.com/png.latex?H) for src .
 /// - Normalize the histogram so that the sum of histogram bins is 255.
 /// - Compute the integral of the histogram:
-/// <div lang='latex'>H'_i =  \sum _{0  \le j < i} H(j)</div>
-/// - Transform the image using <span lang='latex'>H'</span> as a look-up table: <span lang='latex'>\texttt{dst}(x,y) = H'(\texttt{src}(x,y))</span>
+/// ![block formula](https://latex.codecogs.com/png.latex?H%27_i%20%3D%20%20%5Csum%20_%7B0%20%20%5Cle%20j%20%3C%20i%7D%20H%28j%29)
+/// - Transform the image using ![inline formula](https://latex.codecogs.com/png.latex?H%27) as a look-up table: ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28x%2Cy%29%20%3D%20H%27%28%5Ctexttt%7Bsrc%7D%28x%2Cy%29%29)
 ///
 /// The algorithm normalizes the brightness and increases the contrast of the image.
 ///
@@ -2500,7 +2496,7 @@ pub fn equalize_hist(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// The function erodes the source image using the specified structuring element that determines the
 /// shape of a pixel neighborhood over which the minimum is taken:
 ///
-/// <div lang='latex'>\texttt{dst} (x,y) =  \min _{(x',y'):  \, \texttt{element} (x',y') \ne0 } \texttt{src} (x+x',y+y')</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Cmin%20_%7B%28x%27%2Cy%27%29%3A%20%20%5C%2C%20%5Ctexttt%7Belement%7D%20%28x%27%2Cy%27%29%20%5Cne0%20%7D%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27%2Cy%2By%27%29)
 ///
 /// The function supports the in-place mode. Erosion can be applied several ( iterations ) times. In
 /// case of multi-channel images, each channel is processed independently.
@@ -2602,7 +2598,7 @@ pub fn fill_poly(img: &mut core::Mat, pts: &types::VectorOfMat, color: core::Sca
 ///
 /// The function does actually compute correlation, not the convolution:
 ///
-/// <div lang='latex'>\texttt{dst} (x,y) =  \sum _{ \stackrel{0\leq x' < \texttt{kernel.cols},}{0\leq y' < \texttt{kernel.rows}} }  \texttt{kernel} (x',y')* \texttt{src} (x+x'- \texttt{anchor.x} ,y+y'- \texttt{anchor.y} )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Csum%20_%7B%20%5Cstackrel%7B0%5Cleq%20x%27%20%3C%20%5Ctexttt%7Bkernel.cols%7D%2C%7D%7B0%5Cleq%20y%27%20%3C%20%5Ctexttt%7Bkernel.rows%7D%7D%20%7D%20%20%5Ctexttt%7Bkernel%7D%20%28x%27%2Cy%27%29%2A%20%5Ctexttt%7Bsrc%7D%20%28x%2Bx%27-%20%5Ctexttt%7Banchor.x%7D%20%2Cy%2By%27-%20%5Ctexttt%7Banchor.y%7D%20%29)
 ///
 /// That is, the kernel is not mirrored around the anchor point. If you need a real convolution, flip
 /// the kernel using #flip and set the new anchor to `(kernel.cols - anchor.x - 1, kernel.rows -
@@ -2708,15 +2704,15 @@ pub fn find_contours(image: &core::Mat, contours: &mut types::VectorOfMat, mode:
 /// It returns the rotated rectangle in which the ellipse is inscribed.
 /// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
 ///
-/// For an ellipse, this basis set is <span lang='latex'> \chi= \left(x^2, x y, y^2, x, y, 1\right) </span>,
-/// which is a set of six free coefficients <span lang='latex'> A^T=\left\{A_{\text{xx}},A_{\text{xy}},A_{\text{yy}},A_x,A_y,A_0\right\} </span>.
-/// However, to specify an ellipse, all that is needed is five numbers; the major and minor axes lengths <span lang='latex'> (a,b) </span>,
-/// the position <span lang='latex'> (x_0,y_0) </span>, and the orientation <span lang='latex'> \theta </span>. This is because the basis set includes lines,
+/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
+/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA_%7B%5Ctext%7Bxx%7D%7D%2CA_%7B%5Ctext%7Bxy%7D%7D%2CA_%7B%5Ctext%7Byy%7D%7D%2CA_x%2CA_y%2CA_0%5Cright%5C%7D%20).
+/// However, to specify an ellipse, all that is needed is five numbers; the major and minor axes lengths ![inline formula](https://latex.codecogs.com/png.latex?%20%28a%2Cb%29%20),
+/// the position ![inline formula](https://latex.codecogs.com/png.latex?%20%28x_0%2Cy_0%29%20), and the orientation ![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctheta%20). This is because the basis set includes lines,
 /// quadratics, parabolic and hyperbolic functions as well as elliptical functions as possible fits.
 /// If the fit is found to be a parabolic or hyperbolic function then the standard #fitEllipse method is used.
 /// The AMS method restricts the fit to parabolic, hyperbolic and elliptical curves
-/// by imposing the condition that <span lang='latex'> A^T ( D_x^T D_x  +   D_y^T D_y) A = 1 </span> where
-/// the matrices <span lang='latex'> Dx </span> and <span lang='latex'> Dy </span> are the partial derivatives of the design matrix <span lang='latex'> D </span> with
+/// by imposing the condition that ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%20%28%20D_x%5ET%20D_x%20%20%2B%20%20%20D_y%5ET%20D_y%29%20A%20%3D%201%20) where
+/// the matrices ![inline formula](https://latex.codecogs.com/png.latex?%20Dx%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20Dy%20) are the partial derivatives of the design matrix ![inline formula](https://latex.codecogs.com/png.latex?%20D%20) with
 /// respect to x and y. The matrices are formed row by row applying the following to
 /// each of the points in the set:
 /// \f{align*}{
@@ -2747,13 +2743,13 @@ pub fn fit_ellipse_ams(points: &core::Mat) -> Result<core::RotatedRect> {
 /// It returns the rotated rectangle in which the ellipse is inscribed.
 /// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
 ///
-/// For an ellipse, this basis set is <span lang='latex'> \chi= \left(x^2, x y, y^2, x, y, 1\right) </span>,
-/// which is a set of six free coefficients <span lang='latex'> A^T=\left\{A_{\text{xx}},A_{\text{xy}},A_{\text{yy}},A_x,A_y,A_0\right\} </span>.
-/// However, to specify an ellipse, all that is needed is five numbers; the major and minor axes lengths <span lang='latex'> (a,b) </span>,
-/// the position <span lang='latex'> (x_0,y_0) </span>, and the orientation <span lang='latex'> \theta </span>. This is because the basis set includes lines,
+/// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
+/// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA_%7B%5Ctext%7Bxx%7D%7D%2CA_%7B%5Ctext%7Bxy%7D%7D%2CA_%7B%5Ctext%7Byy%7D%7D%2CA_x%2CA_y%2CA_0%5Cright%5C%7D%20).
+/// However, to specify an ellipse, all that is needed is five numbers; the major and minor axes lengths ![inline formula](https://latex.codecogs.com/png.latex?%20%28a%2Cb%29%20),
+/// the position ![inline formula](https://latex.codecogs.com/png.latex?%20%28x_0%2Cy_0%29%20), and the orientation ![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctheta%20). This is because the basis set includes lines,
 /// quadratics, parabolic and hyperbolic functions as well as elliptical functions as possible fits.
-/// The Direct method confines the fit to ellipses by ensuring that <span lang='latex'> 4 A_{xx} A_{yy}- A_{xy}^2 > 0 </span>.
-/// The condition imposed is that <span lang='latex'> 4 A_{xx} A_{yy}- A_{xy}^2=1 </span> which satisfies the inequality
+/// The Direct method confines the fit to ellipses by ensuring that ![inline formula](https://latex.codecogs.com/png.latex?%204%20A_%7Bxx%7D%20A_%7Byy%7D-%20A_%7Bxy%7D%5E2%20%3E%200%20).
+/// The condition imposed is that ![inline formula](https://latex.codecogs.com/png.latex?%204%20A_%7Bxx%7D%20A_%7Byy%7D-%20A_%7Bxy%7D%5E2%3D1%20) which satisfies the inequality
 /// and as the coefficients can be arbitrarily scaled is not overly restrictive.
 ///
 /// \f{equation*}{
@@ -2773,13 +2769,13 @@ pub fn fit_ellipse_ams(points: &core::Mat) -> Result<core::RotatedRect> {
 /// D^T D A = \lambda  \left( C\right) A
 /// \f}
 ///
-/// The system produces only one positive eigenvalue <span lang='latex'> \lambda</span> which is chosen as the solution
-/// with its eigenvector <span lang='latex'>\mathbf{u}</span>. These are used to find the coefficients
+/// The system produces only one positive eigenvalue ![inline formula](https://latex.codecogs.com/png.latex?%20%5Clambda) which is chosen as the solution
+/// with its eigenvector ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathbf%7Bu%7D). These are used to find the coefficients
 ///
 /// \f{equation*}{
 /// A = \sqrt{\frac{1}{\mathbf{u}^T C \mathbf{u}}}  \mathbf{u}
 /// \f}
-/// The scaling factor guarantees that  <span lang='latex'>A^T C A =1</span>.
+/// The scaling factor guarantees that  ![inline formula](https://latex.codecogs.com/png.latex?A%5ET%20C%20A%20%3D1).
 ///
 /// ## Parameters
 /// * points: Input 2D point set, stored in std::vector\<\> or Mat
@@ -2803,25 +2799,25 @@ pub fn fit_ellipse(points: &core::Mat) -> Result<core::RotatedRect> {
 
 /// Fits a line to a 2D or 3D point set.
 ///
-/// The function fitLine fits a line to a 2D or 3D point set by minimizing <span lang='latex'>\sum_i \rho(r_i)</span> where
-/// <span lang='latex'>r_i</span> is a distance between the <span lang='latex'>i^{th}</span> point, the line and <span lang='latex'>\rho(r)</span> is a distance function, one
+/// The function fitLine fits a line to a 2D or 3D point set by minimizing ![inline formula](https://latex.codecogs.com/png.latex?%5Csum_i%20%5Crho%28r_i%29) where
+/// ![inline formula](https://latex.codecogs.com/png.latex?r_i) is a distance between the ![inline formula](https://latex.codecogs.com/png.latex?i%5E%7Bth%7D) point, the line and ![inline formula](https://latex.codecogs.com/png.latex?%5Crho%28r%29) is a distance function, one
 /// of the following:
 /// *  DIST_L2
-/// <div lang='latex'>\rho (r) = r^2/2  \quad \text{(the simplest and the fastest least-squares method)}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%20r%5E2%2F2%20%20%5Cquad%20%5Ctext%7B%28the%20simplest%20and%20the%20fastest%20least-squares%20method%29%7D)
 /// - DIST_L1
-/// <div lang='latex'>\rho (r) = r</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%20r)
 /// - DIST_L12
-/// <div lang='latex'>\rho (r) = 2  \cdot ( \sqrt{1 + \frac{r^2}{2}} - 1)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%202%20%20%5Ccdot%20%28%20%5Csqrt%7B1%20%2B%20%5Cfrac%7Br%5E2%7D%7B2%7D%7D%20-%201%29)
 /// - DIST_FAIR
-/// <div lang='latex'>\rho \left (r \right ) = C^2  \cdot \left (  \frac{r}{C} -  \log{\left(1 + \frac{r}{C}\right)} \right )  \quad \text{where} \quad C=1.3998</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%5Cleft%20%28r%20%5Cright%20%29%20%3D%20C%5E2%20%20%5Ccdot%20%5Cleft%20%28%20%20%5Cfrac%7Br%7D%7BC%7D%20-%20%20%5Clog%7B%5Cleft%281%20%2B%20%5Cfrac%7Br%7D%7BC%7D%5Cright%29%7D%20%5Cright%20%29%20%20%5Cquad%20%5Ctext%7Bwhere%7D%20%5Cquad%20C%3D1.3998)
 /// - DIST_WELSCH
-/// <div lang='latex'>\rho \left (r \right ) =  \frac{C^2}{2} \cdot \left ( 1 -  \exp{\left(-\left(\frac{r}{C}\right)^2\right)} \right )  \quad \text{where} \quad C=2.9846</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%5Cleft%20%28r%20%5Cright%20%29%20%3D%20%20%5Cfrac%7BC%5E2%7D%7B2%7D%20%5Ccdot%20%5Cleft%20%28%201%20-%20%20%5Cexp%7B%5Cleft%28-%5Cleft%28%5Cfrac%7Br%7D%7BC%7D%5Cright%29%5E2%5Cright%29%7D%20%5Cright%20%29%20%20%5Cquad%20%5Ctext%7Bwhere%7D%20%5Cquad%20C%3D2.9846)
 /// - DIST_HUBER
-/// <div lang='latex'>\rho (r) =  \fork{r^2/2}{if \(r < C\)}{C \cdot (r-C/2)}{otherwise} \quad \text{where} \quad C=1.345</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Crho%20%28r%29%20%3D%20%20%5Cleft%5C%7B%20%5Cbegin%7Barray%7D%7Bl%20l%7D%20r%5E2%2F2%20%26%20%5Cmbox%7Bif%20%5C%28r%20%3C%20C%5C%29%7D%5C%5C%20C%20%5Ccdot%20%28r-C%2F2%29%20%26%20%5Cmbox%7Botherwise%7D%5C%5C%20%5Cend%7Barray%7D%20%5Cright.%20%5Cquad%20%5Ctext%7Bwhere%7D%20%5Cquad%20C%3D1.345)
 ///
 /// The algorithm is based on the M-estimator ( <http://en.wikipedia.org/wiki/M-estimator> ) technique
 /// that iteratively fits the line using the weighted least-squares algorithm. After each iteration the
-/// weights <span lang='latex'>w_i</span> are adjusted to be inversely proportional to <span lang='latex'>\rho(r_i)</span> .
+/// weights ![inline formula](https://latex.codecogs.com/png.latex?w_i) are adjusted to be inversely proportional to ![inline formula](https://latex.codecogs.com/png.latex?%5Crho%28r_i%29) .
 ///
 /// ## Parameters
 /// * points: Input vector of 2D or 3D points, stored in std::vector\<\> or Mat.
@@ -2843,31 +2839,31 @@ pub fn fit_line(points: &core::Mat, line: &mut core::Mat, dist_type: i32, param:
 ///
 /// The function cv::floodFill fills a connected component starting from the seed point with the specified
 /// color. The connectivity is determined by the color/brightness closeness of the neighbor pixels. The
-/// pixel at <span lang='latex'>(x,y)</span> is considered to belong to the repainted domain if:
+/// pixel at ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) is considered to belong to the repainted domain if:
 ///
 /// - in case of a grayscale image and floating range
-/// <div lang='latex'>\texttt{src} (x',y')- \texttt{loDiff} \leq \texttt{src} (x,y)  \leq \texttt{src} (x',y')+ \texttt{upDiff}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29-%20%5Ctexttt%7BloDiff%7D%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%2B%20%5Ctexttt%7BupDiff%7D)
 ///
 ///
 /// - in case of a grayscale image and fixed range
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)- \texttt{loDiff} \leq \texttt{src} (x,y)  \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)+ \texttt{upDiff}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29-%20%5Ctexttt%7BloDiff%7D%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29%2B%20%5Ctexttt%7BupDiff%7D)
 ///
 ///
 /// - in case of a color image and floating range
-/// <div lang='latex'>\texttt{src} (x',y')_r- \texttt{loDiff} _r \leq \texttt{src} (x,y)_r \leq \texttt{src} (x',y')_r+ \texttt{upDiff} _r,</div>
-/// <div lang='latex'>\texttt{src} (x',y')_g- \texttt{loDiff} _g \leq \texttt{src} (x,y)_g \leq \texttt{src} (x',y')_g+ \texttt{upDiff} _g</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_r-%20%5Ctexttt%7BloDiff%7D%20_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_r%2B%20%5Ctexttt%7BupDiff%7D%20_r%2C)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_g-%20%5Ctexttt%7BloDiff%7D%20_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_g%2B%20%5Ctexttt%7BupDiff%7D%20_g)
 /// and
-/// <div lang='latex'>\texttt{src} (x',y')_b- \texttt{loDiff} _b \leq \texttt{src} (x,y)_b \leq \texttt{src} (x',y')_b+ \texttt{upDiff} _b</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_b-%20%5Ctexttt%7BloDiff%7D%20_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_b%2B%20%5Ctexttt%7BupDiff%7D%20_b)
 ///
 ///
 /// - in case of a color image and fixed range
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_r- \texttt{loDiff} _r \leq \texttt{src} (x,y)_r \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_r+ \texttt{upDiff} _r,</div>
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_g- \texttt{loDiff} _g \leq \texttt{src} (x,y)_g \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_g+ \texttt{upDiff} _g</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_r-%20%5Ctexttt%7BloDiff%7D%20_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_r%2B%20%5Ctexttt%7BupDiff%7D%20_r%2C)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_g-%20%5Ctexttt%7BloDiff%7D%20_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_g%2B%20%5Ctexttt%7BupDiff%7D%20_g)
 /// and
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_b- \texttt{loDiff} _b \leq \texttt{src} (x,y)_b \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_b+ \texttt{upDiff} _b</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_b-%20%5Ctexttt%7BloDiff%7D%20_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_b%2B%20%5Ctexttt%7BupDiff%7D%20_b)
 ///
 ///
-/// where <span lang='latex'>src(x',y')</span> is the value of one of pixel neighbors that is already known to belong to the
+/// where ![inline formula](https://latex.codecogs.com/png.latex?src%28x%27%2Cy%27%29) is the value of one of pixel neighbors that is already known to belong to the
 /// component. That is, to be added to the connected component, a color/brightness of the pixel should
 /// be close enough to:
 /// - Color/brightness of one of its neighbors that already belong to the connected component in case
@@ -2907,8 +2903,8 @@ pub fn fit_line(points: &core::Mat, line: &mut core::Mat, dist_type: i32, param:
 /// bit-wise or (|), see #FloodFillFlags.
 ///
 ///
-/// Note: Since the mask is larger than the filled image, a pixel <span lang='latex'>(x, y)</span> in image corresponds to the
-/// pixel <span lang='latex'>(x+1, y+1)</span> in the mask .
+/// Note: Since the mask is larger than the filled image, a pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) in image corresponds to the
+/// pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2B1%2C%20y%2B1%29) in the mask .
 ///
 /// ## See also
 /// findContours
@@ -2926,31 +2922,31 @@ pub fn flood_fill(image: &mut core::Mat, mask: &mut core::Mat, seed_point: core:
 ///
 /// The function cv::floodFill fills a connected component starting from the seed point with the specified
 /// color. The connectivity is determined by the color/brightness closeness of the neighbor pixels. The
-/// pixel at <span lang='latex'>(x,y)</span> is considered to belong to the repainted domain if:
+/// pixel at ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) is considered to belong to the repainted domain if:
 ///
 /// - in case of a grayscale image and floating range
-/// <div lang='latex'>\texttt{src} (x',y')- \texttt{loDiff} \leq \texttt{src} (x,y)  \leq \texttt{src} (x',y')+ \texttt{upDiff}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29-%20%5Ctexttt%7BloDiff%7D%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29%2B%20%5Ctexttt%7BupDiff%7D)
 ///
 ///
 /// - in case of a grayscale image and fixed range
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)- \texttt{loDiff} \leq \texttt{src} (x,y)  \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)+ \texttt{upDiff}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29-%20%5Ctexttt%7BloDiff%7D%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29%2B%20%5Ctexttt%7BupDiff%7D)
 ///
 ///
 /// - in case of a color image and floating range
-/// <div lang='latex'>\texttt{src} (x',y')_r- \texttt{loDiff} _r \leq \texttt{src} (x,y)_r \leq \texttt{src} (x',y')_r+ \texttt{upDiff} _r,</div>
-/// <div lang='latex'>\texttt{src} (x',y')_g- \texttt{loDiff} _g \leq \texttt{src} (x,y)_g \leq \texttt{src} (x',y')_g+ \texttt{upDiff} _g</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_r-%20%5Ctexttt%7BloDiff%7D%20_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_r%2B%20%5Ctexttt%7BupDiff%7D%20_r%2C)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_g-%20%5Ctexttt%7BloDiff%7D%20_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_g%2B%20%5Ctexttt%7BupDiff%7D%20_g)
 /// and
-/// <div lang='latex'>\texttt{src} (x',y')_b- \texttt{loDiff} _b \leq \texttt{src} (x,y)_b \leq \texttt{src} (x',y')_b+ \texttt{upDiff} _b</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_b-%20%5Ctexttt%7BloDiff%7D%20_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%27%2Cy%27%29_b%2B%20%5Ctexttt%7BupDiff%7D%20_b)
 ///
 ///
 /// - in case of a color image and fixed range
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_r- \texttt{loDiff} _r \leq \texttt{src} (x,y)_r \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_r+ \texttt{upDiff} _r,</div>
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_g- \texttt{loDiff} _g \leq \texttt{src} (x,y)_g \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_g+ \texttt{upDiff} _g</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_r-%20%5Ctexttt%7BloDiff%7D%20_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_r%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_r%2B%20%5Ctexttt%7BupDiff%7D%20_r%2C)
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_g-%20%5Ctexttt%7BloDiff%7D%20_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_g%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_g%2B%20%5Ctexttt%7BupDiff%7D%20_g)
 /// and
-/// <div lang='latex'>\texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_b- \texttt{loDiff} _b \leq \texttt{src} (x,y)_b \leq \texttt{src} ( \texttt{seedPoint} .x, \texttt{seedPoint} .y)_b+ \texttt{upDiff} _b</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_b-%20%5Ctexttt%7BloDiff%7D%20_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28x%2Cy%29_b%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BseedPoint%7D%20.x%2C%20%5Ctexttt%7BseedPoint%7D%20.y%29_b%2B%20%5Ctexttt%7BupDiff%7D%20_b)
 ///
 ///
-/// where <span lang='latex'>src(x',y')</span> is the value of one of pixel neighbors that is already known to belong to the
+/// where ![inline formula](https://latex.codecogs.com/png.latex?src%28x%27%2Cy%27%29) is the value of one of pixel neighbors that is already known to belong to the
 /// component. That is, to be added to the connected component, a color/brightness of the pixel should
 /// be close enough to:
 /// - Color/brightness of one of its neighbors that already belong to the connected component in case
@@ -2990,8 +2986,8 @@ pub fn flood_fill(image: &mut core::Mat, mask: &mut core::Mat, seed_point: core:
 /// bit-wise or (|), see #FloodFillFlags.
 ///
 ///
-/// Note: Since the mask is larger than the filled image, a pixel <span lang='latex'>(x, y)</span> in image corresponds to the
-/// pixel <span lang='latex'>(x+1, y+1)</span> in the mask .
+/// Note: Since the mask is larger than the filled image, a pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%29) in image corresponds to the
+/// pixel ![inline formula](https://latex.codecogs.com/png.latex?%28x%2B1%2C%20y%2B1%29) in the mask .
 ///
 /// ## See also
 /// findContours
@@ -3016,13 +3012,13 @@ pub fn get_affine_transform_mat(src: &core::Mat, dst: &core::Mat) -> Result<core
 
 /// Calculates an affine transform from three pairs of the corresponding points.
 ///
-/// The function calculates the <span lang='latex'>2 \times 3</span> matrix of an affine transform so that:
+/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?2%20%5Ctimes%203) matrix of an affine transform so that:
 ///
-/// <div lang='latex'>\begin{bmatrix} x'_i \\ y'_i \end{bmatrix} = \texttt{map_matrix} \cdot \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20x%27_i%20%5C%5C%20y%27_i%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap_matrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x_i%20%5C%5C%20y_i%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// where
 ///
-/// <div lang='latex'>dst(i)=(x'_i,y'_i), src(i)=(x_i, y_i), i=0,1,2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27_i%2Cy%27_i%29%2C%20src%28i%29%3D%28x_i%2C%20y_i%29%2C%20i%3D0%2C1%2C2)
 ///
 /// ## Parameters
 /// * src: Coordinates of triangle vertices in the source image.
@@ -3037,7 +3033,7 @@ pub fn get_affine_transform(src: &[core::Point2f], dst: &[core::Point2f]) -> Res
 /// Returns filter coefficients for computing spatial image derivatives.
 ///
 /// The function computes and returns the filter coefficients for spatial image derivatives. When
-/// `ksize=FILTER_SCHARR`, the Scharr <span lang='latex'>3 \times 3</span> kernels are generated (see #Scharr). Otherwise, Sobel
+/// `ksize=FILTER_SCHARR`, the Scharr ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) kernels are generated (see #Scharr). Otherwise, Sobel
 /// kernels are generated (see #Sobel). The filters are normally passed to #sepFilter2D or to
 ///
 /// ## Parameters
@@ -3047,7 +3043,7 @@ pub fn get_affine_transform(src: &[core::Point2f], dst: &[core::Point2f]) -> Res
 /// * dy: Derivative order in respect of y.
 /// * ksize: Aperture size. It can be FILTER_SCHARR, 1, 3, 5, or 7.
 /// * normalize: Flag indicating whether to normalize (scale down) the filter coefficients or not.
-/// Theoretically, the coefficients should have the denominator <span lang='latex'>=2^{ksize*2-dx-dy-2}</span>. If you are
+/// Theoretically, the coefficients should have the denominator ![inline formula](https://latex.codecogs.com/png.latex?%3D2%5E%7Bksize%2A2-dx-dy-2%7D). If you are
 /// going to filter floating-point images, you are likely to use the normalized kernels. But if you
 /// compute derivatives of an 8-bit image, store the results in a 16-bit image, and wish to preserve
 /// all the fractional bits, you may want to set normalize=false .
@@ -3100,18 +3096,18 @@ pub fn get_gabor_kernel(ksize: core::Size, sigma: f64, theta: f64, lambd: f64, g
 
 /// Returns Gaussian filter coefficients.
 ///
-/// The function computes and returns the <span lang='latex'>\texttt{ksize} \times 1</span> matrix of Gaussian filter
+/// The function computes and returns the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%7D%20%5Ctimes%201) matrix of Gaussian filter
 /// coefficients:
 ///
-/// <div lang='latex'>G_i= \alpha *e^{-(i-( \texttt{ksize} -1)/2)^2/(2* \texttt{sigma}^2)},</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?G_i%3D%20%5Calpha%20%2Ae%5E%7B-%28i-%28%20%5Ctexttt%7Bksize%7D%20-1%29%2F2%29%5E2%2F%282%2A%20%5Ctexttt%7Bsigma%7D%5E2%29%7D%2C)
 ///
-/// where <span lang='latex'>i=0..\texttt{ksize}-1</span> and <span lang='latex'>\alpha</span> is the scale factor chosen so that <span lang='latex'>\sum_i G_i=1</span>.
+/// where ![inline formula](https://latex.codecogs.com/png.latex?i%3D0..%5Ctexttt%7Bksize%7D-1) and ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha) is the scale factor chosen so that ![inline formula](https://latex.codecogs.com/png.latex?%5Csum_i%20G_i%3D1).
 ///
 /// Two of such generated kernels can be passed to sepFilter2D. Those functions automatically recognize
 /// smoothing kernels (a symmetrical kernel with sum of weights equal to 1) and handle them accordingly.
 /// You may also use the higher-level GaussianBlur.
 /// ## Parameters
-/// * ksize: Aperture size. It should be odd ( <span lang='latex'>\texttt{ksize} \mod 2 = 1</span> ) and positive.
+/// * ksize: Aperture size. It should be odd ( ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%7D%20%5Cmod%202%20%3D%201) ) and positive.
 /// * sigma: Gaussian standard deviation. If it is non-positive, it is computed from ksize as
 /// `sigma = 0.3*((ksize-1)*0.5 - 1) + 0.8`.
 /// * ktype: Type of filter coefficients. It can be CV_32F or CV_64F .
@@ -3126,13 +3122,13 @@ pub fn get_gaussian_kernel(ksize: i32, sigma: f64, ktype: i32) -> Result<core::M
 
 /// Calculates a perspective transform from four pairs of the corresponding points.
 ///
-/// The function calculates the <span lang='latex'>3 \times 3</span> matrix of a perspective transform so that:
+/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) matrix of a perspective transform so that:
 ///
-/// <div lang='latex'>\begin{bmatrix} t_i x'_i \\ t_i y'_i \\ t_i \end{bmatrix} = \texttt{map_matrix} \cdot \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20t_i%20x%27_i%20%5C%5C%20t_i%20y%27_i%20%5C%5C%20t_i%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap_matrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x_i%20%5C%5C%20y_i%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// where
 ///
-/// <div lang='latex'>dst(i)=(x'_i,y'_i), src(i)=(x_i, y_i), i=0,1,2,3</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27_i%2Cy%27_i%29%2C%20src%28i%29%3D%28x_i%2C%20y_i%29%2C%20i%3D0%2C1%2C2%2C3)
 ///
 /// ## Parameters
 /// * src: Coordinates of quadrangle vertices in the source image.
@@ -3150,13 +3146,13 @@ pub fn get_perspective_transform_mat(src: &core::Mat, dst: &core::Mat, solve_met
 
 /// Calculates a perspective transform from four pairs of the corresponding points.
 ///
-/// The function calculates the <span lang='latex'>3 \times 3</span> matrix of a perspective transform so that:
+/// The function calculates the ![inline formula](https://latex.codecogs.com/png.latex?3%20%5Ctimes%203) matrix of a perspective transform so that:
 ///
-/// <div lang='latex'>\begin{bmatrix} t_i x'_i \\ t_i y'_i \\ t_i \end{bmatrix} = \texttt{map_matrix} \cdot \begin{bmatrix} x_i \\ y_i \\ 1 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20t_i%20x%27_i%20%5C%5C%20t_i%20y%27_i%20%5C%5C%20t_i%20%5Cend%7Bbmatrix%7D%20%3D%20%5Ctexttt%7Bmap_matrix%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x_i%20%5C%5C%20y_i%20%5C%5C%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// where
 ///
-/// <div lang='latex'>dst(i)=(x'_i,y'_i), src(i)=(x_i, y_i), i=0,1,2,3</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?dst%28i%29%3D%28x%27_i%2Cy%27_i%29%2C%20src%28i%29%3D%28x_i%2C%20y_i%29%2C%20i%3D0%2C1%2C2%2C3)
 ///
 /// ## Parameters
 /// * src: Coordinates of quadrangle vertices in the source image.
@@ -3178,7 +3174,7 @@ pub fn get_perspective_transform(src: &[core::Point2f], dst: &[core::Point2f], s
 ///
 /// The function getRectSubPix extracts pixels from src:
 ///
-/// <div lang='latex'>patch(x, y) = src(x +  \texttt{center.x} - ( \texttt{dst.cols} -1)*0.5, y +  \texttt{center.y} - ( \texttt{dst.rows} -1)*0.5)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?patch%28x%2C%20y%29%20%3D%20src%28x%20%2B%20%20%5Ctexttt%7Bcenter.x%7D%20-%20%28%20%5Ctexttt%7Bdst.cols%7D%20-1%29%2A0.5%2C%20y%20%2B%20%20%5Ctexttt%7Bcenter.y%7D%20-%20%28%20%5Ctexttt%7Bdst.rows%7D%20-1%29%2A0.5%29)
 ///
 /// where the values of the pixels at non-integer coordinates are retrieved using bilinear
 /// interpolation. Every channel of multi-channel images is processed independently. Also
@@ -3206,11 +3202,11 @@ pub fn get_rect_sub_pix(image: &core::Mat, patch_size: core::Size, center: core:
 ///
 /// The function calculates the following matrix:
 ///
-/// <div lang='latex'>\begin{bmatrix} \alpha &  \beta & (1- \alpha )  \cdot \texttt{center.x} -  \beta \cdot \texttt{center.y} \\ - \beta &  \alpha &  \beta \cdot \texttt{center.x} + (1- \alpha )  \cdot \texttt{center.y} \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20%5Calpha%20%26%20%20%5Cbeta%20%26%20%281-%20%5Calpha%20%29%20%20%5Ccdot%20%5Ctexttt%7Bcenter.x%7D%20-%20%20%5Cbeta%20%5Ccdot%20%5Ctexttt%7Bcenter.y%7D%20%5C%5C%20-%20%5Cbeta%20%26%20%20%5Calpha%20%26%20%20%5Cbeta%20%5Ccdot%20%5Ctexttt%7Bcenter.x%7D%20%2B%20%281-%20%5Calpha%20%29%20%20%5Ccdot%20%5Ctexttt%7Bcenter.y%7D%20%5Cend%7Bbmatrix%7D)
 ///
 /// where
 ///
-/// <div lang='latex'>\begin{array}{l} \alpha =  \texttt{scale} \cdot \cos \texttt{angle} , \\ \beta =  \texttt{scale} \cdot \sin \texttt{angle} \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Calpha%20%3D%20%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ccos%20%5Ctexttt%7Bangle%7D%20%2C%20%5C%5C%20%5Cbeta%20%3D%20%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Csin%20%5Ctexttt%7Bangle%7D%20%5Cend%7Barray%7D)
 ///
 /// The transformation maps the rotation center to itself. If this is not the target, adjust the shift.
 ///
@@ -3235,7 +3231,7 @@ pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> 
 /// ## Parameters
 /// * shape: Element shape that could be one of #MorphShapes
 /// * ksize: Size of the structuring element.
-/// * anchor: Anchor position within the element. The default value <span lang='latex'>(-1, -1)</span> means that the
+/// * anchor: Anchor position within the element. The default value ![inline formula](https://latex.codecogs.com/png.latex?%28-1%2C%20-1%29) means that the
 /// anchor is at the center. Note that only the shape of a cross-shaped element depends on the anchor
 /// position. In other cases the anchor just regulates how much the result of the morphological
 /// operation is shifted.
@@ -3308,7 +3304,7 @@ pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32
 /// *   Function performs a non-maximum suppression (the local maximums in *3 x 3* neighborhood are
 /// retained).
 /// *   The corners with the minimal eigenvalue less than
-/// <span lang='latex'>\texttt{qualityLevel} \cdot \max_{x,y} qualityMeasureMap(x,y)</span> are rejected.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BqualityLevel%7D%20%5Ccdot%20%5Cmax_%7Bx%2Cy%7D%20qualityMeasureMap%28x%2Cy%29) are rejected.
 /// *   The remaining corners are sorted by the quality measure in the descending order.
 /// *   Function throws away each corner for which there is a stronger corner at a distance less than
 /// maxDistance.
@@ -3390,16 +3386,16 @@ pub fn grab_cut(img: &core::Mat, mask: &mut core::Mat, rect: core::Rect, bgd_mod
 ///
 /// The function calculates one or more integral images for the source image as follows:
 ///
-/// <div lang='latex'>\texttt{sum} (X,Y) =  \sum _{x<X,y<Y}  \texttt{image} (x,y)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
 ///
-/// <div lang='latex'>\texttt{sqsum} (X,Y) =  \sum _{x<X,y<Y}  \texttt{image} (x,y)^2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsqsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%5E2)
 ///
-/// <div lang='latex'>\texttt{tilted} (X,Y) =  \sum _{y<Y,abs(x-X+1) \leq Y-y-1}  \texttt{image} (x,y)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Btilted%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7By%3CY%2Cabs%28x-X%2B1%29%20%5Cleq%20Y-y-1%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
 ///
 /// Using these integral images, you can calculate sum, mean, and standard deviation over a specific
 /// up-right or rotated rectangular region of the image in a constant time, for example:
 ///
-/// <div lang='latex'>\sum _{x_1 \leq x < x_2,  \, y_1  \leq y < y_2}  \texttt{image} (x,y) =  \texttt{sum} (x_2,y_2)- \texttt{sum} (x_1,y_2)- \texttt{sum} (x_2,y_1)+ \texttt{sum} (x_1,y_1)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20_%7Bx_1%20%5Cleq%20x%20%3C%20x_2%2C%20%20%5C%2C%20y_1%20%20%5Cleq%20y%20%3C%20y_2%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsum%7D%20%28x_2%2Cy_2%29-%20%5Ctexttt%7Bsum%7D%20%28x_1%2Cy_2%29-%20%5Ctexttt%7Bsum%7D%20%28x_2%2Cy_1%29%2B%20%5Ctexttt%7Bsum%7D%20%28x_1%2Cy_1%29)
 ///
 /// It makes possible to do a fast blurring or fast block correlation with a variable window size, for
 /// example. In case of multi-channel images, sums for each channel are accumulated independently.
@@ -3411,11 +3407,11 @@ pub fn grab_cut(img: &core::Mat, mask: &mut core::Mat, rect: core::Rect, bgd_mod
 /// ![integral calculation example](https://docs.opencv.org/4.1.1/integral.png)
 ///
 /// ## Parameters
-/// * src: input image as <span lang='latex'>W \times H</span>, 8-bit or floating-point (32f or 64f).
-/// * sum: integral image as <span lang='latex'>(W+1)\times (H+1)</span> , 32-bit integer or floating-point (32f or 64f).
-/// * sqsum: integral image for squared pixel values; it is <span lang='latex'>(W+1)\times (H+1)</span>, double-precision
+/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
+/// * sum: integral image as ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) , 32-bit integer or floating-point (32f or 64f).
+/// * sqsum: integral image for squared pixel values; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29), double-precision
 /// floating-point (64f) array.
-/// * tilted: integral for the image rotated by 45 degrees; it is <span lang='latex'>(W+1)\times (H+1)</span> array with
+/// * tilted: integral for the image rotated by 45 degrees; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) array with
 /// the same data type as sum.
 /// * sdepth: desired depth of the integral and the tilted integral images, CV_32S, CV_32F, or
 /// CV_64F.
@@ -3432,16 +3428,16 @@ pub fn integral_titled_sq(src: &core::Mat, sum: &mut core::Mat, sqsum: &mut core
 ///
 /// The function calculates one or more integral images for the source image as follows:
 ///
-/// <div lang='latex'>\texttt{sum} (X,Y) =  \sum _{x<X,y<Y}  \texttt{image} (x,y)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
 ///
-/// <div lang='latex'>\texttt{sqsum} (X,Y) =  \sum _{x<X,y<Y}  \texttt{image} (x,y)^2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsqsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%5E2)
 ///
-/// <div lang='latex'>\texttt{tilted} (X,Y) =  \sum _{y<Y,abs(x-X+1) \leq Y-y-1}  \texttt{image} (x,y)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Btilted%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7By%3CY%2Cabs%28x-X%2B1%29%20%5Cleq%20Y-y-1%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
 ///
 /// Using these integral images, you can calculate sum, mean, and standard deviation over a specific
 /// up-right or rotated rectangular region of the image in a constant time, for example:
 ///
-/// <div lang='latex'>\sum _{x_1 \leq x < x_2,  \, y_1  \leq y < y_2}  \texttt{image} (x,y) =  \texttt{sum} (x_2,y_2)- \texttt{sum} (x_1,y_2)- \texttt{sum} (x_2,y_1)+ \texttt{sum} (x_1,y_1)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20_%7Bx_1%20%5Cleq%20x%20%3C%20x_2%2C%20%20%5C%2C%20y_1%20%20%5Cleq%20y%20%3C%20y_2%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsum%7D%20%28x_2%2Cy_2%29-%20%5Ctexttt%7Bsum%7D%20%28x_1%2Cy_2%29-%20%5Ctexttt%7Bsum%7D%20%28x_2%2Cy_1%29%2B%20%5Ctexttt%7Bsum%7D%20%28x_1%2Cy_1%29)
 ///
 /// It makes possible to do a fast blurring or fast block correlation with a variable window size, for
 /// example. In case of multi-channel images, sums for each channel are accumulated independently.
@@ -3453,11 +3449,11 @@ pub fn integral_titled_sq(src: &core::Mat, sum: &mut core::Mat, sqsum: &mut core
 /// ![integral calculation example](https://docs.opencv.org/4.1.1/integral.png)
 ///
 /// ## Parameters
-/// * src: input image as <span lang='latex'>W \times H</span>, 8-bit or floating-point (32f or 64f).
-/// * sum: integral image as <span lang='latex'>(W+1)\times (H+1)</span> , 32-bit integer or floating-point (32f or 64f).
-/// * sqsum: integral image for squared pixel values; it is <span lang='latex'>(W+1)\times (H+1)</span>, double-precision
+/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
+/// * sum: integral image as ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) , 32-bit integer or floating-point (32f or 64f).
+/// * sqsum: integral image for squared pixel values; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29), double-precision
 /// floating-point (64f) array.
-/// * tilted: integral for the image rotated by 45 degrees; it is <span lang='latex'>(W+1)\times (H+1)</span> array with
+/// * tilted: integral for the image rotated by 45 degrees; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) array with
 /// the same data type as sum.
 /// * sdepth: desired depth of the integral and the tilted integral images, CV_32S, CV_32F, or
 /// CV_64F.
@@ -3476,16 +3472,16 @@ pub fn integral_sq_depth(src: &core::Mat, sum: &mut core::Mat, sqsum: &mut core:
 ///
 /// The function calculates one or more integral images for the source image as follows:
 ///
-/// <div lang='latex'>\texttt{sum} (X,Y) =  \sum _{x<X,y<Y}  \texttt{image} (x,y)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
 ///
-/// <div lang='latex'>\texttt{sqsum} (X,Y) =  \sum _{x<X,y<Y}  \texttt{image} (x,y)^2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsqsum%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7Bx%3CX%2Cy%3CY%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%5E2)
 ///
-/// <div lang='latex'>\texttt{tilted} (X,Y) =  \sum _{y<Y,abs(x-X+1) \leq Y-y-1}  \texttt{image} (x,y)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Btilted%7D%20%28X%2CY%29%20%3D%20%20%5Csum%20_%7By%3CY%2Cabs%28x-X%2B1%29%20%5Cleq%20Y-y-1%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29)
 ///
 /// Using these integral images, you can calculate sum, mean, and standard deviation over a specific
 /// up-right or rotated rectangular region of the image in a constant time, for example:
 ///
-/// <div lang='latex'>\sum _{x_1 \leq x < x_2,  \, y_1  \leq y < y_2}  \texttt{image} (x,y) =  \texttt{sum} (x_2,y_2)- \texttt{sum} (x_1,y_2)- \texttt{sum} (x_2,y_1)+ \texttt{sum} (x_1,y_1)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20_%7Bx_1%20%5Cleq%20x%20%3C%20x_2%2C%20%20%5C%2C%20y_1%20%20%5Cleq%20y%20%3C%20y_2%7D%20%20%5Ctexttt%7Bimage%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsum%7D%20%28x_2%2Cy_2%29-%20%5Ctexttt%7Bsum%7D%20%28x_1%2Cy_2%29-%20%5Ctexttt%7Bsum%7D%20%28x_2%2Cy_1%29%2B%20%5Ctexttt%7Bsum%7D%20%28x_1%2Cy_1%29)
 ///
 /// It makes possible to do a fast blurring or fast block correlation with a variable window size, for
 /// example. In case of multi-channel images, sums for each channel are accumulated independently.
@@ -3497,11 +3493,11 @@ pub fn integral_sq_depth(src: &core::Mat, sum: &mut core::Mat, sqsum: &mut core:
 /// ![integral calculation example](https://docs.opencv.org/4.1.1/integral.png)
 ///
 /// ## Parameters
-/// * src: input image as <span lang='latex'>W \times H</span>, 8-bit or floating-point (32f or 64f).
-/// * sum: integral image as <span lang='latex'>(W+1)\times (H+1)</span> , 32-bit integer or floating-point (32f or 64f).
-/// * sqsum: integral image for squared pixel values; it is <span lang='latex'>(W+1)\times (H+1)</span>, double-precision
+/// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
+/// * sum: integral image as ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) , 32-bit integer or floating-point (32f or 64f).
+/// * sqsum: integral image for squared pixel values; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29), double-precision
 /// floating-point (64f) array.
-/// * tilted: integral for the image rotated by 45 degrees; it is <span lang='latex'>(W+1)\times (H+1)</span> array with
+/// * tilted: integral for the image rotated by 45 degrees; it is ![inline formula](https://latex.codecogs.com/png.latex?%28W%2B1%29%5Ctimes%20%28H%2B1%29) array with
 /// the same data type as sum.
 /// * sdepth: desired depth of the integral and the tilted integral images, CV_32S, CV_32F, or
 /// CV_64F.
@@ -3525,11 +3521,11 @@ pub fn intersect_convex_convex(_p1: &core::Mat, _p2: &core::Mat, _p12: &mut core
 
 /// Inverts an affine transformation.
 ///
-/// The function computes an inverse affine transformation represented by <span lang='latex'>2 \times 3</span> matrix M:
+/// The function computes an inverse affine transformation represented by ![inline formula](https://latex.codecogs.com/png.latex?2%20%5Ctimes%203) matrix M:
 ///
-/// <div lang='latex'>\begin{bmatrix} a_{11} & a_{12} & b_1  \\ a_{21} & a_{22} & b_2 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20a_%7B11%7D%20%26%20a_%7B12%7D%20%26%20b_1%20%20%5C%5C%20a_%7B21%7D%20%26%20a_%7B22%7D%20%26%20b_2%20%5Cend%7Bbmatrix%7D)
 ///
-/// The result is also a <span lang='latex'>2 \times 3</span> matrix of the same type as M.
+/// The result is also a ![inline formula](https://latex.codecogs.com/png.latex?2%20%5Ctimes%203) matrix of the same type as M.
 ///
 /// ## Parameters
 /// * M: Original affine transformation.
@@ -3580,23 +3576,13 @@ pub fn line(img: &mut core::Mat, pt1: core::Point, pt2: core::Point, color: core
 ///
 /// @internal
 /// Transform the source image using the following transformation (See @ref polar_remaps_reference_image "Polar remaps reference image c)"):
-/// <div lang='latex'>\begin{array}{l}
-/// dst( \rho , \phi ) = src(x,y) \\
-/// dst.size() \leftarrow src.size()
-/// \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0Adst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%20%5C%5C%0Adst.size%28%29%20%5Cleftarrow%20src.size%28%29%0A%5Cend%7Barray%7D)
 ///
 /// where
-/// <div lang='latex'>\begin{array}{l}
-/// I = (dx,dy) = (x - center.x,y - center.y) \\
-/// \rho = Kmag \cdot \texttt{magnitude} (I) ,\\
-/// \phi = angle \cdot \texttt{angle} (I)
-/// \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0AI%20%3D%20%28dx%2Cdy%29%20%3D%20%28x%20-%20center.x%2Cy%20-%20center.y%29%20%5C%5C%0A%5Crho%20%3D%20Kmag%20%5Ccdot%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%2C%5C%5C%0A%5Cphi%20%3D%20angle%20%5Ccdot%20%5Ctexttt%7Bangle%7D%20%28I%29%0A%5Cend%7Barray%7D)
 ///
 /// and
-/// <div lang='latex'>\begin{array}{l}
-/// Kx = src.cols / maxRadius \\
-/// Ky = src.rows / 2\Pi
-/// \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0AKx%20%3D%20src.cols%20%2F%20maxRadius%20%5C%5C%0AKy%20%3D%20src.rows%20%2F%202%5CPi%0A%5Cend%7Barray%7D)
 ///
 ///
 /// ## Parameters
@@ -3626,23 +3612,13 @@ pub fn linear_polar(src: &core::Mat, dst: &mut core::Mat, center: core::Point2f,
 ///
 /// @internal
 /// Transform the source image using the following transformation (See @ref polar_remaps_reference_image "Polar remaps reference image d)"):
-/// <div lang='latex'>\begin{array}{l}
-/// dst( \rho , \phi ) = src(x,y) \\
-/// dst.size() \leftarrow src.size()
-/// \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0Adst%28%20%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%20%5C%5C%0Adst.size%28%29%20%5Cleftarrow%20src.size%28%29%0A%5Cend%7Barray%7D)
 ///
 /// where
-/// <div lang='latex'>\begin{array}{l}
-/// I = (dx,dy) = (x - center.x,y - center.y) \\
-/// \rho = M \cdot log_e(\texttt{magnitude} (I)) ,\\
-/// \phi = Kangle \cdot \texttt{angle} (I) \\
-/// \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0AI%20%3D%20%28dx%2Cdy%29%20%3D%20%28x%20-%20center.x%2Cy%20-%20center.y%29%20%5C%5C%0A%5Crho%20%3D%20M%20%5Ccdot%20log_e%28%5Ctexttt%7Bmagnitude%7D%20%28I%29%29%20%2C%5C%5C%0A%5Cphi%20%3D%20Kangle%20%5Ccdot%20%5Ctexttt%7Bangle%7D%20%28I%29%20%5C%5C%0A%5Cend%7Barray%7D)
 ///
 /// and
-/// <div lang='latex'>\begin{array}{l}
-/// M = src.cols / log_e(maxRadius) \\
-/// Kangle = src.rows / 2\Pi \\
-/// \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0AM%20%3D%20src.cols%20%2F%20log_e%28maxRadius%29%20%5C%5C%0AKangle%20%3D%20src.rows%20%2F%202%5CPi%20%5C%5C%0A%5Cend%7Barray%7D)
 ///
 /// The function emulates the human "foveal" vision and can be used for fast scale and
 /// rotation-invariant template matching, for object tracking and so forth.
@@ -3681,10 +3657,10 @@ pub fn match_shapes(contour1: &core::Mat, contour2: &core::Mat, method: i32, par
 
 /// Compares a template against overlapped image regions.
 ///
-/// The function slides through image , compares the overlapped patches of size <span lang='latex'>w \times h</span> against
+/// The function slides through image , compares the overlapped patches of size ![inline formula](https://latex.codecogs.com/png.latex?w%20%5Ctimes%20h) against
 /// templ using the specified method and stores the comparison results in result . Here are the formulae
-/// for the available comparison methods ( <span lang='latex'>I</span> denotes image, <span lang='latex'>T</span> template, <span lang='latex'>R</span> result ). The summation
-/// is done over template and/or the image patch: <span lang='latex'>x' = 0...w-1, y' = 0...h-1</span>
+/// for the available comparison methods ( ![inline formula](https://latex.codecogs.com/png.latex?I) denotes image, ![inline formula](https://latex.codecogs.com/png.latex?T) template, ![inline formula](https://latex.codecogs.com/png.latex?R) result ). The summation
+/// is done over template and/or the image patch: ![inline formula](https://latex.codecogs.com/png.latex?x%27%20%3D%200...w-1%2C%20y%27%20%3D%200...h-1)
 ///
 /// After the function finishes the comparison, the best matches can be found as global minimums (when
 /// #TM_SQDIFF was used) or maximums (when #TM_CCORR or #TM_CCOEFF was used) using the
@@ -3698,7 +3674,7 @@ pub fn match_shapes(contour1: &core::Mat, contour2: &core::Mat, method: i32, par
 /// * templ: Searched template. It must be not greater than the source image and have the same
 /// data type.
 /// * result: Map of comparison results. It must be single-channel 32-bit floating-point. If image
-/// is <span lang='latex'>W \times H</span> and templ is <span lang='latex'>w \times h</span> , then result is <span lang='latex'>(W-w+1) \times (H-h+1)</span> .
+/// is ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H) and templ is ![inline formula](https://latex.codecogs.com/png.latex?w%20%5Ctimes%20h) , then result is ![inline formula](https://latex.codecogs.com/png.latex?%28W-w%2B1%29%20%5Ctimes%20%28H-h%2B1%29) .
 /// * method: Parameter specifying the comparison method, see #TemplateMatchModes
 /// * mask: Mask of searched template. It must have the same datatype and size with templ. It is
 /// not set by default. Currently, only the #TM_SQDIFF and #TM_CCORR_NORMED methods are supported.
@@ -3711,8 +3687,7 @@ pub fn match_template(image: &core::Mat, templ: &core::Mat, result: &mut core::M
 
 /// Blurs an image using the median filter.
 ///
-/// The function smoothes an image using the median filter with the \f$\texttt{ksize} \times
-/// \texttt{ksize}\f$ aperture. Each channel of a multi-channel image is processed independently.
+/// The function smoothes an image using the median filter with the ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bksize%7D%20%5Ctimes%0A%5Ctexttt%7Bksize%7D) aperture. Each channel of a multi-channel image is processed independently.
 /// In-place operation is supported.
 ///
 ///
@@ -3762,11 +3737,11 @@ pub fn min_enclosing_circle(points: &core::Mat, center: &mut core::Point2f, radi
 /// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.1.1/minenclosingtriangle.png)
 ///
 /// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
-/// [KleeLaskowski85](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a <span lang='latex'>\theta(n)</span> algorithm for finding the minimal
+/// [KleeLaskowski85](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
 /// enclosing triangle of a 2D convex polygon with n vertices. Since the #minEnclosingTriangle function
 /// takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
-/// 2D point set is required. The complexity of the #convexHull function is <span lang='latex'>O(n log(n))</span> which is higher
-/// than <span lang='latex'>\theta(n)</span>. Thus the overall complexity of the function is <span lang='latex'>O(n log(n))</span>.
+/// 2D point set is required. The complexity of the #convexHull function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which is higher
+/// than ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29). Thus the overall complexity of the function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29).
 ///
 /// ## Parameters
 /// * points: Input vector of 2D points with depth CV_32S or CV_32F, stored in std::vector\<\> or Mat
@@ -3831,15 +3806,15 @@ pub fn morphology_ex(src: &core::Mat, dst: &mut core::Mat, op: i32, kernel: &cor
 /// image to remove possible edge effects. This window is cached until the array size changes to speed
 /// up processing time.
 /// - Next it computes the forward DFTs of each source array:
-/// <div lang='latex'>\mathbf{G}_a = \mathcal{F}\{src_1\}, \; \mathbf{G}_b = \mathcal{F}\{src_2\}</div>
-/// where <span lang='latex'>\mathcal{F}</span> is the forward DFT.
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmathbf%7BG%7D_a%20%3D%20%5Cmathcal%7BF%7D%5C%7Bsrc_1%5C%7D%2C%20%5C%3B%20%5Cmathbf%7BG%7D_b%20%3D%20%5Cmathcal%7BF%7D%5C%7Bsrc_2%5C%7D)
+/// where ![inline formula](https://latex.codecogs.com/png.latex?%5Cmathcal%7BF%7D) is the forward DFT.
 /// - It then computes the cross-power spectrum of each frequency domain array:
-/// <div lang='latex'>R = \frac{ \mathbf{G}_a \mathbf{G}_b^*}{|\mathbf{G}_a \mathbf{G}_b^*|}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?R%20%3D%20%5Cfrac%7B%20%5Cmathbf%7BG%7D_a%20%5Cmathbf%7BG%7D_b%5E%2A%7D%7B%7C%5Cmathbf%7BG%7D_a%20%5Cmathbf%7BG%7D_b%5E%2A%7C%7D)
 /// - Next the cross-correlation is converted back into the time domain via the inverse DFT:
-/// <div lang='latex'>r = \mathcal{F}^{-1}\{R\}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?r%20%3D%20%5Cmathcal%7BF%7D%5E%7B-1%7D%5C%7BR%5C%7D)
 /// - Finally, it computes the peak location and computes a 5x5 weighted centroid around the peak to
 /// achieve sub-pixel accuracy.
-/// <div lang='latex'>(\Delta x, \Delta y) = \texttt{weightedCentroid} \{\arg \max_{(x, y)}\{r\}\}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%28%5CDelta%20x%2C%20%5CDelta%20y%29%20%3D%20%5Ctexttt%7BweightedCentroid%7D%20%5C%7B%5Carg%20%5Cmax_%7B%28x%2C%20y%29%7D%5C%7Br%5C%7D%5C%7D)
 /// - If non-zero, the response parameter is computed as the sum of the elements of r within the 5x5
 /// centroid around the peak location. It is normalized to a maximum of 1 (meaning there is a single
 /// peak) and will be smaller when there are multiple peaks.
@@ -3908,10 +3883,10 @@ pub fn polylines(img: &mut core::Mat, pts: &types::VectorOfMat, is_closed: bool,
 ///
 /// The function calculates the complex spatial derivative-based function of the source image
 ///
-/// <div lang='latex'>\texttt{dst} = (D_x  \texttt{src} )^2  \cdot D_{yy}  \texttt{src} + (D_y  \texttt{src} )^2  \cdot D_{xx}  \texttt{src} - 2 D_x  \texttt{src} \cdot D_y  \texttt{src} \cdot D_{xy}  \texttt{src}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%28D_x%20%20%5Ctexttt%7Bsrc%7D%20%29%5E2%20%20%5Ccdot%20D_%7Byy%7D%20%20%5Ctexttt%7Bsrc%7D%20%2B%20%28D_y%20%20%5Ctexttt%7Bsrc%7D%20%29%5E2%20%20%5Ccdot%20D_%7Bxx%7D%20%20%5Ctexttt%7Bsrc%7D%20-%202%20D_x%20%20%5Ctexttt%7Bsrc%7D%20%5Ccdot%20D_y%20%20%5Ctexttt%7Bsrc%7D%20%5Ccdot%20D_%7Bxy%7D%20%20%5Ctexttt%7Bsrc%7D)
 ///
-/// where <span lang='latex'>D_x</span>,<span lang='latex'>D_y</span> are the first image derivatives, <span lang='latex'>D_{xx}</span>,<span lang='latex'>D_{yy}</span> are the second image
-/// derivatives, and <span lang='latex'>D_{xy}</span> is the mixed derivative.
+/// where ![inline formula](https://latex.codecogs.com/png.latex?D_x),![inline formula](https://latex.codecogs.com/png.latex?D_y) are the first image derivatives, ![inline formula](https://latex.codecogs.com/png.latex?D_%7Bxx%7D),![inline formula](https://latex.codecogs.com/png.latex?D_%7Byy%7D) are the second image
+/// derivatives, and ![inline formula](https://latex.codecogs.com/png.latex?D_%7Bxy%7D) is the mixed derivative.
 ///
 /// The corners can be found as local maximums of the functions, as shown below:
 /// ```ignore
@@ -3967,12 +3942,12 @@ pub fn put_text(img: &mut core::Mat, text: &str, org: core::Point, font_face: i3
 /// By default, size of the output image is computed as `Size((src.cols+1)/2, (src.rows+1)/2)`, but in
 /// any case, the following conditions should be satisfied:
 ///
-/// <div lang='latex'>\begin{array}{l} | \texttt{dstsize.width} *2-src.cols| \leq 2 \\ | \texttt{dstsize.height} *2-src.rows| \leq 2 \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%7C%20%5Ctexttt%7Bdstsize.width%7D%20%2A2-src.cols%7C%20%5Cleq%202%20%5C%5C%20%7C%20%5Ctexttt%7Bdstsize.height%7D%20%2A2-src.rows%7C%20%5Cleq%202%20%5Cend%7Barray%7D)
 ///
 /// The function performs the downsampling step of the Gaussian pyramid construction. First, it
 /// convolves the source image with the kernel:
 ///
-/// <div lang='latex'>\frac{1}{256} \begin{bmatrix} 1 & 4 & 6 & 4 & 1  \\ 4 & 16 & 24 & 16 & 4  \\ 6 & 24 & 36 & 24 & 6  \\ 4 & 16 & 24 & 16 & 4  \\ 1 & 4 & 6 & 4 & 1 \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B256%7D%20%5Cbegin%7Bbmatrix%7D%201%20%26%204%20%26%206%20%26%204%20%26%201%20%20%5C%5C%204%20%26%2016%20%26%2024%20%26%2016%20%26%204%20%20%5C%5C%206%20%26%2024%20%26%2036%20%26%2024%20%26%206%20%20%5C%5C%204%20%26%2016%20%26%2024%20%26%2016%20%26%204%20%20%5C%5C%201%20%26%204%20%26%206%20%26%204%20%26%201%20%5Cend%7Bbmatrix%7D)
 ///
 /// Then, it downsamples the image by rejecting even rows and columns.
 ///
@@ -3997,19 +3972,19 @@ pub fn pyr_down(src: &core::Mat, dst: &mut core::Mat, dstsize: core::Size, borde
 /// meanshift iterations, that is, the pixel (X,Y) neighborhood in the joint space-color hyperspace is
 /// considered:
 ///
-/// <div lang='latex'>(x,y): X- \texttt{sp} \le x  \le X+ \texttt{sp} , Y- \texttt{sp} \le y  \le Y+ \texttt{sp} , ||(R,G,B)-(r,g,b)||   \le \texttt{sr}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29%3A%20X-%20%5Ctexttt%7Bsp%7D%20%5Cle%20x%20%20%5Cle%20X%2B%20%5Ctexttt%7Bsp%7D%20%2C%20Y-%20%5Ctexttt%7Bsp%7D%20%5Cle%20y%20%20%5Cle%20Y%2B%20%5Ctexttt%7Bsp%7D%20%2C%20%7C%7C%28R%2CG%2CB%29-%28r%2Cg%2Cb%29%7C%7C%20%20%20%5Cle%20%5Ctexttt%7Bsr%7D)
 ///
 /// where (R,G,B) and (r,g,b) are the vectors of color components at (X,Y) and (x,y), respectively
 /// (though, the algorithm does not depend on the color space used, so any 3-component color space can
 /// be used instead). Over the neighborhood the average spatial value (X',Y') and average color vector
 /// (R',G',B') are found and they act as the neighborhood center on the next iteration:
 ///
-/// <div lang='latex'>(X,Y)~(X',Y'), (R,G,B)~(R',G',B').</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%28X%2CY%29%7E%28X%27%2CY%27%29%2C%20%28R%2CG%2CB%29%7E%28R%27%2CG%27%2CB%27%29.)
 ///
 /// After the iterations over, the color components of the initial pixel (that is, the pixel from where
 /// the iterations started) are set to the final value (average color at the last iteration):
 ///
-/// <div lang='latex'>I(X,Y) <- (R*,G*,B*)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?I%28X%2CY%29%20%3C-%20%28R%2A%2CG%2A%2CB%2A%29)
 ///
 /// When maxLevel \> 0, the gaussian pyramid of maxLevel+1 levels is built, and the above procedure is
 /// run on the smallest layer first. After that, the results are propagated to the larger layer and the
@@ -4038,7 +4013,7 @@ pub fn pyr_mean_shift_filtering(src: &core::Mat, dst: &mut core::Mat, sp: f64, s
 /// By default, size of the output image is computed as `Size(src.cols\*2, (src.rows\*2)`, but in any
 /// case, the following conditions should be satisfied:
 ///
-/// <div lang='latex'>\begin{array}{l} | \texttt{dstsize.width} -src.cols*2| \leq  ( \texttt{dstsize.width}   \mod  2)  \\ | \texttt{dstsize.height} -src.rows*2| \leq  ( \texttt{dstsize.height}   \mod  2) \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%7C%20%5Ctexttt%7Bdstsize.width%7D%20-src.cols%2A2%7C%20%5Cleq%20%20%28%20%5Ctexttt%7Bdstsize.width%7D%20%20%20%5Cmod%20%202%29%20%20%5C%5C%20%7C%20%5Ctexttt%7Bdstsize.height%7D%20-src.rows%2A2%7C%20%5Cleq%20%20%28%20%5Ctexttt%7Bdstsize.height%7D%20%20%20%5Cmod%20%202%29%20%5Cend%7Barray%7D)
 ///
 /// The function performs the upsampling step of the Gaussian pyramid construction, though it can
 /// actually be used to construct the Laplacian pyramid. First, it upsamples the source image by
@@ -4114,15 +4089,15 @@ pub fn rectangle(img: &mut core::Mat, rec: core::Rect, color: core::Scalar, thic
 ///
 /// The function remap transforms the source image using the specified map:
 ///
-/// <div lang='latex'>\texttt{dst} (x,y) =  \texttt{src} (map_x(x,y),map_y(x,y))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28map_x%28x%2Cy%29%2Cmap_y%28x%2Cy%29%29)
 ///
 /// where values of pixels with non-integer coordinates are computed using one of available
-/// interpolation methods. <span lang='latex'>map_x</span> and <span lang='latex'>map_y</span> can be encoded as separate floating-point maps
-/// in <span lang='latex'>map_1</span> and <span lang='latex'>map_2</span> respectively, or interleaved floating-point maps of <span lang='latex'>(x,y)</span> in
-/// <span lang='latex'>map_1</span>, or fixed-point maps created by using convertMaps. The reason you might want to
+/// interpolation methods. ![inline formula](https://latex.codecogs.com/png.latex?map_x) and ![inline formula](https://latex.codecogs.com/png.latex?map_y) can be encoded as separate floating-point maps
+/// in ![inline formula](https://latex.codecogs.com/png.latex?map_1) and ![inline formula](https://latex.codecogs.com/png.latex?map_2) respectively, or interleaved floating-point maps of ![inline formula](https://latex.codecogs.com/png.latex?%28x%2Cy%29) in
+/// ![inline formula](https://latex.codecogs.com/png.latex?map_1), or fixed-point maps created by using convertMaps. The reason you might want to
 /// convert from floating to fixed-point representations of a map is that they can yield much faster
-/// (\~2x) remapping operations. In the converted case, <span lang='latex'>map_1</span> contains pairs (cvFloor(x),
-/// cvFloor(y)) and <span lang='latex'>map_2</span> contains indices in a table of interpolation coefficients.
+/// (\~2x) remapping operations. In the converted case, ![inline formula](https://latex.codecogs.com/png.latex?map_1) contains pairs (cvFloor(x),
+/// cvFloor(y)) and ![inline formula](https://latex.codecogs.com/png.latex?map_2) contains indices in a table of interpolation coefficients.
 ///
 /// This function cannot operate in-place.
 ///
@@ -4178,12 +4153,12 @@ pub fn remap(src: &core::Mat, dst: &mut core::Mat, map1: &core::Mat, map2: &core
 /// * dst: output image; it has the size dsize (when it is non-zero) or the size computed from
 /// src.size(), fx, and fy; the type of dst is the same as of src.
 /// * dsize: output image size; if it equals zero, it is computed as:
-/// <div lang='latex'>\texttt{dsize = Size(round(fx*src.cols), round(fy*src.rows))}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdsize%20%3D%20Size%28round%28fx%2Asrc.cols%29%2C%20round%28fy%2Asrc.rows%29%29%7D)
 /// Either dsize or both fx and fy must be non-zero.
 /// * fx: scale factor along the horizontal axis; when it equals 0, it is computed as
-/// <div lang='latex'>\texttt{(double)dsize.width/src.cols}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize.width%2Fsrc.cols%7D)
 /// * fy: scale factor along the vertical axis; when it equals 0, it is computed as
-/// <div lang='latex'>\texttt{(double)dsize.height/src.rows}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28double%29dsize.height%2Fsrc.rows%7D)
 /// * interpolation: interpolation method, see #InterpolationFlags
 ///
 /// ## See also
@@ -4229,7 +4204,7 @@ pub fn rotated_rectangle_intersection(rect1: &core::RotatedRect, rect2: &core::R
 /// * ddepth: Destination image depth, see @ref filter_depths "combinations"
 /// * kernelX: Coefficients for filtering each row.
 /// * kernelY: Coefficients for filtering each column.
-/// * anchor: Anchor position within the kernel. The default value <span lang='latex'>(-1,-1)</span> means that the anchor
+/// * anchor: Anchor position within the kernel. The default value ![inline formula](https://latex.codecogs.com/png.latex?%28-1%2C-1%29) means that the anchor
 /// is at the kernel center.
 /// * delta: Value added to the filtered results before storing them.
 /// * borderType: Pixel extrapolation method, see #BorderTypes
@@ -4273,8 +4248,8 @@ pub fn spatial_gradient(src: &core::Mat, dx: &mut core::Mat, dy: &mut core::Mat,
 
 /// Calculates the normalized sum of squares of the pixel values overlapping the filter.
 ///
-/// For every pixel <span lang='latex'> (x, y) </span> in the source image, the function calculates the sum of squares of those neighboring
-/// pixel values which overlap the filter placed over the pixel <span lang='latex'> (x, y) </span>.
+/// For every pixel ![inline formula](https://latex.codecogs.com/png.latex?%20%28x%2C%20y%29%20) in the source image, the function calculates the sum of squares of those neighboring
+/// pixel values which overlap the filter placed over the pixel ![inline formula](https://latex.codecogs.com/png.latex?%20%28x%2C%20y%29%20).
 ///
 /// The unnormalized square box filter can be useful in computing local image statistics such as the the local
 /// variance and standard deviation around the neighborhood of a pixel.
@@ -4334,7 +4309,7 @@ pub fn threshold(src: &core::Mat, dst: &mut core::Mat, thresh: f64, maxval: f64,
 ///
 /// The function warpAffine transforms the source image using the specified matrix:
 ///
-/// <div lang='latex'>\texttt{dst} (x,y) =  \texttt{src} ( \texttt{M} _{11} x +  \texttt{M} _{12} y +  \texttt{M} _{13}, \texttt{M} _{21} x +  \texttt{M} _{22} y +  \texttt{M} _{23})</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28%20%5Ctexttt%7BM%7D%20_%7B11%7D%20x%20%2B%20%20%5Ctexttt%7BM%7D%20_%7B12%7D%20y%20%2B%20%20%5Ctexttt%7BM%7D%20_%7B13%7D%2C%20%5Ctexttt%7BM%7D%20_%7B21%7D%20x%20%2B%20%20%5Ctexttt%7BM%7D%20_%7B22%7D%20y%20%2B%20%20%5Ctexttt%7BM%7D%20_%7B23%7D%29)
 ///
 /// when the flag #WARP_INVERSE_MAP is set. Otherwise, the transformation is first inverted
 /// with #invertAffineTransform and then put in the formula above instead of M. The function cannot
@@ -4343,11 +4318,11 @@ pub fn threshold(src: &core::Mat, dst: &mut core::Mat, thresh: f64, maxval: f64,
 /// ## Parameters
 /// * src: input image.
 /// * dst: output image that has the size dsize and the same type as src .
-/// * M: <span lang='latex'>2\times 3</span> transformation matrix.
+/// * M: ![inline formula](https://latex.codecogs.com/png.latex?2%5Ctimes%203) transformation matrix.
 /// * dsize: size of the output image.
 /// * flags: combination of interpolation methods (see #InterpolationFlags) and the optional
 /// flag #WARP_INVERSE_MAP that means that M is the inverse transformation (
-/// <span lang='latex'>\texttt{dst}\rightarrow\texttt{src}</span> ).
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
 /// * borderMode: pixel extrapolation method (see #BorderTypes); when
 /// borderMode=#BORDER_TRANSPARENT, it means that the pixels in the destination image corresponding to
 /// the "outliers" in the source image are not modified by the function.
@@ -4368,8 +4343,7 @@ pub fn warp_affine(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsize: c
 ///
 /// The function warpPerspective transforms the source image using the specified matrix:
 ///
-/// <div lang='latex'>\texttt{dst} (x,y) =  \texttt{src} \left ( \frac{M_{11} x + M_{12} y + M_{13}}{M_{31} x + M_{32} y + M_{33}} ,
-/// \frac{M_{21} x + M_{22} y + M_{23}}{M_{31} x + M_{32} y + M_{33}} \right )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28x%2Cy%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%5Cleft%20%28%20%5Cfrac%7BM_%7B11%7D%20x%20%2B%20M_%7B12%7D%20y%20%2B%20M_%7B13%7D%7D%7BM_%7B31%7D%20x%20%2B%20M_%7B32%7D%20y%20%2B%20M_%7B33%7D%7D%20%2C%0A%5Cfrac%7BM_%7B21%7D%20x%20%2B%20M_%7B22%7D%20y%20%2B%20M_%7B23%7D%7D%7BM_%7B31%7D%20x%20%2B%20M_%7B32%7D%20y%20%2B%20M_%7B33%7D%7D%20%5Cright%20%29)
 ///
 /// when the flag #WARP_INVERSE_MAP is set. Otherwise, the transformation is first inverted with invert
 /// and then put in the formula above instead of M. The function cannot operate in-place.
@@ -4377,11 +4351,11 @@ pub fn warp_affine(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsize: c
 /// ## Parameters
 /// * src: input image.
 /// * dst: output image that has the size dsize and the same type as src .
-/// * M: <span lang='latex'>3\times 3</span> transformation matrix.
+/// * M: ![inline formula](https://latex.codecogs.com/png.latex?3%5Ctimes%203) transformation matrix.
 /// * dsize: size of the output image.
 /// * flags: combination of interpolation methods (#INTER_LINEAR or #INTER_NEAREST) and the
 /// optional flag #WARP_INVERSE_MAP, that sets M as the inverse transformation (
-/// <span lang='latex'>\texttt{dst}\rightarrow\texttt{src}</span> ).
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%5Crightarrow%5Ctexttt%7Bsrc%7D) ).
 /// * borderMode: pixel extrapolation method (#BORDER_CONSTANT or #BORDER_REPLICATE).
 /// * borderValue: value used in case of a constant border; by default, it equals 0.
 ///
@@ -4402,30 +4376,13 @@ pub fn warp_perspective(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsi
 /// ![Polar remaps reference](https://docs.opencv.org/4.1.1/polar_remap_doc.png)
 ///
 /// Transform the source image using the following transformation:
-/// <div lang='latex'>
-/// dst(\rho , \phi ) = src(x,y)
-/// </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%0Adst%28%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%0A)
 ///
 /// where
-/// <div lang='latex'>
-/// \begin{array}{l}
-/// \vec{I} = (x - center.x, \;y - center.y) \\
-/// \phi = Kangle \cdot \texttt{angle} (\vec{I}) \\
-/// \rho = \left\{\begin{matrix}
-/// Klin \cdot \texttt{magnitude} (\vec{I}) & default \\
-/// Klog \cdot log_e(\texttt{magnitude} (\vec{I})) & if \; semilog \\
-/// \end{matrix}\right.
-/// \end{array}
-/// </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Barray%7D%7Bl%7D%0A%5Cvec%7BI%7D%20%3D%20%28x%20-%20center.x%2C%20%5C%3By%20-%20center.y%29%20%5C%5C%0A%5Cphi%20%3D%20Kangle%20%5Ccdot%20%5Ctexttt%7Bangle%7D%20%28%5Cvec%7BI%7D%29%20%5C%5C%0A%5Crho%20%3D%20%5Cleft%5C%7B%5Cbegin%7Bmatrix%7D%0AKlin%20%5Ccdot%20%5Ctexttt%7Bmagnitude%7D%20%28%5Cvec%7BI%7D%29%20%26%20default%20%5C%5C%0AKlog%20%5Ccdot%20log_e%28%5Ctexttt%7Bmagnitude%7D%20%28%5Cvec%7BI%7D%29%29%20%26%20if%20%5C%3B%20semilog%20%5C%5C%0A%5Cend%7Bmatrix%7D%5Cright.%0A%5Cend%7Barray%7D%0A)
 ///
 /// and
-/// <div lang='latex'>
-/// \begin{array}{l}
-/// Kangle = dsize.height / 2\Pi \\
-/// Klin = dsize.width / maxRadius \\
-/// Klog = dsize.width / log_e(maxRadius) \\
-/// \end{array}
-/// </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Barray%7D%7Bl%7D%0AKangle%20%3D%20dsize.height%20%2F%202%5CPi%20%5C%5C%0AKlin%20%3D%20dsize.width%20%2F%20maxRadius%20%5C%5C%0AKlog%20%3D%20dsize.width%20%2F%20log_e%28maxRadius%29%20%5C%5C%0A%5Cend%7Barray%7D%0A)
 ///
 ///
 /// \par Linear vs semilog mapping
@@ -4441,19 +4398,12 @@ pub fn warp_perspective(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsi
 ///
 /// - if both values in `dsize <=0 ` (default),
 /// the destination image will have (almost) same area of source bounding circle:
-/// <div lang='latex'>\begin{array}{l}
-/// dsize.area  \leftarrow (maxRadius^2 \cdot \Pi) \\
-/// dsize.width = \texttt{cvRound}(maxRadius) \\
-/// dsize.height = \texttt{cvRound}(maxRadius \cdot \Pi) \\
-/// \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0Adsize.area%20%20%5Cleftarrow%20%28maxRadius%5E2%20%5Ccdot%20%5CPi%29%20%5C%5C%0Adsize.width%20%3D%20%5Ctexttt%7BcvRound%7D%28maxRadius%29%20%5C%5C%0Adsize.height%20%3D%20%5Ctexttt%7BcvRound%7D%28maxRadius%20%5Ccdot%20%5CPi%29%20%5C%5C%0A%5Cend%7Barray%7D)
 ///
 ///
 /// - if only `dsize.height <= 0`,
 /// the destination image area will be proportional to the bounding circle area but scaled by `Kx * Kx`:
-/// <div lang='latex'>\begin{array}{l}
-/// dsize.height = \texttt{cvRound}(dsize.width \cdot \Pi) \\
-/// \end{array}
-/// </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%0Adsize.height%20%3D%20%5Ctexttt%7BcvRound%7D%28dsize.width%20%5Ccdot%20%5CPi%29%20%5C%5C%0A%5Cend%7Barray%7D%0A)
 ///
 /// - if both values in `dsize > 0 `,
 /// the destination image will have the given size therefore the area of the bounding circle will be scaled to `dsize`.
@@ -4464,7 +4414,7 @@ pub fn warp_perspective(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat, dsi
 /// You can get reverse mapping adding #WARP_INVERSE_MAP to `flags`
 /// \snippet polar_transforms.cpp InverseMap
 ///
-/// In addiction, to calculate the original coordinate from a polar mapped coordinate <span lang='latex'>(rho, phi)->(x, y)</span>:
+/// In addiction, to calculate the original coordinate from a polar mapped coordinate ![inline formula](https://latex.codecogs.com/png.latex?%28rho%2C%20phi%29-%3E%28x%2C%20y%29):
 /// \snippet polar_transforms.cpp InverseCoordinate
 ///
 /// ## Parameters

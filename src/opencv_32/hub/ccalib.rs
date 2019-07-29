@@ -33,7 +33,7 @@ pub const XYZRGB: i32 = 1;
 /// * size: Image size of calibration images.
 /// * K: Output calibrated camera matrix.
 /// * xi: Output parameter xi for CMei's model
-/// * D: Output distortion parameters <span lang='latex'>(k_1, k_2, p_1, p_2)</span>
+/// * D: Output distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29)
 /// * rvecs: Output rotations for each calibration images
 /// * tvecs: Output translation for each calibration images
 /// * flags: The flags that control calibrate
@@ -52,8 +52,8 @@ pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::Vecto
 /// if R or P is empty then identity matrices are used.
 ///
 /// ## Parameters
-/// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{s}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>, with depth CV_32F or CV_64F
-/// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, p_1, p_2)</span>, with depth CV_32F or CV_64F
+/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%20s%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%20_1%20%5Cend%7Bbmatrix%7D), with depth CV_32F or CV_64F
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29), with depth CV_32F or CV_64F
 /// * xi: The parameter xi for CMei's model
 /// * R: Rotation transform between the original and object space : 3x3 1-channel, or vector: 3x1/1x3, with depth CV_32F or CV_64F
 /// * P: New camera matrix (3x3) or new projection matrix (3x4)
@@ -172,11 +172,11 @@ pub fn sub_matrix(src: &core::Mat, dst: &mut core::Mat, cols: &types::VectorOfin
 /// 1xN/Nx1 2-channel of type CV_32F. 64F is also acceptable.
 /// * rvec: vector of rotation between world coordinate and camera coordinate, i.e., om
 /// * tvec: vector of translation between pattern coordinate and camera coordinate
-/// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{s}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
-/// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, p_1, p_2)</span>.
+/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%20s%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%20_1%20%5Cend%7Bbmatrix%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29).
 /// * xi: The parameter xi for CMei's model
 /// * jacobian: Optional output 2Nx16 of type CV_64F jacobian matrix, contains the derivatives of
-/// image pixel points wrt parameters including <span lang='latex'>om, T, f_x, f_y, s, c_x, c_y, xi, k_1, k_2, p_1, p_2</span>.
+/// image pixel points wrt parameters including ![inline formula](https://latex.codecogs.com/png.latex?om%2C%20T%2C%20f_x%2C%20f_y%2C%20s%2C%20c_x%2C%20c_y%2C%20xi%2C%20k_1%2C%20k_2%2C%20p_1%2C%20p_2).
 /// This matrix will be used in calibration by optimization.
 ///
 /// The function projects object 3D points of world coordinate to image pixels, parameter by intrinsic
@@ -203,10 +203,10 @@ pub fn project_points(object_points: &core::Mat, image_points: &mut core::Mat, r
 /// * imageSize2: Image size of calibration images of the second camera.
 /// * K1: Output camera matrix for the first camera.
 /// * xi1: Output parameter xi of Mei's model for the first camera
-/// * D1: Output distortion parameters <span lang='latex'>(k_1, k_2, p_1, p_2)</span> for the first camera
+/// * D1: Output distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29) for the first camera
 /// * K2: Output camera matrix for the first camera.
 /// * xi2: Output parameter xi of CMei's model for the second camera
-/// * D2: Output distortion parameters <span lang='latex'>(k_1, k_2, p_1, p_2)</span> for the second camera
+/// * D2: Output distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29) for the second camera
 /// * rvec: Output rotation between the first and second camera
 /// * tvec: Output translation between the first and second camera
 /// * rvecsL: Output rotation for each image of the first camera
@@ -229,10 +229,10 @@ pub fn stereo_calibrate(object_points: &mut types::VectorOfMat, image_points1: &
 /// * image1: The first input image
 /// * image2: The second input image
 /// * K1: Input camera matrix of the first camera
-/// * D1: Input distortion parameters <span lang='latex'>(k_1, k_2, p_1, p_2)</span> for the first camera
+/// * D1: Input distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29) for the first camera
 /// * xi1: Input parameter xi for the first camera for CMei's model
 /// * K2: Input camera matrix of the second camera
-/// * D2: Input distortion parameters <span lang='latex'>(k_1, k_2, p_1, p_2)</span> for the second camera
+/// * D2: Input distortion parameters ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29) for the second camera
 /// * xi2: Input parameter xi for the second camera for CMei's model
 /// * R: Rotation between the first and second camera
 /// * T: Translation between the first and second camera
@@ -272,8 +272,8 @@ pub fn stereo_rectify(r: &core::Mat, t: &core::Mat, r1: &mut core::Mat, r2: &mut
 /// ## Parameters
 /// * distorted: The input omnidirectional image.
 /// * undistorted: The output undistorted image.
-/// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{s}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
-/// * D: Input vector of distortion coefficients <span lang='latex'>(k_1, k_2, p_1, p_2)</span>.
+/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%20s%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%20_1%20%5Cend%7Bbmatrix%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29).
 /// * xi: The parameter xi for CMei's model.
 /// * flags: Flags indicates the rectification type,  RECTIFY_PERSPECTIVE, RECTIFY_CYLINDRICAL, RECTIFY_LONGLATI and RECTIFY_STEREOGRAPHIC
 /// * Knew: Camera matrix of the distorted image. If it is not assigned, it is just K.
@@ -293,8 +293,8 @@ pub fn undistort_image(distorted: &core::Mat, undistorted: &mut core::Mat, k: &c
 /// ## Parameters
 /// * distorted: Array of distorted image points, vector of Vec2f
 /// or 1xN/Nx1 2-channel Mat of type CV_32F, 64F depth is also acceptable
-/// * K: Camera matrix <span lang='latex'>K = \vecthreethree{f_x}{s}{c_x}{0}{f_y}{c_y}{0}{0}{_1}</span>.
-/// * D: Distortion coefficients <span lang='latex'>(k_1, k_2, p_1, p_2)</span>.
+/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%20s%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%20_1%20%5Cend%7Bbmatrix%7D).
+/// * D: Distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%29).
 /// * xi: The parameter xi for CMei's model
 /// * R: Rotation trainsform between the original and object space : 3x3 1-channel, or vector: 3x1/1x3
 /// 1-channel or 1x1 3-channel
@@ -330,7 +330,7 @@ impl core::Algorithm for CustomPattern {
 
 impl CustomPattern {
 
-    pub fn new() -> Result<crate::ccalib::CustomPattern> {
+    pub fn default() -> Result<crate::ccalib::CustomPattern> {
         unsafe { sys::cv_ccalib_CustomPattern_CustomPattern() }.into_result().map(|ptr| crate::ccalib::CustomPattern { ptr })
     }
     
@@ -543,7 +543,7 @@ impl MultiCameraCalibration_vertex {
         unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_Mat(), ts) }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration_vertex { ptr })
     }
     
-    pub fn new_1() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
+    pub fn default() -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
         unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex() }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration_vertex { ptr })
     }
     

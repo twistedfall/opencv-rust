@@ -185,7 +185,7 @@ impl crate::videostab::InpainterBase for ConsistentMosaicInpainter {
 
 impl ConsistentMosaicInpainter {
 
-    pub fn new() -> Result<crate::videostab::ConsistentMosaicInpainter> {
+    pub fn default() -> Result<crate::videostab::ConsistentMosaicInpainter> {
         unsafe { sys::cv_videostab_ConsistentMosaicInpainter_ConsistentMosaicInpainter() }.into_result().map(|ptr| crate::videostab::ConsistentMosaicInpainter { ptr })
     }
     
@@ -269,7 +269,7 @@ unsafe impl Send for FastMarchingMethod {}
 
 impl FastMarchingMethod {
 
-    pub fn new() -> Result<crate::videostab::FastMarchingMethod> {
+    pub fn default() -> Result<crate::videostab::FastMarchingMethod> {
         unsafe { sys::cv_videostab_FastMarchingMethod_FastMarchingMethod() }.into_result().map(|ptr| crate::videostab::FastMarchingMethod { ptr })
     }
     
@@ -925,7 +925,7 @@ impl crate::videostab::InpainterBase for MotionInpainter {
 
 impl MotionInpainter {
 
-    pub fn new() -> Result<crate::videostab::MotionInpainter> {
+    pub fn default() -> Result<crate::videostab::MotionInpainter> {
         unsafe { sys::cv_videostab_MotionInpainter_MotionInpainter() }.into_result().map(|ptr| crate::videostab::MotionInpainter { ptr })
     }
     
@@ -1217,7 +1217,7 @@ impl crate::videostab::StabilizerBase for OnePassStabilizer {
 
 impl OnePassStabilizer {
 
-    pub fn new() -> Result<crate::videostab::OnePassStabilizer> {
+    pub fn default() -> Result<crate::videostab::OnePassStabilizer> {
         unsafe { sys::cv_videostab_OnePassStabilizer_OnePassStabilizer() }.into_result().map(|ptr| crate::videostab::OnePassStabilizer { ptr })
     }
     
@@ -1482,7 +1482,7 @@ impl crate::videostab::IOutlierRejector for TranslationBasedLocalOutlierRejector
 
 impl TranslationBasedLocalOutlierRejector {
 
-    pub fn new() -> Result<crate::videostab::TranslationBasedLocalOutlierRejector> {
+    pub fn default() -> Result<crate::videostab::TranslationBasedLocalOutlierRejector> {
         unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_TranslationBasedLocalOutlierRejector() }.into_result().map(|ptr| crate::videostab::TranslationBasedLocalOutlierRejector { ptr })
     }
     
@@ -1530,7 +1530,7 @@ impl crate::videostab::StabilizerBase for TwoPassStabilizer {
 
 impl TwoPassStabilizer {
 
-    pub fn new() -> Result<crate::videostab::TwoPassStabilizer> {
+    pub fn default() -> Result<crate::videostab::TwoPassStabilizer> {
         unsafe { sys::cv_videostab_TwoPassStabilizer_TwoPassStabilizer() }.into_result().map(|ptr| crate::videostab::TwoPassStabilizer { ptr })
     }
     
@@ -1646,7 +1646,7 @@ impl crate::videostab::DeblurerBase for WeightingDeblurer {
 
 impl WeightingDeblurer {
 
-    pub fn new() -> Result<crate::videostab::WeightingDeblurer> {
+    pub fn default() -> Result<crate::videostab::WeightingDeblurer> {
         unsafe { sys::cv_videostab_WeightingDeblurer_WeightingDeblurer() }.into_result().map(|ptr| crate::videostab::WeightingDeblurer { ptr })
     }
     

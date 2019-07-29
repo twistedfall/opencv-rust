@@ -403,7 +403,7 @@ impl PyRotationWarper {
         unsafe { sys::cv_PyRotationWarper_PyRotationWarper_String_float(_type.as_ptr() as _, scale) }.into_result().map(|ptr| crate::stitching::PyRotationWarper { ptr })
     }
     
-    pub fn new_1() -> Result<crate::stitching::PyRotationWarper> {
+    pub fn default() -> Result<crate::stitching::PyRotationWarper> {
         unsafe { sys::cv_PyRotationWarper_PyRotationWarper() }.into_result().map(|ptr| crate::stitching::PyRotationWarper { ptr })
     }
     

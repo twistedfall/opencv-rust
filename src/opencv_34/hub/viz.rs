@@ -332,20 +332,20 @@ unsafe impl Send for Color {}
 
 impl Color {
 
-    pub fn new() -> Result<crate::viz::Color> {
+    pub fn default() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_Color() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
     /// The three channels will have the same value equal to gray.
-    pub fn new_1(gray: f64) -> Result<crate::viz::Color> {
+    pub fn new(gray: f64) -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_Color_double(gray) }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn new_2(blue: f64, green: f64, red: f64) -> Result<crate::viz::Color> {
+    pub fn new_1(blue: f64, green: f64, red: f64) -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_Color_double_double_double(blue, green, red) }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
-    pub fn new_3(color: core::Scalar) -> Result<crate::viz::Color> {
+    pub fn new_2(color: core::Scalar) -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_Color_Scalar(color) }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
@@ -618,7 +618,7 @@ impl Viz3d {
         unsafe { sys::cv_viz_Viz3d_Viz3d_String(window_name.as_ptr()) }.into_result().map(|ptr| crate::viz::Viz3d { ptr })
     }
     
-    pub fn new_1(unnamed_arg: &crate::viz::Viz3d) -> Result<crate::viz::Viz3d> {
+    pub fn copy(unnamed_arg: &crate::viz::Viz3d) -> Result<crate::viz::Viz3d> {
         unsafe { sys::cv_viz_Viz3d_Viz3d_Viz3d(unnamed_arg.as_raw_Viz3d()) }.into_result().map(|ptr| crate::viz::Viz3d { ptr })
     }
     
@@ -1161,7 +1161,7 @@ impl crate::viz::Widget3D for WCloudCollection {
 
 impl WCloudCollection {
 
-    pub fn new() -> Result<crate::viz::WCloudCollection> {
+    pub fn default() -> Result<crate::viz::WCloudCollection> {
         unsafe { sys::cv_viz_WCloudCollection_WCloudCollection() }.into_result().map(|ptr| crate::viz::WCloudCollection { ptr })
     }
     
@@ -2108,7 +2108,7 @@ impl crate::viz::Widget3D for WWidgetMerger {
 
 impl WWidgetMerger {
 
-    pub fn new() -> Result<crate::viz::WWidgetMerger> {
+    pub fn default() -> Result<crate::viz::WWidgetMerger> {
         unsafe { sys::cv_viz_WWidgetMerger_WWidgetMerger() }.into_result().map(|ptr| crate::viz::WWidgetMerger { ptr })
     }
     

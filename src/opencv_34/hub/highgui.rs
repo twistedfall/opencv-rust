@@ -970,7 +970,7 @@ pub fn wait_key_ex(delay: i32) -> Result<i32> {
 
 /// Waits for a pressed key.
 ///
-/// The function waitKey waits for a key event infinitely (when <span lang='latex'>\texttt{delay}\leq 0</span> ) or for delay
+/// The function waitKey waits for a key event infinitely (when ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdelay%7D%5Cleq%200) ) or for delay
 /// milliseconds, when it is positive. Since the OS has a minimum time between switching threads, the
 /// function will not wait exactly delay ms, it will wait at least delay ms, depending on what else is
 /// running on your computer at that time. It returns the code of the pressed key or -1 if no key was

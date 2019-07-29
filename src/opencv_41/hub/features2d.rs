@@ -742,7 +742,7 @@ impl BOWKMeansTrainer {
         unsafe { sys::cv_BOWKMeansTrainer_BOWKMeansTrainer_int_TermCriteria_int_int(cluster_count, termcrit.as_raw_TermCriteria(), attempts, flags) }.into_result().map(|ptr| crate::features2d::BOWKMeansTrainer { ptr })
     }
     
-    pub fn default(&self) -> Result<core::Mat> {
+    pub fn cluster(&self) -> Result<core::Mat> {
         unsafe { sys::cv_BOWKMeansTrainer_cluster_const(self.as_raw_BOWKMeansTrainer()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
@@ -1555,7 +1555,7 @@ unsafe impl Send for KeyPointsFilter {}
 
 impl KeyPointsFilter {
 
-    pub fn new() -> Result<crate::features2d::KeyPointsFilter> {
+    pub fn default() -> Result<crate::features2d::KeyPointsFilter> {
         unsafe { sys::cv_KeyPointsFilter_KeyPointsFilter() }.into_result().map(|ptr| crate::features2d::KeyPointsFilter { ptr })
     }
     
@@ -1659,7 +1659,7 @@ impl dyn MSER + '_ {
     /// Full consturctor for %MSER detector
     ///
     /// ## Parameters
-    /// * _delta: it compares <span lang='latex'>(size_{i}-size_{i-delta})/size_{i-delta}</span>
+    /// * _delta: it compares ![inline formula](https://latex.codecogs.com/png.latex?%28size_%7Bi%7D-size_%7Bi-delta%7D%29%2Fsize_%7Bi-delta%7D)
     /// * _min_area: prune the area which smaller than minArea
     /// * _max_area: prune the area which bigger than maxArea
     /// * _max_variation: prune the area have similar size to its children
@@ -1849,7 +1849,7 @@ impl dyn ORB + '_ {
 /// and blobColor = 255 to extract light blobs.
 /// *   **By area**. Extracted blobs have an area between minArea (inclusive) and maxArea (exclusive).
 /// *   **By circularity**. Extracted blobs have circularity
-/// (<span lang='latex'>\frac{4*\pi*Area}{perimeter * perimeter}</span>) between minCircularity (inclusive) and
+/// (![inline formula](https://latex.codecogs.com/png.latex?%5Cfrac%7B4%2A%5Cpi%2AArea%7D%7Bperimeter%20%2A%20perimeter%7D)) between minCircularity (inclusive) and
 /// maxCircularity (exclusive).
 /// *   **By ratio of the minimum inertia to maximum inertia**. Extracted blobs have this ratio
 /// between minInertiaRatio (inclusive) and maxInertiaRatio (exclusive).
@@ -1901,7 +1901,7 @@ impl SimpleBlobDetector {
 
 impl SimpleBlobDetector_Params {
 
-    pub fn new() -> Result<crate::features2d::SimpleBlobDetector_Params> {
+    pub fn default() -> Result<crate::features2d::SimpleBlobDetector_Params> {
         unsafe { sys::cv_SimpleBlobDetector_Params_Params() }.into_result()
     }
     

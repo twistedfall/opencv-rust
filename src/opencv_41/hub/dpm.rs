@@ -84,14 +84,14 @@ unsafe impl Send for DPMDetector_ObjectDetection {}
 
 impl DPMDetector_ObjectDetection {
 
-    pub fn new() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
+    pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
         unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection() }.into_result().map(|ptr| crate::dpm::DPMDetector_ObjectDetection { ptr })
     }
     
     ///
     /// ## C++ default parameters
     /// * class_id: -1
-    pub fn new_1(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
+    pub fn new(rect: core::Rect, score: f32, class_id: i32) -> Result<crate::dpm::DPMDetector_ObjectDetection> {
         unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection_Rect_float_int(rect, score, class_id) }.into_result().map(|ptr| crate::dpm::DPMDetector_ObjectDetection { ptr })
     }
     

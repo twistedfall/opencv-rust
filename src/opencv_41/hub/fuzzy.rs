@@ -3,11 +3,11 @@
 //! Namespace for all functions is `ft`. The module brings implementation of the last image processing algorithms based on fuzzy mathematics. Method are named based on the pattern `FT`_degree_dimension`_`method.
 //! # Math with F0-transform support
 //!
-//! Fuzzy transform (<span lang='latex'>F^0</span>-transform) of the 0th degree transforms whole image to a matrix of its components. These components are used in latter computation where each of them represents average color of certain subarea.
+//! Fuzzy transform (![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transform) of the 0th degree transforms whole image to a matrix of its components. These components are used in latter computation where each of them represents average color of certain subarea.
 //!
 //! # Math with F1-transform support
 //!
-//! Fuzzy transform (<span lang='latex'>F^1</span>-transform) of the 1th degree transforms whole image to a matrix of its components. Each component is polynomial of the 1th degree carrying information about average color and average gradient of certain subarea.
+//! Fuzzy transform (![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform) of the 1th degree transforms whole image to a matrix of its components. Each component is polynomial of the 1th degree carrying information about average color and average gradient of certain subarea.
 //!
 //! # Fuzzy image processing
 //!
@@ -27,7 +27,7 @@ pub const ONE_STEP: i32 = 1;
 /// sinusoidal shape
 pub const SINUS: i32 = 2;
 
-/// Sligtly less accurate version of <span lang='latex'>F^0</span>-transfrom computation optimized for higher speed. The methods counts with linear basic function.
+/// Sligtly less accurate version of ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom computation optimized for higher speed. The methods counts with linear basic function.
 /// ## Parameters
 /// * matrix: Input 3 channels matrix.
 /// * radius: Radius of the `ft::LINEAR` basic function.
@@ -38,7 +38,7 @@ pub fn ft02_d_fl_process(matrix: &core::Mat, radius: i32, output: &mut core::Mat
     unsafe { sys::cv_ft_FT02D_FL_process_Mat_int_Mat(matrix.as_raw_Mat(), radius, output.as_raw_Mat()) }.into_result()
 }
 
-/// Sligtly less accurate version of <span lang='latex'>F^0</span>-transfrom computation optimized for higher speed. The methods counts with linear basic function.
+/// Sligtly less accurate version of ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom computation optimized for higher speed. The methods counts with linear basic function.
 /// ## Parameters
 /// * matrix: Input 3 channels matrix.
 /// * radius: Radius of the `ft::LINEAR` basic function.
@@ -49,7 +49,7 @@ pub fn ft02_d_fl_process_float(matrix: &core::Mat, radius: i32, output: &mut cor
     unsafe { sys::cv_ft_FT02D_FL_process_float_Mat_int_Mat(matrix.as_raw_Mat(), radius, output.as_raw_Mat()) }.into_result()
 }
 
-/// Computes components of the array using direct <span lang='latex'>F^0</span>-transform.
+/// Computes components of the array using direct ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transform.
 /// ## Parameters
 /// * matrix: Input array.
 /// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
@@ -64,7 +64,7 @@ pub fn ft02_d_components(matrix: &core::Mat, kernel: &core::Mat, components: &mu
     unsafe { sys::cv_ft_FT02D_components_Mat_Mat_Mat_Mat(matrix.as_raw_Mat(), kernel.as_raw_Mat(), components.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
-/// Computes inverse <span lang='latex'>F^0</span>-transfrom.
+/// Computes inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom.
 /// ## Parameters
 /// * components: Input 32-bit float single channel array for the components.
 /// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
@@ -77,7 +77,7 @@ pub fn ft02_d_inverse_ft(components: &core::Mat, kernel: &core::Mat, output: &mu
     unsafe { sys::cv_ft_FT02D_inverseFT_Mat_Mat_Mat_int_int(components.as_raw_Mat(), kernel.as_raw_Mat(), output.as_raw_Mat(), width, height) }.into_result()
 }
 
-/// Computes <span lang='latex'>F^0</span>-transfrom and inverse <span lang='latex'>F^0</span>-transfrom at once and return state.
+/// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom at once and return state.
 /// ## Parameters
 /// * matrix: Input matrix.
 /// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
@@ -91,7 +91,7 @@ pub fn ft02_d_iteration(matrix: &core::Mat, kernel: &core::Mat, output: &mut cor
     unsafe { sys::cv_ft_FT02D_iteration_Mat_Mat_Mat_Mat_Mat_bool(matrix.as_raw_Mat(), kernel.as_raw_Mat(), output.as_raw_Mat(), mask.as_raw_Mat(), mask_output.as_raw_Mat(), first_stop) }.into_result()
 }
 
-/// Computes <span lang='latex'>F^0</span>-transfrom and inverse <span lang='latex'>F^0</span>-transfrom at once.
+/// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E0)-transfrom at once.
 /// ## Parameters
 /// * matrix: Input matrix.
 /// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
@@ -106,7 +106,7 @@ pub fn ft02_d_process(matrix: &core::Mat, kernel: &core::Mat, output: &mut core:
     unsafe { sys::cv_ft_FT02D_process_Mat_Mat_Mat_Mat(matrix.as_raw_Mat(), kernel.as_raw_Mat(), output.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
-/// Computes components of the array using direct <span lang='latex'>F^1</span>-transform.
+/// Computes components of the array using direct ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform.
 /// ## Parameters
 /// * matrix: Input array.
 /// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
@@ -117,29 +117,29 @@ pub fn ft12_d_components(matrix: &core::Mat, kernel: &core::Mat, components: &mu
     unsafe { sys::cv_ft_FT12D_components_Mat_Mat_Mat(matrix.as_raw_Mat(), kernel.as_raw_Mat(), components.as_raw_Mat()) }.into_result()
 }
 
-/// Creates horizontal matrix for <span lang='latex'>F^1</span>-transform computation.
+/// Creates horizontal matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform computation.
 /// ## Parameters
 /// * radius: Radius of the basic function.
 /// * matrix: The horizontal matrix.
 /// * chn: Number of channels.
 ///
-/// The function creates helper horizontal matrix for <span lang='latex'>F^1</span>-transfrom processing. It is used for gradient computation.
+/// The function creates helper horizontal matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 pub fn ft12_d_create_polynom_matrix_horizontal(radius: i32, matrix: &mut core::Mat, chn: i32) -> Result<()> {
     unsafe { sys::cv_ft_FT12D_createPolynomMatrixHorizontal_int_Mat_int(radius, matrix.as_raw_Mat(), chn) }.into_result()
 }
 
-/// Creates vertical matrix for <span lang='latex'>F^1</span>-transform computation.
+/// Creates vertical matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform computation.
 /// ## Parameters
 /// * radius: Radius of the basic function.
 /// * matrix: The vertical matrix.
 /// * chn: Number of channels.
 ///
-/// The function creates helper vertical matrix for <span lang='latex'>F^1</span>-transfrom processing. It is used for gradient computation.
+/// The function creates helper vertical matrix for ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom processing. It is used for gradient computation.
 pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut core::Mat, chn: i32) -> Result<()> {
     unsafe { sys::cv_ft_FT12D_createPolynomMatrixVertical_int_Mat_int(radius, matrix.as_raw_Mat(), chn) }.into_result()
 }
 
-/// Computes inverse <span lang='latex'>F^1</span>-transfrom.
+/// Computes inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom.
 /// ## Parameters
 /// * components: Input 32-bit float single channel array for the components.
 /// * kernel: Kernel used for processing. The same kernel as for components computation must be used.
@@ -147,12 +147,12 @@ pub fn ft12_d_create_polynom_matrix_vertical(radius: i32, matrix: &mut core::Mat
 /// * width: Width of the output array.
 /// * height: Height of the output array.
 ///
-/// Computation of inverse <span lang='latex'>F^1</span>-transform.
+/// Computation of inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform.
 pub fn ft12_d_inverse_ft(components: &core::Mat, kernel: &core::Mat, output: &mut core::Mat, width: i32, height: i32) -> Result<()> {
     unsafe { sys::cv_ft_FT12D_inverseFT_Mat_Mat_Mat_int_int(components.as_raw_Mat(), kernel.as_raw_Mat(), output.as_raw_Mat(), width, height) }.into_result()
 }
 
-/// Computes elements of <span lang='latex'>F^1</span>-transform components.
+/// Computes elements of ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transform components.
 /// ## Parameters
 /// * matrix: Input array.
 /// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
@@ -170,14 +170,14 @@ pub fn ft12_d_polynomial(matrix: &core::Mat, kernel: &core::Mat, c00: &mut core:
     unsafe { sys::cv_ft_FT12D_polynomial_Mat_Mat_Mat_Mat_Mat_Mat_Mat(matrix.as_raw_Mat(), kernel.as_raw_Mat(), c00.as_raw_Mat(), c10.as_raw_Mat(), c01.as_raw_Mat(), components.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
 }
 
-/// Computes <span lang='latex'>F^1</span>-transfrom and inverse <span lang='latex'>F^1</span>-transfrom at once.
+/// Computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom at once.
 /// ## Parameters
 /// * matrix: Input matrix.
 /// * kernel: Kernel used for processing. Function `ft::createKernel` can be used.
 /// * output: Output 32-bit float array.
 /// * mask: Mask used for unwanted area marking.
 ///
-/// This function computes <span lang='latex'>F^1</span>-transfrom and inverse <span lang='latex'>F^1</span>-transfotm in one step. It is fully sufficient and optimized for `cv::Mat`.
+/// This function computes ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfrom and inverse ![inline formula](https://latex.codecogs.com/png.latex?F%5E1)-transfotm in one step. It is fully sufficient and optimized for `cv::Mat`.
 ///
 ///
 /// Note:

@@ -263,6 +263,31 @@ pub const DFT_INVERSE: i32 = 1;
 pub const DFT_REAL_OUTPUT: i32 = 32;
 pub const DFT_ROWS: i32 = 4;
 pub const DFT_SCALE: i32 = 2;
+pub const Device_EXEC_KERNEL: i32 = (1 << 0);
+pub const Device_EXEC_NATIVE_KERNEL: i32 = (1 << 1);
+pub const Device_FP_CORRECTLY_ROUNDED_DIVIDE_SQRT: i32 = (1 << 7);
+pub const Device_FP_DENORM: i32 = (1 << 0);
+pub const Device_FP_FMA: i32 = (1 << 5);
+pub const Device_FP_INF_NAN: i32 = (1 << 1);
+pub const Device_FP_ROUND_TO_INF: i32 = (1 << 4);
+pub const Device_FP_ROUND_TO_NEAREST: i32 = (1 << 2);
+pub const Device_FP_ROUND_TO_ZERO: i32 = (1 << 3);
+pub const Device_FP_SOFT_FLOAT: i32 = (1 << 6);
+pub const Device_LOCAL_IS_GLOBAL: i32 = 2;
+pub const Device_LOCAL_IS_LOCAL: i32 = 1;
+pub const Device_NO_CACHE: i32 = 0;
+pub const Device_NO_LOCAL_MEM: i32 = 0;
+pub const Device_READ_ONLY_CACHE: i32 = 1;
+pub const Device_READ_WRITE_CACHE: i32 = 2;
+pub const Device_TYPE_ACCELERATOR: i32 = (1 << 3);
+pub const Device_TYPE_ALL: i32 = 0xFFFFFFFF;
+pub const Device_TYPE_CPU: i32 = (1 << 1);
+pub const Device_TYPE_DEFAULT: i32 = (1 << 0);
+pub const Device_TYPE_GPU: i32 = (1 << 2);
+pub const Device_UNKNOWN_VENDOR: i32 = 0;
+pub const Device_VENDOR_AMD: i32 = 1;
+pub const Device_VENDOR_INTEL: i32 = 2;
+pub const Device_VENDOR_NVIDIA: i32 = 3;
 pub const FLAGS_EXPAND_SAME_NAMES: i32 = 0x02;
 pub const FLAGS_MAPPING: i32 = 0x01;
 pub const FLAGS_NONE: i32 = 0;
@@ -290,6 +315,13 @@ pub const IMPL_PLAIN: i32 = 0;
 pub const KMEANS_PP_CENTERS: i32 = 2;
 pub const KMEANS_RANDOM_CENTERS: i32 = 0;
 pub const KMEANS_USE_INITIAL_LABELS: i32 = 1;
+pub const KernelArg_CONSTANT: i32 = 8;
+pub const KernelArg_LOCAL: i32 = 1;
+pub const KernelArg_NO_SIZE: i32 = 256;
+pub const KernelArg_PTR_ONLY: i32 = 16;
+pub const KernelArg_READ_ONLY: i32 = 2;
+pub const KernelArg_READ_WRITE: i32 = 6;
+pub const KernelArg_WRITE_ONLY: i32 = 4;
 /// Debug message. Disabled in the "Release" build.
 pub const LOG_LEVEL_DEBUG: i32 = 5;
 /// Error message
@@ -322,6 +354,9 @@ pub const NORM_MINMAX: i32 = 32;
 pub const NORM_RELATIVE: i32 = 8;
 /// bit-mask which can be used to separate norm type from norm flags
 pub const NORM_TYPE_MASK: i32 = 7;
+pub const OCL_VECTOR_DEFAULT: i32 = 0;
+pub const OCL_VECTOR_MAX: i32 = 1;
+pub const OCL_VECTOR_OWN: i32 = 0;
 pub const OPENCV_ABI_COMPATIBILITY: i32 = 400;
 /// OpenCL API call error
 pub const OpenCLApiCallError: i32 = -220;
@@ -627,26 +662,26 @@ pub struct KeyPoint {
 
 /// struct returned by cv::moments
 ///
-/// The spatial moments <span lang='latex'>\texttt{Moments::m}_{ji}</span> are computed as:
+/// The spatial moments ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BMoments%3A%3Am%7D_%7Bji%7D) are computed as:
 ///
-/// <div lang='latex'>\texttt{m} _{ji}= \sum _{x,y}  \left ( \texttt{array} (x,y)  \cdot x^j  \cdot y^i \right )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bm%7D%20_%7Bji%7D%3D%20%5Csum%20_%7Bx%2Cy%7D%20%20%5Cleft%20%28%20%5Ctexttt%7Barray%7D%20%28x%2Cy%29%20%20%5Ccdot%20x%5Ej%20%20%5Ccdot%20y%5Ei%20%5Cright%20%29)
 ///
-/// The central moments <span lang='latex'>\texttt{Moments::mu}_{ji}</span> are computed as:
+/// The central moments ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BMoments%3A%3Amu%7D_%7Bji%7D) are computed as:
 ///
-/// <div lang='latex'>\texttt{mu} _{ji}= \sum _{x,y}  \left ( \texttt{array} (x,y)  \cdot (x -  \bar{x} )^j  \cdot (y -  \bar{y} )^i \right )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmu%7D%20_%7Bji%7D%3D%20%5Csum%20_%7Bx%2Cy%7D%20%20%5Cleft%20%28%20%5Ctexttt%7Barray%7D%20%28x%2Cy%29%20%20%5Ccdot%20%28x%20-%20%20%5Cbar%7Bx%7D%20%29%5Ej%20%20%5Ccdot%20%28y%20-%20%20%5Cbar%7By%7D%20%29%5Ei%20%5Cright%20%29)
 ///
-/// where <span lang='latex'>(\bar{x}, \bar{y})</span> is the mass center:
+/// where ![inline formula](https://latex.codecogs.com/png.latex?%28%5Cbar%7Bx%7D%2C%20%5Cbar%7By%7D%29) is the mass center:
 ///
-/// <div lang='latex'>\bar{x} = \frac{\texttt{m}_{10}}{\texttt{m}_{00}} , \; \bar{y} = \frac{\texttt{m}_{01}}{\texttt{m}_{00}}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbar%7Bx%7D%20%3D%20%5Cfrac%7B%5Ctexttt%7Bm%7D_%7B10%7D%7D%7B%5Ctexttt%7Bm%7D_%7B00%7D%7D%20%2C%20%5C%3B%20%5Cbar%7By%7D%20%3D%20%5Cfrac%7B%5Ctexttt%7Bm%7D_%7B01%7D%7D%7B%5Ctexttt%7Bm%7D_%7B00%7D%7D)
 ///
-/// The normalized central moments <span lang='latex'>\texttt{Moments::nu}_{ij}</span> are computed as:
+/// The normalized central moments ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BMoments%3A%3Anu%7D_%7Bij%7D) are computed as:
 ///
-/// <div lang='latex'>\texttt{nu} _{ji}= \frac{\texttt{mu}_{ji}}{\texttt{m}_{00}^{(i+j)/2+1}} .</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bnu%7D%20_%7Bji%7D%3D%20%5Cfrac%7B%5Ctexttt%7Bmu%7D_%7Bji%7D%7D%7B%5Ctexttt%7Bm%7D_%7B00%7D%5E%7B%28i%2Bj%29%2F2%2B1%7D%7D%20.)
 ///
 ///
 /// Note:
-/// <span lang='latex'>\texttt{mu}_{00}=\texttt{m}_{00}</span>, <span lang='latex'>\texttt{nu}_{00}=1</span>
-/// <span lang='latex'>\texttt{nu}_{10}=\texttt{mu}_{10}=\texttt{mu}_{01}=\texttt{mu}_{10}=0</span> , hence the values are not
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmu%7D_%7B00%7D%3D%5Ctexttt%7Bm%7D_%7B00%7D), ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bnu%7D_%7B00%7D%3D1)
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bnu%7D_%7B10%7D%3D%5Ctexttt%7Bmu%7D_%7B10%7D%3D%5Ctexttt%7Bmu%7D_%7B01%7D%3D%5Ctexttt%7Bmu%7D_%7B10%7D%3D0) , hence the values are not
 /// stored.
 ///
 /// The moments of a contour are defined in the same way but computed using the Green's formula (see
@@ -701,9 +736,9 @@ pub fn cholesky_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size
 ///
 /// The function LUT fills the output array with values from the look-up table. Indices of the entries
 /// are taken from the input array. That is, the function processes each element of src as follows:
-/// <div lang='latex'>\texttt{dst} (I)  \leftarrow \texttt{lut(src(I) + d)}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%20%5Cleftarrow%20%5Ctexttt%7Blut%28src%28I%29%20%2B%20d%29%7D)
 /// where
-/// <div lang='latex'>d =  \fork{0}{if \(\texttt{src}\) has depth \(\texttt{CV_8U}\)}{128}{if \(\texttt{src}\) has depth \(\texttt{CV_8S}\)}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?d%20%3D%20%20%5Cfork%7B0%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%5C%29%20has%20depth%20%5C%28%5Ctexttt%7BCV_8U%7D%5C%29%7D%7B128%7D%7Bif%20%5C%28%5Ctexttt%7Bsrc%7D%5C%29%20has%20depth%20%5C%28%5Ctexttt%7BCV_8S%7D%5C%29%7D)
 /// ## Parameters
 /// * src: input array of 8-bit elements.
 /// * lut: look-up table of 256 elements; in case of multi-channel input array, the table should
@@ -729,7 +764,7 @@ pub fn lu_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n:
 /// Calculates the Mahalanobis distance between two vectors.
 ///
 /// The function cv::Mahalanobis calculates and returns the weighted distance between two vectors:
-/// <div lang='latex'>d( \texttt{vec1} , \texttt{vec2} )= \sqrt{\sum_{i,j}{\texttt{icovar(i,j)}\cdot(\texttt{vec1}(I)-\texttt{vec2}(I))\cdot(\texttt{vec1(j)}-\texttt{vec2(j)})} }</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?d%28%20%5Ctexttt%7Bvec1%7D%20%2C%20%5Ctexttt%7Bvec2%7D%20%29%3D%20%5Csqrt%7B%5Csum_%7Bi%2Cj%7D%7B%5Ctexttt%7Bicovar%28i%2Cj%29%7D%5Ccdot%28%5Ctexttt%7Bvec1%7D%28I%29-%5Ctexttt%7Bvec2%7D%28I%29%29%5Ccdot%28%5Ctexttt%7Bvec1%28j%29%7D-%5Ctexttt%7Bvec2%28j%29%7D%29%7D%20%7D)
 /// The covariance matrix may be calculated using the #calcCovarMatrix function and then inverted using
 /// the invert function (preferably using the #DECOMP_SVD method, as the most accurate).
 /// ## Parameters
@@ -783,9 +818,7 @@ pub fn pca_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat,
 ///
 /// The PSNR is calculated as follows:
 ///
-/// <div lang='latex'>
-/// \texttt{PSNR} = 10 \cdot \log_{10}{\left( \frac{R^2}{MSE} \right) }
-/// </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Ctexttt%7BPSNR%7D%20%3D%2010%20%5Ccdot%20%5Clog_%7B10%7D%7B%5Cleft%28%20%5Cfrac%7BR%5E2%7D%7BMSE%7D%20%5Cright%29%20%7D%0A)
 ///
 /// where R is the maximum integer value of depth (e.g. 255 in the case of CV_8U data)
 /// and MSE is the mean squared error between the two arrays.
@@ -819,15 +852,15 @@ pub fn sv_decomp(src: &core::Mat, w: &mut core::Mat, u: &mut core::Mat, vt: &mut
 /// The function cv::absdiff calculates:
 ///   Absolute difference between two arrays when they have the same
 /// size and type:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} (| \texttt{src1}(I) -  \texttt{src2}(I)|)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%7C%20%5Ctexttt%7Bsrc1%7D%28I%29%20-%20%20%5Ctexttt%7Bsrc2%7D%28I%29%7C%29)
 ///   Absolute difference between an array and a scalar when the second
 /// array is constructed from Scalar or has as many elements as the
 /// number of channels in `src1`:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} (| \texttt{src1}(I) -  \texttt{src2} |)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%7C%20%5Ctexttt%7Bsrc1%7D%28I%29%20-%20%20%5Ctexttt%7Bsrc2%7D%20%7C%29)
 ///   Absolute difference between a scalar and an array when the first
 /// array is constructed from Scalar or has as many elements as the
 /// number of channels in `src2`:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} (| \texttt{src1} -  \texttt{src2}(I) |)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%7C%20%5Ctexttt%7Bsrc1%7D%20-%20%20%5Ctexttt%7Bsrc2%7D%28I%29%20%7C%29)
 /// where I is a multi-dimensional index of array elements. In case of
 /// multi-channel arrays, each channel is processed independently.
 ///
@@ -846,7 +879,7 @@ pub fn absdiff(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Resul
 /// Calculates the weighted sum of two arrays.
 ///
 /// The function addWeighted calculates the weighted sum of two arrays as follows:
-/// <div lang='latex'>\texttt{dst} (I)= \texttt{saturate} ( \texttt{src1} (I)* \texttt{alpha} +  \texttt{src2} (I)* \texttt{beta} +  \texttt{gamma} )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%2A%20%5Ctexttt%7Bbeta%7D%20%2B%20%20%5Ctexttt%7Bgamma%7D%20%29)
 /// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
 /// channel is processed independently.
 /// The function can be replaced with a matrix expression:
@@ -879,13 +912,13 @@ pub fn add_weighted(src1: &core::Mat, alpha: f64, src2: &core::Mat, beta: f64, g
 ///
 /// The function add calculates:
 /// - Sum of two arrays when both input arrays have the same size and the same number of channels:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} ( \texttt{src1}(I) +  \texttt{src2}(I)) \quad \texttt{if mask}(I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%28I%29%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
 /// - Sum of an array and a scalar when src2 is constructed from Scalar or has the same number of
 /// elements as `src1.channels()`:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} ( \texttt{src1}(I) +  \texttt{src2} ) \quad \texttt{if mask}(I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
 /// - Sum of a scalar and an array when src1 is constructed from Scalar or has the same number of
 /// elements as `src2.channels()`:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} ( \texttt{src1} +  \texttt{src2}(I) ) \quad \texttt{if mask}(I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20%2B%20%20%5Ctexttt%7Bsrc2%7D%28I%29%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
 /// where `I` is a multi-dimensional index of array elements. In case of multi-channel arrays, each
 /// channel is processed independently.
 ///
@@ -925,7 +958,7 @@ pub fn add(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core:
 /// Aligns a buffer size to the specified number of bytes.
 ///
 /// The function returns the minimum number that is greater than or equal to sz and is divisible by n :
-/// <div lang='latex'>\texttt{(sz + n-1) & -n}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7B%28sz%20%2B%20n-1%29%20%26%20-n%7D)
 /// ## Parameters
 /// * sz: Buffer size to align.
 /// * n: Alignment size that must be a power of two.
@@ -954,13 +987,13 @@ pub fn batch_distance(src1: &core::Mat, src2: &core::Mat, dist: &mut core::Mat, 
 ///
 /// The function cv::bitwise_and calculates the per-element bit-wise logical conjunction for:
 ///   Two arrays when src1 and src2 have the same size:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1} (I)  \wedge \texttt{src2} (I) \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cwedge%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 ///   An array and a scalar when src2 is constructed from Scalar or has
 /// the same number of elements as `src1.channels()`:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1} (I)  \wedge \texttt{src2} \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cwedge%20%5Ctexttt%7Bsrc2%7D%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 ///   A scalar and an array when src1 is constructed from Scalar or has
 /// the same number of elements as `src2.channels()`:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1}  \wedge \texttt{src2} (I) \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%20%5Cwedge%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 /// In case of floating-point arrays, their machine-specific bit
 /// representations (usually IEEE754-compliant) are used for the operation.
 /// In case of multi-channel arrays, each channel is processed
@@ -984,7 +1017,7 @@ pub fn bitwise_and(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask
 ///
 /// The function cv::bitwise_not calculates per-element bit-wise inversion of the input
 /// array:
-/// <div lang='latex'>\texttt{dst} (I) =  \neg \texttt{src} (I)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Cneg%20%5Ctexttt%7Bsrc%7D%20%28I%29)
 /// In case of a floating-point input array, its machine-specific bit
 /// representation (usually IEEE754-compliant) is used for the operation. In
 /// case of multi-channel arrays, each channel is processed independently.
@@ -1006,13 +1039,13 @@ pub fn bitwise_not(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Re
 ///
 /// The function cv::bitwise_or calculates the per-element bit-wise logical disjunction for:
 ///   Two arrays when src1 and src2 have the same size:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1} (I)  \vee \texttt{src2} (I) \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cvee%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 ///   An array and a scalar when src2 is constructed from Scalar or has
 /// the same number of elements as `src1.channels()`:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1} (I)  \vee \texttt{src2} \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Cvee%20%5Ctexttt%7Bsrc2%7D%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 ///   A scalar and an array when src1 is constructed from Scalar or has
 /// the same number of elements as `src2.channels()`:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1}  \vee \texttt{src2} (I) \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%20%5Cvee%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 /// In case of floating-point arrays, their machine-specific bit
 /// representations (usually IEEE754-compliant) are used for the operation.
 /// In case of multi-channel arrays, each channel is processed
@@ -1038,13 +1071,13 @@ pub fn bitwise_or(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask:
 /// The function cv::bitwise_xor calculates the per-element bit-wise logical "exclusive-or"
 /// operation for:
 ///   Two arrays when src1 and src2 have the same size:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1} (I)  \oplus \texttt{src2} (I) \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Coplus%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 ///   An array and a scalar when src2 is constructed from Scalar or has
 /// the same number of elements as `src1.channels()`:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1} (I)  \oplus \texttt{src2} \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Coplus%20%5Ctexttt%7Bsrc2%7D%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 ///   A scalar and an array when src1 is constructed from Scalar or has
 /// the same number of elements as `src2.channels()`:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1}  \oplus \texttt{src2} (I) \quad \texttt{if mask} (I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%20%5Coplus%20%5Ctexttt%7Bsrc2%7D%20%28I%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%20%28I%29%20%5Cne0)
 /// In case of floating-point arrays, their machine-specific bit
 /// representations (usually IEEE754-compliant) are used for the operation.
 /// In case of multi-channel arrays, each channel is processed
@@ -1126,7 +1159,7 @@ pub fn calc_covar_matrix(samples: &core::Mat, covar: &mut core::Mat, mean: &mut 
 ///
 /// The function cv::cartToPolar calculates either the magnitude, angle, or both
 /// for every 2D vector (x(I),y(I)):
-/// <div lang='latex'>\begin{array}{l} \texttt{magnitude} (I)= \sqrt{\texttt{x}(I)^2+\texttt{y}(I)^2} , \\ \texttt{angle} (I)= \texttt{atan2} ( \texttt{y} (I), \texttt{x} (I))[ \cdot180 / \pi ] \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%3D%20%5Csqrt%7B%5Ctexttt%7Bx%7D%28I%29%5E2%2B%5Ctexttt%7By%7D%28I%29%5E2%7D%20%2C%20%5C%5C%20%5Ctexttt%7Bangle%7D%20%28I%29%3D%20%5Ctexttt%7Batan2%7D%20%28%20%5Ctexttt%7By%7D%20%28I%29%2C%20%5Ctexttt%7Bx%7D%20%28I%29%29%5B%20%5Ccdot180%20%2F%20%5Cpi%20%5D%20%5Cend%7Barray%7D)
 ///
 /// The angles are calculated with accuracy about 0.3 degrees. For the point
 /// (0,0), the angle is set to 0.
@@ -1189,13 +1222,13 @@ pub fn check_range(a: &core::Mat, quiet: bool, pos: &mut core::Point, min_val: f
 ///
 /// The function compares:
 ///   Elements of two arrays when src1 and src2 have the same size:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1} (I)  \,\texttt{cmpop}\, \texttt{src2} (I)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5C%2C%5Ctexttt%7Bcmpop%7D%5C%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29)
 ///   Elements of src1 with a scalar src2 when src2 is constructed from
 /// Scalar or has a single element:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1}(I) \,\texttt{cmpop}\,  \texttt{src2}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%28I%29%20%5C%2C%5Ctexttt%7Bcmpop%7D%5C%2C%20%20%5Ctexttt%7Bsrc2%7D)
 ///   src1 with elements of src2 when src1 is constructed from Scalar or
 /// has a single element:
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{src1}  \,\texttt{cmpop}\, \texttt{src2} (I)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bsrc1%7D%20%20%5C%2C%5Ctexttt%7Bcmpop%7D%5C%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29)
 /// When the comparison result is true, the corresponding element of output
 /// array is set to 255. The comparison operations can be replaced with the
 /// equivalent matrix expressions:
@@ -1221,9 +1254,9 @@ pub fn compare(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, cmpop: i
 ///
 /// The function cv::completeSymm copies the lower or the upper half of a square matrix to
 /// its another half. The matrix diagonal remains unchanged:
-/// - <span lang='latex'>\texttt{m}_{ij}=\texttt{m}_{ji}</span> for <span lang='latex'>i > j</span> if
+/// - ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bm%7D_%7Bij%7D%3D%5Ctexttt%7Bm%7D_%7Bji%7D) for ![inline formula](https://latex.codecogs.com/png.latex?i%20%3E%20j) if
 /// lowerToUpper=false
-/// - <span lang='latex'>\texttt{m}_{ij}=\texttt{m}_{ji}</span> for <span lang='latex'>i < j</span> if
+/// - ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bm%7D_%7Bij%7D%3D%5Ctexttt%7Bm%7D_%7Bji%7D) for ![inline formula](https://latex.codecogs.com/png.latex?i%20%3C%20j) if
 /// lowerToUpper=true
 ///
 /// ## Parameters
@@ -1258,7 +1291,7 @@ pub fn convert_fp16(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// On each element of the input array, the function convertScaleAbs
 /// performs three operations sequentially: scaling, taking an absolute
 /// value, conversion to an unsigned 8-bit type:
-/// <div lang='latex'>\texttt{dst} (I)= \texttt{saturate\_cast<uchar>} (| \texttt{src} (I)* \texttt{alpha} +  \texttt{beta} |)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%5C_cast%3Cuchar%3E%7D%20%28%7C%20%5Ctexttt%7Bsrc%7D%20%28I%29%2A%20%5Ctexttt%7Balpha%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%7C%29)
 /// In case of multi-channel arrays, the function processes each channel
 /// independently. When the output is not 8-bit, the operation can be
 /// emulated by calling the Mat::convertTo method (or by using matrix
@@ -1357,7 +1390,7 @@ pub fn copy_to(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result
 /// Counts non-zero array elements.
 ///
 /// The function returns the number of non-zero elements in src :
-/// <div lang='latex'>\sum _{I: \; \texttt{src} (I) \ne0 } 1</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20_%7BI%3A%20%5C%3B%20%5Ctexttt%7Bsrc%7D%20%28I%29%20%5Cne0%20%7D%201)
 /// ## Parameters
 /// * src: single-channel array.
 /// ## See also
@@ -1368,7 +1401,7 @@ pub fn count_non_zero(src: &core::Mat) -> Result<i32> {
 
 /// Computes the cube root of an argument.
 ///
-/// The function cubeRoot computes <span lang='latex'>\sqrt[3]{\texttt{val}}</span>. Negative arguments are handled correctly.
+/// The function cubeRoot computes ![inline formula](https://latex.codecogs.com/png.latex?%5Csqrt%5B3%5D%7B%5Ctexttt%7Bval%7D%7D). Negative arguments are handled correctly.
 /// NaN and Inf are not handled. The accuracy approaches the maximum possible accuracy for
 /// single-precision data.
 /// ## Parameters
@@ -1390,18 +1423,18 @@ pub fn cv_abs_1(x: u16) -> Result<i32> {
 /// The function cv::dct performs a forward or inverse discrete Cosine transform (DCT) of a 1D or 2D
 /// floating-point array:
 /// *   Forward Cosine transform of a 1D vector of N elements:
-/// <div lang='latex'>Y = C^{(N)}  \cdot X</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20C%5E%7B%28N%29%7D%20%20%5Ccdot%20X)
 /// where
-/// <div lang='latex'>C^{(N)}_{jk}= \sqrt{\alpha_j/N} \cos \left ( \frac{\pi(2k+1)j}{2N} \right )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?C%5E%7B%28N%29%7D_%7Bjk%7D%3D%20%5Csqrt%7B%5Calpha_j%2FN%7D%20%5Ccos%20%5Cleft%20%28%20%5Cfrac%7B%5Cpi%282k%2B1%29j%7D%7B2N%7D%20%5Cright%20%29)
 /// and
-/// <span lang='latex'>\alpha_0=1</span>, <span lang='latex'>\alpha_j=2</span> for *j \> 0*.
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha_0%3D1), ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha_j%3D2) for *j \> 0*.
 /// *   Inverse Cosine transform of a 1D vector of N elements:
-/// <div lang='latex'>X =  \left (C^{(N)} \right )^{-1}  \cdot Y =  \left (C^{(N)} \right )^T  \cdot Y</div>
-/// (since <span lang='latex'>C^{(N)}</span> is an orthogonal matrix, <span lang='latex'>C^{(N)} \cdot \left(C^{(N)}\right)^T = I</span> )
+/// ![block formula](https://latex.codecogs.com/png.latex?X%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5E%7B-1%7D%20%20%5Ccdot%20Y%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET%20%20%5Ccdot%20Y)
+/// (since ![inline formula](https://latex.codecogs.com/png.latex?C%5E%7B%28N%29%7D) is an orthogonal matrix, ![inline formula](https://latex.codecogs.com/png.latex?C%5E%7B%28N%29%7D%20%5Ccdot%20%5Cleft%28C%5E%7B%28N%29%7D%5Cright%29%5ET%20%3D%20I) )
 /// *   Forward 2D Cosine transform of M x N matrix:
-/// <div lang='latex'>Y = C^{(N)}  \cdot X  \cdot \left (C^{(N)} \right )^T</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20C%5E%7B%28N%29%7D%20%20%5Ccdot%20X%20%20%5Ccdot%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET)
 /// *   Inverse 2D Cosine transform of M x N matrix:
-/// <div lang='latex'>X =  \left (C^{(N)} \right )^T  \cdot X  \cdot C^{(N)}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?X%20%3D%20%20%5Cleft%20%28C%5E%7B%28N%29%7D%20%5Cright%20%29%5ET%20%20%5Ccdot%20X%20%20%5Ccdot%20C%5E%7B%28N%29%7D)
 ///
 /// The function chooses the mode of operation by looking at the flags and size of the input array:
 /// *   If (flags & #DCT_INVERSE) == 0 , the function does a forward 1D or 2D transform. Otherwise, it
@@ -1517,21 +1550,21 @@ pub fn determinant(mtx: &core::Mat) -> Result<f64> {
 ///
 /// The function cv::dft performs one of the following:
 /// *   Forward the Fourier transform of a 1D vector of N elements:
-/// <div lang='latex'>Y = F^{(N)}  \cdot X,</div>
-/// where <span lang='latex'>F^{(N)}_{jk}=\exp(-2\pi i j k/N)</span> and <span lang='latex'>i=\sqrt{-1}</span>
+/// ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20F%5E%7B%28N%29%7D%20%20%5Ccdot%20X%2C)
+/// where ![inline formula](https://latex.codecogs.com/png.latex?F%5E%7B%28N%29%7D_%7Bjk%7D%3D%5Cexp%28-2%5Cpi%20i%20j%20k%2FN%29) and ![inline formula](https://latex.codecogs.com/png.latex?i%3D%5Csqrt%7B-1%7D)
 /// *   Inverse the Fourier transform of a 1D vector of N elements:
-/// <div lang='latex'>\begin{array}{l} X'=  \left (F^{(N)} \right )^{-1}  \cdot Y =  \left (F^{(N)} \right )^*  \cdot y  \\ X = (1/N)  \cdot X, \end{array}</div>
-/// where <span lang='latex'>F^*=\left(\textrm{Re}(F^{(N)})-\textrm{Im}(F^{(N)})\right)^T</span>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20X%27%3D%20%20%5Cleft%20%28F%5E%7B%28N%29%7D%20%5Cright%20%29%5E%7B-1%7D%20%20%5Ccdot%20Y%20%3D%20%20%5Cleft%20%28F%5E%7B%28N%29%7D%20%5Cright%20%29%5E%2A%20%20%5Ccdot%20y%20%20%5C%5C%20X%20%3D%20%281%2FN%29%20%20%5Ccdot%20X%2C%20%5Cend%7Barray%7D)
+/// where ![inline formula](https://latex.codecogs.com/png.latex?F%5E%2A%3D%5Cleft%28%5Ctextrm%7BRe%7D%28F%5E%7B%28N%29%7D%29-%5Ctextrm%7BIm%7D%28F%5E%7B%28N%29%7D%29%5Cright%29%5ET)
 /// *   Forward the 2D Fourier transform of a M x N matrix:
-/// <div lang='latex'>Y = F^{(M)}  \cdot X  \cdot F^{(N)}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?Y%20%3D%20F%5E%7B%28M%29%7D%20%20%5Ccdot%20X%20%20%5Ccdot%20F%5E%7B%28N%29%7D)
 /// *   Inverse the 2D Fourier transform of a M x N matrix:
-/// <div lang='latex'>\begin{array}{l} X'=  \left (F^{(M)} \right )^*  \cdot Y  \cdot \left (F^{(N)} \right )^* \\ X =  \frac{1}{M \cdot N} \cdot X' \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20X%27%3D%20%20%5Cleft%20%28F%5E%7B%28M%29%7D%20%5Cright%20%29%5E%2A%20%20%5Ccdot%20Y%20%20%5Ccdot%20%5Cleft%20%28F%5E%7B%28N%29%7D%20%5Cright%20%29%5E%2A%20%5C%5C%20X%20%3D%20%20%5Cfrac%7B1%7D%7BM%20%5Ccdot%20N%7D%20%5Ccdot%20X%27%20%5Cend%7Barray%7D)
 ///
 /// In case of real (single-channel) data, the output spectrum of the forward Fourier transform or input
 /// spectrum of the inverse Fourier transform can be represented in a packed format called *CCS*
 /// (complex-conjugate-symmetrical). It was borrowed from IPL (Intel\* Image Processing Library). Here
 /// is how 2D *CCS* spectrum looks:
-/// <div lang='latex'>\begin{bmatrix} Re Y_{0,0} & Re Y_{0,1} & Im Y_{0,1} & Re Y_{0,2} & Im Y_{0,2} &  \cdots & Re Y_{0,N/2-1} & Im Y_{0,N/2-1} & Re Y_{0,N/2}  \\ Re Y_{1,0} & Re Y_{1,1} & Im Y_{1,1} & Re Y_{1,2} & Im Y_{1,2} &  \cdots & Re Y_{1,N/2-1} & Im Y_{1,N/2-1} & Re Y_{1,N/2}  \\ Im Y_{1,0} & Re Y_{2,1} & Im Y_{2,1} & Re Y_{2,2} & Im Y_{2,2} &  \cdots & Re Y_{2,N/2-1} & Im Y_{2,N/2-1} & Im Y_{1,N/2}  \\ \hdotsfor{9} \\ Re Y_{M/2-1,0} &  Re Y_{M-3,1}  & Im Y_{M-3,1} &  \hdotsfor{3} & Re Y_{M-3,N/2-1} & Im Y_{M-3,N/2-1}& Re Y_{M/2-1,N/2}  \\ Im Y_{M/2-1,0} &  Re Y_{M-2,1}  & Im Y_{M-2,1} &  \hdotsfor{3} & Re Y_{M-2,N/2-1} & Im Y_{M-2,N/2-1}& Im Y_{M/2-1,N/2}  \\ Re Y_{M/2,0}  &  Re Y_{M-1,1} &  Im Y_{M-1,1} &  \hdotsfor{3} & Re Y_{M-1,N/2-1} & Im Y_{M-1,N/2-1}& Re Y_{M/2,N/2} \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Bbmatrix%7D%20Re%20Y_%7B0%2C0%7D%20%26%20Re%20Y_%7B0%2C1%7D%20%26%20Im%20Y_%7B0%2C1%7D%20%26%20Re%20Y_%7B0%2C2%7D%20%26%20Im%20Y_%7B0%2C2%7D%20%26%20%20%5Ccdots%20%26%20Re%20Y_%7B0%2CN%2F2-1%7D%20%26%20Im%20Y_%7B0%2CN%2F2-1%7D%20%26%20Re%20Y_%7B0%2CN%2F2%7D%20%20%5C%5C%20Re%20Y_%7B1%2C0%7D%20%26%20Re%20Y_%7B1%2C1%7D%20%26%20Im%20Y_%7B1%2C1%7D%20%26%20Re%20Y_%7B1%2C2%7D%20%26%20Im%20Y_%7B1%2C2%7D%20%26%20%20%5Ccdots%20%26%20Re%20Y_%7B1%2CN%2F2-1%7D%20%26%20Im%20Y_%7B1%2CN%2F2-1%7D%20%26%20Re%20Y_%7B1%2CN%2F2%7D%20%20%5C%5C%20Im%20Y_%7B1%2C0%7D%20%26%20Re%20Y_%7B2%2C1%7D%20%26%20Im%20Y_%7B2%2C1%7D%20%26%20Re%20Y_%7B2%2C2%7D%20%26%20Im%20Y_%7B2%2C2%7D%20%26%20%20%5Ccdots%20%26%20Re%20Y_%7B2%2CN%2F2-1%7D%20%26%20Im%20Y_%7B2%2CN%2F2-1%7D%20%26%20Im%20Y_%7B1%2CN%2F2%7D%20%20%5C%5C%20%5Cdots%20%5C%5C%20Re%20Y_%7BM%2F2-1%2C0%7D%20%26%20%20Re%20Y_%7BM-3%2C1%7D%20%20%26%20Im%20Y_%7BM-3%2C1%7D%20%26%20%20%5Cdots%20%26%20Re%20Y_%7BM-3%2CN%2F2-1%7D%20%26%20Im%20Y_%7BM-3%2CN%2F2-1%7D%26%20Re%20Y_%7BM%2F2-1%2CN%2F2%7D%20%20%5C%5C%20Im%20Y_%7BM%2F2-1%2C0%7D%20%26%20%20Re%20Y_%7BM-2%2C1%7D%20%20%26%20Im%20Y_%7BM-2%2C1%7D%20%26%20%20%5Cdots%20%26%20Re%20Y_%7BM-2%2CN%2F2-1%7D%20%26%20Im%20Y_%7BM-2%2CN%2F2-1%7D%26%20Im%20Y_%7BM%2F2-1%2CN%2F2%7D%20%20%5C%5C%20Re%20Y_%7BM%2F2%2C0%7D%20%20%26%20%20Re%20Y_%7BM-1%2C1%7D%20%26%20%20Im%20Y_%7BM-1%2C1%7D%20%26%20%20%5Cdots%20%26%20Re%20Y_%7BM-1%2CN%2F2-1%7D%20%26%20Im%20Y_%7BM-1%2CN%2F2-1%7D%26%20Re%20Y_%7BM%2F2%2CN%2F2%7D%20%5Cend%7Bbmatrix%7D)
 ///
 /// In case of 1D transform of a real vector, the output looks like the first row of the matrix above.
 ///
@@ -1699,9 +1732,9 @@ pub fn duv_up_u(a: size_t, b: u32) -> Result<size_t> {
 /// Performs per-element division of two arrays or a scalar by an array.
 ///
 /// The function cv::divide divides one array by another:
-/// <div lang='latex'>\texttt{dst(I) = saturate(src1(I)*scale/src2(I))}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28src1%28I%29%2Ascale%2Fsrc2%28I%29%29%7D)
 /// or a scalar by an array when there is no src1 :
-/// <div lang='latex'>\texttt{dst(I) = saturate(scale/src2(I))}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28scale%2Fsrc2%28I%29%29%7D)
 ///
 /// Different channels of multi-channel arrays are processed independently.
 ///
@@ -1735,9 +1768,9 @@ pub fn divide_mat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, scale
 /// Performs per-element division of two arrays or a scalar by an array.
 ///
 /// The function cv::divide divides one array by another:
-/// <div lang='latex'>\texttt{dst(I) = saturate(src1(I)*scale/src2(I))}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28src1%28I%29%2Ascale%2Fsrc2%28I%29%29%7D)
 /// or a scalar by an array when there is no src1 :
-/// <div lang='latex'>\texttt{dst(I) = saturate(scale/src2(I))}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%28I%29%20%3D%20saturate%28scale%2Fsrc2%28I%29%29%7D)
 ///
 /// Different channels of multi-channel arrays are processed independently.
 ///
@@ -1830,7 +1863,7 @@ pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Re
 ///
 /// The function cv::exp calculates the exponent of every element of the input
 /// array:
-/// <div lang='latex'>\texttt{dst} [I] = e^{ src(I) }</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%5BI%5D%20%3D%20e%5E%7B%20src%28I%29%20%7D)
 ///
 /// The maximum relative error is about 7e-6 for single-precision input and
 /// less than 1e-10 for double-precision input. Currently, the function
@@ -1903,14 +1936,7 @@ pub fn find_non_zero(src: &core::Mat, idx: &mut core::Mat) -> Result<()> {
 ///
 /// The function cv::flip flips the array in one of three different ways (row
 /// and column indices are 0-based):
-/// <div lang='latex'>\texttt{dst} _{ij} =
-/// \left\{
-/// \begin{array}{l l}
-/// \texttt{src} _{\texttt{src.rows}-i-1,j} & if\;  \texttt{flipCode} = 0 \\
-/// \texttt{src} _{i, \texttt{src.cols} -j-1} & if\;  \texttt{flipCode} > 0 \\
-/// \texttt{src} _{ \texttt{src.rows} -i-1, \texttt{src.cols} -j-1} & if\; \texttt{flipCode} < 0 \\
-/// \end{array}
-/// \right.</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20_%7Bij%7D%20%3D%0A%5Cleft%5C%7B%0A%5Cbegin%7Barray%7D%7Bl%20l%7D%0A%5Ctexttt%7Bsrc%7D%20_%7B%5Ctexttt%7Bsrc.rows%7D-i-1%2Cj%7D%20%26%20if%5C%3B%20%20%5Ctexttt%7BflipCode%7D%20%3D%200%20%5C%5C%0A%5Ctexttt%7Bsrc%7D%20_%7Bi%2C%20%5Ctexttt%7Bsrc.cols%7D%20-j-1%7D%20%26%20if%5C%3B%20%20%5Ctexttt%7BflipCode%7D%20%3E%200%20%5C%5C%0A%5Ctexttt%7Bsrc%7D%20_%7B%20%5Ctexttt%7Bsrc.rows%7D%20-i-1%2C%20%5Ctexttt%7Bsrc.cols%7D%20-j-1%7D%20%26%20if%5C%3B%20%5Ctexttt%7BflipCode%7D%20%3C%200%20%5C%5C%0A%5Cend%7Barray%7D%0A%5Cright.)
 /// The example scenarios of using the function are the following:
 ///   Vertical flipping of the image (flipCode == 0) to switch between
 /// top-left and bottom-left image origin. This is a typical operation
@@ -1942,7 +1968,7 @@ pub fn flip(src: &core::Mat, dst: &mut core::Mat, flip_code: i32) -> Result<()> 
 /// gemm functions in BLAS level 3. For example,
 /// `gemm(src1, src2, alpha, src3, beta, dst, GEMM_1_T + GEMM_3_T)`
 /// corresponds to
-/// <div lang='latex'>\texttt{dst} =  \texttt{alpha} \cdot \texttt{src1} ^T  \cdot \texttt{src2} +  \texttt{beta} \cdot \texttt{src3} ^T</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Ctexttt%7Balpha%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%5ET%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%2B%20%20%5Ctexttt%7Bbeta%7D%20%5Ccdot%20%5Ctexttt%7Bsrc3%7D%20%5ET)
 ///
 /// In case of complex (two-channel) data, performed a complex matrix
 /// multiplication.
@@ -2294,9 +2320,9 @@ pub fn idft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32)
 ///
 /// The function checks the range as follows:
 /// *   For every element of a single-channel input array:
-/// <div lang='latex'>\texttt{dst} (I)= \texttt{lowerb} (I)_0  \leq \texttt{src} (I)_0 \leq  \texttt{upperb} (I)_0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%20%28I%29_0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29_0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%20%28I%29_0)
 /// *   For two-channel arrays:
-/// <div lang='latex'>\texttt{dst} (I)= \texttt{lowerb} (I)_0  \leq \texttt{src} (I)_0 \leq  \texttt{upperb} (I)_0  \land \texttt{lowerb} (I)_1  \leq \texttt{src} (I)_1 \leq  \texttt{upperb} (I)_1</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Blowerb%7D%20%28I%29_0%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29_0%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%20%28I%29_0%20%20%5Cland%20%5Ctexttt%7Blowerb%7D%20%28I%29_1%20%20%5Cleq%20%5Ctexttt%7Bsrc%7D%20%28I%29_1%20%5Cleq%20%20%5Ctexttt%7Bupperb%7D%20%28I%29_1)
 /// *   and so forth.
 ///
 /// That is, dst (I) is set to 255 (all 1 -bits) if src (I) is within the
@@ -2424,8 +2450,8 @@ pub fn use_ipp__not_exact() -> Result<bool> {
 /// Finds centers of clusters and groups input samples around the clusters.
 ///
 /// The function kmeans implements a k-means algorithm that finds the centers of cluster_count clusters
-/// and groups the input samples around the clusters. As an output, <span lang='latex'>\texttt{bestLabels}_i</span> contains a
-/// 0-based cluster index for the sample stored in the <span lang='latex'>i^{th}</span> row of the samples matrix.
+/// and groups the input samples around the clusters. As an output, ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BbestLabels%7D_i) contains a
+/// 0-based cluster index for the sample stored in the ![inline formula](https://latex.codecogs.com/png.latex?i%5E%7Bth%7D) row of the samples matrix.
 ///
 ///
 /// Note:
@@ -2450,7 +2476,7 @@ pub fn use_ipp__not_exact() -> Result<bool> {
 /// * centers: Output matrix of the cluster centers, one row per each cluster center.
 /// ## Returns
 /// The function returns the compactness measure that is computed as
-/// <div lang='latex'>\sum _i  \| \texttt{samples} _i -  \texttt{centers} _{ \texttt{labels} _i} \| ^2</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Csum%20_i%20%20%5C%7C%20%5Ctexttt%7Bsamples%7D%20_i%20-%20%20%5Ctexttt%7Bcenters%7D%20_%7B%20%5Ctexttt%7Blabels%7D%20_i%7D%20%5C%7C%20%5E2)
 /// after every attempt. The best (minimum) value is chosen and the corresponding labels and the
 /// compactness value are returned by the function. Basically, you can use only the core of the
 /// function, set the number of attempts to 1, initialize labels each time using a custom algorithm,
@@ -2466,7 +2492,7 @@ pub fn kmeans(data: &core::Mat, k: i32, best_labels: &mut core::Mat, criteria: &
 /// Calculates the natural logarithm of every array element.
 ///
 /// The function cv::log calculates the natural logarithm of every element of the input array:
-/// <div lang='latex'>\texttt{dst} (I) =  \log (\texttt{src}(I)) </div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Clog%20%28%5Ctexttt%7Bsrc%7D%28I%29%29%20)
 ///
 /// Output on zero, negative and special (NaN, Inf) values is undefined.
 ///
@@ -2483,7 +2509,7 @@ pub fn log(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 ///
 /// The function cv::magnitude calculates the magnitude of 2D vectors formed
 /// from the corresponding elements of x and y arrays:
-/// <div lang='latex'>\texttt{dst} (I) =  \sqrt{\texttt{x}(I)^2 + \texttt{y}(I)^2}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Csqrt%7B%5Ctexttt%7Bx%7D%28I%29%5E2%20%2B%20%5Ctexttt%7By%7D%28I%29%5E2%7D)
 /// ## Parameters
 /// * x: floating-point array of x-coordinates of the vectors.
 /// * y: floating-point array of y-coordinates of the vectors; it must
@@ -2498,9 +2524,9 @@ pub fn magnitude(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> Res
 /// Calculates per-element maximum of two arrays or an array and a scalar.
 ///
 /// The function cv::max calculates the per-element maximum of two arrays:
-/// <div lang='latex'>\texttt{dst} (I)= \max ( \texttt{src1} (I), \texttt{src2} (I))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmax%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
 /// or array and a scalar:
-/// <div lang='latex'>\texttt{dst} (I)= \max ( \texttt{src1} (I), \texttt{value} )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmax%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bvalue%7D%20%29)
 /// ## Parameters
 /// * src1: first input array.
 /// * src2: second input array of the same size and type as src1 .
@@ -2514,9 +2540,9 @@ pub fn max(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()
 /// Calculates per-element maximum of two arrays or an array and a scalar.
 ///
 /// The function cv::max calculates the per-element maximum of two arrays:
-/// <div lang='latex'>\texttt{dst} (I)= \max ( \texttt{src1} (I), \texttt{src2} (I))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmax%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
 /// or array and a scalar:
-/// <div lang='latex'>\texttt{dst} (I)= \max ( \texttt{src1} (I), \texttt{value} )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmax%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bvalue%7D%20%29)
 /// ## Parameters
 /// * src1: first input array.
 /// * src2: second input array of the same size and type as src1 .
@@ -2536,7 +2562,7 @@ pub fn max_umat(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> R
 /// The function cv::meanStdDev calculates the mean and the standard deviation M
 /// of array elements independently for each channel and returns it via the
 /// output parameters:
-/// <div lang='latex'>\begin{array}{l} N =  \sum _{I, \texttt{mask} (I)  \ne 0} 1 \\ \texttt{mean} _c =  \frac{\sum_{ I: \; \texttt{mask}(I) \ne 0} \texttt{src} (I)_c}{N} \\ \texttt{stddev} _c =  \sqrt{\frac{\sum_{ I: \; \texttt{mask}(I) \ne 0} \left ( \texttt{src} (I)_c -  \texttt{mean} _c \right )^2}{N}} \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20N%20%3D%20%20%5Csum%20_%7BI%2C%20%5Ctexttt%7Bmask%7D%20%28I%29%20%20%5Cne%200%7D%201%20%5C%5C%20%5Ctexttt%7Bmean%7D%20_c%20%3D%20%20%5Cfrac%7B%5Csum_%7B%20I%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%28I%29%20%5Cne%200%7D%20%5Ctexttt%7Bsrc%7D%20%28I%29_c%7D%7BN%7D%20%5C%5C%20%5Ctexttt%7Bstddev%7D%20_c%20%3D%20%20%5Csqrt%7B%5Cfrac%7B%5Csum_%7B%20I%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%28I%29%20%5Cne%200%7D%20%5Cleft%20%28%20%5Ctexttt%7Bsrc%7D%20%28I%29_c%20-%20%20%5Ctexttt%7Bmean%7D%20_c%20%5Cright%20%29%5E2%7D%7BN%7D%7D%20%5Cend%7Barray%7D)
 /// When all the mask elements are 0's, the function returns
 /// mean=stddev=Scalar::all(0).
 ///
@@ -2564,7 +2590,7 @@ pub fn mean_std_dev(src: &core::Mat, mean: &mut core::Mat, stddev: &mut core::Ma
 ///
 /// The function cv::mean calculates the mean value M of array elements,
 /// independently for each channel, and return it:
-/// <div lang='latex'>\begin{array}{l} N =  \sum _{I: \; \texttt{mask} (I) \ne 0} 1 \\ M_c =  \left ( \sum _{I: \; \texttt{mask} (I) \ne 0}{ \texttt{mtx} (I)_c} \right )/N \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20N%20%3D%20%20%5Csum%20_%7BI%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%20%28I%29%20%5Cne%200%7D%201%20%5C%5C%20M_c%20%3D%20%20%5Cleft%20%28%20%5Csum%20_%7BI%3A%20%5C%3B%20%5Ctexttt%7Bmask%7D%20%28I%29%20%5Cne%200%7D%7B%20%5Ctexttt%7Bmtx%7D%20%28I%29_c%7D%20%5Cright%20%29%2FN%20%5Cend%7Barray%7D)
 /// When all the mask elements are 0's, the function returns Scalar::all(0)
 /// ## Parameters
 /// * src: input array that should have from 1 to 4 channels so that the result can be stored in
@@ -2676,9 +2702,9 @@ pub fn min_max_loc(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_lo
 /// Calculates per-element minimum of two arrays or an array and a scalar.
 ///
 /// The function cv::min calculates the per-element minimum of two arrays:
-/// <div lang='latex'>\texttt{dst} (I)= \min ( \texttt{src1} (I), \texttt{src2} (I))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmin%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
 /// or array and a scalar:
-/// <div lang='latex'>\texttt{dst} (I)= \min ( \texttt{src1} (I), \texttt{value} )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmin%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bvalue%7D%20%29)
 /// ## Parameters
 /// * src1: first input array.
 /// * src2: second input array of the same size and type as src1.
@@ -2692,9 +2718,9 @@ pub fn min(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()
 /// Calculates per-element minimum of two arrays or an array and a scalar.
 ///
 /// The function cv::min calculates the per-element minimum of two arrays:
-/// <div lang='latex'>\texttt{dst} (I)= \min ( \texttt{src1} (I), \texttt{src2} (I))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmin%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
 /// or array and a scalar:
-/// <div lang='latex'>\texttt{dst} (I)= \min ( \texttt{src1} (I), \texttt{value} )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmin%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bvalue%7D%20%29)
 /// ## Parameters
 /// * src1: first input array.
 /// * src2: second input array of the same size and type as src1.
@@ -2799,9 +2825,9 @@ pub fn mul_spectrums(a: &core::Mat, b: &core::Mat, c: &mut core::Mat, flags: i32
 ///
 /// The function cv::mulTransposed calculates the product of src and its
 /// transposition:
-/// <div lang='latex'>\texttt{dst} = \texttt{scale} ( \texttt{src} - \texttt{delta} )^T ( \texttt{src} - \texttt{delta} )</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20-%20%5Ctexttt%7Bdelta%7D%20%29%5ET%20%28%20%5Ctexttt%7Bsrc%7D%20-%20%5Ctexttt%7Bdelta%7D%20%29)
 /// if aTa=true , and
-/// <div lang='latex'>\texttt{dst} = \texttt{scale} ( \texttt{src} - \texttt{delta} ) ( \texttt{src} - \texttt{delta} )^T</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%5Ctexttt%7Bscale%7D%20%28%20%5Ctexttt%7Bsrc%7D%20-%20%5Ctexttt%7Bdelta%7D%20%29%20%28%20%5Ctexttt%7Bsrc%7D%20-%20%5Ctexttt%7Bdelta%7D%20%29%5ET)
 /// otherwise. The function is used to calculate the covariance matrix. With
 /// zero delta, it can be used as a faster substitute for general matrix
 /// product A\*B when B=A'
@@ -2837,7 +2863,7 @@ pub fn mul_transposed(src: &core::Mat, dst: &mut core::Mat, a_ta: bool, delta: &
 ///
 /// The function multiply calculates the per-element product of two arrays:
 ///
-/// <div lang='latex'>\texttt{dst} (I)= \texttt{saturate} ( \texttt{scale} \cdot \texttt{src1} (I)  \cdot \texttt{src2} (I))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%20%5Ccdot%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
 ///
 /// There is also a @ref MatrixExpressions -friendly variant of the first function. See Mat::mul .
 ///
@@ -2899,22 +2925,22 @@ pub fn norm_with_type(src1: &core::Mat, src2: &core::Mat, norm_type: i32, mask: 
 ///
 /// This version of #norm calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
 ///
-/// As example for one array consider the function <span lang='latex'>r(x)= \begin{pmatrix} x \\ 1-x \end{pmatrix}, x \in [-1;1]</span>.
-/// The <span lang='latex'> L_{1}, L_{2} </span> and <span lang='latex'> L_{\infty} </span> norm for the sample value <span lang='latex'>r(-1) = \begin{pmatrix} -1 \\ 2 \end{pmatrix}</span>
+/// As example for one array consider the function ![inline formula](https://latex.codecogs.com/png.latex?r%28x%29%3D%20%5Cbegin%7Bpmatrix%7D%20x%20%5C%5C%201-x%20%5Cend%7Bpmatrix%7D%2C%20x%20%5Cin%20%5B-1%3B1%5D).
+/// The ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%2C%20L_%7B2%7D%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm for the sample value ![inline formula](https://latex.codecogs.com/png.latex?r%28-1%29%20%3D%20%5Cbegin%7Bpmatrix%7D%20-1%20%5C%5C%202%20%5Cend%7Bpmatrix%7D)
 /// is calculated as follows
 /// \f{align*}
 /// \| r(-1) \|_{L_1} &= |-1| + |2| = 3 \\
 /// \| r(-1) \|_{L_2} &= \sqrt{(-1)^{2} + (2)^{2}} = \sqrt{5} \\
 /// \| r(-1) \|_{L_\infty} &= \max(|-1|,|2|) = 2
 /// \f}
-/// and for <span lang='latex'>r(0.5) = \begin{pmatrix} 0.5 \\ 0.5 \end{pmatrix}</span> the calculation is
+/// and for ![inline formula](https://latex.codecogs.com/png.latex?r%280.5%29%20%3D%20%5Cbegin%7Bpmatrix%7D%200.5%20%5C%5C%200.5%20%5Cend%7Bpmatrix%7D) the calculation is
 /// \f{align*}
 /// \| r(0.5) \|_{L_1} &= |0.5| + |0.5| = 1 \\
 /// \| r(0.5) \|_{L_2} &= \sqrt{(0.5)^{2} + (0.5)^{2}} = \sqrt{0.5} \\
 /// \| r(0.5) \|_{L_\infty} &= \max(|0.5|,|0.5|) = 0.5.
 /// \f}
-/// The following graphic shows all values for the three norm functions <span lang='latex'>\| r(x) \|_{L_1}, \| r(x) \|_{L_2}</span> and <span lang='latex'>\| r(x) \|_{L_\infty}</span>.
-/// It is notable that the <span lang='latex'> L_{1} </span> norm forms the upper and the <span lang='latex'> L_{\infty} </span> norm forms the lower border for the example function <span lang='latex'> r(x) </span>.
+/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C_%7BL_2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_%5Cinfty%7D).
+/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
 /// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.1.1/NormTypes_OneArray_1-2-INF.png)
 ///
 /// When the mask parameter is specified and it is not empty, the norm is
@@ -2942,9 +2968,9 @@ pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
 /// Normalizes the norm or value range of an array.
 ///
 /// The function cv::normalize normalizes scale and shift the input array elements so that
-/// <div lang='latex'>\| \texttt{dst} \| _{L_p}= \texttt{alpha}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7Bdst%7D%20%5C%7C%20_%7BL_p%7D%3D%20%5Ctexttt%7Balpha%7D)
 /// (where p=Inf, 1 or 2) when normType=NORM_INF, NORM_L1, or NORM_L2, respectively; or so that
-/// <div lang='latex'>\min _I  \texttt{dst} (I)= \texttt{alpha} , \, \, \max _I  \texttt{dst} (I)= \texttt{beta}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmin%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Balpha%7D%20%2C%20%5C%2C%20%5C%2C%20%5Cmax%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bbeta%7D)
 ///
 /// when normType=NORM_MINMAX (for dense arrays only). The optional mask specifies a sub-array to be
 /// normalized. This means that the norm or min-n-max are calculated over the sub-array, and then this
@@ -3010,6 +3036,135 @@ pub fn normalize(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta: f64, no
     unsafe { sys::cv_normalize_Mat_Mat_double_double_int_int_Mat(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta, norm_type, dtype, mask.as_raw_Mat()) }.into_result()
 }
 
+/// Attaches OpenCL context to OpenCV
+///
+/// Note:
+/// OpenCV will check if available OpenCL platform has platformName name, then assign context to
+/// OpenCV and call `clRetainContext` function. The deviceID device will be used as target device and
+/// new command queue will be created.
+/// ## Parameters
+/// * platformName: name of OpenCL platform to attach, this string is used to check if platform is available to OpenCV at runtime
+/// * platformID: ID of platform attached context was created for
+/// * context: OpenCL context to be attached to OpenCV
+/// * deviceID: ID of device, must be created from attached context
+pub fn attach_context(platform_name: &str, platform_id: &mut c_void, context: &mut c_void, device_id: &mut c_void) -> Result<()> {
+    string_arg!(platform_name);
+    unsafe { sys::cv_ocl_attachContext_String_void_X_void_X_void_X(platform_name.as_ptr(), platform_id, context, device_id) }.into_result()
+}
+
+pub fn build_options_add_matrix_description(build_options: &mut String, name: &str, _m: &core::Mat) -> Result<()> {
+    string_arg_output_send!(via build_options_via);
+    string_arg!(name);
+    let out = unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_String_String_Mat(&mut build_options_via, name.as_ptr(), _m.as_raw_Mat()) }.into_result();
+    string_arg_output_receive!(build_options_via => build_options);
+    return out;
+}
+
+/// Convert OpenCL buffer to UMat
+///
+/// Note:
+/// OpenCL buffer (cl_mem_buffer) should contain 2D image data, compatible with OpenCV. Memory
+/// content is not copied from `clBuffer` to UMat. Instead, buffer handle assigned to UMat and
+/// `clRetainMemObject` is called.
+/// ## Parameters
+/// * cl_mem_buffer: source clBuffer handle
+/// * step: num of bytes in single row
+/// * rows: number of rows
+/// * cols: number of cols
+/// * type: OpenCV type of image
+/// * dst: destination UMat
+pub fn convert_from_buffer(cl_mem_buffer: &mut c_void, step: size_t, rows: i32, cols: i32, _type: i32, dst: &mut core::UMat) -> Result<()> {
+    unsafe { sys::cv_ocl_convertFromBuffer_void_X_size_t_int_int_int_UMat(cl_mem_buffer, step, rows, cols, _type, dst.as_raw_UMat()) }.into_result()
+}
+
+/// Convert OpenCL image2d_t to UMat
+///
+/// Note:
+/// OpenCL `image2d_t` (cl_mem_image), should be compatible with OpenCV UMat formats. Memory content
+/// is copied from image to UMat with `clEnqueueCopyImageToBuffer` function.
+/// ## Parameters
+/// * cl_mem_image: source image2d_t handle
+/// * dst: destination UMat
+pub fn convert_from_image(cl_mem_image: &mut c_void, dst: &mut core::UMat) -> Result<()> {
+    unsafe { sys::cv_ocl_convertFromImage_void_X_UMat(cl_mem_image, dst.as_raw_UMat()) }.into_result()
+}
+
+pub fn convert_type_str(sdepth: i32, ddepth: i32, cn: i32, buf: &str) -> Result<String> {
+    string_arg!(buf);
+    unsafe { sys::cv_ocl_convertTypeStr_int_int_int_char_X(sdepth, ddepth, cn, buf.as_ptr() as _) }.into_result().map(crate::templ::receive_string)
+}
+
+pub fn finish() -> Result<()> {
+    unsafe { sys::cv_ocl_finish() }.into_result()
+}
+
+pub fn get_open_cl_error_string(error_code: i32) -> Result<String> {
+    unsafe { sys::cv_ocl_getOpenCLErrorString_int(error_code) }.into_result().map(crate::templ::receive_string)
+}
+
+pub fn get_platfoms_info(platform_info: &mut types::VectorOfPlatformInfo) -> Result<()> {
+    unsafe { sys::cv_ocl_getPlatfomsInfo_VectorOfPlatformInfo(platform_info.as_raw_VectorOfPlatformInfo()) }.into_result()
+}
+
+pub fn have_amd_blas() -> Result<bool> {
+    unsafe { sys::cv_ocl_haveAmdBlas() }.into_result()
+}
+
+pub fn have_amd_fft() -> Result<bool> {
+    unsafe { sys::cv_ocl_haveAmdFft() }.into_result()
+}
+
+pub fn have_open_cl() -> Result<bool> {
+    unsafe { sys::cv_ocl_haveOpenCL() }.into_result()
+}
+
+pub fn have_svm() -> Result<bool> {
+    unsafe { sys::cv_ocl_haveSVM() }.into_result()
+}
+
+///
+/// ## C++ default parameters
+/// * ddepth: -1
+/// * name: NULL
+pub fn kernel_to_str(_kernel: &core::Mat, ddepth: i32, name: &str) -> Result<String> {
+    string_arg!(name);
+    unsafe { sys::cv_ocl_kernelToStr_Mat_int_const_char_X(_kernel.as_raw_Mat(), ddepth, name.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
+}
+
+pub fn memop_type_to_str(t: i32) -> Result<String> {
+    unsafe { sys::cv_ocl_memopTypeToStr_int(t) }.into_result().map(crate::templ::receive_string)
+}
+
+///
+/// ## C++ default parameters
+/// * src2: noArray()
+/// * src3: noArray()
+/// * src4: noArray()
+/// * src5: noArray()
+/// * src6: noArray()
+/// * src7: noArray()
+/// * src8: noArray()
+/// * src9: noArray()
+pub fn predict_optimal_vector_width_max(src1: &core::Mat, src2: &core::Mat, src3: &core::Mat, src4: &core::Mat, src5: &core::Mat, src6: &core::Mat, src7: &core::Mat, src8: &core::Mat, src9: &core::Mat) -> Result<i32> {
+    unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), src3.as_raw_Mat(), src4.as_raw_Mat(), src5.as_raw_Mat(), src6.as_raw_Mat(), src7.as_raw_Mat(), src8.as_raw_Mat(), src9.as_raw_Mat()) }.into_result()
+}
+
+pub fn set_use_open_cl(flag: bool) -> Result<()> {
+    unsafe { sys::cv_ocl_setUseOpenCL_bool(flag) }.into_result()
+}
+
+pub fn type_to_str(t: i32) -> Result<String> {
+    unsafe { sys::cv_ocl_typeToStr_int(t) }.into_result().map(crate::templ::receive_string)
+}
+
+pub fn use_open_cl() -> Result<bool> {
+    unsafe { sys::cv_ocl_useOpenCL() }.into_result()
+}
+
+pub fn vecop_type_to_str(t: i32) -> Result<String> {
+    unsafe { sys::cv_ocl_vecopTypeToStr_int(t) }.into_result().map(crate::templ::receive_string)
+}
+
 /// Parallel data processor
 ///
 /// ## C++ default parameters
@@ -3030,11 +3185,11 @@ pub fn patch_na_ns(a: &mut core::Mat, val: f64) -> Result<()> {
 ///
 /// The function cv::perspectiveTransform transforms every element of src by
 /// treating it as a 2D or 3D vector, in the following way:
-/// <div lang='latex'>(x, y, z)  \rightarrow (x'/w, y'/w, z'/w)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%28x%2C%20y%2C%20z%29%20%20%5Crightarrow%20%28x%27%2Fw%2C%20y%27%2Fw%2C%20z%27%2Fw%29)
 /// where
-/// <div lang='latex'>(x', y', z', w') =  \texttt{mat} \cdot \begin{bmatrix} x & y & z & 1  \end{bmatrix}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%28x%27%2C%20y%27%2C%20z%27%2C%20w%27%29%20%3D%20%20%5Ctexttt%7Bmat%7D%20%5Ccdot%20%5Cbegin%7Bbmatrix%7D%20x%20%26%20y%20%26%20z%20%26%201%20%20%5Cend%7Bbmatrix%7D)
 /// and
-/// <div lang='latex'>w =  \fork{w'}{if \(w' \ne 0\)}{\infty}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?w%20%3D%20%20%5Cleft%5C%7B%20%5Cbegin%7Barray%7D%7Bl%20l%7D%20w%27%20%26%20%5Cmbox%7Bif%20%5C%28w%27%20%5Cne%200%5C%29%7D%5C%5C%20%5Cinfty%20%26%20%5Cmbox%7Botherwise%7D%5C%5C%20%5Cend%7Barray%7D%20%5Cright.)
 ///
 /// Here a 3D vector transformation is shown. In case of a 2D vector
 /// transformation, the z component is omitted.
@@ -3061,7 +3216,7 @@ pub fn perspective_transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat
 ///
 /// The function cv::phase calculates the rotation angle of each 2D vector that
 /// is formed from the corresponding elements of x and y :
-/// <div lang='latex'>\texttt{angle} (I) =  \texttt{atan2} ( \texttt{y} (I), \texttt{x} (I))</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bangle%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Batan2%7D%20%28%20%5Ctexttt%7By%7D%20%28I%29%2C%20%5Ctexttt%7Bx%7D%20%28I%29%29)
 ///
 /// The angle estimation accuracy is about 0.3 degrees. When x(I)=y(I)=0 ,
 /// the corresponding angle(I) is set to 0.
@@ -3084,7 +3239,7 @@ pub fn phase(x: &core::Mat, y: &core::Mat, angle: &mut core::Mat, angle_in_degre
 ///
 /// The function cv::polarToCart calculates the Cartesian coordinates of each 2D
 /// vector represented by the corresponding elements of magnitude and angle:
-/// <div lang='latex'>\begin{array}{l} \texttt{x} (I) =  \texttt{magnitude} (I) \cos ( \texttt{angle} (I)) \\ \texttt{y} (I) =  \texttt{magnitude} (I) \sin ( \texttt{angle} (I)) \\ \end{array}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cbegin%7Barray%7D%7Bl%7D%20%5Ctexttt%7Bx%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%5Ccos%20%28%20%5Ctexttt%7Bangle%7D%20%28I%29%29%20%5C%5C%20%5Ctexttt%7By%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bmagnitude%7D%20%28I%29%20%5Csin%20%28%20%5Ctexttt%7Bangle%7D%20%28I%29%29%20%5C%5C%20%5Cend%7Barray%7D)
 ///
 /// The relative accuracy of the estimated coordinates is about 1e-6.
 /// ## Parameters
@@ -3111,7 +3266,7 @@ pub fn polar_to_cart(magnitude: &core::Mat, angle: &core::Mat, x: &mut core::Mat
 /// Raises every array element to a power.
 ///
 /// The function cv::pow raises every element of the input array to power :
-/// <div lang='latex'>\texttt{dst} (I) =  \fork{\texttt{src}(I)^{power}}{if \(\texttt{power}\) is integer}{|\texttt{src}(I)|^{power}}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Cfork%7B%5Ctexttt%7Bsrc%7D%28I%29%5E%7Bpower%7D%7D%7Bif%20%5C%28%5Ctexttt%7Bpower%7D%5C%29%20is%20integer%7D%7B%7C%5Ctexttt%7Bsrc%7D%28I%29%7C%5E%7Bpower%7D%7D%7Botherwise%7D)
 ///
 /// So, for a non-integer power exponent, the absolute values of input array
 /// elements are used. However, it is possible to get true values for
@@ -3157,7 +3312,7 @@ pub fn randn(dst: &mut core::Mat, mean: &core::Mat, stddev: &core::Mat) -> Resul
 ///
 /// Non-template variant of the function fills the matrix dst with uniformly-distributed
 /// random numbers from the specified range:
-/// <div lang='latex'>\texttt{low} _c  \leq \texttt{dst} (I)_c <  \texttt{high} _c</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blow%7D%20_c%20%20%5Cleq%20%5Ctexttt%7Bdst%7D%20%28I%29_c%20%3C%20%20%5Ctexttt%7Bhigh%7D%20_c)
 /// ## Parameters
 /// * dst: output array of random numbers; the array must be pre-allocated.
 /// * low: inclusive lower boundary of the generated random numbers.
@@ -3203,7 +3358,7 @@ pub fn reduce(src: &core::Mat, dst: &mut core::Mat, dim: i32, rtype: i32, dtype:
 /// Fills the output array with repeated copies of the input array.
 ///
 /// The function cv::repeat duplicates the input array one or more times along each of the two axes:
-/// <div lang='latex'>\texttt{dst} _{ij}= \texttt{src} _{i\mod src.rows, \; j\mod src.cols }</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20_%7Bij%7D%3D%20%5Ctexttt%7Bsrc%7D%20_%7Bi%5Cmod%20src.rows%2C%20%5C%3B%20j%5Cmod%20src.cols%20%7D)
 /// The second variant of the function is more convenient to use with @ref MatrixExpressions.
 /// ## Parameters
 /// * src: input array to replicate.
@@ -3229,7 +3384,7 @@ pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
 /// Fills the output array with repeated copies of the input array.
 ///
 /// The function cv::repeat duplicates the input array one or more times along each of the two axes:
-/// <div lang='latex'>\texttt{dst} _{ij}= \texttt{src} _{i\mod src.rows, \; j\mod src.cols }</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20_%7Bij%7D%3D%20%5Ctexttt%7Bsrc%7D%20_%7Bi%5Cmod%20src.rows%2C%20%5C%3B%20j%5Cmod%20src.cols%20%7D)
 /// The second variant of the function is more convenient to use with @ref MatrixExpressions.
 /// ## Parameters
 /// * src: input array to replicate.
@@ -3352,7 +3507,7 @@ pub fn find_file(relative_path: &str, required: bool, silent_mode: bool) -> Resu
 /// The function scaleAdd is one of the classical primitive linear algebra operations, known as DAXPY
 /// or SAXPY in [BLAS](http://en.wikipedia.org/wiki/Basic_Linear_Algebra_Subprograms). It calculates
 /// the sum of a scaled array and another array:
-/// <div lang='latex'>\texttt{dst} (I)= \texttt{scale} \cdot \texttt{src1} (I) +  \texttt{src2} (I)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29)
 /// The function can also be emulated with a matrix expression, for example:
 /// ```ignore{.cpp}
 /// Mat A(3, 3, CV_64F);
@@ -3384,7 +3539,7 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 /// Initializes a scaled identity matrix.
 ///
 /// The function cv::setIdentity initializes a scaled identity matrix:
-/// <div lang='latex'>\texttt{mtx} (i,j)= \fork{\texttt{value}}{ if \(i=j\)}{0}{otherwise}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmtx%7D%20%28i%2Cj%29%3D%20%5Cfork%7B%5Ctexttt%7Bvalue%7D%7D%7B%20if%20%5C%28i%3Dj%5C%29%7D%7B0%7D%7Botherwise%7D)
 ///
 /// The function can also be emulated using the matrix initializers and the
 /// matrix expressions:
@@ -3464,9 +3619,9 @@ pub fn set_use_optimized(onoff: bool) -> Result<()> {
 ///
 /// The function solveCubic finds the real roots of a cubic equation:
 /// *   if coeffs is a 4-element vector:
-/// <div lang='latex'>\texttt{coeffs} [0] x^3 +  \texttt{coeffs} [1] x^2 +  \texttt{coeffs} [2] x +  \texttt{coeffs} [3] = 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bcoeffs%7D%20%5B0%5D%20x%5E3%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B1%5D%20x%5E2%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B2%5D%20x%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B3%5D%20%3D%200)
 /// *   if coeffs is a 3-element vector:
-/// <div lang='latex'>x^3 +  \texttt{coeffs} [0] x^2 +  \texttt{coeffs} [1] x +  \texttt{coeffs} [2] = 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?x%5E3%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B0%5D%20x%5E2%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B1%5D%20x%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B2%5D%20%3D%200)
 ///
 /// The roots are stored in the roots array.
 /// ## Parameters
@@ -3482,13 +3637,10 @@ pub fn solve_cubic(coeffs: &core::Mat, roots: &mut core::Mat) -> Result<i32> {
 ///
 /// What we mean here by "linear programming problem" (or LP problem, for short) can be formulated as:
 ///
-/// <div lang='latex'>\mbox{Maximize } c\cdot x\\
-/// \mbox{Subject to:}\\
-/// Ax\leq b\\
-/// x\geq 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmbox%7BMaximize%20%7D%20c%5Ccdot%20x%5C%5C%0A%5Cmbox%7BSubject%20to%3A%7D%5C%5C%0AAx%5Cleq%20b%5C%5C%0Ax%5Cgeq%200)
 ///
-/// Where <span lang='latex'>c</span> is fixed `1`-by-`n` row-vector, <span lang='latex'>A</span> is fixed `m`-by-`n` matrix, <span lang='latex'>b</span> is fixed `m`-by-`1`
-/// column vector and <span lang='latex'>x</span> is an arbitrary `n`-by-`1` column vector, which satisfies the constraints.
+/// Where ![inline formula](https://latex.codecogs.com/png.latex?c) is fixed `1`-by-`n` row-vector, ![inline formula](https://latex.codecogs.com/png.latex?A) is fixed `m`-by-`n` matrix, ![inline formula](https://latex.codecogs.com/png.latex?b) is fixed `m`-by-`1`
+/// column vector and ![inline formula](https://latex.codecogs.com/png.latex?x) is an arbitrary `n`-by-`1` column vector, which satisfies the constraints.
 ///
 /// Simplex algorithm is one of many algorithms that are designed to handle this sort of problems
 /// efficiently. Although it is not optimal in theoretical sense (there exist algorithms that can solve
@@ -3501,12 +3653,12 @@ pub fn solve_cubic(coeffs: &core::Mat, roots: &mut core::Mat) -> Result<i32> {
 /// Bland's rule <http://en.wikipedia.org/wiki/Bland%27s_rule> is used to prevent cycling.
 ///
 /// ## Parameters
-/// * Func: This row-vector corresponds to <span lang='latex'>c</span> in the LP problem formulation (see above). It should
+/// * Func: This row-vector corresponds to ![inline formula](https://latex.codecogs.com/png.latex?c) in the LP problem formulation (see above). It should
 /// contain 32- or 64-bit floating point numbers. As a convenience, column-vector may be also submitted,
-/// in the latter case it is understood to correspond to <span lang='latex'>c^T</span>.
-/// * Constr: `m`-by-`n+1` matrix, whose rightmost column corresponds to <span lang='latex'>b</span> in formulation above
-/// and the remaining to <span lang='latex'>A</span>. It should contain 32- or 64-bit floating point numbers.
-/// * z: The solution will be returned here as a column-vector - it corresponds to <span lang='latex'>c</span> in the
+/// in the latter case it is understood to correspond to ![inline formula](https://latex.codecogs.com/png.latex?c%5ET).
+/// * Constr: `m`-by-`n+1` matrix, whose rightmost column corresponds to ![inline formula](https://latex.codecogs.com/png.latex?b) in formulation above
+/// and the remaining to ![inline formula](https://latex.codecogs.com/png.latex?A). It should contain 32- or 64-bit floating point numbers.
+/// * z: The solution will be returned here as a column-vector - it corresponds to ![inline formula](https://latex.codecogs.com/png.latex?c) in the
 /// formulation above. It will contain 64-bit floating point numbers.
 /// ## Returns
 /// One of cv::SolveLPResult
@@ -3517,7 +3669,7 @@ pub fn solve_lp(func: &core::Mat, constr: &core::Mat, z: &mut core::Mat) -> Resu
 /// Finds the real or complex roots of a polynomial equation.
 ///
 /// The function cv::solvePoly finds real and complex roots of a polynomial equation:
-/// <div lang='latex'>\texttt{coeffs} [n] x^{n} +  \texttt{coeffs} [n-1] x^{n-1} + ... +  \texttt{coeffs} [1] x +  \texttt{coeffs} [0] = 0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bcoeffs%7D%20%5Bn%5D%20x%5E%7Bn%7D%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5Bn-1%5D%20x%5E%7Bn-1%7D%20%2B%20...%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B1%5D%20x%20%2B%20%20%5Ctexttt%7Bcoeffs%7D%20%5B0%5D%20%3D%200)
 /// ## Parameters
 /// * coeffs: array of polynomial coefficients.
 /// * roots: output (complex) array of roots.
@@ -3534,16 +3686,16 @@ pub fn solve_poly(coeffs: &core::Mat, roots: &mut core::Mat, max_iters: i32) -> 
 /// The function cv::solve solves a linear system or least-squares problem (the
 /// latter is possible with SVD or QR methods, or by specifying the flag
 /// #DECOMP_NORMAL ):
-/// <div lang='latex'>\texttt{dst} =  \arg \min _X \| \texttt{src1} \cdot \texttt{X} -  \texttt{src2} \|</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%3D%20%20%5Carg%20%5Cmin%20_X%20%5C%7C%20%5Ctexttt%7Bsrc1%7D%20%5Ccdot%20%5Ctexttt%7BX%7D%20-%20%20%5Ctexttt%7Bsrc2%7D%20%5C%7C)
 ///
 /// If #DECOMP_LU or #DECOMP_CHOLESKY method is used, the function returns 1
-/// if src1 (or <span lang='latex'>\texttt{src1}^T\texttt{src1}</span> ) is non-singular. Otherwise,
+/// if src1 (or ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc1%7D%5ET%5Ctexttt%7Bsrc1%7D) ) is non-singular. Otherwise,
 /// it returns 0. In the latter case, dst is not valid. Other methods find a
 /// pseudo-solution in case of a singular left-hand side part.
 ///
 ///
 /// Note: If you want to find a unity-norm solution of an under-defined
-/// singular system <span lang='latex'>\texttt{src1}\cdot\texttt{dst}=0</span> , the function solve
+/// singular system ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bsrc1%7D%5Ccdot%5Ctexttt%7Bdst%7D%3D0) , the function solve
 /// will not do the work. Use SVD::solveZ instead.
 ///
 /// ## Parameters
@@ -3605,7 +3757,7 @@ pub fn sort(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
 /// Divides a multi-channel array into several single-channel arrays.
 ///
 /// The function cv::split splits a multi-channel array into separate single-channel arrays:
-/// <div lang='latex'>\texttt{mv} [c](I) =  \texttt{src} (I)_c</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bmv%7D%20%5Bc%5D%28I%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28I%29_c)
 /// If you need to extract a single channel or do some other sophisticated channel permutation, use
 /// mixChannels .
 ///
@@ -3645,15 +3797,15 @@ pub fn sqrt(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// The function subtract calculates:
 /// - Difference between two arrays, when both input arrays have the same size and the same number of
 /// channels:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} ( \texttt{src1}(I) -  \texttt{src2}(I)) \quad \texttt{if mask}(I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20-%20%20%5Ctexttt%7Bsrc2%7D%28I%29%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
 /// - Difference between an array and a scalar, when src2 is constructed from Scalar or has the same
 /// number of elements as `src1.channels()`:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} ( \texttt{src1}(I) -  \texttt{src2} ) \quad \texttt{if mask}(I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%28I%29%20-%20%20%5Ctexttt%7Bsrc2%7D%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
 /// - Difference between a scalar and an array, when src1 is constructed from Scalar or has the same
 /// number of elements as `src2.channels()`:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} ( \texttt{src1} -  \texttt{src2}(I) ) \quad \texttt{if mask}(I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc1%7D%20-%20%20%5Ctexttt%7Bsrc2%7D%28I%29%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
 /// - The reverse difference between a scalar and an array in the case of `SubRS`:
-/// <div lang='latex'>\texttt{dst}(I) =  \texttt{saturate} ( \texttt{src2} -  \texttt{src1}(I) ) \quad \texttt{if mask}(I) \ne0</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%28I%29%20%3D%20%20%5Ctexttt%7Bsaturate%7D%20%28%20%5Ctexttt%7Bsrc2%7D%20-%20%20%5Ctexttt%7Bsrc1%7D%28I%29%20%29%20%5Cquad%20%5Ctexttt%7Bif%20mask%7D%28I%29%20%5Cne0)
 /// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
 /// channel is processed independently.
 ///
@@ -3724,7 +3876,7 @@ pub fn tempfile(suffix: &str) -> Result<String> {
 ///
 /// The function cv::trace returns the sum of the diagonal elements of the
 /// matrix mtx .
-/// <div lang='latex'>\mathrm{tr} ( \texttt{mtx} ) =  \sum _i  \texttt{mtx} (i,i)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmathrm%7Btr%7D%20%28%20%5Ctexttt%7Bmtx%7D%20%29%20%3D%20%20%5Csum%20_i%20%20%5Ctexttt%7Bmtx%7D%20%28i%2Ci%29)
 /// ## Parameters
 /// * mtx: input matrix.
 pub fn trace(mtx: &core::Mat) -> Result<core::Scalar> {
@@ -3735,9 +3887,9 @@ pub fn trace(mtx: &core::Mat) -> Result<core::Scalar> {
 ///
 /// The function cv::transform performs the matrix transformation of every
 /// element of the array src and stores the results in dst :
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{m} \cdot \texttt{src} (I)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bm%7D%20%5Ccdot%20%5Ctexttt%7Bsrc%7D%20%28I%29)
 /// (when m.cols=src.channels() ), or
-/// <div lang='latex'>\texttt{dst} (I) =  \texttt{m} \cdot [ \texttt{src} (I); 1]</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%20%3D%20%20%5Ctexttt%7Bm%7D%20%5Ccdot%20%5B%20%5Ctexttt%7Bsrc%7D%20%28I%29%3B%201%5D)
 /// (when m.cols=src.channels()+1 )
 ///
 /// Every element of the N -channel array src is interpreted as N -element
@@ -3763,7 +3915,7 @@ pub fn transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<
 /// Transposes a matrix.
 ///
 /// The function cv::transpose transposes the matrix src :
-/// <div lang='latex'>\texttt{dst} (i,j) =  \texttt{src} (j,i)</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28i%2Cj%29%20%3D%20%20%5Ctexttt%7Bsrc%7D%20%28j%2Ci%29)
 ///
 /// Note: No complex conjugation is done in case of a complex matrix. It
 /// should be done separately if needed.
@@ -4046,7 +4198,7 @@ unsafe impl Send for AsyncArray {}
 
 impl AsyncArray {
 
-    pub fn new() -> Result<core::AsyncArray> {
+    pub fn default() -> Result<core::AsyncArray> {
         unsafe { sys::cv_AsyncArray_AsyncArray() }.into_result().map(|ptr| core::AsyncArray { ptr })
     }
     
@@ -4227,7 +4379,7 @@ unsafe impl Send for CommandLineParser {}
 impl CommandLineParser {
 
     /// Copy constructor
-    pub fn new(parser: &core::CommandLineParser) -> Result<core::CommandLineParser> {
+    pub fn copy(parser: &core::CommandLineParser) -> Result<core::CommandLineParser> {
         unsafe { sys::cv_CommandLineParser_CommandLineParser_CommandLineParser(parser.as_raw_CommandLineParser()) }.into_result().map(|ptr| core::CommandLineParser { ptr })
     }
     
@@ -4442,11 +4594,11 @@ pub trait DownhillSolver: core::MinProblemSolver {
     /// Step, together with initial point (givin in DownhillSolver::minimize) are two `n`-dimensional
     /// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
     /// determines the position of a simplex (it will become simplex's centroid), while step determines the
-    /// spread (size in each dimension) of a simplex. To be more precise, if <span lang='latex'>s,x_0\in\mathbb{R}^n</span> are
+    /// spread (size in each dimension) of a simplex. To be more precise, if ![inline formula](https://latex.codecogs.com/png.latex?s%2Cx_0%5Cin%5Cmathbb%7BR%7D%5En) are
     /// the initial step and initial point respectively, the vertices of a simplex will be:
-    /// <span lang='latex'>v_0:=x_0-\frac{1}{2} s</span> and <span lang='latex'>v_i:=x_0+s_i</span> for <span lang='latex'>i=1,2,\dots,n</span> where <span lang='latex'>s_i</span> denotes
+    /// ![inline formula](https://latex.codecogs.com/png.latex?v_0%3A%3Dx_0-%5Cfrac%7B1%7D%7B2%7D%20s) and ![inline formula](https://latex.codecogs.com/png.latex?v_i%3A%3Dx_0%2Bs_i) for ![inline formula](https://latex.codecogs.com/png.latex?i%3D1%2C2%2C%5Cdots%2Cn) where ![inline formula](https://latex.codecogs.com/png.latex?s_i) denotes
     /// projections of the initial step of *n*-th coordinate (the result of projection is treated to be
-    /// vector given by <span lang='latex'>s_i:=e_i\cdot\left<e_i\cdot s\right></span>, where <span lang='latex'>e_i</span> form canonical basis)
+    /// vector given by ![inline formula](https://latex.codecogs.com/png.latex?s_i%3A%3De_i%5Ccdot%5Cleft%3Ce_i%5Ccdot%20s%5Cright%3E), where ![inline formula](https://latex.codecogs.com/png.latex?e_i) form canonical basis)
     ///
     /// ## Parameters
     /// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
@@ -4760,11 +4912,11 @@ impl LDA {
 /// can be used to store real or complex-valued vectors and matrices, grayscale or color images, voxel
 /// volumes, vector fields, point clouds, tensors, histograms (though, very high-dimensional histograms
 /// may be better stored in a SparseMat ). The data layout of the array `M` is defined by the array
-/// `M.step[]`, so that the address of element <span lang='latex'>(i_0,...,i_{M.dims-1})</span>, where <span lang='latex'>0\leq i_k<M.size[k]</span>, is
+/// `M.step[]`, so that the address of element ![inline formula](https://latex.codecogs.com/png.latex?%28i_0%2C...%2Ci_%7BM.dims-1%7D%29), where ![inline formula](https://latex.codecogs.com/png.latex?0%5Cleq%20i_k%3CM.size%5Bk%5D), is
 /// computed as:
-/// <div lang='latex'>addr(M_{i_0,...,i_{M.dims-1}}) = M.data + M.step[0]*i_0 + M.step[1]*i_1 + ... + M.step[M.dims-1]*i_{M.dims-1}</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M_%7Bi_0%2C...%2Ci_%7BM.dims-1%7D%7D%29%20%3D%20M.data%20%2B%20M.step%5B0%5D%2Ai_0%20%2B%20M.step%5B1%5D%2Ai_1%20%2B%20...%20%2B%20M.step%5BM.dims-1%5D%2Ai_%7BM.dims-1%7D)
 /// In case of a 2-dimensional array, the above formula is reduced to:
-/// <div lang='latex'>addr(M_{i,j}) = M.data + M.step[0]*i + M.step[1]*j</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?addr%28M_%7Bi%2Cj%7D%29%20%3D%20M.data%20%2B%20M.step%5B0%5D%2Ai%20%2B%20M.step%5B1%5D%2Aj)
 /// Note that `M.step[i] >= M.step[i+1]` (in fact, `M.step[i] >= M.step[i+1]*M.size[i+1]` ). This means
 /// that 2-dimensional matrices are stored row-by-row, 3-dimensional matrices are stored plane-by-plane,
 /// and so on. M.step[M.dims-1] is minimal and always equal to the element size M.elemSize() .
@@ -4891,7 +5043,7 @@ impl LDA {
 /// The next important thing to learn about the array class is element access. This manual already
 /// described how to compute an address of each array element. Normally, you are not required to use the
 /// formula directly in the code. If you know the array element type (which can be retrieved using the
-/// method Mat::type() ), you can access the element <span lang='latex'>M_{ij}</span> of a 2-dimensional array as:
+/// method Mat::type() ), you can access the element ![inline formula](https://latex.codecogs.com/png.latex?M_%7Bij%7D) of a 2-dimensional array as:
 /// ```ignore
 /// M.at<double>(i,j) += 1.f;
 /// ```
@@ -5027,7 +5179,7 @@ impl Mat {
     /// the default constructor is enough, and the proper matrix will be allocated by an OpenCV function.
     /// The constructed matrix can further be assigned to another matrix or matrix expression or can be
     /// allocated with Mat::create . In the former case, the old content is de-referenced.
-    pub fn new() -> Result<core::Mat> {
+    pub fn default() -> Result<core::Mat> {
         unsafe { sys::cv_Mat_Mat() }.into_result().map(|ptr| core::Mat { ptr })
     }
     
@@ -5385,7 +5537,7 @@ impl Mat {
     /// The method converts source pixel values to the target data type. saturate_cast\<\> is applied at
     /// the end to avoid possible overflows:
     ///
-    /// <div lang='latex'>m(x,y) = saturate \_ cast<rType>( \alpha (*this)(x,y) +  \beta )</div>
+    /// ![block formula](https://latex.codecogs.com/png.latex?m%28x%2Cy%29%20%3D%20saturate%20%5C_%20cast%3CrType%3E%28%20%5Calpha%20%28%2Athis%29%28x%2Cy%29%20%2B%20%20%5Cbeta%20%29)
     /// ## Parameters
     /// * m: output matrix; if it does not have a proper size or type before the operation, it is
     /// reallocated.
@@ -6029,7 +6181,7 @@ unsafe impl Send for MatConstIterator {}
 impl MatConstIterator {
 
     /// default constructor
-    pub fn new() -> Result<core::MatConstIterator> {
+    pub fn default() -> Result<core::MatConstIterator> {
         unsafe { sys::cv_MatConstIterator_MatConstIterator() }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
@@ -6269,7 +6421,7 @@ unsafe impl Send for Matx_AddOp {}
 
 impl Matx_AddOp {
 
-    pub fn new() -> Result<core::Matx_AddOp> {
+    pub fn default() -> Result<core::Matx_AddOp> {
         unsafe { sys::cv_Matx_AddOp_Matx_AddOp() }.into_result().map(|ptr| core::Matx_AddOp { ptr })
     }
     
@@ -6301,7 +6453,7 @@ unsafe impl Send for Matx_DivOp {}
 
 impl Matx_DivOp {
 
-    pub fn new() -> Result<core::Matx_DivOp> {
+    pub fn default() -> Result<core::Matx_DivOp> {
         unsafe { sys::cv_Matx_DivOp_Matx_DivOp() }.into_result().map(|ptr| core::Matx_DivOp { ptr })
     }
     
@@ -6333,7 +6485,7 @@ unsafe impl Send for Matx_MatMulOp {}
 
 impl Matx_MatMulOp {
 
-    pub fn new() -> Result<core::Matx_MatMulOp> {
+    pub fn default() -> Result<core::Matx_MatMulOp> {
         unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp() }.into_result().map(|ptr| core::Matx_MatMulOp { ptr })
     }
     
@@ -6365,7 +6517,7 @@ unsafe impl Send for Matx_MulOp {}
 
 impl Matx_MulOp {
 
-    pub fn new() -> Result<core::Matx_MulOp> {
+    pub fn default() -> Result<core::Matx_MulOp> {
         unsafe { sys::cv_Matx_MulOp_Matx_MulOp() }.into_result().map(|ptr| core::Matx_MulOp { ptr })
     }
     
@@ -6397,7 +6549,7 @@ unsafe impl Send for Matx_ScaleOp {}
 
 impl Matx_ScaleOp {
 
-    pub fn new() -> Result<core::Matx_ScaleOp> {
+    pub fn default() -> Result<core::Matx_ScaleOp> {
         unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp() }.into_result().map(|ptr| core::Matx_ScaleOp { ptr })
     }
     
@@ -6429,7 +6581,7 @@ unsafe impl Send for Matx_SubOp {}
 
 impl Matx_SubOp {
 
-    pub fn new() -> Result<core::Matx_SubOp> {
+    pub fn default() -> Result<core::Matx_SubOp> {
         unsafe { sys::cv_Matx_SubOp_Matx_SubOp() }.into_result().map(|ptr| core::Matx_SubOp { ptr })
     }
     
@@ -6461,7 +6613,7 @@ unsafe impl Send for Matx_TOp {}
 
 impl Matx_TOp {
 
-    pub fn new() -> Result<core::Matx_TOp> {
+    pub fn default() -> Result<core::Matx_TOp> {
         unsafe { sys::cv_Matx_TOp_Matx_TOp() }.into_result().map(|ptr| core::Matx_TOp { ptr })
     }
     
@@ -6657,7 +6809,7 @@ unsafe impl Send for NAryMatIterator {}
 impl NAryMatIterator {
 
     /// the default constructor
-    pub fn new() -> Result<core::NAryMatIterator> {
+    pub fn default() -> Result<core::NAryMatIterator> {
         unsafe { sys::cv_NAryMatIterator_NAryMatIterator() }.into_result().map(|ptr| core::NAryMatIterator { ptr })
     }
     
@@ -6889,7 +7041,7 @@ impl ParallelLoopBodyLambdaWrapper {
 /// The class is used to specify a row or a column span in a matrix ( Mat ) and for many other purposes.
 /// Range(a,b) is basically the same as a:b in Matlab or a..b in Python. As in Python, start is an
 /// inclusive left boundary of the range and end is an exclusive right boundary of the range. Such a
-/// half-opened interval is usually denoted as <span lang='latex'>[start,end)</span> .
+/// half-opened interval is usually denoted as ![inline formula](https://latex.codecogs.com/png.latex?%5Bstart%2Cend%29) .
 ///
 /// The static method Range::all() returns a special variable that means "the whole sequence" or "the
 /// whole range", just like " : " in Matlab or " ... " in Python. All the methods and functions in
@@ -7148,7 +7300,7 @@ unsafe impl Send for SparseMat {}
 impl SparseMat {
 
     /// Various SparseMat constructors.
-    pub fn new() -> Result<core::SparseMat> {
+    pub fn default() -> Result<core::SparseMat> {
         unsafe { sys::cv_SparseMat_SparseMat() }.into_result().map(|ptr| core::SparseMat { ptr })
     }
     
@@ -7156,14 +7308,14 @@ impl SparseMat {
     /// * dims: Array dimensionality.
     /// * _sizes: Sparce matrix size on all dementions.
     /// * _type: Sparse matrix data type.
-    pub fn new_1(dims: i32, _sizes: &i32, _type: i32) -> Result<core::SparseMat> {
+    pub fn new(dims: i32, _sizes: &i32, _type: i32) -> Result<core::SparseMat> {
         unsafe { sys::cv_SparseMat_SparseMat_int_const_int_X_int(dims, _sizes, _type) }.into_result().map(|ptr| core::SparseMat { ptr })
     }
     
     /// ## Parameters
     /// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
     /// to sparse representation.
-    pub fn new_2(m: &core::Mat) -> Result<core::SparseMat> {
+    pub fn new_1(m: &core::Mat) -> Result<core::SparseMat> {
         unsafe { sys::cv_SparseMat_SparseMat_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::SparseMat { ptr })
     }
     
@@ -7577,7 +7729,7 @@ unsafe impl Send for TickMeter {}
 impl TickMeter {
 
     /// the default constructor
-    pub fn new() -> Result<core::TickMeter> {
+    pub fn default() -> Result<core::TickMeter> {
         unsafe { sys::cv_TickMeter_TickMeter() }.into_result().map(|ptr| core::TickMeter { ptr })
     }
     
@@ -8162,7 +8314,7 @@ impl NodeData {
         unsafe { sys::cv_instr_NodeData_NodeData_const_char_X_const_char_X_int_void_X_bool_TYPE_IMPL(fun_name.as_ptr(), file_name.as_ptr(), line_num, ret_address, always_expand, instr_type, impl_type) }.into_result().map(|ptr| core::NodeData { ptr })
     }
     
-    pub fn new_1(_ref: &mut core::NodeData) -> Result<core::NodeData> {
+    pub fn copy(_ref: &mut core::NodeData) -> Result<core::NodeData> {
         unsafe { sys::cv_instr_NodeData_NodeData_NodeData(_ref.as_raw_NodeData()) }.into_result().map(|ptr| core::NodeData { ptr })
     }
     
@@ -8198,11 +8350,1073 @@ unsafe impl Send for NodeDataTls {}
 
 impl NodeDataTls {
 
-    pub fn new() -> Result<core::NodeDataTls> {
+    pub fn default() -> Result<core::NodeDataTls> {
         unsafe { sys::cv_instr_NodeDataTls_NodeDataTls() }.into_result().map(|ptr| core::NodeDataTls { ptr })
     }
     
 }
+
+// boxed class cv::ocl::Context
+pub struct Context {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Context {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Context_delete(self.ptr) };
+    }
+}
+impl core::Context {
+    #[inline(always)] pub fn as_raw_Context(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Context {}
+
+impl Context {
+
+    pub fn default() -> Result<core::Context> {
+        unsafe { sys::cv_ocl_Context_Context() }.into_result().map(|ptr| core::Context { ptr })
+    }
+    
+    pub fn new_with_type(dtype: i32) -> Result<core::Context> {
+        unsafe { sys::cv_ocl_Context_Context_int(dtype) }.into_result().map(|ptr| core::Context { ptr })
+    }
+    
+    pub fn copy(c: &core::Context) -> Result<core::Context> {
+        unsafe { sys::cv_ocl_Context_Context_Context(c.as_raw_Context()) }.into_result().map(|ptr| core::Context { ptr })
+    }
+    
+    pub fn create(&mut self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Context_create(self.as_raw_Context()) }.into_result()
+    }
+    
+    pub fn create_with_type(&mut self, dtype: i32) -> Result<bool> {
+        unsafe { sys::cv_ocl_Context_create_int(self.as_raw_Context(), dtype) }.into_result()
+    }
+    
+    pub fn ndevices(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Context_ndevices_const(self.as_raw_Context()) }.into_result()
+    }
+    
+    pub fn device(&self, idx: size_t) -> Result<core::Device> {
+        unsafe { sys::cv_ocl_Context_device_const_size_t(self.as_raw_Context(), idx) }.into_result().map(|ptr| core::Device { ptr })
+    }
+    
+    pub fn ptr(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn use_svm(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Context_useSVM_const(self.as_raw_Context()) }.into_result()
+    }
+    
+    pub fn set_use_svm(&mut self, enabled: bool) -> Result<()> {
+        unsafe { sys::cv_ocl_Context_setUseSVM_bool(self.as_raw_Context(), enabled) }.into_result()
+    }
+    
+}
+
+// boxed class cv::ocl::Device
+pub struct Device {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Device {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Device_delete(self.ptr) };
+    }
+}
+impl core::Device {
+    #[inline(always)] pub fn as_raw_Device(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Device {}
+
+impl Device {
+
+    pub fn default() -> Result<core::Device> {
+        unsafe { sys::cv_ocl_Device_Device() }.into_result().map(|ptr| core::Device { ptr })
+    }
+    
+    pub fn new(d: &mut c_void) -> Result<core::Device> {
+        unsafe { sys::cv_ocl_Device_Device_void_X(d) }.into_result().map(|ptr| core::Device { ptr })
+    }
+    
+    pub fn copy(d: &core::Device) -> Result<core::Device> {
+        unsafe { sys::cv_ocl_Device_Device_Device(d.as_raw_Device()) }.into_result().map(|ptr| core::Device { ptr })
+    }
+    
+    pub fn set(&mut self, d: &mut c_void) -> Result<()> {
+        unsafe { sys::cv_ocl_Device_set_void_X(self.as_raw_Device(), d) }.into_result()
+    }
+    
+    pub fn name(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Device_name_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn extensions(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Device_extensions_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn is_extension_supported(&self, extension_name: &str) -> Result<bool> {
+        string_arg!(extension_name);
+        unsafe { sys::cv_ocl_Device_isExtensionSupported_const_String(self.as_raw_Device(), extension_name.as_ptr()) }.into_result()
+    }
+    
+    pub fn version(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Device_version_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn vendor_name(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn open_cl_c__version(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn open_cl_version(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Device_OpenCLVersion_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn device_version_major(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_deviceVersionMajor_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn device_version_minor(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_deviceVersionMinor_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn driver_version(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Device_driverVersion_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn ptr(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_ocl_Device_ptr_const(self.as_raw_Device()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn _type(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_type_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn address_bits(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_addressBits_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn available(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_available_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn compiler_available(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_compilerAvailable_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn linker_available(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_linkerAvailable_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn double_fp_config(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_doubleFPConfig_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn single_fp_config(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_singleFPConfig_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn half_fp_config(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_halfFPConfig_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn endian_little(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_endianLittle_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn error_correction_support(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_errorCorrectionSupport_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn execution_capabilities(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_executionCapabilities_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn global_mem_cache_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_globalMemCacheSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn global_mem_cache_type(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_globalMemCacheType_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn global_mem_cache_line_size(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_globalMemCacheLineSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn global_mem_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_globalMemSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn local_mem_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_localMemSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn local_mem_type(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_localMemType_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn host_unified_memory(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_hostUnifiedMemory_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image_support(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_imageSupport_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image_from_buffer_support(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_imageFromBufferSupport_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image_pitch_alignment(&self) -> Result<u32> {
+        unsafe { sys::cv_ocl_Device_imagePitchAlignment_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image_base_address_alignment(&self) -> Result<u32> {
+        unsafe { sys::cv_ocl_Device_imageBaseAddressAlignment_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn intel_subgroups_support(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_intelSubgroupsSupport_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image2_d_max_width(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_image2DMaxWidth_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image2_d_max_height(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_image2DMaxHeight_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image3_d_max_width(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_image3DMaxWidth_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image3_d_max_height(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_image3DMaxHeight_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image3_d_max_depth(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_image3DMaxDepth_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image_max_buffer_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_imageMaxBufferSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn image_max_array_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_imageMaxArraySize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn vendor_id(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_vendorID_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn is_amd(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_isAMD_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn is_intel(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_isIntel_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn is_n_vidia(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Device_isNVidia_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_clock_frequency(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_maxClockFrequency_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_compute_units(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_maxComputeUnits_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_constant_args(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_maxConstantArgs_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_constant_buffer_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_maxConstantBufferSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_mem_alloc_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_maxMemAllocSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_parameter_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_maxParameterSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_read_image_args(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_maxReadImageArgs_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_write_image_args(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_maxWriteImageArgs_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_samplers(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_maxSamplers_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_work_group_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_maxWorkGroupSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_work_item_dims(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_maxWorkItemDims_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn max_work_item_sizes(&self, unnamed_arg: &mut size_t) -> Result<()> {
+        unsafe { sys::cv_ocl_Device_maxWorkItemSizes_const_size_t_X(self.as_raw_Device(), unnamed_arg) }.into_result()
+    }
+    
+    pub fn mem_base_addr_align(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_memBaseAddrAlign_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn native_vector_width_char(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_nativeVectorWidthChar_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn native_vector_width_short(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_nativeVectorWidthShort_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn native_vector_width_int(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_nativeVectorWidthInt_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn native_vector_width_long(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_nativeVectorWidthLong_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn native_vector_width_float(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_nativeVectorWidthFloat_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn native_vector_width_double(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_nativeVectorWidthDouble_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn native_vector_width_half(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_nativeVectorWidthHalf_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn preferred_vector_width_char(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_preferredVectorWidthChar_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn preferred_vector_width_short(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_preferredVectorWidthShort_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn preferred_vector_width_int(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_preferredVectorWidthInt_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn preferred_vector_width_long(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_preferredVectorWidthLong_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn preferred_vector_width_float(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_preferredVectorWidthFloat_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn preferred_vector_width_double(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_preferredVectorWidthDouble_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn preferred_vector_width_half(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_Device_preferredVectorWidthHalf_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn printf_buffer_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_printfBufferSize_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn profiling_timer_resolution(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Device_profilingTimerResolution_const(self.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn get_default() -> Result<core::Device> {
+        unsafe { sys::cv_ocl_Device_getDefault() }.into_result().map(|ptr| core::Device { ptr })
+    }
+    
+}
+
+// boxed class cv::ocl::Image2D
+pub struct Image2D {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Image2D {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Image2D_delete(self.ptr) };
+    }
+}
+impl core::Image2D {
+    #[inline(always)] pub fn as_raw_Image2D(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Image2D {}
+
+impl Image2D {
+
+    pub fn default() -> Result<core::Image2D> {
+        unsafe { sys::cv_ocl_Image2D_Image2D() }.into_result().map(|ptr| core::Image2D { ptr })
+    }
+    
+    /// ## Parameters
+    /// * src: UMat object from which to get image properties and data
+    /// * norm: flag to enable the use of normalized channel data types
+    /// * alias: flag indicating that the image should alias the src UMat. If true, changes to the
+    /// image or src will be reflected in both objects.
+    ///
+    /// ## C++ default parameters
+    /// * norm: false
+    /// * alias: false
+    pub fn new(src: &core::UMat, norm: bool, alias: bool) -> Result<core::Image2D> {
+        unsafe { sys::cv_ocl_Image2D_Image2D_UMat_bool_bool(src.as_raw_UMat(), norm, alias) }.into_result().map(|ptr| core::Image2D { ptr })
+    }
+    
+    pub fn copy(i: &core::Image2D) -> Result<core::Image2D> {
+        unsafe { sys::cv_ocl_Image2D_Image2D_Image2D(i.as_raw_Image2D()) }.into_result().map(|ptr| core::Image2D { ptr })
+    }
+    
+    /// Indicates if creating an aliased image should succeed.
+    /// Depends on the underlying platform and the dimensions of the UMat.
+    pub fn can_create_alias(u: &core::UMat) -> Result<bool> {
+        unsafe { sys::cv_ocl_Image2D_canCreateAlias_UMat(u.as_raw_UMat()) }.into_result()
+    }
+    
+    /// Indicates if the image format is supported.
+    pub fn is_format_supported(depth: i32, cn: i32, norm: bool) -> Result<bool> {
+        unsafe { sys::cv_ocl_Image2D_isFormatSupported_int_int_bool(depth, cn, norm) }.into_result()
+    }
+    
+    pub fn ptr(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+}
+
+// boxed class cv::ocl::Kernel
+pub struct Kernel {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Kernel {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Kernel_delete(self.ptr) };
+    }
+}
+impl core::Kernel {
+    #[inline(always)] pub fn as_raw_Kernel(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Kernel {}
+
+impl Kernel {
+
+    pub fn default() -> Result<core::Kernel> {
+        unsafe { sys::cv_ocl_Kernel_Kernel() }.into_result().map(|ptr| core::Kernel { ptr })
+    }
+    
+    pub fn copy(k: &core::Kernel) -> Result<core::Kernel> {
+        unsafe { sys::cv_ocl_Kernel_Kernel_Kernel(k.as_raw_Kernel()) }.into_result().map(|ptr| core::Kernel { ptr })
+    }
+    
+    pub fn empty(&self) -> Result<bool> {
+        unsafe { sys::cv_ocl_Kernel_empty_const(self.as_raw_Kernel()) }.into_result()
+    }
+    
+    pub fn set(&mut self, i: i32, value: &c_void, sz: size_t) -> Result<i32> {
+        unsafe { sys::cv_ocl_Kernel_set_int_const_void_X_size_t(self.as_raw_Kernel(), i, value, sz) }.into_result()
+    }
+    
+    pub fn set_umat(&mut self, i: i32, m: &core::UMat) -> Result<i32> {
+        unsafe { sys::cv_ocl_Kernel_set_int_UMat(self.as_raw_Kernel(), i, m.as_raw_UMat()) }.into_result()
+    }
+    
+    pub fn set_kernel_arg(&mut self, i: i32, arg: &core::KernelArg) -> Result<i32> {
+        unsafe { sys::cv_ocl_Kernel_set_int_KernelArg(self.as_raw_Kernel(), i, arg.as_raw_KernelArg()) }.into_result()
+    }
+    
+    /// Run the OpenCL kernel.
+    /// ## Parameters
+    /// * dims: the work problem dimensions. It is the length of globalsize and localsize. It can be either 1, 2 or 3.
+    /// * globalsize: work items for each dimension. It is not the final globalsize passed to
+    /// OpenCL. Each dimension will be adjusted to the nearest integer divisible by the corresponding
+    /// value in localsize. If localsize is NULL, it will still be adjusted depending on dims. The
+    /// adjusted values are greater than or equal to the original values.
+    /// * localsize: work-group size for each dimension.
+    /// * sync: specify whether to wait for OpenCL computation to finish before return.
+    /// * q: command queue
+    ///
+    /// ## C++ default parameters
+    /// * q: Queue()
+    pub fn run(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], sync: bool, q: &core::Queue) -> Result<bool> {
+        unsafe { sys::cv_ocl_Kernel_run_int_size_t_X_size_t_X_bool_Queue(self.as_raw_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), sync, q.as_raw_Queue()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * q: Queue()
+    pub fn run_task(&mut self, sync: bool, q: &core::Queue) -> Result<bool> {
+        unsafe { sys::cv_ocl_Kernel_runTask_bool_Queue(self.as_raw_Kernel(), sync, q.as_raw_Queue()) }.into_result()
+    }
+    
+    /// Similar to synchronized run() call with returning of kernel execution time
+    /// Separate OpenCL command queue may be used (with CL_QUEUE_PROFILING_ENABLE)
+    /// ## Returns
+    /// Execution time in nanoseconds or negative number on error
+    ///
+    /// ## C++ default parameters
+    /// * q: Queue()
+    pub fn run_profiling(&mut self, dims: i32, globalsize: &mut [size_t], localsize: &mut [size_t], q: &core::Queue) -> Result<i64> {
+        unsafe { sys::cv_ocl_Kernel_runProfiling_int_size_t_X_size_t_X_Queue(self.as_raw_Kernel(), dims, globalsize.as_mut_ptr(), localsize.as_mut_ptr(), q.as_raw_Queue()) }.into_result()
+    }
+    
+    pub fn work_group_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Kernel_workGroupSize_const(self.as_raw_Kernel()) }.into_result()
+    }
+    
+    pub fn prefered_work_group_size_multiple(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Kernel_preferedWorkGroupSizeMultiple_const(self.as_raw_Kernel()) }.into_result()
+    }
+    
+    pub fn compile_work_group_size(&self, wsz: &mut [size_t]) -> Result<bool> {
+        unsafe { sys::cv_ocl_Kernel_compileWorkGroupSize_const_size_t_X(self.as_raw_Kernel(), wsz.as_mut_ptr()) }.into_result()
+    }
+    
+    pub fn local_mem_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_ocl_Kernel_localMemSize_const(self.as_raw_Kernel()) }.into_result()
+    }
+    
+    pub fn ptr(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_ocl_Kernel_ptr_const(self.as_raw_Kernel()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+}
+
+// boxed class cv::ocl::KernelArg
+pub struct KernelArg {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::KernelArg {
+    fn drop(&mut self) {
+        unsafe { sys::cv_KernelArg_delete(self.ptr) };
+    }
+}
+impl core::KernelArg {
+    #[inline(always)] pub fn as_raw_KernelArg(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for KernelArg {}
+
+impl KernelArg {
+
+    ///
+    /// ## C++ default parameters
+    /// * wscale: 1
+    /// * iwscale: 1
+    /// * _obj: 0
+    /// * _sz: 0
+    pub fn new(_flags: i32, _m: &mut core::UMat, wscale: i32, iwscale: i32, _obj: &c_void, _sz: size_t) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_KernelArg_int_UMat_int_int_const_void_X_size_t(_flags, _m.as_raw_UMat(), wscale, iwscale, _obj, _sz) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    pub fn default() -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_KernelArg() }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    pub fn local(local_mem_size: size_t) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_Local_size_t(local_mem_size) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    pub fn ptr_write_only(m: &core::UMat) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_PtrWriteOnly_UMat(m.as_raw_UMat()) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    pub fn ptr_read_only(m: &core::UMat) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_PtrReadOnly_UMat(m.as_raw_UMat()) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    pub fn ptr_read_write(m: &core::UMat) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_PtrReadWrite_UMat(m.as_raw_UMat()) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * wscale: 1
+    /// * iwscale: 1
+    pub fn read_write(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_ReadWrite_UMat_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * wscale: 1
+    /// * iwscale: 1
+    pub fn read_write_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_ReadWriteNoSize_UMat_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * wscale: 1
+    /// * iwscale: 1
+    pub fn read_only(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_ReadOnly_UMat_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * wscale: 1
+    /// * iwscale: 1
+    pub fn write_only(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_WriteOnly_UMat_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * wscale: 1
+    /// * iwscale: 1
+    pub fn read_only_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_ReadOnlyNoSize_UMat_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * wscale: 1
+    /// * iwscale: 1
+    pub fn write_only_no_size(m: &core::UMat, wscale: i32, iwscale: i32) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_WriteOnlyNoSize_UMat_int_int(m.as_raw_UMat(), wscale, iwscale) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+    pub fn constant(m: &core::Mat) -> Result<core::KernelArg> {
+        unsafe { sys::cv_ocl_KernelArg_Constant_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::KernelArg { ptr })
+    }
+    
+}
+
+// boxed class cv::ocl::Platform
+pub struct Platform {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Platform {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Platform_delete(self.ptr) };
+    }
+}
+impl core::Platform {
+    #[inline(always)] pub fn as_raw_Platform(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Platform {}
+
+impl Platform {
+
+    pub fn default() -> Result<core::Platform> {
+        unsafe { sys::cv_ocl_Platform_Platform() }.into_result().map(|ptr| core::Platform { ptr })
+    }
+    
+    pub fn copy(p: &core::Platform) -> Result<core::Platform> {
+        unsafe { sys::cv_ocl_Platform_Platform_Platform(p.as_raw_Platform()) }.into_result().map(|ptr| core::Platform { ptr })
+    }
+    
+    pub fn ptr(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_ocl_Platform_ptr_const(self.as_raw_Platform()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn get_default() -> Result<core::Platform> {
+        unsafe { sys::cv_ocl_Platform_getDefault() }.into_result().map(|ptr| core::Platform { ptr })
+    }
+    
+}
+
+// boxed class cv::ocl::PlatformInfo
+pub struct PlatformInfo {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::PlatformInfo {
+    fn drop(&mut self) {
+        unsafe { sys::cv_PlatformInfo_delete(self.ptr) };
+    }
+}
+impl core::PlatformInfo {
+    #[inline(always)] pub fn as_raw_PlatformInfo(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for PlatformInfo {}
+
+impl PlatformInfo {
+
+    pub fn default() -> Result<core::PlatformInfo> {
+        unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|ptr| core::PlatformInfo { ptr })
+    }
+    
+    pub fn new(id: &mut c_void) -> Result<core::PlatformInfo> {
+        unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_void_X(id) }.into_result().map(|ptr| core::PlatformInfo { ptr })
+    }
+    
+    pub fn copy(i: &core::PlatformInfo) -> Result<core::PlatformInfo> {
+        unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo_PlatformInfo(i.as_raw_PlatformInfo()) }.into_result().map(|ptr| core::PlatformInfo { ptr })
+    }
+    
+    pub fn name(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_PlatformInfo_name_const(self.as_raw_PlatformInfo()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn vendor(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn version(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn device_number(&self) -> Result<i32> {
+        unsafe { sys::cv_ocl_PlatformInfo_deviceNumber_const(self.as_raw_PlatformInfo()) }.into_result()
+    }
+    
+    pub fn get_device(&self, device: &mut core::Device, d: i32) -> Result<()> {
+        unsafe { sys::cv_ocl_PlatformInfo_getDevice_const_Device_int(self.as_raw_PlatformInfo(), device.as_raw_Device(), d) }.into_result()
+    }
+    
+}
+
+// boxed class cv::ocl::Program
+pub struct Program {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Program {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Program_delete(self.ptr) };
+    }
+}
+impl core::Program {
+    #[inline(always)] pub fn as_raw_Program(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Program {}
+
+impl Program {
+
+    pub fn ptr(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_ocl_Program_ptr_const(self.as_raw_Program()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// Query device-specific program binary.
+    ///
+    /// Returns RAW OpenCL executable binary without additional attachments.
+    ///
+    /// ## See also
+    /// ProgramSource::fromBinary
+    ///
+    /// ## Parameters
+    /// * binary: [out] output buffer
+    pub fn get_binary(&self, binary: &mut types::VectorOfchar) -> Result<()> {
+        unsafe { sys::cv_ocl_Program_getBinary_const_VectorOfchar(self.as_raw_Program(), binary.as_raw_VectorOfchar()) }.into_result()
+    }
+    
+    pub fn read(&mut self, buf: &str, buildflags: &str) -> Result<bool> {
+        string_arg!(buf);
+        string_arg!(buildflags);
+        unsafe { sys::cv_ocl_Program_read_String_String(self.as_raw_Program(), buf.as_ptr(), buildflags.as_ptr()) }.into_result()
+    }
+    
+    pub fn write(&self, buf: &mut String) -> Result<bool> {
+        string_arg_output_send!(via buf_via);
+        let out = unsafe { sys::cv_ocl_Program_write_const_String(self.as_raw_Program(), &mut buf_via) }.into_result();
+        string_arg_output_receive!(buf_via => buf);
+        return out;
+    }
+    
+    pub fn get_prefix(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_Program_getPrefix_const(self.as_raw_Program()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    pub fn get_prefix_build_flags(buildflags: &str) -> Result<String> {
+        string_arg!(buildflags);
+        unsafe { sys::cv_ocl_Program_getPrefix_String(buildflags.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+}
+
+// boxed class cv::ocl::ProgramSource
+pub struct ProgramSource {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::ProgramSource {
+    fn drop(&mut self) {
+        unsafe { sys::cv_ProgramSource_delete(self.ptr) };
+    }
+}
+impl core::ProgramSource {
+    #[inline(always)] pub fn as_raw_ProgramSource(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for ProgramSource {}
+
+impl ProgramSource {
+
+    pub fn default() -> Result<core::ProgramSource> {
+        unsafe { sys::cv_ocl_ProgramSource_ProgramSource() }.into_result().map(|ptr| core::ProgramSource { ptr })
+    }
+    
+    pub fn new(module: &str, name: &str, code_str: &str, code_hash: &str) -> Result<core::ProgramSource> {
+        string_arg!(module);
+        string_arg!(name);
+        string_arg!(code_str);
+        string_arg!(code_hash);
+        unsafe { sys::cv_ocl_ProgramSource_ProgramSource_String_String_String_String(module.as_ptr(), name.as_ptr(), code_str.as_ptr(), code_hash.as_ptr()) }.into_result().map(|ptr| core::ProgramSource { ptr })
+    }
+    
+    pub fn from_str(prog: &str) -> Result<core::ProgramSource> {
+        string_arg!(prog);
+        unsafe { sys::cv_ocl_ProgramSource_ProgramSource_String(prog.as_ptr()) }.into_result().map(|ptr| core::ProgramSource { ptr })
+    }
+    
+    pub fn source(&self) -> Result<String> {
+        unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource()) }.into_result().map(crate::templ::receive_string)
+    }
+    
+    pub fn hash(&self) -> Result<u64> {
+        unsafe { sys::cv_ocl_ProgramSource_hash_const(self.as_raw_ProgramSource()) }.into_result()
+    }
+    
+    /// Describe OpenCL program binary.
+    /// Do not call clCreateProgramWithBinary() and/or clBuildProgram().
+    ///
+    /// Caller should guarantee binary buffer lifetime greater than ProgramSource object (and any of its copies).
+    ///
+    /// This kind of binary is not portable between platforms in general - it is specific to OpenCL vendor / device / driver version.
+    ///
+    /// ## Parameters
+    /// * module: name of program owner module
+    /// * name: unique name of program (module+name is used as key for OpenCL program caching)
+    /// * binary: buffer address. See buffer lifetime requirement in description.
+    /// * size: buffer size
+    /// * buildOptions: additional program-related build options passed to clBuildProgram()
+    /// ## Returns
+    /// created ProgramSource object
+    ///
+    /// ## C++ default parameters
+    /// * build_options: cv::String()
+    pub fn from_binary(module: &str, name: &str, binary: &u8, size: size_t, build_options: &str) -> Result<core::ProgramSource> {
+        string_arg!(module);
+        string_arg!(name);
+        string_arg!(build_options);
+        unsafe { sys::cv_ocl_ProgramSource_fromBinary_String_String_const_unsigned_char_X_size_t_String(module.as_ptr(), name.as_ptr(), binary, size, build_options.as_ptr()) }.into_result().map(|ptr| core::ProgramSource { ptr })
+    }
+    
+    /// Describe OpenCL program in SPIR format.
+    /// Do not call clCreateProgramWithBinary() and/or clBuildProgram().
+    ///
+    /// Supports SPIR 1.2 by default (pass '-spir-std=X.Y' in buildOptions to override this behavior)
+    ///
+    /// Caller should guarantee binary buffer lifetime greater than ProgramSource object (and any of its copies).
+    ///
+    /// Programs in this format are portable between OpenCL implementations with 'khr_spir' extension:
+    /// https://www.khronos.org/registry/OpenCL/sdk/2.0/docs/man/xhtml/cl_khr_spir.html
+    /// (but they are not portable between different platforms: 32-bit / 64-bit)
+    ///
+    /// Note: these programs can't support vendor specific extensions, like 'cl_intel_subgroups'.
+    ///
+    /// ## Parameters
+    /// * module: name of program owner module
+    /// * name: unique name of program (module+name is used as key for OpenCL program caching)
+    /// * binary: buffer address. See buffer lifetime requirement in description.
+    /// * size: buffer size
+    /// * buildOptions: additional program-related build options passed to clBuildProgram()
+    ///        (these options are added automatically: '-x spir' and '-spir-std=1.2')
+    /// ## Returns
+    /// created ProgramSource object.
+    ///
+    /// ## C++ default parameters
+    /// * build_options: cv::String()
+    pub fn from_spir(module: &str, name: &str, binary: &u8, size: size_t, build_options: &str) -> Result<core::ProgramSource> {
+        string_arg!(module);
+        string_arg!(name);
+        string_arg!(build_options);
+        unsafe { sys::cv_ocl_ProgramSource_fromSPIR_String_String_const_unsigned_char_X_size_t_String(module.as_ptr(), name.as_ptr(), binary, size, build_options.as_ptr()) }.into_result().map(|ptr| core::ProgramSource { ptr })
+    }
+    
+}
+
+// boxed class cv::ocl::Queue
+pub struct Queue {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Queue {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Queue_delete(self.ptr) };
+    }
+}
+impl core::Queue {
+    #[inline(always)] pub fn as_raw_Queue(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Queue {}
+
+impl Queue {
+
+    pub fn default() -> Result<core::Queue> {
+        unsafe { sys::cv_ocl_Queue_Queue() }.into_result().map(|ptr| core::Queue { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * d: Device()
+    pub fn new(c: &core::Context, d: &core::Device) -> Result<core::Queue> {
+        unsafe { sys::cv_ocl_Queue_Queue_Context_Device(c.as_raw_Context(), d.as_raw_Device()) }.into_result().map(|ptr| core::Queue { ptr })
+    }
+    
+    pub fn copy(q: &core::Queue) -> Result<core::Queue> {
+        unsafe { sys::cv_ocl_Queue_Queue_Queue(q.as_raw_Queue()) }.into_result().map(|ptr| core::Queue { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * c: Context()
+    /// * d: Device()
+    pub fn create(&mut self, c: &core::Context, d: &core::Device) -> Result<bool> {
+        unsafe { sys::cv_ocl_Queue_create_Context_Device(self.as_raw_Queue(), c.as_raw_Context(), d.as_raw_Device()) }.into_result()
+    }
+    
+    pub fn finish(&mut self) -> Result<()> {
+        unsafe { sys::cv_ocl_Queue_finish(self.as_raw_Queue()) }.into_result()
+    }
+    
+    pub fn ptr(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_ocl_Queue_ptr_const(self.as_raw_Queue()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn get_default() -> Result<core::Queue> {
+        unsafe { sys::cv_ocl_Queue_getDefault() }.into_result().map(|ptr| core::Queue { ptr })
+    }
+    
+    pub fn get_profiling_queue(&self) -> Result<core::Queue> {
+        unsafe { sys::cv_ocl_Queue_getProfilingQueue_const(self.as_raw_Queue()) }.into_result().map(|ptr| core::Queue { ptr })
+    }
+    
+}
+
+// boxed class cv::ocl::Timer
+pub struct Timer {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::Timer {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Timer_delete(self.ptr) };
+    }
+}
+impl core::Timer {
+    #[inline(always)] pub fn as_raw_Timer(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Timer {}
+
+impl Timer {
+
+    pub fn new(q: &core::Queue) -> Result<core::Timer> {
+        unsafe { sys::cv_ocl_Timer_Timer_Queue(q.as_raw_Queue()) }.into_result().map(|ptr| core::Timer { ptr })
+    }
+    
+    pub fn start(&mut self) -> Result<()> {
+        unsafe { sys::cv_ocl_Timer_start(self.as_raw_Timer()) }.into_result()
+    }
+    
+    pub fn stop(&mut self) -> Result<()> {
+        unsafe { sys::cv_ocl_Timer_stop(self.as_raw_Timer()) }.into_result()
+    }
+    
+    pub fn duration_ns(&self) -> Result<u64> {
+        unsafe { sys::cv_ocl_Timer_durationNS_const(self.as_raw_Timer()) }.into_result()
+    }
+    
+}
+
+// boxed class cv::ocl::internal::ProgramEntry
+pub struct ProgramEntry {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::ProgramEntry {
+    fn drop(&mut self) {
+        unsafe { sys::cv_ProgramEntry_delete(self.ptr) };
+    }
+}
+impl core::ProgramEntry {
+    #[inline(always)] pub fn as_raw_ProgramEntry(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for ProgramEntry {}
 
 // Generating impl for trait cv::utils::AllocatorStatisticsInterface (trait)
 pub trait AllocatorStatisticsInterface {
@@ -8294,6 +9508,8 @@ pub const CV_MAT_DEPTH_MASK: i32 = 0x7; // 7
 pub const CV_MAT_TYPE_MASK: i32 = 0xfff; // 4095
 pub const CV_SUBMAT_FLAG: i32 = 0x8000; // 32768
 pub static CV_VERSION: &'static str = "4.1.1";
+pub const Device_TYPE_DGPU: i32 = 0x10004; // 65540
+pub const Device_TYPE_IGPU: i32 = 0x20004; // 131076
 pub const Mat_CONTINUOUS_FLAG: i32 = 0x4000; // 16384
 pub const Mat_SUBMATRIX_FLAG: i32 = 0x8000; // 32768
 pub const _InputArray_CUDA_GPU_MAT: i32 = 0x90000; // 589824

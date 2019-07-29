@@ -156,8 +156,8 @@ pub trait ANN_MLP: crate::ml::StatModel {
     /// Currently the default and the only fully supported activation function is ANN_MLP::SIGMOID_SYM.
     /// ## Parameters
     /// * type: The type of activation function. See ANN_MLP::ActivationFunctions.
-    /// * param1: The first parameter of the activation function, <span lang='latex'>\alpha</span>. Default value is 0.
-    /// * param2: The second parameter of the activation function, <span lang='latex'>\beta</span>. Default value is 0.
+    /// * param1: The first parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Calpha). Default value is 0.
+    /// * param2: The second parameter of the activation function, ![inline formula](https://latex.codecogs.com/png.latex?%5Cbeta). Default value is 0.
     ///
     /// ## C++ default parameters
     /// * param1: 0
@@ -634,7 +634,7 @@ unsafe impl Send for DTrees_Node {}
 
 impl DTrees_Node {
 
-    pub fn new() -> Result<crate::ml::DTrees_Node> {
+    pub fn default() -> Result<crate::ml::DTrees_Node> {
         unsafe { sys::cv_ml_DTrees_Node_Node() }.into_result().map(|ptr| crate::ml::DTrees_Node { ptr })
     }
     
@@ -663,7 +663,7 @@ unsafe impl Send for DTrees_Split {}
 
 impl DTrees_Split {
 
-    pub fn new() -> Result<crate::ml::DTrees_Split> {
+    pub fn default() -> Result<crate::ml::DTrees_Split> {
         unsafe { sys::cv_ml_DTrees_Split_Split() }.into_result().map(|ptr| crate::ml::DTrees_Split { ptr })
     }
     
@@ -733,7 +733,7 @@ pub trait EM: crate::ml::StatModel {
     ///
     /// ## Parameters
     /// * samples: The input samples, floating-point matrix
-    /// * results: The optional output <span lang='latex'> nSamples \times nClusters</span> matrix of results. It contains
+    /// * results: The optional output ![inline formula](https://latex.codecogs.com/png.latex?%20nSamples%20%5Ctimes%20nClusters) matrix of results. It contains
     /// posterior probabilities for each sample from the input
     /// * flags: This parameter will be ignored
     ///
@@ -749,9 +749,9 @@ pub trait EM: crate::ml::StatModel {
     ///
     /// ## Parameters
     /// * sample: A sample for classification. It should be a one-channel matrix of
-    /// <span lang='latex'>1 \times dims</span> or <span lang='latex'>dims \times 1</span> size.
+    /// ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20dims) or ![inline formula](https://latex.codecogs.com/png.latex?dims%20%5Ctimes%201) size.
     /// * probs: Optional output matrix that contains posterior probabilities of each component
-    /// given the sample. It has <span lang='latex'>1 \times nclusters</span> size and CV_64FC1 type.
+    /// given the sample. It has ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20nclusters) size and CV_64FC1 type.
     ///
     /// The method returns a two-element double vector. Zero element is a likelihood logarithm value for
     /// the sample. First element is an index of the most probable mixture component for the given
@@ -768,9 +768,9 @@ pub trait EM: crate::ml::StatModel {
     /// Unlike many of the ML models, %EM is an unsupervised learning algorithm and it does not take
     /// responses (class labels or function values) as input. Instead, it computes the *Maximum
     /// Likelihood Estimate* of the Gaussian mixture parameters from an input sample set, stores all the
-    /// parameters inside the structure: <span lang='latex'>p_{i,k}</span> in probs, <span lang='latex'>a_k</span> in means , <span lang='latex'>S_k</span> in
-    /// covs[k], <span lang='latex'>\pi_k</span> in weights , and optionally computes the output "class label" for each
-    /// sample: <span lang='latex'>\texttt{labels}_i=\texttt{arg max}_k(p_{i,k}), i=1..N</span> (indices of the most
+    /// parameters inside the structure: ![inline formula](https://latex.codecogs.com/png.latex?p_%7Bi%2Ck%7D) in probs, ![inline formula](https://latex.codecogs.com/png.latex?a_k) in means , ![inline formula](https://latex.codecogs.com/png.latex?S_k) in
+    /// covs[k], ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi_k) in weights , and optionally computes the output "class label" for each
+    /// sample: ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D_i%3D%5Ctexttt%7Barg%20max%7D_k%28p_%7Bi%2Ck%7D%29%2C%20i%3D1..N) (indices of the most
     /// probable mixture component for each sample).
     ///
     /// The trained model can be used further for prediction, just like any other classifier. The
@@ -781,12 +781,12 @@ pub trait EM: crate::ml::StatModel {
     /// one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
     /// it will be converted to the inner matrix of such type for the further computing.
     /// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
-    /// each sample. It has <span lang='latex'>nsamples \times 1</span> size and CV_64FC1 type.
+    /// each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_64FC1 type.
     /// * labels: The optional output "class label" for each sample:
-    /// <span lang='latex'>\texttt{labels}_i=\texttt{arg max}_k(p_{i,k}), i=1..N</span> (indices of the most probable
-    /// mixture component for each sample). It has <span lang='latex'>nsamples \times 1</span> size and CV_32SC1 type.
+    /// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D_i%3D%5Ctexttt%7Barg%20max%7D_k%28p_%7Bi%2Ck%7D%29%2C%20i%3D1..N) (indices of the most probable
+    /// mixture component for each sample). It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_32SC1 type.
     /// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
-    /// mixture component given the each sample. It has <span lang='latex'>nsamples \times nclusters</span> size and
+    /// mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
     /// CV_64FC1 type.
     ///
     /// ## C++ default parameters
@@ -799,30 +799,30 @@ pub trait EM: crate::ml::StatModel {
     
     /// Estimate the Gaussian mixture parameters from a samples set.
     ///
-    /// This variation starts with Expectation step. You need to provide initial means <span lang='latex'>a_k</span> of
-    /// mixture components. Optionally you can pass initial weights <span lang='latex'>\pi_k</span> and covariance matrices
-    /// <span lang='latex'>S_k</span> of mixture components.
+    /// This variation starts with Expectation step. You need to provide initial means ![inline formula](https://latex.codecogs.com/png.latex?a_k) of
+    /// mixture components. Optionally you can pass initial weights ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi_k) and covariance matrices
+    /// ![inline formula](https://latex.codecogs.com/png.latex?S_k) of mixture components.
     ///
     /// ## Parameters
     /// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
     /// one-channel matrix, each row of which is a sample. If the matrix does not have CV_64F type
     /// it will be converted to the inner matrix of such type for the further computing.
-    /// * means0: Initial means <span lang='latex'>a_k</span> of mixture components. It is a one-channel matrix of
-    /// <span lang='latex'>nclusters \times dims</span> size. If the matrix does not have CV_64F type it will be
+    /// * means0: Initial means ![inline formula](https://latex.codecogs.com/png.latex?a_k) of mixture components. It is a one-channel matrix of
+    /// ![inline formula](https://latex.codecogs.com/png.latex?nclusters%20%5Ctimes%20dims) size. If the matrix does not have CV_64F type it will be
     /// converted to the inner matrix of such type for the further computing.
-    /// * covs0: The vector of initial covariance matrices <span lang='latex'>S_k</span> of mixture components. Each of
-    /// covariance matrices is a one-channel matrix of <span lang='latex'>dims \times dims</span> size. If the matrices
+    /// * covs0: The vector of initial covariance matrices ![inline formula](https://latex.codecogs.com/png.latex?S_k) of mixture components. Each of
+    /// covariance matrices is a one-channel matrix of ![inline formula](https://latex.codecogs.com/png.latex?dims%20%5Ctimes%20dims) size. If the matrices
     /// do not have CV_64F type they will be converted to the inner matrices of such type for the
     /// further computing.
-    /// * weights0: Initial weights <span lang='latex'>\pi_k</span> of mixture components. It should be a one-channel
-    /// floating-point matrix with <span lang='latex'>1 \times nclusters</span> or <span lang='latex'>nclusters \times 1</span> size.
+    /// * weights0: Initial weights ![inline formula](https://latex.codecogs.com/png.latex?%5Cpi_k) of mixture components. It should be a one-channel
+    /// floating-point matrix with ![inline formula](https://latex.codecogs.com/png.latex?1%20%5Ctimes%20nclusters) or ![inline formula](https://latex.codecogs.com/png.latex?nclusters%20%5Ctimes%201) size.
     /// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
-    /// each sample. It has <span lang='latex'>nsamples \times 1</span> size and CV_64FC1 type.
+    /// each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_64FC1 type.
     /// * labels: The optional output "class label" for each sample:
-    /// <span lang='latex'>\texttt{labels}_i=\texttt{arg max}_k(p_{i,k}), i=1..N</span> (indices of the most probable
-    /// mixture component for each sample). It has <span lang='latex'>nsamples \times 1</span> size and CV_32SC1 type.
+    /// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D_i%3D%5Ctexttt%7Barg%20max%7D_k%28p_%7Bi%2Ck%7D%29%2C%20i%3D1..N) (indices of the most probable
+    /// mixture component for each sample). It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_32SC1 type.
     /// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
-    /// mixture component given the each sample. It has <span lang='latex'>nsamples \times nclusters</span> size and
+    /// mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
     /// CV_64FC1 type.
     ///
     /// ## C++ default parameters
@@ -838,7 +838,7 @@ pub trait EM: crate::ml::StatModel {
     /// Estimate the Gaussian mixture parameters from a samples set.
     ///
     /// This variation starts with Maximization step. You need to provide initial probabilities
-    /// <span lang='latex'>p_{i,k}</span> to use this option.
+    /// ![inline formula](https://latex.codecogs.com/png.latex?p_%7Bi%2Ck%7D) to use this option.
     ///
     /// ## Parameters
     /// * samples: Samples from which the Gaussian mixture model will be estimated. It should be a
@@ -846,12 +846,12 @@ pub trait EM: crate::ml::StatModel {
     /// it will be converted to the inner matrix of such type for the further computing.
     /// * probs0: the probabilities
     /// * logLikelihoods: The optional output matrix that contains a likelihood logarithm value for
-    /// each sample. It has <span lang='latex'>nsamples \times 1</span> size and CV_64FC1 type.
+    /// each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_64FC1 type.
     /// * labels: The optional output "class label" for each sample:
-    /// <span lang='latex'>\texttt{labels}_i=\texttt{arg max}_k(p_{i,k}), i=1..N</span> (indices of the most probable
-    /// mixture component for each sample). It has <span lang='latex'>nsamples \times 1</span> size and CV_32SC1 type.
+    /// ![inline formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Blabels%7D_i%3D%5Ctexttt%7Barg%20max%7D_k%28p_%7Bi%2Ck%7D%29%2C%20i%3D1..N) (indices of the most probable
+    /// mixture component for each sample). It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%201) size and CV_32SC1 type.
     /// * probs: The optional output matrix that contains posterior probabilities of each Gaussian
-    /// mixture component given the each sample. It has <span lang='latex'>nsamples \times nclusters</span> size and
+    /// mixture component given the each sample. It has ![inline formula](https://latex.codecogs.com/png.latex?nsamples%20%5Ctimes%20nclusters) size and
     /// CV_64FC1 type.
     ///
     /// ## C++ default parameters
@@ -1210,16 +1210,16 @@ impl ParamGrid {
     /// Logarithmic step for iterating the statmodel parameter.
     ///
     /// The grid determines the following iteration sequence of the statmodel parameter values:
-    /// <div lang='latex'>(minVal, minVal*step, minVal*{step}^2, \dots,  minVal*{logStep}^n),</div>
-    /// where <span lang='latex'>n</span> is the maximal index satisfying
-    /// <div lang='latex'>\texttt{minVal} * \texttt{logStep} ^n <  \texttt{maxVal}</div>
+    /// ![block formula](https://latex.codecogs.com/png.latex?%28minVal%2C%20minVal%2Astep%2C%20minVal%2A%7Bstep%7D%5E2%2C%20%5Cdots%2C%20%20minVal%2A%7BlogStep%7D%5En%29%2C)
+    /// where ![inline formula](https://latex.codecogs.com/png.latex?n) is the maximal index satisfying
+    /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BminVal%7D%20%2A%20%5Ctexttt%7BlogStep%7D%20%5En%20%3C%20%20%5Ctexttt%7BmaxVal%7D)
     /// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
     pub fn log_step(&self) -> Result<f64> {
         unsafe { sys::cv_ml_ParamGrid_logStep_const(self.as_raw_ParamGrid()) }.into_result()
     }
     
     /// Default constructor
-    pub fn new() -> Result<crate::ml::ParamGrid> {
+    pub fn default() -> Result<crate::ml::ParamGrid> {
         unsafe { sys::cv_ml_ParamGrid_ParamGrid() }.into_result().map(|ptr| crate::ml::ParamGrid { ptr })
     }
     
@@ -1561,7 +1561,7 @@ pub trait SVM: crate::ml::StatModel {
     /// ## Parameters
     /// * i: the index of the decision function. If the problem solved is regression, 1-class or
     /// 2-class classification, then there will be just one decision function and the index should
-    /// always be 0. Otherwise, in the case of N-class classification, there will be <span lang='latex'>N(N-1)/2</span>
+    /// always be 0. Otherwise, in the case of N-class classification, there will be ![inline formula](https://latex.codecogs.com/png.latex?N%28N-1%29%2F2)
     /// decision functions.
     /// * alpha: the optional output vector for weights, corresponding to different support vectors.
     /// In the case of linear %SVM all the alpha's will be 1's.

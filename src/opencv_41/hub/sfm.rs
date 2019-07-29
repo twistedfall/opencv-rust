@@ -1,12 +1,14 @@
 //! # Structure From Motion
 //!
 //! The opencv_sfm module contains algorithms to perform 3d reconstruction
-//! from 2d images.\n
+//! from 2d images.
+//!
 //! The core of the module is based on a light version of
 //! [Libmv](https://developer.blender.org/project/profile/59) originally
 //! developed by Sameer Agarwal and Keir Mierle.
 //!
-//! __Whats is libmv?__ \n
+//! __Whats is libmv?__
+//!
 //! libmv, also known as the Library for Multiview Reconstruction (or LMV),
 //! is the computer vision backend for Blender's motion tracking abilities.
 //! Unlike other vision libraries with general ambitions, libmv is focused
@@ -15,7 +17,8 @@
 //! photo collections, image recognition, and other tasks are not a focus
 //! of libmv.
 //!
-//! __Development__ \n
+//! __Development__
+//!
 //! libmv is officially under the Blender umbrella, and so is developed
 //! on developer.blender.org. The [source repository](https://developer.blender.org/diffusion/LMV) can get checked out
 //! independently from Blender.
@@ -24,7 +27,8 @@
 //!
 //!
 //! Note:
-//! - Notice that it is compiled only when Eigen, GLog and GFlags are correctly installed.\n
+//! - Notice that it is compiled only when Eigen, GLog and GFlags are correctly installed.
+//!
 //! Check installation instructions in the following tutorial: @ref tutorial_sfm_installation
 //! # Conditioning
 //! # Fundamental
@@ -37,14 +41,16 @@
 //! # Reconstruction
 //!
 //! Note:
-//! - Notice that it is compiled only when Ceres Solver is correctly installed.\n
+//! - Notice that it is compiled only when Ceres Solver is correctly installed.
+//!
 //! Check installation instructions in the following tutorial: @ref tutorial_sfm_installation
 //!
 //!
 //! # Simple Pipeline
 //!
 //! Note:
-//! - Notice that it is compiled only when Ceres Solver is correctly installed.\n
+//! - Notice that it is compiled only when Ceres Solver is correctly installed.
+//!
 //! Check installation instructions in the following tutorial: @ref tutorial_sfm_installation
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
@@ -75,7 +81,8 @@ pub const SFM_REFINE_RADIAL_DISTORTION_K2: i32 = (1 << 4);
 /// * _polynomial_p1: radial distortion parameter.
 /// * _polynomial_p2: radial distortion parameter.
 ///
-/// Is assumed that modern cameras have their principal point in the image center.\n
+/// Is assumed that modern cameras have their principal point in the image center.
+///
 /// In case that the camera model was SFM_DISTORTION_MODEL_DIVISION, it's only needed to provide
 /// _polynomial_k1 and _polynomial_k2 which will be assigned as division distortion parameters.
 #[repr(C)]
@@ -117,7 +124,7 @@ pub struct libmv_ReconstructionOptions {
 /// Get K, R and t from projection matrix P, decompose using the RQ decomposition.
 /// ## Parameters
 /// * P: Input 3x4 projection matrix.
-/// * K: Output 3x3 camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>.
+/// * K: Output 3x3 camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D).
 /// * R: Output 3x3 rotation matrix.
 /// * t: Output 3x1 translation vector.
 ///
@@ -129,7 +136,7 @@ pub fn k_rt_from_projection(p: &core::Mat, k: &mut core::Mat, r: &mut core::Mat,
 /// Apply Transformation to points.
 /// ## Parameters
 /// * points: Input vector of N-dimensional points.
-/// * T: Input 3x3 transformation matrix such that <span lang='latex'>x = T*X</span>, where <span lang='latex'>X</span> are the points to transform and <span lang='latex'>x</span> the transformed points.
+/// * T: Input 3x3 transformation matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x%20%3D%20T%2AX), where ![inline formula](https://latex.codecogs.com/png.latex?X) are the points to transform and ![inline formula](https://latex.codecogs.com/png.latex?x) the transformed points.
 /// * transformed_points: Output vector of N-dimensional transformed points.
 pub fn apply_transformation_to_points(points: &core::Mat, t: &core::Mat, transformed_points: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_sfm_applyTransformationToPoints_Mat_Mat_Mat(points.as_raw_Mat(), t.as_raw_Mat(), transformed_points.as_raw_Mat()) }.into_result()
@@ -161,7 +168,7 @@ pub fn depth(r: &core::Mat, t: &core::Mat, x: &core::Mat) -> Result<f64> {
 /// Get Essential matrix from Fundamental and Camera matrices.
 /// ## Parameters
 /// * F: Input 3x3 fundamental matrix.
-/// * K1: Input 3x3 first camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>.
+/// * K1: Input 3x3 first camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D).
 /// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 /// * E: Output 3x3 essential matrix.
 ///
@@ -196,11 +203,11 @@ pub fn euclidean_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<
 /// * x1: Input 2xN Array of 2D points in view 1.
 /// * x2: Input 2xN Array of 2D points in view 2.
 /// * max_error: maximum error (in pixels).
-/// * F: Output 3x3 fundamental matrix such that <span lang='latex'>x_2^T F x_1=0</span>.
+/// * F: Output 3x3 fundamental matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x_2%5ET%20F%20x_1%3D0).
 /// * inliers: Output 1xN vector that contains the indexes of the detected inliers.
 /// * outliers_probability: outliers probability (in ]0,1[).
 /// The number of iterations is controlled using the following equation:
-/// <span lang='latex'>k = \frac{log(1-p)}{log(1.0 - w^n )}</span> where <span lang='latex'>k</span>, <span lang='latex'>w</span> and <span lang='latex'>n</span> are the number of
+/// ![inline formula](https://latex.codecogs.com/png.latex?k%20%3D%20%5Cfrac%7Blog%281-p%29%7D%7Blog%281.0%20-%20w%5En%20%29%7D) where ![inline formula](https://latex.codecogs.com/png.latex?k), ![inline formula](https://latex.codecogs.com/png.latex?w) and ![inline formula](https://latex.codecogs.com/png.latex?n) are the number of
 /// iterations, the inliers ratio and minimun number of selected independent samples.
 /// The more this value is high, the less the function selects ramdom samples.
 ///
@@ -217,11 +224,11 @@ pub fn fundamental_from_correspondences7_point_robust(x1: &core::Mat, x2: &core:
 /// * x1: Input 2xN Array of 2D points in view 1.
 /// * x2: Input 2xN Array of 2D points in view 2.
 /// * max_error: maximum error (in pixels).
-/// * F: Output 3x3 fundamental matrix such that <span lang='latex'>x_2^T F x_1=0</span>.
+/// * F: Output 3x3 fundamental matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x_2%5ET%20F%20x_1%3D0).
 /// * inliers: Output 1xN vector that contains the indexes of the detected inliers.
 /// * outliers_probability: outliers probability (in ]0,1[).
 /// The number of iterations is controlled using the following equation:
-/// <span lang='latex'>k = \frac{log(1-p)}{log(1.0 - w^n )}</span> where <span lang='latex'>k</span>, <span lang='latex'>w</span> and <span lang='latex'>n</span> are the number of
+/// ![inline formula](https://latex.codecogs.com/png.latex?k%20%3D%20%5Cfrac%7Blog%281-p%29%7D%7Blog%281.0%20-%20w%5En%20%29%7D) where ![inline formula](https://latex.codecogs.com/png.latex?k), ![inline formula](https://latex.codecogs.com/png.latex?w) and ![inline formula](https://latex.codecogs.com/png.latex?n) are the number of
 /// iterations, the inliers ratio and minimun number of selected independent samples.
 /// The more this value is high, the less the function selects ramdom samples.
 ///
@@ -236,7 +243,7 @@ pub fn fundamental_from_correspondences8_point_robust(x1: &core::Mat, x2: &core:
 /// Get Essential matrix from Fundamental and Camera matrices.
 /// ## Parameters
 /// * E: Input 3x3 essential matrix.
-/// * K1: Input 3x3 first camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>.
+/// * K1: Input 3x3 first camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D).
 /// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 /// * F: Output 3x3 fundamental matrix.
 ///
@@ -286,7 +293,8 @@ pub fn import_reconstruction(file: &str, rs: &mut types::VectorOfMat, ts: &mut t
 /// * T: Output 3x3 transformation matrix.
 ///
 /// Computes the transformation matrix such that each coordinate direction will be scaled equally,
-/// bringing the centroid to the origin with an average centroid <span lang='latex'>(1,1,1)^T</span>.\n
+/// bringing the centroid to the origin with an average centroid ![inline formula](https://latex.codecogs.com/png.latex?%281%2C1%2C1%29%5ET).
+///
 /// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 pub fn isotropic_preconditioner_from_points(points: &core::Mat, t: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_sfm_isotropicPreconditionerFromPoints_Mat_Mat(points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
@@ -307,7 +315,7 @@ pub fn mean_and_variance_along_rows(a: &core::Mat, mean: &mut core::Mat, varianc
 /// ## Parameters
 /// * Rs: Input vector of 3x3 rotation matrices.
 /// * ts: Input vector of 3x1 translation vectors.
-/// * K1: Input 3x3 first camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>.
+/// * K1: Input 3x3 first camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D).
 /// * x1: Input 2x1 vector with first 2d point.
 /// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 /// * x2: Input 2x1 vector with second 2d point.
@@ -344,11 +352,12 @@ pub fn normalize_fundamental(f: &core::Mat, f_normalized: &mut core::Mat) -> Res
 /// This function normalizes points. (isotropic).
 /// ## Parameters
 /// * points: Input vector of N-dimensional points.
-/// * normalized_points: Output vector of the same N-dimensional points but with mean 0 and average norm <span lang='latex'>\sqrt{2}</span>.
-/// * T: Output 3x3 transform matrix such that <span lang='latex'>x = T*X</span>, where <span lang='latex'>X</span> are the points to normalize and <span lang='latex'>x</span> the normalized points.
+/// * normalized_points: Output vector of the same N-dimensional points but with mean 0 and average norm ![inline formula](https://latex.codecogs.com/png.latex?%5Csqrt%7B2%7D).
+/// * T: Output 3x3 transform matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x%20%3D%20T%2AX), where ![inline formula](https://latex.codecogs.com/png.latex?X) are the points to normalize and ![inline formula](https://latex.codecogs.com/png.latex?x) the normalized points.
 ///
 /// Internally calls @ref preconditionerFromPoints in order to get the scaling matrix before applying @ref applyTransformationToPoints.
-/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.\n
+/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
+///
 /// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 pub fn normalize_isotropic_points(points: &core::Mat, normalized_points: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_sfm_normalizeIsotropicPoints_Mat_Mat_Mat(points.as_raw_Mat(), normalized_points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
@@ -357,11 +366,12 @@ pub fn normalize_isotropic_points(points: &core::Mat, normalized_points: &mut co
 /// This function normalizes points (non isotropic).
 /// ## Parameters
 /// * points: Input vector of N-dimensional points.
-/// * normalized_points: Output vector of the same N-dimensional points but with mean 0 and average norm <span lang='latex'>\sqrt{2}</span>.
-/// * T: Output 3x3 transform matrix such that <span lang='latex'>x = T*X</span>, where <span lang='latex'>X</span> are the points to normalize and <span lang='latex'>x</span> the normalized points.
+/// * normalized_points: Output vector of the same N-dimensional points but with mean 0 and average norm ![inline formula](https://latex.codecogs.com/png.latex?%5Csqrt%7B2%7D).
+/// * T: Output 3x3 transform matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x%20%3D%20T%2AX), where ![inline formula](https://latex.codecogs.com/png.latex?X) are the points to normalize and ![inline formula](https://latex.codecogs.com/png.latex?x) the normalized points.
 ///
 /// Internally calls @ref preconditionerFromPoints in order to get the scaling matrix before applying @ref applyTransformationToPoints.
-/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.\n
+/// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
+///
 /// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 pub fn normalize_points(points: &core::Mat, normalized_points: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_sfm_normalizePoints_Mat_Mat_Mat(points.as_raw_Mat(), normalized_points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
@@ -385,7 +395,8 @@ pub fn normalized_eight_point_solver(x1: &core::Mat, x2: &core::Mat, f: &mut cor
 /// * T: Output 3x3 transformation matrix.
 ///
 /// Computes the transformation matrix such that the two principal moments of the set of points are equal to unity,
-/// forming an approximately symmetric circular cloud of points of radius 1 about the origin.\n
+/// forming an approximately symmetric circular cloud of points of radius 1 about the origin.
+///
 /// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 pub fn preconditioner_from_points(points: &core::Mat, t: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_sfm_preconditionerFromPoints_Mat_Mat(points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
@@ -393,12 +404,12 @@ pub fn preconditioner_from_points(points: &core::Mat, t: &mut core::Mat) -> Resu
 
 /// Get projection matrix P from K, R and t.
 /// ## Parameters
-/// * K: Input 3x3 camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>.
+/// * K: Input 3x3 camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D).
 /// * R: Input 3x3 rotation matrix.
 /// * t: Input 3x1 translation vector.
 /// * P: Output 3x4 projection matrix.
 ///
-/// This function estimate the projection matrix by solving the following equation: <span lang='latex'>P = K * [R|t]</span>
+/// This function estimate the projection matrix by solving the following equation: ![inline formula](https://latex.codecogs.com/png.latex?P%20%3D%20K%20%2A%20%5BR%7Ct%5D)
 pub fn projection_from_k_rt(k: &core::Mat, r: &core::Mat, t: &core::Mat, p: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_sfm_projectionFromKRt_Mat_Mat_Mat_Mat(k.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), p.as_raw_Mat()) }.into_result()
 }
@@ -418,7 +429,7 @@ pub fn projections_from_fundamental(f: &core::Mat, p1: &mut core::Mat, p2: &mut 
 /// * Rs: Output vector of 3x3 rotations of the camera.
 /// * Ts: Output vector of 3x1 translations of the camera.
 /// * points3d: Output array with estimated 3d points.
-/// * K: Input/Output camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>. Input parameters used as initial guess.
+/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
 /// * is_projective: if true, the cameras are supposed to be projective.
 ///
 /// Internally calls libmv simple pipeline routine with some default parameters by instatiating SFMLibmvEuclideanReconstruction class.
@@ -439,7 +450,7 @@ pub fn reconstruct(points2d: &types::VectorOfMat, rs: &mut core::Mat, ts: &mut c
 /// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
 /// * Ps: Output vector with the 3x4 projections matrices of each image.
 /// * points3d: Output array with estimated 3d points.
-/// * K: Input/Output camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>. Input parameters used as initial guess.
+/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
 /// * is_projective: if true, the cameras are supposed to be projective.
 ///
 /// This method calls below signature and extracts projection matrices from estimated K, R and t.
@@ -460,7 +471,7 @@ pub fn reconstruct_1(points2d: &types::VectorOfMat, ps: &mut core::Mat, points3d
 /// * Rs: Output vector of 3x3 rotations of the camera.
 /// * Ts: Output vector of 3x1 translations of the camera.
 /// * points3d: Output array with estimated 3d points.
-/// * K: Input/Output camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>. Input parameters used as initial guess.
+/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
 /// * is_projective: if true, the cameras are supposed to be projective.
 ///
 /// Internally calls libmv simple pipeline routine with some default parameters by instatiating SFMLibmvEuclideanReconstruction class.
@@ -482,7 +493,7 @@ pub fn reconstruct_2(images: &types::VectorOfString, rs: &mut core::Mat, ts: &mu
 /// * images: a vector of string with the images paths.
 /// * Ps: Output vector with the 3x4 projections matrices of each image.
 /// * points3d: Output array with estimated 3d points.
-/// * K: Input/Output camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>. Input parameters used as initial guess.
+/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
 /// * is_projective: if true, the cameras are supposed to be projective.
 ///
 /// This method calls below signature and extracts projection matrices from estimated K, R and t.
@@ -509,7 +520,7 @@ pub fn reconstruct_3(images: &types::VectorOfString, ps: &mut core::Mat, points3
 ///
 /// Given the motion parameters of two cameras, computes the motion parameters
 /// of the second one assuming the first one to be at the origin.
-/// If T1 and T2 are the camera motions, the computed relative motion is <span lang='latex'>T = T_2 T_1^{-1}</span>
+/// If T1 and T2 are the camera motions, the computed relative motion is ![inline formula](https://latex.codecogs.com/png.latex?T%20%3D%20T_2%20T_1%5E%7B-1%7D)
 pub fn relative_camera_motion(r1: &core::Mat, t1: &core::Mat, r2: &core::Mat, t2: &core::Mat, r: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_sfm_relativeCameraMotion_Mat_Mat_Mat_Mat_Mat_Mat(r1.as_raw_Mat(), t1.as_raw_Mat(), r2.as_raw_Mat(), t2.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
 }
@@ -622,7 +633,7 @@ impl SFMLibmvEuclideanReconstruction {
     /// Calls the pipeline in order to perform Eclidean reconstruction.
     /// ## Parameters
     /// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
-    /// * K: Input/Output camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>. Input parameters used as initial guess.
+    /// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
     /// * Rs: Output vector of 3x3 rotations of the camera.
     /// * Ts: Output vector of 3x1 translations of the camera.
     /// * points3d: Output array with estimated 3d points.
@@ -649,7 +660,7 @@ impl SFMLibmvEuclideanReconstruction {
     /// Calls the pipeline in order to perform Eclidean reconstruction.
     /// ## Parameters
     /// * images: a vector of string with the images paths.
-    /// * K: Input/Output camera matrix <span lang='latex'>K = \vecthreethree{f_x}{0}{c_x}{0}{f_y}{c_y}{0}{0}{1}</span>. Input parameters used as initial guess.
+    /// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
     /// * Rs: Output vector of 3x3 rotations of the camera.
     /// * Ts: Output vector of 3x1 translations of the camera.
     /// * points3d: Output array with estimated 3d points.

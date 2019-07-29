@@ -95,7 +95,7 @@ impl dyn Plot2d + '_ {
     /// Creates Plot2d object
     ///
     /// ## Parameters
-    /// * data: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix containing <span lang='latex'>Y</span> values of points to plot. <span lang='latex'>X</span> values
+    /// * data: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot. ![inline formula](https://latex.codecogs.com/png.latex?X) values
     /// will be equal to indexes of correspondind elements in data matrix.
     pub fn create(data: &core::Mat) -> Result<types::PtrOfPlot2d> {
         unsafe { sys::cv_plot_Plot2d_create_Mat(data.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
@@ -104,8 +104,8 @@ impl dyn Plot2d + '_ {
     /// Creates Plot2d object
     ///
     /// ## Parameters
-    /// * dataX: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix <span lang='latex'>X</span> values of points to plot.
-    /// * dataY: <span lang='latex'>1xN</span> or <span lang='latex'>Nx1</span> matrix containing <span lang='latex'>Y</span> values of points to plot.
+    /// * dataX: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix ![inline formula](https://latex.codecogs.com/png.latex?X) values of points to plot.
+    /// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
     pub fn create_1(data_x: &core::Mat, data_y: &core::Mat) -> Result<types::PtrOfPlot2d> {
         unsafe { sys::cv_plot_Plot2d_create_Mat_Mat(data_x.as_raw_Mat(), data_y.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
     }

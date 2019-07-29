@@ -90,14 +90,14 @@ unsafe impl Send for CallMetaData {}
 impl CallMetaData {
 
     /// Creates an unknown location.
-    pub fn new() -> Result<crate::cvv::CallMetaData> {
+    pub fn default() -> Result<crate::cvv::CallMetaData> {
         unsafe { sys::cvv_impl_CallMetaData_CallMetaData() }.into_result().map(|ptr| crate::cvv::CallMetaData { ptr })
     }
     
     /// Creates the provided location.
     ///
     /// Argument should be self-explaining.
-    pub fn new_1(file: &str, line: size_t, function: &str) -> Result<crate::cvv::CallMetaData> {
+    pub fn new(file: &str, line: size_t, function: &str) -> Result<crate::cvv::CallMetaData> {
         string_arg!(file);
         string_arg!(function);
         unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_char_X_size_t_const_char_X(file.as_ptr(), line, function.as_ptr()) }.into_result().map(|ptr| crate::cvv::CallMetaData { ptr })

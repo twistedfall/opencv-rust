@@ -86,7 +86,7 @@ unsafe impl Send for HistogramPhaseUnwrapping_Params {}
 
 impl HistogramPhaseUnwrapping_Params {
 
-    pub fn new() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params> {
+    pub fn default() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params> {
         unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() }.into_result().map(|ptr| crate::phase_unwrapping::HistogramPhaseUnwrapping_Params { ptr })
     }
     

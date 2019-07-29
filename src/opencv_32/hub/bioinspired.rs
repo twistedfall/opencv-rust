@@ -532,7 +532,7 @@ unsafe impl Send for RetinaParameters_IplMagnoParameters {}
 
 impl RetinaParameters_IplMagnoParameters {
 
-    pub fn new() -> Result<crate::bioinspired::RetinaParameters_IplMagnoParameters> {
+    pub fn default() -> Result<crate::bioinspired::RetinaParameters_IplMagnoParameters> {
         unsafe { sys::cv_bioinspired_RetinaParameters_IplMagnoParameters_IplMagnoParameters() }.into_result().map(|ptr| crate::bioinspired::RetinaParameters_IplMagnoParameters { ptr })
     }
     
@@ -561,7 +561,7 @@ unsafe impl Send for RetinaParameters_OPLandIplParvoParameters {}
 
 impl RetinaParameters_OPLandIplParvoParameters {
 
-    pub fn new() -> Result<crate::bioinspired::RetinaParameters_OPLandIplParvoParameters> {
+    pub fn default() -> Result<crate::bioinspired::RetinaParameters_OPLandIplParvoParameters> {
         unsafe { sys::cv_bioinspired_RetinaParameters_OPLandIplParvoParameters_OPLandIplParvoParameters() }.into_result().map(|ptr| crate::bioinspired::RetinaParameters_OPLandIplParvoParameters { ptr })
     }
     
@@ -590,7 +590,7 @@ unsafe impl Send for SegmentationParameters {}
 
 impl SegmentationParameters {
 
-    pub fn new() -> Result<crate::bioinspired::SegmentationParameters> {
+    pub fn default() -> Result<crate::bioinspired::SegmentationParameters> {
         unsafe { sys::cv_bioinspired_SegmentationParameters_SegmentationParameters() }.into_result().map(|ptr| crate::bioinspired::SegmentationParameters { ptr })
     }
     

@@ -230,15 +230,15 @@ pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut cor
 /// [ChambolleEtAl](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_ChambolleEtAl), it might make sense to skim over it here, following [MA13](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_MA13) . To begin
 /// with, we consider the 1-byte gray-level images as the functions from the rectangular domain of
 /// pixels (it may be seen as set
-/// <span lang='latex'>\left\{(x,y)\in\mathbb{N}\times\mathbb{N}\mid 1\leq x\leq n,\;1\leq y\leq m\right\}</span> for some
-/// <span lang='latex'>m,\;n\in\mathbb{N}</span>) into <span lang='latex'>\{0,1,\dots,255\}</span>. We shall denote the noised images as <span lang='latex'>f_i</span> and with
-/// this view, given some image <span lang='latex'>x</span> of the same size, we may measure how bad it is by the formula
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7B%28x%2Cy%29%5Cin%5Cmathbb%7BN%7D%5Ctimes%5Cmathbb%7BN%7D%5Cmid%201%5Cleq%20x%5Cleq%20n%2C%5C%3B1%5Cleq%20y%5Cleq%20m%5Cright%5C%7D) for some
+/// ![inline formula](https://latex.codecogs.com/png.latex?m%2C%5C%3Bn%5Cin%5Cmathbb%7BN%7D)) into ![inline formula](https://latex.codecogs.com/png.latex?%5C%7B0%2C1%2C%5Cdots%2C255%5C%7D). We shall denote the noised images as ![inline formula](https://latex.codecogs.com/png.latex?f_i) and with
+/// this view, given some image ![inline formula](https://latex.codecogs.com/png.latex?x) of the same size, we may measure how bad it is by the formula
 ///
-/// <div lang='latex'>\left\|\left\|\nabla x\right\|\right\| + \lambda\sum_i\left\|\left\|x-f_i\right\|\right\|</div>
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cleft%5C%7C%5Cleft%5C%7C%5Cnabla%20x%5Cright%5C%7C%5Cright%5C%7C%20%2B%20%5Clambda%5Csum_i%5Cleft%5C%7C%5Cleft%5C%7Cx-f_i%5Cright%5C%7C%5Cright%5C%7C)
 ///
-/// <span lang='latex'>\|\|\cdot\|\|</span> here denotes <span lang='latex'>L_2</span>-norm and as you see, the first addend states that we want our
+/// ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%5C%7C%5Ccdot%5C%7C%5C%7C) here denotes ![inline formula](https://latex.codecogs.com/png.latex?L_2)-norm and as you see, the first addend states that we want our
 /// image to be smooth (ideally, having zero gradient, thus being constant) and the second states that
-/// we want our result to be close to the observations we've got. If we treat <span lang='latex'>x</span> as a function, this is
+/// we want our result to be close to the observations we've got. If we treat ![inline formula](https://latex.codecogs.com/png.latex?x) as a function, this is
 /// exactly the functional what we seek to minimize and here the Primal-Dual algorithm comes into play.
 ///
 /// ## Parameters
@@ -246,7 +246,7 @@ pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut cor
 /// be restored.
 /// * result: Here the denoised image will be stored. There is no need to do pre-allocation of
 /// storage space, as it will be automatically allocated, if necessary.
-/// * lambda: Corresponds to <span lang='latex'>\lambda</span> in the formulas above. As it is enlarged, the smooth
+/// * lambda: Corresponds to ![inline formula](https://latex.codecogs.com/png.latex?%5Clambda) in the formulas above. As it is enlarged, the smooth
 /// (blurred) images are treated more favorably than detailed (but maybe more noised) ones. Roughly
 /// speaking, as it becomes smaller, the result will be more blur but more sever outliers will be
 /// removed.

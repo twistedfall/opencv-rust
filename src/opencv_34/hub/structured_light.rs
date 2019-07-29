@@ -142,7 +142,7 @@ unsafe impl Send for GrayCodePattern_Params {}
 
 impl GrayCodePattern_Params {
 
-    pub fn new() -> Result<crate::structured_light::GrayCodePattern_Params> {
+    pub fn default() -> Result<crate::structured_light::GrayCodePattern_Params> {
         unsafe { sys::cv_structured_light_GrayCodePattern_Params_Params() }.into_result().map(|ptr| crate::structured_light::GrayCodePattern_Params { ptr })
     }
     
@@ -280,7 +280,7 @@ impl SinusoidalPattern_Params {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
     }
     
-    pub fn new_1() -> Result<crate::structured_light::SinusoidalPattern_Params> {
+    pub fn default() -> Result<crate::structured_light::SinusoidalPattern_Params> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_Params() }.into_result().map(|ptr| crate::structured_light::SinusoidalPattern_Params { ptr })
     }
     
