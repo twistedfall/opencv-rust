@@ -888,19 +888,6 @@ $code
 
 """)
 
-const_private_list = (
-    "CV_MOP_.+",
-    "CV_INTER_.+",
-    "CV_THRESH_.+",
-    "CV_INPAINT_.+",
-    "CV_RETR_.+",
-    "CV_CHAIN_APPROX_.+",
-    "OPPONENTEXTRACTOR",
-    "GRIDDETECTOR",
-    "PYRAMIDDETECTOR",
-    "DYNAMICDETECTOR",
-)
-
 
 #
 #       Helpers
