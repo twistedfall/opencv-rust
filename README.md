@@ -126,27 +126,7 @@ for compiling OpenCV for your platform. Make sure to compile from the
 correct release tag! We recommend including opencv_contrib and
 configuring your build with the same flags the travis build uses:
 
-```sh
-cmake \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_PERF_TESTS=OFF \
-    -DBUILD_TESTS=OFF \
-    -DINSTALL_TESTS=OFF \
-    -DBUILD_DOCS=OFF \
-    -DBUILD_EXAMPLES=OFF \
-    -DBUILD_opencv_apps=ALL \
-    -DWITH_IPP=OFF \
-    -DPYTHON_EXECUTABLE=OFF \
-    -DINSTALL_PYTHON_EXAMPLES=OFF \
-    -DWITH_LAPACK=ON \
-    -DWITH_EIGEN=ON \
-    -DBUILD_SHARED_LIBS=ON \
-    -DWITH_TBB=ON \
-    -DOPENCV_ENABLE_NONFREE=ON \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DOPENCV_EXTRA_MODULES_PATH=$PATH_TO_OPENCV_CONTRIB_MODULES \
-    $PATH_TO_OPENCV_SRC
-```
+[install-opencv.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-opencv.sh)
 
 ## Contrib modules
 
