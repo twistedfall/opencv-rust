@@ -9,6 +9,7 @@ from io import StringIO
 from itertools import chain
 from pprint import pformat
 from string import Template
+from urllib.parse import quote
 
 
 # fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour
@@ -3419,10 +3420,33 @@ class RustWrapperGenerator(object):
             if has_impl:
                 self.moduleSafeRust.write("}\n\n")
 
+    def preprocess_formula(self, text):
+        macros = {
+            "matTT": ["\\[ \\left|\\begin{array}{ccc} #1 & #2 & #3\\\\ #4 & #5 & #6\\\\ #7 & #8 & #9 \\end{array}\\right| \\]", 9],
+            "fork": ["\\left\\{ \\begin{array}{l l} #1 & \\mbox{#2}\\\\ #3 & \\mbox{#4}\\\\ \\end{array} \\right.", 4],
+            "forkthree": ["\\left\\{ \\begin{array}{l l} #1 & \\mbox{#2}\\\\ #3 & \\mbox{#4}\\\\ #5 & \\mbox{#6}\\\\ \\end{array} \\right.", 6],
+            "forkfour": ["\\left\\{ \\begin{array}{l l} #1 & \\mbox{#2}\\\\ #3 & \\mbox{#4}\\\\ #5 & \\mbox{#6}\\\\ #7 & \\mbox{#8}\\\\ \\end{array} \\right.", 8],
+            "vecthree": ["\\begin{bmatrix} #1\\\\ #2\\\\ #3 \\end{bmatrix}", 3],
+            "vecthreethree": ["\\begin{bmatrix} #1 & #2 & #3\\\\ #4 & #5 & #6\\\\ #7 & #8 & #9 \\end{bmatrix}", 9],
+            "hdotsfor": ["\\dots", 1],
+            "mathbbm": ["\\mathbb{#1}", 1],
+            "bordermatrix": ["\\matrix{#1}", 1]
+        }
+
+        def repl_formulas(m, repl_string):
+            return re.sub(r"#(\d+)",  lambda g: repl_groups(g, m), repl_string)
+
+        def repl_groups(g, m):
+            return m.group(int(g.group(1)))
+
+        for macro, params in macros.items():
+            text = re.sub(r"\\{}{}".format(macro, r"\s*\{([^}]*?)\}" * params[1]), lambda m: repl_formulas(m, params[0]), text)
+        return text
+
     def reformat_doc(self, text, func_info=None, comment_prefix="///"):
         """
         :type text: str
-        :type func_info: FuncInfo
+        :type func_info: FuncInfo|None
         :type comment_prefix: str
         :rtype: str
         """
@@ -3466,17 +3490,28 @@ class RustWrapperGenerator(object):
         # deprecated
         m = re.search(r"^.*?@deprecated\s+(.+)", text, re.M)
         deprecated = None
-        if m is not None:
+        if m:
             text = re.sub(r"^.*?@deprecated\s+(.+)", r"**Deprecated**: \1\n", text, 0, re.M)
             deprecated = m.group(1)
         # ?
         text = re.sub("^-  (.*)", "*  \\1", text, 0, re.M)
         # math expressions
-        # if r"\f" in text:
-        #     text = '<script type="text/javascript" src="https://latex.codecogs.com/latexit.js"></script>\n' + text  # fixme, slows down browser a lot
-        text = re.sub(r"\\f\[", "<div lang='latex'>", text, 0, re.M)
-        text = re.sub(r"\\f\]", "</div>", text, 0, re.M)
-        text = re.sub(r"\\f\$(.*?)\\f\$", "<span lang='latex'>\\1</span>", text, 0, re.M)
+        text = re.sub(
+            r"\\f\[(.*?)\\f\]",
+            lambda m: "![block formula](https://latex.codecogs.com/png.latex?{})".format(quote(self.preprocess_formula(m.group(1)), "")),
+            text,
+            0,
+            re.DOTALL
+        )
+        text = re.sub(
+            r"\\f\$(.*?)\\f\$",
+            lambda m: "![inline formula](https://latex.codecogs.com/png.latex?{})".format(quote(self.preprocess_formula(m.group(1)), "")),
+            text,
+            0,
+            re.DOTALL
+        )
+        # escapes
+        text = re.sub(r"\\n$", "\n", text, 0, re.M)
         # catch sequences of 4 indents and reduce them to avoid cargo test running them as code
         text = re.sub(r"^((\s{1,5})\2{3})(\S)", r"\2\3", text, 0, re.M)
         text = text.strip()
