@@ -11,6 +11,9 @@ edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
 build = "build.rs"
 
+[lib]
+doctest = false
+
 [badges]
 travis-ci = { repository = "twistedfall/opencv-rust", branch = "master" }
 
