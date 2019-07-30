@@ -1,13 +1,28 @@
 use std::{
     fmt,
     ops::Deref,
-    slice,
+    slice
 };
 
 use libc::{c_uchar, size_t};
 
 use crate::{
-    core::{self, Mat, MatConstIterator, MatSize, MatStep, Scalar, UMat},
+    core::{
+        self,
+        InputArray,
+        InputOutputArray,
+        Mat,
+        MatConstIterator,
+        MatExpr,
+        MatSize,
+        MatStep,
+        OutputArray,
+        Scalar,
+        ToInputArray,
+        ToInputOutputArray,
+        ToOutputArray,
+        UMat,
+    },
     Error,
     Result,
     sys,
@@ -425,6 +440,27 @@ impl Mat {
     }
 }
 
+impl ToInputArray for Mat {
+    #[inline]
+    fn input_array(&self) -> Result<InputArray> {
+        InputArray::from_mat(self)
+    }
+}
+
+impl ToOutputArray for Mat {
+    #[inline]
+    fn output_array(&mut self) -> Result<OutputArray> {
+        OutputArray::from_mat(self)
+    }
+}
+
+impl ToInputOutputArray for Mat {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<InputOutputArray> {
+        InputOutputArray::from_mat(self)
+    }
+}
+
 impl fmt::Debug for Mat {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let typ = self.typ();
@@ -461,6 +497,27 @@ impl UMat {
                 return { Error::Code::StsOk, NULL, *reinterpret_cast<SizeWrapper*>(&ret) };
             } CVRS_CATCH(cv_return_value_SizeWrapper)
         }).into_result()
+    }
+}
+
+impl ToInputArray for UMat {
+    #[inline]
+    fn input_array(&self) -> Result<InputArray> {
+        InputArray::from_umat(self)
+    }
+}
+
+impl ToOutputArray for UMat {
+    #[inline]
+    fn output_array(&mut self) -> Result<OutputArray> {
+        OutputArray::from_umat(self)
+    }
+}
+
+impl ToInputOutputArray for UMat {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<InputOutputArray> {
+        InputOutputArray::from_umat(self)
     }
 }
 
@@ -550,6 +607,13 @@ impl MatConstIterator {
         }).as_ref()
             .map(convert_ptr)
             .ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer")))
+    }
+}
+
+impl ToInputArray for MatExpr {
+    #[inline]
+    fn input_array(&self) -> Result<InputArray> {
+        InputArray::from_mat_expr(self)
     }
 }
 

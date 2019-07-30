@@ -17,8 +17,8 @@ from urllib.parse import quote
 # fixme VectorOfMat::get allows to mutate?
 # fixme get comments from HOUGH_PROBABILISTIC in imgproc
 # fixme get multiline comments from LSD_REFINE_ADV in imgproc
-# fixme add support for InputArray and friends to allow passing UMat
 # fixme remove ndims argument when slice is supplied and read it from slice
+# fixme generate struct and trait for e.g. _InputArray
 
 def template(text):
     """
@@ -88,6 +88,15 @@ def make_safe_id(extern_id):
 # value: list of declarations as supplied by hdr_parser
 decls_manual_pre = {
     "core": [
+        ("class cv._InputArray", "", ["/Ghost", "/A"], []),
+        ("typedef cv.InputArray", "const _InputArray&", [], []),
+        ("class cv._OutputArray", "", ["/Ghost", "/A"], []),
+        ("typedef cv.OutputArray", "_OutputArray&", [], []),
+        ("class cv._InputOutputArray", "", ["/Ghost"], []),
+        ("typedef cv.InputOutputArray", "_InputOutputArray&", [], []),
+        ("typedef cv.InputArrayOfArrays", "InputArray", [], []),
+        ("typedef cv.OutputArrayOfArrays", "OutputArray", [], []),
+        ("typedef cv.InputOutputArrayOfArrays", "InputOutputArray", [], []),
         ("class cv.Range", "", ["/Ghost"], []),
         ("class cv.MatExpr", "", ["/Ghost"], []),
         ("class cv.Mat", "", ["/Ghost"], []),
@@ -98,6 +107,10 @@ decls_manual_pre = {
         ("class cv.RotatedRect", "", ["/Ghost"], []),
         ("class cv.TermCriteria", "", ["/Ghost"], []),
         ("class cv.utils.logging.LogTag", "", ["/Ghost"], []),
+    ],
+    "features2d": [
+        ("class cv.Feature2D", ": cv::Algorithm", ["/Ghost", "/A"], []),
+        ("typedef cv.FeatureDetector", "Feature2D", [], []),
     ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
@@ -120,31 +133,33 @@ decls_manual_post = {
 # dict of functions to rename or skip, key is FuncInfo.identifier, value is new name ("+" will be replaces by old name) or "-" to skip
 func_rename = {
     ### bioinspired ###
-    "cv_bioinspired_createRetina_OCL_Size": "-",  # requires opencl
-    "cv_bioinspired_createRetina_OCL_Size_bool_int_bool_float_float": "-",  # requires opencl
+    "cv_bioinspired_Retina_setup_String_bool": "+_from_file",
+    "cv_bioinspired_Retina_getParvoRAW__OutputArray": "+_to",
+    "cv_bioinspired_Retina_getMagnoRAW__OutputArray": "+_to",
+    "cv_bioinspired_Retina_create_Size_bool_int_bool_float_float": "+_ext",
+    "cv_bioinspired_createRetina_OCL_Size_bool_int_bool_float_float": "+_ext",  # 3.2 only
+    "cv_bioinspired_TransientAreasSegmentationModule_setup_String_bool": "+_from_file",
 
     ### calib3d ###
-    "cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat": "+_matrix",
-    "cv_findHomography_Mat_Mat_int_double_Mat_int_double": "+_full",
-    "cv_undistortPoints_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria": "+_with_criteria",
-    "cv_fisheye_projectPoints_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat": "fisheye_+",
-    "cv_fisheye_undistortImage_Mat_Mat_Mat_Mat_Mat_Size": "fisheye_+",
-    "cv_fisheye_undistortPoints_Mat_Mat_Mat_Mat_Mat_Mat": "fisheye_+",
-    "cv_fisheye_initUndistortRectifyMap_Mat_Mat_Mat_Mat_Size_int_Mat_Mat": "fisheye_+",
-    "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_Mat": "+_camera_with_points",
-    "cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat_Mat": "+_camera",
-    "cv_solvePnP_Mat_Mat_Mat_Mat_Mat_Mat_bool_int": "solve_pnp",
-    "cv_solvePnPRansac_Mat_Mat_Mat_Mat_Mat_Mat_bool_int_float_double_Mat_int": "solve_pnp_ransac",
-    "cv_solvePnPRefineLM_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria": "solve_pnp_refine_lm",
-    "cv_solvePnPRefineVVS_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria_double": "solve_pnp_refine_vvs",
-    "cv_solveP3P_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_int": "solve_p3p",
-    "cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria": "+_with_stddev",
-    "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera",
-    "cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_int_TermCriteria": "+_camera_with_errors",
-    "cv_calibrateCameraRO_VectorOfMat_VectorOfMat_Size_int_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Mat_int_TermCriteria": "+_with_stddev",
-    "cv_stereoRectify_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_int_double_Size_Rect_X_Rect_X": "+_camera",
-    "cv_findFundamentalMat_Mat_Mat_int_double_double_Mat": "-",  # duplicate of cv_findFundamentalMat_Mat_Mat_Mat_int_double_double, but with different order of arguments
-    "cv_initWideAngleProjMap_Mat_Mat_Size_int_int_Mat_Mat_int_double": "+_with_type",
+    "cv_findEssentialMat__InputArray__InputArray__InputArray_int_double_double__OutputArray": "+_matrix",
+    "cv_findHomography__InputArray__InputArray_int_double__OutputArray_int_double": "+_ext",
+    "cv_undistortPoints__InputArray__OutputArray__InputArray__InputArray__InputArray__InputArray_TermCriteria": "+_with_criteria",
+    "cv_fisheye_projectPoints__InputArray__OutputArray__InputArray__InputArray__InputArray__InputArray_double__OutputArray": "fisheye_+",
+    "cv_fisheye_stereoCalibrate__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray__InputOutputArray__InputOutputArray_Size__OutputArray__OutputArray_int_TermCriteria": "fisheye_+",
+    "cv_fisheye_stereoRectify__InputArray__InputArray__InputArray__InputArray_Size__InputArray__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_Size_double_double": "fisheye_+",
+    "cv_fisheye_undistortImage__InputArray__OutputArray__InputArray__InputArray__InputArray_Size": "fisheye_+",
+    "cv_fisheye_undistortPoints__InputArray__OutputArray__InputArray__InputArray__InputArray__InputArray": "fisheye_+",
+    "cv_fisheye_initUndistortRectifyMap__InputArray__InputArray__InputArray__InputArray_Size_int__OutputArray__OutputArray": "fisheye_+",
+    "cv_recoverPose__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray__InputOutputArray": "+_camera_with_points",
+    "cv_recoverPose__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_double__InputOutputArray__OutputArray": "+_camera",
+    "cv_calibrateCamera__InputArray__InputArray_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria": "+_with_stddev",
+    "cv_stereoCalibrate__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray__InputOutputArray__InputOutputArray_Size__OutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria": "+_camera",
+    "cv_stereoCalibrate__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray__InputOutputArray__InputOutputArray_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria": "+_camera_with_errors",
+    "cv_calibrateCameraRO__InputArray__InputArray_Size_int__InputOutputArray__InputOutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria": "+_with_stddev",
+    "cv_stereoRectify__InputArray__InputArray__InputArray__InputArray_Size__InputArray__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_double_Size_Rect_X_Rect_X": "+_camera",
+    "cv_findFundamentalMat__InputArray__InputArray_int_double_double__OutputArray": "-",  # duplicate of cv_findFundamentalMat_Mat_Mat_Mat_int_double_double, but with different order of arguments
+    "cv_initWideAngleProjMap__InputArray__InputArray_Size_int_int__OutputArray__OutputArray_int_double": "+_with_type_i32",
+    "cv_findCirclesGrid__InputArray_Size__OutputArray_int_PtrOfFeature2D_CirclesGridFinderParameters": "+_params",
 
     ### core ###
     "cv_addImpl_int_const_char_X": "-",
@@ -174,7 +189,7 @@ func_rename = {
     "cv_Mat_Mat_Mat_VectorOfRange": "ranges",
     "cv_Mat_colRange_const_int_int": "col_bounds",
     "cv_Mat_rowRange_const_int_int": "row_bounds",
-    "cv_Mat_copyTo_const_Mat_Mat": "+_masked",
+    "cv_Mat_copyTo_const__OutputArray__InputArray": "+_masked",
     "cv_Mat_create_int_int_int": "+_rows_cols",
     "cv_Mat_create_Size_int": "+_size",
     "cv_Mat_create_VectorOfint_int": "+_nd",
@@ -212,19 +227,23 @@ func_rename = {
     "cv_Mat_ones_Size_int": "+_size",
     "cv_Mat_ones_int_const_int_X_int": "+_nd",
     "cv_Mat_eye_Size_int": "+_size",
+    "cv_Mat_push_back__const_void_X": "-",  # internal method
+    "cv_min_Mat_Mat": "+_mat",
+    "cv_min_Mat_Mat_Mat": "+_mat_to",
+    "cv_min_Mat_double": "+_mat_f64",
+    "cv_min_double_Mat": "+_f64_mat",
+    "cv_min_UMat_UMat_UMat": "+_umat_to",
+    "cv_max_Mat_Mat": "+_mat",
+    "cv_max_Mat_Mat_Mat": "+_mat_to",
+    "cv_max_Mat_double": "+_mat_f64",
+    "cv_max_double_Mat": "+_f64_mat",
+    "cv_max_UMat_UMat_UMat": "+_umat_to",
+    "cv_minMaxLoc_SparseMat_double_X_double_X_int_X_int_X": "+_sparse",
+    "cv_swap_UMat_UMat": "+_umat",
     "cv_UMat_UMat_int_int_int_UMatUsageFlags": "+_rows_cols",
     "cv_UMat_UMat_Size_int_UMatUsageFlags": "+_size",
     "cv_UMat_UMat_int_int_int_Scalar_UMatUsageFlags": "+_rows_cols_with_default",
     "cv_UMat_UMat_Size_int_Scalar_UMatUsageFlags": "+_size_with_default",
-    "cv_min_Mat_Mat_Mat": "+_to",
-    "cv_min_Mat_double": "+_mat_f64",
-    "cv_min_double_Mat": "+_f64_mat",
-    "cv_min_UMat_UMat_UMat": "+_umat",
-    "cv_max_Mat_Mat_Mat": "+_to",
-    "cv_max_Mat_double": "+_mat_f64",
-    "cv_max_double_Mat": "+_f64_mat",
-    "cv_max_UMat_UMat_UMat": "+_umat",
-    "cv_swap_UMat_UMat": "+_umat",
     "cv_UMat_UMat_int_const_int_X_int_UMatUsageFlags": "+_nd",
     "cv_UMat_UMat_int_const_int_X_int_Scalar_UMatUsageFlags": "+_nd_with_default",  # fixme
     "cv_UMat_UMat_UMat_Range_Range": "rowscols",
@@ -242,18 +261,16 @@ func_rename = {
     "cv_UMat_create_VectorOfint_int_UMatUsageFlags": "+_nd",
     "cv_UMat_create_int_const_int_X_int_UMatUsageFlags": "-",  # duplicate of cv_UMat_create_VectorOfint_int_UMatUsageFlags, but with pointers
     "cv_UMat_type_const": "typ",
-    "cv_UMat_copyTo_const_Mat": "copy_to",
-    "cv_UMat_copyTo_const_Mat_Mat": "copy_to_masked",
+    "cv_UMat_copyTo_const__OutputArray__InputArray": "+_masked",
     "cv_UMat_copySize_UMat": "-",  # internal function
-    "cv_Mat_push_back__const_void_X": "-",  # internal method
-    "cv_merge_const_Mat_size_t_Mat": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
-    "cv_PCA_PCA_Mat_Mat_int_double": "new_mat_variance",
-    "cv_PCA_PCA_Mat_Mat_int_int": "new_mat_max",
-    "cv_PCA_backProject_const_Mat_Mat": "+_to",
-    "cv_PCA_project_const_Mat_Mat": "+_to",
-    "cv_PCACompute_Mat_Mat_Mat_double": "pca_compute_variance",
-    "cv_PCACompute_Mat_Mat_Mat_Mat_double": "pca_compute_values_variance",
-    "cv_PCACompute_Mat_Mat_Mat_Mat_int": "pca_compute_values",
+    "cv_merge_const_Mat_size_t__OutputArray": "-",  # duplicate of cv_merge_VectorOfMat_Mat, but with pointers
+    "cv_PCA_PCA__InputArray__InputArray_int_double": "+_mat_variance",
+    "cv_PCA_PCA__InputArray__InputArray_int_int": "+_mat_max",
+    "cv_PCA_backProject_const__InputArray__OutputArray": "+_to",
+    "cv_PCA_project_const__InputArray__OutputArray": "+_to",
+    "cv_PCACompute__InputArray__InputOutputArray__OutputArray_double": "+_variance",
+    "cv_PCACompute__InputArray__InputOutputArray__OutputArray__OutputArray_double": "+_values_variance",
+    "cv_PCACompute__InputArray__InputOutputArray__OutputArray__OutputArray_int": "+_values",
     "cv_Range_Range_int_int": "new",
     "cv_RotatedRect_RotatedRect_Point2f_Point2f_Point2f": "for_points",
     "cv_calcCovarMatrix_const_Mat_int_Mat_Mat_int_int": "-",  # duplicate of cv_calcCovarMatrix_Mat_Mat_Mat_int_int, but with pointers
@@ -263,13 +280,15 @@ func_rename = {
     "cv_cv_abs_short": "-",
     "cv_cv_abs_uchar": "-",
     "cv_abs_MatExpr": "+_matexpr",
-    "cv_divide_Mat_Mat_Mat_double_int": "divide_mat",
-    "cv_ellipse_Mat_RotatedRect_Scalar_int_int": "ellipse_new_rotated_rect",
+    "cv_divide__InputArray__InputArray__OutputArray_double_int": "+2",
+    "cv_ellipse__InputOutputArray_RotatedRect_Scalar_int_int": "ellipse_new_rotated_rect",
     "cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_VectorOfPoint2d": "ellipse_2_poly_f64",
     "cv_ellipse2Poly_Point_Size_int_int_int_int_VectorOfPoint": "ellipse_2_poly",
-    "cv_norm_Mat_Mat_int_Mat": "norm_with_type",
-    "cv_rectangle_Mat_Point_Point_Scalar_int_int_int": "rectangle_points",
-    "cv_repeat_Mat_int_int_Mat": "repeat_to",
+    "cv_norm__InputArray__InputArray_int__InputArray": "+2",
+    "cv_norm_SparseMat_int": "+_sparse",
+    "cv_normalize_SparseMat_SparseMat_double_int": "+_sparse",
+    "cv_rectangle__InputOutputArray_Point_Point_Scalar_int_int_int": "+_points",
+    "cv_repeat__InputArray_int_int__OutputArray": "+_to",
     "cv_split_Mat_Mat": "-",  # duplicate of cv_split_Mat_VectorOfMat, but with pointers
     "cv_getNumberOfCPUs": "get_number_of_cpus",
     "cv_setImpl_int": "-",
@@ -277,16 +296,15 @@ func_rename = {
     "cv_useCollection": "-",
     "cv_directx_getTypeFromD3DFORMAT_int": "get_type_from_d3d_format",
     "cv_divUp_size_t_unsigned_int": "duv_up_u",
-    "cv_hconcat_Mat_Mat_Mat": "hconcat_2",
-    "cv_hconcat_const_Mat_size_t_Mat": "-",  # duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
-    "cv_vconcat_Mat_Mat_Mat": "vconcat_2",
-    "cv_vconcat_const_Mat_size_t_Mat": "-",  # duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
+    "cv_hconcat__InputArray__InputArray__OutputArray": "+2",
+    "cv_hconcat_const_Mat_size_t__OutputArray": "-",  # duplicate of cv_hconcat_VectorOfMat_Mat, but with pointers
+    "cv_vconcat__InputArray__InputArray__OutputArray": "+2",
+    "cv_vconcat_const_Mat_size_t__OutputArray": "-",  # duplicate of cv_vconcat_VectorOfMat_Mat, but with pointers
     "cv_Cholesky_float_X_size_t_int_float_X_size_t_int": "cholesky_f32",
     "cv_LU_float_X_size_t_int_float_X_size_t_int": "lu_f32",
-    "cv_LDA_LDA_VectorOfMat_Mat_int": "new_with_data",
-    "cv_mixChannels_VectorOfMat_VectorOfMat_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
+    "cv_LDA_LDA__InputArray__InputArray_int": "+_with_data",
+    "cv_mixChannels__InputArray__InputOutputArray_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
     "cv_mixChannels_const_Mat_size_t_Mat_size_t_const_int_X_size_t": "-",  # duplicate of cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint, but with pointers
-    "cv_noArray": "-",  # fixme: conversion from ‘const cv::_InputOutputArray’ to non-scalar type ‘cv::Mat’ requested
     "cv_detail_typeToString__int": "-",  # detail function
     "cv_detail_depthToString__int": "-",  # detail function
     "cv_MatConstIterator_MatConstIterator_const_Mat": "over",
@@ -295,8 +313,8 @@ func_rename = {
     "cv_MatConstIterator_MatConstIterator_const_Mat_const_int_X": "with_idx",
     "cv_MatConstIterator_pos_const_int_X": "+_to",
     "cv_MatConstIterator_seek_const_int_X_bool": "+_idx",
-    "cv_AsyncArray_get_const_Mat_int64": "+_with_timeout",
-    "cv_AsyncArray_get_const_Mat_double": "+_with_timeout_f64",
+    "cv_AsyncArray_get_const__OutputArray_int64": "+_with_timeout",
+    "cv_AsyncArray_get_const__OutputArray_double": "+_with_timeout_f64",
     "cv_AsyncArray_wait_for_const_double": "+_f64",
     "cv_AsyncArray__getImpl_const": "-",
     "cv_ocl_internal_isCLBuffer_UMat": "-",
@@ -309,36 +327,42 @@ func_rename = {
     "cv_ocl_Kernel_set_int_KernelArg": "+_kernel_arg",
     "cv_ocl_Program_getPrefix_String": "+_build_flags",
     "cv_ocl_ProgramSource_ProgramSource_String": "from_str",
+    "cv__InputArray_copyTo_const__OutputArray__InputArray": "+_with_mask",
+    "cv__InputOutputArray__InputOutputArray_Mat": "from_mat",
+    "cv__InputOutputArray__InputOutputArray_VectorOfMat": "from_mat_vec",
+    # "cv__InputArray__InputArray_double": "from_f64",
+    "cv__InputOutputArray__InputOutputArray_UMat": "from_umat",
+    "cv__InputOutputArray__InputOutputArray_VectorOfUMat": "from_umat_vec",
 
     ### features2d ###
-    "cv_AGAST_Mat_VectorOfKeyPoint_int_bool": "AGAST",
-    "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_int": "AGAST_with_type",  # 3.x only
-    "cv_AGAST_Mat_VectorOfKeyPoint_int_bool_AgastFeatureDetector_DetectorType": "AGAST_with_type",
+    "cv_AGAST__InputArray_VectorOfKeyPoint_int_bool": "AGAST",
+    "cv_AGAST__InputArray_VectorOfKeyPoint_int_bool_int": "AGAST_with_type",  # 3.x only
+    "cv_AGAST__InputArray_VectorOfKeyPoint_int_bool_AgastFeatureDetector_DetectorType": "AGAST_with_type",
     "cv_BOWKMeansTrainer_cluster_const_Mat": "new",
     "cv_BOWKMeansTrainer_BOWKMeansTrainer_int_TermCriteria_int_int": "new_with_criteria",
-    "cv_BOWImgDescriptorExtractor_compute_Mat_VectorOfKeyPoint_Mat_VectorOfVectorOfint_Mat": "compute_desc",
+    "cv_BOWImgDescriptorExtractor_compute__InputArray_VectorOfKeyPoint__OutputArray_VectorOfVectorOfint_Mat": "+_desc",
     "cv_DMatch_DMatch_int_int_int_float": "new_index",
-    "cv_DescriptorMatcher_knnMatch_const_Mat_Mat_VectorOfVectorOfDMatch_int_Mat_bool": "knn_train_matches",
-    "cv_DescriptorMatcher_knnMatch_Mat_VectorOfVectorOfDMatch_int_VectorOfMat_bool": "knn_matches",
-    "cv_DescriptorMatcher_match_Mat_VectorOfDMatch_VectorOfMat": "matches",
-    "cv_DescriptorMatcher_match_const_Mat_Mat_VectorOfDMatch_Mat": "train_matches",
-    "cv_DescriptorMatcher_radiusMatch_const_Mat_Mat_VectorOfVectorOfDMatch_float_Mat_bool": "train_radius_matches",
-    "cv_DescriptorMatcher_radiusMatch_Mat_VectorOfVectorOfDMatch_float_VectorOfMat_bool": "radius_matches",
-    "cv_FAST_Mat_VectorOfKeyPoint_int_bool": "FAST",
-    "cv_FAST_Mat_VectorOfKeyPoint_int_bool_int": "FAST_with_type",  # 3.x only
-    "cv_FAST_Mat_VectorOfKeyPoint_int_bool_FastFeatureDetector_DetectorType": "FAST_with_type",
-    "cv_Feature2D_detect_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "+_multiple",
+    "cv_DescriptorMatcher_knnMatch_const__InputArray__InputArray_VectorOfVectorOfDMatch_int__InputArray_bool": "knn_train_matches",
+    "cv_DescriptorMatcher_knnMatch__InputArray_VectorOfVectorOfDMatch_int__InputArray_bool": "knn_matches",
+    "cv_DescriptorMatcher_match__InputArray_VectorOfDMatch__InputArray": "matches",
+    "cv_DescriptorMatcher_match_const__InputArray__InputArray_VectorOfDMatch__InputArray": "train_matches",
+    "cv_DescriptorMatcher_radiusMatch_const__InputArray__InputArray_VectorOfVectorOfDMatch_float__InputArray_bool": "train_radius_matches",
+    "cv_DescriptorMatcher_radiusMatch__InputArray_VectorOfVectorOfDMatch_float__InputArray_bool": "radius_matches",
+    "cv_FAST__InputArray_VectorOfKeyPoint_int_bool": "FAST",
+    "cv_FAST__InputArray_VectorOfKeyPoint_int_bool_int": "FAST_with_type",  # 3.x only
+    "cv_FAST__InputArray_VectorOfKeyPoint_int_bool_FastFeatureDetector_DetectorType": "FAST_with_type",
+    "cv_Feature2D_detect__InputArray_VectorOfVectorOfKeyPoint__InputArray": "+_multiple",
     "cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int": "new_point",
     "cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int": "new_coords",
     "cv_KeyPoint_convert_VectorOfKeyPoint_VectorOfPoint2f_VectorOfint": "convert_from",
     "cv_KeyPoint_convert_VectorOfPoint2f_VectorOfKeyPoint_float_float_int_int": "convert_to",
-    "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int": "+_vector",
-    "cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_DrawMatchesFlags": "+_vector",
+    "cv_drawMatches__InputArray_VectorOfKeyPoint__InputArray_VectorOfKeyPoint_VectorOfVectorOfDMatch__InputOutputArray_Scalar_Scalar_VectorOfVectorOfchar_int": "+_vec",  # 3.x only
+    "cv_drawMatches__InputArray_VectorOfKeyPoint__InputArray_VectorOfKeyPoint_VectorOfVectorOfDMatch__InputOutputArray_Scalar_Scalar_VectorOfVectorOfchar_DrawMatchesFlags": "+_vec",
     "cv_BRISK_create_VectorOffloat_VectorOfint_float_float_VectorOfint": "create_with_pattern",
     "cv_BRISK_create_int_int_VectorOffloat_VectorOfint_float_float_VectorOfint": "create_with_pattern_threshold_octaves",
     "cv_BOWTrainer_cluster_const_Mat": "cluster_with_descriptors",
     "cv_GFTTDetector_create_int_double_double_int_int_bool_double": "+_with_gradient",
-    "cv_Feature2D_compute_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat": "+_multiple",
+    "cv_Feature2D_compute__InputArray_VectorOfVectorOfKeyPoint__OutputArray": "+_multiple",
     "cv_DescriptorMatcher_create_int": "+_with_matcher_type",  # 3.x only
     "cv_DescriptorMatcher_create_DescriptorMatcher_MatcherType": "+_with_matcher_type",
     "cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_PtrOfFeature2D_PtrOfDescriptorMatcher": "new_with_dextractor",
@@ -349,52 +373,67 @@ func_rename = {
 
     ### highgui ###
     "cv_addText_Mat_String_Point_QtFont": "+_with_font",
-    "cv_selectROIs_String_Mat_VectorOfRect_bool_bool": "select_rois",
-    "cv_selectROI_String_Mat_bool_bool": "+_for_window",
+    "cv_selectROIs_String__InputArray_VectorOfRect_bool_bool": "select_rois",
+    "cv_selectROI_String__InputArray_bool_bool": "+_for_window",
 
     ### imgcodecs ###
-    "cv_imdecode_Mat_int_Mat": "+_to",
+    "cv_imdecode__InputArray_int_Mat": "+_to",
 
     ### imgproc ###
-    "cv_Canny_Mat_Mat_Mat_double_double_bool": "+_derivative",
+    "cv_Canny__InputArray__InputArray__OutputArray_double_double_bool": "+_derivative",
+    "cv_applyColorMap__InputArray__OutputArray__InputArray": "+_user",
+    "cv_connectedComponentsWithStats__InputArray__OutputArray__OutputArray__OutputArray_int_int_int": "+_algo",
+    "cv_connectedComponents__InputArray__OutputArray_int_int_int": "+_algo",
     "cv_Subdiv2D_insert_VectorOfPoint2f": "+_multiple",
-    "cv_findContours_Mat_VectorOfMat_Mat_int_int_Point": "+_with_hierarchy",
-    "cv_distanceTransform_Mat_Mat_Mat_int_int_int": "+_labels",
-    "cv_integral_Mat_Mat_Mat_Mat_int_int": "+_titled_sq",
-    "cv_integral_Mat_Mat_Mat_int_int": "+_sq_depth",
-    "cv_GeneralizedHough_detect_Mat_Mat_Mat_Mat_Mat": "+_with_edges",
-    "cv_goodFeaturesToTrack_Mat_Mat_int_double_double_Mat_int_int_bool_double": "+_with_gradient",
-    "cv_getAffineTransform_Mat_Mat": "+_mat",
-    "cv_getPerspectiveTransform_Mat_Mat": "+_mat",  # 3.x only
-    "cv_getPerspectiveTransform_Mat_Mat_int": "+_mat",
+    "cv_findContours__InputArray__OutputArray__OutputArray_int_int_Point": "+_with_hierarchy",  # 4.x only
+    "cv_findContours__InputOutputArray__OutputArray__OutputArray_int_int_Point": "+_with_hierarchy",  # 3.x only
+    "cv_distanceTransform__InputArray__OutputArray__OutputArray_int_int_int": "+_labels",
+    "cv_fillConvexPoly__InputOutputArray_const_Point_X_int_Scalar_int_int": "-",  # duplicate of cv_fillConvexPoly__InputOutputArray__InputArray_Scalar_int_int, but with pointers
+    "cv_fillConvexPoly_Mat_const_Point_X_int_Scalar_int_int": "-",  # duplicate of cv_fillConvexPoly__InputOutputArray__InputArray_Scalar_int_int, but with pointers
+    "cv_floodFill__InputOutputArray__InputOutputArray_Point_Scalar_Rect_X_Scalar_Scalar_int": "+_mask",
+    "cv_integral__InputArray__OutputArray__OutputArray__OutputArray_int_int": "+_titled_sq",
+    "cv_integral__InputArray__OutputArray__OutputArray_int_int": "+_sq_depth",
+    "cv_GeneralizedHough_detect__InputArray__InputArray__InputArray__OutputArray__OutputArray": "+_with_edges",
+    "cv_goodFeaturesToTrack__InputArray__OutputArray_int_double_double__InputArray_int_int_bool_double": "+_with_gradient",
+    "cv_getAffineTransform_const_Point2f_X_const_Point2f_X": "+_slice",
+    "cv_getPerspectiveTransform_const_Point2f_X_const_Point2f_X": "+_slice",  # 3.x only
+    "cv_getPerspectiveTransform_const_Point2f_X_const_Point2f_X_int": "+_slice",  # 4.x only
+
+    ### line_descriptor ###
+    "cv_line_descriptor_LSDDetector_detect_const_VectorOfMat_VectorOfVectorOfKeyLine_int_int_VectorOfMat": "+_multiple",
 
     ### ml ###
+    "cv_ml_StatModel_train_PtrOfTrainData_int": "+_with_data",
+    "cv_ml_SVM_trainAuto_PtrOfTrainData_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool": "+_with_data",
     "cv_ml_ParamGrid_ParamGrid_double_double_double": "for_range",
 
     ### objdetect ###
-    "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "detect_multi_scale_levels",
-    "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size": "detect_multi_scale_num",
-    "cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size": "detect_multi_scale",
+    "cv_CascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "+_levels",
+    "cv_CascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_double_int_int_Size_Size": "+_num",
     "cv_HOGDescriptor_HOGDescriptor_String": "new_from_file",
-    "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool": "detect_multi_scale",
-    "cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_double_Size_Size_double_double_bool": "detect_multi_scale_weights",
-    "cv_HOGDescriptor_detect_const_Mat_VectorOfPoint_VectorOfdouble_double_Size_Size_VectorOfPoint": "detect_weights",
+    "cv_HOGDescriptor_detect_const__InputArray_VectorOfPoint_VectorOfdouble_double_Size_Size_VectorOfPoint": "+_weights",  # 4.x only
+    "cv_HOGDescriptor_detect_const_Mat_VectorOfPoint_VectorOfdouble_double_Size_Size_VectorOfPoint": "+_weights",  # 3.x only
+    "cv_HOGDescriptor_detectMultiScale_const__InputArray_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool": "+_weights",
     "cv_groupRectangles_VectorOfRect_VectorOfint_VectorOfdouble_int_double": "+_levels",
     "cv_groupRectangles_VectorOfRect_VectorOfint_int_double": "+_weights",
     "cv_groupRectangles_VectorOfRect_int_double_VectorOfint_VectorOfdouble": "+_levelweights",
-    "cv_ml_StatModel_train_PtrOfTrainData_int": "+_with_data",
-    "cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size": "+_num",
-    "cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "+_levels",
-    "cv_HOGDescriptor_setSVMDetector_Mat": "+_mat",
+    "cv_BaseCascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_double_int_int_Size_Size": "+_num",
+    "cv_BaseCascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool": "+_levels",
+    "cv_HOGDescriptor_set_svmDetector_VectorOffloat": "+_vec",
 
     ### photo ###
-    "cv_fastNlMeansDenoisingColored_Mat_Mat_float_float_int_int": "fast_nl_means_denoising_color",
-    "cv_fastNlMeansDenoising_Mat_Mat_VectorOffloat_int_int_int": "fast_nl_means_denoising_vec",
-    "cv_fastNlMeansDenoising_Mat_Mat_float_int_int": "fast_nl_means_denoising_window",
-    "cv_AlignMTB_process_VectorOfMat_VectorOfMat_Mat_Mat": "process_with_response",
-    "cv_MergeDebevec_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
-    "cv_MergeMertens_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
-    "cv_MergeRobertson_process_VectorOfMat_Mat_Mat_Mat": "process_with_response",
+    "cv_fastNlMeansDenoisingMulti__InputArray__OutputArray_int_int_float_int_int": "+_vec",
+    "cv_fastNlMeansDenoising__InputArray__OutputArray_VectorOffloat_int_int_int": "+_vec",
+    "cv_fastNlMeansDenoising_Mat_Mat_float_int_int": "+_window",
+    "cv_AlignMTB_process__InputArray_VectorOfMat__InputArray__InputArray": "+_with_response",
+    "cv_MergeDebevec_process__InputArray__OutputArray__InputArray__InputArray": "+_with_response",
+    "cv_MergeMertens_process__InputArray__OutputArray__InputArray__InputArray": "+_with_response",
+    "cv_MergeRobertson_process__InputArray__OutputArray__InputArray__InputArray": "process_with_response",
+
+    ### stitching ###
+    "cv_Stitcher_composePanorama__InputArray__OutputArray": "+_images",
+    "cv_Stitcher_stitch__InputArray__InputArray__OutputArray": "+_mask",
+    "cv_Stitcher_stitch__InputArray_VectorOfVectorOfRect__OutputArray": "+_rois",
 
     ### videoio ###
     "cv_VideoCapture_VideoCapture_int_int": "new_with_backend",
@@ -406,6 +445,9 @@ func_rename = {
     "cv_VideoWriter_VideoWriter_String_int_int_double_Size_bool": "new_with_backend",
     "cv_VideoWriter_open_String_int_int_double_Size_bool": "open_with_backend",
 
+    ### videostab ###
+    "cv_videostab_KeypointBasedMotionEstimator_estimate_Mat_Mat_bool_X": "+_mat",
+
     ### utility ###
     "cv_getImpl_VectorOfint_VectorOfString": "-",
 
@@ -414,8 +456,8 @@ func_rename = {
     "cv_dnn_NMSBoxes_VectorOfRotatedRect_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_rotated",
     "cv_dnn_NMSBoxes_VectorOfRect2d_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_f64",
     "cv_dnn_Dict_ptr_String": "ptr_mut",
-    "cv_dnn_Net_forward_VectorOfMat_String": "forward_layer",
-    "cv_dnn_Net_forward_VectorOfMat_VectorOfString": "forward_first_outputs",
+    "cv_dnn_Net_forward__OutputArray_String": "+_layer",
+    "cv_dnn_Net_forward__OutputArray_VectorOfString": "+_first_outputs",
     "cv_dnn_Net_forward_VectorOfVectorOfMat_VectorOfString": "forward_all",
     "cv_dnn_slice_Mat_Range": "slice_1d",
     "cv_dnn_slice_Mat_Range_Range": "slice_2d",
@@ -424,10 +466,11 @@ func_rename = {
     "cv_dnn_shape_UMat": "+_umat",
     "cv_dnn_shape_const_int_X_int": "shape_nd",
     "cv_dnn_shape_int_int_int_int": "shape_3d",
-    "cv_dnn_blobFromImage_Mat_Mat_double_Size_Scalar_bool_bool_int": "blob_from_image_to",
+    "cv_dnn_blobFromImage__InputArray__OutputArray_double_Size_Scalar_bool_bool_int": "+_to",
+    "cv_dnn_blobFromImages__InputArray__OutputArray_double_Size_Scalar_bool_bool_int": "+_to",
     "cv_dnn_clamp_Range_int": "clamp_range",
     "cv_dnn_Net_connect_String_String": "connect_first_second",
-    "cv_dnn_Layer_finalize_VectorOfMat_VectorOfMat": "finalize_to",
+    "cv_dnn_Layer_finalize__InputArray__OutputArray": "+_to",
     "cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar": "+_buffer",
     "cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t": "+_str",
     "cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar": "+_buffer",
@@ -458,8 +501,10 @@ class_ignore_list = (
     "cv::SVD",
     "cv::MatAllocator",
     "cv::TLSDataContainer",
-    "cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray",
     "cv::utils::logging::LogTagAuto",  # inherits LogTag, can't really handle this particular case yet
+
+    ### calib3d ###
+    "cv::CirclesGridFinderParameters2",  # requires proper inheritance of simple classes
 
     ### features2d ###
     "cv::DrawMatchesFlags",  # dummy type only used to contain anonymous enum, 3.x only
@@ -543,15 +588,6 @@ func_unsafe_list = {
 # key: typeid (full class path with . replaces by ::)
 # value: replacement typeid
 type_replace = {
-    "InputArray": "cv::Mat",
-    "InputArrayOfArrays": "vector<cv::Mat>",
-    "OutputArray": "cv::Mat",
-    "OutputArrayOfArrays": "vector<cv::Mat>",
-    "InputOutputArrayOfArrays": "vector<cv::Mat>",
-    "InputOutputArray": "cv::Mat",
-    "_InputArray": "cv::Mat",
-    "_OutputArray": "cv::Mat",
-    "_InputOutputArray": "cv::Mat",
     "vector_Mat": "vector<cv::Mat>",
     "vector_float": "vector<float>",
     "_Range": "cv::Range",
@@ -828,10 +864,25 @@ reserved_rename = {
     "in": "_in",
     "use": "_use",
     "match": "_match",
+    "move": "_move",
 }
 
 # list of modules that are imported into every other module so there is no need to reference them using full path, elements are module names
 static_modules = ("core", "sys", "types")
+
+data_type_typeids = {
+    "uchar", "char", "ushort", "short", "int",
+    "float", "double",
+    "cv::Vec2b", "core::Vec3b", "cv::Vec4b",
+    "cv::Vec2s", "core::Vec3s", "cv::Vec4s",
+    "cv::Vec2i", "core::Vec3i", "cv::Vec4i",
+    "cv::Vec2f", "core::Vec3f", "cv::Vec4f",
+    "cv::Vec2d", "core::Vec3d", "cv::Vec4d",
+    "cv::Scalar",
+    "cv::Point", "core::Point2i", "cv::Point2f", "cv::Point2d",
+    "cv::Size", "core::Size2i", "cv::Size2f", "cv::Size2d",
+    "cv::Rect", "core::Rect2i", "cv::Rect2f", "cv::Rect2d",
+}
 
 
 def decl_patch(module, decl):
@@ -914,6 +965,7 @@ def camel_case_to_snake_case(name):
     res = re.sub('([a-z0-9])([A-Z])', r'\1_\2', res)
     res = re.sub(r'\B([23])_(D)\b', r'_\1\2', res)  # fix 2_d and 3_d
     res = re.sub(r'_(P[n3])_(P)', r'_\1\2', res)  # fix p3_p and pn_p
+    res = re.sub(r'Open_(CL|Gl|VX)', r'Open\1', res)  # fix open_cl, open_gl, open_vx
     return res.lower()
 
 
@@ -1016,7 +1068,8 @@ class ArgInfo:
         if len(arg_tuple) > 2:
             self.defval = arg_tuple[2]
         self.out = ""
-        if typ in ("OutputArray", "OutputArrayOfArrays") or len(arg_tuple) > 3 and "/O" in arg_tuple[3] or self.type.is_by_ref and not self.type.is_const:
+        # "const _OutputArray&" is a special case for InputArray::copyTo
+        if typ in ("OutputArray", "OutputArrayOfArrays", "const _OutputArray&") or len(arg_tuple) > 3 and "/O" in arg_tuple[3] or self.type.is_by_ref and not self.type.is_const:
             self.out = "O"
         if typ in ("InputOutputArray", "InputOutputArrayOfArrays") or len(arg_tuple) > 3 and "/IO" in arg_tuple[3]:
             self.out = "IO"
@@ -2231,11 +2284,35 @@ class BoxedClassTypeInfo(TypeInfo):
         self.is_ignored = self.ci.is_ignored
         self.rust_safe_id = self.ci.name
 
+    def is_input_array(self):
+        return self.cpptype == "cv::_InputArray"
+
+    def is_output_array(self):
+        return self.cpptype == "cv::_OutputArray"
+
+    def is_input_output_array(self):
+        return self.cpptype == "cv::_InputOutputArray"
+
     def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         old_rust_full = self.rust_full
+        if self.is_input_array():
+            self.rust_full = "core::ToInputArray"
+        elif self.is_output_array():
+            self.rust_full = "core::ToOutputArray"
+        elif self.is_input_output_array():
+            self.rust_full = "dyn core::ToInputOutputArray"
         out = super().rust_arg_func_decl(var_name, is_output, attr_type)
         self.rust_full = old_rust_full
         return out
+
+    def rust_arg_pre_call(self, var_name, is_output=False):
+        if self.is_input_array():
+            return "input_array_arg!({})".format(var_name)
+        elif self.is_output_array():
+            return "output_array_arg!({})".format(var_name)
+        elif self.is_input_output_array():
+            return "input_output_array_arg!({})".format(var_name)
+        return super().rust_arg_pre_call(var_name, is_output)
 
     def cpp_method_call_name(self, method_name):
         return "reinterpret_cast<{}*>(instance)->{}".format(self.cpptype, method_name)
@@ -2346,7 +2423,7 @@ class VectorTypeInfo(TypeInfo):
                 }
                 
                 #[inline]
-                fn remove(&mut self, index: size_t) -> crate::Result<()> {
+                fn remove(&mut self, index: size_t) -> Result<()> {
                     crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
                     let vec = self.as_raw_${rust_local}();
                     cpp!(unsafe [vec as "${cpptype}*", index as "size_t"] {
@@ -2357,7 +2434,7 @@ class VectorTypeInfo(TypeInfo):
                 
                 /// Swaps values of 2 elements
                 #[inline]
-                fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+                fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
                     let len = self.len();
                     crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
                     crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -2381,7 +2458,7 @@ class VectorTypeInfo(TypeInfo):
             ${vector_methods}}
             
             unsafe impl Send for ${rust_local} {}
-        
+            ${impls}
         """),
 
         "rust_methods_boxed": template("""
@@ -2397,7 +2474,7 @@ class VectorTypeInfo(TypeInfo):
             }
             
             #[inline]
-            fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+            fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
                 crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
                 let vec = self.as_raw_${rust_local}();
                 let val = val.as_raw_${inner_rust_local}();
@@ -2408,7 +2485,7 @@ class VectorTypeInfo(TypeInfo):
             }
             
             #[inline]
-            fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+            fn get(&self, index: size_t) -> Result<Self::Storage> {
                 let vec = self.as_raw_${rust_local}();
                 cpp!(unsafe [vec as "const ${cpptype}*", index as "size_t"] -> crate::sys::${return_wrapper_type} as "${return_wrapper_type}" {
                     try {
@@ -2426,7 +2503,7 @@ class VectorTypeInfo(TypeInfo):
             }
             
             #[inline]
-            fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+            fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
                 let vec = self.as_raw_${rust_local}();
                 let val = val.ptr;
                 cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -2461,7 +2538,7 @@ class VectorTypeInfo(TypeInfo):
             }
             
             #[inline]
-            fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+            fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
                 crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
                 let vec = self.as_raw_${rust_local}();
                 let val = ::std::ffi::CString::new(val).unwrap();
@@ -2473,7 +2550,7 @@ class VectorTypeInfo(TypeInfo):
             }
             
             #[inline]
-            fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+            fn get(&self, index: size_t) -> Result<Self::Storage> {
                 let vec = self.as_raw_${rust_local}();
                 cpp!(unsafe [vec as "const ${cpptype}*", index as "size_t"] -> crate::sys::${return_wrapper_type} as "${return_wrapper_type}" {
                     try {
@@ -2491,7 +2568,7 @@ class VectorTypeInfo(TypeInfo):
             }
 
             #[inline]
-            fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+            fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
                 let vec = self.as_raw_${rust_local}();
                 let val = ::std::ffi::CString::new(val).unwrap();
                 let val = val.as_ptr();
@@ -2526,7 +2603,7 @@ class VectorTypeInfo(TypeInfo):
             }
             
             #[inline]
-            fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+            fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
                 crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
                 let vec = self.as_raw_${rust_local}();
                 cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}"] {
@@ -2536,7 +2613,7 @@ class VectorTypeInfo(TypeInfo):
             }
             
             #[inline]
-            fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+            fn get(&self, index: size_t) -> Result<Self::Storage> {
                 let vec = self.as_raw_${rust_local}();
                 cpp!(unsafe [vec as "const std::vector<${inner_cpp_extern}>*", index as "size_t"] -> crate::sys::${return_wrapper_type} as "${return_wrapper_type}" {
                     try {
@@ -2554,7 +2631,7 @@ class VectorTypeInfo(TypeInfo):
             }
 
             #[inline]
-            fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+            fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
                 let vec = self.as_raw_${rust_local}();
                 cpp!(unsafe [vec as "${cpptype}*", index as "size_t", val as "${inner_cpptype}"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
                     try {
@@ -2588,6 +2665,45 @@ class VectorTypeInfo(TypeInfo):
                 }
             }
         """),
+
+        "input_output_array": template("""
+
+            impl core::ToInputArray for ${rust_local} {
+                fn input_array(&self) -> Result<core::InputArray> {
+                    let me = self.as_raw_${rust_local}();
+                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                        try {
+                            return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+                        } CVRS_CATCH(cv_return_value_void_X)
+                    }).into_result()
+                        .map(|ptr| core::InputArray { ptr })
+                }
+            }
+
+            impl core::ToOutputArray for ${rust_local} {
+                fn output_array(&mut self) -> Result<core::OutputArray> {
+                    let me = self.as_raw_${rust_local}();
+                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                        try {
+                            return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+                        } CVRS_CATCH(cv_return_value_void_X)
+                    }).into_result()
+                        .map(|ptr| core::OutputArray { ptr })
+                }
+            }
+
+            impl core::ToInputOutputArray for ${rust_local} {
+                fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+                    let me = self.as_raw_${rust_local}();
+                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                        try {
+                            return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+                        } CVRS_CATCH(cv_return_value_void_X)
+                    }).into_result()
+                        .map(|ptr| core::InputOutputArray { ptr })
+                }
+            }
+        """)
     }
 
     def __init__(self, gen, typeid, inner):
@@ -2622,6 +2738,7 @@ class VectorTypeInfo(TypeInfo):
         })
         vector_methods = ""
         inherent_methods = ""
+        impls = ""
         if self.inner.is_by_ptr:
             vector_methods += VectorTypeInfo.TEMPLATES["rust_methods_boxed"].substitute(template_vars)
         elif isinstance(self.inner, StringTypeInfo):
@@ -2630,11 +2747,15 @@ class VectorTypeInfo(TypeInfo):
             vector_methods += VectorTypeInfo.TEMPLATES["rust_methods_non_boxed"].substitute(template_vars)
             if self.inner.is_copy and self.inner.typeid != "bool":
                 inherent_methods += VectorTypeInfo.TEMPLATES["rust_copy_non_bool"].substitute(template_vars)
+        if self.inner.typeid in data_type_typeids or isinstance(self.inner, VectorTypeInfo) and self.inner.inner.typeid in data_type_typeids:
+            # if "inner" not in self.inner.__dict__ or (self.inner.inner is not None and self.inner.inner.typeid != "bool"):
+            impls += VectorTypeInfo.TEMPLATES["input_output_array"].substitute(template_vars)
 
         self.inner.gen_return_wrappers(self.gen.cpp_dir, self.gen.rust_dir)
         write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), lambda f: f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(combine_dicts(template_vars, {
             "vector_methods": indent(vector_methods),
             "inherent_methods": indent(inherent_methods),
+            "impls": impls,
         }))))
 
     def __str__(self):
@@ -3172,9 +3293,12 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write(template("""
             use std::os::raw::{c_char, c_void};
             use libc::{ptrdiff_t, size_t};
-            use crate::{Error, Result, """ + ", ".join(static_modules) + """};
-            
-        """).substitute())
+            use crate::{Error, Result, ${static_modules}};
+            ${input_output_array}
+        """).substitute({
+            "static_modules": ", ".join(static_modules),
+            "input_output_array": "use crate::core::{_InputArray, _OutputArray};\n" if module != "core" else ""
+        }))
         for co in sorted(self.consts, key=lambda c: c.rustname):
             rust = co.gen_rust()
             if rust:

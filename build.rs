@@ -441,7 +441,7 @@ fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_d
         let mut types = File::create(module_dir.join("types.rs"))?;
         writeln!(&mut types, "use std::os::raw::{{c_char, c_void}};")?;
         writeln!(&mut types, "use libc::size_t;")?;
-        writeln!(&mut types, "use crate::{{core, types}};")?;
+        writeln!(&mut types, "use crate::{{core, types, sys, Result}};")?;
         writeln!(&mut types, "")?;
         for entry in glob(&format!("{}/*.type.rs", out_dir_as_str))? {
             let entry = entry?;

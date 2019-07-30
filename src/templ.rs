@@ -48,6 +48,24 @@ macro_rules! callback_arg {
     };
 }
 
+macro_rules! input_array_arg {
+    ($name: ident) => {
+        let $name = $name.input_array()?;
+    };
+}
+
+macro_rules! output_array_arg {
+    ($name: ident) => {
+        let $name = $name.output_array()?;
+    };
+}
+
+macro_rules! input_output_array_arg {
+    ($name: ident) => {
+        let $name = $name.input_output_array()?;
+    };
+}
+
 #[inline]
 pub fn receive_string(s: *const c_char) -> String {
     let out = unsafe { CStr::from_ptr(s) }.to_string_lossy().into_owned();
