@@ -90,7 +90,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "cuda",
     ];
 
-    let mut modules = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
+    let mut modules: Vec<(String, Vec<String>)> = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
         .filter_map(|entry| {
             let entry = entry.unwrap();
             let module = entry.file_stem().unwrap().to_string_lossy();
@@ -113,13 +113,26 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
                 Some((module.into_owned(), files))
             }
         })
-        .collect::<Vec<_>>();
+        .collect();
 
-    if let Some(core_idx) = modules.iter().position(|x| x.0 == "core") {
-        if core_idx != 0 {
-            modules.swap(0, core_idx);
-        }
+    let module_order = ["core"];
+    let header_order = [
+        "core/cvdef.h",
+        "core/version.hpp",
+        "core/base.hpp",
+        "core/cvstd.hpp",
+        "core/traits.hpp",
+        "core/matx.hpp",
+        "core/types.hpp",
+        "core/mat.hpp",
+        "core/persistence.hpp",
+    ];
+
+    modules.sort_by_key(|(mod_name, ..)| module_order.iter().position(|&order_module| order_module == mod_name).unwrap_or_else(|| module_order.len()));
+    for (.., file_list) in &mut modules {
+        file_list.sort_by_key(|header| header_order.iter().position(|&order_header| header.ends_with(order_header)).unwrap_or_else(|| header_order.len()));
     }
+
     MODULES.set(modules).expect("Cannot assign module cache");
     Ok(MODULES.get().unwrap())
 }
