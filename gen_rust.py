@@ -17,7 +17,7 @@ from urllib.parse import quote
 # fixme VectorOfMat::get allows to mutate?
 # fixme get comments from HOUGH_PROBABILISTIC in imgproc
 # fixme get multiline comments from LSD_REFINE_ADV in imgproc
-# fixme implement PtrOf<Trait> see https://docs.opencv.org/3.4.7/d8/d53/classcv_1_1dnn_1_1CropAndResizeLayer.html#a8a42c6fa064f2071f58954c7723bd033
+# fixme add support for InputArray and friends to allow passing UMat
 
 def template(text):
     """
@@ -99,6 +99,7 @@ decls_manual_pre = {
     ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
+        ("class cv.dnn.Layer", "", ["/Ghost", "/A"], []),
     ],
 }
 
