@@ -477,6 +477,8 @@ class CppHeaderParser(object):
             decl_str = decl_str[len("static"):].lstrip()
             static_method = True
 
+        deleted_method = "=" in end_tokens and "delete" in end_tokens
+
         args_begin = decl_str.find("(")
         if decl_str.startswith("CVAPI"):
             rtype_end = decl_str.find(")", args_begin+1)
@@ -546,6 +548,8 @@ class CppHeaderParser(object):
         if not self.wrap_mode:
             decl = self.parse_func_decl_no_wrap(decl_str, static_method, docstring)
             decl[0] = funcname
+            if deleted_method and not "/I" in decl[2]:
+                decl[2].append("/I")
             return decl
 
         arg_start = args_begin+1
