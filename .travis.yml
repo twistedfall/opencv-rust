@@ -12,7 +12,7 @@ cache:
     - $HOME/build/opencv
 
 sudo: true
-dist: xenial
+dist: bionic
 
 addons:
   apt:
@@ -34,7 +34,6 @@ addons:
       - libgoogle-glog-dev
       - libgphoto2-dev
       - libgstreamer-plugins-base1.0-dev
-      - libgstreamer1.0-dev
       - libharfbuzz-dev
       - libhdf5-dev
       - libjpeg-dev
@@ -46,7 +45,7 @@ addons:
       - libtbb-dev
       - libtesseract-dev
       - libtiff-dev
-      - libvtk6-dev
+      - libvtk7-dev
       - libwebp-dev
       - qtbase5-dev
       - tree
@@ -61,7 +60,7 @@ env:
     - OPENCV_VERSION=4.1.1 OPENCV_PKGCONFIG=opencv4 CARGO_FEATURES=opencv-41
 
 before_script:
-  - ci/install-opencv.sh
+  - ci/bionic-install-opencv.sh
   - pkg-config --cflags $OPENCV_PKGCONFIG
   - pkg-config --libs $OPENCV_PKGCONFIG
 

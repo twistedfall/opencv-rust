@@ -126,7 +126,7 @@ for compiling OpenCV for your platform. Make sure to compile from the
 correct release tag! We recommend including opencv_contrib and
 configuring your build with the same flags the travis build uses:
 
-[install-opencv.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-opencv.sh)
+[bionic-install-opencv.sh](https://github.com/twistedfall/opencv-rust/blob/master/ci/bionic-install-opencv.sh)
 
 ## Contrib modules
 
