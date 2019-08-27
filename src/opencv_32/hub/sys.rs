@@ -134,6 +134,7 @@ pub fn cv_mean_Mat_Mat(src: *mut c_void, mask: *mut c_void) -> cv_return_value_S
 pub fn cv_merge_VectorOfMat_Mat(mv: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
 pub fn cv_minMaxIdx_Mat_double_X_double_X_int_X_int_X_Mat(src: *mut c_void, min_val: *mut f64, max_val: *mut f64, min_idx: *mut i32, max_idx: *mut i32, mask: *mut c_void) -> cv_return_value_void;
 pub fn cv_minMaxLoc_Mat_double_X_double_X_Point_X_Point_X_Mat(src: *mut c_void, min_val: *mut f64, max_val: *mut f64, min_loc: *mut core::Point, max_loc: *mut core::Point, mask: *mut c_void) -> cv_return_value_void;
+pub fn cv_minMaxLoc_SparseMat_double_X_double_X_int_X_int_X(a: *mut c_void, min_val: *mut f64, max_val: *mut f64, min_idx: *mut i32, max_idx: *mut i32) -> cv_return_value_void;
 pub fn cv_min_Mat_Mat_Mat(src1: *mut c_void, src2: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
 pub fn cv_min_UMat_UMat_UMat(src1: *mut c_void, src2: *mut c_void, dst: *mut c_void) -> cv_return_value_void;
 pub fn cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint(src: *mut c_void, dst: *mut c_void, from_to: *mut c_void) -> cv_return_value_void;
@@ -145,7 +146,9 @@ pub fn cv_normL1_const_uchar_X_const_uchar_X_int(a: *const u8, b: *const u8, n: 
 pub fn cv_normL2Sqr_const_float_X_const_float_X_int(a: *const f32, b: *const f32, n: i32) -> cv_return_value_float;
 pub fn cv_norm_Mat_Mat_int_Mat(src1: *mut c_void, src2: *mut c_void, norm_type: i32, mask: *mut c_void) -> cv_return_value_double;
 pub fn cv_norm_Mat_int_Mat(src1: *mut c_void, norm_type: i32, mask: *mut c_void) -> cv_return_value_double;
+pub fn cv_norm_SparseMat_int(src: *mut c_void, norm_type: i32) -> cv_return_value_double;
 pub fn cv_normalize_Mat_Mat_double_double_int_int_Mat(src: *mut c_void, dst: *mut c_void, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: *mut c_void) -> cv_return_value_void;
+pub fn cv_normalize_SparseMat_SparseMat_double_int(src: *mut c_void, dst: *mut c_void, alpha: f64, norm_type: i32) -> cv_return_value_void;
 pub fn cv_ocl_attachContext_String_void_X_void_X_void_X(platform_name: *const c_char, platform_id: *mut c_void, context: *mut c_void, device_id: *mut c_void) -> cv_return_value_void;
 pub fn cv_ocl_buildOptionsAddMatrixDescription_String_String_Mat(build_options: *mut *mut c_char, name: *const c_char, _m: *mut c_void) -> cv_return_value_void;
 pub fn cv_ocl_convertFromBuffer_void_X_size_t_int_int_int_UMat(cl_mem_buffer: *mut c_void, step: size_t, rows: i32, cols: i32, _type: i32, dst: *mut c_void) -> cv_return_value_void;
@@ -405,10 +408,14 @@ pub fn cv_RotatedRect_boundingRect2f_const(instance: *const c_void) -> cv_return
 #[doc(hidden)] pub fn cv_SparseMat_delete(ptr : *mut c_void);
 pub fn cv_SparseMat_SparseMat() -> cv_return_value_void_X;
 pub fn cv_SparseMat_SparseMat_int_const_int_X_int(dims: i32, _sizes: *const i32, _type: i32) -> cv_return_value_void_X;
+pub fn cv_SparseMat_SparseMat_SparseMat(m: *mut c_void) -> cv_return_value_void_X;
 pub fn cv_SparseMat_SparseMat_Mat(m: *mut c_void) -> cv_return_value_void_X;
 pub fn cv_SparseMat_clone_const(instance: *const c_void) -> cv_return_value_void_X;
+pub fn cv_SparseMat_copyTo_const_SparseMat(instance: *const c_void, m: *mut c_void) -> cv_return_value_void;
 pub fn cv_SparseMat_copyTo_const_Mat(instance: *const c_void, m: *mut c_void) -> cv_return_value_void;
+pub fn cv_SparseMat_convertTo_const_SparseMat_int_double(instance: *const c_void, m: *mut c_void, rtype: i32, alpha: f64) -> cv_return_value_void;
 pub fn cv_SparseMat_convertTo_const_Mat_int_double_double(instance: *const c_void, m: *mut c_void, rtype: i32, alpha: f64, beta: f64) -> cv_return_value_void;
+pub fn cv_SparseMat_assignTo_const_SparseMat_int(instance: *const c_void, m: *mut c_void, _type: i32) -> cv_return_value_void;
 pub fn cv_SparseMat_create_int_const_int_X_int(instance: *mut c_void, dims: i32, _sizes: *const i32, _type: i32) -> cv_return_value_void;
 pub fn cv_SparseMat_clear(instance: *mut c_void) -> cv_return_value_void;
 pub fn cv_SparseMat_addref(instance: *mut c_void) -> cv_return_value_void;
@@ -712,6 +719,51 @@ pub fn cv_ocl_Queue_ptr_const(instance: *const c_void) -> cv_return_value_void_X
 pub fn cv_ocl_Queue_getDefault() -> cv_return_value_void_X;
 }
 extern "C" {
+pub fn cv_bioinspired_createRetinaFastToneMapping_Size(input_size: core::Size) -> cv_return_value_void_X;
+pub fn cv_bioinspired_createRetina_Size(input_size: core::Size) -> cv_return_value_void_X;
+pub fn cv_bioinspired_createRetina_Size_bool_int_bool_float_float(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strenght: f32) -> cv_return_value_void_X;
+pub fn cv_bioinspired_createTransientAreasSegmentationModule_Size(input_size: core::Size) -> cv_return_value_void_X;
+pub fn cv_bioinspired_Retina_getInputSize(instance: *mut c_void) -> cv_return_value_SizeWrapper;
+pub fn cv_bioinspired_Retina_getOutputSize(instance: *mut c_void) -> cv_return_value_SizeWrapper;
+pub fn cv_bioinspired_Retina_setup_String_bool(instance: *mut c_void, retina_parameter_file: *mut c_char, apply_default_setup_on_failure: bool) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_setup_RetinaParameters(instance: *mut c_void, new_parameters: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_getParameters(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_bioinspired_Retina_printSetup(instance: *mut c_void) -> cv_return_value_const_char_X;
+pub fn cv_bioinspired_Retina_write_const_String(instance: *const c_void, fs: *mut c_char) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_setupOPLandIPLParvoChannel_bool_bool_float_float_float_float_float_float_float(instance: *mut c_void, color_mode: bool, normalise_output: bool, photoreceptors_local_adaptation_sensitivity: f32, photoreceptors_temporal_constant: f32, photoreceptors_spatial_constant: f32, horizontal_cells_gain: f32, hcells_temporal_constant: f32, hcells_spatial_constant: f32, ganglion_cells_sensitivity: f32) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_setupIPLMagnoChannel_bool_float_float_float_float_float_float_float(instance: *mut c_void, normalise_output: bool, parasol_cells_beta: f32, parasol_cells_tau: f32, parasol_cells_k: f32, amacrin_cells_temporal_cut_frequency: f32, v0_compression_parameter: f32, local_adaptintegration_tau: f32, local_adaptintegration_k: f32) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_run_Mat(instance: *mut c_void, input_image: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_applyFastToneMapping_Mat_Mat(instance: *mut c_void, input_image: *mut c_void, output_tone_mapped_image: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_getParvo_Mat(instance: *mut c_void, retina_output_parvo: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_getParvoRAW_Mat(instance: *mut c_void, retina_output_parvo: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_getMagno_Mat(instance: *mut c_void, retina_output_magno: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_getMagnoRAW_Mat(instance: *mut c_void, retina_output_magno: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_getMagnoRAW_const(instance: *const c_void) -> cv_return_value_void_X;
+pub fn cv_bioinspired_Retina_getParvoRAW_const(instance: *const c_void) -> cv_return_value_void_X;
+pub fn cv_bioinspired_Retina_setColorSaturation_bool_float(instance: *mut c_void, saturate_colors: bool, color_saturation_value: f32) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_clearBuffers(instance: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_activateMovingContoursProcessing_bool(instance: *mut c_void, activate: bool) -> cv_return_value_void;
+pub fn cv_bioinspired_Retina_activateContoursProcessing_bool(instance: *mut c_void, activate: bool) -> cv_return_value_void;
+pub fn cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_Mat_Mat(instance: *mut c_void, input_image: *mut c_void, output_tone_mapped_image: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_RetinaFastToneMapping_setup_float_float_float(instance: *mut c_void, photoreceptors_neighborhood_radius: f32, ganglioncells_neighborhood_radius: f32, mean_luminance_modulator_k: f32) -> cv_return_value_void;
+#[doc(hidden)] pub fn cv_RetinaParameters_delete(ptr : *mut c_void);
+#[doc(hidden)] pub fn cv_RetinaParameters_IplMagnoParameters_delete(ptr : *mut c_void);
+pub fn cv_bioinspired_RetinaParameters_IplMagnoParameters_IplMagnoParameters() -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_RetinaParameters_OPLandIplParvoParameters_delete(ptr : *mut c_void);
+pub fn cv_bioinspired_RetinaParameters_OPLandIplParvoParameters_OPLandIplParvoParameters() -> cv_return_value_void_X;
+#[doc(hidden)] pub fn cv_SegmentationParameters_delete(ptr : *mut c_void);
+pub fn cv_bioinspired_SegmentationParameters_SegmentationParameters() -> cv_return_value_void_X;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_getSize(instance: *mut c_void) -> cv_return_value_SizeWrapper;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_setup_String_bool(instance: *mut c_void, segmentation_parameter_file: *mut c_char, apply_default_setup_on_failure: bool) -> cv_return_value_void;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(instance: *mut c_void, new_parameters: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_getParameters(instance: *mut c_void) -> cv_return_value_void_X;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_printSetup(instance: *mut c_void) -> cv_return_value_const_char_X;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_write_const_String(instance: *const c_void, fs: *mut c_char) -> cv_return_value_void;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_run_Mat_int(instance: *mut c_void, input_to_segment: *mut c_void, channel_index: i32) -> cv_return_value_void;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_Mat(instance: *mut c_void, transient_areas: *mut c_void) -> cv_return_value_void;
+pub fn cv_bioinspired_TransientAreasSegmentationModule_clearAllBuffers(instance: *mut c_void) -> cv_return_value_void;
+}
+extern "C" {
 pub fn cv_RQDecomp3x3_Mat_Mat_Mat_Mat_Mat_Mat(src: *mut c_void, mtx_r: *mut c_void, mtx_q: *mut c_void, qx: *mut c_void, qy: *mut c_void, qz: *mut c_void) -> cv_return_value_Vec3dWrapper;
 pub fn cv_Rodrigues_Mat_Mat_Mat(src: *mut c_void, dst: *mut c_void, jacobian: *mut c_void) -> cv_return_value_void;
 pub fn cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria(object_points: *mut c_void, image_points: *mut c_void, image_size: core::Size, camera_matrix: *mut c_void, dist_coeffs: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, std_deviations_intrinsics: *mut c_void, std_deviations_extrinsics: *mut c_void, per_view_errors: *mut c_void, flags: i32, criteria: *mut c_void) -> cv_return_value_double;
@@ -872,51 +924,6 @@ pub fn cv_randpattern_RandomPatternCornerFinder_getImagePoints(instance: *mut c_
 pub fn cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width: i32, image_height: i32) -> cv_return_value_void_X;
 pub fn cv_randpattern_RandomPatternGenerator_generatePattern(instance: *mut c_void) -> cv_return_value_void;
 pub fn cv_randpattern_RandomPatternGenerator_getPattern(instance: *mut c_void) -> cv_return_value_void_X;
-}
-extern "C" {
-pub fn cv_bioinspired_createRetinaFastToneMapping_Size(input_size: core::Size) -> cv_return_value_void_X;
-pub fn cv_bioinspired_createRetina_Size(input_size: core::Size) -> cv_return_value_void_X;
-pub fn cv_bioinspired_createRetina_Size_bool_int_bool_float_float(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strenght: f32) -> cv_return_value_void_X;
-pub fn cv_bioinspired_createTransientAreasSegmentationModule_Size(input_size: core::Size) -> cv_return_value_void_X;
-pub fn cv_bioinspired_Retina_getInputSize(instance: *mut c_void) -> cv_return_value_SizeWrapper;
-pub fn cv_bioinspired_Retina_getOutputSize(instance: *mut c_void) -> cv_return_value_SizeWrapper;
-pub fn cv_bioinspired_Retina_setup_String_bool(instance: *mut c_void, retina_parameter_file: *mut c_char, apply_default_setup_on_failure: bool) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_setup_RetinaParameters(instance: *mut c_void, new_parameters: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_getParameters(instance: *mut c_void) -> cv_return_value_void_X;
-pub fn cv_bioinspired_Retina_printSetup(instance: *mut c_void) -> cv_return_value_const_char_X;
-pub fn cv_bioinspired_Retina_write_const_String(instance: *const c_void, fs: *mut c_char) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_setupOPLandIPLParvoChannel_bool_bool_float_float_float_float_float_float_float(instance: *mut c_void, color_mode: bool, normalise_output: bool, photoreceptors_local_adaptation_sensitivity: f32, photoreceptors_temporal_constant: f32, photoreceptors_spatial_constant: f32, horizontal_cells_gain: f32, hcells_temporal_constant: f32, hcells_spatial_constant: f32, ganglion_cells_sensitivity: f32) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_setupIPLMagnoChannel_bool_float_float_float_float_float_float_float(instance: *mut c_void, normalise_output: bool, parasol_cells_beta: f32, parasol_cells_tau: f32, parasol_cells_k: f32, amacrin_cells_temporal_cut_frequency: f32, v0_compression_parameter: f32, local_adaptintegration_tau: f32, local_adaptintegration_k: f32) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_run_Mat(instance: *mut c_void, input_image: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_applyFastToneMapping_Mat_Mat(instance: *mut c_void, input_image: *mut c_void, output_tone_mapped_image: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_getParvo_Mat(instance: *mut c_void, retina_output_parvo: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_getParvoRAW_Mat(instance: *mut c_void, retina_output_parvo: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_getMagno_Mat(instance: *mut c_void, retina_output_magno: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_getMagnoRAW_Mat(instance: *mut c_void, retina_output_magno: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_getMagnoRAW_const(instance: *const c_void) -> cv_return_value_void_X;
-pub fn cv_bioinspired_Retina_getParvoRAW_const(instance: *const c_void) -> cv_return_value_void_X;
-pub fn cv_bioinspired_Retina_setColorSaturation_bool_float(instance: *mut c_void, saturate_colors: bool, color_saturation_value: f32) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_clearBuffers(instance: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_activateMovingContoursProcessing_bool(instance: *mut c_void, activate: bool) -> cv_return_value_void;
-pub fn cv_bioinspired_Retina_activateContoursProcessing_bool(instance: *mut c_void, activate: bool) -> cv_return_value_void;
-pub fn cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_Mat_Mat(instance: *mut c_void, input_image: *mut c_void, output_tone_mapped_image: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_RetinaFastToneMapping_setup_float_float_float(instance: *mut c_void, photoreceptors_neighborhood_radius: f32, ganglioncells_neighborhood_radius: f32, mean_luminance_modulator_k: f32) -> cv_return_value_void;
-#[doc(hidden)] pub fn cv_RetinaParameters_delete(ptr : *mut c_void);
-#[doc(hidden)] pub fn cv_RetinaParameters_IplMagnoParameters_delete(ptr : *mut c_void);
-pub fn cv_bioinspired_RetinaParameters_IplMagnoParameters_IplMagnoParameters() -> cv_return_value_void_X;
-#[doc(hidden)] pub fn cv_RetinaParameters_OPLandIplParvoParameters_delete(ptr : *mut c_void);
-pub fn cv_bioinspired_RetinaParameters_OPLandIplParvoParameters_OPLandIplParvoParameters() -> cv_return_value_void_X;
-#[doc(hidden)] pub fn cv_SegmentationParameters_delete(ptr : *mut c_void);
-pub fn cv_bioinspired_SegmentationParameters_SegmentationParameters() -> cv_return_value_void_X;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_getSize(instance: *mut c_void) -> cv_return_value_SizeWrapper;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_setup_String_bool(instance: *mut c_void, segmentation_parameter_file: *mut c_char, apply_default_setup_on_failure: bool) -> cv_return_value_void;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(instance: *mut c_void, new_parameters: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_getParameters(instance: *mut c_void) -> cv_return_value_void_X;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_printSetup(instance: *mut c_void) -> cv_return_value_const_char_X;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_write_const_String(instance: *const c_void, fs: *mut c_char) -> cv_return_value_void;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_run_Mat_int(instance: *mut c_void, input_to_segment: *mut c_void, channel_index: i32) -> cv_return_value_void;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_Mat(instance: *mut c_void, transient_areas: *mut c_void) -> cv_return_value_void;
-pub fn cv_bioinspired_TransientAreasSegmentationModule_clearAllBuffers(instance: *mut c_void) -> cv_return_value_void;
 }
 extern "C" {
 pub fn cvv_debugMode() -> cv_return_value_bool;

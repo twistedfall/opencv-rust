@@ -2474,6 +2474,47 @@ impl crate::dnn::Layer for PtrOfLSTMLayer {
     }
 }
 
+pub struct PtrOfLayer {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfLayer {
+    #[inline(always)] pub fn as_raw_PtrOfLayer(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfLayer {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::dnn::Layer>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfLayer {}
+
+impl core::Algorithm for PtrOfLayer {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::dnn::Layer for PtrOfLayer {
+    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
 pub struct PtrOfLineSegmentDetector {
     pub(crate) ptr: *mut c_void
 }
@@ -7129,6 +7170,196 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
 }
 
 unsafe impl Send for VectorOfPtrOfBackendWrapper {}
+
+pub struct VectorOfPtrOfLayer {
+    pub(crate) ptr: *mut c_void
+}
+
+impl VectorOfPtrOfLayer {
+    #[inline(always)] pub fn as_raw_VectorOfPtrOfLayer(&self) -> *mut c_void { self.ptr }
+
+    #[inline]
+    pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+        crate::templ::VectorRefIterator::new(self)
+    }
+}
+
+impl Drop for VectorOfPtrOfLayer {
+    #[inline]
+    fn drop(&mut self) {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*"] {
+            delete vec;
+        })
+    }
+}
+
+impl IntoIterator for VectorOfPtrOfLayer {
+    type Item = types::PtrOfLayer;
+    type IntoIter = crate::templ::VectorIterator<Self>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(self)
+    }
+}
+
+impl<'i> IntoIterator for &'i VectorOfPtrOfLayer {
+    type Item = types::PtrOfLayer;
+    type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfPtrOfLayer>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfLayer {
+    type Storage = types::PtrOfLayer;
+
+    #[inline]
+    fn new() -> Self {
+        Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+            return new std::vector<Ptr<cv::dnn::Layer>>();
+        })}
+    }
+
+    #[inline]
+    fn len(&self) -> size_t {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::Layer>>*"] -> size_t as "size_t" {
+            return vec->size();
+        })
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::Layer>>*"] -> bool as "bool" {
+            return vec->empty();
+        })
+    }
+
+    #[inline]
+    fn capacity(&self) -> size_t {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::Layer>>*"] -> size_t as "size_t" {
+            return vec->capacity();
+        })
+    }
+
+    #[inline]
+    fn shrink_to_fit(&mut self) {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*"] {
+            vec->shrink_to_fit();
+        })
+    }                
+
+    #[inline]
+    fn reserve(&mut self, additional: size_t) {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", additional as "size_t"] {
+            vec->reserve(vec->size() + additional);
+        })
+    }
+
+    #[inline]
+    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t"] {
+            vec->erase(vec->begin() + index);
+        });
+        Ok(())
+    }
+
+    /// Swaps values of 2 elements
+    #[inline]
+    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+        let len = self.len();
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+        if index1 != index2 {
+            let vec = self.as_raw_VectorOfPtrOfLayer();
+            cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", index1 as "size_t", index2 as "size_t"] {
+                swap((*vec)[index1], (*vec)[index2]);
+            });
+        }
+        Ok(())
+    }
+
+    #[inline]
+    fn clear(&mut self) {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*"] {
+            vec->clear();
+        })
+    }
+
+    type Arg = types::PtrOfLayer;
+    
+    #[inline]
+    fn push(&mut self, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        let val = val.as_raw_PtrOfLayer();
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", val as "Ptr<cv::dnn::Layer>*"] {
+            vec->push_back(*val);
+        })
+    }
+    
+    #[inline]
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        let val = val.as_raw_PtrOfLayer();
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t", val as "Ptr<cv::dnn::Layer>*"] {
+            vec->insert(vec->begin() + index, *val);
+        });
+        Ok(())
+    }
+    
+    #[inline]
+    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new Ptr<cv::dnn::Layer>(vec->at(index)) };
+            } VEC_CATCH(cv_return_value_void_X)
+        }).into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
+    #[inline]
+    unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        types::PtrOfLayer { ptr: cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new Ptr<cv::dnn::Layer>((*vec)[index]);
+        })}
+    }
+    
+    #[inline]
+    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t", val as "Ptr<cv::dnn::Layer>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+            try {
+                vec->at(index) = *val;
+                return { Error::Code::StsOk, NULL };
+            } VEC_CATCH(cv_return_value_void)
+        }).into_result()
+    }
+    
+    #[inline]
+    unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfPtrOfLayer();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t", val as "Ptr<cv::dnn::Layer>*"] {
+            (*vec)[index] = *val;
+        })
+    }
+}
+
+unsafe impl Send for VectorOfPtrOfLayer {}
 
 pub struct VectorOfRange {
     pub(crate) ptr: *mut c_void

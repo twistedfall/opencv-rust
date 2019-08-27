@@ -312,7 +312,6 @@ pub const Param_ALGORITHM: i32 = 6;
 pub const Param_BOOLEAN: i32 = 1;
 pub const Param_FLOAT: i32 = 7;
 pub const Param_INT: i32 = 0;
-pub const Param_MAT: i32 = 4;
 pub const Param_MAT_VECTOR: i32 = 5;
 pub const Param_REAL: i32 = 2;
 pub const Param_STRING: i32 = 3;
@@ -2358,6 +2357,43 @@ pub fn min_max_loc(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_lo
     unsafe { sys::cv_minMaxLoc_Mat_double_X_double_X_Point_X_Point_X_Mat(src.as_raw_Mat(), min_val, max_val, min_loc, max_loc, mask.as_raw_Mat()) }.into_result()
 }
 
+/// Finds the global minimum and maximum in an array.
+///
+/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
+/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+/// array region.
+///
+/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
+/// elements across all the channels, use Mat::reshape first to reinterpret the array as
+/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
+/// mixChannels , or split .
+/// ## Parameters
+/// * src: input single-channel array.
+/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+/// * minLoc: pointer to the returned minimum location (in 2D case); NULL is used if not required.
+/// * maxLoc: pointer to the returned maximum location (in 2D case); NULL is used if not required.
+/// * mask: optional mask used to select a sub-array.
+/// ## See also
+/// max, min, compare, inRange, extractImageCOI, mixChannels, split, Mat::reshape
+///
+/// ## Overloaded parameters
+///
+/// * a: input single-channel array.
+/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+/// * minIdx: pointer to the returned minimum location (in nD case); NULL is used if not required;
+/// Otherwise, it must point to an array of src.dims elements, the coordinates of the minimum element
+/// in each dimension are stored there sequentially.
+/// * maxIdx: pointer to the returned maximum location (in nD case). NULL is used if not required.
+///
+/// ## C++ default parameters
+/// * min_idx: 0
+/// * max_idx: 0
+pub fn min_max_loc_1(a: &core::SparseMat, min_val: &mut f64, max_val: &mut f64, min_idx: &mut i32, max_idx: &mut i32) -> Result<()> {
+    unsafe { sys::cv_minMaxLoc_SparseMat_double_X_double_X_int_X_int_X(a.as_raw_SparseMat(), min_val, max_val, min_idx, max_idx) }.into_result()
+}
+
 /// Calculates per-element minimum of two arrays or an array and a scalar.
 ///
 /// The function cv::min calculates the per-element minimum of two arrays:
@@ -2640,6 +2676,43 @@ pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
     unsafe { sys::cv_norm_Mat_int_Mat(src1.as_raw_Mat(), norm_type, mask.as_raw_Mat()) }.into_result()
 }
 
+/// Calculates an absolute array norm, an absolute difference norm, or a
+/// relative difference norm.
+///
+/// The function cv::norm calculates an absolute norm of src1 (when there is no
+/// src2 ):
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?norm%20%3D%20%20%5Cforkthree%7B%5C%7C%5Ctexttt%7Bsrc1%7D%5C%7C_%7BL_%7B%5Cinfty%7D%7D%20%3D%20%20%5Cmax%20_I%20%7C%20%5Ctexttt%7Bsrc1%7D%20%28I%29%7C%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_INF%7D%5C%29%20%7D%0A%7B%20%5C%7C%20%5Ctexttt%7Bsrc1%7D%20%5C%7C%20_%7BL_1%7D%20%3D%20%20%5Csum%20_I%20%7C%20%5Ctexttt%7Bsrc1%7D%20%28I%29%7C%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_L1%7D%5C%29%20%7D%0A%7B%20%5C%7C%20%5Ctexttt%7Bsrc1%7D%20%5C%7C%20_%7BL_2%7D%20%3D%20%20%5Csqrt%7B%5Csum_I%20%5Ctexttt%7Bsrc1%7D%28I%29%5E2%7D%20%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_L2%7D%5C%29%20%7D)
+///
+/// or an absolute or relative difference norm if src2 is there:
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?norm%20%3D%20%20%5Cforkthree%7B%5C%7C%5Ctexttt%7Bsrc1%7D-%5Ctexttt%7Bsrc2%7D%5C%7C_%7BL_%7B%5Cinfty%7D%7D%20%3D%20%20%5Cmax%20_I%20%7C%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20-%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%7C%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_INF%7D%5C%29%20%7D%0A%7B%20%5C%7C%20%5Ctexttt%7Bsrc1%7D%20-%20%5Ctexttt%7Bsrc2%7D%20%5C%7C%20_%7BL_1%7D%20%3D%20%20%5Csum%20_I%20%7C%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20-%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29%7C%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_L1%7D%5C%29%20%7D%0A%7B%20%5C%7C%20%5Ctexttt%7Bsrc1%7D%20-%20%5Ctexttt%7Bsrc2%7D%20%5C%7C%20_%7BL_2%7D%20%3D%20%20%5Csqrt%7B%5Csum_I%20%28%5Ctexttt%7Bsrc1%7D%28I%29%20-%20%5Ctexttt%7Bsrc2%7D%28I%29%29%5E2%7D%20%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_L2%7D%5C%29%20%7D)
+///
+/// or
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?norm%20%3D%20%20%5Cforkthree%7B%5Cfrac%7B%5C%7C%5Ctexttt%7Bsrc1%7D-%5Ctexttt%7Bsrc2%7D%5C%7C_%7BL_%7B%5Cinfty%7D%7D%20%20%20%20%7D%7B%5C%7C%5Ctexttt%7Bsrc2%7D%5C%7C_%7BL_%7B%5Cinfty%7D%7D%20%7D%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_RELATIVE_INF%7D%5C%29%20%7D%0A%7B%20%5Cfrac%7B%5C%7C%5Ctexttt%7Bsrc1%7D-%5Ctexttt%7Bsrc2%7D%5C%7C_%7BL_1%7D%20%7D%7B%5C%7C%5Ctexttt%7Bsrc2%7D%5C%7C_%7BL_1%7D%7D%20%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_RELATIVE_L1%7D%5C%29%20%7D%0A%7B%20%5Cfrac%7B%5C%7C%5Ctexttt%7Bsrc1%7D-%5Ctexttt%7Bsrc2%7D%5C%7C_%7BL_2%7D%20%7D%7B%5C%7C%5Ctexttt%7Bsrc2%7D%5C%7C_%7BL_2%7D%7D%20%7D%7Bif%20%20%5C%28%5Ctexttt%7BnormType%7D%20%3D%20%5Ctexttt%7BNORM_RELATIVE_L2%7D%5C%29%20%7D)
+///
+/// The function cv::norm returns the calculated norm.
+///
+/// When the mask parameter is specified and it is not empty, the norm is
+/// calculated only over the region specified by the mask.
+///
+/// A multi-channel input arrays are treated as a single-channel, that is,
+/// the results for all channels are combined.
+///
+/// ## Parameters
+/// * src1: first input array.
+/// * normType: type of the norm (see cv::NormTypes).
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+///
+/// ## Overloaded parameters
+///
+/// * src: first input array.
+/// * normType: type of the norm (see cv::NormTypes).
+pub fn norm_1(src: &core::SparseMat, norm_type: i32) -> Result<f64> {
+    unsafe { sys::cv_norm_SparseMat_int(src.as_raw_SparseMat(), norm_type) }.into_result()
+}
+
 /// Normalizes the norm or value range of an array.
 ///
 /// The function cv::normalize normalizes scale and shift the input array elements so that
@@ -2709,6 +2782,78 @@ pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
 /// * mask: noArray()
 pub fn normalize(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &core::Mat) -> Result<()> {
     unsafe { sys::cv_normalize_Mat_Mat_double_double_int_int_Mat(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta, norm_type, dtype, mask.as_raw_Mat()) }.into_result()
+}
+
+/// Normalizes the norm or value range of an array.
+///
+/// The function cv::normalize normalizes scale and shift the input array elements so that
+/// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7Bdst%7D%20%5C%7C%20_%7BL_p%7D%3D%20%5Ctexttt%7Balpha%7D)
+/// (where p=Inf, 1 or 2) when normType=NORM_INF, NORM_L1, or NORM_L2, respectively; or so that
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmin%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Balpha%7D%20%2C%20%5C%2C%20%5C%2C%20%5Cmax%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bbeta%7D)
+///
+/// when normType=NORM_MINMAX (for dense arrays only). The optional mask specifies a sub-array to be
+/// normalized. This means that the norm or min-n-max are calculated over the sub-array, and then this
+/// sub-array is modified to be normalized. If you want to only use the mask to calculate the norm or
+/// min-max but modify the whole array, you can use norm and Mat::convertTo.
+///
+/// In case of sparse matrices, only the non-zero values are analyzed and transformed. Because of this,
+/// the range transformation for sparse matrices is not allowed since it can shift the zero level.
+///
+/// Possible usage with some positive example data:
+/// ```ignore{.cpp}
+/// vector<double> positiveData = { 2.0, 8.0, 10.0 };
+/// vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
+///
+/// // Norm to probability (total count)
+/// // sum(numbers) = 20.0
+/// // 2.0      0.1     (2.0/20.0)
+/// // 8.0      0.4     (8.0/20.0)
+/// // 10.0     0.5     (10.0/20.0)
+/// normalize(positiveData, normalizedData_l1, 1.0, 0.0, NORM_L1);
+///
+/// // Norm to unit vector: ||positiveData|| = 1.0
+/// // 2.0      0.15
+/// // 8.0      0.62
+/// // 10.0     0.77
+/// normalize(positiveData, normalizedData_l2, 1.0, 0.0, NORM_L2);
+///
+/// // Norm to max element
+/// // 2.0      0.2     (2.0/10.0)
+/// // 8.0      0.8     (8.0/10.0)
+/// // 10.0     1.0     (10.0/10.0)
+/// normalize(positiveData, normalizedData_inf, 1.0, 0.0, NORM_INF);
+///
+/// // Norm to range [0.0;1.0]
+/// // 2.0      0.0     (shift to left border)
+/// // 8.0      0.75    (6.0/8.0)
+/// // 10.0     1.0     (shift to right border)
+/// normalize(positiveData, normalizedData_minmax, 1.0, 0.0, NORM_MINMAX);
+/// ```
+///
+///
+/// ## Parameters
+/// * src: input array.
+/// * dst: output array of the same size as src .
+/// * alpha: norm value to normalize to or the lower range boundary in case of the range
+/// normalization.
+/// * beta: upper range boundary in case of the range normalization; it is not used for the norm
+/// normalization.
+/// * norm_type: normalization type (see cv::NormTypes).
+/// * dtype: when negative, the output array has the same type as src; otherwise, it has the same
+/// number of channels as src and the depth =CV_MAT_DEPTH(dtype).
+/// * mask: optional operation mask.
+/// ## See also
+/// norm, Mat::convertTo, SparseMat::convertTo
+///
+/// ## Overloaded parameters
+///
+/// * src: input array.
+/// * dst: output array of the same size as src .
+/// * alpha: norm value to normalize to or the lower range boundary in case of the range
+/// normalization.
+/// * normType: normalization type (see cv::NormTypes).
+pub fn normalize_1(src: &core::SparseMat, dst: &mut core::SparseMat, alpha: f64, norm_type: i32) -> Result<()> {
+    unsafe { sys::cv_normalize_SparseMat_SparseMat_double_int(src.as_raw_SparseMat(), dst.as_raw_SparseMat(), alpha, norm_type) }.into_result()
 }
 
 pub fn attach_context(platform_name: &str, platform_id: &mut c_void, context: &mut c_void, device_id: &mut c_void) -> Result<()> {
@@ -6571,6 +6716,13 @@ impl SparseMat {
     /// ## Parameters
     /// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
     /// to sparse representation.
+    pub fn copy(m: &core::SparseMat) -> Result<core::SparseMat> {
+        unsafe { sys::cv_SparseMat_SparseMat_SparseMat(m.as_raw_SparseMat()) }.into_result().map(|ptr| core::SparseMat { ptr })
+    }
+    
+    /// ## Parameters
+    /// * m: Source matrix for copy constructor. If m is dense matrix (ocvMat) then it will be converted
+    /// to sparse representation.
     pub fn new_1(m: &core::Mat) -> Result<core::SparseMat> {
         unsafe { sys::cv_SparseMat_SparseMat_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::SparseMat { ptr })
     }
@@ -6580,9 +6732,22 @@ impl SparseMat {
         unsafe { sys::cv_SparseMat_clone_const(self.as_raw_SparseMat()) }.into_result().map(|ptr| core::SparseMat { ptr })
     }
     
+    /// copies all the data to the destination matrix. All the previous content of m is erased
+    pub fn copy_to(&self, m: &mut core::SparseMat) -> Result<()> {
+        unsafe { sys::cv_SparseMat_copyTo_const_SparseMat(self.as_raw_SparseMat(), m.as_raw_SparseMat()) }.into_result()
+    }
+    
     /// converts sparse matrix to dense matrix.
-    pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
+    pub fn copy_to_1(&self, m: &mut core::Mat) -> Result<()> {
         unsafe { sys::cv_SparseMat_copyTo_const_Mat(self.as_raw_SparseMat(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    /// multiplies all the matrix elements by the specified scale factor alpha and converts the results to the specified data type
+    ///
+    /// ## C++ default parameters
+    /// * alpha: 1
+    pub fn convert_to(&self, m: &mut core::SparseMat, rtype: i32, alpha: f64) -> Result<()> {
+        unsafe { sys::cv_SparseMat_convertTo_const_SparseMat_int_double(self.as_raw_SparseMat(), m.as_raw_SparseMat(), rtype, alpha) }.into_result()
     }
     
     /// converts sparse matrix to dense n-dim matrix with optional type conversion and scaling.
@@ -6590,8 +6755,15 @@ impl SparseMat {
     /// ## C++ default parameters
     /// * alpha: 1
     /// * beta: 0
-    pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+    pub fn convert_to_1(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
         unsafe { sys::cv_SparseMat_convertTo_const_Mat_int_double_double(self.as_raw_SparseMat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * _type: -1
+    pub fn assign_to(&self, m: &mut core::SparseMat, _type: i32) -> Result<()> {
+        unsafe { sys::cv_SparseMat_assignTo_const_SparseMat_int(self.as_raw_SparseMat(), m.as_raw_SparseMat(), _type) }.into_result()
     }
     
     /// reallocates sparse matrix.
@@ -8536,6 +8708,7 @@ pub const _InputArray_EXPR: i32 = 0x60000; // 393216
 pub const _InputArray_FIXED_SIZE: i32 = 0x40000000; // 1073741824
 pub const _InputArray_FIXED_TYPE: i32 = 0x80000000; // -2147483648
 pub const _InputArray_KIND_MASK: i32 = 0x1f0000; // 2031616
+pub const _InputArray_MAT: i32 = 0x10000; // 65536
 pub const _InputArray_MATX: i32 = 0x20000; // 131072
 pub const _InputArray_NONE: i32 = 0x0; // 0
 pub const _InputArray_OPENGL_BUFFER: i32 = 0x70000; // 458752

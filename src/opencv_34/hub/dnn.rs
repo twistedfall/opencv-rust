@@ -814,6 +814,10 @@ impl crate::dnn::Layer for BlankLayer {
 
 impl BlankLayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_BlankLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::ChannelsPReLULayer
@@ -850,6 +854,10 @@ impl crate::dnn::Layer for ChannelsPReLULayer {
 
 impl ChannelsPReLULayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_ChannelsPReLULayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::ConcatLayer
@@ -919,6 +927,10 @@ impl crate::dnn::Layer for ConstLayer {
 
 impl ConstLayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_ConstLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::ConvolutionLayer
@@ -991,6 +1003,10 @@ impl crate::dnn::Layer for CropAndResizeLayer {
 
 impl CropAndResizeLayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_CropAndResizeLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::CropLayer
@@ -1023,6 +1039,10 @@ impl crate::dnn::Layer for CropLayer {
 
 impl CropLayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_CropLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::DeconvolutionLayer
@@ -1423,6 +1443,10 @@ impl crate::dnn::Layer for InterpLayer {
 
 impl InterpLayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_InterpLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::LRNLayer
@@ -1703,6 +1727,15 @@ pub trait Layer: core::Algorithm {
         unsafe { sys::cv_dnn_Layer_setActivation_PtrOfActivationLayer(self.as_raw_Layer(), layer.as_raw_PtrOfActivationLayer()) }.into_result()
     }
     
+    /// Try to fuse current layer with a next one
+    /// ## Parameters
+    /// * top: Next layer to be fused.
+    /// ## Returns
+    /// True if fusion was performed.
+    fn try_fuse(&mut self, top: &mut types::PtrOfLayer) -> Result<bool> {
+        unsafe { sys::cv_dnn_Layer_tryFuse_PtrOfLayer(self.as_raw_Layer(), top.as_raw_PtrOfLayer()) }.into_result()
+    }
+    
     /// Returns parameters of layers with channel-wise multiplication and addition.
     /// ## Parameters
     /// * scale: [out] Channel-wise multipliers. Total number of values should
@@ -1766,6 +1799,17 @@ impl LayerFactory {
     pub fn unregister_layer(_type: &str) -> Result<()> {
         string_arg!(_type);
         unsafe { sys::cv_dnn_LayerFactory_unregisterLayer_String(_type.as_ptr()) }.into_result()
+    }
+    
+    /// Creates instance of registered layer.
+    /// ## Parameters
+    /// * type: type name of creating layer.
+    /// * params: parameters which will be used for layer initialization.
+    ///
+    /// Note: Thread-safe.
+    pub fn create_layer_instance(_type: &str, params: &mut crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        string_arg!(_type);
+        unsafe { sys::cv_dnn_LayerFactory_createLayerInstance_String_LayerParams(_type.as_ptr(), params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
     
 }
@@ -2011,6 +2055,16 @@ impl Net {
     
     pub fn get_layer_names(&self) -> Result<types::VectorOfString> {
         unsafe { sys::cv_dnn_Net_getLayerNames_const(self.as_raw_Net()) }.into_result().map(|ptr| types::VectorOfString { ptr })
+    }
+    
+    /// Returns pointer to layer with specified id or name which the network use.
+    pub fn get_layer(&mut self, layer_id: &crate::dnn::DictValue) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_Net_getLayer_DictValue(self.as_raw_Net(), layer_id.as_raw_DictValue()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
+    /// Returns pointers to input layers of specific layer.
+    pub fn get_layer_inputs(&mut self, layer_id: &crate::dnn::DictValue) -> Result<types::VectorOfPtrOfLayer> {
+        unsafe { sys::cv_dnn_Net_getLayerInputs_DictValue(self.as_raw_Net(), layer_id.as_raw_DictValue()) }.into_result().map(|ptr| types::VectorOfPtrOfLayer { ptr })
     }
     
     /// Connects output of the first layer to input of the second layer.
@@ -2930,6 +2984,10 @@ impl crate::dnn::Layer for ShiftLayer {
 
 impl ShiftLayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_ShiftLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::ShuffleChannelLayer
@@ -2970,6 +3028,10 @@ impl crate::dnn::Layer for ShuffleChannelLayer {
 
 impl ShuffleChannelLayer {
 
+    pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
+        unsafe { sys::cv_dnn_ShuffleChannelLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::SigmoidLayer

@@ -1,7 +1,7 @@
 pub mod core;
+pub mod bioinspired;
 pub mod calib3d;
 pub mod ccalib;
-pub mod bioinspired;
 pub mod cvv;
 pub mod dnn;
 pub mod dpm;
