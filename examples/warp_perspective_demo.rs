@@ -41,7 +41,7 @@ use self::core::LINE_8;
 #[cfg(feature = "opencv-41")]
 use self::imgproc::LINE_8;
 
-fn main() -> Result<(), Box<Error>> {
+fn main() -> Result<(), Box<dyn Error>> {
     let roi_corners = Arc::new(Mutex::new(VectorOfPoint::new()));
     let mut dst_corners = VectorOfPoint::with_capacity(4);
     for _ in 0..4 {
