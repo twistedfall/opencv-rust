@@ -18,6 +18,8 @@ from urllib.parse import quote
 # fixme get comments from HOUGH_PROBABILISTIC in imgproc
 # fixme get multiline comments from LSD_REFINE_ADV in imgproc
 # fixme add support for InputArray and friends to allow passing UMat
+# fixme remove ndims argument when slice is supplied and read it from slice
+# fixme add support for geneating "operator TYPE" for doing type conversion, e.g. MatExpr to Mat (https://docs.opencv.org/4.1.1/d1/d10/classcv_1_1MatExpr.html#a14b681f8faccc92f32053ee037f22462)
 
 def template(text):
     """
@@ -88,6 +90,7 @@ def make_safe_id(extern_id):
 decls_manual_pre = {
     "core": [
         ("class cv.Range", "", ["/Ghost"], []),
+        ("class cv.MatExpr", "", ["/Ghost"], []),
         ("class cv.Mat", "", ["/Ghost"], []),
         ("class cv.UMat", "", ["/Ghost"], []),
         ("class cv.Algorithm", "", ["/Ghost"], []),
@@ -147,6 +150,13 @@ func_rename = {
     ### core ###
     "cv_addImpl_int_const_char_X": "-",
     "cv_MatExpr_type_const": "typ",
+    "cv_MatExpr_MatExpr_Mat": "from_mat",
+    "cv_MatExpr_mul_const_MatExpr_double": "+_matexpr",
+    "cv_MatOp_add_const_MatExpr_Scalar_MatExpr": "+_scalar",
+    "cv_MatOp_subtract_const_Scalar_MatExpr_MatExpr": "+_scalar",
+    "cv_MatOp_multiply_const_MatExpr_double_MatExpr": "+_f64",
+    "cv_MatOp_divide_const_double_MatExpr_MatExpr": "+_f64",
+    "cv_MatOp_type_const_MatExpr": "typ",
     "cv_Mat_Mat_int_int_int": "+_rows_cols",
     "cv_Mat_Mat_Size_int": "+_size",
     "cv_Mat_Mat_int_int_int_Scalar": "+_rows_cols_with_default",
@@ -198,11 +208,22 @@ func_rename = {
     "cv_Mat_copySize_Mat": "-",  # internal function
     "cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags": "get_umat",
     "cv_Mat_getUMat_const_int_UMatUsageFlags": "get_umat",  # 3.2 only
+    "cv_Mat_zeros_Size_int": "+_size",
+    "cv_Mat_zeros_int_const_int_X_int": "+_nd",
+    "cv_Mat_ones_Size_int": "+_size",
+    "cv_Mat_ones_int_const_int_X_int": "+_nd",
+    "cv_Mat_eye_Size_int": "+_size",
     "cv_UMat_UMat_int_int_int_UMatUsageFlags": "+_rows_cols",
     "cv_UMat_UMat_Size_int_UMatUsageFlags": "+_size",
     "cv_UMat_UMat_int_int_int_Scalar_UMatUsageFlags": "+_rows_cols_with_default",
     "cv_UMat_UMat_Size_int_Scalar_UMatUsageFlags": "+_size_with_default",
+    "cv_min_Mat_Mat_Mat": "+_to",
+    "cv_min_Mat_double": "+_mat_f64",
+    "cv_min_double_Mat": "+_f64_mat",
     "cv_min_UMat_UMat_UMat": "+_umat",
+    "cv_max_Mat_Mat_Mat": "+_to",
+    "cv_max_Mat_double": "+_mat_f64",
+    "cv_max_double_Mat": "+_f64_mat",
     "cv_max_UMat_UMat_UMat": "+_umat",
     "cv_swap_UMat_UMat": "+_umat",
     "cv_UMat_UMat_int_const_int_X_int_UMatUsageFlags": "+_nd",
@@ -242,6 +263,7 @@ func_rename = {
     "cv_clipLine_Rect_Point_Point": "clip_line",
     "cv_cv_abs_short": "-",
     "cv_cv_abs_uchar": "-",
+    "cv_abs_MatExpr": "+_matexpr",
     "cv_divide_Mat_Mat_Mat_double_int": "divide_mat",
     "cv_ellipse_Mat_RotatedRect_Scalar_int_int": "ellipse_new_rotated_rect",
     "cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_VectorOfPoint2d": "ellipse_2_poly_f64",
@@ -718,6 +740,16 @@ force_slice = {
         "cv.Mat.Mat": {
             "arg_count": 4,
             "arg_name": "steps",
+        },
+        # accepts pointer to array of dimensions, make it slice
+        "cv.Mat.zeros": {
+            "arg_count": 3,
+            "arg_name": "sz",
+        },
+        # accepts pointer to array of dimensions, make it slice
+        "cv.Mat.ones": {
+            "arg_count": 3,
+            "arg_name": "sz",
         },
         # accepts pointer to array of dimensions, make it slice
         "cv.UMat.UMat": (

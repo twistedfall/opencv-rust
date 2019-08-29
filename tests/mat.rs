@@ -388,6 +388,28 @@ fn mat_from_data() -> Result<()> {
 }
 
 #[test]
+fn mat_from_matexpr() -> Result<()> {
+    {
+        let mat = Mat::zeros(3, 4, f32::typ())?.to_mat()?;
+        assert_eq!(4, mat.cols()?);
+        assert_eq!(3, mat.rows()?);
+        assert_eq!(0., *mat.at_2d::<f32>(0, 0)?);
+        assert_eq!(0., *mat.at_2d::<f32>(1, 1)?);
+        assert_eq!(0., *mat.at_2d::<f32>(2, 3)?);
+    }
+
+    {
+        let mat = Mat::ones_nd(2, &[6, 5], f32::typ())?.to_mat()?;
+        assert_eq!(5, mat.cols()?);
+        assert_eq!(6, mat.rows()?);
+        assert_eq!(1., *mat.at_2d::<f32>(0, 0)?);
+        assert_eq!(1., *mat.at_2d::<f32>(1, 1)?);
+        assert_eq!(1., *mat.at_2d::<f32>(5, 4)?);
+    }
+    Ok(())
+}
+
+#[test]
 fn mat_iterator() -> Result<()> {
     let mat = Mat::from_slice(&[1, 2, 3, 4])?;
     let mut iter = MatConstIterator::over(&mat)?;

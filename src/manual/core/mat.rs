@@ -7,7 +7,7 @@ use std::{
 use libc::{c_uchar, size_t};
 
 use crate::{
-    core::{self, Mat, MatConstIterator, MatSize, MatStep, Scalar, UMat},
+    core::{self, Mat, MatConstIterator, MatExpr, MatSize, MatStep, Scalar, UMat},
     Error,
     Result,
     sys,
@@ -550,6 +550,19 @@ impl MatConstIterator {
         }).as_ref()
             .map(convert_ptr)
             .ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer")))
+    }
+}
+
+impl MatExpr {
+    pub fn to_mat(&self) -> Result<Mat> {
+        let me = self.as_raw_MatExpr();
+        cpp!(unsafe [me as "const MatExpr*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                Mat ret = *me;
+                return { Error::Code::StsOk, NULL, new Mat(ret) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::Mat { ptr })
     }
 }
 
