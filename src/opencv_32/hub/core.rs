@@ -701,6 +701,46 @@ pub fn sv_decomp(src: &core::Mat, w: &mut core::Mat, u: &mut core::Mat, vt: &mut
     unsafe { sys::cv_SVDecomp_Mat_Mat_Mat_Mat_int(src.as_raw_Mat(), w.as_raw_Mat(), u.as_raw_Mat(), vt.as_raw_Mat(), flags) }.into_result()
 }
 
+/// Calculates an absolute value of each matrix element.
+///
+/// abs is a meta-function that is expanded to one of absdiff or convertScaleAbs forms:
+/// - C = abs(A-B) is equivalent to `absdiff(A, B, C)`
+/// - C = abs(A) is equivalent to `absdiff(A, Scalar::all(0), C)`
+/// - C = `Mat_<Vec<uchar,n> >(abs(A*alpha + beta))` is equivalent to `convertScaleAbs(A, C, alpha,
+/// beta)`
+///
+/// The output matrix has the same size and the same type as the input one except for the last case,
+/// where C is depth=CV_8U .
+/// ## Parameters
+/// * m: matrix.
+/// ## See also
+/// @ref MatrixExpressions, absdiff, convertScaleAbs
+pub fn abs(m: &core::Mat) -> Result<core::MatExpr> {
+    unsafe { sys::cv_abs_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
+}
+
+/// Calculates an absolute value of each matrix element.
+///
+/// abs is a meta-function that is expanded to one of absdiff or convertScaleAbs forms:
+/// - C = abs(A-B) is equivalent to `absdiff(A, B, C)`
+/// - C = abs(A) is equivalent to `absdiff(A, Scalar::all(0), C)`
+/// - C = `Mat_<Vec<uchar,n> >(abs(A*alpha + beta))` is equivalent to `convertScaleAbs(A, C, alpha,
+/// beta)`
+///
+/// The output matrix has the same size and the same type as the input one except for the last case,
+/// where C is depth=CV_8U .
+/// ## Parameters
+/// * m: matrix.
+/// ## See also
+/// @ref MatrixExpressions, absdiff, convertScaleAbs
+///
+/// ## Overloaded parameters
+///
+/// * e: matrix expression.
+pub fn abs_matexpr(e: &core::MatExpr) -> Result<core::MatExpr> {
+    unsafe { sys::cv_abs_MatExpr(e.as_raw_MatExpr()) }.into_result().map(|ptr| core::MatExpr { ptr })
+}
+
 /// Calculates the per-element absolute difference between two arrays or between an array and a scalar.
 ///
 /// The function cv::absdiff calculates:
@@ -2183,6 +2223,10 @@ pub fn magnitude(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> Res
     unsafe { sys::cv_magnitude_Mat_Mat_Mat(x.as_raw_Mat(), y.as_raw_Mat(), magnitude.as_raw_Mat()) }.into_result()
 }
 
+pub fn max(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
+    unsafe { sys::cv_max_Mat_Mat(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
+}
+
 /// Calculates per-element maximum of two arrays or an array and a scalar.
 ///
 /// The function cv::max calculates the per-element maximum of two arrays:
@@ -2195,8 +2239,12 @@ pub fn magnitude(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> Res
 /// * dst: output array of the same size and type as src1.
 /// ## See also
 /// min, compare, inRange, minMaxLoc, @ref MatrixExpressions
-pub fn max(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
+pub fn max_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_max_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+}
+
+pub fn max_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
+    unsafe { sys::cv_max_Mat_double(a.as_raw_Mat(), s) }.into_result().map(|ptr| core::MatExpr { ptr })
 }
 
 /// Calculates per-element maximum of two arrays or an array and a scalar.
@@ -2217,6 +2265,10 @@ pub fn max(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
 pub fn max_umat(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
     unsafe { sys::cv_max_UMat_UMat_UMat(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_UMat()) }.into_result()
+}
+
+pub fn max_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
+    unsafe { sys::cv_max_double_Mat(s, a.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
 }
 
 /// Calculates a mean and standard deviation of array elements.
@@ -2394,6 +2446,10 @@ pub fn min_max_loc_1(a: &core::SparseMat, min_val: &mut f64, max_val: &mut f64, 
     unsafe { sys::cv_minMaxLoc_SparseMat_double_X_double_X_int_X_int_X(a.as_raw_SparseMat(), min_val, max_val, min_idx, max_idx) }.into_result()
 }
 
+pub fn min(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
+    unsafe { sys::cv_min_Mat_Mat(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
+}
+
 /// Calculates per-element minimum of two arrays or an array and a scalar.
 ///
 /// The function cv::min calculates the per-element minimum of two arrays:
@@ -2406,8 +2462,12 @@ pub fn min_max_loc_1(a: &core::SparseMat, min_val: &mut f64, max_val: &mut f64, 
 /// * dst: output array of the same size and type as src1.
 /// ## See also
 /// max, compare, inRange, minMaxLoc
-pub fn min(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
+pub fn min_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_min_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+}
+
+pub fn min_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
+    unsafe { sys::cv_min_Mat_double(a.as_raw_Mat(), s) }.into_result().map(|ptr| core::MatExpr { ptr })
 }
 
 /// Calculates per-element minimum of two arrays or an array and a scalar.
@@ -2428,6 +2488,10 @@ pub fn min(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
 pub fn min_umat(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
     unsafe { sys::cv_min_UMat_UMat_UMat(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_UMat()) }.into_result()
+}
+
+pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
+    unsafe { sys::cv_min_double_Mat(s, a.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
 }
 
 /// Copies specified channels from input arrays to the specified channels of
@@ -5147,6 +5211,53 @@ impl Mat {
         unsafe { sys::cv_Mat_reshape_const_int_int(self.as_raw_Mat(), cn, rows) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
+    /// Transposes a matrix.
+    ///
+    /// The method performs matrix transposition by means of matrix expressions. It does not perform the
+    /// actual transposition but returns a temporary matrix transposition object that can be further used as
+    /// a part of more complex matrix expressions or can be assigned to a matrix:
+    /// ```ignore
+    /// Mat A1 = A + Mat::eye(A.size(), A.type())*lambda;
+    /// Mat C = A1.t()*A1; // compute (A + lambda*I)^t * (A + lamda*I)
+    /// ```
+    pub fn t(&self) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_t_const(self.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// Inverses a matrix.
+    ///
+    /// The method performs a matrix inversion by means of matrix expressions. This means that a temporary
+    /// matrix inversion object is returned by the method and can be used further as a part of more complex
+    /// matrix expressions or can be assigned to a matrix.
+    /// ## Parameters
+    /// * method: Matrix inversion method. One of cv::DecompTypes
+    ///
+    /// ## C++ default parameters
+    /// * method: DECOMP_LU
+    pub fn inv(&self, method: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_inv_const_int(self.as_raw_Mat(), method) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// Performs an element-wise multiplication or division of the two matrices.
+    ///
+    /// The method returns a temporary object encoding per-element array multiplication, with optional
+    /// scale. Note that this is not a matrix multiplication that corresponds to a simpler "\*" operator.
+    ///
+    /// Example:
+    /// ```ignore
+    /// Mat C = A.mul(5/B); // equivalent to divide(A, B, C, 5)
+    /// ```
+    ///
+    /// ## Parameters
+    /// * m: Another array of the same type and the same size as \*this, or a matrix expression.
+    /// * scale: Optional scale factor.
+    ///
+    /// ## C++ default parameters
+    /// * scale: 1
+    pub fn mul(&self, m: &core::Mat, scale: f64) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_mul_const_Mat_double(self.as_raw_Mat(), m.as_raw_Mat(), scale) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
     /// Computes a cross-product of two 3-element vectors.
     ///
     /// The method computes a cross-product of two 3-element vectors. The vectors must be 3-element
@@ -5168,6 +5279,98 @@ impl Mat {
     /// * m: another dot-product operand.
     pub fn dot(&self, m: &core::Mat) -> Result<f64> {
         unsafe { sys::cv_Mat_dot_const_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    /// Returns a zero array of the specified size and type.
+    ///
+    /// The method returns a Matlab-style zero array initializer. It can be used to quickly form a constant
+    /// array as a function parameter, part of a matrix expression, or as a matrix initializer. :
+    /// ```ignore
+    /// Mat A;
+    /// A = Mat::zeros(3, 3, CV_32F);
+    /// ```
+    ///
+    /// In the example above, a new matrix is allocated only if A is not a 3x3 floating-point matrix.
+    /// Otherwise, the existing matrix A is filled with zeros.
+    /// ## Parameters
+    /// * rows: Number of rows.
+    /// * cols: Number of columns.
+    /// * type: Created matrix type.
+    pub fn zeros(rows: i32, cols: i32, _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_zeros_int_int_int(rows, cols, _type) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// ## Parameters
+    /// * size: Alternative to the matrix size specification Size(cols, rows) .
+    /// * type: Created matrix type.
+    pub fn zeros_size(size: core::Size, _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_zeros_Size_int(size, _type) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// ## Parameters
+    /// * ndims: Array dimensionality.
+    /// * sz: Array of integers specifying the array shape.
+    /// * type: Created matrix type.
+    pub fn zeros_nd(ndims: i32, sz: &[i32], _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_zeros_int_const_int_X_int(ndims, sz.as_ptr(), _type) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// Returns an array of all 1's of the specified size and type.
+    ///
+    /// The method returns a Matlab-style 1's array initializer, similarly to Mat::zeros. Note that using
+    /// this method you can initialize an array with an arbitrary value, using the following Matlab idiom:
+    /// ```ignore
+    /// Mat A = Mat::ones(100, 100, CV_8U)*3; // make 100x100 matrix filled with 3.
+    /// ```
+    ///
+    /// The above operation does not form a 100x100 matrix of 1's and then multiply it by 3. Instead, it
+    /// just remembers the scale factor (3 in this case) and use it when actually invoking the matrix
+    /// initializer.
+    /// ## Parameters
+    /// * rows: Number of rows.
+    /// * cols: Number of columns.
+    /// * type: Created matrix type.
+    pub fn ones(rows: i32, cols: i32, _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_ones_int_int_int(rows, cols, _type) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// ## Parameters
+    /// * size: Alternative to the matrix size specification Size(cols, rows) .
+    /// * type: Created matrix type.
+    pub fn ones_size(size: core::Size, _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_ones_Size_int(size, _type) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// ## Parameters
+    /// * ndims: Array dimensionality.
+    /// * sz: Array of integers specifying the array shape.
+    /// * type: Created matrix type.
+    pub fn ones_nd(ndims: i32, sz: &[i32], _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_ones_int_const_int_X_int(ndims, sz.as_ptr(), _type) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// Returns an identity matrix of the specified size and type.
+    ///
+    /// The method returns a Matlab-style identity matrix initializer, similarly to Mat::zeros. Similarly to
+    /// Mat::ones, you can use a scale operation to create a scaled identity matrix efficiently:
+    /// ```ignore
+    /// // make a 4x4 diagonal matrix with 0.1's on the diagonal.
+    /// Mat A = Mat::eye(4, 4, CV_32F)*0.1;
+    /// ```
+    ///
+    /// ## Parameters
+    /// * rows: Number of rows.
+    /// * cols: Number of columns.
+    /// * type: Created matrix type.
+    pub fn eye(rows: i32, cols: i32, _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_eye_int_int_int(rows, cols, _type) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    /// ## Parameters
+    /// * size: Alternative matrix size specification as Size(cols, rows) .
+    /// * type: Created matrix type.
+    pub fn eye_size(size: core::Size, _type: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_Mat_eye_Size_int(size, _type) }.into_result().map(|ptr| core::MatExpr { ptr })
     }
     
     /// Allocates new array data if needed.
@@ -5797,12 +6000,72 @@ unsafe impl Send for MatExpr {}
 
 impl MatExpr {
 
+    pub fn default() -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_MatExpr() }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    pub fn from_mat(m: &core::Mat) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_MatExpr_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * _a: Mat()
+    /// * _b: Mat()
+    /// * _c: Mat()
+    /// * _alpha: 1
+    /// * _beta: 1
+    /// * _s: Scalar()
+    pub fn new(_op: &core::MatOp, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_MatExpr_const_MatOp_int_Mat_Mat_Mat_double_double_Scalar(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, _s) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
     pub fn size(&self) -> Result<core::Size> {
         unsafe { sys::cv_MatExpr_size_const(self.as_raw_MatExpr()) }.into_result()
     }
     
     pub fn typ(&self) -> Result<i32> {
         unsafe { sys::cv_MatExpr_type_const(self.as_raw_MatExpr()) }.into_result()
+    }
+    
+    pub fn row(&self, y: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_row_const_int(self.as_raw_MatExpr(), y) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    pub fn col(&self, x: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_col_const_int(self.as_raw_MatExpr(), x) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * d: 0
+    pub fn diag(&self, d: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_diag_const_int(self.as_raw_MatExpr(), d) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    pub fn t(&self) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_t_const(self.as_raw_MatExpr()) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * method: DECOMP_LU
+    pub fn inv(&self, method: i32) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_inv_const_int(self.as_raw_MatExpr(), method) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * scale: 1
+    pub fn mul_matexpr(&self, e: &core::MatExpr, scale: f64) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_mul_const_MatExpr_double(self.as_raw_MatExpr(), e.as_raw_MatExpr(), scale) }.into_result().map(|ptr| core::MatExpr { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * scale: 1
+    pub fn mul(&self, m: &core::Mat, scale: f64) -> Result<core::MatExpr> {
+        unsafe { sys::cv_MatExpr_mul_const_Mat_double(self.as_raw_MatExpr(), m.as_raw_Mat(), scale) }.into_result().map(|ptr| core::MatExpr { ptr })
     }
     
     pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
@@ -5818,6 +6081,115 @@ impl MatExpr {
 // Generating impl for trait cv::MatOp (trait)
 pub trait MatOp {
     #[inline(always)] fn as_raw_MatOp(&self) -> *mut c_void;
+    fn element_wise(&self, expr: &core::MatExpr) -> Result<bool> {
+        unsafe { sys::cv_MatOp_elementWise_const_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * _type: -1
+    fn assign(&self, expr: &core::MatExpr, m: &mut core::Mat, _type: i32) -> Result<()> {
+        unsafe { sys::cv_MatOp_assign_const_MatExpr_Mat_int(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat(), _type) }.into_result()
+    }
+    
+    fn roi(&self, expr: &core::MatExpr, row_range: &core::Range, col_range: &core::Range, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_roi_const_MatExpr_Range_Range_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr(), row_range.as_raw_Range(), col_range.as_raw_Range(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn diag(&self, expr: &core::MatExpr, d: i32, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_diag_const_MatExpr_int_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr(), d, res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn aug_assign_add(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_MatOp_augAssignAdd_const_MatExpr_Mat(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn aug_assign_subtract(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_MatOp_augAssignSubtract_const_MatExpr_Mat(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn aug_assign_multiply(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_MatOp_augAssignMultiply_const_MatExpr_Mat(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn aug_assign_divide(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_MatOp_augAssignDivide_const_MatExpr_Mat(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn aug_assign_and(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_MatOp_augAssignAnd_const_MatExpr_Mat(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn aug_assign_or(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_MatOp_augAssignOr_const_MatExpr_Mat(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn aug_assign_xor(&self, expr: &core::MatExpr, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv_MatOp_augAssignXor_const_MatExpr_Mat(self.as_raw_MatOp(), expr.as_raw_MatExpr(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn add(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_add_const_MatExpr_MatExpr_MatExpr(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn add_scalar(&self, expr1: &core::MatExpr, s: core::Scalar, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_add_const_MatExpr_Scalar_MatExpr(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), s, res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn subtract(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_subtract_const_MatExpr_MatExpr_MatExpr(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn subtract_scalar(&self, s: core::Scalar, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_subtract_const_Scalar_MatExpr_MatExpr(self.as_raw_MatOp(), s, expr.as_raw_MatExpr(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * scale: 1
+    fn multiply(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr, scale: f64) -> Result<()> {
+        unsafe { sys::cv_MatOp_multiply_const_MatExpr_MatExpr_MatExpr_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_MatExpr(), scale) }.into_result()
+    }
+    
+    fn multiply_f64(&self, expr1: &core::MatExpr, s: f64, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_multiply_const_MatExpr_double_MatExpr(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), s, res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * scale: 1
+    fn divide(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr, scale: f64) -> Result<()> {
+        unsafe { sys::cv_MatOp_divide_const_MatExpr_MatExpr_MatExpr_double(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_MatExpr(), scale) }.into_result()
+    }
+    
+    fn divide_f64(&self, s: f64, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_divide_const_double_MatExpr_MatExpr(self.as_raw_MatOp(), s, expr.as_raw_MatExpr(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn abs(&self, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_abs_const_MatExpr_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn transpose(&self, expr: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_transpose_const_MatExpr_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn matmul(&self, expr1: &core::MatExpr, expr2: &core::MatExpr, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_matmul_const_MatExpr_MatExpr_MatExpr(self.as_raw_MatOp(), expr1.as_raw_MatExpr(), expr2.as_raw_MatExpr(), res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn invert(&self, expr: &core::MatExpr, method: i32, res: &mut core::MatExpr) -> Result<()> {
+        unsafe { sys::cv_MatOp_invert_const_MatExpr_int_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr(), method, res.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn size(&self, expr: &core::MatExpr) -> Result<core::Size> {
+        unsafe { sys::cv_MatOp_size_const_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()
+    }
+    
+    fn typ(&self, expr: &core::MatExpr) -> Result<i32> {
+        unsafe { sys::cv_MatOp_type_const_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()
+    }
+    
 }
 
 // boxed class cv::MatSize
