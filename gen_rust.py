@@ -911,7 +911,7 @@ $code
 #
 
 def camel_case_to_snake_case(name):
-    res = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    res = re.sub('([^_])([A-Z][a-z]+)', r'\1_\2', name)
     res = re.sub('([a-z0-9])([A-Z])', r'\1_\2', res)
     res = re.sub(r'\B([23])_(D)\b', r'_\1\2', res)  # fix 2_d and 3_d
     return res.lower()
