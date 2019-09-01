@@ -1511,27 +1511,27 @@ pub fn depth_to_string(depth: i32) -> Result<String> {
     unsafe { sys::cv_depthToString_int(depth) }.into_result().map(crate::templ::receive_string)
 }
 
-pub fn check_failed__mat_channels(v: i32, ctx: &core::CheckContext) -> Result<()> {
+pub fn check_failed_mat_channels(v: i32, ctx: &core::CheckContext) -> Result<()> {
     unsafe { sys::cv_detail_check_failed_MatChannels_int_CheckContext(v, ctx.as_raw_CheckContext()) }.into_result()
 }
 
-pub fn check_failed__mat_channels_1(v1: i32, v2: i32, ctx: &core::CheckContext) -> Result<()> {
+pub fn check_failed_mat_channels_1(v1: i32, v2: i32, ctx: &core::CheckContext) -> Result<()> {
     unsafe { sys::cv_detail_check_failed_MatChannels_int_int_CheckContext(v1, v2, ctx.as_raw_CheckContext()) }.into_result()
 }
 
-pub fn check_failed__mat_depth(v: i32, ctx: &core::CheckContext) -> Result<()> {
+pub fn check_failed_mat_depth(v: i32, ctx: &core::CheckContext) -> Result<()> {
     unsafe { sys::cv_detail_check_failed_MatDepth_int_CheckContext(v, ctx.as_raw_CheckContext()) }.into_result()
 }
 
-pub fn check_failed__mat_depth_1(v1: i32, v2: i32, ctx: &core::CheckContext) -> Result<()> {
+pub fn check_failed_mat_depth_1(v1: i32, v2: i32, ctx: &core::CheckContext) -> Result<()> {
     unsafe { sys::cv_detail_check_failed_MatDepth_int_int_CheckContext(v1, v2, ctx.as_raw_CheckContext()) }.into_result()
 }
 
-pub fn check_failed__mat_type(v: i32, ctx: &core::CheckContext) -> Result<()> {
+pub fn check_failed_mat_type(v: i32, ctx: &core::CheckContext) -> Result<()> {
     unsafe { sys::cv_detail_check_failed_MatType_int_CheckContext(v, ctx.as_raw_CheckContext()) }.into_result()
 }
 
-pub fn check_failed__mat_type_1(v1: i32, v2: i32, ctx: &core::CheckContext) -> Result<()> {
+pub fn check_failed_mat_type_1(v1: i32, v2: i32, ctx: &core::CheckContext) -> Result<()> {
     unsafe { sys::cv_detail_check_failed_MatType_int_int_CheckContext(v1, v2, ctx.as_raw_CheckContext()) }.into_result()
 }
 
@@ -2466,7 +2466,7 @@ pub fn set_use_ipp_ne(flag: bool) -> Result<()> {
     unsafe { sys::cv_ipp_setUseIPP_NE_bool(flag) }.into_result()
 }
 
-pub fn set_use_ipp__not_exact(flag: bool) -> Result<()> {
+pub fn set_use_ipp_not_exact(flag: bool) -> Result<()> {
     unsafe { sys::cv_ipp_setUseIPP_NotExact_bool(flag) }.into_result()
 }
 
@@ -2482,7 +2482,7 @@ pub fn use_ipp_ne() -> Result<bool> {
     unsafe { sys::cv_ipp_useIPP_NE() }.into_result()
 }
 
-pub fn use_ipp__not_exact() -> Result<bool> {
+pub fn use_ipp_not_exact() -> Result<bool> {
     unsafe { sys::cv_ipp_useIPP_NotExact() }.into_result()
 }
 
@@ -6693,6 +6693,10 @@ impl MatExpr {
         unsafe { sys::cv_MatExpr_MatExpr_const_MatOp_int_Mat_Mat_Mat_double_double_Scalar(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, _s) }.into_result().map(|ptr| core::MatExpr { ptr })
     }
     
+    pub fn to_mat(&self) -> Result<core::Mat> {
+        unsafe { sys::cv_MatExpr_operator_Mat_const(self.as_raw_MatExpr()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
     pub fn size(&self) -> Result<core::Size> {
         unsafe { sys::cv_MatExpr_size_const(self.as_raw_MatExpr()) }.into_result()
     }
@@ -6925,6 +6929,10 @@ impl MatStep {
     
     pub fn new(s: size_t) -> Result<core::MatStep> {
         unsafe { sys::cv_MatStep_MatStep_size_t(s) }.into_result().map(|ptr| core::MatStep { ptr })
+    }
+    
+    pub fn to_size_t(&self) -> Result<size_t> {
+        unsafe { sys::cv_MatStep_operator_size_t_const(self.as_raw_MatStep()) }.into_result()
     }
     
 }
@@ -9037,7 +9045,7 @@ impl Device {
         unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-    pub fn open_cl_c__version(&self) -> Result<String> {
+    pub fn open_cl_c_version(&self) -> Result<String> {
         unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
     }
     

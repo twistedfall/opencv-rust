@@ -349,6 +349,10 @@ impl Color {
         unsafe { sys::cv_viz_Color_Color_Scalar(color) }.into_result().map(|ptr| crate::viz::Color { ptr })
     }
     
+    pub fn to_vec3b(&self) -> Result<core::Vec3b> {
+        unsafe { sys::cv_viz_Color_operator_Vec3b_const(self.as_raw_Color()) }.into_result()
+    }
+    
     pub fn black() -> Result<crate::viz::Color> {
         unsafe { sys::cv_viz_Color_black() }.into_result().map(|ptr| crate::viz::Color { ptr })
     }

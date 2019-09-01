@@ -218,7 +218,7 @@ pub fn create_background_subtractor_mog2(history: i32, var_threshold: f64, detec
 }
 
 /// Creates instance of cv::DenseOpticalFlow
-pub fn create_opt_flow__dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
+pub fn create_opt_flow_dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
     unsafe { sys::cv_createOptFlow_DualTVL1() }.into_result().map(|ptr| types::PtrOfDualTVL1OpticalFlow { ptr })
 }
 

@@ -11,20 +11,20 @@ use crate::{Error, Result, core, sys, types};
 ///
 /// ## C++ default parameters
 /// * device_id: 0
-pub fn create_frame_source__camera(device_id: i32) -> Result<types::PtrOfFrameSource> {
+pub fn create_frame_source_camera(device_id: i32) -> Result<types::PtrOfFrameSource> {
     unsafe { sys::cv_superres_createFrameSource_Camera_int(device_id) }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }
 
-pub fn create_frame_source__empty() -> Result<types::PtrOfFrameSource> {
+pub fn create_frame_source_empty() -> Result<types::PtrOfFrameSource> {
     unsafe { sys::cv_superres_createFrameSource_Empty() }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }
 
-pub fn create_frame_source__video_cuda(file_name: &str) -> Result<types::PtrOfFrameSource> {
+pub fn create_frame_source_video_cuda(file_name: &str) -> Result<types::PtrOfFrameSource> {
     string_arg!(file_name);
     unsafe { sys::cv_superres_createFrameSource_Video_CUDA_String(file_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }
 
-pub fn create_frame_source__video(file_name: &str) -> Result<types::PtrOfFrameSource> {
+pub fn create_frame_source_video(file_name: &str) -> Result<types::PtrOfFrameSource> {
     string_arg!(file_name);
     unsafe { sys::cv_superres_createFrameSource_Video_String(file_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfFrameSource { ptr })
 }

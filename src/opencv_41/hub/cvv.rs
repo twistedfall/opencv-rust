@@ -103,5 +103,9 @@ impl CallMetaData {
         unsafe { sys::cvv_impl_CallMetaData_CallMetaData_const_char_X_size_t_const_char_X(file.as_ptr(), line, function.as_ptr()) }.into_result().map(|ptr| crate::cvv::CallMetaData { ptr })
     }
     
+    pub fn to_bool(&mut self) -> Result<bool> {
+        unsafe { sys::cvv_impl_CallMetaData_operator_bool(self.as_raw_CallMetaData()) }.into_result()
+    }
+    
 }
 

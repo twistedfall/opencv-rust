@@ -371,6 +371,7 @@ pub fn cv_MatConstIterator_seek_const_int_X_bool(instance: *mut c_void, _idx: *c
 pub fn cv_MatExpr_MatExpr() -> cv_return_value_void_X;
 pub fn cv_MatExpr_MatExpr_Mat(m: *mut c_void) -> cv_return_value_void_X;
 pub fn cv_MatExpr_MatExpr_const_MatOp_int_Mat_Mat_Mat_double_double_Scalar(_op: *mut c_void, _flags: i32, _a: *mut c_void, _b: *mut c_void, _c: *mut c_void, _alpha: f64, _beta: f64, _s: core::Scalar) -> cv_return_value_void_X;
+pub fn cv_MatExpr_operator_Mat_const(instance: *const c_void) -> cv_return_value_void_X;
 pub fn cv_MatExpr_size_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
 pub fn cv_MatExpr_type_const(instance: *const c_void) -> cv_return_value_int;
 pub fn cv_MatExpr_row_const_int(instance: *const c_void, y: i32) -> cv_return_value_void_X;
@@ -412,6 +413,7 @@ pub fn cv_MatSize_MatSize_int_X(_p: *mut i32) -> cv_return_value_void_X;
 #[doc(hidden)] pub fn cv_MatStep_delete(ptr : *mut c_void);
 pub fn cv_MatStep_MatStep() -> cv_return_value_void_X;
 pub fn cv_MatStep_MatStep_size_t(s: size_t) -> cv_return_value_void_X;
+pub fn cv_MatStep_operator_size_t_const(instance: *const c_void) -> cv_return_value_std_size_t;
 #[doc(hidden)] pub fn cv_Matx_AddOp_delete(ptr : *mut c_void);
 #[doc(hidden)] pub fn cv_Matx_DivOp_delete(ptr : *mut c_void);
 #[doc(hidden)] pub fn cv_Matx_MatMulOp_delete(ptr : *mut c_void);
@@ -989,6 +991,7 @@ pub fn cvv_setDebugFlag_bool(active: bool) -> cv_return_value_void;
 #[doc(hidden)] pub fn cv_CallMetaData_delete(ptr : *mut c_void);
 pub fn cvv_impl_CallMetaData_CallMetaData() -> cv_return_value_void_X;
 pub fn cvv_impl_CallMetaData_CallMetaData_const_char_X_size_t_const_char_X(file: *const c_char, line: size_t, function: *const c_char) -> cv_return_value_void_X;
+pub fn cvv_impl_CallMetaData_operator_bool(instance: *mut c_void) -> cv_return_value_bool;
 }
 extern "C" {
 pub fn cv_dnn_createCaffeImporter_String_String(prototxt: *const c_char, caffe_model: *const c_char) -> cv_return_value_void_X;
