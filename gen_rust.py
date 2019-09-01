@@ -19,7 +19,6 @@ from urllib.parse import quote
 # fixme get multiline comments from LSD_REFINE_ADV in imgproc
 # fixme add support for InputArray and friends to allow passing UMat
 # fixme remove ndims argument when slice is supplied and read it from slice
-# fixme add support for geneating "operator TYPE" for doing type conversion, e.g. MatExpr to Mat (https://docs.opencv.org/4.1.1/d1/d10/classcv_1_1MatExpr.html#a14b681f8faccc92f32053ee037f22462)
 
 def template(text):
     """
@@ -1035,6 +1034,7 @@ class ArgInfo:
 class FuncInfo(GeneralInfo):
     KIND_FUNCTION    = "(function)"
     KIND_METHOD      = "(method)"
+    KIND_METHOD_CONVERT = "(convertor method)"
     KIND_CONSTRUCTOR = "(constructor)"
 
     TEMPLATES = {
@@ -1111,14 +1111,23 @@ class FuncInfo(GeneralInfo):
                     self.name = "new"
                 self.type = gen.get_type_info(self.classpath)
             else:
-                self.kind = self.KIND_METHOD
-                self.type = gen.get_type_info(decl[1])
+                operator_convert = False
+                m = re.match(r"operator\s+(\w+)$", self.name)
+                if m is not None:
+                    out_type = gen.get_type_info(m.group(1))
+                    if out_type is not None and not isinstance(out_type, UnknownTypeInfo):
+                        operator_convert = True
+                        self.kind = self.KIND_METHOD_CONVERT
+                        self.type = out_type
+                if not operator_convert:
+                    self.kind = self.KIND_METHOD
+                    self.type = gen.get_type_info(decl[1])
         else:
             self.kind = self.KIND_FUNCTION
             self.ci = None  # type: ClassInfo
             self.type = gen.get_type_info(decl[1])
 
-        self.identifier = self.fullname.replace("::", "_")
+        self.identifier = self.fullname.replace("::", "_").replace(" ", "_")
 
         self.is_ignored = self.is_ignored or "/H" in decl[2] or "/I" in decl[2]
 
@@ -1164,7 +1173,7 @@ class FuncInfo(GeneralInfo):
             logging.info("ignore destructor %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
 
-        if self.name.startswith("operator") or self.fullname.startswith("operator "):
+        if (self.name.startswith("operator") or self.fullname.startswith("operator ")) and self.kind != self.KIND_METHOD_CONVERT:
             logging.info("ignore %s %s in %s"%(self.kind, self.name, self.ci))
             self.is_ignored = True
 
@@ -1207,7 +1216,7 @@ class FuncInfo(GeneralInfo):
         if self.identifier in func_manual:
             return None
 
-        if self.name.startswith("operator"):
+        if self.name.startswith("operator") and self.kind != self.KIND_METHOD_CONVERT:
             return "can not map %s yet"%(self.name)
 
         if not self.rv_type():
@@ -1231,7 +1240,10 @@ class FuncInfo(GeneralInfo):
     def r_name(self):
         name = func_rename.get(self.identifier)
         if name is None:
-            name = self.name
+            if self.kind == self.KIND_METHOD_CONVERT:
+                name = re.sub(r"^operator\s+", "to_", self.name)
+            else:
+                name = self.name
         else:
             if "+" in name:
                 name = name.replace("+", self.name)
