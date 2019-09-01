@@ -39,6 +39,8 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "aruco",
         "bgsegm",
         "core_detect",
+        "cudalegacy",
+        "cudev",
         "face",
         "flann",
         "gapi",
@@ -484,7 +486,6 @@ fn cleanup(opencv_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
 fn main() -> Result<(), Box<dyn Error>> {
     let features = [cfg!(feature = "opencv-32"), cfg!(feature = "opencv-34"), cfg!(feature = "opencv-41")].iter().map(|&x| i32::from(x)).sum::<i32>();
     if features != 1 {
-        // todo: allow building with custom headers
         panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
     }
     let opencv_header_dir = env::var("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|_| {
