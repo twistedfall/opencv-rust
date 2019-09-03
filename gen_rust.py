@@ -822,7 +822,7 @@ enum_ignore_discriminant = {
 # key: reserved keyword
 # value: replacement
 reserved_rename = {
-    "type": "_type",
+    "type": "_type",  # fixme: "typ" is better rename
     "box": "_box",
     "ref": "_ref",
     "in": "_in",
@@ -1843,7 +1843,7 @@ class TypeInfo(object):
         :type attr_type: str|None
         :rtype: str
         """
-        if self.is_by_ptr and attr_type != "w":
+        if self.is_by_ptr and attr_type is None:
             if is_output:
                 return "{}: &mut {}".format(var_name, self.rust_full)
             return "{}: &{}".format(var_name, self.rust_full)
@@ -3361,7 +3361,7 @@ class RustWrapperGenerator(object):
         self.moduleCppCode.write(template("""
             // boxed class: $typeid
             void cv_${rust_local}_delete(void* instance) {
-                delete ($cpptype*) instance;
+                delete reinterpret_cast<$cpptype*>(instance);
             }
             """).substitute(typ.__dict__))
 

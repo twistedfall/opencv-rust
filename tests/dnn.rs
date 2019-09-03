@@ -41,15 +41,12 @@ fn net() -> Result<()> {
 #[test]
 #[cfg(not(feature = "opencv-32"))]
 fn layer() -> Result<()> {
-    #[cfg(not(feature = "opencv-32"))]
-    {
-        use opencv::dnn::CropAndResizeLayer;
-        let mut params = LayerParams::default()?;
-        params.set("width", &mut DictValue::from_i32(32)?)?;
-        params.set("height", &mut DictValue::from_i32(32)?)?;
-        let layer = CropAndResizeLayer::create(&mut params)?;
-        assert_eq!(0, layer.preferable_target()?);
-    }
+    use opencv::dnn::CropAndResizeLayer;
+    let mut params = LayerParams::default()?;
+    params.set("width", &mut DictValue::from_i32(32)?)?;
+    params.set("height", &mut DictValue::from_i32(32)?)?;
+    let layer = CropAndResizeLayer::create(&mut params)?;
+    assert_eq!(0, layer.preferable_target()?);
     Ok(())
 }
 

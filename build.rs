@@ -159,6 +159,7 @@ fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
     let mut out = cc::Build::new();
     out.cpp(true)
         .flag("-std=c++11")
+        .flag_if_supported("-fno-strict-aliasing")
         .flag_if_supported("-Wno-deprecated-declarations")
         .flag_if_supported("-Wno-class-memaccess")
         .include(opencv_header_dir)
@@ -511,10 +512,11 @@ fn main() -> Result<(), Box<dyn Error>> {
     install_wrapper()?;
     cleanup(&opencv_header_dir)?;
 
-    let mut config = cpp_build::Config::new();
-    config.flag_if_supported("-Wno-class-memaccess");
-    config.flag_if_supported("-Wno-ignored-qualifiers");
-    config.include(opencv_header_dir);
-    config.build("src/lib.rs");
+    cpp_build::Config::new()
+        .flag_if_supported("-fno-strict-aliasing")
+        .flag_if_supported("-Wno-class-memaccess")
+        .flag_if_supported("-Wno-ignored-qualifiers")
+        .include(opencv_header_dir)
+        .build("src/lib.rs");
     Ok(())
 }
