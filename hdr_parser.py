@@ -772,6 +772,8 @@ class CppHeaderParser(object):
                     return stmt_type, classname, True, decl
 
             if stmt.startswith("enum") or stmt.startswith("namespace"):
+                if "CV_EXPORTS_W_SIMPLE " in stmt:
+                    stmt = stmt.replace("CV_EXPORTS_W_SIMPLE ", "")
                 stmt_list = stmt.rsplit(" ", 1)
                 if len(stmt_list) < 2:
                     stmt_list.append("<unnamed>")

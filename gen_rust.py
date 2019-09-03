@@ -132,6 +132,16 @@ decls_manual_post = {
 
 # dict of functions to rename or skip, key is FuncInfo.identifier, value is new name ("+" will be replaces by old name) or "-" to skip
 func_rename = {
+    ### aruco ###
+    "cv_aruco_calibrateCameraAruco__InputArray__InputArray__InputArray_PtrOfBoard_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria": "+_with_stddev",
+    "cv_aruco_calibrateCameraCharuco__InputArray__InputArray_PtrOfCharucoBoard_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria": "+_with_stddev",
+    "cv_aruco_generateCustomDictionary_int_int_PtrOfDictionary": "+_with_base",  # 3.2 only
+    "cv_aruco_generateCustomDictionary_int_int_PtrOfDictionary_int": "+_with_base",
+    "cv_aruco_getPredefinedDictionary_int": "+_i32",
+    "cv_aruco_Dictionary_Dictionary_PtrOfDictionary": "copy",
+    "cv_aruco_Dictionary_create_int_int_PtrOfDictionary": "+_with_base",  # 3.2 only
+    "cv_aruco_Dictionary_create_int_int_PtrOfDictionary_int": "+_with_base",
+
     ### bioinspired ###
     "cv_bioinspired_Retina_setup_String_bool": "+_from_file",
     "cv_bioinspired_Retina_getParvoRAW__OutputArray": "+_to",
@@ -802,6 +812,9 @@ force_slice = {
 
 # set of enum's that need to be generated, other enums are just expanded to constants, elements are EnumInfo.fullname
 enum_generate = {
+    ### aruco ###
+    "cv::aruco::PREDEFINED_DICTIONARY_NAME",
+
     ### calib3d ###
     "cv::HandEyeCalibrationMethod",
 

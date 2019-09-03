@@ -36,7 +36,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         return Ok(modules);
     }
     let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
-        "aruco",
         "bgsegm",
         "core_detect",
         "cudalegacy",
@@ -128,6 +127,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "core/types.hpp",
         "core/mat.hpp",
         "core/persistence.hpp",
+        "aruco/dictionary.hpp",
     ];
 
     modules.sort_by_key(|(mod_name, ..)| module_order.iter().position(|&order_module| order_module == mod_name).unwrap_or_else(|| module_order.len()));
@@ -267,14 +267,21 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
         writeln!(&mut types, "#define HAVE_OPENCV_OCL true")?; // for 3.2 opencl support
         for m in modules {
             writeln!(&mut types, "#include <opencv2/{}.hpp>", m.0)?;
-            if m.0 == "dnn" {
-                // include it manually, otherwise it's not included
-                if cfg!(feature = "opencv-41") {
-                    writeln!(&mut types, "#include <opencv2/{}/version.hpp>", m.0)?;
+            match m.0.as_str() {
+                "dnn" => {
+                    // include it manually, otherwise it's not included
+                    if cfg!(feature = "opencv-41") {
+                        writeln!(&mut types, "#include <opencv2/{}/version.hpp>", m.0)?;
+                    }
+                    writeln!(&mut types, "#include <opencv2/{}/all_layers.hpp>", m.0)?;
                 }
-                writeln!(&mut types, "#include <opencv2/{}/all_layers.hpp>", m.0)?;
-            } else if m.0 == "core" {
-                writeln!(&mut types, "#include <opencv2/{}/ocl.hpp>", m.0)?;
+                "aruco" => {
+                    writeln!(&mut types, "#include <opencv2/{}/charuco.hpp>", m.0)?;
+                }
+                "core" => {
+                    writeln!(&mut types, "#include <opencv2/{}/ocl.hpp>", m.0)?;
+                }
+                _ => ()
             }
         }
         if !cfg!(feature = "opencv-32") {
