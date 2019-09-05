@@ -1371,7 +1371,7 @@ class FuncInfo(GeneralInfo):
                 continue
             args.append(arg.type.rust_arg_func_decl(arg.rsname, arg.is_output(), self.attr_accessor_type))
 
-        pub = "" if self.ci and self.ci.type_info().is_trait and not self.is_static else "pub "
+        pub = "" if self.ci and self.ci.is_trait and not self.is_static else "pub "
 
         doc_comment = self.gen.reformat_doc(self.comment, self)
 
@@ -1462,7 +1462,7 @@ class ClassInfo(GeneralInfo):
         self.namespaces = namespaces
         self.module = module
         self.is_simple = self.is_ignored = self.is_ghost = self.is_callback = False
-        self.is_trait = self.fullname in forced_class_trait
+        self.is_trait = self.fullname in forced_class_trait  # don't generate struct, generate trait (abstract classes and classes inside forced_trait_classes)
         self.classname = self.name
         self.comment = ""
         if len(decl) > 5:
@@ -1470,12 +1470,14 @@ class ClassInfo(GeneralInfo):
         for m in decl[2]:
             if m == "/Simple" or m == "/Map":
                 self.is_simple = True
-            if m == "/Hidden":
+            elif m == "/Hidden":
                 self.is_ignored = True
-            if m == "/Ghost":
+            elif m == "/Ghost":
                 self.is_ghost = True
-            if m == "/Callback":
+            elif m == "/Callback":
                 self.is_callback = True
+            elif m == "/A":
+                self.is_trait = True
         if self.classpath:
             ci = self.gen.get_class(self.classpath)
             if ci is not None and ci.is_ignored:
@@ -1493,9 +1495,9 @@ class ClassInfo(GeneralInfo):
 
         if not self.is_ignored:
             for base in self.bases:
-                typ = self.gen.get_class(base)
-                if typ:
-                    typ.is_trait = True
+                ci = self.gen.get_class(base)
+                if ci:
+                    ci.is_trait = True
 
         # class props
         self.props = []
@@ -1759,7 +1761,6 @@ class TypeInfo(object):
         # False: types that contain ptr field to actual heap allocated data (e.g. BoxedClass, Vector, SmartPtr)
         # True: types that are getting passed by value (e.g. Primitive, SimpleClass)
         self.is_by_ptr = False
-        self.is_trait = False  # don't generate struct, generate trait (abstract classes and classes inside forced_trait_classes)
         self.is_copy = False  # true for types that are Copy in Rust (e.g. Primitive, SimpleClass)
 
         self.cpp_extern = ""  # cpp type used on the boundary between Rust and C (e.g. in return wrappers)
@@ -1844,10 +1845,16 @@ class TypeInfo(object):
         :rtype: str
         """
         if self.is_by_ptr and attr_type is None:
+            mods = []
             if is_output:
-                return "{}: &mut {}".format(var_name, self.rust_full)
-            return "{}: &{}".format(var_name, self.rust_full)
-        if self.is_by_ref and not self.is_const:
+                mods.append("mut")
+            ci = self.gen.get_class(self.typeid)
+            if ci is not None and ci.is_trait:
+                mods.append("dyn")
+            if len(mods) > 0:
+                mods.append("")  # force space at the end
+            return "{}: &{}{}".format(var_name, " ".join(mods), self.rust_full)
+        if self.is_by_ref and not self.is_const:  # fixme, it should be possible to join this condition with the previous one
             return "{}: &mut {}".format(var_name, self.rust_full)
         return "{}: {}".format(var_name, self.rust_full)
 
@@ -2225,8 +2232,6 @@ class BoxedClassTypeInfo(TypeInfo):
 
     def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
         old_rust_full = self.rust_full
-        if self.is_trait:
-            self.rust_full = "dyn {}".format(self.rust_full)
         out = super().rust_arg_func_decl(var_name, is_output, attr_type)
         self.rust_full = old_rust_full
         return out
@@ -3430,7 +3435,7 @@ class RustWrapperGenerator(object):
         if ci.namespace == "":
             logging.info("Not namespaced. Skipped %s", ci)
             return
-        if t.is_trait:
+        if ci.is_trait:
             if len(ci.bases):
                 bases = sorted(x.rust_full for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
                 bases = ": " + " + ".join(bases)
