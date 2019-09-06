@@ -71,6 +71,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 
 /// A class to represent a line
@@ -679,7 +680,7 @@ impl LSDDetector {
     ///
     /// ## C++ default parameters
     /// * masks: std::vector<Mat>()
-    pub fn detect_1(&self, images: &types::VectorOfMat, keylines: &mut types::VectorOfVectorOfKeyLine, scale: i32, num_octaves: i32, masks: &types::VectorOfMat) -> Result<()> {
+    pub fn detect_multiple(&self, images: &types::VectorOfMat, keylines: &mut types::VectorOfVectorOfKeyLine, scale: i32, num_octaves: i32, masks: &types::VectorOfMat) -> Result<()> {
         unsafe { sys::cv_line_descriptor_LSDDetector_detect_const_VectorOfMat_VectorOfVectorOfKeyLine_int_int_VectorOfMat(self.as_raw_LSDDetector(), images.as_raw_VectorOfMat(), keylines.as_raw_VectorOfVectorOfKeyLine(), scale, num_octaves, masks.as_raw_VectorOfMat()) }.into_result()
     }
     

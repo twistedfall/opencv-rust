@@ -56,6 +56,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
 pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
@@ -183,16 +184,19 @@ pub trait BaseCascadeClassifier: core::Algorithm {
         unsafe { sys::cv_BaseCascadeClassifier_load_String(self.as_raw_BaseCascadeClassifier(), filename.as_ptr()) }.into_result()
     }
     
-    fn detect_multi_scale(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-        unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size(self.as_raw_BaseCascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
+    fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale__InputArray_VectorOfRect_double_int_int_Size_Size(self.as_raw_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_VectorOfRect(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
-    fn detect_multi_scale_num(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, num_detections: &mut types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-        unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size(self.as_raw_BaseCascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), num_detections.as_raw_VectorOfint(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
+    fn detect_multi_scale_num(&mut self, image: &dyn core::ToInputArray, objects: &mut types::VectorOfRect, num_detections: &mut types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_double_int_int_Size_Size(self.as_raw_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_VectorOfRect(), num_detections.as_raw_VectorOfint(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
-    fn detect_multi_scale_levels(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, reject_levels: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
-        unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool(self.as_raw_BaseCascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), reject_levels.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble(), scale_factor, min_neighbors, flags, min_size, max_size, output_reject_levels) }.into_result()
+    fn detect_multi_scale_levels(&mut self, image: &dyn core::ToInputArray, objects: &mut types::VectorOfRect, reject_levels: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_BaseCascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool(self.as_raw_BaseCascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_VectorOfRect(), reject_levels.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble(), scale_factor, min_neighbors, flags, min_size, max_size, output_reject_levels) }.into_result()
     }
     
     fn is_old_format_cascade(&self) -> Result<bool> {
@@ -314,8 +318,9 @@ impl CascadeClassifier {
     /// * flags: 0
     /// * min_size: Size()
     /// * max_size: Size()
-    pub fn detect_multi_scale(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-        unsafe { sys::cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_double_int_int_Size_Size(self.as_raw_CascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
+    pub fn detect_multi_scale(&mut self, image: &dyn core::ToInputArray, objects: &mut types::VectorOfRect, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_CascadeClassifier_detectMultiScale__InputArray_VectorOfRect_double_int_int_Size_Size(self.as_raw_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_VectorOfRect(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
     /// ## Parameters
@@ -339,8 +344,9 @@ impl CascadeClassifier {
     /// * flags: 0
     /// * min_size: Size()
     /// * max_size: Size()
-    pub fn detect_multi_scale_num(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, num_detections: &mut types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
-        unsafe { sys::cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_double_int_int_Size_Size(self.as_raw_CascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), num_detections.as_raw_VectorOfint(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
+    pub fn detect_multi_scale_num(&mut self, image: &dyn core::ToInputArray, objects: &mut types::VectorOfRect, num_detections: &mut types::VectorOfint, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_CascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_double_int_int_Size_Size(self.as_raw_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_VectorOfRect(), num_detections.as_raw_VectorOfint(), scale_factor, min_neighbors, flags, min_size, max_size) }.into_result()
     }
     
     /// if `outputRejectLevels` is `true` returns `rejectLevels` and `levelWeights`
@@ -352,8 +358,9 @@ impl CascadeClassifier {
     /// * min_size: Size()
     /// * max_size: Size()
     /// * output_reject_levels: false
-    pub fn detect_multi_scale_levels(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect, reject_levels: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
-        unsafe { sys::cv_CascadeClassifier_detectMultiScale_Mat_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool(self.as_raw_CascadeClassifier(), image.as_raw_Mat(), objects.as_raw_VectorOfRect(), reject_levels.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble(), scale_factor, min_neighbors, flags, min_size, max_size, output_reject_levels) }.into_result()
+    pub fn detect_multi_scale_levels(&mut self, image: &dyn core::ToInputArray, objects: &mut types::VectorOfRect, reject_levels: &mut types::VectorOfint, level_weights: &mut types::VectorOfdouble, scale_factor: f64, min_neighbors: i32, flags: i32, min_size: core::Size, max_size: core::Size, output_reject_levels: bool) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_CascadeClassifier_detectMultiScale__InputArray_VectorOfRect_VectorOfint_VectorOfdouble_double_int_int_Size_Size_bool(self.as_raw_CascadeClassifier(), image.as_raw__InputArray(), objects.as_raw_VectorOfRect(), reject_levels.as_raw_VectorOfint(), level_weights.as_raw_VectorOfdouble(), scale_factor, min_neighbors, flags, min_size, max_size, output_reject_levels) }.into_result()
     }
     
     pub fn is_old_format_cascade(&self) -> Result<bool> {
@@ -628,7 +635,7 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_svmDetector(self.as_raw_HOGDescriptor()) }.into_result().map(|ptr| types::VectorOffloat { ptr })
     }
     
-    pub fn set_svm_detector(&mut self, val: types::VectorOffloat) -> Result<()> {
+    pub fn set_svm_detector_vec(&mut self, val: types::VectorOffloat) -> Result<()> {
         unsafe { sys::cv_HOGDescriptor_set_svmDetector_VectorOffloat(self.as_raw_HOGDescriptor(), val.as_raw_VectorOffloat()) }.into_result()
     }
     
@@ -678,8 +685,9 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_getWinSigma_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
-    pub fn set_svm_detector_mat(&mut self, _svmdetector: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_HOGDescriptor_setSVMDetector_Mat(self.as_raw_HOGDescriptor(), _svmdetector.as_raw_Mat()) }.into_result()
+    pub fn set_svm_detector(&mut self, _svmdetector: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(_svmdetector);
+        unsafe { sys::cv_HOGDescriptor_setSVMDetector__InputArray(self.as_raw_HOGDescriptor(), _svmdetector.as_raw__InputArray()) }.into_result()
     }
     
     ///
@@ -709,8 +717,9 @@ impl HOGDescriptor {
     /// * win_stride: Size()
     /// * padding: Size()
     /// * locations: std::vector<Point>()
-    pub fn compute(&self, img: &core::Mat, descriptors: &mut types::VectorOffloat, win_stride: core::Size, padding: core::Size, locations: &types::VectorOfPoint) -> Result<()> {
-        unsafe { sys::cv_HOGDescriptor_compute_const_Mat_VectorOffloat_Size_Size_VectorOfPoint(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), descriptors.as_raw_VectorOffloat(), win_stride, padding, locations.as_raw_VectorOfPoint()) }.into_result()
+    pub fn compute(&self, img: &dyn core::ToInputArray, descriptors: &mut types::VectorOffloat, win_stride: core::Size, padding: core::Size, locations: &types::VectorOfPoint) -> Result<()> {
+        input_array_arg!(img);
+        unsafe { sys::cv_HOGDescriptor_compute_const__InputArray_VectorOffloat_Size_Size_VectorOfPoint(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), descriptors.as_raw_VectorOffloat(), win_stride, padding, locations.as_raw_VectorOfPoint()) }.into_result()
     }
     
     /// with found weights output
@@ -744,8 +753,9 @@ impl HOGDescriptor {
     /// * scale: 1.05
     /// * final_threshold: 2.0
     /// * use_meanshift_grouping: false
-    pub fn detect_multi_scale(&self, img: &core::Mat, found_locations: &mut types::VectorOfRect, found_weights: &mut types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
-        unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_VectorOfRect(), found_weights.as_raw_VectorOfdouble(), hit_threshold, win_stride, padding, scale, final_threshold, use_meanshift_grouping) }.into_result()
+    pub fn detect_multi_scale_weights(&self, img: &dyn core::ToInputArray, found_locations: &mut types::VectorOfRect, found_weights: &mut types::VectorOfdouble, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+        input_array_arg!(img);
+        unsafe { sys::cv_HOGDescriptor_detectMultiScale_const__InputArray_VectorOfRect_VectorOfdouble_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_VectorOfRect(), found_weights.as_raw_VectorOfdouble(), hit_threshold, win_stride, padding, scale, final_threshold, use_meanshift_grouping) }.into_result()
     }
     
     /// without found weights output
@@ -757,8 +767,9 @@ impl HOGDescriptor {
     /// * scale: 1.05
     /// * final_threshold: 2.0
     /// * use_meanshift_grouping: false
-    pub fn detect_multi_scale_weights(&self, img: &core::Mat, found_locations: &mut types::VectorOfRect, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
-        unsafe { sys::cv_HOGDescriptor_detectMultiScale_const_Mat_VectorOfRect_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw_Mat(), found_locations.as_raw_VectorOfRect(), hit_threshold, win_stride, padding, scale, final_threshold, use_meanshift_grouping) }.into_result()
+    pub fn detect_multi_scale(&self, img: &dyn core::ToInputArray, found_locations: &mut types::VectorOfRect, hit_threshold: f64, win_stride: core::Size, padding: core::Size, scale: f64, final_threshold: f64, use_meanshift_grouping: bool) -> Result<()> {
+        input_array_arg!(img);
+        unsafe { sys::cv_HOGDescriptor_detectMultiScale_const__InputArray_VectorOfRect_double_Size_Size_double_double_bool(self.as_raw_HOGDescriptor(), img.as_raw__InputArray(), found_locations.as_raw_VectorOfRect(), hit_threshold, win_stride, padding, scale, final_threshold, use_meanshift_grouping) }.into_result()
     }
     
     ///

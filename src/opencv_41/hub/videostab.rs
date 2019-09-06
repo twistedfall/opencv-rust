@@ -25,6 +25,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const MM_AFFINE: i32 = 5;
 pub const MM_HOMOGRAPHY: i32 = 6;
@@ -67,8 +68,10 @@ pub fn ensure_inclusion_constraint(m: &core::Mat, size: core::Size, trim_ratio: 
 /// ## C++ default parameters
 /// * model: MM_AFFINE
 /// * rmse: 0
-pub fn estimate_global_motion_least_squares(points0: &mut core::Mat, points1: &mut core::Mat, model: i32, rmse: &mut f32) -> Result<core::Mat> {
-    unsafe { sys::cv_videostab_estimateGlobalMotionLeastSquares_Mat_Mat_int_float_X(points0.as_raw_Mat(), points1.as_raw_Mat(), model, rmse) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn estimate_global_motion_least_squares(points0: &mut dyn core::ToInputOutputArray, points1: &mut dyn core::ToInputOutputArray, model: i32, rmse: &mut f32) -> Result<core::Mat> {
+    input_output_array_arg!(points0);
+    input_output_array_arg!(points1);
+    unsafe { sys::cv_videostab_estimateGlobalMotionLeastSquares__InputOutputArray__InputOutputArray_int_float_X(points0.as_raw__InputOutputArray(), points1.as_raw__InputOutputArray(), model, rmse) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 pub fn estimate_optimal_trim_ratio(m: &core::Mat, size: core::Size) -> Result<f32> {
@@ -379,8 +382,13 @@ impl GaussianMotionFilter {
 // Generating impl for trait cv::videostab::IDenseOptFlowEstimator (trait)
 pub trait IDenseOptFlowEstimator {
     #[inline(always)] fn as_raw_IDenseOptFlowEstimator(&self) -> *mut c_void;
-    fn run(&mut self, frame0: &core::Mat, frame1: &core::Mat, flow_x: &mut core::Mat, flow_y: &mut core::Mat, errors: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_IDenseOptFlowEstimator_run_Mat_Mat_Mat_Mat_Mat(self.as_raw_IDenseOptFlowEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), flow_x.as_raw_Mat(), flow_y.as_raw_Mat(), errors.as_raw_Mat()) }.into_result()
+    fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow_x: &mut dyn core::ToInputOutputArray, flow_y: &mut dyn core::ToInputOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(frame0);
+        input_array_arg!(frame1);
+        input_output_array_arg!(flow_x);
+        input_output_array_arg!(flow_y);
+        output_array_arg!(errors);
+        unsafe { sys::cv_videostab_IDenseOptFlowEstimator_run__InputArray__InputArray__InputOutputArray__InputOutputArray__OutputArray(self.as_raw_IDenseOptFlowEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), flow_x.as_raw__InputOutputArray(), flow_y.as_raw__InputOutputArray(), errors.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -411,8 +419,11 @@ pub trait IMotionStabilizer {
 // Generating impl for trait cv::videostab::IOutlierRejector (trait)
 pub trait IOutlierRejector {
     #[inline(always)] fn as_raw_IOutlierRejector(&self) -> *mut c_void;
-    fn process(&mut self, frame_size: core::Size, points0: &core::Mat, points1: &core::Mat, mask: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_IOutlierRejector_process_Size_Mat_Mat_Mat(self.as_raw_IOutlierRejector(), frame_size, points0.as_raw_Mat(), points1.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+    fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(points0);
+        input_array_arg!(points1);
+        output_array_arg!(mask);
+        unsafe { sys::cv_videostab_IOutlierRejector_process_Size__InputArray__InputArray__OutputArray(self.as_raw_IOutlierRejector(), frame_size, points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -420,8 +431,14 @@ pub trait IOutlierRejector {
 // Generating impl for trait cv::videostab::ISparseOptFlowEstimator (trait)
 pub trait ISparseOptFlowEstimator {
     #[inline(always)] fn as_raw_ISparseOptFlowEstimator(&self) -> *mut c_void;
-    fn run(&mut self, frame0: &core::Mat, frame1: &core::Mat, points0: &core::Mat, points1: &mut core::Mat, status: &mut core::Mat, errors: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_ISparseOptFlowEstimator_run_Mat_Mat_Mat_Mat_Mat_Mat(self.as_raw_ISparseOptFlowEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), points0.as_raw_Mat(), points1.as_raw_Mat(), status.as_raw_Mat(), errors.as_raw_Mat()) }.into_result()
+    fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(frame0);
+        input_array_arg!(frame1);
+        input_array_arg!(points0);
+        input_output_array_arg!(points1);
+        output_array_arg!(status);
+        output_array_arg!(errors);
+        unsafe { sys::cv_videostab_ISparseOptFlowEstimator_run__InputArray__InputArray__InputArray__InputOutputArray__OutputArray__OutputArray(self.as_raw_ISparseOptFlowEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), points0.as_raw__InputArray(), points1.as_raw__InputOutputArray(), status.as_raw__OutputArray(), errors.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -430,8 +447,9 @@ pub trait ISparseOptFlowEstimator {
 /// Base class for global 2D motion estimation methods which take frames as input.
 pub trait ImageMotionEstimatorBase {
     #[inline(always)] fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void;
-    fn set_frame_mask(&mut self, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_ImageMotionEstimatorBase_setFrameMask_Mat(self.as_raw_ImageMotionEstimatorBase(), mask.as_raw_Mat()) }.into_result()
+    fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(mask);
+        unsafe { sys::cv_videostab_ImageMotionEstimatorBase_setFrameMask__InputArray(self.as_raw_ImageMotionEstimatorBase(), mask.as_raw__InputArray()) }.into_result()
     }
     
     ///
@@ -584,15 +602,33 @@ impl KeypointBasedMotionEstimator {
         unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_KeypointBasedMotionEstimator_PtrOfMotionEstimatorBase(estimator.as_raw_PtrOfMotionEstimatorBase()) }.into_result().map(|ptr| crate::videostab::KeypointBasedMotionEstimator { ptr })
     }
     
-    pub fn set_frame_mask(&mut self, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setFrameMask_Mat(self.as_raw_KeypointBasedMotionEstimator(), mask.as_raw_Mat()) }.into_result()
+    pub fn set_detector(&mut self, val: &types::PtrOfFeature2D) -> Result<()> {
+        unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setDetector_PtrOfFeature2D(self.as_raw_KeypointBasedMotionEstimator(), val.as_raw_PtrOfFeature2D()) }.into_result()
+    }
+    
+    pub fn detector(&self) -> Result<types::PtrOfFeature2D> {
+        unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_detector_const(self.as_raw_KeypointBasedMotionEstimator()) }.into_result().map(|ptr| types::PtrOfFeature2D { ptr })
+    }
+    
+    pub fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(mask);
+        unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_setFrameMask__InputArray(self.as_raw_KeypointBasedMotionEstimator(), mask.as_raw__InputArray()) }.into_result()
     }
     
     ///
     /// ## C++ default parameters
     /// * ok: 0
-    pub fn estimate(&mut self, frame0: &core::Mat, frame1: &core::Mat, ok: &mut bool) -> Result<core::Mat> {
+    pub fn estimate_mat(&mut self, frame0: &core::Mat, frame1: &core::Mat, ok: &mut bool) -> Result<core::Mat> {
         unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate_Mat_Mat_bool_X(self.as_raw_KeypointBasedMotionEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), ok) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * ok: 0
+    pub fn estimate(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+        input_array_arg!(frame0);
+        input_array_arg!(frame1);
+        unsafe { sys::cv_videostab_KeypointBasedMotionEstimator_estimate__InputArray__InputArray_bool_X(self.as_raw_KeypointBasedMotionEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), ok) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -805,8 +841,10 @@ pub trait MotionEstimatorBase {
     ///
     /// ## C++ default parameters
     /// * ok: 0
-    fn estimate(&mut self, points0: &core::Mat, points1: &core::Mat, ok: &mut bool) -> Result<core::Mat> {
-        unsafe { sys::cv_videostab_MotionEstimatorBase_estimate_Mat_Mat_bool_X(self.as_raw_MotionEstimatorBase(), points0.as_raw_Mat(), points1.as_raw_Mat(), ok) }.into_result().map(|ptr| core::Mat { ptr })
+    fn estimate(&mut self, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+        input_array_arg!(points0);
+        input_array_arg!(points1);
+        unsafe { sys::cv_videostab_MotionEstimatorBase_estimate__InputArray__InputArray_bool_X(self.as_raw_MotionEstimatorBase(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -844,8 +882,10 @@ impl MotionEstimatorL1 {
     ///
     /// ## C++ default parameters
     /// * ok: 0
-    pub fn estimate(&mut self, points0: &core::Mat, points1: &core::Mat, ok: &mut bool) -> Result<core::Mat> {
-        unsafe { sys::cv_videostab_MotionEstimatorL1_estimate_Mat_Mat_bool_X(self.as_raw_MotionEstimatorL1(), points0.as_raw_Mat(), points1.as_raw_Mat(), ok) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn estimate(&mut self, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+        input_array_arg!(points0);
+        input_array_arg!(points1);
+        unsafe { sys::cv_videostab_MotionEstimatorL1_estimate__InputArray__InputArray_bool_X(self.as_raw_MotionEstimatorL1(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -888,8 +928,10 @@ impl MotionEstimatorRansacL2 {
     ///
     /// ## C++ default parameters
     /// * ok: 0
-    pub fn estimate(&mut self, points0: &core::Mat, points1: &core::Mat, ok: &mut bool) -> Result<core::Mat> {
-        unsafe { sys::cv_videostab_MotionEstimatorRansacL2_estimate_Mat_Mat_bool_X(self.as_raw_MotionEstimatorRansacL2(), points0.as_raw_Mat(), points1.as_raw_Mat(), ok) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn estimate(&mut self, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, ok: &mut bool) -> Result<core::Mat> {
+        input_array_arg!(points0);
+        input_array_arg!(points1);
+        unsafe { sys::cv_videostab_MotionEstimatorRansacL2_estimate__InputArray__InputArray_bool_X(self.as_raw_MotionEstimatorRansacL2(), points0.as_raw__InputArray(), points1.as_raw__InputArray(), ok) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -1149,8 +1191,11 @@ impl crate::videostab::IOutlierRejector for NullOutlierRejector {
 
 impl NullOutlierRejector {
 
-    pub fn process(&mut self, frame_size: core::Size, points0: &core::Mat, points1: &core::Mat, mask: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_NullOutlierRejector_process_Size_Mat_Mat_Mat(self.as_raw_NullOutlierRejector(), frame_size, points0.as_raw_Mat(), points1.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+    pub fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(points0);
+        input_array_arg!(points1);
+        output_array_arg!(mask);
+        unsafe { sys::cv_videostab_NullOutlierRejector_process_Size__InputArray__InputArray__OutputArray(self.as_raw_NullOutlierRejector(), frame_size, points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -1321,8 +1366,14 @@ impl crate::videostab::PyrLkOptFlowEstimatorBase for SparsePyrLkOptFlowEstimator
 
 impl SparsePyrLkOptFlowEstimator {
 
-    pub fn run(&mut self, frame0: &core::Mat, frame1: &core::Mat, points0: &core::Mat, points1: &mut core::Mat, status: &mut core::Mat, errors: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimator_run_Mat_Mat_Mat_Mat_Mat_Mat(self.as_raw_SparsePyrLkOptFlowEstimator(), frame0.as_raw_Mat(), frame1.as_raw_Mat(), points0.as_raw_Mat(), points1.as_raw_Mat(), status.as_raw_Mat(), errors.as_raw_Mat()) }.into_result()
+    pub fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(frame0);
+        input_array_arg!(frame1);
+        input_array_arg!(points0);
+        input_output_array_arg!(points1);
+        output_array_arg!(status);
+        output_array_arg!(errors);
+        unsafe { sys::cv_videostab_SparsePyrLkOptFlowEstimator_run__InputArray__InputArray__InputArray__InputOutputArray__OutputArray__OutputArray(self.as_raw_SparsePyrLkOptFlowEstimator(), frame0.as_raw__InputArray(), frame1.as_raw__InputArray(), points0.as_raw__InputArray(), points1.as_raw__InputOutputArray(), status.as_raw__OutputArray(), errors.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -1443,8 +1494,9 @@ impl ToFileMotionWriter {
         unsafe { sys::cv_videostab_ToFileMotionWriter_ToFileMotionWriter_String_PtrOfImageMotionEstimatorBase(path.as_ptr(), estimator.as_raw_PtrOfImageMotionEstimatorBase()) }.into_result().map(|ptr| crate::videostab::ToFileMotionWriter { ptr })
     }
     
-    pub fn set_frame_mask(&mut self, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_ToFileMotionWriter_setFrameMask_Mat(self.as_raw_ToFileMotionWriter(), mask.as_raw_Mat()) }.into_result()
+    pub fn set_frame_mask(&mut self, mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(mask);
+        unsafe { sys::cv_videostab_ToFileMotionWriter_setFrameMask__InputArray(self.as_raw_ToFileMotionWriter(), mask.as_raw__InputArray()) }.into_result()
     }
     
     ///
@@ -1494,8 +1546,11 @@ impl TranslationBasedLocalOutlierRejector {
         unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_cellSize_const(self.as_raw_TranslationBasedLocalOutlierRejector()) }.into_result()
     }
     
-    pub fn process(&mut self, frame_size: core::Size, points0: &core::Mat, points1: &core::Mat, mask: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_Mat_Mat_Mat(self.as_raw_TranslationBasedLocalOutlierRejector(), frame_size, points0.as_raw_Mat(), points1.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+    pub fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(points0);
+        input_array_arg!(points1);
+        output_array_arg!(mask);
+        unsafe { sys::cv_videostab_TranslationBasedLocalOutlierRejector_process_Size__InputArray__InputArray__OutputArray(self.as_raw_TranslationBasedLocalOutlierRejector(), frame_size, points0.as_raw__InputArray(), points1.as_raw__InputArray(), mask.as_raw__OutputArray()) }.into_result()
     }
     
 }

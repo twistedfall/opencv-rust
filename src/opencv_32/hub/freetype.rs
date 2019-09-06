@@ -13,6 +13,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 
 /// Create FreeType2 Instance
@@ -62,9 +63,10 @@ pub trait FreeType2: core::Algorithm {
     /// * thickness: Thickness of the lines used to draw a text when negative, the glyph is filled. Otherwise, the glyph is drawn with this thickness.
     /// * line_type: Line type. See the line for details.
     /// * bottomLeftOrigin: When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner.
-    fn put_text(&mut self, img: &mut core::Mat, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
+    fn put_text(&mut self, img: &mut dyn core::ToInputOutputArray, text: &str, org: core::Point, font_height: i32, color: core::Scalar, thickness: i32, line_type: i32, bottom_left_origin: bool) -> Result<()> {
+        input_output_array_arg!(img);
         string_arg!(text);
-        unsafe { sys::cv_freetype_FreeType2_putText_Mat_String_Point_int_Scalar_int_int_bool(self.as_raw_FreeType2(), img.as_raw_Mat(), text.as_ptr(), org, font_height, color, thickness, line_type, bottom_left_origin) }.into_result()
+        unsafe { sys::cv_freetype_FreeType2_putText__InputOutputArray_String_Point_int_Scalar_int_int_bool(self.as_raw_FreeType2(), img.as_raw__InputOutputArray(), text.as_ptr(), org, font_height, color, thickness, line_type, bottom_left_origin) }.into_result()
     }
     
 }

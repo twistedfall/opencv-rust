@@ -747,8 +747,11 @@ pub fn cholesky_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size
 /// * dst: output array of the same size and number of channels as src, and the same depth as lut.
 /// ## See also
 /// convertScaleAbs, Mat::convertTo
-pub fn lut(src: &core::Mat, lut: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_LUT_Mat_Mat_Mat(src.as_raw_Mat(), lut.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn lut(src: &dyn core::ToInputArray, lut: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(lut);
+    output_array_arg!(dst);
+    unsafe { sys::cv_LUT__InputArray__InputArray__OutputArray(src.as_raw__InputArray(), lut.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// proxy for hal::LU
@@ -771,44 +774,69 @@ pub fn lu_f32(a: &mut f32, astep: size_t, m: i32, b: &mut f32, bstep: size_t, n:
 /// * v1: first 1D input vector.
 /// * v2: second 1D input vector.
 /// * icovar: inverse covariance matrix.
-pub fn mahalanobis(v1: &core::Mat, v2: &core::Mat, icovar: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_Mahalanobis_Mat_Mat_Mat(v1.as_raw_Mat(), v2.as_raw_Mat(), icovar.as_raw_Mat()) }.into_result()
+pub fn mahalanobis(v1: &dyn core::ToInputArray, v2: &dyn core::ToInputArray, icovar: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(v1);
+    input_array_arg!(v2);
+    input_array_arg!(icovar);
+    unsafe { sys::cv_Mahalanobis__InputArray__InputArray__InputArray(v1.as_raw__InputArray(), v2.as_raw__InputArray(), icovar.as_raw__InputArray()) }.into_result()
 }
 
 /// wrap PCA::backProject
-pub fn pca_back_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat, result: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_PCABackProject_Mat_Mat_Mat_Mat(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
+pub fn pca_back_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, eigenvectors: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(data);
+    input_array_arg!(mean);
+    input_array_arg!(eigenvectors);
+    output_array_arg!(result);
+    unsafe { sys::cv_PCABackProject__InputArray__InputArray__InputArray__OutputArray(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
 }
 
 /// wrap PCA::operator() and add eigenvalues output parameter
-pub fn pca_compute_values_variance(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, eigenvalues: &mut core::Mat, retained_variance: f64) -> Result<()> {
-    unsafe { sys::cv_PCACompute_Mat_Mat_Mat_Mat_double(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), eigenvalues.as_raw_Mat(), retained_variance) }.into_result()
+pub fn pca_compute_values_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, eigenvalues: &mut dyn core::ToOutputArray, retained_variance: f64) -> Result<()> {
+    input_array_arg!(data);
+    input_output_array_arg!(mean);
+    output_array_arg!(eigenvectors);
+    output_array_arg!(eigenvalues);
+    unsafe { sys::cv_PCACompute__InputArray__InputOutputArray__OutputArray__OutputArray_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), retained_variance) }.into_result()
 }
 
 /// wrap PCA::operator() and add eigenvalues output parameter
 ///
 /// ## C++ default parameters
 /// * max_components: 0
-pub fn pca_compute_values(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, eigenvalues: &mut core::Mat, max_components: i32) -> Result<()> {
-    unsafe { sys::cv_PCACompute_Mat_Mat_Mat_Mat_int(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), eigenvalues.as_raw_Mat(), max_components) }.into_result()
+pub fn pca_compute_values(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, eigenvalues: &mut dyn core::ToOutputArray, max_components: i32) -> Result<()> {
+    input_array_arg!(data);
+    input_output_array_arg!(mean);
+    output_array_arg!(eigenvectors);
+    output_array_arg!(eigenvalues);
+    unsafe { sys::cv_PCACompute__InputArray__InputOutputArray__OutputArray__OutputArray_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), eigenvalues.as_raw__OutputArray(), max_components) }.into_result()
 }
 
 /// wrap PCA::operator()
-pub fn pca_compute_variance(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, retained_variance: f64) -> Result<()> {
-    unsafe { sys::cv_PCACompute_Mat_Mat_Mat_double(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), retained_variance) }.into_result()
+pub fn pca_compute_variance(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, retained_variance: f64) -> Result<()> {
+    input_array_arg!(data);
+    input_output_array_arg!(mean);
+    output_array_arg!(eigenvectors);
+    unsafe { sys::cv_PCACompute__InputArray__InputOutputArray__OutputArray_double(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), retained_variance) }.into_result()
 }
 
 /// wrap PCA::operator()
 ///
 /// ## C++ default parameters
 /// * max_components: 0
-pub fn pca_compute(data: &core::Mat, mean: &mut core::Mat, eigenvectors: &mut core::Mat, max_components: i32) -> Result<()> {
-    unsafe { sys::cv_PCACompute_Mat_Mat_Mat_int(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), max_components) }.into_result()
+pub fn pca_compute(data: &dyn core::ToInputArray, mean: &mut dyn core::ToInputOutputArray, eigenvectors: &mut dyn core::ToOutputArray, max_components: i32) -> Result<()> {
+    input_array_arg!(data);
+    input_output_array_arg!(mean);
+    output_array_arg!(eigenvectors);
+    unsafe { sys::cv_PCACompute__InputArray__InputOutputArray__OutputArray_int(data.as_raw__InputArray(), mean.as_raw__InputOutputArray(), eigenvectors.as_raw__OutputArray(), max_components) }.into_result()
 }
 
 /// wrap PCA::project
-pub fn pca_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat, result: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_PCAProject_Mat_Mat_Mat_Mat(data.as_raw_Mat(), mean.as_raw_Mat(), eigenvectors.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
+pub fn pca_project(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, eigenvectors: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(data);
+    input_array_arg!(mean);
+    input_array_arg!(eigenvectors);
+    output_array_arg!(result);
+    unsafe { sys::cv_PCAProject__InputArray__InputArray__InputArray__OutputArray(data.as_raw__InputArray(), mean.as_raw__InputArray(), eigenvectors.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
 }
 
 /// Computes the Peak Signal-to-Noise Ratio (PSNR) image quality metric.
@@ -824,21 +852,32 @@ pub fn pca_project(data: &core::Mat, mean: &core::Mat, eigenvectors: &core::Mat,
 /// ## Parameters
 /// * src1: first input array.
 /// * src2: second input array of the same size as src1.
-pub fn psnr(src1: &core::Mat, src2: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_PSNR_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat()) }.into_result()
+pub fn psnr(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    unsafe { sys::cv_PSNR__InputArray__InputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray()) }.into_result()
 }
 
 /// wrap SVD::backSubst
-pub fn sv_back_subst(w: &core::Mat, u: &core::Mat, vt: &core::Mat, rhs: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_SVBackSubst_Mat_Mat_Mat_Mat_Mat(w.as_raw_Mat(), u.as_raw_Mat(), vt.as_raw_Mat(), rhs.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn sv_back_subst(w: &dyn core::ToInputArray, u: &dyn core::ToInputArray, vt: &dyn core::ToInputArray, rhs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(w);
+    input_array_arg!(u);
+    input_array_arg!(vt);
+    input_array_arg!(rhs);
+    output_array_arg!(dst);
+    unsafe { sys::cv_SVBackSubst__InputArray__InputArray__InputArray__InputArray__OutputArray(w.as_raw__InputArray(), u.as_raw__InputArray(), vt.as_raw__InputArray(), rhs.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// wrap SVD::compute
 ///
 /// ## C++ default parameters
 /// * flags: 0
-pub fn sv_decomp(src: &core::Mat, w: &mut core::Mat, u: &mut core::Mat, vt: &mut core::Mat, flags: i32) -> Result<()> {
-    unsafe { sys::cv_SVDecomp_Mat_Mat_Mat_Mat_int(src.as_raw_Mat(), w.as_raw_Mat(), u.as_raw_Mat(), vt.as_raw_Mat(), flags) }.into_result()
+pub fn sv_decomp(src: &dyn core::ToInputArray, w: &mut dyn core::ToOutputArray, u: &mut dyn core::ToOutputArray, vt: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(w);
+    output_array_arg!(u);
+    output_array_arg!(vt);
+    unsafe { sys::cv_SVDecomp__InputArray__OutputArray__OutputArray__OutputArray_int(src.as_raw__InputArray(), w.as_raw__OutputArray(), u.as_raw__OutputArray(), vt.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Calculates an absolute value of each matrix element.
@@ -906,8 +945,11 @@ pub fn abs_matexpr(e: &core::MatExpr) -> Result<core::MatExpr> {
 /// * dst: output array that has the same size and type as input arrays.
 /// ## See also
 /// cv::abs(const Mat&)
-pub fn absdiff(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_absdiff_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_absdiff__InputArray__InputArray__OutputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates the weighted sum of two arrays.
@@ -938,8 +980,11 @@ pub fn absdiff(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Resul
 ///
 /// ## C++ default parameters
 /// * dtype: -1
-pub fn add_weighted(src1: &core::Mat, alpha: f64, src2: &core::Mat, beta: f64, gamma: f64, dst: &mut core::Mat, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_addWeighted_Mat_double_Mat_double_double_Mat_int(src1.as_raw_Mat(), alpha, src2.as_raw_Mat(), beta, gamma, dst.as_raw_Mat(), dtype) }.into_result()
+pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, beta: f64, gamma: f64, dst: &mut dyn core::ToOutputArray, dtype: i32) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_addWeighted__InputArray_double__InputArray_double_double__OutputArray_int(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), beta, gamma, dst.as_raw__OutputArray(), dtype) }.into_result()
 }
 
 /// Calculates the per-element sum of two arrays or an array and a scalar.
@@ -985,8 +1030,12 @@ pub fn add_weighted(src1: &core::Mat, alpha: f64, src2: &core::Mat, beta: f64, g
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * dtype: -1
-pub fn add(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_add_Mat_Mat_Mat_Mat_int(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), dtype) }.into_result()
+pub fn add(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    input_array_arg!(mask);
+    unsafe { sys::cv_add__InputArray__InputArray__OutputArray__InputArray_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype) }.into_result()
 }
 
 /// Aligns a buffer size to the specified number of bytes.
@@ -1011,8 +1060,13 @@ pub fn align_size(sz: size_t, n: i32) -> Result<size_t> {
 /// * mask: noArray()
 /// * update: 0
 /// * crosscheck: false
-pub fn batch_distance(src1: &core::Mat, src2: &core::Mat, dist: &mut core::Mat, dtype: i32, nidx: &mut core::Mat, norm_type: i32, k: i32, mask: &core::Mat, update: i32, crosscheck: bool) -> Result<()> {
-    unsafe { sys::cv_batchDistance_Mat_Mat_Mat_int_Mat_int_int_Mat_int_bool(src1.as_raw_Mat(), src2.as_raw_Mat(), dist.as_raw_Mat(), dtype, nidx.as_raw_Mat(), norm_type, k, mask.as_raw_Mat(), update, crosscheck) }.into_result()
+pub fn batch_distance(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dist: &mut dyn core::ToOutputArray, dtype: i32, nidx: &mut dyn core::ToOutputArray, norm_type: i32, k: i32, mask: &dyn core::ToInputArray, update: i32, crosscheck: bool) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dist);
+    output_array_arg!(nidx);
+    input_array_arg!(mask);
+    unsafe { sys::cv_batchDistance__InputArray__InputArray__OutputArray_int__OutputArray_int_int__InputArray_int_bool(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dist.as_raw__OutputArray(), dtype, nidx.as_raw__OutputArray(), norm_type, k, mask.as_raw__InputArray(), update, crosscheck) }.into_result()
 }
 
 /// computes bitwise conjunction of the two arrays (dst = src1 & src2)
@@ -1043,8 +1097,12 @@ pub fn batch_distance(src1: &core::Mat, src2: &core::Mat, dist: &mut core::Mat, 
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn bitwise_and(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_bitwise_and_Mat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+pub fn bitwise_and(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    input_array_arg!(mask);
+    unsafe { sys::cv_bitwise_and__InputArray__InputArray__OutputArray__InputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Inverts every bit of an array.
@@ -1064,8 +1122,11 @@ pub fn bitwise_and(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn bitwise_not(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_bitwise_not_Mat_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+pub fn bitwise_not(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    input_array_arg!(mask);
+    unsafe { sys::cv_bitwise_not__InputArray__OutputArray__InputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Calculates the per-element bit-wise disjunction of two arrays or an
@@ -1095,8 +1156,12 @@ pub fn bitwise_not(src: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Re
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn bitwise_or(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_bitwise_or_Mat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+pub fn bitwise_or(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    input_array_arg!(mask);
+    unsafe { sys::cv_bitwise_or__InputArray__InputArray__OutputArray__InputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Calculates the per-element bit-wise "exclusive or" operation on two
@@ -1127,8 +1192,12 @@ pub fn bitwise_or(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask:
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn bitwise_xor(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_bitwise_xor_Mat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    input_array_arg!(mask);
+    unsafe { sys::cv_bitwise_xor__InputArray__InputArray__OutputArray__InputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Computes the source location of an extrapolated pixel.
@@ -1185,8 +1254,11 @@ pub fn border_interpolate(p: i32, len: i32, border_type: i32) -> Result<i32> {
 ///
 /// ## C++ default parameters
 /// * ctype: CV_64F
-pub fn calc_covar_matrix(samples: &core::Mat, covar: &mut core::Mat, mean: &mut core::Mat, flags: i32, ctype: i32) -> Result<()> {
-    unsafe { sys::cv_calcCovarMatrix_Mat_Mat_Mat_int_int(samples.as_raw_Mat(), covar.as_raw_Mat(), mean.as_raw_Mat(), flags, ctype) }.into_result()
+pub fn calc_covar_matrix(samples: &dyn core::ToInputArray, covar: &mut dyn core::ToOutputArray, mean: &mut dyn core::ToInputOutputArray, flags: i32, ctype: i32) -> Result<()> {
+    input_array_arg!(samples);
+    output_array_arg!(covar);
+    input_output_array_arg!(mean);
+    unsafe { sys::cv_calcCovarMatrix__InputArray__OutputArray__InputOutputArray_int_int(samples.as_raw__InputArray(), covar.as_raw__OutputArray(), mean.as_raw__InputOutputArray(), flags, ctype) }.into_result()
 }
 
 /// Calculates the magnitude and angle of 2D vectors.
@@ -1211,8 +1283,12 @@ pub fn calc_covar_matrix(samples: &core::Mat, covar: &mut core::Mat, mean: &mut 
 ///
 /// ## C++ default parameters
 /// * angle_in_degrees: false
-pub fn cart_to_polar(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat, angle: &mut core::Mat, angle_in_degrees: bool) -> Result<()> {
-    unsafe { sys::cv_cartToPolar_Mat_Mat_Mat_Mat_bool(x.as_raw_Mat(), y.as_raw_Mat(), magnitude.as_raw_Mat(), angle.as_raw_Mat(), angle_in_degrees) }.into_result()
+pub fn cart_to_polar(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
+    input_array_arg!(x);
+    input_array_arg!(y);
+    output_array_arg!(magnitude);
+    output_array_arg!(angle);
+    unsafe { sys::cv_cartToPolar__InputArray__InputArray__OutputArray__OutputArray_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray(), angle.as_raw__OutputArray(), angle_in_degrees) }.into_result()
 }
 
 /// Returns true if the specified feature is supported by the host hardware.
@@ -1248,8 +1324,9 @@ pub fn check_hardware_support(feature: i32) -> Result<bool> {
 /// * pos: 0
 /// * min_val: -DBL_MAX
 /// * max_val: DBL_MAX
-pub fn check_range(a: &core::Mat, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
-    unsafe { sys::cv_checkRange_Mat_bool_Point_X_double_double(a.as_raw_Mat(), quiet, pos, min_val, max_val) }.into_result()
+pub fn check_range(a: &dyn core::ToInputArray, quiet: bool, pos: &mut core::Point, min_val: f64, max_val: f64) -> Result<bool> {
+    input_array_arg!(a);
+    unsafe { sys::cv_checkRange__InputArray_bool_Point_X_double_double(a.as_raw__InputArray(), quiet, pos, min_val, max_val) }.into_result()
 }
 
 /// Performs the per-element comparison of two arrays or an array and scalar value.
@@ -1280,8 +1357,11 @@ pub fn check_range(a: &core::Mat, quiet: bool, pos: &mut core::Point, min_val: f
 /// * cmpop: a flag, that specifies correspondence between the arrays (cv::CmpTypes)
 /// ## See also
 /// checkRange, min, max, threshold
-pub fn compare(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, cmpop: i32) -> Result<()> {
-    unsafe { sys::cv_compare_Mat_Mat_Mat_int(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), cmpop) }.into_result()
+pub fn compare(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, cmpop: i32) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_compare__InputArray__InputArray__OutputArray_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), cmpop) }.into_result()
 }
 
 /// Copies the lower or the upper half of a square matrix to its another half.
@@ -1302,8 +1382,9 @@ pub fn compare(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, cmpop: i
 ///
 /// ## C++ default parameters
 /// * lower_to_upper: false
-pub fn complete_symm(m: &mut core::Mat, lower_to_upper: bool) -> Result<()> {
-    unsafe { sys::cv_completeSymm_Mat_bool(m.as_raw_Mat(), lower_to_upper) }.into_result()
+pub fn complete_symm(m: &mut dyn core::ToInputOutputArray, lower_to_upper: bool) -> Result<()> {
+    input_output_array_arg!(m);
+    unsafe { sys::cv_completeSymm__InputOutputArray_bool(m.as_raw__InputOutputArray(), lower_to_upper) }.into_result()
 }
 
 /// Converts an array to half precision floating number.
@@ -1316,8 +1397,10 @@ pub fn complete_symm(m: &mut core::Mat, lower_to_upper: bool) -> Result<()> {
 /// ## Parameters
 /// * src: input array.
 /// * dst: output array.
-pub fn convert_fp16(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_convertFp16_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_convertFp16__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Scales, calculates absolute values, and converts the result to 8-bit.
@@ -1351,8 +1434,10 @@ pub fn convert_fp16(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// ## C++ default parameters
 /// * alpha: 1
 /// * beta: 0
-pub fn convert_scale_abs(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta: f64) -> Result<()> {
-    unsafe { sys::cv_convertScaleAbs_Mat_Mat_double_double(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta) }.into_result()
+pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f64, beta: f64) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_convertScaleAbs__InputArray__OutputArray_double_double(src.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta) }.into_result()
 }
 
 /// Forms a border around an image.
@@ -1404,8 +1489,10 @@ pub fn convert_scale_abs(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta:
 ///
 /// ## C++ default parameters
 /// * value: Scalar()
-pub fn copy_make_border(src: &core::Mat, dst: &mut core::Mat, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar) -> Result<()> {
-    unsafe { sys::cv_copyMakeBorder_Mat_Mat_int_int_int_int_int_Scalar(src.as_raw_Mat(), dst.as_raw_Mat(), top, bottom, left, right, border_type, value) }.into_result()
+pub fn copy_make_border(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, top: i32, bottom: i32, left: i32, right: i32, border_type: i32, value: core::Scalar) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_copyMakeBorder__InputArray__OutputArray_int_int_int_int_int_Scalar(src.as_raw__InputArray(), dst.as_raw__OutputArray(), top, bottom, left, right, border_type, value) }.into_result()
 }
 
 /// Counts non-zero array elements.
@@ -1416,8 +1503,9 @@ pub fn copy_make_border(src: &core::Mat, dst: &mut core::Mat, top: i32, bottom: 
 /// * src: single-channel array.
 /// ## See also
 /// mean, meanStdDev, norm, minMaxLoc, calcCovarMatrix
-pub fn count_non_zero(src: &core::Mat) -> Result<i32> {
-    unsafe { sys::cv_countNonZero_Mat(src.as_raw_Mat()) }.into_result()
+pub fn count_non_zero(src: &dyn core::ToInputArray) -> Result<i32> {
+    input_array_arg!(src);
+    unsafe { sys::cv_countNonZero__InputArray(src.as_raw__InputArray()) }.into_result()
 }
 
 /// Computes the cube root of an argument.
@@ -1484,8 +1572,10 @@ pub fn cv_abs_1(x: u16) -> Result<i32> {
 ///
 /// ## C++ default parameters
 /// * flags: 0
-pub fn dct(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-    unsafe { sys::cv_dct_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
+pub fn dct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_dct__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Returns string of cv::Mat depth value: CV_8U -> "CV_8U" or "<invalid depth>"
@@ -1563,8 +1653,9 @@ pub fn check_failed_auto_7(v1: size_t, v2: size_t, ctx: &core::CheckContext) -> 
 /// square size.
 /// ## See also
 /// trace, invert, solve, eigen, @ref MatrixExpressions
-pub fn determinant(mtx: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_determinant_Mat(mtx.as_raw_Mat()) }.into_result()
+pub fn determinant(mtx: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(mtx);
+    unsafe { sys::cv_determinant__InputArray(mtx.as_raw__InputArray()) }.into_result()
 }
 
 /// Performs a forward or inverse Discrete Fourier transform of a 1D or 2D floating-point array.
@@ -1706,8 +1797,10 @@ pub fn determinant(mtx: &core::Mat) -> Result<f64> {
 /// ## C++ default parameters
 /// * flags: 0
 /// * nonzero_rows: 0
-pub fn dft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32) -> Result<()> {
-    unsafe { sys::cv_dft_Mat_Mat_int_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags, nonzero_rows) }.into_result()
+pub fn dft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_dft__InputArray__OutputArray_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows) }.into_result()
 }
 
 /// Get OpenCV type from DirectX type
@@ -1776,8 +1869,11 @@ pub fn duv_up_u(a: size_t, b: u32) -> Result<size_t> {
 /// ## C++ default parameters
 /// * scale: 1
 /// * dtype: -1
-pub fn divide_mat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, scale: f64, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_divide_Mat_Mat_Mat_double_int(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), scale, dtype) }.into_result()
+pub fn divide2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_divide__InputArray__InputArray__OutputArray_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype) }.into_result()
 }
 
 /// Performs per-element division of two arrays or a scalar by an array.
@@ -1807,8 +1903,10 @@ pub fn divide_mat(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, scale
 ///
 /// ## C++ default parameters
 /// * dtype: -1
-pub fn divide(scale: f64, src2: &core::Mat, dst: &mut core::Mat, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_divide_double_Mat_Mat_int(scale, src2.as_raw_Mat(), dst.as_raw_Mat(), dtype) }.into_result()
+pub fn divide(scale: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dtype: i32) -> Result<()> {
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_divide_double__InputArray__OutputArray_int(scale, src2.as_raw__InputArray(), dst.as_raw__OutputArray(), dtype) }.into_result()
 }
 
 /// Calculates eigenvalues and eigenvectors of a non-symmetric matrix (real eigenvalues only).
@@ -1828,8 +1926,11 @@ pub fn divide(scale: f64, src2: &core::Mat, dst: &mut core::Mat, dtype: i32) -> 
 /// * eigenvectors: output matrix of eigenvectors (type is the same type as src). The eigenvectors are stored as subsequent matrix rows, in the same order as the corresponding eigenvalues.
 /// ## See also
 /// eigen
-pub fn eigen_non_symmetric(src: &core::Mat, eigenvalues: &mut core::Mat, eigenvectors: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_eigenNonSymmetric_Mat_Mat_Mat(src.as_raw_Mat(), eigenvalues.as_raw_Mat(), eigenvectors.as_raw_Mat()) }.into_result()
+pub fn eigen_non_symmetric(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputArray, eigenvectors: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(eigenvalues);
+    output_array_arg!(eigenvectors);
+    unsafe { sys::cv_eigenNonSymmetric__InputArray__OutputArray__OutputArray(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates eigenvalues and eigenvectors of a symmetric matrix.
@@ -1857,8 +1958,11 @@ pub fn eigen_non_symmetric(src: &core::Mat, eigenvalues: &mut core::Mat, eigenve
 ///
 /// ## C++ default parameters
 /// * eigenvectors: noArray()
-pub fn eigen(src: &core::Mat, eigenvalues: &mut core::Mat, eigenvectors: &mut core::Mat) -> Result<bool> {
-    unsafe { sys::cv_eigen_Mat_Mat_Mat(src.as_raw_Mat(), eigenvalues.as_raw_Mat(), eigenvectors.as_raw_Mat()) }.into_result()
+pub fn eigen(src: &dyn core::ToInputArray, eigenvalues: &mut dyn core::ToOutputArray, eigenvectors: &mut dyn core::ToOutputArray) -> Result<bool> {
+    input_array_arg!(src);
+    output_array_arg!(eigenvalues);
+    output_array_arg!(eigenvectors);
+    unsafe { sys::cv_eigen__InputArray__OutputArray__OutputArray(src.as_raw__InputArray(), eigenvalues.as_raw__OutputArray(), eigenvectors.as_raw__OutputArray()) }.into_result()
 }
 
 /// same as cv::error, but does not return
@@ -1891,8 +1995,10 @@ pub fn error(_code: i32, _err: &str, _func: &str, _file: &str, _line: i32) -> Re
 /// * dst: output array of the same size and type as src.
 /// ## See also
 /// log , cartToPolar , polarToCart , phase , pow , sqrt , magnitude
-pub fn exp(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_exp_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn exp(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_exp__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Extracts a single channel from src (coi is 0-based index)
@@ -1902,8 +2008,10 @@ pub fn exp(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// * coi: index of channel to extract
 /// ## See also
 /// mixChannels, split
-pub fn extract_channel(src: &core::Mat, dst: &mut core::Mat, coi: i32) -> Result<()> {
-    unsafe { sys::cv_extractChannel_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), coi) }.into_result()
+pub fn extract_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, coi: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_extractChannel__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), coi) }.into_result()
 }
 
 /// Calculates the angle of a 2D vector in degrees.
@@ -1945,8 +2053,10 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 /// ## Parameters
 /// * src: single-channel array (type CV_8UC1)
 /// * idx: the output array, type of cv::Mat or std::vector<Point>, corresponding to non-zero indices in the input
-pub fn find_non_zero(src: &core::Mat, idx: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_findNonZero_Mat_Mat(src.as_raw_Mat(), idx.as_raw_Mat()) }.into_result()
+pub fn find_non_zero(src: &dyn core::ToInputArray, idx: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(idx);
+    unsafe { sys::cv_findNonZero__InputArray__OutputArray(src.as_raw__InputArray(), idx.as_raw__OutputArray()) }.into_result()
 }
 
 /// Flips a 2D array around vertical, horizontal, or both axes.
@@ -1975,8 +2085,10 @@ pub fn find_non_zero(src: &core::Mat, idx: &mut core::Mat) -> Result<()> {
 /// around both axes.
 /// ## See also
 /// transpose , repeat , completeSymm
-pub fn flip(src: &core::Mat, dst: &mut core::Mat, flip_code: i32) -> Result<()> {
-    unsafe { sys::cv_flip_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), flip_code) }.into_result()
+pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flip_code: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_flip__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flip_code) }.into_result()
 }
 
 /// Performs generalized matrix multiplication.
@@ -2012,8 +2124,12 @@ pub fn flip(src: &core::Mat, dst: &mut core::Mat, flip_code: i32) -> Result<()> 
 ///
 /// ## C++ default parameters
 /// * flags: 0
-pub fn gemm(src1: &core::Mat, src2: &core::Mat, alpha: f64, src3: &core::Mat, beta: f64, dst: &mut core::Mat, flags: i32) -> Result<()> {
-    unsafe { sys::cv_gemm_Mat_Mat_double_Mat_double_Mat_int(src1.as_raw_Mat(), src2.as_raw_Mat(), alpha, src3.as_raw_Mat(), beta, dst.as_raw_Mat(), flags) }.into_result()
+pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha: f64, src3: &dyn core::ToInputArray, beta: f64, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    input_array_arg!(src3);
+    output_array_arg!(dst);
+    unsafe { sys::cv_gemm__InputArray__InputArray_double__InputArray_double__OutputArray_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), alpha, src3.as_raw__InputArray(), beta, dst.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Returns full configuration time cmake output.
@@ -2195,7 +2311,7 @@ pub fn glob(pattern: &str, result: &mut types::VectorOfString, recursive: bool) 
     unsafe { sys::cv_glob_String_VectorOfString_bool(pattern.as_ptr() as _, result.as_raw_VectorOfString(), recursive) }.into_result()
 }
 
-pub fn have_open_vx() -> Result<bool> {
+pub fn have_openvx() -> Result<bool> {
     unsafe { sys::cv_haveOpenVX() }.into_result()
 }
 
@@ -2244,8 +2360,11 @@ pub fn have_open_vx() -> Result<bool> {
 /// * src1: first input array to be considered for horizontal concatenation.
 /// * src2: second input array to be considered for horizontal concatenation.
 /// * dst: output array. It has the same number of rows and depth as the src1 and src2, and the sum of cols of the src1 and src2.
-pub fn hconcat_2(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_hconcat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_hconcat__InputArray__InputArray__OutputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Applies horizontal concatenation to given matrices.
@@ -2291,8 +2410,10 @@ pub fn hconcat_2(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Res
 /// * src: input array or vector of matrices. all of the matrices must have the same number of rows and the same depth.
 /// * dst: output array. It has the same number of rows and depth as the src, and the sum of cols of the src.
 /// same depth.
-pub fn hconcat(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_hconcat_VectorOfMat_Mat(src.as_raw_VectorOfMat(), dst.as_raw_Mat()) }.into_result()
+pub fn hconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_hconcat__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates the inverse Discrete Cosine Transform of a 1D or 2D array.
@@ -2307,8 +2428,10 @@ pub fn hconcat(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
 ///
 /// ## C++ default parameters
 /// * flags: 0
-pub fn idct(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-    unsafe { sys::cv_idct_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
+pub fn idct(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_idct__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Calculates the inverse Discrete Fourier Transform of a 1D or 2D array.
@@ -2329,8 +2452,10 @@ pub fn idct(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
 /// ## C++ default parameters
 /// * flags: 0
 /// * nonzero_rows: 0
-pub fn idft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32) -> Result<()> {
-    unsafe { sys::cv_idft_Mat_Mat_int_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags, nonzero_rows) }.into_result()
+pub fn idft(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, nonzero_rows: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_idft__InputArray__OutputArray_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, nonzero_rows) }.into_result()
 }
 
 /// Checks if array elements lie between the elements of two other arrays.
@@ -2352,8 +2477,12 @@ pub fn idft(src: &core::Mat, dst: &mut core::Mat, flags: i32, nonzero_rows: i32)
 /// * lowerb: inclusive lower boundary array or a scalar.
 /// * upperb: inclusive upper boundary array or a scalar.
 /// * dst: output array of the same size as src and CV_8U type.
-pub fn in_range(src: &core::Mat, lowerb: &core::Mat, upperb: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_inRange_Mat_Mat_Mat_Mat(src.as_raw_Mat(), lowerb.as_raw_Mat(), upperb.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn in_range(src: &dyn core::ToInputArray, lowerb: &dyn core::ToInputArray, upperb: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(lowerb);
+    input_array_arg!(upperb);
+    output_array_arg!(dst);
+    unsafe { sys::cv_inRange__InputArray__InputArray__InputArray__OutputArray(src.as_raw__InputArray(), lowerb.as_raw__InputArray(), upperb.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Inserts a single channel to dst (coi is 0-based index)
@@ -2363,8 +2492,10 @@ pub fn in_range(src: &core::Mat, lowerb: &core::Mat, upperb: &core::Mat, dst: &m
 /// * coi: index of channel for insertion
 /// ## See also
 /// mixChannels, merge
-pub fn insert_channel(src: &core::Mat, dst: &mut core::Mat, coi: i32) -> Result<()> {
-    unsafe { sys::cv_insertChannel_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), coi) }.into_result()
+pub fn insert_channel(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, coi: i32) -> Result<()> {
+    input_array_arg!(src);
+    input_output_array_arg!(dst);
+    unsafe { sys::cv_insertChannel__InputArray__InputOutputArray_int(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), coi) }.into_result()
 }
 
 pub fn get_flags() -> Result<core::FLAGS> {
@@ -2420,8 +2551,10 @@ pub fn use_instrumentation() -> Result<bool> {
 ///
 /// ## C++ default parameters
 /// * flags: DECOMP_LU
-pub fn invert(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<f64> {
-    unsafe { sys::cv_invert_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
+pub fn invert(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<f64> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_invert__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
 }
 
 pub fn get_ipp_error_location() -> Result<String> {
@@ -2502,8 +2635,11 @@ pub fn use_ipp_not_exact() -> Result<bool> {
 ///
 /// ## C++ default parameters
 /// * centers: noArray()
-pub fn kmeans(data: &core::Mat, k: i32, best_labels: &mut core::Mat, criteria: &core::TermCriteria, attempts: i32, flags: i32, centers: &mut core::Mat) -> Result<f64> {
-    unsafe { sys::cv_kmeans_Mat_int_Mat_TermCriteria_int_int_Mat(data.as_raw_Mat(), k, best_labels.as_raw_Mat(), criteria.as_raw_TermCriteria(), attempts, flags, centers.as_raw_Mat()) }.into_result()
+pub fn kmeans(data: &dyn core::ToInputArray, k: i32, best_labels: &mut dyn core::ToInputOutputArray, criteria: &core::TermCriteria, attempts: i32, flags: i32, centers: &mut dyn core::ToOutputArray) -> Result<f64> {
+    input_array_arg!(data);
+    input_output_array_arg!(best_labels);
+    output_array_arg!(centers);
+    unsafe { sys::cv_kmeans__InputArray_int__InputOutputArray_TermCriteria_int_int__OutputArray(data.as_raw__InputArray(), k, best_labels.as_raw__InputOutputArray(), criteria.as_raw_TermCriteria(), attempts, flags, centers.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates the natural logarithm of every array element.
@@ -2518,8 +2654,10 @@ pub fn kmeans(data: &core::Mat, k: i32, best_labels: &mut core::Mat, criteria: &
 /// * dst: output array of the same size and type as src .
 /// ## See also
 /// exp, cartToPolar, polarToCart, phase, pow, sqrt, magnitude
-pub fn log(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_log_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn log(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_log__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates the magnitude of 2D vectors.
@@ -2534,11 +2672,14 @@ pub fn log(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// * magnitude: output array of the same size and type as x.
 /// ## See also
 /// cartToPolar, polarToCart, phase, sqrt
-pub fn magnitude(x: &core::Mat, y: &core::Mat, magnitude: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_magnitude_Mat_Mat_Mat(x.as_raw_Mat(), y.as_raw_Mat(), magnitude.as_raw_Mat()) }.into_result()
+pub fn magnitude(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, magnitude: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(x);
+    input_array_arg!(y);
+    output_array_arg!(magnitude);
+    unsafe { sys::cv_magnitude__InputArray__InputArray__OutputArray(x.as_raw__InputArray(), y.as_raw__InputArray(), magnitude.as_raw__OutputArray()) }.into_result()
 }
 
-pub fn max(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
+pub fn max_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
     unsafe { sys::cv_max_Mat_Mat(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
 }
 
@@ -2554,7 +2695,11 @@ pub fn max(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
 /// * dst: output array of the same size and type as src1.
 /// ## See also
 /// min, compare, inRange, minMaxLoc, @ref MatrixExpressions
-pub fn max_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
+///
+/// ## Overloaded parameters
+///
+/// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
+pub fn max_mat_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_max_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
@@ -2578,8 +2723,27 @@ pub fn max_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
 /// ## Overloaded parameters
 ///
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
-pub fn max_umat(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
+pub fn max_umat_to(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
     unsafe { sys::cv_max_UMat_UMat_UMat(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_UMat()) }.into_result()
+}
+
+/// Calculates per-element maximum of two arrays or an array and a scalar.
+///
+/// The function cv::max calculates the per-element maximum of two arrays:
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmax%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
+/// or array and a scalar:
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmax%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bvalue%7D%20%29)
+/// ## Parameters
+/// * src1: first input array.
+/// * src2: second input array of the same size and type as src1 .
+/// * dst: output array of the same size and type as src1.
+/// ## See also
+/// min, compare, inRange, minMaxLoc, @ref MatrixExpressions
+pub fn max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_max__InputArray__InputArray__OutputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 pub fn max_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
@@ -2611,8 +2775,12 @@ pub fn max_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn mean_std_dev(src: &core::Mat, mean: &mut core::Mat, stddev: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_meanStdDev_Mat_Mat_Mat_Mat(src.as_raw_Mat(), mean.as_raw_Mat(), stddev.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+pub fn mean_std_dev(src: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputArray, stddev: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(mean);
+    output_array_arg!(stddev);
+    input_array_arg!(mask);
+    unsafe { sys::cv_meanStdDev__InputArray__OutputArray__OutputArray__InputArray(src.as_raw__InputArray(), mean.as_raw__OutputArray(), stddev.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Calculates an average (mean) of array elements.
@@ -2630,8 +2798,10 @@ pub fn mean_std_dev(src: &core::Mat, mean: &mut core::Mat, stddev: &mut core::Ma
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn mean(src: &core::Mat, mask: &core::Mat) -> Result<core::Scalar> {
-    unsafe { sys::cv_mean_Mat_Mat(src.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Scalar> {
+    input_array_arg!(src);
+    input_array_arg!(mask);
+    unsafe { sys::cv_mean__InputArray__InputArray(src.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Creates one multi-channel array out of several single-channel ones.
@@ -2661,8 +2831,10 @@ pub fn mean(src: &core::Mat, mask: &core::Mat) -> Result<core::Scalar> {
 /// size and the same depth.
 /// * dst: output array of the same size and the same depth as mv[0]; The number of channels will
 /// be the total number of channels in the matrix array.
-pub fn merge(mv: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_merge_VectorOfMat_Mat(mv.as_raw_VectorOfMat(), dst.as_raw_Mat()) }.into_result()
+pub fn merge(mv: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(mv);
+    output_array_arg!(dst);
+    unsafe { sys::cv_merge__InputArray__OutputArray(mv.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Finds the global minimum and maximum in an array
@@ -2695,37 +2867,10 @@ pub fn merge(mv: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
 /// * min_idx: 0
 /// * max_idx: 0
 /// * mask: noArray()
-pub fn min_max_idx(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_idx: &mut i32, max_idx: &mut i32, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_minMaxIdx_Mat_double_X_double_X_int_X_int_X_Mat(src.as_raw_Mat(), min_val, max_val, min_idx, max_idx, mask.as_raw_Mat()) }.into_result()
-}
-
-/// Finds the global minimum and maximum in an array.
-///
-/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
-/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
-/// array region.
-///
-/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
-/// elements across all the channels, use Mat::reshape first to reinterpret the array as
-/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
-/// mixChannels , or split .
-/// ## Parameters
-/// * src: input single-channel array.
-/// * minVal: pointer to the returned minimum value; NULL is used if not required.
-/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
-/// * minLoc: pointer to the returned minimum location (in 2D case); NULL is used if not required.
-/// * maxLoc: pointer to the returned maximum location (in 2D case); NULL is used if not required.
-/// * mask: optional mask used to select a sub-array.
-/// ## See also
-/// max, min, compare, inRange, extractImageCOI, mixChannels, split, Mat::reshape
-///
-/// ## C++ default parameters
-/// * max_val: 0
-/// * min_loc: 0
-/// * max_loc: 0
-/// * mask: noArray()
-pub fn min_max_loc(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_minMaxLoc_Mat_double_X_double_X_Point_X_Point_X_Mat(src.as_raw_Mat(), min_val, max_val, min_loc, max_loc, mask.as_raw_Mat()) }.into_result()
+pub fn min_max_idx(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_idx: &mut i32, max_idx: &mut i32, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(mask);
+    unsafe { sys::cv_minMaxIdx__InputArray_double_X_double_X_int_X_int_X__InputArray(src.as_raw__InputArray(), min_val, max_val, min_idx, max_idx, mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Finds the global minimum and maximum in an array.
@@ -2761,11 +2906,42 @@ pub fn min_max_loc(src: &core::Mat, min_val: &mut f64, max_val: &mut f64, min_lo
 /// ## C++ default parameters
 /// * min_idx: 0
 /// * max_idx: 0
-pub fn min_max_loc_1(a: &core::SparseMat, min_val: &mut f64, max_val: &mut f64, min_idx: &mut i32, max_idx: &mut i32) -> Result<()> {
+pub fn min_max_loc_sparse(a: &core::SparseMat, min_val: &mut f64, max_val: &mut f64, min_idx: &mut i32, max_idx: &mut i32) -> Result<()> {
     unsafe { sys::cv_minMaxLoc_SparseMat_double_X_double_X_int_X_int_X(a.as_raw_SparseMat(), min_val, max_val, min_idx, max_idx) }.into_result()
 }
 
-pub fn min(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
+/// Finds the global minimum and maximum in an array.
+///
+/// The function cv::minMaxLoc finds the minimum and maximum element values and their positions. The
+/// extremums are searched across the whole array or, if mask is not an empty array, in the specified
+/// array region.
+///
+/// The function do not work with multi-channel arrays. If you need to find minimum or maximum
+/// elements across all the channels, use Mat::reshape first to reinterpret the array as
+/// single-channel. Or you may extract the particular channel using either extractImageCOI , or
+/// mixChannels , or split .
+/// ## Parameters
+/// * src: input single-channel array.
+/// * minVal: pointer to the returned minimum value; NULL is used if not required.
+/// * maxVal: pointer to the returned maximum value; NULL is used if not required.
+/// * minLoc: pointer to the returned minimum location (in 2D case); NULL is used if not required.
+/// * maxLoc: pointer to the returned maximum location (in 2D case); NULL is used if not required.
+/// * mask: optional mask used to select a sub-array.
+/// ## See also
+/// max, min, compare, inRange, extractImageCOI, mixChannels, split, Mat::reshape
+///
+/// ## C++ default parameters
+/// * max_val: 0
+/// * min_loc: 0
+/// * max_loc: 0
+/// * mask: noArray()
+pub fn min_max_loc(src: &dyn core::ToInputArray, min_val: &mut f64, max_val: &mut f64, min_loc: &mut core::Point, max_loc: &mut core::Point, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(mask);
+    unsafe { sys::cv_minMaxLoc__InputArray_double_X_double_X_Point_X_Point_X__InputArray(src.as_raw__InputArray(), min_val, max_val, min_loc, max_loc, mask.as_raw__InputArray()) }.into_result()
+}
+
+pub fn min_mat(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
     unsafe { sys::cv_min_Mat_Mat(a.as_raw_Mat(), b.as_raw_Mat()) }.into_result().map(|ptr| core::MatExpr { ptr })
 }
 
@@ -2781,7 +2957,11 @@ pub fn min(a: &core::Mat, b: &core::Mat) -> Result<core::MatExpr> {
 /// * dst: output array of the same size and type as src1.
 /// ## See also
 /// max, compare, inRange, minMaxLoc
-pub fn min_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
+///
+/// ## Overloaded parameters
+///
+/// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
+pub fn min_mat_to(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
     unsafe { sys::cv_min_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
 }
 
@@ -2805,8 +2985,27 @@ pub fn min_mat_f64(a: &core::Mat, s: f64) -> Result<core::MatExpr> {
 /// ## Overloaded parameters
 ///
 /// needed to avoid conflicts with const _Tp& std::min(const _Tp&, const _Tp&, _Compare)
-pub fn min_umat(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
+pub fn min_umat_to(src1: &core::UMat, src2: &core::UMat, dst: &mut core::UMat) -> Result<()> {
     unsafe { sys::cv_min_UMat_UMat_UMat(src1.as_raw_UMat(), src2.as_raw_UMat(), dst.as_raw_UMat()) }.into_result()
+}
+
+/// Calculates per-element minimum of two arrays or an array and a scalar.
+///
+/// The function cv::min calculates the per-element minimum of two arrays:
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmin%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bsrc2%7D%20%28I%29%29)
+/// or array and a scalar:
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Cmin%20%28%20%5Ctexttt%7Bsrc1%7D%20%28I%29%2C%20%5Ctexttt%7Bvalue%7D%20%29)
+/// ## Parameters
+/// * src1: first input array.
+/// * src2: second input array of the same size and type as src1.
+/// * dst: output array of the same size and type as src1.
+/// ## See also
+/// max, compare, inRange, minMaxLoc
+pub fn min(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_min__InputArray__InputArray__OutputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
@@ -2871,8 +3070,10 @@ pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 /// src[0].channels() + src[1].channels()-1, and so on, the same scheme is used for the output image
 /// channels; as a special case, when fromTo[k\*2] is negative, the corresponding output channel is
 /// filled with zero .
-pub fn mix_channels(src: &types::VectorOfMat, dst: &mut types::VectorOfMat, from_to: &types::VectorOfint) -> Result<()> {
-    unsafe { sys::cv_mixChannels_VectorOfMat_VectorOfMat_VectorOfint(src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), from_to.as_raw_VectorOfint()) }.into_result()
+pub fn mix_channels(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, from_to: &types::VectorOfint) -> Result<()> {
+    input_array_arg!(src);
+    input_output_array_arg!(dst);
+    unsafe { sys::cv_mixChannels__InputArray__InputOutputArray_VectorOfint(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), from_to.as_raw_VectorOfint()) }.into_result()
 }
 
 /// Performs the per-element multiplication of two Fourier spectrums.
@@ -2895,8 +3096,11 @@ pub fn mix_channels(src: &types::VectorOfMat, dst: &mut types::VectorOfMat, from
 ///
 /// ## C++ default parameters
 /// * conj_b: false
-pub fn mul_spectrums(a: &core::Mat, b: &core::Mat, c: &mut core::Mat, flags: i32, conj_b: bool) -> Result<()> {
-    unsafe { sys::cv_mulSpectrums_Mat_Mat_Mat_int_bool(a.as_raw_Mat(), b.as_raw_Mat(), c.as_raw_Mat(), flags, conj_b) }.into_result()
+pub fn mul_spectrums(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, c: &mut dyn core::ToOutputArray, flags: i32, conj_b: bool) -> Result<()> {
+    input_array_arg!(a);
+    input_array_arg!(b);
+    output_array_arg!(c);
+    unsafe { sys::cv_mulSpectrums__InputArray__InputArray__OutputArray_int_bool(a.as_raw__InputArray(), b.as_raw__InputArray(), c.as_raw__OutputArray(), flags, conj_b) }.into_result()
 }
 
 /// Calculates the product of a matrix and its transposition.
@@ -2933,8 +3137,11 @@ pub fn mul_spectrums(a: &core::Mat, b: &core::Mat, c: &mut core::Mat, flags: i32
 /// * delta: noArray()
 /// * scale: 1
 /// * dtype: -1
-pub fn mul_transposed(src: &core::Mat, dst: &mut core::Mat, a_ta: bool, delta: &core::Mat, scale: f64, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_mulTransposed_Mat_Mat_bool_Mat_double_int(src.as_raw_Mat(), dst.as_raw_Mat(), a_ta, delta.as_raw_Mat(), scale, dtype) }.into_result()
+pub fn mul_transposed(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, a_ta: bool, delta: &dyn core::ToInputArray, scale: f64, dtype: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    input_array_arg!(delta);
+    unsafe { sys::cv_mulTransposed__InputArray__OutputArray_bool__InputArray_double_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), a_ta, delta.as_raw__InputArray(), scale, dtype) }.into_result()
 }
 
 /// Calculates the per-element scaled product of two arrays.
@@ -2964,8 +3171,15 @@ pub fn mul_transposed(src: &core::Mat, dst: &mut core::Mat, a_ta: bool, delta: &
 /// ## C++ default parameters
 /// * scale: 1
 /// * dtype: -1
-pub fn multiply(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, scale: f64, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_multiply_Mat_Mat_Mat_double_int(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), scale, dtype) }.into_result()
+pub fn multiply(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, scale: f64, dtype: i32) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_multiply__InputArray__InputArray__OutputArray_double_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), scale, dtype) }.into_result()
+}
+
+pub fn no_array() -> Result<core::_InputOutputArray> {
+    unsafe { sys::cv_noArray() }.into_result().map(|ptr| core::_InputOutputArray { ptr })
 }
 
 pub fn norm_l1(a: &f32, b: &f32, n: i32) -> Result<f32> {
@@ -2978,69 +3192,6 @@ pub fn norm_l2(a: &u8, b: &u8, n: i32) -> Result<i32> {
 
 pub fn norm_l2_sqr(a: &f32, b: &f32, n: i32) -> Result<f32> {
     unsafe { sys::cv_normL2Sqr_const_float_X_const_float_X_int(a, b, n) }.into_result()
-}
-
-/// Calculates an absolute difference norm or a relative difference norm.
-///
-/// This version of cv::norm calculates the absolute difference norm
-/// or the relative difference norm of arrays src1 and src2.
-/// The type of norm to calculate is specified using #NormTypes.
-///
-/// ## Parameters
-/// * src1: first input array.
-/// * src2: second input array of the same size and the same type as src1.
-/// * normType: type of the norm (see #NormTypes).
-/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
-///
-/// ## C++ default parameters
-/// * norm_type: NORM_L2
-/// * mask: noArray()
-pub fn norm_with_type(src1: &core::Mat, src2: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_norm_Mat_Mat_int_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), norm_type, mask.as_raw_Mat()) }.into_result()
-}
-
-/// Calculates the  absolute norm of an array.
-///
-/// This version of #norm calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
-///
-/// As example for one array consider the function ![inline formula](https://latex.codecogs.com/png.latex?r%28x%29%3D%20%5Cbegin%7Bpmatrix%7D%20x%20%5C%5C%201-x%20%5Cend%7Bpmatrix%7D%2C%20x%20%5Cin%20%5B-1%3B1%5D).
-/// The ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%2C%20L_%7B2%7D%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm for the sample value ![inline formula](https://latex.codecogs.com/png.latex?r%28-1%29%20%3D%20%5Cbegin%7Bpmatrix%7D%20-1%20%5C%5C%202%20%5Cend%7Bpmatrix%7D)
-/// is calculated as follows
-/// \f{align*}
-/// \| r(-1) \|_{L_1} &= |-1| + |2| = 3 \\
-/// \| r(-1) \|_{L_2} &= \sqrt{(-1)^{2} + (2)^{2}} = \sqrt{5} \\
-/// \| r(-1) \|_{L_\infty} &= \max(|-1|,|2|) = 2
-/// \f}
-/// and for ![inline formula](https://latex.codecogs.com/png.latex?r%280.5%29%20%3D%20%5Cbegin%7Bpmatrix%7D%200.5%20%5C%5C%200.5%20%5Cend%7Bpmatrix%7D) the calculation is
-/// \f{align*}
-/// \| r(0.5) \|_{L_1} &= |0.5| + |0.5| = 1 \\
-/// \| r(0.5) \|_{L_2} &= \sqrt{(0.5)^{2} + (0.5)^{2}} = \sqrt{0.5} \\
-/// \| r(0.5) \|_{L_\infty} &= \max(|0.5|,|0.5|) = 0.5.
-/// \f}
-/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C_%7BL_2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_%5Cinfty%7D).
-/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.7/NormTypes_OneArray_1-2-INF.png)
-///
-/// When the mask parameter is specified and it is not empty, the norm is
-///
-/// If normType is not specified, #NORM_L2 is used.
-/// calculated only over the region specified by the mask.
-///
-/// Multi-channel input arrays are treated as single-channel arrays, that is,
-/// the results for all channels are combined.
-///
-/// Hamming norms can only be calculated with CV_8U depth arrays.
-///
-/// ## Parameters
-/// * src1: first input array.
-/// * normType: type of the norm (see #NormTypes).
-/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
-///
-/// ## C++ default parameters
-/// * norm_type: NORM_L2
-/// * mask: noArray()
-pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_norm_Mat_int_Mat(src1.as_raw_Mat(), norm_type, mask.as_raw_Mat()) }.into_result()
 }
 
 /// Calculates the  absolute norm of an array.
@@ -3084,79 +3235,76 @@ pub fn norm(src1: &core::Mat, norm_type: i32, mask: &core::Mat) -> Result<f64> {
 ///
 /// * src: first input array.
 /// * normType: type of the norm (see #NormTypes).
-pub fn norm_1(src: &core::SparseMat, norm_type: i32) -> Result<f64> {
+pub fn norm_sparse(src: &core::SparseMat, norm_type: i32) -> Result<f64> {
     unsafe { sys::cv_norm_SparseMat_int(src.as_raw_SparseMat(), norm_type) }.into_result()
 }
 
-/// Normalizes the norm or value range of an array.
+/// Calculates an absolute difference norm or a relative difference norm.
 ///
-/// The function cv::normalize normalizes scale and shift the input array elements so that
-/// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7Bdst%7D%20%5C%7C%20_%7BL_p%7D%3D%20%5Ctexttt%7Balpha%7D)
-/// (where p=Inf, 1 or 2) when normType=NORM_INF, NORM_L1, or NORM_L2, respectively; or so that
-/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmin%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Balpha%7D%20%2C%20%5C%2C%20%5C%2C%20%5Cmax%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bbeta%7D)
-///
-/// when normType=NORM_MINMAX (for dense arrays only). The optional mask specifies a sub-array to be
-/// normalized. This means that the norm or min-n-max are calculated over the sub-array, and then this
-/// sub-array is modified to be normalized. If you want to only use the mask to calculate the norm or
-/// min-max but modify the whole array, you can use norm and Mat::convertTo.
-///
-/// In case of sparse matrices, only the non-zero values are analyzed and transformed. Because of this,
-/// the range transformation for sparse matrices is not allowed since it can shift the zero level.
-///
-/// Possible usage with some positive example data:
-/// ```ignore{.cpp}
-/// vector<double> positiveData = { 2.0, 8.0, 10.0 };
-/// vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
-///
-/// // Norm to probability (total count)
-/// // sum(numbers) = 20.0
-/// // 2.0      0.1     (2.0/20.0)
-/// // 8.0      0.4     (8.0/20.0)
-/// // 10.0     0.5     (10.0/20.0)
-/// normalize(positiveData, normalizedData_l1, 1.0, 0.0, NORM_L1);
-///
-/// // Norm to unit vector: ||positiveData|| = 1.0
-/// // 2.0      0.15
-/// // 8.0      0.62
-/// // 10.0     0.77
-/// normalize(positiveData, normalizedData_l2, 1.0, 0.0, NORM_L2);
-///
-/// // Norm to max element
-/// // 2.0      0.2     (2.0/10.0)
-/// // 8.0      0.8     (8.0/10.0)
-/// // 10.0     1.0     (10.0/10.0)
-/// normalize(positiveData, normalizedData_inf, 1.0, 0.0, NORM_INF);
-///
-/// // Norm to range [0.0;1.0]
-/// // 2.0      0.0     (shift to left border)
-/// // 8.0      0.75    (6.0/8.0)
-/// // 10.0     1.0     (shift to right border)
-/// normalize(positiveData, normalizedData_minmax, 1.0, 0.0, NORM_MINMAX);
-/// ```
-///
+/// This version of cv::norm calculates the absolute difference norm
+/// or the relative difference norm of arrays src1 and src2.
+/// The type of norm to calculate is specified using #NormTypes.
 ///
 /// ## Parameters
-/// * src: input array.
-/// * dst: output array of the same size as src .
-/// * alpha: norm value to normalize to or the lower range boundary in case of the range
-/// normalization.
-/// * beta: upper range boundary in case of the range normalization; it is not used for the norm
-/// normalization.
-/// * norm_type: normalization type (see cv::NormTypes).
-/// * dtype: when negative, the output array has the same type as src; otherwise, it has the same
-/// number of channels as src and the depth =CV_MAT_DEPTH(dtype).
-/// * mask: optional operation mask.
-/// ## See also
-/// norm, Mat::convertTo, SparseMat::convertTo
+/// * src1: first input array.
+/// * src2: second input array of the same size and the same type as src1.
+/// * normType: type of the norm (see #NormTypes).
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
 ///
 /// ## C++ default parameters
-/// * alpha: 1
-/// * beta: 0
 /// * norm_type: NORM_L2
-/// * dtype: -1
 /// * mask: noArray()
-pub fn normalize(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_normalize_Mat_Mat_double_double_int_int_Mat(src.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta, norm_type, dtype, mask.as_raw_Mat()) }.into_result()
+pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    input_array_arg!(mask);
+    unsafe { sys::cv_norm__InputArray__InputArray_int__InputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()
+}
+
+/// Calculates the  absolute norm of an array.
+///
+/// This version of #norm calculates the absolute norm of src1. The type of norm to calculate is specified using #NormTypes.
+///
+/// As example for one array consider the function ![inline formula](https://latex.codecogs.com/png.latex?r%28x%29%3D%20%5Cbegin%7Bpmatrix%7D%20x%20%5C%5C%201-x%20%5Cend%7Bpmatrix%7D%2C%20x%20%5Cin%20%5B-1%3B1%5D).
+/// The ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%2C%20L_%7B2%7D%20) and ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm for the sample value ![inline formula](https://latex.codecogs.com/png.latex?r%28-1%29%20%3D%20%5Cbegin%7Bpmatrix%7D%20-1%20%5C%5C%202%20%5Cend%7Bpmatrix%7D)
+/// is calculated as follows
+/// \f{align*}
+/// \| r(-1) \|_{L_1} &= |-1| + |2| = 3 \\
+/// \| r(-1) \|_{L_2} &= \sqrt{(-1)^{2} + (2)^{2}} = \sqrt{5} \\
+/// \| r(-1) \|_{L_\infty} &= \max(|-1|,|2|) = 2
+/// \f}
+/// and for ![inline formula](https://latex.codecogs.com/png.latex?r%280.5%29%20%3D%20%5Cbegin%7Bpmatrix%7D%200.5%20%5C%5C%200.5%20%5Cend%7Bpmatrix%7D) the calculation is
+/// \f{align*}
+/// \| r(0.5) \|_{L_1} &= |0.5| + |0.5| = 1 \\
+/// \| r(0.5) \|_{L_2} &= \sqrt{(0.5)^{2} + (0.5)^{2}} = \sqrt{0.5} \\
+/// \| r(0.5) \|_{L_\infty} &= \max(|0.5|,|0.5|) = 0.5.
+/// \f}
+/// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C_%7BL_2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_%5Cinfty%7D).
+/// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.7/NormTypes_OneArray_1-2-INF.png)
+///
+/// When the mask parameter is specified and it is not empty, the norm is
+///
+/// If normType is not specified, #NORM_L2 is used.
+/// calculated only over the region specified by the mask.
+///
+/// Multi-channel input arrays are treated as single-channel arrays, that is,
+/// the results for all channels are combined.
+///
+/// Hamming norms can only be calculated with CV_8U depth arrays.
+///
+/// ## Parameters
+/// * src1: first input array.
+/// * normType: type of the norm (see #NormTypes).
+/// * mask: optional operation mask; it must have the same size as src1 and CV_8UC1 type.
+///
+/// ## C++ default parameters
+/// * norm_type: NORM_L2
+/// * mask: noArray()
+pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(src1);
+    input_array_arg!(mask);
+    unsafe { sys::cv_norm__InputArray_int__InputArray(src1.as_raw__InputArray(), norm_type, mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Normalizes the norm or value range of an array.
@@ -3227,8 +3375,82 @@ pub fn normalize(src: &core::Mat, dst: &mut core::Mat, alpha: f64, beta: f64, no
 /// * alpha: norm value to normalize to or the lower range boundary in case of the range
 /// normalization.
 /// * normType: normalization type (see cv::NormTypes).
-pub fn normalize_1(src: &core::SparseMat, dst: &mut core::SparseMat, alpha: f64, norm_type: i32) -> Result<()> {
+pub fn normalize_sparse(src: &core::SparseMat, dst: &mut core::SparseMat, alpha: f64, norm_type: i32) -> Result<()> {
     unsafe { sys::cv_normalize_SparseMat_SparseMat_double_int(src.as_raw_SparseMat(), dst.as_raw_SparseMat(), alpha, norm_type) }.into_result()
+}
+
+/// Normalizes the norm or value range of an array.
+///
+/// The function cv::normalize normalizes scale and shift the input array elements so that
+/// ![block formula](https://latex.codecogs.com/png.latex?%5C%7C%20%5Ctexttt%7Bdst%7D%20%5C%7C%20_%7BL_p%7D%3D%20%5Ctexttt%7Balpha%7D)
+/// (where p=Inf, 1 or 2) when normType=NORM_INF, NORM_L1, or NORM_L2, respectively; or so that
+/// ![block formula](https://latex.codecogs.com/png.latex?%5Cmin%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Balpha%7D%20%2C%20%5C%2C%20%5C%2C%20%5Cmax%20_I%20%20%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bbeta%7D)
+///
+/// when normType=NORM_MINMAX (for dense arrays only). The optional mask specifies a sub-array to be
+/// normalized. This means that the norm or min-n-max are calculated over the sub-array, and then this
+/// sub-array is modified to be normalized. If you want to only use the mask to calculate the norm or
+/// min-max but modify the whole array, you can use norm and Mat::convertTo.
+///
+/// In case of sparse matrices, only the non-zero values are analyzed and transformed. Because of this,
+/// the range transformation for sparse matrices is not allowed since it can shift the zero level.
+///
+/// Possible usage with some positive example data:
+/// ```ignore{.cpp}
+/// vector<double> positiveData = { 2.0, 8.0, 10.0 };
+/// vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
+///
+/// // Norm to probability (total count)
+/// // sum(numbers) = 20.0
+/// // 2.0      0.1     (2.0/20.0)
+/// // 8.0      0.4     (8.0/20.0)
+/// // 10.0     0.5     (10.0/20.0)
+/// normalize(positiveData, normalizedData_l1, 1.0, 0.0, NORM_L1);
+///
+/// // Norm to unit vector: ||positiveData|| = 1.0
+/// // 2.0      0.15
+/// // 8.0      0.62
+/// // 10.0     0.77
+/// normalize(positiveData, normalizedData_l2, 1.0, 0.0, NORM_L2);
+///
+/// // Norm to max element
+/// // 2.0      0.2     (2.0/10.0)
+/// // 8.0      0.8     (8.0/10.0)
+/// // 10.0     1.0     (10.0/10.0)
+/// normalize(positiveData, normalizedData_inf, 1.0, 0.0, NORM_INF);
+///
+/// // Norm to range [0.0;1.0]
+/// // 2.0      0.0     (shift to left border)
+/// // 8.0      0.75    (6.0/8.0)
+/// // 10.0     1.0     (shift to right border)
+/// normalize(positiveData, normalizedData_minmax, 1.0, 0.0, NORM_MINMAX);
+/// ```
+///
+///
+/// ## Parameters
+/// * src: input array.
+/// * dst: output array of the same size as src .
+/// * alpha: norm value to normalize to or the lower range boundary in case of the range
+/// normalization.
+/// * beta: upper range boundary in case of the range normalization; it is not used for the norm
+/// normalization.
+/// * norm_type: normalization type (see cv::NormTypes).
+/// * dtype: when negative, the output array has the same type as src; otherwise, it has the same
+/// number of channels as src and the depth =CV_MAT_DEPTH(dtype).
+/// * mask: optional operation mask.
+/// ## See also
+/// norm, Mat::convertTo, SparseMat::convertTo
+///
+/// ## C++ default parameters
+/// * alpha: 1
+/// * beta: 0
+/// * norm_type: NORM_L2
+/// * dtype: -1
+/// * mask: noArray()
+pub fn normalize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToInputOutputArray, alpha: f64, beta: f64, norm_type: i32, dtype: i32, mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src);
+    input_output_array_arg!(dst);
+    input_array_arg!(mask);
+    unsafe { sys::cv_normalize__InputArray__InputOutputArray_double_double_int_int__InputArray(src.as_raw__InputArray(), dst.as_raw__InputOutputArray(), alpha, beta, norm_type, dtype, mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Attaches OpenCL context to OpenCV
@@ -3247,10 +3469,11 @@ pub fn attach_context(platform_name: &str, platform_id: &mut c_void, context: &m
     unsafe { sys::cv_ocl_attachContext_String_void_X_void_X_void_X(platform_name.as_ptr(), platform_id, context, device_id) }.into_result()
 }
 
-pub fn build_options_add_matrix_description(build_options: &mut String, name: &str, _m: &core::Mat) -> Result<()> {
+pub fn build_options_add_matrix_description(build_options: &mut String, name: &str, _m: &dyn core::ToInputArray) -> Result<()> {
     string_arg_output_send!(via build_options_via);
     string_arg!(name);
-    let out = unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_String_String_Mat(&mut build_options_via, name.as_ptr(), _m.as_raw_Mat()) }.into_result();
+    input_array_arg!(_m);
+    let out = unsafe { sys::cv_ocl_buildOptionsAddMatrixDescription_String_String__InputArray(&mut build_options_via, name.as_ptr(), _m.as_raw__InputArray()) }.into_result();
     string_arg_output_receive!(build_options_via => build_options);
     return out;
 }
@@ -3293,7 +3516,7 @@ pub fn finish() -> Result<()> {
     unsafe { sys::cv_ocl_finish() }.into_result()
 }
 
-pub fn get_open_cl_error_string(error_code: i32) -> Result<String> {
+pub fn get_opencl_error_string(error_code: i32) -> Result<String> {
     unsafe { sys::cv_ocl_getOpenCLErrorString_int(error_code) }.into_result().map(crate::templ::receive_string)
 }
 
@@ -3309,7 +3532,7 @@ pub fn have_amd_fft() -> Result<bool> {
     unsafe { sys::cv_ocl_haveAmdFft() }.into_result()
 }
 
-pub fn have_open_cl() -> Result<bool> {
+pub fn have_opencl() -> Result<bool> {
     unsafe { sys::cv_ocl_haveOpenCL() }.into_result()
 }
 
@@ -3321,9 +3544,10 @@ pub fn have_svm() -> Result<bool> {
 /// ## C++ default parameters
 /// * ddepth: -1
 /// * name: NULL
-pub fn kernel_to_str(_kernel: &core::Mat, ddepth: i32, name: &str) -> Result<String> {
+pub fn kernel_to_str(_kernel: &dyn core::ToInputArray, ddepth: i32, name: &str) -> Result<String> {
+    input_array_arg!(_kernel);
     string_arg!(name);
-    unsafe { sys::cv_ocl_kernelToStr_Mat_int_const_char_X(_kernel.as_raw_Mat(), ddepth, name.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
+    unsafe { sys::cv_ocl_kernelToStr__InputArray_int_const_char_X(_kernel.as_raw__InputArray(), ddepth, name.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
 pub fn memop_type_to_str(t: i32) -> Result<String> {
@@ -3340,11 +3564,20 @@ pub fn memop_type_to_str(t: i32) -> Result<String> {
 /// * src7: noArray()
 /// * src8: noArray()
 /// * src9: noArray()
-pub fn predict_optimal_vector_width_max(src1: &core::Mat, src2: &core::Mat, src3: &core::Mat, src4: &core::Mat, src5: &core::Mat, src6: &core::Mat, src7: &core::Mat, src8: &core::Mat, src9: &core::Mat) -> Result<i32> {
-    unsafe { sys::cv_ocl_predictOptimalVectorWidthMax_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), src3.as_raw_Mat(), src4.as_raw_Mat(), src5.as_raw_Mat(), src6.as_raw_Mat(), src7.as_raw_Mat(), src8.as_raw_Mat(), src9.as_raw_Mat()) }.into_result()
+pub fn predict_optimal_vector_width_max(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray) -> Result<i32> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    input_array_arg!(src3);
+    input_array_arg!(src4);
+    input_array_arg!(src5);
+    input_array_arg!(src6);
+    input_array_arg!(src7);
+    input_array_arg!(src8);
+    input_array_arg!(src9);
+    unsafe { sys::cv_ocl_predictOptimalVectorWidthMax__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray()) }.into_result()
 }
 
-pub fn set_use_open_cl(flag: bool) -> Result<()> {
+pub fn set_use_opencl(flag: bool) -> Result<()> {
     unsafe { sys::cv_ocl_setUseOpenCL_bool(flag) }.into_result()
 }
 
@@ -3352,7 +3585,7 @@ pub fn type_to_str(t: i32) -> Result<String> {
     unsafe { sys::cv_ocl_typeToStr_int(t) }.into_result().map(crate::templ::receive_string)
 }
 
-pub fn use_open_cl() -> Result<bool> {
+pub fn use_opencl() -> Result<bool> {
     unsafe { sys::cv_ocl_useOpenCL() }.into_result()
 }
 
@@ -3372,8 +3605,9 @@ pub fn parallel_for_(range: &core::Range, body: &dyn core::ParallelLoopBody, nst
 ///
 /// ## C++ default parameters
 /// * val: 0
-pub fn patch_na_ns(a: &mut core::Mat, val: f64) -> Result<()> {
-    unsafe { sys::cv_patchNaNs_Mat_double(a.as_raw_Mat(), val) }.into_result()
+pub fn patch_na_ns(a: &mut dyn core::ToInputOutputArray, val: f64) -> Result<()> {
+    input_output_array_arg!(a);
+    unsafe { sys::cv_patchNaNs__InputOutputArray_double(a.as_raw__InputOutputArray(), val) }.into_result()
 }
 
 /// Performs the perspective matrix transformation of vectors.
@@ -3403,8 +3637,11 @@ pub fn patch_na_ns(a: &mut core::Mat, val: f64) -> Result<()> {
 /// * m: 3x3 or 4x4 floating-point transformation matrix.
 /// ## See also
 /// transform, warpPerspective, getPerspectiveTransform, findHomography
-pub fn perspective_transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_perspectiveTransform_Mat_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
+pub fn perspective_transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    input_array_arg!(m);
+    unsafe { sys::cv_perspectiveTransform__InputArray__OutputArray__InputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray()) }.into_result()
 }
 
 /// Calculates the rotation angle of 2D vectors.
@@ -3426,8 +3663,11 @@ pub fn perspective_transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat
 ///
 /// ## C++ default parameters
 /// * angle_in_degrees: false
-pub fn phase(x: &core::Mat, y: &core::Mat, angle: &mut core::Mat, angle_in_degrees: bool) -> Result<()> {
-    unsafe { sys::cv_phase_Mat_Mat_Mat_bool(x.as_raw_Mat(), y.as_raw_Mat(), angle.as_raw_Mat(), angle_in_degrees) }.into_result()
+pub fn phase(x: &dyn core::ToInputArray, y: &dyn core::ToInputArray, angle: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
+    input_array_arg!(x);
+    input_array_arg!(y);
+    output_array_arg!(angle);
+    unsafe { sys::cv_phase__InputArray__InputArray__OutputArray_bool(x.as_raw__InputArray(), y.as_raw__InputArray(), angle.as_raw__OutputArray(), angle_in_degrees) }.into_result()
 }
 
 /// Calculates x and y coordinates of 2D vectors from their magnitude and angle.
@@ -3454,8 +3694,12 @@ pub fn phase(x: &core::Mat, y: &core::Mat, angle: &mut core::Mat, angle_in_degre
 ///
 /// ## C++ default parameters
 /// * angle_in_degrees: false
-pub fn polar_to_cart(magnitude: &core::Mat, angle: &core::Mat, x: &mut core::Mat, y: &mut core::Mat, angle_in_degrees: bool) -> Result<()> {
-    unsafe { sys::cv_polarToCart_Mat_Mat_Mat_Mat_bool(magnitude.as_raw_Mat(), angle.as_raw_Mat(), x.as_raw_Mat(), y.as_raw_Mat(), angle_in_degrees) }.into_result()
+pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInputArray, x: &mut dyn core::ToOutputArray, y: &mut dyn core::ToOutputArray, angle_in_degrees: bool) -> Result<()> {
+    input_array_arg!(magnitude);
+    input_array_arg!(angle);
+    output_array_arg!(x);
+    output_array_arg!(y);
+    unsafe { sys::cv_polarToCart__InputArray__InputArray__OutputArray__OutputArray_bool(magnitude.as_raw__InputArray(), angle.as_raw__InputArray(), x.as_raw__OutputArray(), y.as_raw__OutputArray(), angle_in_degrees) }.into_result()
 }
 
 /// Raises every array element to a power.
@@ -3483,8 +3727,10 @@ pub fn polar_to_cart(magnitude: &core::Mat, angle: &core::Mat, x: &mut core::Mat
 /// * dst: output array of the same size and type as src.
 /// ## See also
 /// sqrt, exp, log, cartToPolar, polarToCart
-pub fn pow(src: &core::Mat, power: f64, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_pow_Mat_double_Mat(src.as_raw_Mat(), power, dst.as_raw_Mat()) }.into_result()
+pub fn pow(src: &dyn core::ToInputArray, power: f64, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_pow__InputArray_double__OutputArray(src.as_raw__InputArray(), power, dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Fills the array with normally distributed random numbers.
@@ -3499,8 +3745,11 @@ pub fn pow(src: &core::Mat, power: f64, dst: &mut core::Mat) -> Result<()> {
 /// which case a diagonal standard deviation matrix is assumed) or a square matrix.
 /// ## See also
 /// RNG, randu
-pub fn randn(dst: &mut core::Mat, mean: &core::Mat, stddev: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_randn_Mat_Mat_Mat(dst.as_raw_Mat(), mean.as_raw_Mat(), stddev.as_raw_Mat()) }.into_result()
+pub fn randn(dst: &mut dyn core::ToInputOutputArray, mean: &dyn core::ToInputArray, stddev: &dyn core::ToInputArray) -> Result<()> {
+    input_output_array_arg!(dst);
+    input_array_arg!(mean);
+    input_array_arg!(stddev);
+    unsafe { sys::cv_randn__InputOutputArray__InputArray__InputArray(dst.as_raw__InputOutputArray(), mean.as_raw__InputArray(), stddev.as_raw__InputArray()) }.into_result()
 }
 
 /// Generates a single uniformly-distributed random number or an array of random numbers.
@@ -3514,8 +3763,11 @@ pub fn randn(dst: &mut core::Mat, mean: &core::Mat, stddev: &core::Mat) -> Resul
 /// * high: exclusive upper boundary of the generated random numbers.
 /// ## See also
 /// RNG, randn, theRNG
-pub fn randu(dst: &mut core::Mat, low: &core::Mat, high: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_randu_Mat_Mat_Mat(dst.as_raw_Mat(), low.as_raw_Mat(), high.as_raw_Mat()) }.into_result()
+pub fn randu(dst: &mut dyn core::ToInputOutputArray, low: &dyn core::ToInputArray, high: &dyn core::ToInputArray) -> Result<()> {
+    input_output_array_arg!(dst);
+    input_array_arg!(low);
+    input_array_arg!(high);
+    unsafe { sys::cv_randu__InputOutputArray__InputArray__InputArray(dst.as_raw__InputOutputArray(), low.as_raw__InputArray(), high.as_raw__InputArray()) }.into_result()
 }
 
 /// Reduces a matrix to a vector.
@@ -3546,8 +3798,10 @@ pub fn randu(dst: &mut core::Mat, low: &core::Mat, high: &core::Mat) -> Result<(
 ///
 /// ## C++ default parameters
 /// * dtype: -1
-pub fn reduce(src: &core::Mat, dst: &mut core::Mat, dim: i32, rtype: i32, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_reduce_Mat_Mat_int_int_int(src.as_raw_Mat(), dst.as_raw_Mat(), dim, rtype, dtype) }.into_result()
+pub fn reduce(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, dim: i32, rtype: i32, dtype: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_reduce__InputArray__OutputArray_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), dim, rtype, dtype) }.into_result()
 }
 
 /// Fills the output array with repeated copies of the input array.
@@ -3590,8 +3844,10 @@ pub fn repeat(src: &core::Mat, ny: i32, nx: i32) -> Result<core::Mat> {
 /// * dst: output array of the same type as `src`.
 /// ## See also
 /// cv::reduce
-pub fn repeat_to(src: &core::Mat, ny: i32, nx: i32, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_repeat_Mat_int_int_Mat(src.as_raw_Mat(), ny, nx, dst.as_raw_Mat()) }.into_result()
+pub fn repeat_to(src: &dyn core::ToInputArray, ny: i32, nx: i32, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_repeat__InputArray_int_int__OutputArray(src.as_raw__InputArray(), ny, nx, dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Rotates a 2D array in multiples of 90 degrees.
@@ -3606,8 +3862,10 @@ pub fn repeat_to(src: &core::Mat, ny: i32, nx: i32, dst: &mut core::Mat) -> Resu
 /// * rotateCode: an enum to specify how to rotate the array; see the enum #RotateFlags
 /// ## See also
 /// transpose , repeat , completeSymm, flip, RotateFlags
-pub fn rotate(src: &core::Mat, dst: &mut core::Mat, rotate_code: i32) -> Result<()> {
-    unsafe { sys::cv_rotate_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), rotate_code) }.into_result()
+pub fn rotate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, rotate_code: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_rotate__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), rotate_code) }.into_result()
 }
 
 /// Round first value up to the nearest multiple of second value.
@@ -3717,8 +3975,11 @@ pub fn find_file(relative_path: &str, required: bool, silent_mode: bool) -> Resu
 /// * dst: output array of the same size and type as src1.
 /// ## See also
 /// add, addWeighted, subtract, Mat::dot, Mat::convertTo
-pub fn scale_add(src1: &core::Mat, alpha: f64, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_scaleAdd_Mat_double_Mat_Mat(src1.as_raw_Mat(), alpha, src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn scale_add(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_scaleAdd__InputArray_double__InputArray__OutputArray(src1.as_raw__InputArray(), alpha, src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Sets/resets the break-on-error mode.
@@ -3751,8 +4012,9 @@ pub fn set_break_on_error(flag: bool) -> Result<bool> {
 ///
 /// ## C++ default parameters
 /// * s: Scalar(1)
-pub fn set_identity(mtx: &mut core::Mat, s: core::Scalar) -> Result<()> {
-    unsafe { sys::cv_setIdentity_Mat_Scalar(mtx.as_raw_Mat(), s) }.into_result()
+pub fn set_identity(mtx: &mut dyn core::ToInputOutputArray, s: core::Scalar) -> Result<()> {
+    input_output_array_arg!(mtx);
+    unsafe { sys::cv_setIdentity__InputOutputArray_Scalar(mtx.as_raw__InputOutputArray(), s) }.into_result()
 }
 
 /// OpenCV will try to set the number of threads for the next parallel region.
@@ -3789,7 +4051,7 @@ pub fn set_rng_seed(seed: i32) -> Result<()> {
     unsafe { sys::cv_setRNGSeed_int(seed) }.into_result()
 }
 
-pub fn set_use_open_vx(flag: bool) -> Result<()> {
+pub fn set_use_openvx(flag: bool) -> Result<()> {
     unsafe { sys::cv_setUseOpenVX_bool(flag) }.into_result()
 }
 
@@ -3824,8 +4086,10 @@ pub fn set_use_optimized(onoff: bool) -> Result<()> {
 /// * roots: output array of real roots that has 1 or 3 elements.
 /// ## Returns
 /// number of real roots. It can be 0, 1 or 2.
-pub fn solve_cubic(coeffs: &core::Mat, roots: &mut core::Mat) -> Result<i32> {
-    unsafe { sys::cv_solveCubic_Mat_Mat(coeffs.as_raw_Mat(), roots.as_raw_Mat()) }.into_result()
+pub fn solve_cubic(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray) -> Result<i32> {
+    input_array_arg!(coeffs);
+    output_array_arg!(roots);
+    unsafe { sys::cv_solveCubic__InputArray__OutputArray(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray()) }.into_result()
 }
 
 /// Solve given (non-integer) linear programming problem using the Simplex Algorithm (Simplex Method).
@@ -3872,8 +4136,10 @@ pub fn solve_lp(func: &core::Mat, constr: &core::Mat, z: &mut core::Mat) -> Resu
 ///
 /// ## C++ default parameters
 /// * max_iters: 300
-pub fn solve_poly(coeffs: &core::Mat, roots: &mut core::Mat, max_iters: i32) -> Result<f64> {
-    unsafe { sys::cv_solvePoly_Mat_Mat_int(coeffs.as_raw_Mat(), roots.as_raw_Mat(), max_iters) }.into_result()
+pub fn solve_poly(coeffs: &dyn core::ToInputArray, roots: &mut dyn core::ToOutputArray, max_iters: i32) -> Result<f64> {
+    input_array_arg!(coeffs);
+    output_array_arg!(roots);
+    unsafe { sys::cv_solvePoly__InputArray__OutputArray_int(coeffs.as_raw__InputArray(), roots.as_raw__OutputArray(), max_iters) }.into_result()
 }
 
 /// Solves one or more linear systems or least-squares problems.
@@ -3903,8 +4169,11 @@ pub fn solve_poly(coeffs: &core::Mat, roots: &mut core::Mat, max_iters: i32) -> 
 ///
 /// ## C++ default parameters
 /// * flags: DECOMP_LU
-pub fn solve(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<bool> {
-    unsafe { sys::cv_solve_Mat_Mat_Mat_int(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
+pub fn solve(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_solve__InputArray__InputArray__OutputArray_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Sorts each row or each column of a matrix.
@@ -3927,8 +4196,10 @@ pub fn solve(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, flags: i32
 /// * flags: operation flags that could be a combination of cv::SortFlags
 /// ## See also
 /// sort, randShuffle
-pub fn sort_idx(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-    unsafe { sys::cv_sortIdx_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
+pub fn sort_idx(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_sortIdx__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Sorts each row or each column of a matrix.
@@ -3945,8 +4216,10 @@ pub fn sort_idx(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> 
 /// * flags: operation flags, a combination of #SortFlags
 /// ## See also
 /// sortIdx, randShuffle
-pub fn sort(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
-    unsafe { sys::cv_sort_Mat_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), flags) }.into_result()
+pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_sort__InputArray__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Divides a multi-channel array into several single-channel arrays.
@@ -3970,8 +4243,10 @@ pub fn sort(src: &core::Mat, dst: &mut core::Mat, flags: i32) -> Result<()> {
 ///
 /// * m: input multi-channel array.
 /// * mv: output vector of arrays; the arrays themselves are reallocated, if needed.
-pub fn split(m: &core::Mat, mv: &mut types::VectorOfMat) -> Result<()> {
-    unsafe { sys::cv_split_Mat_VectorOfMat(m.as_raw_Mat(), mv.as_raw_VectorOfMat()) }.into_result()
+pub fn split(m: &dyn core::ToInputArray, mv: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(m);
+    output_array_arg!(mv);
+    unsafe { sys::cv_split__InputArray__OutputArray(m.as_raw__InputArray(), mv.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates a square root of array elements.
@@ -3983,8 +4258,10 @@ pub fn split(m: &core::Mat, mv: &mut types::VectorOfMat) -> Result<()> {
 /// ## Parameters
 /// * src: input floating-point array.
 /// * dst: output array of the same size and type as src.
-pub fn sqrt(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sqrt_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_sqrt__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Calculates the per-element difference between two arrays or array and a scalar.
@@ -4031,8 +4308,12 @@ pub fn sqrt(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * dtype: -1
-pub fn subtract(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &core::Mat, dtype: i32) -> Result<()> {
-    unsafe { sys::cv_subtract_Mat_Mat_Mat_Mat_int(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), dtype) }.into_result()
+pub fn subtract(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray, dtype: i32) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    input_array_arg!(mask);
+    unsafe { sys::cv_subtract__InputArray__InputArray__OutputArray__InputArray_int(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray(), mask.as_raw__InputArray(), dtype) }.into_result()
 }
 
 /// Calculates the sum of array elements.
@@ -4043,8 +4324,9 @@ pub fn subtract(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat, mask: &
 /// * src: input array that must have from 1 to 4 channels.
 /// ## See also
 /// countNonZero, mean, meanStdDev, norm, minMaxLoc, reduce
-pub fn sum(src: &core::Mat) -> Result<core::Scalar> {
-    unsafe { sys::cv_sum_Mat(src.as_raw_Mat()) }.into_result()
+pub fn sum(src: &dyn core::ToInputArray) -> Result<core::Scalar> {
+    input_array_arg!(src);
+    unsafe { sys::cv_sum__InputArray(src.as_raw__InputArray()) }.into_result()
 }
 
 /// Swaps two matrices
@@ -4074,8 +4356,9 @@ pub fn tempfile(suffix: &str) -> Result<String> {
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Cmathrm%7Btr%7D%20%28%20%5Ctexttt%7Bmtx%7D%20%29%20%3D%20%20%5Csum%20_i%20%20%5Ctexttt%7Bmtx%7D%20%28i%2Ci%29)
 /// ## Parameters
 /// * mtx: input matrix.
-pub fn trace(mtx: &core::Mat) -> Result<core::Scalar> {
-    unsafe { sys::cv_trace_Mat(mtx.as_raw_Mat()) }.into_result()
+pub fn trace(mtx: &dyn core::ToInputArray) -> Result<core::Scalar> {
+    input_array_arg!(mtx);
+    unsafe { sys::cv_trace__InputArray(mtx.as_raw__InputArray()) }.into_result()
 }
 
 /// Performs the matrix transformation of every array element.
@@ -4103,8 +4386,11 @@ pub fn trace(mtx: &core::Mat) -> Result<core::Scalar> {
 /// * m: transformation 2x2 or 2x3 floating-point matrix.
 /// ## See also
 /// perspectiveTransform, getAffineTransform, estimateAffine2D, warpAffine, warpPerspective
-pub fn transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_transform_Mat_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
+pub fn transform(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, m: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    input_array_arg!(m);
+    unsafe { sys::cv_transform__InputArray__OutputArray__InputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray(), m.as_raw__InputArray()) }.into_result()
 }
 
 /// Transposes a matrix.
@@ -4117,8 +4403,10 @@ pub fn transform(src: &core::Mat, dst: &mut core::Mat, m: &core::Mat) -> Result<
 /// ## Parameters
 /// * src: input array.
 /// * dst: output array of the same type as src.
-pub fn transpose(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_transpose_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn transpose(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_transpose__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Returns string of cv::Mat depth value: CV_8UC3 -> "CV_8UC3" or "<invalid type>"
@@ -4126,7 +4414,7 @@ pub fn type_to_string(_type: i32) -> Result<String> {
     unsafe { sys::cv_typeToString_int(_type) }.into_result().map(crate::templ::receive_string)
 }
 
-pub fn use_open_vx() -> Result<bool> {
+pub fn use_openvx() -> Result<bool> {
     unsafe { sys::cv_useOpenVX() }.into_result()
 }
 
@@ -4137,20 +4425,24 @@ pub fn use_optimized() -> Result<bool> {
     unsafe { sys::cv_useOptimized() }.into_result()
 }
 
-pub fn dump_input_array_of_arrays(argument: &types::VectorOfMat) -> Result<String> {
-    unsafe { sys::cv_utils_dumpInputArrayOfArrays_VectorOfMat(argument.as_raw_VectorOfMat()) }.into_result().map(crate::templ::receive_string_mut)
+pub fn dump_input_array_of_arrays(argument: &dyn core::ToInputArray) -> Result<String> {
+    input_array_arg!(argument);
+    unsafe { sys::cv_utils_dumpInputArrayOfArrays__InputArray(argument.as_raw__InputArray()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn dump_input_array(argument: &core::Mat) -> Result<String> {
-    unsafe { sys::cv_utils_dumpInputArray_Mat(argument.as_raw_Mat()) }.into_result().map(crate::templ::receive_string_mut)
+pub fn dump_input_array(argument: &dyn core::ToInputArray) -> Result<String> {
+    input_array_arg!(argument);
+    unsafe { sys::cv_utils_dumpInputArray__InputArray(argument.as_raw__InputArray()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn dump_input_output_array_of_arrays(argument: &mut types::VectorOfMat) -> Result<String> {
-    unsafe { sys::cv_utils_dumpInputOutputArrayOfArrays_VectorOfMat(argument.as_raw_VectorOfMat()) }.into_result().map(crate::templ::receive_string_mut)
+pub fn dump_input_output_array_of_arrays(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
+    input_output_array_arg!(argument);
+    unsafe { sys::cv_utils_dumpInputOutputArrayOfArrays__InputOutputArray(argument.as_raw__InputOutputArray()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
-pub fn dump_input_output_array(argument: &mut core::Mat) -> Result<String> {
-    unsafe { sys::cv_utils_dumpInputOutputArray_Mat(argument.as_raw_Mat()) }.into_result().map(crate::templ::receive_string_mut)
+pub fn dump_input_output_array(argument: &mut dyn core::ToInputOutputArray) -> Result<String> {
+    input_output_array_arg!(argument);
+    unsafe { sys::cv_utils_dumpInputOutputArray__InputOutputArray(argument.as_raw__InputOutputArray()) }.into_result().map(crate::templ::receive_string_mut)
 }
 
 pub fn get_thread_id() -> Result<i32> {
@@ -4175,8 +4467,9 @@ pub fn set_log_level(log_level: core::LogLevel) -> Result<core::LogLevel> {
     unsafe { sys::cv_utils_logging_setLogLevel_LogLevel(log_level) }.into_result()
 }
 
-pub fn test_async_array(argument: &core::Mat) -> Result<core::AsyncArray> {
-    unsafe { sys::cv_utils_testAsyncArray_Mat(argument.as_raw_Mat()) }.into_result().map(|ptr| core::AsyncArray { ptr })
+pub fn test_async_array(argument: &dyn core::ToInputArray) -> Result<core::AsyncArray> {
+    input_array_arg!(argument);
+    unsafe { sys::cv_utils_testAsyncArray__InputArray(argument.as_raw__InputArray()) }.into_result().map(|ptr| core::AsyncArray { ptr })
 }
 
 pub fn test_async_exception() -> Result<core::AsyncArray> {
@@ -4189,8 +4482,9 @@ pub fn test_async_exception() -> Result<core::AsyncArray> {
 /// * surface: - source VASurfaceID object.
 /// * size: - size of image represented by VASurfaceID object.
 /// * dst: - destination OutputArray.
-pub fn convert_from_va_surface(display: &mut c_void, surface: u32, size: core::Size, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_va_intel_convertFromVASurface_void_X_unsigned_int_Size_Mat(display, surface, size, dst.as_raw_Mat()) }.into_result()
+pub fn convert_from_va_surface(display: &mut c_void, surface: u32, size: core::Size, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    output_array_arg!(dst);
+    unsafe { sys::cv_va_intel_convertFromVASurface_void_X_unsigned_int_Size__OutputArray(display, surface, size, dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts InputArray to VASurfaceID object.
@@ -4199,8 +4493,9 @@ pub fn convert_from_va_surface(display: &mut c_void, surface: u32, size: core::S
 /// * src: - source InputArray.
 /// * surface: - destination VASurfaceID object.
 /// * size: - size of image represented by VASurfaceID object.
-pub fn convert_to_va_surface(display: &mut c_void, src: &core::Mat, surface: u32, size: core::Size) -> Result<()> {
-    unsafe { sys::cv_va_intel_convertToVASurface_void_X_Mat_unsigned_int_Size(display, src.as_raw_Mat(), surface, size) }.into_result()
+pub fn convert_to_va_surface(display: &mut c_void, src: &dyn core::ToInputArray, surface: u32, size: core::Size) -> Result<()> {
+    input_array_arg!(src);
+    unsafe { sys::cv_va_intel_convertToVASurface_void_X__InputArray_unsigned_int_Size(display, src.as_raw__InputArray(), surface, size) }.into_result()
 }
 
 /// Applies vertical concatenation to given matrices.
@@ -4250,8 +4545,11 @@ pub fn convert_to_va_surface(display: &mut c_void, src: &core::Mat, surface: u32
 /// * src1: first input array to be considered for vertical concatenation.
 /// * src2: second input array to be considered for vertical concatenation.
 /// * dst: output array. It has the same number of cols and depth as the src1 and src2, and the sum of rows of the src1 and src2.
-pub fn vconcat_2(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_vconcat_Mat_Mat_Mat(src1.as_raw_Mat(), src2.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    output_array_arg!(dst);
+    unsafe { sys::cv_vconcat__InputArray__InputArray__OutputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Applies vertical concatenation to given matrices.
@@ -4295,8 +4593,10 @@ pub fn vconcat_2(src1: &core::Mat, src2: &core::Mat, dst: &mut core::Mat) -> Res
 /// * src: input array or vector of matrices. all of the matrices must have the same number of cols and the same depth
 /// * dst: output array. It has the same number of cols and depth as the src, and the sum of rows of the src.
 /// same depth.
-pub fn vconcat(src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_vconcat_VectorOfMat_Mat(src.as_raw_VectorOfMat(), dst.as_raw_Mat()) }.into_result()
+pub fn vconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_vconcat__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 // Generating impl for trait cv::Algorithm (trait)
@@ -4388,8 +4688,9 @@ impl AsyncArray {
     ///
     ///
     /// Note: Result or stored exception can be fetched only once.
-    pub fn get(&self, dst: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_AsyncArray_get_const_Mat(self.as_raw_AsyncArray(), dst.as_raw_Mat()) }.into_result()
+    pub fn get(&self, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(dst);
+        unsafe { sys::cv_AsyncArray_get_const__OutputArray(self.as_raw_AsyncArray(), dst.as_raw__OutputArray()) }.into_result()
     }
     
     /// Retrieving the result with timeout
@@ -4402,12 +4703,14 @@ impl AsyncArray {
     ///
     ///
     /// Note: Result or stored exception can be fetched only once.
-    pub fn get_with_timeout(&self, dst: &mut core::Mat, timeout_ns: i64) -> Result<bool> {
-        unsafe { sys::cv_AsyncArray_get_const_Mat_int64(self.as_raw_AsyncArray(), dst.as_raw_Mat(), timeout_ns) }.into_result()
+    pub fn get_with_timeout(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: i64) -> Result<bool> {
+        output_array_arg!(dst);
+        unsafe { sys::cv_AsyncArray_get_const__OutputArray_int64(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns) }.into_result()
     }
     
-    pub fn get_with_timeout_f64(&self, dst: &mut core::Mat, timeout_ns: f64) -> Result<bool> {
-        unsafe { sys::cv_AsyncArray_get_const_Mat_double(self.as_raw_AsyncArray(), dst.as_raw_Mat(), timeout_ns) }.into_result()
+    pub fn get_with_timeout_f64(&self, dst: &mut dyn core::ToOutputArray, timeout_ns: f64) -> Result<bool> {
+        output_array_arg!(dst);
+        unsafe { sys::cv_AsyncArray_get_const__OutputArray_double(self.as_raw_AsyncArray(), dst.as_raw__OutputArray(), timeout_ns) }.into_result()
     }
     
     pub fn wait_for(&self, timeout_ns: i64) -> Result<bool> {
@@ -4776,8 +5079,9 @@ pub trait DownhillSolver: core::MinProblemSolver {
     /// * step: Initial step that will be used in algorithm. Note, that although corresponding setter
     /// accepts column-vectors as well as row-vectors, this method will return a row-vector.
     /// @see DownhillSolver::setInitStep
-    fn get_init_step(&self, step: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_DownhillSolver_getInitStep_const_Mat(self.as_raw_DownhillSolver(), step.as_raw_Mat()) }.into_result()
+    fn get_init_step(&self, step: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(step);
+        unsafe { sys::cv_DownhillSolver_getInitStep_const__OutputArray(self.as_raw_DownhillSolver(), step.as_raw__OutputArray()) }.into_result()
     }
     
     /// Sets the initial step that will be used in downhill simplex algorithm.
@@ -4794,8 +5098,9 @@ pub trait DownhillSolver: core::MinProblemSolver {
     /// ## Parameters
     /// * step: Initial step that will be used in algorithm. Roughly said, it determines the spread
     /// (size in each dimension) of an initial simplex.
-    fn set_init_step(&mut self, step: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_DownhillSolver_setInitStep_Mat(self.as_raw_DownhillSolver(), step.as_raw_Mat()) }.into_result()
+    fn set_init_step(&mut self, step: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(step);
+        unsafe { sys::cv_DownhillSolver_setInitStep__InputArray(self.as_raw_DownhillSolver(), step.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -4823,8 +5128,9 @@ impl dyn DownhillSolver + '_ {
     /// * f: Ptr<MinProblemSolver::Function>()
     /// * init_step: Mat_<double>(1,1,0.0)
     /// * termcrit: TermCriteria(TermCriteria::MAX_ITER+TermCriteria::EPS,5000,0.000001)
-    pub fn create(f: &types::PtrOfFunction, init_step: &core::Mat, termcrit: &core::TermCriteria) -> Result<types::PtrOfDownhillSolver> {
-        unsafe { sys::cv_DownhillSolver_create_PtrOfFunction_Mat_TermCriteria(f.as_raw_PtrOfFunction(), init_step.as_raw_Mat(), termcrit.as_raw_TermCriteria()) }.into_result().map(|ptr| types::PtrOfDownhillSolver { ptr })
+    pub fn create(f: &types::PtrOfFunction, init_step: &dyn core::ToInputArray, termcrit: &core::TermCriteria) -> Result<types::PtrOfDownhillSolver> {
+        input_array_arg!(init_step);
+        unsafe { sys::cv_DownhillSolver_create_PtrOfFunction__InputArray_TermCriteria(f.as_raw_PtrOfFunction(), init_step.as_raw__InputArray(), termcrit.as_raw_TermCriteria()) }.into_result().map(|ptr| types::PtrOfDownhillSolver { ptr })
     }
     
 }
@@ -5036,8 +5342,10 @@ impl LDA {
     ///
     /// ## C++ default parameters
     /// * num_components: 0
-    pub fn new_with_data(src: &types::VectorOfMat, labels: &core::Mat, num_components: i32) -> Result<core::LDA> {
-        unsafe { sys::cv_LDA_LDA_VectorOfMat_Mat_int(src.as_raw_VectorOfMat(), labels.as_raw_Mat(), num_components) }.into_result().map(|ptr| core::LDA { ptr })
+    pub fn new_with_data(src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray, num_components: i32) -> Result<core::LDA> {
+        input_array_arg!(src);
+        input_array_arg!(labels);
+        unsafe { sys::cv_LDA_LDA__InputArray__InputArray_int(src.as_raw__InputArray(), labels.as_raw__InputArray(), num_components) }.into_result().map(|ptr| core::LDA { ptr })
     }
     
     /// Serializes this object to a given filename.
@@ -5053,20 +5361,24 @@ impl LDA {
     }
     
     /// Compute the discriminants for data in src (row aligned) and labels.
-    pub fn compute(&mut self, src: &types::VectorOfMat, labels: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_LDA_compute_VectorOfMat_Mat(self.as_raw_LDA(), src.as_raw_VectorOfMat(), labels.as_raw_Mat()) }.into_result()
+    pub fn compute(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        input_array_arg!(labels);
+        unsafe { sys::cv_LDA_compute__InputArray__InputArray(self.as_raw_LDA(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
     }
     
     /// Projects samples into the LDA subspace.
     /// src may be one or more row aligned samples.
-    pub fn project(&mut self, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_project_Mat(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn project(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(src);
+        unsafe { sys::cv_LDA_project__InputArray(self.as_raw_LDA(), src.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Reconstructs projections from the LDA subspace.
     /// src may be one or more row aligned projections.
-    pub fn reconstruct(&mut self, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_reconstruct_Mat(self.as_raw_LDA(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn reconstruct(&mut self, src: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(src);
+        unsafe { sys::cv_LDA_reconstruct__InputArray(self.as_raw_LDA(), src.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Returns the eigenvectors of this LDA.
@@ -5079,12 +5391,18 @@ impl LDA {
         unsafe { sys::cv_LDA_eigenvalues_const(self.as_raw_LDA()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-    pub fn subspace_project(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_subspaceProject_Mat_Mat_Mat(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn subspace_project(w: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, src: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(w);
+        input_array_arg!(mean);
+        input_array_arg!(src);
+        unsafe { sys::cv_LDA_subspaceProject__InputArray__InputArray__InputArray(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-    pub fn subspace_reconstruct(w: &core::Mat, mean: &core::Mat, src: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_LDA_subspaceReconstruct_Mat_Mat_Mat(w.as_raw_Mat(), mean.as_raw_Mat(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn subspace_reconstruct(w: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, src: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(w);
+        input_array_arg!(mean);
+        input_array_arg!(src);
+        unsafe { sys::cv_LDA_subspaceReconstruct__InputArray__InputArray__InputArray(w.as_raw__InputArray(), mean.as_raw__InputArray(), src.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
 }
@@ -5708,8 +6026,9 @@ impl Mat {
     /// ## Parameters
     /// * m: Destination matrix. If it does not have a proper size or type before the operation, it is
     /// reallocated.
-    pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_Mat_copyTo_const_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
+    pub fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(m);
+        unsafe { sys::cv_Mat_copyTo_const__OutputArray(self.as_raw_Mat(), m.as_raw__OutputArray()) }.into_result()
     }
     
     /// ## Parameters
@@ -5717,8 +6036,10 @@ impl Mat {
     /// reallocated.
     /// * mask: Operation mask of the same size as \*this. Its non-zero elements indicate which matrix
     /// elements need to be copied. The mask has to be of type CV_8U and can have 1 or multiple channels.
-    pub fn copy_to_masked(&self, m: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_Mat_copyTo_const_Mat_Mat(self.as_raw_Mat(), m.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+    pub fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+        output_array_arg!(m);
+        input_array_arg!(mask);
+        unsafe { sys::cv_Mat_copyTo_const__OutputArray__InputArray(self.as_raw_Mat(), m.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
     }
     
     /// Converts an array to another data type with optional scaling.
@@ -5738,8 +6059,9 @@ impl Mat {
     /// ## C++ default parameters
     /// * alpha: 1
     /// * beta: 0
-    pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-        unsafe { sys::cv_Mat_convertTo_const_Mat_int_double_double(self.as_raw_Mat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
+    pub fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+        output_array_arg!(m);
+        unsafe { sys::cv_Mat_convertTo_const__OutputArray_int_double_double(self.as_raw_Mat(), m.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()
     }
     
     /// Provides a functional form of convertTo.
@@ -5765,8 +6087,10 @@ impl Mat {
     ///
     /// ## C++ default parameters
     /// * mask: noArray()
-    pub fn set_to(&mut self, value: &core::Mat, mask: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_setTo_Mat_Mat(self.as_raw_Mat(), value.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(value);
+        input_array_arg!(mask);
+        unsafe { sys::cv_Mat_setTo__InputArray__InputArray(self.as_raw_Mat(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Changes the shape and/or the number of channels of a 2D matrix without copying the data.
@@ -5848,8 +6172,9 @@ impl Mat {
     ///
     /// ## C++ default parameters
     /// * scale: 1
-    pub fn mul(&self, m: &core::Mat, scale: f64) -> Result<core::MatExpr> {
-        unsafe { sys::cv_Mat_mul_const_Mat_double(self.as_raw_Mat(), m.as_raw_Mat(), scale) }.into_result().map(|ptr| core::MatExpr { ptr })
+    pub fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::MatExpr> {
+        input_array_arg!(m);
+        unsafe { sys::cv_Mat_mul_const__InputArray_double(self.as_raw_Mat(), m.as_raw__InputArray(), scale) }.into_result().map(|ptr| core::MatExpr { ptr })
     }
     
     /// Computes a cross-product of two 3-element vectors.
@@ -5859,8 +6184,9 @@ impl Mat {
     /// same shape and type as operands.
     /// ## Parameters
     /// * m: Another cross-product operand.
-    pub fn cross(&self, m: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_Mat_cross_const_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn cross(&self, m: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(m);
+        unsafe { sys::cv_Mat_cross_const__InputArray(self.as_raw_Mat(), m.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// Computes a dot-product of two vectors.
@@ -5871,8 +6197,9 @@ impl Mat {
     /// the dot products from all the channels are summed together.
     /// ## Parameters
     /// * m: another dot-product operand.
-    pub fn dot(&self, m: &core::Mat) -> Result<f64> {
-        unsafe { sys::cv_Mat_dot_const_Mat(self.as_raw_Mat(), m.as_raw_Mat()) }.into_result()
+    pub fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
+        input_array_arg!(m);
+        unsafe { sys::cv_Mat_dot_const__InputArray(self.as_raw_Mat(), m.as_raw__InputArray()) }.into_result()
     }
     
     /// Returns a zero array of the specified size and type.
@@ -7196,8 +7523,9 @@ pub trait MinProblemSolver: core::Algorithm {
     /// minimum.
     /// ## Returns
     /// The value of a function at the point found.
-    fn minimize(&mut self, x: &mut core::Mat) -> Result<f64> {
-        unsafe { sys::cv_MinProblemSolver_minimize_Mat(self.as_raw_MinProblemSolver(), x.as_raw_Mat()) }.into_result()
+    fn minimize(&mut self, x: &mut dyn core::ToInputOutputArray) -> Result<f64> {
+        input_output_array_arg!(x);
+        unsafe { sys::cv_MinProblemSolver_minimize__InputOutputArray(self.as_raw_MinProblemSolver(), x.as_raw__InputOutputArray()) }.into_result()
     }
     
 }
@@ -7433,8 +7761,10 @@ impl PCA {
     ///
     /// ## C++ default parameters
     /// * max_components: 0
-    pub fn new_mat_max(data: &core::Mat, mean: &core::Mat, flags: i32, max_components: i32) -> Result<core::PCA> {
-        unsafe { sys::cv_PCA_PCA_Mat_Mat_int_int(data.as_raw_Mat(), mean.as_raw_Mat(), flags, max_components) }.into_result().map(|ptr| core::PCA { ptr })
+    pub fn new_mat_max(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, max_components: i32) -> Result<core::PCA> {
+        input_array_arg!(data);
+        input_array_arg!(mean);
+        unsafe { sys::cv_PCA_PCA__InputArray__InputArray_int_int(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, max_components) }.into_result().map(|ptr| core::PCA { ptr })
     }
     
     /// ## Parameters
@@ -7446,8 +7776,10 @@ impl PCA {
     /// * retainedVariance: Percentage of variance that PCA should retain.
     /// Using this parameter will let the PCA decided how many components to
     /// retain but it will always keep at least 2.
-    pub fn new_mat_variance(data: &core::Mat, mean: &core::Mat, flags: i32, retained_variance: f64) -> Result<core::PCA> {
-        unsafe { sys::cv_PCA_PCA_Mat_Mat_int_double(data.as_raw_Mat(), mean.as_raw_Mat(), flags, retained_variance) }.into_result().map(|ptr| core::PCA { ptr })
+    pub fn new_mat_variance(data: &dyn core::ToInputArray, mean: &dyn core::ToInputArray, flags: i32, retained_variance: f64) -> Result<core::PCA> {
+        input_array_arg!(data);
+        input_array_arg!(mean);
+        unsafe { sys::cv_PCA_PCA__InputArray__InputArray_int_double(data.as_raw__InputArray(), mean.as_raw__InputArray(), flags, retained_variance) }.into_result().map(|ptr| core::PCA { ptr })
     }
     
     /// Projects vector(s) to the principal component subspace.
@@ -7464,8 +7796,9 @@ impl PCA {
     /// DATA_AS_ROW are specified, then `vec.cols==data.cols`
     /// (vector dimensionality) and `vec.rows` is the number of vectors to
     /// project, and the same is true for the PCA::DATA_AS_COL case.
-    pub fn project(&self, vec: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_PCA_project_const_Mat(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(vec);
+        unsafe { sys::cv_PCA_project_const__InputArray(self.as_raw_PCA(), vec.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -7479,8 +7812,10 @@ impl PCA {
     /// means that `result.cols==vec.cols` and the number of rows match the
     /// number of principal components (for example, `maxComponents` parameter
     /// passed to the constructor).
-    pub fn project_to(&self, vec: &core::Mat, result: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_PCA_project_const_Mat_Mat(self.as_raw_PCA(), vec.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
+    pub fn project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(vec);
+        output_array_arg!(result);
+        unsafe { sys::cv_PCA_project_const__InputArray__OutputArray(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
     }
     
     /// Reconstructs vectors from their PC projections.
@@ -7496,8 +7831,9 @@ impl PCA {
     /// * vec: coordinates of the vectors in the principal component
     /// subspace, the layout and size are the same as of PCA::project output
     /// vectors.
-    pub fn back_project(&self, vec: &core::Mat) -> Result<core::Mat> {
-        unsafe { sys::cv_PCA_backProject_const_Mat(self.as_raw_PCA(), vec.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    pub fn back_project(&self, vec: &dyn core::ToInputArray) -> Result<core::Mat> {
+        input_array_arg!(vec);
+        unsafe { sys::cv_PCA_backProject_const__InputArray(self.as_raw_PCA(), vec.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
     /// ## Parameters
@@ -7506,8 +7842,10 @@ impl PCA {
     /// vectors.
     /// * result: reconstructed vectors; the layout and size are the same as
     /// of PCA::project input vectors.
-    pub fn back_project_to(&self, vec: &core::Mat, result: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_PCA_backProject_const_Mat_Mat(self.as_raw_PCA(), vec.as_raw_Mat(), result.as_raw_Mat()) }.into_result()
+    pub fn back_project_to(&self, vec: &dyn core::ToInputArray, result: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(vec);
+        output_array_arg!(result);
+        unsafe { sys::cv_PCA_backProject_const__InputArray__OutputArray(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -8519,13 +8857,16 @@ impl UMat {
     }
     
     /// copies the matrix content to "m".
-    pub fn copy_to(&self, m: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_UMat_copyTo_const_Mat(self.as_raw_UMat(), m.as_raw_Mat()) }.into_result()
+    pub fn copy_to(&self, m: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(m);
+        unsafe { sys::cv_UMat_copyTo_const__OutputArray(self.as_raw_UMat(), m.as_raw__OutputArray()) }.into_result()
     }
     
     /// copies those matrix elements to "m" that are marked with non-zero mask elements.
-    pub fn copy_to_masked(&self, m: &mut core::Mat, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_UMat_copyTo_const_Mat_Mat(self.as_raw_UMat(), m.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+    pub fn copy_to_masked(&self, m: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+        output_array_arg!(m);
+        input_array_arg!(mask);
+        unsafe { sys::cv_UMat_copyTo_const__OutputArray__InputArray(self.as_raw_UMat(), m.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
     }
     
     /// converts matrix to another datatype with optional scaling. See cvConvertScale.
@@ -8533,8 +8874,9 @@ impl UMat {
     /// ## C++ default parameters
     /// * alpha: 1
     /// * beta: 0
-    pub fn convert_to(&self, m: &mut core::Mat, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
-        unsafe { sys::cv_UMat_convertTo_const_Mat_int_double_double(self.as_raw_UMat(), m.as_raw_Mat(), rtype, alpha, beta) }.into_result()
+    pub fn convert_to(&self, m: &mut dyn core::ToOutputArray, rtype: i32, alpha: f64, beta: f64) -> Result<()> {
+        output_array_arg!(m);
+        unsafe { sys::cv_UMat_convertTo_const__OutputArray_int_double_double(self.as_raw_UMat(), m.as_raw__OutputArray(), rtype, alpha, beta) }.into_result()
     }
     
     ///
@@ -8548,8 +8890,10 @@ impl UMat {
     ///
     /// ## C++ default parameters
     /// * mask: noArray()
-    pub fn set_to(&mut self, value: &core::Mat, mask: &core::Mat) -> Result<core::UMat> {
-        unsafe { sys::cv_UMat_setTo_Mat_Mat(self.as_raw_UMat(), value.as_raw_Mat(), mask.as_raw_Mat()) }.into_result().map(|ptr| core::UMat { ptr })
+    pub fn set_to(&mut self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<core::UMat> {
+        input_array_arg!(value);
+        input_array_arg!(mask);
+        unsafe { sys::cv_UMat_setTo__InputArray__InputArray(self.as_raw_UMat(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
     /// creates alternative matrix header for the same data, with different
@@ -8581,13 +8925,15 @@ impl UMat {
     ///
     /// ## C++ default parameters
     /// * scale: 1
-    pub fn mul(&self, m: &core::Mat, scale: f64) -> Result<core::UMat> {
-        unsafe { sys::cv_UMat_mul_const_Mat_double(self.as_raw_UMat(), m.as_raw_Mat(), scale) }.into_result().map(|ptr| core::UMat { ptr })
+    pub fn mul(&self, m: &dyn core::ToInputArray, scale: f64) -> Result<core::UMat> {
+        input_array_arg!(m);
+        unsafe { sys::cv_UMat_mul_const__InputArray_double(self.as_raw_UMat(), m.as_raw__InputArray(), scale) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
     /// computes dot-product
-    pub fn dot(&self, m: &core::Mat) -> Result<f64> {
-        unsafe { sys::cv_UMat_dot_const_Mat(self.as_raw_UMat(), m.as_raw_Mat()) }.into_result()
+    pub fn dot(&self, m: &dyn core::ToInputArray) -> Result<f64> {
+        input_array_arg!(m);
+        unsafe { sys::cv_UMat_dot_const__InputArray(self.as_raw_UMat(), m.as_raw__InputArray()) }.into_result()
     }
     
     /// Matlab-style matrix initialization
@@ -8815,6 +9161,473 @@ impl UMatData {
     
 }
 
+// Generating impl for trait cv::_InputArray (trait)
+/// This is the proxy class for passing read-only input arrays into OpenCV functions.
+///
+/// It is defined as:
+/// ```ignore
+/// typedef const _InputArray& InputArray;
+/// ```
+///
+/// where _InputArray is a class that can be constructed from `Mat`, `Mat_<T>`, `Matx<T, m, n>`,
+/// `std::vector<T>`, `std::vector<std::vector<T> >`, `std::vector<Mat>`, `std::vector<Mat_<T> >`,
+/// `UMat`, `std::vector<UMat>` or `double`. It can also be constructed from a matrix expression.
+///
+/// Since this is mostly implementation-level class, and its interface may change in future versions, we
+/// do not describe it in details. There are a few key things, though, that should be kept in mind:
+///
+/// *   When you see in the reference manual or in OpenCV source code a function that takes
+/// InputArray, it means that you can actually pass `Mat`, `Matx`, `vector<T>` etc. (see above the
+/// complete list).
+/// *   Optional input arguments: If some of the input arrays may be empty, pass cv::noArray() (or
+/// simply cv::Mat() as you probably did before).
+/// *   The class is designed solely for passing parameters. That is, normally you *should not*
+/// declare class members, local and global variables of this type.
+/// *   If you want to design your own function or a class method that can operate of arrays of
+/// multiple types, you can use InputArray (or OutputArray) for the respective parameters. Inside
+/// a function you should use _InputArray::getMat() method to construct a matrix header for the
+/// array (without copying data). _InputArray::kind() can be used to distinguish Mat from
+/// `vector<>` etc., but normally it is not needed.
+///
+/// Here is how you can use a function that takes InputArray :
+/// ```ignore
+/// std::vector<Point2f> vec;
+/// // points or a circle
+/// for( int i = 0; i < 30; i++ )
+/// vec.push_back(Point2f((float)(100 + 30*cos(i*CV_PI*2/5)),
+/// (float)(100 - 30*sin(i*CV_PI*2/5))));
+/// cv::transform(vec, vec, cv::Matx23f(0.707, -0.707, 10, 0.707, 0.707, 20));
+/// ```
+///
+/// That is, we form an STL vector containing points, and apply in-place affine transformation to the
+/// vector using the 2x3 matrix created inline as `Matx<float, 2, 3>` instance.
+///
+/// Here is how such a function can be implemented (for simplicity, we implement a very specific case of
+/// it, according to the assertion statement inside) :
+/// ```ignore
+/// void myAffineTransform(InputArray _src, OutputArray _dst, InputArray _m)
+/// {
+/// // get Mat headers for input arrays. This is O(1) operation,
+/// // unless _src and/or _m are matrix expressions.
+/// Mat src = _src.getMat(), m = _m.getMat();
+/// CV_Assert( src.type() == CV_32FC2 && m.type() == CV_32F && m.size() == Size(3, 2) );
+///
+/// // [re]create the output array so that it has the proper size and type.
+/// // In case of Mat it calls Mat::create, in case of STL vector it calls vector::resize.
+/// _dst.create(src.size(), src.type());
+/// Mat dst = _dst.getMat();
+///
+/// for( int i = 0; i < src.rows; i++ )
+/// for( int j = 0; j < src.cols; j++ )
+/// {
+/// Point2f pt = src.at<Point2f>(i, j);
+/// dst.at<Point2f>(i, j) = Point2f(m.at<float>(0, 0)*pt.x +
+/// m.at<float>(0, 1)*pt.y +
+/// m.at<float>(0, 2),
+/// m.at<float>(1, 0)*pt.x +
+/// m.at<float>(1, 1)*pt.y +
+/// m.at<float>(1, 2));
+/// }
+/// }
+/// ```
+///
+/// There is another related type, InputArrayOfArrays, which is currently defined as a synonym for
+/// InputArray:
+/// ```ignore
+/// typedef InputArray InputArrayOfArrays;
+/// ```
+///
+/// It denotes function arguments that are either vectors of vectors or vectors of matrices. A separate
+/// synonym is needed to generate Python/Java etc. wrappers properly. At the function implementation
+/// level their use is similar, but _InputArray::getMat(idx) should be used to get header for the
+/// idx-th component of the outer vector and _InputArray::size().area() should be used to find the
+/// number of components (vectors/matrices) of the outer vector.
+///
+/// In general, type support is limited to cv::Mat types. Other types are forbidden.
+/// But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
+/// This data is not intented to be interpreted as an image data, or processed somehow like regular cv::Mat.
+/// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
+/// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
+pub trait _InputArray {
+    #[inline(always)] fn as_raw__InputArray(&self) -> *mut c_void;
+    ///
+    /// ## C++ default parameters
+    /// * idx: -1
+    fn get_mat(&self, idx: i32) -> Result<core::Mat> {
+        unsafe { sys::cv__InputArray_getMat_const_int(self.as_raw__InputArray(), idx) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * idx: -1
+    fn get_mat_(&self, idx: i32) -> Result<core::Mat> {
+        unsafe { sys::cv__InputArray_getMat__const_int(self.as_raw__InputArray(), idx) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * idx: -1
+    fn get_u_mat(&self, idx: i32) -> Result<core::UMat> {
+        unsafe { sys::cv__InputArray_getUMat_const_int(self.as_raw__InputArray(), idx) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    fn get_mat_vector(&self, mv: &mut types::VectorOfMat) -> Result<()> {
+        unsafe { sys::cv__InputArray_getMatVector_const_VectorOfMat(self.as_raw__InputArray(), mv.as_raw_VectorOfMat()) }.into_result()
+    }
+    
+    fn get_u_mat_vector(&self, umv: &mut types::VectorOfUMat) -> Result<()> {
+        unsafe { sys::cv__InputArray_getUMatVector_const_VectorOfUMat(self.as_raw__InputArray(), umv.as_raw_VectorOfUMat()) }.into_result()
+    }
+    
+    fn get_flags(&self) -> Result<i32> {
+        unsafe { sys::cv__InputArray_getFlags_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn get_obj(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv__InputArray_getObj_const(self.as_raw__InputArray()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    fn get_sz(&self) -> Result<core::Size> {
+        unsafe { sys::cv__InputArray_getSz_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn kind(&self) -> Result<i32> {
+        unsafe { sys::cv__InputArray_kind_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn dims(&self, i: i32) -> Result<i32> {
+        unsafe { sys::cv__InputArray_dims_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn cols(&self, i: i32) -> Result<i32> {
+        unsafe { sys::cv__InputArray_cols_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn rows(&self, i: i32) -> Result<i32> {
+        unsafe { sys::cv__InputArray_rows_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn size(&self, i: i32) -> Result<core::Size> {
+        unsafe { sys::cv__InputArray_size_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn sizend(&self, sz: &mut i32, i: i32) -> Result<i32> {
+        unsafe { sys::cv__InputArray_sizend_const_int_X_int(self.as_raw__InputArray(), sz, i) }.into_result()
+    }
+    
+    fn same_size(&self, arr: &dyn core::ToInputArray) -> Result<bool> {
+        input_array_arg!(arr);
+        unsafe { sys::cv__InputArray_sameSize_const__InputArray(self.as_raw__InputArray(), arr.as_raw__InputArray()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn total(&self, i: i32) -> Result<size_t> {
+        unsafe { sys::cv__InputArray_total_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn _type(&self, i: i32) -> Result<i32> {
+        unsafe { sys::cv__InputArray_type_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn depth(&self, i: i32) -> Result<i32> {
+        unsafe { sys::cv__InputArray_depth_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn channels(&self, i: i32) -> Result<i32> {
+        unsafe { sys::cv__InputArray_channels_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn is_continuous(&self, i: i32) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isContinuous_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn is_submatrix(&self, i: i32) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isSubmatrix_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    fn empty(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_empty_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn copy_to(&self, arr: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(arr);
+        unsafe { sys::cv__InputArray_copyTo_const__OutputArray(self.as_raw__InputArray(), arr.as_raw__OutputArray()) }.into_result()
+    }
+    
+    fn copy_to_with_mask(&self, arr: &mut dyn core::ToOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+        output_array_arg!(arr);
+        input_array_arg!(mask);
+        unsafe { sys::cv__InputArray_copyTo_const__OutputArray__InputArray(self.as_raw__InputArray(), arr.as_raw__OutputArray(), mask.as_raw__InputArray()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn offset(&self, i: i32) -> Result<size_t> {
+        unsafe { sys::cv__InputArray_offset_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn step(&self, i: i32) -> Result<size_t> {
+        unsafe { sys::cv__InputArray_step_const_int(self.as_raw__InputArray(), i) }.into_result()
+    }
+    
+    fn is_mat(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isMat_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn is_u_mat(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isUMat_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn is_mat_vector(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isMatVector_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn is_u_mat_vector(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isUMatVector_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn is_matx(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isMatx_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn is_vector(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isVector_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn is_gpu_mat(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isGpuMat_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn is_gpu_mat_vector(&self) -> Result<bool> {
+        unsafe { sys::cv__InputArray_isGpuMatVector_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
+}
+
+// boxed class cv::_InputOutputArray
+pub struct _InputOutputArray {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::_InputOutputArray {
+    fn drop(&mut self) {
+        unsafe { sys::cv__InputOutputArray_delete(self.ptr) };
+    }
+}
+impl core::_InputOutputArray {
+    #[inline(always)] pub fn as_raw__InputOutputArray(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for _InputOutputArray {}
+
+impl core::_InputArray for _InputOutputArray {
+    #[inline(always)] fn as_raw__InputArray(&self) -> *mut c_void { self.ptr }
+}
+
+impl core::_OutputArray for _InputOutputArray {
+    #[inline(always)] fn as_raw__OutputArray(&self) -> *mut c_void { self.ptr }
+}
+
+impl _InputOutputArray {
+
+    pub fn default() -> Result<core::_InputOutputArray> {
+        unsafe { sys::cv__InputOutputArray__InputOutputArray() }.into_result().map(|ptr| core::_InputOutputArray { ptr })
+    }
+    
+    pub fn new(_flags: i32, _obj: &mut c_void) -> Result<core::_InputOutputArray> {
+        unsafe { sys::cv__InputOutputArray__InputOutputArray_int_void_X(_flags, _obj) }.into_result().map(|ptr| core::_InputOutputArray { ptr })
+    }
+    
+    pub fn from_mat(m: &mut core::Mat) -> Result<core::_InputOutputArray> {
+        unsafe { sys::cv__InputOutputArray__InputOutputArray_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::_InputOutputArray { ptr })
+    }
+    
+    pub fn from_mat_vec(vec: &mut types::VectorOfMat) -> Result<core::_InputOutputArray> {
+        unsafe { sys::cv__InputOutputArray__InputOutputArray_VectorOfMat(vec.as_raw_VectorOfMat()) }.into_result().map(|ptr| core::_InputOutputArray { ptr })
+    }
+    
+    pub fn new_1(vec: &mut types::VectorOfbool) -> Result<core::_InputOutputArray> {
+        unsafe { sys::cv__InputOutputArray__InputOutputArray_VectorOfbool(vec.as_raw_VectorOfbool()) }.into_result().map(|ptr| core::_InputOutputArray { ptr })
+    }
+    
+    pub fn from_umat(m: &mut core::UMat) -> Result<core::_InputOutputArray> {
+        unsafe { sys::cv__InputOutputArray__InputOutputArray_UMat(m.as_raw_UMat()) }.into_result().map(|ptr| core::_InputOutputArray { ptr })
+    }
+    
+    pub fn from_umat_vec(vec: &mut types::VectorOfUMat) -> Result<core::_InputOutputArray> {
+        unsafe { sys::cv__InputOutputArray__InputOutputArray_VectorOfUMat(vec.as_raw_VectorOfUMat()) }.into_result().map(|ptr| core::_InputOutputArray { ptr })
+    }
+    
+}
+
+// Generating impl for trait cv::_OutputArray (trait)
+/// This type is very similar to InputArray except that it is used for input/output and output function
+/// parameters.
+///
+/// Just like with InputArray, OpenCV users should not care about OutputArray, they just pass `Mat`,
+/// `vector<T>` etc. to the functions. The same limitation as for `InputArray`: *Do not explicitly
+/// create OutputArray instances* applies here too.
+///
+/// If you want to make your function polymorphic (i.e. accept different arrays as output parameters),
+/// it is also not very difficult. Take the sample above as the reference. Note that
+/// _OutputArray::create() needs to be called before _OutputArray::getMat(). This way you guarantee
+/// that the output array is properly allocated.
+///
+/// Optional output parameters. If you do not need certain output array to be computed and returned to
+/// you, pass cv::noArray(), just like you would in the case of optional input array. At the
+/// implementation level, use _OutputArray::needed() to check if certain output array needs to be
+/// computed or not.
+///
+/// There are several synonyms for OutputArray that are used to assist automatic Python/Java/... wrapper
+/// generators:
+/// ```ignore
+/// typedef OutputArray OutputArrayOfArrays;
+/// typedef OutputArray InputOutputArray;
+/// typedef OutputArray InputOutputArrayOfArrays;
+/// ```
+pub trait _OutputArray: core::_InputArray {
+    #[inline(always)] fn as_raw__OutputArray(&self) -> *mut c_void;
+    fn fixed_size(&self) -> Result<bool> {
+        unsafe { sys::cv__OutputArray_fixedSize_const(self.as_raw__OutputArray()) }.into_result()
+    }
+    
+    fn fixed_type(&self) -> Result<bool> {
+        unsafe { sys::cv__OutputArray_fixedType_const(self.as_raw__OutputArray()) }.into_result()
+    }
+    
+    fn needed(&self) -> Result<bool> {
+        unsafe { sys::cv__OutputArray_needed_const(self.as_raw__OutputArray()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn get_mat_ref(&self, i: i32) -> Result<core::Mat> {
+        unsafe { sys::cv__OutputArray_getMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    fn get_u_mat_ref(&self, i: i32) -> Result<core::UMat> {
+        unsafe { sys::cv__OutputArray_getUMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    /// * allow_transposed: false
+    /// * fixed_depth_mask: 0
+    fn create(&self, sz: core::Size, _type: i32, i: i32, allow_transposed: bool, fixed_depth_mask: i32) -> Result<()> {
+        unsafe { sys::cv__OutputArray_create_const_Size_int_int_bool_int(self.as_raw__OutputArray(), sz, _type, i, allow_transposed, fixed_depth_mask) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    /// * allow_transposed: false
+    /// * fixed_depth_mask: 0
+    fn create_1(&self, rows: i32, cols: i32, _type: i32, i: i32, allow_transposed: bool, fixed_depth_mask: i32) -> Result<()> {
+        unsafe { sys::cv__OutputArray_create_const_int_int_int_int_bool_int(self.as_raw__OutputArray(), rows, cols, _type, i, allow_transposed, fixed_depth_mask) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    /// * allow_transposed: false
+    /// * fixed_depth_mask: 0
+    fn create_2(&self, dims: i32, size: &i32, _type: i32, i: i32, allow_transposed: bool, fixed_depth_mask: i32) -> Result<()> {
+        unsafe { sys::cv__OutputArray_create_const_int_const_int_X_int_int_bool_int(self.as_raw__OutputArray(), dims, size, _type, i, allow_transposed, fixed_depth_mask) }.into_result()
+    }
+    
+    fn create_same_size(&self, arr: &dyn core::ToInputArray, mtype: i32) -> Result<()> {
+        input_array_arg!(arr);
+        unsafe { sys::cv__OutputArray_createSameSize_const__InputArray_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype) }.into_result()
+    }
+    
+    fn release(&self) -> Result<()> {
+        unsafe { sys::cv__OutputArray_release_const(self.as_raw__OutputArray()) }.into_result()
+    }
+    
+    fn clear(&self) -> Result<()> {
+        unsafe { sys::cv__OutputArray_clear_const(self.as_raw__OutputArray()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * mask: _InputArray()
+    fn set_to(&self, value: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(value);
+        input_array_arg!(mask);
+        unsafe { sys::cv__OutputArray_setTo_const__InputArray__InputArray(self.as_raw__OutputArray(), value.as_raw__InputArray(), mask.as_raw__InputArray()) }.into_result()
+    }
+    
+    fn assign(&self, u: &core::UMat) -> Result<()> {
+        unsafe { sys::cv__OutputArray_assign_const_UMat(self.as_raw__OutputArray(), u.as_raw_UMat()) }.into_result()
+    }
+    
+    fn assign_1(&self, m: &core::Mat) -> Result<()> {
+        unsafe { sys::cv__OutputArray_assign_const_Mat(self.as_raw__OutputArray(), m.as_raw_Mat()) }.into_result()
+    }
+    
+    fn assign_2(&self, v: &types::VectorOfUMat) -> Result<()> {
+        unsafe { sys::cv__OutputArray_assign_const_VectorOfUMat(self.as_raw__OutputArray(), v.as_raw_VectorOfUMat()) }.into_result()
+    }
+    
+    fn assign_3(&self, v: &types::VectorOfMat) -> Result<()> {
+        unsafe { sys::cv__OutputArray_assign_const_VectorOfMat(self.as_raw__OutputArray(), v.as_raw_VectorOfMat()) }.into_result()
+    }
+    
+    fn _move(&self, u: &mut core::UMat) -> Result<()> {
+        unsafe { sys::cv__OutputArray_move_const_UMat(self.as_raw__OutputArray(), u.as_raw_UMat()) }.into_result()
+    }
+    
+    fn _move_1(&self, m: &mut core::Mat) -> Result<()> {
+        unsafe { sys::cv__OutputArray_move_const_Mat(self.as_raw__OutputArray(), m.as_raw_Mat()) }.into_result()
+    }
+    
+}
+
 // boxed class cv::detail::CheckContext
 pub struct CheckContext {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
@@ -9037,11 +9850,11 @@ impl Device {
         unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-    pub fn open_cl_c_version(&self) -> Result<String> {
+    pub fn opencl_c_version(&self) -> Result<String> {
         unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
-    pub fn open_cl_version(&self) -> Result<String> {
+    pub fn opencl_version(&self) -> Result<String> {
         unsafe { sys::cv_ocl_Device_OpenCLVersion_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string_mut)
     }
     

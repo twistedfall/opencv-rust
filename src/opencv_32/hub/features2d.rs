@@ -30,6 +30,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const AKAZE_DESCRIPTOR_KAZE: i32 = 3;
 pub const AKAZE_DESCRIPTOR_KAZE_UPRIGHT: i32 = 2;
@@ -114,8 +115,9 @@ pub struct SimpleBlobDetector_Params {
 ///
 /// ## C++ default parameters
 /// * nonmax_suppression: true
-pub fn AGAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-    unsafe { sys::cv_AGAST_Mat_VectorOfKeyPoint_int_bool(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
+pub fn AGAST(image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool) -> Result<()> {
+    input_array_arg!(image);
+    unsafe { sys::cv_AGAST__InputArray_VectorOfKeyPoint_int_bool(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
 }
 
 /// Detects corners using the AGAST algorithm
@@ -135,8 +137,9 @@ pub fn AGAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, thresho
 /// The 32-bit binary tree tables were generated automatically from original code using perl script.
 /// The perl script and examples of tree generation are placed in features2d/doc folder.
 /// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_mair2010_agast) .
-pub fn AGAST_with_type(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<()> {
-    unsafe { sys::cv_AGAST_Mat_VectorOfKeyPoint_int_bool_int(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
+pub fn AGAST_with_type(image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<()> {
+    input_array_arg!(image);
+    unsafe { sys::cv_AGAST__InputArray_VectorOfKeyPoint_int_bool_int(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
 }
 
 /// Detects corners using the FAST algorithm
@@ -163,8 +166,9 @@ pub fn AGAST_with_type(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoin
 ///
 /// ## C++ default parameters
 /// * nonmax_suppression: true
-pub fn FAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool) -> Result<()> {
-    unsafe { sys::cv_FAST_Mat_VectorOfKeyPoint_int_bool(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
+pub fn FAST(image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool) -> Result<()> {
+    input_array_arg!(image);
+    unsafe { sys::cv_FAST__InputArray_VectorOfKeyPoint_int_bool(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression) }.into_result()
 }
 
 /// Detects corners using the FAST algorithm
@@ -186,8 +190,9 @@ pub fn FAST(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, threshol
 /// Note: In Python API, types are given as cv2.FAST_FEATURE_DETECTOR_TYPE_5_8,
 /// cv2.FAST_FEATURE_DETECTOR_TYPE_7_12 and cv2.FAST_FEATURE_DETECTOR_TYPE_9_16. For corner
 /// detection, use cv2.FAST.detect() method.
-pub fn FAST_with_type(image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<()> {
-    unsafe { sys::cv_FAST_Mat_VectorOfKeyPoint_int_bool_int(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
+pub fn FAST_with_type(image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: i32) -> Result<()> {
+    input_array_arg!(image);
+    unsafe { sys::cv_FAST__InputArray_VectorOfKeyPoint_int_bool_int(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
 }
 
 pub fn compute_recall_precision_curve(matches1to2: &types::VectorOfVectorOfDMatch, correct_matches1to2_mask: &types::VectorOfVectorOfuchar, recall_precision_curve: &mut types::VectorOfPoint2f) -> Result<()> {
@@ -214,8 +219,10 @@ pub fn compute_recall_precision_curve(matches1to2: &types::VectorOfVectorOfDMatc
 /// ## C++ default parameters
 /// * color: Scalar::all(-1)
 /// * flags: DrawMatchesFlags::DEFAULT
-pub fn draw_keypoints(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, out_image: &mut core::Mat, color: core::Scalar, flags: i32) -> Result<()> {
-    unsafe { sys::cv_drawKeypoints_Mat_VectorOfKeyPoint_Mat_Scalar_int(image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw_Mat(), color, flags) }.into_result()
+pub fn draw_keypoints(image: &dyn core::ToInputArray, keypoints: &types::VectorOfKeyPoint, out_image: &mut dyn core::ToInputOutputArray, color: core::Scalar, flags: i32) -> Result<()> {
+    input_array_arg!(image);
+    input_output_array_arg!(out_image);
+    unsafe { sys::cv_drawKeypoints__InputArray_VectorOfKeyPoint__InputOutputArray_Scalar_int(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), out_image.as_raw__InputOutputArray(), color, flags) }.into_result()
 }
 
 /// Draws the found matches of keypoints from two images.
@@ -246,8 +253,11 @@ pub fn draw_keypoints(image: &core::Mat, keypoints: &types::VectorOfKeyPoint, ou
 /// * single_point_color: Scalar::all(-1)
 /// * matches_mask: std::vector<char>()
 /// * flags: DrawMatchesFlags::DEFAULT
-pub fn draw_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoint, img2: &core::Mat, keypoints2: &types::VectorOfKeyPoint, matches1to2: &types::VectorOfDMatch, out_img: &mut core::Mat, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &types::VectorOfchar, flags: i32) -> Result<()> {
-    unsafe { sys::cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfDMatch_Mat_Scalar_Scalar_VectorOfchar_int(img1.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw_Mat(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw_Mat(), match_color, single_point_color, matches_mask.as_raw_VectorOfchar(), flags) }.into_result()
+pub fn draw_matches(img1: &dyn core::ToInputArray, keypoints1: &types::VectorOfKeyPoint, img2: &dyn core::ToInputArray, keypoints2: &types::VectorOfKeyPoint, matches1to2: &types::VectorOfDMatch, out_img: &mut dyn core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &types::VectorOfchar, flags: i32) -> Result<()> {
+    input_array_arg!(img1);
+    input_array_arg!(img2);
+    input_output_array_arg!(out_img);
+    unsafe { sys::cv_drawMatches__InputArray_VectorOfKeyPoint__InputArray_VectorOfKeyPoint_VectorOfDMatch__InputOutputArray_Scalar_Scalar_VectorOfchar_int(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfDMatch(), out_img.as_raw__InputOutputArray(), match_color, single_point_color, matches_mask.as_raw_VectorOfchar(), flags) }.into_result()
 }
 
 /// Draws the found matches of keypoints from two images.
@@ -280,8 +290,11 @@ pub fn draw_matches(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoint, img2
 /// * single_point_color: Scalar::all(-1)
 /// * matches_mask: std::vector<std::vector<char> >()
 /// * flags: DrawMatchesFlags::DEFAULT
-pub fn draw_matches_vector(img1: &core::Mat, keypoints1: &types::VectorOfKeyPoint, img2: &core::Mat, keypoints2: &types::VectorOfKeyPoint, matches1to2: &types::VectorOfVectorOfDMatch, out_img: &mut core::Mat, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &types::VectorOfVectorOfchar, flags: i32) -> Result<()> {
-    unsafe { sys::cv_drawMatches_Mat_VectorOfKeyPoint_Mat_VectorOfKeyPoint_VectorOfVectorOfDMatch_Mat_Scalar_Scalar_VectorOfVectorOfchar_int(img1.as_raw_Mat(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw_Mat(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw_Mat(), match_color, single_point_color, matches_mask.as_raw_VectorOfVectorOfchar(), flags) }.into_result()
+pub fn draw_matches_vec(img1: &dyn core::ToInputArray, keypoints1: &types::VectorOfKeyPoint, img2: &dyn core::ToInputArray, keypoints2: &types::VectorOfKeyPoint, matches1to2: &types::VectorOfVectorOfDMatch, out_img: &mut dyn core::ToInputOutputArray, match_color: core::Scalar, single_point_color: core::Scalar, matches_mask: &types::VectorOfVectorOfchar, flags: i32) -> Result<()> {
+    input_array_arg!(img1);
+    input_array_arg!(img2);
+    input_output_array_arg!(out_img);
+    unsafe { sys::cv_drawMatches__InputArray_VectorOfKeyPoint__InputArray_VectorOfKeyPoint_VectorOfVectorOfDMatch__InputOutputArray_Scalar_Scalar_VectorOfVectorOfchar_int(img1.as_raw__InputArray(), keypoints1.as_raw_VectorOfKeyPoint(), img2.as_raw__InputArray(), keypoints2.as_raw_VectorOfKeyPoint(), matches1to2.as_raw_VectorOfVectorOfDMatch(), out_img.as_raw__InputOutputArray(), match_color, single_point_color, matches_mask.as_raw_VectorOfVectorOfchar(), flags) }.into_result()
 }
 
 /// \
@@ -580,8 +593,10 @@ impl BOWImgDescriptorExtractor {
     /// ## C++ default parameters
     /// * point_idxs_of_clusters: 0
     /// * descriptors: 0
-    pub fn compute_desc(&mut self, image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &mut types::VectorOfVectorOfint, descriptors: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_BOWImgDescriptorExtractor_compute_Mat_VectorOfKeyPoint_Mat_VectorOfVectorOfint_Mat(self.as_raw_BOWImgDescriptorExtractor(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint(), descriptors.as_raw_Mat()) }.into_result()
+    pub fn compute_desc(&mut self, image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, img_descriptor: &mut dyn core::ToOutputArray, point_idxs_of_clusters: &mut types::VectorOfVectorOfint, descriptors: &mut core::Mat) -> Result<()> {
+        input_array_arg!(image);
+        output_array_arg!(img_descriptor);
+        unsafe { sys::cv_BOWImgDescriptorExtractor_compute__InputArray_VectorOfKeyPoint__OutputArray_VectorOfVectorOfint_Mat(self.as_raw_BOWImgDescriptorExtractor(), image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint(), descriptors.as_raw_Mat()) }.into_result()
     }
     
     /// ## Parameters
@@ -593,8 +608,10 @@ impl BOWImgDescriptorExtractor {
     ///
     /// ## C++ default parameters
     /// * point_idxs_of_clusters: 0
-    pub fn compute(&mut self, keypoint_descriptors: &core::Mat, img_descriptor: &mut core::Mat, point_idxs_of_clusters: &mut types::VectorOfVectorOfint) -> Result<()> {
-        unsafe { sys::cv_BOWImgDescriptorExtractor_compute_Mat_Mat_VectorOfVectorOfint(self.as_raw_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw_Mat(), img_descriptor.as_raw_Mat(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint()) }.into_result()
+    pub fn compute(&mut self, keypoint_descriptors: &dyn core::ToInputArray, img_descriptor: &mut dyn core::ToOutputArray, point_idxs_of_clusters: &mut types::VectorOfVectorOfint) -> Result<()> {
+        input_array_arg!(keypoint_descriptors);
+        output_array_arg!(img_descriptor);
+        unsafe { sys::cv_BOWImgDescriptorExtractor_compute__InputArray__OutputArray_VectorOfVectorOfint(self.as_raw_BOWImgDescriptorExtractor(), keypoint_descriptors.as_raw__InputArray(), img_descriptor.as_raw__OutputArray(), point_idxs_of_clusters.as_raw_VectorOfVectorOfint()) }.into_result()
     }
     
     pub fn compute2(&mut self, image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, img_descriptor: &mut core::Mat) -> Result<()> {
@@ -798,8 +815,9 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// ## Parameters
     /// * descriptors: Descriptors to add. Each descriptors[i] is a set of descriptors from the same
     /// train image.
-    fn add(&mut self, descriptors: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_DescriptorMatcher_add_VectorOfMat(self.as_raw_DescriptorMatcher(), descriptors.as_raw_VectorOfMat()) }.into_result()
+    fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(descriptors);
+        unsafe { sys::cv_DescriptorMatcher_add__InputArray(self.as_raw_DescriptorMatcher(), descriptors.as_raw__InputArray()) }.into_result()
     }
     
     /// Returns a constant link to the train descriptor collection trainDescCollection .
@@ -851,8 +869,11 @@ pub trait DescriptorMatcher: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * mask: noArray()
-    fn train_matches(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut types::VectorOfDMatch, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_DescriptorMatcher_match_const_Mat_Mat_VectorOfDMatch_Mat(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfDMatch(), mask.as_raw_Mat()) }.into_result()
+    fn train_matches(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut types::VectorOfDMatch, mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(query_descriptors);
+        input_array_arg!(train_descriptors);
+        input_array_arg!(mask);
+        unsafe { sys::cv_DescriptorMatcher_match_const__InputArray__InputArray_VectorOfDMatch__InputArray(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_VectorOfDMatch(), mask.as_raw__InputArray()) }.into_result()
     }
     
     /// Finds the k best matches for each descriptor from a query set.
@@ -877,8 +898,11 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// ## C++ default parameters
     /// * mask: noArray()
     /// * compact_result: false
-    fn knn_train_matches(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut types::VectorOfVectorOfDMatch, k: i32, mask: &core::Mat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_DescriptorMatcher_knnMatch_const_Mat_Mat_VectorOfVectorOfDMatch_int_Mat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), k, mask.as_raw_Mat(), compact_result) }.into_result()
+    fn knn_train_matches(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut types::VectorOfVectorOfDMatch, k: i32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
+        input_array_arg!(query_descriptors);
+        input_array_arg!(train_descriptors);
+        input_array_arg!(mask);
+        unsafe { sys::cv_DescriptorMatcher_knnMatch_const__InputArray__InputArray_VectorOfVectorOfDMatch_int__InputArray_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_VectorOfVectorOfDMatch(), k, mask.as_raw__InputArray(), compact_result) }.into_result()
     }
     
     /// For each query descriptor, finds the training descriptors not farther than the specified distance.
@@ -904,8 +928,11 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// ## C++ default parameters
     /// * mask: noArray()
     /// * compact_result: false
-    fn train_radius_matches(&self, query_descriptors: &core::Mat, train_descriptors: &core::Mat, matches: &mut types::VectorOfVectorOfDMatch, max_distance: f32, mask: &core::Mat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_DescriptorMatcher_radiusMatch_const_Mat_Mat_VectorOfVectorOfDMatch_float_Mat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), train_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, mask.as_raw_Mat(), compact_result) }.into_result()
+    fn train_radius_matches(&self, query_descriptors: &dyn core::ToInputArray, train_descriptors: &dyn core::ToInputArray, matches: &mut types::VectorOfVectorOfDMatch, max_distance: f32, mask: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
+        input_array_arg!(query_descriptors);
+        input_array_arg!(train_descriptors);
+        input_array_arg!(mask);
+        unsafe { sys::cv_DescriptorMatcher_radiusMatch_const__InputArray__InputArray_VectorOfVectorOfDMatch_float__InputArray_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), train_descriptors.as_raw__InputArray(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, mask.as_raw__InputArray(), compact_result) }.into_result()
     }
     
     /// ## Parameters
@@ -917,8 +944,10 @@ pub trait DescriptorMatcher: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * masks: noArray()
-    fn matches(&mut self, query_descriptors: &core::Mat, matches: &mut types::VectorOfDMatch, masks: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_DescriptorMatcher_match_Mat_VectorOfDMatch_VectorOfMat(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfDMatch(), masks.as_raw_VectorOfMat()) }.into_result()
+    fn matches(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut types::VectorOfDMatch, masks: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(query_descriptors);
+        input_array_arg!(masks);
+        unsafe { sys::cv_DescriptorMatcher_match__InputArray_VectorOfDMatch__InputArray(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_VectorOfDMatch(), masks.as_raw__InputArray()) }.into_result()
     }
     
     /// ## Parameters
@@ -935,8 +964,10 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// ## C++ default parameters
     /// * masks: noArray()
     /// * compact_result: false
-    fn knn_matches(&mut self, query_descriptors: &core::Mat, matches: &mut types::VectorOfVectorOfDMatch, k: i32, masks: &types::VectorOfMat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_DescriptorMatcher_knnMatch_Mat_VectorOfVectorOfDMatch_int_VectorOfMat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), k, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
+    fn knn_matches(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut types::VectorOfVectorOfDMatch, k: i32, masks: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
+        input_array_arg!(query_descriptors);
+        input_array_arg!(masks);
+        unsafe { sys::cv_DescriptorMatcher_knnMatch__InputArray_VectorOfVectorOfDMatch_int__InputArray_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_VectorOfVectorOfDMatch(), k, masks.as_raw__InputArray(), compact_result) }.into_result()
     }
     
     /// ## Parameters
@@ -954,8 +985,10 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// ## C++ default parameters
     /// * masks: noArray()
     /// * compact_result: false
-    fn radius_matches(&mut self, query_descriptors: &core::Mat, matches: &mut types::VectorOfVectorOfDMatch, max_distance: f32, masks: &types::VectorOfMat, compact_result: bool) -> Result<()> {
-        unsafe { sys::cv_DescriptorMatcher_radiusMatch_Mat_VectorOfVectorOfDMatch_float_VectorOfMat_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw_Mat(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, masks.as_raw_VectorOfMat(), compact_result) }.into_result()
+    fn radius_matches(&mut self, query_descriptors: &dyn core::ToInputArray, matches: &mut types::VectorOfVectorOfDMatch, max_distance: f32, masks: &dyn core::ToInputArray, compact_result: bool) -> Result<()> {
+        input_array_arg!(query_descriptors);
+        input_array_arg!(masks);
+        unsafe { sys::cv_DescriptorMatcher_radiusMatch__InputArray_VectorOfVectorOfDMatch_float__InputArray_bool(self.as_raw_DescriptorMatcher(), query_descriptors.as_raw__InputArray(), matches.as_raw_VectorOfVectorOfDMatch(), max_distance, masks.as_raw__InputArray(), compact_result) }.into_result()
     }
     
     fn write(&self, file_name: &str) -> Result<()> {
@@ -1065,8 +1098,10 @@ pub trait Feature2D: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * mask: noArray()
-    fn detect(&mut self, image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_Feature2D_detect_Mat_VectorOfKeyPoint_Mat(self.as_raw_Feature2D(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), mask.as_raw_Mat()) }.into_result()
+    fn detect(&mut self, image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(image);
+        input_array_arg!(mask);
+        unsafe { sys::cv_Feature2D_detect__InputArray_VectorOfKeyPoint__InputArray(self.as_raw_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), mask.as_raw__InputArray()) }.into_result()
     }
     
     /// ## Parameters
@@ -1078,8 +1113,10 @@ pub trait Feature2D: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * masks: noArray()
-    fn detect_multiple(&mut self, images: &types::VectorOfMat, keypoints: &mut types::VectorOfVectorOfKeyPoint, masks: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_Feature2D_detect_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat(self.as_raw_Feature2D(), images.as_raw_VectorOfMat(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), masks.as_raw_VectorOfMat()) }.into_result()
+    fn detect_multiple(&mut self, images: &dyn core::ToInputArray, keypoints: &mut types::VectorOfVectorOfKeyPoint, masks: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(images);
+        input_array_arg!(masks);
+        unsafe { sys::cv_Feature2D_detect__InputArray_VectorOfVectorOfKeyPoint__InputArray(self.as_raw_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), masks.as_raw__InputArray()) }.into_result()
     }
     
     /// Computes the descriptors for a set of keypoints detected in an image (first variant) or image set
@@ -1093,8 +1130,10 @@ pub trait Feature2D: core::Algorithm {
     /// * descriptors: Computed descriptors. In the second variant of the method descriptors[i] are
     /// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
     /// descriptor for keypoint j-th keypoint.
-    fn compute(&mut self, image: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, descriptors: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_Feature2D_compute_Mat_VectorOfKeyPoint_Mat(self.as_raw_Feature2D(), image.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw_Mat()) }.into_result()
+    fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(image);
+        output_array_arg!(descriptors);
+        unsafe { sys::cv_Feature2D_compute__InputArray_VectorOfKeyPoint__OutputArray(self.as_raw_Feature2D(), image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
     }
     
     /// ## Parameters
@@ -1105,16 +1144,21 @@ pub trait Feature2D: core::Algorithm {
     /// * descriptors: Computed descriptors. In the second variant of the method descriptors[i] are
     /// descriptors computed for a keypoints[i]. Row j is the keypoints (or keypoints[i]) is the
     /// descriptor for keypoint j-th keypoint.
-    fn compute_multiple(&mut self, images: &types::VectorOfMat, keypoints: &mut types::VectorOfVectorOfKeyPoint, descriptors: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_Feature2D_compute_VectorOfMat_VectorOfVectorOfKeyPoint_VectorOfMat(self.as_raw_Feature2D(), images.as_raw_VectorOfMat(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), descriptors.as_raw_VectorOfMat()) }.into_result()
+    fn compute_multiple(&mut self, images: &dyn core::ToInputArray, keypoints: &mut types::VectorOfVectorOfKeyPoint, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(images);
+        output_array_arg!(descriptors);
+        unsafe { sys::cv_Feature2D_compute__InputArray_VectorOfVectorOfKeyPoint__OutputArray(self.as_raw_Feature2D(), images.as_raw__InputArray(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
     }
     
     /// Detects keypoints and computes the descriptors
     ///
     /// ## C++ default parameters
     /// * use_provided_keypoints: false
-    fn detect_and_compute(&mut self, image: &core::Mat, mask: &core::Mat, keypoints: &mut types::VectorOfKeyPoint, descriptors: &mut core::Mat, use_provided_keypoints: bool) -> Result<()> {
-        unsafe { sys::cv_Feature2D_detectAndCompute_Mat_Mat_VectorOfKeyPoint_Mat_bool(self.as_raw_Feature2D(), image.as_raw_Mat(), mask.as_raw_Mat(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw_Mat(), use_provided_keypoints) }.into_result()
+    fn detect_and_compute(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, descriptors: &mut dyn core::ToOutputArray, use_provided_keypoints: bool) -> Result<()> {
+        input_array_arg!(image);
+        input_array_arg!(mask);
+        output_array_arg!(descriptors);
+        unsafe { sys::cv_Feature2D_detectAndCompute__InputArray__InputArray_VectorOfKeyPoint__OutputArray_bool(self.as_raw_Feature2D(), image.as_raw__InputArray(), mask.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw__OutputArray(), use_provided_keypoints) }.into_result()
     }
     
     fn descriptor_size(&self) -> Result<i32> {
@@ -1182,8 +1226,9 @@ impl crate::features2d::DescriptorMatcher for FlannBasedMatcher {
 
 impl FlannBasedMatcher {
 
-    pub fn add(&mut self, descriptors: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_FlannBasedMatcher_add_VectorOfMat(self.as_raw_FlannBasedMatcher(), descriptors.as_raw_VectorOfMat()) }.into_result()
+    pub fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(descriptors);
+        unsafe { sys::cv_FlannBasedMatcher_add__InputArray(self.as_raw_FlannBasedMatcher(), descriptors.as_raw__InputArray()) }.into_result()
     }
     
     pub fn clear(&mut self) -> Result<()> {
@@ -1445,8 +1490,9 @@ pub trait MSER: crate::features2d::Feature2D {
     /// * image: input image (8UC1, 8UC3 or 8UC4, must be greater or equal than 3x3)
     /// * msers: resulting list of point sets
     /// * bboxes: resulting bounding boxes
-    fn detect_regions(&mut self, image: &core::Mat, msers: &mut types::VectorOfVectorOfPoint, bboxes: &mut types::VectorOfRect) -> Result<()> {
-        unsafe { sys::cv_MSER_detectRegions_Mat_VectorOfVectorOfPoint_VectorOfRect(self.as_raw_MSER(), image.as_raw_Mat(), msers.as_raw_VectorOfVectorOfPoint(), bboxes.as_raw_VectorOfRect()) }.into_result()
+    fn detect_regions(&mut self, image: &dyn core::ToInputArray, msers: &mut types::VectorOfVectorOfPoint, bboxes: &mut types::VectorOfRect) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_MSER_detectRegions__InputArray_VectorOfVectorOfPoint_VectorOfRect(self.as_raw_MSER(), image.as_raw__InputArray(), msers.as_raw_VectorOfVectorOfPoint(), bboxes.as_raw_VectorOfRect()) }.into_result()
     }
     
     fn set_delta(&mut self, delta: i32) -> Result<()> {

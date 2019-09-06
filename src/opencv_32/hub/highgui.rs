@@ -117,6 +117,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// indicates that ALT Key is pressed.
 pub const EVENT_FLAG_ALTKEY: i32 = 32;
@@ -577,9 +578,10 @@ pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 /// ## Parameters
 /// * winname: Name of the window.
 /// * mat: Image to be shown.
-pub fn imshow(winname: &str, mat: &core::Mat) -> Result<()> {
+pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
     string_arg!(winname);
-    unsafe { sys::cv_imshow_String_Mat(winname.as_ptr(), mat.as_raw_Mat()) }.into_result()
+    input_array_arg!(mat);
+    unsafe { sys::cv_imshow_String__InputArray(winname.as_ptr(), mat.as_raw__InputArray()) }.into_result()
 }
 
 /// Loads parameters of the specified window.
@@ -690,7 +692,7 @@ pub fn set_mouse_callback(winname: &str, on_mouse: Option<Box<crate::highgui::Mo
 ///
 /// ## Parameters
 /// * winname: Name of the window.
-pub fn set_open_gl_context(winname: &str) -> Result<()> {
+pub fn set_opengl_context(winname: &str) -> Result<()> {
     string_arg!(winname);
     unsafe { sys::cv_setOpenGlContext_String(winname.as_ptr()) }.into_result()
 }
@@ -739,10 +741,10 @@ pub fn set_open_gl_context(winname: &str) -> Result<()> {
 ///
 /// ## C++ default parameters
 /// * userdata: 0
-pub fn set_open_gl_draw_callback(winname: &str, on_open_gl_draw: Option<Box<crate::highgui::OpenGlDrawCallback>>) -> Result<()> {
+pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: Option<Box<crate::highgui::OpenGlDrawCallback>>) -> Result<()> {
     string_arg!(winname);
-    callback_arg!(on_open_gl_draw(userdata: *mut c_void) via userdata => ());
-    unsafe { sys::cv_setOpenGlDrawCallback_String_OpenGlDrawCallback_void_X(winname.as_ptr(), on_open_gl_draw, userdata) }.into_result()
+    callback_arg!(on_opengl_draw(userdata: *mut c_void) via userdata => ());
+    unsafe { sys::cv_setOpenGlDrawCallback_String_OpenGlDrawCallback_void_X(winname.as_ptr(), on_opengl_draw, userdata) }.into_result()
 }
 
 /// Sets the trackbar maximum position.

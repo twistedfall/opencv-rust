@@ -16,6 +16,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 
 // Generating impl for trait cv::phase_unwrapping::HistogramPhaseUnwrapping (trait)
@@ -35,8 +36,9 @@ pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
     ///
     /// ## Parameters
     /// * reliabilityMap: Image where the reliability map is stored.
-    fn get_inverse_reliability_map(&mut self, reliability_map: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_Mat(self.as_raw_HistogramPhaseUnwrapping(), reliability_map.as_raw_Mat()) }.into_result()
+    fn get_inverse_reliability_map(&mut self, reliability_map: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(reliability_map);
+        unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap__OutputArray(self.as_raw_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -105,8 +107,11 @@ pub trait PhaseUnwrapping: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * shadow_mask: noArray()
-    fn unwrap_phase_map(&mut self, wrapped_phase_map: &core::Mat, unwrapped_phase_map: &mut core::Mat, shadow_mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_Mat_Mat_Mat(self.as_raw_PhaseUnwrapping(), wrapped_phase_map.as_raw_Mat(), unwrapped_phase_map.as_raw_Mat(), shadow_mask.as_raw_Mat()) }.into_result()
+    fn unwrap_phase_map(&mut self, wrapped_phase_map: &dyn core::ToInputArray, unwrapped_phase_map: &mut dyn core::ToOutputArray, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(wrapped_phase_map);
+        output_array_arg!(unwrapped_phase_map);
+        input_array_arg!(shadow_mask);
+        unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap__InputArray__OutputArray__InputArray(self.as_raw_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()
     }
     
 }

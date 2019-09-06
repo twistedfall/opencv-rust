@@ -14,6 +14,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// Android - not used
 pub const CAP_ANDROID: i32 = 1000;
@@ -895,8 +896,9 @@ impl VideoCapture {
     ///
     /// ## C++ default parameters
     /// * flag: 0
-    pub fn retrieve(&mut self, image: &mut core::Mat, flag: i32) -> Result<bool> {
-        unsafe { sys::cv_VideoCapture_retrieve_Mat_int(self.as_raw_VideoCapture(), image.as_raw_Mat(), flag) }.into_result()
+    pub fn retrieve(&mut self, image: &mut dyn core::ToOutputArray, flag: i32) -> Result<bool> {
+        output_array_arg!(image);
+        unsafe { sys::cv_VideoCapture_retrieve__OutputArray_int(self.as_raw_VideoCapture(), image.as_raw__OutputArray(), flag) }.into_result()
     }
     
     /// Grabs, decodes and returns the next video frame.
@@ -915,8 +917,9 @@ impl VideoCapture {
     /// Note: In @ref videoio_c "C API", functions cvRetrieveFrame() and cv.RetrieveFrame() return image stored inside the video
     /// capturing structure. It is not allowed to modify or release the image! You can copy the frame using
     /// cvCloneImage and then do whatever you want with the copy.
-    pub fn read(&mut self, image: &mut core::Mat) -> Result<bool> {
-        unsafe { sys::cv_VideoCapture_read_Mat(self.as_raw_VideoCapture(), image.as_raw_Mat()) }.into_result()
+    pub fn read(&mut self, image: &mut dyn core::ToOutputArray) -> Result<bool> {
+        output_array_arg!(image);
+        unsafe { sys::cv_VideoCapture_read__OutputArray(self.as_raw_VideoCapture(), image.as_raw__OutputArray()) }.into_result()
     }
     
     /// Sets a property in the VideoCapture.
@@ -1095,8 +1098,9 @@ impl VideoWriter {
     ///
     /// The function/method writes the specified image to video file. It must have the same size as has
     /// been specified when opening the video writer.
-    pub fn write(&mut self, image: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_VideoWriter_write_Mat(self.as_raw_VideoWriter(), image.as_raw_Mat()) }.into_result()
+    pub fn write(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_VideoWriter_write__InputArray(self.as_raw_VideoWriter(), image.as_raw__InputArray()) }.into_result()
     }
     
     /// Sets a property in the VideoWriter.

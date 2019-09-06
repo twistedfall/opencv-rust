@@ -1,6 +1,6 @@
 use std::os::raw::{c_char, c_void};
 use libc::size_t;
-use crate::{core, types};
+use crate::{core, types, sys, Result};
 
 pub struct PtrOfAKAZE {
     pub(crate) ptr: *mut c_void
@@ -4754,7 +4754,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<cv::DMatch>*", index as "size_t"] {
@@ -4765,7 +4765,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -4797,7 +4797,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<cv::DMatch>*", index as "size_t", val as "cv::DMatch"] {
@@ -4807,7 +4807,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "const std::vector<cv::DMatch>*", index as "size_t"] -> crate::sys::cv_return_value_DMatch as "cv_return_value_DMatch" {
             try {
@@ -4825,7 +4825,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<cv::DMatch>*", index as "size_t", val as "cv::DMatch"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -4940,7 +4940,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfDetectionROI();
         cpp!(unsafe [vec as "std::vector<cv::DetectionROI>*", index as "size_t"] {
@@ -4951,7 +4951,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -4984,7 +4984,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfDetectionROI();
         let val = val.as_raw_DetectionROI();
@@ -4995,7 +4995,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfDetectionROI();
         cpp!(unsafe [vec as "const std::vector<cv::DetectionROI>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -5013,7 +5013,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfDetectionROI();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::DetectionROI>*", index as "size_t", val as "cv::DetectionROI*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -5130,7 +5130,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfExtObject();
         cpp!(unsafe [vec as "std::vector<cv::DetectionBasedTracker::ExtObject>*", index as "size_t"] {
@@ -5141,7 +5141,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -5174,7 +5174,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfExtObject();
         let val = val.as_raw_DetectionBasedTracker_ExtObject();
@@ -5185,7 +5185,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfExtObject();
         cpp!(unsafe [vec as "const std::vector<cv::DetectionBasedTracker::ExtObject>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -5203,7 +5203,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfExtObject();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::DetectionBasedTracker::ExtObject>*", index as "size_t", val as "cv::DetectionBasedTracker::ExtObject*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -5333,7 +5333,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfKeyLine();
         cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index as "size_t"] {
@@ -5344,7 +5344,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -5376,7 +5376,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfKeyLine();
         cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index as "size_t", val as "cv::line_descriptor::KeyLine"] {
@@ -5386,7 +5386,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfKeyLine();
         cpp!(unsafe [vec as "const std::vector<cv::line_descriptor::KeyLine>*", index as "size_t"] -> crate::sys::cv_return_value_KeyLine as "cv_return_value_KeyLine" {
             try {
@@ -5404,7 +5404,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfKeyLine();
         cpp!(unsafe [vec as "std::vector<cv::line_descriptor::KeyLine>*", index as "size_t", val as "cv::line_descriptor::KeyLine"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -5532,7 +5532,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*", index as "size_t"] {
@@ -5543,7 +5543,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -5575,7 +5575,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*", index as "size_t", val as "cv::KeyPoint"] {
@@ -5585,7 +5585,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "const std::vector<cv::KeyPoint>*", index as "size_t"] -> crate::sys::cv_return_value_KeyPoint as "cv_return_value_KeyPoint" {
             try {
@@ -5603,7 +5603,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<cv::KeyPoint>*", index as "size_t", val as "cv::KeyPoint"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -5718,7 +5718,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfMat();
         cpp!(unsafe [vec as "std::vector<cv::Mat>*", index as "size_t"] {
@@ -5729,7 +5729,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -5762,7 +5762,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfMat();
         let val = val.as_raw_Mat();
@@ -5773,7 +5773,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfMat();
         cpp!(unsafe [vec as "const std::vector<cv::Mat>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -5791,7 +5791,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfMat();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::Mat>*", index as "size_t", val as "cv::Mat*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -5908,7 +5908,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfNode();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Node>*", index as "size_t"] {
@@ -5919,7 +5919,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -5952,7 +5952,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfNode();
         let val = val.as_raw_DTrees_Node();
@@ -5963,7 +5963,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfNode();
         cpp!(unsafe [vec as "const std::vector<cv::ml::DTrees::Node>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -5981,7 +5981,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfNode();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Node>*", index as "size_t", val as "cv::ml::DTrees::Node*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -6098,7 +6098,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfObjectDetection();
         cpp!(unsafe [vec as "std::vector<cv::dpm::DPMDetector::ObjectDetection>*", index as "size_t"] {
@@ -6109,7 +6109,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -6142,7 +6142,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfObjectDetection();
         let val = val.as_raw_DPMDetector_ObjectDetection();
@@ -6153,7 +6153,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfObjectDetection();
         cpp!(unsafe [vec as "const std::vector<cv::dpm::DPMDetector::ObjectDetection>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -6171,7 +6171,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfObjectDetection();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::dpm::DPMDetector::ObjectDetection>*", index as "size_t", val as "cv::dpm::DPMDetector::ObjectDetection*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -6288,7 +6288,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPlatformInfo {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPlatformInfo();
         cpp!(unsafe [vec as "std::vector<cv::ocl::PlatformInfo>*", index as "size_t"] {
@@ -6299,7 +6299,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPlatformInfo {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -6332,7 +6332,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPlatformInfo {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPlatformInfo();
         let val = val.as_raw_PlatformInfo();
@@ -6343,7 +6343,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPlatformInfo {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfPlatformInfo();
         cpp!(unsafe [vec as "const std::vector<cv::ocl::PlatformInfo>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -6361,7 +6361,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPlatformInfo {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfPlatformInfo();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::ocl::PlatformInfo>*", index as "size_t", val as "cv::ocl::PlatformInfo*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -6491,7 +6491,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<cv::Point>*", index as "size_t"] {
@@ -6502,7 +6502,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -6534,7 +6534,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<cv::Point>*", index as "size_t", val as "cv::Point"] {
@@ -6544,7 +6544,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "const std::vector<PointWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_PointWrapper as "cv_return_value_PointWrapper" {
             try {
@@ -6562,7 +6562,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfPoint();
         cpp!(unsafe [vec as "std::vector<cv::Point>*", index as "size_t", val as "cv::Point"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -6582,6 +6582,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
 }
 
 unsafe impl Send for VectorOfPoint {}
+
+impl core::ToInputArray for VectorOfPoint {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfPoint();
+        cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfPoint {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfPoint();
+        cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfPoint {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfPoint();
+        cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfPoint2d {
     pub(crate) ptr: *mut c_void
@@ -6690,7 +6726,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [vec as "std::vector<cv::Point2d>*", index as "size_t"] {
@@ -6701,7 +6737,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -6733,7 +6769,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [vec as "std::vector<cv::Point2d>*", index as "size_t", val as "cv::Point2d"] {
@@ -6743,7 +6779,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [vec as "const std::vector<Point2dWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Point2dWrapper as "cv_return_value_Point2dWrapper" {
             try {
@@ -6761,7 +6797,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [vec as "std::vector<cv::Point2d>*", index as "size_t", val as "cv::Point2d"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -6781,6 +6817,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
 }
 
 unsafe impl Send for VectorOfPoint2d {}
+
+impl core::ToInputArray for VectorOfPoint2d {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfPoint2d();
+        cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfPoint2d {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfPoint2d();
+        cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfPoint2d {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfPoint2d();
+        cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfPoint2f {
     pub(crate) ptr: *mut c_void
@@ -6889,7 +6961,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<cv::Point2f>*", index as "size_t"] {
@@ -6900,7 +6972,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -6932,7 +7004,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<cv::Point2f>*", index as "size_t", val as "cv::Point2f"] {
@@ -6942,7 +7014,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "const std::vector<Point2fWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Point2fWrapper as "cv_return_value_Point2fWrapper" {
             try {
@@ -6960,7 +7032,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<cv::Point2f>*", index as "size_t", val as "cv::Point2f"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -6980,6 +7052,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
 }
 
 unsafe impl Send for VectorOfPoint2f {}
+
+impl core::ToInputArray for VectorOfPoint2f {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfPoint2f();
+        cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfPoint2f {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfPoint2f();
+        cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfPoint2f {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfPoint2f();
+        cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfPtrOfBackendWrapper {
     pub(crate) ptr: *mut c_void
@@ -7075,7 +7183,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPtrOfBackendWrapper();
         cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendWrapper>>*", index as "size_t"] {
@@ -7086,7 +7194,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -7119,7 +7227,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPtrOfBackendWrapper();
         let val = val.as_raw_PtrOfBackendWrapper();
@@ -7130,7 +7238,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfPtrOfBackendWrapper();
         cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::BackendWrapper>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -7148,7 +7256,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfPtrOfBackendWrapper();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::BackendWrapper>>*", index as "size_t", val as "Ptr<cv::dnn::BackendWrapper>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -7265,7 +7373,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfLayer {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfPtrOfLayer();
         cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t"] {
@@ -7276,7 +7384,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfLayer {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -7309,7 +7417,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfLayer {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfPtrOfLayer();
         let val = val.as_raw_PtrOfLayer();
@@ -7320,7 +7428,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfLayer {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfPtrOfLayer();
         cpp!(unsafe [vec as "const std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -7338,7 +7446,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfLayer {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfPtrOfLayer();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<Ptr<cv::dnn::Layer>>*", index as "size_t", val as "Ptr<cv::dnn::Layer>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -7455,7 +7563,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRange();
         cpp!(unsafe [vec as "std::vector<cv::Range>*", index as "size_t"] {
@@ -7466,7 +7574,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -7499,7 +7607,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRange();
         let val = val.as_raw_Range();
@@ -7510,7 +7618,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfRange();
         cpp!(unsafe [vec as "const std::vector<cv::Range>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -7528,7 +7636,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfRange();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::Range>*", index as "size_t", val as "cv::Range*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -7658,7 +7766,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<cv::Rect>*", index as "size_t"] {
@@ -7669,7 +7777,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -7701,7 +7809,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<cv::Rect>*", index as "size_t", val as "cv::Rect"] {
@@ -7711,7 +7819,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "const std::vector<RectWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_RectWrapper as "cv_return_value_RectWrapper" {
             try {
@@ -7729,7 +7837,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfRect();
         cpp!(unsafe [vec as "std::vector<cv::Rect>*", index as "size_t", val as "cv::Rect"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -7749,6 +7857,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
 }
 
 unsafe impl Send for VectorOfRect {}
+
+impl core::ToInputArray for VectorOfRect {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfRect();
+        cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfRect {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfRect();
+        cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfRect {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfRect();
+        cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfRect2d {
     pub(crate) ptr: *mut c_void
@@ -7857,7 +8001,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [vec as "std::vector<cv::Rect2d>*", index as "size_t"] {
@@ -7868,7 +8012,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -7900,7 +8044,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [vec as "std::vector<cv::Rect2d>*", index as "size_t", val as "cv::Rect2d"] {
@@ -7910,7 +8054,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [vec as "const std::vector<Rect2dWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Rect2dWrapper as "cv_return_value_Rect2dWrapper" {
             try {
@@ -7928,7 +8072,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [vec as "std::vector<cv::Rect2d>*", index as "size_t", val as "cv::Rect2d"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -7948,6 +8092,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
 }
 
 unsafe impl Send for VectorOfRect2d {}
+
+impl core::ToInputArray for VectorOfRect2d {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfRect2d();
+        cpp!(unsafe [me as "std::vector<cv::Rect2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfRect2d {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfRect2d();
+        cpp!(unsafe [me as "std::vector<cv::Rect2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfRect2d {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfRect2d();
+        cpp!(unsafe [me as "std::vector<cv::Rect2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfRotatedRect {
     pub(crate) ptr: *mut c_void
@@ -8043,7 +8223,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfRotatedRect();
         cpp!(unsafe [vec as "std::vector<cv::RotatedRect>*", index as "size_t"] {
@@ -8054,7 +8234,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -8087,7 +8267,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfRotatedRect();
         let val = val.as_raw_RotatedRect();
@@ -8098,7 +8278,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfRotatedRect();
         cpp!(unsafe [vec as "const std::vector<cv::RotatedRect>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -8116,7 +8296,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfRotatedRect();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::RotatedRect>*", index as "size_t", val as "cv::RotatedRect*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -8233,7 +8413,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfSplit();
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Split>*", index as "size_t"] {
@@ -8244,7 +8424,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -8277,7 +8457,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfSplit();
         let val = val.as_raw_DTrees_Split();
@@ -8288,7 +8468,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfSplit();
         cpp!(unsafe [vec as "const std::vector<cv::ml::DTrees::Split>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -8306,7 +8486,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfSplit();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::ml::DTrees::Split>*", index as "size_t", val as "cv::ml::DTrees::Split*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -8423,7 +8603,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfString();
         cpp!(unsafe [vec as "std::vector<String>*", index as "size_t"] {
@@ -8434,7 +8614,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -8468,7 +8648,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfString();
         let val = ::std::ffi::CString::new(val).unwrap();
@@ -8480,7 +8660,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfString();
         cpp!(unsafe [vec as "const std::vector<String>*", index as "size_t"] -> crate::sys::cv_return_value_char_X as "cv_return_value_char_X" {
             try {
@@ -8498,7 +8678,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfString();
         let val = ::std::ffi::CString::new(val).unwrap();
         let val = val.as_ptr();
@@ -8630,7 +8810,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfTarget {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfTarget();
         cpp!(unsafe [vec as "std::vector<dnn::Target>*", index as "size_t"] {
@@ -8641,7 +8821,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfTarget {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -8673,7 +8853,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfTarget {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfTarget();
         cpp!(unsafe [vec as "std::vector<dnn::Target>*", index as "size_t", val as "dnn::Target"] {
@@ -8683,7 +8863,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfTarget {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfTarget();
         cpp!(unsafe [vec as "const std::vector<dnn::Target>*", index as "size_t"] -> crate::sys::cv_return_value_dnn_Target as "cv_return_value_dnn_Target" {
             try {
@@ -8701,7 +8881,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfTarget {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfTarget();
         cpp!(unsafe [vec as "std::vector<dnn::Target>*", index as "size_t", val as "dnn::Target"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -8816,7 +8996,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfUMat();
         cpp!(unsafe [vec as "std::vector<cv::UMat>*", index as "size_t"] {
@@ -8827,7 +9007,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -8860,7 +9040,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfUMat();
         let val = val.as_raw_UMat();
@@ -8871,7 +9051,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfUMat();
         cpp!(unsafe [vec as "const std::vector<cv::UMat>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -8889,7 +9069,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfUMat();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<cv::UMat>*", index as "size_t", val as "cv::UMat*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -9019,7 +9199,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [vec as "std::vector<cv::Vec4f>*", index as "size_t"] {
@@ -9030,7 +9210,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -9062,7 +9242,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [vec as "std::vector<cv::Vec4f>*", index as "size_t", val as "cv::Vec4f"] {
@@ -9072,7 +9252,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [vec as "const std::vector<Vec4fWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Vec4fWrapper as "cv_return_value_Vec4fWrapper" {
             try {
@@ -9090,7 +9270,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [vec as "std::vector<cv::Vec4f>*", index as "size_t", val as "cv::Vec4f"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -9110,6 +9290,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
 }
 
 unsafe impl Send for VectorOfVec4f {}
+
+impl core::ToInputArray for VectorOfVec4f {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfVec4f();
+        cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfVec4f {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfVec4f();
+        cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfVec4f {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfVec4f();
+        cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfVec6f {
     pub(crate) ptr: *mut c_void
@@ -9218,7 +9434,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVec6f();
         cpp!(unsafe [vec as "std::vector<cv::Vec6f>*", index as "size_t"] {
@@ -9229,7 +9445,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -9261,7 +9477,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVec6f();
         cpp!(unsafe [vec as "std::vector<cv::Vec6f>*", index as "size_t", val as "cv::Vec6f"] {
@@ -9271,7 +9487,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVec6f();
         cpp!(unsafe [vec as "const std::vector<Vec6fWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Vec6fWrapper as "cv_return_value_Vec6fWrapper" {
             try {
@@ -9289,7 +9505,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVec6f();
         cpp!(unsafe [vec as "std::vector<cv::Vec6f>*", index as "size_t", val as "cv::Vec6f"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -9404,7 +9620,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfDMatch();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::DMatch>>*", index as "size_t"] {
@@ -9415,7 +9631,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -9448,7 +9664,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfDMatch();
         let val = val.as_raw_VectorOfDMatch();
@@ -9459,7 +9675,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfDMatch();
         cpp!(unsafe [vec as "const std::vector<std::vector<cv::DMatch>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -9477,7 +9693,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfDMatch();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<cv::DMatch>>*", index as "size_t", val as "std::vector<cv::DMatch>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -9594,7 +9810,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfKeyLine();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t"] {
@@ -9605,7 +9821,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -9638,7 +9854,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfKeyLine();
         let val = val.as_raw_VectorOfKeyLine();
@@ -9649,7 +9865,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfKeyLine();
         cpp!(unsafe [vec as "const std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -9667,7 +9883,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfKeyLine();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<cv::line_descriptor::KeyLine>>*", index as "size_t", val as "std::vector<cv::line_descriptor::KeyLine>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -9784,7 +10000,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::KeyPoint>>*", index as "size_t"] {
@@ -9795,7 +10011,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -9828,7 +10044,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
         let val = val.as_raw_VectorOfKeyPoint();
@@ -9839,7 +10055,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
         cpp!(unsafe [vec as "const std::vector<std::vector<cv::KeyPoint>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -9857,7 +10073,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfKeyPoint();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<cv::KeyPoint>>*", index as "size_t", val as "std::vector<cv::KeyPoint>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -9974,7 +10190,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfMat();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Mat>>*", index as "size_t"] {
@@ -9985,7 +10201,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -10018,7 +10234,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfMat();
         let val = val.as_raw_VectorOfMat();
@@ -10029,7 +10245,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfMat();
         cpp!(unsafe [vec as "const std::vector<std::vector<cv::Mat>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -10047,7 +10263,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfMat();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Mat>>*", index as "size_t", val as "std::vector<cv::Mat>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -10164,7 +10380,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfPoint();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point>>*", index as "size_t"] {
@@ -10175,7 +10391,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -10208,7 +10424,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfPoint();
         let val = val.as_raw_VectorOfPoint();
@@ -10219,7 +10435,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfPoint();
         cpp!(unsafe [vec as "const std::vector<std::vector<cv::Point>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -10237,7 +10453,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfPoint();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point>>*", index as "size_t", val as "std::vector<cv::Point>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -10259,6 +10475,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
 }
 
 unsafe impl Send for VectorOfVectorOfPoint {}
+
+impl core::ToInputArray for VectorOfVectorOfPoint {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfVectorOfPoint();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfVectorOfPoint {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfVectorOfPoint();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfVectorOfPoint {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfVectorOfPoint();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfVectorOfPoint2f {
     pub(crate) ptr: *mut c_void
@@ -10354,7 +10606,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point2f>>*", index as "size_t"] {
@@ -10365,7 +10617,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -10398,7 +10650,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
         let val = val.as_raw_VectorOfPoint2f();
@@ -10409,7 +10661,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
         cpp!(unsafe [vec as "const std::vector<std::vector<cv::Point2f>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -10427,7 +10679,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfPoint2f();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Point2f>>*", index as "size_t", val as "std::vector<cv::Point2f>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -10449,6 +10701,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
 }
 
 unsafe impl Send for VectorOfVectorOfPoint2f {}
+
+impl core::ToInputArray for VectorOfVectorOfPoint2f {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfVectorOfPoint2f();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfVectorOfPoint2f {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfVectorOfPoint2f();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfVectorOfPoint2f {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfVectorOfPoint2f();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfVectorOfRect {
     pub(crate) ptr: *mut c_void
@@ -10544,7 +10832,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfRect();
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Rect>>*", index as "size_t"] {
@@ -10555,7 +10843,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -10588,7 +10876,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfRect();
         let val = val.as_raw_VectorOfRect();
@@ -10599,7 +10887,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfRect();
         cpp!(unsafe [vec as "const std::vector<std::vector<cv::Rect>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -10617,7 +10905,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfRect();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<cv::Rect>>*", index as "size_t", val as "std::vector<cv::Rect>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -10639,6 +10927,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
 }
 
 unsafe impl Send for VectorOfVectorOfRect {}
+
+impl core::ToInputArray for VectorOfVectorOfRect {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfVectorOfRect();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfVectorOfRect {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfVectorOfRect();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfVectorOfRect {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfVectorOfRect();
+        cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfVectorOfVectorOfint {
     pub(crate) ptr: *mut c_void
@@ -10734,7 +11058,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfVectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<std::vector<int>>>*", index as "size_t"] {
@@ -10745,7 +11069,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -10778,7 +11102,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfVectorOfint();
         let val = val.as_raw_VectorOfVectorOfint();
@@ -10789,7 +11113,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfVectorOfint();
         cpp!(unsafe [vec as "const std::vector<std::vector<std::vector<int>>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -10807,7 +11131,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfVectorOfint();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<std::vector<int>>>*", index as "size_t", val as "std::vector<std::vector<int>>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -10924,7 +11248,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfbool();
         cpp!(unsafe [vec as "std::vector<std::vector<bool>>*", index as "size_t"] {
@@ -10935,7 +11259,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -10968,7 +11292,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfbool();
         let val = val.as_raw_VectorOfbool();
@@ -10979,7 +11303,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfbool();
         cpp!(unsafe [vec as "const std::vector<std::vector<bool>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -10997,7 +11321,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfbool();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<bool>>*", index as "size_t", val as "std::vector<bool>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -11114,7 +11438,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfchar();
         cpp!(unsafe [vec as "std::vector<std::vector<char>>*", index as "size_t"] {
@@ -11125,7 +11449,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -11158,7 +11482,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfchar();
         let val = val.as_raw_VectorOfchar();
@@ -11169,7 +11493,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfchar();
         cpp!(unsafe [vec as "const std::vector<std::vector<char>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -11187,7 +11511,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfchar();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<char>>*", index as "size_t", val as "std::vector<char>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -11209,6 +11533,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
 }
 
 unsafe impl Send for VectorOfVectorOfchar {}
+
+impl core::ToInputArray for VectorOfVectorOfchar {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfVectorOfchar();
+        cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfVectorOfchar {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfVectorOfchar();
+        cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfVectorOfchar {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfVectorOfchar();
+        cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfVectorOfint {
     pub(crate) ptr: *mut c_void
@@ -11304,7 +11664,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [vec as "std::vector<std::vector<int>>*", index as "size_t"] {
@@ -11315,7 +11675,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -11348,7 +11708,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfint();
         let val = val.as_raw_VectorOfint();
@@ -11359,7 +11719,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [vec as "const std::vector<std::vector<int>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -11377,7 +11737,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfint();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<int>>*", index as "size_t", val as "std::vector<int>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -11399,6 +11759,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
 }
 
 unsafe impl Send for VectorOfVectorOfint {}
+
+impl core::ToInputArray for VectorOfVectorOfint {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfVectorOfint();
+        cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfVectorOfint {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfVectorOfint();
+        cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfVectorOfint {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfVectorOfint();
+        cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfVectorOfuchar {
     pub(crate) ptr: *mut c_void
@@ -11494,7 +11890,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVectorOfuchar();
         cpp!(unsafe [vec as "std::vector<std::vector<uchar>>*", index as "size_t"] {
@@ -11505,7 +11901,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -11538,7 +11934,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVectorOfuchar();
         let val = val.as_raw_VectorOfuchar();
@@ -11549,7 +11945,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVectorOfuchar();
         cpp!(unsafe [vec as "const std::vector<std::vector<uchar>>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
             try {
@@ -11567,7 +11963,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVectorOfuchar();
         let val = val.ptr;
         cpp!(unsafe [vec as "std::vector<std::vector<uchar>>*", index as "size_t", val as "std::vector<uchar>*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
@@ -11589,6 +11985,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
 }
 
 unsafe impl Send for VectorOfVectorOfuchar {}
+
+impl core::ToInputArray for VectorOfVectorOfuchar {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfVectorOfuchar();
+        cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfVectorOfuchar {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfVectorOfuchar();
+        cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfVectorOfuchar {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfVectorOfuchar();
+        cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfVideoCaptureAPIs {
     pub(crate) ptr: *mut c_void
@@ -11697,7 +12129,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVideoCaptureAPIs {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfVideoCaptureAPIs();
         cpp!(unsafe [vec as "std::vector<VideoCaptureAPIs>*", index as "size_t"] {
@@ -11708,7 +12140,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVideoCaptureAPIs {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -11740,7 +12172,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVideoCaptureAPIs {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfVideoCaptureAPIs();
         cpp!(unsafe [vec as "std::vector<VideoCaptureAPIs>*", index as "size_t", val as "VideoCaptureAPIs"] {
@@ -11750,7 +12182,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVideoCaptureAPIs {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfVideoCaptureAPIs();
         cpp!(unsafe [vec as "const std::vector<VideoCaptureAPIs>*", index as "size_t"] -> crate::sys::cv_return_value_VideoCaptureAPIs as "cv_return_value_VideoCaptureAPIs" {
             try {
@@ -11768,7 +12200,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVideoCaptureAPIs {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfVideoCaptureAPIs();
         cpp!(unsafe [vec as "std::vector<VideoCaptureAPIs>*", index as "size_t", val as "VideoCaptureAPIs"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -11883,7 +12315,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "std::vector<bool>*", index as "size_t"] {
@@ -11894,7 +12326,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -11926,7 +12358,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "std::vector<bool>*", index as "size_t", val as "bool"] {
@@ -11936,7 +12368,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "const std::vector<bool>*", index as "size_t"] -> crate::sys::cv_return_value_bool as "cv_return_value_bool" {
             try {
@@ -11954,7 +12386,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfbool();
         cpp!(unsafe [vec as "std::vector<bool>*", index as "size_t", val as "bool"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -12082,7 +12514,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<char>*", index as "size_t"] {
@@ -12093,7 +12525,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -12125,7 +12557,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<char>*", index as "size_t", val as "char"] {
@@ -12135,7 +12567,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "const std::vector<char>*", index as "size_t"] -> crate::sys::cv_return_value_char as "cv_return_value_char" {
             try {
@@ -12153,7 +12585,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfchar();
         cpp!(unsafe [vec as "std::vector<char>*", index as "size_t", val as "char"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -12173,6 +12605,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
 }
 
 unsafe impl Send for VectorOfchar {}
+
+impl core::ToInputArray for VectorOfchar {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfchar();
+        cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfchar {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfchar();
+        cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfchar {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfchar();
+        cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfdouble {
     pub(crate) ptr: *mut c_void
@@ -12281,7 +12749,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfdouble();
         cpp!(unsafe [vec as "std::vector<double>*", index as "size_t"] {
@@ -12292,7 +12760,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -12324,7 +12792,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfdouble();
         cpp!(unsafe [vec as "std::vector<double>*", index as "size_t", val as "double"] {
@@ -12334,7 +12802,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfdouble();
         cpp!(unsafe [vec as "const std::vector<double>*", index as "size_t"] -> crate::sys::cv_return_value_double as "cv_return_value_double" {
             try {
@@ -12352,7 +12820,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfdouble();
         cpp!(unsafe [vec as "std::vector<double>*", index as "size_t", val as "double"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -12372,6 +12840,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
 }
 
 unsafe impl Send for VectorOfdouble {}
+
+impl core::ToInputArray for VectorOfdouble {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfdouble();
+        cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfdouble {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfdouble();
+        cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfdouble {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfdouble();
+        cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOffloat {
     pub(crate) ptr: *mut c_void
@@ -12480,7 +12984,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOffloat();
         cpp!(unsafe [vec as "std::vector<float>*", index as "size_t"] {
@@ -12491,7 +12995,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -12523,7 +13027,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOffloat();
         cpp!(unsafe [vec as "std::vector<float>*", index as "size_t", val as "float"] {
@@ -12533,7 +13037,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOffloat();
         cpp!(unsafe [vec as "const std::vector<float>*", index as "size_t"] -> crate::sys::cv_return_value_float as "cv_return_value_float" {
             try {
@@ -12551,7 +13055,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOffloat();
         cpp!(unsafe [vec as "std::vector<float>*", index as "size_t", val as "float"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -12571,6 +13075,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
 }
 
 unsafe impl Send for VectorOffloat {}
+
+impl core::ToInputArray for VectorOffloat {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOffloat();
+        cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOffloat {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOffloat();
+        cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOffloat {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOffloat();
+        cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfint {
     pub(crate) ptr: *mut c_void
@@ -12679,7 +13219,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<int>*", index as "size_t"] {
@@ -12690,7 +13230,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -12722,7 +13262,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<int>*", index as "size_t", val as "int"] {
@@ -12732,7 +13272,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfint();
         cpp!(unsafe [vec as "const std::vector<int>*", index as "size_t"] -> crate::sys::cv_return_value_int as "cv_return_value_int" {
             try {
@@ -12750,7 +13290,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfint();
         cpp!(unsafe [vec as "std::vector<int>*", index as "size_t", val as "int"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -12770,6 +13310,42 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
 }
 
 unsafe impl Send for VectorOfint {}
+
+impl core::ToInputArray for VectorOfint {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfint();
+        cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfint {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfint();
+        cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfint {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfint();
+        cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub struct VectorOfsize_t {
     pub(crate) ptr: *mut c_void
@@ -12878,7 +13454,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfsize_t();
         cpp!(unsafe [vec as "std::vector<size_t>*", index as "size_t"] {
@@ -12889,7 +13465,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -12921,7 +13497,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfsize_t();
         cpp!(unsafe [vec as "std::vector<size_t>*", index as "size_t", val as "size_t"] {
@@ -12931,7 +13507,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfsize_t();
         cpp!(unsafe [vec as "const std::vector<std::size_t>*", index as "size_t"] -> crate::sys::cv_return_value_std_size_t as "cv_return_value_std_size_t" {
             try {
@@ -12949,7 +13525,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfsize_t();
         cpp!(unsafe [vec as "std::vector<size_t>*", index as "size_t", val as "size_t"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -13077,7 +13653,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
     }
 
     #[inline]
-    fn remove(&mut self, index: size_t) -> crate::Result<()> {
+    fn remove(&mut self, index: size_t) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
         let vec = self.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<uchar>*", index as "size_t"] {
@@ -13088,7 +13664,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
 
     /// Swaps values of 2 elements
     #[inline]
-    fn swap(&mut self, index1: size_t, index2: size_t) -> crate::Result<()> {
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
@@ -13120,7 +13696,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
     }
     
     #[inline]
-    fn insert(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
         let vec = self.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<uchar>*", index as "size_t", val as "uchar"] {
@@ -13130,7 +13706,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
     }
     
     #[inline]
-    fn get(&self, index: size_t) -> crate::Result<Self::Storage> {
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
         let vec = self.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "const std::vector<unsigned char>*", index as "size_t"] -> crate::sys::cv_return_value_unsigned_char as "cv_return_value_unsigned_char" {
             try {
@@ -13148,7 +13724,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
     }
     
     #[inline]
-    fn set(&mut self, index: size_t, val: Self::Arg) -> crate::Result<()> {
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
         let vec = self.as_raw_VectorOfuchar();
         cpp!(unsafe [vec as "std::vector<uchar>*", index as "size_t", val as "uchar"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
             try {
@@ -13168,5 +13744,41 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
 }
 
 unsafe impl Send for VectorOfuchar {}
+
+impl core::ToInputArray for VectorOfuchar {
+    fn input_array(&self) -> Result<core::InputArray> {
+        let me = self.as_raw_VectorOfuchar();
+        cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputArray { ptr })
+    }
+}
+
+impl core::ToOutputArray for VectorOfuchar {
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        let me = self.as_raw_VectorOfuchar();
+        cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::OutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for VectorOfuchar {
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        let me = self.as_raw_VectorOfuchar();
+        cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
 
 pub use crate::manual::types::*;

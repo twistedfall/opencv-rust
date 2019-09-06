@@ -41,6 +41,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const Stitcher_ERR_CAMERA_PARAMS_ADJUST_FAIL: i32 = 3;
 pub const Stitcher_ERR_HOMOGRAPHY_EST_FAIL: i32 = 2;
@@ -535,8 +536,9 @@ impl Stitcher {
         unsafe { sys::cv_Stitcher_setMatchingMask_UMat(self.as_raw_Stitcher(), mask.as_raw_UMat()) }.into_result()
     }
     
-    pub fn estimate_transform(&mut self, images: &types::VectorOfMat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_estimateTransform_VectorOfMat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat()) }.into_result()
+    pub fn estimate_transform(&mut self, images: &dyn core::ToInputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        unsafe { sys::cv_Stitcher_estimateTransform__InputArray(self.as_raw_Stitcher(), images.as_raw__InputArray()) }.into_result()
     }
     
     /// These functions try to match the given images and to estimate rotations of each camera.
@@ -550,12 +552,14 @@ impl Stitcher {
     /// * rois: Region of interest rectangles.
     /// ## Returns
     /// Status code.
-    pub fn estimate_transform_1(&mut self, images: &types::VectorOfMat, rois: &types::VectorOfVectorOfRect) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_estimateTransform_VectorOfMat_VectorOfVectorOfRect(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), rois.as_raw_VectorOfVectorOfRect()) }.into_result()
+    pub fn estimate_transform_1(&mut self, images: &dyn core::ToInputArray, rois: &types::VectorOfVectorOfRect) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        unsafe { sys::cv_Stitcher_estimateTransform__InputArray_VectorOfVectorOfRect(self.as_raw_Stitcher(), images.as_raw__InputArray(), rois.as_raw_VectorOfVectorOfRect()) }.into_result()
     }
     
-    pub fn compose_panorama(&mut self, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_composePanorama_Mat(self.as_raw_Stitcher(), pano.as_raw_Mat()) }.into_result()
+    pub fn compose_panorama(&mut self, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_composePanorama__OutputArray(self.as_raw_Stitcher(), pano.as_raw__OutputArray()) }.into_result()
     }
     
     /// These functions try to compose the given images (or images stored internally from the other function
@@ -571,12 +575,16 @@ impl Stitcher {
     /// * pano: Final pano.
     /// ## Returns
     /// Status code.
-    pub fn compose_panorama_1(&mut self, images: &types::VectorOfMat, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_composePanorama_VectorOfMat_Mat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), pano.as_raw_Mat()) }.into_result()
+    pub fn compose_panorama_images(&mut self, images: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_composePanorama__InputArray__OutputArray(self.as_raw_Stitcher(), images.as_raw__InputArray(), pano.as_raw__OutputArray()) }.into_result()
     }
     
-    pub fn stitch(&mut self, images: &types::VectorOfMat, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_stitch_VectorOfMat_Mat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), pano.as_raw_Mat()) }.into_result()
+    pub fn stitch(&mut self, images: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_stitch__InputArray__OutputArray(self.as_raw_Stitcher(), images.as_raw__InputArray(), pano.as_raw__OutputArray()) }.into_result()
     }
     
     /// These functions try to stitch the given images.
@@ -587,8 +595,10 @@ impl Stitcher {
     /// * pano: Final pano.
     /// ## Returns
     /// Status code.
-    pub fn stitch_1(&mut self, images: &types::VectorOfMat, rois: &types::VectorOfVectorOfRect, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_stitch_VectorOfMat_VectorOfVectorOfRect_Mat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), rois.as_raw_VectorOfVectorOfRect(), pano.as_raw_Mat()) }.into_result()
+    pub fn stitch_rois(&mut self, images: &dyn core::ToInputArray, rois: &types::VectorOfVectorOfRect, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_stitch__InputArray_VectorOfVectorOfRect__OutputArray(self.as_raw_Stitcher(), images.as_raw__InputArray(), rois.as_raw_VectorOfVectorOfRect(), pano.as_raw__OutputArray()) }.into_result()
     }
     
     pub fn component(&self) -> Result<types::VectorOfint> {

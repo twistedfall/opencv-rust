@@ -10,6 +10,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const EltwiseLayer_PROD: i32 = 0;
 pub const EltwiseLayer_SUM: i32 = 1;

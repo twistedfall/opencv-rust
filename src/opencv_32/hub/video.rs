@@ -5,6 +5,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const MOTION_AFFINE: i32 = 2;
 pub const MOTION_EUCLIDEAN: i32 = 1;
@@ -33,8 +34,9 @@ pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 /// Note:
 /// *   (Python) A sample explaining the camshift tracking algorithm can be found at
 /// opencv_source_code/samples/python/camshift.py
-pub fn cam_shift(prob_image: &core::Mat, window: &mut core::Rect, criteria: &core::TermCriteria) -> Result<core::RotatedRect> {
-    unsafe { sys::cv_CamShift_Mat_Rect_TermCriteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result().map(|ptr| core::RotatedRect { ptr })
+pub fn cam_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: &core::TermCriteria) -> Result<core::RotatedRect> {
+    input_array_arg!(prob_image);
+    unsafe { sys::cv_CamShift__InputArray_Rect_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.as_raw_TermCriteria()) }.into_result().map(|ptr| core::RotatedRect { ptr })
 }
 
 /// Constructs the image pyramid which can be passed to calcOpticalFlowPyrLK.
@@ -59,8 +61,10 @@ pub fn cam_shift(prob_image: &core::Mat, window: &mut core::Rect, criteria: &cor
 /// * pyr_border: BORDER_REFLECT_101
 /// * deriv_border: BORDER_CONSTANT
 /// * try_reuse_input_image: true
-pub fn build_optical_flow_pyramid(img: &core::Mat, pyramid: &mut types::VectorOfMat, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
-    unsafe { sys::cv_buildOpticalFlowPyramid_Mat_VectorOfMat_Size_int_bool_int_int_bool(img.as_raw_Mat(), pyramid.as_raw_VectorOfMat(), win_size, max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image) }.into_result()
+pub fn build_optical_flow_pyramid(img: &dyn core::ToInputArray, pyramid: &mut dyn core::ToOutputArray, win_size: core::Size, max_level: i32, with_derivatives: bool, pyr_border: i32, deriv_border: i32, try_reuse_input_image: bool) -> Result<i32> {
+    input_array_arg!(img);
+    output_array_arg!(pyramid);
+    unsafe { sys::cv_buildOpticalFlowPyramid__InputArray__OutputArray_Size_int_bool_int_int_bool(img.as_raw__InputArray(), pyramid.as_raw__OutputArray(), win_size, max_level, with_derivatives, pyr_border, deriv_border, try_reuse_input_image) }.into_result()
 }
 
 /// Computes a dense optical flow using the Gunnar Farneback's algorithm.
@@ -102,8 +106,11 @@ pub fn build_optical_flow_pyramid(img: &core::Mat, pyramid: &mut types::VectorOf
 /// opencv_source_code/samples/cpp/fback.cpp
 /// *   (Python) An example using the optical flow algorithm described by Gunnar Farneback can be
 /// found at opencv_source_code/samples/python/opt_flow.py
-pub fn calc_optical_flow_farneback(prev: &core::Mat, next: &core::Mat, flow: &mut core::Mat, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<()> {
-    unsafe { sys::cv_calcOpticalFlowFarneback_Mat_Mat_Mat_double_int_int_int_int_double_int(prev.as_raw_Mat(), next.as_raw_Mat(), flow.as_raw_Mat(), pyr_scale, levels, winsize, iterations, poly_n, poly_sigma, flags) }.into_result()
+pub fn calc_optical_flow_farneback(prev: &dyn core::ToInputArray, next: &dyn core::ToInputArray, flow: &mut dyn core::ToInputOutputArray, pyr_scale: f64, levels: i32, winsize: i32, iterations: i32, poly_n: i32, poly_sigma: f64, flags: i32) -> Result<()> {
+    input_array_arg!(prev);
+    input_array_arg!(next);
+    input_output_array_arg!(flow);
+    unsafe { sys::cv_calcOpticalFlowFarneback__InputArray__InputArray__InputOutputArray_double_int_int_int_int_double_int(prev.as_raw__InputArray(), next.as_raw__InputArray(), flow.as_raw__InputOutputArray(), pyr_scale, levels, winsize, iterations, poly_n, poly_sigma, flags) }.into_result()
 }
 
 /// Calculates an optical flow for a sparse feature set using the iterative Lucas-Kanade method with
@@ -161,8 +168,14 @@ pub fn calc_optical_flow_farneback(prev: &core::Mat, next: &core::Mat, flow: &mu
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 0.01)
 /// * flags: 0
 /// * min_eig_threshold: 1e-4
-pub fn calc_optical_flow_pyr_lk(prev_img: &core::Mat, next_img: &core::Mat, prev_pts: &core::Mat, next_pts: &mut core::Mat, status: &mut core::Mat, err: &mut core::Mat, win_size: core::Size, max_level: i32, criteria: &core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<()> {
-    unsafe { sys::cv_calcOpticalFlowPyrLK_Mat_Mat_Mat_Mat_Mat_Mat_Size_int_TermCriteria_int_double(prev_img.as_raw_Mat(), next_img.as_raw_Mat(), prev_pts.as_raw_Mat(), next_pts.as_raw_Mat(), status.as_raw_Mat(), err.as_raw_Mat(), win_size, max_level, criteria.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result()
+pub fn calc_optical_flow_pyr_lk(prev_img: &dyn core::ToInputArray, next_img: &dyn core::ToInputArray, prev_pts: &dyn core::ToInputArray, next_pts: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, err: &mut dyn core::ToOutputArray, win_size: core::Size, max_level: i32, criteria: &core::TermCriteria, flags: i32, min_eig_threshold: f64) -> Result<()> {
+    input_array_arg!(prev_img);
+    input_array_arg!(next_img);
+    input_array_arg!(prev_pts);
+    input_output_array_arg!(next_pts);
+    output_array_arg!(status);
+    output_array_arg!(err);
+    unsafe { sys::cv_calcOpticalFlowPyrLK__InputArray__InputArray__InputArray__InputOutputArray__OutputArray__OutputArray_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), win_size, max_level, criteria.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result()
 }
 
 /// Creates KNN Background Subtractor
@@ -232,8 +245,10 @@ pub fn create_opt_flow_dual_tvl1() -> Result<types::PtrOfDualTVL1OpticalFlow> {
 ///
 /// ## See also
 /// estimateAffine2D, estimateAffinePartial2D, getAffineTransform, getPerspectiveTransform, findHomography
-pub fn estimate_rigid_transform(src: &core::Mat, dst: &core::Mat, full_affine: bool) -> Result<core::Mat> {
-    unsafe { sys::cv_estimateRigidTransform_Mat_Mat_bool(src.as_raw_Mat(), dst.as_raw_Mat(), full_affine) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn estimate_rigid_transform(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, full_affine: bool) -> Result<core::Mat> {
+    input_array_arg!(src);
+    input_array_arg!(dst);
+    unsafe { sys::cv_estimateRigidTransform__InputArray__InputArray_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_EP08) .
@@ -291,8 +306,12 @@ pub fn estimate_rigid_transform(src: &core::Mat, dst: &core::Mat, full_affine: b
 /// * motion_type: MOTION_AFFINE
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 50, 0.001)
 /// * input_mask: noArray()
-pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, warp_matrix: &mut core::Mat, motion_type: i32, criteria: &core::TermCriteria, input_mask: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_findTransformECC_Mat_Mat_Mat_int_TermCriteria_Mat(template_image.as_raw_Mat(), input_image.as_raw_Mat(), warp_matrix.as_raw_Mat(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw_Mat()) }.into_result()
+pub fn find_transform_ecc(template_image: &dyn core::ToInputArray, input_image: &dyn core::ToInputArray, warp_matrix: &mut dyn core::ToInputOutputArray, motion_type: i32, criteria: &core::TermCriteria, input_mask: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(template_image);
+    input_array_arg!(input_image);
+    input_output_array_arg!(warp_matrix);
+    input_array_arg!(input_mask);
+    unsafe { sys::cv_findTransformECC__InputArray__InputArray__InputOutputArray_int_TermCriteria__InputArray(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Finds an object on a back projection image.
@@ -317,8 +336,9 @@ pub fn find_transform_ecc(template_image: &core::Mat, input_image: &core::Mat, w
 ///
 /// Note:
 /// *   A mean-shift tracking sample can be found at opencv_source_code/samples/cpp/camshiftdemo.cpp
-pub fn mean_shift(prob_image: &core::Mat, window: &mut core::Rect, criteria: &core::TermCriteria) -> Result<i32> {
-    unsafe { sys::cv_meanShift_Mat_Rect_TermCriteria(prob_image.as_raw_Mat(), window, criteria.as_raw_TermCriteria()) }.into_result()
+pub fn mean_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, criteria: &core::TermCriteria) -> Result<i32> {
+    input_array_arg!(prob_image);
+    unsafe { sys::cv_meanShift__InputArray_Rect_TermCriteria(prob_image.as_raw__InputArray(), window, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 // Generating impl for trait cv::BackgroundSubtractor (trait)
@@ -340,8 +360,10 @@ pub trait BackgroundSubtractor: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * learning_rate: -1
-    fn apply(&mut self, image: &core::Mat, fgmask: &mut core::Mat, learning_rate: f64) -> Result<()> {
-        unsafe { sys::cv_BackgroundSubtractor_apply_Mat_Mat_double(self.as_raw_BackgroundSubtractor(), image.as_raw_Mat(), fgmask.as_raw_Mat(), learning_rate) }.into_result()
+    fn apply(&mut self, image: &dyn core::ToInputArray, fgmask: &mut dyn core::ToOutputArray, learning_rate: f64) -> Result<()> {
+        input_array_arg!(image);
+        output_array_arg!(fgmask);
+        unsafe { sys::cv_BackgroundSubtractor_apply__InputArray__OutputArray_double(self.as_raw_BackgroundSubtractor(), image.as_raw__InputArray(), fgmask.as_raw__OutputArray(), learning_rate) }.into_result()
     }
     
     /// Computes a background image.
@@ -352,8 +374,9 @@ pub trait BackgroundSubtractor: core::Algorithm {
     ///
     /// Note: Sometimes the background image can be very blurry, as it contain the average background
     /// statistics.
-    fn get_background_image(&self, background_image: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_BackgroundSubtractor_getBackgroundImage_const_Mat(self.as_raw_BackgroundSubtractor(), background_image.as_raw_Mat()) }.into_result()
+    fn get_background_image(&self, background_image: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(background_image);
+        unsafe { sys::cv_BackgroundSubtractor_getBackgroundImage_const__OutputArray(self.as_raw_BackgroundSubtractor(), background_image.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -620,8 +643,11 @@ pub trait DenseOpticalFlow: core::Algorithm {
     /// * I0: first 8-bit single-channel input image.
     /// * I1: second input image of the same size and the same type as prev.
     /// * flow: computed flow image that has the same size as prev and type CV_32FC2.
-    fn calc(&mut self, i0: &core::Mat, i1: &core::Mat, flow: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_DenseOpticalFlow_calc_Mat_Mat_Mat(self.as_raw_DenseOpticalFlow(), i0.as_raw_Mat(), i1.as_raw_Mat(), flow.as_raw_Mat()) }.into_result()
+    fn calc(&mut self, i0: &dyn core::ToInputArray, i1: &dyn core::ToInputArray, flow: &mut dyn core::ToInputOutputArray) -> Result<()> {
+        input_array_arg!(i0);
+        input_array_arg!(i1);
+        input_output_array_arg!(flow);
+        unsafe { sys::cv_DenseOpticalFlow_calc__InputArray__InputArray__InputOutputArray(self.as_raw_DenseOpticalFlow(), i0.as_raw__InputArray(), i1.as_raw__InputArray(), flow.as_raw__InputOutputArray()) }.into_result()
     }
     
     /// Releases all inner buffers.
@@ -1116,8 +1142,14 @@ pub trait SparseOpticalFlow: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * err: cv::noArray()
-    fn calc(&mut self, prev_img: &core::Mat, next_img: &core::Mat, prev_pts: &core::Mat, next_pts: &mut core::Mat, status: &mut core::Mat, err: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_SparseOpticalFlow_calc_Mat_Mat_Mat_Mat_Mat_Mat(self.as_raw_SparseOpticalFlow(), prev_img.as_raw_Mat(), next_img.as_raw_Mat(), prev_pts.as_raw_Mat(), next_pts.as_raw_Mat(), status.as_raw_Mat(), err.as_raw_Mat()) }.into_result()
+    fn calc(&mut self, prev_img: &dyn core::ToInputArray, next_img: &dyn core::ToInputArray, prev_pts: &dyn core::ToInputArray, next_pts: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, err: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(prev_img);
+        input_array_arg!(next_img);
+        input_array_arg!(prev_pts);
+        input_output_array_arg!(next_pts);
+        output_array_arg!(status);
+        output_array_arg!(err);
+        unsafe { sys::cv_SparseOpticalFlow_calc__InputArray__InputArray__InputArray__InputOutputArray__OutputArray__OutputArray(self.as_raw_SparseOpticalFlow(), prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray()) }.into_result()
     }
     
 }

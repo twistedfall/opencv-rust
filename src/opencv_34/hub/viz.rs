@@ -24,6 +24,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const AMBIENT: i32 = 7;
 pub const FONT_SIZE: i32 = 3;
@@ -77,8 +78,9 @@ pub fn vec3b() -> Result<()> {
 /// ## Parameters
 /// * mesh: Input mesh.
 /// * normals: Normals at very point in the mesh of type CV_64FC3.
-pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_viz_computeNormals_Mesh_Mat(mesh.as_raw_Mesh(), normals.as_raw_Mat()) }.into_result()
+pub fn compute_normals(mesh: &crate::viz::Mesh, normals: &mut dyn core::ToOutputArray) -> Result<()> {
+    output_array_arg!(normals);
+    unsafe { sys::cv_viz_computeNormals_Mesh__OutputArray(mesh.as_raw_Mesh(), normals.as_raw__OutputArray()) }.into_result()
 }
 
 /// Retrieves a window by its name.
@@ -108,9 +110,10 @@ pub fn get_window_by_name(window_name: &str) -> Result<crate::viz::Viz3d> {
 ///
 /// ## C++ default parameters
 /// * window_size: Size(-1, -1)
-pub fn imshow(window_name: &str, image: &core::Mat, window_size: core::Size) -> Result<crate::viz::Viz3d> {
+pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<crate::viz::Viz3d> {
     string_arg!(window_name);
-    unsafe { sys::cv_viz_imshow_String_Mat_Size(window_name.as_ptr(), image.as_raw_Mat(), window_size) }.into_result().map(|ptr| crate::viz::Viz3d { ptr })
+    input_array_arg!(image);
+    unsafe { sys::cv_viz_imshow_String__InputArray_Size(window_name.as_ptr(), image.as_raw__InputArray(), window_size) }.into_result().map(|ptr| crate::viz::Viz3d { ptr })
 }
 
 /// Checks **float/double** value for nan.
@@ -140,9 +143,11 @@ pub fn is_nan_1(x: f32) -> Result<bool> {
 /// ## C++ default parameters
 /// * colors: noArray()
 /// * normals: noArray()
-pub fn read_cloud(file: &str, colors: &mut core::Mat, normals: &mut core::Mat) -> Result<core::Mat> {
+pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
     string_arg!(file);
-    unsafe { sys::cv_viz_readCloud_String_Mat_Mat(file.as_ptr(), colors.as_raw_Mat(), normals.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+    output_array_arg!(colors);
+    output_array_arg!(normals);
+    unsafe { sys::cv_viz_readCloud_String__OutputArray__OutputArray(file.as_ptr(), colors.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
@@ -167,10 +172,11 @@ pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
 /// * start: 0
 /// * end: INT_MAX
 /// * tag: "pose"
-pub fn read_trajectory(traj: &mut core::Mat, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
+pub fn read_trajectory(traj: &mut dyn core::ToOutputArray, files_format: &str, start: i32, end: i32, tag: &str) -> Result<()> {
+    output_array_arg!(traj);
     string_arg!(files_format);
     string_arg!(tag);
-    unsafe { sys::cv_viz_readTrajectory_Mat_String_int_int_String(traj.as_raw_Mat(), files_format.as_ptr(), start, end, tag.as_ptr()) }.into_result()
+    unsafe { sys::cv_viz_readTrajectory__OutputArray_String_int_int_String(traj.as_raw__OutputArray(), files_format.as_ptr(), start, end, tag.as_ptr()) }.into_result()
 }
 
 /// Unregisters all Viz windows from internal database. After it 'getWindowByName()' will create new windows instead of getting existing from the database.
@@ -190,9 +196,12 @@ pub fn unregister_all_windows() -> Result<()> {
 /// * colors: noArray()
 /// * normals: noArray()
 /// * binary: false
-pub fn write_cloud(file: &str, cloud: &core::Mat, colors: &core::Mat, normals: &core::Mat, binary: bool) -> Result<()> {
+pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, binary: bool) -> Result<()> {
     string_arg!(file);
-    unsafe { sys::cv_viz_writeCloud_String_Mat_Mat_Mat_bool(file.as_ptr(), cloud.as_raw_Mat(), colors.as_raw_Mat(), normals.as_raw_Mat(), binary) }.into_result()
+    input_array_arg!(cloud);
+    input_array_arg!(colors);
+    input_array_arg!(normals);
+    unsafe { sys::cv_viz_writeCloud_String__InputArray__InputArray__InputArray_bool(file.as_ptr(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary) }.into_result()
 }
 
 /// takes vector<Affine3<T>> with T = float/dobule and writes to a sequence of files with given filename format
@@ -210,10 +219,11 @@ pub fn write_cloud(file: &str, cloud: &core::Mat, colors: &core::Mat, normals: &
 /// * files_format: "pose%05d.xml"
 /// * start: 0
 /// * tag: "pose"
-pub fn write_trajectory(traj: &core::Mat, files_format: &str, start: i32, tag: &str) -> Result<()> {
+pub fn write_trajectory(traj: &dyn core::ToInputArray, files_format: &str, start: i32, tag: &str) -> Result<()> {
+    input_array_arg!(traj);
     string_arg!(files_format);
     string_arg!(tag);
-    unsafe { sys::cv_viz_writeTrajectory_Mat_String_int_String(traj.as_raw_Mat(), files_format.as_ptr(), start, tag.as_ptr()) }.into_result()
+    unsafe { sys::cv_viz_writeTrajectory__InputArray_String_int_String(traj.as_raw__InputArray(), files_format.as_ptr(), start, tag.as_ptr()) }.into_result()
 }
 
 // boxed class cv::viz::Camera
@@ -648,8 +658,9 @@ impl Viz3d {
     ///
     /// ## C++ default parameters
     /// * window_size: Size(-1, -1)
-    pub fn show_image(&mut self, image: &core::Mat, window_size: core::Size) -> Result<()> {
-        unsafe { sys::cv_viz_Viz3d_showImage_Mat_Size(self.as_raw_Viz3d(), image.as_raw_Mat(), window_size) }.into_result()
+    pub fn show_image(&mut self, image: &dyn core::ToInputArray, window_size: core::Size) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_Viz3d_showImage__InputArray_Size(self.as_raw_Viz3d(), image.as_raw__InputArray(), window_size) }.into_result()
     }
     
     /// Sets the intrinsic parameters of the viewer using Camera.
@@ -743,8 +754,9 @@ impl Viz3d {
     ///
     /// ## C++ default parameters
     /// * image: noArray()
-    pub fn set_background_texture(&mut self, image: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_viz_Viz3d_setBackgroundTexture_Mat(self.as_raw_Viz3d(), image.as_raw_Mat()) }.into_result()
+    pub fn set_background_texture(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_Viz3d_setBackgroundTexture__InputArray(self.as_raw_Viz3d(), image.as_raw__InputArray()) }.into_result()
     }
     
     pub fn set_background_mesh_lab(&mut self) -> Result<()> {
@@ -996,8 +1008,9 @@ impl WCameraPosition {
     /// ## C++ default parameters
     /// * scale: 1.0
     /// * color: Color::white()
-    pub fn new_2(fov: core::Vec2d, image: &core::Mat, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
-        unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_Vec2d_Mat_double_Color(fov, image.as_raw_Mat(), scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCameraPosition { ptr })
+    pub fn new_2(fov: core::Vec2d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_Vec2d__InputArray_double_Color(fov, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCameraPosition { ptr })
     }
     
 }
@@ -1090,8 +1103,10 @@ impl WCloud {
     /// * colors: Set of colors. It has to be of the same size with cloud.
     ///
     /// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
-    pub fn new(cloud: &core::Mat, colors: &core::Mat) -> Result<crate::viz::WCloud> {
-        unsafe { sys::cv_viz_WCloud_WCloud_Mat_Mat(cloud.as_raw_Mat(), colors.as_raw_Mat()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
+    pub fn new(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
+        input_array_arg!(cloud);
+        input_array_arg!(colors);
+        unsafe { sys::cv_viz_WCloud_WCloud__InputArray__InputArray(cloud.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
     }
     
     /// Constructs a WCloud.
@@ -1103,8 +1118,9 @@ impl WCloud {
     ///
     /// ## C++ default parameters
     /// * color: Color::white()
-    pub fn new_1(cloud: &core::Mat, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
-        unsafe { sys::cv_viz_WCloud_WCloud_Mat_Color(cloud.as_raw_Mat(), color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
+    pub fn new_1(cloud: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WCloud> {
+        input_array_arg!(cloud);
+        unsafe { sys::cv_viz_WCloud_WCloud__InputArray_Color(cloud.as_raw__InputArray(), color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
     }
     
     /// Constructs a WCloud.
@@ -1114,8 +1130,11 @@ impl WCloud {
     /// * normals: Normals for each point in cloud. Size and type should match with the cloud parameter.
     ///
     /// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
-    pub fn new_2(cloud: &core::Mat, colors: &core::Mat, normals: &core::Mat) -> Result<crate::viz::WCloud> {
-        unsafe { sys::cv_viz_WCloud_WCloud_Mat_Mat_Mat(cloud.as_raw_Mat(), colors.as_raw_Mat(), normals.as_raw_Mat()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
+    pub fn new_2(cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
+        input_array_arg!(cloud);
+        input_array_arg!(colors);
+        input_array_arg!(normals);
+        unsafe { sys::cv_viz_WCloud_WCloud__InputArray__InputArray__InputArray(cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
     }
     
     /// Constructs a WCloud.
@@ -1126,8 +1145,10 @@ impl WCloud {
     ///
     /// Size and type should match with the cloud parameter.
     /// Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
-    pub fn new_3(cloud: &core::Mat, color: &crate::viz::Color, normals: &core::Mat) -> Result<crate::viz::WCloud> {
-        unsafe { sys::cv_viz_WCloud_WCloud_Mat_Color_Mat(cloud.as_raw_Mat(), color.as_raw_Color(), normals.as_raw_Mat()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
+    pub fn new_3(cloud: &dyn core::ToInputArray, color: &crate::viz::Color, normals: &dyn core::ToInputArray) -> Result<crate::viz::WCloud> {
+        input_array_arg!(cloud);
+        input_array_arg!(normals);
+        unsafe { sys::cv_viz_WCloud_WCloud__InputArray_Color__InputArray(cloud.as_raw__InputArray(), color.as_raw_Color(), normals.as_raw__InputArray()) }.into_result().map(|ptr| crate::viz::WCloud { ptr })
     }
     
 }
@@ -1225,8 +1246,10 @@ impl WCloudNormals {
     /// * level: 64
     /// * scale: 0.1
     /// * color: Color::white()
-    pub fn new(cloud: &core::Mat, normals: &core::Mat, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
-        unsafe { sys::cv_viz_WCloudNormals_WCloudNormals_Mat_Mat_int_double_Color(cloud.as_raw_Mat(), normals.as_raw_Mat(), level, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCloudNormals { ptr })
+    pub fn new(cloud: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, level: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCloudNormals> {
+        input_array_arg!(cloud);
+        input_array_arg!(normals);
+        unsafe { sys::cv_viz_WCloudNormals_WCloudNormals__InputArray__InputArray_int_double_Color(cloud.as_raw__InputArray(), normals.as_raw__InputArray(), level, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCloudNormals { ptr })
     }
     
 }
@@ -1473,8 +1496,9 @@ impl WImage3D {
     /// ## Parameters
     /// * image: BGR or Gray-Scale image.
     /// * size: Size of the image.
-    pub fn new(image: &core::Mat, size: core::Size2d) -> Result<crate::viz::WImage3D> {
-        unsafe { sys::cv_viz_WImage3D_WImage3D_Mat_Size2d(image.as_raw_Mat(), size) }.into_result().map(|ptr| crate::viz::WImage3D { ptr })
+    pub fn new(image: &dyn core::ToInputArray, size: core::Size2d) -> Result<crate::viz::WImage3D> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_WImage3D_WImage3D__InputArray_Size2d(image.as_raw__InputArray(), size) }.into_result().map(|ptr| crate::viz::WImage3D { ptr })
     }
     
     /// Constructs an WImage3D.
@@ -1485,16 +1509,18 @@ impl WImage3D {
     /// * center: Position of the image.
     /// * normal: Normal of the plane that represents the image.
     /// * up_vector: Determines orientation of the image.
-    pub fn new_1(image: &core::Mat, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
-        unsafe { sys::cv_viz_WImage3D_WImage3D_Mat_Size2d_Vec3d_Vec3d_Vec3d(image.as_raw_Mat(), size, center, normal, up_vector) }.into_result().map(|ptr| crate::viz::WImage3D { ptr })
+    pub fn new_1(image: &dyn core::ToInputArray, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> Result<crate::viz::WImage3D> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_WImage3D_WImage3D__InputArray_Size2d_Vec3d_Vec3d_Vec3d(image.as_raw__InputArray(), size, center, normal, up_vector) }.into_result().map(|ptr| crate::viz::WImage3D { ptr })
     }
     
     /// Sets the image content of the widget.
     ///
     /// ## Parameters
     /// * image: BGR or Gray-Scale image.
-    pub fn set_image(&mut self, image: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_viz_WImage3D_setImage_Mat(self.as_raw_WImage3D(), image.as_raw_Mat()) }.into_result()
+    pub fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_WImage3D_setImage__InputArray(self.as_raw_WImage3D(), image.as_raw__InputArray()) }.into_result()
     }
     
     /// Sets the image size of the widget.
@@ -1543,16 +1569,18 @@ impl WImageOverlay {
     /// ## Parameters
     /// * image: BGR or Gray-Scale image.
     /// * rect: Image is scaled and positioned based on rect.
-    pub fn new(image: &core::Mat, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
-        unsafe { sys::cv_viz_WImageOverlay_WImageOverlay_Mat_Rect(image.as_raw_Mat(), rect) }.into_result().map(|ptr| crate::viz::WImageOverlay { ptr })
+    pub fn new(image: &dyn core::ToInputArray, rect: core::Rect) -> Result<crate::viz::WImageOverlay> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_WImageOverlay_WImageOverlay__InputArray_Rect(image.as_raw__InputArray(), rect) }.into_result().map(|ptr| crate::viz::WImageOverlay { ptr })
     }
     
     /// Sets the image content of the widget.
     ///
     /// ## Parameters
     /// * image: BGR or Gray-Scale image.
-    pub fn set_image(&mut self, image: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_viz_WImageOverlay_setImage_Mat(self.as_raw_WImageOverlay(), image.as_raw_Mat()) }.into_result()
+    pub fn set_image(&mut self, image: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_viz_WImageOverlay_setImage__InputArray(self.as_raw_WImageOverlay(), image.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -1636,8 +1664,12 @@ impl WMesh {
     /// ## C++ default parameters
     /// * colors: noArray()
     /// * normals: noArray()
-    pub fn new_1(cloud: &core::Mat, polygons: &core::Mat, colors: &core::Mat, normals: &core::Mat) -> Result<crate::viz::WMesh> {
-        unsafe { sys::cv_viz_WMesh_WMesh_Mat_Mat_Mat_Mat(cloud.as_raw_Mat(), polygons.as_raw_Mat(), colors.as_raw_Mat(), normals.as_raw_Mat()) }.into_result().map(|ptr| crate::viz::WMesh { ptr })
+    pub fn new_1(cloud: &dyn core::ToInputArray, polygons: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, normals: &dyn core::ToInputArray) -> Result<crate::viz::WMesh> {
+        input_array_arg!(cloud);
+        input_array_arg!(polygons);
+        input_array_arg!(colors);
+        input_array_arg!(normals);
+        unsafe { sys::cv_viz_WMesh_WMesh__InputArray__InputArray__InputArray__InputArray(cloud.as_raw__InputArray(), polygons.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray()) }.into_result().map(|ptr| crate::viz::WMesh { ptr })
     }
     
 }
@@ -1673,8 +1705,9 @@ impl crate::viz::Widget3D for WPaintedCloud {
 impl WPaintedCloud {
 
     /// Paint cloud with default gradient between cloud bounds points
-    pub fn new(cloud: &core::Mat) -> Result<crate::viz::WPaintedCloud> {
-        unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud_Mat(cloud.as_raw_Mat()) }.into_result().map(|ptr| crate::viz::WPaintedCloud { ptr })
+    pub fn new(cloud: &dyn core::ToInputArray) -> Result<crate::viz::WPaintedCloud> {
+        input_array_arg!(cloud);
+        unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud__InputArray(cloud.as_raw__InputArray()) }.into_result().map(|ptr| crate::viz::WPaintedCloud { ptr })
     }
     
 }
@@ -1756,8 +1789,10 @@ impl crate::viz::Widget3D for WPolyLine {
 
 impl WPolyLine {
 
-    pub fn new(points: &core::Mat, colors: &core::Mat) -> Result<crate::viz::WPolyLine> {
-        unsafe { sys::cv_viz_WPolyLine_WPolyLine_Mat_Mat(points.as_raw_Mat(), colors.as_raw_Mat()) }.into_result().map(|ptr| crate::viz::WPolyLine { ptr })
+    pub fn new(points: &dyn core::ToInputArray, colors: &dyn core::ToInputArray) -> Result<crate::viz::WPolyLine> {
+        input_array_arg!(points);
+        input_array_arg!(colors);
+        unsafe { sys::cv_viz_WPolyLine_WPolyLine__InputArray__InputArray(points.as_raw__InputArray(), colors.as_raw__InputArray()) }.into_result().map(|ptr| crate::viz::WPolyLine { ptr })
     }
     
     /// Constructs a WPolyLine.
@@ -1768,8 +1803,9 @@ impl WPolyLine {
     ///
     /// ## C++ default parameters
     /// * color: Color::white()
-    pub fn new_1(points: &core::Mat, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
-        unsafe { sys::cv_viz_WPolyLine_WPolyLine_Mat_Color(points.as_raw_Mat(), color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WPolyLine { ptr })
+    pub fn new_1(points: &dyn core::ToInputArray, color: &crate::viz::Color) -> Result<crate::viz::WPolyLine> {
+        input_array_arg!(points);
+        unsafe { sys::cv_viz_WPolyLine_WPolyLine__InputArray_Color(points.as_raw__InputArray(), color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WPolyLine { ptr })
     }
     
 }
@@ -1966,8 +2002,9 @@ impl WTrajectory {
     /// * display_mode: WTrajectory::PATH
     /// * scale: 1.0
     /// * color: Color::white()
-    pub fn new(path: &core::Mat, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
-        unsafe { sys::cv_viz_WTrajectory_WTrajectory_Mat_int_double_Color(path.as_raw_Mat(), display_mode, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectory { ptr })
+    pub fn new(path: &dyn core::ToInputArray, display_mode: i32, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectory> {
+        input_array_arg!(path);
+        unsafe { sys::cv_viz_WTrajectory_WTrajectory__InputArray_int_double_Color(path.as_raw__InputArray(), display_mode, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectory { ptr })
     }
     
 }
@@ -2016,8 +2053,9 @@ impl WTrajectoryFrustums {
     /// ## C++ default parameters
     /// * scale: 1.
     /// * color: Color::white()
-    pub fn new(path: &core::Mat, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
-        unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_Mat_Vec2d_double_Color(path.as_raw_Mat(), fov, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectoryFrustums { ptr })
+    pub fn new(path: &dyn core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
+        input_array_arg!(path);
+        unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums__InputArray_Vec2d_double_Color(path.as_raw__InputArray(), fov, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectoryFrustums { ptr })
     }
     
 }
@@ -2070,8 +2108,9 @@ impl WTrajectorySpheres {
     /// * radius: 0.007
     /// * from: Color::red()
     /// * to: Color::white()
-    pub fn new(path: &core::Mat, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
-        unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres_Mat_double_double_Color_Color(path.as_raw_Mat(), line_length, radius, from.as_raw_Color(), to.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectorySpheres { ptr })
+    pub fn new(path: &dyn core::ToInputArray, line_length: f64, radius: f64, from: &crate::viz::Color, to: &crate::viz::Color) -> Result<crate::viz::WTrajectorySpheres> {
+        input_array_arg!(path);
+        unsafe { sys::cv_viz_WTrajectorySpheres_WTrajectorySpheres__InputArray_double_double_Color_Color(path.as_raw__InputArray(), line_length, radius, from.as_raw_Color(), to.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectorySpheres { ptr })
     }
     
 }

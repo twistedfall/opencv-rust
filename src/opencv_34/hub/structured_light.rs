@@ -18,6 +18,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// Kyriakos Herakleous, Charalambos Poullis. "3DUNDERWORLD-SLS: An Open-Source Structured-Light Scanning System for Rapid Geometry Acquisition", arXiv preprint arXiv:1406.6595 (2014).
 pub const DECODE_3D_UNDERWORLD: i32 = 0;
@@ -78,8 +79,10 @@ pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
     /// ## Parameters
     /// * blackImage: The generated all-black CV_8U image, at projector's resolution.
     /// * whiteImage: The generated all-white CV_8U image, at projector's resolution.
-    fn get_images_for_shadow_masks(&self, black_image: &mut core::Mat, white_image: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const_Mat_Mat(self.as_raw_GrayCodePattern(), black_image.as_raw_Mat(), white_image.as_raw_Mat()) }.into_result()
+    fn get_images_for_shadow_masks(&self, black_image: &mut dyn core::ToInputOutputArray, white_image: &mut dyn core::ToInputOutputArray) -> Result<()> {
+        input_output_array_arg!(black_image);
+        input_output_array_arg!(white_image);
+        unsafe { sys::cv_structured_light_GrayCodePattern_getImagesForShadowMasks_const__InputOutputArray__InputOutputArray(self.as_raw_GrayCodePattern(), black_image.as_raw__InputOutputArray(), white_image.as_raw__InputOutputArray()) }.into_result()
     }
     
     /// For a (x,y) pixel of a camera returns the corresponding projector pixel.
@@ -92,8 +95,9 @@ pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
     /// * x: x coordinate of the image pixel.
     /// * y: y coordinate of the image pixel.
     /// * projPix: Projector's pixel corresponding to the camera's pixel: projPix.x and projPix.y are the image coordinates of the projector's pixel corresponding to the pixel being decoded in a camera.
-    fn get_proj_pixel(&self, pattern_images: &types::VectorOfMat, x: i32, y: i32, proj_pix: &mut core::Point) -> Result<bool> {
-        unsafe { sys::cv_structured_light_GrayCodePattern_getProjPixel_const_VectorOfMat_int_int_Point(self.as_raw_GrayCodePattern(), pattern_images.as_raw_VectorOfMat(), x, y, proj_pix) }.into_result()
+    fn get_proj_pixel(&self, pattern_images: &dyn core::ToInputArray, x: i32, y: i32, proj_pix: &mut core::Point) -> Result<bool> {
+        input_array_arg!(pattern_images);
+        unsafe { sys::cv_structured_light_GrayCodePattern_getProjPixel_const__InputArray_int_int_Point(self.as_raw_GrayCodePattern(), pattern_images.as_raw__InputArray(), x, y, proj_pix) }.into_result()
     }
     
 }
@@ -165,8 +169,12 @@ pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
     /// ## C++ default parameters
     /// * shadow_mask: noArray()
     /// * fundamental: noArray()
-    fn compute_phase_map(&mut self, pattern_images: &types::VectorOfMat, wrapped_phase_map: &mut core::Mat, shadow_mask: &mut core::Mat, fundamental: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_structured_light_SinusoidalPattern_computePhaseMap_VectorOfMat_Mat_Mat_Mat(self.as_raw_SinusoidalPattern(), pattern_images.as_raw_VectorOfMat(), wrapped_phase_map.as_raw_Mat(), shadow_mask.as_raw_Mat(), fundamental.as_raw_Mat()) }.into_result()
+    fn compute_phase_map(&mut self, pattern_images: &dyn core::ToInputArray, wrapped_phase_map: &mut dyn core::ToOutputArray, shadow_mask: &mut dyn core::ToOutputArray, fundamental: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(pattern_images);
+        output_array_arg!(wrapped_phase_map);
+        output_array_arg!(shadow_mask);
+        input_array_arg!(fundamental);
+        unsafe { sys::cv_structured_light_SinusoidalPattern_computePhaseMap__InputArray__OutputArray__OutputArray__InputArray(self.as_raw_SinusoidalPattern(), pattern_images.as_raw__InputArray(), wrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__OutputArray(), fundamental.as_raw__InputArray()) }.into_result()
     }
     
     /// Unwrap the wrapped phase map to remove phase ambiguities.
@@ -178,8 +186,11 @@ pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
     ///
     /// ## C++ default parameters
     /// * shadow_mask: noArray()
-    fn unwrap_phase_map(&mut self, wrapped_phase_map: &types::VectorOfMat, unwrapped_phase_map: &mut core::Mat, cam_size: core::Size, shadow_mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap_VectorOfMat_Mat_Size_Mat(self.as_raw_SinusoidalPattern(), wrapped_phase_map.as_raw_VectorOfMat(), unwrapped_phase_map.as_raw_Mat(), cam_size, shadow_mask.as_raw_Mat()) }.into_result()
+    fn unwrap_phase_map(&mut self, wrapped_phase_map: &dyn core::ToInputArray, unwrapped_phase_map: &mut dyn core::ToOutputArray, cam_size: core::Size, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(wrapped_phase_map);
+        output_array_arg!(unwrapped_phase_map);
+        input_array_arg!(shadow_mask);
+        unsafe { sys::cv_structured_light_SinusoidalPattern_unwrapPhaseMap__InputArray__OutputArray_Size__InputArray(self.as_raw_SinusoidalPattern(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), cam_size, shadow_mask.as_raw__InputArray()) }.into_result()
     }
     
     /// Find correspondences between the two devices thanks to unwrapped phase maps.
@@ -187,8 +198,11 @@ pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
     /// * projUnwrappedPhaseMap: Projector's unwrapped phase map.
     /// * camUnwrappedPhaseMap: Camera's unwrapped phase map.
     /// * matches: Images used to display correspondences map.
-    fn find_pro_cam_matches(&mut self, proj_unwrapped_phase_map: &core::Mat, cam_unwrapped_phase_map: &core::Mat, matches: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_structured_light_SinusoidalPattern_findProCamMatches_Mat_Mat_VectorOfMat(self.as_raw_SinusoidalPattern(), proj_unwrapped_phase_map.as_raw_Mat(), cam_unwrapped_phase_map.as_raw_Mat(), matches.as_raw_VectorOfMat()) }.into_result()
+    fn find_pro_cam_matches(&mut self, proj_unwrapped_phase_map: &dyn core::ToInputArray, cam_unwrapped_phase_map: &dyn core::ToInputArray, matches: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(proj_unwrapped_phase_map);
+        input_array_arg!(cam_unwrapped_phase_map);
+        output_array_arg!(matches);
+        unsafe { sys::cv_structured_light_SinusoidalPattern_findProCamMatches__InputArray__InputArray__OutputArray(self.as_raw_SinusoidalPattern(), proj_unwrapped_phase_map.as_raw__InputArray(), cam_unwrapped_phase_map.as_raw__InputArray(), matches.as_raw__OutputArray()) }.into_result()
     }
     
     /// compute the data modulation term.
@@ -196,8 +210,11 @@ pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
     /// * patternImages: captured images with projected patterns.
     /// * dataModulationTerm: Mat where the data modulation term is saved.
     /// * shadowMask: Mask used to discard shadow regions.
-    fn compute_data_modulation_term(&mut self, pattern_images: &types::VectorOfMat, data_modulation_term: &mut core::Mat, shadow_mask: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_structured_light_SinusoidalPattern_computeDataModulationTerm_VectorOfMat_Mat_Mat(self.as_raw_SinusoidalPattern(), pattern_images.as_raw_VectorOfMat(), data_modulation_term.as_raw_Mat(), shadow_mask.as_raw_Mat()) }.into_result()
+    fn compute_data_modulation_term(&mut self, pattern_images: &dyn core::ToInputArray, data_modulation_term: &mut dyn core::ToOutputArray, shadow_mask: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(pattern_images);
+        output_array_arg!(data_modulation_term);
+        input_array_arg!(shadow_mask);
+        unsafe { sys::cv_structured_light_SinusoidalPattern_computeDataModulationTerm__InputArray__OutputArray__InputArray(self.as_raw_SinusoidalPattern(), pattern_images.as_raw__InputArray(), data_modulation_term.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -294,8 +311,9 @@ pub trait StructuredLightPattern: core::Algorithm {
     ///
     /// ## Parameters
     /// * patternImages: The generated pattern: a vector<Mat>, in which each image is a CV_8U Mat at projector's resolution.
-    fn generate(&mut self, pattern_images: &mut types::VectorOfMat) -> Result<bool> {
-        unsafe { sys::cv_structured_light_StructuredLightPattern_generate_VectorOfMat(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfMat()) }.into_result()
+    fn generate(&mut self, pattern_images: &mut dyn core::ToOutputArray) -> Result<bool> {
+        output_array_arg!(pattern_images);
+        unsafe { sys::cv_structured_light_StructuredLightPattern_generate__OutputArray(self.as_raw_StructuredLightPattern(), pattern_images.as_raw__OutputArray()) }.into_result()
     }
     
     /// Decodes the structured light pattern, generating a disparity map
@@ -313,8 +331,11 @@ pub trait StructuredLightPattern: core::Algorithm {
     /// * black_images: noArray()
     /// * white_images: noArray()
     /// * flags: DECODE_3D_UNDERWORLD
-    fn decode(&self, pattern_images: &types::VectorOfVectorOfMat, disparity_map: &mut core::Mat, black_images: &types::VectorOfMat, white_images: &types::VectorOfMat, flags: i32) -> Result<bool> {
-        unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_VectorOfVectorOfMat_Mat_VectorOfMat_VectorOfMat_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw_Mat(), black_images.as_raw_VectorOfMat(), white_images.as_raw_VectorOfMat(), flags) }.into_result()
+    fn decode(&self, pattern_images: &types::VectorOfVectorOfMat, disparity_map: &mut dyn core::ToOutputArray, black_images: &dyn core::ToInputArray, white_images: &dyn core::ToInputArray, flags: i32) -> Result<bool> {
+        output_array_arg!(disparity_map);
+        input_array_arg!(black_images);
+        input_array_arg!(white_images);
+        unsafe { sys::cv_structured_light_StructuredLightPattern_decode_const_VectorOfVectorOfMat__OutputArray__InputArray__InputArray_int(self.as_raw_StructuredLightPattern(), pattern_images.as_raw_VectorOfVectorOfMat(), disparity_map.as_raw__OutputArray(), black_images.as_raw__InputArray(), white_images.as_raw__InputArray(), flags) }.into_result()
     }
     
 }

@@ -125,6 +125,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;
 pub const CALIB_CB_ASYMMETRIC_GRID: i32 = 2;
@@ -247,14 +248,6 @@ pub struct CirclesGridFinderParameters {
     pub min_rng_edge_switch_dist: f32,
 }
 
-
-#[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
-pub struct CirclesGridFinderParameters2 {
-    pub square_size: f32,
-    pub max_rectified_distance: f32,
-}
-
 /// Computes an RQ decomposition of 3x3 matrices.
 ///
 /// ## Parameters
@@ -279,8 +272,14 @@ pub struct CirclesGridFinderParameters2 {
 /// * qx: noArray()
 /// * qy: noArray()
 /// * qz: noArray()
-pub fn rq_decomp3x3(src: &core::Mat, mtx_r: &mut core::Mat, mtx_q: &mut core::Mat, qx: &mut core::Mat, qy: &mut core::Mat, qz: &mut core::Mat) -> Result<core::Vec3d> {
-    unsafe { sys::cv_RQDecomp3x3_Mat_Mat_Mat_Mat_Mat_Mat(src.as_raw_Mat(), mtx_r.as_raw_Mat(), mtx_q.as_raw_Mat(), qx.as_raw_Mat(), qy.as_raw_Mat(), qz.as_raw_Mat()) }.into_result()
+pub fn rq_decomp3x3(src: &dyn core::ToInputArray, mtx_r: &mut dyn core::ToOutputArray, mtx_q: &mut dyn core::ToOutputArray, qx: &mut dyn core::ToOutputArray, qy: &mut dyn core::ToOutputArray, qz: &mut dyn core::ToOutputArray) -> Result<core::Vec3d> {
+    input_array_arg!(src);
+    output_array_arg!(mtx_r);
+    output_array_arg!(mtx_q);
+    output_array_arg!(qx);
+    output_array_arg!(qy);
+    output_array_arg!(qz);
+    unsafe { sys::cv_RQDecomp3x3__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray(src.as_raw__InputArray(), mtx_r.as_raw__OutputArray(), mtx_q.as_raw__OutputArray(), qx.as_raw__OutputArray(), qy.as_raw__OutputArray(), qz.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts a rotation matrix to a rotation vector or vice versa.
@@ -303,8 +302,11 @@ pub fn rq_decomp3x3(src: &core::Mat, mtx_r: &mut core::Mat, mtx_q: &mut core::Ma
 ///
 /// ## C++ default parameters
 /// * jacobian: noArray()
-pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_Rodrigues_Mat_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat(), jacobian.as_raw_Mat()) }.into_result()
+pub fn rodrigues(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    output_array_arg!(jacobian);
+    unsafe { sys::cv_Rodrigues__InputArray__OutputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray(), jacobian.as_raw__OutputArray()) }.into_result()
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
@@ -425,8 +427,17 @@ pub fn rodrigues(src: &core::Mat, dst: &mut core::Mat, jacobian: &mut core::Mat)
 /// ## C++ default parameters
 /// * flags: 0
 /// * criteria: TermCriteria( TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON)
-pub fn calibrate_camera_with_stddev(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, camera_matrix: &mut core::Mat, dist_coeffs: &mut core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, std_deviations_intrinsics: &mut core::Mat, std_deviations_extrinsics: &mut core::Mat, per_view_errors: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-    unsafe { sys::cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), std_deviations_intrinsics.as_raw_Mat(), std_deviations_extrinsics.as_raw_Mat(), per_view_errors.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+pub fn calibrate_camera_with_stddev(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_output_array_arg!(camera_matrix);
+    input_output_array_arg!(dist_coeffs);
+    output_array_arg!(rvecs);
+    output_array_arg!(tvecs);
+    output_array_arg!(std_deviations_intrinsics);
+    output_array_arg!(std_deviations_extrinsics);
+    output_array_arg!(per_view_errors);
+    unsafe { sys::cv_calibrateCamera__InputArray__InputArray_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
@@ -556,8 +567,14 @@ pub fn calibrate_camera_with_stddev(object_points: &types::VectorOfMat, image_po
 /// ## C++ default parameters
 /// * flags: 0
 /// * criteria: TermCriteria( TermCriteria::COUNT + TermCriteria::EPS, 30, DBL_EPSILON)
-pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, camera_matrix: &mut core::Mat, dist_coeffs: &mut core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-    unsafe { sys::cv_calibrateCamera_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+pub fn calibrate_camera(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_output_array_arg!(camera_matrix);
+    input_output_array_arg!(dist_coeffs);
+    output_array_arg!(rvecs);
+    output_array_arg!(tvecs);
+    unsafe { sys::cv_calibrateCamera__InputArray__InputArray_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 /// Computes Hand-Eye calibration: ![inline formula](https://latex.codecogs.com/png.latex?_%7B%7D%5E%7Bg%7D%5Ctextrm%7BT%7D_c)
@@ -626,8 +643,14 @@ pub fn calibrate_camera(object_points: &types::VectorOfMat, image_points: &types
 ///
 /// ## C++ default parameters
 /// * method: CALIB_HAND_EYE_TSAI
-pub fn calibrate_hand_eye(r_gripper2base: &types::VectorOfMat, t_gripper2base: &types::VectorOfMat, r_target2cam: &types::VectorOfMat, t_target2cam: &types::VectorOfMat, r_cam2gripper: &mut core::Mat, t_cam2gripper: &mut core::Mat, method: crate::calib3d::HandEyeCalibrationMethod) -> Result<()> {
-    unsafe { sys::cv_calibrateHandEye_VectorOfMat_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_HandEyeCalibrationMethod(r_gripper2base.as_raw_VectorOfMat(), t_gripper2base.as_raw_VectorOfMat(), r_target2cam.as_raw_VectorOfMat(), t_target2cam.as_raw_VectorOfMat(), r_cam2gripper.as_raw_Mat(), t_cam2gripper.as_raw_Mat(), method) }.into_result()
+pub fn calibrate_hand_eye(r_gripper2base: &dyn core::ToInputArray, t_gripper2base: &dyn core::ToInputArray, r_target2cam: &dyn core::ToInputArray, t_target2cam: &dyn core::ToInputArray, r_cam2gripper: &mut dyn core::ToOutputArray, t_cam2gripper: &mut dyn core::ToOutputArray, method: crate::calib3d::HandEyeCalibrationMethod) -> Result<()> {
+    input_array_arg!(r_gripper2base);
+    input_array_arg!(t_gripper2base);
+    input_array_arg!(r_target2cam);
+    input_array_arg!(t_target2cam);
+    output_array_arg!(r_cam2gripper);
+    output_array_arg!(t_cam2gripper);
+    unsafe { sys::cv_calibrateHandEye__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_HandEyeCalibrationMethod(r_gripper2base.as_raw__InputArray(), t_gripper2base.as_raw__InputArray(), r_target2cam.as_raw__InputArray(), t_target2cam.as_raw__InputArray(), r_cam2gripper.as_raw__OutputArray(), t_cam2gripper.as_raw__OutputArray(), method) }.into_result()
 }
 
 /// Computes useful camera characteristics from the camera matrix.
@@ -651,8 +674,9 @@ pub fn calibrate_hand_eye(r_gripper2base: &types::VectorOfMat, t_gripper2base: &
 /// Note:
 /// Do keep in mind that the unity measure 'mm' stands for whatever unit of measure one chooses for
 /// the chessboard pitch (it can thus be any value).
-pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> Result<()> {
-    unsafe { sys::cv_calibrationMatrixValues_Mat_Size_double_double_double_double_double_Point2d_double(camera_matrix.as_raw_Mat(), image_size, aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio) }.into_result()
+pub fn calibration_matrix_values(camera_matrix: &dyn core::ToInputArray, image_size: core::Size, aperture_width: f64, aperture_height: f64, fovx: &mut f64, fovy: &mut f64, focal_length: &mut f64, principal_point: &mut core::Point2d, aspect_ratio: &mut f64) -> Result<()> {
+    input_array_arg!(camera_matrix);
+    unsafe { sys::cv_calibrationMatrixValues__InputArray_Size_double_double_double_double_double_Point2d_double(camera_matrix.as_raw__InputArray(), image_size, aperture_width, aperture_height, fovx, fovy, focal_length, principal_point, aspect_ratio) }.into_result()
 }
 
 /// Combines two rotation-and-shift transformations.
@@ -694,8 +718,22 @@ pub fn calibration_matrix_values(camera_matrix: &core::Mat, image_size: core::Si
 /// * dt3dt1: noArray()
 /// * dt3dr2: noArray()
 /// * dt3dt2: noArray()
-pub fn compose_rt(rvec1: &core::Mat, tvec1: &core::Mat, rvec2: &core::Mat, tvec2: &core::Mat, rvec3: &mut core::Mat, tvec3: &mut core::Mat, dr3dr1: &mut core::Mat, dr3dt1: &mut core::Mat, dr3dr2: &mut core::Mat, dr3dt2: &mut core::Mat, dt3dr1: &mut core::Mat, dt3dt1: &mut core::Mat, dt3dr2: &mut core::Mat, dt3dt2: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_composeRT_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat(rvec1.as_raw_Mat(), tvec1.as_raw_Mat(), rvec2.as_raw_Mat(), tvec2.as_raw_Mat(), rvec3.as_raw_Mat(), tvec3.as_raw_Mat(), dr3dr1.as_raw_Mat(), dr3dt1.as_raw_Mat(), dr3dr2.as_raw_Mat(), dr3dt2.as_raw_Mat(), dt3dr1.as_raw_Mat(), dt3dt1.as_raw_Mat(), dt3dr2.as_raw_Mat(), dt3dt2.as_raw_Mat()) }.into_result()
+pub fn compose_rt(rvec1: &dyn core::ToInputArray, tvec1: &dyn core::ToInputArray, rvec2: &dyn core::ToInputArray, tvec2: &dyn core::ToInputArray, rvec3: &mut dyn core::ToOutputArray, tvec3: &mut dyn core::ToOutputArray, dr3dr1: &mut dyn core::ToOutputArray, dr3dt1: &mut dyn core::ToOutputArray, dr3dr2: &mut dyn core::ToOutputArray, dr3dt2: &mut dyn core::ToOutputArray, dt3dr1: &mut dyn core::ToOutputArray, dt3dt1: &mut dyn core::ToOutputArray, dt3dr2: &mut dyn core::ToOutputArray, dt3dt2: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(rvec1);
+    input_array_arg!(tvec1);
+    input_array_arg!(rvec2);
+    input_array_arg!(tvec2);
+    output_array_arg!(rvec3);
+    output_array_arg!(tvec3);
+    output_array_arg!(dr3dr1);
+    output_array_arg!(dr3dt1);
+    output_array_arg!(dr3dr2);
+    output_array_arg!(dr3dt2);
+    output_array_arg!(dt3dr1);
+    output_array_arg!(dt3dt1);
+    output_array_arg!(dt3dr2);
+    output_array_arg!(dt3dt2);
+    unsafe { sys::cv_composeRT__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray(rvec1.as_raw__InputArray(), tvec1.as_raw__InputArray(), rvec2.as_raw__InputArray(), tvec2.as_raw__InputArray(), rvec3.as_raw__OutputArray(), tvec3.as_raw__OutputArray(), dr3dr1.as_raw__OutputArray(), dr3dt1.as_raw__OutputArray(), dr3dr2.as_raw__OutputArray(), dr3dt2.as_raw__OutputArray(), dt3dr1.as_raw__OutputArray(), dt3dt1.as_raw__OutputArray(), dt3dr2.as_raw__OutputArray(), dt3dt2.as_raw__OutputArray()) }.into_result()
 }
 
 /// For points in an image of a stereo pair, computes the corresponding epilines in the other image.
@@ -721,8 +759,11 @@ pub fn compose_rt(rvec1: &core::Mat, tvec1: &core::Mat, rvec2: &core::Mat, tvec2
 /// ![block formula](https://latex.codecogs.com/png.latex?l%5E%7B%281%29%7D_i%20%3D%20F%5ET%20p%5E%7B%282%29%7D_i)
 ///
 /// Line coefficients are defined up to a scale. They are normalized so that ![inline formula](https://latex.codecogs.com/png.latex?a_i%5E2%2Bb_i%5E2%3D1) .
-pub fn compute_correspond_epilines(points: &core::Mat, which_image: i32, f: &core::Mat, lines: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_computeCorrespondEpilines_Mat_int_Mat_Mat(points.as_raw_Mat(), which_image, f.as_raw_Mat(), lines.as_raw_Mat()) }.into_result()
+pub fn compute_correspond_epilines(points: &dyn core::ToInputArray, which_image: i32, f: &dyn core::ToInputArray, lines: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(points);
+    input_array_arg!(f);
+    output_array_arg!(lines);
+    unsafe { sys::cv_computeCorrespondEpilines__InputArray_int__InputArray__OutputArray(points.as_raw__InputArray(), which_image, f.as_raw__InputArray(), lines.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts points from homogeneous to Euclidean space.
@@ -734,8 +775,10 @@ pub fn compute_correspond_epilines(points: &core::Mat, which_image: i32, f: &cor
 /// The function converts points homogeneous to Euclidean space using perspective projection. That is,
 /// each point (x1, x2, ... x(n-1), xn) is converted to (x1/xn, x2/xn, ..., x(n-1)/xn). When xn=0, the
 /// output point coordinates will be (0,0,0,...).
-pub fn convert_points_from_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_convertPointsFromHomogeneous_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn convert_points_from_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_convertPointsFromHomogeneous__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts points to/from homogeneous coordinates.
@@ -749,8 +792,10 @@ pub fn convert_points_from_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> 
 ///
 ///
 /// Note: The function is obsolete. Use one of the previous two functions instead.
-pub fn convert_points_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_convertPointsHomogeneous_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn convert_points_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_convertPointsHomogeneous__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts points from Euclidean to homogeneous space.
@@ -761,8 +806,10 @@ pub fn convert_points_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Resul
 ///
 /// The function converts points from Euclidean to homogeneous space by appending 1's to the tuple of
 /// point coordinates. That is, each point (x1, x2, ..., xn) is converted to (x1, x2, ..., xn, 1).
-pub fn convert_points_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_convertPointsToHomogeneous_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn convert_points_to_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_convertPointsToHomogeneous__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Refines coordinates of corresponding points.
@@ -780,8 +827,13 @@ pub fn convert_points_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Re
 /// error ![inline formula](https://latex.codecogs.com/png.latex?d%28points1%5Bi%5D%2C%20newPoints1%5Bi%5D%29%5E2%20%2B%20d%28points2%5Bi%5D%2CnewPoints2%5Bi%5D%29%5E2) (where ![inline formula](https://latex.codecogs.com/png.latex?d%28a%2Cb%29) is the
 /// geometric distance between points ![inline formula](https://latex.codecogs.com/png.latex?a) and ![inline formula](https://latex.codecogs.com/png.latex?b) ) subject to the epipolar constraint
 /// ![inline formula](https://latex.codecogs.com/png.latex?newPoints2%5ET%20%2A%20F%20%2A%20newPoints1%20%3D%200) .
-pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, new_points1: &mut core::Mat, new_points2: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_correctMatches_Mat_Mat_Mat_Mat_Mat(f.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), new_points1.as_raw_Mat(), new_points2.as_raw_Mat()) }.into_result()
+pub fn correct_matches(f: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, new_points1: &mut dyn core::ToOutputArray, new_points2: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(f);
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    output_array_arg!(new_points1);
+    output_array_arg!(new_points2);
+    unsafe { sys::cv_correctMatches__InputArray__InputArray__InputArray__OutputArray__OutputArray(f.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), new_points1.as_raw__OutputArray(), new_points2.as_raw__OutputArray()) }.into_result()
 }
 
 /// Decompose an essential matrix to possible rotations and translation.
@@ -795,8 +847,12 @@ pub fn correct_matches(f: &core::Mat, points1: &core::Mat, points2: &core::Mat, 
 /// This function decompose an essential matrix E using svd decomposition [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) . Generally 4
 /// possible poses exists for a given E. They are ![inline formula](https://latex.codecogs.com/png.latex?%5BR_1%2C%20t%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR_1%2C%20-t%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR_2%2C%20t%5D), ![inline formula](https://latex.codecogs.com/png.latex?%5BR_2%2C%20-t%5D). By
 /// decomposing E, you can only get the direction of the translation, so the function returns unit t.
-pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_decomposeEssentialMat_Mat_Mat_Mat_Mat(e.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
+pub fn decompose_essential_mat(e: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(e);
+    output_array_arg!(r1);
+    output_array_arg!(r2);
+    output_array_arg!(t);
+    unsafe { sys::cv_decomposeEssentialMat__InputArray__OutputArray__OutputArray__OutputArray(e.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), t.as_raw__OutputArray()) }.into_result()
 }
 
 /// Decompose a homography matrix to rotation(s), translation(s) and plane normal(s).
@@ -813,8 +869,13 @@ pub fn decompose_essential_mat(e: &core::Mat, r1: &mut core::Mat, r2: &mut core:
 /// may return up to four mathematical solution sets. At least two of the solutions may further be
 /// invalidated if point correspondences are available by applying positive depth constraint (all points
 /// must be in front of the camera). The decomposition method is described in detail in [Malis](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Malis) .
-pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut types::VectorOfMat, translations: &mut types::VectorOfMat, normals: &mut types::VectorOfMat) -> Result<i32> {
-    unsafe { sys::cv_decomposeHomographyMat_Mat_Mat_VectorOfMat_VectorOfMat_VectorOfMat(h.as_raw_Mat(), k.as_raw_Mat(), rotations.as_raw_VectorOfMat(), translations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat()) }.into_result()
+pub fn decompose_homography_mat(h: &dyn core::ToInputArray, k: &dyn core::ToInputArray, rotations: &mut dyn core::ToOutputArray, translations: &mut dyn core::ToOutputArray, normals: &mut dyn core::ToOutputArray) -> Result<i32> {
+    input_array_arg!(h);
+    input_array_arg!(k);
+    output_array_arg!(rotations);
+    output_array_arg!(translations);
+    output_array_arg!(normals);
+    unsafe { sys::cv_decomposeHomographyMat__InputArray__InputArray__OutputArray__OutputArray__OutputArray(h.as_raw__InputArray(), k.as_raw__InputArray(), rotations.as_raw__OutputArray(), translations.as_raw__OutputArray(), normals.as_raw__OutputArray()) }.into_result()
 }
 
 /// Decomposes a projection matrix into a rotation matrix and a camera matrix.
@@ -845,8 +906,16 @@ pub fn decompose_homography_mat(h: &core::Mat, k: &core::Mat, rotations: &mut ty
 /// * rot_matrix_y: noArray()
 /// * rot_matrix_z: noArray()
 /// * euler_angles: noArray()
-pub fn decompose_projection_matrix(proj_matrix: &core::Mat, camera_matrix: &mut core::Mat, rot_matrix: &mut core::Mat, trans_vect: &mut core::Mat, rot_matrix_x: &mut core::Mat, rot_matrix_y: &mut core::Mat, rot_matrix_z: &mut core::Mat, euler_angles: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_decomposeProjectionMatrix_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat(proj_matrix.as_raw_Mat(), camera_matrix.as_raw_Mat(), rot_matrix.as_raw_Mat(), trans_vect.as_raw_Mat(), rot_matrix_x.as_raw_Mat(), rot_matrix_y.as_raw_Mat(), rot_matrix_z.as_raw_Mat(), euler_angles.as_raw_Mat()) }.into_result()
+pub fn decompose_projection_matrix(proj_matrix: &dyn core::ToInputArray, camera_matrix: &mut dyn core::ToOutputArray, rot_matrix: &mut dyn core::ToOutputArray, trans_vect: &mut dyn core::ToOutputArray, rot_matrix_x: &mut dyn core::ToOutputArray, rot_matrix_y: &mut dyn core::ToOutputArray, rot_matrix_z: &mut dyn core::ToOutputArray, euler_angles: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(proj_matrix);
+    output_array_arg!(camera_matrix);
+    output_array_arg!(rot_matrix);
+    output_array_arg!(trans_vect);
+    output_array_arg!(rot_matrix_x);
+    output_array_arg!(rot_matrix_y);
+    output_array_arg!(rot_matrix_z);
+    output_array_arg!(euler_angles);
+    unsafe { sys::cv_decomposeProjectionMatrix__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray(proj_matrix.as_raw__InputArray(), camera_matrix.as_raw__OutputArray(), rot_matrix.as_raw__OutputArray(), trans_vect.as_raw__OutputArray(), rot_matrix_x.as_raw__OutputArray(), rot_matrix_y.as_raw__OutputArray(), rot_matrix_z.as_raw__OutputArray(), euler_angles.as_raw__OutputArray()) }.into_result()
 }
 
 /// Renders the detected chessboard corners.
@@ -861,8 +930,10 @@ pub fn decompose_projection_matrix(proj_matrix: &core::Mat, camera_matrix: &mut 
 ///
 /// The function draws individual chessboard corners detected either as red circles if the board was not
 /// found, or as colored corners connected with lines if the board was found.
-pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, corners: &core::Mat, pattern_was_found: bool) -> Result<()> {
-    unsafe { sys::cv_drawChessboardCorners_Mat_Size_Mat_bool(image.as_raw_Mat(), pattern_size, corners.as_raw_Mat(), pattern_was_found) }.into_result()
+pub fn draw_chessboard_corners(image: &mut dyn core::ToInputOutputArray, pattern_size: core::Size, corners: &dyn core::ToInputArray, pattern_was_found: bool) -> Result<()> {
+    input_output_array_arg!(image);
+    input_array_arg!(corners);
+    unsafe { sys::cv_drawChessboardCorners__InputOutputArray_Size__InputArray_bool(image.as_raw__InputOutputArray(), pattern_size, corners.as_raw__InputArray(), pattern_was_found) }.into_result()
 }
 
 /// Draw axes of the world/object coordinate system from pose estimation. ## See also
@@ -886,8 +957,13 @@ pub fn draw_chessboard_corners(image: &mut core::Mat, pattern_size: core::Size, 
 ///
 /// ## C++ default parameters
 /// * thickness: 3
-pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &core::Mat, tvec: &core::Mat, length: f32, thickness: i32) -> Result<()> {
-    unsafe { sys::cv_drawFrameAxes_Mat_Mat_Mat_Mat_Mat_float_int(image.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), length, thickness) }.into_result()
+pub fn draw_frame_axes(image: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, length: f32, thickness: i32) -> Result<()> {
+    input_output_array_arg!(image);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    input_array_arg!(rvec);
+    input_array_arg!(tvec);
+    unsafe { sys::cv_drawFrameAxes__InputOutputArray__InputArray__InputArray__InputArray__InputArray_float_int(image.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), length, thickness) }.into_result()
 }
 
 /// Computes an optimal affine transformation between two 2D point sets.
@@ -939,8 +1015,11 @@ pub fn draw_frame_axes(image: &mut core::Mat, camera_matrix: &core::Mat, dist_co
 /// * max_iters: 2000
 /// * confidence: 0.99
 /// * refine_iters: 10
-pub fn estimate_affine_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-    unsafe { sys::cv_estimateAffine2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn estimate_affine_2d(from: &dyn core::ToInputArray, to: &dyn core::ToInputArray, inliers: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
+    input_array_arg!(from);
+    input_array_arg!(to);
+    output_array_arg!(inliers);
+    unsafe { sys::cv_estimateAffine2D__InputArray__InputArray__OutputArray_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Computes an optimal affine transformation between two 3D point sets.
@@ -966,8 +1045,12 @@ pub fn estimate_affine_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::
 /// ## C++ default parameters
 /// * ransac_threshold: 3
 /// * confidence: 0.99
-pub fn estimate_affine_3d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat, inliers: &mut core::Mat, ransac_threshold: f64, confidence: f64) -> Result<i32> {
-    unsafe { sys::cv_estimateAffine3D_Mat_Mat_Mat_Mat_double_double(src.as_raw_Mat(), dst.as_raw_Mat(), out.as_raw_Mat(), inliers.as_raw_Mat(), ransac_threshold, confidence) }.into_result()
+pub fn estimate_affine_3d(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, out: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, ransac_threshold: f64, confidence: f64) -> Result<i32> {
+    input_array_arg!(src);
+    input_array_arg!(dst);
+    output_array_arg!(out);
+    output_array_arg!(inliers);
+    unsafe { sys::cv_estimateAffine3D__InputArray__InputArray__OutputArray__OutputArray_double_double(src.as_raw__InputArray(), dst.as_raw__InputArray(), out.as_raw__OutputArray(), inliers.as_raw__OutputArray(), ransac_threshold, confidence) }.into_result()
 }
 
 /// Computes an optimal limited affine transformation with 4 degrees of freedom between
@@ -1022,8 +1105,11 @@ pub fn estimate_affine_3d(src: &core::Mat, dst: &core::Mat, out: &mut core::Mat,
 /// * max_iters: 2000
 /// * confidence: 0.99
 /// * refine_iters: 10
-pub fn estimate_affine_partial_2d(from: &core::Mat, to: &core::Mat, inliers: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
-    unsafe { sys::cv_estimateAffinePartial2D_Mat_Mat_Mat_int_double_size_t_double_size_t(from.as_raw_Mat(), to.as_raw_Mat(), inliers.as_raw_Mat(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn estimate_affine_partial_2d(from: &dyn core::ToInputArray, to: &dyn core::ToInputArray, inliers: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<core::Mat> {
+    input_array_arg!(from);
+    input_array_arg!(to);
+    output_array_arg!(inliers);
+    unsafe { sys::cv_estimateAffinePartial2D__InputArray__InputArray__OutputArray_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Filters homography decompositions based on additional information.
@@ -1046,8 +1132,14 @@ pub fn estimate_affine_partial_2d(from: &core::Mat, to: &core::Mat, inliers: &mu
 ///
 /// ## C++ default parameters
 /// * points_mask: noArray()
-pub fn filter_homography_decomp_by_visible_refpoints(rotations: &types::VectorOfMat, normals: &types::VectorOfMat, before_points: &core::Mat, after_points: &core::Mat, possible_solutions: &mut core::Mat, points_mask: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_filterHomographyDecompByVisibleRefpoints_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat(rotations.as_raw_VectorOfMat(), normals.as_raw_VectorOfMat(), before_points.as_raw_Mat(), after_points.as_raw_Mat(), possible_solutions.as_raw_Mat(), points_mask.as_raw_Mat()) }.into_result()
+pub fn filter_homography_decomp_by_visible_refpoints(rotations: &dyn core::ToInputArray, normals: &dyn core::ToInputArray, before_points: &dyn core::ToInputArray, after_points: &dyn core::ToInputArray, possible_solutions: &mut dyn core::ToOutputArray, points_mask: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(rotations);
+    input_array_arg!(normals);
+    input_array_arg!(before_points);
+    input_array_arg!(after_points);
+    output_array_arg!(possible_solutions);
+    input_array_arg!(points_mask);
+    unsafe { sys::cv_filterHomographyDecompByVisibleRefpoints__InputArray__InputArray__InputArray__InputArray__OutputArray__InputArray(rotations.as_raw__InputArray(), normals.as_raw__InputArray(), before_points.as_raw__InputArray(), after_points.as_raw__InputArray(), possible_solutions.as_raw__OutputArray(), points_mask.as_raw__InputArray()) }.into_result()
 }
 
 /// Filters off small noise blobs (speckles) in the disparity map
@@ -1065,13 +1157,17 @@ pub fn filter_homography_decomp_by_visible_refpoints(rotations: &types::VectorOf
 ///
 /// ## C++ default parameters
 /// * buf: noArray()
-pub fn filter_speckles(img: &mut core::Mat, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_filterSpeckles_Mat_double_int_double_Mat(img.as_raw_Mat(), new_val, max_speckle_size, max_diff, buf.as_raw_Mat()) }.into_result()
+pub fn filter_speckles(img: &mut dyn core::ToInputOutputArray, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: &mut dyn core::ToInputOutputArray) -> Result<()> {
+    input_output_array_arg!(img);
+    input_output_array_arg!(buf);
+    unsafe { sys::cv_filterSpeckles__InputOutputArray_double_int_double__InputOutputArray(img.as_raw__InputOutputArray(), new_val, max_speckle_size, max_diff, buf.as_raw__InputOutputArray()) }.into_result()
 }
 
 /// finds subpixel-accurate positions of the chessboard corners
-pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region_size: core::Size) -> Result<bool> {
-    unsafe { sys::cv_find4QuadCornerSubpix_Mat_Mat_Size(img.as_raw_Mat(), corners.as_raw_Mat(), region_size) }.into_result()
+pub fn find4_quad_corner_subpix(img: &dyn core::ToInputArray, corners: &mut dyn core::ToInputOutputArray, region_size: core::Size) -> Result<bool> {
+    input_array_arg!(img);
+    input_output_array_arg!(corners);
+    unsafe { sys::cv_find4QuadCornerSubpix__InputArray__InputOutputArray_Size(img.as_raw__InputArray(), corners.as_raw__InputOutputArray(), region_size) }.into_result()
 }
 
 /// Finds the positions of internal corners of the chessboard.
@@ -1128,8 +1224,96 @@ pub fn find4_quad_corner_subpix(img: &core::Mat, corners: &mut core::Mat, region
 ///
 /// ## C++ default parameters
 /// * flags: CALIB_CB_ADAPTIVE_THRESH + CALIB_CB_NORMALIZE_IMAGE
-pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corners: &mut core::Mat, flags: i32) -> Result<bool> {
-    unsafe { sys::cv_findChessboardCorners_Mat_Size_Mat_int(image.as_raw_Mat(), pattern_size, corners.as_raw_Mat(), flags) }.into_result()
+pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: core::Size, corners: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
+    input_array_arg!(image);
+    output_array_arg!(corners);
+    unsafe { sys::cv_findChessboardCorners__InputArray_Size__OutputArray_int(image.as_raw__InputArray(), pattern_size, corners.as_raw__OutputArray(), flags) }.into_result()
+}
+
+/// Finds centers in the grid of circles.
+///
+/// ## Parameters
+/// * image: grid view of input circles; it must be an 8-bit grayscale or color image.
+/// * patternSize: number of circles per row and column
+/// ( patternSize = Size(points_per_row, points_per_colum) ).
+/// * centers: output array of detected centers.
+/// * flags: various operation flags that can be one of the following values:
+/// *   **CALIB_CB_SYMMETRIC_GRID** uses symmetric pattern of circles.
+/// *   **CALIB_CB_ASYMMETRIC_GRID** uses asymmetric pattern of circles.
+/// *   **CALIB_CB_CLUSTERING** uses a special algorithm for grid detection. It is more robust to
+/// perspective distortions but much more sensitive to background clutter.
+/// * blobDetector: feature detector that finds blobs like dark circles on light background.
+/// * parameters: struct for finding circles in a grid pattern.
+///
+/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
+/// function locates centers of the circles. The function returns a non-zero value if all of the centers
+/// have been found and they have been placed in a certain order (row by row, left to right in every
+/// row). Otherwise, if the function fails to find all the corners or reorder them, it returns 0.
+///
+/// Sample usage of detecting and drawing the centers of circles: :
+/// ```ignore
+/// Size patternsize(7,7); //number of centers
+/// Mat gray = ....; //source image
+/// vector<Point2f> centers; //this will be filled by the detected centers
+///
+/// bool patternfound = findCirclesGrid(gray, patternsize, centers);
+///
+/// drawChessboardCorners(img, patternsize, Mat(centers), patternfound);
+/// ```
+///
+///
+/// Note: The function requires white space (like a square-thick border, the wider the better) around
+/// the board to make the detection more robust in various environments.
+///
+/// ## Overloaded parameters
+///
+/// ## C++ default parameters
+/// * flags: CALIB_CB_SYMMETRIC_GRID
+/// * blob_detector: SimpleBlobDetector::create()
+pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &types::PtrOfFeature2D) -> Result<bool> {
+    input_array_arg!(image);
+    output_array_arg!(centers);
+    unsafe { sys::cv_findCirclesGrid__InputArray_Size__OutputArray_int_PtrOfFeature2D(image.as_raw__InputArray(), pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D()) }.into_result()
+}
+
+/// Finds centers in the grid of circles.
+///
+/// ## Parameters
+/// * image: grid view of input circles; it must be an 8-bit grayscale or color image.
+/// * patternSize: number of circles per row and column
+/// ( patternSize = Size(points_per_row, points_per_colum) ).
+/// * centers: output array of detected centers.
+/// * flags: various operation flags that can be one of the following values:
+/// *   **CALIB_CB_SYMMETRIC_GRID** uses symmetric pattern of circles.
+/// *   **CALIB_CB_ASYMMETRIC_GRID** uses asymmetric pattern of circles.
+/// *   **CALIB_CB_CLUSTERING** uses a special algorithm for grid detection. It is more robust to
+/// perspective distortions but much more sensitive to background clutter.
+/// * blobDetector: feature detector that finds blobs like dark circles on light background.
+/// * parameters: struct for finding circles in a grid pattern.
+///
+/// The function attempts to determine whether the input image contains a grid of circles. If it is, the
+/// function locates centers of the circles. The function returns a non-zero value if all of the centers
+/// have been found and they have been placed in a certain order (row by row, left to right in every
+/// row). Otherwise, if the function fails to find all the corners or reorder them, it returns 0.
+///
+/// Sample usage of detecting and drawing the centers of circles: :
+/// ```ignore
+/// Size patternsize(7,7); //number of centers
+/// Mat gray = ....; //source image
+/// vector<Point2f> centers; //this will be filled by the detected centers
+///
+/// bool patternfound = findCirclesGrid(gray, patternsize, centers);
+///
+/// drawChessboardCorners(img, patternsize, Mat(centers), patternfound);
+/// ```
+///
+///
+/// Note: The function requires white space (like a square-thick border, the wider the better) around
+/// the board to make the detection more robust in various environments.
+pub fn find_circles_grid_params(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &types::PtrOfFeature2D, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
+    input_array_arg!(image);
+    output_array_arg!(centers);
+    unsafe { sys::cv_findCirclesGrid__InputArray_Size__OutputArray_int_PtrOfFeature2D_CirclesGridFinderParameters(image.as_raw__InputArray(), pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), parameters) }.into_result()
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -1167,8 +1351,12 @@ pub fn find_chessboard_corners(image: &core::Mat, pattern_size: core::Size, corn
 /// * prob: 0.999
 /// * threshold: 1.0
 /// * mask: noArray()
-pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, method: i32, prob: f64, threshold: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_findEssentialMat_Mat_Mat_Mat_int_double_double_Mat(points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, method: i32, prob: f64, threshold: f64, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    input_array_arg!(camera_matrix);
+    output_array_arg!(mask);
+    unsafe { sys::cv_findEssentialMat__InputArray__InputArray__InputArray_int_double_double__OutputArray(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -1233,8 +1421,11 @@ pub fn find_essential_mat_matrix(points1: &core::Mat, points2: &core::Mat, camer
 /// * prob: 0.999
 /// * threshold: 1.0
 /// * mask: noArray()
-pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: &mut core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_findEssentialMat_Mat_Mat_double_Point2d_int_double_double_Mat(points1.as_raw_Mat(), points2.as_raw_Mat(), focal, pp, method, prob, threshold, mask.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, focal: f64, pp: core::Point2d, method: i32, prob: f64, threshold: f64, mask: &mut dyn core::ToOutputArray) -> Result<core::Mat> {
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    output_array_arg!(mask);
+    unsafe { sys::cv_findEssentialMat__InputArray__InputArray_double_Point2d_int_double_double__OutputArray(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, pp, method, prob, threshold, mask.as_raw__OutputArray()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
@@ -1295,8 +1486,11 @@ pub fn find_essential_mat(points1: &core::Mat, points2: &core::Mat, focal: f64, 
 /// * method: FM_RANSAC
 /// * ransac_reproj_threshold: 3.
 /// * confidence: 0.99
-pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut core::Mat, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_findFundamentalMat_Mat_Mat_Mat_int_double_double(points1.as_raw_Mat(), points2.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold, confidence) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn find_fundamental_mat(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<core::Mat> {
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    output_array_arg!(mask);
+    unsafe { sys::cv_findFundamentalMat__InputArray__InputArray__OutputArray_int_double_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, confidence) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Finds a perspective transformation between two planes.
@@ -1364,8 +1558,11 @@ pub fn find_fundamental_mat(points1: &core::Mat, points2: &core::Mat, mask: &mut
 /// ## C++ default parameters
 /// * method: 0
 /// * ransac_reproj_threshold: 3
-pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mut core::Mat, method: i32, ransac_reproj_threshold: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_findHomography_Mat_Mat_Mat_int_double(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), mask.as_raw_Mat(), method, ransac_reproj_threshold) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn find_homography(src_points: &dyn core::ToInputArray, dst_points: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray, method: i32, ransac_reproj_threshold: f64) -> Result<core::Mat> {
+    input_array_arg!(src_points);
+    input_array_arg!(dst_points);
+    output_array_arg!(mask);
+    unsafe { sys::cv_findHomography__InputArray__InputArray__OutputArray_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Finds a perspective transformation between two planes.
@@ -1434,8 +1631,11 @@ pub fn find_homography(src_points: &core::Mat, dst_points: &core::Mat, mask: &mu
 /// * mask: noArray()
 /// * max_iters: 2000
 /// * confidence: 0.995
-pub fn find_homography_full(src_points: &core::Mat, dst_points: &core::Mat, method: i32, ransac_reproj_threshold: f64, mask: &mut core::Mat, max_iters: i32, confidence: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_findHomography_Mat_Mat_int_double_Mat_int_double(src_points.as_raw_Mat(), dst_points.as_raw_Mat(), method, ransac_reproj_threshold, mask.as_raw_Mat(), max_iters, confidence) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn core::ToInputArray, method: i32, ransac_reproj_threshold: f64, mask: &mut dyn core::ToOutputArray, max_iters: i32, confidence: f64) -> Result<core::Mat> {
+    input_array_arg!(src_points);
+    input_array_arg!(dst_points);
+    output_array_arg!(mask);
+    unsafe { sys::cv_findHomography__InputArray__InputArray_int_double__OutputArray_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), method, ransac_reproj_threshold, mask.as_raw__OutputArray(), max_iters, confidence) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Performs camera calibaration
@@ -1475,8 +1675,14 @@ pub fn find_homography_full(src_points: &core::Mat, dst_points: &core::Mat, meth
 /// ## C++ default parameters
 /// * flags: 0
 /// * criteria: TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 100, DBL_EPSILON)
-pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, k: &mut core::Mat, d: &mut core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-    unsafe { sys::cv_fisheye_calibrate_VectorOfMat_VectorOfMat_Size_Mat_Mat_VectorOfMat_VectorOfMat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, k.as_raw_Mat(), d.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, k: &mut dyn core::ToInputOutputArray, d: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_output_array_arg!(k);
+    input_output_array_arg!(d);
+    output_array_arg!(rvecs);
+    output_array_arg!(tvecs);
+    unsafe { sys::cv_fisheye_calibrate__InputArray__InputArray_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 /// Distorts 2D points using fisheye model.
@@ -1495,8 +1701,12 @@ pub fn calibrate(object_points: &types::VectorOfMat, image_points: &types::Vecto
 ///
 /// ## C++ default parameters
 /// * alpha: 0
-pub fn distort_points(undistorted: &core::Mat, distorted: &mut core::Mat, k: &core::Mat, d: &core::Mat, alpha: f64) -> Result<()> {
-    unsafe { sys::cv_fisheye_distortPoints_Mat_Mat_Mat_Mat_double(undistorted.as_raw_Mat(), distorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), alpha) }.into_result()
+pub fn distort_points(undistorted: &dyn core::ToInputArray, distorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64) -> Result<()> {
+    input_array_arg!(undistorted);
+    output_array_arg!(distorted);
+    input_array_arg!(k);
+    input_array_arg!(d);
+    unsafe { sys::cv_fisheye_distortPoints__InputArray__OutputArray__InputArray__InputArray_double(undistorted.as_raw__InputArray(), distorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha) }.into_result()
 }
 
 /// Estimates new camera matrix for undistortion or rectification.
@@ -1517,8 +1727,12 @@ pub fn distort_points(undistorted: &core::Mat, distorted: &mut core::Mat, k: &co
 /// * balance: 0.0
 /// * new_size: Size()
 /// * fov_scale: 1.0
-pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &core::Mat, d: &core::Mat, image_size: core::Size, r: &core::Mat, p: &mut core::Mat, balance: f64, new_size: core::Size, fov_scale: f64) -> Result<()> {
-    unsafe { sys::cv_fisheye_estimateNewCameraMatrixForUndistortRectify_Mat_Mat_Size_Mat_Mat_double_Size_double(k.as_raw_Mat(), d.as_raw_Mat(), image_size, r.as_raw_Mat(), p.as_raw_Mat(), balance, new_size, fov_scale) }.into_result()
+pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, image_size: core::Size, r: &dyn core::ToInputArray, p: &mut dyn core::ToOutputArray, balance: f64, new_size: core::Size, fov_scale: f64) -> Result<()> {
+    input_array_arg!(k);
+    input_array_arg!(d);
+    input_array_arg!(r);
+    output_array_arg!(p);
+    unsafe { sys::cv_fisheye_estimateNewCameraMatrixForUndistortRectify__InputArray__InputArray_Size__InputArray__OutputArray_double_Size_double(k.as_raw__InputArray(), d.as_raw__InputArray(), image_size, r.as_raw__InputArray(), p.as_raw__OutputArray(), balance, new_size, fov_scale) }.into_result()
 }
 
 /// Computes undistortion and rectification maps for image transform by cv::remap(). If D is empty zero
@@ -1535,8 +1749,14 @@ pub fn estimate_new_camera_matrix_for_undistort_rectify(k: &core::Mat, d: &core:
 /// for details.
 /// * map1: The first output map.
 /// * map2: The second output map.
-pub fn fisheye_init_undistort_rectify_map(k: &core::Mat, d: &core::Mat, r: &core::Mat, p: &core::Mat, size: core::Size, m1type: i32, map1: &mut core::Mat, map2: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_fisheye_initUndistortRectifyMap_Mat_Mat_Mat_Mat_Size_int_Mat_Mat(k.as_raw_Mat(), d.as_raw_Mat(), r.as_raw_Mat(), p.as_raw_Mat(), size, m1type, map1.as_raw_Mat(), map2.as_raw_Mat()) }.into_result()
+pub fn fisheye_init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, size: core::Size, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(k);
+    input_array_arg!(d);
+    input_array_arg!(r);
+    input_array_arg!(p);
+    output_array_arg!(map1);
+    output_array_arg!(map2);
+    unsafe { sys::cv_fisheye_initUndistortRectifyMap__InputArray__InputArray__InputArray__InputArray_Size_int__OutputArray__OutputArray(k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray()) }.into_result()
 }
 
 /// Projects points using fisheye model
@@ -1565,8 +1785,15 @@ pub fn fisheye_init_undistort_rectify_map(k: &core::Mat, d: &core::Mat, r: &core
 /// ## C++ default parameters
 /// * alpha: 0
 /// * jacobian: noArray()
-pub fn fisheye_project_points(object_points: &core::Mat, image_points: &mut core::Mat, rvec: &core::Mat, tvec: &core::Mat, k: &core::Mat, d: &core::Mat, alpha: f64, jacobian: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_fisheye_projectPoints_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat(object_points.as_raw_Mat(), image_points.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), alpha, jacobian.as_raw_Mat()) }.into_result()
+pub fn fisheye_project_points(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(object_points);
+    output_array_arg!(image_points);
+    input_array_arg!(rvec);
+    input_array_arg!(tvec);
+    input_array_arg!(k);
+    input_array_arg!(d);
+    output_array_arg!(jacobian);
+    unsafe { sys::cv_fisheye_projectPoints__InputArray__OutputArray__InputArray__InputArray__InputArray__InputArray_double__OutputArray(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray()) }.into_result()
 }
 
 /// Performs stereo calibration
@@ -1605,8 +1832,17 @@ pub fn fisheye_project_points(object_points: &core::Mat, image_points: &mut core
 /// ## C++ default parameters
 /// * flags: fisheye::CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 100, DBL_EPSILON)
-pub fn stereo_calibrate(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, k1: &mut core::Mat, d1: &mut core::Mat, k2: &mut core::Mat, d2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-    unsafe { sys::cv_fisheye_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), k1.as_raw_Mat(), d1.as_raw_Mat(), k2.as_raw_Mat(), d2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, k1: &mut dyn core::ToInputOutputArray, d1: &mut dyn core::ToInputOutputArray, k2: &mut dyn core::ToInputOutputArray, d2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points1);
+    input_array_arg!(image_points2);
+    input_output_array_arg!(k1);
+    input_output_array_arg!(d1);
+    input_output_array_arg!(k2);
+    input_output_array_arg!(d2);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    unsafe { sys::cv_fisheye_stereoCalibrate__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray__InputOutputArray__InputOutputArray_Size__OutputArray__OutputArray_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 /// Stereo rectification for fisheye camera model
@@ -1644,8 +1880,19 @@ pub fn stereo_calibrate(object_points: &types::VectorOfMat, image_points1: &type
 /// * new_image_size: Size()
 /// * balance: 0.0
 /// * fov_scale: 1.0
-pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core::Mat, image_size: core::Size, r: &core::Mat, tvec: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, q: &mut core::Mat, flags: i32, new_image_size: core::Size, balance: f64, fov_scale: f64) -> Result<()> {
-    unsafe { sys::cv_fisheye_stereoRectify_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_int_Size_double_double(k1.as_raw_Mat(), d1.as_raw_Mat(), k2.as_raw_Mat(), d2.as_raw_Mat(), image_size, r.as_raw_Mat(), tvec.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), q.as_raw_Mat(), flags, new_image_size, balance, fov_scale) }.into_result()
+pub fn fisheye_stereo_rectify(k1: &dyn core::ToInputArray, d1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, d2: &dyn core::ToInputArray, image_size: core::Size, r: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray, q: &mut dyn core::ToOutputArray, flags: i32, new_image_size: core::Size, balance: f64, fov_scale: f64) -> Result<()> {
+    input_array_arg!(k1);
+    input_array_arg!(d1);
+    input_array_arg!(k2);
+    input_array_arg!(d2);
+    input_array_arg!(r);
+    input_array_arg!(tvec);
+    output_array_arg!(r1);
+    output_array_arg!(r2);
+    output_array_arg!(p1);
+    output_array_arg!(p2);
+    output_array_arg!(q);
+    unsafe { sys::cv_fisheye_stereoRectify__InputArray__InputArray__InputArray__InputArray_Size__InputArray__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_Size_double_double(k1.as_raw__InputArray(), d1.as_raw__InputArray(), k2.as_raw__InputArray(), d2.as_raw__InputArray(), image_size, r.as_raw__InputArray(), tvec.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, new_image_size, balance, fov_scale) }.into_result()
 }
 
 /// Transforms an image to compensate for fisheye lens distortion.
@@ -1680,8 +1927,13 @@ pub fn stereo_rectify(k1: &core::Mat, d1: &core::Mat, k2: &core::Mat, d2: &core:
 /// ## C++ default parameters
 /// * knew: cv::noArray()
 /// * new_size: Size()
-pub fn fisheye_undistort_image(distorted: &core::Mat, undistorted: &mut core::Mat, k: &core::Mat, d: &core::Mat, knew: &core::Mat, new_size: core::Size) -> Result<()> {
-    unsafe { sys::cv_fisheye_undistortImage_Mat_Mat_Mat_Mat_Mat_Size(distorted.as_raw_Mat(), undistorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), knew.as_raw_Mat(), new_size) }.into_result()
+pub fn fisheye_undistort_image(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, knew: &dyn core::ToInputArray, new_size: core::Size) -> Result<()> {
+    input_array_arg!(distorted);
+    output_array_arg!(undistorted);
+    input_array_arg!(k);
+    input_array_arg!(d);
+    input_array_arg!(knew);
+    unsafe { sys::cv_fisheye_undistortImage__InputArray__OutputArray__InputArray__InputArray__InputArray_Size(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), knew.as_raw__InputArray(), new_size) }.into_result()
 }
 
 /// Undistorts 2D points using fisheye model
@@ -1699,8 +1951,14 @@ pub fn fisheye_undistort_image(distorted: &core::Mat, undistorted: &mut core::Ma
 /// ## C++ default parameters
 /// * r: noArray()
 /// * p: noArray()
-pub fn fisheye_undistort_points(distorted: &core::Mat, undistorted: &mut core::Mat, k: &core::Mat, d: &core::Mat, r: &core::Mat, p: &core::Mat) -> Result<()> {
-    unsafe { sys::cv_fisheye_undistortPoints_Mat_Mat_Mat_Mat_Mat_Mat(distorted.as_raw_Mat(), undistorted.as_raw_Mat(), k.as_raw_Mat(), d.as_raw_Mat(), r.as_raw_Mat(), p.as_raw_Mat()) }.into_result()
+pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted: &mut dyn core::ToOutputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray) -> Result<()> {
+    input_array_arg!(distorted);
+    output_array_arg!(undistorted);
+    input_array_arg!(k);
+    input_array_arg!(d);
+    input_array_arg!(r);
+    input_array_arg!(p);
+    unsafe { sys::cv_fisheye_undistortPoints__InputArray__OutputArray__InputArray__InputArray__InputArray__InputArray(distorted.as_raw__InputArray(), undistorted.as_raw__OutputArray(), k.as_raw__InputArray(), d.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray()) }.into_result()
 }
 
 /// Returns the new camera matrix based on the free scaling parameter.
@@ -1736,8 +1994,10 @@ pub fn fisheye_undistort_points(distorted: &core::Mat, undistorted: &mut core::M
 /// * new_img_size: Size()
 /// * valid_pix_roi: 0
 /// * center_principal_point: false
-pub fn get_optimal_new_camera_matrix(camera_matrix: &core::Mat, dist_coeffs: &core::Mat, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: &mut core::Rect, center_principal_point: bool) -> Result<core::Mat> {
-    unsafe { sys::cv_getOptimalNewCameraMatrix_Mat_Mat_Size_double_Size_Rect_X_bool(camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_size, alpha, new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn get_optimal_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: &mut core::Rect, center_principal_point: bool) -> Result<core::Mat> {
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    unsafe { sys::cv_getOptimalNewCameraMatrix__InputArray__InputArray_Size_double_Size_Rect_X_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_size, alpha, new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// computes valid disparity ROI from the valid ROIs of the rectified images (that are returned by cv::stereoRectify())
@@ -1763,8 +2023,10 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 ///
 /// ## C++ default parameters
 /// * aspect_ratio: 1.0
-pub fn init_camera_matrix_2d(object_points: &types::VectorOfMat, image_points: &types::VectorOfMat, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
-    unsafe { sys::cv_initCameraMatrix2D_VectorOfMat_VectorOfMat_Size_double(object_points.as_raw_VectorOfMat(), image_points.as_raw_VectorOfMat(), image_size, aspect_ratio) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn init_camera_matrix_2d(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    unsafe { sys::cv_initCameraMatrix2D__InputArray__InputArray_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), image_size, aspect_ratio) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Computes partial derivatives of the matrix product for each multiplied matrix.
@@ -1780,8 +2042,12 @@ pub fn init_camera_matrix_2d(object_points: &types::VectorOfMat, image_points: &
 /// The function computes partial derivatives of the elements of the matrix product ![inline formula](https://latex.codecogs.com/png.latex?A%2AB) with regard to
 /// the elements of each of the two input matrices. The function is used to compute the Jacobian
 /// matrices in stereoCalibrate but can also be used in any other similar optimization function.
-pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a_bd_b: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_matMulDeriv_Mat_Mat_Mat_Mat(a.as_raw_Mat(), b.as_raw_Mat(), d_a_bd_a.as_raw_Mat(), d_a_bd_b.as_raw_Mat()) }.into_result()
+pub fn mat_mul_deriv(a: &dyn core::ToInputArray, b: &dyn core::ToInputArray, d_a_bd_a: &mut dyn core::ToOutputArray, d_a_bd_b: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(a);
+    input_array_arg!(b);
+    output_array_arg!(d_a_bd_a);
+    output_array_arg!(d_a_bd_b);
+    unsafe { sys::cv_matMulDeriv__InputArray__InputArray__OutputArray__OutputArray(a.as_raw__InputArray(), b.as_raw__InputArray(), d_a_bd_a.as_raw__OutputArray(), d_a_bd_b.as_raw__OutputArray()) }.into_result()
 }
 
 /// Projects 3D points to an image plane.
@@ -1821,8 +2087,15 @@ pub fn mat_mul_deriv(a: &core::Mat, b: &core::Mat, d_a_bd_a: &mut core::Mat, d_a
 /// ## C++ default parameters
 /// * jacobian: noArray()
 /// * aspect_ratio: 0
-pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, image_points: &mut core::Mat, jacobian: &mut core::Mat, aspect_ratio: f64) -> Result<()> {
-    unsafe { sys::cv_projectPoints_Mat_Mat_Mat_Mat_Mat_Mat_Mat_double(object_points.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), image_points.as_raw_Mat(), jacobian.as_raw_Mat(), aspect_ratio) }.into_result()
+pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, jacobian: &mut dyn core::ToOutputArray, aspect_ratio: f64) -> Result<()> {
+    input_array_arg!(object_points);
+    input_array_arg!(rvec);
+    input_array_arg!(tvec);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    output_array_arg!(image_points);
+    output_array_arg!(jacobian);
+    unsafe { sys::cv_projectPoints__InputArray__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_double(object_points.as_raw__InputArray(), rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), image_points.as_raw__OutputArray(), jacobian.as_raw__OutputArray(), aspect_ratio) }.into_result()
 }
 
 /// Recover relative camera rotation and translation from an estimated essential matrix and the
@@ -1873,8 +2146,15 @@ pub fn project_points(object_points: &core::Mat, rvec: &core::Mat, tvec: &core::
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn recover_pose_camera_with_points(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, mask: &mut core::Mat) -> Result<i32> {
-    unsafe { sys::cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_Mat(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), mask.as_raw_Mat()) }.into_result()
+pub fn recover_pose_camera_with_points(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, mask: &mut dyn core::ToInputOutputArray) -> Result<i32> {
+    input_array_arg!(e);
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    input_array_arg!(camera_matrix);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    input_output_array_arg!(mask);
+    unsafe { sys::cv_recoverPose__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray__InputOutputArray(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), mask.as_raw__InputOutputArray()) }.into_result()
 }
 
 /// Recover relative camera rotation and translation from an estimated essential matrix and the
@@ -1945,8 +2225,16 @@ pub fn recover_pose_camera_with_points(e: &core::Mat, points1: &core::Mat, point
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * triangulated_points: noArray()
-pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, camera_matrix: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, distance_thresh: f64, mask: &mut core::Mat, triangulated_points: &mut core::Mat) -> Result<i32> {
-    unsafe { sys::cv_recoverPose_Mat_Mat_Mat_Mat_Mat_Mat_double_Mat_Mat(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), camera_matrix.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), distance_thresh, mask.as_raw_Mat(), triangulated_points.as_raw_Mat()) }.into_result()
+pub fn recover_pose_camera(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, distance_thresh: f64, mask: &mut dyn core::ToInputOutputArray, triangulated_points: &mut dyn core::ToOutputArray) -> Result<i32> {
+    input_array_arg!(e);
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    input_array_arg!(camera_matrix);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    input_output_array_arg!(mask);
+    output_array_arg!(triangulated_points);
+    unsafe { sys::cv_recoverPose__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_double__InputOutputArray__OutputArray(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), distance_thresh, mask.as_raw__InputOutputArray(), triangulated_points.as_raw__OutputArray()) }.into_result()
 }
 
 /// Recover relative camera rotation and translation from an estimated essential matrix and the
@@ -2021,13 +2309,38 @@ pub fn recover_pose_camera(e: &core::Mat, points1: &core::Mat, points2: &core::M
 /// * focal: 1.0
 /// * pp: Point2d(0, 0)
 /// * mask: noArray()
-pub fn recover_pose(e: &core::Mat, points1: &core::Mat, points2: &core::Mat, r: &mut core::Mat, t: &mut core::Mat, focal: f64, pp: core::Point2d, mask: &mut core::Mat) -> Result<i32> {
-    unsafe { sys::cv_recoverPose_Mat_Mat_Mat_Mat_Mat_double_Point2d_Mat(e.as_raw_Mat(), points1.as_raw_Mat(), points2.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), focal, pp, mask.as_raw_Mat()) }.into_result()
+pub fn recover_pose(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, focal: f64, pp: core::Point2d, mask: &mut dyn core::ToInputOutputArray) -> Result<i32> {
+    input_array_arg!(e);
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    input_output_array_arg!(mask);
+    unsafe { sys::cv_recoverPose__InputArray__InputArray__InputArray__OutputArray__OutputArray_double_Point2d__InputOutputArray(e.as_raw__InputArray(), points1.as_raw__InputArray(), points2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), focal, pp, mask.as_raw__InputOutputArray()) }.into_result()
 }
 
 /// computes the rectification transformations for 3-head camera, where all the heads are on the same line.
-pub fn rectify3_collinear(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, camera_matrix2: &core::Mat, dist_coeffs2: &core::Mat, camera_matrix3: &core::Mat, dist_coeffs3: &core::Mat, imgpt1: &types::VectorOfMat, imgpt3: &types::VectorOfMat, image_size: core::Size, r12: &core::Mat, t12: &core::Mat, r13: &core::Mat, t13: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, r3: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, p3: &mut core::Mat, q: &mut core::Mat, alpha: f64, new_img_size: core::Size, roi1: &mut core::Rect, roi2: &mut core::Rect, flags: i32) -> Result<f32> {
-    unsafe { sys::cv_rectify3Collinear_Mat_Mat_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_Mat_double_Size_Rect_X_Rect_X_int(camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), camera_matrix3.as_raw_Mat(), dist_coeffs3.as_raw_Mat(), imgpt1.as_raw_VectorOfMat(), imgpt3.as_raw_VectorOfMat(), image_size, r12.as_raw_Mat(), t12.as_raw_Mat(), r13.as_raw_Mat(), t13.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), r3.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), p3.as_raw_Mat(), q.as_raw_Mat(), alpha, new_img_size, roi1, roi2, flags) }.into_result()
+pub fn rectify3_collinear(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dyn core::ToInputArray, camera_matrix2: &dyn core::ToInputArray, dist_coeffs2: &dyn core::ToInputArray, camera_matrix3: &dyn core::ToInputArray, dist_coeffs3: &dyn core::ToInputArray, imgpt1: &dyn core::ToInputArray, imgpt3: &dyn core::ToInputArray, image_size: core::Size, r12: &dyn core::ToInputArray, t12: &dyn core::ToInputArray, r13: &dyn core::ToInputArray, t13: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, r3: &mut dyn core::ToOutputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray, p3: &mut dyn core::ToOutputArray, q: &mut dyn core::ToOutputArray, alpha: f64, new_img_size: core::Size, roi1: &mut core::Rect, roi2: &mut core::Rect, flags: i32) -> Result<f32> {
+    input_array_arg!(camera_matrix1);
+    input_array_arg!(dist_coeffs1);
+    input_array_arg!(camera_matrix2);
+    input_array_arg!(dist_coeffs2);
+    input_array_arg!(camera_matrix3);
+    input_array_arg!(dist_coeffs3);
+    input_array_arg!(imgpt1);
+    input_array_arg!(imgpt3);
+    input_array_arg!(r12);
+    input_array_arg!(t12);
+    input_array_arg!(r13);
+    input_array_arg!(t13);
+    output_array_arg!(r1);
+    output_array_arg!(r2);
+    output_array_arg!(r3);
+    output_array_arg!(p1);
+    output_array_arg!(p2);
+    output_array_arg!(p3);
+    output_array_arg!(q);
+    unsafe { sys::cv_rectify3Collinear__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray_Size__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_double_Size_Rect_X_Rect_X_int(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), camera_matrix3.as_raw__InputArray(), dist_coeffs3.as_raw__InputArray(), imgpt1.as_raw__InputArray(), imgpt3.as_raw__InputArray(), image_size, r12.as_raw__InputArray(), t12.as_raw__InputArray(), r13.as_raw__InputArray(), t13.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), r3.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), p3.as_raw__OutputArray(), q.as_raw__OutputArray(), alpha, new_img_size, roi1, roi2, flags) }.into_result()
 }
 
 /// Reprojects a disparity image to 3D space.
@@ -2060,8 +2373,11 @@ pub fn rectify3_collinear(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, 
 /// ## C++ default parameters
 /// * handle_missing_values: false
 /// * ddepth: -1
-pub fn reproject_image_to_3d(disparity: &core::Mat, _3d_image: &mut core::Mat, q: &core::Mat, handle_missing_values: bool, ddepth: i32) -> Result<()> {
-    unsafe { sys::cv_reprojectImageTo3D_Mat_Mat_Mat_bool_int(disparity.as_raw_Mat(), _3d_image.as_raw_Mat(), q.as_raw_Mat(), handle_missing_values, ddepth) }.into_result()
+pub fn reproject_image_to_3d(disparity: &dyn core::ToInputArray, _3d_image: &mut dyn core::ToOutputArray, q: &dyn core::ToInputArray, handle_missing_values: bool, ddepth: i32) -> Result<()> {
+    input_array_arg!(disparity);
+    output_array_arg!(_3d_image);
+    input_array_arg!(q);
+    unsafe { sys::cv_reprojectImageTo3D__InputArray__OutputArray__InputArray_bool_int(disparity.as_raw__InputArray(), _3d_image.as_raw__OutputArray(), q.as_raw__InputArray(), handle_missing_values, ddepth) }.into_result()
 }
 
 /// Calculates the Sampson Distance between two points.
@@ -2075,8 +2391,11 @@ pub fn reproject_image_to_3d(disparity: &core::Mat, _3d_image: &mut core::Mat, q
 /// * F: fundamental matrix
 /// ## Returns
 /// The computed Sampson distance.
-pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_sampsonDistance_Mat_Mat_Mat(pt1.as_raw_Mat(), pt2.as_raw_Mat(), f.as_raw_Mat()) }.into_result()
+pub fn sampson_distance(pt1: &dyn core::ToInputArray, pt2: &dyn core::ToInputArray, f: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(pt1);
+    input_array_arg!(pt2);
+    input_array_arg!(f);
+    unsafe { sys::cv_sampsonDistance__InputArray__InputArray__InputArray(pt1.as_raw__InputArray(), pt2.as_raw__InputArray(), f.as_raw__InputArray()) }.into_result()
 }
 
 /// Finds an object pose from 3 3D-2D point correspondences.
@@ -2106,8 +2425,14 @@ pub fn sampson_distance(pt1: &core::Mat, pt2: &core::Mat, f: &core::Mat) -> Resu
 ///
 /// Note:
 /// The solutions are sorted by reprojection errors (lowest to highest).
-pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvecs: &mut types::VectorOfMat, tvecs: &mut types::VectorOfMat, flags: i32) -> Result<i32> {
-    unsafe { sys::cv_solveP3P_Mat_Mat_Mat_Mat_VectorOfMat_VectorOfMat_int(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvecs.as_raw_VectorOfMat(), tvecs.as_raw_VectorOfMat(), flags) }.into_result()
+pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32) -> Result<i32> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    output_array_arg!(rvecs);
+    output_array_arg!(tvecs);
+    unsafe { sys::cv_solveP3P__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.
@@ -2161,8 +2486,15 @@ pub fn solve_p3p(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// * confidence: 0.99
 /// * inliers: noArray()
 /// * flags: SOLVEPNP_ITERATIVE
-pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut core::Mat, flags: i32) -> Result<bool> {
-    unsafe { sys::cv_solvePnPRansac_Mat_Mat_Mat_Mat_Mat_Mat_bool_int_float_double_Mat_int(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw_Mat(), flags) }.into_result()
+pub fn solve_pnp_ransac(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, iterations_count: i32, reprojection_error: f32, confidence: f64, inliers: &mut dyn core::ToOutputArray, flags: i32) -> Result<bool> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    output_array_arg!(rvec);
+    output_array_arg!(tvec);
+    output_array_arg!(inliers);
+    unsafe { sys::cv_solvePnPRansac__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_bool_int_float_double__OutputArray_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, iterations_count, reprojection_error, confidence, inliers.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
@@ -2191,8 +2523,14 @@ pub fn solve_pnp_ransac(object_points: &core::Mat, image_points: &core::Mat, cam
 ///
 /// ## C++ default parameters
 /// * criteria: TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 20, FLT_EPSILON)
-pub fn solve_pnp_refine_lm(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, criteria: &core::TermCriteria) -> Result<()> {
-    unsafe { sys::cv_solvePnPRefineLM_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), criteria.as_raw_TermCriteria()) }.into_result()
+pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, criteria: &core::TermCriteria) -> Result<()> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    input_output_array_arg!(rvec);
+    input_output_array_arg!(tvec);
+    unsafe { sys::cv_solvePnPRefineLM__InputArray__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
@@ -2224,8 +2562,14 @@ pub fn solve_pnp_refine_lm(object_points: &core::Mat, image_points: &core::Mat, 
 /// ## C++ default parameters
 /// * criteria: TermCriteria(TermCriteria::EPS + TermCriteria::COUNT, 20, FLT_EPSILON)
 /// * vv_slambda: 1
-pub fn solve_pnp_refine_vvs(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, criteria: &core::TermCriteria, vv_slambda: f64) -> Result<()> {
-    unsafe { sys::cv_solvePnPRefineVVS_Mat_Mat_Mat_Mat_Mat_Mat_TermCriteria_double(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), criteria.as_raw_TermCriteria(), vv_slambda) }.into_result()
+pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToInputOutputArray, tvec: &mut dyn core::ToInputOutputArray, criteria: &core::TermCriteria, vv_slambda: f64) -> Result<()> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    input_output_array_arg!(rvec);
+    input_output_array_arg!(tvec);
+    unsafe { sys::cv_solvePnPRefineVVS__InputArray__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.as_raw_TermCriteria(), vv_slambda) }.into_result()
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
@@ -2338,8 +2682,14 @@ pub fn solve_pnp_refine_vvs(object_points: &core::Mat, image_points: &core::Mat,
 /// ## C++ default parameters
 /// * use_extrinsic_guess: false
 /// * flags: SOLVEPNP_ITERATIVE
-pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_matrix: &core::Mat, dist_coeffs: &core::Mat, rvec: &mut core::Mat, tvec: &mut core::Mat, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
-    unsafe { sys::cv_solvePnP_Mat_Mat_Mat_Mat_Mat_Mat_bool_int(object_points.as_raw_Mat(), image_points.as_raw_Mat(), camera_matrix.as_raw_Mat(), dist_coeffs.as_raw_Mat(), rvec.as_raw_Mat(), tvec.as_raw_Mat(), use_extrinsic_guess, flags) }.into_result()
+pub fn solve_pnp(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, flags: i32) -> Result<bool> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    output_array_arg!(rvec);
+    output_array_arg!(tvec);
+    unsafe { sys::cv_solvePnP__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_bool_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__OutputArray(), tvec.as_raw__OutputArray(), use_extrinsic_guess, flags) }.into_result()
 }
 
 /// Calibrates the stereo camera.
@@ -2441,16 +2791,39 @@ pub fn solve_pnp(object_points: &core::Mat, image_points: &core::Mat, camera_mat
 /// ## C++ default parameters
 /// * flags: CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6)
-pub fn stereo_calibrate_camera_with_errors(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, per_view_errors: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-    unsafe { sys::cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), per_view_errors.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+pub fn stereo_calibrate_camera_with_errors(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, camera_matrix1: &mut dyn core::ToInputOutputArray, dist_coeffs1: &mut dyn core::ToInputOutputArray, camera_matrix2: &mut dyn core::ToInputOutputArray, dist_coeffs2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToInputOutputArray, t: &mut dyn core::ToInputOutputArray, e: &mut dyn core::ToOutputArray, f: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points1);
+    input_array_arg!(image_points2);
+    input_output_array_arg!(camera_matrix1);
+    input_output_array_arg!(dist_coeffs1);
+    input_output_array_arg!(camera_matrix2);
+    input_output_array_arg!(dist_coeffs2);
+    input_output_array_arg!(r);
+    input_output_array_arg!(t);
+    output_array_arg!(e);
+    output_array_arg!(f);
+    output_array_arg!(per_view_errors);
+    unsafe { sys::cv_stereoCalibrate__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray__InputOutputArray__InputOutputArray_Size__InputOutputArray__InputOutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size, r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 ///
 /// ## C++ default parameters
 /// * flags: CALIB_FIX_INTRINSIC
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS, 30, 1e-6)
-pub fn stereo_calibrate_camera(object_points: &types::VectorOfMat, image_points1: &types::VectorOfMat, image_points2: &types::VectorOfMat, camera_matrix1: &mut core::Mat, dist_coeffs1: &mut core::Mat, camera_matrix2: &mut core::Mat, dist_coeffs2: &mut core::Mat, image_size: core::Size, r: &mut core::Mat, t: &mut core::Mat, e: &mut core::Mat, f: &mut core::Mat, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
-    unsafe { sys::cv_stereoCalibrate_VectorOfMat_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_int_TermCriteria(object_points.as_raw_VectorOfMat(), image_points1.as_raw_VectorOfMat(), image_points2.as_raw_VectorOfMat(), camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), e.as_raw_Mat(), f.as_raw_Mat(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+pub fn stereo_calibrate_camera(object_points: &dyn core::ToInputArray, image_points1: &dyn core::ToInputArray, image_points2: &dyn core::ToInputArray, camera_matrix1: &mut dyn core::ToInputOutputArray, dist_coeffs1: &mut dyn core::ToInputOutputArray, camera_matrix2: &mut dyn core::ToInputOutputArray, dist_coeffs2: &mut dyn core::ToInputOutputArray, image_size: core::Size, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, e: &mut dyn core::ToOutputArray, f: &mut dyn core::ToOutputArray, flags: i32, criteria: &core::TermCriteria) -> Result<f64> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points1);
+    input_array_arg!(image_points2);
+    input_output_array_arg!(camera_matrix1);
+    input_output_array_arg!(dist_coeffs1);
+    input_output_array_arg!(camera_matrix2);
+    input_output_array_arg!(dist_coeffs2);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    output_array_arg!(e);
+    output_array_arg!(f);
+    unsafe { sys::cv_stereoCalibrate__InputArray__InputArray__InputArray__InputOutputArray__InputOutputArray__InputOutputArray__InputOutputArray_Size__OutputArray__OutputArray__OutputArray__OutputArray_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
 }
 
 /// Computes a rectification transform for an uncalibrated stereo camera.
@@ -2486,8 +2859,13 @@ pub fn stereo_calibrate_camera(object_points: &types::VectorOfMat, image_points1
 ///
 /// ## C++ default parameters
 /// * threshold: 5
-pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: &core::Mat, img_size: core::Size, h1: &mut core::Mat, h2: &mut core::Mat, threshold: f64) -> Result<bool> {
-    unsafe { sys::cv_stereoRectifyUncalibrated_Mat_Mat_Mat_Size_Mat_Mat_double(points1.as_raw_Mat(), points2.as_raw_Mat(), f.as_raw_Mat(), img_size, h1.as_raw_Mat(), h2.as_raw_Mat(), threshold) }.into_result()
+pub fn stereo_rectify_uncalibrated(points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, f: &dyn core::ToInputArray, img_size: core::Size, h1: &mut dyn core::ToOutputArray, h2: &mut dyn core::ToOutputArray, threshold: f64) -> Result<bool> {
+    input_array_arg!(points1);
+    input_array_arg!(points2);
+    input_array_arg!(f);
+    output_array_arg!(h1);
+    output_array_arg!(h2);
+    unsafe { sys::cv_stereoRectifyUncalibrated__InputArray__InputArray__InputArray_Size__OutputArray__OutputArray_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), f.as_raw__InputArray(), img_size, h1.as_raw__OutputArray(), h2.as_raw__OutputArray(), threshold) }.into_result()
 }
 
 /// Computes rectification transforms for each head of a calibrated stereo camera.
@@ -2576,8 +2954,19 @@ pub fn stereo_rectify_uncalibrated(points1: &core::Mat, points2: &core::Mat, f: 
 /// * new_image_size: Size()
 /// * valid_pix_roi1: 0
 /// * valid_pix_roi2: 0
-pub fn stereo_rectify_camera(camera_matrix1: &core::Mat, dist_coeffs1: &core::Mat, camera_matrix2: &core::Mat, dist_coeffs2: &core::Mat, image_size: core::Size, r: &core::Mat, t: &core::Mat, r1: &mut core::Mat, r2: &mut core::Mat, p1: &mut core::Mat, p2: &mut core::Mat, q: &mut core::Mat, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
-    unsafe { sys::cv_stereoRectify_Mat_Mat_Mat_Mat_Size_Mat_Mat_Mat_Mat_Mat_Mat_Mat_int_double_Size_Rect_X_Rect_X(camera_matrix1.as_raw_Mat(), dist_coeffs1.as_raw_Mat(), camera_matrix2.as_raw_Mat(), dist_coeffs2.as_raw_Mat(), image_size, r.as_raw_Mat(), t.as_raw_Mat(), r1.as_raw_Mat(), r2.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat(), q.as_raw_Mat(), flags, alpha, new_image_size, valid_pix_roi1, valid_pix_roi2) }.into_result()
+pub fn stereo_rectify_camera(camera_matrix1: &dyn core::ToInputArray, dist_coeffs1: &dyn core::ToInputArray, camera_matrix2: &dyn core::ToInputArray, dist_coeffs2: &dyn core::ToInputArray, image_size: core::Size, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, r1: &mut dyn core::ToOutputArray, r2: &mut dyn core::ToOutputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray, q: &mut dyn core::ToOutputArray, flags: i32, alpha: f64, new_image_size: core::Size, valid_pix_roi1: &mut core::Rect, valid_pix_roi2: &mut core::Rect) -> Result<()> {
+    input_array_arg!(camera_matrix1);
+    input_array_arg!(dist_coeffs1);
+    input_array_arg!(camera_matrix2);
+    input_array_arg!(dist_coeffs2);
+    input_array_arg!(r);
+    input_array_arg!(t);
+    output_array_arg!(r1);
+    output_array_arg!(r2);
+    output_array_arg!(p1);
+    output_array_arg!(p2);
+    output_array_arg!(q);
+    unsafe { sys::cv_stereoRectify__InputArray__InputArray__InputArray__InputArray_Size__InputArray__InputArray__OutputArray__OutputArray__OutputArray__OutputArray__OutputArray_int_double_Size_Rect_X_Rect_X(camera_matrix1.as_raw__InputArray(), dist_coeffs1.as_raw__InputArray(), camera_matrix2.as_raw__InputArray(), dist_coeffs2.as_raw__InputArray(), image_size, r.as_raw__InputArray(), t.as_raw__InputArray(), r1.as_raw__OutputArray(), r2.as_raw__OutputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray(), q.as_raw__OutputArray(), flags, alpha, new_image_size, valid_pix_roi1, valid_pix_roi2) }.into_result()
 }
 
 /// Reconstructs points by triangulation.
@@ -2600,26 +2989,29 @@ pub fn stereo_rectify_camera(camera_matrix1: &core::Mat, dist_coeffs1: &core::Ma
 ///
 /// ## See also
 /// reprojectImageTo3D
-pub fn triangulate_points(proj_matr1: &core::Mat, proj_matr2: &core::Mat, proj_points1: &core::Mat, proj_points2: &core::Mat, points4_d: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_triangulatePoints_Mat_Mat_Mat_Mat_Mat(proj_matr1.as_raw_Mat(), proj_matr2.as_raw_Mat(), proj_points1.as_raw_Mat(), proj_points2.as_raw_Mat(), points4_d.as_raw_Mat()) }.into_result()
+pub fn triangulate_points(proj_matr1: &dyn core::ToInputArray, proj_matr2: &dyn core::ToInputArray, proj_points1: &dyn core::ToInputArray, proj_points2: &dyn core::ToInputArray, points4_d: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(proj_matr1);
+    input_array_arg!(proj_matr2);
+    input_array_arg!(proj_points1);
+    input_array_arg!(proj_points2);
+    output_array_arg!(points4_d);
+    unsafe { sys::cv_triangulatePoints__InputArray__InputArray__InputArray__InputArray__OutputArray(proj_matr1.as_raw__InputArray(), proj_matr2.as_raw__InputArray(), proj_points1.as_raw__InputArray(), proj_points2.as_raw__InputArray(), points4_d.as_raw__OutputArray()) }.into_result()
 }
 
 /// validates disparity using the left-right check. The matrix "cost" should be computed by the stereo correspondence algorithm
 ///
 /// ## C++ default parameters
 /// * disp12_max_disp: 1
-pub fn validate_disparity(disparity: &mut core::Mat, cost: &core::Mat, min_disparity: i32, number_of_disparities: i32, disp12_max_disp: i32) -> Result<()> {
-    unsafe { sys::cv_validateDisparity_Mat_Mat_int_int_int(disparity.as_raw_Mat(), cost.as_raw_Mat(), min_disparity, number_of_disparities, disp12_max_disp) }.into_result()
+pub fn validate_disparity(disparity: &mut dyn core::ToInputOutputArray, cost: &dyn core::ToInputArray, min_disparity: i32, number_of_disparities: i32, disp12_max_disp: i32) -> Result<()> {
+    input_output_array_arg!(disparity);
+    input_array_arg!(cost);
+    unsafe { sys::cv_validateDisparity__InputOutputArray__InputArray_int_int_int(disparity.as_raw__InputOutputArray(), cost.as_raw__InputArray(), min_disparity, number_of_disparities, disp12_max_disp) }.into_result()
 }
 
 impl CirclesGridFinderParameters {
 
-}
-
-impl CirclesGridFinderParameters2 {
-
-    pub fn default() -> Result<crate::calib3d::CirclesGridFinderParameters2> {
-        unsafe { sys::cv_CirclesGridFinderParameters2_CirclesGridFinderParameters2() }.into_result()
+    pub fn default() -> Result<crate::calib3d::CirclesGridFinderParameters> {
+        unsafe { sys::cv_CirclesGridFinderParameters_CirclesGridFinderParameters() }.into_result()
     }
     
 }
@@ -2732,8 +3124,11 @@ pub trait StereoMatcher: core::Algorithm {
     /// * disparity: Output disparity map. It has the same size as the input images. Some algorithms,
     /// like StereoBM or StereoSGBM compute 16-bit fixed-point disparity map (where each disparity value
     /// has 4 fractional bits), whereas other algorithms output 32-bit floating-point disparity map.
-    fn compute(&mut self, left: &core::Mat, right: &core::Mat, disparity: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_StereoMatcher_compute_Mat_Mat_Mat(self.as_raw_StereoMatcher(), left.as_raw_Mat(), right.as_raw_Mat(), disparity.as_raw_Mat()) }.into_result()
+    fn compute(&mut self, left: &dyn core::ToInputArray, right: &dyn core::ToInputArray, disparity: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(left);
+        input_array_arg!(right);
+        output_array_arg!(disparity);
+        unsafe { sys::cv_StereoMatcher_compute__InputArray__InputArray__OutputArray(self.as_raw_StereoMatcher(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()
     }
     
     fn get_min_disparity(&self) -> Result<i32> {

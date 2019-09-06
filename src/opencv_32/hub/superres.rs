@@ -6,6 +6,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 
 ///
@@ -58,8 +59,9 @@ pub fn create_super_resolution_btvl1_cuda() -> Result<types::PtrOfSuperResolutio
 // Generating impl for trait cv::superres::FrameSource (trait)
 pub trait FrameSource {
     #[inline(always)] fn as_raw_FrameSource(&self) -> *mut c_void;
-    fn next_frame(&mut self, frame: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_superres_FrameSource_nextFrame_Mat(self.as_raw_FrameSource(), frame.as_raw_Mat()) }.into_result()
+    fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(frame);
+        unsafe { sys::cv_superres_FrameSource_nextFrame__OutputArray(self.as_raw_FrameSource(), frame.as_raw__OutputArray()) }.into_result()
     }
     
     fn reset(&mut self) -> Result<()> {
@@ -87,8 +89,9 @@ pub trait SuperResolution: core::Algorithm + crate::superres::FrameSource {
     ///
     /// ## Parameters
     /// * frame: Output result
-    fn next_frame(&mut self, frame: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_superres_SuperResolution_nextFrame_Mat(self.as_raw_SuperResolution(), frame.as_raw_Mat()) }.into_result()
+    fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(frame);
+        unsafe { sys::cv_superres_SuperResolution_nextFrame__OutputArray(self.as_raw_SuperResolution(), frame.as_raw__OutputArray()) }.into_result()
     }
     
     fn reset(&mut self) -> Result<()> {

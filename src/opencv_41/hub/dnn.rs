@@ -10,6 +10,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_2: &'static str = "Myriad2";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_X: &'static str = "MyriadX";
@@ -97,8 +98,10 @@ pub fn nms_boxes_rotated(bboxes: &types::VectorOfRotatedRect, scores: &types::Ve
 /// * swap_rb: false
 /// * crop: false
 /// * ddepth: CV_32F
-pub fn blob_from_image_to(image: &core::Mat, blob: &mut core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
-    unsafe { sys::cv_dnn_blobFromImage_Mat_Mat_double_Size_Scalar_bool_bool_int(image.as_raw_Mat(), blob.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
+pub fn blob_from_image_to(image: &dyn core::ToInputArray, blob: &mut dyn core::ToOutputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
+    input_array_arg!(image);
+    output_array_arg!(blob);
+    unsafe { sys::cv_dnn_blobFromImage__InputArray__OutputArray_double_Size_Scalar_bool_bool_int(image.as_raw__InputArray(), blob.as_raw__OutputArray(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
 }
 
 /// Creates 4-dimensional blob from image. Optionally resizes and crops @p image from center,
@@ -126,8 +129,9 @@ pub fn blob_from_image_to(image: &core::Mat, blob: &mut core::Mat, scalefactor: 
 /// * swap_rb: false
 /// * crop: false
 /// * ddepth: CV_32F
-pub fn blob_from_image(image: &core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_blobFromImage_Mat_double_Size_Scalar_bool_bool_int(image.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn blob_from_image(image: &dyn core::ToInputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
+    input_array_arg!(image);
+    unsafe { sys::cv_dnn_blobFromImage__InputArray_double_Size_Scalar_bool_bool_int(image.as_raw__InputArray(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Creates 4-dimensional blob from series of images.
@@ -141,8 +145,10 @@ pub fn blob_from_image(image: &core::Mat, scalefactor: f64, size: core::Size, me
 /// * swap_rb: false
 /// * crop: false
 /// * ddepth: CV_32F
-pub fn blob_from_images(images: &types::VectorOfMat, blob: &mut core::Mat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
-    unsafe { sys::cv_dnn_blobFromImages_VectorOfMat_Mat_double_Size_Scalar_bool_bool_int(images.as_raw_VectorOfMat(), blob.as_raw_Mat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
+pub fn blob_from_images_to(images: &dyn core::ToInputArray, blob: &mut dyn core::ToOutputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<()> {
+    input_array_arg!(images);
+    output_array_arg!(blob);
+    unsafe { sys::cv_dnn_blobFromImages__InputArray__OutputArray_double_Size_Scalar_bool_bool_int(images.as_raw__InputArray(), blob.as_raw__OutputArray(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result()
 }
 
 /// Creates 4-dimensional blob from series of images. Optionally resizes and
@@ -171,8 +177,9 @@ pub fn blob_from_images(images: &types::VectorOfMat, blob: &mut core::Mat, scale
 /// * swap_rb: false
 /// * crop: false
 /// * ddepth: CV_32F
-pub fn blob_from_images_1(images: &types::VectorOfMat, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
-    unsafe { sys::cv_dnn_blobFromImages_VectorOfMat_double_Size_Scalar_bool_bool_int(images.as_raw_VectorOfMat(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn blob_from_images(images: &dyn core::ToInputArray, scalefactor: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool, ddepth: i32) -> Result<core::Mat> {
+    input_array_arg!(images);
+    unsafe { sys::cv_dnn_blobFromImages__InputArray_double_Size_Scalar_bool_bool_int(images.as_raw__InputArray(), scalefactor, size, mean, swap_rb, crop, ddepth) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 pub fn clamp_range(r: &core::Range, axis_size: i32) -> Result<core::Range> {
@@ -206,8 +213,9 @@ pub fn get_plane(m: &core::Mat, n: i32, cn: i32) -> Result<core::Mat> {
 /// * images_: [out] array of 2D Mat containing the images extracted from the blob in floating point precision
 ///  (CV_32F). They are non normalized neither mean added. The number of returned images equals the first dimension
 ///  of the blob (batch size). Every image has a number of channels equals to the second dimension of the blob (depth).
-pub fn images_from_blob(blob_: &core::Mat, images_: &mut types::VectorOfMat) -> Result<()> {
-    unsafe { sys::cv_dnn_imagesFromBlob_Mat_VectorOfMat(blob_.as_raw_Mat(), images_.as_raw_VectorOfMat()) }.into_result()
+pub fn images_from_blob(blob_: &core::Mat, images_: &mut dyn core::ToOutputArray) -> Result<()> {
+    output_array_arg!(images_);
+    unsafe { sys::cv_dnn_imagesFromBlob_Mat__OutputArray(blob_.as_raw_Mat(), images_.as_raw__OutputArray()) }.into_result()
 }
 
 /// Reads a network model stored in <a href="http://caffe.berkeleyvision.org">Caffe</a> framework's format.
@@ -1633,8 +1641,10 @@ pub trait Layer: core::Algorithm {
     ///
     /// If this method is called after network has allocated all memory for input and output blobs
     /// and before inferencing.
-    fn finalize_to(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_dnn_Layer_finalize_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat()) }.into_result()
+    fn finalize_to(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(inputs);
+        output_array_arg!(outputs);
+        unsafe { sys::cv_dnn_Layer_finalize__InputArray__OutputArray(self.as_raw_Layer(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray()) }.into_result()
     }
     
     /// Given the @p input blobs, computes the output @p blobs.
@@ -1642,8 +1652,11 @@ pub trait Layer: core::Algorithm {
     /// * inputs: the input blobs.
     /// * outputs: [out] allocated output blobs, which will store results of the computation.
     /// * internals: [out] allocated internal blobs
-    fn forward(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat, internals: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_dnn_Layer_forward_VectorOfMat_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
+    fn forward(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray, internals: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(inputs);
+        output_array_arg!(outputs);
+        output_array_arg!(internals);
+        unsafe { sys::cv_dnn_Layer_forward__InputArray__OutputArray__OutputArray(self.as_raw_Layer(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), internals.as_raw__OutputArray()) }.into_result()
     }
     
     /// Given the @p input blobs, computes the output @p blobs.
@@ -1651,8 +1664,11 @@ pub trait Layer: core::Algorithm {
     /// * inputs: the input blobs.
     /// * outputs: [out] allocated output blobs, which will store results of the computation.
     /// * internals: [out] allocated internal blobs
-    fn forward_fallback(&mut self, inputs: &types::VectorOfMat, outputs: &mut types::VectorOfMat, internals: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_dnn_Layer_forward_fallback_VectorOfMat_VectorOfMat_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat(), outputs.as_raw_VectorOfMat(), internals.as_raw_VectorOfMat()) }.into_result()
+    fn forward_fallback(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray, internals: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(inputs);
+        output_array_arg!(outputs);
+        output_array_arg!(internals);
+        unsafe { sys::cv_dnn_Layer_forward_fallback__InputArray__OutputArray__OutputArray(self.as_raw_Layer(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), internals.as_raw__OutputArray()) }.into_result()
     }
     
     /// **Deprecated**: Use Layer::finalize(InputArrayOfArrays, OutputArrayOfArrays) instead
@@ -2137,17 +2153,19 @@ impl Net {
     ///
     /// ## C++ default parameters
     /// * output_name: String()
-    pub fn forward_layer(&mut self, output_blobs: &mut types::VectorOfMat, output_name: &str) -> Result<()> {
+    pub fn forward_layer(&mut self, output_blobs: &mut dyn core::ToOutputArray, output_name: &str) -> Result<()> {
+        output_array_arg!(output_blobs);
         string_arg!(output_name);
-        unsafe { sys::cv_dnn_Net_forward_VectorOfMat_String(self.as_raw_Net(), output_blobs.as_raw_VectorOfMat(), output_name.as_ptr()) }.into_result()
+        unsafe { sys::cv_dnn_Net_forward__OutputArray_String(self.as_raw_Net(), output_blobs.as_raw__OutputArray(), output_name.as_ptr()) }.into_result()
     }
     
     /// Runs forward pass to compute outputs of layers listed in @p outBlobNames.
     /// ## Parameters
     /// * outputBlobs: contains blobs for first outputs of specified layers.
     /// * outBlobNames: names for layers which outputs are needed to get
-    pub fn forward_first_outputs(&mut self, output_blobs: &mut types::VectorOfMat, out_blob_names: &types::VectorOfString) -> Result<()> {
-        unsafe { sys::cv_dnn_Net_forward_VectorOfMat_VectorOfString(self.as_raw_Net(), output_blobs.as_raw_VectorOfMat(), out_blob_names.as_raw_VectorOfString()) }.into_result()
+    pub fn forward_first_outputs(&mut self, output_blobs: &mut dyn core::ToOutputArray, out_blob_names: &types::VectorOfString) -> Result<()> {
+        output_array_arg!(output_blobs);
+        unsafe { sys::cv_dnn_Net_forward__OutputArray_VectorOfString(self.as_raw_Net(), output_blobs.as_raw__OutputArray(), out_blob_names.as_raw_VectorOfString()) }.into_result()
     }
     
     /// Runs forward pass to compute outputs of layers listed in @p outBlobNames.
@@ -2215,9 +2233,10 @@ impl Net {
     /// * name: ""
     /// * scalefactor: 1.0
     /// * mean: Scalar()
-    pub fn set_input(&mut self, blob: &core::Mat, name: &str, scalefactor: f64, mean: core::Scalar) -> Result<()> {
+    pub fn set_input(&mut self, blob: &dyn core::ToInputArray, name: &str, scalefactor: f64, mean: core::Scalar) -> Result<()> {
+        input_array_arg!(blob);
         string_arg!(name);
-        unsafe { sys::cv_dnn_Net_setInput_Mat_String_double_Scalar(self.as_raw_Net(), blob.as_raw_Mat(), name.as_ptr(), scalefactor, mean) }.into_result()
+        unsafe { sys::cv_dnn_Net_setInput__InputArray_String_double_Scalar(self.as_raw_Net(), blob.as_raw__InputArray(), name.as_ptr(), scalefactor, mean) }.into_result()
     }
     
     /// Sets the new value for the learned param of the layer.

@@ -12,6 +12,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 pub const ANN_MLP_ANNEAL: i32 = 2;
@@ -104,8 +105,10 @@ pub const VAR_NUMERICAL: i32 = 0;
 pub const VAR_ORDERED: i32 = 0;
 
 /// Creates test set
-pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasses: i32, samples: &mut core::Mat, responses: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_ml_createConcentricSpheresTestSet_int_int_int_Mat_Mat(nsamples, nfeatures, nclasses, samples.as_raw_Mat(), responses.as_raw_Mat()) }.into_result()
+pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasses: i32, samples: &mut dyn core::ToOutputArray, responses: &mut dyn core::ToOutputArray) -> Result<()> {
+    output_array_arg!(samples);
+    output_array_arg!(responses);
+    unsafe { sys::cv_ml_createConcentricSpheresTestSet_int_int_int__OutputArray__OutputArray(nsamples, nfeatures, nclasses, samples.as_raw__OutputArray(), responses.as_raw__OutputArray()) }.into_result()
 }
 
 /// Generates _sample_ from multivariate normal distribution
@@ -115,8 +118,11 @@ pub fn create_concentric_spheres_test_set(nsamples: i32, nfeatures: i32, nclasse
 /// * cov: symmetric covariation matrix
 /// * nsamples: returned samples count
 /// * samples: returned samples array
-pub fn rand_mv_normal(mean: &core::Mat, cov: &core::Mat, nsamples: i32, samples: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_ml_randMVNormal_Mat_Mat_int_Mat(mean.as_raw_Mat(), cov.as_raw_Mat(), nsamples, samples.as_raw_Mat()) }.into_result()
+pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArray, nsamples: i32, samples: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(mean);
+    input_array_arg!(cov);
+    output_array_arg!(samples);
+    unsafe { sys::cv_ml_randMVNormal__InputArray__InputArray_int__OutputArray(mean.as_raw__InputArray(), cov.as_raw__InputArray(), nsamples, samples.as_raw__OutputArray()) }.into_result()
 }
 
 // Generating impl for trait cv::ml::ANN_MLP (trait)
@@ -171,8 +177,9 @@ pub trait ANN_MLP: crate::ml::StatModel {
     /// The last element - number of elements in the output layer. Default value is empty Mat.
     /// ## See also
     /// getLayerSizes
-    fn set_layer_sizes(&mut self, _layer_sizes: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_ml_ANN_MLP_setLayerSizes_Mat(self.as_raw_ANN_MLP(), _layer_sizes.as_raw_Mat()) }.into_result()
+    fn set_layer_sizes(&mut self, _layer_sizes: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(_layer_sizes);
+        unsafe { sys::cv_ml_ANN_MLP_setLayerSizes__InputArray(self.as_raw_ANN_MLP(), _layer_sizes.as_raw__InputArray()) }.into_result()
     }
     
     /// Integer vector specifying the number of neurons in each layer including the input and output layers.
@@ -740,8 +747,10 @@ pub trait EM: crate::ml::StatModel {
     /// ## C++ default parameters
     /// * results: noArray()
     /// * flags: 0
-    fn predict(&self, samples: &core::Mat, results: &mut core::Mat, flags: i32) -> Result<f32> {
-        unsafe { sys::cv_ml_EM_predict_const_Mat_Mat_int(self.as_raw_EM(), samples.as_raw_Mat(), results.as_raw_Mat(), flags) }.into_result()
+    fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
+        input_array_arg!(samples);
+        output_array_arg!(results);
+        unsafe { sys::cv_ml_EM_predict_const__InputArray__OutputArray_int(self.as_raw_EM(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags) }.into_result()
     }
     
     /// Returns a likelihood logarithm value and an index of the most probable mixture component
@@ -756,8 +765,10 @@ pub trait EM: crate::ml::StatModel {
     /// The method returns a two-element double vector. Zero element is a likelihood logarithm value for
     /// the sample. First element is an index of the most probable mixture component for the given
     /// sample.
-    fn predict2(&self, sample: &core::Mat, probs: &mut core::Mat) -> Result<core::Vec2d> {
-        unsafe { sys::cv_ml_EM_predict2_const_Mat_Mat(self.as_raw_EM(), sample.as_raw_Mat(), probs.as_raw_Mat()) }.into_result()
+    fn predict2(&self, sample: &dyn core::ToInputArray, probs: &mut dyn core::ToOutputArray) -> Result<core::Vec2d> {
+        input_array_arg!(sample);
+        output_array_arg!(probs);
+        unsafe { sys::cv_ml_EM_predict2_const__InputArray__OutputArray(self.as_raw_EM(), sample.as_raw__InputArray(), probs.as_raw__OutputArray()) }.into_result()
     }
     
     /// Estimate the Gaussian mixture parameters from a samples set.
@@ -793,8 +804,12 @@ pub trait EM: crate::ml::StatModel {
     /// * log_likelihoods: noArray()
     /// * labels: noArray()
     /// * probs: noArray()
-    fn train_em(&mut self, samples: &core::Mat, log_likelihoods: &mut core::Mat, labels: &mut core::Mat, probs: &mut core::Mat) -> Result<bool> {
-        unsafe { sys::cv_ml_EM_trainEM_Mat_Mat_Mat_Mat(self.as_raw_EM(), samples.as_raw_Mat(), log_likelihoods.as_raw_Mat(), labels.as_raw_Mat(), probs.as_raw_Mat()) }.into_result()
+    fn train_em(&mut self, samples: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
+        input_array_arg!(samples);
+        output_array_arg!(log_likelihoods);
+        output_array_arg!(labels);
+        output_array_arg!(probs);
+        unsafe { sys::cv_ml_EM_trainEM__InputArray__OutputArray__OutputArray__OutputArray(self.as_raw_EM(), samples.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
     }
     
     /// Estimate the Gaussian mixture parameters from a samples set.
@@ -831,8 +846,15 @@ pub trait EM: crate::ml::StatModel {
     /// * log_likelihoods: noArray()
     /// * labels: noArray()
     /// * probs: noArray()
-    fn train_e(&mut self, samples: &core::Mat, means0: &core::Mat, covs0: &core::Mat, weights0: &core::Mat, log_likelihoods: &mut core::Mat, labels: &mut core::Mat, probs: &mut core::Mat) -> Result<bool> {
-        unsafe { sys::cv_ml_EM_trainE_Mat_Mat_Mat_Mat_Mat_Mat_Mat(self.as_raw_EM(), samples.as_raw_Mat(), means0.as_raw_Mat(), covs0.as_raw_Mat(), weights0.as_raw_Mat(), log_likelihoods.as_raw_Mat(), labels.as_raw_Mat(), probs.as_raw_Mat()) }.into_result()
+    fn train_e(&mut self, samples: &dyn core::ToInputArray, means0: &dyn core::ToInputArray, covs0: &dyn core::ToInputArray, weights0: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
+        input_array_arg!(samples);
+        input_array_arg!(means0);
+        input_array_arg!(covs0);
+        input_array_arg!(weights0);
+        output_array_arg!(log_likelihoods);
+        output_array_arg!(labels);
+        output_array_arg!(probs);
+        unsafe { sys::cv_ml_EM_trainE__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray__OutputArray(self.as_raw_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), covs0.as_raw__InputArray(), weights0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
     }
     
     /// Estimate the Gaussian mixture parameters from a samples set.
@@ -858,8 +880,13 @@ pub trait EM: crate::ml::StatModel {
     /// * log_likelihoods: noArray()
     /// * labels: noArray()
     /// * probs: noArray()
-    fn train_m(&mut self, samples: &core::Mat, probs0: &core::Mat, log_likelihoods: &mut core::Mat, labels: &mut core::Mat, probs: &mut core::Mat) -> Result<bool> {
-        unsafe { sys::cv_ml_EM_trainM_Mat_Mat_Mat_Mat_Mat(self.as_raw_EM(), samples.as_raw_Mat(), probs0.as_raw_Mat(), log_likelihoods.as_raw_Mat(), labels.as_raw_Mat(), probs.as_raw_Mat()) }.into_result()
+    fn train_m(&mut self, samples: &dyn core::ToInputArray, probs0: &dyn core::ToInputArray, log_likelihoods: &mut dyn core::ToOutputArray, labels: &mut dyn core::ToOutputArray, probs: &mut dyn core::ToOutputArray) -> Result<bool> {
+        input_array_arg!(samples);
+        input_array_arg!(probs0);
+        output_array_arg!(log_likelihoods);
+        output_array_arg!(labels);
+        output_array_arg!(probs);
+        unsafe { sys::cv_ml_EM_trainM__InputArray__InputArray__OutputArray__OutputArray__OutputArray(self.as_raw_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -970,8 +997,12 @@ pub trait KNearest: crate::ml::StatModel {
     /// ## C++ default parameters
     /// * neighbor_responses: noArray()
     /// * dist: noArray()
-    fn find_nearest(&self, samples: &core::Mat, k: i32, results: &mut core::Mat, neighbor_responses: &mut core::Mat, dist: &mut core::Mat) -> Result<f32> {
-        unsafe { sys::cv_ml_KNearest_findNearest_const_Mat_int_Mat_Mat_Mat(self.as_raw_KNearest(), samples.as_raw_Mat(), k, results.as_raw_Mat(), neighbor_responses.as_raw_Mat(), dist.as_raw_Mat()) }.into_result()
+    fn find_nearest(&self, samples: &dyn core::ToInputArray, k: i32, results: &mut dyn core::ToOutputArray, neighbor_responses: &mut dyn core::ToOutputArray, dist: &mut dyn core::ToOutputArray) -> Result<f32> {
+        input_array_arg!(samples);
+        output_array_arg!(results);
+        output_array_arg!(neighbor_responses);
+        output_array_arg!(dist);
+        unsafe { sys::cv_ml_KNearest_findNearest_const__InputArray_int__OutputArray__OutputArray__OutputArray(self.as_raw_KNearest(), samples.as_raw__InputArray(), k, results.as_raw__OutputArray(), neighbor_responses.as_raw__OutputArray(), dist.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -1077,8 +1108,10 @@ pub trait LogisticRegression: crate::ml::StatModel {
     /// ## C++ default parameters
     /// * results: noArray()
     /// * flags: 0
-    fn predict(&self, samples: &core::Mat, results: &mut core::Mat, flags: i32) -> Result<f32> {
-        unsafe { sys::cv_ml_LogisticRegression_predict_const_Mat_Mat_int(self.as_raw_LogisticRegression(), samples.as_raw_Mat(), results.as_raw_Mat(), flags) }.into_result()
+    fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
+        input_array_arg!(samples);
+        output_array_arg!(results);
+        unsafe { sys::cv_ml_LogisticRegression_predict_const__InputArray__OutputArray_int(self.as_raw_LogisticRegression(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags) }.into_result()
     }
     
     /// This function returns the trained parameters arranged across rows.
@@ -1137,8 +1170,11 @@ pub trait NormalBayesClassifier: crate::ml::StatModel {
     ///
     /// ## C++ default parameters
     /// * flags: 0
-    fn predict_prob(&self, inputs: &core::Mat, outputs: &mut core::Mat, output_probs: &mut core::Mat, flags: i32) -> Result<f32> {
-        unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const_Mat_Mat_Mat_int(self.as_raw_NormalBayesClassifier(), inputs.as_raw_Mat(), outputs.as_raw_Mat(), output_probs.as_raw_Mat(), flags) }.into_result()
+    fn predict_prob(&self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray, output_probs: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
+        input_array_arg!(inputs);
+        output_array_arg!(outputs);
+        output_array_arg!(output_probs);
+        unsafe { sys::cv_ml_NormalBayesClassifier_predictProb_const__InputArray__OutputArray__OutputArray_int(self.as_raw_NormalBayesClassifier(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray(), output_probs.as_raw__OutputArray(), flags) }.into_result()
     }
     
 }
@@ -1299,8 +1335,10 @@ pub trait RTrees: crate::ml::DTrees {
     /// * samples: Array containing the samples for which votes will be calculated.
     /// * results: Array where the result of the calculation will be written.
     /// * flags: Flags for defining the type of RTrees.
-    fn get_votes(&self, samples: &core::Mat, results: &mut core::Mat, flags: i32) -> Result<()> {
-        unsafe { sys::cv_ml_RTrees_getVotes_const_Mat_Mat_int(self.as_raw_RTrees(), samples.as_raw_Mat(), results.as_raw_Mat(), flags) }.into_result()
+    fn get_votes(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+        input_array_arg!(samples);
+        output_array_arg!(results);
+        unsafe { sys::cv_ml_RTrees_getVotes_const__InputArray__OutputArray_int(self.as_raw_RTrees(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags) }.into_result()
     }
     
 }
@@ -1493,7 +1531,7 @@ pub trait SVM: crate::ml::StatModel {
     /// * coeff_grid: getDefaultGrid(COEF)
     /// * degree_grid: getDefaultGrid(DEGREE)
     /// * balanced: false
-    fn train_auto(&mut self, data: &types::PtrOfTrainData, k_fold: i32, cgrid: &crate::ml::ParamGrid, gamma_grid: &crate::ml::ParamGrid, p_grid: &crate::ml::ParamGrid, nu_grid: &crate::ml::ParamGrid, coeff_grid: &crate::ml::ParamGrid, degree_grid: &crate::ml::ParamGrid, balanced: bool) -> Result<bool> {
+    fn train_auto_with_data(&mut self, data: &types::PtrOfTrainData, k_fold: i32, cgrid: &crate::ml::ParamGrid, gamma_grid: &crate::ml::ParamGrid, p_grid: &crate::ml::ParamGrid, nu_grid: &crate::ml::ParamGrid, coeff_grid: &crate::ml::ParamGrid, degree_grid: &crate::ml::ParamGrid, balanced: bool) -> Result<bool> {
         unsafe { sys::cv_ml_SVM_trainAuto_PtrOfTrainData_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(self.as_raw_SVM(), data.as_raw_PtrOfTrainData(), k_fold, cgrid.as_raw_ParamGrid(), gamma_grid.as_raw_ParamGrid(), p_grid.as_raw_ParamGrid(), nu_grid.as_raw_ParamGrid(), coeff_grid.as_raw_ParamGrid(), degree_grid.as_raw_ParamGrid(), balanced) }.into_result()
     }
     
@@ -1535,8 +1573,10 @@ pub trait SVM: crate::ml::StatModel {
     /// * coeff_grid: SVM::getDefaultGridPtr(SVM::COEF)
     /// * degree_grid: SVM::getDefaultGridPtr(SVM::DEGREE)
     /// * balanced: false
-    fn train_auto_1(&mut self, samples: &core::Mat, layout: i32, responses: &core::Mat, k_fold: i32, cgrid: &types::PtrOfParamGrid, gamma_grid: &types::PtrOfParamGrid, p_grid: &types::PtrOfParamGrid, nu_grid: &types::PtrOfParamGrid, coeff_grid: &types::PtrOfParamGrid, degree_grid: &types::PtrOfParamGrid, balanced: bool) -> Result<bool> {
-        unsafe { sys::cv_ml_SVM_trainAuto_Mat_int_Mat_int_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_bool(self.as_raw_SVM(), samples.as_raw_Mat(), layout, responses.as_raw_Mat(), k_fold, cgrid.as_raw_PtrOfParamGrid(), gamma_grid.as_raw_PtrOfParamGrid(), p_grid.as_raw_PtrOfParamGrid(), nu_grid.as_raw_PtrOfParamGrid(), coeff_grid.as_raw_PtrOfParamGrid(), degree_grid.as_raw_PtrOfParamGrid(), balanced) }.into_result()
+    fn train_auto(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, k_fold: i32, cgrid: &types::PtrOfParamGrid, gamma_grid: &types::PtrOfParamGrid, p_grid: &types::PtrOfParamGrid, nu_grid: &types::PtrOfParamGrid, coeff_grid: &types::PtrOfParamGrid, degree_grid: &types::PtrOfParamGrid, balanced: bool) -> Result<bool> {
+        input_array_arg!(samples);
+        input_array_arg!(responses);
+        unsafe { sys::cv_ml_SVM_trainAuto__InputArray_int__InputArray_int_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_PtrOfParamGrid_bool(self.as_raw_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_PtrOfParamGrid(), gamma_grid.as_raw_PtrOfParamGrid(), p_grid.as_raw_PtrOfParamGrid(), nu_grid.as_raw_PtrOfParamGrid(), coeff_grid.as_raw_PtrOfParamGrid(), degree_grid.as_raw_PtrOfParamGrid(), balanced) }.into_result()
     }
     
     /// Retrieves all the support vectors
@@ -1571,8 +1611,10 @@ pub trait SVM: crate::ml::StatModel {
     ///
     /// The method returns rho parameter of the decision function, a scalar subtracted from the weighted
     /// sum of kernel responses.
-    fn get_decision_function(&self, i: i32, alpha: &mut core::Mat, svidx: &mut core::Mat) -> Result<f64> {
-        unsafe { sys::cv_ml_SVM_getDecisionFunction_const_int_Mat_Mat(self.as_raw_SVM(), i, alpha.as_raw_Mat(), svidx.as_raw_Mat()) }.into_result()
+    fn get_decision_function(&self, i: i32, alpha: &mut dyn core::ToOutputArray, svidx: &mut dyn core::ToOutputArray) -> Result<f64> {
+        output_array_arg!(alpha);
+        output_array_arg!(svidx);
+        unsafe { sys::cv_ml_SVM_getDecisionFunction_const_int__OutputArray__OutputArray(self.as_raw_SVM(), i, alpha.as_raw__OutputArray(), svidx.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -1800,8 +1842,10 @@ pub trait StatModel: core::Algorithm {
     /// * samples: training samples
     /// * layout: See ml::SampleTypes.
     /// * responses: vector of responses associated with the training samples.
-    fn train(&mut self, samples: &core::Mat, layout: i32, responses: &core::Mat) -> Result<bool> {
-        unsafe { sys::cv_ml_StatModel_train_Mat_int_Mat(self.as_raw_StatModel(), samples.as_raw_Mat(), layout, responses.as_raw_Mat()) }.into_result()
+    fn train(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray) -> Result<bool> {
+        input_array_arg!(samples);
+        input_array_arg!(responses);
+        unsafe { sys::cv_ml_StatModel_train__InputArray_int__InputArray(self.as_raw_StatModel(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray()) }.into_result()
     }
     
     /// Computes error on the training or test dataset
@@ -1817,8 +1861,9 @@ pub trait StatModel: core::Algorithm {
     ///
     /// The method uses StatModel::predict to compute the error. For regression models the error is
     /// computed as RMS, for classifiers - as a percent of missclassified samples (0%-100%).
-    fn calc_error(&self, data: &types::PtrOfTrainData, test: bool, resp: &mut core::Mat) -> Result<f32> {
-        unsafe { sys::cv_ml_StatModel_calcError_const_PtrOfTrainData_bool_Mat(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw_Mat()) }.into_result()
+    fn calc_error(&self, data: &types::PtrOfTrainData, test: bool, resp: &mut dyn core::ToOutputArray) -> Result<f32> {
+        output_array_arg!(resp);
+        unsafe { sys::cv_ml_StatModel_calcError_const_PtrOfTrainData_bool__OutputArray(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray()) }.into_result()
     }
     
     /// Predicts response(s) for the provided sample(s)
@@ -1831,8 +1876,10 @@ pub trait StatModel: core::Algorithm {
     /// ## C++ default parameters
     /// * results: noArray()
     /// * flags: 0
-    fn predict(&self, samples: &core::Mat, results: &mut core::Mat, flags: i32) -> Result<f32> {
-        unsafe { sys::cv_ml_StatModel_predict_const_Mat_Mat_int(self.as_raw_StatModel(), samples.as_raw_Mat(), results.as_raw_Mat(), flags) }.into_result()
+    fn predict(&self, samples: &dyn core::ToInputArray, results: &mut dyn core::ToOutputArray, flags: i32) -> Result<f32> {
+        input_array_arg!(samples);
+        output_array_arg!(results);
+        unsafe { sys::cv_ml_StatModel_predict_const__InputArray__OutputArray_int(self.as_raw_StatModel(), samples.as_raw__InputArray(), results.as_raw__OutputArray(), flags) }.into_result()
     }
     
 }
@@ -1877,8 +1924,9 @@ pub trait TrainData {
         unsafe { sys::cv_ml_TrainData_getNAllVars_const(self.as_raw_TrainData()) }.into_result()
     }
     
-    fn get_sample(&self, var_idx: &core::Mat, sidx: i32, buf: &mut f32) -> Result<()> {
-        unsafe { sys::cv_ml_TrainData_getSample_const_Mat_int_float_X(self.as_raw_TrainData(), var_idx.as_raw_Mat(), sidx, buf) }.into_result()
+    fn get_sample(&self, var_idx: &dyn core::ToInputArray, sidx: i32, buf: &mut f32) -> Result<()> {
+        input_array_arg!(var_idx);
+        unsafe { sys::cv_ml_TrainData_getSample_const__InputArray_int_float_X(self.as_raw_TrainData(), var_idx.as_raw__InputArray(), sidx, buf) }.into_result()
     }
     
     fn get_samples(&self) -> Result<core::Mat> {
@@ -1979,12 +2027,14 @@ pub trait TrainData {
         unsafe { sys::cv_ml_TrainData_getTestSampleIdx_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-    fn get_values(&self, vi: i32, sidx: &core::Mat, values: &mut f32) -> Result<()> {
-        unsafe { sys::cv_ml_TrainData_getValues_const_int_Mat_float_X(self.as_raw_TrainData(), vi, sidx.as_raw_Mat(), values) }.into_result()
+    fn get_values(&self, vi: i32, sidx: &dyn core::ToInputArray, values: &mut f32) -> Result<()> {
+        input_array_arg!(sidx);
+        unsafe { sys::cv_ml_TrainData_getValues_const_int__InputArray_float_X(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values) }.into_result()
     }
     
-    fn get_norm_cat_values(&self, vi: i32, sidx: &core::Mat, values: &mut i32) -> Result<()> {
-        unsafe { sys::cv_ml_TrainData_getNormCatValues_const_int_Mat_int_X(self.as_raw_TrainData(), vi, sidx.as_raw_Mat(), values) }.into_result()
+    fn get_norm_cat_values(&self, vi: i32, sidx: &dyn core::ToInputArray, values: &mut i32) -> Result<()> {
+        input_array_arg!(sidx);
+        unsafe { sys::cv_ml_TrainData_getNormCatValues_const_int__InputArray_int_X(self.as_raw_TrainData(), vi, sidx.as_raw__InputArray(), values) }.into_result()
     }
     
     fn get_default_subst_values(&self) -> Result<core::Mat> {
@@ -2138,8 +2188,14 @@ impl dyn TrainData + '_ {
     /// * sample_idx: noArray()
     /// * sample_weights: noArray()
     /// * var_type: noArray()
-    pub fn create(samples: &core::Mat, layout: i32, responses: &core::Mat, var_idx: &core::Mat, sample_idx: &core::Mat, sample_weights: &core::Mat, var_type: &core::Mat) -> Result<types::PtrOfTrainData> {
-        unsafe { sys::cv_ml_TrainData_create_Mat_int_Mat_Mat_Mat_Mat_Mat(samples.as_raw_Mat(), layout, responses.as_raw_Mat(), var_idx.as_raw_Mat(), sample_idx.as_raw_Mat(), sample_weights.as_raw_Mat(), var_type.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfTrainData { ptr })
+    pub fn create(samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, var_idx: &dyn core::ToInputArray, sample_idx: &dyn core::ToInputArray, sample_weights: &dyn core::ToInputArray, var_type: &dyn core::ToInputArray) -> Result<types::PtrOfTrainData> {
+        input_array_arg!(samples);
+        input_array_arg!(responses);
+        input_array_arg!(var_idx);
+        input_array_arg!(sample_idx);
+        input_array_arg!(sample_weights);
+        input_array_arg!(var_type);
+        unsafe { sys::cv_ml_TrainData_create__InputArray_int__InputArray__InputArray__InputArray__InputArray__InputArray(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), var_idx.as_raw__InputArray(), sample_idx.as_raw__InputArray(), sample_weights.as_raw__InputArray(), var_type.as_raw__InputArray()) }.into_result().map(|ptr| types::PtrOfTrainData { ptr })
     }
     
 }

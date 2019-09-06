@@ -60,6 +60,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// use fewer block and generate 16*16/8 uchar hash value
 pub const BLOCK_MEAN_HASH_MODE_0: i32 = 0;

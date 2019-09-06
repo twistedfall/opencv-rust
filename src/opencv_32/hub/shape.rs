@@ -2,6 +2,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 
 /// Computes the "minimal work" distance between two weighted point configurations base on the papers
@@ -13,8 +14,10 @@ use crate::{Error, Result, core, sys, types};
 /// * signature1: First signature, a single column floating-point matrix. Each row is the value of
 /// the histogram in each bin.
 /// * signature2: Second signature of the same format and size as signature1.
-pub fn emdl1(signature1: &core::Mat, signature2: &core::Mat) -> Result<f32> {
-    unsafe { sys::cv_EMDL1_Mat_Mat(signature1.as_raw_Mat(), signature2.as_raw_Mat()) }.into_result()
+pub fn emdl1(signature1: &dyn core::ToInputArray, signature2: &dyn core::ToInputArray) -> Result<f32> {
+    input_array_arg!(signature1);
+    input_array_arg!(signature2);
+    unsafe { sys::cv_EMDL1__InputArray__InputArray(signature1.as_raw__InputArray(), signature2.as_raw__InputArray()) }.into_result()
 }
 
 /// Complete constructor
@@ -198,8 +201,11 @@ pub trait HausdorffDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 /// Abstract base class for histogram cost algorithms.
 pub trait HistogramCostExtractor: core::Algorithm {
     #[inline(always)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void;
-    fn build_cost_matrix(&mut self, descriptors1: &core::Mat, descriptors2: &core::Mat, cost_matrix: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix_Mat_Mat_Mat(self.as_raw_HistogramCostExtractor(), descriptors1.as_raw_Mat(), descriptors2.as_raw_Mat(), cost_matrix.as_raw_Mat()) }.into_result()
+    fn build_cost_matrix(&mut self, descriptors1: &dyn core::ToInputArray, descriptors2: &dyn core::ToInputArray, cost_matrix: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(descriptors1);
+        input_array_arg!(descriptors2);
+        output_array_arg!(cost_matrix);
+        unsafe { sys::cv_HistogramCostExtractor_buildCostMatrix__InputArray__InputArray__OutputArray(self.as_raw_HistogramCostExtractor(), descriptors1.as_raw__InputArray(), descriptors2.as_raw__InputArray(), cost_matrix.as_raw__OutputArray()) }.into_result()
     }
     
     fn set_n_dummies(&mut self, n_dummies: i32) -> Result<()> {
@@ -353,12 +359,16 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
     /// ## Parameters
     /// * image1: Image corresponding to the shape defined by contours1.
     /// * image2: Image corresponding to the shape defined by contours2.
-    fn set_images(&mut self, image1: &core::Mat, image2: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_ShapeContextDistanceExtractor_setImages_Mat_Mat(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw_Mat(), image2.as_raw_Mat()) }.into_result()
+    fn set_images(&mut self, image1: &dyn core::ToInputArray, image2: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(image1);
+        input_array_arg!(image2);
+        unsafe { sys::cv_ShapeContextDistanceExtractor_setImages__InputArray__InputArray(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw__InputArray(), image2.as_raw__InputArray()) }.into_result()
     }
     
-    fn get_images(&self, image1: &mut core::Mat, image2: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_ShapeContextDistanceExtractor_getImages_const_Mat_Mat(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw_Mat(), image2.as_raw_Mat()) }.into_result()
+    fn get_images(&self, image1: &mut dyn core::ToOutputArray, image2: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(image1);
+        output_array_arg!(image2);
+        unsafe { sys::cv_ShapeContextDistanceExtractor_getImages_const__OutputArray__OutputArray(self.as_raw_ShapeContextDistanceExtractor(), image1.as_raw__OutputArray(), image2.as_raw__OutputArray()) }.into_result()
     }
     
     fn set_iterations(&mut self, iterations: i32) -> Result<()> {
@@ -405,8 +415,10 @@ pub trait ShapeDistanceExtractor: core::Algorithm {
     /// ## Parameters
     /// * contour1: Contour defining first shape.
     /// * contour2: Contour defining second shape.
-    fn compute_distance(&mut self, contour1: &core::Mat, contour2: &core::Mat) -> Result<f32> {
-        unsafe { sys::cv_ShapeDistanceExtractor_computeDistance_Mat_Mat(self.as_raw_ShapeDistanceExtractor(), contour1.as_raw_Mat(), contour2.as_raw_Mat()) }.into_result()
+    fn compute_distance(&mut self, contour1: &dyn core::ToInputArray, contour2: &dyn core::ToInputArray) -> Result<f32> {
+        input_array_arg!(contour1);
+        input_array_arg!(contour2);
+        unsafe { sys::cv_ShapeDistanceExtractor_computeDistance__InputArray__InputArray(self.as_raw_ShapeDistanceExtractor(), contour1.as_raw__InputArray(), contour2.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -421,8 +433,10 @@ pub trait ShapeTransformer: core::Algorithm {
     /// * transformingShape: Contour defining first shape.
     /// * targetShape: Contour defining second shape (Target).
     /// * matches: Standard vector of Matches between points.
-    fn estimate_transformation(&mut self, transforming_shape: &core::Mat, target_shape: &core::Mat, matches: &mut types::VectorOfDMatch) -> Result<()> {
-        unsafe { sys::cv_ShapeTransformer_estimateTransformation_Mat_Mat_VectorOfDMatch(self.as_raw_ShapeTransformer(), transforming_shape.as_raw_Mat(), target_shape.as_raw_Mat(), matches.as_raw_VectorOfDMatch()) }.into_result()
+    fn estimate_transformation(&mut self, transforming_shape: &dyn core::ToInputArray, target_shape: &dyn core::ToInputArray, matches: &mut types::VectorOfDMatch) -> Result<()> {
+        input_array_arg!(transforming_shape);
+        input_array_arg!(target_shape);
+        unsafe { sys::cv_ShapeTransformer_estimateTransformation__InputArray__InputArray_VectorOfDMatch(self.as_raw_ShapeTransformer(), transforming_shape.as_raw__InputArray(), target_shape.as_raw__InputArray(), matches.as_raw_VectorOfDMatch()) }.into_result()
     }
     
     /// Apply a transformation, given a pre-estimated transformation parameters.
@@ -433,8 +447,10 @@ pub trait ShapeTransformer: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * output: noArray()
-    fn apply_transformation(&mut self, input: &core::Mat, output: &mut core::Mat) -> Result<f32> {
-        unsafe { sys::cv_ShapeTransformer_applyTransformation_Mat_Mat(self.as_raw_ShapeTransformer(), input.as_raw_Mat(), output.as_raw_Mat()) }.into_result()
+    fn apply_transformation(&mut self, input: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray) -> Result<f32> {
+        input_array_arg!(input);
+        output_array_arg!(output);
+        unsafe { sys::cv_ShapeTransformer_applyTransformation__InputArray__OutputArray(self.as_raw_ShapeTransformer(), input.as_raw__InputArray(), output.as_raw__OutputArray()) }.into_result()
     }
     
     /// Apply a transformation, given a pre-estimated transformation parameters, to an Image.
@@ -450,8 +466,10 @@ pub trait ShapeTransformer: core::Algorithm {
     /// * flags: INTER_LINEAR
     /// * border_mode: BORDER_CONSTANT
     /// * border_value: Scalar()
-    fn warp_image(&self, transforming_image: &core::Mat, output: &mut core::Mat, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
-        unsafe { sys::cv_ShapeTransformer_warpImage_const_Mat_Mat_int_int_Scalar(self.as_raw_ShapeTransformer(), transforming_image.as_raw_Mat(), output.as_raw_Mat(), flags, border_mode, border_value) }.into_result()
+    fn warp_image(&self, transforming_image: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, flags: i32, border_mode: i32, border_value: core::Scalar) -> Result<()> {
+        input_array_arg!(transforming_image);
+        output_array_arg!(output);
+        unsafe { sys::cv_ShapeTransformer_warpImage_const__InputArray__OutputArray_int_int_Scalar(self.as_raw_ShapeTransformer(), transforming_image.as_raw__InputArray(), output.as_raw__OutputArray(), flags, border_mode, border_value) }.into_result()
     }
     
 }

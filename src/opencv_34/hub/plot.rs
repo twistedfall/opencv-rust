@@ -2,6 +2,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 
 // Generating impl for trait cv::plot::Plot2d (trait)
@@ -84,8 +85,9 @@ pub trait Plot2d: core::Algorithm {
         unsafe { sys::cv_plot_Plot2d_setPointIdxToPrint_int(self.as_raw_Plot2d(), point_idx) }.into_result()
     }
     
-    fn render(&mut self, _plot_result: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_plot_Plot2d_render_Mat(self.as_raw_Plot2d(), _plot_result.as_raw_Mat()) }.into_result()
+    fn render(&mut self, _plot_result: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(_plot_result);
+        unsafe { sys::cv_plot_Plot2d_render__OutputArray(self.as_raw_Plot2d(), _plot_result.as_raw__OutputArray()) }.into_result()
     }
     
 }
@@ -97,8 +99,9 @@ impl dyn Plot2d + '_ {
     /// ## Parameters
     /// * data: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot. ![inline formula](https://latex.codecogs.com/png.latex?X) values
     /// will be equal to indexes of correspondind elements in data matrix.
-    pub fn create(data: &core::Mat) -> Result<types::PtrOfPlot2d> {
-        unsafe { sys::cv_plot_Plot2d_create_Mat(data.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
+    pub fn create(data: &dyn core::ToInputArray) -> Result<types::PtrOfPlot2d> {
+        input_array_arg!(data);
+        unsafe { sys::cv_plot_Plot2d_create__InputArray(data.as_raw__InputArray()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
     }
     
     /// Creates Plot2d object
@@ -106,8 +109,10 @@ impl dyn Plot2d + '_ {
     /// ## Parameters
     /// * dataX: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix ![inline formula](https://latex.codecogs.com/png.latex?X) values of points to plot.
     /// * dataY: ![inline formula](https://latex.codecogs.com/png.latex?1xN) or ![inline formula](https://latex.codecogs.com/png.latex?Nx1) matrix containing ![inline formula](https://latex.codecogs.com/png.latex?Y) values of points to plot.
-    pub fn create_1(data_x: &core::Mat, data_y: &core::Mat) -> Result<types::PtrOfPlot2d> {
-        unsafe { sys::cv_plot_Plot2d_create_Mat_Mat(data_x.as_raw_Mat(), data_y.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
+    pub fn create_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInputArray) -> Result<types::PtrOfPlot2d> {
+        input_array_arg!(data_x);
+        input_array_arg!(data_y);
+        unsafe { sys::cv_plot_Plot2d_create__InputArray__InputArray(data_x.as_raw__InputArray(), data_y.as_raw__InputArray()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
     }
     
 }

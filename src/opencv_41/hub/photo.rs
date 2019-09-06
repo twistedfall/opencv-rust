@@ -30,6 +30,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// Use Navier-Stokes based method
 pub const INPAINT_NS: i32 = 0;
@@ -61,8 +62,11 @@ pub const RECURS_FILTER: i32 = 1;
 /// * red_mul: 1.0f
 /// * green_mul: 1.0f
 /// * blue_mul: 1.0f
-pub fn color_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, red_mul: f32, green_mul: f32, blue_mul: f32) -> Result<()> {
-    unsafe { sys::cv_colorChange_Mat_Mat_Mat_float_float_float(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_Mat(), red_mul, green_mul, blue_mul) }.into_result()
+pub fn color_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, red_mul: f32, green_mul: f32, blue_mul: f32) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(mask);
+    output_array_arg!(dst);
+    unsafe { sys::cv_colorChange__InputArray__InputArray__OutputArray_float_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), red_mul, green_mul, blue_mul) }.into_result()
 }
 
 /// Creates AlignMTB object
@@ -212,8 +216,11 @@ pub fn create_tonemap(gamma: f32) -> Result<types::PtrOfTonemap> {
 /// * color_boost: Output 8-bit 3-channel image.
 ///
 /// This function is to be applied on color images.
-pub fn decolor(src: &core::Mat, grayscale: &mut core::Mat, color_boost: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_decolor_Mat_Mat_Mat(src.as_raw_Mat(), grayscale.as_raw_Mat(), color_boost.as_raw_Mat()) }.into_result()
+pub fn decolor(src: &dyn core::ToInputArray, grayscale: &mut dyn core::ToOutputArray, color_boost: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(grayscale);
+    output_array_arg!(color_boost);
+    unsafe { sys::cv_decolor__InputArray__OutputArray__OutputArray(src.as_raw__InputArray(), grayscale.as_raw__OutputArray(), color_boost.as_raw__OutputArray()) }.into_result()
 }
 
 /// Primal-dual algorithm is an algorithm for solving special types of variational problems (that is,
@@ -272,8 +279,10 @@ pub fn denoise_tvl1(observations: &types::VectorOfMat, result: &mut core::Mat, l
 /// ## C++ default parameters
 /// * sigma_s: 10
 /// * sigma_r: 0.15f
-pub fn detail_enhance(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_r: f32) -> Result<()> {
-    unsafe { sys::cv_detailEnhance_Mat_Mat_float_float(src.as_raw_Mat(), dst.as_raw_Mat(), sigma_s, sigma_r) }.into_result()
+pub fn detail_enhance(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_detailEnhance__InputArray__OutputArray_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r) }.into_result()
 }
 
 /// Filtering is the fundamental operation in image and video processing. Edge-preserving smoothing
@@ -290,8 +299,10 @@ pub fn detail_enhance(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_
 /// * flags: 1
 /// * sigma_s: 60
 /// * sigma_r: 0.4f
-pub fn edge_preserving_filter(src: &core::Mat, dst: &mut core::Mat, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
-    unsafe { sys::cv_edgePreservingFilter_Mat_Mat_int_float_float(src.as_raw_Mat(), dst.as_raw_Mat(), flags, sigma_s, sigma_r) }.into_result()
+pub fn edge_preserving_filter(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, flags: i32, sigma_s: f32, sigma_r: f32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_edgePreservingFilter__InputArray__OutputArray_int_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), flags, sigma_s, sigma_r) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoisingMulti function for colored images sequences
@@ -323,8 +334,10 @@ pub fn edge_preserving_filter(src: &core::Mat, dst: &mut core::Mat, flags: i32, 
 /// * h_color: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
-pub fn fast_nl_means_denoising_colored_multi(src_imgs: &types::VectorOfMat, dst: &mut core::Mat, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-    unsafe { sys::cv_fastNlMeansDenoisingColoredMulti_VectorOfMat_Mat_int_int_float_float_int_int(src_imgs.as_raw_VectorOfMat(), dst.as_raw_Mat(), img_to_denoise_index, temporal_window_size, h, h_color, template_window_size, search_window_size) }.into_result()
+pub fn fast_nl_means_denoising_colored_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+    input_array_arg!(src_imgs);
+    output_array_arg!(dst);
+    unsafe { sys::cv_fastNlMeansDenoisingColoredMulti__InputArray__OutputArray_int_int_float_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, h_color, template_window_size, search_window_size) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoising function for colored images
@@ -351,8 +364,10 @@ pub fn fast_nl_means_denoising_colored_multi(src_imgs: &types::VectorOfMat, dst:
 /// * h_color: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
-pub fn fast_nl_means_denoising_color(src: &core::Mat, dst: &mut core::Mat, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-    unsafe { sys::cv_fastNlMeansDenoisingColored_Mat_Mat_float_float_int_int(src.as_raw_Mat(), dst.as_raw_Mat(), h, h_color, template_window_size, search_window_size) }.into_result()
+pub fn fast_nl_means_denoising_colored(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, h_color: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_fastNlMeansDenoisingColored__InputArray__OutputArray_float_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, h_color, template_window_size, search_window_size) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
@@ -385,8 +400,10 @@ pub fn fast_nl_means_denoising_color(src: &core::Mat, dst: &mut core::Mat, h: f3
 /// * template_window_size: 7
 /// * search_window_size: 21
 /// * norm_type: NORM_L2
-pub fn fast_nl_means_denoising_multi(src_imgs: &types::VectorOfMat, dst: &mut core::Mat, img_to_denoise_index: i32, temporal_window_size: i32, h: &types::VectorOffloat, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
-    unsafe { sys::cv_fastNlMeansDenoisingMulti_VectorOfMat_Mat_int_int_VectorOffloat_int_int_int(src_imgs.as_raw_VectorOfMat(), dst.as_raw_Mat(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOffloat(), template_window_size, search_window_size, norm_type) }.into_result()
+pub fn fast_nl_means_denoising_multi(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: &types::VectorOffloat, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
+    input_array_arg!(src_imgs);
+    output_array_arg!(dst);
+    unsafe { sys::cv_fastNlMeansDenoisingMulti__InputArray__OutputArray_int_int_VectorOffloat_int_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h.as_raw_VectorOffloat(), template_window_size, search_window_size, norm_type) }.into_result()
 }
 
 /// Modification of fastNlMeansDenoising function for images sequence where consecutive images have been
@@ -417,8 +434,10 @@ pub fn fast_nl_means_denoising_multi(src_imgs: &types::VectorOfMat, dst: &mut co
 /// * h: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
-pub fn fast_nl_means_denoising_multi_1(src_imgs: &types::VectorOfMat, dst: &mut core::Mat, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-    unsafe { sys::cv_fastNlMeansDenoisingMulti_VectorOfMat_Mat_int_int_float_int_int(src_imgs.as_raw_VectorOfMat(), dst.as_raw_Mat(), img_to_denoise_index, temporal_window_size, h, template_window_size, search_window_size) }.into_result()
+pub fn fast_nl_means_denoising_multi_vec(src_imgs: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, img_to_denoise_index: i32, temporal_window_size: i32, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+    input_array_arg!(src_imgs);
+    output_array_arg!(dst);
+    unsafe { sys::cv_fastNlMeansDenoisingMulti__InputArray__OutputArray_int_int_float_int_int(src_imgs.as_raw__InputArray(), dst.as_raw__OutputArray(), img_to_denoise_index, temporal_window_size, h, template_window_size, search_window_size) }.into_result()
 }
 
 /// Perform image denoising using Non-local Means Denoising algorithm
@@ -450,8 +469,10 @@ pub fn fast_nl_means_denoising_multi_1(src_imgs: &types::VectorOfMat, dst: &mut 
 /// * template_window_size: 7
 /// * search_window_size: 21
 /// * norm_type: NORM_L2
-pub fn fast_nl_means_denoising_vec(src: &core::Mat, dst: &mut core::Mat, h: &types::VectorOffloat, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
-    unsafe { sys::cv_fastNlMeansDenoising_Mat_Mat_VectorOffloat_int_int_int(src.as_raw_Mat(), dst.as_raw_Mat(), h.as_raw_VectorOffloat(), template_window_size, search_window_size, norm_type) }.into_result()
+pub fn fast_nl_means_denoising_vec(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: &types::VectorOffloat, template_window_size: i32, search_window_size: i32, norm_type: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_fastNlMeansDenoising__InputArray__OutputArray_VectorOffloat_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h.as_raw_VectorOffloat(), template_window_size, search_window_size, norm_type) }.into_result()
 }
 
 /// Perform image denoising using Non-local Means Denoising algorithm
@@ -479,8 +500,10 @@ pub fn fast_nl_means_denoising_vec(src: &core::Mat, dst: &mut core::Mat, h: &typ
 /// * h: 3
 /// * template_window_size: 7
 /// * search_window_size: 21
-pub fn fast_nl_means_denoising_window(src: &core::Mat, dst: &mut core::Mat, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
-    unsafe { sys::cv_fastNlMeansDenoising_Mat_Mat_float_int_int(src.as_raw_Mat(), dst.as_raw_Mat(), h, template_window_size, search_window_size) }.into_result()
+pub fn fast_nl_means_denoising(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, h: f32, template_window_size: i32, search_window_size: i32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_fastNlMeansDenoising__InputArray__OutputArray_float_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), h, template_window_size, search_window_size) }.into_result()
 }
 
 /// Applying an appropriate non-linear transformation to the gradient field inside the selection and
@@ -498,8 +521,11 @@ pub fn fast_nl_means_denoising_window(src: &core::Mat, dst: &mut core::Mat, h: f
 /// ## C++ default parameters
 /// * alpha: 0.2f
 /// * beta: 0.4f
-pub fn illumination_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, alpha: f32, beta: f32) -> Result<()> {
-    unsafe { sys::cv_illuminationChange_Mat_Mat_Mat_float_float(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_Mat(), alpha, beta) }.into_result()
+pub fn illumination_change(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, alpha: f32, beta: f32) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(mask);
+    output_array_arg!(dst);
+    unsafe { sys::cv_illuminationChange__InputArray__InputArray__OutputArray_float_float(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), alpha, beta) }.into_result()
 }
 
 /// Restores the selected region in an image using the region neighborhood.
@@ -523,8 +549,11 @@ pub fn illumination_change(src: &core::Mat, mask: &core::Mat, dst: &mut core::Ma
 /// opencv_source_code/samples/cpp/inpaint.cpp
 /// *   (Python) An example using the inpainting technique can be found at
 /// opencv_source_code/samples/python/inpaint.py
-pub fn inpaint(src: &core::Mat, inpaint_mask: &core::Mat, dst: &mut core::Mat, inpaint_radius: f64, flags: i32) -> Result<()> {
-    unsafe { sys::cv_inpaint_Mat_Mat_Mat_double_int(src.as_raw_Mat(), inpaint_mask.as_raw_Mat(), dst.as_raw_Mat(), inpaint_radius, flags) }.into_result()
+pub fn inpaint(src: &dyn core::ToInputArray, inpaint_mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, inpaint_radius: f64, flags: i32) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(inpaint_mask);
+    output_array_arg!(dst);
+    unsafe { sys::cv_inpaint__InputArray__InputArray__OutputArray_double_int(src.as_raw__InputArray(), inpaint_mask.as_raw__InputArray(), dst.as_raw__OutputArray(), inpaint_radius, flags) }.into_result()
 }
 
 /// Pencil-like non-photorealistic line drawing
@@ -541,8 +570,11 @@ pub fn inpaint(src: &core::Mat, inpaint_mask: &core::Mat, dst: &mut core::Mat, i
 /// * sigma_s: 60
 /// * sigma_r: 0.07f
 /// * shade_factor: 0.02f
-pub fn pencil_sketch(src: &core::Mat, dst1: &mut core::Mat, dst2: &mut core::Mat, sigma_s: f32, sigma_r: f32, shade_factor: f32) -> Result<()> {
-    unsafe { sys::cv_pencilSketch_Mat_Mat_Mat_float_float_float(src.as_raw_Mat(), dst1.as_raw_Mat(), dst2.as_raw_Mat(), sigma_s, sigma_r, shade_factor) }.into_result()
+pub fn pencil_sketch(src: &dyn core::ToInputArray, dst1: &mut dyn core::ToOutputArray, dst2: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32, shade_factor: f32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst1);
+    output_array_arg!(dst2);
+    unsafe { sys::cv_pencilSketch__InputArray__OutputArray__OutputArray_float_float_float(src.as_raw__InputArray(), dst1.as_raw__OutputArray(), dst2.as_raw__OutputArray(), sigma_s, sigma_r, shade_factor) }.into_result()
 }
 
 /// Image editing tasks concern either global changes (color/intensity corrections, filters,
@@ -558,8 +590,12 @@ pub fn pencil_sketch(src: &core::Mat, dst1: &mut core::Mat, dst2: &mut core::Mat
 /// * p: Point in dst image where object is placed.
 /// * blend: Output image with the same size and type as dst.
 /// * flags: Cloning method that could be cv::NORMAL_CLONE, cv::MIXED_CLONE or cv::MONOCHROME_TRANSFER
-pub fn seamless_clone(src: &core::Mat, dst: &core::Mat, mask: &core::Mat, p: core::Point, blend: &mut core::Mat, flags: i32) -> Result<()> {
-    unsafe { sys::cv_seamlessClone_Mat_Mat_Mat_Point_Mat_int(src.as_raw_Mat(), dst.as_raw_Mat(), mask.as_raw_Mat(), p, blend.as_raw_Mat(), flags) }.into_result()
+pub fn seamless_clone(src: &dyn core::ToInputArray, dst: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, p: core::Point, blend: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(dst);
+    input_array_arg!(mask);
+    output_array_arg!(blend);
+    unsafe { sys::cv_seamlessClone__InputArray__InputArray__InputArray_Point__OutputArray_int(src.as_raw__InputArray(), dst.as_raw__InputArray(), mask.as_raw__InputArray(), p, blend.as_raw__OutputArray(), flags) }.into_result()
 }
 
 /// Stylization aims to produce digital imagery with a wide variety of effects not focused on
@@ -575,8 +611,10 @@ pub fn seamless_clone(src: &core::Mat, dst: &core::Mat, mask: &core::Mat, p: cor
 /// ## C++ default parameters
 /// * sigma_s: 60
 /// * sigma_r: 0.45f
-pub fn stylization(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_r: f32) -> Result<()> {
-    unsafe { sys::cv_stylization_Mat_Mat_float_float(src.as_raw_Mat(), dst.as_raw_Mat(), sigma_s, sigma_r) }.into_result()
+pub fn stylization(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, sigma_s: f32, sigma_r: f32) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_stylization__InputArray__OutputArray_float_float(src.as_raw__InputArray(), dst.as_raw__OutputArray(), sigma_s, sigma_r) }.into_result()
 }
 
 /// By retaining only the gradients at edge locations, before integrating with the Poisson solver, one
@@ -600,8 +638,11 @@ pub fn stylization(src: &core::Mat, dst: &mut core::Mat, sigma_s: f32, sigma_r: 
 /// * low_threshold: 30
 /// * high_threshold: 45
 /// * kernel_size: 3
-pub fn texture_flattening(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, low_threshold: f32, high_threshold: f32, kernel_size: i32) -> Result<()> {
-    unsafe { sys::cv_textureFlattening_Mat_Mat_Mat_float_float_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_Mat(), low_threshold, high_threshold, kernel_size) }.into_result()
+pub fn texture_flattening(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, low_threshold: f32, high_threshold: f32, kernel_size: i32) -> Result<()> {
+    input_array_arg!(src);
+    input_array_arg!(mask);
+    output_array_arg!(dst);
+    unsafe { sys::cv_textureFlattening__InputArray__InputArray__OutputArray_float_float_int(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), low_threshold, high_threshold, kernel_size) }.into_result()
 }
 
 // Generating impl for trait cv::AlignExposures (trait)
@@ -616,8 +657,11 @@ pub trait AlignExposures: core::Algorithm {
     /// * times: vector of exposure time values for each image
     /// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
     /// have the same number of channels as images.
-    fn process(&mut self, src: &types::VectorOfMat, dst: &mut types::VectorOfMat, times: &core::Mat, response: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_AlignExposures_process_VectorOfMat_VectorOfMat_Mat_Mat(self.as_raw_AlignExposures(), src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut types::VectorOfMat, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        input_array_arg!(times);
+        input_array_arg!(response);
+        unsafe { sys::cv_AlignExposures_process__InputArray_VectorOfMat__InputArray__InputArray(self.as_raw_AlignExposures(), src.as_raw__InputArray(), dst.as_raw_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -633,8 +677,11 @@ pub trait AlignExposures: core::Algorithm {
 /// For more information see [GW03](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_GW03) .
 pub trait AlignMTB: crate::photo::AlignExposures {
     #[inline(always)] fn as_raw_AlignMTB(&self) -> *mut c_void;
-    fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut types::VectorOfMat, times: &core::Mat, response: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_AlignMTB_process_VectorOfMat_VectorOfMat_Mat_Mat(self.as_raw_AlignMTB(), src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
+    fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut types::VectorOfMat, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        input_array_arg!(times);
+        input_array_arg!(response);
+        unsafe { sys::cv_AlignMTB_process__InputArray_VectorOfMat__InputArray__InputArray(self.as_raw_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_VectorOfMat(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
     }
     
     /// Short version of process, that doesn't take extra arguments.
@@ -642,8 +689,9 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: vector of aligned images
-    fn process(&mut self, src: &types::VectorOfMat, dst: &mut types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_AlignMTB_process_VectorOfMat_VectorOfMat(self.as_raw_AlignMTB(), src.as_raw_VectorOfMat(), dst.as_raw_VectorOfMat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut types::VectorOfMat) -> Result<()> {
+        input_array_arg!(src);
+        unsafe { sys::cv_AlignMTB_process__InputArray_VectorOfMat(self.as_raw_AlignMTB(), src.as_raw__InputArray(), dst.as_raw_VectorOfMat()) }.into_result()
     }
     
     /// Calculates shift between two images, i. e. how to shift the second image to correspond it with the
@@ -652,8 +700,10 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     /// ## Parameters
     /// * img0: first image
     /// * img1: second image
-    fn calculate_shift(&mut self, img0: &core::Mat, img1: &core::Mat) -> Result<core::Point> {
-        unsafe { sys::cv_AlignMTB_calculateShift_Mat_Mat(self.as_raw_AlignMTB(), img0.as_raw_Mat(), img1.as_raw_Mat()) }.into_result()
+    fn calculate_shift(&mut self, img0: &dyn core::ToInputArray, img1: &dyn core::ToInputArray) -> Result<core::Point> {
+        input_array_arg!(img0);
+        input_array_arg!(img1);
+        unsafe { sys::cv_AlignMTB_calculateShift__InputArray__InputArray(self.as_raw_AlignMTB(), img0.as_raw__InputArray(), img1.as_raw__InputArray()) }.into_result()
     }
     
     /// Helper function, that shift Mat filling new regions with zeros.
@@ -662,8 +712,10 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     /// * src: input image
     /// * dst: result image
     /// * shift: shift value
-    fn shift_mat(&mut self, src: &core::Mat, dst: &mut core::Mat, shift: core::Point) -> Result<()> {
-        unsafe { sys::cv_AlignMTB_shiftMat_Mat_Mat_Point(self.as_raw_AlignMTB(), src.as_raw_Mat(), dst.as_raw_Mat(), shift) }.into_result()
+    fn shift_mat(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, shift: core::Point) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        unsafe { sys::cv_AlignMTB_shiftMat__InputArray__OutputArray_Point(self.as_raw_AlignMTB(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), shift) }.into_result()
     }
     
     /// Computes median threshold and exclude bitmaps of given image.
@@ -672,8 +724,11 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     /// * img: input image
     /// * tb: median threshold bitmap
     /// * eb: exclude bitmap
-    fn compute_bitmaps(&mut self, img: &core::Mat, tb: &mut core::Mat, eb: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_AlignMTB_computeBitmaps_Mat_Mat_Mat(self.as_raw_AlignMTB(), img.as_raw_Mat(), tb.as_raw_Mat(), eb.as_raw_Mat()) }.into_result()
+    fn compute_bitmaps(&mut self, img: &dyn core::ToInputArray, tb: &mut dyn core::ToOutputArray, eb: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(img);
+        output_array_arg!(tb);
+        output_array_arg!(eb);
+        unsafe { sys::cv_AlignMTB_computeBitmaps__InputArray__OutputArray__OutputArray(self.as_raw_AlignMTB(), img.as_raw__InputArray(), tb.as_raw__OutputArray(), eb.as_raw__OutputArray()) }.into_result()
     }
     
     fn get_max_bits(&self) -> Result<i32> {
@@ -712,8 +767,11 @@ pub trait CalibrateCRF: core::Algorithm {
     /// * src: vector of input images
     /// * dst: 256x1 matrix with inverse camera response function
     /// * times: vector of exposure time values for each image
-    fn process(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_CalibrateCRF_process_VectorOfMat_Mat_Mat(self.as_raw_CalibrateCRF(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        input_array_arg!(times);
+        unsafe { sys::cv_CalibrateCRF_process__InputArray__OutputArray__InputArray(self.as_raw_CalibrateCRF(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -788,12 +846,19 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
 /// For more information see [DM97](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait MergeDebevec: crate::photo::MergeExposures {
     #[inline(always)] fn as_raw_MergeDebevec(&self) -> *mut c_void;
-    fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat, response: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_MergeDebevec_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeDebevec(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
+    fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        input_array_arg!(times);
+        input_array_arg!(response);
+        unsafe { sys::cv_MergeDebevec_process__InputArray__OutputArray__InputArray__InputArray(self.as_raw_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
     }
     
-    fn process(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_MergeDebevec_process_VectorOfMat_Mat_Mat(self.as_raw_MergeDebevec(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        input_array_arg!(times);
+        unsafe { sys::cv_MergeDebevec_process__InputArray__OutputArray__InputArray(self.as_raw_MergeDebevec(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -810,8 +875,12 @@ pub trait MergeExposures: core::Algorithm {
     /// * times: vector of exposure time values for each image
     /// * response: 256x1 matrix with inverse camera response function for each pixel value, it should
     /// have the same number of channels as images.
-    fn process(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat, response: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_MergeExposures_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeExposures(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        input_array_arg!(times);
+        input_array_arg!(response);
+        unsafe { sys::cv_MergeExposures_process__InputArray__OutputArray__InputArray__InputArray(self.as_raw_MergeExposures(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -829,8 +898,12 @@ pub trait MergeExposures: core::Algorithm {
 /// For more information see [MK07](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_MK07) .
 pub trait MergeMertens: crate::photo::MergeExposures {
     #[inline(always)] fn as_raw_MergeMertens(&self) -> *mut c_void;
-    fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat, response: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_MergeMertens_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeMertens(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
+    fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        input_array_arg!(times);
+        input_array_arg!(response);
+        unsafe { sys::cv_MergeMertens_process__InputArray__OutputArray__InputArray__InputArray(self.as_raw_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
     }
     
     /// Short version of process, that doesn't take extra arguments.
@@ -838,8 +911,10 @@ pub trait MergeMertens: crate::photo::MergeExposures {
     /// ## Parameters
     /// * src: vector of input images
     /// * dst: result image
-    fn process(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_MergeMertens_process_VectorOfMat_Mat(self.as_raw_MergeMertens(), src.as_raw_VectorOfMat(), dst.as_raw_Mat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        unsafe { sys::cv_MergeMertens_process__InputArray__OutputArray(self.as_raw_MergeMertens(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
     }
     
     fn get_contrast_weight(&self) -> Result<f32> {
@@ -875,12 +950,19 @@ pub trait MergeMertens: crate::photo::MergeExposures {
 /// For more information see [RB99](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait MergeRobertson: crate::photo::MergeExposures {
     #[inline(always)] fn as_raw_MergeRobertson(&self) -> *mut c_void;
-    fn process_with_response(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat, response: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_MergeRobertson_process_VectorOfMat_Mat_Mat_Mat(self.as_raw_MergeRobertson(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat(), response.as_raw_Mat()) }.into_result()
+    fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        input_array_arg!(times);
+        input_array_arg!(response);
+        unsafe { sys::cv_MergeRobertson_process__InputArray__OutputArray__InputArray__InputArray(self.as_raw_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray(), response.as_raw__InputArray()) }.into_result()
     }
     
-    fn process(&mut self, src: &types::VectorOfMat, dst: &mut core::Mat, times: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_MergeRobertson_process_VectorOfMat_Mat_Mat(self.as_raw_MergeRobertson(), src.as_raw_VectorOfMat(), dst.as_raw_Mat(), times.as_raw_Mat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        input_array_arg!(times);
+        unsafe { sys::cv_MergeRobertson_process__InputArray__OutputArray__InputArray(self.as_raw_MergeRobertson(), src.as_raw__InputArray(), dst.as_raw__OutputArray(), times.as_raw__InputArray()) }.into_result()
     }
     
 }
@@ -894,8 +976,10 @@ pub trait Tonemap: core::Algorithm {
     /// ## Parameters
     /// * src: source image - CV_32FC3 Mat (float 32 bits 3 channels)
     /// * dst: destination image - CV_32FC3 Mat with values in [0, 1] range
-    fn process(&mut self, src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_Tonemap_process_Mat_Mat(self.as_raw_Tonemap(), src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+    fn process(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(src);
+        output_array_arg!(dst);
+        unsafe { sys::cv_Tonemap_process__InputArray__OutputArray(self.as_raw_Tonemap(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
     }
     
     fn get_gamma(&self) -> Result<f32> {

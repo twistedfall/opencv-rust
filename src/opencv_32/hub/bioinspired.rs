@@ -7,6 +7,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// standard bayer sampling
 pub const RETINA_COLOR_BAYER: i32 = 2;
@@ -18,6 +19,20 @@ pub const RETINA_COLOR_RANDOM: i32 = 0;
 /// @relates bioinspired::RetinaFastToneMapping
 pub fn create_retina_fast_tone_mapping(input_size: core::Size) -> Result<types::PtrOfRetinaFastToneMapping> {
     unsafe { sys::cv_bioinspired_createRetinaFastToneMapping_Size(input_size) }.into_result().map(|ptr| types::PtrOfRetinaFastToneMapping { ptr })
+}
+
+pub fn create_retina_ocl(input_size: core::Size) -> Result<types::PtrOfRetina> {
+    unsafe { sys::cv_bioinspired_createRetina_OCL_Size(input_size) }.into_result().map(|ptr| types::PtrOfRetina { ptr })
+}
+
+///
+/// ## C++ default parameters
+/// * color_sampling_method: RETINA_COLOR_BAYER
+/// * use_retina_log_sampling: false
+/// * reduction_factor: 1.0f
+/// * sampling_strenght: 10.0f
+pub fn create_retina_ocl_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strenght: f32) -> Result<types::PtrOfRetina> {
+    unsafe { sys::cv_bioinspired_createRetina_OCL_Size_bool_int_bool_float_float(input_size, color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strenght) }.into_result().map(|ptr| types::PtrOfRetina { ptr })
 }
 
 /// Constructors from standardized interfaces : retreive a smart pointer to a Retina instance
@@ -130,14 +145,14 @@ pub trait Retina: core::Algorithm {
     /// ## C++ default parameters
     /// * retina_parameter_file: ""
     /// * apply_default_setup_on_failure: true
-    fn setup(&mut self, retina_parameter_file: &str, apply_default_setup_on_failure: bool) -> Result<()> {
+    fn setup_from_file(&mut self, retina_parameter_file: &str, apply_default_setup_on_failure: bool) -> Result<()> {
         string_arg!(mut retina_parameter_file);
         unsafe { sys::cv_bioinspired_Retina_setup_String_bool(self.as_raw_Retina(), retina_parameter_file.as_ptr() as _, apply_default_setup_on_failure) }.into_result()
     }
     
     /// ## Parameters
     /// * newParameters: a parameters structures updated with the new target configuration.
-    fn setup_1(&mut self, new_parameters: &crate::bioinspired::RetinaParameters) -> Result<()> {
+    fn setup(&mut self, new_parameters: &crate::bioinspired::RetinaParameters) -> Result<()> {
         unsafe { sys::cv_bioinspired_Retina_setup_RetinaParameters(self.as_raw_Retina(), new_parameters.as_raw_RetinaParameters()) }.into_result()
     }
     
@@ -258,8 +273,9 @@ pub trait Retina: core::Algorithm {
     /// ## Parameters
     /// * inputImage: the input Mat image to be processed, can be gray level or BGR coded in any
     /// format (from 8bit to 16bits)
-    fn run(&mut self, input_image: &core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_Retina_run_Mat(self.as_raw_Retina(), input_image.as_raw_Mat()) }.into_result()
+    fn run(&mut self, input_image: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(input_image);
+        unsafe { sys::cv_bioinspired_Retina_run__InputArray(self.as_raw_Retina(), input_image.as_raw__InputArray()) }.into_result()
     }
     
     /// Method which processes an image in the aim to correct its luminance correct
@@ -278,8 +294,10 @@ pub trait Retina: core::Algorithm {
     /// * inputImage: the input image to process (should be coded in float format : CV_32F,
     /// CV_32FC1, CV_32F_C3, CV_32F_C4, the 4th channel won't be considered).
     /// * outputToneMappedImage: the output 8bit/channel tone mapped image (CV_8U or CV_8UC3 format).
-    fn apply_fast_tone_mapping(&mut self, input_image: &core::Mat, output_tone_mapped_image: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_Retina_applyFastToneMapping_Mat_Mat(self.as_raw_Retina(), input_image.as_raw_Mat(), output_tone_mapped_image.as_raw_Mat()) }.into_result()
+    fn apply_fast_tone_mapping(&mut self, input_image: &dyn core::ToInputArray, output_tone_mapped_image: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(input_image);
+        output_array_arg!(output_tone_mapped_image);
+        unsafe { sys::cv_bioinspired_Retina_applyFastToneMapping__InputArray__OutputArray(self.as_raw_Retina(), input_image.as_raw__InputArray(), output_tone_mapped_image.as_raw__OutputArray()) }.into_result()
     }
     
     /// Accessor of the details channel of the retina (models foveal vision).
@@ -294,14 +312,16 @@ pub trait Retina: core::Algorithm {
     /// B2, ...Bn), this output is the original retina filter model output, without any
     /// quantification or rescaling.
     /// @see getParvoRAW
-    fn get_parvo(&mut self, retina_output_parvo: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_Retina_getParvo_Mat(self.as_raw_Retina(), retina_output_parvo.as_raw_Mat()) }.into_result()
+    fn get_parvo(&mut self, retina_output_parvo: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(retina_output_parvo);
+        unsafe { sys::cv_bioinspired_Retina_getParvo__OutputArray(self.as_raw_Retina(), retina_output_parvo.as_raw__OutputArray()) }.into_result()
     }
     
     /// Accessor of the details channel of the retina (models foveal vision).
     /// @see getParvo
-    fn get_parvo_raw(&mut self, retina_output_parvo: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_Retina_getParvoRAW_Mat(self.as_raw_Retina(), retina_output_parvo.as_raw_Mat()) }.into_result()
+    fn get_parvo_raw_to(&mut self, retina_output_parvo: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(retina_output_parvo);
+        unsafe { sys::cv_bioinspired_Retina_getParvoRAW__OutputArray(self.as_raw_Retina(), retina_output_parvo.as_raw__OutputArray()) }.into_result()
     }
     
     /// Accessor of the motion channel of the retina (models peripheral vision).
@@ -314,21 +334,23 @@ pub trait Retina: core::Algorithm {
     /// *   RAW methods actually return a 1D matrix (encoding is M1, M2,... Mn), this output is the
     /// original retina filter model output, without any quantification or rescaling.
     /// @see getMagnoRAW
-    fn get_magno(&mut self, retina_output_magno: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_Retina_getMagno_Mat(self.as_raw_Retina(), retina_output_magno.as_raw_Mat()) }.into_result()
+    fn get_magno(&mut self, retina_output_magno: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(retina_output_magno);
+        unsafe { sys::cv_bioinspired_Retina_getMagno__OutputArray(self.as_raw_Retina(), retina_output_magno.as_raw__OutputArray()) }.into_result()
     }
     
     /// Accessor of the motion channel of the retina (models peripheral vision).
     /// @see getMagno
-    fn get_magno_raw(&mut self, retina_output_magno: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_Mat(self.as_raw_Retina(), retina_output_magno.as_raw_Mat()) }.into_result()
+    fn get_magno_raw_to(&mut self, retina_output_magno: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(retina_output_magno);
+        unsafe { sys::cv_bioinspired_Retina_getMagnoRAW__OutputArray(self.as_raw_Retina(), retina_output_magno.as_raw__OutputArray()) }.into_result()
     }
     
-    fn get_magno_raw_1(&self) -> Result<core::Mat> {
+    fn get_magno_raw(&self) -> Result<core::Mat> {
         unsafe { sys::cv_bioinspired_Retina_getMagnoRAW_const(self.as_raw_Retina()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-    fn get_parvo_raw_1(&self) -> Result<core::Mat> {
+    fn get_parvo_raw(&self) -> Result<core::Mat> {
         unsafe { sys::cv_bioinspired_Retina_getParvoRAW_const(self.as_raw_Retina()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
@@ -408,8 +430,10 @@ pub trait RetinaFastToneMapping: core::Algorithm {
     /// ## Parameters
     /// * inputImage: the input image to process RGB or gray levels
     /// * outputToneMappedImage: the output tone mapped image
-    fn apply_fast_tone_mapping(&mut self, input_image: &core::Mat, output_tone_mapped_image: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_Mat_Mat(self.as_raw_RetinaFastToneMapping(), input_image.as_raw_Mat(), output_tone_mapped_image.as_raw_Mat()) }.into_result()
+    fn apply_fast_tone_mapping(&mut self, input_image: &dyn core::ToInputArray, output_tone_mapped_image: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(input_image);
+        output_array_arg!(output_tone_mapped_image);
+        unsafe { sys::cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping__InputArray__OutputArray(self.as_raw_RetinaFastToneMapping(), input_image.as_raw__InputArray(), output_tone_mapped_image.as_raw__OutputArray()) }.into_result()
     }
     
     /// updates tone mapping behaviors by adjusing the local luminance computation area
@@ -627,7 +651,7 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     /// ## C++ default parameters
     /// * segmentation_parameter_file: ""
     /// * apply_default_setup_on_failure: true
-    fn setup(&mut self, segmentation_parameter_file: &str, apply_default_setup_on_failure: bool) -> Result<()> {
+    fn setup_from_file(&mut self, segmentation_parameter_file: &str, apply_default_setup_on_failure: bool) -> Result<()> {
         string_arg!(mut segmentation_parameter_file);
         unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_String_bool(self.as_raw_TransientAreasSegmentationModule(), segmentation_parameter_file.as_ptr() as _, apply_default_setup_on_failure) }.into_result()
     }
@@ -638,7 +662,7 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     /// - warning, Exceptions are thrown if read XML file is not valid
     /// ## Parameters
     /// * newParameters: : a parameters structures updated with the new target configuration
-    fn setup_1(&mut self, new_parameters: &crate::bioinspired::SegmentationParameters) -> Result<()> {
+    fn setup(&mut self, new_parameters: &crate::bioinspired::SegmentationParameters) -> Result<()> {
         unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(self.as_raw_TransientAreasSegmentationModule(), new_parameters.as_raw_SegmentationParameters()) }.into_result()
     }
     
@@ -669,15 +693,17 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     ///
     /// ## C++ default parameters
     /// * channel_index: 0
-    fn run(&mut self, input_to_segment: &core::Mat, channel_index: i32) -> Result<()> {
-        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run_Mat_int(self.as_raw_TransientAreasSegmentationModule(), input_to_segment.as_raw_Mat(), channel_index) }.into_result()
+    fn run(&mut self, input_to_segment: &dyn core::ToInputArray, channel_index: i32) -> Result<()> {
+        input_array_arg!(input_to_segment);
+        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_run__InputArray_int(self.as_raw_TransientAreasSegmentationModule(), input_to_segment.as_raw__InputArray(), channel_index) }.into_result()
     }
     
     /// access function
     /// ## Returns
     /// the last segmentation result: a boolean picture which is resampled between 0 and 255 for a display purpose
-    fn get_segmentation_picture(&mut self, transient_areas: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture_Mat(self.as_raw_TransientAreasSegmentationModule(), transient_areas.as_raw_Mat()) }.into_result()
+    fn get_segmentation_picture(&mut self, transient_areas: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(transient_areas);
+        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSegmentationPicture__OutputArray(self.as_raw_TransientAreasSegmentationModule(), transient_areas.as_raw__OutputArray()) }.into_result()
     }
     
     /// cleans all the buffers of the instance

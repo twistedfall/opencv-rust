@@ -41,6 +41,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const Stitcher_ERR_CAMERA_PARAMS_ADJUST_FAIL: i32 = 3;
 pub const Stitcher_ERR_HOMOGRAPHY_EST_FAIL: i32 = 2;
@@ -415,8 +416,10 @@ impl PyRotationWarper {
     /// * R: Camera rotation matrix
     /// ## Returns
     /// Projected point
-    pub fn warp_point(&mut self, pt: core::Point2f, k: &core::Mat, r: &core::Mat) -> Result<core::Point2f> {
-        unsafe { sys::cv_PyRotationWarper_warpPoint_Point2f_Mat_Mat(self.as_raw_PyRotationWarper(), pt, k.as_raw_Mat(), r.as_raw_Mat()) }.into_result()
+    pub fn warp_point(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
+        input_array_arg!(k);
+        input_array_arg!(r);
+        unsafe { sys::cv_PyRotationWarper_warpPoint_Point2f__InputArray__InputArray(self.as_raw_PyRotationWarper(), pt, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
     }
     
     /// Builds the projection maps according to the given camera data.
@@ -429,8 +432,12 @@ impl PyRotationWarper {
     /// * ymap: Projection map for the y axis
     /// ## Returns
     /// Projected image minimum bounding box
-    pub fn build_maps(&mut self, src_size: core::Size, k: &core::Mat, r: &core::Mat, xmap: &mut core::Mat, ymap: &mut core::Mat) -> Result<core::Rect> {
-        unsafe { sys::cv_PyRotationWarper_buildMaps_Size_Mat_Mat_Mat_Mat(self.as_raw_PyRotationWarper(), src_size, k.as_raw_Mat(), r.as_raw_Mat(), xmap.as_raw_Mat(), ymap.as_raw_Mat()) }.into_result()
+    pub fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
+        input_array_arg!(k);
+        input_array_arg!(r);
+        output_array_arg!(xmap);
+        output_array_arg!(ymap);
+        unsafe { sys::cv_PyRotationWarper_buildMaps_Size__InputArray__InputArray__OutputArray__OutputArray(self.as_raw_PyRotationWarper(), src_size, k.as_raw__InputArray(), r.as_raw__InputArray(), xmap.as_raw__OutputArray(), ymap.as_raw__OutputArray()) }.into_result()
     }
     
     /// Projects the image.
@@ -444,8 +451,12 @@ impl PyRotationWarper {
     /// * dst: Projected image
     /// ## Returns
     /// Project image top-left corner
-    pub fn warp(&mut self, src: &core::Mat, k: &core::Mat, r: &core::Mat, interp_mode: i32, border_mode: i32, dst: &mut core::Mat) -> Result<core::Point> {
-        unsafe { sys::cv_PyRotationWarper_warp_Mat_Mat_Mat_int_int_Mat(self.as_raw_PyRotationWarper(), src.as_raw_Mat(), k.as_raw_Mat(), r.as_raw_Mat(), interp_mode, border_mode, dst.as_raw_Mat()) }.into_result()
+    pub fn warp(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst: &mut dyn core::ToOutputArray) -> Result<core::Point> {
+        input_array_arg!(src);
+        input_array_arg!(k);
+        input_array_arg!(r);
+        output_array_arg!(dst);
+        unsafe { sys::cv_PyRotationWarper_warp__InputArray__InputArray__InputArray_int_int__OutputArray(self.as_raw_PyRotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst.as_raw__OutputArray()) }.into_result()
     }
     
     /// Projects the image backward.
@@ -458,8 +469,12 @@ impl PyRotationWarper {
     /// * border_mode: Border extrapolation mode
     /// * dst_size: Backward-projected image size
     /// * dst: Backward-projected image
-    pub fn warp_backward(&mut self, src: &core::Mat, k: &core::Mat, r: &core::Mat, interp_mode: i32, border_mode: i32, dst_size: core::Size, dst: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_PyRotationWarper_warpBackward_Mat_Mat_Mat_int_int_Size_Mat(self.as_raw_PyRotationWarper(), src.as_raw_Mat(), k.as_raw_Mat(), r.as_raw_Mat(), interp_mode, border_mode, dst_size, dst.as_raw_Mat()) }.into_result()
+    pub fn warp_backward(&mut self, src: &dyn core::ToInputArray, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, interp_mode: i32, border_mode: i32, dst_size: core::Size, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(src);
+        input_array_arg!(k);
+        input_array_arg!(r);
+        output_array_arg!(dst);
+        unsafe { sys::cv_PyRotationWarper_warpBackward__InputArray__InputArray__InputArray_int_int_Size__OutputArray(self.as_raw_PyRotationWarper(), src.as_raw__InputArray(), k.as_raw__InputArray(), r.as_raw__InputArray(), interp_mode, border_mode, dst_size, dst.as_raw__OutputArray()) }.into_result()
     }
     
     /// ## Parameters
@@ -468,8 +483,10 @@ impl PyRotationWarper {
     /// * R: Camera rotation matrix
     /// ## Returns
     /// Projected image minimum bounding box
-    pub fn warp_roi(&mut self, src_size: core::Size, k: &core::Mat, r: &core::Mat) -> Result<core::Rect> {
-        unsafe { sys::cv_PyRotationWarper_warpRoi_Size_Mat_Mat(self.as_raw_PyRotationWarper(), src_size, k.as_raw_Mat(), r.as_raw_Mat()) }.into_result()
+    pub fn warp_roi(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Rect> {
+        input_array_arg!(k);
+        input_array_arg!(r);
+        unsafe { sys::cv_PyRotationWarper_warpRoi_Size__InputArray__InputArray(self.as_raw_PyRotationWarper(), src_size, k.as_raw__InputArray(), r.as_raw__InputArray()) }.into_result()
     }
     
     pub fn get_scale(&self) -> Result<f32> {
@@ -630,6 +647,18 @@ impl Stitcher {
         unsafe { sys::cv_Stitcher_setWaveCorrection_bool(self.as_raw_Stitcher(), flag) }.into_result()
     }
     
+    pub fn features_finder(&mut self) -> Result<types::PtrOfFeature2D> {
+        unsafe { sys::cv_Stitcher_featuresFinder(self.as_raw_Stitcher()) }.into_result().map(|ptr| types::PtrOfFeature2D { ptr })
+    }
+    
+    pub fn features_finder_1(&self) -> Result<types::PtrOfFeature2D> {
+        unsafe { sys::cv_Stitcher_featuresFinder_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| types::PtrOfFeature2D { ptr })
+    }
+    
+    pub fn set_features_finder(&mut self, features_finder: &types::PtrOfFeature2D) -> Result<()> {
+        unsafe { sys::cv_Stitcher_setFeaturesFinder_PtrOfFeature2D(self.as_raw_Stitcher(), features_finder.as_raw_PtrOfFeature2D()) }.into_result()
+    }
+    
     pub fn matching_mask(&self) -> Result<core::UMat> {
         unsafe { sys::cv_Stitcher_matchingMask_const(self.as_raw_Stitcher()) }.into_result().map(|ptr| core::UMat { ptr })
     }
@@ -652,12 +681,15 @@ impl Stitcher {
     ///
     /// ## C++ default parameters
     /// * masks: noArray()
-    pub fn estimate_transform(&mut self, images: &types::VectorOfMat, masks: &types::VectorOfMat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_estimateTransform_VectorOfMat_VectorOfMat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), masks.as_raw_VectorOfMat()) }.into_result()
+    pub fn estimate_transform(&mut self, images: &dyn core::ToInputArray, masks: &dyn core::ToInputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        input_array_arg!(masks);
+        unsafe { sys::cv_Stitcher_estimateTransform__InputArray__InputArray(self.as_raw_Stitcher(), images.as_raw__InputArray(), masks.as_raw__InputArray()) }.into_result()
     }
     
-    pub fn compose_panorama(&mut self, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_composePanorama_Mat(self.as_raw_Stitcher(), pano.as_raw_Mat()) }.into_result()
+    pub fn compose_panorama(&mut self, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_composePanorama__OutputArray(self.as_raw_Stitcher(), pano.as_raw__OutputArray()) }.into_result()
     }
     
     /// These functions try to compose the given images (or images stored internally from the other function
@@ -673,12 +705,16 @@ impl Stitcher {
     /// * pano: Final pano.
     /// ## Returns
     /// Status code.
-    pub fn compose_panorama_1(&mut self, images: &types::VectorOfMat, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_composePanorama_VectorOfMat_Mat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), pano.as_raw_Mat()) }.into_result()
+    pub fn compose_panorama_images(&mut self, images: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_composePanorama__InputArray__OutputArray(self.as_raw_Stitcher(), images.as_raw__InputArray(), pano.as_raw__OutputArray()) }.into_result()
     }
     
-    pub fn stitch(&mut self, images: &types::VectorOfMat, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_stitch_VectorOfMat_Mat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), pano.as_raw_Mat()) }.into_result()
+    pub fn stitch(&mut self, images: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_stitch__InputArray__OutputArray(self.as_raw_Stitcher(), images.as_raw__InputArray(), pano.as_raw__OutputArray()) }.into_result()
     }
     
     /// These functions try to stitch the given images.
@@ -689,8 +725,11 @@ impl Stitcher {
     /// * pano: Final pano.
     /// ## Returns
     /// Status code.
-    pub fn stitch_1(&mut self, images: &types::VectorOfMat, masks: &types::VectorOfMat, pano: &mut core::Mat) -> Result<crate::stitching::Stitcher_Status> {
-        unsafe { sys::cv_Stitcher_stitch_VectorOfMat_VectorOfMat_Mat(self.as_raw_Stitcher(), images.as_raw_VectorOfMat(), masks.as_raw_VectorOfMat(), pano.as_raw_Mat()) }.into_result()
+    pub fn stitch_mask(&mut self, images: &dyn core::ToInputArray, masks: &dyn core::ToInputArray, pano: &mut dyn core::ToOutputArray) -> Result<crate::stitching::Stitcher_Status> {
+        input_array_arg!(images);
+        input_array_arg!(masks);
+        output_array_arg!(pano);
+        unsafe { sys::cv_Stitcher_stitch__InputArray__InputArray__OutputArray(self.as_raw_Stitcher(), images.as_raw__InputArray(), masks.as_raw__InputArray(), pano.as_raw__OutputArray()) }.into_result()
     }
     
     pub fn component(&self) -> Result<types::VectorOfint> {

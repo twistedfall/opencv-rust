@@ -55,6 +55,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 pub const SFM_DISTORTION_MODEL_DIVISION: i32 = 1;
 pub const SFM_DISTORTION_MODEL_POLYNOMIAL: i32 = 0;
@@ -127,8 +128,12 @@ pub struct libmv_ReconstructionOptions {
 /// * t: Output 3x1 translation vector.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
-pub fn k_rt_from_projection(p: &core::Mat, k: &mut core::Mat, r: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_KRtFromProjection_Mat_Mat_Mat_Mat(p.as_raw_Mat(), k.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
+pub fn k_rt_from_projection(p: &dyn core::ToInputArray, k: &mut dyn core::ToOutputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(p);
+    output_array_arg!(k);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    unsafe { sys::cv_sfm_KRtFromProjection__InputArray__OutputArray__OutputArray__OutputArray(p.as_raw__InputArray(), k.as_raw__OutputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray()) }.into_result()
 }
 
 /// Apply Transformation to points.
@@ -136,8 +141,11 @@ pub fn k_rt_from_projection(p: &core::Mat, k: &mut core::Mat, r: &mut core::Mat,
 /// * points: Input vector of N-dimensional points.
 /// * T: Input 3x3 transformation matrix such that ![inline formula](https://latex.codecogs.com/png.latex?x%20%3D%20T%2AX), where ![inline formula](https://latex.codecogs.com/png.latex?X) are the points to transform and ![inline formula](https://latex.codecogs.com/png.latex?x) the transformed points.
 /// * transformed_points: Output vector of N-dimensional transformed points.
-pub fn apply_transformation_to_points(points: &core::Mat, t: &core::Mat, transformed_points: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_applyTransformationToPoints_Mat_Mat_Mat(points.as_raw_Mat(), t.as_raw_Mat(), transformed_points.as_raw_Mat()) }.into_result()
+pub fn apply_transformation_to_points(points: &dyn core::ToInputArray, t: &dyn core::ToInputArray, transformed_points: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(points);
+    input_array_arg!(t);
+    output_array_arg!(transformed_points);
+    unsafe { sys::cv_sfm_applyTransformationToPoints__InputArray__InputArray__OutputArray(points.as_raw__InputArray(), t.as_raw__InputArray(), transformed_points.as_raw__OutputArray()) }.into_result()
 }
 
 /// Computes Absolute or Exterior Orientation (Pose Estimation) between 2 sets of 3D point.
@@ -150,8 +158,12 @@ pub fn apply_transformation_to_points(points: &core::Mat, t: &core::Mat, transfo
 ///
 /// Find the best transformation such that xp=projection*(s*R*x+t) (same as Pose Estimation, ePNP).
 /// The routines below are only for the orthographic case for now.
-pub fn compute_orientation(x1: &types::VectorOfMat, x2: &types::VectorOfMat, r: &mut core::Mat, t: &mut core::Mat, s: f64) -> Result<()> {
-    unsafe { sys::cv_sfm_computeOrientation_VectorOfMat_VectorOfMat_Mat_Mat_double(x1.as_raw_VectorOfMat(), x2.as_raw_VectorOfMat(), r.as_raw_Mat(), t.as_raw_Mat(), s) }.into_result()
+pub fn compute_orientation(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, s: f64) -> Result<()> {
+    input_array_arg!(x1);
+    input_array_arg!(x2);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    unsafe { sys::cv_sfm_computeOrientation__InputArray__InputArray__OutputArray__OutputArray_double(x1.as_raw__InputArray(), x2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray(), s) }.into_result()
 }
 
 /// Returns the depth of a point transformed by a rigid transform.
@@ -159,8 +171,11 @@ pub fn compute_orientation(x1: &types::VectorOfMat, x2: &types::VectorOfMat, r: 
 /// * R: Input 3x3 rotation matrix.
 /// * t: Input 3x1 translation vector.
 /// * X: Input 3x1 or 4x1 vector with the 3d point.
-pub fn depth(r: &core::Mat, t: &core::Mat, x: &core::Mat) -> Result<f64> {
-    unsafe { sys::cv_sfm_depth_Mat_Mat_Mat(r.as_raw_Mat(), t.as_raw_Mat(), x.as_raw_Mat()) }.into_result()
+pub fn depth(r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, x: &dyn core::ToInputArray) -> Result<f64> {
+    input_array_arg!(r);
+    input_array_arg!(t);
+    input_array_arg!(x);
+    unsafe { sys::cv_sfm_depth__InputArray__InputArray__InputArray(r.as_raw__InputArray(), t.as_raw__InputArray(), x.as_raw__InputArray()) }.into_result()
 }
 
 /// Get Essential matrix from Fundamental and Camera matrices.
@@ -171,8 +186,12 @@ pub fn depth(r: &core::Mat, t: &core::Mat, x: &core::Mat) -> Result<f64> {
 /// * E: Output 3x3 essential matrix.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
-pub fn essential_from_fundamental(f: &core::Mat, k1: &core::Mat, k2: &core::Mat, e: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_essentialFromFundamental_Mat_Mat_Mat_Mat(f.as_raw_Mat(), k1.as_raw_Mat(), k2.as_raw_Mat(), e.as_raw_Mat()) }.into_result()
+pub fn essential_from_fundamental(f: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, e: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(f);
+    input_array_arg!(k1);
+    input_array_arg!(k2);
+    output_array_arg!(e);
+    unsafe { sys::cv_sfm_essentialFromFundamental__InputArray__InputArray__InputArray__OutputArray(f.as_raw__InputArray(), k1.as_raw__InputArray(), k2.as_raw__InputArray(), e.as_raw__OutputArray()) }.into_result()
 }
 
 /// Get Essential matrix from Motion (R's and t's ).
@@ -184,16 +203,23 @@ pub fn essential_from_fundamental(f: &core::Mat, k1: &core::Mat, k2: &core::Mat,
 /// * E: Output 3x3 essential matrix.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
-pub fn essential_from_rt(r1: &core::Mat, t1: &core::Mat, r2: &core::Mat, t2: &core::Mat, e: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_essentialFromRt_Mat_Mat_Mat_Mat_Mat(r1.as_raw_Mat(), t1.as_raw_Mat(), r2.as_raw_Mat(), t2.as_raw_Mat(), e.as_raw_Mat()) }.into_result()
+pub fn essential_from_rt(r1: &dyn core::ToInputArray, t1: &dyn core::ToInputArray, r2: &dyn core::ToInputArray, t2: &dyn core::ToInputArray, e: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(r1);
+    input_array_arg!(t1);
+    input_array_arg!(r2);
+    input_array_arg!(t2);
+    output_array_arg!(e);
+    unsafe { sys::cv_sfm_essentialFromRt__InputArray__InputArray__InputArray__InputArray__OutputArray(r1.as_raw__InputArray(), t1.as_raw__InputArray(), r2.as_raw__InputArray(), t2.as_raw__InputArray(), e.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts points from Euclidean to homogeneous space. E.g., ((x,y)->(x,y,1))
 /// ## Parameters
 /// * src: Input vector of N-dimensional points.
 /// * dst: Output vector of N+1-dimensional points.
-pub fn euclidean_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_euclideanToHomogeneous_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn euclidean_to_homogeneous(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_sfm_euclideanToHomogeneous__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Estimate robustly the fundamental matrix between two dataset of 2D point (image coords space).
@@ -213,8 +239,12 @@ pub fn euclidean_to_homogeneous(src: &core::Mat, dst: &mut core::Mat) -> Result<
 ///
 /// ## C++ default parameters
 /// * outliers_probability: 1e-2
-pub fn fundamental_from_correspondences7_point_robust(x1: &core::Mat, x2: &core::Mat, max_error: f64, f: &mut core::Mat, inliers: &mut core::Mat, outliers_probability: f64) -> Result<f64> {
-    unsafe { sys::cv_sfm_fundamentalFromCorrespondences7PointRobust_Mat_Mat_double_Mat_Mat_double(x1.as_raw_Mat(), x2.as_raw_Mat(), max_error, f.as_raw_Mat(), inliers.as_raw_Mat(), outliers_probability) }.into_result()
+pub fn fundamental_from_correspondences7_point_robust(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, max_error: f64, f: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, outliers_probability: f64) -> Result<f64> {
+    input_array_arg!(x1);
+    input_array_arg!(x2);
+    output_array_arg!(f);
+    output_array_arg!(inliers);
+    unsafe { sys::cv_sfm_fundamentalFromCorrespondences7PointRobust__InputArray__InputArray_double__OutputArray__OutputArray_double(x1.as_raw__InputArray(), x2.as_raw__InputArray(), max_error, f.as_raw__OutputArray(), inliers.as_raw__OutputArray(), outliers_probability) }.into_result()
 }
 
 /// Estimate robustly the fundamental matrix between two dataset of 2D point (image coords space).
@@ -234,8 +264,12 @@ pub fn fundamental_from_correspondences7_point_robust(x1: &core::Mat, x2: &core:
 ///
 /// ## C++ default parameters
 /// * outliers_probability: 1e-2
-pub fn fundamental_from_correspondences8_point_robust(x1: &core::Mat, x2: &core::Mat, max_error: f64, f: &mut core::Mat, inliers: &mut core::Mat, outliers_probability: f64) -> Result<f64> {
-    unsafe { sys::cv_sfm_fundamentalFromCorrespondences8PointRobust_Mat_Mat_double_Mat_Mat_double(x1.as_raw_Mat(), x2.as_raw_Mat(), max_error, f.as_raw_Mat(), inliers.as_raw_Mat(), outliers_probability) }.into_result()
+pub fn fundamental_from_correspondences8_point_robust(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, max_error: f64, f: &mut dyn core::ToOutputArray, inliers: &mut dyn core::ToOutputArray, outliers_probability: f64) -> Result<f64> {
+    input_array_arg!(x1);
+    input_array_arg!(x2);
+    output_array_arg!(f);
+    output_array_arg!(inliers);
+    unsafe { sys::cv_sfm_fundamentalFromCorrespondences8PointRobust__InputArray__InputArray_double__OutputArray__OutputArray_double(x1.as_raw__InputArray(), x2.as_raw__InputArray(), max_error, f.as_raw__OutputArray(), inliers.as_raw__OutputArray(), outliers_probability) }.into_result()
 }
 
 /// Get Essential matrix from Fundamental and Camera matrices.
@@ -246,8 +280,12 @@ pub fn fundamental_from_correspondences8_point_robust(x1: &core::Mat, x2: &core:
 /// * F: Output 3x3 fundamental matrix.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or http://ai.stanford.edu/~birch/projective/node20.html
-pub fn fundamental_from_essential(e: &core::Mat, k1: &core::Mat, k2: &core::Mat, f: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_fundamentalFromEssential_Mat_Mat_Mat_Mat(e.as_raw_Mat(), k1.as_raw_Mat(), k2.as_raw_Mat(), f.as_raw_Mat()) }.into_result()
+pub fn fundamental_from_essential(e: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(e);
+    input_array_arg!(k1);
+    input_array_arg!(k2);
+    output_array_arg!(f);
+    unsafe { sys::cv_sfm_fundamentalFromEssential__InputArray__InputArray__InputArray__OutputArray(e.as_raw__InputArray(), k1.as_raw__InputArray(), k2.as_raw__InputArray(), f.as_raw__OutputArray()) }.into_result()
 }
 
 /// Get Fundamental matrix from Projection matrices.
@@ -255,16 +293,21 @@ pub fn fundamental_from_essential(e: &core::Mat, k1: &core::Mat, k2: &core::Mat,
 /// * P1: Input 3x4 first projection matrix.
 /// * P2: Input 3x4 second projection matrix.
 /// * F: Output 3x3 fundamental matrix.
-pub fn fundamental_from_projections(p1: &core::Mat, p2: &core::Mat, f: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_fundamentalFromProjections_Mat_Mat_Mat(p1.as_raw_Mat(), p2.as_raw_Mat(), f.as_raw_Mat()) }.into_result()
+pub fn fundamental_from_projections(p1: &dyn core::ToInputArray, p2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(p1);
+    input_array_arg!(p2);
+    output_array_arg!(f);
+    unsafe { sys::cv_sfm_fundamentalFromProjections__InputArray__InputArray__OutputArray(p1.as_raw__InputArray(), p2.as_raw__InputArray(), f.as_raw__OutputArray()) }.into_result()
 }
 
 /// Converts point coordinates from homogeneous to euclidean pixel coordinates. E.g., ((x,y,z)->(x/z, y/z))
 /// ## Parameters
 /// * src: Input vector of N-dimensional points.
 /// * dst: Output vector of N-1-dimensional points.
-pub fn homogeneous_to_euclidean(src: &core::Mat, dst: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_homogeneousToEuclidean_Mat_Mat(src.as_raw_Mat(), dst.as_raw_Mat()) }.into_result()
+pub fn homogeneous_to_euclidean(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(src);
+    output_array_arg!(dst);
+    unsafe { sys::cv_sfm_homogeneousToEuclidean__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
 /// Import a reconstruction file.
@@ -280,9 +323,13 @@ pub fn homogeneous_to_euclidean(src: &core::Mat, dst: &mut core::Mat) -> Result<
 ///
 /// ## C++ default parameters
 /// * file_format: SFM_IO_BUNDLER
-pub fn import_reconstruction(file: &str, rs: &mut types::VectorOfMat, ts: &mut types::VectorOfMat, ks: &mut types::VectorOfMat, points3d: &mut core::Mat, file_format: i32) -> Result<()> {
+pub fn import_reconstruction(file: &str, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, ks: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, file_format: i32) -> Result<()> {
     string_arg!(file);
-    unsafe { sys::cv_sfm_importReconstruction_String_VectorOfMat_VectorOfMat_VectorOfMat_Mat_int(file.as_ptr(), rs.as_raw_VectorOfMat(), ts.as_raw_VectorOfMat(), ks.as_raw_VectorOfMat(), points3d.as_raw_Mat(), file_format) }.into_result()
+    output_array_arg!(rs);
+    output_array_arg!(ts);
+    output_array_arg!(ks);
+    output_array_arg!(points3d);
+    unsafe { sys::cv_sfm_importReconstruction_String__OutputArray__OutputArray__OutputArray__OutputArray_int(file.as_ptr(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), ks.as_raw__OutputArray(), points3d.as_raw__OutputArray(), file_format) }.into_result()
 }
 
 /// Point conditioning (isotropic).
@@ -294,8 +341,10 @@ pub fn import_reconstruction(file: &str, rs: &mut types::VectorOfMat, ts: &mut t
 /// bringing the centroid to the origin with an average centroid ![inline formula](https://latex.codecogs.com/png.latex?%281%2C1%2C1%29%5ET).
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
-pub fn isotropic_preconditioner_from_points(points: &core::Mat, t: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_isotropicPreconditionerFromPoints_Mat_Mat(points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
+pub fn isotropic_preconditioner_from_points(points: &dyn core::ToInputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(points);
+    output_array_arg!(t);
+    unsafe { sys::cv_sfm_isotropicPreconditionerFromPoints__InputArray__OutputArray(points.as_raw__InputArray(), t.as_raw__OutputArray()) }.into_result()
 }
 
 /// Computes the mean and variance of a given matrix along its rows.
@@ -305,8 +354,11 @@ pub fn isotropic_preconditioner_from_points(points: &core::Mat, t: &mut core::Ma
 /// * variance: Output Nx1 matrix with computed variance.
 ///
 /// It computes in the same way as woud do @ref reduce but with \a Variance function.
-pub fn mean_and_variance_along_rows(a: &core::Mat, mean: &mut core::Mat, variance: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_meanAndVarianceAlongRows_Mat_Mat_Mat(a.as_raw_Mat(), mean.as_raw_Mat(), variance.as_raw_Mat()) }.into_result()
+pub fn mean_and_variance_along_rows(a: &dyn core::ToInputArray, mean: &mut dyn core::ToOutputArray, variance: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(a);
+    output_array_arg!(mean);
+    output_array_arg!(variance);
+    unsafe { sys::cv_sfm_meanAndVarianceAlongRows__InputArray__OutputArray__OutputArray(a.as_raw__InputArray(), mean.as_raw__OutputArray(), variance.as_raw__OutputArray()) }.into_result()
 }
 
 /// Choose one of the four possible motion solutions from an essential matrix.
@@ -322,8 +374,14 @@ pub fn mean_and_variance_along_rows(a: &core::Mat, mean: &mut core::Mat, varianc
 /// x1--x2 lies in front of the cameras. Return index of the right solution or -1 if no solution.
 ///
 /// Reference: See [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
-pub fn motion_from_essential_choose_solution(rs: &types::VectorOfMat, ts: &types::VectorOfMat, k1: &core::Mat, x1: &core::Mat, k2: &core::Mat, x2: &core::Mat) -> Result<i32> {
-    unsafe { sys::cv_sfm_motionFromEssentialChooseSolution_VectorOfMat_VectorOfMat_Mat_Mat_Mat_Mat(rs.as_raw_VectorOfMat(), ts.as_raw_VectorOfMat(), k1.as_raw_Mat(), x1.as_raw_Mat(), k2.as_raw_Mat(), x2.as_raw_Mat()) }.into_result()
+pub fn motion_from_essential_choose_solution(rs: &dyn core::ToInputArray, ts: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, x1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, x2: &dyn core::ToInputArray) -> Result<i32> {
+    input_array_arg!(rs);
+    input_array_arg!(ts);
+    input_array_arg!(k1);
+    input_array_arg!(x1);
+    input_array_arg!(k2);
+    input_array_arg!(x2);
+    unsafe { sys::cv_sfm_motionFromEssentialChooseSolution__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray(rs.as_raw__InputArray(), ts.as_raw__InputArray(), k1.as_raw__InputArray(), x1.as_raw__InputArray(), k2.as_raw__InputArray(), x2.as_raw__InputArray()) }.into_result()
 }
 
 /// Get Motion (R's and t's ) from Essential matrix.
@@ -333,8 +391,11 @@ pub fn motion_from_essential_choose_solution(rs: &types::VectorOfMat, ts: &types
 /// * ts: Output vector of 3x1 translation vectors.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
-pub fn motion_from_essential(e: &core::Mat, rs: &mut types::VectorOfMat, ts: &mut types::VectorOfMat) -> Result<()> {
-    unsafe { sys::cv_sfm_motionFromEssential_Mat_VectorOfMat_VectorOfMat(e.as_raw_Mat(), rs.as_raw_VectorOfMat(), ts.as_raw_VectorOfMat()) }.into_result()
+pub fn motion_from_essential(e: &dyn core::ToInputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(e);
+    output_array_arg!(rs);
+    output_array_arg!(ts);
+    unsafe { sys::cv_sfm_motionFromEssential__InputArray__OutputArray__OutputArray(e.as_raw__InputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray()) }.into_result()
 }
 
 /// Normalizes the Fundamental matrix.
@@ -343,8 +404,10 @@ pub fn motion_from_essential(e: &core::Mat, rs: &mut types::VectorOfMat, ts: &mu
 /// * F_normalized: Output 3x3 normalized fundamental matrix.
 ///
 /// By default divides the fundamental matrix by its L2 norm.
-pub fn normalize_fundamental(f: &core::Mat, f_normalized: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_normalizeFundamental_Mat_Mat(f.as_raw_Mat(), f_normalized.as_raw_Mat()) }.into_result()
+pub fn normalize_fundamental(f: &dyn core::ToInputArray, f_normalized: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(f);
+    output_array_arg!(f_normalized);
+    unsafe { sys::cv_sfm_normalizeFundamental__InputArray__OutputArray(f.as_raw__InputArray(), f_normalized.as_raw__OutputArray()) }.into_result()
 }
 
 /// This function normalizes points. (isotropic).
@@ -357,8 +420,11 @@ pub fn normalize_fundamental(f: &core::Mat, f_normalized: &mut core::Mat) -> Res
 /// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
-pub fn normalize_isotropic_points(points: &core::Mat, normalized_points: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_normalizeIsotropicPoints_Mat_Mat_Mat(points.as_raw_Mat(), normalized_points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
+pub fn normalize_isotropic_points(points: &dyn core::ToInputArray, normalized_points: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(points);
+    output_array_arg!(normalized_points);
+    output_array_arg!(t);
+    unsafe { sys::cv_sfm_normalizeIsotropicPoints__InputArray__OutputArray__OutputArray(points.as_raw__InputArray(), normalized_points.as_raw__OutputArray(), t.as_raw__OutputArray()) }.into_result()
 }
 
 /// This function normalizes points (non isotropic).
@@ -371,8 +437,11 @@ pub fn normalize_isotropic_points(points: &core::Mat, normalized_points: &mut co
 /// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
-pub fn normalize_points(points: &core::Mat, normalized_points: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_normalizePoints_Mat_Mat_Mat(points.as_raw_Mat(), normalized_points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
+pub fn normalize_points(points: &dyn core::ToInputArray, normalized_points: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(points);
+    output_array_arg!(normalized_points);
+    output_array_arg!(t);
+    unsafe { sys::cv_sfm_normalizePoints__InputArray__OutputArray__OutputArray(points.as_raw__InputArray(), normalized_points.as_raw__OutputArray(), t.as_raw__OutputArray()) }.into_result()
 }
 
 /// Estimate the fundamental matrix between two dataset of 2D point (image coords space).
@@ -383,8 +452,11 @@ pub fn normalize_points(points: &core::Mat, normalized_points: &mut core::Mat, t
 ///
 /// Uses the normalized 8-point fundamental matrix solver.
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
-pub fn normalized_eight_point_solver(x1: &core::Mat, x2: &core::Mat, f: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_normalizedEightPointSolver_Mat_Mat_Mat(x1.as_raw_Mat(), x2.as_raw_Mat(), f.as_raw_Mat()) }.into_result()
+pub fn normalized_eight_point_solver(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(x1);
+    input_array_arg!(x2);
+    output_array_arg!(f);
+    unsafe { sys::cv_sfm_normalizedEightPointSolver__InputArray__InputArray__OutputArray(x1.as_raw__InputArray(), x2.as_raw__InputArray(), f.as_raw__OutputArray()) }.into_result()
 }
 
 /// Point conditioning (non isotropic).
@@ -396,8 +468,10 @@ pub fn normalized_eight_point_solver(x1: &core::Mat, x2: &core::Mat, f: &mut cor
 /// forming an approximately symmetric circular cloud of points of radius 1 about the origin.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
-pub fn preconditioner_from_points(points: &core::Mat, t: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_preconditionerFromPoints_Mat_Mat(points.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
+pub fn preconditioner_from_points(points: &dyn core::ToInputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(points);
+    output_array_arg!(t);
+    unsafe { sys::cv_sfm_preconditionerFromPoints__InputArray__OutputArray(points.as_raw__InputArray(), t.as_raw__OutputArray()) }.into_result()
 }
 
 /// Get projection matrix P from K, R and t.
@@ -408,8 +482,12 @@ pub fn preconditioner_from_points(points: &core::Mat, t: &mut core::Mat) -> Resu
 /// * P: Output 3x4 projection matrix.
 ///
 /// This function estimate the projection matrix by solving the following equation: ![inline formula](https://latex.codecogs.com/png.latex?P%20%3D%20K%20%2A%20%5BR%7Ct%5D)
-pub fn projection_from_k_rt(k: &core::Mat, r: &core::Mat, t: &core::Mat, p: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_projectionFromKRt_Mat_Mat_Mat_Mat(k.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat(), p.as_raw_Mat()) }.into_result()
+pub fn projection_from_k_rt(k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, p: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(k);
+    input_array_arg!(r);
+    input_array_arg!(t);
+    output_array_arg!(p);
+    unsafe { sys::cv_sfm_projectionFromKRt__InputArray__InputArray__InputArray__OutputArray(k.as_raw__InputArray(), r.as_raw__InputArray(), t.as_raw__InputArray(), p.as_raw__OutputArray()) }.into_result()
 }
 
 /// Get projection matrices from Fundamental matrix
@@ -417,50 +495,11 @@ pub fn projection_from_k_rt(k: &core::Mat, r: &core::Mat, t: &core::Mat, p: &mut
 /// * F: Input 3x3 fundamental matrix.
 /// * P1: Output 3x4 one possible projection matrix.
 /// * P2: Output 3x4 another possible projection matrix.
-pub fn projections_from_fundamental(f: &core::Mat, p1: &mut core::Mat, p2: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_projectionsFromFundamental_Mat_Mat_Mat(f.as_raw_Mat(), p1.as_raw_Mat(), p2.as_raw_Mat()) }.into_result()
-}
-
-/// Reconstruct 3d points from 2d correspondences while performing autocalibration.
-/// ## Parameters
-/// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
-/// * Rs: Output vector of 3x3 rotations of the camera.
-/// * Ts: Output vector of 3x1 translations of the camera.
-/// * points3d: Output array with estimated 3d points.
-/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
-/// * is_projective: if true, the cameras are supposed to be projective.
-///
-/// Internally calls libmv simple pipeline routine with some default parameters by instatiating SFMLibmvEuclideanReconstruction class.
-///
-///
-/// Note:
-/// - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
-/// - To see a working example for camera motion reconstruction, check the following tutorial: @ref tutorial_sfm_trajectory_estimation.
-///
-/// ## C++ default parameters
-/// * is_projective: false
-pub fn reconstruct(points2d: &types::VectorOfMat, rs: &mut core::Mat, ts: &mut core::Mat, k: &mut core::Mat, points3d: &mut core::Mat, is_projective: bool) -> Result<()> {
-    unsafe { sys::cv_sfm_reconstruct_VectorOfMat_Mat_Mat_Mat_Mat_bool(points2d.as_raw_VectorOfMat(), rs.as_raw_Mat(), ts.as_raw_Mat(), k.as_raw_Mat(), points3d.as_raw_Mat(), is_projective) }.into_result()
-}
-
-/// Reconstruct 3d points from 2d correspondences while performing autocalibration.
-/// ## Parameters
-/// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
-/// * Ps: Output vector with the 3x4 projections matrices of each image.
-/// * points3d: Output array with estimated 3d points.
-/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
-/// * is_projective: if true, the cameras are supposed to be projective.
-///
-/// This method calls below signature and extracts projection matrices from estimated K, R and t.
-///
-///
-/// Note:
-/// - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
-///
-/// ## C++ default parameters
-/// * is_projective: false
-pub fn reconstruct_1(points2d: &types::VectorOfMat, ps: &mut core::Mat, points3d: &mut core::Mat, k: &mut core::Mat, is_projective: bool) -> Result<()> {
-    unsafe { sys::cv_sfm_reconstruct_VectorOfMat_Mat_Mat_Mat_bool(points2d.as_raw_VectorOfMat(), ps.as_raw_Mat(), points3d.as_raw_Mat(), k.as_raw_Mat(), is_projective) }.into_result()
+pub fn projections_from_fundamental(f: &dyn core::ToInputArray, p1: &mut dyn core::ToOutputArray, p2: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(f);
+    output_array_arg!(p1);
+    output_array_arg!(p2);
+    unsafe { sys::cv_sfm_projectionsFromFundamental__InputArray__OutputArray__OutputArray(f.as_raw__InputArray(), p1.as_raw__OutputArray(), p2.as_raw__OutputArray()) }.into_result()
 }
 
 /// Reconstruct 3d points from 2d images while performing autocalibration.
@@ -482,8 +521,12 @@ pub fn reconstruct_1(points2d: &types::VectorOfMat, ps: &mut core::Mat, points3d
 ///
 /// ## C++ default parameters
 /// * is_projective: false
-pub fn reconstruct_2(images: &types::VectorOfString, rs: &mut core::Mat, ts: &mut core::Mat, k: &mut core::Mat, points3d: &mut core::Mat, is_projective: bool) -> Result<()> {
-    unsafe { sys::cv_sfm_reconstruct_VectorOfString_Mat_Mat_Mat_Mat_bool(images.as_raw_VectorOfString(), rs.as_raw_Mat(), ts.as_raw_Mat(), k.as_raw_Mat(), points3d.as_raw_Mat(), is_projective) }.into_result()
+pub fn reconstruct(images: &types::VectorOfString, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, points3d: &mut dyn core::ToOutputArray, is_projective: bool) -> Result<()> {
+    output_array_arg!(rs);
+    output_array_arg!(ts);
+    input_output_array_arg!(k);
+    output_array_arg!(points3d);
+    unsafe { sys::cv_sfm_reconstruct_VectorOfString__OutputArray__OutputArray__InputOutputArray__OutputArray_bool(images.as_raw_VectorOfString(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective) }.into_result()
 }
 
 /// Reconstruct 3d points from 2d images while performing autocalibration.
@@ -503,8 +546,62 @@ pub fn reconstruct_2(images: &types::VectorOfString, rs: &mut core::Mat, ts: &mu
 ///
 /// ## C++ default parameters
 /// * is_projective: false
-pub fn reconstruct_3(images: &types::VectorOfString, ps: &mut core::Mat, points3d: &mut core::Mat, k: &mut core::Mat, is_projective: bool) -> Result<()> {
-    unsafe { sys::cv_sfm_reconstruct_VectorOfString_Mat_Mat_Mat_bool(images.as_raw_VectorOfString(), ps.as_raw_Mat(), points3d.as_raw_Mat(), k.as_raw_Mat(), is_projective) }.into_result()
+pub fn reconstruct_1(images: &types::VectorOfString, ps: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, is_projective: bool) -> Result<()> {
+    output_array_arg!(ps);
+    output_array_arg!(points3d);
+    input_output_array_arg!(k);
+    unsafe { sys::cv_sfm_reconstruct_VectorOfString__OutputArray__OutputArray__InputOutputArray_bool(images.as_raw_VectorOfString(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective) }.into_result()
+}
+
+/// Reconstruct 3d points from 2d correspondences while performing autocalibration.
+/// ## Parameters
+/// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
+/// * Rs: Output vector of 3x3 rotations of the camera.
+/// * Ts: Output vector of 3x1 translations of the camera.
+/// * points3d: Output array with estimated 3d points.
+/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
+/// * is_projective: if true, the cameras are supposed to be projective.
+///
+/// Internally calls libmv simple pipeline routine with some default parameters by instatiating SFMLibmvEuclideanReconstruction class.
+///
+///
+/// Note:
+/// - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
+/// - To see a working example for camera motion reconstruction, check the following tutorial: @ref tutorial_sfm_trajectory_estimation.
+///
+/// ## C++ default parameters
+/// * is_projective: false
+pub fn reconstruct_2(points2d: &dyn core::ToInputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, points3d: &mut dyn core::ToOutputArray, is_projective: bool) -> Result<()> {
+    input_array_arg!(points2d);
+    output_array_arg!(rs);
+    output_array_arg!(ts);
+    input_output_array_arg!(k);
+    output_array_arg!(points3d);
+    unsafe { sys::cv_sfm_reconstruct__InputArray__OutputArray__OutputArray__InputOutputArray__OutputArray_bool(points2d.as_raw__InputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), k.as_raw__InputOutputArray(), points3d.as_raw__OutputArray(), is_projective) }.into_result()
+}
+
+/// Reconstruct 3d points from 2d correspondences while performing autocalibration.
+/// ## Parameters
+/// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
+/// * Ps: Output vector with the 3x4 projections matrices of each image.
+/// * points3d: Output array with estimated 3d points.
+/// * K: Input/Output camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f_x%20%26%200%20%26%20c_x%5C%5C%200%20%26%20f_y%20%26%20c_y%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D). Input parameters used as initial guess.
+/// * is_projective: if true, the cameras are supposed to be projective.
+///
+/// This method calls below signature and extracts projection matrices from estimated K, R and t.
+///
+///
+/// Note:
+/// - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
+///
+/// ## C++ default parameters
+/// * is_projective: false
+pub fn reconstruct_3(points2d: &dyn core::ToInputArray, ps: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray, k: &mut dyn core::ToInputOutputArray, is_projective: bool) -> Result<()> {
+    input_array_arg!(points2d);
+    output_array_arg!(ps);
+    output_array_arg!(points3d);
+    input_output_array_arg!(k);
+    unsafe { sys::cv_sfm_reconstruct__InputArray__OutputArray__OutputArray__InputOutputArray_bool(points2d.as_raw__InputArray(), ps.as_raw__OutputArray(), points3d.as_raw__OutputArray(), k.as_raw__InputOutputArray(), is_projective) }.into_result()
 }
 
 /// Computes the relative camera motion between two cameras.
@@ -519,8 +616,14 @@ pub fn reconstruct_3(images: &types::VectorOfString, ps: &mut core::Mat, points3
 /// Given the motion parameters of two cameras, computes the motion parameters
 /// of the second one assuming the first one to be at the origin.
 /// If T1 and T2 are the camera motions, the computed relative motion is ![inline formula](https://latex.codecogs.com/png.latex?T%20%3D%20T_2%20T_1%5E%7B-1%7D)
-pub fn relative_camera_motion(r1: &core::Mat, t1: &core::Mat, r2: &core::Mat, t2: &core::Mat, r: &mut core::Mat, t: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_relativeCameraMotion_Mat_Mat_Mat_Mat_Mat_Mat(r1.as_raw_Mat(), t1.as_raw_Mat(), r2.as_raw_Mat(), t2.as_raw_Mat(), r.as_raw_Mat(), t.as_raw_Mat()) }.into_result()
+pub fn relative_camera_motion(r1: &dyn core::ToInputArray, t1: &dyn core::ToInputArray, r2: &dyn core::ToInputArray, t2: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(r1);
+    input_array_arg!(t1);
+    input_array_arg!(r2);
+    input_array_arg!(t2);
+    output_array_arg!(r);
+    output_array_arg!(t);
+    unsafe { sys::cv_sfm_relativeCameraMotion__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray(r1.as_raw__InputArray(), t1.as_raw__InputArray(), r2.as_raw__InputArray(), t2.as_raw__InputArray(), r.as_raw__OutputArray(), t.as_raw__OutputArray()) }.into_result()
 }
 
 /// Returns the 3x3 skew symmetric matrix of a vector.
@@ -528,8 +631,9 @@ pub fn relative_camera_motion(r1: &core::Mat, t1: &core::Mat, r2: &core::Mat, t2
 /// * x: Input 3x1 vector.
 ///
 /// Reference: [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
-pub fn skew(x: &core::Mat) -> Result<core::Mat> {
-    unsafe { sys::cv_sfm_skew_Mat(x.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+pub fn skew(x: &dyn core::ToInputArray) -> Result<core::Mat> {
+    input_array_arg!(x);
+    unsafe { sys::cv_sfm_skew__InputArray(x.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
 /// Reconstructs bunch of points by triangulation.
@@ -540,44 +644,60 @@ pub fn skew(x: &core::Mat) -> Result<core::Mat> {
 ///
 /// Triangulates the 3d position of 2d correspondences between several images.
 /// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
-pub fn triangulate_points(points2d: &types::VectorOfMat, projection_matrices: &types::VectorOfMat, points3d: &mut core::Mat) -> Result<()> {
-    unsafe { sys::cv_sfm_triangulatePoints_VectorOfMat_VectorOfMat_Mat(points2d.as_raw_VectorOfMat(), projection_matrices.as_raw_VectorOfMat(), points3d.as_raw_Mat()) }.into_result()
+pub fn triangulate_points(points2d: &dyn core::ToInputArray, projection_matrices: &dyn core::ToInputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+    input_array_arg!(points2d);
+    input_array_arg!(projection_matrices);
+    output_array_arg!(points3d);
+    unsafe { sys::cv_sfm_triangulatePoints__InputArray__InputArray__OutputArray(points2d.as_raw__InputArray(), projection_matrices.as_raw__InputArray(), points3d.as_raw__OutputArray()) }.into_result()
 }
 
 // Generating impl for trait cv::sfm::BaseSFM (trait)
 /// base class BaseSFM declares a common API that would be used in a typical scene reconstruction scenario
 pub trait BaseSFM {
     #[inline(always)] fn as_raw_BaseSFM(&self) -> *mut c_void;
-    fn run(&mut self, points2d: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_sfm_BaseSFM_run_VectorOfMat(self.as_raw_BaseSFM(), points2d.as_raw_VectorOfMat()) }.into_result()
+    fn run(&mut self, points2d: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(points2d);
+        unsafe { sys::cv_sfm_BaseSFM_run__InputArray(self.as_raw_BaseSFM(), points2d.as_raw__InputArray()) }.into_result()
     }
     
-    fn run_1(&mut self, points2d: &types::VectorOfMat, k: &mut core::Mat, rs: &mut core::Mat, ts: &mut core::Mat, points3d: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_BaseSFM_run_VectorOfMat_Mat_Mat_Mat_Mat(self.as_raw_BaseSFM(), points2d.as_raw_VectorOfMat(), k.as_raw_Mat(), rs.as_raw_Mat(), ts.as_raw_Mat(), points3d.as_raw_Mat()) }.into_result()
+    fn run_1(&mut self, points2d: &dyn core::ToInputArray, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(points2d);
+        input_output_array_arg!(k);
+        output_array_arg!(rs);
+        output_array_arg!(ts);
+        output_array_arg!(points3d);
+        unsafe { sys::cv_sfm_BaseSFM_run__InputArray__InputOutputArray__OutputArray__OutputArray__OutputArray(self.as_raw_BaseSFM(), points2d.as_raw__InputArray(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray()) }.into_result()
     }
     
     fn run_2(&mut self, images: &types::VectorOfString) -> Result<()> {
         unsafe { sys::cv_sfm_BaseSFM_run_VectorOfString(self.as_raw_BaseSFM(), images.as_raw_VectorOfString()) }.into_result()
     }
     
-    fn run_3(&mut self, images: &types::VectorOfString, k: &mut core::Mat, rs: &mut core::Mat, ts: &mut core::Mat, points3d: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_BaseSFM_run_VectorOfString_Mat_Mat_Mat_Mat(self.as_raw_BaseSFM(), images.as_raw_VectorOfString(), k.as_raw_Mat(), rs.as_raw_Mat(), ts.as_raw_Mat(), points3d.as_raw_Mat()) }.into_result()
+    fn run_3(&mut self, images: &types::VectorOfString, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_output_array_arg!(k);
+        output_array_arg!(rs);
+        output_array_arg!(ts);
+        output_array_arg!(points3d);
+        unsafe { sys::cv_sfm_BaseSFM_run_VectorOfString__InputOutputArray__OutputArray__OutputArray__OutputArray(self.as_raw_BaseSFM(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray()) }.into_result()
     }
     
     fn get_error(&self) -> Result<f64> {
         unsafe { sys::cv_sfm_BaseSFM_getError_const(self.as_raw_BaseSFM()) }.into_result()
     }
     
-    fn get_points(&mut self, points3d: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_BaseSFM_getPoints_Mat(self.as_raw_BaseSFM(), points3d.as_raw_Mat()) }.into_result()
+    fn get_points(&mut self, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(points3d);
+        unsafe { sys::cv_sfm_BaseSFM_getPoints__OutputArray(self.as_raw_BaseSFM(), points3d.as_raw__OutputArray()) }.into_result()
     }
     
     fn get_intrinsics(&self) -> Result<core::Mat> {
         unsafe { sys::cv_sfm_BaseSFM_getIntrinsics_const(self.as_raw_BaseSFM()) }.into_result().map(|ptr| core::Mat { ptr })
     }
     
-    fn get_cameras(&mut self, rs: &mut core::Mat, ts: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_BaseSFM_getCameras_Mat_Mat(self.as_raw_BaseSFM(), rs.as_raw_Mat(), ts.as_raw_Mat()) }.into_result()
+    fn get_cameras(&mut self, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(rs);
+        output_array_arg!(ts);
+        unsafe { sys::cv_sfm_BaseSFM_getCameras__OutputArray__OutputArray(self.as_raw_BaseSFM(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray()) }.into_result()
     }
     
     fn set_reconstruction_options(&mut self, libmv_reconstruction_options: crate::sfm::libmv_ReconstructionOptions) -> Result<()> {
@@ -624,8 +744,9 @@ impl SFMLibmvEuclideanReconstruction {
     ///
     /// Note:
     /// - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
-    pub fn run(&mut self, points2d: &types::VectorOfMat) -> Result<()> {
-        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfMat(self.as_raw_SFMLibmvEuclideanReconstruction(), points2d.as_raw_VectorOfMat()) }.into_result()
+    pub fn run(&mut self, points2d: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(points2d);
+        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run__InputArray(self.as_raw_SFMLibmvEuclideanReconstruction(), points2d.as_raw__InputArray()) }.into_result()
     }
     
     /// Calls the pipeline in order to perform Eclidean reconstruction.
@@ -639,8 +760,13 @@ impl SFMLibmvEuclideanReconstruction {
     ///
     /// Note:
     /// - Tracks must be as precise as possible. It does not handle outliers and is very sensible to them.
-    pub fn run_1(&mut self, points2d: &types::VectorOfMat, k: &mut core::Mat, rs: &mut core::Mat, ts: &mut core::Mat, points3d: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfMat_Mat_Mat_Mat_Mat(self.as_raw_SFMLibmvEuclideanReconstruction(), points2d.as_raw_VectorOfMat(), k.as_raw_Mat(), rs.as_raw_Mat(), ts.as_raw_Mat(), points3d.as_raw_Mat()) }.into_result()
+    pub fn run_1(&mut self, points2d: &dyn core::ToInputArray, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_array_arg!(points2d);
+        input_output_array_arg!(k);
+        output_array_arg!(rs);
+        output_array_arg!(ts);
+        output_array_arg!(points3d);
+        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run__InputArray__InputOutputArray__OutputArray__OutputArray__OutputArray(self.as_raw_SFMLibmvEuclideanReconstruction(), points2d.as_raw__InputArray(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray()) }.into_result()
     }
     
     /// Calls the pipeline in order to perform Eclidean reconstruction.
@@ -667,8 +793,12 @@ impl SFMLibmvEuclideanReconstruction {
     /// Note:
     /// - The images must be ordered as they were an image sequence. Additionally, each frame should be as close as posible to the previous and posterior.
     /// - For now DAISY features are used in order to compute the 2d points tracks and it only works for 3-4 images.
-    pub fn run_3(&mut self, images: &types::VectorOfString, k: &mut core::Mat, rs: &mut core::Mat, ts: &mut core::Mat, points3d: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfString_Mat_Mat_Mat_Mat(self.as_raw_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), k.as_raw_Mat(), rs.as_raw_Mat(), ts.as_raw_Mat(), points3d.as_raw_Mat()) }.into_result()
+    pub fn run_3(&mut self, images: &types::VectorOfString, k: &mut dyn core::ToInputOutputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+        input_output_array_arg!(k);
+        output_array_arg!(rs);
+        output_array_arg!(ts);
+        output_array_arg!(points3d);
+        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_run_VectorOfString__InputOutputArray__OutputArray__OutputArray__OutputArray(self.as_raw_SFMLibmvEuclideanReconstruction(), images.as_raw_VectorOfString(), k.as_raw__InputOutputArray(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray(), points3d.as_raw__OutputArray()) }.into_result()
     }
     
     /// Returns the computed reprojection error.
@@ -679,8 +809,9 @@ impl SFMLibmvEuclideanReconstruction {
     /// Returns the estimated 3d points.
     /// ## Parameters
     /// * points3d: Output array with estimated 3d points.
-    pub fn get_points(&mut self, points3d: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getPoints_Mat(self.as_raw_SFMLibmvEuclideanReconstruction(), points3d.as_raw_Mat()) }.into_result()
+    pub fn get_points(&mut self, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(points3d);
+        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getPoints__OutputArray(self.as_raw_SFMLibmvEuclideanReconstruction(), points3d.as_raw__OutputArray()) }.into_result()
     }
     
     /// Returns the refined camera calibration matrix.
@@ -692,8 +823,10 @@ impl SFMLibmvEuclideanReconstruction {
     /// ## Parameters
     /// * Rs: Output vector of 3x3 rotations of the camera.
     /// * Ts: Output vector of 3x1 translations of the camera.
-    pub fn get_cameras(&mut self, rs: &mut core::Mat, ts: &mut core::Mat) -> Result<()> {
-        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getCameras_Mat_Mat(self.as_raw_SFMLibmvEuclideanReconstruction(), rs.as_raw_Mat(), ts.as_raw_Mat()) }.into_result()
+    pub fn get_cameras(&mut self, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
+        output_array_arg!(rs);
+        output_array_arg!(ts);
+        unsafe { sys::cv_sfm_SFMLibmvEuclideanReconstruction_getCameras__OutputArray__OutputArray(self.as_raw_SFMLibmvEuclideanReconstruction(), rs.as_raw__OutputArray(), ts.as_raw__OutputArray()) }.into_result()
     }
     
     /// Setter method for reconstruction options.

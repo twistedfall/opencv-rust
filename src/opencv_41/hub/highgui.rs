@@ -117,6 +117,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
+use crate::core::{_InputArray, _OutputArray};
 
 /// indicates that ALT Key is pressed.
 pub const EVENT_FLAG_ALTKEY: i32 = 32;
@@ -591,9 +592,10 @@ pub fn get_window_property(winname: &str, prop_id: i32) -> Result<f64> {
 /// ## Parameters
 /// * winname: Name of the window.
 /// * mat: Image to be shown.
-pub fn imshow(winname: &str, mat: &core::Mat) -> Result<()> {
+pub fn imshow(winname: &str, mat: &dyn core::ToInputArray) -> Result<()> {
     string_arg!(winname);
-    unsafe { sys::cv_imshow_String_Mat(winname.as_ptr(), mat.as_raw_Mat()) }.into_result()
+    input_array_arg!(mat);
+    unsafe { sys::cv_imshow_String__InputArray(winname.as_ptr(), mat.as_raw__InputArray()) }.into_result()
 }
 
 /// Loads parameters of the specified window.
@@ -722,13 +724,13 @@ pub fn save_window_parameters(window_name: &str) -> Result<()> {
 /// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 /// After finish of work an empty callback will be set for the used window.
 ///
-/// ## Overloaded parameters
-///
 /// ## C++ default parameters
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_roi(img: &core::Mat, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
-    unsafe { sys::cv_selectROI_Mat_bool_bool(img.as_raw_Mat(), show_crosshair, from_center) }.into_result()
+pub fn select_roi_for_window(window_name: &str, img: &dyn core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+    string_arg!(window_name);
+    input_array_arg!(img);
+    unsafe { sys::cv_selectROI_String__InputArray_bool_bool(window_name.as_ptr(), img.as_raw__InputArray(), show_crosshair, from_center) }.into_result()
 }
 
 /// Selects ROI on the given image.
@@ -748,12 +750,14 @@ pub fn select_roi(img: &core::Mat, show_crosshair: bool, from_center: bool) -> R
 /// Note: The function sets it's own mouse callback for specified window using cv::setMouseCallback(windowName, ...).
 /// After finish of work an empty callback will be set for the used window.
 ///
+/// ## Overloaded parameters
+///
 /// ## C++ default parameters
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_roi_for_window(window_name: &str, img: &core::Mat, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
-    string_arg!(window_name);
-    unsafe { sys::cv_selectROI_String_Mat_bool_bool(window_name.as_ptr(), img.as_raw_Mat(), show_crosshair, from_center) }.into_result()
+pub fn select_roi(img: &dyn core::ToInputArray, show_crosshair: bool, from_center: bool) -> Result<core::Rect> {
+    input_array_arg!(img);
+    unsafe { sys::cv_selectROI__InputArray_bool_bool(img.as_raw__InputArray(), show_crosshair, from_center) }.into_result()
 }
 
 /// Selects ROIs on the given image.
@@ -776,9 +780,10 @@ pub fn select_roi_for_window(window_name: &str, img: &core::Mat, show_crosshair:
 /// ## C++ default parameters
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_rois(window_name: &str, img: &core::Mat, bounding_boxes: &mut types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
+pub fn select_rois(window_name: &str, img: &dyn core::ToInputArray, bounding_boxes: &mut types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
     string_arg!(window_name);
-    unsafe { sys::cv_selectROIs_String_Mat_VectorOfRect_bool_bool(window_name.as_ptr(), img.as_raw_Mat(), bounding_boxes.as_raw_VectorOfRect(), show_crosshair, from_center) }.into_result()
+    input_array_arg!(img);
+    unsafe { sys::cv_selectROIs_String__InputArray_VectorOfRect_bool_bool(window_name.as_ptr(), img.as_raw__InputArray(), bounding_boxes.as_raw_VectorOfRect(), show_crosshair, from_center) }.into_result()
 }
 
 /// Sets mouse handler for the specified window
@@ -800,7 +805,7 @@ pub fn set_mouse_callback(winname: &str, on_mouse: Option<Box<crate::highgui::Mo
 ///
 /// ## Parameters
 /// * winname: Name of the window.
-pub fn set_open_gl_context(winname: &str) -> Result<()> {
+pub fn set_opengl_context(winname: &str) -> Result<()> {
     string_arg!(winname);
     unsafe { sys::cv_setOpenGlContext_String(winname.as_ptr()) }.into_result()
 }
@@ -849,10 +854,10 @@ pub fn set_open_gl_context(winname: &str) -> Result<()> {
 ///
 /// ## C++ default parameters
 /// * userdata: 0
-pub fn set_open_gl_draw_callback(winname: &str, on_open_gl_draw: Option<Box<crate::highgui::OpenGlDrawCallback>>) -> Result<()> {
+pub fn set_opengl_draw_callback(winname: &str, on_opengl_draw: Option<Box<crate::highgui::OpenGlDrawCallback>>) -> Result<()> {
     string_arg!(winname);
-    callback_arg!(on_open_gl_draw(userdata: *mut c_void) via userdata => ());
-    unsafe { sys::cv_setOpenGlDrawCallback_String_OpenGlDrawCallback_void_X(winname.as_ptr(), on_open_gl_draw, userdata) }.into_result()
+    callback_arg!(on_opengl_draw(userdata: *mut c_void) via userdata => ());
+    unsafe { sys::cv_setOpenGlDrawCallback_String_OpenGlDrawCallback_void_X(winname.as_ptr(), on_opengl_draw, userdata) }.into_result()
 }
 
 /// Sets the trackbar maximum position.
