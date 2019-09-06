@@ -913,6 +913,7 @@ def camel_case_to_snake_case(name):
     res = re.sub('([^_])([A-Z][a-z]+)', r'\1_\2', name)
     res = re.sub('([a-z0-9])([A-Z])', r'\1_\2', res)
     res = re.sub(r'\B([23])_(D)\b', r'_\1\2', res)  # fix 2_d and 3_d
+    res = re.sub(r'_(P[n3])_(P)', r'_\1\2', res)  # fix p3_p and pn_p
     return res.lower()
 
 
