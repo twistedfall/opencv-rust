@@ -1,4 +1,5 @@
 pub mod core;
+pub mod aruco;
 pub mod bioinspired;
 pub mod calib3d;
 pub mod ccalib;

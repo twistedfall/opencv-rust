@@ -714,6 +714,38 @@ impl Drop for PtrOfBlockMeanHash {
 
 unsafe impl Send for PtrOfBlockMeanHash {}
 
+pub struct PtrOfBoard {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBoard {
+    #[inline(always)] pub fn as_raw_PtrOfBoard(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBoard {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::aruco::Board>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBoard {}
+
+impl crate::aruco::Board for PtrOfBoard {
+    #[inline(always)] fn as_raw_Board(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::aruco::Board>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
 pub struct PtrOfBoost {
     pub(crate) ptr: *mut c_void
 }
@@ -945,6 +977,29 @@ impl crate::calib3d::LMSolver_Callback for PtrOfCallback {
         })
     }
 }
+
+pub struct PtrOfCharucoBoard {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfCharucoBoard {
+    #[inline(always)] pub fn as_raw_PtrOfCharucoBoard(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfCharucoBoard {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::aruco::CharucoBoard>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfCharucoBoard {}
 
 pub struct PtrOfColorMomentHash {
     pub(crate) ptr: *mut c_void
@@ -1210,6 +1265,52 @@ impl Drop for PtrOfDetectionOutputLayer {
 }
 
 unsafe impl Send for PtrOfDetectionOutputLayer {}
+
+pub struct PtrOfDetectorParameters {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfDetectorParameters {
+    #[inline(always)] pub fn as_raw_PtrOfDetectorParameters(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfDetectorParameters {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::aruco::DetectorParameters>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfDetectorParameters {}
+
+pub struct PtrOfDictionary {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfDictionary {
+    #[inline(always)] pub fn as_raw_PtrOfDictionary(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfDictionary {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::aruco::Dictionary>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfDictionary {}
 
 pub struct PtrOfDownhillSolver {
     pub(crate) ptr: *mut c_void
@@ -1912,6 +2013,29 @@ impl crate::structured_light::StructuredLightPattern for PtrOfGrayCodePattern {
         })
     }
 }
+
+pub struct PtrOfGridBoard {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfGridBoard {
+    #[inline(always)] pub fn as_raw_PtrOfGridBoard(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfGridBoard {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::aruco::GridBoard>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfGridBoard {}
 
 pub struct PtrOfHDF5 {
     pub(crate) ptr: *mut c_void
@@ -6707,6 +6831,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
 unsafe impl Send for VectorOfPoint {}
 
 impl core::ToInputArray for VectorOfPoint {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfPoint();
         cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -6718,7 +6843,15 @@ impl core::ToInputArray for VectorOfPoint {
     }
 }
 
+impl core::ToInputArray for &VectorOfPoint {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfPoint {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfPoint();
         cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -6730,7 +6863,15 @@ impl core::ToOutputArray for VectorOfPoint {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfPoint {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfPoint {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfPoint();
         cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -6739,6 +6880,13 @@ impl core::ToInputOutputArray for VectorOfPoint {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfPoint {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -6942,6 +7090,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
 unsafe impl Send for VectorOfPoint2d {}
 
 impl core::ToInputArray for VectorOfPoint2d {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -6953,7 +7102,15 @@ impl core::ToInputArray for VectorOfPoint2d {
     }
 }
 
+impl core::ToInputArray for &VectorOfPoint2d {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfPoint2d {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -6965,7 +7122,15 @@ impl core::ToOutputArray for VectorOfPoint2d {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfPoint2d {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfPoint2d {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfPoint2d();
         cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -6974,6 +7139,13 @@ impl core::ToInputOutputArray for VectorOfPoint2d {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfPoint2d {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -7177,6 +7349,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
 unsafe impl Send for VectorOfPoint2f {}
 
 impl core::ToInputArray for VectorOfPoint2f {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -7188,7 +7361,15 @@ impl core::ToInputArray for VectorOfPoint2f {
     }
 }
 
+impl core::ToInputArray for &VectorOfPoint2f {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfPoint2f {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -7200,7 +7381,15 @@ impl core::ToOutputArray for VectorOfPoint2f {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfPoint2f {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfPoint2f {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfPoint2f();
         cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -7209,6 +7398,13 @@ impl core::ToInputOutputArray for VectorOfPoint2f {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfPoint2f {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -7982,6 +8178,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
 unsafe impl Send for VectorOfRect {}
 
 impl core::ToInputArray for VectorOfRect {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfRect();
         cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -7993,7 +8190,15 @@ impl core::ToInputArray for VectorOfRect {
     }
 }
 
+impl core::ToInputArray for &VectorOfRect {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfRect {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfRect();
         cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -8005,7 +8210,15 @@ impl core::ToOutputArray for VectorOfRect {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfRect {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfRect {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfRect();
         cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -8014,6 +8227,13 @@ impl core::ToInputOutputArray for VectorOfRect {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfRect {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -8217,6 +8437,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
 unsafe impl Send for VectorOfRect2d {}
 
 impl core::ToInputArray for VectorOfRect2d {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [me as "std::vector<cv::Rect2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -8228,7 +8449,15 @@ impl core::ToInputArray for VectorOfRect2d {
     }
 }
 
+impl core::ToInputArray for &VectorOfRect2d {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfRect2d {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [me as "std::vector<cv::Rect2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -8240,7 +8469,15 @@ impl core::ToOutputArray for VectorOfRect2d {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfRect2d {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfRect2d {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfRect2d();
         cpp!(unsafe [me as "std::vector<cv::Rect2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -8249,6 +8486,13 @@ impl core::ToInputOutputArray for VectorOfRect2d {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfRect2d {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -9415,6 +9659,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
 unsafe impl Send for VectorOfVec4f {}
 
 impl core::ToInputArray for VectorOfVec4f {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -9426,7 +9671,15 @@ impl core::ToInputArray for VectorOfVec4f {
     }
 }
 
+impl core::ToInputArray for &VectorOfVec4f {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfVec4f {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -9438,7 +9691,15 @@ impl core::ToOutputArray for VectorOfVec4f {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfVec4f {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfVec4f {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfVec4f();
         cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -9447,6 +9708,13 @@ impl core::ToInputOutputArray for VectorOfVec4f {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfVec4f {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -10600,6 +10868,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
 unsafe impl Send for VectorOfVectorOfPoint {}
 
 impl core::ToInputArray for VectorOfVectorOfPoint {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfVectorOfPoint();
         cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -10611,7 +10880,15 @@ impl core::ToInputArray for VectorOfVectorOfPoint {
     }
 }
 
+impl core::ToInputArray for &VectorOfVectorOfPoint {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfVectorOfPoint {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfVectorOfPoint();
         cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -10623,7 +10900,15 @@ impl core::ToOutputArray for VectorOfVectorOfPoint {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfVectorOfPoint {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfVectorOfPoint {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfVectorOfPoint();
         cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -10632,6 +10917,13 @@ impl core::ToInputOutputArray for VectorOfVectorOfPoint {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfVectorOfPoint {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -10826,6 +11118,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
 unsafe impl Send for VectorOfVectorOfPoint2f {}
 
 impl core::ToInputArray for VectorOfVectorOfPoint2f {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfVectorOfPoint2f();
         cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -10837,7 +11130,15 @@ impl core::ToInputArray for VectorOfVectorOfPoint2f {
     }
 }
 
+impl core::ToInputArray for &VectorOfVectorOfPoint2f {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfVectorOfPoint2f {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfVectorOfPoint2f();
         cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -10849,7 +11150,15 @@ impl core::ToOutputArray for VectorOfVectorOfPoint2f {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfVectorOfPoint2f {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfVectorOfPoint2f {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfVectorOfPoint2f();
         cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -10858,6 +11167,13 @@ impl core::ToInputOutputArray for VectorOfVectorOfPoint2f {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfVectorOfPoint2f {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -11432,6 +11748,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
 unsafe impl Send for VectorOfVectorOfchar {}
 
 impl core::ToInputArray for VectorOfVectorOfchar {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfVectorOfchar();
         cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11443,7 +11760,15 @@ impl core::ToInputArray for VectorOfVectorOfchar {
     }
 }
 
+impl core::ToInputArray for &VectorOfVectorOfchar {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfVectorOfchar {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfVectorOfchar();
         cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11455,7 +11780,15 @@ impl core::ToOutputArray for VectorOfVectorOfchar {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfVectorOfchar {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfVectorOfchar {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfVectorOfchar();
         cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11464,6 +11797,13 @@ impl core::ToInputOutputArray for VectorOfVectorOfchar {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfVectorOfchar {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -11658,6 +11998,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
 unsafe impl Send for VectorOfVectorOfint {}
 
 impl core::ToInputArray for VectorOfVectorOfint {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11669,7 +12010,15 @@ impl core::ToInputArray for VectorOfVectorOfint {
     }
 }
 
+impl core::ToInputArray for &VectorOfVectorOfint {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfVectorOfint {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11681,7 +12030,15 @@ impl core::ToOutputArray for VectorOfVectorOfint {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfVectorOfint {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfVectorOfint {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfVectorOfint();
         cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11690,6 +12047,13 @@ impl core::ToInputOutputArray for VectorOfVectorOfint {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfVectorOfint {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -11884,6 +12248,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
 unsafe impl Send for VectorOfVectorOfuchar {}
 
 impl core::ToInputArray for VectorOfVectorOfuchar {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfVectorOfuchar();
         cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11895,7 +12260,15 @@ impl core::ToInputArray for VectorOfVectorOfuchar {
     }
 }
 
+impl core::ToInputArray for &VectorOfVectorOfuchar {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfVectorOfuchar {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfVectorOfuchar();
         cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11907,7 +12280,15 @@ impl core::ToOutputArray for VectorOfVectorOfuchar {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfVectorOfuchar {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfVectorOfuchar {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfVectorOfuchar();
         cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -11916,6 +12297,13 @@ impl core::ToInputOutputArray for VectorOfVectorOfuchar {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfVectorOfuchar {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -12504,6 +12892,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
 unsafe impl Send for VectorOfchar {}
 
 impl core::ToInputArray for VectorOfchar {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfchar();
         cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12515,7 +12904,15 @@ impl core::ToInputArray for VectorOfchar {
     }
 }
 
+impl core::ToInputArray for &VectorOfchar {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfchar {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfchar();
         cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12527,7 +12924,15 @@ impl core::ToOutputArray for VectorOfchar {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfchar {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfchar {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfchar();
         cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12536,6 +12941,13 @@ impl core::ToInputOutputArray for VectorOfchar {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfchar {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -12739,6 +13151,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
 unsafe impl Send for VectorOfdouble {}
 
 impl core::ToInputArray for VectorOfdouble {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfdouble();
         cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12750,7 +13163,15 @@ impl core::ToInputArray for VectorOfdouble {
     }
 }
 
+impl core::ToInputArray for &VectorOfdouble {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfdouble {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfdouble();
         cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12762,7 +13183,15 @@ impl core::ToOutputArray for VectorOfdouble {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfdouble {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfdouble {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfdouble();
         cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12771,6 +13200,13 @@ impl core::ToInputOutputArray for VectorOfdouble {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfdouble {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -12974,6 +13410,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
 unsafe impl Send for VectorOffloat {}
 
 impl core::ToInputArray for VectorOffloat {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOffloat();
         cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12985,7 +13422,15 @@ impl core::ToInputArray for VectorOffloat {
     }
 }
 
+impl core::ToInputArray for &VectorOffloat {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOffloat {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOffloat();
         cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -12997,7 +13442,15 @@ impl core::ToOutputArray for VectorOffloat {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOffloat {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOffloat {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOffloat();
         cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -13006,6 +13459,13 @@ impl core::ToInputOutputArray for VectorOffloat {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOffloat {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -13209,6 +13669,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
 unsafe impl Send for VectorOfint {}
 
 impl core::ToInputArray for VectorOfint {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfint();
         cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -13220,7 +13681,15 @@ impl core::ToInputArray for VectorOfint {
     }
 }
 
+impl core::ToInputArray for &VectorOfint {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfint {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfint();
         cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -13232,7 +13701,15 @@ impl core::ToOutputArray for VectorOfint {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfint {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfint {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfint();
         cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -13241,6 +13718,13 @@ impl core::ToInputOutputArray for VectorOfint {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfint {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -13643,6 +14127,7 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
 unsafe impl Send for VectorOfuchar {}
 
 impl core::ToInputArray for VectorOfuchar {
+    #[inline]
     fn input_array(&self) -> Result<core::InputArray> {
         let me = self.as_raw_VectorOfuchar();
         cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -13654,7 +14139,15 @@ impl core::ToInputArray for VectorOfuchar {
     }
 }
 
+impl core::ToInputArray for &VectorOfuchar {
+    #[inline]
+    fn input_array(&self) -> Result<core::InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl core::ToOutputArray for VectorOfuchar {
+    #[inline]
     fn output_array(&mut self) -> Result<core::OutputArray> {
         let me = self.as_raw_VectorOfuchar();
         cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -13666,7 +14159,15 @@ impl core::ToOutputArray for VectorOfuchar {
     }
 }
 
+impl core::ToOutputArray for &mut VectorOfuchar {
+    #[inline]
+    fn output_array(&mut self) -> Result<core::OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl core::ToInputOutputArray for VectorOfuchar {
+    #[inline]
     fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
         let me = self.as_raw_VectorOfuchar();
         cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -13675,6 +14176,13 @@ impl core::ToInputOutputArray for VectorOfuchar {
             } CVRS_CATCH(cv_return_value_void_X)
         }).into_result()
             .map(|ptr| core::InputOutputArray { ptr })
+    }
+}
+
+impl core::ToInputOutputArray for &mut VectorOfuchar {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
