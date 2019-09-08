@@ -23,5 +23,3 @@ catch (cv::Exception& e) { \
 }
 
 #define VEC_CATCH(return_type) CODE_CATCH(return_type, std::out_of_range, Error::Code::StsOutOfRange, "index out of bounds")
-
-#define HAVE_OPENCV_OCL true // # for 3.2

@@ -4,7 +4,6 @@ use opencv::{
     Result,
     types::{VectorOfdouble, VectorOfuchar},
 };
-
 #[cfg(not(feature = "opencv-41"))]
 use opencv::core::ACCESS_READ;
 #[cfg(feature = "opencv-41")]
@@ -15,12 +14,23 @@ fn input_output_array() -> Result<()> {
     {
         let mat_expr = Mat::ones(1, 3, u8::typ())?;
         let umat = Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(3.))?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
-        let mut trg = VectorOfuchar::new();
-        core::add(&mat_expr, &umat, &mut trg, &Mat::default()?, -1)?;
-        assert_eq!(3, trg.len());
-        assert_eq!(4, trg.get(0)?);
-        assert_eq!(4, trg.get(1)?);
-        assert_eq!(4, trg.get(2)?);
+        {
+            let mut trg = VectorOfuchar::new();
+            core::add(&mat_expr, &umat, &mut trg, &Mat::default()?, -1)?;
+            assert_eq!(3, trg.len());
+            assert_eq!(4, trg.get(0)?);
+            assert_eq!(4, trg.get(1)?);
+            assert_eq!(4, trg.get(2)?);
+        }
+
+        {
+            let mut trg = VectorOfuchar::new();
+            core::add(&&mat_expr, &&umat, &mut &mut trg, &Mat::default()?, -1)?;
+            assert_eq!(3, trg.len());
+            assert_eq!(4, trg.get(0)?);
+            assert_eq!(4, trg.get(1)?);
+            assert_eq!(4, trg.get(2)?);
+        }
     }
 
     {

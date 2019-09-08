@@ -447,6 +447,13 @@ impl ToInputArray for Mat {
     }
 }
 
+impl ToInputArray for &Mat {
+    #[inline]
+    fn input_array(&self) -> Result<InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl ToOutputArray for Mat {
     #[inline]
     fn output_array(&mut self) -> Result<OutputArray> {
@@ -454,10 +461,24 @@ impl ToOutputArray for Mat {
     }
 }
 
+impl ToOutputArray for &mut Mat {
+    #[inline]
+    fn output_array(&mut self) -> Result<OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl ToInputOutputArray for Mat {
     #[inline]
     fn input_output_array(&mut self) -> Result<InputOutputArray> {
         InputOutputArray::from_mat(self)
+    }
+}
+
+impl ToInputOutputArray for &mut Mat {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -507,6 +528,13 @@ impl ToInputArray for UMat {
     }
 }
 
+impl ToInputArray for &UMat {
+    #[inline]
+    fn input_array(&self) -> Result<InputArray> {
+        (*self).input_array()
+    }
+}
+
 impl ToOutputArray for UMat {
     #[inline]
     fn output_array(&mut self) -> Result<OutputArray> {
@@ -514,10 +542,24 @@ impl ToOutputArray for UMat {
     }
 }
 
+impl ToOutputArray for &mut UMat {
+    #[inline]
+    fn output_array(&mut self) -> Result<OutputArray> {
+        (*self).output_array()
+    }
+}
+
 impl ToInputOutputArray for UMat {
     #[inline]
     fn input_output_array(&mut self) -> Result<InputOutputArray> {
         InputOutputArray::from_umat(self)
+    }
+}
+
+impl ToInputOutputArray for &mut UMat {
+    #[inline]
+    fn input_output_array(&mut self) -> Result<InputOutputArray> {
+        (*self).input_output_array()
     }
 }
 
@@ -614,6 +656,13 @@ impl ToInputArray for MatExpr {
     #[inline]
     fn input_array(&self) -> Result<InputArray> {
         InputArray::from_mat_expr(self)
+    }
+}
+
+impl ToInputArray for &MatExpr {
+    #[inline]
+    fn input_array(&self) -> Result<InputArray> {
+        (*self).input_array()
     }
 }
 

@@ -2669,6 +2669,7 @@ class VectorTypeInfo(TypeInfo):
         "input_output_array": template("""
 
             impl core::ToInputArray for ${rust_local} {
+                #[inline]
                 fn input_array(&self) -> Result<core::InputArray> {
                     let me = self.as_raw_${rust_local}();
                     cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -2680,7 +2681,15 @@ class VectorTypeInfo(TypeInfo):
                 }
             }
 
+            impl core::ToInputArray for &${rust_local} {
+                #[inline]
+                fn input_array(&self) -> Result<core::InputArray> {
+                    (*self).input_array()
+                }
+            }
+
             impl core::ToOutputArray for ${rust_local} {
+                #[inline]
                 fn output_array(&mut self) -> Result<core::OutputArray> {
                     let me = self.as_raw_${rust_local}();
                     cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -2692,7 +2701,15 @@ class VectorTypeInfo(TypeInfo):
                 }
             }
 
+            impl core::ToOutputArray for &mut ${rust_local} {
+                #[inline]
+                fn output_array(&mut self) -> Result<core::OutputArray> {
+                    (*self).output_array()
+                }
+            }
+
             impl core::ToInputOutputArray for ${rust_local} {
+                #[inline]
                 fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
                     let me = self.as_raw_${rust_local}();
                     cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
@@ -2701,6 +2718,13 @@ class VectorTypeInfo(TypeInfo):
                         } CVRS_CATCH(cv_return_value_void_X)
                     }).into_result()
                         .map(|ptr| core::InputOutputArray { ptr })
+                }
+            }
+
+            impl core::ToInputOutputArray for &mut ${rust_local} {
+                #[inline]
+                fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+                    (*self).input_output_array()
                 }
             }
         """)
