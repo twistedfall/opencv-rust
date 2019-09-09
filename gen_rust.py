@@ -2445,7 +2445,6 @@ class VectorTypeInfo(TypeInfo):
                     Ok(())
                 }
                 
-                /// Swaps values of 2 elements
                 #[inline]
                 fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
                     let len = self.len();

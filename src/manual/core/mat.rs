@@ -193,6 +193,30 @@ impl Mat {
         Ok(out)
     }
 
+    #[inline]
+    pub fn from_slice<T: DataType>(s: &[T]) -> Result<Mat> {
+        Self::from_slice_2d(&[s])
+    }
+
+    pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Mat> {
+        let row_count: i32 = s.len() as _;
+        let col_count: i32 = if row_count > 0 {
+            s[0].as_ref().len() as _
+        } else {
+            0
+        };
+        let mut out = unsafe { Mat::new_rows_cols(row_count, col_count, T::typ()) }?;
+        for (row_n, row) in s.into_iter().enumerate() {
+            let trg = out.at_row_mut(row_n as _)?;
+            let src = row.as_ref();
+            if trg.len() != src.len() {
+                return Err(Error::new(core::StsUnmatchedSizes, format!("Unexpected number of items: {} in a row index: {}, expected: {}", trg.len(), row_n, src.len())));
+            }
+            trg.copy_from_slice(src);
+        }
+        Ok(out)
+    }
+
     #[inline(always)]
     pub(crate) fn _at<T: DataType>(&self, i0: i32) -> Result<&T> {
         self.match_format::<T>()
@@ -381,30 +405,6 @@ impl Mat {
     pub fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
         let total = self.total()?;
         self.data_mut().map(|x| unsafe { slice::from_raw_parts_mut(x as *mut _ as *mut _, total) })
-    }
-
-    #[inline]
-    pub fn from_slice<T: DataType>(s: &[T]) -> Result<Mat> {
-        Self::from_slice_2d(&[s])
-    }
-
-    pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Mat> {
-        let row_count: i32 = s.len() as _;
-        let col_count: i32 = if row_count > 0 {
-            s[0].as_ref().len() as _
-        } else {
-            0
-        };
-        let mut out = unsafe { Mat::new_rows_cols(row_count, col_count, T::typ()) }?;
-        for (row_n, row) in s.into_iter().enumerate() {
-            let trg = out.at_row_mut(row_n as _)?;
-            let src = row.as_ref();
-            if trg.len() != src.len() {
-                return Err(Error::new(core::StsUnmatchedSizes, format!("Unexpected number of items: {} in a row index: {}, expected: {}", trg.len(), row_n, src.len())));
-            }
-            trg.copy_from_slice(src);
-        }
-        Ok(out)
     }
 
     pub fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
