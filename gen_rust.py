@@ -929,16 +929,6 @@ def decl_patch(module, decl):
         if decl[0] == "cv.ml.TrainData.loadFromCSV" and len(decl[3]) == 8 and decl[3][6][0] == "'":
             decl[3][5][2] = "','"
             del decl[3][6]
-    elif module == "objdetect":
-        # replace Mat with explicit vector because detect functions only accept vector InputArray
-        if decl[0] == "cv.QRCodeDetector.detect" or decl[0] == "cv.QRCodeDetector.detectAndDecode":
-            pts_arg = decl[3][1]
-            if pts_arg[0] == "OutputArray" and pts_arg[1] == "points":
-                decl[3][1][0] = "std::vector<Point>&"
-        elif decl[0] == "cv.QRCodeDetector.decode" or decl[0] == "cv.decodeQRCode":
-            pts_arg = decl[3][1]
-            if pts_arg[0] == "InputArray" and pts_arg[1] == "points":
-                decl[3][1][0] = "const std::vector<Point>&"
     return decl
 
 
