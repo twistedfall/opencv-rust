@@ -84,11 +84,12 @@ pub fn create_face_detection_mask_generator() -> Result<types::PtrOfMaskGenerato
 ///
 /// ## C++ default parameters
 /// * straight_qrcode: noArray()
-pub fn decode_qr_code(_in: &dyn core::ToInputArray, points: &types::VectorOfPoint, decoded_info: &mut String, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
+pub fn decode_qr_code(_in: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut String, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
     input_array_arg!(_in);
+    input_array_arg!(points);
     string_arg_output_send!(via decoded_info_via);
     output_array_arg!(straight_qrcode);
-    let out = unsafe { sys::cv_decodeQRCode__InputArray_VectorOfPoint_std_string__OutputArray(_in.as_raw__InputArray(), points.as_raw_VectorOfPoint(), &mut decoded_info_via, straight_qrcode.as_raw__OutputArray()) }.into_result();
+    let out = unsafe { sys::cv_decodeQRCode__InputArray__InputArray_std_string__OutputArray(_in.as_raw__InputArray(), points.as_raw__InputArray(), &mut decoded_info_via, straight_qrcode.as_raw__OutputArray()) }.into_result();
     string_arg_output_receive!(decoded_info_via => decoded_info);
     return out;
 }
@@ -1065,9 +1066,10 @@ impl QRCodeDetector {
     /// ## Parameters
     /// * img: grayscale or color (BGR) image containing (or not) QR code.
     /// * points: Output vector of vertices of the minimum-area quadrangle containing the code.
-    pub fn detect(&self, img: &dyn core::ToInputArray, points: &mut types::VectorOfPoint) -> Result<bool> {
+    pub fn detect(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
         input_array_arg!(img);
-        unsafe { sys::cv_QRCodeDetector_detect_const__InputArray_VectorOfPoint(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw_VectorOfPoint()) }.into_result()
+        output_array_arg!(points);
+        unsafe { sys::cv_QRCodeDetector_detect_const__InputArray__OutputArray(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result()
     }
     
     /// Decodes QR code in image once it's found by the detect() method.
@@ -1080,10 +1082,11 @@ impl QRCodeDetector {
     ///
     /// ## C++ default parameters
     /// * straight_qrcode: noArray()
-    pub fn decode(&mut self, img: &dyn core::ToInputArray, points: &types::VectorOfPoint, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+    pub fn decode(&mut self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
         input_array_arg!(img);
+        input_array_arg!(points);
         output_array_arg!(straight_qrcode);
-        unsafe { sys::cv_QRCodeDetector_decode__InputArray_VectorOfPoint__OutputArray(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw_VectorOfPoint(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_QRCodeDetector_decode__InputArray__InputArray__OutputArray(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
     /// Both detects and decodes QR code
@@ -1096,10 +1099,11 @@ impl QRCodeDetector {
     /// ## C++ default parameters
     /// * points: noArray()
     /// * straight_qrcode: noArray()
-    pub fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut types::VectorOfPoint, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
+    pub fn detect_and_decode(&mut self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<String> {
         input_array_arg!(img);
+        output_array_arg!(points);
         output_array_arg!(straight_qrcode);
-        unsafe { sys::cv_QRCodeDetector_detectAndDecode__InputArray_VectorOfPoint__OutputArray(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw_VectorOfPoint(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(crate::templ::receive_string_mut)
+        unsafe { sys::cv_QRCodeDetector_detectAndDecode__InputArray__OutputArray__OutputArray(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(crate::templ::receive_string_mut)
     }
     
 }

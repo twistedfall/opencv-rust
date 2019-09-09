@@ -2335,7 +2335,7 @@ pub fn cv_ml_TrainData_create__InputArray_int__InputArray__InputArray__InputArra
 }
 extern "C" {
 pub fn cv_createFaceDetectionMaskGenerator() -> cv_return_value_void_X;
-pub fn cv_decodeQRCode__InputArray_VectorOfPoint_std_string__OutputArray(_in: *mut c_void, points: *mut c_void, decoded_info: *mut *mut c_char, straight_qrcode: *mut c_void) -> cv_return_value_bool;
+pub fn cv_decodeQRCode__InputArray__InputArray_std_string__OutputArray(_in: *mut c_void, points: *mut c_void, decoded_info: *mut *mut c_char, straight_qrcode: *mut c_void) -> cv_return_value_bool;
 pub fn cv_detectQRCode__InputArray_VectorOfPoint_double_double(_in: *mut c_void, points: *mut c_void, eps_x: f64, eps_y: f64) -> cv_return_value_bool;
 pub fn cv_groupRectangles_VectorOfRect_VectorOfint_VectorOfdouble_int_double(rect_list: *mut c_void, reject_levels: *mut c_void, level_weights: *mut c_void, group_threshold: i32, eps: f64) -> cv_return_value_void;
 pub fn cv_groupRectangles_VectorOfRect_VectorOfint_int_double(rect_list: *mut c_void, weights: *mut c_void, group_threshold: i32, eps: f64) -> cv_return_value_void;
@@ -2435,9 +2435,9 @@ pub fn cv_HOGDescriptor_groupRectangles_const_VectorOfRect_VectorOfdouble_int_do
 pub fn cv_QRCodeDetector_QRCodeDetector() -> cv_return_value_void_X;
 pub fn cv_QRCodeDetector_setEpsX_double(instance: *mut c_void, eps_x: f64) -> cv_return_value_void;
 pub fn cv_QRCodeDetector_setEpsY_double(instance: *mut c_void, eps_y: f64) -> cv_return_value_void;
-pub fn cv_QRCodeDetector_detect_const__InputArray_VectorOfPoint(instance: *const c_void, img: *mut c_void, points: *mut c_void) -> cv_return_value_bool;
-pub fn cv_QRCodeDetector_decode__InputArray_VectorOfPoint__OutputArray(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> cv_return_value_char_X;
-pub fn cv_QRCodeDetector_detectAndDecode__InputArray_VectorOfPoint__OutputArray(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> cv_return_value_char_X;
+pub fn cv_QRCodeDetector_detect_const__InputArray__OutputArray(instance: *const c_void, img: *mut c_void, points: *mut c_void) -> cv_return_value_bool;
+pub fn cv_QRCodeDetector_decode__InputArray__InputArray__OutputArray(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> cv_return_value_char_X;
+pub fn cv_QRCodeDetector_detectAndDecode__InputArray__OutputArray__OutputArray(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> cv_return_value_char_X;
 #[doc(hidden)] pub fn cv_SimilarRects_delete(ptr : *mut c_void);
 pub fn cv_SimilarRects_SimilarRects_double(_eps: f64) -> cv_return_value_void_X;
 }
