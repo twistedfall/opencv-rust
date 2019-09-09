@@ -291,6 +291,52 @@ pub const Device_VENDOR_NVIDIA: i32 = 3;
 pub const FLAGS_EXPAND_SAME_NAMES: i32 = 0x02;
 pub const FLAGS_MAPPING: i32 = 0x01;
 pub const FLAGS_NONE: i32 = 0;
+/// empty structure (sequence or mapping)
+pub const FileNode_EMPTY: i32 = 16;
+/// synonym or REAL
+pub const FileNode_FLOAT: i32 = 2;
+/// compact representation of a sequence or mapping. Used only by YAML writer
+pub const FileNode_FLOW: i32 = 8;
+/// an integer
+pub const FileNode_INT: i32 = 1;
+/// mapping
+pub const FileNode_MAP: i32 = 5;
+/// the node has a name (i.e. it is element of a mapping).
+pub const FileNode_NAMED: i32 = 32;
+/// floating-point number
+pub const FileNode_REAL: i32 = 2;
+/// sequence
+pub const FileNode_SEQ: i32 = 4;
+/// text string in UTF-8 encoding
+pub const FileNode_STR: i32 = 3;
+/// synonym for STR
+pub const FileNode_STRING: i32 = 3;
+/// if set, means that all the collection elements are numbers of the same type (real's or int's).
+pub const FileNode_UNIFORM: i32 = 8;
+/// value, open the file for appending
+pub const FileStorage_APPEND: i32 = 2;
+/// flag, write rawdata in Base64 by default. (consider using WRITE_BASE64)
+pub const FileStorage_BASE64: i32 = 64;
+/// flag, auto format
+pub const FileStorage_FORMAT_AUTO: i32 = 0;
+/// flag, JSON format
+pub const FileStorage_FORMAT_JSON: i32 = (3<<3);
+/// mask for format flags
+pub const FileStorage_FORMAT_MASK: i32 = (7<<3);
+/// flag, XML format
+pub const FileStorage_FORMAT_XML: i32 = (1<<3);
+/// flag, YAML format
+pub const FileStorage_FORMAT_YAML: i32 = (2<<3);
+pub const FileStorage_INSIDE_MAP: i32 = 4;
+/// flag, read data from source or write data to the internal buffer (which is
+pub const FileStorage_MEMORY: i32 = 4;
+pub const FileStorage_NAME_EXPECTED: i32 = 2;
+/// value, open the file for reading
+pub const FileStorage_READ: i32 = 0;
+pub const FileStorage_UNDEFINED: i32 = 0;
+pub const FileStorage_VALUE_EXPECTED: i32 = 1;
+/// value, open the file for writing
+pub const FileStorage_WRITE: i32 = 1;
 pub const Formatter_FMT_C: i32 = 5;
 pub const Formatter_FMT_CSV: i32 = 2;
 pub const Formatter_FMT_DEFAULT: i32 = 0;
@@ -375,12 +421,8 @@ pub const PCA_DATA_AS_ROW: i32 = 0;
 pub const PCA_USE_AVG: i32 = 2;
 pub const Param_ALGORITHM: i32 = 6;
 pub const Param_BOOLEAN: i32 = 1;
-pub const Param_FLOAT: i32 = 7;
-pub const Param_INT: i32 = 0;
 pub const Param_MAT_VECTOR: i32 = 5;
-pub const Param_REAL: i32 = 2;
 pub const Param_SCALAR: i32 = 12;
-pub const Param_STRING: i32 = 3;
 pub const Param_UCHAR: i32 = 11;
 pub const Param_UINT64: i32 = 9;
 pub const Param_UNSIGNED_INT: i32 = 8;
@@ -393,7 +435,6 @@ pub const REDUCE_MIN: i32 = 3;
 /// the output is the sum of all rows/columns of the matrix.
 pub const REDUCE_SUM: i32 = 0;
 pub const RNG_NORMAL: i32 = 1;
-pub const RNG_UNIFORM: i32 = 0;
 /// Rotate 180 degrees clockwise
 pub const ROTATE_180: i32 = 1;
 /// Rotate 90 degrees clockwise
@@ -549,6 +590,7 @@ pub enum IMPL {
     IMPL_OPENCL = IMPL_OPENCL as isize,
 }
 
+/// Supported logging levels and their semantic
 #[repr(C)]
 #[derive(Debug)]
 pub enum LogLevel {
@@ -571,6 +613,14 @@ pub enum LogLevel {
 
 #[repr(C)]
 #[derive(Debug)]
+pub enum OclVectorStrategy {
+    OCL_VECTOR_OWN = OCL_VECTOR_OWN as isize,
+    OCL_VECTOR_MAX = OCL_VECTOR_MAX as isize,
+    // OCL_VECTOR_DEFAULT = OCL_VECTOR_DEFAULT as isize, // ignored discriminant
+}
+
+#[repr(C)]
+#[derive(Debug)]
 pub enum TYPE {
     TYPE_GENERAL = TYPE_GENERAL as isize,
     TYPE_MARKER = TYPE_MARKER as isize,
@@ -578,6 +628,7 @@ pub enum TYPE {
     TYPE_FUN = TYPE_FUN as isize,
 }
 
+/// Usage flags for allocator
 #[repr(C)]
 #[derive(Debug)]
 pub enum UMatUsageFlags {
@@ -586,6 +637,48 @@ pub enum UMatUsageFlags {
     USAGE_ALLOCATE_DEVICE_MEMORY = USAGE_ALLOCATE_DEVICE_MEMORY as isize,
     USAGE_ALLOCATE_SHARED_MEMORY = USAGE_ALLOCATE_SHARED_MEMORY as isize,
     __UMAT_USAGE_FLAGS_32BIT = __UMAT_USAGE_FLAGS_32BIT as isize,
+}
+
+#[repr(C)]
+#[derive(Debug)]
+pub enum _InputArray_KindFlag {
+    KIND_SHIFT = _InputArray_KIND_SHIFT as isize,
+    FIXED_TYPE = _InputArray_FIXED_TYPE as isize,
+    FIXED_SIZE = _InputArray_FIXED_SIZE as isize,
+    KIND_MASK = _InputArray_KIND_MASK as isize,
+    NONE = _InputArray_NONE as isize,
+    MAT = _InputArray_MAT as isize,
+    MATX = _InputArray_MATX as isize,
+    STD_VECTOR = _InputArray_STD_VECTOR as isize,
+    STD_VECTOR_VECTOR = _InputArray_STD_VECTOR_VECTOR as isize,
+    STD_VECTOR_MAT = _InputArray_STD_VECTOR_MAT as isize,
+    EXPR = _InputArray_EXPR as isize,
+    OPENGL_BUFFER = _InputArray_OPENGL_BUFFER as isize,
+    CUDA_HOST_MEM = _InputArray_CUDA_HOST_MEM as isize,
+    CUDA_GPU_MAT = _InputArray_CUDA_GPU_MAT as isize,
+    UMAT = _InputArray_UMAT as isize,
+    STD_VECTOR_UMAT = _InputArray_STD_VECTOR_UMAT as isize,
+    STD_BOOL_VECTOR = _InputArray_STD_BOOL_VECTOR as isize,
+    STD_VECTOR_CUDA_GPU_MAT = _InputArray_STD_VECTOR_CUDA_GPU_MAT as isize,
+    STD_ARRAY = _InputArray_STD_ARRAY as isize,
+    STD_ARRAY_MAT = _InputArray_STD_ARRAY_MAT as isize,
+}
+
+#[repr(C)]
+#[derive(Debug)]
+pub enum _OutputArray_DepthMask {
+    DEPTH_MASK_8U = _OutputArray_DEPTH_MASK_8U as isize,
+    DEPTH_MASK_8S = _OutputArray_DEPTH_MASK_8S as isize,
+    DEPTH_MASK_16U = _OutputArray_DEPTH_MASK_16U as isize,
+    DEPTH_MASK_16S = _OutputArray_DEPTH_MASK_16S as isize,
+    DEPTH_MASK_32S = _OutputArray_DEPTH_MASK_32S as isize,
+    DEPTH_MASK_32F = _OutputArray_DEPTH_MASK_32F as isize,
+    DEPTH_MASK_64F = _OutputArray_DEPTH_MASK_64F as isize,
+    DEPTH_MASK_16F = _OutputArray_DEPTH_MASK_16F as isize,
+    DEPTH_MASK_ALL = _OutputArray_DEPTH_MASK_ALL as isize,
+    DEPTH_MASK_ALL_BUT_8S = _OutputArray_DEPTH_MASK_ALL_BUT_8S as isize,
+    DEPTH_MASK_ALL_16F = _OutputArray_DEPTH_MASK_ALL_16F as isize,
+    DEPTH_MASK_FLT = _OutputArray_DEPTH_MASK_FLT as isize,
 }
 
 pub type Vec8i = core::Vec8<i32>;
@@ -3503,6 +3596,30 @@ pub fn build_options_add_matrix_description(build_options: &mut String, name: &s
     return out;
 }
 
+///
+/// ## C++ default parameters
+/// * src2: noArray()
+/// * src3: noArray()
+/// * src4: noArray()
+/// * src5: noArray()
+/// * src6: noArray()
+/// * src7: noArray()
+/// * src8: noArray()
+/// * src9: noArray()
+/// * strat: OCL_VECTOR_DEFAULT
+pub fn check_optimal_vector_width(vector_widths: &i32, src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    input_array_arg!(src3);
+    input_array_arg!(src4);
+    input_array_arg!(src5);
+    input_array_arg!(src6);
+    input_array_arg!(src7);
+    input_array_arg!(src8);
+    input_array_arg!(src9);
+    unsafe { sys::cv_ocl_checkOptimalVectorWidth_const_int_X__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray_OclVectorStrategy(vector_widths, src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat) }.into_result()
+}
+
 /// Convert OpenCL buffer to UMat
 ///
 /// Note:
@@ -3600,6 +3717,30 @@ pub fn predict_optimal_vector_width_max(src1: &dyn core::ToInputArray, src2: &dy
     input_array_arg!(src8);
     input_array_arg!(src9);
     unsafe { sys::cv_ocl_predictOptimalVectorWidthMax__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray()) }.into_result()
+}
+
+///
+/// ## C++ default parameters
+/// * src2: noArray()
+/// * src3: noArray()
+/// * src4: noArray()
+/// * src5: noArray()
+/// * src6: noArray()
+/// * src7: noArray()
+/// * src8: noArray()
+/// * src9: noArray()
+/// * strat: OCL_VECTOR_DEFAULT
+pub fn predict_optimal_vector_width(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, src3: &dyn core::ToInputArray, src4: &dyn core::ToInputArray, src5: &dyn core::ToInputArray, src6: &dyn core::ToInputArray, src7: &dyn core::ToInputArray, src8: &dyn core::ToInputArray, src9: &dyn core::ToInputArray, strat: core::OclVectorStrategy) -> Result<i32> {
+    input_array_arg!(src1);
+    input_array_arg!(src2);
+    input_array_arg!(src3);
+    input_array_arg!(src4);
+    input_array_arg!(src5);
+    input_array_arg!(src6);
+    input_array_arg!(src7);
+    input_array_arg!(src8);
+    input_array_arg!(src9);
+    unsafe { sys::cv_ocl_predictOptimalVectorWidth__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray__InputArray_OclVectorStrategy(src1.as_raw__InputArray(), src2.as_raw__InputArray(), src3.as_raw__InputArray(), src4.as_raw__InputArray(), src5.as_raw__InputArray(), src6.as_raw__InputArray(), src7.as_raw__InputArray(), src8.as_raw__InputArray(), src9.as_raw__InputArray(), strat) }.into_result()
 }
 
 pub fn set_use_opencl(flag: bool) -> Result<()> {
@@ -3793,6 +3934,86 @@ pub fn randu(dst: &mut dyn core::ToInputOutputArray, low: &dyn core::ToInputArra
     input_array_arg!(low);
     input_array_arg!(high);
     unsafe { sys::cv_randu__InputOutputArray__InputArray__InputArray(dst.as_raw__InputOutputArray(), low.as_raw__InputArray(), high.as_raw__InputArray()) }.into_result()
+}
+
+pub fn read_dmatch(node: &core::FileNode, value: &mut core::DMatch, default_value: core::DMatch) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_DMatch_DMatch(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+pub fn read_keypoint(node: &core::FileNode, value: &mut core::KeyPoint, default_value: core::KeyPoint) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_KeyPoint_KeyPoint(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+///
+/// ## C++ default parameters
+/// * default_mat: Mat()
+pub fn read_mat(node: &core::FileNode, mat: &mut core::Mat, default_mat: &core::Mat) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_Mat_Mat(node.as_raw_FileNode(), mat.as_raw_Mat(), default_mat.as_raw_Mat()) }.into_result()
+}
+
+pub fn read_range(node: &core::FileNode, value: &mut core::Range, default_value: &core::Range) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_Range_Range(node.as_raw_FileNode(), value.as_raw_Range(), default_value.as_raw_Range()) }.into_result()
+}
+
+///
+/// ## C++ default parameters
+/// * default_mat: SparseMat()
+pub fn read_sparsemat(node: &core::FileNode, mat: &mut core::SparseMat, default_mat: &core::SparseMat) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_SparseMat_SparseMat(node.as_raw_FileNode(), mat.as_raw_SparseMat(), default_mat.as_raw_SparseMat()) }.into_result()
+}
+
+pub fn read_dmatch_vec_legacy(node: &core::FileNode, matches: &mut types::VectorOfDMatch) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_VectorOfDMatch(node.as_raw_FileNode(), matches.as_raw_VectorOfDMatch()) }.into_result()
+}
+
+pub fn read_dmatch_vec(node: &core::FileNode, vec: &mut types::VectorOfDMatch, default_value: &types::VectorOfDMatch) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_VectorOfDMatch_VectorOfDMatch(node.as_raw_FileNode(), vec.as_raw_VectorOfDMatch(), default_value.as_raw_VectorOfDMatch()) }.into_result()
+}
+
+pub fn read_keypoint_vec_legacy(node: &core::FileNode, keypoints: &mut types::VectorOfKeyPoint) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_VectorOfKeyPoint(node.as_raw_FileNode(), keypoints.as_raw_VectorOfKeyPoint()) }.into_result()
+}
+
+pub fn read_keypoint_vec(node: &core::FileNode, vec: &mut types::VectorOfKeyPoint, default_value: &types::VectorOfKeyPoint) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_VectorOfKeyPoint_VectorOfKeyPoint(node.as_raw_FileNode(), vec.as_raw_VectorOfKeyPoint(), default_value.as_raw_VectorOfKeyPoint()) }.into_result()
+}
+
+/// @relates cv::FileNode
+pub fn read_bool(node: &core::FileNode, value: &mut bool, default_value: bool) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_bool_bool(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+pub fn read_f64(node: &core::FileNode, value: &mut f64, default_value: f64) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_double_double(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+pub fn read_f32(node: &core::FileNode, value: &mut f32, default_value: f32) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_float_float(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+/// @relates cv::FileNode
+pub fn read_i32(node: &core::FileNode, value: &mut i32, default_value: i32) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_int_int(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+pub fn read_i16(node: &core::FileNode, value: &mut i16, default_value: i16) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_short_short(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+pub fn read_str(node: &core::FileNode, value: &mut String, default_value: &str) -> Result<()> {
+    string_arg_output_send!(via value_via);
+    string_arg!(default_value);
+    let out = unsafe { sys::cv_read_FileNode_std_string_std_string(node.as_raw_FileNode(), &mut value_via, default_value.as_ptr()) }.into_result();
+    string_arg_output_receive!(value_via => value);
+    return out;
+}
+
+pub fn read_u8(node: &core::FileNode, value: &mut u8, default_value: u8) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_uchar_uchar(node.as_raw_FileNode(), value, default_value) }.into_result()
+}
+
+pub fn read_u16(node: &core::FileNode, value: &mut u16, default_value: u16) -> Result<()> {
+    unsafe { sys::cv_read_FileNode_ushort_ushort(node.as_raw_FileNode(), value, default_value) }.into_result()
 }
 
 /// Reduces a matrix to a vector.
@@ -4655,6 +4876,100 @@ pub fn vconcat(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) 
     unsafe { sys::cv_vconcat__InputArray__OutputArray(src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 }
 
+pub fn write_scalar_str(fs: &mut core::FileStorage, value: &str) -> Result<()> {
+    string_arg!(value);
+    unsafe { sys::cv_writeScalar_FileStorage_String(fs.as_raw_FileStorage(), value.as_ptr()) }.into_result()
+}
+
+pub fn write_scalar_f64(fs: &mut core::FileStorage, value: f64) -> Result<()> {
+    unsafe { sys::cv_writeScalar_FileStorage_double(fs.as_raw_FileStorage(), value) }.into_result()
+}
+
+pub fn write_scalar_f32(fs: &mut core::FileStorage, value: f32) -> Result<()> {
+    unsafe { sys::cv_writeScalar_FileStorage_float(fs.as_raw_FileStorage(), value) }.into_result()
+}
+
+pub fn write_scalar_i32(fs: &mut core::FileStorage, value: i32) -> Result<()> {
+    unsafe { sys::cv_writeScalar_FileStorage_int(fs.as_raw_FileStorage(), value) }.into_result()
+}
+
+pub fn write_dmatch(fs: &mut core::FileStorage, m: core::DMatch) -> Result<()> {
+    unsafe { sys::cv_write_FileStorage_DMatch(fs.as_raw_FileStorage(), m) }.into_result()
+}
+
+pub fn write_keypoint(fs: &mut core::FileStorage, kpt: core::KeyPoint) -> Result<()> {
+    unsafe { sys::cv_write_FileStorage_KeyPoint(fs.as_raw_FileStorage(), kpt) }.into_result()
+}
+
+pub fn write_range(fs: &mut core::FileStorage, r: &core::Range) -> Result<()> {
+    unsafe { sys::cv_write_FileStorage_Range(fs.as_raw_FileStorage(), r.as_raw_Range()) }.into_result()
+}
+
+pub fn write_dmatch_1(fs: &mut core::FileStorage, name: &str, m: core::DMatch) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_DMatch(fs.as_raw_FileStorage(), name.as_ptr(), m) }.into_result()
+}
+
+pub fn write_keypoint_1(fs: &mut core::FileStorage, name: &str, kpt: core::KeyPoint) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_KeyPoint(fs.as_raw_FileStorage(), name.as_ptr(), kpt) }.into_result()
+}
+
+pub fn write_mat(fs: &mut core::FileStorage, name: &str, value: &core::Mat) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_Mat(fs.as_raw_FileStorage(), name.as_ptr(), value.as_raw_Mat()) }.into_result()
+}
+
+pub fn write_range_1(fs: &mut core::FileStorage, name: &str, r: &core::Range) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_Range(fs.as_raw_FileStorage(), name.as_ptr(), r.as_raw_Range()) }.into_result()
+}
+
+pub fn write_sparsemat(fs: &mut core::FileStorage, name: &str, value: &core::SparseMat) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_SparseMat(fs.as_raw_FileStorage(), name.as_ptr(), value.as_raw_SparseMat()) }.into_result()
+}
+
+pub fn write_str(fs: &mut core::FileStorage, name: &str, value: &str) -> Result<()> {
+    string_arg!(name);
+    string_arg!(value);
+    unsafe { sys::cv_write_FileStorage_String_String(fs.as_raw_FileStorage(), name.as_ptr(), value.as_ptr()) }.into_result()
+}
+
+pub fn write_dmatch_vec(fs: &mut core::FileStorage, name: &str, value: &types::VectorOfDMatch) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_VectorOfDMatch(fs.as_raw_FileStorage(), name.as_ptr(), value.as_raw_VectorOfDMatch()) }.into_result()
+}
+
+pub fn write_keypoint_vec(fs: &mut core::FileStorage, name: &str, value: &types::VectorOfKeyPoint) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_VectorOfKeyPoint(fs.as_raw_FileStorage(), name.as_ptr(), value.as_raw_VectorOfKeyPoint()) }.into_result()
+}
+
+pub fn write_f64(fs: &mut core::FileStorage, name: &str, value: f64) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_double(fs.as_raw_FileStorage(), name.as_ptr(), value) }.into_result()
+}
+
+pub fn write_f32(fs: &mut core::FileStorage, name: &str, value: f32) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_float(fs.as_raw_FileStorage(), name.as_ptr(), value) }.into_result()
+}
+
+/// @relates cv::FileStorage
+pub fn write_i32(fs: &mut core::FileStorage, name: &str, value: i32) -> Result<()> {
+    string_arg!(name);
+    unsafe { sys::cv_write_FileStorage_String_int(fs.as_raw_FileStorage(), name.as_ptr(), value) }.into_result()
+}
+
+pub fn write_dmatch_vec_1(fs: &mut core::FileStorage, vec: &types::VectorOfDMatch) -> Result<()> {
+    unsafe { sys::cv_write_FileStorage_VectorOfDMatch(fs.as_raw_FileStorage(), vec.as_raw_VectorOfDMatch()) }.into_result()
+}
+
+pub fn write_keypoint_vec_1(fs: &mut core::FileStorage, vec: &types::VectorOfKeyPoint) -> Result<()> {
+    unsafe { sys::cv_write_FileStorage_VectorOfKeyPoint(fs.as_raw_FileStorage(), vec.as_raw_VectorOfKeyPoint()) }.into_result()
+}
+
 // Generating impl for trait cv::Algorithm (trait)
 /// This is a base class for all more or less complex algorithms in OpenCV
 ///
@@ -4671,6 +4986,25 @@ pub trait Algorithm {
     /// Clears the algorithm state
     fn clear(&mut self) -> Result<()> {
         unsafe { sys::cv_Algorithm_clear(self.as_raw_Algorithm()) }.into_result()
+    }
+    
+    /// Stores algorithm parameters in a file storage
+    fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_Algorithm_write_const_FileStorage(self.as_raw_Algorithm(), fs.as_raw_FileStorage()) }.into_result()
+    }
+    
+    /// simplified API for language bindings
+    ///
+    /// ## C++ default parameters
+    /// * name: String()
+    fn write_1(&self, fs: &types::PtrOfFileStorage, name: &str) -> Result<()> {
+        string_arg!(name);
+        unsafe { sys::cv_Algorithm_write_const_PtrOfFileStorage_String(self.as_raw_Algorithm(), fs.as_raw_PtrOfFileStorage(), name.as_ptr()) }.into_result()
+    }
+    
+    /// Reads algorithm parameters from a file storage
+    fn read(&mut self, _fn: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_Algorithm_read_FileNode(self.as_raw_Algorithm(), _fn.as_raw_FileNode()) }.into_result()
     }
     
     /// Returns true if the Algorithm is empty (e.g. in the very beginning or after unsuccessful read
@@ -5167,6 +5501,463 @@ impl dyn DownhillSolver + '_ {
     
 }
 
+// boxed class cv::FileNode
+/// File Storage Node class.
+///
+/// The node is used to store each and every element of the file storage opened for reading. When
+/// XML/YAML file is read, it is first parsed and stored in the memory as a hierarchical collection of
+/// nodes. Each node can be a "leaf" that is contain a single number or a string, or be a collection of
+/// other nodes. There can be named collections (mappings) where each element has a name and it is
+/// accessed by a name, and ordered collections (sequences) where elements do not have names but rather
+/// accessed by index. Type of the file node can be determined using FileNode::type method.
+///
+/// Note that file nodes are only used for navigating file storages opened for reading. When a file
+/// storage is opened for writing, no data is stored in memory after it is written.
+pub struct FileNode {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::FileNode {
+    fn drop(&mut self) {
+        unsafe { sys::cv_FileNode_delete(self.ptr) };
+    }
+}
+impl core::FileNode {
+    #[inline(always)] pub fn as_raw_FileNode(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for FileNode {}
+
+impl FileNode {
+
+    /// The constructors.
+    ///
+    /// These constructors are used to create a default file node, construct it from obsolete structures or
+    /// from the another file node.
+    pub fn default() -> Result<core::FileNode> {
+        unsafe { sys::cv_FileNode_FileNode() }.into_result().map(|ptr| core::FileNode { ptr })
+    }
+    
+    /// ## Parameters
+    /// * fs: Pointer to the file storage structure.
+    /// * blockIdx: Index of the memory block where the file node is stored
+    /// * ofs: Offset in bytes from the beginning of the serialized storage
+    pub fn new(fs: &core::FileStorage, block_idx: size_t, ofs: size_t) -> Result<core::FileNode> {
+        unsafe { sys::cv_FileNode_FileNode_const_FileStorage_size_t_size_t(fs.as_raw_FileStorage(), block_idx, ofs) }.into_result().map(|ptr| core::FileNode { ptr })
+    }
+    
+    /// ## Parameters
+    /// * node: File node to be used as initialization for the created file node.
+    pub fn copy(node: &core::FileNode) -> Result<core::FileNode> {
+        unsafe { sys::cv_FileNode_FileNode_FileNode(node.as_raw_FileNode()) }.into_result().map(|ptr| core::FileNode { ptr })
+    }
+    
+    /// Returns keys of a mapping node.
+    /// ## Returns
+    /// Keys of a mapping node.
+    pub fn keys(&self) -> Result<types::VectorOfString> {
+        unsafe { sys::cv_FileNode_keys_const(self.as_raw_FileNode()) }.into_result().map(|ptr| types::VectorOfString { ptr })
+    }
+    
+    /// Returns type of the node.
+    /// ## Returns
+    /// Type of the node. See FileNode::Type
+    pub fn _type(&self) -> Result<i32> {
+        unsafe { sys::cv_FileNode_type_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node is empty
+    pub fn empty(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_empty_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node is a "none" object
+    pub fn is_none(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isNone_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node is a sequence
+    pub fn is_seq(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isSeq_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node is a mapping
+    pub fn is_map(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isMap_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node is an integer
+    pub fn is_int(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isInt_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node is a floating-point number
+    pub fn is_real(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isReal_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node is a text string
+    pub fn is_string(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isString_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns true if the node has a name
+    pub fn is_named(&self) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isNamed_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns the node name or an empty string if the node is nameless
+    pub fn name(&self) -> Result<String> {
+        unsafe { sys::cv_FileNode_name_const(self.as_raw_FileNode()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// returns the number of elements in the node, if it is a sequence or mapping, or 1 otherwise.
+    pub fn size(&self) -> Result<size_t> {
+        unsafe { sys::cv_FileNode_size_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns raw size of the FileNode in bytes
+    pub fn raw_size(&self) -> Result<size_t> {
+        unsafe { sys::cv_FileNode_rawSize_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns the node content as an integer. If the node stores floating-point number, it is rounded.
+    pub fn to_int(&self) -> Result<i32> {
+        unsafe { sys::cv_FileNode_operator_int_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns the node content as float
+    pub fn to_float(&self) -> Result<f32> {
+        unsafe { sys::cv_FileNode_operator_float_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// returns the node content as double
+    pub fn to_double(&self) -> Result<f64> {
+        unsafe { sys::cv_FileNode_operator_double_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    pub fn is_map_1(flags: i32) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isMap_int(flags) }.into_result()
+    }
+    
+    pub fn is_seq_1(flags: i32) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isSeq_int(flags) }.into_result()
+    }
+    
+    pub fn is_collection(flags: i32) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isCollection_int(flags) }.into_result()
+    }
+    
+    pub fn is_empty_collection(flags: i32) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isEmptyCollection_int(flags) }.into_result()
+    }
+    
+    pub fn is_flow(flags: i32) -> Result<bool> {
+        unsafe { sys::cv_FileNode_isFlow_int(flags) }.into_result()
+    }
+    
+    pub fn ptr(&mut self) -> Result<&mut u8> {
+        unsafe { sys::cv_FileNode_ptr(self.as_raw_FileNode()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn ptr_1(&self) -> Result<&u8> {
+        unsafe { sys::cv_FileNode_ptr_const(self.as_raw_FileNode()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// Reads node elements to the buffer with the specified format.
+    ///
+    /// Usually it is more convenient to use operator `>>` instead of this method.
+    /// ## Parameters
+    /// * fmt: Specification of each array element. See @ref format_spec "format specification"
+    /// * vec: Pointer to the destination array.
+    /// * len: Number of bytes to read (buffer size limit). If it is greater than number of
+    /// remaining elements then all of them will be read.
+    pub fn read_raw(&self, fmt: &str, vec: &mut c_void, len: size_t) -> Result<()> {
+        string_arg!(fmt);
+        unsafe { sys::cv_FileNode_readRaw_const_String_void_X_size_t(self.as_raw_FileNode(), fmt.as_ptr(), vec, len) }.into_result()
+    }
+    
+    /// Internal method used when reading FileStorage.
+    /// Sets the type (int, real or string) and value of the previously created node.
+    ///
+    /// ## C++ default parameters
+    /// * len: -1
+    pub fn set_value(&mut self, _type: i32, value: &c_void, len: i32) -> Result<()> {
+        unsafe { sys::cv_FileNode_setValue_int_const_void_X_int(self.as_raw_FileNode(), _type, value, len) }.into_result()
+    }
+    
+    /// Simplified reading API to use with bindings.
+    pub fn real(&self) -> Result<f64> {
+        unsafe { sys::cv_FileNode_real_const(self.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// Simplified reading API to use with bindings.
+    pub fn string(&self) -> Result<String> {
+        unsafe { sys::cv_FileNode_string_const(self.as_raw_FileNode()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Simplified reading API to use with bindings.
+    pub fn mat(&self) -> Result<core::Mat> {
+        unsafe { sys::cv_FileNode_mat_const(self.as_raw_FileNode()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+}
+
+// boxed class cv::FileNodeIterator
+/// used to iterate through sequences and mappings.
+///
+/// A standard STL notation, with node.begin(), node.end() denoting the beginning and the end of a
+/// sequence, stored in node. See the data reading sample in the beginning of the section.
+pub struct FileNodeIterator {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::FileNodeIterator {
+    fn drop(&mut self) {
+        unsafe { sys::cv_FileNodeIterator_delete(self.ptr) };
+    }
+}
+impl core::FileNodeIterator {
+    #[inline(always)] pub fn as_raw_FileNodeIterator(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for FileNodeIterator {}
+
+impl FileNodeIterator {
+
+    /// Reads node elements to the buffer with the specified format.
+    ///
+    /// Usually it is more convenient to use operator `>>` instead of this method.
+    /// ## Parameters
+    /// * fmt: Specification of each array element. See @ref format_spec "format specification"
+    /// * vec: Pointer to the destination array.
+    /// * len: Number of bytes to read (buffer size limit). If it is greater than number of
+    /// remaining elements then all of them will be read.
+    ///
+    /// ## C++ default parameters
+    /// * len: (size_t)INT_MAX
+    pub fn read_raw(&mut self, fmt: &str, vec: &mut c_void, len: size_t) -> Result<core::FileNodeIterator> {
+        string_arg!(fmt);
+        unsafe { sys::cv_FileNodeIterator_readRaw_String_void_X_size_t(self.as_raw_FileNodeIterator(), fmt.as_ptr(), vec, len) }.into_result().map(|ptr| core::FileNodeIterator { ptr })
+    }
+    
+    /// returns the number of remaining (not read yet) elements
+    pub fn remaining(&self) -> Result<size_t> {
+        unsafe { sys::cv_FileNodeIterator_remaining_const(self.as_raw_FileNodeIterator()) }.into_result()
+    }
+    
+    pub fn equal_to(&self, it: &core::FileNodeIterator) -> Result<bool> {
+        unsafe { sys::cv_FileNodeIterator_equalTo_const_FileNodeIterator(self.as_raw_FileNodeIterator(), it.as_raw_FileNodeIterator()) }.into_result()
+    }
+    
+}
+
+// boxed class cv::FileStorage
+/// XML/YAML/JSON file storage class that encapsulates all the information necessary for writing or
+/// reading data to/from a file.
+pub struct FileStorage {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::FileStorage {
+    fn drop(&mut self) {
+        unsafe { sys::cv_FileStorage_delete(self.ptr) };
+    }
+}
+impl core::FileStorage {
+    #[inline(always)] pub fn as_raw_FileStorage(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for FileStorage {}
+
+impl FileStorage {
+
+    /// The constructors.
+    ///
+    /// The full constructor opens the file. Alternatively you can use the default constructor and then
+    /// call FileStorage::open.
+    pub fn default() -> Result<core::FileStorage> {
+        unsafe { sys::cv_FileStorage_FileStorage() }.into_result().map(|ptr| core::FileStorage { ptr })
+    }
+    
+    /// @copydoc open()
+    ///
+    /// ## C++ default parameters
+    /// * encoding: String()
+    pub fn new(filename: &str, flags: i32, encoding: &str) -> Result<core::FileStorage> {
+        string_arg!(filename);
+        string_arg!(encoding);
+        unsafe { sys::cv_FileStorage_FileStorage_String_int_String(filename.as_ptr(), flags, encoding.as_ptr()) }.into_result().map(|ptr| core::FileStorage { ptr })
+    }
+    
+    /// Opens a file.
+    ///
+    /// See description of parameters in FileStorage::FileStorage. The method calls FileStorage::release
+    /// before opening the file.
+    /// ## Parameters
+    /// * filename: Name of the file to open or the text string to read the data from.
+    /// Extension of the file (.xml, .yml/.yaml or .json) determines its format (XML, YAML or JSON
+    /// respectively). Also you can append .gz to work with compressed files, for example myHugeMatrix.xml.gz. If both
+    /// FileStorage::WRITE and FileStorage::MEMORY flags are specified, source is used just to specify
+    /// the output file format (e.g. mydata.xml, .yml etc.). A file name can also contain parameters.
+    /// You can use this format, "*?base64" (e.g. "file.json?base64" (case sensitive)), as an alternative to
+    /// FileStorage::BASE64 flag.
+    /// * flags: Mode of operation. One of FileStorage::Mode
+    /// * encoding: Encoding of the file. Note that UTF-16 XML encoding is not supported currently and
+    /// you should use 8-bit encoding instead of it.
+    ///
+    /// ## C++ default parameters
+    /// * encoding: String()
+    pub fn open(&mut self, filename: &str, flags: i32, encoding: &str) -> Result<bool> {
+        string_arg!(filename);
+        string_arg!(encoding);
+        unsafe { sys::cv_FileStorage_open_String_int_String(self.as_raw_FileStorage(), filename.as_ptr(), flags, encoding.as_ptr()) }.into_result()
+    }
+    
+    /// Checks whether the file is opened.
+    ///
+    /// ## Returns
+    /// true if the object is associated with the current file and false otherwise. It is a
+    /// good practice to call this method after you tried to open a file.
+    pub fn is_opened(&self) -> Result<bool> {
+        unsafe { sys::cv_FileStorage_isOpened_const(self.as_raw_FileStorage()) }.into_result()
+    }
+    
+    /// Closes the file and releases all the memory buffers.
+    ///
+    /// Call this method after all I/O operations with the storage are finished.
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_FileStorage_release(self.as_raw_FileStorage()) }.into_result()
+    }
+    
+    /// Closes the file and releases all the memory buffers.
+    ///
+    /// Call this method after all I/O operations with the storage are finished. If the storage was
+    /// opened for writing data and FileStorage::WRITE was specified
+    pub fn release_and_get_string(&mut self) -> Result<String> {
+        unsafe { sys::cv_FileStorage_releaseAndGetString(self.as_raw_FileStorage()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Returns the first element of the top-level mapping.
+    /// ## Returns
+    /// The first element of the top-level mapping.
+    pub fn get_first_top_level_node(&self) -> Result<core::FileNode> {
+        unsafe { sys::cv_FileStorage_getFirstTopLevelNode_const(self.as_raw_FileStorage()) }.into_result().map(|ptr| core::FileNode { ptr })
+    }
+    
+    /// Returns the top-level mapping
+    /// ## Parameters
+    /// * streamidx: Zero-based index of the stream. In most cases there is only one stream in the file.
+    /// However, YAML supports multiple streams and so there can be several.
+    /// ## Returns
+    /// The top-level mapping.
+    ///
+    /// ## C++ default parameters
+    /// * streamidx: 0
+    pub fn root(&self, streamidx: i32) -> Result<core::FileNode> {
+        unsafe { sys::cv_FileStorage_root_const_int(self.as_raw_FileStorage(), streamidx) }.into_result().map(|ptr| core::FileNode { ptr })
+    }
+    
+    /// Simplified writing API to use with bindings.
+    /// ## Parameters
+    /// * name: Name of the written object
+    /// * val: Value of the written object
+    pub fn write_i32(&mut self, name: &str, val: i32) -> Result<()> {
+        string_arg!(name);
+        unsafe { sys::cv_FileStorage_write_String_int(self.as_raw_FileStorage(), name.as_ptr(), val) }.into_result()
+    }
+    
+    pub fn write_f64(&mut self, name: &str, val: f64) -> Result<()> {
+        string_arg!(name);
+        unsafe { sys::cv_FileStorage_write_String_double(self.as_raw_FileStorage(), name.as_ptr(), val) }.into_result()
+    }
+    
+    pub fn write_str(&mut self, name: &str, val: &str) -> Result<()> {
+        string_arg!(name);
+        string_arg!(val);
+        unsafe { sys::cv_FileStorage_write_String_String(self.as_raw_FileStorage(), name.as_ptr(), val.as_ptr()) }.into_result()
+    }
+    
+    pub fn write_mat(&mut self, name: &str, val: &core::Mat) -> Result<()> {
+        string_arg!(name);
+        unsafe { sys::cv_FileStorage_write_String_Mat(self.as_raw_FileStorage(), name.as_ptr(), val.as_raw_Mat()) }.into_result()
+    }
+    
+    pub fn write_str_vec(&mut self, name: &str, val: &types::VectorOfString) -> Result<()> {
+        string_arg!(name);
+        unsafe { sys::cv_FileStorage_write_String_VectorOfString(self.as_raw_FileStorage(), name.as_ptr(), val.as_raw_VectorOfString()) }.into_result()
+    }
+    
+    /// Writes multiple numbers.
+    ///
+    /// Writes one or more numbers of the specified format to the currently written structure. Usually it is
+    /// more convenient to use operator `<<` instead of this method.
+    /// ## Parameters
+    /// * fmt: Specification of each array element, see @ref format_spec "format specification"
+    /// * vec: Pointer to the written array.
+    /// * len: Number of the uchar elements to write.
+    pub fn write_raw(&mut self, fmt: &str, vec: &c_void, len: size_t) -> Result<()> {
+        string_arg!(fmt);
+        unsafe { sys::cv_FileStorage_writeRaw_String_const_void_X_size_t(self.as_raw_FileStorage(), fmt.as_ptr(), vec, len) }.into_result()
+    }
+    
+    /// Writes a comment.
+    ///
+    /// The function writes a comment into file storage. The comments are skipped when the storage is read.
+    /// ## Parameters
+    /// * comment: The written comment, single-line or multi-line
+    /// * append: If true, the function tries to put the comment at the end of current line.
+    /// Else if the comment is multi-line, or if it does not fit at the end of the current
+    /// line, the comment starts a new line.
+    ///
+    /// ## C++ default parameters
+    /// * append: false
+    pub fn write_comment(&mut self, comment: &str, append: bool) -> Result<()> {
+        string_arg!(comment);
+        unsafe { sys::cv_FileStorage_writeComment_String_bool(self.as_raw_FileStorage(), comment.as_ptr(), append) }.into_result()
+    }
+    
+    pub fn start_write_struct(&mut self, name: &str, flags: i32, type_name: &str) -> Result<()> {
+        string_arg!(name);
+        string_arg!(type_name);
+        unsafe { sys::cv_FileStorage_startWriteStruct_String_int_String(self.as_raw_FileStorage(), name.as_ptr(), flags, type_name.as_ptr()) }.into_result()
+    }
+    
+    pub fn end_write_struct(&mut self) -> Result<()> {
+        unsafe { sys::cv_FileStorage_endWriteStruct(self.as_raw_FileStorage()) }.into_result()
+    }
+    
+    /// Returns the normalized object name for the specified name of a file.
+    /// ## Parameters
+    /// * filename: Name of a file
+    /// ## Returns
+    /// The normalized object name.
+    pub fn get_default_object_name(filename: &str) -> Result<String> {
+        string_arg!(filename);
+        unsafe { sys::cv_FileStorage_getDefaultObjectName_String(filename.as_ptr()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    /// Returns the current format.
+    /// ## Returns
+    /// The current format, see FileStorage::Mode
+    pub fn get_format(&self) -> Result<i32> {
+        unsafe { sys::cv_FileStorage_getFormat_const(self.as_raw_FileStorage()) }.into_result()
+    }
+    
+}
+
 // Generating impl for trait cv::Formatted (trait)
 /// @todo document
 pub trait Formatted {
@@ -5397,6 +6188,16 @@ impl LDA {
     pub fn load(&mut self, filename: &str) -> Result<()> {
         string_arg!(filename);
         unsafe { sys::cv_LDA_load_String(self.as_raw_LDA(), filename.as_ptr()) }.into_result()
+    }
+    
+    /// Serializes this object to a given cv::FileStorage.
+    pub fn save_1(&self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_LDA_save_const_FileStorage(self.as_raw_LDA(), fs.as_raw_FileStorage()) }.into_result()
+    }
+    
+    /// Deserializes this object from a given cv::FileStorage.
+    pub fn load_1(&mut self, node: &core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_LDA_load_FileStorage(self.as_raw_LDA(), node.as_raw_FileStorage()) }.into_result()
     }
     
     /// Compute the discriminants for data in src (row aligned) and labels.
@@ -7882,6 +8683,20 @@ impl PCA {
         unsafe { sys::cv_PCA_backProject_const__InputArray__OutputArray(self.as_raw_PCA(), vec.as_raw__InputArray(), result.as_raw__OutputArray()) }.into_result()
     }
     
+    /// write PCA objects
+    ///
+    /// Writes @ref eigenvalues @ref eigenvectors and @ref mean to specified FileStorage
+    pub fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_PCA_write_const_FileStorage(self.as_raw_PCA(), fs.as_raw_FileStorage()) }.into_result()
+    }
+    
+    /// load PCA objects
+    ///
+    /// Loads @ref eigenvalues @ref eigenvectors and @ref mean from specified FileNode
+    pub fn read(&mut self, _fn: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_PCA_read_FileNode(self.as_raw_PCA(), _fn.as_raw_FileNode()) }.into_result()
+    }
+    
 }
 
 // Generating impl for trait cv::ParallelLoopBody (trait)
@@ -9305,6 +10120,10 @@ pub trait _InputArray {
         unsafe { sys::cv__InputArray_getSz_const(self.as_raw__InputArray()) }.into_result()
     }
     
+    fn kind(&self) -> Result<core::_InputArray_KindFlag> {
+        unsafe { sys::cv__InputArray_kind_const(self.as_raw__InputArray()) }.into_result()
+    }
+    
     ///
     /// ## C++ default parameters
     /// * i: -1
@@ -9559,6 +10378,33 @@ pub trait _OutputArray: core::_InputArray {
         unsafe { sys::cv__OutputArray_getUMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    /// * allow_transposed: false
+    /// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
+    fn create(&self, sz: core::Size, _type: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
+        unsafe { sys::cv__OutputArray_create_const_Size_int_int_bool__OutputArray_DepthMask(self.as_raw__OutputArray(), sz, _type, i, allow_transposed, fixed_depth_mask) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    /// * allow_transposed: false
+    /// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
+    fn create_1(&self, rows: i32, cols: i32, _type: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
+        unsafe { sys::cv__OutputArray_create_const_int_int_int_int_bool__OutputArray_DepthMask(self.as_raw__OutputArray(), rows, cols, _type, i, allow_transposed, fixed_depth_mask) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * i: -1
+    /// * allow_transposed: false
+    /// * fixed_depth_mask: static_cast<_OutputArray::DepthMask>(0)
+    fn create_2(&self, dims: i32, size: &i32, _type: i32, i: i32, allow_transposed: bool, fixed_depth_mask: core::_OutputArray_DepthMask) -> Result<()> {
+        unsafe { sys::cv__OutputArray_create_const_int_const_int_X_int_int_bool__OutputArray_DepthMask(self.as_raw__OutputArray(), dims, size, _type, i, allow_transposed, fixed_depth_mask) }.into_result()
+    }
+    
     fn create_same_size(&self, arr: &dyn core::ToInputArray, mtype: i32) -> Result<()> {
         input_array_arg!(arr);
         unsafe { sys::cv__OutputArray_createSameSize_const__InputArray_int(self.as_raw__OutputArray(), arr.as_raw__InputArray(), mtype) }.into_result()
@@ -9702,6 +10548,39 @@ impl NodeDataTls {
 
     pub fn default() -> Result<core::NodeDataTls> {
         unsafe { sys::cv_instr_NodeDataTls_NodeDataTls() }.into_result().map(|ptr| core::NodeDataTls { ptr })
+    }
+    
+}
+
+// boxed class cv::internal::WriteStructContext
+pub struct WriteStructContext {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for core::WriteStructContext {
+    fn drop(&mut self) {
+        unsafe { sys::cv_WriteStructContext_delete(self.ptr) };
+    }
+}
+impl core::WriteStructContext {
+    #[inline(always)] pub fn as_raw_WriteStructContext(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for WriteStructContext {}
+
+impl WriteStructContext {
+
+    ///
+    /// ## C++ default parameters
+    /// * type_name: String()
+    pub fn new(_fs: &mut core::FileStorage, name: &str, flags: i32, type_name: &str) -> Result<core::WriteStructContext> {
+        string_arg!(name);
+        string_arg!(type_name);
+        unsafe { sys::cv_internal_WriteStructContext_WriteStructContext_FileStorage_String_int_String(_fs.as_raw_FileStorage(), name.as_ptr(), flags, type_name.as_ptr()) }.into_result().map(|ptr| core::WriteStructContext { ptr })
     }
     
 }
@@ -10860,6 +11739,7 @@ pub const CV_SUBMAT_FLAG: i32 = 0x8000; // 32768
 pub static CV_VERSION: &'static str = "4.1.1";
 pub const Device_TYPE_DGPU: i32 = 0x10004; // 65540
 pub const Device_TYPE_IGPU: i32 = 0x20004; // 131076
+pub const FileStorage_WRITE_BASE64: i32 = 0x41; // 65
 pub const Mat_CONTINUOUS_FLAG: i32 = 0x4000; // 16384
 pub const Mat_SUBMATRIX_FLAG: i32 = 0x8000; // 32768
 pub const _InputArray_CUDA_GPU_MAT: i32 = 0x90000; // 589824
@@ -10881,6 +11761,7 @@ pub const _InputArray_STD_VECTOR_MAT: i32 = 0x50000; // 327680
 pub const _InputArray_STD_VECTOR_UMAT: i32 = 0xb0000; // 720896
 pub const _InputArray_STD_VECTOR_VECTOR: i32 = 0x40000; // 262144
 pub const _InputArray_UMAT: i32 = 0xa0000; // 655360
+pub const _OutputArray_DEPTH_MASK_16F: i32 = 0x80; // 128
 pub const _OutputArray_DEPTH_MASK_16S: i32 = 0x8; // 8
 pub const _OutputArray_DEPTH_MASK_16U: i32 = 0x4; // 4
 pub const _OutputArray_DEPTH_MASK_32F: i32 = 0x20; // 32
@@ -10889,6 +11770,7 @@ pub const _OutputArray_DEPTH_MASK_64F: i32 = 0x40; // 64
 pub const _OutputArray_DEPTH_MASK_8S: i32 = 0x2; // 2
 pub const _OutputArray_DEPTH_MASK_8U: i32 = 0x1; // 1
 pub const _OutputArray_DEPTH_MASK_ALL: i32 = 0x7f; // 127
+pub const _OutputArray_DEPTH_MASK_ALL_16F: i32 = 0xff; // 255
 pub const _OutputArray_DEPTH_MASK_ALL_BUT_8S: i32 = 0x7d; // 125
 pub const _OutputArray_DEPTH_MASK_FLT: i32 = 0x60; // 96
 pub use crate::manual::core::*;

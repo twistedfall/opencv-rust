@@ -647,6 +647,14 @@ impl Stitcher {
         unsafe { sys::cv_Stitcher_setWaveCorrection_bool(self.as_raw_Stitcher(), flag) }.into_result()
     }
     
+    pub fn interpolation_flags(&self) -> Result<crate::imgproc::InterpolationFlags> {
+        unsafe { sys::cv_Stitcher_interpolationFlags_const(self.as_raw_Stitcher()) }.into_result()
+    }
+    
+    pub fn set_interpolation_flags(&mut self, interp_flags: crate::imgproc::InterpolationFlags) -> Result<()> {
+        unsafe { sys::cv_Stitcher_setInterpolationFlags_InterpolationFlags(self.as_raw_Stitcher(), interp_flags) }.into_result()
+    }
+    
     pub fn features_finder(&mut self) -> Result<types::PtrOfFeature2D> {
         unsafe { sys::cv_Stitcher_featuresFinder(self.as_raw_Stitcher()) }.into_result().map(|ptr| types::PtrOfFeature2D { ptr })
     }

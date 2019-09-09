@@ -30,6 +30,8 @@ pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 pub const DNN_TARGET_VULKAN: i32 = 4;
 pub const OPENCV_DNN_API_VERSION: i32 = 20190621;
 
+/// Enum of computation backends supported by layers.
+/// @see Net::setPreferableBackend
 #[repr(C)]
 #[derive(Debug)]
 pub enum Backend {
@@ -41,6 +43,8 @@ pub enum Backend {
     DNN_BACKEND_VKCOM = DNN_BACKEND_VKCOM as isize,
 }
 
+/// Enum of target devices for computations.
+/// @see Net::setPreferableTarget
 #[repr(C)]
 #[derive(Debug)]
 pub enum Target {

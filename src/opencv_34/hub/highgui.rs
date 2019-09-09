@@ -206,6 +206,7 @@ pub const WND_PROP_OPENGL: i32 = 3;
 /// checks whether the window exists and is visible
 pub const WND_PROP_VISIBLE: i32 = 4;
 
+/// Flags for cv::namedWindow
 #[repr(C)]
 #[derive(Debug)]
 pub enum WindowFlags {
@@ -227,6 +228,7 @@ pub enum WindowFlags {
     WINDOW_GUI_NORMAL = WINDOW_GUI_NORMAL as isize,
 }
 
+/// Flags for cv::setWindowProperty / cv::getWindowProperty
 #[repr(C)]
 #[derive(Debug)]
 pub enum WindowPropertyFlags {

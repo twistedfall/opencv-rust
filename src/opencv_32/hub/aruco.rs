@@ -44,6 +44,10 @@ pub const DICT_7X7_250: i32 = 0+14;
 pub const DICT_7X7_50: i32 = 0+12;
 pub const DICT_ARUCO_ORIGINAL: i32 = 0+16;
 
+/// Predefined markers dictionaries/sets
+/// Each dictionary indicates the number of bits and the number of markers contained
+/// - DICT_ARUCO_ORIGINAL: standard ArUco Library Markers. 1024 markers, 5x5 bits, 0 minimum
+/// distance
 #[repr(C)]
 #[derive(Debug)]
 pub enum PREDEFINED_DICTIONARY_NAME {

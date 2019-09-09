@@ -71,6 +71,15 @@ pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
 /// Default histogramNormType
 pub const HOGDescriptor_L2Hys: i32 = 0;
 
+#[repr(C)]
+#[derive(Debug)]
+pub enum DetectionBasedTracker_ObjectStatus {
+    DETECTED_NOT_SHOWN_YET = DetectionBasedTracker_DETECTED_NOT_SHOWN_YET as isize,
+    DETECTED = DetectionBasedTracker_DETECTED as isize,
+    DETECTED_TEMPORARY_LOST = DetectionBasedTracker_DETECTED_TEMPORARY_LOST as isize,
+    WRONG_OBJECT = DetectionBasedTracker_WRONG_OBJECT as isize,
+}
+
 pub fn create_face_detection_mask_generator() -> Result<types::PtrOfMaskGenerator> {
     unsafe { sys::cv_createFaceDetectionMaskGenerator() }.into_result().map(|ptr| types::PtrOfMaskGenerator { ptr })
 }
@@ -326,6 +335,14 @@ impl CascadeClassifier {
         unsafe { sys::cv_CascadeClassifier_load_String(self.as_raw_CascadeClassifier(), filename.as_ptr()) }.into_result()
     }
     
+    /// Reads a classifier from a FileStorage node.
+    ///
+    ///
+    /// Note: The file may contain a new cascade classifier (trained traincascade application) only.
+    pub fn read(&mut self, node: &core::FileNode) -> Result<bool> {
+        unsafe { sys::cv_CascadeClassifier_read_FileNode(self.as_raw_CascadeClassifier(), node.as_raw_FileNode()) }.into_result()
+    }
+    
     /// Detects objects of different sizes in the input image. The detected objects are returned as a list
     /// of rectangles.
     ///
@@ -527,6 +544,10 @@ unsafe impl Send for DetectionBasedTracker_ExtObject {}
 
 impl DetectionBasedTracker_ExtObject {
 
+    pub fn new(_id: i32, _location: core::Rect, _status: crate::objdetect::DetectionBasedTracker_ObjectStatus) -> Result<crate::objdetect::DetectionBasedTracker_ExtObject> {
+        unsafe { sys::cv_DetectionBasedTracker_ExtObject_ExtObject_int_Rect_DetectionBasedTracker_ObjectStatus(_id, _location, _status) }.into_result().map(|ptr| crate::objdetect::DetectionBasedTracker_ExtObject { ptr })
+    }
+    
 }
 
 // Generating impl for trait cv::DetectionBasedTracker::IDetector (trait)
@@ -793,6 +814,22 @@ impl HOGDescriptor {
     pub fn set_svm_detector(&mut self, _svmdetector: &dyn core::ToInputArray) -> Result<()> {
         input_array_arg!(_svmdetector);
         unsafe { sys::cv_HOGDescriptor_setSVMDetector__InputArray(self.as_raw_HOGDescriptor(), _svmdetector.as_raw__InputArray()) }.into_result()
+    }
+    
+    /// Reads HOGDescriptor parameters from a file node.
+    /// ## Parameters
+    /// * fn: File node
+    pub fn read(&mut self, _fn: &mut core::FileNode) -> Result<bool> {
+        unsafe { sys::cv_HOGDescriptor_read_FileNode(self.as_raw_HOGDescriptor(), _fn.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// Stores HOGDescriptor parameters in a file storage.
+    /// ## Parameters
+    /// * fs: File storage
+    /// * objname: Object name
+    pub fn write(&self, fs: &mut core::FileStorage, objname: &str) -> Result<()> {
+        string_arg!(objname);
+        unsafe { sys::cv_HOGDescriptor_write_const_FileStorage_String(self.as_raw_HOGDescriptor(), fs.as_raw_FileStorage(), objname.as_ptr()) }.into_result()
     }
     
     /// loads coefficients for the linear SVM classifier from a file

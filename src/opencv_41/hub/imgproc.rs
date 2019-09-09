@@ -640,6 +640,7 @@ pub const WARP_INVERSE_MAP: i32 = 16;
 pub const WARP_POLAR_LINEAR: i32 = 0;
 pub const WARP_POLAR_LOG: i32 = 256;
 
+/// interpolation algorithm
 #[repr(C)]
 #[derive(Debug)]
 pub enum InterpolationFlags {

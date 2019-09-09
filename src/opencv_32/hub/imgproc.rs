@@ -600,6 +600,7 @@ pub const TM_SQDIFF_NORMED: i32 = 1;
 pub const WARP_FILL_OUTLIERS: i32 = 8;
 pub const WARP_INVERSE_MAP: i32 = 16;
 
+/// interpolation algorithm
 #[repr(C)]
 #[derive(Debug)]
 pub enum InterpolationFlags {
@@ -613,6 +614,7 @@ pub enum InterpolationFlags {
     WARP_INVERSE_MAP = WARP_INVERSE_MAP as isize,
 }
 
+/// cv::undistort mode
 #[repr(C)]
 #[derive(Debug)]
 pub enum UndistortTypes {

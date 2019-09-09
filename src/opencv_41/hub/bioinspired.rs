@@ -76,8 +76,18 @@ pub trait Retina: core::Algorithm {
     }
     
     /// ## Parameters
+    /// * fs: the open Filestorage which contains retina parameters
+    /// * applyDefaultSetupOnFailure: set to true if an error must be thrown on error
+    ///
+    /// ## C++ default parameters
+    /// * apply_default_setup_on_failure: true
+    fn setup(&mut self, fs: &mut core::FileStorage, apply_default_setup_on_failure: bool) -> Result<()> {
+        unsafe { sys::cv_bioinspired_Retina_setup_FileStorage_bool(self.as_raw_Retina(), fs.as_raw_FileStorage(), apply_default_setup_on_failure) }.into_result()
+    }
+    
+    /// ## Parameters
     /// * newParameters: a parameters structures updated with the new target configuration.
-    fn setup(&mut self, new_parameters: &crate::bioinspired::RetinaParameters) -> Result<()> {
+    fn setup_1(&mut self, new_parameters: &crate::bioinspired::RetinaParameters) -> Result<()> {
         unsafe { sys::cv_bioinspired_Retina_setup_RetinaParameters(self.as_raw_Retina(), new_parameters.as_raw_RetinaParameters()) }.into_result()
     }
     
@@ -101,6 +111,10 @@ pub trait Retina: core::Algorithm {
     fn write(&self, fs: &str) -> Result<()> {
         string_arg!(mut fs);
         unsafe { sys::cv_bioinspired_Retina_write_const_String(self.as_raw_Retina(), fs.as_ptr() as _) }.into_result()
+    }
+    
+    fn write_1(&self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_bioinspired_Retina_write_const_FileStorage(self.as_raw_Retina(), fs.as_raw_FileStorage()) }.into_result()
     }
     
     /// Setup the OPL and IPL parvo channels (see biologocal model)
@@ -628,8 +642,22 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     /// - if the xml file does not exist, then default setup is applied
     /// - warning, Exceptions are thrown if read XML file is not valid
     /// ## Parameters
+    /// * fs: : the open Filestorage which contains segmentation parameters
+    /// * applyDefaultSetupOnFailure: : set to true if an error must be thrown on error
+    ///
+    /// ## C++ default parameters
+    /// * apply_default_setup_on_failure: true
+    fn setup(&mut self, fs: &mut core::FileStorage, apply_default_setup_on_failure: bool) -> Result<()> {
+        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_FileStorage_bool(self.as_raw_TransientAreasSegmentationModule(), fs.as_raw_FileStorage(), apply_default_setup_on_failure) }.into_result()
+    }
+    
+    /// try to open an XML segmentation parameters file to adjust current segmentation instance setup
+    ///
+    /// - if the xml file does not exist, then default setup is applied
+    /// - warning, Exceptions are thrown if read XML file is not valid
+    /// ## Parameters
     /// * newParameters: : a parameters structures updated with the new target configuration
-    fn setup(&mut self, new_parameters: &crate::bioinspired::SegmentationParameters) -> Result<()> {
+    fn setup_1(&mut self, new_parameters: &crate::bioinspired::SegmentationParameters) -> Result<()> {
         unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(self.as_raw_TransientAreasSegmentationModule(), new_parameters.as_raw_SegmentationParameters()) }.into_result()
     }
     
@@ -651,6 +679,13 @@ pub trait TransientAreasSegmentationModule: core::Algorithm {
     fn write(&self, fs: &str) -> Result<()> {
         string_arg!(mut fs);
         unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_String(self.as_raw_TransientAreasSegmentationModule(), fs.as_ptr() as _) }.into_result()
+    }
+    
+    /// write xml/yml formated parameters information
+    /// ## Parameters
+    /// * fs: : a cv::Filestorage object ready to be filled
+    fn write_1(&self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_write_const_FileStorage(self.as_raw_TransientAreasSegmentationModule(), fs.as_raw_FileStorage()) }.into_result()
     }
     
     /// main processing method, get result using methods getSegmentationPicture()

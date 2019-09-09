@@ -594,6 +594,14 @@ pub const VIDEOWRITER_PROP_NSTRIPES: i32 = 3;
 /// Current quality (0..100%) of the encoded videostream. Can be adjusted dynamically in some codecs.
 pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 
+/// %VideoCapture API backends identifier.
+///
+/// Select preferred API for a capture object.
+/// To be used in the VideoCapture::VideoCapture() constructor or VideoCapture::open()
+///
+///
+/// Note: Backends are available only if they have been built with your OpenCV binaries.
+/// See @ref videoio_overview for more information.
 #[repr(C)]
 #[derive(Debug)]
 pub enum VideoCaptureAPIs {

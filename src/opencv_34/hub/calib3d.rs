@@ -229,6 +229,28 @@ pub enum HandEyeCalibrationMethod {
     CALIB_HAND_EYE_DANIILIDIS = CALIB_HAND_EYE_DANIILIDIS as isize,
 }
 
+#[repr(C)]
+#[derive(Debug)]
+pub enum SolvePnPMethod {
+    SOLVEPNP_ITERATIVE = SOLVEPNP_ITERATIVE as isize,
+    /// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
+    SOLVEPNP_EPNP = SOLVEPNP_EPNP as isize,
+    /// Complete Solution Classification for the Perspective-Three-Point Problem [gao2003complete](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_gao2003complete)
+    SOLVEPNP_P3P = SOLVEPNP_P3P as isize,
+    /// A Direct Least-Squares (DLS) Method for PnP  [hesch2011direct](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_hesch2011direct)
+    SOLVEPNP_DLS = SOLVEPNP_DLS as isize,
+    /// Exhaustive Linearization for Robust Camera Pose and Focal Length Estimation [penate2013exhaustive](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_penate2013exhaustive)
+    SOLVEPNP_UPNP = SOLVEPNP_UPNP as isize,
+    /// An Efficient Algebraic Solution to the Perspective-Three-Point Problem [Ke17](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Ke17)
+    SOLVEPNP_AP3P = SOLVEPNP_AP3P as isize,
+    /// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14)
+    SOLVEPNP_IPPE = SOLVEPNP_IPPE as isize,
+    /// Infinitesimal Plane-Based Pose Estimation [Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14)
+    SOLVEPNP_IPPE_SQUARE = SOLVEPNP_IPPE_SQUARE as isize,
+    /// Used for count
+    SOLVEPNP_MAX_COUNT = SOLVEPNP_MAX_COUNT as isize,
+}
+
 
 #[repr(C)]
 #[derive(Copy,Clone,Debug,PartialEq)]
@@ -2433,6 +2455,140 @@ pub fn solve_p3p(object_points: &dyn core::ToInputArray, image_points: &dyn core
     output_array_arg!(rvecs);
     output_array_arg!(tvecs);
     unsafe { sys::cv_solveP3P__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_int(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags) }.into_result()
+}
+
+/// Finds an object pose from 3D-2D point correspondences.
+/// This function returns a list of all the possible solutions (a solution is a <rotation vector, translation vector>
+/// couple), depending on the number of input points and the chosen method:
+/// - P3P methods (@ref SOLVEPNP_P3P, @ref SOLVEPNP_AP3P): 3 or 4 input points. Number of returned solutions can be between 0 and 4 with 3 input points.
+/// - @ref SOLVEPNP_IPPE Input points must be >= 4 and object points must be coplanar. Returns 2 solutions.
+/// - @ref SOLVEPNP_IPPE_SQUARE Special case suitable for marker pose estimation.
+/// Number of input points must be 4 and 2 solutions are returned. Object points must be defined in the following order:
+/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
+/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
+/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
+/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
+/// - for all the other flags, number of input points must be >= 4 and object points can be in any configuration.
+/// Only 1 solution is returned.
+///
+/// ## Parameters
+/// * objectPoints: Array of object points in the object coordinate space, Nx3 1-channel or
+/// 1xN/Nx1 3-channel, where N is the number of points. vector\<Point3f\> can be also passed here.
+/// * imagePoints: Array of corresponding image points, Nx2 1-channel or 1xN/Nx1 2-channel,
+/// where N is the number of points. vector\<Point2f\> can be also passed here.
+/// * cameraMatrix: Input camera matrix ![inline formula](https://latex.codecogs.com/png.latex?A%20%3D%20%5Cbegin%7Bbmatrix%7D%20fx%20%26%200%20%26%20cx%5C%5C%200%20%26%20fy%20%26%20cy%5C%5C%200%20%26%200%20%26%201%20%5Cend%7Bbmatrix%7D) .
+/// * distCoeffs: Input vector of distortion coefficients
+/// ![inline formula](https://latex.codecogs.com/png.latex?%28k_1%2C%20k_2%2C%20p_1%2C%20p_2%5B%2C%20k_3%5B%2C%20k_4%2C%20k_5%2C%20k_6%20%5B%2C%20s_1%2C%20s_2%2C%20s_3%2C%20s_4%5B%2C%20%5Ctau_x%2C%20%5Ctau_y%5D%5D%5D%5D%29) of
+/// 4, 5, 8, 12 or 14 elements. If the vector is NULL/empty, the zero distortion coefficients are
+/// assumed.
+/// * rvecs: Vector of output rotation vectors (see @ref Rodrigues ) that, together with tvecs, brings points from
+/// the model coordinate system to the camera coordinate system.
+/// * tvecs: Vector of output translation vectors.
+/// * useExtrinsicGuess: Parameter used for #SOLVEPNP_ITERATIVE. If true (1), the function uses
+/// the provided rvec and tvec values as initial approximations of the rotation and translation
+/// vectors, respectively, and further optimizes them.
+/// * flags: Method for solving a PnP problem:
+/// *   **SOLVEPNP_ITERATIVE** Iterative method is based on a Levenberg-Marquardt optimization. In
+/// this case the function finds such a pose that minimizes reprojection error, that is the sum
+/// of squared distances between the observed projections imagePoints and the projected (using
+/// projectPoints ) objectPoints .
+/// *   **SOLVEPNP_P3P** Method is based on the paper of X.S. Gao, X.-R. Hou, J. Tang, H.-F. Chang
+/// "Complete Solution Classification for the Perspective-Three-Point Problem" ([gao2003complete](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_gao2003complete)).
+/// In this case the function requires exactly four object and image points.
+/// *   **SOLVEPNP_AP3P** Method is based on the paper of T. Ke, S. Roumeliotis
+/// "An Efficient Algebraic Solution to the Perspective-Three-Point Problem" ([Ke17](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Ke17)).
+/// In this case the function requires exactly four object and image points.
+/// *   **SOLVEPNP_EPNP** Method has been introduced by F.Moreno-Noguer, V.Lepetit and P.Fua in the
+/// paper "EPnP: Efficient Perspective-n-Point Camera Pose Estimation" ([lepetit2009epnp](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_lepetit2009epnp)).
+/// *   **SOLVEPNP_DLS** Method is based on the paper of Joel A. Hesch and Stergios I. Roumeliotis.
+/// "A Direct Least-Squares (DLS) Method for PnP" ([hesch2011direct](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_hesch2011direct)).
+/// *   **SOLVEPNP_UPNP** Method is based on the paper of A.Penate-Sanchez, J.Andrade-Cetto,
+/// F.Moreno-Noguer. "Exhaustive Linearization for Robust Camera Pose and Focal Length
+/// Estimation" ([penate2013exhaustive](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_penate2013exhaustive)). In this case the function also estimates the parameters ![inline formula](https://latex.codecogs.com/png.latex?f_x) and ![inline formula](https://latex.codecogs.com/png.latex?f_y)
+/// assuming that both have the same value. Then the cameraMatrix is updated with the estimated
+/// focal length.
+/// *   **SOLVEPNP_IPPE** Method is based on the paper of T. Collins and A. Bartoli.
+/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14)). This method requires coplanar object points.
+/// *   **SOLVEPNP_IPPE_SQUARE** Method is based on the paper of Toby Collins and Adrien Bartoli.
+/// "Infinitesimal Plane-Based Pose Estimation" ([Collins14](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Collins14)). This method is suitable for marker pose estimation.
+/// It requires 4 coplanar object points defined in the following order:
+/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
+/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
+/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
+/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
+/// * rvec: Rotation vector used to initialize an iterative PnP refinement algorithm, when flag is SOLVEPNP_ITERATIVE
+/// and useExtrinsicGuess is set to true.
+/// * tvec: Translation vector used to initialize an iterative PnP refinement algorithm, when flag is SOLVEPNP_ITERATIVE
+/// and useExtrinsicGuess is set to true.
+/// * reprojectionError: Optional vector of reprojection error, that is the RMS error
+/// (![inline formula](https://latex.codecogs.com/png.latex?%20%5Ctext%7BRMSE%7D%20%3D%20%5Csqrt%7B%5Cfrac%7B%5Csum_%7Bi%7D%5E%7BN%7D%20%5Cleft%20%28%20%5Chat%7By_i%7D%20-%20y_i%20%5Cright%20%29%5E2%7D%7BN%7D%7D%20)) between the input image points
+/// and the 3D object points projected with the estimated pose.
+///
+/// The function estimates the object pose given a set of object points, their corresponding image
+/// projections, as well as the camera matrix and the distortion coefficients, see the figure below
+/// (more precisely, the X-axis of the camera frame is pointing to the right, the Y-axis downward
+/// and the Z-axis forward).
+///
+/// ![](https://docs.opencv.org/3.4.7/pnp.jpg)
+///
+/// Points expressed in the world frame ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cbf%7BX%7D_w%20) are projected into the image plane ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cleft%5B%20u%2C%20v%20%5Cright%5D%20)
+/// using the perspective projection model ![inline formula](https://latex.codecogs.com/png.latex?%20%5CPi%20) and the camera intrinsic parameters matrix ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cbf%7BA%7D%20):
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%2A%7D%0A%5Cbegin%7Bbmatrix%7D%0Au%20%5C%5C%0Av%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%26%3D%0A%5Cbf%7BA%7D%20%5Chspace%7B0.1em%7D%20%5CPi%20%5Chspace%7B0.2em%7D%20%5E%7Bc%7D%5Cbf%7BM%7D_w%0A%5Cbegin%7Bbmatrix%7D%0AX_%7Bw%7D%20%5C%5C%0AY_%7Bw%7D%20%5C%5C%0AZ_%7Bw%7D%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%5C%5C%0A%5Cbegin%7Bbmatrix%7D%0Au%20%5C%5C%0Av%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%26%3D%0A%5Cbegin%7Bbmatrix%7D%0Af_x%20%26%200%20%26%20c_x%20%5C%5C%0A0%20%26%20f_y%20%26%20c_y%20%5C%5C%0A0%20%26%200%20%26%201%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0A1%20%26%200%20%26%200%20%26%200%20%5C%5C%0A0%20%26%201%20%26%200%20%26%200%20%5C%5C%0A0%20%26%200%20%26%201%20%26%200%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0Ar_%7B11%7D%20%26%20r_%7B12%7D%20%26%20r_%7B13%7D%20%26%20t_x%20%5C%5C%0Ar_%7B21%7D%20%26%20r_%7B22%7D%20%26%20r_%7B23%7D%20%26%20t_y%20%5C%5C%0Ar_%7B31%7D%20%26%20r_%7B32%7D%20%26%20r_%7B33%7D%20%26%20t_z%20%5C%5C%0A0%20%26%200%20%26%200%20%26%201%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0AX_%7Bw%7D%20%5C%5C%0AY_%7Bw%7D%20%5C%5C%0AZ_%7Bw%7D%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%0A%5Cend%7Balign%2A%7D%0A)
+///
+/// The estimated pose is thus the rotation (`rvec`) and the translation (`tvec`) vectors that allow transforming
+/// a 3D point expressed in the world frame into the camera frame:
+///
+/// ![block formula](https://latex.codecogs.com/png.latex?%0A%5Cbegin%7Balign%2A%7D%0A%5Cbegin%7Bbmatrix%7D%0AX_c%20%5C%5C%0AY_c%20%5C%5C%0AZ_c%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%26%3D%0A%5Chspace%7B0.2em%7D%20%5E%7Bc%7D%5Cbf%7BM%7D_w%0A%5Cbegin%7Bbmatrix%7D%0AX_%7Bw%7D%20%5C%5C%0AY_%7Bw%7D%20%5C%5C%0AZ_%7Bw%7D%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%5C%5C%0A%5Cbegin%7Bbmatrix%7D%0AX_c%20%5C%5C%0AY_c%20%5C%5C%0AZ_c%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%20%26%3D%0A%5Cbegin%7Bbmatrix%7D%0Ar_%7B11%7D%20%26%20r_%7B12%7D%20%26%20r_%7B13%7D%20%26%20t_x%20%5C%5C%0Ar_%7B21%7D%20%26%20r_%7B22%7D%20%26%20r_%7B23%7D%20%26%20t_y%20%5C%5C%0Ar_%7B31%7D%20%26%20r_%7B32%7D%20%26%20r_%7B33%7D%20%26%20t_z%20%5C%5C%0A0%20%26%200%20%26%200%20%26%201%0A%5Cend%7Bbmatrix%7D%0A%5Cbegin%7Bbmatrix%7D%0AX_%7Bw%7D%20%5C%5C%0AY_%7Bw%7D%20%5C%5C%0AZ_%7Bw%7D%20%5C%5C%0A1%0A%5Cend%7Bbmatrix%7D%0A%5Cend%7Balign%2A%7D%0A)
+///
+///
+/// Note:
+/// *   An example of how to use solvePnP for planar augmented reality can be found at
+/// opencv_source_code/samples/python/plane_ar.py
+/// *   If you are using Python:
+/// - Numpy array slices won't work as input because solvePnP requires contiguous
+/// arrays (enforced by the assertion using cv::Mat::checkVector() around line 55 of
+/// modules/calib3d/src/solvepnp.cpp version 2.4.9)
+/// - The P3P algorithm requires image points to be in an array of shape (N,1,2) due
+/// to its calling of cv::undistortPoints (around line 75 of modules/calib3d/src/solvepnp.cpp version 2.4.9)
+/// which requires 2-channel information.
+/// - Thus, given some data D = np.array(...) where D.shape = (N,M), in order to use a subset of
+/// it as, e.g., imagePoints, one must effectively copy it into a new array: imagePoints =
+/// np.ascontiguousarray(D[:,:2]).reshape((N,1,2))
+/// *   The methods **SOLVEPNP_DLS** and **SOLVEPNP_UPNP** cannot be used as the current implementations are
+/// unstable and sometimes give completely wrong results. If you pass one of these two
+/// flags, **SOLVEPNP_EPNP** method will be used instead.
+/// *   The minimum number of points is 4 in the general case. In the case of **SOLVEPNP_P3P** and **SOLVEPNP_AP3P**
+/// methods, it is required to use exactly 4 points (the first 3 points are used to estimate all the solutions
+/// of the P3P problem, the last one is used to retain the best solution that minimizes the reprojection error).
+/// *   With **SOLVEPNP_ITERATIVE** method and `useExtrinsicGuess=true`, the minimum number of points is 3 (3 points
+/// are sufficient to compute a pose but there are up to 4 solutions). The initial solution should be close to the
+/// global solution to converge.
+/// *   With **SOLVEPNP_IPPE** input points must be >= 4 and object points must be coplanar.
+/// *   With **SOLVEPNP_IPPE_SQUARE** this is a special case suitable for marker pose estimation.
+/// Number of input points must be 4. Object points must be defined in the following order:
+/// - point 0: [-squareLength / 2,  squareLength / 2, 0]
+/// - point 1: [ squareLength / 2,  squareLength / 2, 0]
+/// - point 2: [ squareLength / 2, -squareLength / 2, 0]
+/// - point 3: [-squareLength / 2, -squareLength / 2, 0]
+///
+/// ## C++ default parameters
+/// * use_extrinsic_guess: false
+/// * flags: SOLVEPNP_ITERATIVE
+/// * rvec: noArray()
+/// * tvec: noArray()
+/// * reprojection_error: noArray()
+pub fn solve_pnp_generic(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, use_extrinsic_guess: bool, flags: crate::calib3d::SolvePnPMethod, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, reprojection_error: &mut dyn core::ToOutputArray) -> Result<i32> {
+    input_array_arg!(object_points);
+    input_array_arg!(image_points);
+    input_array_arg!(camera_matrix);
+    input_array_arg!(dist_coeffs);
+    output_array_arg!(rvecs);
+    output_array_arg!(tvecs);
+    input_array_arg!(rvec);
+    input_array_arg!(tvec);
+    output_array_arg!(reprojection_error);
+    unsafe { sys::cv_solvePnPGeneric__InputArray__InputArray__InputArray__InputArray__OutputArray__OutputArray_bool_SolvePnPMethod__InputArray__InputArray__OutputArray(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), use_extrinsic_guess, flags, rvec.as_raw__InputArray(), tvec.as_raw__InputArray(), reprojection_error.as_raw__OutputArray()) }.into_result()
 }
 
 /// Finds an object pose from 3D-2D point correspondences using the RANSAC scheme.

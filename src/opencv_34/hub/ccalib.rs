@@ -535,8 +535,24 @@ impl CustomPattern {
         unsafe { sys::cv_ccalib_CustomPattern_setFeatureDetector_PtrOfFeature2D(self.as_raw_CustomPattern(), feature_detector.as_raw_PtrOfFeature2D()) }.into_result()
     }
     
+    pub fn set_descriptor_extractor(&mut self, extractor: &types::PtrOfFeature2D) -> Result<bool> {
+        unsafe { sys::cv_ccalib_CustomPattern_setDescriptorExtractor_PtrOfFeature2D(self.as_raw_CustomPattern(), extractor.as_raw_PtrOfFeature2D()) }.into_result()
+    }
+    
+    pub fn set_descriptor_matcher(&mut self, matcher: &types::PtrOfDescriptorMatcher) -> Result<bool> {
+        unsafe { sys::cv_ccalib_CustomPattern_setDescriptorMatcher_PtrOfDescriptorMatcher(self.as_raw_CustomPattern(), matcher.as_raw_PtrOfDescriptorMatcher()) }.into_result()
+    }
+    
     pub fn get_feature_detector(&mut self) -> Result<types::PtrOfFeature2D> {
         unsafe { sys::cv_ccalib_CustomPattern_getFeatureDetector(self.as_raw_CustomPattern()) }.into_result().map(|ptr| types::PtrOfFeature2D { ptr })
+    }
+    
+    pub fn get_descriptor_extractor(&mut self) -> Result<types::PtrOfFeature2D> {
+        unsafe { sys::cv_ccalib_CustomPattern_getDescriptorExtractor(self.as_raw_CustomPattern()) }.into_result().map(|ptr| types::PtrOfFeature2D { ptr })
+    }
+    
+    pub fn get_descriptor_matcher(&mut self) -> Result<types::PtrOfDescriptorMatcher> {
+        unsafe { sys::cv_ccalib_CustomPattern_getDescriptorMatcher(self.as_raw_CustomPattern()) }.into_result().map(|ptr| types::PtrOfDescriptorMatcher { ptr })
     }
     
     ///
@@ -673,6 +689,21 @@ unsafe impl Send for MultiCameraCalibration {}
 
 impl MultiCameraCalibration {
 
+    ///
+    /// ## C++ default parameters
+    /// * verbose: 0
+    /// * show_extration: 0
+    /// * n_mini_matches: 20
+    /// * flags: 0
+    /// * criteria: TermCriteria(TermCriteria::COUNT + TermCriteria::EPS, 200, 1e-7)
+    /// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB, 0, 3, 0.006f)
+    /// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0, 3, 0.006f)
+    /// * matcher: DescriptorMatcher::create("BruteForce-L1" )
+    pub fn new(camera_type: i32, n_cameras: i32, file_name: &str, pattern_width: f32, pattern_height: f32, verbose: i32, show_extration: i32, n_mini_matches: i32, flags: i32, criteria: &core::TermCriteria, detector: &types::PtrOfFeature2D, descriptor: &types::PtrOfFeature2D, matcher: &types::PtrOfDescriptorMatcher) -> Result<crate::ccalib::MultiCameraCalibration> {
+        string_arg!(file_name);
+        unsafe { sys::cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_std_string_float_float_int_int_int_int_TermCriteria_PtrOfFeature2D_PtrOfFeature2D_PtrOfDescriptorMatcher(camera_type, n_cameras, file_name.as_ptr(), pattern_width, pattern_height, verbose, show_extration, n_mini_matches, flags, criteria.as_raw_TermCriteria(), detector.as_raw_PtrOfFeature2D(), descriptor.as_raw_PtrOfFeature2D(), matcher.as_raw_PtrOfDescriptorMatcher()) }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration { ptr })
+    }
+    
     pub fn load_images(&mut self) -> Result<()> {
         unsafe { sys::cv_multicalib_MultiCameraCalibration_loadImages(self.as_raw_MultiCameraCalibration()) }.into_result()
     }
@@ -787,6 +818,19 @@ unsafe impl Send for RandomPatternCornerFinder {}
 
 impl RandomPatternCornerFinder {
 
+    ///
+    /// ## C++ default parameters
+    /// * nmini_match: 20
+    /// * depth: CV_32F
+    /// * verbose: 0
+    /// * show_extraction: 0
+    /// * detector: AKAZE::create(AKAZE::DESCRIPTOR_MLDB, 0, 3, 0.005f)
+    /// * descriptor: AKAZE::create(AKAZE::DESCRIPTOR_MLDB,0, 3, 0.005f)
+    /// * matcher: DescriptorMatcher::create("BruteForce-L1" )
+    pub fn new(pattern_width: f32, pattern_height: f32, nmini_match: i32, depth: i32, verbose: i32, show_extraction: i32, detector: &types::PtrOfFeature2D, descriptor: &types::PtrOfFeature2D, matcher: &types::PtrOfDescriptorMatcher) -> Result<crate::ccalib::RandomPatternCornerFinder> {
+        unsafe { sys::cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_PtrOfFeature2D_PtrOfFeature2D_PtrOfDescriptorMatcher(pattern_width, pattern_height, nmini_match, depth, verbose, show_extraction, detector.as_raw_PtrOfFeature2D(), descriptor.as_raw_PtrOfFeature2D(), matcher.as_raw_PtrOfDescriptorMatcher()) }.into_result().map(|ptr| crate::ccalib::RandomPatternCornerFinder { ptr })
+    }
+    
     pub fn load_pattern(&mut self, pattern_image: &core::Mat) -> Result<()> {
         unsafe { sys::cv_randpattern_RandomPatternCornerFinder_loadPattern_Mat(self.as_raw_RandomPatternCornerFinder(), pattern_image.as_raw_Mat()) }.into_result()
     }

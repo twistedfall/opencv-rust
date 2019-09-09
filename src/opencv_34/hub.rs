@@ -1,5 +1,6 @@
 pub mod core;
 pub mod aruco;
+pub mod bgsegm;
 pub mod bioinspired;
 pub mod calib3d;
 pub mod ccalib;
@@ -29,5 +30,8 @@ pub mod video;
 pub mod videoio;
 pub mod videostab;
 pub mod viz;
+pub mod xfeatures2d;
+pub mod xobjdetect;
+pub mod xphoto;
 pub mod types;
 #[doc(hidden)] pub mod sys;

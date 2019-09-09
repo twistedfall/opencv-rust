@@ -215,6 +215,22 @@ impl BinaryDescriptor {
         unsafe { sys::cv_line_descriptor_BinaryDescriptor_setReductionRatio_int(self.as_raw_BinaryDescriptor(), r_ratio) }.into_result()
     }
     
+    /// Read parameters from a FileNode object and store them
+    ///
+    /// ## Parameters
+    /// * fn: source FileNode file
+    pub fn read(&mut self, _fn: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_line_descriptor_BinaryDescriptor_read_FileNode(self.as_raw_BinaryDescriptor(), _fn.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// Store parameters to a FileStorage object
+    ///
+    /// ## Parameters
+    /// * fs: output FileStorage file
+    pub fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_line_descriptor_BinaryDescriptor_write_const_FileStorage(self.as_raw_BinaryDescriptor(), fs.as_raw_FileStorage()) }.into_result()
+    }
+    
     /// Requires line detection
     ///
     /// ## Parameters
@@ -307,6 +323,16 @@ impl BinaryDescriptor_Params {
 
     pub fn default() -> Result<crate::line_descriptor::BinaryDescriptor_Params> {
         unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|ptr| crate::line_descriptor::BinaryDescriptor_Params { ptr })
+    }
+    
+    /// read parameters from a FileNode object and store them (struct function)
+    pub fn read(&mut self, _fn: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_read_FileNode(self.as_raw_BinaryDescriptor_Params(), _fn.as_raw_FileNode()) }.into_result()
+    }
+    
+    /// store parameters to a FileStorage object (struct function)
+    pub fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_write_const_FileStorage(self.as_raw_BinaryDescriptor_Params(), fs.as_raw_FileStorage()) }.into_result()
     }
     
 }

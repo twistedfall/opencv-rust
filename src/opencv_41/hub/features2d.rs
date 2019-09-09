@@ -95,6 +95,8 @@ pub enum DescriptorMatcher_MatcherType {
     BRUTEFORCE_SL2 = DescriptorMatcher_BRUTEFORCE_SL2 as isize,
 }
 
+/// \
+///                                   Drawing functions                                    *
 #[repr(C)]
 #[derive(Debug)]
 pub enum DrawMatchesFlags {
@@ -1140,6 +1142,14 @@ pub trait DescriptorMatcher: core::Algorithm {
         unsafe { sys::cv_DescriptorMatcher_read_String(self.as_raw_DescriptorMatcher(), file_name.as_ptr()) }.into_result()
     }
     
+    fn read_1(&mut self, unnamed_arg: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_DescriptorMatcher_read_FileNode(self.as_raw_DescriptorMatcher(), unnamed_arg.as_raw_FileNode()) }.into_result()
+    }
+    
+    fn write_1(&self, unnamed_arg: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_DescriptorMatcher_write_const_FileStorage(self.as_raw_DescriptorMatcher(), unnamed_arg.as_raw_FileStorage()) }.into_result()
+    }
+    
     /// Clones the matcher.
     ///
     /// ## Parameters
@@ -1151,6 +1161,14 @@ pub trait DescriptorMatcher: core::Algorithm {
     /// * empty_train_data: false
     fn clone(&self, empty_train_data: bool) -> Result<types::PtrOfDescriptorMatcher> {
         unsafe { sys::cv_DescriptorMatcher_clone_const_bool(self.as_raw_DescriptorMatcher(), empty_train_data) }.into_result().map(|ptr| types::PtrOfDescriptorMatcher { ptr })
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * name: String()
+    fn write_2(&self, fs: &types::PtrOfFileStorage, name: &str) -> Result<()> {
+        string_arg!(name);
+        unsafe { sys::cv_DescriptorMatcher_write_const_PtrOfFileStorage_String(self.as_raw_DescriptorMatcher(), fs.as_raw_PtrOfFileStorage(), name.as_ptr()) }.into_result()
     }
     
 }
@@ -1326,6 +1344,14 @@ pub trait Feature2D: core::Algorithm {
         unsafe { sys::cv_Feature2D_read_String(self.as_raw_Feature2D(), file_name.as_ptr()) }.into_result()
     }
     
+    fn write_1(&self, unnamed_arg: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_Feature2D_write_const_FileStorage(self.as_raw_Feature2D(), unnamed_arg.as_raw_FileStorage()) }.into_result()
+    }
+    
+    fn read_1(&mut self, unnamed_arg: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_Feature2D_read_FileNode(self.as_raw_Feature2D(), unnamed_arg.as_raw_FileNode()) }.into_result()
+    }
+    
     /// Return true if detector object is empty
     fn empty(&self) -> Result<bool> {
         unsafe { sys::cv_Feature2D_empty_const(self.as_raw_Feature2D()) }.into_result()
@@ -1333,6 +1359,14 @@ pub trait Feature2D: core::Algorithm {
     
     fn get_default_name(&self) -> Result<String> {
         unsafe { sys::cv_Feature2D_getDefaultName_const(self.as_raw_Feature2D()) }.into_result().map(crate::templ::receive_string_mut)
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * name: String()
+    fn write_2(&self, fs: &types::PtrOfFileStorage, name: &str) -> Result<()> {
+        string_arg!(name);
+        unsafe { sys::cv_Feature2D_write_const_PtrOfFileStorage_String(self.as_raw_Feature2D(), fs.as_raw_PtrOfFileStorage(), name.as_ptr()) }.into_result()
     }
     
 }
@@ -1380,6 +1414,14 @@ impl FlannBasedMatcher {
     
     pub fn clear(&mut self) -> Result<()> {
         unsafe { sys::cv_FlannBasedMatcher_clear(self.as_raw_FlannBasedMatcher()) }.into_result()
+    }
+    
+    pub fn read(&mut self, unnamed_arg: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_FlannBasedMatcher_read_FileNode(self.as_raw_FlannBasedMatcher(), unnamed_arg.as_raw_FileNode()) }.into_result()
+    }
+    
+    pub fn write(&self, unnamed_arg: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_FlannBasedMatcher_write_const_FileStorage(self.as_raw_FlannBasedMatcher(), unnamed_arg.as_raw_FileStorage()) }.into_result()
     }
     
     pub fn train(&mut self) -> Result<()> {
@@ -1949,6 +1991,14 @@ impl SimpleBlobDetector_Params {
 
     pub fn default() -> Result<crate::features2d::SimpleBlobDetector_Params> {
         unsafe { sys::cv_SimpleBlobDetector_Params_Params() }.into_result()
+    }
+    
+    pub fn read(self, _fn: &core::FileNode) -> Result<()> {
+        unsafe { sys::cv_SimpleBlobDetector_Params_read_FileNode(self, _fn.as_raw_FileNode()) }.into_result()
+    }
+    
+    pub fn write(self, fs: &mut core::FileStorage) -> Result<()> {
+        unsafe { sys::cv_SimpleBlobDetector_Params_write_const_FileStorage(self, fs.as_raw_FileStorage()) }.into_result()
     }
     
 }

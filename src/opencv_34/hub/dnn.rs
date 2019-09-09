@@ -27,6 +27,8 @@ pub const DNN_TARGET_MYRIAD: i32 = 3;
 pub const DNN_TARGET_OPENCL: i32 = 1;
 pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 
+/// Enum of computation backends supported by layers.
+/// @see Net::setPreferableBackend
 #[repr(C)]
 #[derive(Debug)]
 pub enum Backend {
@@ -37,6 +39,8 @@ pub enum Backend {
     DNN_BACKEND_OPENCV = DNN_BACKEND_OPENCV as isize,
 }
 
+/// Enum of target devices for computations.
+/// @see Net::setPreferableTarget
 #[repr(C)]
 #[derive(Debug)]
 pub enum Target {

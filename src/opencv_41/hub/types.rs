@@ -175,6 +175,56 @@ impl crate::dnn::Layer for PtrOfActivationLayer {
     }
 }
 
+pub struct PtrOfAffineFeature2D {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfAffineFeature2D {
+    #[inline(always)] pub fn as_raw_PtrOfAffineFeature2D(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfAffineFeature2D {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::AffineFeature2D>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfAffineFeature2D {}
+
+impl core::Algorithm for PtrOfAffineFeature2D {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xfeatures2d::AffineFeature2D for PtrOfAffineFeature2D {
+    #[inline(always)] fn as_raw_AffineFeature2D(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::AffineFeature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::features2d::Feature2D for PtrOfAffineFeature2D {
+    #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
 pub struct PtrOfAffineTransformer {
     pub(crate) ptr: *mut c_void
 }
@@ -472,6 +522,93 @@ impl crate::dnn::BackendWrapper for PtrOfBackendWrapper {
     }
 }
 
+pub struct PtrOfBackgroundSubtractorCNT {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBackgroundSubtractorCNT {
+    #[inline(always)] pub fn as_raw_PtrOfBackgroundSubtractorCNT(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBackgroundSubtractorCNT {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::bgsegm::BackgroundSubtractorCNT>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBackgroundSubtractorCNT {}
+
+impl crate::bgsegm::BackgroundSubtractorCNT for PtrOfBackgroundSubtractorCNT {
+    #[inline(always)] fn as_raw_BackgroundSubtractorCNT(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::bgsegm::BackgroundSubtractorCNT>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfBackgroundSubtractorGMG {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBackgroundSubtractorGMG {
+    #[inline(always)] pub fn as_raw_PtrOfBackgroundSubtractorGMG(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBackgroundSubtractorGMG {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::bgsegm::BackgroundSubtractorGMG>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBackgroundSubtractorGMG {}
+
+impl crate::bgsegm::BackgroundSubtractorGMG for PtrOfBackgroundSubtractorGMG {
+    #[inline(always)] fn as_raw_BackgroundSubtractorGMG(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::bgsegm::BackgroundSubtractorGMG>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfBackgroundSubtractorGSOC {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBackgroundSubtractorGSOC {
+    #[inline(always)] pub fn as_raw_PtrOfBackgroundSubtractorGSOC(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBackgroundSubtractorGSOC {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::bgsegm::BackgroundSubtractorGSOC>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBackgroundSubtractorGSOC {}
+
 pub struct PtrOfBackgroundSubtractorKNN {
     pub(crate) ptr: *mut c_void
 }
@@ -517,6 +654,61 @@ impl crate::video::BackgroundSubtractorKNN for PtrOfBackgroundSubtractorKNN {
     #[inline(always)] fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void {
         let me = self.ptr;
         cpp!(unsafe [me as "cv::Ptr<cv::BackgroundSubtractorKNN>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfBackgroundSubtractorLSBP {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBackgroundSubtractorLSBP {
+    #[inline(always)] pub fn as_raw_PtrOfBackgroundSubtractorLSBP(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBackgroundSubtractorLSBP {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::bgsegm::BackgroundSubtractorLSBP>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBackgroundSubtractorLSBP {}
+
+pub struct PtrOfBackgroundSubtractorMOG {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBackgroundSubtractorMOG {
+    #[inline(always)] pub fn as_raw_PtrOfBackgroundSubtractorMOG(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBackgroundSubtractorMOG {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::bgsegm::BackgroundSubtractorMOG>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBackgroundSubtractorMOG {}
+
+impl crate::bgsegm::BackgroundSubtractorMOG for PtrOfBackgroundSubtractorMOG {
+    #[inline(always)] fn as_raw_BackgroundSubtractorMOG(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::bgsegm::BackgroundSubtractorMOG>*"] -> *mut c_void as "void*" {
             return me->get();
         })
     }
@@ -805,6 +997,79 @@ impl crate::ml::StatModel for PtrOfBoost {
     }
 }
 
+pub struct PtrOfBoostDesc {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBoostDesc {
+    #[inline(always)] pub fn as_raw_PtrOfBoostDesc(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBoostDesc {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::BoostDesc>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBoostDesc {}
+
+impl core::Algorithm for PtrOfBoostDesc {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xfeatures2d::BoostDesc for PtrOfBoostDesc {
+    #[inline(always)] fn as_raw_BoostDesc(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::BoostDesc>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::features2d::Feature2D for PtrOfBoostDesc {
+    #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfBriefDescriptorExtractor {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfBriefDescriptorExtractor {
+    #[inline(always)] pub fn as_raw_PtrOfBriefDescriptorExtractor(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfBriefDescriptorExtractor {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::BriefDescriptorExtractor>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfBriefDescriptorExtractor {}
+
 pub struct PtrOfCLAHE {
     pub(crate) ptr: *mut c_void
 }
@@ -1069,6 +1334,56 @@ impl Drop for PtrOfConjGradSolver {
 }
 
 unsafe impl Send for PtrOfConjGradSolver {}
+
+pub struct PtrOfDAISY {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfDAISY {
+    #[inline(always)] pub fn as_raw_PtrOfDAISY(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfDAISY {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::DAISY>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfDAISY {}
+
+impl core::Algorithm for PtrOfDAISY {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xfeatures2d::DAISY for PtrOfDAISY {
+    #[inline(always)] fn as_raw_DAISY(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::DAISY>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::features2d::Feature2D for PtrOfDAISY {
+    #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
 
 pub struct PtrOfDISOpticalFlow {
     pub(crate) ptr: *mut c_void
@@ -1458,6 +1773,29 @@ impl Drop for PtrOfEltwiseLayer {
 
 unsafe impl Send for PtrOfEltwiseLayer {}
 
+pub struct PtrOfFREAK {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfFREAK {
+    #[inline(always)] pub fn as_raw_PtrOfFREAK(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfFREAK {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::FREAK>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfFREAK {}
+
 pub struct PtrOfFarnebackOpticalFlow {
     pub(crate) ptr: *mut c_void
 }
@@ -1598,6 +1936,29 @@ impl crate::features2d::Feature2D for PtrOfFeature2D {
         })
     }
 }
+
+pub struct PtrOfFileStorage {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfFileStorage {
+    #[inline(always)] pub fn as_raw_PtrOfFileStorage(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfFileStorage {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::FileStorage>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfFileStorage {}
 
 pub struct PtrOfFlannBasedMatcher {
     pub(crate) ptr: *mut c_void
@@ -2014,6 +2375,56 @@ impl crate::structured_light::StructuredLightPattern for PtrOfGrayCodePattern {
     }
 }
 
+pub struct PtrOfGrayworldWB {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfGrayworldWB {
+    #[inline(always)] pub fn as_raw_PtrOfGrayworldWB(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfGrayworldWB {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xphoto::GrayworldWB>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfGrayworldWB {}
+
+impl core::Algorithm for PtrOfGrayworldWB {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xphoto::GrayworldWB for PtrOfGrayworldWB {
+    #[inline(always)] fn as_raw_GrayworldWB(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xphoto::GrayworldWB>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xphoto::WhiteBalancer for PtrOfGrayworldWB {
+    #[inline(always)] fn as_raw_WhiteBalancer(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xphoto::WhiteBalancer>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
 pub struct PtrOfGridBoard {
     pub(crate) ptr: *mut c_void
 }
@@ -2068,6 +2479,29 @@ impl crate::hdf::HDF5 for PtrOfHDF5 {
         })
     }
 }
+
+pub struct PtrOfHarrisLaplaceFeatureDetector {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfHarrisLaplaceFeatureDetector {
+    #[inline(always)] pub fn as_raw_PtrOfHarrisLaplaceFeatureDetector(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfHarrisLaplaceFeatureDetector {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::HarrisLaplaceFeatureDetector>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfHarrisLaplaceFeatureDetector {}
 
 pub struct PtrOfHausdorffDistanceExtractor {
     pub(crate) ptr: *mut c_void
@@ -2534,6 +2968,29 @@ impl crate::ml::SVM_Kernel for PtrOfKernel {
     }
 }
 
+pub struct PtrOfLATCH {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfLATCH {
+    #[inline(always)] pub fn as_raw_PtrOfLATCH(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfLATCH {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::LATCH>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfLATCH {}
+
 pub struct PtrOfLMSolver {
     pub(crate) ptr: *mut c_void
 }
@@ -2671,6 +3128,29 @@ impl crate::dnn::Layer for PtrOfLSTMLayer {
     }
 }
 
+pub struct PtrOfLUCID {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfLUCID {
+    #[inline(always)] pub fn as_raw_PtrOfLUCID(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfLUCID {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::LUCID>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfLUCID {}
+
 pub struct PtrOfLayer {
     pub(crate) ptr: *mut c_void
 }
@@ -2707,6 +3187,56 @@ impl crate::dnn::Layer for PtrOfLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void {
         let me = self.ptr;
         cpp!(unsafe [me as "cv::Ptr<cv::dnn::Layer>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfLearningBasedWB {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfLearningBasedWB {
+    #[inline(always)] pub fn as_raw_PtrOfLearningBasedWB(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfLearningBasedWB {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xphoto::LearningBasedWB>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfLearningBasedWB {}
+
+impl core::Algorithm for PtrOfLearningBasedWB {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xphoto::LearningBasedWB for PtrOfLearningBasedWB {
+    #[inline(always)] fn as_raw_LearningBasedWB(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xphoto::LearningBasedWB>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xphoto::WhiteBalancer for PtrOfLearningBasedWB {
+    #[inline(always)] fn as_raw_WhiteBalancer(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xphoto::WhiteBalancer>*"] -> *mut c_void as "void*" {
             return me->get();
         })
     }
@@ -2802,6 +3332,29 @@ impl crate::ml::StatModel for PtrOfLogisticRegression {
         })
     }
 }
+
+pub struct PtrOfMSDDetector {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfMSDDetector {
+    #[inline(always)] pub fn as_raw_PtrOfMSDDetector(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfMSDDetector {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::MSDDetector>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfMSDDetector {}
 
 pub struct PtrOfMSER {
     pub(crate) ptr: *mut c_void
@@ -3295,6 +3848,88 @@ impl crate::features2d::ORB for PtrOfORB {
     #[inline(always)] fn as_raw_ORB(&self) -> *mut c_void {
         let me = self.ptr;
         cpp!(unsafe [me as "cv::Ptr<cv::ORB>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfPCTSignatures {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfPCTSignatures {
+    #[inline(always)] pub fn as_raw_PtrOfPCTSignatures(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfPCTSignatures {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::PCTSignatures>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfPCTSignatures {}
+
+impl core::Algorithm for PtrOfPCTSignatures {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xfeatures2d::PCTSignatures for PtrOfPCTSignatures {
+    #[inline(always)] fn as_raw_PCTSignatures(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::PCTSignatures>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfPCTSignaturesSQFD {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfPCTSignaturesSQFD {
+    #[inline(always)] pub fn as_raw_PtrOfPCTSignaturesSQFD(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfPCTSignaturesSQFD {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::PCTSignaturesSQFD>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfPCTSignaturesSQFD {}
+
+impl core::Algorithm for PtrOfPCTSignaturesSQFD {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xfeatures2d::PCTSignaturesSQFD for PtrOfPCTSignaturesSQFD {
+    #[inline(always)] fn as_raw_PCTSignaturesSQFD(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::PCTSignaturesSQFD>*"] -> *mut c_void as "void*" {
             return me->get();
         })
     }
@@ -3923,6 +4558,79 @@ impl Drop for PtrOfSFMLibmvEuclideanReconstruction {
 
 unsafe impl Send for PtrOfSFMLibmvEuclideanReconstruction {}
 
+pub struct PtrOfSIFT {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfSIFT {
+    #[inline(always)] pub fn as_raw_PtrOfSIFT(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfSIFT {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::SIFT>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfSIFT {}
+
+pub struct PtrOfSURF {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfSURF {
+    #[inline(always)] pub fn as_raw_PtrOfSURF(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfSURF {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::SURF>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfSURF {}
+
+impl core::Algorithm for PtrOfSURF {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::features2d::Feature2D for PtrOfSURF {
+    #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xfeatures2d::SURF for PtrOfSURF {
+    #[inline(always)] fn as_raw_SURF(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::SURF>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
 pub struct PtrOfSVM {
     pub(crate) ptr: *mut c_void
 }
@@ -4142,6 +4850,56 @@ impl Drop for PtrOfSimpleBlobDetector {
 
 unsafe impl Send for PtrOfSimpleBlobDetector {}
 
+pub struct PtrOfSimpleWB {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfSimpleWB {
+    #[inline(always)] pub fn as_raw_PtrOfSimpleWB(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfSimpleWB {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xphoto::SimpleWB>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfSimpleWB {}
+
+impl core::Algorithm for PtrOfSimpleWB {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xphoto::SimpleWB for PtrOfSimpleWB {
+    #[inline(always)] fn as_raw_SimpleWB(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xphoto::SimpleWB>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xphoto::WhiteBalancer for PtrOfSimpleWB {
+    #[inline(always)] fn as_raw_WhiteBalancer(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xphoto::WhiteBalancer>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
 pub struct PtrOfSinusoidalPattern {
     pub(crate) ptr: *mut c_void
 }
@@ -4310,6 +5068,29 @@ impl Drop for PtrOfSplitLayer {
 }
 
 unsafe impl Send for PtrOfSplitLayer {}
+
+pub struct PtrOfStarDetector {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfStarDetector {
+    #[inline(always)] pub fn as_raw_PtrOfStarDetector(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfStarDetector {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::StarDetector>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfStarDetector {}
 
 pub struct PtrOfStereoBM {
     pub(crate) ptr: *mut c_void
@@ -4484,6 +5265,29 @@ impl crate::superres::SuperResolution for PtrOfSuperResolution {
     }
 }
 
+pub struct PtrOfSyntheticSequenceGenerator {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfSyntheticSequenceGenerator {
+    #[inline(always)] pub fn as_raw_PtrOfSyntheticSequenceGenerator(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfSyntheticSequenceGenerator {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::bgsegm::SyntheticSequenceGenerator>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfSyntheticSequenceGenerator {}
+
 pub struct PtrOfTanHLayer {
     pub(crate) ptr: *mut c_void
 }
@@ -4643,6 +5447,38 @@ impl crate::photo::TonemapDrago for PtrOfTonemapDrago {
     #[inline(always)] fn as_raw_TonemapDrago(&self) -> *mut c_void {
         let me = self.ptr;
         cpp!(unsafe [me as "cv::Ptr<cv::TonemapDrago>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfTonemapDurand {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfTonemapDurand {
+    #[inline(always)] pub fn as_raw_PtrOfTonemapDurand(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfTonemapDurand {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xphoto::TonemapDurand>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfTonemapDurand {}
+
+impl crate::xphoto::TonemapDurand for PtrOfTonemapDurand {
+    #[inline(always)] fn as_raw_TonemapDurand(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xphoto::TonemapDurand>*"] -> *mut c_void as "void*" {
             return me->get();
         })
     }
@@ -4821,6 +5657,56 @@ impl crate::bioinspired::TransientAreasSegmentationModule for PtrOfTransientArea
     }
 }
 
+pub struct PtrOfVGG {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfVGG {
+    #[inline(always)] pub fn as_raw_PtrOfVGG(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfVGG {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xfeatures2d::VGG>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfVGG {}
+
+impl core::Algorithm for PtrOfVGG {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::features2d::Feature2D for PtrOfVGG {
+    #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::Feature2D>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+impl crate::xfeatures2d::VGG for PtrOfVGG {
+    #[inline(always)] fn as_raw_VGG(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::VGG>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
 pub struct PtrOfVariationalRefinement {
     pub(crate) ptr: *mut c_void
 }
@@ -4866,6 +5752,38 @@ impl crate::video::VariationalRefinement for PtrOfVariationalRefinement {
     #[inline(always)] fn as_raw_VariationalRefinement(&self) -> *mut c_void {
         let me = self.ptr;
         cpp!(unsafe [me as "cv::Ptr<cv::VariationalRefinement>*"] -> *mut c_void as "void*" {
+            return me->get();
+        })
+    }
+}
+
+pub struct PtrOfWBDetector {
+    pub(crate) ptr: *mut c_void
+}
+
+impl PtrOfWBDetector {
+    #[inline(always)] pub fn as_raw_PtrOfWBDetector(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+impl Drop for PtrOfWBDetector {
+    fn drop(&mut self) {
+        let me = self.ptr;
+        cpp!(unsafe [me as "Ptr<cv::xobjdetect::WBDetector>*"] {
+            delete me;
+        })
+    }
+}
+
+unsafe impl Send for PtrOfWBDetector {}
+
+impl crate::xobjdetect::WBDetector for PtrOfWBDetector {
+    #[inline(always)] fn as_raw_WBDetector(&self) -> *mut c_void {
+        let me = self.ptr;
+        cpp!(unsafe [me as "cv::Ptr<cv::xobjdetect::WBDetector>*"] -> *mut c_void as "void*" {
             return me->get();
         })
     }
@@ -5010,7 +5928,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -5196,7 +6113,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -5282,6 +6198,195 @@ impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
 }
 
 unsafe impl Send for VectorOfDetectionROI {}
+
+pub struct VectorOfElliptic_KeyPoint {
+    pub(crate) ptr: *mut c_void
+}
+
+impl VectorOfElliptic_KeyPoint {
+    #[inline(always)] pub fn as_raw_VectorOfElliptic_KeyPoint(&self) -> *mut c_void { self.ptr }
+
+    #[inline]
+    pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+        crate::templ::VectorRefIterator::new(self)
+    }
+}
+
+impl Drop for VectorOfElliptic_KeyPoint {
+    #[inline]
+    fn drop(&mut self) {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*"] {
+            delete vec;
+        })
+    }
+}
+
+impl IntoIterator for VectorOfElliptic_KeyPoint {
+    type Item = crate::xfeatures2d::Elliptic_KeyPoint;
+    type IntoIter = crate::templ::VectorIterator<Self>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        Self::IntoIter::new(self)
+    }
+}
+
+impl<'i> IntoIterator for &'i VectorOfElliptic_KeyPoint {
+    type Item = crate::xfeatures2d::Elliptic_KeyPoint;
+    type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfElliptic_KeyPoint>;
+
+    #[inline]
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
+impl<'i> crate::templ::Vector<'i> for VectorOfElliptic_KeyPoint {
+    type Storage = crate::xfeatures2d::Elliptic_KeyPoint;
+
+    #[inline]
+    fn new() -> Self {
+        Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+            return new std::vector<cv::xfeatures2d::Elliptic_KeyPoint>();
+        })}
+    }
+
+    #[inline]
+    fn len(&self) -> size_t {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "const std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*"] -> size_t as "size_t" {
+            return vec->size();
+        })
+    }
+
+    #[inline]
+    fn is_empty(&self) -> bool {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "const std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*"] -> bool as "bool" {
+            return vec->empty();
+        })
+    }
+
+    #[inline]
+    fn capacity(&self) -> size_t {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "const std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*"] -> size_t as "size_t" {
+            return vec->capacity();
+        })
+    }
+
+    #[inline]
+    fn shrink_to_fit(&mut self) {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*"] {
+            vec->shrink_to_fit();
+        })
+    }                
+
+    #[inline]
+    fn reserve(&mut self, additional: size_t) {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", additional as "size_t"] {
+            vec->reserve(vec->size() + additional);
+        })
+    }
+
+    #[inline]
+    fn remove(&mut self, index: size_t) -> Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", index as "size_t"] {
+            vec->erase(vec->begin() + index);
+        });
+        Ok(())
+    }
+
+    #[inline]
+    fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
+        let len = self.len();
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+        if index1 != index2 {
+            let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+            cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", index1 as "size_t", index2 as "size_t"] {
+                swap((*vec)[index1], (*vec)[index2]);
+            });
+        }
+        Ok(())
+    }
+
+    #[inline]
+    fn clear(&mut self) {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*"] {
+            vec->clear();
+        })
+    }
+
+    type Arg = crate::xfeatures2d::Elliptic_KeyPoint;
+    
+    #[inline]
+    fn push(&mut self, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        let val = val.as_raw_Elliptic_KeyPoint();
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", val as "cv::xfeatures2d::Elliptic_KeyPoint*"] {
+            vec->push_back(*val);
+        })
+    }
+    
+    #[inline]
+    fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+        crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        let val = val.as_raw_Elliptic_KeyPoint();
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", index as "size_t", val as "cv::xfeatures2d::Elliptic_KeyPoint*"] {
+            vec->insert(vec->begin() + index, *val);
+        });
+        Ok(())
+    }
+    
+    #[inline]
+    fn get(&self, index: size_t) -> Result<Self::Storage> {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        cpp!(unsafe [vec as "const std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new cv::xfeatures2d::Elliptic_KeyPoint(vec->at(index)) };
+            } VEC_CATCH(cv_return_value_void_X)
+        }).into_result().map(|ptr| crate::xfeatures2d::Elliptic_KeyPoint { ptr })
+    }
+    
+    #[inline]
+    unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        crate::xfeatures2d::Elliptic_KeyPoint { ptr: cpp!(unsafe [vec as "const std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", index as "size_t"] -> *mut c_void as "void*" {
+            return new cv::xfeatures2d::Elliptic_KeyPoint((*vec)[index]);
+        })}
+    }
+    
+    #[inline]
+    fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", index as "size_t", val as "cv::xfeatures2d::Elliptic_KeyPoint*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+            try {
+                vec->at(index) = *val;
+                return { Error::Code::StsOk, NULL };
+            } VEC_CATCH(cv_return_value_void)
+        }).into_result()
+    }
+    
+    #[inline]
+    unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+        let vec = self.as_raw_VectorOfElliptic_KeyPoint();
+        let val = val.ptr;
+        cpp!(unsafe [vec as "std::vector<cv::xfeatures2d::Elliptic_KeyPoint>*", index as "size_t", val as "cv::xfeatures2d::Elliptic_KeyPoint*"] {
+            (*vec)[index] = *val;
+        })
+    }
+}
+
+unsafe impl Send for VectorOfElliptic_KeyPoint {}
 
 pub struct VectorOfExtObject {
     pub(crate) ptr: *mut c_void
@@ -5386,7 +6491,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfExtObject {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -5589,7 +6693,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -5788,7 +6891,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -5974,7 +7076,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfMat {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -6164,7 +7265,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfNode {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -6354,7 +7454,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfObjectDetection {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -6544,7 +7643,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPlatformInfo {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -6747,7 +7845,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -7006,7 +8103,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -7265,7 +8361,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -7511,7 +8606,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfBackendWrapper {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -7701,7 +8795,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfPtrOfLayer {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -7891,7 +8984,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRange {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -8094,7 +9186,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -8353,7 +9444,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRect2d {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -8599,7 +9689,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfRotatedRect {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -8789,7 +9878,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfSplit {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -8979,7 +10067,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfString {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -9186,7 +10273,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfTarget {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -9372,7 +10458,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -9575,7 +10660,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -9834,7 +10918,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -10020,7 +11103,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -10210,7 +11292,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -10400,7 +11481,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -10590,7 +11670,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfMat {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -10780,7 +11859,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -11030,7 +12108,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -11280,7 +12357,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVectorOfint {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -11470,7 +12546,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfbool {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -11660,7 +12735,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfchar {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -11910,7 +12984,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfint {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -12160,7 +13233,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfuchar {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -12423,7 +13495,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfVideoCaptureAPIs {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -12609,7 +13680,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfbool {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -12808,7 +13878,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfchar {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -13067,7 +14136,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfdouble {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -13326,7 +14394,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOffloat {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -13585,7 +14652,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfint {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -13844,7 +14910,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
@@ -14043,7 +15108,6 @@ impl<'i> crate::templ::Vector<'i> for VectorOfuchar {
         Ok(())
     }
 
-    /// Swaps values of 2 elements
     #[inline]
     fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
         let len = self.len();
