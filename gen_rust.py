@@ -118,6 +118,9 @@ decls_manual_pre = {
         ("typedef cv.FeatureDetector", "Feature2D", [], []),
         ("typedef cv.DescriptorExtractor", "Feature2D", [], []),
     ],
+    "imgproc": [
+        ("enum cv.InterpolationFlags", "", ["/Ghost"], []),
+    ]
 }
 
 # dict of decls to inject after doing header parsing
@@ -1779,7 +1782,10 @@ class EnumInfo(GeneralInfo):
         if self.classname:
             self.name = "{}_{}".format(self.classname, self.name)
         self.consts = []
-        self.is_ignored = False
+        self.is_ignored = self.is_ghost = False
+        for attr in decl[2]:
+            if attr == "/Ghost":
+                self.is_ghost = True
         for const_decl in decl[3]:
             ci = ConstInfo(gen, const_decl, namespaces)
             self.consts.append(ci)
@@ -3340,7 +3346,7 @@ class RustWrapperGenerator(object):
 
         self.moduleSafeRust.write("\n")
 
-        for enm in sorted(self.enums, key=lambda x: x.name):
+        for enm in sorted((x for x in self.enums if not x.is_ghost and not x.is_ignored), key=lambda x: x.name):
             rust = enm.gen_rust()
             if rust:
                 self.moduleSafeRust.write(rust)
