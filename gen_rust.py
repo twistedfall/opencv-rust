@@ -500,6 +500,9 @@ func_rename = {
 
     ### utility ###
     "cv_getImpl_VectorOfint_VectorOfString": "-",
+
+    ### xfeatures2d ###
+    "cv_xfeatures2d_AffineFeature2D_create_PtrOfFeature2D_PtrOfFeature2D": "+_with_extrator",
 }
 
 # list of classes to skip, elements are regular expressions for re.match() against ClassInfo.fullname
@@ -614,6 +617,7 @@ type_replace = {
     "Size_<float>": "Size2f",
     "Size_<double>": "Size2d",
     "Scalar_<double>": "Scalar",
+    "cv::xfeatures2d::Feature2D": "cv::Feature2D",
 }
 
 # dict for handling primitives
@@ -3563,6 +3567,8 @@ class RustWrapperGenerator(object):
     # all your bases...
     def all_bases(self, name):
         bases = set()
+        if name in type_replace:
+            name = type_replace[name]
         ci = self.get_class(name)
         if ci is not None:
             for b in ci.bases:
@@ -3589,8 +3595,8 @@ class RustWrapperGenerator(object):
             logging.info("Not namespaced. Skipped %s", ci)
             return
         if ci.is_trait:
-            if len(ci.bases):
-                bases = sorted(x.rust_full for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
+            bases = sorted(x.rust_full for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
+            if len(bases) > 0:
                 bases = ": " + " + ".join(bases)
             else:
                 bases = ""

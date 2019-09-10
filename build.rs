@@ -36,7 +36,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         return Ok(modules);
     }
     let ignore_modules: HashSet<&'static str> = HashSet::from_iter([
-        "bgsegm",
         "core_detect",
         "cudalegacy",
         "cudev",
@@ -56,10 +55,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "surface_matching",
         "text",
         "tracking",
-        "xfeatures2d", // only appears in some builds, maybe platform or opencv compile flag specific
         "ximgproc",
-        "xobjdetect",
-        "xphoto",
     ].iter().map(|x| *x));
     let ignore_header_suffix = [
         ".details.hpp",
