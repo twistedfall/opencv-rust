@@ -75,7 +75,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "ios.h",
         "ippasync.hpp",
         "operations.hpp",
-        "persistence.hpp",
         "utils/trace.hpp",
         "viz/widget_accessor.hpp",  // wants to include vtk header
     ];

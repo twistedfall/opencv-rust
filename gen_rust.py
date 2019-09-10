@@ -107,6 +107,8 @@ decls_manual_pre = {
         ("class cv.RotatedRect", "", ["/Ghost"], []),
         ("class cv.TermCriteria", "", ["/Ghost"], []),
         ("class cv.utils.logging.LogTag", "", ["/Ghost"], []),
+        ("class cv.FileNode", "", ["/Ghost"], []),
+        ("class cv.FileStorage", "", ["/Ghost"], []),
     ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
@@ -348,6 +350,53 @@ func_rename = {
     # "cv__InputArray__InputArray_double": "from_f64",
     "cv__InputOutputArray__InputOutputArray_UMat": "from_umat",
     "cv__InputOutputArray__InputOutputArray_VectorOfUMat": "from_umat_vec",
+    "cv_read_FileNode_schar_schar": "-",
+    "cv_operator_std_string_const": "-",
+    "cv_double_const": "-",
+    "cv_float_const": "-",
+    "cv_int_const": "-",
+    "cv_read_FileNode_DMatch_DMatch": "+_dmatch",
+    "cv_read_FileNode_KeyPoint_KeyPoint": "+_keypoint",
+    "cv_read_FileNode_Mat_Mat": "+_mat",
+    "cv_read_FileNode_Range_Range": "+_range",
+    "cv_read_FileNode_SparseMat_SparseMat": "+_sparsemat",
+    "cv_read_FileNode_VectorOfDMatch": "+_dmatch_vec_legacy",
+    "cv_read_FileNode_VectorOfDMatch_VectorOfDMatch": "+_dmatch_vec",
+    "cv_read_FileNode_VectorOfKeyPoint": "+_keypoint_vec_legacy",
+    "cv_read_FileNode_VectorOfKeyPoint_VectorOfKeyPoint": "+_keypoint_vec",
+    "cv_read_FileNode_bool_bool": "+_bool",
+    "cv_read_FileNode_double_double": "+_f64",
+    "cv_read_FileNode_float_float": "+_f32",
+    "cv_read_FileNode_int_int": "+_i32",
+    "cv_read_FileNode_short_short": "+_i16",
+    "cv_read_FileNode_std_string_std_string": "+_str",
+    "cv_read_FileNode_uchar_uchar": "+_u8",
+    "cv_read_FileNode_ushort_ushort": "+_u16",
+    "cv_writeScalar_FileStorage_String": "+_str",
+    "cv_writeScalar_FileStorage_double": "+_f64",
+    "cv_writeScalar_FileStorage_float": "+_f32",
+    "cv_writeScalar_FileStorage_int": "+_i32",
+    "cv_write_FileStorage_DMatch": "+_dmatch",
+    "cv_write_FileStorage_KeyPoint": "+_keypoint",
+    "cv_write_FileStorage_Range": "+_range",
+    "cv_write_FileStorage_String_DMatch": "+_dmatch",
+    "cv_write_FileStorage_String_KeyPoint": "+_keypoint",
+    "cv_write_FileStorage_String_Mat": "+_mat",
+    "cv_write_FileStorage_String_Range": "+_range",
+    "cv_write_FileStorage_String_SparseMat": "+_sparsemat",
+    "cv_write_FileStorage_String_String": "+_str",
+    "cv_write_FileStorage_String_VectorOfDMatch": "+_dmatch_vec",
+    "cv_write_FileStorage_String_VectorOfKeyPoint": "+_keypoint_vec",
+    "cv_write_FileStorage_String_double": "+_f64",
+    "cv_write_FileStorage_String_float": "+_f32",
+    "cv_write_FileStorage_String_int": "+_i32",
+    "cv_write_FileStorage_VectorOfDMatch": "+_dmatch_vec",
+    "cv_write_FileStorage_VectorOfKeyPoint": "+_keypoint_vec",
+    "cv_FileStorage_write_String_int": "+_i32",
+    "cv_FileStorage_write_String_double": "+_f64",
+    "cv_FileStorage_write_String_String": "+_str",
+    "cv_FileStorage_write_String_Mat": "+_mat",
+    "cv_FileStorage_write_String_VectorOfString": "+_str_vec",
 
     ### dnn ###
     "cv_dnn_<unnamed>_is_neg_int": "-",
@@ -880,13 +929,14 @@ enum_ignore_discriminant = {
 # key: reserved keyword
 # value: replacement
 reserved_rename = {
-    "type": "_type",  # fixme: "typ" is better rename
     "box": "_box",
-    "ref": "_ref",
+    "fn": "_fn",
     "in": "_in",
-    "use": "_use",
     "match": "_match",
     "move": "_move",
+    "ref": "_ref",
+    "type": "_type",  # fixme: "typ" is better rename
+    "use": "_use",
 }
 
 # list of modules that are imported into every other module so there is no need to reference them using full path, elements are module names
@@ -923,7 +973,8 @@ def decl_patch(module, decl):
         # size() and step() of Mat and UMat should be const
         if decl[0] == "cv.Mat.size" or decl[0] == "cv.Mat.step" or decl[0] == "cv.UMat.size" or decl[0] == "cv.UMat.step":
             decl[2].append("/C")
-        elif decl[0] == "class cv.ocl.Device" and "/Simple" in decl[2]:
+        # force class to be non-simple
+        elif decl[0] in ("class cv.ocl.Device", "class cv.FileNode") and "/Simple" in decl[2]:
             decl[2].remove("/Simple")
     elif module == "dnn":
         # set method takes generic, force it to take DictValue wrapper
