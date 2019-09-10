@@ -163,10 +163,10 @@ fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
     out
 }
 
-fn link_wrapper() -> Result<(pkg_config::Library, &'static str), Box<dyn Error>> {
+fn link_wrapper() -> Result<(pkg_config::Library, String), Box<dyn Error>> {
     let (opencv, pkg_name) = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
-        let pkg_name = "opencv";
-        let opencv = pkg_config::probe_library(pkg_name).expect("package opencv is not found by pkg-config");
+        let pkg_name = env::var("OPENCV_PKGCONFIG_NAME").unwrap_or_else(|_| "opencv".to_owned());
+        let opencv = pkg_config::probe_library(&pkg_name).expect("package opencv is not found by pkg-config");
         if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(&opencv.version)?) {
             panic!("OpenCV version from pkg-config: {} must be from 3.2 branch because of the feature: opencv-32", opencv.version);
         }
@@ -175,8 +175,8 @@ fn link_wrapper() -> Result<(pkg_config::Library, &'static str), Box<dyn Error>>
         }
         (opencv, pkg_name)
     } else if cfg!(feature = "opencv-41") {
-        let pkg_name = "opencv4";
-        let opencv = pkg_config::probe_library(pkg_name).expect("package opencv4 is not found by pkg-config");
+        let pkg_name = env::var("OPENCV_PKGCONFIG_NAME").unwrap_or_else(|_| "opencv4".to_owned());
+        let opencv = pkg_config::probe_library(&pkg_name).expect("package opencv4 is not found by pkg-config");
         if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
             panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv-41", opencv.version);
         }
@@ -185,16 +185,16 @@ fn link_wrapper() -> Result<(pkg_config::Library, &'static str), Box<dyn Error>>
         unreachable!("Cannot be until we allow custom headers");
     };
 
-    eprintln!("=== Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(pkg_name, "libdir")?);
+    eprintln!("=== Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(&pkg_name, "libdir")?);
 
     // fixme: I wonder whether that kind of forced discovery is needed at all now
     // It sure messes with cross-building when a lib is present in host, but not in target platform
     // So for now let's hide it behind a non-default feature and check the breakage reports
     if cfg!(feature = "force-3rd-party-libs-discovery") {
         // add 3rdparty lib dir. pkgconfig forgets it somehow.
-        let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(pkg_name, "prefix")?);
+        let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(&pkg_name, "prefix")?);
         println!("cargo:rustc-link-search=native={}", third_party_dir1);
-        let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(pkg_name, "libdir")?, pkg_name);
+        let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(&pkg_name, "libdir")?, pkg_name);
         println!("cargo:rustc-link-search=native={}", third_party_dir2);
         let third_party_dirs: [&str; 2] = [&third_party_dir1, &third_party_dir2];
 
@@ -241,6 +241,8 @@ fn link_wrapper() -> Result<(pkg_config::Library, &'static str), Box<dyn Error>>
 fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<(), Box<dyn Error>> {
     println!("cargo:rerun-if-changed=hdr_parser.py");
     println!("cargo:rerun-if-changed=gen_rust.py");
+    println!("cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME");
+    println!("cargo:rerun-if-env-changed=OPENCV_HEADER_DIR");
 
     let out_dir = PathBuf::from(env::var("OUT_DIR")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
@@ -509,7 +511,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     if !cfg!(feature = "docs-only") {
         let opencv = link_wrapper()?;
         if cfg!(feature = "buildtime-bindgen") {
-            gen_wrapper((&opencv.0, opencv.1), &opencv_header_dir)?;
+            gen_wrapper((&opencv.0, &opencv.1), &opencv_header_dir)?;
         }
     }
     install_wrapper()?;

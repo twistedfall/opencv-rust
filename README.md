@@ -124,6 +124,10 @@ The directory in that environment variable should contain `opencv2` dir, e.g. `/
 OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x. Please be sure to match the supplied
 header version with the crate version features (opencv-34, opencv-41, etc.).
 
+In some cases you might want to override the pkgconfig package name, you can use `OPENCV_PKGCONFIG_NAME`
+environment variable for that. If you set it pkgconfig will expect to find the file with that name
+and `.pc` extension in the package directory.
+
 ### Compiling OpenCV
 
 See the [upstream
