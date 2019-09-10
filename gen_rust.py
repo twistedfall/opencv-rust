@@ -614,7 +614,6 @@ const_ignore_list = (
     "CV_16FC",
     "CV__DNN_INLINE_NS",
     "ENUM_LOG_LEVEL_FORCE_INT", "CV_LOGTAG_FALLBACK", "CV_LOGTAG_GLOBAL",
-    "DEPTH_MASK_16F", "DEPTH_MASK_ALL_16F",
     "CV_USRTYPE1",
     "CV_INSTRUMENT_GET_RETURN_ADDRESS",
     "CVVISUAL_FUNCTION_NAME_MACRO", "CVVISUAL_LOCATION", "CVVISUAL_THREAD_LOCAL",
@@ -875,6 +874,7 @@ enum_generate = {
 
     ### calib3d ###
     "cv::HandEyeCalibrationMethod",
+    "cv::SolvePnPMethod",
 
     ### core ###
     "cv::AccessFlag",
@@ -887,6 +887,9 @@ enum_generate = {
     "cv::WindowFlags",
     "cv::WindowPropertyFlags",
     "cv::utils::logging::LogLevel",
+    "cv::_InputArray::KindFlag",
+    "cv::_OutputArray::DepthMask",
+    "cv::ocl::OclVectorStrategy",
 
     ### dnn ###
     "cv::dnn::Backend",
@@ -906,6 +909,7 @@ enum_generate = {
 
     ### objdetect ###
     "cv::HOGDescriptor::HistogramNormType",
+    "cv::DetectionBasedTracker::ObjectStatus",
 
     ### stitching ###
     "cv::Stitcher::Mode",
@@ -913,16 +917,25 @@ enum_generate = {
 
     ### videoio ###
     "cv::VideoCaptureAPIs",
+
+    ### xfeatures2d ###
+    "cv::xfeatures2d::DAISY::NormalizationType",
 }
 
 # dict of enum discriminants to exclude from the bindings (e.g. due to duplicate values)
 # key: EnumInfo.fullname
 # value: set of ConstInfo.name
 enum_ignore_discriminant = {
-    "cv::AccessFlag": {"ACCESS_MASK", },
-    "cv::WindowFlags": {"WINDOW_FULLSCREEN", "WINDOW_KEEPRATIO", "WINDOW_GUI_EXPANDED"},
-    "cv::VideoCaptureAPIs": {"CAP_VFW", "CAP_V4L2", "CAP_FIREWARE", "CAP_IEEE1394", "CAP_DC1394", "CAP_CMU1394", "CAP_REALSENSE"},
+    "cv::AccessFlag": {"ACCESS_MASK"},
+    "cv::BorderTypes": {"BORDER_REFLECT101", "BORDER_DEFAULT"},
+    "cv::CpuFeatures": {"CPU_AVX_512IFMA512"},
+    "cv::DftFlags": {"DCT_INVERSE", "DCT_ROWS"},
+    "cv::FileStorage::Mode": {"FORMAT_AUTO"},
+    "cv::NormTypes": {"NORM_TYPE_MASK"},
+    "cv::ocl::OclVectorStrategy": {"OCL_VECTOR_DEFAULT"},
     "cv::utils::logging::LogLevel": {"ENUM_LOG_LEVEL_FORCE_INT"},
+    "cv::VideoCaptureAPIs": {"CAP_VFW", "CAP_V4L2", "CAP_FIREWARE", "CAP_IEEE1394", "CAP_DC1394", "CAP_CMU1394", "CAP_REALSENSE"},
+    "cv::WindowFlags": {"WINDOW_FULLSCREEN", "WINDOW_KEEPRATIO", "WINDOW_GUI_EXPANDED"},
 }
 
 # dict of reserved Rust keywords and their replacement to be used in var, function and class names
