@@ -108,13 +108,15 @@ decls_manual_pre = {
         ("class cv.TermCriteria", "", ["/Ghost"], []),
         ("class cv.utils.logging.LogTag", "", ["/Ghost"], []),
     ],
-    "features2d": [
-        ("class cv.Feature2D", ": cv::Algorithm", ["/Ghost", "/A"], []),
-        ("typedef cv.FeatureDetector", "Feature2D", [], []),
-    ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
         ("class cv.dnn.Layer", "", ["/Ghost", "/A"], []),
+    ],
+    "features2d": [
+        ("class cv.Feature2D", ": cv::Algorithm", ["/Ghost", "/A"], []),
+        ("class cv.DescriptorMatcher", ": cv::Algorithm", ["/Ghost", "/A"], []),
+        ("typedef cv.FeatureDetector", "Feature2D", [], []),
+        ("typedef cv.DescriptorExtractor", "Feature2D", [], []),
     ],
 }
 
@@ -344,6 +346,44 @@ func_rename = {
     "cv__InputOutputArray__InputOutputArray_UMat": "from_umat",
     "cv__InputOutputArray__InputOutputArray_VectorOfUMat": "from_umat_vec",
 
+    ### dnn ###
+    "cv_dnn_<unnamed>_is_neg_int": "-",
+    "cv_dnn_NMSBoxes_VectorOfRotatedRect_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_rotated",
+    "cv_dnn_NMSBoxes_VectorOfRect2d_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_f64",
+    "cv_dnn_Dict_ptr_String": "ptr_mut",
+    "cv_dnn_Net_forward__OutputArray_String": "+_layer",
+    "cv_dnn_Net_forward__OutputArray_VectorOfString": "+_first_outputs",
+    "cv_dnn_Net_forward_VectorOfVectorOfMat_VectorOfString": "forward_all",
+    "cv_dnn_slice_Mat_Range": "slice_1d",
+    "cv_dnn_slice_Mat_Range_Range": "slice_2d",
+    "cv_dnn_slice_Mat_Range_Range_Range": "slice_3d",
+    "cv_dnn_slice_Mat_Range_Range_Range_Range": "slice_4d",
+    "cv_dnn_shape_UMat": "+_umat",
+    "cv_dnn_shape_const_int_X_int": "shape_nd",
+    "cv_dnn_shape_int_int_int_int": "shape_3d",
+    "cv_dnn_blobFromImage__InputArray__OutputArray_double_Size_Scalar_bool_bool_int": "+_to",
+    "cv_dnn_blobFromImages__InputArray__OutputArray_double_Size_Scalar_bool_bool_int": "+_to",
+    "cv_dnn_clamp_Range_int": "clamp_range",
+    "cv_dnn_Net_connect_String_String": "connect_first_second",
+    "cv_dnn_Layer_finalize__InputArray__OutputArray": "+_to",
+    "cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t": "+_str",
+    "cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromTensorflow_const_char_X_size_t_const_char_X_size_t": "+_str",
+    "cv_dnn_readNetFromDarknet_VectorOfuchar_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromDarknet_const_char_X_size_t_const_char_X_size_t": "+_str",
+    "cv_dnn_readNetFromONNX_VectorOfuchar": "+_buffer",
+    "cv_dnn_readNetFromONNX_const_char_X_size_t": "+_str",
+    "cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t": "get_memory_consumption_for_layer",
+    "cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t": "get_memory_consumption_for_layers",
+    "cv_dnn_DictValue_DictValue_bool": "from_bool",
+    "cv_dnn_DictValue_DictValue_int64": "from_i64",
+    "cv_dnn_DictValue_DictValue_int": "from_i32",
+    "cv_dnn_DictValue_DictValue_unsigned": "from_u32",
+    "cv_dnn_DictValue_DictValue_double": "from_f64",
+    "cv_dnn_DictValue_DictValue_const_char_X": "from_str",
+    "cv_dnn_DictValue_DictValue_String": "-",  # effectively duplicate of cv_dnn_DictValue_DictValue_const_char_X
+
     ### features2d ###
     "cv_AGAST__InputArray_VectorOfKeyPoint_int_bool": "AGAST",
     "cv_AGAST__InputArray_VectorOfKeyPoint_int_bool_int": "AGAST_with_type",  # 3.x only
@@ -460,44 +500,6 @@ func_rename = {
 
     ### utility ###
     "cv_getImpl_VectorOfint_VectorOfString": "-",
-
-    ### dnn ###
-    "cv_dnn_<unnamed>_is_neg_int": "-",
-    "cv_dnn_NMSBoxes_VectorOfRotatedRect_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_rotated",
-    "cv_dnn_NMSBoxes_VectorOfRect2d_VectorOffloat_float_float_VectorOfint_float_int": "nms_boxes_f64",
-    "cv_dnn_Dict_ptr_String": "ptr_mut",
-    "cv_dnn_Net_forward__OutputArray_String": "+_layer",
-    "cv_dnn_Net_forward__OutputArray_VectorOfString": "+_first_outputs",
-    "cv_dnn_Net_forward_VectorOfVectorOfMat_VectorOfString": "forward_all",
-    "cv_dnn_slice_Mat_Range": "slice_1d",
-    "cv_dnn_slice_Mat_Range_Range": "slice_2d",
-    "cv_dnn_slice_Mat_Range_Range_Range": "slice_3d",
-    "cv_dnn_slice_Mat_Range_Range_Range_Range": "slice_4d",
-    "cv_dnn_shape_UMat": "+_umat",
-    "cv_dnn_shape_const_int_X_int": "shape_nd",
-    "cv_dnn_shape_int_int_int_int": "shape_3d",
-    "cv_dnn_blobFromImage__InputArray__OutputArray_double_Size_Scalar_bool_bool_int": "+_to",
-    "cv_dnn_blobFromImages__InputArray__OutputArray_double_Size_Scalar_bool_bool_int": "+_to",
-    "cv_dnn_clamp_Range_int": "clamp_range",
-    "cv_dnn_Net_connect_String_String": "connect_first_second",
-    "cv_dnn_Layer_finalize__InputArray__OutputArray": "+_to",
-    "cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar": "+_buffer",
-    "cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t": "+_str",
-    "cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar": "+_buffer",
-    "cv_dnn_readNetFromTensorflow_const_char_X_size_t_const_char_X_size_t": "+_str",
-    "cv_dnn_readNetFromDarknet_VectorOfuchar_VectorOfuchar": "+_buffer",
-    "cv_dnn_readNetFromDarknet_const_char_X_size_t_const_char_X_size_t": "+_str",
-    "cv_dnn_readNetFromONNX_VectorOfuchar": "+_buffer",
-    "cv_dnn_readNetFromONNX_const_char_X_size_t": "+_str",
-    "cv_dnn_Net_getMemoryConsumption_const_int_VectorOfVectorOfint_size_t_size_t": "get_memory_consumption_for_layer",
-    "cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t": "get_memory_consumption_for_layers",
-    "cv_dnn_DictValue_DictValue_bool": "from_bool",
-    "cv_dnn_DictValue_DictValue_int64": "from_i64",
-    "cv_dnn_DictValue_DictValue_int": "from_i32",
-    "cv_dnn_DictValue_DictValue_unsigned": "from_u32",
-    "cv_dnn_DictValue_DictValue_double": "from_f64",
-    "cv_dnn_DictValue_DictValue_const_char_X": "from_str",
-    "cv_dnn_DictValue_DictValue_String": "-",  # effectively duplicate of cv_dnn_DictValue_DictValue_const_char_X
 }
 
 # list of classes to skip, elements are regular expressions for re.match() against ClassInfo.fullname
