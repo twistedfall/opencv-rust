@@ -771,21 +771,29 @@ class CppHeaderParser(object):
                             decl[1] = ": " + ", ".join([self.get_dotted_name(b).replace(".","::") for b in bases])
                     return stmt_type, classname, True, decl
 
-            if stmt.startswith("enum") or stmt.startswith("namespace"):
+            if stmt.startswith("namespace"):
+                stmt_list = stmt.rsplit(" ", 1)
+                if len(stmt_list) < 2:
+                    stmt_list.append("<unnamed>")
+                return stmt_list[0], stmt_list[1], True, None
+
+            elif stmt.startswith("enum"):
                 if "CV_EXPORTS_W_SIMPLE " in stmt:
                     stmt = stmt.replace("CV_EXPORTS_W_SIMPLE ", "")
                 stmt_list = stmt.rsplit(" ", 1)
                 if len(stmt_list) < 2:
                     stmt_list.append("<unnamed>")
-                return stmt_list[0], stmt_list[1], True, None
+                stmt_type, enum_name = stmt_list
+                return stmt_type, enum_name, True, [stmt_type + " " + self.get_dotted_name(enum_name), "", [], None, None, docstring]
 
             if stmt.startswith("extern") and "\"C\"" in stmt:
                 return "namespace", "", True, None
 
         if end_token == "}" and context.startswith("enum"):
             decl = self.parse_enum(stmt, enum_docstrings)
+            stack_top[self.CLASS_DECL][3] = decl
             name = stack_top[self.BLOCK_NAME]
-            return context, name, False, decl
+            return context, name, False, stack_top[self.CLASS_DECL]
 
         if end_token == ";" and stmt.startswith("typedef"):
             decl = self.parse_typedef(stmt, docstring)
@@ -1002,35 +1010,31 @@ class CppHeaderParser(object):
                     docstring = docstring.strip()
                     stmt_type, name, parse_flag, decl = self.parse_stmt(stmt, token, docstring=docstring, enum_docstrings=enum_docstrings)
                     enum_docstrings = {}
-                    if decl:
+                    if decl and decl[3] is not None:
                         line_stmt_type = stmt_type
-                        if stmt_type.startswith("enum"):
-                            enum_decl = [stmt_type + " " + self.get_dotted_name(name), "", [], decl, None, ""]
-                            # if enum is declared inside class then we need to put its declaration earlier in decls
-                            if len(decls) >= 1 and decls[-1][0].startswith("struct ") and enum_decl[0].replace("enum ", "").startswith(decls[-1][0].replace("struct ", "")):
-                                decls.insert(-1, enum_decl)
-                            else:
-                                decls.append(enum_decl)
+                        # if enum is declared inside class then we need to put its declaration earlier in decls
+                        if stmt_type.startswith("enum") and len(decls) >= 1 and decls[-1][0].startswith("struct ") and decl[0].replace("enum ", "").startswith(decls[-1][0].replace("struct ", "")):
+                            decls.insert(-1, decl)
                         else:
                             decls.append(decl)
 
-                            if self._generate_gpumat_decls and "cv.cuda." in decl[0]:
-                                # If function takes as one of arguments Mat or vector<Mat> - we want to create the
-                                # same declaration working with GpuMat (this is important for T-Api access)
-                                args = decl[3]
-                                has_mat = len(list(filter(lambda x: x[0] in {"Mat", "vector_Mat"}, args))) > 0
-                                if has_mat:
-                                    _, _, _, gpumat_decl = self.parse_stmt(stmt, token, mat="cuda::GpuMat", docstring=docstring)
-                                    decls.append(gpumat_decl)
+                        if self._generate_gpumat_decls and "cv.cuda." in decl[0]:
+                            # If function takes as one of arguments Mat or vector<Mat> - we want to create the
+                            # same declaration working with GpuMat (this is important for T-Api access)
+                            args = decl[3]
+                            has_mat = len(list(filter(lambda x: x[0] in {"Mat", "vector_Mat"}, args))) > 0
+                            if has_mat:
+                                _, _, _, gpumat_decl = self.parse_stmt(stmt, token, mat="cuda::GpuMat", docstring=docstring)
+                                decls.append(gpumat_decl)
 
-                            if self._generate_umat_decls:
-                                # If function takes as one of arguments Mat or vector<Mat> - we want to create the
-                                # same declaration working with UMat (this is important for T-Api access)
-                                args = decl[3]
-                                has_mat = len(list(filter(lambda x: x[0] in {"Mat", "vector_Mat"}, args))) > 0
-                                if has_mat:
-                                    _, _, _, umat_decl = self.parse_stmt(stmt, token, mat="UMat", docstring=docstring)
-                                    decls.append(umat_decl)
+                        if self._generate_umat_decls:
+                            # If function takes as one of arguments Mat or vector<Mat> - we want to create the
+                            # same declaration working with UMat (this is important for T-Api access)
+                            args = decl[3]
+                            has_mat = len(list(filter(lambda x: x[0] in {"Mat", "vector_Mat"}, args))) > 0
+                            if has_mat:
+                                _, _, _, umat_decl = self.parse_stmt(stmt, token, mat="UMat", docstring=docstring)
+                                decls.append(umat_decl)
                     docstring = ""
                     if stmt_type == "namespace":
                         chunks = [block[1] for block in self.block_stack if block[0] == 'namespace'] + [name]
