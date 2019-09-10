@@ -81,7 +81,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "operations.hpp",
         "persistence.hpp",
         "utils/trace.hpp",
-        "viz/widget_accessor.hpp",  // want to include vtk header
+        "viz/widget_accessor.hpp",  // wants to include vtk header
     ];
     let ignore_header_substring = [
         "/detail/",

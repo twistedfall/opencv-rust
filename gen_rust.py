@@ -595,7 +595,7 @@ func_unsafe_list = {
 }
 
 # dict of types to replace if cannot be handled automatically
-# key: typeid (full class path with . replaces by ::)
+# key: typeid (full class path with . replaced by ::)
 # value: replacement typeid
 type_replace = {
     "vector_Mat": "vector<cv::Mat>",
@@ -1015,7 +1015,7 @@ class GeneralInfo:
         """
         :type gen: RustWrapperGenerator
         :type name: str
-        :type namespaces: frozenset
+        :type namespaces: frozenset|set
         """
         self.gen = gen
         self.fullname, self.namespace, self.classpath, self.classname, self.name = self.do_parse_name(name, namespaces)
@@ -1143,7 +1143,7 @@ class FuncInfo(GeneralInfo):
         :type gen: RustWrapperGenerator
         :type module: str
         :type decl: list
-        :type namespaces: frozenset
+        :type namespaces: frozenset|set
         """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.module = module
@@ -1512,7 +1512,7 @@ class ClassInfo(GeneralInfo):
         :type gen: RustWrapperGenerator
         :type module: str
         :type decl: list
-        :type namespaces: frozenset
+        :type namespaces: frozenset|set
         """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.methods = []  # type: list[FuncInfo]
@@ -1543,7 +1543,7 @@ class ClassInfo(GeneralInfo):
         self.nested_cname = self.fullname.replace("::", "_")
 
         bases = decl[1][1:].strip()
-        if len(bases):
+        if len(bases) > 0:
             self.bases = [x for x in set(x.strip() for x in bases.split(",")) if x != self.fullname]
         else:
             self.bases = []
@@ -1615,7 +1615,7 @@ class ConstInfo(GeneralInfo):
         """
         :type gen: RustWrapperGenerator
         :type decl: list
-        :type namespaces: frozenset
+        :type namespaces: frozenset|set
         """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         _, self.rustname = split_known_namespace(self.fullname, namespaces)
@@ -1681,7 +1681,7 @@ class TypedefInfo(GeneralInfo):
         """
         :type gen: RustWrapperGenerator
         :type decl: list
-        :type namespaces: frozenset
+        :type namespaces: frozenset|set
         """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.alias = decl[1]
@@ -1709,7 +1709,7 @@ class CallbackInfo(GeneralInfo):
         """
         :type gen: RustWrapperGenerator
         :type decl: list
-        :type namespaces: frozenset
+        :type namespaces: frozenset|set
         """
         GeneralInfo.__init__(self, gen, decl[0], namespaces)
         self.args = []
@@ -1766,7 +1766,7 @@ class EnumInfo(GeneralInfo):
         :type gen: RustWrapperGenerator
         :type module: str
         :type decl: list
-        :type namespaces: frozenset
+        :type namespaces: frozenset|set
         """
         super().__init__(gen, decl[0], namespaces)
         self.module = module
