@@ -1956,6 +1956,9 @@ class TypeInfo(object):
             lambda f: f.write(self.base_templates["rust_void" if self.cpp_extern == "void" else "rust_non_void"].substitute(template_vars))
         )
 
+    def is_output_ref(self):
+        return self.is_by_ref and not self.is_const
+
     def rust_generic_decl(self):
         return ""
 
@@ -2033,9 +2036,10 @@ class TypeInfo(object):
         :type is_output: bool
         :rtype: str
         """
+        typ = self.rust_full
         if self.is_by_ptr:
-            return "instance: *{} c_void".format("mut" if is_output else "const")
-        return "instance: {}".format(self.rust_full)
+            typ = "*{} c_void".format("mut" if is_output else "const")
+        return "instance: {}".format(typ)
 
     def rust_extern_arg_func_decl(self, var_name, is_output=False):
         """
@@ -2043,9 +2047,10 @@ class TypeInfo(object):
         :type is_output: bool
         :rtype: str
         """
-        if not self.is_by_ptr and self.is_by_ref and not self.is_const:
-            return "{}: &mut {}".format(var_name, self.rust_extern)
-        return "{}: {}".format(var_name, self.rust_extern)
+        typ = self.rust_extern
+        if self.is_by_ref and not self.is_by_ptr:
+            typ = "*{} {}".format("const" if self.is_const else "mut", self.rust_extern)
+        return "{}: {}".format(var_name, typ)
 
     def rust_arg_post_call(self, var_name, is_output=False):
         """
@@ -2069,8 +2074,7 @@ class TypeInfo(object):
         """
         if not self.is_by_ptr:
             if self.is_by_ref:
-                if not self.is_const:
-                    return "{}& {}".format(self.cpp_extern, var_name)
+                return "{}{}& {}".format("const " if self.is_const else "", self.cpp_extern, var_name)
             elif is_output:
                 return "{}* {}".format(self.cpp_extern, var_name)
         return "{} {}".format(self.cpp_extern, var_name)
@@ -2089,9 +2093,10 @@ class TypeInfo(object):
         :type is_output: bool
         :rtype: str
         """
+        const = "const " if self.is_const else ""
         if self.is_by_ptr:
-            return "*reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
-        return "*reinterpret_cast<{}*>(&{})".format(self.cpptype, var_name)
+            return "*reinterpret_cast<{}{}*>({})".format(const, self.cpptype, var_name)
+        return "*reinterpret_cast<{}{}*>(&{})".format(const, self.cpptype, var_name)
 
     def cpp_arg_post_call(self, var_name, is_output=False):
         """
@@ -2153,43 +2158,43 @@ class StringTypeInfo(TypeInfo):
             self.c_safe_id = "char_X"
             self.rust_extern = "*mut c_char"
 
-    def is_output(self):
-        return self.is_by_ref and not self.is_const
-
     def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
-        if self.is_output():
+        if self.is_output_ref():
             return "{}: &mut String".format(var_name)
         return "{}: &str".format(var_name)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
-        if self.is_output():
+        if self.is_output_ref():
             return "string_arg_output_send!(via {}_via)".format(var_name)
         return "string_arg!({}{})".format("" if self.is_const else "mut ", var_name)
 
     def rust_arg_func_call(self, var_name, is_output=False):
-        if self.is_output():
+        if self.is_output_ref():
             return "&mut {}_via".format(var_name)
         if self.is_const:
             return "{}.as_ptr()".format(var_name)
         return "{}.as_ptr() as _".format(var_name)  # fixme: use as_mut_ptr() when it's stabilized
 
     def rust_extern_arg_func_decl(self, var_name, is_output=False):
-        if self.is_output():
-            return "{}: *mut {}".format(var_name, self.rust_extern)
+        if self.is_by_ref and self.is_const:
+            return "{}: {}".format(var_name, self.rust_extern)
         return super().rust_extern_arg_func_decl(var_name, is_output)
 
     def rust_arg_post_call(self, var_name, is_output=False):
-        if self.is_output():
+        if self.is_output_ref():
             return "string_arg_output_receive!({}_via => {})".format(var_name, var_name)
         return super().rust_arg_post_call(var_name, is_output)
 
     def cpp_arg_func_decl(self, var_name, is_output=False):
-        if self.is_output():
-            return "{}* {}".format(self.cpp_extern, var_name)
+        if self.is_by_ref:
+            if self.is_const:
+                return "{} {}".format(self.cpp_extern, var_name)
+            else:
+                return "{}* {}".format(self.cpp_extern, var_name)
         return super().cpp_arg_func_decl(var_name, is_output)
 
     def cpp_arg_pre_call(self, var_name, is_output=False):
-        if self.is_output():
+        if self.is_output_ref():
             if self.is_std:
                 return "std::string {}_out".format(var_name)
             else:
@@ -2197,12 +2202,12 @@ class StringTypeInfo(TypeInfo):
         return super().cpp_arg_pre_call(var_name, is_output)
 
     def cpp_arg_func_call(self, var_name, is_output=False):
-        if self.is_output():
+        if self.is_output_ref():
             return "{}_out".format(var_name)
         return "{}({})".format(self.cpptype, var_name)
 
     def cpp_arg_post_call(self, var_name, is_output=False):
-        if self.is_output():
+        if self.is_output_ref():
             return "*{} = strdup({}_out.c_str())".format(var_name, var_name)
         return super().cpp_arg_post_call(var_name, is_output)
 
@@ -2277,6 +2282,26 @@ class SimpleClassTypeInfo(TypeInfo):
                 self.c_safe_id = self.cpp_extern
             self.rust_extern = self.rust_full
             self.is_copy = True
+
+    def rust_arg_func_decl(self, var_name, is_output=False, attr_type=None):
+        # const references to simple classes are passed by value for performance
+        # fixme: it kind of works now, but probably it's not the best idea
+        #  because some functions potentially can save the pointer to the value, but it will be destroyed after function call
+        if self.is_by_ref and self.is_const:
+            return "{}: {}".format(var_name, self.rust_full)
+        return super().rust_arg_func_decl(var_name, is_output, attr_type)
+
+    def rust_extern_arg_func_decl(self, var_name, is_output=False):
+        # fixme, see comment in rust_arg_func_decl()
+        if self.is_by_ref and self.is_const:
+            return "{}: {}".format(var_name, self.rust_extern)
+        return super().rust_extern_arg_func_decl(var_name, is_output)
+
+    def cpp_arg_func_decl(self, var_name, is_output=False):
+        # fixme, see comment in rust_arg_func_decl()
+        if self.is_by_ref and self.is_const:
+            return "{} {}".format(self.cpp_extern, var_name)
+        return super().cpp_arg_func_decl(var_name, is_output)
 
     def cpp_method_return(self, is_constructor):
         if self.cpp_extern.endswith("Wrapper"):
@@ -2357,7 +2382,6 @@ class BoxedClassTypeInfo(TypeInfo):
         self.rust_extern = "*mut c_void"
         self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
         self.is_by_ptr = True
-        self.is_trait = self.typeid in forced_class_trait or self.ci.is_trait
         self.cpp_extern = "void*"
         self.c_safe_id = "void_X"
         self.is_ignored = self.ci.is_ignored
@@ -3021,10 +3045,11 @@ class RawPtrTypeInfo(TypeInfo):
 
     def cpp_arg_func_call(self, var_name, is_output=False):
         if isinstance(self.inner, PrimitiveTypeInfo):
-            return var_name
+            return self.inner.cpp_arg_func_call(var_name, is_output)
         if self.is_by_ptr:
             return "reinterpret_cast<{}*>({})".format(self.cpptype, var_name)
-        return "reinterpret_cast<{}>({})".format(self.cpptype, var_name)
+        else:
+            return "reinterpret_cast<{}>({})".format(self.cpptype, var_name)
 
     def cpp_method_call_invoke(self, call_name, call_args, is_constructor, attr_type):
         if self.is_by_ptr:
@@ -3137,29 +3162,29 @@ class RustWrapperGenerator(object):
     TEMPLATES = {
         "simple_class": {
             "rust_struct": template("""
-                    ${doc_comment}
-                    #[repr(C)]
-                    #[derive(Copy,Clone,Debug,PartialEq)]
-                    pub struct ${rust_local} {
-                    ${fields}
-                    }
-                    
-                """),
+                ${doc_comment}
+                #[repr(C)]
+                #[derive(Copy, Clone, Debug, PartialEq)]
+                pub struct ${rust_local} {
+                ${fields}
+                }
+                
+            """),
 
             "rust_struct_simple": template("""
-                    ${doc_comment}
-                    #[repr(C)]
-                    #[derive(Copy,Clone,Debug,PartialEq)]
-                    pub struct ${rust_local} (${fields});
-                    
-                """),
+                ${doc_comment}
+                #[repr(C)]
+                #[derive(Copy, Clone, Debug, PartialEq)]
+                pub struct ${rust_local} (${fields});
+                
+            """),
 
             "cpp_struct": template("""
-                    typedef struct ${c_safe_id} {
-                    ${fields}
-                    } ${c_safe_id};
-                    
-                """),
+                typedef struct ${c_safe_id} {
+                ${fields}
+                } ${c_safe_id};
+                
+            """),
 
             "rust_field_array": template("""${visibility}${rsname}: [${rust_full}; ${size}],\n"""),
 

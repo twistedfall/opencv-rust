@@ -166,7 +166,7 @@ fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
 fn link_wrapper() -> Result<(pkg_config::Library, String), Box<dyn Error>> {
     let (opencv, pkg_name) = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
         let pkg_name = env::var("OPENCV_PKGCONFIG_NAME").unwrap_or_else(|_| "opencv".to_owned());
-        let opencv = pkg_config::probe_library(&pkg_name).expect("package opencv is not found by pkg-config");
+        let opencv = pkg_config::probe_library(&pkg_name).expect(&format!("package {} is not found by pkg-config", pkg_name));
         if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(&opencv.version)?) {
             panic!("OpenCV version from pkg-config: {} must be from 3.2 branch because of the feature: opencv-32", opencv.version);
         }
@@ -176,13 +176,13 @@ fn link_wrapper() -> Result<(pkg_config::Library, String), Box<dyn Error>> {
         (opencv, pkg_name)
     } else if cfg!(feature = "opencv-41") {
         let pkg_name = env::var("OPENCV_PKGCONFIG_NAME").unwrap_or_else(|_| "opencv4".to_owned());
-        let opencv = pkg_config::probe_library(&pkg_name).expect("package opencv4 is not found by pkg-config");
+        let opencv = pkg_config::probe_library(&pkg_name).expect(&format!("package {} is not found by pkg-config", pkg_name));
         if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
             panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv-41", opencv.version);
         }
         (opencv, pkg_name)
     } else {
-        unreachable!("Cannot be until we allow custom headers");
+        unreachable!("Feature flags should have been checked in main()");
     };
 
     eprintln!("=== Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(&pkg_name, "libdir")?);

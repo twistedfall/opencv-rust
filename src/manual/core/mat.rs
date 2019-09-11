@@ -198,7 +198,7 @@ impl Mat {
         Self::from_slice_2d(&[s])
     }
 
-    pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Mat> {
+    pub fn from_slice_2d<T: DataType>(s: &[impl AsRef<[T]>]) -> Result<Self> {
         let row_count: i32 = s.len() as _;
         let col_count: i32 = if row_count > 0 {
             s[0].as_ref().len() as _
