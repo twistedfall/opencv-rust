@@ -142,6 +142,8 @@ configuring your build with the same flags the travis build uses:
 
 The following modules require [`opencv_contrib`](https://github.com/opencv/opencv_contrib/)
 installed:
+ * aruco
+ * bgsegm
  * bioinspired
  * ccalib
  * cvv
@@ -154,7 +156,14 @@ installed:
  * phase_unwrapping
  * plot
  * sfm
+ * shape
  * structured_light
+ * superres
+ * videostab
+ * viz
+ * xfeatures2d
+ * xobjdetect
+ * xphoto
 
 ## OpenCV 2 support
 
