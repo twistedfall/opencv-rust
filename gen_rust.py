@@ -1985,6 +1985,8 @@ class TypeInfo(object):
             if is_output:
                 mods.append("mut")
             ci = self.gen.get_class(self.typeid)
+            if ci is None and isinstance(self, RawPtrTypeInfo):
+                ci = self.gen.get_class(self.inner.typeid)
             if ci is not None and ci.is_trait:
                 mods.append("dyn")
             if len(mods) > 0:
