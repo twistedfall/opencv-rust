@@ -18,7 +18,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// Kyriakos Herakleous, Charalambos Poullis. "3DUNDERWORLD-SLS: An Open-Source Structured-Light Scanning System for Rapid Geometry Acquisition", arXiv preprint arXiv:1406.6595 (2014).
 pub const DECODE_3D_UNDERWORLD: i32 = 0;
@@ -26,7 +26,7 @@ pub const FAPS: i32 = 2;
 pub const FTP: i32 = 0;
 pub const PSP: i32 = 1;
 
-// Generating impl for trait cv::structured_light::GrayCodePattern (trait)
+// Generating impl for trait crate::structured_light::GrayCodePattern
 /// Class implementing the Gray-code pattern, based on [UNDERWORLD](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_UNDERWORLD).
 ///
 ///  The generation of the pattern images is performed with Gray encoding using the traditional white and black colors.
@@ -103,7 +103,6 @@ pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
 }
 
 impl dyn GrayCodePattern + '_ {
-
     /// Constructor
     /// ## Parameters
     /// * parameters: GrayCodePattern parameters GrayCodePattern::Params: the width and the height of the projector.
@@ -129,12 +128,13 @@ pub struct GrayCodePattern_Params {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::structured_light::GrayCodePattern_Params {
+impl Drop for GrayCodePattern_Params {
     fn drop(&mut self) {
         unsafe { sys::cv_GrayCodePattern_Params_delete(self.ptr) };
     }
 }
-impl crate::structured_light::GrayCodePattern_Params {
+
+impl GrayCodePattern_Params {
     #[inline(always)] pub fn as_raw_GrayCodePattern_Params(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -145,14 +145,13 @@ impl crate::structured_light::GrayCodePattern_Params {
 unsafe impl Send for GrayCodePattern_Params {}
 
 impl GrayCodePattern_Params {
-
     pub fn default() -> Result<crate::structured_light::GrayCodePattern_Params> {
         unsafe { sys::cv_structured_light_GrayCodePattern_Params_Params() }.into_result().map(|ptr| crate::structured_light::GrayCodePattern_Params { ptr })
     }
     
 }
 
-// Generating impl for trait cv::structured_light::SinusoidalPattern (trait)
+// Generating impl for trait crate::structured_light::SinusoidalPattern
 /// Class implementing Fourier transform profilometry (FTP) , phase-shifting profilometry (PSP)
 /// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_faps).
 ///
@@ -220,7 +219,6 @@ pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
 }
 
 impl dyn SinusoidalPattern + '_ {
-
     /// Constructor.
     /// ## Parameters
     /// * parameters: SinusoidalPattern parameters SinusoidalPattern::Params: width, height of the projector and patterns parameters.
@@ -248,12 +246,13 @@ pub struct SinusoidalPattern_Params {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::structured_light::SinusoidalPattern_Params {
+impl Drop for SinusoidalPattern_Params {
     fn drop(&mut self) {
         unsafe { sys::cv_SinusoidalPattern_Params_delete(self.ptr) };
     }
 }
-impl crate::structured_light::SinusoidalPattern_Params {
+
+impl SinusoidalPattern_Params {
     #[inline(always)] pub fn as_raw_SinusoidalPattern_Params(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -264,7 +263,6 @@ impl crate::structured_light::SinusoidalPattern_Params {
 unsafe impl Send for SinusoidalPattern_Params {}
 
 impl SinusoidalPattern_Params {
-
     pub fn width(&self) -> Result<i32> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_width_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
     }
@@ -303,9 +301,9 @@ impl SinusoidalPattern_Params {
     
 }
 
-// Generating impl for trait cv::structured_light::StructuredLightPattern (trait)
+// Generating impl for trait crate::structured_light::StructuredLightPattern
 /// Abstract base class for generating and decoding structured light patterns.
-pub trait StructuredLightPattern: core::Algorithm {
+pub trait StructuredLightPattern: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_StructuredLightPattern(&self) -> *mut c_void;
     /// Generates the structured light pattern to project.
     ///

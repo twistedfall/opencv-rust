@@ -126,7 +126,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;
 pub const CALIB_CB_ASYMMETRIC_GRID: i32 = 2;
@@ -2502,7 +2502,7 @@ pub fn validate_disparity(disparity: &mut dyn core::ToInputOutputArray, cost: &d
     unsafe { sys::cv_validateDisparity__InputOutputArray__InputArray_int_int_int(disparity.as_raw__InputOutputArray(), cost.as_raw__InputArray(), min_disparity, number_of_disparities, disp12_max_disp) }.into_result()
 }
 
-// Generating impl for trait cv::StereoBM (trait)
+// Generating impl for trait crate::calib3d::StereoBM
 /// Class for computing stereo correspondence using the block matching algorithm, introduced and
 /// contributed to OpenCV by K. Konolige.
 pub trait StereoBM: crate::calib3d::StereoMatcher {
@@ -2574,7 +2574,6 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 }
 
 impl dyn StereoBM + '_ {
-
     /// Creates StereoBM object
     ///
     /// ## Parameters
@@ -2598,9 +2597,9 @@ impl dyn StereoBM + '_ {
     
 }
 
-// Generating impl for trait cv::StereoMatcher (trait)
+// Generating impl for trait crate::calib3d::StereoMatcher
 /// The base class for stereo correspondence algorithms.
-pub trait StereoMatcher: core::Algorithm {
+pub trait StereoMatcher: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
     /// Computes disparity map for the specified stereo pair
     ///
@@ -2667,7 +2666,7 @@ pub trait StereoMatcher: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::StereoSGBM (trait)
+// Generating impl for trait crate::calib3d::StereoSGBM
 /// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 /// one as follows:
 ///
@@ -2731,7 +2730,6 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
 }
 
 impl dyn StereoSGBM + '_ {
-
     /// Creates StereoSGBM object
     ///
     /// ## Parameters

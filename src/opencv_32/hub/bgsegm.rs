@@ -2,7 +2,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
 /// Creates a GMG Background Subtractor
@@ -36,7 +36,7 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
     unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma) }.into_result().map(|ptr| types::PtrOfBackgroundSubtractorMOG { ptr })
 }
 
-// Generating impl for trait cv::bgsegm::BackgroundSubtractorGMG (trait)
+// Generating impl for trait crate::bgsegm::BackgroundSubtractorGMG
 /// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Gold2012) .
 ///
 /// Takes a series of images and returns a sequence of mask (8UC1)
@@ -155,7 +155,7 @@ pub trait BackgroundSubtractorGMG {
     
 }
 
-// Generating impl for trait cv::bgsegm::BackgroundSubtractorMOG (trait)
+// Generating impl for trait crate::bgsegm::BackgroundSubtractorMOG
 /// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 ///
 /// The class implements the algorithm described in [KB2001](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_KB2001) .

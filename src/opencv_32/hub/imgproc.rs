@@ -171,7 +171,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
@@ -602,7 +602,7 @@ pub const WARP_INVERSE_MAP: i32 = 16;
 
 /// interpolation algorithm
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum InterpolationFlags {
     INTER_NEAREST = INTER_NEAREST as isize,
     INTER_LINEAR = INTER_LINEAR as isize,
@@ -616,7 +616,7 @@ pub enum InterpolationFlags {
 
 /// cv::undistort mode
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum UndistortTypes {
     PROJ_SPHERICAL_ORTHO = PROJ_SPHERICAL_ORTHO as isize,
     PROJ_SPHERICAL_EQRECT = PROJ_SPHERICAL_EQRECT as isize,
@@ -4655,8 +4655,8 @@ pub fn watershed(image: &dyn core::ToInputArray, markers: &mut dyn core::ToInput
     unsafe { sys::cv_watershed__InputArray__InputOutputArray(image.as_raw__InputArray(), markers.as_raw__InputOutputArray()) }.into_result()
 }
 
-// Generating impl for trait cv::CLAHE (trait)
-pub trait CLAHE: core::Algorithm {
+// Generating impl for trait crate::imgproc::CLAHE
+pub trait CLAHE: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_CLAHE(&self) -> *mut c_void;
     fn apply(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
         input_array_arg!(src);
@@ -4686,9 +4686,9 @@ pub trait CLAHE: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::GeneralizedHough (trait)
+// Generating impl for trait crate::imgproc::GeneralizedHough
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
-pub trait GeneralizedHough: core::Algorithm {
+pub trait GeneralizedHough: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_GeneralizedHough(&self) -> *mut c_void;
     /// set template to search
     ///
@@ -4779,7 +4779,7 @@ pub trait GeneralizedHough: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::GeneralizedHoughBallard (trait)
+// Generating impl for trait crate::imgproc::GeneralizedHoughBallard
 /// Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. Pattern Recognition 13 (2): 111-122.
 /// Detects position only without traslation and rotation
 pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
@@ -4804,7 +4804,7 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
     
 }
 
-// Generating impl for trait cv::GeneralizedHoughGuil (trait)
+// Generating impl for trait crate::imgproc::GeneralizedHoughGuil
 /// Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
 /// Detects position, traslation and rotation
 pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
@@ -4955,12 +4955,13 @@ pub struct LineIterator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::imgproc::LineIterator {
+impl Drop for LineIterator {
     fn drop(&mut self) {
         unsafe { sys::cv_LineIterator_delete(self.ptr) };
     }
 }
-impl crate::imgproc::LineIterator {
+
+impl LineIterator {
     #[inline(always)] pub fn as_raw_LineIterator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -4971,7 +4972,6 @@ impl crate::imgproc::LineIterator {
 unsafe impl Send for LineIterator {}
 
 impl LineIterator {
-
     /// intializes the iterator
     ///
     /// creates iterators for the line connecting pt1 and pt2
@@ -4995,11 +4995,11 @@ impl LineIterator {
     
 }
 
-// Generating impl for trait cv::LineSegmentDetector (trait)
+// Generating impl for trait crate::imgproc::LineSegmentDetector
 /// Line segment detector class
 ///
 /// following the algorithm described at [Rafael12](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Rafael12) .
-pub trait LineSegmentDetector: core::Algorithm {
+pub trait LineSegmentDetector: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
     /// Finds lines in the input image.
     ///
@@ -5071,12 +5071,13 @@ pub struct Subdiv2D {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::imgproc::Subdiv2D {
+impl Drop for Subdiv2D {
     fn drop(&mut self) {
         unsafe { sys::cv_Subdiv2D_delete(self.ptr) };
     }
 }
-impl crate::imgproc::Subdiv2D {
+
+impl Subdiv2D {
     #[inline(always)] pub fn as_raw_Subdiv2D(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5087,7 +5088,6 @@ impl crate::imgproc::Subdiv2D {
 unsafe impl Send for Subdiv2D {}
 
 impl Subdiv2D {
-
     /// creates an empty Subdiv2D object.
     /// To create a new empty Delaunay subdivision you need to use the initDelaunay() function.
     pub fn default() -> Result<crate::imgproc::Subdiv2D> {

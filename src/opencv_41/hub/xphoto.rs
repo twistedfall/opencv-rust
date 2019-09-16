@@ -2,7 +2,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const BM3D_STEP1: i32 = 1;
 pub const BM3D_STEP2: i32 = 2;
@@ -244,7 +244,7 @@ pub fn oil_painting_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
     unsafe { sys::cv_xphoto_oilPainting__InputArray__OutputArray_int_int_int(src.as_raw__InputArray(), dst.as_raw__OutputArray(), size, dyn_ratio, code) }.into_result()
 }
 
-// Generating impl for trait cv::xphoto::GrayworldWB (trait)
+// Generating impl for trait crate::xphoto::GrayworldWB
 /// Gray-world white balance algorithm
 ///
 /// This algorithm scales the values of pixels based on a
@@ -281,7 +281,7 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
     
 }
 
-// Generating impl for trait cv::xphoto::LearningBasedWB (trait)
+// Generating impl for trait crate::xphoto::LearningBasedWB
 /// More sophisticated learning-based automatic white balance algorithm.
 ///
 /// As @ref GrayworldWB, this algorithm works by applying different gains to the input
@@ -356,7 +356,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
     
 }
 
-// Generating impl for trait cv::xphoto::SimpleWB (trait)
+// Generating impl for trait crate::xphoto::SimpleWB
 /// A simple white balance algorithm that works by independently stretching
 /// each of the input image channels to the specified range. For increased robustness
 /// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
@@ -419,7 +419,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
     
 }
 
-// Generating impl for trait cv::xphoto::TonemapDurand (trait)
+// Generating impl for trait crate::xphoto::TonemapDurand
 /// This algorithm decomposes image into two layers: base layer and detail layer using bilateral filter
 /// and compresses contrast of the base layer thus preserving all the details.
 ///
@@ -464,9 +464,9 @@ pub trait TonemapDurand {
     
 }
 
-// Generating impl for trait cv::xphoto::WhiteBalancer (trait)
+// Generating impl for trait crate::xphoto::WhiteBalancer
 /// The base class for auto white balance algorithms.
-pub trait WhiteBalancer: core::Algorithm {
+pub trait WhiteBalancer: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_WhiteBalancer(&self) -> *mut c_void;
     /// Applies white balancing to the input image
     ///

@@ -125,7 +125,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CALIB_CB_ACCURACY: i32 = 32;
 pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;
@@ -224,7 +224,7 @@ pub const StereoSGBM_MODE_SGBM: i32 = 0;
 pub const StereoSGBM_MODE_SGBM_3WAY: i32 = 2;
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum HandEyeCalibrationMethod {
     /// A New Technique for Fully Autonomous and Efficient 3D Robotics Hand/Eye Calibration [Tsai89](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Tsai89)
     CALIB_HAND_EYE_TSAI = CALIB_HAND_EYE_TSAI as isize,
@@ -239,7 +239,7 @@ pub enum HandEyeCalibrationMethod {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum SolvePnPMethod {
     SOLVEPNP_ITERATIVE = SOLVEPNP_ITERATIVE as isize,
     /// EPnP: Efficient Perspective-n-Point Camera Pose Estimation [lepetit2009epnp](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_lepetit2009epnp)
@@ -262,7 +262,7 @@ pub enum SolvePnPMethod {
 
 /// cv::undistort mode
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum UndistortTypes {
     PROJ_SPHERICAL_ORTHO = PROJ_SPHERICAL_ORTHO as isize,
     PROJ_SPHERICAL_EQRECT = PROJ_SPHERICAL_EQRECT as isize,
@@ -270,7 +270,7 @@ pub enum UndistortTypes {
 
 
 #[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct CirclesGridFinderParameters {
     pub density_neighborhood_size: core::Size2f,
     pub min_density: f32,
@@ -3607,20 +3607,19 @@ pub fn validate_disparity(disparity: &mut dyn core::ToInputOutputArray, cost: &d
 }
 
 impl CirclesGridFinderParameters {
-
     pub fn default() -> Result<crate::calib3d::CirclesGridFinderParameters> {
         unsafe { sys::cv_CirclesGridFinderParameters_CirclesGridFinderParameters() }.into_result()
     }
     
 }
 
-// Generating impl for trait cv::LMSolver (trait)
+// Generating impl for trait crate::calib3d::LMSolver
 /// Levenberg-Marquardt solver. Starting with the specified vector of parameters it
 /// optimizes the target vector criteria "err"
 /// (finds local minima of each target vector component absolute value).
 ///
 /// When needed, it calls user-provided callback.
-pub trait LMSolver: core::Algorithm {
+pub trait LMSolver: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_LMSolver(&self) -> *mut c_void;
     /// Runs Levenberg-Marquardt algorithm using the passed vector of parameters as the start point.
     /// The final vector of parameters (whether the algorithm converged or not) is stored at the same
@@ -3653,7 +3652,6 @@ pub trait LMSolver: core::Algorithm {
 }
 
 impl dyn LMSolver + '_ {
-
     /// Creates Levenberg-Marquard solver
     ///
     /// ## Parameters
@@ -3670,7 +3668,7 @@ impl dyn LMSolver + '_ {
     
 }
 
-// Generating impl for trait cv::LMSolver::Callback (trait)
+// Generating impl for trait crate::calib3d::LMSolver_Callback
 pub trait LMSolver_Callback {
     #[inline(always)] fn as_raw_LMSolver_Callback(&self) -> *mut c_void;
     /// computes error and Jacobian for the specified vector of parameters
@@ -3693,7 +3691,7 @@ pub trait LMSolver_Callback {
     
 }
 
-// Generating impl for trait cv::StereoBM (trait)
+// Generating impl for trait crate::calib3d::StereoBM
 /// Class for computing stereo correspondence using the block matching algorithm, introduced and
 /// contributed to OpenCV by K. Konolige.
 pub trait StereoBM: crate::calib3d::StereoMatcher {
@@ -3765,7 +3763,6 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 }
 
 impl dyn StereoBM + '_ {
-
     /// Creates StereoBM object
     ///
     /// ## Parameters
@@ -3789,9 +3786,9 @@ impl dyn StereoBM + '_ {
     
 }
 
-// Generating impl for trait cv::StereoMatcher (trait)
+// Generating impl for trait crate::calib3d::StereoMatcher
 /// The base class for stereo correspondence algorithms.
-pub trait StereoMatcher: core::Algorithm {
+pub trait StereoMatcher: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
     /// Computes disparity map for the specified stereo pair
     ///
@@ -3858,7 +3855,7 @@ pub trait StereoMatcher: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::StereoSGBM (trait)
+// Generating impl for trait crate::calib3d::StereoSGBM
 /// The class implements the modified H. Hirschmuller algorithm [HH08](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HH08) that differs from the original
 /// one as follows:
 ///
@@ -3922,7 +3919,6 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
 }
 
 impl dyn StereoSGBM + '_ {
-
     /// Creates StereoSGBM object
     ///
     /// ## Parameters

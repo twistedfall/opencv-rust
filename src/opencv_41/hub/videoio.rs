@@ -14,7 +14,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// Android - not used
 pub const CAP_ANDROID: i32 = 1000;
@@ -618,7 +618,7 @@ pub const VIDEOWRITER_PROP_QUALITY: i32 = 1;
 /// Note: Backends are available only if they have been built with your OpenCV binaries.
 /// See @ref videoio_overview for more information.
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum VideoCaptureAPIs {
     /// Auto detect == 0
     CAP_ANY = CAP_ANY as isize,
@@ -744,12 +744,13 @@ pub struct VideoCapture {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::videoio::VideoCapture {
+impl Drop for VideoCapture {
     fn drop(&mut self) {
         unsafe { sys::cv_VideoCapture_delete(self.ptr) };
     }
 }
-impl crate::videoio::VideoCapture {
+
+impl VideoCapture {
     #[inline(always)] pub fn as_raw_VideoCapture(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -760,7 +761,6 @@ impl crate::videoio::VideoCapture {
 unsafe impl Send for VideoCapture {}
 
 impl VideoCapture {
-
     /// Default constructor
     ///
     /// Note: In @ref videoio_c "C API", when you finished working with video, release CvCapture structure with
@@ -997,12 +997,13 @@ pub struct VideoWriter {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::videoio::VideoWriter {
+impl Drop for VideoWriter {
     fn drop(&mut self) {
         unsafe { sys::cv_VideoWriter_delete(self.ptr) };
     }
 }
-impl crate::videoio::VideoWriter {
+
+impl VideoWriter {
     #[inline(always)] pub fn as_raw_VideoWriter(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1013,7 +1014,6 @@ impl crate::videoio::VideoWriter {
 unsafe impl Send for VideoWriter {}
 
 impl VideoWriter {
-
     /// Default constructors
     ///
     /// The constructors/functions initialize video writers.

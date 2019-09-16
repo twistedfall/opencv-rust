@@ -55,7 +55,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const SFM_DISTORTION_MODEL_DIVISION: i32 = 1;
 pub const SFM_DISTORTION_MODEL_POLYNOMIAL: i32 = 0;
@@ -86,7 +86,7 @@ pub const SFM_REFINE_RADIAL_DISTORTION_K2: i32 = (1 << 4);
 /// In case that the camera model was SFM_DISTORTION_MODEL_DIVISION, it's only needed to provide
 /// _polynomial_k1 and _polynomial_k2 which will be assigned as division distortion parameters.
 #[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct libmv_CameraIntrinsicsOptions {
     pub distortion_model: i32,
     pub image_width: i32,
@@ -111,7 +111,7 @@ pub struct libmv_CameraIntrinsicsOptions {
 /// * _select_keyframes: allows to select automatically the initial keyframes. If 1 then autoselection is enabled. If 0 then is disabled.
 /// * _verbosity_level: verbosity logs level for Glog. If -1 then logs are disabled, otherwise the log level will be the input integer.
 #[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct libmv_ReconstructionOptions {
     pub keyframe1: i32,
     pub keyframe2: i32,
@@ -651,7 +651,7 @@ pub fn triangulate_points(points2d: &dyn core::ToInputArray, projection_matrices
     unsafe { sys::cv_sfm_triangulatePoints__InputArray__InputArray__OutputArray(points2d.as_raw__InputArray(), projection_matrices.as_raw__InputArray(), points3d.as_raw__OutputArray()) }.into_result()
 }
 
-// Generating impl for trait cv::sfm::BaseSFM (trait)
+// Generating impl for trait crate::sfm::BaseSFM
 /// base class BaseSFM declares a common API that would be used in a typical scene reconstruction scenario
 pub trait BaseSFM {
     #[inline(always)] fn as_raw_BaseSFM(&self) -> *mut c_void;
@@ -716,12 +716,13 @@ pub struct SFMLibmvEuclideanReconstruction {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::sfm::SFMLibmvEuclideanReconstruction {
+impl Drop for SFMLibmvEuclideanReconstruction {
     fn drop(&mut self) {
         unsafe { sys::cv_SFMLibmvEuclideanReconstruction_delete(self.ptr) };
     }
 }
-impl crate::sfm::SFMLibmvEuclideanReconstruction {
+
+impl SFMLibmvEuclideanReconstruction {
     #[inline(always)] pub fn as_raw_SFMLibmvEuclideanReconstruction(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -736,7 +737,6 @@ impl crate::sfm::BaseSFM for SFMLibmvEuclideanReconstruction {
 }
 
 impl SFMLibmvEuclideanReconstruction {
-
     /// Calls the pipeline in order to perform Eclidean reconstruction.
     /// ## Parameters
     /// * points2d: Input vector of vectors of 2d points (the inner vector is per image).
@@ -857,7 +857,6 @@ impl SFMLibmvEuclideanReconstruction {
 }
 
 impl libmv_CameraIntrinsicsOptions {
-
     ///
     /// ## C++ default parameters
     /// * _distortion_model: 0
@@ -876,7 +875,6 @@ impl libmv_CameraIntrinsicsOptions {
 }
 
 impl libmv_ReconstructionOptions {
-
     ///
     /// ## C++ default parameters
     /// * _keyframe1: 1

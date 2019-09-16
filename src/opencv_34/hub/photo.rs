@@ -30,7 +30,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// Use Navier-Stokes based method
 pub const INPAINT_NS: i32 = 0;
@@ -645,9 +645,9 @@ pub fn texture_flattening(src: &dyn core::ToInputArray, mask: &dyn core::ToInput
     unsafe { sys::cv_textureFlattening__InputArray__InputArray__OutputArray_float_float_int(src.as_raw__InputArray(), mask.as_raw__InputArray(), dst.as_raw__OutputArray(), low_threshold, high_threshold, kernel_size) }.into_result()
 }
 
-// Generating impl for trait cv::AlignExposures (trait)
+// Generating impl for trait crate::photo::AlignExposures
 /// The base class for algorithms that align images of the same scene with different exposures
-pub trait AlignExposures: core::Algorithm {
+pub trait AlignExposures: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_AlignExposures(&self) -> *mut c_void;
     /// Aligns images
     ///
@@ -666,7 +666,7 @@ pub trait AlignExposures: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::AlignMTB (trait)
+// Generating impl for trait crate::photo::AlignMTB
 /// This algorithm converts images to median threshold bitmaps (1 for pixels brighter than median
 /// luminance and 0 otherwise) and than aligns the resulting bitmaps using bit operations.
 ///
@@ -757,9 +757,9 @@ pub trait AlignMTB: crate::photo::AlignExposures {
     
 }
 
-// Generating impl for trait cv::CalibrateCRF (trait)
+// Generating impl for trait crate::photo::CalibrateCRF
 /// The base class for camera response calibration algorithms.
-pub trait CalibrateCRF: core::Algorithm {
+pub trait CalibrateCRF: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_CalibrateCRF(&self) -> *mut c_void;
     /// Recovers inverse camera response.
     ///
@@ -776,7 +776,7 @@ pub trait CalibrateCRF: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::CalibrateDebevec (trait)
+// Generating impl for trait crate::photo::CalibrateDebevec
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. Objective function is constructed using pixel values on the same position
 /// in all images, extra term is added to make the result smoother.
@@ -810,7 +810,7 @@ pub trait CalibrateDebevec: crate::photo::CalibrateCRF {
     
 }
 
-// Generating impl for trait cv::CalibrateRobertson (trait)
+// Generating impl for trait crate::photo::CalibrateRobertson
 /// Inverse camera response function is extracted for each brightness value by minimizing an objective
 /// function as linear system. This algorithm uses all image pixels.
 ///
@@ -839,7 +839,7 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
     
 }
 
-// Generating impl for trait cv::MergeDebevec (trait)
+// Generating impl for trait crate::photo::MergeDebevec
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 ///
@@ -863,9 +863,9 @@ pub trait MergeDebevec: crate::photo::MergeExposures {
     
 }
 
-// Generating impl for trait cv::MergeExposures (trait)
+// Generating impl for trait crate::photo::MergeExposures
 /// The base class algorithms that can merge exposure sequence to a single image.
-pub trait MergeExposures: core::Algorithm {
+pub trait MergeExposures: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_MergeExposures(&self) -> *mut c_void;
     /// Merges images.
     ///
@@ -885,7 +885,7 @@ pub trait MergeExposures: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::MergeMertens (trait)
+// Generating impl for trait crate::photo::MergeMertens
 /// Pixels are weighted using contrast, saturation and well-exposedness measures, than images are
 /// combined using laplacian pyramids.
 ///
@@ -943,7 +943,7 @@ pub trait MergeMertens: crate::photo::MergeExposures {
     
 }
 
-// Generating impl for trait cv::MergeRobertson (trait)
+// Generating impl for trait crate::photo::MergeRobertson
 /// The resulting HDR image is calculated as weighted average of the exposures considering exposure
 /// values and camera response.
 ///
@@ -967,9 +967,9 @@ pub trait MergeRobertson: crate::photo::MergeExposures {
     
 }
 
-// Generating impl for trait cv::Tonemap (trait)
+// Generating impl for trait crate::photo::Tonemap
 /// Base class for tonemapping algorithms - tools that are used to map HDR image to 8-bit range.
-pub trait Tonemap: core::Algorithm {
+pub trait Tonemap: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void;
     /// Tonemaps image
     ///
@@ -992,7 +992,7 @@ pub trait Tonemap: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::TonemapDrago (trait)
+// Generating impl for trait crate::photo::TonemapDrago
 /// Adaptive logarithmic mapping is a fast global tonemapping algorithm that scales the image in
 /// logarithmic domain.
 ///
@@ -1022,7 +1022,7 @@ pub trait TonemapDrago: crate::photo::Tonemap {
     
 }
 
-// Generating impl for trait cv::TonemapMantiuk (trait)
+// Generating impl for trait crate::photo::TonemapMantiuk
 /// This algorithm transforms image to contrast using gradients on all levels of gaussian pyramid,
 /// transforms contrast values to HVS response and scales the response. After this the image is
 /// reconstructed from new contrast values.
@@ -1048,7 +1048,7 @@ pub trait TonemapMantiuk: crate::photo::Tonemap {
     
 }
 
-// Generating impl for trait cv::TonemapReinhard (trait)
+// Generating impl for trait crate::photo::TonemapReinhard
 /// This is a global tonemapping operator that models human visual system.
 ///
 /// Mapping function is controlled by adaptation parameter, that is computed using light adaptation and

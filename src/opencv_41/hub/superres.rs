@@ -6,7 +6,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
 ///
@@ -56,7 +56,7 @@ pub fn create_super_resolution_btvl1_cuda() -> Result<types::PtrOfSuperResolutio
     unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result().map(|ptr| types::PtrOfSuperResolution { ptr })
 }
 
-// Generating impl for trait cv::superres::FrameSource (trait)
+// Generating impl for trait crate::superres::FrameSource
 pub trait FrameSource {
     #[inline(always)] fn as_raw_FrameSource(&self) -> *mut c_void;
     fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
@@ -70,12 +70,12 @@ pub trait FrameSource {
     
 }
 
-// Generating impl for trait cv::superres::SuperResolution (trait)
+// Generating impl for trait crate::superres::SuperResolution
 /// Base class for Super Resolution algorithms.
 ///
 /// The class is only used to define the common interface for the whole family of Super Resolution
 /// algorithms.
-pub trait SuperResolution: core::Algorithm + crate::superres::FrameSource {
+pub trait SuperResolution: core::AlgorithmTrait + crate::superres::FrameSource {
     #[inline(always)] fn as_raw_SuperResolution(&self) -> *mut c_void;
     /// Set input frame source for Super Resolution algorithm.
     ///

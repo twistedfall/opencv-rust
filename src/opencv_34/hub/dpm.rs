@@ -32,10 +32,10 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
-// Generating impl for trait cv::dpm::DPMDetector (trait)
+// Generating impl for trait crate::dpm::DPMDetector
 /// This is a C++ abstract class, it provides external user API to work with DPM.
 pub trait DPMDetector {
     #[inline(always)] fn as_raw_DPMDetector(&self) -> *mut c_void;
@@ -59,21 +59,18 @@ pub trait DPMDetector {
     
 }
 
-impl dyn DPMDetector + '_ {
-
-}
-
 // boxed class cv::dpm::DPMDetector::ObjectDetection
 pub struct DPMDetector_ObjectDetection {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dpm::DPMDetector_ObjectDetection {
+impl Drop for DPMDetector_ObjectDetection {
     fn drop(&mut self) {
         unsafe { sys::cv_DPMDetector_ObjectDetection_delete(self.ptr) };
     }
 }
-impl crate::dpm::DPMDetector_ObjectDetection {
+
+impl DPMDetector_ObjectDetection {
     #[inline(always)] pub fn as_raw_DPMDetector_ObjectDetection(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -84,7 +81,6 @@ impl crate::dpm::DPMDetector_ObjectDetection {
 unsafe impl Send for DPMDetector_ObjectDetection {}
 
 impl DPMDetector_ObjectDetection {
-
     pub fn default() -> Result<crate::dpm::DPMDetector_ObjectDetection> {
         unsafe { sys::cv_dpm_DPMDetector_ObjectDetection_ObjectDetection() }.into_result().map(|ptr| crate::dpm::DPMDetector_ObjectDetection { ptr })
     }

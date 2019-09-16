@@ -8,7 +8,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
 /// Open or create hdf5 file
@@ -59,7 +59,7 @@ pub fn open(hdf5_filename: &str) -> Result<types::PtrOfHDF5> {
     unsafe { sys::cv_hdf_open_String(hdf5_filename.as_ptr() as _) }.into_result().map(|ptr| types::PtrOfHDF5 { ptr })
 }
 
-// Generating impl for trait cv::hdf::HDF5 (trait)
+// Generating impl for trait crate::hdf::HDF5
 /// Hierarchical Data Format version 5 interface.
 ///
 /// Notice that module is compiled only when hdf5 is correctly installed.

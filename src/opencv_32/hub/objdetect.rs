@@ -56,7 +56,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;
 pub const CASCADE_DO_ROUGH_SEARCH: i32 = 8;
@@ -70,7 +70,7 @@ pub const HOGDescriptor_DEFAULT_NLEVELS: i32 = 64;
 pub const HOGDescriptor_L2Hys: i32 = 0;
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DetectionBasedTracker_ObjectStatus {
     DETECTED_NOT_SHOWN_YET = DetectionBasedTracker_DETECTED_NOT_SHOWN_YET as isize,
     DETECTED = DetectionBasedTracker_DETECTED as isize,
@@ -181,8 +181,8 @@ pub fn group_rectangles_meanshift(rect_list: &mut types::VectorOfRect, found_wei
     unsafe { sys::cv_groupRectangles_meanshift_VectorOfRect_VectorOfdouble_VectorOfdouble_double_Size(rect_list.as_raw_VectorOfRect(), found_weights.as_raw_VectorOfdouble(), found_scales.as_raw_VectorOfdouble(), detect_threshold, win_det_size) }.into_result()
 }
 
-// Generating impl for trait cv::BaseCascadeClassifier (trait)
-pub trait BaseCascadeClassifier: core::Algorithm {
+// Generating impl for trait crate::objdetect::BaseCascadeClassifier
+pub trait BaseCascadeClassifier: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_BaseCascadeClassifier(&self) -> *mut c_void;
     fn empty(&self) -> Result<bool> {
         unsafe { sys::cv_BaseCascadeClassifier_empty_const(self.as_raw_BaseCascadeClassifier()) }.into_result()
@@ -234,7 +234,7 @@ pub trait BaseCascadeClassifier: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::BaseCascadeClassifier::MaskGenerator (trait)
+// Generating impl for trait crate::objdetect::BaseCascadeClassifier_MaskGenerator
 pub trait BaseCascadeClassifier_MaskGenerator {
     #[inline(always)] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void;
     fn generate_mask(&mut self, src: &core::Mat) -> Result<core::Mat> {
@@ -253,12 +253,13 @@ pub struct CascadeClassifier {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::objdetect::CascadeClassifier {
+impl Drop for CascadeClassifier {
     fn drop(&mut self) {
         unsafe { sys::cv_CascadeClassifier_delete(self.ptr) };
     }
 }
-impl crate::objdetect::CascadeClassifier {
+
+impl CascadeClassifier {
     #[inline(always)] pub fn as_raw_CascadeClassifier(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -269,7 +270,6 @@ impl crate::objdetect::CascadeClassifier {
 unsafe impl Send for CascadeClassifier {}
 
 impl CascadeClassifier {
-
     pub fn default() -> Result<crate::objdetect::CascadeClassifier> {
         unsafe { sys::cv_CascadeClassifier_CascadeClassifier() }.into_result().map(|ptr| crate::objdetect::CascadeClassifier { ptr })
     }
@@ -417,12 +417,13 @@ pub struct DetectionBasedTracker {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::objdetect::DetectionBasedTracker {
+impl Drop for DetectionBasedTracker {
     fn drop(&mut self) {
         unsafe { sys::cv_DetectionBasedTracker_delete(self.ptr) };
     }
 }
-impl crate::objdetect::DetectionBasedTracker {
+
+impl DetectionBasedTracker {
     #[inline(always)] pub fn as_raw_DetectionBasedTracker(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -433,7 +434,6 @@ impl crate::objdetect::DetectionBasedTracker {
 unsafe impl Send for DetectionBasedTracker {}
 
 impl DetectionBasedTracker {
-
     pub fn run(&mut self) -> Result<bool> {
         unsafe { sys::cv_DetectionBasedTracker_run(self.as_raw_DetectionBasedTracker()) }.into_result()
     }
@@ -477,12 +477,13 @@ pub struct DetectionBasedTracker_ExtObject {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::objdetect::DetectionBasedTracker_ExtObject {
+impl Drop for DetectionBasedTracker_ExtObject {
     fn drop(&mut self) {
         unsafe { sys::cv_DetectionBasedTracker_ExtObject_delete(self.ptr) };
     }
 }
-impl crate::objdetect::DetectionBasedTracker_ExtObject {
+
+impl DetectionBasedTracker_ExtObject {
     #[inline(always)] pub fn as_raw_DetectionBasedTracker_ExtObject(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -493,14 +494,13 @@ impl crate::objdetect::DetectionBasedTracker_ExtObject {
 unsafe impl Send for DetectionBasedTracker_ExtObject {}
 
 impl DetectionBasedTracker_ExtObject {
-
     pub fn new(_id: i32, _location: core::Rect, _status: crate::objdetect::DetectionBasedTracker_ObjectStatus) -> Result<crate::objdetect::DetectionBasedTracker_ExtObject> {
         unsafe { sys::cv_DetectionBasedTracker_ExtObject_ExtObject_int_Rect_DetectionBasedTracker_ObjectStatus(_id, _location, _status) }.into_result().map(|ptr| crate::objdetect::DetectionBasedTracker_ExtObject { ptr })
     }
     
 }
 
-// Generating impl for trait cv::DetectionBasedTracker::IDetector (trait)
+// Generating impl for trait crate::objdetect::DetectionBasedTracker_IDetector
 pub trait DetectionBasedTracker_IDetector {
     #[inline(always)] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *mut c_void;
     fn detect(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect) -> Result<()> {
@@ -546,12 +546,13 @@ pub struct DetectionBasedTracker_Parameters {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::objdetect::DetectionBasedTracker_Parameters {
+impl Drop for DetectionBasedTracker_Parameters {
     fn drop(&mut self) {
         unsafe { sys::cv_DetectionBasedTracker_Parameters_delete(self.ptr) };
     }
 }
-impl crate::objdetect::DetectionBasedTracker_Parameters {
+
+impl DetectionBasedTracker_Parameters {
     #[inline(always)] pub fn as_raw_DetectionBasedTracker_Parameters(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -562,7 +563,6 @@ impl crate::objdetect::DetectionBasedTracker_Parameters {
 unsafe impl Send for DetectionBasedTracker_Parameters {}
 
 impl DetectionBasedTracker_Parameters {
-
     pub fn default() -> Result<crate::objdetect::DetectionBasedTracker_Parameters> {
         unsafe { sys::cv_DetectionBasedTracker_Parameters_Parameters() }.into_result().map(|ptr| crate::objdetect::DetectionBasedTracker_Parameters { ptr })
     }
@@ -575,12 +575,13 @@ pub struct DetectionROI {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::objdetect::DetectionROI {
+impl Drop for DetectionROI {
     fn drop(&mut self) {
         unsafe { sys::cv_DetectionROI_delete(self.ptr) };
     }
 }
-impl crate::objdetect::DetectionROI {
+
+impl DetectionROI {
     #[inline(always)] pub fn as_raw_DetectionROI(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -595,12 +596,13 @@ pub struct HOGDescriptor {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::objdetect::HOGDescriptor {
+impl Drop for HOGDescriptor {
     fn drop(&mut self) {
         unsafe { sys::cv_HOGDescriptor_delete(self.ptr) };
     }
 }
-impl crate::objdetect::HOGDescriptor {
+
+impl HOGDescriptor {
     #[inline(always)] pub fn as_raw_HOGDescriptor(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -611,7 +613,6 @@ impl crate::objdetect::HOGDescriptor {
 unsafe impl Send for HOGDescriptor {}
 
 impl HOGDescriptor {
-
     pub fn win_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_HOGDescriptor_winSize_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
@@ -856,12 +857,13 @@ pub struct SimilarRects {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::objdetect::SimilarRects {
+impl Drop for SimilarRects {
     fn drop(&mut self) {
         unsafe { sys::cv_SimilarRects_delete(self.ptr) };
     }
 }
-impl crate::objdetect::SimilarRects {
+
+impl SimilarRects {
     #[inline(always)] pub fn as_raw_SimilarRects(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -872,7 +874,6 @@ impl crate::objdetect::SimilarRects {
 unsafe impl Send for SimilarRects {}
 
 impl SimilarRects {
-
     pub fn new(_eps: f64) -> Result<crate::objdetect::SimilarRects> {
         unsafe { sys::cv_SimilarRects_SimilarRects_double(_eps) }.into_result().map(|ptr| crate::objdetect::SimilarRects { ptr })
     }

@@ -5,7 +5,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const DISOpticalFlow_PRESET_FAST: i32 = 1;
 pub const DISOpticalFlow_PRESET_MEDIUM: i32 = 2;
@@ -450,12 +450,12 @@ pub fn write_optical_flow(path: &str, flow: &dyn core::ToInputArray) -> Result<b
     unsafe { sys::cv_writeOpticalFlow_String__InputArray(path.as_ptr(), flow.as_raw__InputArray()) }.into_result()
 }
 
-// Generating impl for trait cv::BackgroundSubtractor (trait)
+// Generating impl for trait crate::video::BackgroundSubtractor
 /// Base class for background/foreground segmentation. :
 ///
 /// The class is only used to define the common interface for the whole family of background/foreground
 /// segmentation algorithms.
-pub trait BackgroundSubtractor: core::Algorithm {
+pub trait BackgroundSubtractor: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void;
     /// Computes a foreground mask.
     ///
@@ -490,7 +490,7 @@ pub trait BackgroundSubtractor: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::BackgroundSubtractorKNN (trait)
+// Generating impl for trait crate::video::BackgroundSubtractorKNN
 /// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 ///
 /// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
@@ -588,7 +588,7 @@ pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
     
 }
 
-// Generating impl for trait cv::BackgroundSubtractorMOG2 (trait)
+// Generating impl for trait crate::video::BackgroundSubtractorMOG2
 /// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 ///
 /// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Zivkovic2004)
@@ -761,7 +761,7 @@ pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
     
 }
 
-// Generating impl for trait cv::DISOpticalFlow (trait)
+// Generating impl for trait crate::video::DISOpticalFlow
 /// DIS optical flow algorithm.
 ///
 /// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
@@ -900,7 +900,6 @@ pub trait DISOpticalFlow: crate::video::DenseOpticalFlow {
 }
 
 impl dyn DISOpticalFlow + '_ {
-
     /// Creates an instance of DISOpticalFlow
     ///
     /// ## Parameters
@@ -914,9 +913,9 @@ impl dyn DISOpticalFlow + '_ {
     
 }
 
-// Generating impl for trait cv::DenseOpticalFlow (trait)
+// Generating impl for trait crate::video::DenseOpticalFlow
 /// Base class for dense optical flow algorithms
-pub trait DenseOpticalFlow: core::Algorithm {
+pub trait DenseOpticalFlow: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
     /// Calculates an optical flow.
     ///
@@ -938,7 +937,7 @@ pub trait DenseOpticalFlow: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::FarnebackOpticalFlow (trait)
+// Generating impl for trait crate::video::FarnebackOpticalFlow
 /// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
 pub trait FarnebackOpticalFlow: crate::video::DenseOpticalFlow {
     #[inline(always)] fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
@@ -1009,7 +1008,6 @@ pub trait FarnebackOpticalFlow: crate::video::DenseOpticalFlow {
 }
 
 impl dyn FarnebackOpticalFlow + '_ {
-
     ///
     /// ## C++ default parameters
     /// * num_levels: 5
@@ -1039,12 +1037,13 @@ pub struct KalmanFilter {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::video::KalmanFilter {
+impl Drop for KalmanFilter {
     fn drop(&mut self) {
         unsafe { sys::cv_KalmanFilter_delete(self.ptr) };
     }
 }
-impl crate::video::KalmanFilter {
+
+impl KalmanFilter {
     #[inline(always)] pub fn as_raw_KalmanFilter(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1055,7 +1054,6 @@ impl crate::video::KalmanFilter {
 unsafe impl Send for KalmanFilter {}
 
 impl KalmanFilter {
-
     /// predicted state (x'(k)): x(k)=A*x(k-1)+B*u(k)
     pub fn state_pre(&mut self) -> Result<core::Mat> {
         unsafe { sys::cv_KalmanFilter_statePre(self.as_raw_KalmanFilter()) }.into_result().map(|ptr| core::Mat { ptr })
@@ -1209,9 +1207,9 @@ impl KalmanFilter {
     
 }
 
-// Generating impl for trait cv::SparseOpticalFlow (trait)
+// Generating impl for trait crate::video::SparseOpticalFlow
 /// Base interface for sparse optical flow algorithms.
-pub trait SparseOpticalFlow: core::Algorithm {
+pub trait SparseOpticalFlow: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_SparseOpticalFlow(&self) -> *mut c_void;
     /// Calculates a sparse optical flow.
     ///
@@ -1238,7 +1236,7 @@ pub trait SparseOpticalFlow: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::SparsePyrLKOpticalFlow (trait)
+// Generating impl for trait crate::video::SparsePyrLKOpticalFlow
 /// Class used for calculating a sparse optical flow.
 ///
 /// The class can calculate an optical flow for a sparse feature set using the
@@ -1291,7 +1289,6 @@ pub trait SparsePyrLKOpticalFlow: crate::video::SparseOpticalFlow {
 }
 
 impl dyn SparsePyrLKOpticalFlow + '_ {
-
     ///
     /// ## C++ default parameters
     /// * win_size: Size(21, 21)
@@ -1305,7 +1302,7 @@ impl dyn SparsePyrLKOpticalFlow + '_ {
     
 }
 
-// Generating impl for trait cv::VariationalRefinement (trait)
+// Generating impl for trait crate::video::VariationalRefinement
 /// Variational optical flow refinement
 ///
 /// This class implements variational refinement of the input flow field, i.e.
@@ -1397,7 +1394,6 @@ pub trait VariationalRefinement: crate::video::DenseOpticalFlow {
 }
 
 impl dyn VariationalRefinement + '_ {
-
     /// Creates an instance of VariationalRefinement
     pub fn create() -> Result<types::PtrOfVariationalRefinement> {
         unsafe { sys::cv_VariationalRefinement_create() }.into_result().map(|ptr| types::PtrOfVariationalRefinement { ptr })

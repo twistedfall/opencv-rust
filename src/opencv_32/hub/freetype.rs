@@ -13,7 +13,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
 /// Create FreeType2 Instance
@@ -23,8 +23,8 @@ pub fn create_free_type2() -> Result<types::PtrOfFreeType2> {
     unsafe { sys::cv_freetype_createFreeType2() }.into_result().map(|ptr| types::PtrOfFreeType2 { ptr })
 }
 
-// Generating impl for trait cv::freetype::FreeType2 (trait)
-pub trait FreeType2: core::Algorithm {
+// Generating impl for trait crate::freetype::FreeType2
+pub trait FreeType2: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_FreeType2(&self) -> *mut c_void;
     /// Load font data.
     ///

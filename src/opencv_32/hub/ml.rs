@@ -12,7 +12,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// The back-propagation algorithm.
 pub const ANN_MLP_BACKPROP: i32 = 0;
@@ -121,7 +121,7 @@ pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArra
     unsafe { sys::cv_ml_randMVNormal__InputArray__InputArray_int__OutputArray(mean.as_raw__InputArray(), cov.as_raw__InputArray(), nsamples, samples.as_raw__OutputArray()) }.into_result()
 }
 
-// Generating impl for trait cv::ml::ANN_MLP (trait)
+// Generating impl for trait crate::ml::ANN_MLP
 /// Artificial Neural Networks - Multi-Layer Perceptrons.
 ///
 /// Unlike many other models in ML that are constructed and trained at once, in the MLP model these
@@ -274,7 +274,6 @@ pub trait ANN_MLP: crate::ml::StatModel {
 }
 
 impl dyn ANN_MLP + '_ {
-
     /// Creates empty model
     ///
     /// Use StatModel::train to train the model, Algorithm::load\<ANN_MLP\>(filename) to load the pre-trained model.
@@ -297,7 +296,7 @@ impl dyn ANN_MLP + '_ {
     
 }
 
-// Generating impl for trait cv::ml::Boost (trait)
+// Generating impl for trait crate::ml::Boost
 /// Boosted tree classifier derived from DTrees
 ///
 /// ## See also
@@ -337,7 +336,6 @@ pub trait Boost: crate::ml::DTrees {
 }
 
 impl dyn Boost + '_ {
-
     /// Creates the empty model.
     /// Use StatModel::train to train the model, Algorithm::load\<Boost\>(filename) to load the pre-trained model.
     pub fn create() -> Result<types::PtrOfBoost> {
@@ -346,7 +344,7 @@ impl dyn Boost + '_ {
     
 }
 
-// Generating impl for trait cv::ml::DTrees (trait)
+// Generating impl for trait crate::ml::DTrees
 /// The class represents a single decision tree or a collection of decision trees.
 ///
 /// The current public interface of the class allows user to train only a single decision tree, however
@@ -477,7 +475,6 @@ pub trait DTrees: crate::ml::StatModel {
 }
 
 impl dyn DTrees + '_ {
-
     /// Creates the empty model
     ///
     /// The static method creates empty decision tree with the specified parameters. It should be then
@@ -495,12 +492,13 @@ pub struct DTrees_Node {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ml::DTrees_Node {
+impl Drop for DTrees_Node {
     fn drop(&mut self) {
         unsafe { sys::cv_DTrees_Node_delete(self.ptr) };
     }
 }
-impl crate::ml::DTrees_Node {
+
+impl DTrees_Node {
     #[inline(always)] pub fn as_raw_DTrees_Node(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -511,7 +509,6 @@ impl crate::ml::DTrees_Node {
 unsafe impl Send for DTrees_Node {}
 
 impl DTrees_Node {
-
     pub fn default() -> Result<crate::ml::DTrees_Node> {
         unsafe { sys::cv_ml_DTrees_Node_Node() }.into_result().map(|ptr| crate::ml::DTrees_Node { ptr })
     }
@@ -524,12 +521,13 @@ pub struct DTrees_Split {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ml::DTrees_Split {
+impl Drop for DTrees_Split {
     fn drop(&mut self) {
         unsafe { sys::cv_DTrees_Split_delete(self.ptr) };
     }
 }
-impl crate::ml::DTrees_Split {
+
+impl DTrees_Split {
     #[inline(always)] pub fn as_raw_DTrees_Split(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -540,14 +538,13 @@ impl crate::ml::DTrees_Split {
 unsafe impl Send for DTrees_Split {}
 
 impl DTrees_Split {
-
     pub fn default() -> Result<crate::ml::DTrees_Split> {
         unsafe { sys::cv_ml_DTrees_Split_Split() }.into_result().map(|ptr| crate::ml::DTrees_Split { ptr })
     }
     
 }
 
-// Generating impl for trait cv::ml::EM (trait)
+// Generating impl for trait crate::ml::EM
 /// The class implements the Expectation Maximization algorithm.
 ///
 /// ## See also
@@ -746,7 +743,6 @@ pub trait EM: crate::ml::StatModel {
 }
 
 impl dyn EM + '_ {
-
     /// Creates empty %EM model.
     /// The model should be trained then using StatModel::train(traindata, flags) method. Alternatively, you
     /// can use one of the EM::train\* methods or load it from file using Algorithm::load\<EM\>(filename).
@@ -756,7 +752,7 @@ impl dyn EM + '_ {
     
 }
 
-// Generating impl for trait cv::ml::KNearest (trait)
+// Generating impl for trait crate::ml::KNearest
 /// The class implements K-Nearest Neighbors model
 ///
 /// ## See also
@@ -844,7 +840,6 @@ pub trait KNearest: crate::ml::StatModel {
 }
 
 impl dyn KNearest + '_ {
-
     /// Creates the empty model
     ///
     /// The static method creates empty %KNearest classifier. It should be then trained using StatModel::train method.
@@ -854,7 +849,7 @@ impl dyn KNearest + '_ {
     
 }
 
-// Generating impl for trait cv::ml::LogisticRegression (trait)
+// Generating impl for trait crate::ml::LogisticRegression
 /// Implements Logistic Regression classifier.
 ///
 /// ## See also
@@ -949,7 +944,6 @@ pub trait LogisticRegression: crate::ml::StatModel {
 }
 
 impl dyn LogisticRegression + '_ {
-
     /// Creates empty model.
     ///
     /// Creates Logistic Regression model with parameters given.
@@ -959,7 +953,7 @@ impl dyn LogisticRegression + '_ {
     
 }
 
-// Generating impl for trait cv::ml::NormalBayesClassifier (trait)
+// Generating impl for trait crate::ml::NormalBayesClassifier
 /// Bayes classifier for normally distributed data.
 ///
 /// ## See also
@@ -986,7 +980,6 @@ pub trait NormalBayesClassifier: crate::ml::StatModel {
 }
 
 impl dyn NormalBayesClassifier + '_ {
-
     /// Creates empty model
     /// Use StatModel::train to train the model after creation.
     pub fn create() -> Result<types::PtrOfNormalBayesClassifier> {
@@ -1004,12 +997,13 @@ pub struct ParamGrid {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ml::ParamGrid {
+impl Drop for ParamGrid {
     fn drop(&mut self) {
         unsafe { sys::cv_ParamGrid_delete(self.ptr) };
     }
 }
-impl crate::ml::ParamGrid {
+
+impl ParamGrid {
     #[inline(always)] pub fn as_raw_ParamGrid(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1020,7 +1014,6 @@ impl crate::ml::ParamGrid {
 unsafe impl Send for ParamGrid {}
 
 impl ParamGrid {
-
     /// Default constructor
     pub fn default() -> Result<crate::ml::ParamGrid> {
         unsafe { sys::cv_ml_ParamGrid_ParamGrid() }.into_result().map(|ptr| crate::ml::ParamGrid { ptr })
@@ -1033,7 +1026,7 @@ impl ParamGrid {
     
 }
 
-// Generating impl for trait cv::ml::RTrees (trait)
+// Generating impl for trait crate::ml::RTrees
 /// The class implements the random forest predictor.
 ///
 /// ## See also
@@ -1081,7 +1074,6 @@ pub trait RTrees: crate::ml::DTrees {
 }
 
 impl dyn RTrees + '_ {
-
     /// Creates the empty model.
     /// Use StatModel::train to train the model, StatModel::train to create and train the model,
     /// Algorithm::load to load the pre-trained model.
@@ -1091,7 +1083,7 @@ impl dyn RTrees + '_ {
     
 }
 
-// Generating impl for trait cv::ml::SVM (trait)
+// Generating impl for trait crate::ml::SVM
 /// Support Vector Machines.
 ///
 /// ## See also
@@ -1295,7 +1287,6 @@ pub trait SVM: crate::ml::StatModel {
 }
 
 impl dyn SVM + '_ {
-
     /// Generates a grid for %SVM parameters.
     ///
     /// ## Parameters
@@ -1329,8 +1320,8 @@ impl dyn SVM + '_ {
     
 }
 
-// Generating impl for trait cv::ml::SVM::Kernel (trait)
-pub trait SVM_Kernel: core::Algorithm {
+// Generating impl for trait crate::ml::SVM_Kernel
+pub trait SVM_Kernel: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_SVM_Kernel(&self) -> *mut c_void;
     fn get_type(&self) -> Result<i32> {
         unsafe { sys::cv_ml_SVM_Kernel_getType_const(self.as_raw_SVM_Kernel()) }.into_result()
@@ -1342,7 +1333,7 @@ pub trait SVM_Kernel: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::ml::SVMSGD (trait)
+// Generating impl for trait crate::ml::SVMSGD
 /// \
 ///                        Stochastic Gradient Descent SVM Classifier                      *
 pub trait SVMSGD: crate::ml::StatModel {
@@ -1434,7 +1425,6 @@ pub trait SVMSGD: crate::ml::StatModel {
 }
 
 impl dyn SVMSGD + '_ {
-
     /// Creates empty model.
     /// Use StatModel::train to train the model. Since %SVMSGD has several parameters, you may want to
     /// find the best parameters for your problem or use setOptimalParameters() to set some default parameters.
@@ -1444,9 +1434,9 @@ impl dyn SVMSGD + '_ {
     
 }
 
-// Generating impl for trait cv::ml::StatModel (trait)
+// Generating impl for trait crate::ml::StatModel
 /// Base class for statistical models in OpenCV ML.
-pub trait StatModel: core::Algorithm {
+pub trait StatModel: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void;
     /// Returns the number of variables in training samples
     fn get_var_count(&self) -> Result<i32> {
@@ -1529,7 +1519,7 @@ pub trait StatModel: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::ml::TrainData (trait)
+// Generating impl for trait crate::ml::TrainData
 /// Class encapsulating training data.
 ///
 /// Please note that the class only specifies the interface of training data, but not implementation.
@@ -1747,7 +1737,6 @@ pub trait TrainData {
 }
 
 impl dyn TrainData + '_ {
-
     pub fn get_sub_vector(vec: &core::Mat, idx: &core::Mat) -> Result<core::Mat> {
         unsafe { sys::cv_ml_TrainData_getSubVector_Mat_Mat(vec.as_raw_Mat(), idx.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }

@@ -2,7 +2,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
 /// Creates Plot2d object
@@ -26,8 +26,8 @@ pub fn create_plot2d_1(data_x: &dyn core::ToInputArray, data_y: &dyn core::ToInp
     unsafe { sys::cv_plot_createPlot2d__InputArray__InputArray(data_x.as_raw__InputArray(), data_y.as_raw__InputArray()) }.into_result().map(|ptr| types::PtrOfPlot2d { ptr })
 }
 
-// Generating impl for trait cv::plot::Plot2d (trait)
-pub trait Plot2d: core::Algorithm {
+// Generating impl for trait crate::plot::Plot2d
+pub trait Plot2d: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_Plot2d(&self) -> *mut c_void;
     fn set_min_x(&mut self, _plot_min_x: f64) -> Result<()> {
         unsafe { sys::cv_plot_Plot2d_setMinX_double(self.as_raw_Plot2d(), _plot_min_x) }.into_result()

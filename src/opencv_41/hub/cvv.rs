@@ -12,7 +12,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
 /// Returns whether debug-mode is active for this TU and thread.
@@ -52,12 +52,13 @@ pub struct FinalShowCaller {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::cvv::FinalShowCaller {
+impl Drop for FinalShowCaller {
     fn drop(&mut self) {
         unsafe { sys::cv_FinalShowCaller_delete(self.ptr) };
     }
 }
-impl crate::cvv::FinalShowCaller {
+
+impl FinalShowCaller {
     #[inline(always)] pub fn as_raw_FinalShowCaller(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -73,12 +74,13 @@ pub struct CallMetaData {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::cvv::CallMetaData {
+impl Drop for CallMetaData {
     fn drop(&mut self) {
         unsafe { sys::cv_CallMetaData_delete(self.ptr) };
     }
 }
-impl crate::cvv::CallMetaData {
+
+impl CallMetaData {
     #[inline(always)] pub fn as_raw_CallMetaData(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -89,7 +91,6 @@ impl crate::cvv::CallMetaData {
 unsafe impl Send for CallMetaData {}
 
 impl CallMetaData {
-
     /// Creates an unknown location.
     pub fn default() -> Result<crate::cvv::CallMetaData> {
         unsafe { sys::cvv_impl_CallMetaData_CallMetaData() }.into_result().map(|ptr| crate::cvv::CallMetaData { ptr })

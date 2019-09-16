@@ -2,7 +2,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CALIB_FIX_CENTER: i32 = 256;
 pub const CALIB_FIX_GAMMA: i32 = 128;
@@ -463,12 +463,13 @@ pub struct CustomPattern {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ccalib::CustomPattern {
+impl Drop for CustomPattern {
     fn drop(&mut self) {
         unsafe { sys::cv_CustomPattern_delete(self.ptr) };
     }
 }
-impl crate::ccalib::CustomPattern {
+
+impl CustomPattern {
     #[inline(always)] pub fn as_raw_CustomPattern(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -478,12 +479,11 @@ impl crate::ccalib::CustomPattern {
 
 unsafe impl Send for CustomPattern {}
 
-impl core::Algorithm for CustomPattern {
+impl core::AlgorithmTrait for CustomPattern {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl CustomPattern {
-
     pub fn default() -> Result<crate::ccalib::CustomPattern> {
         unsafe { sys::cv_ccalib_CustomPattern_CustomPattern() }.into_result().map(|ptr| crate::ccalib::CustomPattern { ptr })
     }
@@ -672,12 +672,13 @@ pub struct MultiCameraCalibration {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ccalib::MultiCameraCalibration {
+impl Drop for MultiCameraCalibration {
     fn drop(&mut self) {
         unsafe { sys::cv_MultiCameraCalibration_delete(self.ptr) };
     }
 }
-impl crate::ccalib::MultiCameraCalibration {
+
+impl MultiCameraCalibration {
     #[inline(always)] pub fn as_raw_MultiCameraCalibration(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -688,7 +689,6 @@ impl crate::ccalib::MultiCameraCalibration {
 unsafe impl Send for MultiCameraCalibration {}
 
 impl MultiCameraCalibration {
-
     ///
     /// ## C++ default parameters
     /// * verbose: 0
@@ -732,12 +732,13 @@ pub struct MultiCameraCalibration_edge {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ccalib::MultiCameraCalibration_edge {
+impl Drop for MultiCameraCalibration_edge {
     fn drop(&mut self) {
         unsafe { sys::cv_MultiCameraCalibration_edge_delete(self.ptr) };
     }
 }
-impl crate::ccalib::MultiCameraCalibration_edge {
+
+impl MultiCameraCalibration_edge {
     #[inline(always)] pub fn as_raw_MultiCameraCalibration_edge(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -748,7 +749,6 @@ impl crate::ccalib::MultiCameraCalibration_edge {
 unsafe impl Send for MultiCameraCalibration_edge {}
 
 impl MultiCameraCalibration_edge {
-
     pub fn new(cv: i32, pv: i32, pi: i32, trans: &core::Mat) -> Result<crate::ccalib::MultiCameraCalibration_edge> {
         unsafe { sys::cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(cv, pv, pi, trans.as_raw_Mat()) }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration_edge { ptr })
     }
@@ -760,12 +760,13 @@ pub struct MultiCameraCalibration_vertex {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ccalib::MultiCameraCalibration_vertex {
+impl Drop for MultiCameraCalibration_vertex {
     fn drop(&mut self) {
         unsafe { sys::cv_MultiCameraCalibration_vertex_delete(self.ptr) };
     }
 }
-impl crate::ccalib::MultiCameraCalibration_vertex {
+
+impl MultiCameraCalibration_vertex {
     #[inline(always)] pub fn as_raw_MultiCameraCalibration_vertex(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -776,7 +777,6 @@ impl crate::ccalib::MultiCameraCalibration_vertex {
 unsafe impl Send for MultiCameraCalibration_vertex {}
 
 impl MultiCameraCalibration_vertex {
-
     pub fn new(po: &core::Mat, ts: i32) -> Result<crate::ccalib::MultiCameraCalibration_vertex> {
         unsafe { sys::cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(po.as_raw_Mat(), ts) }.into_result().map(|ptr| crate::ccalib::MultiCameraCalibration_vertex { ptr })
     }
@@ -801,12 +801,13 @@ pub struct RandomPatternCornerFinder {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ccalib::RandomPatternCornerFinder {
+impl Drop for RandomPatternCornerFinder {
     fn drop(&mut self) {
         unsafe { sys::cv_RandomPatternCornerFinder_delete(self.ptr) };
     }
 }
-impl crate::ccalib::RandomPatternCornerFinder {
+
+impl RandomPatternCornerFinder {
     #[inline(always)] pub fn as_raw_RandomPatternCornerFinder(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -817,7 +818,6 @@ impl crate::ccalib::RandomPatternCornerFinder {
 unsafe impl Send for RandomPatternCornerFinder {}
 
 impl RandomPatternCornerFinder {
-
     ///
     /// ## C++ default parameters
     /// * nmini_match: 20
@@ -862,12 +862,13 @@ pub struct RandomPatternGenerator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::ccalib::RandomPatternGenerator {
+impl Drop for RandomPatternGenerator {
     fn drop(&mut self) {
         unsafe { sys::cv_RandomPatternGenerator_delete(self.ptr) };
     }
 }
-impl crate::ccalib::RandomPatternGenerator {
+
+impl RandomPatternGenerator {
     #[inline(always)] pub fn as_raw_RandomPatternGenerator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -878,7 +879,6 @@ impl crate::ccalib::RandomPatternGenerator {
 unsafe impl Send for RandomPatternGenerator {}
 
 impl RandomPatternGenerator {
-
     pub fn new(image_width: i32, image_height: i32) -> Result<crate::ccalib::RandomPatternGenerator> {
         unsafe { sys::cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(image_width, image_height) }.into_result().map(|ptr| crate::ccalib::RandomPatternGenerator { ptr })
     }

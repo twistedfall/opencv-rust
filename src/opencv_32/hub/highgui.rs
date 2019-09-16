@@ -117,7 +117,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// indicates that ALT Key is pressed.
 pub const EVENT_FLAG_ALTKEY: i32 = 32;
@@ -208,7 +208,7 @@ pub const WND_PROP_VISIBLE: i32 = 4;
 
 /// Flags for cv::namedWindow
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum WindowFlags {
     /// the user can resize the window (no constraint) / also use to switch a fullscreen window to a normal size.
     WINDOW_NORMAL = WINDOW_NORMAL as isize,
@@ -230,7 +230,7 @@ pub enum WindowFlags {
 
 /// Flags for cv::setWindowProperty / cv::getWindowProperty
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum WindowPropertyFlags {
     /// fullscreen property    (can be WINDOW_NORMAL or WINDOW_FULLSCREEN).
     WND_PROP_FULLSCREEN = WND_PROP_FULLSCREEN as isize,
@@ -898,12 +898,13 @@ pub struct QtFont {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::highgui::QtFont {
+impl Drop for QtFont {
     fn drop(&mut self) {
         unsafe { sys::cv_QtFont_delete(self.ptr) };
     }
 }
-impl crate::highgui::QtFont {
+
+impl QtFont {
     #[inline(always)] pub fn as_raw_QtFont(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {

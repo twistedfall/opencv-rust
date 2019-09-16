@@ -26,7 +26,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CORNER_REFINE_APRILTAG: i32 = 3;
 pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -59,7 +59,7 @@ pub const DICT_ARUCO_ORIGINAL: i32 = 0+16;
 /// - DICT_ARUCO_ORIGINAL: standard ArUco Library Markers. 1024 markers, 5x5 bits, 0 minimum
 /// distance
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum PREDEFINED_DICTIONARY_NAME {
     DICT_4X4_50 = DICT_4X4_50 as isize,
     DICT_4X4_100 = DICT_4X4_100 as isize,
@@ -89,7 +89,7 @@ pub enum PREDEFINED_DICTIONARY_NAME {
 /// ## C++ default parameters
 /// * margin_size: 0
 /// * border_bits: 1
-pub fn _draw_planar_board_impl(board: &mut crate::aruco::Board, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
+pub fn _draw_planar_board_impl(board: &mut dyn crate::aruco::BoardTrait, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
     output_array_arg!(img);
     unsafe { sys::cv_aruco__drawPlanarBoardImpl_Board_Size__OutputArray_int_int(board.as_raw_Board(), out_size, img.as_raw__OutputArray(), margin_size, border_bits) }.into_result()
 }
@@ -731,7 +731,7 @@ pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &types::Pt
     unsafe { sys::cv_aruco_refineDetectedMarkers__InputArray_PtrOfBoard__InputOutputArray__InputOutputArray__InputOutputArray__InputArray__InputArray_float_float_bool__OutputArray_PtrOfDetectorParameters(image.as_raw__InputArray(), board.as_raw_PtrOfBoard(), detected_corners.as_raw__InputOutputArray(), detected_ids.as_raw__InputOutputArray(), rejected_corners.as_raw__InputOutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), min_rep_distance, error_correction_rate, check_all_orders, recovered_idxs.as_raw__OutputArray(), parameters.as_raw_PtrOfDetectorParameters()) }.into_result()
 }
 
-// Generating impl for trait cv::aruco::Board (trait)
+// Generating impl for trait crate::aruco::Board
 /// Board of markers
 ///
 /// A board is a set of markers in the 3D space with a common coordinate system.
@@ -740,12 +740,44 @@ pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &types::Pt
 /// - The object points of the marker corners, i.e. their coordinates respect to the board system.
 /// - The dictionary which indicates the type of markers of the board
 /// - The identifier of all the markers in the board.
-pub trait Board {
+pub trait BoardTrait {
     #[inline(always)] fn as_raw_Board(&self) -> *mut c_void;
 }
 
-impl dyn Board + '_ {
+// boxed class cv::aruco::Board
+/// Board of markers
+///
+/// A board is a set of markers in the 3D space with a common coordinate system.
+/// The common form of a board of marker is a planar (2D) board, however any 3D layout can be used.
+/// A Board object is composed by:
+/// - The object points of the marker corners, i.e. their coordinates respect to the board system.
+/// - The dictionary which indicates the type of markers of the board
+/// - The identifier of all the markers in the board.
+pub struct Board {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
 
+impl Drop for Board {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Board_delete(self.ptr) };
+    }
+}
+
+impl Board {
+    #[inline(always)] pub fn as_raw_Board(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Board {}
+
+impl crate::aruco::BoardTrait for Board {
+    #[inline(always)] fn as_raw_Board(&self) -> *mut c_void { self.ptr }
+}
+
+impl Board {
     /// Provide way to create Board by passing necessary data. Specially needed in Python.
     ///
     /// ## Parameters
@@ -771,12 +803,13 @@ pub struct CharucoBoard {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::aruco::CharucoBoard {
+impl Drop for CharucoBoard {
     fn drop(&mut self) {
         unsafe { sys::cv_CharucoBoard_delete(self.ptr) };
     }
 }
-impl crate::aruco::CharucoBoard {
+
+impl CharucoBoard {
     #[inline(always)] pub fn as_raw_CharucoBoard(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -786,12 +819,11 @@ impl crate::aruco::CharucoBoard {
 
 unsafe impl Send for CharucoBoard {}
 
-impl crate::aruco::Board for CharucoBoard {
+impl crate::aruco::BoardTrait for CharucoBoard {
     #[inline(always)] fn as_raw_Board(&self) -> *mut c_void { self.ptr }
 }
 
 impl CharucoBoard {
-
     /// Draw a ChArUco board
     ///
     /// ## Parameters
@@ -911,12 +943,13 @@ pub struct DetectorParameters {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::aruco::DetectorParameters {
+impl Drop for DetectorParameters {
     fn drop(&mut self) {
         unsafe { sys::cv_DetectorParameters_delete(self.ptr) };
     }
 }
-impl crate::aruco::DetectorParameters {
+
+impl DetectorParameters {
     #[inline(always)] pub fn as_raw_DetectorParameters(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -927,7 +960,6 @@ impl crate::aruco::DetectorParameters {
 unsafe impl Send for DetectorParameters {}
 
 impl DetectorParameters {
-
     pub fn adaptive_thresh_win_size_min(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_adaptiveThreshWinSizeMin_const(self.as_raw_DetectorParameters()) }.into_result()
     }
@@ -1067,12 +1099,13 @@ pub struct Dictionary {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::aruco::Dictionary {
+impl Drop for Dictionary {
     fn drop(&mut self) {
         unsafe { sys::cv_Dictionary_delete(self.ptr) };
     }
 }
-impl crate::aruco::Dictionary {
+
+impl Dictionary {
     #[inline(always)] pub fn as_raw_Dictionary(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1083,7 +1116,6 @@ impl crate::aruco::Dictionary {
 unsafe impl Send for Dictionary {}
 
 impl Dictionary {
-
     pub fn bytes_list(&mut self) -> Result<core::Mat> {
         unsafe { sys::cv_aruco_Dictionary_bytesList(self.as_raw_Dictionary()) }.into_result().map(|ptr| core::Mat { ptr })
     }
@@ -1180,12 +1212,13 @@ pub struct GridBoard {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::aruco::GridBoard {
+impl Drop for GridBoard {
     fn drop(&mut self) {
         unsafe { sys::cv_GridBoard_delete(self.ptr) };
     }
 }
-impl crate::aruco::GridBoard {
+
+impl GridBoard {
     #[inline(always)] pub fn as_raw_GridBoard(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1195,12 +1228,11 @@ impl crate::aruco::GridBoard {
 
 unsafe impl Send for GridBoard {}
 
-impl crate::aruco::Board for GridBoard {
+impl crate::aruco::BoardTrait for GridBoard {
     #[inline(always)] fn as_raw_Board(&self) -> *mut c_void { self.ptr }
 }
 
 impl GridBoard {
-
     /// Draw a GridBoard
     ///
     /// ## Parameters

@@ -30,7 +30,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const AKAZE_DESCRIPTOR_KAZE: i32 = 3;
 pub const AKAZE_DESCRIPTOR_KAZE_UPRIGHT: i32 = 2;
@@ -67,7 +67,7 @@ pub const ORB_FAST_SCORE: i32 = 1;
 pub const ORB_HARRIS_SCORE: i32 = 0;
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum AKAZE_DescriptorType {
     DESCRIPTOR_KAZE_UPRIGHT = AKAZE_DESCRIPTOR_KAZE_UPRIGHT as isize,
     DESCRIPTOR_KAZE = AKAZE_DESCRIPTOR_KAZE as isize,
@@ -76,7 +76,7 @@ pub enum AKAZE_DescriptorType {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum AgastFeatureDetector_DetectorType {
     AGAST_5_8 = AgastFeatureDetector_AGAST_5_8 as isize,
     AGAST_7_12d = AgastFeatureDetector_AGAST_7_12d as isize,
@@ -85,7 +85,7 @@ pub enum AgastFeatureDetector_DetectorType {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DescriptorMatcher_MatcherType {
     FLANNBASED = DescriptorMatcher_FLANNBASED as isize,
     BRUTEFORCE = DescriptorMatcher_BRUTEFORCE as isize,
@@ -98,7 +98,7 @@ pub enum DescriptorMatcher_MatcherType {
 /// \
 ///                                   Drawing functions                                    *
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum DrawMatchesFlags {
     DEFAULT = DrawMatchesFlags_DEFAULT as isize,
     DRAW_OVER_OUTIMG = DrawMatchesFlags_DRAW_OVER_OUTIMG as isize,
@@ -107,7 +107,7 @@ pub enum DrawMatchesFlags {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum FastFeatureDetector_DetectorType {
     TYPE_5_8 = FastFeatureDetector_TYPE_5_8 as isize,
     TYPE_7_12 = FastFeatureDetector_TYPE_7_12 as isize,
@@ -115,7 +115,7 @@ pub enum FastFeatureDetector_DetectorType {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum KAZE_DiffusivityType {
     DIFF_PM_G1 = KAZE_DIFF_PM_G1 as isize,
     DIFF_PM_G2 = KAZE_DIFF_PM_G2 as isize,
@@ -124,7 +124,7 @@ pub enum KAZE_DiffusivityType {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ORB_ScoreType {
     HARRIS_SCORE = ORB_HARRIS_SCORE as isize,
     FAST_SCORE = ORB_FAST_SCORE as isize,
@@ -132,7 +132,7 @@ pub enum ORB_ScoreType {
 
 
 #[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct SimpleBlobDetector_Params {
     pub threshold_step: f32,
     pub min_threshold: f32,
@@ -376,7 +376,7 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
     unsafe { sys::cv_getRecall_VectorOfPoint2f_float(recall_precision_curve.as_raw_VectorOfPoint2f(), l_precision) }.into_result()
 }
 
-// Generating impl for trait cv::AKAZE (trait)
+// Generating impl for trait crate::features2d::AKAZE
 /// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_ANB13).
 ///
 /// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
@@ -394,7 +394,7 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
 /// Note: [ANB13] Fast Explicit Diffusion for Accelerated Features in Nonlinear
 /// Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien Bartoli. In
 /// British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
-pub trait AKAZE: crate::features2d::Feature2D {
+pub trait AKAZE: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_AKAZE(&self) -> *mut c_void;
     fn set_descriptor_type(&mut self, dtype: crate::features2d::AKAZE_DescriptorType) -> Result<()> {
         unsafe { sys::cv_AKAZE_setDescriptorType_AKAZE_DescriptorType(self.as_raw_AKAZE(), dtype) }.into_result()
@@ -459,7 +459,6 @@ pub trait AKAZE: crate::features2d::Feature2D {
 }
 
 impl dyn AKAZE + '_ {
-
     /// The AKAZE constructor
     ///
     /// ## Parameters
@@ -487,9 +486,9 @@ impl dyn AKAZE + '_ {
     
 }
 
-// Generating impl for trait cv::AgastFeatureDetector (trait)
+// Generating impl for trait crate::features2d::AgastFeatureDetector
 /// Wrapping class for feature detection using the AGAST method. :
-pub trait AgastFeatureDetector: crate::features2d::Feature2D {
+pub trait AgastFeatureDetector: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_AgastFeatureDetector(&self) -> *mut c_void;
     fn set_threshold(&mut self, threshold: i32) -> Result<()> {
         unsafe { sys::cv_AgastFeatureDetector_setThreshold_int(self.as_raw_AgastFeatureDetector(), threshold) }.into_result()
@@ -522,7 +521,6 @@ pub trait AgastFeatureDetector: crate::features2d::Feature2D {
 }
 
 impl dyn AgastFeatureDetector + '_ {
-
     ///
     /// ## C++ default parameters
     /// * threshold: 10
@@ -544,12 +542,13 @@ pub struct BFMatcher {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::features2d::BFMatcher {
+impl Drop for BFMatcher {
     fn drop(&mut self) {
         unsafe { sys::cv_BFMatcher_delete(self.ptr) };
     }
 }
-impl crate::features2d::BFMatcher {
+
+impl BFMatcher {
     #[inline(always)] pub fn as_raw_BFMatcher(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -559,7 +558,7 @@ impl crate::features2d::BFMatcher {
 
 unsafe impl Send for BFMatcher {}
 
-impl core::Algorithm for BFMatcher {
+impl core::AlgorithmTrait for BFMatcher {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -568,7 +567,6 @@ impl crate::features2d::DescriptorMatcher for BFMatcher {
 }
 
 impl BFMatcher {
-
     /// Brute-force matcher constructor (obsolete). Please use BFMatcher.create()
     ///
     /// ## C++ default parameters
@@ -625,12 +623,13 @@ pub struct BOWImgDescriptorExtractor {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::features2d::BOWImgDescriptorExtractor {
+impl Drop for BOWImgDescriptorExtractor {
     fn drop(&mut self) {
         unsafe { sys::cv_BOWImgDescriptorExtractor_delete(self.ptr) };
     }
 }
-impl crate::features2d::BOWImgDescriptorExtractor {
+
+impl BOWImgDescriptorExtractor {
     #[inline(always)] pub fn as_raw_BOWImgDescriptorExtractor(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -641,7 +640,6 @@ impl crate::features2d::BOWImgDescriptorExtractor {
 unsafe impl Send for BOWImgDescriptorExtractor {}
 
 impl BOWImgDescriptorExtractor {
-
     /// The constructor.
     ///
     /// ## Parameters
@@ -728,12 +726,13 @@ pub struct BOWKMeansTrainer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::features2d::BOWKMeansTrainer {
+impl Drop for BOWKMeansTrainer {
     fn drop(&mut self) {
         unsafe { sys::cv_BOWKMeansTrainer_delete(self.ptr) };
     }
 }
-impl crate::features2d::BOWKMeansTrainer {
+
+impl BOWKMeansTrainer {
     #[inline(always)] pub fn as_raw_BOWKMeansTrainer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -748,7 +747,6 @@ impl crate::features2d::BOWTrainer for BOWKMeansTrainer {
 }
 
 impl BOWKMeansTrainer {
-
     /// The constructor.
     ///
     /// @see cv::kmeans
@@ -771,7 +769,7 @@ impl BOWKMeansTrainer {
     
 }
 
-// Generating impl for trait cv::BOWTrainer (trait)
+// Generating impl for trait crate::features2d::BOWTrainer
 /// Abstract base class for training the *bag of visual words* vocabulary from a set of descriptors.
 ///
 /// For details, see, for example, *Visual Categorization with Bags of Keypoints* by Gabriella Csurka,
@@ -828,12 +826,13 @@ pub struct BRISK {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::features2d::BRISK {
+impl Drop for BRISK {
     fn drop(&mut self) {
         unsafe { sys::cv_BRISK_delete(self.ptr) };
     }
 }
-impl crate::features2d::BRISK {
+
+impl BRISK {
     #[inline(always)] pub fn as_raw_BRISK(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -843,16 +842,15 @@ impl crate::features2d::BRISK {
 
 unsafe impl Send for BRISK {}
 
-impl core::Algorithm for BRISK {
+impl core::AlgorithmTrait for BRISK {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::features2d::Feature2D for BRISK {
+impl crate::features2d::Feature2DTrait for BRISK {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl BRISK {
-
     /// The BRISK constructor
     ///
     /// ## Parameters
@@ -941,12 +939,12 @@ impl BRISK {
     
 }
 
-// Generating impl for trait cv::DescriptorMatcher (trait)
+// Generating impl for trait crate::features2d::DescriptorMatcher
 /// Abstract base class for matching keypoint descriptors.
 ///
 /// It has two groups of match methods: for matching descriptors of an image with another image or with
 /// an image set.
-pub trait DescriptorMatcher: core::Algorithm {
+pub trait DescriptorMatcher: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_DescriptorMatcher(&self) -> *mut c_void;
     /// Adds descriptors to train a CPU(trainDescCollectionis) or GPU(utrainDescCollectionis) descriptor
     /// collection.
@@ -1174,7 +1172,6 @@ pub trait DescriptorMatcher: core::Algorithm {
 }
 
 impl dyn DescriptorMatcher + '_ {
-
     /// Creates a descriptor matcher of a given type with the default parameters (using default
     /// constructor).
     ///
@@ -1191,15 +1188,15 @@ impl dyn DescriptorMatcher + '_ {
         unsafe { sys::cv_DescriptorMatcher_create_String(descriptor_matcher_type.as_ptr()) }.into_result().map(|ptr| types::PtrOfDescriptorMatcher { ptr })
     }
     
-    pub fn create_with_matcher_type(matcher_type: crate::features2d::DescriptorMatcher_MatcherType) -> Result<types::PtrOfDescriptorMatcher> {
+    pub fn create_with_matcher_type(matcher_type: &crate::features2d::DescriptorMatcher_MatcherType) -> Result<types::PtrOfDescriptorMatcher> {
         unsafe { sys::cv_DescriptorMatcher_create_DescriptorMatcher_MatcherType(matcher_type) }.into_result().map(|ptr| types::PtrOfDescriptorMatcher { ptr })
     }
     
 }
 
-// Generating impl for trait cv::FastFeatureDetector (trait)
+// Generating impl for trait crate::features2d::FastFeatureDetector
 /// Wrapping class for feature detection using the FAST method. :
-pub trait FastFeatureDetector: crate::features2d::Feature2D {
+pub trait FastFeatureDetector: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_FastFeatureDetector(&self) -> *mut c_void;
     fn set_threshold(&mut self, threshold: i32) -> Result<()> {
         unsafe { sys::cv_FastFeatureDetector_setThreshold_int(self.as_raw_FastFeatureDetector(), threshold) }.into_result()
@@ -1232,7 +1229,6 @@ pub trait FastFeatureDetector: crate::features2d::Feature2D {
 }
 
 impl dyn FastFeatureDetector + '_ {
-
     ///
     /// ## C++ default parameters
     /// * threshold: 10
@@ -1244,9 +1240,9 @@ impl dyn FastFeatureDetector + '_ {
     
 }
 
-// Generating impl for trait cv::Feature2D (trait)
+// Generating impl for trait crate::features2d::Feature2D
 /// Abstract base class for 2D image feature detectors and descriptor extractors
-pub trait Feature2D: core::Algorithm {
+pub trait Feature2DTrait: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void;
     /// Detects keypoints in an image (first variant) or image set (second variant).
     ///
@@ -1371,6 +1367,36 @@ pub trait Feature2D: core::Algorithm {
     
 }
 
+// boxed class cv::Feature2D
+/// Abstract base class for 2D image feature detectors and descriptor extractors
+pub struct Feature2D {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for Feature2D {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Feature2D_delete(self.ptr) };
+    }
+}
+
+impl Feature2D {
+    #[inline(always)] pub fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Feature2D {}
+
+impl core::AlgorithmTrait for Feature2D {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::features2d::Feature2DTrait for Feature2D {
+    #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+}
+
 // boxed class cv::FlannBasedMatcher
 /// Flann-based descriptor matcher.
 ///
@@ -1382,12 +1408,13 @@ pub struct FlannBasedMatcher {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::features2d::FlannBasedMatcher {
+impl Drop for FlannBasedMatcher {
     fn drop(&mut self) {
         unsafe { sys::cv_FlannBasedMatcher_delete(self.ptr) };
     }
 }
-impl crate::features2d::FlannBasedMatcher {
+
+impl FlannBasedMatcher {
     #[inline(always)] pub fn as_raw_FlannBasedMatcher(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1397,7 +1424,7 @@ impl crate::features2d::FlannBasedMatcher {
 
 unsafe impl Send for FlannBasedMatcher {}
 
-impl core::Algorithm for FlannBasedMatcher {
+impl core::AlgorithmTrait for FlannBasedMatcher {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -1406,7 +1433,6 @@ impl crate::features2d::DescriptorMatcher for FlannBasedMatcher {
 }
 
 impl FlannBasedMatcher {
-
     pub fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
         input_array_arg!(descriptors);
         unsafe { sys::cv_FlannBasedMatcher_add__InputArray(self.as_raw_FlannBasedMatcher(), descriptors.as_raw__InputArray()) }.into_result()
@@ -1445,9 +1471,9 @@ impl FlannBasedMatcher {
     
 }
 
-// Generating impl for trait cv::GFTTDetector (trait)
+// Generating impl for trait crate::features2d::GFTTDetector
 /// Wrapping class for feature detection using the goodFeaturesToTrack function. :
-pub trait GFTTDetector: crate::features2d::Feature2D {
+pub trait GFTTDetector: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_GFTTDetector(&self) -> *mut c_void;
     fn set_max_features(&mut self, max_features: i32) -> Result<()> {
         unsafe { sys::cv_GFTTDetector_setMaxFeatures_int(self.as_raw_GFTTDetector(), max_features) }.into_result()
@@ -1504,7 +1530,6 @@ pub trait GFTTDetector: crate::features2d::Feature2D {
 }
 
 impl dyn GFTTDetector + '_ {
-
     ///
     /// ## C++ default parameters
     /// * max_corners: 1000
@@ -1527,14 +1552,14 @@ impl dyn GFTTDetector + '_ {
     
 }
 
-// Generating impl for trait cv::KAZE (trait)
+// Generating impl for trait crate::features2d::KAZE
 /// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_ABD12) .
 ///
 ///
 /// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
 /// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
 /// (ECCV), Fiorenze, Italy, October 2012.
-pub trait KAZE: crate::features2d::Feature2D {
+pub trait KAZE: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_KAZE(&self) -> *mut c_void;
     fn set_extended(&mut self, extended: bool) -> Result<()> {
         unsafe { sys::cv_KAZE_setExtended_bool(self.as_raw_KAZE(), extended) }.into_result()
@@ -1591,7 +1616,6 @@ pub trait KAZE: crate::features2d::Feature2D {
 }
 
 impl dyn KAZE + '_ {
-
     /// The KAZE constructor
     ///
     /// ## Parameters
@@ -1625,12 +1649,13 @@ pub struct KeyPointsFilter {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::features2d::KeyPointsFilter {
+impl Drop for KeyPointsFilter {
     fn drop(&mut self) {
         unsafe { sys::cv_KeyPointsFilter_delete(self.ptr) };
     }
 }
-impl crate::features2d::KeyPointsFilter {
+
+impl KeyPointsFilter {
     #[inline(always)] pub fn as_raw_KeyPointsFilter(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1641,7 +1666,6 @@ impl crate::features2d::KeyPointsFilter {
 unsafe impl Send for KeyPointsFilter {}
 
 impl KeyPointsFilter {
-
     pub fn default() -> Result<crate::features2d::KeyPointsFilter> {
         unsafe { sys::cv_KeyPointsFilter_KeyPointsFilter() }.into_result().map(|ptr| crate::features2d::KeyPointsFilter { ptr })
     }
@@ -1675,7 +1699,7 @@ impl KeyPointsFilter {
     
 }
 
-// Generating impl for trait cv::MSER (trait)
+// Generating impl for trait crate::features2d::MSER
 /// Maximally stable extremal region extractor
 ///
 /// The class encapsulates all the parameters of the %MSER extraction algorithm (see [wiki
@@ -1691,7 +1715,7 @@ impl KeyPointsFilter {
 /// code which is distributed under GPL.
 ///
 /// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
-pub trait MSER: crate::features2d::Feature2D {
+pub trait MSER: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_MSER(&self) -> *mut c_void;
     /// Detect %MSER regions
     ///
@@ -1743,7 +1767,6 @@ pub trait MSER: crate::features2d::Feature2D {
 }
 
 impl dyn MSER + '_ {
-
     /// Full consturctor for %MSER detector
     ///
     /// ## Parameters
@@ -1773,14 +1796,14 @@ impl dyn MSER + '_ {
     
 }
 
-// Generating impl for trait cv::ORB (trait)
+// Generating impl for trait crate::features2d::ORB
 /// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 ///
 /// described in [RRKB11](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 /// the strongest features using FAST or Harris response, finds their orientation using first-order
 /// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 /// k-tuples) are rotated according to the measured orientation).
-pub trait ORB: crate::features2d::Feature2D {
+pub trait ORB: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_ORB(&self) -> *mut c_void;
     fn set_max_features(&mut self, max_features: i32) -> Result<()> {
         unsafe { sys::cv_ORB_setMaxFeatures_int(self.as_raw_ORB(), max_features) }.into_result()
@@ -1861,7 +1884,6 @@ pub trait ORB: crate::features2d::Feature2D {
 }
 
 impl dyn ORB + '_ {
-
     /// The ORB constructor
     ///
     /// ## Parameters
@@ -1949,12 +1971,13 @@ pub struct SimpleBlobDetector {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::features2d::SimpleBlobDetector {
+impl Drop for SimpleBlobDetector {
     fn drop(&mut self) {
         unsafe { sys::cv_SimpleBlobDetector_delete(self.ptr) };
     }
 }
-impl crate::features2d::SimpleBlobDetector {
+
+impl SimpleBlobDetector {
     #[inline(always)] pub fn as_raw_SimpleBlobDetector(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1964,16 +1987,15 @@ impl crate::features2d::SimpleBlobDetector {
 
 unsafe impl Send for SimpleBlobDetector {}
 
-impl core::Algorithm for SimpleBlobDetector {
+impl core::AlgorithmTrait for SimpleBlobDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::features2d::Feature2D for SimpleBlobDetector {
+impl crate::features2d::Feature2DTrait for SimpleBlobDetector {
     #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl SimpleBlobDetector {
-
     ///
     /// ## C++ default parameters
     /// * parameters: SimpleBlobDetector::Params()
@@ -1988,7 +2010,6 @@ impl SimpleBlobDetector {
 }
 
 impl SimpleBlobDetector_Params {
-
     pub fn default() -> Result<crate::features2d::SimpleBlobDetector_Params> {
         unsafe { sys::cv_SimpleBlobDetector_Params_Params() }.into_result()
     }

@@ -10,7 +10,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const DAISY_NRM_FULL: i32 = 102;
 pub const DAISY_NRM_NONE: i32 = 100;
@@ -70,12 +70,13 @@ pub struct BoostDesc {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::BoostDesc {
+impl Drop for BoostDesc {
     fn drop(&mut self) {
         unsafe { sys::cv_BoostDesc_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::BoostDesc {
+
+impl BoostDesc {
     #[inline(always)] pub fn as_raw_BoostDesc(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -85,12 +86,11 @@ impl crate::xfeatures2d::BoostDesc {
 
 unsafe impl Send for BoostDesc {}
 
-impl core::Algorithm for BoostDesc {
+impl core::AlgorithmTrait for BoostDesc {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl BoostDesc {
-
     ///
     /// ## C++ default parameters
     /// * desc: BoostDesc::BINBOOST_256
@@ -112,12 +112,13 @@ pub struct BriefDescriptorExtractor {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::BriefDescriptorExtractor {
+impl Drop for BriefDescriptorExtractor {
     fn drop(&mut self) {
         unsafe { sys::cv_BriefDescriptorExtractor_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::BriefDescriptorExtractor {
+
+impl BriefDescriptorExtractor {
     #[inline(always)] pub fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -127,12 +128,11 @@ impl crate::xfeatures2d::BriefDescriptorExtractor {
 
 unsafe impl Send for BriefDescriptorExtractor {}
 
-impl core::Algorithm for BriefDescriptorExtractor {
+impl core::AlgorithmTrait for BriefDescriptorExtractor {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl BriefDescriptorExtractor {
-
     ///
     /// ## C++ default parameters
     /// * bytes: 32
@@ -143,7 +143,7 @@ impl BriefDescriptorExtractor {
     
 }
 
-// Generating impl for trait cv::xfeatures2d::DAISY (trait)
+// Generating impl for trait crate::xfeatures2d::DAISY
 /// Class implementing DAISY descriptor, described in [Tola10](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Tola10)
 ///
 /// ## Parameters
@@ -159,7 +159,7 @@ impl BriefDescriptorExtractor {
 /// * H: optional 3x3 homography matrix used to warp the grid of daisy but sampling keypoints remains unwarped on image
 /// * interpolation: switch to disable interpolation for speed improvement at minor quality loss
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
-pub trait DAISY: crate::features2d::Feature2D {
+pub trait DAISY: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_DAISY(&self) -> *mut c_void;
     /// ## Parameters
     /// * image: image to extract descriptors
@@ -237,7 +237,6 @@ pub trait DAISY: crate::features2d::Feature2D {
 }
 
 impl dyn DAISY + '_ {
-
     ///
     /// ## C++ default parameters
     /// * radius: 15
@@ -272,12 +271,13 @@ pub struct FREAK {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::FREAK {
+impl Drop for FREAK {
     fn drop(&mut self) {
         unsafe { sys::cv_FREAK_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::FREAK {
+
+impl FREAK {
     #[inline(always)] pub fn as_raw_FREAK(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -287,12 +287,11 @@ impl crate::xfeatures2d::FREAK {
 
 unsafe impl Send for FREAK {}
 
-impl core::Algorithm for FREAK {
+impl core::AlgorithmTrait for FREAK {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl FREAK {
-
     /// ## Parameters
     /// * orientationNormalized: Enable orientation normalization.
     /// * scaleNormalized: Enable scale normalization.
@@ -332,12 +331,13 @@ pub struct LATCH {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::LATCH {
+impl Drop for LATCH {
     fn drop(&mut self) {
         unsafe { sys::cv_LATCH_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::LATCH {
+
+impl LATCH {
     #[inline(always)] pub fn as_raw_LATCH(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -347,12 +347,11 @@ impl crate::xfeatures2d::LATCH {
 
 unsafe impl Send for LATCH {}
 
-impl core::Algorithm for LATCH {
+impl core::AlgorithmTrait for LATCH {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl LATCH {
-
     ///
     /// ## C++ default parameters
     /// * bytes: 32
@@ -376,12 +375,13 @@ pub struct LUCID {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::LUCID {
+impl Drop for LUCID {
     fn drop(&mut self) {
         unsafe { sys::cv_LUCID_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::LUCID {
+
+impl LUCID {
     #[inline(always)] pub fn as_raw_LUCID(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -391,12 +391,11 @@ impl crate::xfeatures2d::LUCID {
 
 unsafe impl Send for LUCID {}
 
-impl core::Algorithm for LUCID {
+impl core::AlgorithmTrait for LUCID {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl LUCID {
-
     /// ## Parameters
     /// * lucid_kernel: kernel for descriptor construction, where 1=3x3, 2=5x5, 3=7x7 and so forth
     /// * blur_kernel: kernel for blurring image prior to descriptor construction, where 1=3x3, 2=5x5, 3=7x7 and so forth
@@ -425,12 +424,13 @@ pub struct MSDDetector {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::MSDDetector {
+impl Drop for MSDDetector {
     fn drop(&mut self) {
         unsafe { sys::cv_MSDDetector_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::MSDDetector {
+
+impl MSDDetector {
     #[inline(always)] pub fn as_raw_MSDDetector(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -440,12 +440,11 @@ impl crate::xfeatures2d::MSDDetector {
 
 unsafe impl Send for MSDDetector {}
 
-impl core::Algorithm for MSDDetector {
+impl core::AlgorithmTrait for MSDDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl MSDDetector {
-
     ///
     /// ## C++ default parameters
     /// * m_patch_radius: 3
@@ -463,7 +462,7 @@ impl MSDDetector {
     
 }
 
-// Generating impl for trait cv::xfeatures2d::PCTSignatures (trait)
+// Generating impl for trait crate::xfeatures2d::PCTSignatures
 /// Class implementing PCT (position-color-texture) signature extraction
 ///       as described in [KrulisLS16](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_KrulisLS16).
 ///       The algorithm is divided to a feature sampler and a clusterizer.
@@ -476,7 +475,7 @@ impl MSDDetector {
 ///       weight, x, y position; lab color, contrast, entropy.
 /// [KrulisLS16](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_KrulisLS16)
 /// [BeecksUS10](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
-pub trait PCTSignatures: core::Algorithm {
+pub trait PCTSignatures: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_PCTSignatures(&self) -> *mut c_void;
     /// Computes signature of given image.
     /// ## Parameters
@@ -791,7 +790,6 @@ pub trait PCTSignatures: core::Algorithm {
 }
 
 impl dyn PCTSignatures + '_ {
-
     /// Creates PCTSignatures algorithm using sample and seed count.
     ///       It generates its own sets of sampling points and clusterization seed indexes.
     /// ## Parameters
@@ -872,14 +870,14 @@ impl dyn PCTSignatures + '_ {
     
 }
 
-// Generating impl for trait cv::xfeatures2d::PCTSignaturesSQFD (trait)
+// Generating impl for trait crate::xfeatures2d::PCTSignaturesSQFD
 /// Class implementing Signature Quadratic Form Distance (SQFD).
 /// @see Christian Beecks, Merih Seran Uysal, Thomas Seidl.
 ///   Signature quadratic form distance.
 ///   In Proceedings of the ACM International Conference on Image and Video Retrieval, pages 438-445.
 ///   ACM, 2010.
 /// [BeecksUS10](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
-pub trait PCTSignaturesSQFD: core::Algorithm {
+pub trait PCTSignaturesSQFD: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_PCTSignaturesSQFD(&self) -> *mut c_void;
     /// Computes Signature Quadratic Form Distance of two signatures.
     /// ## Parameters
@@ -904,7 +902,6 @@ pub trait PCTSignaturesSQFD: core::Algorithm {
 }
 
 impl dyn PCTSignaturesSQFD + '_ {
-
     /// Creates the algorithm instance using selected distance function,
     ///       similarity function and similarity function parameter.
     /// ## Parameters
@@ -931,12 +928,13 @@ pub struct SIFT {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::SIFT {
+impl Drop for SIFT {
     fn drop(&mut self) {
         unsafe { sys::cv_SIFT_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::SIFT {
+
+impl SIFT {
     #[inline(always)] pub fn as_raw_SIFT(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -946,12 +944,11 @@ impl crate::xfeatures2d::SIFT {
 
 unsafe impl Send for SIFT {}
 
-impl core::Algorithm for SIFT {
+impl core::AlgorithmTrait for SIFT {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl SIFT {
-
     /// ## Parameters
     /// * nfeatures: The number of best features to retain. The features are ranked by their scores
     /// (measured in SIFT algorithm as the local contrast)
@@ -981,7 +978,7 @@ impl SIFT {
     
 }
 
-// Generating impl for trait cv::xfeatures2d::SURF (trait)
+// Generating impl for trait crate::xfeatures2d::SURF
 /// Class for extracting Speeded Up Robust Features from an image [Bay06](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Bay06) .
 ///
 /// The algorithm parameters:
@@ -1011,7 +1008,7 @@ impl SIFT {
 /// opencv_source_code/samples/cpp/generic_descriptor_match.cpp
 /// *   Another example using the SURF feature detector, extractor and matcher can be found at
 /// opencv_source_code/samples/cpp/matcher_simple.cpp
-pub trait SURF: crate::features2d::Feature2D {
+pub trait SURF: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_SURF(&self) -> *mut c_void;
     fn set_hessian_threshold(&mut self, hessian_threshold: f64) -> Result<()> {
         unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_SURF(), hessian_threshold) }.into_result()
@@ -1056,7 +1053,6 @@ pub trait SURF: crate::features2d::Feature2D {
 }
 
 impl dyn SURF + '_ {
-
     /// ## Parameters
     /// * hessianThreshold: Threshold for hessian keypoint detector used in SURF.
     /// * nOctaves: Number of pyramid octaves the keypoint detector will use.
@@ -1084,12 +1080,13 @@ pub struct StarDetector {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::xfeatures2d::StarDetector {
+impl Drop for StarDetector {
     fn drop(&mut self) {
         unsafe { sys::cv_StarDetector_delete(self.ptr) };
     }
 }
-impl crate::xfeatures2d::StarDetector {
+
+impl StarDetector {
     #[inline(always)] pub fn as_raw_StarDetector(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1099,12 +1096,11 @@ impl crate::xfeatures2d::StarDetector {
 
 unsafe impl Send for StarDetector {}
 
-impl core::Algorithm for StarDetector {
+impl core::AlgorithmTrait for StarDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl StarDetector {
-
     /// the full constructor
     ///
     /// ## C++ default parameters
@@ -1119,7 +1115,7 @@ impl StarDetector {
     
 }
 
-// Generating impl for trait cv::xfeatures2d::VGG (trait)
+// Generating impl for trait crate::xfeatures2d::VGG
 /// Class implementing VGG (Oxford Visual Geometry Group) descriptor trained end to end
 /// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Simonyan14).
 ///
@@ -1136,7 +1132,7 @@ impl StarDetector {
 /// 0.75f should be the scale for ORB keypoints ratio
 ///
 /// * dsc_normalize: clamp descriptors to 255 and convert to uchar CV_8UC1 (disabled by default)
-pub trait VGG: crate::features2d::Feature2D {
+pub trait VGG: crate::features2d::Feature2DTrait {
     #[inline(always)] fn as_raw_VGG(&self) -> *mut c_void;
     /// ## Parameters
     /// * image: image to extract descriptors
@@ -1151,7 +1147,6 @@ pub trait VGG: crate::features2d::Feature2D {
 }
 
 impl dyn VGG + '_ {
-
     ///
     /// ## C++ default parameters
     /// * desc: VGG::VGG_120

@@ -71,7 +71,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// Output image matrix will be created (Mat::create),
 pub const DrawLinesMatchesFlags_DEFAULT: i32 = 0;
@@ -134,12 +134,13 @@ pub struct BinaryDescriptor {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::line_descriptor::BinaryDescriptor {
+impl Drop for BinaryDescriptor {
     fn drop(&mut self) {
         unsafe { sys::cv_BinaryDescriptor_delete(self.ptr) };
     }
 }
-impl crate::line_descriptor::BinaryDescriptor {
+
+impl BinaryDescriptor {
     #[inline(always)] pub fn as_raw_BinaryDescriptor(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -149,12 +150,11 @@ impl crate::line_descriptor::BinaryDescriptor {
 
 unsafe impl Send for BinaryDescriptor {}
 
-impl core::Algorithm for BinaryDescriptor {
+impl core::AlgorithmTrait for BinaryDescriptor {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl BinaryDescriptor {
-
     /// Constructor
     ///
     /// ## Parameters
@@ -304,12 +304,13 @@ pub struct BinaryDescriptor_Params {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::line_descriptor::BinaryDescriptor_Params {
+impl Drop for BinaryDescriptor_Params {
     fn drop(&mut self) {
         unsafe { sys::cv_BinaryDescriptor_Params_delete(self.ptr) };
     }
 }
-impl crate::line_descriptor::BinaryDescriptor_Params {
+
+impl BinaryDescriptor_Params {
     #[inline(always)] pub fn as_raw_BinaryDescriptor_Params(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -320,7 +321,6 @@ impl crate::line_descriptor::BinaryDescriptor_Params {
 unsafe impl Send for BinaryDescriptor_Params {}
 
 impl BinaryDescriptor_Params {
-
     pub fn default() -> Result<crate::line_descriptor::BinaryDescriptor_Params> {
         unsafe { sys::cv_line_descriptor_BinaryDescriptor_Params_Params() }.into_result().map(|ptr| crate::line_descriptor::BinaryDescriptor_Params { ptr })
     }
@@ -379,12 +379,13 @@ pub struct BinaryDescriptorMatcher {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::line_descriptor::BinaryDescriptorMatcher {
+impl Drop for BinaryDescriptorMatcher {
     fn drop(&mut self) {
         unsafe { sys::cv_BinaryDescriptorMatcher_delete(self.ptr) };
     }
 }
-impl crate::line_descriptor::BinaryDescriptorMatcher {
+
+impl BinaryDescriptorMatcher {
     #[inline(always)] pub fn as_raw_BinaryDescriptorMatcher(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -394,12 +395,11 @@ impl crate::line_descriptor::BinaryDescriptorMatcher {
 
 unsafe impl Send for BinaryDescriptorMatcher {}
 
-impl core::Algorithm for BinaryDescriptorMatcher {
+impl core::AlgorithmTrait for BinaryDescriptorMatcher {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl BinaryDescriptorMatcher {
-
     /// For every input query descriptor, retrieve the best matching one from a dataset provided from user
     /// or from the one internal to class
     ///
@@ -546,12 +546,13 @@ pub struct DrawLinesMatchesFlags {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::line_descriptor::DrawLinesMatchesFlags {
+impl Drop for DrawLinesMatchesFlags {
     fn drop(&mut self) {
         unsafe { sys::cv_DrawLinesMatchesFlags_delete(self.ptr) };
     }
 }
-impl crate::line_descriptor::DrawLinesMatchesFlags {
+
+impl DrawLinesMatchesFlags {
     #[inline(always)] pub fn as_raw_DrawLinesMatchesFlags(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -587,12 +588,13 @@ pub struct KeyLine {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::line_descriptor::KeyLine {
+impl Drop for KeyLine {
     fn drop(&mut self) {
         unsafe { sys::cv_KeyLine_delete(self.ptr) };
     }
 }
-impl crate::line_descriptor::KeyLine {
+
+impl KeyLine {
     #[inline(always)] pub fn as_raw_KeyLine(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -603,7 +605,6 @@ impl crate::line_descriptor::KeyLine {
 unsafe impl Send for KeyLine {}
 
 impl KeyLine {
-
     /// Returns the start point of the line in the original image
     pub fn get_start_point(&self) -> Result<core::Point2f> {
         unsafe { sys::cv_line_descriptor_KeyLine_getStartPoint_const(self.as_raw_KeyLine()) }.into_result()
@@ -651,12 +652,13 @@ pub struct LSDDetector {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::line_descriptor::LSDDetector {
+impl Drop for LSDDetector {
     fn drop(&mut self) {
         unsafe { sys::cv_LSDDetector_delete(self.ptr) };
     }
 }
-impl crate::line_descriptor::LSDDetector {
+
+impl LSDDetector {
     #[inline(always)] pub fn as_raw_LSDDetector(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -666,12 +668,11 @@ impl crate::line_descriptor::LSDDetector {
 
 unsafe impl Send for LSDDetector {}
 
-impl core::Algorithm for LSDDetector {
+impl core::AlgorithmTrait for LSDDetector {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl LSDDetector {
-
     pub fn default() -> Result<crate::line_descriptor::LSDDetector> {
         unsafe { sys::cv_line_descriptor_LSDDetector_LSDDetector() }.into_result().map(|ptr| crate::line_descriptor::LSDDetector { ptr })
     }

@@ -10,8 +10,13 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
+pub const Blob_ALLOC_MAT: i32 = 1 << 0;
+pub const Blob_ALLOC_UMAT: i32 = 1 << 1;
+pub const Blob_HEAD_AT_MAT: i32 = 1 << 0;
+pub const Blob_HEAD_AT_UMAT: i32 = 1 << 1;
+pub const Blob_UNINITIALIZED: i32 = 0;
 pub const EltwiseLayer_PROD: i32 = 0;
 pub const EltwiseLayer_SUM: i32 = 1;
 pub const LRNLayer_CHANNEL_NRM: i32 = 0;
@@ -19,6 +24,13 @@ pub const LRNLayer_SPATIAL_NRM: i32 = 1;
 pub const PoolingLayer_AVE: i32 = 1;
 pub const PoolingLayer_MAX: i32 = 0;
 pub const PoolingLayer_STOCHASTIC: i32 = 2;
+
+///
+/// ## C++ default parameters
+/// * src_range: Range::all()
+pub fn compute_shape_by_reshape_mask(src_shape: &crate::dnn::BlobShape, mask_shape: &crate::dnn::BlobShape, src_range: &core::Range) -> Result<crate::dnn::BlobShape> {
+    unsafe { sys::cv_dnn_computeShapeByReshapeMask_BlobShape_BlobShape_Range(src_shape.as_raw_BlobShape(), mask_shape.as_raw_BlobShape(), src_range.as_raw_Range()) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+}
 
 /// Creates the importer of <a href="http://caffe.berkeleyvision.org">Caffe</a> framework network.
 /// ## Parameters
@@ -99,17 +111,28 @@ pub fn read_net_from_caffe(prototxt: &str, caffe_model: &str) -> Result<crate::d
     unsafe { sys::cv_dnn_readNetFromCaffe_String_String(prototxt.as_ptr(), caffe_model.as_ptr()) }.into_result().map(|ptr| crate::dnn::Net { ptr })
 }
 
+/// Loads blob which was serialized as torch.Tensor object of Torch7 framework.
+///  @warning This function has the same limitations as createTorchImporter().
+///
+/// ## C++ default parameters
+/// * is_binary: true
+pub fn read_torch_blob(filename: &str, is_binary: bool) -> Result<crate::dnn::Blob> {
+    string_arg!(filename);
+    unsafe { sys::cv_dnn_readTorchBlob_String_bool(filename.as_ptr(), is_binary) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+}
+
 // boxed class cv::dnn::AbsLayer
 pub struct AbsLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::AbsLayer {
+impl Drop for AbsLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_AbsLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::AbsLayer {
+
+impl AbsLayer {
     #[inline(always)] pub fn as_raw_AbsLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -124,7 +147,6 @@ impl crate::dnn::Layer for AbsLayer {
 }
 
 impl AbsLayer {
-
     pub fn create() -> Result<types::PtrOfAbsLayer> {
         unsafe { sys::cv_dnn_AbsLayer_create() }.into_result().map(|ptr| types::PtrOfAbsLayer { ptr })
     }
@@ -136,12 +158,13 @@ pub struct BNLLLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::BNLLLayer {
+impl Drop for BNLLLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_BNLLLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::BNLLLayer {
+
+impl BNLLLayer {
     #[inline(always)] pub fn as_raw_BNLLLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -156,15 +179,14 @@ impl crate::dnn::Layer for BNLLLayer {
 }
 
 impl BNLLLayer {
-
     pub fn create() -> Result<types::PtrOfBNLLLayer> {
         unsafe { sys::cv_dnn_BNLLLayer_create() }.into_result().map(|ptr| types::PtrOfBNLLLayer { ptr })
     }
     
 }
 
-// Generating impl for trait cv::dnn::BaseConvolutionLayer (trait)
-pub trait BaseConvolutionLayer: crate::dnn::Layer {
+// Generating impl for trait crate::dnn::BaseConvolutionLayer
+pub trait BaseConvolutionLayerTrait: crate::dnn::Layer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
     fn kernel(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_BaseConvolutionLayer_kernel_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
@@ -193,17 +215,521 @@ pub trait BaseConvolutionLayer: crate::dnn::Layer {
     
 }
 
+// boxed class cv::dnn::BaseConvolutionLayer
+pub struct BaseConvolutionLayer {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for BaseConvolutionLayer {
+    fn drop(&mut self) {
+        unsafe { sys::cv_BaseConvolutionLayer_delete(self.ptr) };
+    }
+}
+
+impl BaseConvolutionLayer {
+    #[inline(always)] pub fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for BaseConvolutionLayer {}
+
+impl crate::dnn::BaseConvolutionLayerTrait for BaseConvolutionLayer {
+    #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::Layer for BaseConvolutionLayer {
+    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+}
+
+// boxed class cv::dnn::Blob
+/// This class provides methods for continuous n-dimensional CPU and GPU array processing.
+///
+/// The class is realized as a wrapper over @ref cv::Mat and @ref cv::UMat.
+/// It will support methods for switching and logical synchronization between CPU and GPU.
+pub struct Blob {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for Blob {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Blob_delete(self.ptr) };
+    }
+}
+
+impl Blob {
+    #[inline(always)] pub fn as_raw_Blob(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Blob {}
+
+impl Blob {
+    pub fn default() -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_Blob_Blob() }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Constructs blob with specified @p shape and @p type.
+    ///
+    /// ## C++ default parameters
+    /// * _type: CV_32F
+    /// * alloc_flags: ALLOC_MAT
+    pub fn new(shape: &crate::dnn::BlobShape, _type: i32, alloc_flags: i32) -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_Blob_Blob_BlobShape_int_int(shape.as_raw_BlobShape(), _type, alloc_flags) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Constructs Blob from existing Mat or UMat.
+    pub fn new_1(data: &dyn core::ToInputArray) -> Result<crate::dnn::Blob> {
+        input_array_arg!(data);
+        unsafe { sys::cv_dnn_Blob_Blob__InputArray(data.as_raw__InputArray()) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Constructs 4-dimensional blob (so-called batch) from image or array of images.
+    /// ## Parameters
+    /// * image: 2-dimensional multi-channel or 3-dimensional single-channel image (or array of such images)
+    /// * dstCn: specifies size of second axis of ouptut blob
+    ///
+    /// ## C++ default parameters
+    /// * dst_cn: -1
+    pub fn from_images(image: &dyn core::ToInputArray, dst_cn: i32) -> Result<crate::dnn::Blob> {
+        input_array_arg!(image);
+        unsafe { sys::cv_dnn_Blob_fromImages__InputArray_int(image.as_raw__InputArray(), dst_cn) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Works like Blob::fromImages() but in-place.
+    ///
+    /// ## C++ default parameters
+    /// * dst_cn: -1
+    pub fn batch_from_images(&mut self, image: &dyn core::ToInputArray, dst_cn: i32) -> Result<()> {
+        input_array_arg!(image);
+        unsafe { sys::cv_dnn_Blob_batchFromImages__InputArray_int(self.as_raw_Blob(), image.as_raw__InputArray(), dst_cn) }.into_result()
+    }
+    
+    /// Creates blob with specified @p shape and @p type.
+    ///
+    /// ## C++ default parameters
+    /// * _type: CV_32F
+    /// * alloc_flags: ALLOC_MAT
+    pub fn create(&mut self, shape: &crate::dnn::BlobShape, _type: i32, alloc_flags: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_Blob_create_BlobShape_int_int(self.as_raw_Blob(), shape.as_raw_BlobShape(), _type, alloc_flags) }.into_result()
+    }
+    
+    /// Creates blob from Mat or UMat without copying the data.
+    /// @details If in is Mat then Mat data is populated, otherwise - UMat.
+    pub fn fill(&mut self, _in: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(_in);
+        unsafe { sys::cv_dnn_Blob_fill__InputArray(self.as_raw_Blob(), _in.as_raw__InputArray()) }.into_result()
+    }
+    
+    /// Creates blob from user data.
+    ///  @details If @p deepCopy is false then CPU data will not be allocated.
+    ///
+    /// ## C++ default parameters
+    /// * deep_copy: true
+    pub fn fill_1(&mut self, shape: &crate::dnn::BlobShape, _type: i32, data: &mut c_void, deep_copy: bool) -> Result<()> {
+        unsafe { sys::cv_dnn_Blob_fill_BlobShape_int_void_X_bool(self.as_raw_Blob(), shape.as_raw_BlobShape(), _type, data, deep_copy) }.into_result()
+    }
+    
+    /// Sets @p value to the last used data (if @p allocFlags = -1).
+    /// @details If @p allocFlags != -1 then destination data (Mat or UMat) is determined by flags from AllocFlag enum like in create().
+    ///
+    /// ## C++ default parameters
+    /// * alloc_flags: -1
+    pub fn set_to(&mut self, value: &dyn core::ToInputArray, alloc_flags: i32) -> Result<()> {
+        input_array_arg!(value);
+        unsafe { sys::cv_dnn_Blob_setTo__InputArray_int(self.as_raw_Blob(), value.as_raw__InputArray(), alloc_flags) }.into_result()
+    }
+    
+    /// Returns reference to cv::Mat, containing blob data.
+    ///
+    /// ## C++ default parameters
+    /// * write_only: true
+    pub fn mat_ref(&mut self, write_only: bool) -> Result<core::Mat> {
+        unsafe { sys::cv_dnn_Blob_matRef_bool(self.as_raw_Blob(), write_only) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// Returns reference to cv::Mat, containing blob data, for read-only purposes.
+    pub fn mat_ref_const(&self) -> Result<core::Mat> {
+        unsafe { sys::cv_dnn_Blob_matRefConst_const(self.as_raw_Blob()) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// Returns reference to cv::UMat, containing blob data.
+    ///
+    /// ## C++ default parameters
+    /// * write_only: true
+    pub fn umat_ref(&mut self, write_only: bool) -> Result<core::UMat> {
+        unsafe { sys::cv_dnn_Blob_umatRef_bool(self.as_raw_Blob(), write_only) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// Returns reference to cv::UMat, containing blob data, for read-only purposes.
+    pub fn umat_ref_const(&self) -> Result<core::UMat> {
+        unsafe { sys::cv_dnn_Blob_umatRefConst_const(self.as_raw_Blob()) }.into_result().map(|ptr| core::UMat { ptr })
+    }
+    
+    /// Actualizes data stored inside Mat of Blob; if @p syncData is false then only shape will be actualized.
+    ///
+    /// ## C++ default parameters
+    /// * sync_data: true
+    pub fn update_mat(&self, sync_data: bool) -> Result<()> {
+        unsafe { sys::cv_dnn_Blob_updateMat_const_bool(self.as_raw_Blob(), sync_data) }.into_result()
+    }
+    
+    /// Actualizes data stored inside Mat of Blob; if @p syncData is false then only shape will be actualized.
+    ///
+    /// ## C++ default parameters
+    /// * sync_data: true
+    pub fn update_u_mat(&self, sync_data: bool) -> Result<()> {
+        unsafe { sys::cv_dnn_Blob_updateUMat_const_bool(self.as_raw_Blob(), sync_data) }.into_result()
+    }
+    
+    /// Updates Mat and UMat of Blob.
+    pub fn sync(&self) -> Result<()> {
+        unsafe { sys::cv_dnn_Blob_sync_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns number of blob dimensions.
+    pub fn dims(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_dims_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns the size of the specified @p axis.
+    ///
+    /// Negative @p axis is supported, in this case a counting starts from the last axis,
+    /// i. e. -1 corresponds to last axis.
+    /// If non-existing axis was passed then an error will be generated.
+    pub fn size(&self, axis: i32) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_size_const_int(self.as_raw_Blob(), axis) }.into_result()
+    }
+    
+    /// Returns the size of the specified @p axis.
+    ///
+    /// Does the same thing as size(int) const, but if non-existing axis will be passed then 1 will be returned,
+    /// therefore this function always finishes successfully.
+    pub fn xsize(&self, axis: i32) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_xsize_const_int(self.as_raw_Blob(), axis) }.into_result()
+    }
+    
+    /// Computes the product of sizes of axes among the specified axes range [@p startAxis; @p endAxis).
+    /// ## Parameters
+    /// * startAxis: the first axis to include in the range.
+    /// * endAxis: the first axis to exclude from the range.
+    /// @details Negative axis indexing can be used.
+    ///
+    /// ## C++ default parameters
+    /// * start_axis: 0
+    /// * end_axis: INT_MAX
+    pub fn total(&self, start_axis: i32, end_axis: i32) -> Result<size_t> {
+        unsafe { sys::cv_dnn_Blob_total_const_int_int(self.as_raw_Blob(), start_axis, end_axis) }.into_result()
+    }
+    
+    /// Converts @p axis index to canonical format (where 0 <= @p axis < dims()).
+    pub fn canonical_axis(&self, axis: i32) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_canonicalAxis_const_int(self.as_raw_Blob(), axis) }.into_result()
+    }
+    
+    /// Returns shape of the blob.
+    pub fn shape(&self) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_Blob_shape_const(self.as_raw_Blob()) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Checks equality of two blobs shapes.
+    pub fn equal_shape(&self, other: &crate::dnn::Blob) -> Result<bool> {
+        unsafe { sys::cv_dnn_Blob_equalShape_const_Blob(self.as_raw_Blob(), other.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns slice of first two dimensions.
+    ///  @details The behaviour is similar to the following numpy code: blob[n, cn, ...]
+    pub fn get_plane(&mut self, n: i32, cn: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_dnn_Blob_getPlane_int_int(self.as_raw_Blob(), n, cn) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// Returns slice of first dimension.
+    ///  @details The behaviour is similar to getPlane(), but returns all
+    /// channels * rows * cols values, corresponding to the n-th value
+    /// of the first dimension.
+    pub fn get_planes(&mut self, n: i32) -> Result<core::Mat> {
+        unsafe { sys::cv_dnn_Blob_getPlanes_int(self.as_raw_Blob(), n) }.into_result().map(|ptr| core::Mat { ptr })
+    }
+    
+    /// Returns size of the fourth axis blob.
+    pub fn cols(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_cols_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns size of the thrid  axis blob.
+    pub fn rows(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_rows_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns size of the second axis blob.
+    pub fn channels(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_channels_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns size of the first  axis blob.
+    pub fn num(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_num_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns cv::Size(cols(), rows())
+    pub fn size2(&self) -> Result<core::Size> {
+        unsafe { sys::cv_dnn_Blob_size2_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns shape of first four blob axes.
+    pub fn shape4(&self) -> Result<core::Vec4i> {
+        unsafe { sys::cv_dnn_Blob_shape4_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * n: 0
+    /// * cn: 0
+    /// * row: 0
+    /// * col: 0
+    pub fn offset(&self, n: i32, cn: i32, row: i32, col: i32) -> Result<size_t> {
+        unsafe { sys::cv_dnn_Blob_offset_const_int_int_int_int(self.as_raw_Blob(), n, cn, row, col) }.into_result()
+    }
+    
+    /// Returns pointer to the blob element with the specified position, stored in CPU memory.
+    ///
+    /// @p n correspond to the first axis, @p cn - to the second, etc.
+    /// If dims() > 4 then unspecified coordinates will be filled by zeros.
+    /// If dims() < 4 then extra coordinates will be ignored.
+    ///
+    /// ## C++ default parameters
+    /// * n: 0
+    /// * cn: 0
+    /// * row: 0
+    /// * col: 0
+    pub fn ptr(&mut self, n: i32, cn: i32, row: i32, col: i32) -> Result<&mut u8> {
+        unsafe { sys::cv_dnn_Blob_ptr_int_int_int_int(self.as_raw_Blob(), n, cn, row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// ptr<float>()
+    ///
+    /// ## C++ default parameters
+    /// * n: 0
+    /// * cn: 0
+    /// * row: 0
+    /// * col: 0
+    pub fn ptrf(&mut self, n: i32, cn: i32, row: i32, col: i32) -> Result<&mut f32> {
+        unsafe { sys::cv_dnn_Blob_ptrf_int_int_int_int(self.as_raw_Blob(), n, cn, row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// Shares data from other @p blob.
+    /// ## Returns
+    /// *this
+    pub fn share_from(&mut self, blob: &crate::dnn::Blob) -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_Blob_shareFrom_Blob(self.as_raw_Blob(), blob.as_raw_Blob()) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Changes shape of the blob without copying the data.
+    /// ## Returns
+    /// *this
+    pub fn reshape(&mut self, shape: &crate::dnn::BlobShape) -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_Blob_reshape_BlobShape(self.as_raw_Blob(), shape.as_raw_BlobShape()) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Changes shape of the blob without copying the data.
+    /// ## Returns
+    /// shallow copy of original blob with new shape.
+    pub fn reshaped(&self, new_shape: &crate::dnn::BlobShape) -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_Blob_reshaped_const_BlobShape(self.as_raw_Blob(), new_shape.as_raw_BlobShape()) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Returns type of the blob.
+    pub fn _type(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_type_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns size of single element in bytes.
+    pub fn elem_size(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_elemSize_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns current state of the blob, @see DataState.
+    pub fn get_state(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_Blob_getState_const(self.as_raw_Blob()) }.into_result()
+    }
+    
+}
+
+// boxed class cv::dnn::BlobShape
+/// Lightweight class for storing and processing a shape of blob (or anything else).
+pub struct BlobShape {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for BlobShape {
+    fn drop(&mut self) {
+        unsafe { sys::cv_BlobShape_delete(self.ptr) };
+    }
+}
+
+impl BlobShape {
+    #[inline(always)] pub fn as_raw_BlobShape(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for BlobShape {}
+
+impl BlobShape {
+    /// Creates [1, 1, 1, 1] shape @todo Make more clearer behavior.
+    pub fn default() -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_BlobShape() }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Creates 1-dim shape [@p s0]
+    pub fn new(s0: i32) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_BlobShape_int(s0) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    pub fn new_1(s0: i32, s1: i32) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int(s0, s1) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    pub fn new_2(s0: i32, s1: i32, s2: i32) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int_int(s0, s1, s2) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Creates 4-dim shape [@p num, @p cn, @p rows, @p cols]
+    pub fn new_3(num: i32, cn: i32, rows: i32, cols: i32) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_BlobShape_int_int_int_int(num, cn, rows, cols) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Creates n-dim shape from the @p sizes array; if @p sizes is NULL then shape will contain unspecified data
+    pub fn new_4(ndims: i32, sizes: &i32) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_BlobShape_int_const_int_X(ndims, sizes) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Creates n-dim shape from the @p sizes vector
+    pub fn new_5(sizes: &types::VectorOfint) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_BlobShape_VectorOfint(sizes.as_raw_VectorOfint()) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Creates n-dim shape and fill its by @p fill
+    ///
+    /// ## C++ default parameters
+    /// * fill: 1
+    pub fn all(ndims: i32, fill: i32) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_all_int_int(ndims, fill) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Returns number of dimensions.
+    pub fn dims(&self) -> Result<i32> {
+        unsafe { sys::cv_dnn_BlobShape_dims_const(self.as_raw_BlobShape()) }.into_result()
+    }
+    
+    /// Returns reference to the size of the specified @p axis.
+    ///
+    /// Negative @p axis is supported, in this case a counting starts from the last axis,
+    /// i. e. -1 corresponds to last axis.
+    /// If non-existing axis was passed then an error will be generated.
+    pub fn size(&mut self, axis: i32) -> Result<i32> {
+        unsafe { sys::cv_dnn_BlobShape_size_int(self.as_raw_BlobShape(), axis) }.into_result()
+    }
+    
+    /// Returns the size of the specified @p axis.
+    ///  @see size()
+    pub fn size_1(&self, axis: i32) -> Result<i32> {
+        unsafe { sys::cv_dnn_BlobShape_size_const_int(self.as_raw_BlobShape(), axis) }.into_result()
+    }
+    
+    /// Returns the size of the specified @p axis.
+    ///
+    /// Does the same thing as size(int) const, but if non-existing axis will be passed then 1 will be returned,
+    /// therefore this function always finishes successfully.
+    pub fn xsize(&self, axis: i32) -> Result<i32> {
+        unsafe { sys::cv_dnn_BlobShape_xsize_const_int(self.as_raw_BlobShape(), axis) }.into_result()
+    }
+    
+    /// Converts @p axis index to canonical format (where 0 <= @p axis < dims()).
+    pub fn canonical_axis(&self, axis: i32) -> Result<i32> {
+        unsafe { sys::cv_dnn_BlobShape_canonicalAxis_const_int(self.as_raw_BlobShape(), axis) }.into_result()
+    }
+    
+    /// Returns the product of all sizes of axes.
+    pub fn total(&self) -> Result<ptrdiff_t> {
+        unsafe { sys::cv_dnn_BlobShape_total_const(self.as_raw_BlobShape()) }.into_result()
+    }
+    
+    /// Computes the product of sizes of axes among the specified axes range [@p startAxis; @p endAxis).
+    /// @details Negative axis indexing can be used. ## See also
+    /// Blob::total(int,int)
+    ///
+    /// ## C++ default parameters
+    /// * end_axis: INT_MAX
+    pub fn total_1(&self, start_axis: i32, end_axis: i32) -> Result<ptrdiff_t> {
+        unsafe { sys::cv_dnn_BlobShape_total_const_int_int(self.as_raw_BlobShape(), start_axis, end_axis) }.into_result()
+    }
+    
+    /// Constructs new shape from axes in range [@p startAxis; @p endAxis).
+    /// @details Negative axis indexing can be used. ## See also
+    /// Blob::total(int,int)
+    ///
+    /// ## C++ default parameters
+    /// * end_axis: INT_MAX
+    pub fn slice(&self, start_axis: i32, end_axis: i32) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_slice_const_int_int(self.as_raw_BlobShape(), start_axis, end_axis) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Returns pointer to the first element of continuous size array.
+    pub fn ptr(&self) -> Result<&i32> {
+        unsafe { sys::cv_dnn_BlobShape_ptr_const(self.as_raw_BlobShape()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    pub fn ptr_1(&mut self) -> Result<&mut i32> {
+        unsafe { sys::cv_dnn_BlobShape_ptr(self.as_raw_BlobShape()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+    /// Checks equality of two shapes.
+    pub fn equal(&self, other: &crate::dnn::BlobShape) -> Result<bool> {
+        unsafe { sys::cv_dnn_BlobShape_equal_const_BlobShape(self.as_raw_BlobShape(), other.as_raw_BlobShape()) }.into_result()
+    }
+    
+    /// Returns shape of passed Mat.
+    pub fn like(m: &core::Mat) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_like_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Returns shape of passed UMat.
+    pub fn like_1(m: &core::UMat) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_like_UMat(m.as_raw_UMat()) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Returns empty shape [].
+    pub fn empty() -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_BlobShape_empty() }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    /// Returns true if shape is empty (i.e []).
+    pub fn is_empty(&self) -> Result<bool> {
+        unsafe { sys::cv_dnn_BlobShape_isEmpty_const(self.as_raw_BlobShape()) }.into_result()
+    }
+    
+}
+
 // boxed class cv::dnn::ConcatLayer
 pub struct ConcatLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ConcatLayer {
+impl Drop for ConcatLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ConcatLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ConcatLayer {
+
+impl ConcatLayer {
     #[inline(always)] pub fn as_raw_ConcatLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -218,7 +744,6 @@ impl crate::dnn::Layer for ConcatLayer {
 }
 
 impl ConcatLayer {
-
     ///
     /// ## C++ default parameters
     /// * axis: 1
@@ -233,12 +758,13 @@ pub struct ConvolutionLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ConvolutionLayer {
+impl Drop for ConvolutionLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ConvolutionLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ConvolutionLayer {
+
+impl ConvolutionLayer {
     #[inline(always)] pub fn as_raw_ConvolutionLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -248,7 +774,7 @@ impl crate::dnn::ConvolutionLayer {
 
 unsafe impl Send for ConvolutionLayer {}
 
-impl crate::dnn::BaseConvolutionLayer for ConvolutionLayer {
+impl crate::dnn::BaseConvolutionLayerTrait for ConvolutionLayer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
 }
 
@@ -257,7 +783,6 @@ impl crate::dnn::Layer for ConvolutionLayer {
 }
 
 impl ConvolutionLayer {
-
     ///
     /// ## C++ default parameters
     /// * kernel: Size(3, 3)
@@ -275,12 +800,13 @@ pub struct CropLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::CropLayer {
+impl Drop for CropLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_CropLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::CropLayer {
+
+impl CropLayer {
     #[inline(always)] pub fn as_raw_CropLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -295,7 +821,6 @@ impl crate::dnn::Layer for CropLayer {
 }
 
 impl CropLayer {
-
     pub fn start_axis(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_CropLayer_startAxis_const(self.as_raw_CropLayer()) }.into_result()
     }
@@ -311,12 +836,13 @@ pub struct DeconvolutionLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::DeconvolutionLayer {
+impl Drop for DeconvolutionLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_DeconvolutionLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::DeconvolutionLayer {
+
+impl DeconvolutionLayer {
     #[inline(always)] pub fn as_raw_DeconvolutionLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -326,7 +852,7 @@ impl crate::dnn::DeconvolutionLayer {
 
 unsafe impl Send for DeconvolutionLayer {}
 
-impl crate::dnn::BaseConvolutionLayer for DeconvolutionLayer {
+impl crate::dnn::BaseConvolutionLayerTrait for DeconvolutionLayer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
 }
 
@@ -335,7 +861,6 @@ impl crate::dnn::Layer for DeconvolutionLayer {
 }
 
 impl DeconvolutionLayer {
-
     ///
     /// ## C++ default parameters
     /// * kernel: Size(3, 3)
@@ -348,9 +873,9 @@ impl DeconvolutionLayer {
     
 }
 
-// Generating impl for trait cv::dnn::Dict (trait)
+// Generating impl for trait crate::dnn::Dict
 /// This class implements name-value dictionary, values are instances of DictValue.
-pub trait Dict {
+pub trait DictTrait {
     #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void;
     /// Checks a presence of the @p key in the dictionary.
     fn has(&self, key: &str) -> Result<bool> {
@@ -378,6 +903,32 @@ pub trait Dict {
     
 }
 
+// boxed class cv::dnn::Dict
+/// This class implements name-value dictionary, values are instances of DictValue.
+pub struct Dict {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for Dict {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Dict_delete(self.ptr) };
+    }
+}
+
+impl Dict {
+    #[inline(always)] pub fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Dict {}
+
+impl crate::dnn::DictTrait for Dict {
+    #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
+}
+
 // boxed class cv::dnn::DictValue
 /// This struct stores the scalar value (or array) of one of the following type: double, cv::String or int64.
 ///  @todo Maybe int64 is useless because double type exactly stores at least 2^52 integers.
@@ -385,12 +936,13 @@ pub struct DictValue {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::DictValue {
+impl Drop for DictValue {
     fn drop(&mut self) {
         unsafe { sys::cv_DictValue_delete(self.ptr) };
     }
 }
-impl crate::dnn::DictValue {
+
+impl DictValue {
     #[inline(always)] pub fn as_raw_DictValue(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -401,7 +953,6 @@ impl crate::dnn::DictValue {
 unsafe impl Send for DictValue {}
 
 impl DictValue {
-
     pub fn copy(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
@@ -457,12 +1008,13 @@ pub struct EltwiseLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::EltwiseLayer {
+impl Drop for EltwiseLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_EltwiseLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::EltwiseLayer {
+
+impl EltwiseLayer {
     #[inline(always)] pub fn as_raw_EltwiseLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -476,11 +1028,7 @@ impl crate::dnn::Layer for EltwiseLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
-impl EltwiseLayer {
-
-}
-
-// Generating impl for trait cv::dnn::Importer (trait)
+// Generating impl for trait crate::dnn::Importer
 /// Small interface class for loading trained serialized models of different dnn-frameworks.
 pub trait Importer {
     #[inline(always)] fn as_raw_Importer(&self) -> *mut c_void;
@@ -496,12 +1044,13 @@ pub struct InnerProductLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::InnerProductLayer {
+impl Drop for InnerProductLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_InnerProductLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::InnerProductLayer {
+
+impl InnerProductLayer {
     #[inline(always)] pub fn as_raw_InnerProductLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -516,7 +1065,6 @@ impl crate::dnn::Layer for InnerProductLayer {
 }
 
 impl InnerProductLayer {
-
     pub fn axis(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_InnerProductLayer_axis_const(self.as_raw_InnerProductLayer()) }.into_result()
     }
@@ -535,12 +1083,13 @@ pub struct LRNLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::LRNLayer {
+impl Drop for LRNLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_LRNLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::LRNLayer {
+
+impl LRNLayer {
     #[inline(always)] pub fn as_raw_LRNLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -555,7 +1104,6 @@ impl crate::dnn::Layer for LRNLayer {
 }
 
 impl LRNLayer {
-
     pub fn _type(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_LRNLayer_type_const(self.as_raw_LRNLayer()) }.into_result()
     }
@@ -594,7 +1142,7 @@ impl LRNLayer {
     
 }
 
-// Generating impl for trait cv::dnn::LSTMLayer (trait)
+// Generating impl for trait crate::dnn::LSTMLayer
 /// # Partial List of Implemented Layers
 /// This subsection of dnn module contains information about bult-in layers and their descriptions.
 ///
@@ -618,6 +1166,72 @@ impl LRNLayer {
 /// LSTM recurrent layer
 pub trait LSTMLayer: crate::dnn::Layer {
     #[inline(always)] fn as_raw_LSTMLayer(&self) -> *mut c_void;
+    /// Set trained weights for LSTM layer.
+    /// LSTM behavior on each step is defined by current input, previous output, previous cell state and learned weights.
+    ///
+    /// Let @f$x_t@f$ be current input, @f$h_t@f$ be current output, @f$c_t@f$ be current state.
+    /// Than current output and current cell state is computed as follows:
+    /// @f{eqnarray*}{
+    /// h_t &= o_t \odot tanh(c_t),               \\
+    /// c_t &= f_t \odot c_{t-1} + i_t \odot g_t, \\
+    /// @f}
+    /// where @f$\odot@f$ is per-element multiply operation and @f$i_t, f_t, o_t, g_t@f$ is internal gates that are computed using learned wights.
+    ///
+    /// Gates are computed as follows:
+    /// @f{eqnarray*}{
+    /// i_t &= sigmoid&(W_{xi} x_t + W_{hi} h_{t-1} + b_i), \\
+    /// f_t &= sigmoid&(W_{xf} x_t + W_{hf} h_{t-1} + b_f), \\
+    /// o_t &= sigmoid&(W_{xo} x_t + W_{ho} h_{t-1} + b_o), \\
+    /// g_t &= tanh   &(W_{xg} x_t + W_{hg} h_{t-1} + b_g), \\
+    /// @f}
+    /// where @f$W_{x?}@f$, @f$W_{h?}@f$ and @f$b_{?}@f$ are learned weights represented as matrices:
+    /// @f$W_{x?} \in R^{N_h \times N_x}@f$, @f$W_{h?} \in R^{N_h \times N_h}@f$, @f$b_? \in R^{N_h}@f$.
+    ///
+    /// For simplicity and performance purposes we use @f$ W_x = [W_{xi}; W_{xf}; W_{xo}, W_{xg}] @f$
+    /// (i.e. @f$W_x@f$ is vertical contacentaion of @f$ W_{x?} @f$), @f$ W_x \in R^{4N_h \times N_x} @f$.
+    /// The same for @f$ W_h = [W_{hi}; W_{hf}; W_{ho}, W_{hg}], W_h \in R^{4N_h \times N_h} @f$
+    /// and for @f$ b = [b_i; b_f, b_o, b_g]@f$, @f$b \in R^{4N_h} @f$.
+    ///
+    /// ## Parameters
+    /// * Wh: is matrix defining how previous output is transformed to internal gates (i.e. according to abovemtioned notation is @f$ W_h @f$)
+    /// * Wx: is matrix defining how current input is transformed to internal gates (i.e. according to abovemtioned notation is @f$ W_x @f$)
+    /// * b: is bias vector (i.e. according to abovemtioned notation is @f$ b @f$)
+    fn set_weights(&mut self, wh: &crate::dnn::Blob, wx: &crate::dnn::Blob, b: &crate::dnn::Blob) -> Result<()> {
+        unsafe { sys::cv_dnn_LSTMLayer_setWeights_Blob_Blob_Blob(self.as_raw_LSTMLayer(), wh.as_raw_Blob(), wx.as_raw_Blob(), b.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Specifies shape of output blob which will be [[`T`], `N`] + @p outTailShape.
+    /// @details If this parameter is empty or unset then @p outTailShape = [`Wh`.size(0)] will be used,
+    /// where `Wh` is parameter from setWeights().
+    ///
+    /// ## C++ default parameters
+    /// * out_tail_shape: BlobShape::empty()
+    fn set_out_shape(&mut self, out_tail_shape: &crate::dnn::BlobShape) -> Result<()> {
+        unsafe { sys::cv_dnn_LSTMLayer_setOutShape_BlobShape(self.as_raw_LSTMLayer(), out_tail_shape.as_raw_BlobShape()) }.into_result()
+    }
+    
+    /// Set @f$ h_{t-1} @f$ value that will be used in next forward() calls.
+    /// @details By-default @f$ h_{t-1} @f$ is inited by zeros and updated after each forward() call.
+    fn set_h(&mut self, h: &crate::dnn::Blob) -> Result<()> {
+        unsafe { sys::cv_dnn_LSTMLayer_setH_Blob(self.as_raw_LSTMLayer(), h.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns current @f$ h_{t-1} @f$ value (deep copy).
+    fn get_h(&self) -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_LSTMLayer_getH_const(self.as_raw_LSTMLayer()) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Set @f$ c_{t-1} @f$ value that will be used in next forward() calls.
+    /// @details By-default @f$ c_{t-1} @f$ is inited by zeros and updated after each forward() call.
+    fn set_c(&mut self, c: &crate::dnn::Blob) -> Result<()> {
+        unsafe { sys::cv_dnn_LSTMLayer_setC_Blob(self.as_raw_LSTMLayer(), c.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns current @f$ c_{t-1} @f$ value (deep copy).
+    fn get_c(&self) -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_LSTMLayer_getC_const(self.as_raw_LSTMLayer()) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
     /// Specifies either interpet first dimension of input blob as timestamp dimenion either as sample.
     ///
     /// If flag is set to true then shape of input blob will be interpeted as [`T`, `N`, `[data dims]`] where `T` specifies number of timpestamps, `N` is number of independent streams.
@@ -654,7 +1268,6 @@ pub trait LSTMLayer: crate::dnn::Layer {
 }
 
 impl dyn LSTMLayer + '_ {
-
     /// Creates instance of LSTM layer
     pub fn create() -> Result<types::PtrOfLSTMLayer> {
         unsafe { sys::cv_dnn_LSTMLayer_create() }.into_result().map(|ptr| types::PtrOfLSTMLayer { ptr })
@@ -662,7 +1275,7 @@ impl dyn LSTMLayer + '_ {
     
 }
 
-// Generating impl for trait cv::dnn::Layer (trait)
+// Generating impl for trait crate::dnn::Layer
 /// This interface class allows to build new Layers - are building blocks of networks.
 ///
 /// Each class, derived from Layer, must implement allocate() methods to declare own outputs and forward() to compute outputs.
@@ -689,6 +1302,26 @@ pub trait Layer {
     fn set_type(&mut self, val: &str) -> Result<()> {
         string_arg!(mut val);
         unsafe { sys::cv_dnn_Layer_set_type_String(self.as_raw_Layer(), val.as_ptr() as _) }.into_result()
+    }
+    
+    
+    fn allocate(&mut self, inputs: &types::VectorOfBlob, outputs: &mut types::VectorOfBlob) -> Result<()> {
+        unsafe { sys::cv_dnn_Layer_allocate_VectorOfBlob_VectorOfBlob(self.as_raw_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_VectorOfBlob()) }.into_result()
+    }
+    
+    
+    fn allocate_1(&mut self, inputs: &types::VectorOfBlob) -> Result<types::VectorOfBlob> {
+        unsafe { sys::cv_dnn_Layer_allocate_VectorOfBlob(self.as_raw_Layer(), inputs.as_raw_VectorOfBlob()) }.into_result().map(|ptr| types::VectorOfBlob { ptr })
+    }
+    
+    
+    fn forward(&mut self, inputs: &types::VectorOfBlob, outputs: &mut types::VectorOfBlob) -> Result<()> {
+        unsafe { sys::cv_dnn_Layer_forward_VectorOfBlob_VectorOfBlob(self.as_raw_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_VectorOfBlob()) }.into_result()
+    }
+    
+    /// Allocates layer and computes output.
+    fn run(&mut self, inputs: &types::VectorOfBlob, outputs: &mut types::VectorOfBlob) -> Result<()> {
+        unsafe { sys::cv_dnn_Layer_run_VectorOfBlob_VectorOfBlob(self.as_raw_Layer(), inputs.as_raw_VectorOfBlob(), outputs.as_raw_VectorOfBlob()) }.into_result()
     }
     
     /// Returns index of input blob into the input array.
@@ -722,12 +1355,13 @@ pub struct LayerFactory {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::LayerFactory {
+impl Drop for LayerFactory {
     fn drop(&mut self) {
         unsafe { sys::cv_LayerFactory_delete(self.ptr) };
     }
 }
-impl crate::dnn::LayerFactory {
+
+impl LayerFactory {
     #[inline(always)] pub fn as_raw_LayerFactory(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -738,7 +1372,6 @@ impl crate::dnn::LayerFactory {
 unsafe impl Send for LayerFactory {}
 
 impl LayerFactory {
-
     /// Unregisters registered layer with specified type name.
     pub fn unregister_layer(_type: &str) -> Result<()> {
         string_arg!(_type);
@@ -765,12 +1398,13 @@ pub struct LayerParams {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::LayerParams {
+impl Drop for LayerParams {
     fn drop(&mut self) {
         unsafe { sys::cv_LayerParams_delete(self.ptr) };
     }
 }
-impl crate::dnn::LayerParams {
+
+impl LayerParams {
     #[inline(always)] pub fn as_raw_LayerParams(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -780,12 +1414,11 @@ impl crate::dnn::LayerParams {
 
 unsafe impl Send for LayerParams {}
 
-impl crate::dnn::Dict for LayerParams {
+impl crate::dnn::DictTrait for LayerParams {
     #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
 }
 
 impl LayerParams {
-
     /// Name of the layer instance (optional, can be used internal purposes).
     pub fn name(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_LayerParams_name(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string_mut)
@@ -819,12 +1452,13 @@ pub struct MVNLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::MVNLayer {
+impl Drop for MVNLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_MVNLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::MVNLayer {
+
+impl MVNLayer {
     #[inline(always)] pub fn as_raw_MVNLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -839,7 +1473,6 @@ impl crate::dnn::Layer for MVNLayer {
 }
 
 impl MVNLayer {
-
     pub fn eps(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_MVNLayer_eps_const(self.as_raw_MVNLayer()) }.into_result()
     }
@@ -877,12 +1510,13 @@ pub struct Net {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::Net {
+impl Drop for Net {
     fn drop(&mut self) {
         unsafe { sys::cv_Net_delete(self.ptr) };
     }
 }
-impl crate::dnn::Net {
+
+impl Net {
     #[inline(always)] pub fn as_raw_Net(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -893,7 +1527,6 @@ impl crate::dnn::Net {
 unsafe impl Send for Net {}
 
 impl Net {
-
     /// Default constructor.
     pub fn default() -> Result<crate::dnn::Net> {
         unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| crate::dnn::Net { ptr })
@@ -1020,6 +1653,53 @@ impl Net {
         unsafe { sys::cv_dnn_Net_forwardOpt_VectorOfDictValue(self.as_raw_Net(), to_layers.as_raw_VectorOfDictValue()) }.into_result()
     }
     
+    /// Sets the new value for the layer output blob
+    /// ## Parameters
+    /// * outputName: descriptor of the updating layer output blob.
+    /// * blob: new blob.
+    ///  @see connect(String, String) to know format of the descriptor.
+    ///
+    /// Note: If updating blob is not empty then @p blob must have the same shape,
+    ///  because network reshaping is not implemented yet.
+    pub fn set_blob(&mut self, output_name: &str, blob: &crate::dnn::Blob) -> Result<()> {
+        string_arg!(mut output_name);
+        unsafe { sys::cv_dnn_Net_setBlob_String_Blob(self.as_raw_Net(), output_name.as_ptr() as _, blob.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns the layer output blob.
+    /// ## Parameters
+    /// * outputName: the descriptor of the returning layer output blob.
+    ///  @see connect(String, String)
+    pub fn get_blob(&mut self, output_name: &str) -> Result<crate::dnn::Blob> {
+        string_arg!(mut output_name);
+        unsafe { sys::cv_dnn_Net_getBlob_String(self.as_raw_Net(), output_name.as_ptr() as _) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
+    /// Sets the new value for the learned param of the layer.
+    /// ## Parameters
+    /// * layer: name or id of the layer.
+    /// * numParam: index of the layer parameter in the Layer::blobs array.
+    /// * blob: the new value.
+    ///  @see Layer::blobs
+    ///
+    /// Note: If shape of the new blob differs from the previous shape,
+    ///  then the following forward pass may fail.
+    pub fn set_param(&mut self, layer: &crate::dnn::DictValue, num_param: i32, blob: &crate::dnn::Blob) -> Result<()> {
+        unsafe { sys::cv_dnn_Net_setParam_DictValue_int_Blob(self.as_raw_Net(), layer.as_raw_DictValue(), num_param, blob.as_raw_Blob()) }.into_result()
+    }
+    
+    /// Returns parameter blob of the layer.
+    /// ## Parameters
+    /// * layer: name or id of the layer.
+    /// * numParam: index of the layer parameter in the Layer::blobs array.
+    ///  @see Layer::blobs
+    ///
+    /// ## C++ default parameters
+    /// * num_param: 0
+    pub fn get_param(&mut self, layer: &crate::dnn::DictValue, num_param: i32) -> Result<crate::dnn::Blob> {
+        unsafe { sys::cv_dnn_Net_getParam_DictValue_int(self.as_raw_Net(), layer.as_raw_DictValue(), num_param) }.into_result().map(|ptr| crate::dnn::Blob { ptr })
+    }
+    
 }
 
 // boxed class cv::dnn::PoolingLayer
@@ -1027,12 +1707,13 @@ pub struct PoolingLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::PoolingLayer {
+impl Drop for PoolingLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_PoolingLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::PoolingLayer {
+
+impl PoolingLayer {
     #[inline(always)] pub fn as_raw_PoolingLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1047,7 +1728,6 @@ impl crate::dnn::Layer for PoolingLayer {
 }
 
 impl PoolingLayer {
-
     pub fn _type(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_PoolingLayer_type_const(self.as_raw_PoolingLayer()) }.into_result()
     }
@@ -1103,12 +1783,13 @@ pub struct PowerLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::PowerLayer {
+impl Drop for PowerLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_PowerLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::PowerLayer {
+
+impl PowerLayer {
     #[inline(always)] pub fn as_raw_PowerLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1123,7 +1804,6 @@ impl crate::dnn::Layer for PowerLayer {
 }
 
 impl PowerLayer {
-
     pub fn power(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_PowerLayer_power_const(self.as_raw_PowerLayer()) }.into_result()
     }
@@ -1147,10 +1827,28 @@ impl PowerLayer {
     
 }
 
-// Generating impl for trait cv::dnn::RNNLayer (trait)
+// Generating impl for trait crate::dnn::RNNLayer
 /// Classical recurrent layer
 pub trait RNNLayer: crate::dnn::Layer {
     #[inline(always)] fn as_raw_RNNLayer(&self) -> *mut c_void;
+    /// Setups learned weights.
+    ///
+    /// Recurrent-layer behavior on each step is defined by current input @f$ x_t @f$, previous state @f$ h_t @f$ and learned weights as follows:
+    /// @f{eqnarray*}{
+    /// h_t &= tanh&(W_{hh} h_{t-1} + W_{xh} x_t + b_h),  \\
+    /// o_t &= tanh&(W_{ho} h_t + b_o),
+    /// @f}
+    ///
+    /// ## Parameters
+    /// * Wxh: is @f$ W_{xh} @f$ matrix
+    /// * bh: is @f$ b_{h}  @f$ vector
+    /// * Whh: is @f$ W_{hh} @f$ matrix
+    /// * Who: is @f$ W_{xo} @f$ matrix
+    /// * bo: is @f$ b_{o}  @f$ vector
+    fn set_weights(&mut self, wxh: &crate::dnn::Blob, bh: &crate::dnn::Blob, whh: &crate::dnn::Blob, who: &crate::dnn::Blob, bo: &crate::dnn::Blob) -> Result<()> {
+        unsafe { sys::cv_dnn_RNNLayer_setWeights_Blob_Blob_Blob_Blob_Blob(self.as_raw_RNNLayer(), wxh.as_raw_Blob(), bh.as_raw_Blob(), whh.as_raw_Blob(), who.as_raw_Blob(), bo.as_raw_Blob()) }.into_result()
+    }
+    
     /// If this flag is set to true then layer will produce @f$ h_t @f$ as second output.
     /// @details Shape of the second output is the same as first output.
     ///
@@ -1163,7 +1861,6 @@ pub trait RNNLayer: crate::dnn::Layer {
 }
 
 impl dyn RNNLayer + '_ {
-
     /// Creates instance of RNNLayer
     pub fn create() -> Result<types::PtrOfRNNLayer> {
         unsafe { sys::cv_dnn_RNNLayer_create() }.into_result().map(|ptr| types::PtrOfRNNLayer { ptr })
@@ -1176,12 +1873,13 @@ pub struct ReLULayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ReLULayer {
+impl Drop for ReLULayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ReLULayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ReLULayer {
+
+impl ReLULayer {
     #[inline(always)] pub fn as_raw_ReLULayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1196,7 +1894,6 @@ impl crate::dnn::Layer for ReLULayer {
 }
 
 impl ReLULayer {
-
     pub fn negative_slope(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_ReLULayer_negativeSlope_const(self.as_raw_ReLULayer()) }.into_result()
     }
@@ -1215,12 +1912,13 @@ pub struct ReshapeLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ReshapeLayer {
+impl Drop for ReshapeLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ReshapeLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ReshapeLayer {
+
+impl ReshapeLayer {
     #[inline(always)] pub fn as_raw_ReshapeLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1235,13 +1933,28 @@ impl crate::dnn::Layer for ReshapeLayer {
 }
 
 impl ReshapeLayer {
-
+    pub fn new_shape_desc(&mut self) -> Result<crate::dnn::BlobShape> {
+        unsafe { sys::cv_dnn_ReshapeLayer_newShapeDesc(self.as_raw_ReshapeLayer()) }.into_result().map(|ptr| crate::dnn::BlobShape { ptr })
+    }
+    
+    pub fn set_new_shape_desc(&mut self, val: crate::dnn::BlobShape) -> Result<()> {
+        unsafe { sys::cv_dnn_ReshapeLayer_set_newShapeDesc_BlobShape(self.as_raw_ReshapeLayer(), val.as_raw_BlobShape()) }.into_result()
+    }
+    
     pub fn new_shape_range(&mut self) -> Result<core::Range> {
         unsafe { sys::cv_dnn_ReshapeLayer_newShapeRange(self.as_raw_ReshapeLayer()) }.into_result().map(|ptr| core::Range { ptr })
     }
     
     pub fn set_new_shape_range(&mut self, val: core::Range) -> Result<()> {
         unsafe { sys::cv_dnn_ReshapeLayer_set_newShapeRange_Range(self.as_raw_ReshapeLayer(), val.as_raw_Range()) }.into_result()
+    }
+    
+    ///
+    /// ## C++ default parameters
+    /// * applying_range: Range::all()
+    /// * enable_reordering: false
+    pub fn create(new_shape: &crate::dnn::BlobShape, applying_range: &core::Range, enable_reordering: bool) -> Result<types::PtrOfReshapeLayer> {
+        unsafe { sys::cv_dnn_ReshapeLayer_create_BlobShape_Range_bool(new_shape.as_raw_BlobShape(), applying_range.as_raw_Range(), enable_reordering) }.into_result().map(|ptr| types::PtrOfReshapeLayer { ptr })
     }
     
 }
@@ -1251,12 +1964,13 @@ pub struct SigmoidLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SigmoidLayer {
+impl Drop for SigmoidLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SigmoidLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SigmoidLayer {
+
+impl SigmoidLayer {
     #[inline(always)] pub fn as_raw_SigmoidLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1271,7 +1985,6 @@ impl crate::dnn::Layer for SigmoidLayer {
 }
 
 impl SigmoidLayer {
-
     pub fn create() -> Result<types::PtrOfSigmoidLayer> {
         unsafe { sys::cv_dnn_SigmoidLayer_create() }.into_result().map(|ptr| types::PtrOfSigmoidLayer { ptr })
     }
@@ -1283,12 +1996,13 @@ pub struct SliceLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SliceLayer {
+impl Drop for SliceLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SliceLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SliceLayer {
+
+impl SliceLayer {
     #[inline(always)] pub fn as_raw_SliceLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1303,7 +2017,6 @@ impl crate::dnn::Layer for SliceLayer {
 }
 
 impl SliceLayer {
-
     pub fn axis(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_SliceLayer_axis_const(self.as_raw_SliceLayer()) }.into_result()
     }
@@ -1323,12 +2036,13 @@ pub struct SoftmaxLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SoftmaxLayer {
+impl Drop for SoftmaxLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SoftmaxLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SoftmaxLayer {
+
+impl SoftmaxLayer {
     #[inline(always)] pub fn as_raw_SoftmaxLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1343,7 +2057,6 @@ impl crate::dnn::Layer for SoftmaxLayer {
 }
 
 impl SoftmaxLayer {
-
     ///
     /// ## C++ default parameters
     /// * axis: 1
@@ -1358,12 +2071,13 @@ pub struct SplitLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SplitLayer {
+impl Drop for SplitLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SplitLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SplitLayer {
+
+impl SplitLayer {
     #[inline(always)] pub fn as_raw_SplitLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1378,7 +2092,6 @@ impl crate::dnn::Layer for SplitLayer {
 }
 
 impl SplitLayer {
-
     ///
     /// ## C++ default parameters
     /// * outputs_count: -1
@@ -1393,12 +2106,13 @@ pub struct TanHLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::TanHLayer {
+impl Drop for TanHLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_TanHLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::TanHLayer {
+
+impl TanHLayer {
     #[inline(always)] pub fn as_raw_TanHLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1413,7 +2127,6 @@ impl crate::dnn::Layer for TanHLayer {
 }
 
 impl TanHLayer {
-
     pub fn create() -> Result<types::PtrOfTanHLayer> {
         unsafe { sys::cv_dnn_TanHLayer_create() }.into_result().map(|ptr| types::PtrOfTanHLayer { ptr })
     }
@@ -1425,12 +2138,13 @@ pub struct _LayerStaticRegisterer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::_LayerStaticRegisterer {
+impl Drop for _LayerStaticRegisterer {
     fn drop(&mut self) {
         unsafe { sys::cv__LayerStaticRegisterer_delete(self.ptr) };
     }
 }
-impl crate::dnn::_LayerStaticRegisterer {
+
+impl _LayerStaticRegisterer {
     #[inline(always)] pub fn as_raw__LayerStaticRegisterer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1440,8 +2154,6 @@ impl crate::dnn::_LayerStaticRegisterer {
 
 unsafe impl Send for _LayerStaticRegisterer {}
 
-impl _LayerStaticRegisterer {
-
-}
-
+pub const Blob_ALLOC_BOTH: i32 = 0x3; // 3
+pub const Blob_SYNCED: i32 = 0x3; // 3
 pub use crate::manual::dnn::*;

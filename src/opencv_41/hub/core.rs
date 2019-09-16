@@ -554,7 +554,7 @@ pub const _InputArray_KIND_SHIFT: i32 = 16;
 pub const __UMAT_USAGE_FLAGS_32BIT: i32 = 0x7fffffff;
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum AccessFlag {
     ACCESS_READ = ACCESS_READ as isize,
     ACCESS_WRITE = ACCESS_WRITE as isize,
@@ -564,7 +564,7 @@ pub enum AccessFlag {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum FLAGS {
     FLAGS_NONE = FLAGS_NONE as isize,
     FLAGS_MAPPING = FLAGS_MAPPING as isize,
@@ -572,7 +572,7 @@ pub enum FLAGS {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Formatter_FormatType {
     FMT_DEFAULT = Formatter_FMT_DEFAULT as isize,
     FMT_MATLAB = Formatter_FMT_MATLAB as isize,
@@ -583,7 +583,7 @@ pub enum Formatter_FormatType {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum IMPL {
     IMPL_PLAIN = IMPL_PLAIN as isize,
     IMPL_IPP = IMPL_IPP as isize,
@@ -592,7 +592,7 @@ pub enum IMPL {
 
 /// Supported logging levels and their semantic
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum LogLevel {
     /// for using in setLogVevel() call
     LOG_LEVEL_SILENT = LOG_LEVEL_SILENT as isize,
@@ -612,7 +612,7 @@ pub enum LogLevel {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum OclVectorStrategy {
     OCL_VECTOR_OWN = OCL_VECTOR_OWN as isize,
     OCL_VECTOR_MAX = OCL_VECTOR_MAX as isize,
@@ -620,7 +620,7 @@ pub enum OclVectorStrategy {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum TYPE {
     TYPE_GENERAL = TYPE_GENERAL as isize,
     TYPE_MARKER = TYPE_MARKER as isize,
@@ -630,7 +630,7 @@ pub enum TYPE {
 
 /// Usage flags for allocator
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum UMatUsageFlags {
     USAGE_DEFAULT = USAGE_DEFAULT as isize,
     USAGE_ALLOCATE_HOST_MEMORY = USAGE_ALLOCATE_HOST_MEMORY as isize,
@@ -640,7 +640,7 @@ pub enum UMatUsageFlags {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum _InputArray_KindFlag {
     KIND_SHIFT = _InputArray_KIND_SHIFT as isize,
     FIXED_TYPE = _InputArray_FIXED_TYPE as isize,
@@ -665,7 +665,7 @@ pub enum _InputArray_KindFlag {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum _OutputArray_DepthMask {
     DEPTH_MASK_8U = _OutputArray_DEPTH_MASK_8U as isize,
     DEPTH_MASK_8S = _OutputArray_DEPTH_MASK_8S as isize,
@@ -723,7 +723,7 @@ pub type Scalar = core::Scalar_<f64>;
 /// query descriptor index, train descriptor index, train image index, and distance between
 /// descriptors.
 #[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct DMatch {
     pub query_idx: i32,
     pub train_idx: i32,
@@ -742,7 +742,7 @@ pub struct DMatch {
 /// represented as a feature vector). The keypoints representing the same object in different images
 /// can then be matched using %KDTree or another method.
 #[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct KeyPoint {
     pub pt: core::Point2f,
     pub size: f32,
@@ -786,7 +786,7 @@ pub struct KeyPoint {
 /// Since the contour moments are computed using Green formula, you may get seemingly odd results for
 /// contours with self-intersections, e.g. a zero area (m00) for butterfly-shaped contours.
 #[repr(C)]
-#[derive(Copy,Clone,Debug,PartialEq)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Moments {
     pub m00: f64,
     pub m10: f64,
@@ -4970,7 +4970,7 @@ pub fn write_keypoint_vec_1(fs: &mut core::FileStorage, vec: &types::VectorOfKey
     unsafe { sys::cv_write_FileStorage_VectorOfKeyPoint(fs.as_raw_FileStorage(), vec.as_raw_VectorOfKeyPoint()) }.into_result()
 }
 
-// Generating impl for trait cv::Algorithm (trait)
+// Generating impl for trait core::Algorithm
 /// This is a base class for all more or less complex algorithms in OpenCV
 ///
 /// especially for classes of algorithms, for which there can be multiple implementations. The examples
@@ -4981,7 +4981,7 @@ pub fn write_keypoint_vec_1(fs: &mut core::FileStorage, vec: &types::VectorOfKey
 ///
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
 /// @snippet snippets/core_various.cpp Algorithm
-pub trait Algorithm {
+pub trait AlgorithmTrait {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void;
     /// Clears the algorithm state
     fn clear(&mut self) -> Result<()> {
@@ -5027,6 +5027,48 @@ pub trait Algorithm {
     
 }
 
+// boxed class cv::Algorithm
+/// This is a base class for all more or less complex algorithms in OpenCV
+///
+/// especially for classes of algorithms, for which there can be multiple implementations. The examples
+/// are stereo correspondence (for which there are algorithms like block matching, semi-global block
+/// matching, graph-cut etc.), background subtraction (which can be done using mixture-of-gaussians
+/// models, codebook-based algorithm etc.), optical flow (block matching, Lucas-Kanade, Horn-Schunck
+/// etc.).
+///
+/// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
+/// @snippet snippets/core_various.cpp Algorithm
+pub struct Algorithm {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for Algorithm {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Algorithm_delete(self.ptr) };
+    }
+}
+
+impl Algorithm {
+    #[inline(always)] pub fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Algorithm {}
+
+impl core::AlgorithmTrait for Algorithm {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+}
+
+impl Algorithm {
+    pub fn default() -> Result<core::Algorithm> {
+        unsafe { sys::cv_Algorithm_Algorithm() }.into_result().map(|ptr| core::Algorithm { ptr })
+    }
+    
+}
+
 // boxed class cv::AsyncArray
 /// Returns result of asynchronous operations
 ///
@@ -5038,12 +5080,13 @@ pub struct AsyncArray {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::AsyncArray {
+impl Drop for AsyncArray {
     fn drop(&mut self) {
         unsafe { sys::cv_AsyncArray_delete(self.ptr) };
     }
 }
-impl core::AsyncArray {
+
+impl AsyncArray {
     #[inline(always)] pub fn as_raw_AsyncArray(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5054,7 +5097,6 @@ impl core::AsyncArray {
 unsafe impl Send for AsyncArray {}
 
 impl AsyncArray {
-
     pub fn default() -> Result<core::AsyncArray> {
         unsafe { sys::cv_AsyncArray_AsyncArray() }.into_result().map(|ptr| core::AsyncArray { ptr })
     }
@@ -5117,7 +5159,7 @@ impl AsyncArray {
     
 }
 
-// Generating impl for trait cv::BufferPoolController (trait)
+// Generating impl for trait core::BufferPoolController
 pub trait BufferPoolController {
     #[inline(always)] fn as_raw_BufferPoolController(&self) -> *mut c_void;
     fn get_reserved_size(&self) -> Result<size_t> {
@@ -5221,12 +5263,13 @@ pub struct CommandLineParser {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::CommandLineParser {
+impl Drop for CommandLineParser {
     fn drop(&mut self) {
         unsafe { sys::cv_CommandLineParser_delete(self.ptr) };
     }
 }
-impl core::CommandLineParser {
+
+impl CommandLineParser {
     #[inline(always)] pub fn as_raw_CommandLineParser(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5237,7 +5280,6 @@ impl core::CommandLineParser {
 unsafe impl Send for CommandLineParser {}
 
 impl CommandLineParser {
-
     /// Copy constructor
     pub fn copy(parser: &core::CommandLineParser) -> Result<core::CommandLineParser> {
         unsafe { sys::cv_CommandLineParser_CommandLineParser_CommandLineParser(parser.as_raw_CommandLineParser()) }.into_result().map(|ptr| core::CommandLineParser { ptr })
@@ -5341,12 +5383,13 @@ pub struct ConjGradSolver {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::ConjGradSolver {
+impl Drop for ConjGradSolver {
     fn drop(&mut self) {
         unsafe { sys::cv_ConjGradSolver_delete(self.ptr) };
     }
 }
-impl core::ConjGradSolver {
+
+impl ConjGradSolver {
     #[inline(always)] pub fn as_raw_ConjGradSolver(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5356,7 +5399,7 @@ impl core::ConjGradSolver {
 
 unsafe impl Send for ConjGradSolver {}
 
-impl core::Algorithm for ConjGradSolver {
+impl core::AlgorithmTrait for ConjGradSolver {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -5365,7 +5408,6 @@ impl core::MinProblemSolver for ConjGradSolver {
 }
 
 impl ConjGradSolver {
-
     /// This function returns the reference to the ready-to-use ConjGradSolver object.
     ///
     /// All the parameters are optional, so this procedure can be called even without parameters at
@@ -5390,7 +5432,6 @@ impl ConjGradSolver {
 }
 
 impl DMatch {
-
     pub fn default() -> Result<core::DMatch> {
         unsafe { sys::cv_DMatch_DMatch() }.into_result()
     }
@@ -5405,7 +5446,7 @@ impl DMatch {
     
 }
 
-// Generating impl for trait cv::DownhillSolver (trait)
+// Generating impl for trait core::DownhillSolver
 /// This class is used to perform the non-linear non-constrained minimization of a function,
 ///
 /// defined on an `n`-dimensional Euclidean space, using the **Nelder-Mead method**, also known as
@@ -5472,7 +5513,6 @@ pub trait DownhillSolver: core::MinProblemSolver {
 }
 
 impl dyn DownhillSolver + '_ {
-
     /// This function returns the reference to the ready-to-use DownhillSolver object.
     ///
     /// All the parameters are optional, so this procedure can be called even without parameters at
@@ -5517,12 +5557,13 @@ pub struct FileNode {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::FileNode {
+impl Drop for FileNode {
     fn drop(&mut self) {
         unsafe { sys::cv_FileNode_delete(self.ptr) };
     }
 }
-impl core::FileNode {
+
+impl FileNode {
     #[inline(always)] pub fn as_raw_FileNode(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5533,7 +5574,6 @@ impl core::FileNode {
 unsafe impl Send for FileNode {}
 
 impl FileNode {
-
     /// The constructors.
     ///
     /// These constructors are used to create a default file node, construct it from obsolete structures or
@@ -5716,12 +5756,13 @@ pub struct FileNodeIterator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::FileNodeIterator {
+impl Drop for FileNodeIterator {
     fn drop(&mut self) {
         unsafe { sys::cv_FileNodeIterator_delete(self.ptr) };
     }
 }
-impl core::FileNodeIterator {
+
+impl FileNodeIterator {
     #[inline(always)] pub fn as_raw_FileNodeIterator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5732,7 +5773,6 @@ impl core::FileNodeIterator {
 unsafe impl Send for FileNodeIterator {}
 
 impl FileNodeIterator {
-
     /// Reads node elements to the buffer with the specified format.
     ///
     /// Usually it is more convenient to use operator `>>` instead of this method.
@@ -5767,12 +5807,13 @@ pub struct FileStorage {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::FileStorage {
+impl Drop for FileStorage {
     fn drop(&mut self) {
         unsafe { sys::cv_FileStorage_delete(self.ptr) };
     }
 }
-impl core::FileStorage {
+
+impl FileStorage {
     #[inline(always)] pub fn as_raw_FileStorage(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5783,7 +5824,6 @@ impl core::FileStorage {
 unsafe impl Send for FileStorage {}
 
 impl FileStorage {
-
     /// The constructors.
     ///
     /// The full constructor opens the file. Alternatively you can use the default constructor and then
@@ -5958,7 +5998,7 @@ impl FileStorage {
     
 }
 
-// Generating impl for trait cv::Formatted (trait)
+// Generating impl for trait core::Formatted
 /// @todo document
 pub trait Formatted {
     #[inline(always)] fn as_raw_Formatted(&self) -> *mut c_void;
@@ -5972,7 +6012,7 @@ pub trait Formatted {
     
 }
 
-// Generating impl for trait cv::Formatter (trait)
+// Generating impl for trait core::Formatter
 /// @todo document
 pub trait Formatter {
     #[inline(always)] fn as_raw_Formatter(&self) -> *mut c_void;
@@ -6011,7 +6051,6 @@ pub trait Formatter {
 }
 
 impl dyn Formatter + '_ {
-
     ///
     /// ## C++ default parameters
     /// * fmt: FMT_DEFAULT
@@ -6027,12 +6066,13 @@ pub struct Hamming {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Hamming {
+impl Drop for Hamming {
     fn drop(&mut self) {
         unsafe { sys::cv_Hamming_delete(self.ptr) };
     }
 }
-impl core::Hamming {
+
+impl Hamming {
     #[inline(always)] pub fn as_raw_Hamming(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -6043,7 +6083,6 @@ impl core::Hamming {
 unsafe impl Send for Hamming {}
 
 impl KeyPoint {
-
     /// the default constructor
     pub fn default() -> Result<core::KeyPoint> {
         unsafe { sys::cv_KeyPoint_KeyPoint() }.into_result()
@@ -6139,12 +6178,13 @@ pub struct LDA {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::LDA {
+impl Drop for LDA {
     fn drop(&mut self) {
         unsafe { sys::cv_LDA_delete(self.ptr) };
     }
 }
-impl core::LDA {
+
+impl LDA {
     #[inline(always)] pub fn as_raw_LDA(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -6155,7 +6195,6 @@ impl core::LDA {
 unsafe impl Send for LDA {}
 
 impl LDA {
-
     /// constructor
     /// Initializes a LDA with num_components (default 0).
     ///
@@ -6450,12 +6489,13 @@ pub struct Mat {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Mat {
+impl Drop for Mat {
     fn drop(&mut self) {
         unsafe { sys::cv_Mat_delete(self.ptr) };
     }
 }
-impl core::Mat {
+
+impl Mat {
     #[inline(always)] pub fn as_raw_Mat(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -6466,7 +6506,6 @@ impl core::Mat {
 unsafe impl Send for Mat {}
 
 impl Mat {
-
     pub fn flags(&self) -> Result<i32> {
         unsafe { sys::cv_Mat_flags_const(self.as_raw_Mat()) }.into_result()
     }
@@ -7659,12 +7698,13 @@ pub struct MatConstIterator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::MatConstIterator {
+impl Drop for MatConstIterator {
     fn drop(&mut self) {
         unsafe { sys::cv_MatConstIterator_delete(self.ptr) };
     }
 }
-impl core::MatConstIterator {
+
+impl MatConstIterator {
     #[inline(always)] pub fn as_raw_MatConstIterator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -7675,7 +7715,6 @@ impl core::MatConstIterator {
 unsafe impl Send for MatConstIterator {}
 
 impl MatConstIterator {
-
     /// default constructor
     pub fn default() -> Result<core::MatConstIterator> {
         unsafe { sys::cv_MatConstIterator_MatConstIterator() }.into_result().map(|ptr| core::MatConstIterator { ptr })
@@ -7790,12 +7829,13 @@ pub struct MatExpr {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::MatExpr {
+impl Drop for MatExpr {
     fn drop(&mut self) {
         unsafe { sys::cv_MatExpr_delete(self.ptr) };
     }
 }
-impl core::MatExpr {
+
+impl MatExpr {
     #[inline(always)] pub fn as_raw_MatExpr(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -7806,7 +7846,6 @@ impl core::MatExpr {
 unsafe impl Send for MatExpr {}
 
 impl MatExpr {
-
     pub fn default() -> Result<core::MatExpr> {
         unsafe { sys::cv_MatExpr_MatExpr() }.into_result().map(|ptr| core::MatExpr { ptr })
     }
@@ -7823,7 +7862,7 @@ impl MatExpr {
     /// * _alpha: 1
     /// * _beta: 1
     /// * _s: Scalar()
-    pub fn new(_op: &core::MatOp, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
+    pub fn new(_op: &dyn core::MatOp, _flags: i32, _a: &core::Mat, _b: &core::Mat, _c: &core::Mat, _alpha: f64, _beta: f64, _s: core::Scalar) -> Result<core::MatExpr> {
         unsafe { sys::cv_MatExpr_MatExpr_const_MatOp_int_Mat_Mat_Mat_double_double_Scalar(_op.as_raw_MatOp(), _flags, _a.as_raw_Mat(), _b.as_raw_Mat(), _c.as_raw_Mat(), _alpha, _beta, _s) }.into_result().map(|ptr| core::MatExpr { ptr })
     }
     
@@ -7889,7 +7928,7 @@ impl MatExpr {
     
 }
 
-// Generating impl for trait cv::MatOp (trait)
+// Generating impl for trait core::MatOp
 pub trait MatOp {
     #[inline(always)] fn as_raw_MatOp(&self) -> *mut c_void;
     fn element_wise(&self, expr: &core::MatExpr) -> Result<bool> {
@@ -8008,12 +8047,13 @@ pub struct MatSize {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::MatSize {
+impl Drop for MatSize {
     fn drop(&mut self) {
         unsafe { sys::cv_MatSize_delete(self.ptr) };
     }
 }
-impl core::MatSize {
+
+impl MatSize {
     #[inline(always)] pub fn as_raw_MatSize(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8024,7 +8064,6 @@ impl core::MatSize {
 unsafe impl Send for MatSize {}
 
 impl MatSize {
-
     pub fn new(_p: &mut i32) -> Result<core::MatSize> {
         unsafe { sys::cv_MatSize_MatSize_int_X(_p) }.into_result().map(|ptr| core::MatSize { ptr })
     }
@@ -8040,12 +8079,13 @@ pub struct MatStep {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::MatStep {
+impl Drop for MatStep {
     fn drop(&mut self) {
         unsafe { sys::cv_MatStep_delete(self.ptr) };
     }
 }
-impl core::MatStep {
+
+impl MatStep {
     #[inline(always)] pub fn as_raw_MatStep(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8056,7 +8096,6 @@ impl core::MatStep {
 unsafe impl Send for MatStep {}
 
 impl MatStep {
-
     pub fn default() -> Result<core::MatStep> {
         unsafe { sys::cv_MatStep_MatStep() }.into_result().map(|ptr| core::MatStep { ptr })
     }
@@ -8077,12 +8116,13 @@ pub struct Matx_AddOp {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Matx_AddOp {
+impl Drop for Matx_AddOp {
     fn drop(&mut self) {
         unsafe { sys::cv_Matx_AddOp_delete(self.ptr) };
     }
 }
-impl core::Matx_AddOp {
+
+impl Matx_AddOp {
     #[inline(always)] pub fn as_raw_Matx_AddOp(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8093,7 +8133,6 @@ impl core::Matx_AddOp {
 unsafe impl Send for Matx_AddOp {}
 
 impl Matx_AddOp {
-
     pub fn default() -> Result<core::Matx_AddOp> {
         unsafe { sys::cv_Matx_AddOp_Matx_AddOp() }.into_result().map(|ptr| core::Matx_AddOp { ptr })
     }
@@ -8109,12 +8148,13 @@ pub struct Matx_DivOp {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Matx_DivOp {
+impl Drop for Matx_DivOp {
     fn drop(&mut self) {
         unsafe { sys::cv_Matx_DivOp_delete(self.ptr) };
     }
 }
-impl core::Matx_DivOp {
+
+impl Matx_DivOp {
     #[inline(always)] pub fn as_raw_Matx_DivOp(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8125,7 +8165,6 @@ impl core::Matx_DivOp {
 unsafe impl Send for Matx_DivOp {}
 
 impl Matx_DivOp {
-
     pub fn default() -> Result<core::Matx_DivOp> {
         unsafe { sys::cv_Matx_DivOp_Matx_DivOp() }.into_result().map(|ptr| core::Matx_DivOp { ptr })
     }
@@ -8141,12 +8180,13 @@ pub struct Matx_MatMulOp {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Matx_MatMulOp {
+impl Drop for Matx_MatMulOp {
     fn drop(&mut self) {
         unsafe { sys::cv_Matx_MatMulOp_delete(self.ptr) };
     }
 }
-impl core::Matx_MatMulOp {
+
+impl Matx_MatMulOp {
     #[inline(always)] pub fn as_raw_Matx_MatMulOp(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8157,7 +8197,6 @@ impl core::Matx_MatMulOp {
 unsafe impl Send for Matx_MatMulOp {}
 
 impl Matx_MatMulOp {
-
     pub fn default() -> Result<core::Matx_MatMulOp> {
         unsafe { sys::cv_Matx_MatMulOp_Matx_MatMulOp() }.into_result().map(|ptr| core::Matx_MatMulOp { ptr })
     }
@@ -8173,12 +8212,13 @@ pub struct Matx_MulOp {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Matx_MulOp {
+impl Drop for Matx_MulOp {
     fn drop(&mut self) {
         unsafe { sys::cv_Matx_MulOp_delete(self.ptr) };
     }
 }
-impl core::Matx_MulOp {
+
+impl Matx_MulOp {
     #[inline(always)] pub fn as_raw_Matx_MulOp(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8189,7 +8229,6 @@ impl core::Matx_MulOp {
 unsafe impl Send for Matx_MulOp {}
 
 impl Matx_MulOp {
-
     pub fn default() -> Result<core::Matx_MulOp> {
         unsafe { sys::cv_Matx_MulOp_Matx_MulOp() }.into_result().map(|ptr| core::Matx_MulOp { ptr })
     }
@@ -8205,12 +8244,13 @@ pub struct Matx_ScaleOp {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Matx_ScaleOp {
+impl Drop for Matx_ScaleOp {
     fn drop(&mut self) {
         unsafe { sys::cv_Matx_ScaleOp_delete(self.ptr) };
     }
 }
-impl core::Matx_ScaleOp {
+
+impl Matx_ScaleOp {
     #[inline(always)] pub fn as_raw_Matx_ScaleOp(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8221,7 +8261,6 @@ impl core::Matx_ScaleOp {
 unsafe impl Send for Matx_ScaleOp {}
 
 impl Matx_ScaleOp {
-
     pub fn default() -> Result<core::Matx_ScaleOp> {
         unsafe { sys::cv_Matx_ScaleOp_Matx_ScaleOp() }.into_result().map(|ptr| core::Matx_ScaleOp { ptr })
     }
@@ -8237,12 +8276,13 @@ pub struct Matx_SubOp {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Matx_SubOp {
+impl Drop for Matx_SubOp {
     fn drop(&mut self) {
         unsafe { sys::cv_Matx_SubOp_delete(self.ptr) };
     }
 }
-impl core::Matx_SubOp {
+
+impl Matx_SubOp {
     #[inline(always)] pub fn as_raw_Matx_SubOp(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8253,7 +8293,6 @@ impl core::Matx_SubOp {
 unsafe impl Send for Matx_SubOp {}
 
 impl Matx_SubOp {
-
     pub fn default() -> Result<core::Matx_SubOp> {
         unsafe { sys::cv_Matx_SubOp_Matx_SubOp() }.into_result().map(|ptr| core::Matx_SubOp { ptr })
     }
@@ -8269,12 +8308,13 @@ pub struct Matx_TOp {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Matx_TOp {
+impl Drop for Matx_TOp {
     fn drop(&mut self) {
         unsafe { sys::cv_Matx_TOp_delete(self.ptr) };
     }
 }
-impl core::Matx_TOp {
+
+impl Matx_TOp {
     #[inline(always)] pub fn as_raw_Matx_TOp(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8285,7 +8325,6 @@ impl core::Matx_TOp {
 unsafe impl Send for Matx_TOp {}
 
 impl Matx_TOp {
-
     pub fn default() -> Result<core::Matx_TOp> {
         unsafe { sys::cv_Matx_TOp_Matx_TOp() }.into_result().map(|ptr| core::Matx_TOp { ptr })
     }
@@ -8296,9 +8335,9 @@ impl Matx_TOp {
     
 }
 
-// Generating impl for trait cv::MinProblemSolver (trait)
+// Generating impl for trait core::MinProblemSolver
 /// Basic interface for all solvers
-pub trait MinProblemSolver: core::Algorithm {
+pub trait MinProblemSolver: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_MinProblemSolver(&self) -> *mut c_void;
     /// Getter for the optimized function.
     ///
@@ -8365,7 +8404,7 @@ pub trait MinProblemSolver: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::MinProblemSolver::Function (trait)
+// Generating impl for trait core::MinProblemSolver_Function
 /// Represents function being optimized
 pub trait MinProblemSolver_Function {
     #[inline(always)] fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void;
@@ -8388,7 +8427,6 @@ pub trait MinProblemSolver_Function {
 }
 
 impl Moments {
-
     /// the default constructor
     pub fn default() -> Result<core::Moments> {
         unsafe { sys::cv_Moments_Moments() }.into_result()
@@ -8465,12 +8503,13 @@ pub struct NAryMatIterator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::NAryMatIterator {
+impl Drop for NAryMatIterator {
     fn drop(&mut self) {
         unsafe { sys::cv_NAryMatIterator_delete(self.ptr) };
     }
 }
-impl core::NAryMatIterator {
+
+impl NAryMatIterator {
     #[inline(always)] pub fn as_raw_NAryMatIterator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8481,7 +8520,6 @@ impl core::NAryMatIterator {
 unsafe impl Send for NAryMatIterator {}
 
 impl NAryMatIterator {
-
     /// the default constructor
     pub fn default() -> Result<core::NAryMatIterator> {
         unsafe { sys::cv_NAryMatIterator_NAryMatIterator() }.into_result().map(|ptr| core::NAryMatIterator { ptr })
@@ -8560,12 +8598,13 @@ pub struct PCA {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::PCA {
+impl Drop for PCA {
     fn drop(&mut self) {
         unsafe { sys::cv_PCA_delete(self.ptr) };
     }
 }
-impl core::PCA {
+
+impl PCA {
     #[inline(always)] pub fn as_raw_PCA(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8576,7 +8615,6 @@ impl core::PCA {
 unsafe impl Send for PCA {}
 
 impl PCA {
-
     /// default constructor
     ///
     /// The default constructor initializes an empty %PCA structure. The other
@@ -8699,7 +8737,7 @@ impl PCA {
     
 }
 
-// Generating impl for trait cv::ParallelLoopBody (trait)
+// Generating impl for trait core::ParallelLoopBody
 /// Base class for parallel data processors
 pub trait ParallelLoopBody {
     #[inline(always)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
@@ -8710,12 +8748,13 @@ pub struct ParallelLoopBodyLambdaWrapper {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::ParallelLoopBodyLambdaWrapper {
+impl Drop for ParallelLoopBodyLambdaWrapper {
     fn drop(&mut self) {
         unsafe { sys::cv_ParallelLoopBodyLambdaWrapper_delete(self.ptr) };
     }
 }
-impl core::ParallelLoopBodyLambdaWrapper {
+
+impl ParallelLoopBodyLambdaWrapper {
     #[inline(always)] pub fn as_raw_ParallelLoopBodyLambdaWrapper(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8727,10 +8766,6 @@ unsafe impl Send for ParallelLoopBodyLambdaWrapper {}
 
 impl core::ParallelLoopBody for ParallelLoopBodyLambdaWrapper {
     #[inline(always)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void { self.ptr }
-}
-
-impl ParallelLoopBodyLambdaWrapper {
-
 }
 
 // boxed class cv::Range
@@ -8760,12 +8795,13 @@ pub struct Range {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Range {
+impl Drop for Range {
     fn drop(&mut self) {
         unsafe { sys::cv_Range_delete(self.ptr) };
     }
 }
-impl core::Range {
+
+impl Range {
     #[inline(always)] pub fn as_raw_Range(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8776,7 +8812,6 @@ impl core::Range {
 unsafe impl Send for Range {}
 
 impl Range {
-
     pub fn start(&self) -> Result<i32> {
         unsafe { sys::cv_Range_start_const(self.as_raw_Range()) }.into_result()
     }
@@ -8823,12 +8858,13 @@ pub struct RotatedRect {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::RotatedRect {
+impl Drop for RotatedRect {
     fn drop(&mut self) {
         unsafe { sys::cv_RotatedRect_delete(self.ptr) };
     }
 }
-impl core::RotatedRect {
+
+impl RotatedRect {
     #[inline(always)] pub fn as_raw_RotatedRect(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8839,7 +8875,6 @@ impl core::RotatedRect {
 unsafe impl Send for RotatedRect {}
 
 impl RotatedRect {
-
     /// returns the rectangle mass center
     pub fn center(&self) -> Result<core::Point2f> {
         unsafe { sys::cv_RotatedRect_center_const(self.as_raw_RotatedRect()) }.into_result()
@@ -8980,12 +9015,13 @@ pub struct SparseMat {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::SparseMat {
+impl Drop for SparseMat {
     fn drop(&mut self) {
         unsafe { sys::cv_SparseMat_delete(self.ptr) };
     }
 }
-impl core::SparseMat {
+
+impl SparseMat {
     #[inline(always)] pub fn as_raw_SparseMat(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -8996,7 +9032,6 @@ impl core::SparseMat {
 unsafe impl Send for SparseMat {}
 
 impl SparseMat {
-
     /// Various SparseMat constructors.
     pub fn default() -> Result<core::SparseMat> {
         unsafe { sys::cv_SparseMat_SparseMat() }.into_result().map(|ptr| core::SparseMat { ptr })
@@ -9232,12 +9267,13 @@ pub struct SparseMat_Hdr {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::SparseMat_Hdr {
+impl Drop for SparseMat_Hdr {
     fn drop(&mut self) {
         unsafe { sys::cv_SparseMat_Hdr_delete(self.ptr) };
     }
 }
-impl core::SparseMat_Hdr {
+
+impl SparseMat_Hdr {
     #[inline(always)] pub fn as_raw_SparseMat_Hdr(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -9248,7 +9284,6 @@ impl core::SparseMat_Hdr {
 unsafe impl Send for SparseMat_Hdr {}
 
 impl SparseMat_Hdr {
-
     pub fn new(_dims: i32, _sizes: &i32, _type: i32) -> Result<core::SparseMat_Hdr> {
         unsafe { sys::cv_SparseMat_Hdr_Hdr_int_const_int_X_int(_dims, _sizes, _type) }.into_result().map(|ptr| core::SparseMat_Hdr { ptr })
     }
@@ -9265,12 +9300,13 @@ pub struct SparseMat_Node {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::SparseMat_Node {
+impl Drop for SparseMat_Node {
     fn drop(&mut self) {
         unsafe { sys::cv_SparseMat_Node_delete(self.ptr) };
     }
 }
-impl core::SparseMat_Node {
+
+impl SparseMat_Node {
     #[inline(always)] pub fn as_raw_SparseMat_Node(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -9280,7 +9316,7 @@ impl core::SparseMat_Node {
 
 unsafe impl Send for SparseMat_Node {}
 
-// Generating impl for trait cv::SparseMatConstIterator (trait)
+// Generating impl for trait core::SparseMatConstIterator
 /// Read-Only Sparse Matrix Iterator.
 ///
 /// Here is how to use the iterator to compute the sum of floating-point sparse matrix elements:
@@ -9292,7 +9328,7 @@ unsafe impl Send for SparseMat_Node {}
 /// for( ; it != it_end; ++it )
 /// s += it.value<float>();
 /// \endcode
-pub trait SparseMatConstIterator {
+pub trait SparseMatConstIteratorTrait {
     #[inline(always)] fn as_raw_SparseMatConstIterator(&self) -> *mut c_void;
     /// returns the current node of the sparse matrix. it.node->idx is the current element index
     fn node(&self) -> Result<core::SparseMat_Node> {
@@ -9306,6 +9342,42 @@ pub trait SparseMatConstIterator {
     
 }
 
+// boxed class cv::SparseMatConstIterator
+/// Read-Only Sparse Matrix Iterator.
+///
+/// Here is how to use the iterator to compute the sum of floating-point sparse matrix elements:
+///
+/// \code
+/// SparseMatConstIterator it = m.begin(), it_end = m.end();
+/// double s = 0;
+/// CV_Assert( m.type() == CV_32F );
+/// for( ; it != it_end; ++it )
+/// s += it.value<float>();
+/// \endcode
+pub struct SparseMatConstIterator {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for SparseMatConstIterator {
+    fn drop(&mut self) {
+        unsafe { sys::cv_SparseMatConstIterator_delete(self.ptr) };
+    }
+}
+
+impl SparseMatConstIterator {
+    #[inline(always)] pub fn as_raw_SparseMatConstIterator(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for SparseMatConstIterator {}
+
+impl core::SparseMatConstIteratorTrait for SparseMatConstIterator {
+    #[inline(always)] fn as_raw_SparseMatConstIterator(&self) -> *mut c_void { self.ptr }
+}
+
 // boxed class cv::SparseMatIterator
 /// Read-write Sparse Matrix Iterator
 ///
@@ -9315,12 +9387,13 @@ pub struct SparseMatIterator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::SparseMatIterator {
+impl Drop for SparseMatIterator {
     fn drop(&mut self) {
         unsafe { sys::cv_SparseMatIterator_delete(self.ptr) };
     }
 }
-impl core::SparseMatIterator {
+
+impl SparseMatIterator {
     #[inline(always)] pub fn as_raw_SparseMatIterator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -9330,12 +9403,11 @@ impl core::SparseMatIterator {
 
 unsafe impl Send for SparseMatIterator {}
 
-impl core::SparseMatConstIterator for SparseMatIterator {
+impl core::SparseMatConstIteratorTrait for SparseMatIterator {
     #[inline(always)] fn as_raw_SparseMatConstIterator(&self) -> *mut c_void { self.ptr }
 }
 
 impl SparseMatIterator {
-
     /// returns pointer to the current sparse matrix node. it.node->idx is the index of the current element (do not modify it!)
     pub fn node(&self) -> Result<core::SparseMat_Node> {
         unsafe { sys::cv_SparseMatIterator_node_const(self.as_raw_SparseMatIterator()) }.into_result().map(|ptr| core::SparseMat_Node { ptr })
@@ -9352,12 +9424,13 @@ pub struct TermCriteria {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::TermCriteria {
+impl Drop for TermCriteria {
     fn drop(&mut self) {
         unsafe { sys::cv_TermCriteria_delete(self.ptr) };
     }
 }
-impl core::TermCriteria {
+
+impl TermCriteria {
     #[inline(always)] pub fn as_raw_TermCriteria(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -9368,7 +9441,6 @@ impl core::TermCriteria {
 unsafe impl Send for TermCriteria {}
 
 impl TermCriteria {
-
     /// the type of termination criteria: COUNT, EPS or COUNT + EPS
     pub fn _type(&self) -> Result<i32> {
         unsafe { sys::cv_TermCriteria_type_const(self.as_raw_TermCriteria()) }.into_result()
@@ -9436,12 +9508,13 @@ pub struct TickMeter {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::TickMeter {
+impl Drop for TickMeter {
     fn drop(&mut self) {
         unsafe { sys::cv_TickMeter_delete(self.ptr) };
     }
 }
-impl core::TickMeter {
+
+impl TickMeter {
     #[inline(always)] pub fn as_raw_TickMeter(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -9452,7 +9525,6 @@ impl core::TickMeter {
 unsafe impl Send for TickMeter {}
 
 impl TickMeter {
-
     /// the default constructor
     pub fn default() -> Result<core::TickMeter> {
         unsafe { sys::cv_TickMeter_TickMeter() }.into_result().map(|ptr| core::TickMeter { ptr })
@@ -9506,12 +9578,13 @@ pub struct UMat {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::UMat {
+impl Drop for UMat {
     fn drop(&mut self) {
         unsafe { sys::cv_UMat_delete(self.ptr) };
     }
 }
-impl core::UMat {
+
+impl UMat {
     #[inline(always)] pub fn as_raw_UMat(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -9522,7 +9595,6 @@ impl core::UMat {
 unsafe impl Send for UMat {}
 
 impl UMat {
-
     pub fn flags(&self) -> Result<i32> {
         unsafe { sys::cv_UMat_flags_const(self.as_raw_UMat()) }.into_result()
     }
@@ -9927,12 +9999,13 @@ pub struct UMatData {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::UMatData {
+impl Drop for UMatData {
     fn drop(&mut self) {
         unsafe { sys::cv_UMatData_delete(self.ptr) };
     }
 }
-impl core::UMatData {
+
+impl UMatData {
     #[inline(always)] pub fn as_raw_UMatData(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -9943,7 +10016,6 @@ impl core::UMatData {
 unsafe impl Send for UMatData {}
 
 impl UMatData {
-
     pub fn lock(&mut self) -> Result<()> {
         unsafe { sys::cv_UMatData_lock(self.as_raw_UMatData()) }.into_result()
     }
@@ -9990,7 +10062,7 @@ impl UMatData {
     
 }
 
-// Generating impl for trait cv::_InputArray (trait)
+// Generating impl for trait core::_InputArray
 /// This is the proxy class for passing read-only input arrays into OpenCV functions.
 ///
 /// It is defined as:
@@ -10077,7 +10149,7 @@ impl UMatData {
 /// This data is not intented to be interpreted as an image data, or processed somehow like regular cv::Mat.
 /// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
 /// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
-pub trait _InputArray {
+pub trait _InputArrayTrait {
     #[inline(always)] fn as_raw__InputArray(&self) -> *mut c_void;
     ///
     /// ## C++ default parameters
@@ -10269,17 +10341,173 @@ pub trait _InputArray {
     
 }
 
+// boxed class cv::_InputArray
+/// This is the proxy class for passing read-only input arrays into OpenCV functions.
+///
+/// It is defined as:
+/// ```ignore
+/// typedef const _InputArray& InputArray;
+/// ```
+///
+/// where _InputArray is a class that can be constructed from `Mat`, `Mat_<T>`, `Matx<T, m, n>`,
+/// `std::vector<T>`, `std::vector<std::vector<T> >`, `std::vector<Mat>`, `std::vector<Mat_<T> >`,
+/// `UMat`, `std::vector<UMat>` or `double`. It can also be constructed from a matrix expression.
+///
+/// Since this is mostly implementation-level class, and its interface may change in future versions, we
+/// do not describe it in details. There are a few key things, though, that should be kept in mind:
+///
+/// *   When you see in the reference manual or in OpenCV source code a function that takes
+/// InputArray, it means that you can actually pass `Mat`, `Matx`, `vector<T>` etc. (see above the
+/// complete list).
+/// *   Optional input arguments: If some of the input arrays may be empty, pass cv::noArray() (or
+/// simply cv::Mat() as you probably did before).
+/// *   The class is designed solely for passing parameters. That is, normally you *should not*
+/// declare class members, local and global variables of this type.
+/// *   If you want to design your own function or a class method that can operate of arrays of
+/// multiple types, you can use InputArray (or OutputArray) for the respective parameters. Inside
+/// a function you should use _InputArray::getMat() method to construct a matrix header for the
+/// array (without copying data). _InputArray::kind() can be used to distinguish Mat from
+/// `vector<>` etc., but normally it is not needed.
+///
+/// Here is how you can use a function that takes InputArray :
+/// ```ignore
+/// std::vector<Point2f> vec;
+/// // points or a circle
+/// for( int i = 0; i < 30; i++ )
+/// vec.push_back(Point2f((float)(100 + 30*cos(i*CV_PI*2/5)),
+/// (float)(100 - 30*sin(i*CV_PI*2/5))));
+/// cv::transform(vec, vec, cv::Matx23f(0.707, -0.707, 10, 0.707, 0.707, 20));
+/// ```
+///
+/// That is, we form an STL vector containing points, and apply in-place affine transformation to the
+/// vector using the 2x3 matrix created inline as `Matx<float, 2, 3>` instance.
+///
+/// Here is how such a function can be implemented (for simplicity, we implement a very specific case of
+/// it, according to the assertion statement inside) :
+/// ```ignore
+/// void myAffineTransform(InputArray _src, OutputArray _dst, InputArray _m)
+/// {
+/// // get Mat headers for input arrays. This is O(1) operation,
+/// // unless _src and/or _m are matrix expressions.
+/// Mat src = _src.getMat(), m = _m.getMat();
+/// CV_Assert( src.type() == CV_32FC2 && m.type() == CV_32F && m.size() == Size(3, 2) );
+///
+/// // [re]create the output array so that it has the proper size and type.
+/// // In case of Mat it calls Mat::create, in case of STL vector it calls vector::resize.
+/// _dst.create(src.size(), src.type());
+/// Mat dst = _dst.getMat();
+///
+/// for( int i = 0; i < src.rows; i++ )
+/// for( int j = 0; j < src.cols; j++ )
+/// {
+/// Point2f pt = src.at<Point2f>(i, j);
+/// dst.at<Point2f>(i, j) = Point2f(m.at<float>(0, 0)*pt.x +
+/// m.at<float>(0, 1)*pt.y +
+/// m.at<float>(0, 2),
+/// m.at<float>(1, 0)*pt.x +
+/// m.at<float>(1, 1)*pt.y +
+/// m.at<float>(1, 2));
+/// }
+/// }
+/// ```
+///
+/// There is another related type, InputArrayOfArrays, which is currently defined as a synonym for
+/// InputArray:
+/// ```ignore
+/// typedef InputArray InputArrayOfArrays;
+/// ```
+///
+/// It denotes function arguments that are either vectors of vectors or vectors of matrices. A separate
+/// synonym is needed to generate Python/Java etc. wrappers properly. At the function implementation
+/// level their use is similar, but _InputArray::getMat(idx) should be used to get header for the
+/// idx-th component of the outer vector and _InputArray::size().area() should be used to find the
+/// number of components (vectors/matrices) of the outer vector.
+///
+/// In general, type support is limited to cv::Mat types. Other types are forbidden.
+/// But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
+/// This data is not intented to be interpreted as an image data, or processed somehow like regular cv::Mat.
+/// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
+/// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
+pub struct _InputArray {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for _InputArray {
+    fn drop(&mut self) {
+        unsafe { sys::cv__InputArray_delete(self.ptr) };
+    }
+}
+
+impl _InputArray {
+    #[inline(always)] pub fn as_raw__InputArray(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for _InputArray {}
+
+impl core::_InputArrayTrait for _InputArray {
+    #[inline(always)] fn as_raw__InputArray(&self) -> *mut c_void { self.ptr }
+}
+
+impl _InputArray {
+    pub fn default() -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray() }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn new(_flags: i32, _obj: &mut c_void) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_int_void_X(_flags, _obj) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn from_mat(m: &core::Mat) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn from_matexpr(expr: &core::MatExpr) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_MatExpr(expr.as_raw_MatExpr()) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn from_mat_vec(vec: &types::VectorOfMat) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_VectorOfMat(vec.as_raw_VectorOfMat()) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn from_bool_vec(vec: &types::VectorOfbool) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_VectorOfbool(vec.as_raw_VectorOfbool()) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn from_f64(val: &f64) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_double(val) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn from_umat(um: &core::UMat) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_UMat(um.as_raw_UMat()) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+    pub fn from_umat_vec(umv: &types::VectorOfUMat) -> Result<core::_InputArray> {
+        unsafe { sys::cv__InputArray__InputArray_VectorOfUMat(umv.as_raw_VectorOfUMat()) }.into_result().map(|ptr| core::_InputArray { ptr })
+    }
+    
+}
+
+// Generating impl for trait core::_InputOutputArray
+pub trait _InputOutputArrayTrait: core::_OutputArrayTrait {
+    #[inline(always)] fn as_raw__InputOutputArray(&self) -> *mut c_void;
+}
+
 // boxed class cv::_InputOutputArray
 pub struct _InputOutputArray {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::_InputOutputArray {
+impl Drop for _InputOutputArray {
     fn drop(&mut self) {
         unsafe { sys::cv__InputOutputArray_delete(self.ptr) };
     }
 }
-impl core::_InputOutputArray {
+
+impl _InputOutputArray {
     #[inline(always)] pub fn as_raw__InputOutputArray(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -10289,16 +10517,19 @@ impl core::_InputOutputArray {
 
 unsafe impl Send for _InputOutputArray {}
 
-impl core::_InputArray for _InputOutputArray {
+impl core::_InputArrayTrait for _InputOutputArray {
     #[inline(always)] fn as_raw__InputArray(&self) -> *mut c_void { self.ptr }
 }
 
-impl core::_OutputArray for _InputOutputArray {
+impl core::_InputOutputArrayTrait for _InputOutputArray {
+    #[inline(always)] fn as_raw__InputOutputArray(&self) -> *mut c_void { self.ptr }
+}
+
+impl core::_OutputArrayTrait for _InputOutputArray {
     #[inline(always)] fn as_raw__OutputArray(&self) -> *mut c_void { self.ptr }
 }
 
 impl _InputOutputArray {
-
     pub fn default() -> Result<core::_InputOutputArray> {
         unsafe { sys::cv__InputOutputArray__InputOutputArray() }.into_result().map(|ptr| core::_InputOutputArray { ptr })
     }
@@ -10325,7 +10556,7 @@ impl _InputOutputArray {
     
 }
 
-// Generating impl for trait cv::_OutputArray (trait)
+// Generating impl for trait core::_OutputArray
 /// This type is very similar to InputArray except that it is used for input/output and output function
 /// parameters.
 ///
@@ -10350,7 +10581,7 @@ impl _InputOutputArray {
 /// typedef OutputArray InputOutputArray;
 /// typedef OutputArray InputOutputArrayOfArrays;
 /// ```
-pub trait _OutputArray: core::_InputArray {
+pub trait _OutputArrayTrait: core::_InputArrayTrait {
     #[inline(always)] fn as_raw__OutputArray(&self) -> *mut c_void;
     fn fixed_size(&self) -> Result<bool> {
         unsafe { sys::cv__OutputArray_fixedSize_const(self.as_raw__OutputArray()) }.into_result()
@@ -10453,17 +10684,98 @@ pub trait _OutputArray: core::_InputArray {
     
 }
 
+// boxed class cv::_OutputArray
+/// This type is very similar to InputArray except that it is used for input/output and output function
+/// parameters.
+///
+/// Just like with InputArray, OpenCV users should not care about OutputArray, they just pass `Mat`,
+/// `vector<T>` etc. to the functions. The same limitation as for `InputArray`: *Do not explicitly
+/// create OutputArray instances* applies here too.
+///
+/// If you want to make your function polymorphic (i.e. accept different arrays as output parameters),
+/// it is also not very difficult. Take the sample above as the reference. Note that
+/// _OutputArray::create() needs to be called before _OutputArray::getMat(). This way you guarantee
+/// that the output array is properly allocated.
+///
+/// Optional output parameters. If you do not need certain output array to be computed and returned to
+/// you, pass cv::noArray(), just like you would in the case of optional input array. At the
+/// implementation level, use _OutputArray::needed() to check if certain output array needs to be
+/// computed or not.
+///
+/// There are several synonyms for OutputArray that are used to assist automatic Python/Java/... wrapper
+/// generators:
+/// ```ignore
+/// typedef OutputArray OutputArrayOfArrays;
+/// typedef OutputArray InputOutputArray;
+/// typedef OutputArray InputOutputArrayOfArrays;
+/// ```
+pub struct _OutputArray {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for _OutputArray {
+    fn drop(&mut self) {
+        unsafe { sys::cv__OutputArray_delete(self.ptr) };
+    }
+}
+
+impl _OutputArray {
+    #[inline(always)] pub fn as_raw__OutputArray(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for _OutputArray {}
+
+impl core::_InputArrayTrait for _OutputArray {
+    #[inline(always)] fn as_raw__InputArray(&self) -> *mut c_void { self.ptr }
+}
+
+impl core::_OutputArrayTrait for _OutputArray {
+    #[inline(always)] fn as_raw__OutputArray(&self) -> *mut c_void { self.ptr }
+}
+
+impl _OutputArray {
+    pub fn default() -> Result<core::_OutputArray> {
+        unsafe { sys::cv__OutputArray__OutputArray() }.into_result().map(|ptr| core::_OutputArray { ptr })
+    }
+    
+    pub fn new(_flags: i32, _obj: &mut c_void) -> Result<core::_OutputArray> {
+        unsafe { sys::cv__OutputArray__OutputArray_int_void_X(_flags, _obj) }.into_result().map(|ptr| core::_OutputArray { ptr })
+    }
+    
+    pub fn from_mat(m: &mut core::Mat) -> Result<core::_OutputArray> {
+        unsafe { sys::cv__OutputArray__OutputArray_Mat(m.as_raw_Mat()) }.into_result().map(|ptr| core::_OutputArray { ptr })
+    }
+    
+    pub fn from_mat_vec(vec: &mut types::VectorOfMat) -> Result<core::_OutputArray> {
+        unsafe { sys::cv__OutputArray__OutputArray_VectorOfMat(vec.as_raw_VectorOfMat()) }.into_result().map(|ptr| core::_OutputArray { ptr })
+    }
+    
+    pub fn from_umat(m: &mut core::UMat) -> Result<core::_OutputArray> {
+        unsafe { sys::cv__OutputArray__OutputArray_UMat(m.as_raw_UMat()) }.into_result().map(|ptr| core::_OutputArray { ptr })
+    }
+    
+    pub fn from_umat_vec(vec: &mut types::VectorOfUMat) -> Result<core::_OutputArray> {
+        unsafe { sys::cv__OutputArray__OutputArray_VectorOfUMat(vec.as_raw_VectorOfUMat()) }.into_result().map(|ptr| core::_OutputArray { ptr })
+    }
+    
+}
+
 // boxed class cv::detail::CheckContext
 pub struct CheckContext {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::CheckContext {
+impl Drop for CheckContext {
     fn drop(&mut self) {
         unsafe { sys::cv_CheckContext_delete(self.ptr) };
     }
 }
-impl core::CheckContext {
+
+impl CheckContext {
     #[inline(always)] pub fn as_raw_CheckContext(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -10478,12 +10790,13 @@ pub struct NodeData {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::NodeData {
+impl Drop for NodeData {
     fn drop(&mut self) {
         unsafe { sys::cv_NodeData_delete(self.ptr) };
     }
 }
-impl core::NodeData {
+
+impl NodeData {
     #[inline(always)] pub fn as_raw_NodeData(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -10494,7 +10807,6 @@ impl core::NodeData {
 unsafe impl Send for NodeData {}
 
 impl NodeData {
-
     ///
     /// ## C++ default parameters
     /// * fun_name: 0
@@ -10529,12 +10841,13 @@ pub struct NodeDataTls {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::NodeDataTls {
+impl Drop for NodeDataTls {
     fn drop(&mut self) {
         unsafe { sys::cv_NodeDataTls_delete(self.ptr) };
     }
 }
-impl core::NodeDataTls {
+
+impl NodeDataTls {
     #[inline(always)] pub fn as_raw_NodeDataTls(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -10545,7 +10858,6 @@ impl core::NodeDataTls {
 unsafe impl Send for NodeDataTls {}
 
 impl NodeDataTls {
-
     pub fn default() -> Result<core::NodeDataTls> {
         unsafe { sys::cv_instr_NodeDataTls_NodeDataTls() }.into_result().map(|ptr| core::NodeDataTls { ptr })
     }
@@ -10557,12 +10869,13 @@ pub struct WriteStructContext {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::WriteStructContext {
+impl Drop for WriteStructContext {
     fn drop(&mut self) {
         unsafe { sys::cv_WriteStructContext_delete(self.ptr) };
     }
 }
-impl core::WriteStructContext {
+
+impl WriteStructContext {
     #[inline(always)] pub fn as_raw_WriteStructContext(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -10573,7 +10886,6 @@ impl core::WriteStructContext {
 unsafe impl Send for WriteStructContext {}
 
 impl WriteStructContext {
-
     ///
     /// ## C++ default parameters
     /// * type_name: String()
@@ -10590,12 +10902,13 @@ pub struct Context {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Context {
+impl Drop for Context {
     fn drop(&mut self) {
         unsafe { sys::cv_Context_delete(self.ptr) };
     }
 }
-impl core::Context {
+
+impl Context {
     #[inline(always)] pub fn as_raw_Context(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -10606,7 +10919,6 @@ impl core::Context {
 unsafe impl Send for Context {}
 
 impl Context {
-
     pub fn default() -> Result<core::Context> {
         unsafe { sys::cv_ocl_Context_Context() }.into_result().map(|ptr| core::Context { ptr })
     }
@@ -10654,12 +10966,13 @@ pub struct Device {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Device {
+impl Drop for Device {
     fn drop(&mut self) {
         unsafe { sys::cv_Device_delete(self.ptr) };
     }
 }
-impl core::Device {
+
+impl Device {
     #[inline(always)] pub fn as_raw_Device(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -10670,7 +10983,6 @@ impl core::Device {
 unsafe impl Send for Device {}
 
 impl Device {
-
     pub fn default() -> Result<core::Device> {
         unsafe { sys::cv_ocl_Device_Device() }.into_result().map(|ptr| core::Device { ptr })
     }
@@ -10995,12 +11307,13 @@ pub struct Image2D {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Image2D {
+impl Drop for Image2D {
     fn drop(&mut self) {
         unsafe { sys::cv_Image2D_delete(self.ptr) };
     }
 }
-impl core::Image2D {
+
+impl Image2D {
     #[inline(always)] pub fn as_raw_Image2D(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11011,7 +11324,6 @@ impl core::Image2D {
 unsafe impl Send for Image2D {}
 
 impl Image2D {
-
     pub fn default() -> Result<core::Image2D> {
         unsafe { sys::cv_ocl_Image2D_Image2D() }.into_result().map(|ptr| core::Image2D { ptr })
     }
@@ -11055,12 +11367,13 @@ pub struct Kernel {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Kernel {
+impl Drop for Kernel {
     fn drop(&mut self) {
         unsafe { sys::cv_Kernel_delete(self.ptr) };
     }
 }
-impl core::Kernel {
+
+impl Kernel {
     #[inline(always)] pub fn as_raw_Kernel(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11071,7 +11384,6 @@ impl core::Kernel {
 unsafe impl Send for Kernel {}
 
 impl Kernel {
-
     pub fn default() -> Result<core::Kernel> {
         unsafe { sys::cv_ocl_Kernel_Kernel() }.into_result().map(|ptr| core::Kernel { ptr })
     }
@@ -11158,12 +11470,13 @@ pub struct KernelArg {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::KernelArg {
+impl Drop for KernelArg {
     fn drop(&mut self) {
         unsafe { sys::cv_KernelArg_delete(self.ptr) };
     }
 }
-impl core::KernelArg {
+
+impl KernelArg {
     #[inline(always)] pub fn as_raw_KernelArg(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11174,7 +11487,6 @@ impl core::KernelArg {
 unsafe impl Send for KernelArg {}
 
 impl KernelArg {
-
     ///
     /// ## C++ default parameters
     /// * wscale: 1
@@ -11264,12 +11576,13 @@ pub struct Platform {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Platform {
+impl Drop for Platform {
     fn drop(&mut self) {
         unsafe { sys::cv_Platform_delete(self.ptr) };
     }
 }
-impl core::Platform {
+
+impl Platform {
     #[inline(always)] pub fn as_raw_Platform(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11280,7 +11593,6 @@ impl core::Platform {
 unsafe impl Send for Platform {}
 
 impl Platform {
-
     pub fn default() -> Result<core::Platform> {
         unsafe { sys::cv_ocl_Platform_Platform() }.into_result().map(|ptr| core::Platform { ptr })
     }
@@ -11304,12 +11616,13 @@ pub struct PlatformInfo {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::PlatformInfo {
+impl Drop for PlatformInfo {
     fn drop(&mut self) {
         unsafe { sys::cv_PlatformInfo_delete(self.ptr) };
     }
 }
-impl core::PlatformInfo {
+
+impl PlatformInfo {
     #[inline(always)] pub fn as_raw_PlatformInfo(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11320,7 +11633,6 @@ impl core::PlatformInfo {
 unsafe impl Send for PlatformInfo {}
 
 impl PlatformInfo {
-
     pub fn default() -> Result<core::PlatformInfo> {
         unsafe { sys::cv_ocl_PlatformInfo_PlatformInfo() }.into_result().map(|ptr| core::PlatformInfo { ptr })
     }
@@ -11360,12 +11672,13 @@ pub struct Program {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Program {
+impl Drop for Program {
     fn drop(&mut self) {
         unsafe { sys::cv_Program_delete(self.ptr) };
     }
 }
-impl core::Program {
+
+impl Program {
     #[inline(always)] pub fn as_raw_Program(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11376,7 +11689,6 @@ impl core::Program {
 unsafe impl Send for Program {}
 
 impl Program {
-
     pub fn ptr(&self) -> Result<&mut c_void> {
         unsafe { sys::cv_ocl_Program_ptr_const(self.as_raw_Program()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
     }
@@ -11423,12 +11735,13 @@ pub struct ProgramSource {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::ProgramSource {
+impl Drop for ProgramSource {
     fn drop(&mut self) {
         unsafe { sys::cv_ProgramSource_delete(self.ptr) };
     }
 }
-impl core::ProgramSource {
+
+impl ProgramSource {
     #[inline(always)] pub fn as_raw_ProgramSource(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11439,7 +11752,6 @@ impl core::ProgramSource {
 unsafe impl Send for ProgramSource {}
 
 impl ProgramSource {
-
     pub fn default() -> Result<core::ProgramSource> {
         unsafe { sys::cv_ocl_ProgramSource_ProgramSource() }.into_result().map(|ptr| core::ProgramSource { ptr })
     }
@@ -11529,12 +11841,13 @@ pub struct Queue {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Queue {
+impl Drop for Queue {
     fn drop(&mut self) {
         unsafe { sys::cv_Queue_delete(self.ptr) };
     }
 }
-impl core::Queue {
+
+impl Queue {
     #[inline(always)] pub fn as_raw_Queue(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11545,7 +11858,6 @@ impl core::Queue {
 unsafe impl Send for Queue {}
 
 impl Queue {
-
     pub fn default() -> Result<core::Queue> {
         unsafe { sys::cv_ocl_Queue_Queue() }.into_result().map(|ptr| core::Queue { ptr })
     }
@@ -11592,12 +11904,13 @@ pub struct Timer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::Timer {
+impl Drop for Timer {
     fn drop(&mut self) {
         unsafe { sys::cv_Timer_delete(self.ptr) };
     }
 }
-impl core::Timer {
+
+impl Timer {
     #[inline(always)] pub fn as_raw_Timer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11608,7 +11921,6 @@ impl core::Timer {
 unsafe impl Send for Timer {}
 
 impl Timer {
-
     pub fn new(q: &core::Queue) -> Result<core::Timer> {
         unsafe { sys::cv_ocl_Timer_Timer_Queue(q.as_raw_Queue()) }.into_result().map(|ptr| core::Timer { ptr })
     }
@@ -11632,12 +11944,13 @@ pub struct ProgramEntry {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::ProgramEntry {
+impl Drop for ProgramEntry {
     fn drop(&mut self) {
         unsafe { sys::cv_ProgramEntry_delete(self.ptr) };
     }
 }
-impl core::ProgramEntry {
+
+impl ProgramEntry {
     #[inline(always)] pub fn as_raw_ProgramEntry(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11647,7 +11960,7 @@ impl core::ProgramEntry {
 
 unsafe impl Send for ProgramEntry {}
 
-// Generating impl for trait cv::utils::AllocatorStatisticsInterface (trait)
+// Generating impl for trait core::AllocatorStatisticsInterface
 pub trait AllocatorStatisticsInterface {
     #[inline(always)] fn as_raw_AllocatorStatisticsInterface(&self) -> *mut c_void;
     fn get_current_usage(&self) -> Result<u64> {
@@ -11678,12 +11991,13 @@ pub struct LogTag {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for core::LogTag {
+impl Drop for LogTag {
     fn drop(&mut self) {
         unsafe { sys::cv_LogTag_delete(self.ptr) };
     }
 }
-impl core::LogTag {
+
+impl LogTag {
     #[inline(always)] pub fn as_raw_LogTag(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -11694,7 +12008,6 @@ impl core::LogTag {
 unsafe impl Send for LogTag {}
 
 impl LogTag {
-
     pub fn new(_name: &str, _level: core::LogLevel) -> Result<core::LogTag> {
         string_arg!(_name);
         unsafe { sys::cv_utils_logging_LogTag_LogTag_const_char_X_LogLevel(_name.as_ptr(), _level) }.into_result().map(|ptr| core::LogTag { ptr })

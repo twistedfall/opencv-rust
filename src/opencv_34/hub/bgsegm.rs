@@ -2,7 +2,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const LSBP_CAMERA_MOTION_COMPENSATION_LK: i32 = 0+1;
 pub const LSBP_CAMERA_MOTION_COMPENSATION_NONE: i32 = 0;
@@ -146,7 +146,7 @@ pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, 
     unsafe { sys::cv_bgsegm_createSyntheticSequenceGenerator__InputArray__InputArray_double_double_double_double(background.as_raw__InputArray(), object.as_raw__InputArray(), amplitude, wavelength, wavespeed, objspeed) }.into_result().map(|ptr| types::PtrOfSyntheticSequenceGenerator { ptr })
 }
 
-// Generating impl for trait cv::bgsegm::BackgroundSubtractorCNT (trait)
+// Generating impl for trait crate::bgsegm::BackgroundSubtractorCNT
 /// Background subtraction based on counting.
 ///
 /// About as fast as MOG2 on a high end system.
@@ -211,7 +211,7 @@ pub trait BackgroundSubtractorCNT {
     
 }
 
-// Generating impl for trait cv::bgsegm::BackgroundSubtractorGMG (trait)
+// Generating impl for trait crate::bgsegm::BackgroundSubtractorGMG
 /// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Gold2012) .
 ///
 /// Takes a series of images and returns a sequence of mask (8UC1)
@@ -338,12 +338,13 @@ pub struct BackgroundSubtractorGSOC {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::bgsegm::BackgroundSubtractorGSOC {
+impl Drop for BackgroundSubtractorGSOC {
     fn drop(&mut self) {
         unsafe { sys::cv_BackgroundSubtractorGSOC_delete(self.ptr) };
     }
 }
-impl crate::bgsegm::BackgroundSubtractorGSOC {
+
+impl BackgroundSubtractorGSOC {
     #[inline(always)] pub fn as_raw_BackgroundSubtractorGSOC(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -354,7 +355,6 @@ impl crate::bgsegm::BackgroundSubtractorGSOC {
 unsafe impl Send for BackgroundSubtractorGSOC {}
 
 impl BackgroundSubtractorGSOC {
-
     ///
     /// ## C++ default parameters
     /// * learning_rate: -1
@@ -377,12 +377,13 @@ pub struct BackgroundSubtractorLSBP {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::bgsegm::BackgroundSubtractorLSBP {
+impl Drop for BackgroundSubtractorLSBP {
     fn drop(&mut self) {
         unsafe { sys::cv_BackgroundSubtractorLSBP_delete(self.ptr) };
     }
 }
-impl crate::bgsegm::BackgroundSubtractorLSBP {
+
+impl BackgroundSubtractorLSBP {
     #[inline(always)] pub fn as_raw_BackgroundSubtractorLSBP(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -393,7 +394,6 @@ impl crate::bgsegm::BackgroundSubtractorLSBP {
 unsafe impl Send for BackgroundSubtractorLSBP {}
 
 impl BackgroundSubtractorLSBP {
-
     ///
     /// ## C++ default parameters
     /// * learning_rate: -1
@@ -416,12 +416,13 @@ pub struct BackgroundSubtractorLSBPDesc {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::bgsegm::BackgroundSubtractorLSBPDesc {
+impl Drop for BackgroundSubtractorLSBPDesc {
     fn drop(&mut self) {
         unsafe { sys::cv_BackgroundSubtractorLSBPDesc_delete(self.ptr) };
     }
 }
-impl crate::bgsegm::BackgroundSubtractorLSBPDesc {
+
+impl BackgroundSubtractorLSBPDesc {
     #[inline(always)] pub fn as_raw_BackgroundSubtractorLSBPDesc(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -432,7 +433,6 @@ impl crate::bgsegm::BackgroundSubtractorLSBPDesc {
 unsafe impl Send for BackgroundSubtractorLSBPDesc {}
 
 impl BackgroundSubtractorLSBPDesc {
-
     pub fn calc_local_svd_values(local_svd_values: &mut dyn core::ToOutputArray, frame: &core::Mat) -> Result<()> {
         output_array_arg!(local_svd_values);
         unsafe { sys::cv_bgsegm_BackgroundSubtractorLSBPDesc_calcLocalSVDValues__OutputArray_Mat(local_svd_values.as_raw__OutputArray(), frame.as_raw_Mat()) }.into_result()
@@ -450,7 +450,7 @@ impl BackgroundSubtractorLSBPDesc {
     
 }
 
-// Generating impl for trait cv::bgsegm::BackgroundSubtractorMOG (trait)
+// Generating impl for trait crate::bgsegm::BackgroundSubtractorMOG
 /// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 ///
 /// The class implements the algorithm described in [KB2001](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_KB2001) .
@@ -499,12 +499,13 @@ pub struct SyntheticSequenceGenerator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::bgsegm::SyntheticSequenceGenerator {
+impl Drop for SyntheticSequenceGenerator {
     fn drop(&mut self) {
         unsafe { sys::cv_SyntheticSequenceGenerator_delete(self.ptr) };
     }
 }
-impl crate::bgsegm::SyntheticSequenceGenerator {
+
+impl SyntheticSequenceGenerator {
     #[inline(always)] pub fn as_raw_SyntheticSequenceGenerator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -514,12 +515,11 @@ impl crate::bgsegm::SyntheticSequenceGenerator {
 
 unsafe impl Send for SyntheticSequenceGenerator {}
 
-impl core::Algorithm for SyntheticSequenceGenerator {
+impl core::AlgorithmTrait for SyntheticSequenceGenerator {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
 impl SyntheticSequenceGenerator {
-
     /// Creates an instance of SyntheticSequenceGenerator.
     ///
     /// ## Parameters

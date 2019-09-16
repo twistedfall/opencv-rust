@@ -16,10 +16,10 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
-// Generating impl for trait cv::phase_unwrapping::HistogramPhaseUnwrapping (trait)
+// Generating impl for trait crate::phase_unwrapping::HistogramPhaseUnwrapping
 /// Class implementing two-dimensional phase unwrapping based on [histogramUnwrapping](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_histogramUnwrapping)
 /// This algorithm belongs to the quality-guided phase unwrapping methods.
 /// First, it computes a reliability map from second differences between a pixel and its eight neighbours.
@@ -44,7 +44,6 @@ pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
 }
 
 impl dyn HistogramPhaseUnwrapping + '_ {
-
     /// Constructor
     ///
     /// ## Parameters
@@ -71,12 +70,13 @@ pub struct HistogramPhaseUnwrapping_Params {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::phase_unwrapping::HistogramPhaseUnwrapping_Params {
+impl Drop for HistogramPhaseUnwrapping_Params {
     fn drop(&mut self) {
         unsafe { sys::cv_HistogramPhaseUnwrapping_Params_delete(self.ptr) };
     }
 }
-impl crate::phase_unwrapping::HistogramPhaseUnwrapping_Params {
+
+impl HistogramPhaseUnwrapping_Params {
     #[inline(always)] pub fn as_raw_HistogramPhaseUnwrapping_Params(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -87,16 +87,15 @@ impl crate::phase_unwrapping::HistogramPhaseUnwrapping_Params {
 unsafe impl Send for HistogramPhaseUnwrapping_Params {}
 
 impl HistogramPhaseUnwrapping_Params {
-
     pub fn default() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params> {
         unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() }.into_result().map(|ptr| crate::phase_unwrapping::HistogramPhaseUnwrapping_Params { ptr })
     }
     
 }
 
-// Generating impl for trait cv::phase_unwrapping::PhaseUnwrapping (trait)
+// Generating impl for trait crate::phase_unwrapping::PhaseUnwrapping
 /// Abstract base class for phase unwrapping.
-pub trait PhaseUnwrapping: core::Algorithm {
+pub trait PhaseUnwrapping: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_PhaseUnwrapping(&self) -> *mut c_void;
     /// Unwraps a 2D phase map.
     ///

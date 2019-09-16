@@ -10,7 +10,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_2: &'static str = "Myriad2";
 pub const CV_DNN_INFERENCE_ENGINE_VPU_TYPE_MYRIAD_X: &'static str = "MyriadX";
@@ -30,7 +30,7 @@ pub const DNN_TARGET_OPENCL_FP16: i32 = 2;
 /// Enum of computation backends supported by layers.
 /// @see Net::setPreferableBackend
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Backend {
     DNN_BACKEND_DEFAULT = DNN_BACKEND_DEFAULT as isize,
     DNN_BACKEND_HALIDE = DNN_BACKEND_HALIDE as isize,
@@ -42,7 +42,7 @@ pub enum Backend {
 /// Enum of target devices for computations.
 /// @see Net::setPreferableTarget
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Target {
     DNN_TARGET_CPU = DNN_TARGET_CPU as isize,
     DNN_TARGET_OPENCL = DNN_TARGET_OPENCL as isize,
@@ -603,12 +603,13 @@ pub struct AbsLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::AbsLayer {
+impl Drop for AbsLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_AbsLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::AbsLayer {
+
+impl AbsLayer {
     #[inline(always)] pub fn as_raw_AbsLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -618,7 +619,7 @@ impl crate::dnn::AbsLayer {
 
 unsafe impl Send for AbsLayer {}
 
-impl core::Algorithm for AbsLayer {
+impl core::AlgorithmTrait for AbsLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -626,20 +627,19 @@ impl crate::dnn::ActivationLayer for AbsLayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for AbsLayer {
+impl crate::dnn::LayerTrait for AbsLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl AbsLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfAbsLayer> {
         unsafe { sys::cv_dnn_AbsLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfAbsLayer { ptr })
     }
     
 }
 
-// Generating impl for trait cv::dnn::ActivationLayer (trait)
-pub trait ActivationLayer: crate::dnn::Layer {
+// Generating impl for trait crate::dnn::ActivationLayer
+pub trait ActivationLayer: crate::dnn::LayerTrait {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void;
     fn forward_slice(&self, src: &f32, dst: &mut f32, len: i32, out_plane_size: size_t, cn0: i32, cn1: i32) -> Result<()> {
         unsafe { sys::cv_dnn_ActivationLayer_forwardSlice_const_const_float_X_float_X_int_size_t_int_int(self.as_raw_ActivationLayer(), src, dst, len, out_plane_size, cn0, cn1) }.into_result()
@@ -652,12 +652,13 @@ pub struct BNLLLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::BNLLLayer {
+impl Drop for BNLLLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_BNLLLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::BNLLLayer {
+
+impl BNLLLayer {
     #[inline(always)] pub fn as_raw_BNLLLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -667,7 +668,7 @@ impl crate::dnn::BNLLLayer {
 
 unsafe impl Send for BNLLLayer {}
 
-impl core::Algorithm for BNLLLayer {
+impl core::AlgorithmTrait for BNLLLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -675,12 +676,11 @@ impl crate::dnn::ActivationLayer for BNLLLayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for BNLLLayer {
+impl crate::dnn::LayerTrait for BNLLLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl BNLLLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfBNLLLayer> {
         unsafe { sys::cv_dnn_BNLLLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfBNLLLayer { ptr })
     }
@@ -693,12 +693,13 @@ pub struct BackendNode {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::BackendNode {
+impl Drop for BackendNode {
     fn drop(&mut self) {
         unsafe { sys::cv_BackendNode_delete(self.ptr) };
     }
 }
-impl crate::dnn::BackendNode {
+
+impl BackendNode {
     #[inline(always)] pub fn as_raw_BackendNode(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -709,14 +710,13 @@ impl crate::dnn::BackendNode {
 unsafe impl Send for BackendNode {}
 
 impl BackendNode {
-
     pub fn new(backend_id: i32) -> Result<crate::dnn::BackendNode> {
         unsafe { sys::cv_dnn_BackendNode_BackendNode_int(backend_id) }.into_result().map(|ptr| crate::dnn::BackendNode { ptr })
     }
     
 }
 
-// Generating impl for trait cv::dnn::BackendWrapper (trait)
+// Generating impl for trait crate::dnn::BackendWrapper
 /// Derivatives of this class wraps cv::Mat for different backends and targets.
 pub trait BackendWrapper {
     #[inline(always)] fn as_raw_BackendWrapper(&self) -> *mut c_void;
@@ -732,9 +732,42 @@ pub trait BackendWrapper {
     
 }
 
-// Generating impl for trait cv::dnn::BaseConvolutionLayer (trait)
-pub trait BaseConvolutionLayer: crate::dnn::Layer {
+// Generating impl for trait crate::dnn::BaseConvolutionLayer
+pub trait BaseConvolutionLayerTrait: crate::dnn::LayerTrait {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
+}
+
+// boxed class cv::dnn::BaseConvolutionLayer
+pub struct BaseConvolutionLayer {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for BaseConvolutionLayer {
+    fn drop(&mut self) {
+        unsafe { sys::cv_BaseConvolutionLayer_delete(self.ptr) };
+    }
+}
+
+impl BaseConvolutionLayer {
+    #[inline(always)] pub fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for BaseConvolutionLayer {}
+
+impl core::AlgorithmTrait for BaseConvolutionLayer {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::BaseConvolutionLayerTrait for BaseConvolutionLayer {
+    #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::LayerTrait for BaseConvolutionLayer {
+    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 // boxed class cv::dnn::BatchNormLayer
@@ -742,12 +775,13 @@ pub struct BatchNormLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::BatchNormLayer {
+impl Drop for BatchNormLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_BatchNormLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::BatchNormLayer {
+
+impl BatchNormLayer {
     #[inline(always)] pub fn as_raw_BatchNormLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -757,7 +791,7 @@ impl crate::dnn::BatchNormLayer {
 
 unsafe impl Send for BatchNormLayer {}
 
-impl core::Algorithm for BatchNormLayer {
+impl core::AlgorithmTrait for BatchNormLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -765,12 +799,11 @@ impl crate::dnn::ActivationLayer for BatchNormLayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for BatchNormLayer {
+impl crate::dnn::LayerTrait for BatchNormLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl BatchNormLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfBatchNormLayer> {
         unsafe { sys::cv_dnn_BatchNormLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfBatchNormLayer { ptr })
     }
@@ -801,12 +834,13 @@ pub struct BlankLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::BlankLayer {
+impl Drop for BlankLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_BlankLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::BlankLayer {
+
+impl BlankLayer {
     #[inline(always)] pub fn as_raw_BlankLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -816,16 +850,15 @@ impl crate::dnn::BlankLayer {
 
 unsafe impl Send for BlankLayer {}
 
-impl core::Algorithm for BlankLayer {
+impl core::AlgorithmTrait for BlankLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for BlankLayer {
+impl crate::dnn::LayerTrait for BlankLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl BlankLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_BlankLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -837,12 +870,13 @@ pub struct ChannelsPReLULayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ChannelsPReLULayer {
+impl Drop for ChannelsPReLULayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ChannelsPReLULayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ChannelsPReLULayer {
+
+impl ChannelsPReLULayer {
     #[inline(always)] pub fn as_raw_ChannelsPReLULayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -852,7 +886,7 @@ impl crate::dnn::ChannelsPReLULayer {
 
 unsafe impl Send for ChannelsPReLULayer {}
 
-impl core::Algorithm for ChannelsPReLULayer {
+impl core::AlgorithmTrait for ChannelsPReLULayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -860,12 +894,11 @@ impl crate::dnn::ActivationLayer for ChannelsPReLULayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ChannelsPReLULayer {
+impl crate::dnn::LayerTrait for ChannelsPReLULayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ChannelsPReLULayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_ChannelsPReLULayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -877,12 +910,13 @@ pub struct ConcatLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ConcatLayer {
+impl Drop for ConcatLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ConcatLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ConcatLayer {
+
+impl ConcatLayer {
     #[inline(always)] pub fn as_raw_ConcatLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -892,16 +926,15 @@ impl crate::dnn::ConcatLayer {
 
 unsafe impl Send for ConcatLayer {}
 
-impl core::Algorithm for ConcatLayer {
+impl core::AlgorithmTrait for ConcatLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ConcatLayer {
+impl crate::dnn::LayerTrait for ConcatLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConcatLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfConcatLayer> {
         unsafe { sys::cv_dnn_ConcatLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfConcatLayer { ptr })
     }
@@ -914,12 +947,13 @@ pub struct ConstLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ConstLayer {
+impl Drop for ConstLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ConstLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ConstLayer {
+
+impl ConstLayer {
     #[inline(always)] pub fn as_raw_ConstLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -929,16 +963,15 @@ impl crate::dnn::ConstLayer {
 
 unsafe impl Send for ConstLayer {}
 
-impl core::Algorithm for ConstLayer {
+impl core::AlgorithmTrait for ConstLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ConstLayer {
+impl crate::dnn::LayerTrait for ConstLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConstLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_ConstLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -950,12 +983,13 @@ pub struct ConvolutionLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ConvolutionLayer {
+impl Drop for ConvolutionLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ConvolutionLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ConvolutionLayer {
+
+impl ConvolutionLayer {
     #[inline(always)] pub fn as_raw_ConvolutionLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -965,20 +999,19 @@ impl crate::dnn::ConvolutionLayer {
 
 unsafe impl Send for ConvolutionLayer {}
 
-impl core::Algorithm for ConvolutionLayer {
+impl core::AlgorithmTrait for ConvolutionLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::BaseConvolutionLayer for ConvolutionLayer {
+impl crate::dnn::BaseConvolutionLayerTrait for ConvolutionLayer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ConvolutionLayer {
+impl crate::dnn::LayerTrait for ConvolutionLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ConvolutionLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfBaseConvolutionLayer> {
         unsafe { sys::cv_dnn_ConvolutionLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfBaseConvolutionLayer { ptr })
     }
@@ -990,12 +1023,13 @@ pub struct CropAndResizeLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::CropAndResizeLayer {
+impl Drop for CropAndResizeLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_CropAndResizeLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::CropAndResizeLayer {
+
+impl CropAndResizeLayer {
     #[inline(always)] pub fn as_raw_CropAndResizeLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1005,16 +1039,15 @@ impl crate::dnn::CropAndResizeLayer {
 
 unsafe impl Send for CropAndResizeLayer {}
 
-impl core::Algorithm for CropAndResizeLayer {
+impl core::AlgorithmTrait for CropAndResizeLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for CropAndResizeLayer {
+impl crate::dnn::LayerTrait for CropAndResizeLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl CropAndResizeLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_CropAndResizeLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -1026,12 +1059,13 @@ pub struct CropLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::CropLayer {
+impl Drop for CropLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_CropLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::CropLayer {
+
+impl CropLayer {
     #[inline(always)] pub fn as_raw_CropLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1041,16 +1075,15 @@ impl crate::dnn::CropLayer {
 
 unsafe impl Send for CropLayer {}
 
-impl core::Algorithm for CropLayer {
+impl core::AlgorithmTrait for CropLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for CropLayer {
+impl crate::dnn::LayerTrait for CropLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl CropLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_CropLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -1062,12 +1095,13 @@ pub struct DeconvolutionLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::DeconvolutionLayer {
+impl Drop for DeconvolutionLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_DeconvolutionLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::DeconvolutionLayer {
+
+impl DeconvolutionLayer {
     #[inline(always)] pub fn as_raw_DeconvolutionLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1077,20 +1111,19 @@ impl crate::dnn::DeconvolutionLayer {
 
 unsafe impl Send for DeconvolutionLayer {}
 
-impl core::Algorithm for DeconvolutionLayer {
+impl core::AlgorithmTrait for DeconvolutionLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::BaseConvolutionLayer for DeconvolutionLayer {
+impl crate::dnn::BaseConvolutionLayerTrait for DeconvolutionLayer {
     #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for DeconvolutionLayer {
+impl crate::dnn::LayerTrait for DeconvolutionLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl DeconvolutionLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfBaseConvolutionLayer> {
         unsafe { sys::cv_dnn_DeconvolutionLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfBaseConvolutionLayer { ptr })
     }
@@ -1102,12 +1135,13 @@ pub struct DetectionOutputLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::DetectionOutputLayer {
+impl Drop for DetectionOutputLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_DetectionOutputLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::DetectionOutputLayer {
+
+impl DetectionOutputLayer {
     #[inline(always)] pub fn as_raw_DetectionOutputLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1117,25 +1151,24 @@ impl crate::dnn::DetectionOutputLayer {
 
 unsafe impl Send for DetectionOutputLayer {}
 
-impl core::Algorithm for DetectionOutputLayer {
+impl core::AlgorithmTrait for DetectionOutputLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for DetectionOutputLayer {
+impl crate::dnn::LayerTrait for DetectionOutputLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl DetectionOutputLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfDetectionOutputLayer> {
         unsafe { sys::cv_dnn_DetectionOutputLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfDetectionOutputLayer { ptr })
     }
     
 }
 
-// Generating impl for trait cv::dnn::Dict (trait)
+// Generating impl for trait crate::dnn::Dict
 /// This class implements name-value dictionary, values are instances of DictValue.
-pub trait Dict {
+pub trait DictTrait {
     #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void;
     /// Checks a presence of the @p key in the dictionary.
     fn has(&self, key: &str) -> Result<bool> {
@@ -1174,6 +1207,32 @@ pub trait Dict {
     
 }
 
+// boxed class cv::dnn::Dict
+/// This class implements name-value dictionary, values are instances of DictValue.
+pub struct Dict {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for Dict {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Dict_delete(self.ptr) };
+    }
+}
+
+impl Dict {
+    #[inline(always)] pub fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Dict {}
+
+impl crate::dnn::DictTrait for Dict {
+    #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
+}
+
 // boxed class cv::dnn::DictValue
 /// This struct stores the scalar value (or array) of one of the following type: double, cv::String or int64.
 ///  @todo Maybe int64 is useless because double type exactly stores at least 2^52 integers.
@@ -1181,12 +1240,13 @@ pub struct DictValue {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::DictValue {
+impl Drop for DictValue {
     fn drop(&mut self) {
         unsafe { sys::cv_DictValue_delete(self.ptr) };
     }
 }
-impl crate::dnn::DictValue {
+
+impl DictValue {
     #[inline(always)] pub fn as_raw_DictValue(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1197,7 +1257,6 @@ impl crate::dnn::DictValue {
 unsafe impl Send for DictValue {}
 
 impl DictValue {
-
     pub fn copy(r: &crate::dnn::DictValue) -> Result<crate::dnn::DictValue> {
         unsafe { sys::cv_dnn_DictValue_DictValue_DictValue(r.as_raw_DictValue()) }.into_result().map(|ptr| crate::dnn::DictValue { ptr })
     }
@@ -1279,12 +1338,13 @@ pub struct ELULayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ELULayer {
+impl Drop for ELULayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ELULayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ELULayer {
+
+impl ELULayer {
     #[inline(always)] pub fn as_raw_ELULayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1294,7 +1354,7 @@ impl crate::dnn::ELULayer {
 
 unsafe impl Send for ELULayer {}
 
-impl core::Algorithm for ELULayer {
+impl core::AlgorithmTrait for ELULayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -1302,12 +1362,11 @@ impl crate::dnn::ActivationLayer for ELULayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ELULayer {
+impl crate::dnn::LayerTrait for ELULayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ELULayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfELULayer> {
         unsafe { sys::cv_dnn_ELULayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfELULayer { ptr })
     }
@@ -1319,12 +1378,13 @@ pub struct EltwiseLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::EltwiseLayer {
+impl Drop for EltwiseLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_EltwiseLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::EltwiseLayer {
+
+impl EltwiseLayer {
     #[inline(always)] pub fn as_raw_EltwiseLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1334,16 +1394,15 @@ impl crate::dnn::EltwiseLayer {
 
 unsafe impl Send for EltwiseLayer {}
 
-impl core::Algorithm for EltwiseLayer {
+impl core::AlgorithmTrait for EltwiseLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for EltwiseLayer {
+impl crate::dnn::LayerTrait for EltwiseLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl EltwiseLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfEltwiseLayer> {
         unsafe { sys::cv_dnn_EltwiseLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfEltwiseLayer { ptr })
     }
@@ -1355,12 +1414,13 @@ pub struct FlattenLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::FlattenLayer {
+impl Drop for FlattenLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_FlattenLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::FlattenLayer {
+
+impl FlattenLayer {
     #[inline(always)] pub fn as_raw_FlattenLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1370,16 +1430,15 @@ impl crate::dnn::FlattenLayer {
 
 unsafe impl Send for FlattenLayer {}
 
-impl core::Algorithm for FlattenLayer {
+impl core::AlgorithmTrait for FlattenLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for FlattenLayer {
+impl crate::dnn::LayerTrait for FlattenLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl FlattenLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfFlattenLayer> {
         unsafe { sys::cv_dnn_FlattenLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfFlattenLayer { ptr })
     }
@@ -1391,12 +1450,13 @@ pub struct InnerProductLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::InnerProductLayer {
+impl Drop for InnerProductLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_InnerProductLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::InnerProductLayer {
+
+impl InnerProductLayer {
     #[inline(always)] pub fn as_raw_InnerProductLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1406,16 +1466,15 @@ impl crate::dnn::InnerProductLayer {
 
 unsafe impl Send for InnerProductLayer {}
 
-impl core::Algorithm for InnerProductLayer {
+impl core::AlgorithmTrait for InnerProductLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for InnerProductLayer {
+impl crate::dnn::LayerTrait for InnerProductLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl InnerProductLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfInnerProductLayer> {
         unsafe { sys::cv_dnn_InnerProductLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfInnerProductLayer { ptr })
     }
@@ -1430,12 +1489,13 @@ pub struct InterpLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::InterpLayer {
+impl Drop for InterpLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_InterpLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::InterpLayer {
+
+impl InterpLayer {
     #[inline(always)] pub fn as_raw_InterpLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1445,16 +1505,15 @@ impl crate::dnn::InterpLayer {
 
 unsafe impl Send for InterpLayer {}
 
-impl core::Algorithm for InterpLayer {
+impl core::AlgorithmTrait for InterpLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for InterpLayer {
+impl crate::dnn::LayerTrait for InterpLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl InterpLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_InterpLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -1466,12 +1525,13 @@ pub struct LRNLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::LRNLayer {
+impl Drop for LRNLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_LRNLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::LRNLayer {
+
+impl LRNLayer {
     #[inline(always)] pub fn as_raw_LRNLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1481,25 +1541,24 @@ impl crate::dnn::LRNLayer {
 
 unsafe impl Send for LRNLayer {}
 
-impl core::Algorithm for LRNLayer {
+impl core::AlgorithmTrait for LRNLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for LRNLayer {
+impl crate::dnn::LayerTrait for LRNLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl LRNLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLRNLayer> {
         unsafe { sys::cv_dnn_LRNLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLRNLayer { ptr })
     }
     
 }
 
-// Generating impl for trait cv::dnn::LSTMLayer (trait)
+// Generating impl for trait crate::dnn::LSTMLayer
 /// LSTM recurrent layer
-pub trait LSTMLayer: crate::dnn::Layer {
+pub trait LSTMLayer: crate::dnn::LayerTrait {
     #[inline(always)] fn as_raw_LSTMLayer(&self) -> *mut c_void;
     /// **Deprecated**: Use LayerParams::blobs instead.
     ///
@@ -1581,7 +1640,6 @@ pub trait LSTMLayer: crate::dnn::Layer {
 }
 
 impl dyn LSTMLayer + '_ {
-
     /// Creates instance of LSTM layer
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLSTMLayer> {
         unsafe { sys::cv_dnn_LSTMLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLSTMLayer { ptr })
@@ -1589,12 +1647,12 @@ impl dyn LSTMLayer + '_ {
     
 }
 
-// Generating impl for trait cv::dnn::Layer (trait)
+// Generating impl for trait crate::dnn::Layer
 /// This interface class allows to build new Layers - are building blocks of networks.
 ///
 /// Each class, derived from Layer, must implement allocate() methods to declare own outputs and forward() to compute outputs.
 /// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
-pub trait Layer: core::Algorithm {
+pub trait LayerTrait: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void;
     /// List of learned parameters must be stored here to allow read them by using Net::getParam().
     fn blobs(&mut self) -> Result<types::VectorOfMat> {
@@ -1640,7 +1698,7 @@ pub trait Layer: core::Algorithm {
     ///
     /// If this method is called after network has allocated all memory for input and output blobs
     /// and before inferencing.
-    fn finalize_to(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray) -> Result<()> {
+    fn finalize(&mut self, inputs: &dyn core::ToInputArray, outputs: &mut dyn core::ToOutputArray) -> Result<()> {
         input_array_arg!(inputs);
         output_array_arg!(outputs);
         unsafe { sys::cv_dnn_Layer_finalize__InputArray__OutputArray(self.as_raw_Layer(), inputs.as_raw__InputArray(), outputs.as_raw__OutputArray()) }.into_result()
@@ -1672,7 +1730,7 @@ pub trait Layer: core::Algorithm {
     
     /// **Deprecated**: Use Layer::finalize(InputArrayOfArrays, OutputArrayOfArrays) instead
     #[deprecated = "Use Layer::finalize(InputArrayOfArrays, OutputArrayOfArrays) instead"]
-    fn finalize(&mut self, inputs: &types::VectorOfMat) -> Result<types::VectorOfMat> {
+    fn finalize_mat(&mut self, inputs: &types::VectorOfMat) -> Result<types::VectorOfMat> {
         unsafe { sys::cv_dnn_Layer_finalize_VectorOfMat(self.as_raw_Layer(), inputs.as_raw_VectorOfMat()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
     }
     
@@ -1792,18 +1850,64 @@ pub trait Layer: core::Algorithm {
     
 }
 
+// boxed class cv::dnn::Layer
+/// This interface class allows to build new Layers - are building blocks of networks.
+///
+/// Each class, derived from Layer, must implement allocate() methods to declare own outputs and forward() to compute outputs.
+/// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
+pub struct Layer {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for Layer {
+    fn drop(&mut self) {
+        unsafe { sys::cv_Layer_delete(self.ptr) };
+    }
+}
+
+impl Layer {
+    #[inline(always)] pub fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for Layer {}
+
+impl core::AlgorithmTrait for Layer {
+    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::dnn::LayerTrait for Layer {
+    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
+}
+
+impl Layer {
+    pub fn default() -> Result<crate::dnn::Layer> {
+        unsafe { sys::cv_dnn_Layer_Layer() }.into_result().map(|ptr| crate::dnn::Layer { ptr })
+    }
+    
+    /// Initializes only #name, #type and #blobs fields.
+    pub fn new(params: &crate::dnn::LayerParams) -> Result<crate::dnn::Layer> {
+        unsafe { sys::cv_dnn_Layer_Layer_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| crate::dnn::Layer { ptr })
+    }
+    
+}
+
 // boxed class cv::dnn::LayerFactory
 /// %Layer factory allows to create instances of registered layers.
 pub struct LayerFactory {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::LayerFactory {
+impl Drop for LayerFactory {
     fn drop(&mut self) {
         unsafe { sys::cv_LayerFactory_delete(self.ptr) };
     }
 }
-impl crate::dnn::LayerFactory {
+
+impl LayerFactory {
     #[inline(always)] pub fn as_raw_LayerFactory(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1814,7 +1918,6 @@ impl crate::dnn::LayerFactory {
 unsafe impl Send for LayerFactory {}
 
 impl LayerFactory {
-
     /// Unregisters registered layer with specified type name. Thread-safe.
     pub fn unregister_layer(_type: &str) -> Result<()> {
         string_arg!(_type);
@@ -1843,12 +1946,13 @@ pub struct LayerParams {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::LayerParams {
+impl Drop for LayerParams {
     fn drop(&mut self) {
         unsafe { sys::cv_LayerParams_delete(self.ptr) };
     }
 }
-impl crate::dnn::LayerParams {
+
+impl LayerParams {
     #[inline(always)] pub fn as_raw_LayerParams(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1858,12 +1962,11 @@ impl crate::dnn::LayerParams {
 
 unsafe impl Send for LayerParams {}
 
-impl crate::dnn::Dict for LayerParams {
+impl crate::dnn::DictTrait for LayerParams {
     #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void { self.ptr }
 }
 
 impl LayerParams {
-
     /// List of learned parameters stored as blobs.
     pub fn blobs(&mut self) -> Result<types::VectorOfMat> {
         unsafe { sys::cv_dnn_LayerParams_blobs(self.as_raw_LayerParams()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
@@ -1907,12 +2010,13 @@ pub struct MVNLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::MVNLayer {
+impl Drop for MVNLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_MVNLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::MVNLayer {
+
+impl MVNLayer {
     #[inline(always)] pub fn as_raw_MVNLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1922,16 +2026,15 @@ impl crate::dnn::MVNLayer {
 
 unsafe impl Send for MVNLayer {}
 
-impl core::Algorithm for MVNLayer {
+impl core::AlgorithmTrait for MVNLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for MVNLayer {
+impl crate::dnn::LayerTrait for MVNLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl MVNLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfMVNLayer> {
         unsafe { sys::cv_dnn_MVNLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfMVNLayer { ptr })
     }
@@ -1943,12 +2046,13 @@ pub struct MaxUnpoolLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::MaxUnpoolLayer {
+impl Drop for MaxUnpoolLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_MaxUnpoolLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::MaxUnpoolLayer {
+
+impl MaxUnpoolLayer {
     #[inline(always)] pub fn as_raw_MaxUnpoolLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -1958,16 +2062,15 @@ impl crate::dnn::MaxUnpoolLayer {
 
 unsafe impl Send for MaxUnpoolLayer {}
 
-impl core::Algorithm for MaxUnpoolLayer {
+impl core::AlgorithmTrait for MaxUnpoolLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for MaxUnpoolLayer {
+impl crate::dnn::LayerTrait for MaxUnpoolLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl MaxUnpoolLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfMaxUnpoolLayer> {
         unsafe { sys::cv_dnn_MaxUnpoolLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfMaxUnpoolLayer { ptr })
     }
@@ -1988,12 +2091,13 @@ pub struct Net {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::Net {
+impl Drop for Net {
     fn drop(&mut self) {
         unsafe { sys::cv_Net_delete(self.ptr) };
     }
 }
-impl crate::dnn::Net {
+
+impl Net {
     #[inline(always)] pub fn as_raw_Net(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2004,7 +2108,6 @@ impl crate::dnn::Net {
 unsafe impl Send for Net {}
 
 impl Net {
-
     /// Default constructor.
     pub fn default() -> Result<crate::dnn::Net> {
         unsafe { sys::cv_dnn_Net_Net() }.into_result().map(|ptr| crate::dnn::Net { ptr })
@@ -2390,12 +2493,13 @@ pub struct NormalizeBBoxLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::NormalizeBBoxLayer {
+impl Drop for NormalizeBBoxLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_NormalizeBBoxLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::NormalizeBBoxLayer {
+
+impl NormalizeBBoxLayer {
     #[inline(always)] pub fn as_raw_NormalizeBBoxLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2405,16 +2509,15 @@ impl crate::dnn::NormalizeBBoxLayer {
 
 unsafe impl Send for NormalizeBBoxLayer {}
 
-impl core::Algorithm for NormalizeBBoxLayer {
+impl core::AlgorithmTrait for NormalizeBBoxLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for NormalizeBBoxLayer {
+impl crate::dnn::LayerTrait for NormalizeBBoxLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl NormalizeBBoxLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfNormalizeBBoxLayer> {
         unsafe { sys::cv_dnn_NormalizeBBoxLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfNormalizeBBoxLayer { ptr })
     }
@@ -2446,12 +2549,13 @@ pub struct PaddingLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::PaddingLayer {
+impl Drop for PaddingLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_PaddingLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::PaddingLayer {
+
+impl PaddingLayer {
     #[inline(always)] pub fn as_raw_PaddingLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2461,16 +2565,15 @@ impl crate::dnn::PaddingLayer {
 
 unsafe impl Send for PaddingLayer {}
 
-impl core::Algorithm for PaddingLayer {
+impl core::AlgorithmTrait for PaddingLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for PaddingLayer {
+impl crate::dnn::LayerTrait for PaddingLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl PaddingLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfPaddingLayer> {
         unsafe { sys::cv_dnn_PaddingLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfPaddingLayer { ptr })
     }
@@ -2482,12 +2585,13 @@ pub struct PermuteLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::PermuteLayer {
+impl Drop for PermuteLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_PermuteLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::PermuteLayer {
+
+impl PermuteLayer {
     #[inline(always)] pub fn as_raw_PermuteLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2497,16 +2601,15 @@ impl crate::dnn::PermuteLayer {
 
 unsafe impl Send for PermuteLayer {}
 
-impl core::Algorithm for PermuteLayer {
+impl core::AlgorithmTrait for PermuteLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for PermuteLayer {
+impl crate::dnn::LayerTrait for PermuteLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl PermuteLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfPermuteLayer> {
         unsafe { sys::cv_dnn_PermuteLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfPermuteLayer { ptr })
     }
@@ -2518,12 +2621,13 @@ pub struct PoolingLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::PoolingLayer {
+impl Drop for PoolingLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_PoolingLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::PoolingLayer {
+
+impl PoolingLayer {
     #[inline(always)] pub fn as_raw_PoolingLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2533,16 +2637,15 @@ impl crate::dnn::PoolingLayer {
 
 unsafe impl Send for PoolingLayer {}
 
-impl core::Algorithm for PoolingLayer {
+impl core::AlgorithmTrait for PoolingLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for PoolingLayer {
+impl crate::dnn::LayerTrait for PoolingLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl PoolingLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfPoolingLayer> {
         unsafe { sys::cv_dnn_PoolingLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfPoolingLayer { ptr })
     }
@@ -2554,12 +2657,13 @@ pub struct PowerLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::PowerLayer {
+impl Drop for PowerLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_PowerLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::PowerLayer {
+
+impl PowerLayer {
     #[inline(always)] pub fn as_raw_PowerLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2569,7 +2673,7 @@ impl crate::dnn::PowerLayer {
 
 unsafe impl Send for PowerLayer {}
 
-impl core::Algorithm for PowerLayer {
+impl core::AlgorithmTrait for PowerLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -2577,12 +2681,11 @@ impl crate::dnn::ActivationLayer for PowerLayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for PowerLayer {
+impl crate::dnn::LayerTrait for PowerLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl PowerLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfPowerLayer> {
         unsafe { sys::cv_dnn_PowerLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfPowerLayer { ptr })
     }
@@ -2594,12 +2697,13 @@ pub struct PriorBoxLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::PriorBoxLayer {
+impl Drop for PriorBoxLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_PriorBoxLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::PriorBoxLayer {
+
+impl PriorBoxLayer {
     #[inline(always)] pub fn as_raw_PriorBoxLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2609,16 +2713,15 @@ impl crate::dnn::PriorBoxLayer {
 
 unsafe impl Send for PriorBoxLayer {}
 
-impl core::Algorithm for PriorBoxLayer {
+impl core::AlgorithmTrait for PriorBoxLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for PriorBoxLayer {
+impl crate::dnn::LayerTrait for PriorBoxLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl PriorBoxLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfPriorBoxLayer> {
         unsafe { sys::cv_dnn_PriorBoxLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfPriorBoxLayer { ptr })
     }
@@ -2630,12 +2733,13 @@ pub struct ProposalLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ProposalLayer {
+impl Drop for ProposalLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ProposalLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ProposalLayer {
+
+impl ProposalLayer {
     #[inline(always)] pub fn as_raw_ProposalLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2645,23 +2749,22 @@ impl crate::dnn::ProposalLayer {
 
 unsafe impl Send for ProposalLayer {}
 
-impl core::Algorithm for ProposalLayer {
+impl core::AlgorithmTrait for ProposalLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ProposalLayer {
+impl crate::dnn::LayerTrait for ProposalLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ProposalLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfProposalLayer> {
         unsafe { sys::cv_dnn_ProposalLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfProposalLayer { ptr })
     }
     
 }
 
-// Generating impl for trait cv::dnn::RNNLayer (trait)
+// Generating impl for trait crate::dnn::RNNLayer
 /// Classical recurrent layer
 ///
 /// Accepts two inputs @f$x_t@f$ and @f$h_{t-1}@f$ and compute two outputs @f$o_t@f$ and @f$h_t@f$.
@@ -2674,7 +2777,7 @@ impl ProposalLayer {
 /// output[0] will have shape [`T`, `N`, @f$N_o@f$], where @f$N_o@f$ is number of rows in @f$ W_{xo} @f$ matrix.
 ///
 /// If setProduceHiddenOutput() is set to true then @p output[1] will contain a Mat with shape [`T`, `N`, @f$N_h@f$], where @f$N_h@f$ is number of rows in @f$ W_{hh} @f$ matrix.
-pub trait RNNLayer: crate::dnn::Layer {
+pub trait RNNLayer: crate::dnn::LayerTrait {
     #[inline(always)] fn as_raw_RNNLayer(&self) -> *mut c_void;
     /// Setups learned weights.
     ///
@@ -2706,7 +2809,6 @@ pub trait RNNLayer: crate::dnn::Layer {
 }
 
 impl dyn RNNLayer + '_ {
-
     /// Creates instance of RNNLayer
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfRNNLayer> {
         unsafe { sys::cv_dnn_RNNLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfRNNLayer { ptr })
@@ -2719,12 +2821,13 @@ pub struct ReLU6Layer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ReLU6Layer {
+impl Drop for ReLU6Layer {
     fn drop(&mut self) {
         unsafe { sys::cv_ReLU6Layer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ReLU6Layer {
+
+impl ReLU6Layer {
     #[inline(always)] pub fn as_raw_ReLU6Layer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2734,7 +2837,7 @@ impl crate::dnn::ReLU6Layer {
 
 unsafe impl Send for ReLU6Layer {}
 
-impl core::Algorithm for ReLU6Layer {
+impl core::AlgorithmTrait for ReLU6Layer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -2742,12 +2845,11 @@ impl crate::dnn::ActivationLayer for ReLU6Layer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ReLU6Layer {
+impl crate::dnn::LayerTrait for ReLU6Layer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReLU6Layer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfReLU6Layer> {
         unsafe { sys::cv_dnn_ReLU6Layer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfReLU6Layer { ptr })
     }
@@ -2759,12 +2861,13 @@ pub struct ReLULayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ReLULayer {
+impl Drop for ReLULayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ReLULayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ReLULayer {
+
+impl ReLULayer {
     #[inline(always)] pub fn as_raw_ReLULayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2774,7 +2877,7 @@ impl crate::dnn::ReLULayer {
 
 unsafe impl Send for ReLULayer {}
 
-impl core::Algorithm for ReLULayer {
+impl core::AlgorithmTrait for ReLULayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -2782,12 +2885,11 @@ impl crate::dnn::ActivationLayer for ReLULayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ReLULayer {
+impl crate::dnn::LayerTrait for ReLULayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReLULayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfReLULayer> {
         unsafe { sys::cv_dnn_ReLULayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfReLULayer { ptr })
     }
@@ -2799,12 +2901,13 @@ pub struct RegionLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::RegionLayer {
+impl Drop for RegionLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_RegionLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::RegionLayer {
+
+impl RegionLayer {
     #[inline(always)] pub fn as_raw_RegionLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2814,16 +2917,15 @@ impl crate::dnn::RegionLayer {
 
 unsafe impl Send for RegionLayer {}
 
-impl core::Algorithm for RegionLayer {
+impl core::AlgorithmTrait for RegionLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for RegionLayer {
+impl crate::dnn::LayerTrait for RegionLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl RegionLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfRegionLayer> {
         unsafe { sys::cv_dnn_RegionLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfRegionLayer { ptr })
     }
@@ -2835,12 +2937,13 @@ pub struct ReorgLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ReorgLayer {
+impl Drop for ReorgLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ReorgLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ReorgLayer {
+
+impl ReorgLayer {
     #[inline(always)] pub fn as_raw_ReorgLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2850,16 +2953,15 @@ impl crate::dnn::ReorgLayer {
 
 unsafe impl Send for ReorgLayer {}
 
-impl core::Algorithm for ReorgLayer {
+impl core::AlgorithmTrait for ReorgLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ReorgLayer {
+impl crate::dnn::LayerTrait for ReorgLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReorgLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfReorgLayer> {
         unsafe { sys::cv_dnn_ReorgLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfReorgLayer { ptr })
     }
@@ -2871,12 +2973,13 @@ pub struct ReshapeLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ReshapeLayer {
+impl Drop for ReshapeLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ReshapeLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ReshapeLayer {
+
+impl ReshapeLayer {
     #[inline(always)] pub fn as_raw_ReshapeLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2886,16 +2989,15 @@ impl crate::dnn::ReshapeLayer {
 
 unsafe impl Send for ReshapeLayer {}
 
-impl core::Algorithm for ReshapeLayer {
+impl core::AlgorithmTrait for ReshapeLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ReshapeLayer {
+impl crate::dnn::LayerTrait for ReshapeLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ReshapeLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfReshapeLayer> {
         unsafe { sys::cv_dnn_ReshapeLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfReshapeLayer { ptr })
     }
@@ -2910,12 +3012,13 @@ pub struct ResizeLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ResizeLayer {
+impl Drop for ResizeLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ResizeLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ResizeLayer {
+
+impl ResizeLayer {
     #[inline(always)] pub fn as_raw_ResizeLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2925,16 +3028,15 @@ impl crate::dnn::ResizeLayer {
 
 unsafe impl Send for ResizeLayer {}
 
-impl core::Algorithm for ResizeLayer {
+impl core::AlgorithmTrait for ResizeLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ResizeLayer {
+impl crate::dnn::LayerTrait for ResizeLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ResizeLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfResizeLayer> {
         unsafe { sys::cv_dnn_ResizeLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfResizeLayer { ptr })
     }
@@ -2946,12 +3048,13 @@ pub struct ScaleLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ScaleLayer {
+impl Drop for ScaleLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ScaleLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ScaleLayer {
+
+impl ScaleLayer {
     #[inline(always)] pub fn as_raw_ScaleLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2961,16 +3064,15 @@ impl crate::dnn::ScaleLayer {
 
 unsafe impl Send for ScaleLayer {}
 
-impl core::Algorithm for ScaleLayer {
+impl core::AlgorithmTrait for ScaleLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ScaleLayer {
+impl crate::dnn::LayerTrait for ScaleLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ScaleLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfScaleLayer> {
         unsafe { sys::cv_dnn_ScaleLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfScaleLayer { ptr })
     }
@@ -2982,12 +3084,13 @@ pub struct ShiftLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ShiftLayer {
+impl Drop for ShiftLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ShiftLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ShiftLayer {
+
+impl ShiftLayer {
     #[inline(always)] pub fn as_raw_ShiftLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -2997,16 +3100,15 @@ impl crate::dnn::ShiftLayer {
 
 unsafe impl Send for ShiftLayer {}
 
-impl core::Algorithm for ShiftLayer {
+impl core::AlgorithmTrait for ShiftLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ShiftLayer {
+impl crate::dnn::LayerTrait for ShiftLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ShiftLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_ShiftLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -3026,12 +3128,13 @@ pub struct ShuffleChannelLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::ShuffleChannelLayer {
+impl Drop for ShuffleChannelLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_ShuffleChannelLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::ShuffleChannelLayer {
+
+impl ShuffleChannelLayer {
     #[inline(always)] pub fn as_raw_ShuffleChannelLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -3041,16 +3144,15 @@ impl crate::dnn::ShuffleChannelLayer {
 
 unsafe impl Send for ShuffleChannelLayer {}
 
-impl core::Algorithm for ShuffleChannelLayer {
+impl core::AlgorithmTrait for ShuffleChannelLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for ShuffleChannelLayer {
+impl crate::dnn::LayerTrait for ShuffleChannelLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl ShuffleChannelLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfLayer> {
         unsafe { sys::cv_dnn_ShuffleChannelLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfLayer { ptr })
     }
@@ -3062,12 +3164,13 @@ pub struct SigmoidLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SigmoidLayer {
+impl Drop for SigmoidLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SigmoidLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SigmoidLayer {
+
+impl SigmoidLayer {
     #[inline(always)] pub fn as_raw_SigmoidLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -3077,7 +3180,7 @@ impl crate::dnn::SigmoidLayer {
 
 unsafe impl Send for SigmoidLayer {}
 
-impl core::Algorithm for SigmoidLayer {
+impl core::AlgorithmTrait for SigmoidLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -3085,12 +3188,11 @@ impl crate::dnn::ActivationLayer for SigmoidLayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for SigmoidLayer {
+impl crate::dnn::LayerTrait for SigmoidLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl SigmoidLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfSigmoidLayer> {
         unsafe { sys::cv_dnn_SigmoidLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfSigmoidLayer { ptr })
     }
@@ -3125,12 +3227,13 @@ pub struct SliceLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SliceLayer {
+impl Drop for SliceLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SliceLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SliceLayer {
+
+impl SliceLayer {
     #[inline(always)] pub fn as_raw_SliceLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -3140,16 +3243,15 @@ impl crate::dnn::SliceLayer {
 
 unsafe impl Send for SliceLayer {}
 
-impl core::Algorithm for SliceLayer {
+impl core::AlgorithmTrait for SliceLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for SliceLayer {
+impl crate::dnn::LayerTrait for SliceLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl SliceLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfSliceLayer> {
         unsafe { sys::cv_dnn_SliceLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfSliceLayer { ptr })
     }
@@ -3161,12 +3263,13 @@ pub struct SoftmaxLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SoftmaxLayer {
+impl Drop for SoftmaxLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SoftmaxLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SoftmaxLayer {
+
+impl SoftmaxLayer {
     #[inline(always)] pub fn as_raw_SoftmaxLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -3176,16 +3279,15 @@ impl crate::dnn::SoftmaxLayer {
 
 unsafe impl Send for SoftmaxLayer {}
 
-impl core::Algorithm for SoftmaxLayer {
+impl core::AlgorithmTrait for SoftmaxLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for SoftmaxLayer {
+impl crate::dnn::LayerTrait for SoftmaxLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl SoftmaxLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfSoftmaxLayer> {
         unsafe { sys::cv_dnn_SoftmaxLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfSoftmaxLayer { ptr })
     }
@@ -3197,12 +3299,13 @@ pub struct SplitLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::SplitLayer {
+impl Drop for SplitLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_SplitLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::SplitLayer {
+
+impl SplitLayer {
     #[inline(always)] pub fn as_raw_SplitLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -3212,16 +3315,15 @@ impl crate::dnn::SplitLayer {
 
 unsafe impl Send for SplitLayer {}
 
-impl core::Algorithm for SplitLayer {
+impl core::AlgorithmTrait for SplitLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for SplitLayer {
+impl crate::dnn::LayerTrait for SplitLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl SplitLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfSplitLayer> {
         unsafe { sys::cv_dnn_SplitLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfSplitLayer { ptr })
     }
@@ -3233,12 +3335,13 @@ pub struct TanHLayer {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::dnn::TanHLayer {
+impl Drop for TanHLayer {
     fn drop(&mut self) {
         unsafe { sys::cv_TanHLayer_delete(self.ptr) };
     }
 }
-impl crate::dnn::TanHLayer {
+
+impl TanHLayer {
     #[inline(always)] pub fn as_raw_TanHLayer(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -3248,7 +3351,7 @@ impl crate::dnn::TanHLayer {
 
 unsafe impl Send for TanHLayer {}
 
-impl core::Algorithm for TanHLayer {
+impl core::AlgorithmTrait for TanHLayer {
     #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
@@ -3256,12 +3359,11 @@ impl crate::dnn::ActivationLayer for TanHLayer {
     #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::dnn::Layer for TanHLayer {
+impl crate::dnn::LayerTrait for TanHLayer {
     #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void { self.ptr }
 }
 
 impl TanHLayer {
-
     pub fn create(params: &crate::dnn::LayerParams) -> Result<types::PtrOfTanHLayer> {
         unsafe { sys::cv_dnn_TanHLayer_create_LayerParams(params.as_raw_LayerParams()) }.into_result().map(|ptr| types::PtrOfTanHLayer { ptr })
     }

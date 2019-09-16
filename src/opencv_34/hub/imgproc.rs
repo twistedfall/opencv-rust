@@ -143,7 +143,7 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const ADAPTIVE_THRESH_GAUSSIAN_C: i32 = 1;
 pub const ADAPTIVE_THRESH_MEAN_C: i32 = 0;
@@ -618,7 +618,7 @@ pub const WARP_POLAR_LOG: i32 = 256;
 
 /// interpolation algorithm
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum InterpolationFlags {
     INTER_NEAREST = INTER_NEAREST as isize,
     INTER_LINEAR = INTER_LINEAR as isize,
@@ -633,7 +633,7 @@ pub enum InterpolationFlags {
 
 /// cv::undistort mode
 #[repr(C)]
-#[derive(Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub enum UndistortTypes {
     PROJ_SPHERICAL_ORTHO = PROJ_SPHERICAL_ORTHO as isize,
     PROJ_SPHERICAL_EQRECT = PROJ_SPHERICAL_EQRECT as isize,
@@ -4890,9 +4890,9 @@ pub fn wrapper_emd(signature1: &dyn core::ToInputArray, signature2: &dyn core::T
     unsafe { sys::cv_wrapperEMD__InputArray__InputArray_int__InputArray_PtrOffloat__OutputArray(signature1.as_raw__InputArray(), signature2.as_raw__InputArray(), dist_type, cost.as_raw__InputArray(), lower_bound.as_raw_PtrOffloat(), flow.as_raw__OutputArray()) }.into_result()
 }
 
-// Generating impl for trait cv::CLAHE (trait)
+// Generating impl for trait crate::imgproc::CLAHE
 /// Base class for Contrast Limited Adaptive Histogram Equalization.
-pub trait CLAHE: core::Algorithm {
+pub trait CLAHE: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_CLAHE(&self) -> *mut c_void;
     /// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
     ///
@@ -4938,9 +4938,9 @@ pub trait CLAHE: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::GeneralizedHough (trait)
+// Generating impl for trait crate::imgproc::GeneralizedHough
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
-pub trait GeneralizedHough: core::Algorithm {
+pub trait GeneralizedHough: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_GeneralizedHough(&self) -> *mut c_void;
     /// set template to search
     ///
@@ -5031,7 +5031,7 @@ pub trait GeneralizedHough: core::Algorithm {
     
 }
 
-// Generating impl for trait cv::GeneralizedHoughBallard (trait)
+// Generating impl for trait crate::imgproc::GeneralizedHoughBallard
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 ///
 /// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Ballard1981) .
@@ -5057,7 +5057,7 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
     
 }
 
-// Generating impl for trait cv::GeneralizedHoughGuil (trait)
+// Generating impl for trait crate::imgproc::GeneralizedHoughGuil
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 ///
 /// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Guil1999) .
@@ -5209,12 +5209,13 @@ pub struct LineIterator {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::imgproc::LineIterator {
+impl Drop for LineIterator {
     fn drop(&mut self) {
         unsafe { sys::cv_LineIterator_delete(self.ptr) };
     }
 }
-impl crate::imgproc::LineIterator {
+
+impl LineIterator {
     #[inline(always)] pub fn as_raw_LineIterator(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5225,7 +5226,6 @@ impl crate::imgproc::LineIterator {
 unsafe impl Send for LineIterator {}
 
 impl LineIterator {
-
     /// initializes the iterator
     ///
     /// creates iterators for the line connecting pt1 and pt2
@@ -5249,14 +5249,14 @@ impl LineIterator {
     
 }
 
-// Generating impl for trait cv::LineSegmentDetector (trait)
+// Generating impl for trait crate::imgproc::LineSegmentDetector
 /// Line segment detector class
 ///
 /// following the algorithm described at [Rafael12](https://docs.opencv.org/3.4.7/d0/de3/citelist.html#CITEREF_Rafael12) .
 ///
 ///
 /// Note: Implementation has been removed due original code license conflict
-pub trait LineSegmentDetector: core::Algorithm {
+pub trait LineSegmentDetector: core::AlgorithmTrait {
     #[inline(always)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
     /// Finds lines in the input image.
     ///
@@ -5328,12 +5328,13 @@ pub struct Subdiv2D {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
 
-impl Drop for crate::imgproc::Subdiv2D {
+impl Drop for Subdiv2D {
     fn drop(&mut self) {
         unsafe { sys::cv_Subdiv2D_delete(self.ptr) };
     }
 }
-impl crate::imgproc::Subdiv2D {
+
+impl Subdiv2D {
     #[inline(always)] pub fn as_raw_Subdiv2D(&self) -> *mut c_void { self.ptr }
 
     pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
@@ -5344,7 +5345,6 @@ impl crate::imgproc::Subdiv2D {
 unsafe impl Send for Subdiv2D {}
 
 impl Subdiv2D {
-
     /// creates an empty Subdiv2D object.
     /// To create a new empty Delaunay subdivision you need to use the #initDelaunay function.
     pub fn default() -> Result<crate::imgproc::Subdiv2D> {

@@ -2,10 +2,10 @@
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
-use crate::core::{_InputArray, _OutputArray};
+use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 
-// Generating impl for trait cv::xobjdetect::WBDetector (trait)
+// Generating impl for trait crate::xobjdetect::WBDetector
 /// WaldBoost detector
 pub trait WBDetector {
     #[inline(always)] fn as_raw_WBDetector(&self) -> *mut c_void;
@@ -45,7 +45,6 @@ pub trait WBDetector {
 }
 
 impl dyn WBDetector + '_ {
-
     /// Create instance of WBDetector
     pub fn create() -> Result<types::PtrOfWBDetector> {
         unsafe { sys::cv_xobjdetect_WBDetector_create() }.into_result().map(|ptr| types::PtrOfWBDetector { ptr })
