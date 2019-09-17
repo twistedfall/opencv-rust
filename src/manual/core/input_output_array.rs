@@ -1,7 +1,7 @@
 use std::ffi::c_void;
 
 use crate::{
-    core::{_InputArray, _InputOutputArray, _OutputArray, Mat, MatExpr, UMat},
+    core::{_InputArrayTrait, _InputOutputArray, _OutputArrayTrait, Mat, MatExpr, UMat},
     Result,
     sys,
     types::{VectorOfMat, VectorOfUMat},
@@ -78,7 +78,7 @@ impl InputArray {
     }
 }
 
-impl _InputArray for InputArray {
+impl _InputArrayTrait for InputArray {
     fn as_raw__InputArray(&self) -> *mut c_void {
         self.ptr
     }
@@ -167,13 +167,13 @@ impl OutputArray {
     }
 }
 
-impl _InputArray for OutputArray {
+impl _InputArrayTrait for OutputArray {
     fn as_raw__InputArray(&self) -> *mut c_void {
         self.ptr
     }
 }
 
-impl _OutputArray for OutputArray {
+impl _OutputArrayTrait for OutputArray {
     fn as_raw__OutputArray(&self) -> *mut c_void {
         self.as_raw__InputArray()
     }

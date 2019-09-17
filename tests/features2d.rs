@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use opencv::{
     core::Size,
-    features2d::{Feature2D, ORB},
+    features2d::{Feature2DTrait, ORB},
     imgcodecs,
     prelude::*,
     Result,

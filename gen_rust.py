@@ -19,6 +19,7 @@ from urllib.parse import quote
 # fixme get multiline comments from LSD_REFINE_ADV in imgproc
 # fixme remove ndims argument when slice is supplied and read it from slice
 # fixme generate struct and trait for e.g. _InputArray
+# fixme combining enum variants with |
 
 def template(text):
     """
@@ -88,9 +89,9 @@ def make_safe_id(extern_id):
 # value: list of declarations as supplied by hdr_parser
 decls_manual_pre = {
     "core": [
-        ("class cv._InputArray", "", ["/Ghost", "/A"], []),
+        ("class cv._InputArray", "", ["/Ghost"], []),
         ("typedef cv.InputArray", "const _InputArray&", [], []),
-        ("class cv._OutputArray", "", ["/Ghost", "/A"], []),
+        ("class cv._OutputArray", "", ["/Ghost"], []),
         ("typedef cv.OutputArray", "_OutputArray&", [], []),
         ("class cv._InputOutputArray", "", ["/Ghost"], []),
         ("typedef cv.InputOutputArray", "_InputOutputArray&", [], []),
@@ -112,10 +113,10 @@ decls_manual_pre = {
     ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
-        ("class cv.dnn.Layer", "", ["/Ghost", "/A"], []),
+        ("class cv.dnn.Layer", "", ["/Ghost"], []),
     ],
     "features2d": [
-        ("class cv.Feature2D", ": cv::Algorithm", ["/Ghost", "/A"], []),
+        ("class cv.Feature2D", ": cv::Algorithm", ["/Ghost"], []),
         ("class cv.DescriptorMatcher", ": cv::Algorithm", ["/Ghost", "/A"], []),
         ("typedef cv.FeatureDetector", "Feature2D", [], []),
         ("typedef cv.DescriptorExtractor", "Feature2D", [], []),
@@ -814,8 +815,14 @@ for s in (2, 3, 4, 6, 8):
 # set of types that must be generated as traits, elements are typeids
 forced_class_trait = {
     "cv::Algorithm",
+    "cv::Feature2D",
     "cv::BackgroundSubtractor",
     "cv::dnn::Layer",
+    "cv::MatOp",
+    "cv::aruco::Board",
+    "cv::_InputArray",
+    "cv::_OutputArray",
+    "cv::_InputOutputArray",
 }
 
 # dict of pointer arguments that need to be made into slices, the conversion only happens if an arg is a pointer
@@ -1231,6 +1238,7 @@ class FuncInfo(GeneralInfo):
                     raise NameError("class not found: " + self.classname)
             if "/A" in decl[2]:
                 self.ci.is_trait = True
+                self.ci.is_abstract = True
             if self.classname == self.name:
                 self.kind = self.KIND_CONSTRUCTOR
                 if len(decl[3]) == 0:
@@ -1358,7 +1366,7 @@ class FuncInfo(GeneralInfo):
         if self.rv_type().is_ignored:
             return "return value type is ignored"
 
-        if self.kind == self.KIND_CONSTRUCTOR and self.ci.is_trait:
+        if self.kind == self.KIND_CONSTRUCTOR and self.ci.is_abstract:
             return "skip constructor of abstract class"
 
         for a in self.args:
@@ -1458,7 +1466,7 @@ class FuncInfo(GeneralInfo):
         tmpl = self._get_manual_implementation_tpl("rust_extern") or FuncInfo.TEMPLATES["rust_extern"]
         return tmpl.substitute(template_vars)
 
-    def gen_safe_rust(self):
+    def gen_safe_rust(self, visibility):
         args = []
         call_args = []
         forward_args = []
@@ -1501,8 +1509,6 @@ class FuncInfo(GeneralInfo):
                 continue
             args.append(arg.type.rust_arg_func_decl(arg.rsname, arg.is_output(), self.attr_accessor_type))
 
-        pub = "" if self.ci and self.ci.is_trait and not self.is_static else "pub "
-
         doc_comment = self.gen.reformat_doc(self.comment, self)
 
         defattr_doc_comment = ""
@@ -1527,7 +1533,7 @@ class FuncInfo(GeneralInfo):
             "rv_rust_full": self.rv_type().rust_full,
             "unsafety_decl": "" if self.is_safe else "unsafe ",
             "unsafety_call": "unsafe " if self.is_safe else "",
-            "visibility": pub,
+            "visibility": visibility,
             "generic_decl": "<{}>".format(", ".join(generic_decls)) if len(generic_decls) >= 1 else "",
             "prefix": prefix,
             "suffix": suffix,
@@ -1592,7 +1598,8 @@ class ClassInfo(GeneralInfo):
         self.namespaces = namespaces
         self.module = module
         self.is_simple = self.is_ignored = self.is_ghost = self.is_callback = False
-        self.is_trait = self.fullname in forced_class_trait  # don't generate struct, generate trait (abstract classes and classes inside forced_trait_classes)
+        self.is_trait = self.fullname in forced_class_trait
+        self.is_abstract = False
         self.classname = self.name
         self.comment = ""
         if len(decl) > 5:
@@ -1608,6 +1615,7 @@ class ClassInfo(GeneralInfo):
                 self.is_callback = True
             elif m == "/A":
                 self.is_trait = True
+                self.is_abstract = True
         if self.classpath:
             ci = self.gen.get_class(self.classpath)
             if ci is not None and ci.is_ignored:
@@ -1633,7 +1641,6 @@ class ClassInfo(GeneralInfo):
         self.props = []
         for p in decl[3]:
             self.props.append(ClassPropInfo(p))
-
 
     def __repr__(self):
         attrs = []
@@ -1890,6 +1897,7 @@ class TypeInfo(object):
         self.is_const = typeid.startswith("const ")  # type has C++ const modifier
         self.typeid = typeid.replace("const ", "").strip()  # e.g. "vector<cv::Mat>", "std::vector<int>", "float"
         self.gen = gen
+        self.ci = gen.get_class(self.typeid)
         self.is_ignored = False  # don't generate
         # False: types that contain ptr field to actual heap allocated data (e.g. BoxedClass, Vector, SmartPtr)
         # True: types that are getting passed by value (e.g. Primitive, SimpleClass)
@@ -1903,7 +1911,7 @@ class TypeInfo(object):
         _, self.rust_local = split_known_namespace(self.typeid, gen.namespaces)
         self.rust_local = self.rust_local.replace("::", "_")  # only the type name for Rust without module path
         self.rust_safe_id = self.rust_local  # rust safe type identifier used for file and function names
-        self.rust_full = ""  # full module path (with modules/crate::) to Rust type
+        self.rust_full = self.rust_local  # full module path (with modules/crate::) to Rust type
         self.rust_extern = ""  # Rust type used on the boundary between Rust and C (e.g. in return wrappers)
         # self.rust_lifetimes = ""  # for reference types it's the definition of lifetimes that need to be present in function
 
@@ -1959,6 +1967,18 @@ class TypeInfo(object):
     def is_output_ref(self):
         return self.is_by_ref and not self.is_const
 
+    def rust_trait_local(self):
+        out = self.rust_local
+        if self.ci and self.ci.is_trait and not self.ci.is_abstract:
+            out += "Trait"
+        return out
+
+    def rust_trait_full(self):
+        out = self.rust_full
+        if self.ci and self.ci.is_trait and not self.ci.is_abstract:
+            out += "Trait"
+        return out
+
     def rust_generic_decl(self):
         return ""
 
@@ -1980,21 +2000,22 @@ class TypeInfo(object):
         :type attr_type: str|None
         :rtype: str
         """
-        if self.is_by_ptr and attr_type is None:
+        rust_full = self.rust_full
+        if (self.is_by_ptr or self.is_by_ref) and attr_type is None:
             mods = []
-            if is_output:
+            if self.is_by_ptr and is_output or self.is_output_ref():
                 mods.append("mut")
-            ci = self.gen.get_class(self.typeid)
-            if ci is None and isinstance(self, RawPtrTypeInfo):
-                ci = self.gen.get_class(self.inner.typeid)
-            if ci is not None and ci.is_trait:
+            ci = self.ci
+            if not ci and isinstance(self, RawPtrTypeInfo):
+                ci = self.inner.ci
+            if ci and ci.is_trait:
+                if not ci.is_abstract:
+                    rust_full += "Trait"
                 mods.append("dyn")
             if len(mods) > 0:
                 mods.append("")  # force space at the end
-            return "{}: &{}{}".format(var_name, " ".join(mods), self.rust_full)
-        if self.is_by_ref and not self.is_const:  # fixme, it should be possible to join this condition with the previous one
-            return "{}: &mut {}".format(var_name, self.rust_full)
-        return "{}: {}".format(var_name, self.rust_full)
+            rust_full = "&{}{}".format(" ".join(mods), rust_full)
+        return "{}: {}".format(var_name, rust_full)
 
     def rust_arg_pre_call(self, var_name, is_output=False):
         """
@@ -2272,7 +2293,6 @@ class SimpleClassTypeInfo(TypeInfo):
         :type typeid: str
         """
         super().__init__(gen, typeid)
-        self.ci = gen.get_class(self.typeid)
         if self.ci:
             self.is_ignored = self.ci.is_ignored
             self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
@@ -2321,7 +2341,6 @@ class CallbackTypeInfo(TypeInfo):
         :type typeid: str
         """
         super().__init__(gen, typeid)
-        self.ci = gen.get_class(self.typeid)
         if self.ci:
             self.is_ignored = self.ci.is_ignored
             self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
@@ -2379,7 +2398,6 @@ class BoxedClassTypeInfo(TypeInfo):
         :type typeid: str
         """
         super().__init__(gen, typeid)
-        self.ci = gen.get_class(self.typeid)
         self.cpptype = self.ci.fullname
         self.rust_extern = "*mut c_void"
         self.rust_full = ("crate::" if self.ci.module not in static_modules else "") + self.ci.module + "::" + self.rust_local
@@ -2405,7 +2423,7 @@ class BoxedClassTypeInfo(TypeInfo):
         elif self.is_output_array():
             self.rust_full = "core::ToOutputArray"
         elif self.is_input_output_array():
-            self.rust_full = "dyn core::ToInputOutputArray"
+            self.rust_full = "core::ToInputOutputArray"
         out = super().rust_arg_func_decl(var_name, is_output, attr_type)
         self.rust_full = old_rust_full
         return out
@@ -2965,7 +2983,7 @@ class SmartPtrTypeInfo(TypeInfo):
                     if not isinstance(cibase, UnknownTypeInfo):
                         f.write(SmartPtrTypeInfo.TEMPLATES["rust_trait_cast"].substitute(combine_dicts(self.__dict__ , {
                             "base_rust_local": cibase.rust_local,
-                            "base_rust_full": cibase.rust_full,
+                            "base_rust_full": cibase.rust_trait_full(),
                             "base_cpp_type": cibase.cpptype,
                         })))
 
@@ -3254,7 +3272,7 @@ class RustWrapperGenerator(object):
         "trait": {
             "rust": template("""
                 // Generating impl for trait ${rust_full}
-                ${doc_comment}pub trait ${rust_local}${bases} {
+                ${doc_comment}pub trait ${rust_trait_local}${bases} {
                     #[inline(always)] fn as_raw_${rust_local}(&self) -> *mut c_void;
                 ${methods}}
                 
@@ -3496,7 +3514,7 @@ class RustWrapperGenerator(object):
             ${input_output_array}
         """).substitute({
             "static_modules": ", ".join(static_modules),
-            "input_output_array": "use crate::core::{_InputArray, _OutputArray};\n" if module != "core" else ""
+            "input_output_array": "use crate::core::{_InputArrayTrait, _OutputArrayTrait};\n" if module != "core" else "",
         }))
         for co in sorted(self.consts, key=lambda c: c.rustname):
             rust = co.gen_rust()
@@ -3583,7 +3601,7 @@ class RustWrapperGenerator(object):
                 return True
         return False
 
-    def gen_func(self, fi):
+    def gen_func(self, fi, visibility="pub "):
         """
         :type fi: FuncInfo
         :return:
@@ -3625,7 +3643,7 @@ class RustWrapperGenerator(object):
 
         # rust safe wrapper
         self.func_names.add(classname + '::' + fi.r_name())
-        return fi.gen_safe_rust()
+        return fi.gen_safe_rust(visibility)
 
     def get_value_struct_field(self, name, typ):
         rsname = camel_case_to_snake_case(reserved_rename.get(name, name))
@@ -3679,10 +3697,9 @@ class RustWrapperGenerator(object):
             "fields": indent(cpp_fields.rstrip()),
         })))
 
-    def gen_boxed_class(self, name):
-        ci = self.get_class(name)
+    def gen_boxed_class(self, ci):
         if not ci:
-            logging.info("type %s not found", name)
+            logging.info("type %s not found", ci.fullname)
             return
         typ = ci.type_info()
         logging.info("Generating box for %s", ci)
@@ -3693,13 +3710,16 @@ class RustWrapperGenerator(object):
             "doc_comment": self.reformat_doc(ci.comment)
         })))
 
-        for base in sorted(self.all_bases(name)):
+        bases = self.all_bases(ci.fullname)
+        if ci.is_trait:
+            bases.add(ci.fullname)
+        for base in sorted(bases):
             cibase = self.get_class(base)
             if cibase is not None:
                 cibase = cibase.type_info()
                 self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["boxed"]["rust_base"].substitute(combine_dicts(typ.__dict__, {
                     "base_rust_local": cibase.rust_local,
-                    "base_rust_full": cibase.rust_full,
+                    "base_rust_full": cibase.rust_trait_full(),
                 })))
 
     # all your bases...
@@ -3733,38 +3753,40 @@ class RustWrapperGenerator(object):
             logging.info("Not namespaced. Skipped %s", ci)
             return
         if ci.is_trait:
-            bases = sorted(x.rust_full for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
+            bases = sorted(x.rust_trait_full() for x in (self.get_type_info(x) for x in ci.bases) if not isinstance(x, UnknownTypeInfo))
             if len(bases) > 0:
                 bases = ": " + " + ".join(bases)
             else:
                 bases = ""
             logging.info("Generating impl for trait %s", ci)
             methods = ""
-            for fi in ci.methods:
-                if not fi.is_static:
-                    methods += self.gen_func(fi)
+            for fi in (fi for fi in ci.methods if fi.is_instance_method()):
+                methods += self.gen_func(fi, "")
             self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["trait"]["rust"].substitute(combine_dicts(typ.__dict__, {
+                "rust_trait_local": typ.rust_trait_local(),
                 "doc_comment": self.reformat_doc(ci.comment),
                 "bases": bases,
                 "methods": methods,
             })))
-            methods = ""
-            for fi in (fi for fi in ci.methods if fi.is_static):
-                methods += self.gen_func(fi)
-            if methods != "":
-                self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["trait"]["rust_static"].substitute(combine_dicts(typ.__dict__, {
-                    "methods": methods,
-                })))
-        else:
-            if isinstance(typ, BoxedClassTypeInfo):
-                self.gen_boxed_class(ci.fullname)
-            methods = ""
-            for fi in ci.methods:
-                methods += self.gen_func(fi)
-            if methods != "":
-                self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["boxed"]["rust_impl"].substitute(combine_dicts(typ.__dict__, {
-                    "methods": methods
-                })))
+            if ci.is_abstract:
+                methods = ""
+                for fi in (fi for fi in ci.methods if fi.is_static):
+                    methods += self.gen_func(fi)
+                if methods != "":
+                    self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["trait"]["rust_static"].substitute(combine_dicts(typ.__dict__, {
+                        "rust_local": typ.rust_trait_local(),
+                        "methods": methods,
+                    })))
+                return
+        if isinstance(typ, BoxedClassTypeInfo):
+            self.gen_boxed_class(ci)
+        methods = ""
+        for fi in ci.methods:
+            methods += self.gen_func(fi)
+        if methods != "":
+            self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["boxed"]["rust_impl"].substitute(combine_dicts(typ.__dict__, {
+                "methods": methods
+            })))
 
     def preprocess_formula(self, text):
         macros = {

@@ -1,7 +1,7 @@
 use opencv::prelude::*;
 use opencv::core;
 use opencv::features2d;
-use opencv::features2d::Feature2D;
+use opencv::features2d::Feature2DTrait;
 use opencv::highgui;
 use opencv::imgproc;
 use opencv::videoio;

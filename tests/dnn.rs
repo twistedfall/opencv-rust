@@ -3,7 +3,7 @@ use matches::assert_matches;
 #[cfg(not(feature = "opencv-32"))]
 use opencv::{
     core,
-    dnn::{Dict, DictValue, Layer, LayerParams, Net},
+    dnn::{DictTrait, DictValue, LayerTrait, LayerParams, Net},
     Error,
     prelude::*,
     Result,
