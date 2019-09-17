@@ -345,10 +345,20 @@ func_rename = {
     "cv_ocl_Kernel_set_int_KernelArg": "+_kernel_arg",
     "cv_ocl_Program_getPrefix_String": "+_build_flags",
     "cv_ocl_ProgramSource_ProgramSource_String": "from_str",
+    "cv__InputArray__InputArray_Mat": "from_mat",
+    "cv__InputArray__InputArray_MatExpr": "from_matexpr",
+    "cv__InputArray__InputArray_VectorOfMat": "from_mat_vec",
+    "cv__InputArray__InputArray_VectorOfbool": "from_bool_vec",
+    "cv__InputArray__InputArray_double": "from_f64",
+    "cv__InputArray__InputArray_UMat": "from_umat",
+    "cv__InputArray__InputArray_VectorOfUMat": "from_umat_vec",
     "cv__InputArray_copyTo_const__OutputArray__InputArray": "+_with_mask",
+    "cv__OutputArray__OutputArray_Mat": "from_mat",
+    "cv__OutputArray__OutputArray_VectorOfMat": "from_mat_vec",
+    "cv__OutputArray__OutputArray_UMat": "from_umat",
+    "cv__OutputArray__OutputArray_VectorOfUMat": "from_umat_vec",
     "cv__InputOutputArray__InputOutputArray_Mat": "from_mat",
     "cv__InputOutputArray__InputOutputArray_VectorOfMat": "from_mat_vec",
-    # "cv__InputArray__InputArray_double": "from_f64",
     "cv__InputOutputArray__InputOutputArray_UMat": "from_umat",
     "cv__InputOutputArray__InputOutputArray_VectorOfUMat": "from_umat_vec",
     "cv_read_FileNode_schar_schar": "-",
@@ -2009,7 +2019,7 @@ class TypeInfo(object):
             if not ci and isinstance(self, RawPtrTypeInfo):
                 ci = self.inner.ci
             if ci and ci.is_trait:
-                if not ci.is_abstract:
+                if not ci.is_abstract and ci.fullname not in ("cv::_InputArray", "cv::_OutputArray", "cv::_InputOutputArray"):
                     rust_full += "Trait"
                 mods.append("dyn")
             if len(mods) > 0:
@@ -2797,60 +2807,60 @@ class VectorTypeInfo(TypeInfo):
 
             impl core::ToInputArray for ${rust_local} {
                 #[inline]
-                fn input_array(&self) -> Result<core::InputArray> {
+                fn input_array(&self) -> Result<core::_InputArray> {
                     let me = self.as_raw_${rust_local}();
                     cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
                         try {
                             return { Error::Code::StsOk, NULL, new _InputArray(*me) };
                         } CVRS_CATCH(cv_return_value_void_X)
                     }).into_result()
-                        .map(|ptr| core::InputArray { ptr })
+                        .map(|ptr| core::_InputArray { ptr })
                 }
             }
 
             impl core::ToInputArray for &${rust_local} {
                 #[inline]
-                fn input_array(&self) -> Result<core::InputArray> {
+                fn input_array(&self) -> Result<core::_InputArray> {
                     (*self).input_array()
                 }
             }
 
             impl core::ToOutputArray for ${rust_local} {
                 #[inline]
-                fn output_array(&mut self) -> Result<core::OutputArray> {
+                fn output_array(&mut self) -> Result<core::_OutputArray> {
                     let me = self.as_raw_${rust_local}();
                     cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
                         try {
                             return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
                         } CVRS_CATCH(cv_return_value_void_X)
                     }).into_result()
-                        .map(|ptr| core::OutputArray { ptr })
+                        .map(|ptr| core::_OutputArray { ptr })
                 }
             }
 
             impl core::ToOutputArray for &mut ${rust_local} {
                 #[inline]
-                fn output_array(&mut self) -> Result<core::OutputArray> {
+                fn output_array(&mut self) -> Result<core::_OutputArray> {
                     (*self).output_array()
                 }
             }
 
             impl core::ToInputOutputArray for ${rust_local} {
                 #[inline]
-                fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+                fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
                     let me = self.as_raw_${rust_local}();
                     cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
                         try {
                             return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
                         } CVRS_CATCH(cv_return_value_void_X)
                     }).into_result()
-                        .map(|ptr| core::InputOutputArray { ptr })
+                        .map(|ptr| core::_InputOutputArray { ptr })
                 }
             }
 
             impl core::ToInputOutputArray for &mut ${rust_local} {
                 #[inline]
-                fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+                fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
                     (*self).input_output_array()
                 }
             }

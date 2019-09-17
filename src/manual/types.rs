@@ -1,4 +1,8 @@
-use crate::{core, Result, types};
+use crate::{
+    core::{_InputArray, _InputOutputArray, _OutputArray, ToInputArray, ToInputOutputArray, ToOutputArray},
+    Result,
+    types,
+};
 
 #[doc(hidden)]
 #[repr(C)]
@@ -11,86 +15,86 @@ impl From<Unit> for () {
     }
 }
 
-impl core::ToInputArray for types::VectorOfMat {
+impl ToInputArray for types::VectorOfMat {
     #[inline]
-    fn input_array(&self) -> Result<core::InputArray> {
-        core::InputArray::from_mat_vec(self)
+    fn input_array(&self) -> Result<_InputArray> {
+        _InputArray::from_mat_vec(self)
     }
 }
 
-impl core::ToInputArray for &types::VectorOfMat {
+impl ToInputArray for &types::VectorOfMat {
     #[inline]
-    fn input_array(&self) -> Result<core::InputArray> {
+    fn input_array(&self) -> Result<_InputArray> {
         (*self).input_array()
     }
 }
 
-impl core::ToOutputArray for types::VectorOfMat {
+impl ToOutputArray for types::VectorOfMat {
     #[inline]
-    fn output_array(&mut self) -> Result<core::OutputArray> {
-        core::OutputArray::from_mat_vec(self)
+    fn output_array(&mut self) -> Result<_OutputArray> {
+        _OutputArray::from_mat_vec(self)
     }
 }
 
-impl core::ToOutputArray for &mut types::VectorOfMat {
+impl ToOutputArray for &mut types::VectorOfMat {
     #[inline]
-    fn output_array(&mut self) -> Result<core::OutputArray> {
+    fn output_array(&mut self) -> Result<_OutputArray> {
         (*self).output_array()
     }
 }
 
-impl core::ToInputOutputArray for types::VectorOfMat {
+impl ToInputOutputArray for types::VectorOfMat {
     #[inline]
-    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
-        core::InputOutputArray::from_mat_vec(self)
+    fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+        _InputOutputArray::from_mat_vec(self)
     }
 }
 
-impl core::ToInputOutputArray for &mut types::VectorOfMat {
+impl ToInputOutputArray for &mut types::VectorOfMat {
     #[inline]
-    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+    fn input_output_array(&mut self) -> Result<_InputOutputArray> {
         (*self).input_output_array()
     }
 }
 
-impl core::ToInputArray for types::VectorOfUMat {
+impl ToInputArray for types::VectorOfUMat {
     #[inline]
-    fn input_array(&self) -> Result<core::InputArray> {
-        core::InputArray::from_umat_vec(self)
+    fn input_array(&self) -> Result<_InputArray> {
+        _InputArray::from_umat_vec(self)
     }
 }
 
-impl core::ToInputArray for &types::VectorOfUMat {
+impl ToInputArray for &types::VectorOfUMat {
     #[inline]
-    fn input_array(&self) -> Result<core::InputArray> {
+    fn input_array(&self) -> Result<_InputArray> {
         (*self).input_array()
     }
 }
 
-impl core::ToOutputArray for types::VectorOfUMat {
+impl ToOutputArray for types::VectorOfUMat {
     #[inline]
-    fn output_array(&mut self) -> Result<core::OutputArray> {
-        core::OutputArray::from_umat_vec(self)
+    fn output_array(&mut self) -> Result<_OutputArray> {
+        _OutputArray::from_umat_vec(self)
     }
 }
 
-impl core::ToOutputArray for &mut types::VectorOfUMat {
+impl ToOutputArray for &mut types::VectorOfUMat {
     #[inline]
-    fn output_array(&mut self) -> Result<core::OutputArray> {
+    fn output_array(&mut self) -> Result<_OutputArray> {
         (*self).output_array()
     }
 }
 
-impl core::ToInputOutputArray for types::VectorOfUMat {
+impl ToInputOutputArray for types::VectorOfUMat {
     #[inline]
-    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
-        core::InputOutputArray::from_umat_vec(self)
+    fn input_output_array(&mut self) -> Result<_InputOutputArray> {
+        _InputOutputArray::from_umat_vec(self)
     }
 }
 
-impl core::ToInputOutputArray for &mut types::VectorOfUMat {
+impl ToInputOutputArray for &mut types::VectorOfUMat {
     #[inline]
-    fn input_output_array(&mut self) -> Result<core::InputOutputArray> {
+    fn input_output_array(&mut self) -> Result<_InputOutputArray> {
         (*self).input_output_array()
     }
 }
