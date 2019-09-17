@@ -3202,6 +3202,70 @@ class RustWrapperGenerator(object):
 
             "cpp_field_non_array": template("""${cpp_extern} ${name};\n"""),
         },
+        "boxed": {
+            "rust": template("""
+                // boxed class ${typeid}
+                ${doc_comment}pub struct ${rust_local} {
+                    #[doc(hidden)] pub(crate) ptr: *mut c_void
+                }
+                
+                impl Drop for ${rust_local} {
+                    fn drop(&mut self) {
+                        unsafe { sys::cv_${rust_local}_delete(self.ptr) };
+                    }
+                }
+                
+                impl ${rust_local} {
+                    #[inline(always)] pub fn as_raw_${rust_local}(&self) -> *mut c_void { self.ptr }
+                    
+                    pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
+                        Self { ptr }
+                    }
+                }
+                
+                unsafe impl Send for ${rust_local} {}
+ 
+            """),
+
+            "rust_impl": template("""
+                impl ${rust_local} {
+                ${methods}}
+                
+            """),
+
+            "rust_base": template("""
+                impl ${base_rust_full} for ${rust_local} {
+                    #[inline(always)] fn as_raw_${base_rust_local}(&self) -> *mut c_void { self.ptr }
+                }
+
+            """),
+
+            "rust_externs": template("""
+                #[doc(hidden)] pub fn cv_${rust_local}_delete(ptr : *mut c_void);
+            """),
+
+            "cpp": template("""
+                // boxed class: ${typeid}
+                void cv_${rust_local}_delete(void* instance) {
+                    delete reinterpret_cast<${cpptype}*>(instance);
+                }
+            """),
+        },
+        "trait": {
+            "rust": template("""
+                // Generating impl for trait ${rust_full}
+                ${doc_comment}pub trait ${rust_local}${bases} {
+                    #[inline(always)] fn as_raw_${rust_local}(&self) -> *mut c_void;
+                ${methods}}
+                
+            """),
+
+            "rust_static": template("""
+                impl dyn ${rust_local} + '_ {
+                ${methods}}
+                
+            """),
+        }
     }
 
     def __init__(self):
@@ -3461,7 +3525,7 @@ class RustWrapperGenerator(object):
 
         for fi in sorted(self.functions, key=lambda fi: fi.identifier):
             if not fi.is_ignored:
-                self.gen_func(fi)
+                self.moduleSafeRust.write(self.gen_func(fi))
 
         for ci in sorted(list(self.classes.values()), key=lambda ci:ci.fullname):
             self.gen_class(ci)
@@ -3527,7 +3591,7 @@ class RustWrapperGenerator(object):
         if fi.kind == fi.KIND_FUNCTION or fi.attr_accessor_type:
             for item in self.generated_functions:
                 if item.fullname == fi.fullname and str(item.args) == str(fi.args):
-                    return
+                    return ""
             else:
                 self.generated_functions.append(fi)
         logging.info("Generating func %s"%(fi.identifier))
@@ -3535,7 +3599,7 @@ class RustWrapperGenerator(object):
         if reason:
             logging.info("  ignored: " + reason)
             self.skipped_func_list.append("%s\n   %s\n"%(fi,reason))
-            return
+            return ""
         self.ported_func_list.append(fi.__repr__())
         self.generated.add(fi.identifier)
 
@@ -3560,8 +3624,8 @@ class RustWrapperGenerator(object):
             func_rename[fi.identifier] = rust_func_name
 
         # rust safe wrapper
-        self.moduleSafeRust.write(fi.gen_safe_rust())
         self.func_names.add(classname + '::' + fi.r_name())
+        return fi.gen_safe_rust()
 
     def get_value_struct_field(self, name, typ):
         rsname = camel_case_to_snake_case(reserved_rename.get(name, name))
@@ -3623,49 +3687,20 @@ class RustWrapperGenerator(object):
         typ = ci.type_info()
         logging.info("Generating box for %s", ci)
 
-        self.moduleCppCode.write(template("""
-            // boxed class: $typeid
-            void cv_${rust_local}_delete(void* instance) {
-                delete reinterpret_cast<$cpptype*>(instance);
-            }
-            """).substitute(typ.__dict__))
-
-        self.moduleRustExterns.write("#[doc(hidden)] pub fn cv_%s_delete(ptr : *mut c_void);\n" % (typ.rust_local))
-
-        self.moduleSafeRust.write("// boxed class %s\n"%(typ.typeid))
-        self.moduleSafeRust.write(self.reformat_doc(ci.comment))
-        self.moduleSafeRust.write(template("""
-            pub struct ${rust_local} {
-                #[doc(hidden)] pub(crate) ptr: *mut c_void
-            }
-            
-            impl Drop for $rust_full {
-                fn drop(&mut self) {
-                    unsafe { sys::cv_${rust_local}_delete(self.ptr) };
-                }
-            }
-            impl $rust_full {
-                #[inline(always)] pub fn as_raw_${rust_local}(&self) -> *mut c_void { self.ptr }
-                
-                pub unsafe fn from_raw_ptr(ptr: ${rust_extern}) -> Self {
-                    Self { ptr }
-                }
-            }
-            
-            unsafe impl Send for ${rust_local} {}
-            
-            """).substitute(typ.__dict__))
+        self.moduleCppCode.write(RustWrapperGenerator.TEMPLATES["boxed"]["cpp"].substitute(typ.__dict__))
+        self.moduleRustExterns.write(RustWrapperGenerator.TEMPLATES["boxed"]["rust_externs"].substitute(typ.__dict__))
+        self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["boxed"]["rust"].substitute(combine_dicts(typ.__dict__, {
+            "doc_comment": self.reformat_doc(ci.comment)
+        })))
 
         for base in sorted(self.all_bases(name)):
             cibase = self.get_class(base)
             if cibase is not None:
                 cibase = cibase.type_info()
-                self.moduleSafeRust.write(template("""
-                    impl $base_rust_full for ${rust_local} {
-                        #[inline(always)] fn as_raw_$base_rust_local(&self) -> *mut c_void { self.ptr }
-                    }
-                    
-                """).substitute(rust_local=typ.rust_local, base_rust_local=cibase.rust_local, base_rust_full=cibase.rust_full))
+                self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["boxed"]["rust_base"].substitute(combine_dicts(typ.__dict__, {
+                    "base_rust_local": cibase.rust_local,
+                    "base_rust_full": cibase.rust_full,
+                })))
 
     # all your bases...
     def all_bases(self, name):
@@ -3690,8 +3725,8 @@ class RustWrapperGenerator(object):
         if ci.is_ghost:
             logging.info("Ghost class %s, ignoring", ci)
             return
-        t = ci.type_info()
-        if not t:
+        typ = ci.type_info()
+        if not typ:
             logging.info("Ignore class %s (not found)", ci)
             return
         if ci.namespace == "":
@@ -3704,33 +3739,32 @@ class RustWrapperGenerator(object):
             else:
                 bases = ""
             logging.info("Generating impl for trait %s", ci)
-            self.moduleSafeRust.write("// Generating impl for trait %s\n" % (ci))
-            self.moduleSafeRust.write(self.reformat_doc(ci.comment))
-            self.moduleSafeRust.write("pub trait %s%s {\n" % (t.rust_local, bases))
-            self.moduleSafeRust.write("    #[inline(always)] fn as_raw_%s(&self) -> *mut c_void;\n" % (t.rust_local))
+            methods = ""
             for fi in ci.methods:
                 if not fi.is_static:
-                    self.gen_func(fi)
-            self.moduleSafeRust.write("}\n\n")
-            has_static = False
+                    methods += self.gen_func(fi)
+            self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["trait"]["rust"].substitute(combine_dicts(typ.__dict__, {
+                "doc_comment": self.reformat_doc(ci.comment),
+                "bases": bases,
+                "methods": methods,
+            })))
+            methods = ""
             for fi in (fi for fi in ci.methods if fi.is_static):
-                if not has_static:
-                    has_static = True
-                    self.moduleSafeRust.write("impl dyn {} + '_ {{\n\n".format(t.rust_local))
-                self.gen_func(fi)
-            if has_static:
-                self.moduleSafeRust.write("}\n\n")
+                methods += self.gen_func(fi)
+            if methods != "":
+                self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["trait"]["rust_static"].substitute(combine_dicts(typ.__dict__, {
+                    "methods": methods,
+                })))
         else:
-            if isinstance(t, BoxedClassTypeInfo):
+            if isinstance(typ, BoxedClassTypeInfo):
                 self.gen_boxed_class(ci.fullname)
-            has_impl = len(ci.methods) > 0 or (isinstance(t, BoxedClassTypeInfo) and len(ci.props) > 0)
-            if has_impl:
-                logging.info("Generating impl for struct %s", ci)
-                self.moduleSafeRust.write("impl %s {\n\n" % (t.rust_local))
+            methods = ""
             for fi in ci.methods:
-                self.gen_func(fi)
-            if has_impl:
-                self.moduleSafeRust.write("}\n\n")
+                methods += self.gen_func(fi)
+            if methods != "":
+                self.moduleSafeRust.write(RustWrapperGenerator.TEMPLATES["boxed"]["rust_impl"].substitute(combine_dicts(typ.__dict__, {
+                    "methods": methods
+                })))
 
     def preprocess_formula(self, text):
         macros = {
