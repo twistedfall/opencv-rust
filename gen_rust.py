@@ -417,7 +417,7 @@ func_rename = {
     "cv_dnn_blobFromImages__InputArray__OutputArray_double_Size_Scalar_bool_bool_int": "+_to",
     "cv_dnn_clamp_Range_int": "clamp_range",
     "cv_dnn_Net_connect_String_String": "connect_first_second",
-    "cv_dnn_Layer_finalize__InputArray__OutputArray": "+_to",
+    "cv_dnn_Layer_finalize_VectorOfMat": "+_mat",
     "cv_dnn_readNetFromCaffe_VectorOfuchar_VectorOfuchar": "+_buffer",
     "cv_dnn_readNetFromCaffe_const_char_X_size_t_const_char_X_size_t": "+_str",
     "cv_dnn_readNetFromTensorflow_VectorOfuchar_VectorOfuchar": "+_buffer",

@@ -71,7 +71,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "core/private.hpp",
         "allocator_stats.impl.hpp",
         "core/utils/filesystem.hpp", // contains functions with Rust native counterparts
-        "dnn/blob.hpp",
         "ios.h",
         "ippasync.hpp",
         "operations.hpp",
@@ -123,6 +122,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "core/mat.hpp",
         "core/persistence.hpp",
         "aruco/dictionary.hpp",
+        "dnn/blob.hpp",
     ];
 
     modules.sort_by_key(|(mod_name, ..)| module_order.iter().position(|&order_module| order_module == mod_name).unwrap_or_else(|| module_order.len()));
