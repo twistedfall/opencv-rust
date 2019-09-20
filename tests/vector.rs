@@ -2,10 +2,10 @@ use matches::assert_matches;
 
 use opencv::{
     core::{self, Point2d, Scalar},
+    Error,
     prelude::*,
     Result,
-    Error,
-    types::{VectorOfbool, VectorOfchar, VectorOfdouble, VectorOfint, VectorOfMat, VectorOfPoint2d, VectorOfString},
+    types::{VectorOfbool, VectorOfchar, VectorOfdouble, VectorOfint, VectorOfMat, VectorOfPoint2d, VectorOfString, VectorOfuchar},
 };
 
 #[test]
@@ -295,5 +295,38 @@ fn iter() -> Result<()> {
         }
     }
 
+    Ok(())
+}
+
+#[test]
+fn to_slice() -> Result<()> {
+    {
+        let vec = VectorOfuchar::from_iter(vec![1, 2, 3, 4, 5]);
+        assert_eq!(vec.to_slice(), &[1, 2, 3, 4, 5]);
+    }
+    {
+        let vec = VectorOfint::new();
+        assert_eq!(vec.to_slice(), &[]);
+    }
+    {
+        let vec = VectorOfPoint2d::from_iter(vec![Point2d::new(10., 20.), Point2d::new(60.5, 90.3), Point2d::new(-40.333, 89.)]);
+        let slice = vec.to_slice();
+        assert_eq!(20., slice[0].y);
+        assert_eq!(60.5, slice[1].x);
+        assert_eq!(Point2d::new(-40.333, 89.), slice[2]);
+    }
+    Ok(())
+}
+
+#[test]
+fn to_vec() -> Result<()> {
+    {
+        let vec = VectorOfuchar::from_iter(vec![1, 2, 3, 4, 5]);
+        assert_eq!(vec.to_vec(), vec![1, 2, 3, 4, 5]);
+    }
+    {
+        let vec = VectorOfuchar::new();
+        assert_eq!(vec.to_vec(), Vec::new());
+    }
     Ok(())
 }

@@ -1821,7 +1821,7 @@ class EnumInfo(GeneralInfo):
     TEMPLATES = {
         "rust": template("""
             ${doc_comment}#[repr(C)]
-            #[derive(Debug)]
+            #[derive(Copy, Clone, Debug, PartialEq)]
             pub enum ${name} {
             ${consts}}
         
@@ -2752,18 +2752,23 @@ class VectorTypeInfo(TypeInfo):
             }
         """),
 
-        "rust_copy_non_bool": template("""
-                
-            fn to_slice(&self) -> &[${inner_rust_full}] {
+        "rust_methods_copy_non_bool": template("""
+
+            #[inline]
+            fn to_vec(&self) -> Vec<Self::Storage> {
+                self.to_slice().to_vec()
+            }
+        """),
+
+        "rust_inherent_copy_non_bool": template("""
+
+            pub fn to_slice(&self) -> &[${inner_rust_full}] {
                 unsafe {
                     let vec = self.as_raw_${rust_local}();
-                    let data = cpp!(unsafe [vec as "${cpptype}*"] -> *const ${rust_extern} as "${cpp_extern}*" {
+                    let data = cpp!(unsafe [vec as "${cpptype}*"] -> *const ${inner_rust_full} as "${cpp_extern}*" {
                         return reinterpret_cast<${cpp_extern}*>(vec->data());
                     });
-                    let len = cpp!(unsafe [vec as "${cpptype}*"] -> size_t as "size_t" {
-                        return vec->size();
-                    });
-                    ::std::slice::from_raw_parts(::std::mem::transmute(data), len)
+                    ::std::slice::from_raw_parts(data, crate::templ::Vector::len(self))
                 }
             }
         """),
@@ -2872,7 +2877,8 @@ class VectorTypeInfo(TypeInfo):
         else:
             vector_methods += VectorTypeInfo.TEMPLATES["rust_methods_non_boxed"].substitute(template_vars)
             if self.inner.is_copy and self.inner.typeid != "bool":
-                inherent_methods += VectorTypeInfo.TEMPLATES["rust_copy_non_bool"].substitute(template_vars)
+                vector_methods += VectorTypeInfo.TEMPLATES["rust_methods_copy_non_bool"].substitute(template_vars)
+                inherent_methods += VectorTypeInfo.TEMPLATES["rust_inherent_copy_non_bool"].substitute(template_vars)
         if self.inner.typeid in data_type_typeids or isinstance(self.inner, VectorTypeInfo) and self.inner.inner.typeid in data_type_typeids:
             # if "inner" not in self.inner.__dict__ or (self.inner.inner is not None and self.inner.inner.typeid != "bool"):
             impls += VectorTypeInfo.TEMPLATES["input_output_array"].substitute(template_vars)
