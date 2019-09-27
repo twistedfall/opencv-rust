@@ -6,7 +6,7 @@ use std::{
     fs::{self, File, OpenOptions},
     io::{self, Write},
     iter::FromIterator,
-    path::PathBuf,
+    path::{self, PathBuf},
     process::Command,
 };
 
@@ -19,7 +19,7 @@ use which_crate::which;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
-static MODULES: OnceCell<Vec<(String, Vec<String>)>> = OnceCell::new();
+static MODULES: OnceCell<Vec<(String, Vec<PathBuf>)>> = OnceCell::new();
 
 fn get_versioned_hub_dir() -> PathBuf {
     let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var"));
@@ -34,7 +34,7 @@ fn get_versioned_hub_dir() -> PathBuf {
     hub_dir
 }
 
-fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<String>)>> {
+fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<PathBuf>)>> {
     if let Some(modules) = MODULES.get() {
         return Ok(modules);
     }
@@ -63,22 +63,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
     let ignore_header_suffix = [
         ".details.hpp",
         ".inl.hpp",
-        "hal.hpp",
         "_c.h",
-        "core/cv_cpu_dispatch.h", // ?
-        "core/opengl.hpp", // ?
-        "core/cvstd.hpp", // contains functions with Rust native counterparts and c++ specific classes
-        "core/cvstd_wrapper.hpp",
-        "core/eigen.hpp",
-        "core/fast_math.hpp", // contains functions with Rust native counterparts
-        "core/private.hpp",
-        "allocator_stats.impl.hpp",
-        "core/utils/filesystem.hpp", // contains functions with Rust native counterparts
-        "ios.h",
-        "ippasync.hpp",
-        "operations.hpp",
-        "utils/trace.hpp",
-        "viz/widget_accessor.hpp",  // wants to include vtk header
     ];
     let ignore_header_substring = [
         "/detail/",
@@ -87,50 +72,70 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<S
         "core/opencl/",
         "cuda",
     ];
+    let ignore_header_files = [
+        PathBuf::from("allocator_stats.impl.hpp"),
+        PathBuf::from("core/cv_cpu_dispatch.h"), // ?
+        PathBuf::from("core/cvstd.hpp"), // contains functions with Rust native counterparts and c++ specific classes
+        PathBuf::from("core/cvstd_wrapper.hpp"),
+        PathBuf::from("core/eigen.hpp"),
+        PathBuf::from("core/fast_math.hpp"), // contains functions with Rust native counterparts
+        PathBuf::from("core/opengl.hpp"), // ?
+        PathBuf::from("core/private.hpp"),
+        PathBuf::from("core/utils/filesystem.hpp"), // contains functions with Rust native counterparts
+        PathBuf::from("hal.hpp"), // ?
+        PathBuf::from("imgcodecs/ios.h"),
+        PathBuf::from("ippasync.hpp"),
+        PathBuf::from("operations.hpp"),
+        PathBuf::from("utils/trace.hpp"),
+        PathBuf::from("videoio/cap_ios.h"),
+        PathBuf::from("viz/widget_accessor.hpp"), // wants to include vtk header
+    ];
 
-    let mut modules: Vec<(String, Vec<String>)> = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
+    let mut modules: Vec<(String, Vec<PathBuf>)> = glob(&format!("{}/*.hpp", opencv_dir_as_string))?
         .filter_map(|entry| {
             let entry = entry.unwrap();
-            let module = entry.file_stem().unwrap().to_string_lossy();
-            if ignore_modules.contains(module.as_ref()) {
+            let module: String = entry.file_stem().unwrap().to_string_lossy().into_owned();
+            if ignore_modules.contains(module.as_str()) {
                 None
             } else {
-                let mut files = vec![entry.to_string_lossy().into_owned()];
+                let mut files = vec![entry];
                 files.extend(
                     glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
                         .filter_map(|file| {
-                            let f = file.unwrap();
-                            let f = f.to_string_lossy();
-                            if !ignore_header_suffix.iter().any(|&x| f.ends_with(x)) && !ignore_header_substring.iter().any(|&x| f.contains(x)) {
-                                Some(f.into_owned())
+                            let path = file.unwrap();
+                            let path_str = path.to_string_lossy();
+                            if !ignore_header_files.iter().any(|x| path.ends_with(x))
+                                && !ignore_header_suffix.iter().any(|&x| path_str.ends_with(x))
+                                && !ignore_header_substring.iter().any(|&x| path_str.contains(&x.replace('/', &path::MAIN_SEPARATOR.to_string()))) {
+                                Some(path)
                             } else {
                                 None
                             }
                         })
                 );
-                Some((module.into_owned(), files))
+                Some((module, files))
             }
         })
         .collect();
 
     let module_order = ["core"];
-    let header_order = [
-        "core/cvdef.h",
-        "core/version.hpp",
-        "core/base.hpp",
-        "core/cvstd.hpp",
-        "core/traits.hpp",
-        "core/matx.hpp",
-        "core/types.hpp",
-        "core/mat.hpp",
-        "core/persistence.hpp",
-        "aruco/dictionary.hpp",
-        "dnn/blob.hpp",
+    let header_file_order = [
+        PathBuf::from("core/cvdef.h"),
+        PathBuf::from("core/version.hpp"),
+        PathBuf::from("core/base.hpp"),
+        PathBuf::from("core/cvstd.hpp"),
+        PathBuf::from("core/traits.hpp"),
+        PathBuf::from("core/matx.hpp"),
+        PathBuf::from("core/types.hpp"),
+        PathBuf::from("core/mat.hpp"),
+        PathBuf::from("core/persistence.hpp"),
+        PathBuf::from("aruco/dictionary.hpp"),
+        PathBuf::from("dnn/blob.hpp"),
     ];
 
     modules.sort_by_key(|(mod_name, ..)| module_order.iter().position(|&order_module| order_module == mod_name).unwrap_or_else(|| module_order.len()));
     for (.., file_list) in &mut modules {
-        file_list.sort_by_key(|header| header_order.iter().position(|&order_header| header.ends_with(order_header)).unwrap_or_else(|| header_order.len()));
+        file_list.sort_by_key(|header| header_file_order.iter().position(|order_header| header.ends_with(order_header)).unwrap_or_else(|| header_file_order.len()));
     }
 
     MODULES.set(modules).expect("Cannot set MODULES cache");
@@ -305,7 +310,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     } else {
         unreachable!();
     };
-    modules.par_iter().for_each(|(module, files)| {
+    modules.par_iter().for_each(|(module, files): &(String, Vec<PathBuf>)| {
         let python3 = env::var_os("OPENCV_PYTHON3_BIN")
             .map(PathBuf::from)
             .or_else(|| which("python3").ok())
