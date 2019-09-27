@@ -12,6 +12,7 @@ use std::{
 
 use once_cell::sync::OnceCell;
 use rayon::prelude::*;
+use regex::Regex;
 use semver::{Version, VersionReq};
 
 use glob_crate::glob;
@@ -21,6 +22,136 @@ type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
 static CORE_MODULES: OnceCell<HashSet<&'static str>> = OnceCell::new();
 static MODULES: OnceCell<Vec<(String, Vec<PathBuf>)>> = OnceCell::new();
+
+#[derive(Debug)]
+struct Library {
+    pub pkg_name: String,
+    pub libs: Vec<String>,
+    pub link_paths: Vec<PathBuf>,
+    pub framework_paths: Vec<PathBuf>,
+    pub include_paths: Vec<PathBuf>,
+    pub version: String,
+    pub prefix: PathBuf,
+    pub libdir: PathBuf,
+}
+
+impl Library {
+    fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
+        let libs: Vec<_> = link_libs.split(',')
+            .map(|x| {
+                let mut path = PathBuf::from(x.trim());
+                if path.extension().map(|e| e == "lib" || e == "so" || e == "dylib").unwrap_or(false) {
+                    path.set_extension("");
+                }
+                let out = path.file_name().and_then(|f| f.to_str()).expect("Invalid library name").to_owned();
+                if cfg!(target_env = "msvc") {
+                    println!("cargo:rustc-link-lib=static={}", out);
+                } else {
+                    println!("cargo:rustc-link-lib={}", out);
+                }
+                out
+            })
+            .collect();
+
+        let link_paths: Vec<_> = link_paths
+            .split(',')
+            .map(|x| {
+                let out = PathBuf::from(x.trim());
+                println!("cargo:rustc-link-search=native={}", out.to_str().expect("Invalid link path"));
+                out
+            })
+            .collect();
+
+        let libdir = link_paths
+            .first()
+            .map(|x| x.clone())
+            .unwrap_or_else(|| PathBuf::from(""));
+
+        let include_paths: Vec<_> = include_paths
+            .split(',')
+            .map(|x| PathBuf::from(x.trim()))
+            .collect();
+
+        let version = include_paths.iter()
+            .filter_map(get_version_from_headers)
+            .next();
+        let out = Self {
+            pkg_name: pkg_name.to_owned(),
+            libs,
+            link_paths,
+            framework_paths: vec![],
+            include_paths,
+            version: version.unwrap_or("0.0.0".to_owned()),
+            prefix: PathBuf::from(""),
+            libdir
+        };
+        Ok(out)
+    }
+
+    fn probe_pkg_config(pkg_name: &str) -> Result<Self> {
+        let opencv = pkg_config::probe_library(pkg_name)?;
+        Ok(Self {
+            pkg_name: pkg_name.to_owned(),
+            libs: opencv.libs,
+            link_paths: opencv.link_paths,
+            framework_paths: opencv.framework_paths,
+            include_paths: opencv.include_paths,
+            version: opencv.version,
+            prefix: PathBuf::from(pkg_config::get_variable(pkg_name, "prefix")?),
+            libdir: PathBuf::from(pkg_config::get_variable(pkg_name, "libdir")?),
+        })
+    }
+
+
+    pub fn probe(pkg_name: &str) -> Result<Self> {
+        if let (Ok(link_libs), Ok(link_paths), Ok(include_paths)) = (env::var("OPENCV_LINK_LIBS"), env::var("OPENCV_LINK_PATHS"), env::var("OPENCV_INCLUDE_PATHS")) {
+            Self::probe_from_paths(pkg_name, &link_libs, &link_paths, &include_paths)
+        } else {
+            Self::probe_pkg_config(pkg_name)
+        }
+    }
+
+    pub fn update_compiler(&self, cc: &mut cc::Build) -> Result<Vec<OsString>> {
+        for p in &self.include_paths {
+            cc.include(p);
+        }
+        let mut extra_args: Vec<OsString> = Vec::with_capacity(60);
+        let third_party_dirs = if cfg!(feature = "force-3rd-party-libs-discovery") {
+            // add 3rdparty lib dir. pkgconfig forgets it somehow.
+            self.get_3rdparty_lib_dirs()
+        } else {
+            vec![]
+        };
+        let link_paths = self.link_paths.iter().chain(third_party_dirs.iter());
+        if cfg!(target_env = "msvc") {
+            for l in &self.libs {
+                extra_args.push(format!("{}.lib", l).into());
+            }
+            extra_args.push("-link".into());
+            for p in link_paths {
+                extra_args.push(format!("-LIBPATH:{}", p.to_string_lossy()).into());
+            }
+        } else {
+            for p in link_paths {
+                extra_args.push("-L".into());
+                extra_args.push(p.into());
+            }
+            for f in &self.framework_paths {
+                extra_args.push("-F".into());
+                extra_args.push(f.into());
+            }
+            for l in &self.libs {
+                extra_args.push("-l".into());
+                extra_args.push(l.into());
+            }
+        }
+        Ok(extra_args)
+    }
+
+    pub fn get_3rdparty_lib_dirs(&self) -> Vec<PathBuf> {
+        vec![self.prefix.join("share/OpenCV/3rdparty/lib"), self.libdir.join(&format!("{}/3rdparty", self.pkg_name))]
+    }
+}
 
 trait CompilerFlagSetter {
     fn flag_if_supported(&mut self, flag: &str) -> &mut Self;
@@ -45,6 +176,43 @@ fn set_compiler_flags<T: CompilerFlagSetter>(cc: &mut T) {
         .flag_if_supported("-Wno-class-memaccess")
         .flag_if_supported("-Wno-deprecated-declarations")
         .flag_if_supported("-Wno-ignored-qualifiers");
+    if cfg!(target_env = "msvc") {
+        cc.flag_if_supported("-wd4996")
+            .flag_if_supported("-EHsc");
+    }
+}
+
+fn get_version_from_headers(header_dir: &PathBuf) -> Option<String> {
+    let version_hpp = header_dir.join("opencv2/core/version.hpp");
+    if !version_hpp.is_file() {
+        return None;
+    }
+    let version_header = fs::read_to_string(version_hpp).ok()?;
+    let get_version_part = |def| {
+        Regex::new(&format!(r"#define\s+CV_VERSION_{}\s+(\d+)", def)).ok()
+            .map(|r| {
+                r.captures(&version_header)
+                    .and_then(|c| c.get(1))
+                    .map(|m| m.as_str())
+                    .unwrap_or("0")
+            })
+    };
+    let major = get_version_part("MAJOR")?;
+    let minor = get_version_part("MINOR")?;
+    let revision = get_version_part("REVISION")?;
+    Some(format!("{}.{}.{}", major, minor, revision))
+}
+
+fn check_matching_version(version: &str) -> Result<()> {
+    if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(version)?) {
+        Err(format!("OpenCV version: {} must be from 3.2 branch because of the feature: opencv-32", version).into())
+    } else if cfg!(feature = "opencv-34") && !VersionReq::parse("~3.4")?.matches(&Version::parse(version)?) {
+        Err(format!("OpenCV version: {} must be from 3.4 branch because of the feature: opencv-34", version).into())
+    } else if cfg!(feature = "opencv-41") && !VersionReq::parse("~4.1")?.matches(&Version::parse(version)?) {
+        Err(format!("OpenCV version: {} must be from 4.1 branch because of the feature: opencv-41", version).into())
+    } else {
+        Ok(())
+    }
 }
 
 fn get_versioned_hub_dir() -> PathBuf {
@@ -215,78 +383,58 @@ fn copy_indent(mut read: impl BufRead, mut write: impl Write, level: usize, inde
     Ok(())
 }
 
-fn build_pkg_config_args((opencv, pkg_name): (&pkg_config::Library, &str)) -> Vec<String> {
-    let mut out = Vec::with_capacity(60);
-    out.extend(opencv.link_paths.iter().map(|x| format!("-L{}", x.to_string_lossy())));
-    if let Ok(prefix) = pkg_config::get_variable(pkg_name, "prefix") {
-        out.push(format!("-L{}/share/OpenCV/3rdparty/lib", prefix))
-    }
-    if let Ok(libdir) = pkg_config::get_variable(pkg_name, "libdir") {
-        out.push(format!("-L{}/{}/3rdparty", libdir, pkg_name));
-    }
-    out.extend(opencv.framework_paths.iter().map(|x| format!("-F{}", x.to_string_lossy())));
-    out.extend(opencv.include_paths.iter().map(|x| format!("-I{}", x.to_string_lossy())));
-    out.extend(opencv.libs.iter().map(|x| format!("-l{}", x)));
-    out
-}
-
 fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var"));
     let mut out = cc::Build::new();
     set_compiler_flags(&mut out);
     out.cpp(true)
-        .flag("-std=c++11")
         .include(opencv_header_dir)
         .include(&out_dir)
         .include(".");
+    if !cfg!(target_env = "msvc") {
+        out.flag("-std=c++11");
+    }
     out
 }
 
-fn link_wrapper() -> Result<(pkg_config::Library, String)> {
-    let (opencv, pkg_name) = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
-        let pkg_name = env::var("OPENCV_PKGCONFIG_NAME").map(|x| Cow::Owned(x)).unwrap_or_else(|_| Cow::Borrowed("opencv"));
-        let opencv = pkg_config::probe_library(&pkg_name).expect(&format!("package {} is not found by pkg-config", pkg_name));
-        if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 3.2 branch because of the feature: opencv-32", opencv.version);
-        }
-        if cfg!(feature = "opencv-34") && !VersionReq::parse("~3.4")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 3.4 branch because of the feature: opencv-34", opencv.version);
-        }
-        (opencv, pkg_name)
+fn link_wrapper() -> Result<Library> {
+    let pkg_name = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
+        env::var("OPENCV_PKGCONFIG_NAME").map(|x| Cow::Owned(x)).unwrap_or_else(|_| Cow::Borrowed("opencv"))
     } else if cfg!(feature = "opencv-41") {
-        let pkg_name = env::var("OPENCV_PKGCONFIG_NAME").map(|x| Cow::Owned(x)).unwrap_or_else(|_| Cow::Borrowed("opencv4"));
-        let opencv = pkg_config::probe_library(&pkg_name).expect(&format!("package {} is not found by pkg-config", pkg_name));
-        if !VersionReq::parse("~4.1")?.matches(&Version::parse(&opencv.version)?) {
-            panic!("OpenCV version from pkg-config: {} must be from 4.1 branch because of the feature: opencv-41", opencv.version);
-        }
-        (opencv, pkg_name)
+        env::var("OPENCV_PKGCONFIG_NAME").map(|x| Cow::Owned(x)).unwrap_or_else(|_| Cow::Borrowed("opencv4"))
     } else {
         unreachable!("Feature flags should have been checked in main()");
     };
+    let opencv = Library::probe(&pkg_name).expect(&format!("Package {} is not found", pkg_name));
+    check_matching_version(&opencv.version).map_err(|e| format!("{}, (version coming from pkg_config for package: {})", e, opencv.pkg_name))?;
 
-    eprintln!("=== Using OpenCV library version: {} from: {}", opencv.version, pkg_config::get_variable(&pkg_name, "libdir")?);
+    eprintln!("=== Using OpenCV library version: {} from: {}", opencv.version, opencv.libdir.display());
 
     // fixme: I wonder whether that kind of forced discovery is needed at all now
     // It sure messes with cross-building when a lib is present in host, but not in target platform
     // So for now let's hide it behind a non-default feature and check the breakage reports
     if cfg!(feature = "force-3rd-party-libs-discovery") {
+        let mut third_party_dirs = opencv.get_3rdparty_lib_dirs();
         // add 3rdparty lib dir. pkgconfig forgets it somehow.
-        let third_party_dir1 = format!("{}/share/OpenCV/3rdparty/lib", pkg_config::get_variable(&pkg_name, "prefix")?);
-        println!("cargo:rustc-link-search=native={}", third_party_dir1);
-        let third_party_dir2 = format!("{}/{}/3rdparty", pkg_config::get_variable(&pkg_name, "libdir")?, pkg_name);
-        println!("cargo:rustc-link-search=native={}", third_party_dir2);
-        let third_party_dirs: [&str; 2] = [&third_party_dir1, &third_party_dir2];
+        third_party_dirs.iter().for_each(|p| println!("cargo:rustc-link-search=native={}", p.to_string_lossy()));
+        third_party_dirs.extend(vec![
+            PathBuf::from("/usr/lib"),
+            PathBuf::from("/usr/lib64"),
+            PathBuf::from("/usr/local/lib"),
+            PathBuf::from("/usr/local/lib64"),
+            PathBuf::from("/usr/lib/x86_64-linux-gnu/"),
+        ]);
 
         // now, this is a nightmare.
         // opencv will embark these as .a when they are not available, or
         // use the one from the system
         // and some may appear in one or more variant (-llibtiff or -ltiff, depending on the system)
-        fn lookup_lib(third_party_dirs: &[&str], search: &str) {
+        fn lookup_lib(third_party_dirs: &[PathBuf], search: &str) {
             for &prefix in &["lib", "liblib"] {
-                for &path in third_party_dirs.iter().chain(&["/usr/lib", "/usr/lib64", "/usr/local/lib", "/usr/local/lib64", "/usr/lib/x86_64-linux-gnu/"]) {
+                for path in third_party_dirs.iter() {
                     for &ext in &[".a", ".dylib", ".so"] {
                         let name = format!("{}{}", prefix, search);
-                        let filename = PathBuf::from(format!("{}/{}{}", path, name, ext));
+                        let filename = path.join(format!("{}{}", name, ext));
                         if filename.exists() {
                             println!("cargo:rustc-link-lib={}", &name[3..]);
                             return;
@@ -314,14 +462,17 @@ fn link_wrapper() -> Result<(pkg_config::Library, String)> {
         third_party_deps.iter().for_each(|&x| lookup_lib(&third_party_dirs, x));
     }
 
-    Ok((opencv, pkg_name.into_owned()))
+    Ok(opencv)
 }
 
 fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     println!("cargo:rerun-if-changed=hdr_parser.py");
     println!("cargo:rerun-if-changed=gen_rust.py");
-    println!("cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME");
     println!("cargo:rerun-if-env-changed=OPENCV_HEADER_DIR");
+    println!("cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME");
+    println!("cargo:rerun-if-env-changed=OPENCV_LINK_LIBS");
+    println!("cargo:rerun-if-env-changed=OPENCV_LINK_PATHS");
+    println!("cargo:rerun-if-env-changed=OPENCV_INCLUDE_PATHS");
 
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
@@ -456,7 +607,7 @@ fn install_wrapper() -> Result<()> {
     Ok(())
 }
 
-fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_dir: &PathBuf) -> Result<()> {
+fn gen_wrapper(opencv: &Library, opencv_header_dir: &PathBuf) -> Result<()> {
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
     let src_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").ok_or_else(|| "Can't read CARGO_MANIFEST_DIR env var")?).join("src");
@@ -467,25 +618,25 @@ fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_d
 
     eprintln!("=== Placing generated bindings into: {}", hub_dir.display());
 
-    let compiler = build_compiler(opencv_header_dir).get_compiler();
-    let pkg_config_args = build_pkg_config_args((opencv, pkg_name));
+    let mut compiler = build_compiler(opencv_header_dir);
+    let extra_args = opencv.update_compiler(&mut compiler)?;
     let modules = get_modules(&opencv_dir.to_string_lossy())?;
     modules.par_iter().for_each(|(module, ..)| {
         let consts_cpp = out_dir.join(format!("{}.consts.cpp", module));
         if consts_cpp.is_file() {
-            let e = compiler.to_command()
+            let consts_bin = out_dir.join(format!("{}.consts{}", module, if cfg!(target_env = "msvc") { ".exe" } else { "" }));
+            let mut command = compiler.get_compiler().to_command();
+            command
                 .current_dir(&out_dir)
-                .args(&[
-                    format!("{}.consts.cpp", module),
-                    "-o".into(),
-                    format!("{}.consts", module)
-                ])
-                .args(&pkg_config_args)
+                .arg(consts_cpp)
+                .args(&extra_args)
+                .arg(format!("{}{}", if cfg!(target_env = "msvc") { "-OUT:" } else { "-o" }, consts_bin.to_string_lossy()));
+            println!("running: {:?}", &command);
+            let e = command
                 .status()
                 .unwrap();
             assert!(e.success());
-            let output = Command::new(format!("./{}.consts", module))
-                .current_dir(&out_dir)
+            let output = Command::new(consts_bin)
                 .output()
                 .unwrap();
             assert!(output.status.success());
@@ -540,7 +691,11 @@ fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_d
             writeln!(&mut hub, "pub mod {};", module)?;
             let module_filename = format!("{}.rs", module);
             let target_file = module_dir.join(&module_filename);
-            fs::rename(out_dir.join(&module_filename), &target_file)?;
+            let src_file = out_dir.join(&module_filename);
+            if fs::rename(&src_file, &target_file).is_err() {
+                fs::copy(&src_file, &target_file)?;
+                fs::remove_file(src_file)?;
+            }
             let mut f = OpenOptions::new().append(true).open(&target_file)?;
             add_manual(&mut f, module)?;
 
@@ -596,7 +751,11 @@ fn cleanup(opencv_dir: &PathBuf) -> Result<()> {
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
     let modules = get_modules(&opencv_dir.to_string_lossy())?;
     modules.par_iter().for_each(|(module, ..)| {
-        let _ = fs::remove_file(out_dir.join(format!("{}.consts", module)));
+        if cfg!(target_env = "msvc") {
+            let _ = fs::remove_file(out_dir.join(format!("{}.consts.exe", module)));
+        } else {
+            let _ = fs::remove_file(out_dir.join(format!("{}.consts", module)));
+        }
         let _ = fs::remove_file(out_dir.join(format!("{}.consts.cpp", module)));
     });
     for entry in glob(&format!("{}/*.rs", out_dir.to_string_lossy()))? {
@@ -623,12 +782,17 @@ fn main() -> Result<()> {
             panic!("Please select one OpenCV major version using one of the opencv-* features or specify OpenCV header path manually via OPENCV_HEADER_DIR environment var");
         }
     });
+    if let Some(version) = get_version_from_headers(&opencv_header_dir) {
+        check_matching_version(&version).map_err(|e| format!("{}, (version coming from headers at: {})", e, opencv_header_dir.display()))?;
+    } else {
+        panic!("Unable to find header version in: {}", opencv_header_dir.display())
+    }
 
     build_wrapper(&opencv_header_dir)?;
     if !cfg!(feature = "docs-only") {
         let opencv = link_wrapper()?;
         if cfg!(feature = "buildtime-bindgen") {
-            gen_wrapper((&opencv.0, &opencv.1), &opencv_header_dir)?;
+            gen_wrapper(&opencv, &opencv_header_dir)?;
         }
     }
     install_wrapper()?;

@@ -143,7 +143,7 @@ fn capacity() {
         vec.push(true);
         assert_eq!(1, vec.len());
         assert!(!vec.is_empty());
-        assert_eq!(64, vec.capacity());
+        assert!(vec.capacity() > 0);
     }
 }
 

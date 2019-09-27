@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -vex
 
 BUILD_FLAGS="
     -D BUILD_CUDA_STUBS=OFF
@@ -113,6 +113,5 @@ else
         -D OPENCV_EXTRA_MODULES_PATH=~/"build/opencv/opencv_contrib-$OPENCV_VERSION/modules" \
         ~/"build/opencv/opencv-$OPENCV_VERSION"
     sudo make -j"$(nproc)" install
-    tree .
     popd > /dev/null
 fi

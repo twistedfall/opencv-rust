@@ -59,8 +59,18 @@ Generally you should use the latest stable rustc to compile this crate.
 
 ### Platform support
 
-Currently development and testing of the crate is only performed on Linux, please feel
-free to submit support for other platforms.
+Currently the main development and testing of the crate is performed on Linux, but other 
+major platforms are also supported: Mac OS X and Windows.
+
+Support for Windows is a bit tricky at the moment: you will need to set up `OPENCV_LINK_LIBS`,
+`OPENCV_LINK_PATHS`, `OPENCV_INCLUDE_PATHS` and potentially `OPENCV_PYTHON3_BIN` environment
+variables. Then build the crate with `buildtime-bindgen` feature enabled. If you get linking
+errors try also building with `--release` flag.
+
+Mac OS X build currently also requires `buildtime-bindgen` feature enabled.
+
+Also refer to the corresponding [issue](https://github.com/twistedfall/opencv-rust/issues/6)
+and Travis [build script] (https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh).
 
 ### Features
 * `opencv-32` - build against OpenCV 3.2.0, this feature is aimed primarily on stable Debian and
@@ -143,8 +153,7 @@ Path specified by `LD_LIBRARY_PATH` must contain `libopencv_*.so` files.
   During crate build it uses opencv headers supplied inside the crate for binding generation.
   If you want to use your own (system) headers supply `OPENCV_HEADER_DIR` environment variable.
   The directory in that environment variable should contain `opencv2` dir, e.g. `/usr/include` for
-  OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x. Please be sure to match the supplied
-  header version with the crate version features (opencv-34, opencv-41, etc.).
+  OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x.
 
 * `OPENCV_PKGCONFIG_NAME`
   In some cases you might want to override the pkgconfig package name, you can use `OPENCV_PKGCONFIG_NAME`
@@ -155,6 +164,23 @@ Path specified by `LD_LIBRARY_PATH` must contain `libopencv_*.so` files.
   During the build crate uses Python 3 to run header parsing and generation. The binary is usually
   autodiscovered, but you can use `OPENCV_PYTHON3_BIN` to specify the full path to the binary to
   invoke. E.g. "/usr/bin/python3" or "C:\Python37\python.exe"
+
+The following variables must be set when building without `pkg_config` (e.g. on Windows msvc target):
+
+* `OPENCV_LINK_LIBS`
+  Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional.
+  E.g. "opencv_world411".
+  
+* `OPENCV_LINK_PATHS`
+  Comma separated list of paths to search for libraries to link. E.g. "C:\tools\opencv\build\x64\vc14\lib".
+
+* `OPENCV_INCLUDE_PATHS`
+  Comma separated list of paths to search for system include files during compilation. E.g.
+  "C:\tools\opencv\build\include". One of the directories specified therein must contain
+  "opencv2/core/version.hpp" file, it's used to detect the version of the headers.
+
+You can also set them on other platforms, then `pkg_config` usage will be disabled and the set values will
+be used.
 
 ### Compiling OpenCV
 

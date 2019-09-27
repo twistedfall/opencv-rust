@@ -1,18 +1,40 @@
+os:
+  - linux
+  - windows
+  - osx
+
+sudo: true
+dist: bionic
+osx_image: xcode11.2
+
+cache:
+  timeout: 600
+  cargo: false
+  directories:
+    - $HOME/build/opencv
+
 language: rust
 rust:
   - stable
   - beta
-  - nightly
+#  - nightly
 
-cache:
-  timeout: 600
-  cargo: true
-  ccache: true
-  directories:
-    - $HOME/build/opencv
+matrix:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
+  include:
+    - os: linux
+      env: OPENCV_VERSION=3.2.0 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-32
+      rust: stable
 
-sudo: true
-dist: bionic
+env:
+  global:
+    - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
+    - LC_CTYPE=C.UTF-8 # makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
+  matrix:
+    - OPENCV_VERSION=3.4.7 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-34
+    - OPENCV_VERSION=4.1.1 OPENCV_PKGCONFIG=opencv4 CARGO_FEATURES=opencv-41
 
 addons:
   apt:
@@ -50,24 +72,8 @@ addons:
       - qtbase5-dev
       - tree
 
-env:
-  global:
-    - Atlas_ROOT_DIR=/usr/include/ # for cmake to find lapacke.h
-    - LC_CTYPE=C.UTF-8 # makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
-  matrix:
-    - OPENCV_VERSION=3.2.0 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-32
-    - OPENCV_VERSION=3.4.7 OPENCV_PKGCONFIG=opencv CARGO_FEATURES=opencv-34
-    - OPENCV_VERSION=4.1.1 OPENCV_PKGCONFIG=opencv4 CARGO_FEATURES=opencv-41
-
-before_script:
-  - ci/bionic-install-opencv.sh
-  - pkg-config --cflags $OPENCV_PKGCONFIG
-  - pkg-config --libs $OPENCV_PKGCONFIG
+install:
+  - ci/install.sh
 
 script:
-  - cargo test --verbose --no-default-features --features $CARGO_FEATURES
-
-matrix:
-  allow_failures:
-    - rust: nightly
-  fast_finish: true
+  - ci/script.sh
