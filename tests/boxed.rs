@@ -8,7 +8,8 @@ use opencv::{
 #[test]
 fn layout() -> Result<()> {
     let mat = Mat::new_rows_cols_with_default(1, 3, f32::typ(), Scalar::all(10.))?;
-    let mat_ref: &mut Mat = unsafe { transmute(&mut mat.as_raw_Mat()) };
+    let mut mat_ptr = mat.as_raw_Mat();
+    let mat_ref: &mut Mat = unsafe { transmute(&mut mat_ptr) };
     assert_eq!(mat.size()?, mat_ref.size()?);
     assert_eq!(mat.typ()?, mat_ref.typ()?);
     assert_eq!(mat.rows()?, mat_ref.rows()?);

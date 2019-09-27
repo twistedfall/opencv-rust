@@ -33,4 +33,5 @@ pub mod xfeatures2d;
 pub mod xobjdetect;
 pub mod xphoto;
 pub mod types;
-#[doc(hidden)] pub mod sys;
+#[doc(hidden)]
+pub mod sys;

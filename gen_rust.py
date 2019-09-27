@@ -1,7 +1,6 @@
 import logging
 import os.path
 import re
-import shutil
 import sys
 import textwrap
 from collections import OrderedDict
@@ -20,6 +19,7 @@ from urllib.parse import quote
 # fixme remove ndims argument when slice is supplied and read it from slice
 # fixme generate struct and trait for e.g. _InputArray
 # fixme combining enum variants with |
+# fixme add support for more operators
 
 def template(text):
     """
@@ -31,15 +31,14 @@ def template(text):
     return Template(textwrap.dedent(text))
 
 
-def indent(text, level=1, chars_per_level=4, char=" "):
+def indent(text, level=1, indent_string="    "):
     """
     :type text: str
     :type level: int
-    :type chars_per_level: int
-    :type char: str
+    :type indent_string: str
     :rtype: str
     """
-    padding = char * (level * chars_per_level)
+    padding = level * indent_string
     return padding.join(chain(("",), text.splitlines(True)))
 
 
@@ -69,7 +68,7 @@ def classes_equal(first, second):
 def write_exc(filename, action):
     """ Calls action with file handle of filename only when file didn't exist before, thread-safe """
     try:
-        with os.fdopen(os.open(filename, os.O_CREAT | os.O_WRONLY | os.O_EXCL, 0o666), "w") as f:
+        with os.fdopen(os.open(filename, os.O_CREAT | os.O_WRONLY | os.O_EXCL, 0o666), "w", encoding="utf_8") as f:
             action(f)
     except OSError:
         pass
@@ -1020,33 +1019,6 @@ def decl_patch(module, decl):
             decl[3][5][2] = "','"
             del decl[3][6]
     return decl
-
-
-#
-#       TEMPLATES
-#
-
-T_CPP_MODULE = template("""
-//
-// This file is auto-generated, please don't edit!
-//
-
-#include "stdint.h"
-#include "common.h"
-#include <string>
-#include "common_opencv.h"
-using namespace cv;
-#include "types.h"
-#include "return_types.h"
-$includes
-
-extern "C" {
-
-$code
-
-} // extern "C"
-
-""")
 
 
 #
@@ -2510,7 +2482,7 @@ class VectorTypeInfo(TypeInfo):
 
                 #[inline]
                 fn new() -> Self {
-                    Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+                    Self { ptr: cpp!(unsafe [] -> ${rust_extern} as "${cpp_extern}" {
                         return new ${cpptype}();
                     })}
                 }
@@ -3196,6 +3168,43 @@ def parse_type(gen, typeid):
 
 class RustWrapperGenerator(object):
     TEMPLATES = {
+        "cpp": {
+            "module": template("""
+                #include "stdint.h"
+                #include "common.h"
+                #include <string>
+                #include "common_opencv.h"
+                using namespace cv;
+                #include "types.h"
+                #include "return_types.h"
+                ${includes}
+                
+                extern "C" {
+                
+                ${code}
+                
+                }
+            """),
+
+            "consts": template("""
+                #include <cstdio>
+                #include <opencv2/core.hpp> // for hdf in opencv-3.2
+                #include <opencv2/${module}.hpp>
+                #include <opencv2/core/ocl.hpp>
+                using namespace cv;
+                
+                int main(int, char**) {
+                ${code}
+                }
+            """),
+        },
+        "rust": {
+            "externs": template("""
+            extern "C" {
+            ${code}
+            }
+            """),
+        },
         "simple_class": {
             "rust_struct": template("""
                 ${doc_comment}
@@ -3558,35 +3567,34 @@ class RustWrapperGenerator(object):
         for ci in sorted(list(self.classes.values()), key=lambda ci:ci.fullname):
             self.gen_class(ci)
 
-        with open("{}/{}.types.h".format(cpp_dir, module), "w") as f:
+        with open("{}/{}.types.h".format(cpp_dir, module), "w", encoding="utf_8") as f:
             f.write(self.moduleCppTypes.getvalue())
 
-        with open("{}/{}.consts.cpp".format(cpp_dir, module), "w") as f:
-            f.write("""#include <cstdio>\n""")
-            f.write("""#include <opencv2/core.hpp>\n""")  # for hdf in opencv-3.2
-            f.write("""#include <opencv2/%s.hpp>\n"""%(module))
-            f.write("""#include <opencv2/core/ocl.hpp>\n""")
-            f.write("""using namespace cv;\n""")
-            f.write("int main(int, char**) {\n")
-            f.write(self.moduleCppConsts.getvalue())
-            f.write("}\n")
+        with open("{}/{}.consts.cpp".format(cpp_dir, module), "w", encoding="utf_8") as f:
+            f.write(RustWrapperGenerator.TEMPLATES["cpp"]["consts"].substitute({
+                "module": module,
+                "code": self.moduleCppConsts.getvalue(),
+            }))
 
         namespaces = ""
         for namespace in self.namespaces:
             if namespace != "":
                 namespaces += "using namespace %s;\n"%(namespace.replace(".", "::"))
-        with open("{}/{}.cpp".format(cpp_dir, module), "w") as f:
-            f.write(T_CPP_MODULE.substitute(m=module, M=module.upper(), code=self.moduleCppCode.getvalue(), includes="\n".join(includes), namespaces=namespaces))
+        with open("{}/{}.cpp".format(cpp_dir, module), "w", encoding="utf_8") as f:
+            f.write(RustWrapperGenerator.TEMPLATES["cpp"]["module"].substitute({
+                "code": self.moduleCppCode.getvalue(),
+                "includes": "\n".join(includes),
+            }))
 
-        with open("{}/{}.externs.rs".format(rust_dir, module), "w") as f:
-            f.write("extern \"C\" {\n")
-            f.write(self.moduleRustExterns.getvalue())
-            f.write("}\n")
+        with open("{}/{}.externs.rs".format(rust_dir, module), "w", encoding="utf_8") as f:
+            f.write(RustWrapperGenerator.TEMPLATES["rust"]["externs"].substitute({
+                "code": indent(self.moduleRustExterns.getvalue()),
+            }))
 
-        with open("{}/{}.rs".format(rust_dir, module), "w") as f:
+        with open("{}/{}.rs".format(rust_dir, module), "w", encoding="utf_8") as f:
             f.write(self.moduleSafeRust.getvalue())
 
-        with open("{}/{}.txt".format(cpp_dir, module), "w") as f:
+        with open("{}/{}.txt".format(cpp_dir, module), "w", encoding="utf_8") as f:
             f.write(self.make_report())
 
     def make_report(self):

@@ -1,3 +1,4 @@
+#[cfg(not(feature = "opencv-32"))]
 use matches::assert_matches;
 
 #[cfg(not(feature = "opencv-32"))]
