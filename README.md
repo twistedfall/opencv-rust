@@ -118,15 +118,24 @@ export LD_LIBRARY_PATH=/custom/prefix/lib/
 Path specified by `PKG_CONFIG_PATH` must contain `opencv.pc` or `opencv4.pc` (for OpenCV 4.x).
 Path specified by `LD_LIBRARY_PATH` must contain `libopencv_*.so` files.
 
-During crate build it uses opencv headers supplied inside the crate for binding generation.
-If you want to use your own (system) headers supply `OPENCV_HEADER_DIR` environment variable.
-The directory in that environment variable should contain `opencv2` dir, e.g. `/usr/include` for
-OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x. Please be sure to match the supplied
-header version with the crate version features (opencv-34, opencv-41, etc.).
+### Environment variables
 
-In some cases you might want to override the pkgconfig package name, you can use `OPENCV_PKGCONFIG_NAME`
-environment variable for that. If you set it pkgconfig will expect to find the file with that name
-and `.pc` extension in the package directory.
+* `OPENCV_HEADER_DIR`
+  During crate build it uses opencv headers supplied inside the crate for binding generation.
+  If you want to use your own (system) headers supply `OPENCV_HEADER_DIR` environment variable.
+  The directory in that environment variable should contain `opencv2` dir, e.g. `/usr/include` for
+  OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x. Please be sure to match the supplied
+  header version with the crate version features (opencv-34, opencv-41, etc.).
+
+* `OPENCV_PKGCONFIG_NAME`
+  In some cases you might want to override the pkgconfig package name, you can use `OPENCV_PKGCONFIG_NAME`
+  environment variable for that. If you set it pkgconfig will expect to find the file with that name
+  and `.pc` extension in the package directory.
+  
+* `OPENCV_PYTHON3_BIN`
+  During the build crate uses Python 3 to run header parsing and generation. The binary is usually
+  autodiscovered, but you can use `OPENCV_PYTHON3_BIN` to specify the full path to the binary to
+  invoke. E.g. "/usr/bin/python3" or "C:\Python37\python.exe"
 
 ### Compiling OpenCV
 

@@ -15,6 +15,7 @@ use rayon::prelude::*;
 use semver::{Version, VersionReq};
 
 use glob_crate::glob;
+use which_crate::which;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
@@ -305,7 +306,13 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
         unreachable!();
     };
     modules.par_iter().for_each(|(module, files)| {
-        if !Command::new("python3")
+        let python3 = env::var_os("OPENCV_PYTHON3_BIN")
+            .map(PathBuf::from)
+            .or_else(|| which("python3").ok())
+            .or_else(|| which("python").ok())
+            .unwrap_or_else(|| PathBuf::from("python3"));
+        // todo ensure that this is actually python3 (e.g. run --version)
+        if !Command::new(python3)
             .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, module, &version])
             .args(
                 files.iter()
