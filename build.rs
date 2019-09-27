@@ -21,6 +21,31 @@ type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
 static MODULES: OnceCell<Vec<(String, Vec<PathBuf>)>> = OnceCell::new();
 
+trait CompilerFlagSetter {
+    fn flag_if_supported(&mut self, flag: &str) -> &mut Self;
+}
+
+impl CompilerFlagSetter for cc::Build {
+    #[inline(always)]
+    fn flag_if_supported(&mut self, flag: &str) -> &mut Self {
+        self.flag_if_supported(flag)
+    }
+}
+
+impl CompilerFlagSetter for cpp_build::Config {
+    #[inline(always)]
+    fn flag_if_supported(&mut self, flag: &str) -> &mut Self {
+        self.flag_if_supported(flag)
+    }
+}
+
+fn set_compiler_flags<T: CompilerFlagSetter>(cc: &mut T) {
+    cc.flag_if_supported("-fno-strict-aliasing")
+        .flag_if_supported("-Wno-class-memaccess")
+        .flag_if_supported("-Wno-deprecated-declarations")
+        .flag_if_supported("-Wno-ignored-qualifiers");
+}
+
 fn get_versioned_hub_dir() -> PathBuf {
     let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var"));
     hub_dir.push("src");
@@ -160,11 +185,9 @@ fn build_pkg_config_args((opencv, pkg_name): (&pkg_config::Library, &str)) -> Ve
 fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
     let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Can't get OUT_DIR env var"));
     let mut out = cc::Build::new();
+    set_compiler_flags(&mut out);
     out.cpp(true)
         .flag("-std=c++11")
-        .flag_if_supported("-fno-strict-aliasing")
-        .flag_if_supported("-Wno-deprecated-declarations")
-        .flag_if_supported("-Wno-class-memaccess")
         .include(opencv_header_dir)
         .include(&out_dir)
         .include(".");
@@ -532,11 +555,9 @@ fn main() -> Result<()> {
     install_wrapper()?;
     cleanup(&opencv_header_dir)?;
 
-    cpp_build::Config::new()
-        .flag_if_supported("-fno-strict-aliasing")
-        .flag_if_supported("-Wno-class-memaccess")
-        .flag_if_supported("-Wno-ignored-qualifiers")
-        .include(opencv_header_dir)
+    let mut config = cpp_build::Config::new();
+    set_compiler_flags(&mut config);
+    config.include(opencv_header_dir)
         .build("src/lib.rs");
     Ok(())
 }
