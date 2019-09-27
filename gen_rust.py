@@ -615,7 +615,7 @@ const_ignore_list = (
     "CV_IMPL_IPP", "CV_IMPL_MT", "CV_IMPL_OCL", "CV_IMPL_PLAIN", "CV_IPP_CHECK_COND", "IPP_INITIALIZER_AUTO", "IPP_VERSION_X100",
     "CV_TRY", "CV_CATCH_ALL",
     "CV__DEBUG_NS_",
-    "UINT64_1",
+    "UINT64_1", "UINT32_1",
     "CV_STRUCT_INITIALIZER", "CV__ENABLE_C_API_CTORS",
     "VSX_IMPL_MULH_",
     "CV__DNN_EXPERIMENTAL_NS_",
@@ -1666,8 +1666,9 @@ class ClassInfo(GeneralInfo):
 class ConstInfo(GeneralInfo):
     TEMPLATES = {
         "rust_string": template("${doc_comment}pub const ${name}: &'static str = ${value};\n"),
-        "rust_int": template("${doc_comment}pub const ${name}: i32 = ${value};\n"),
         "rust_usize": template("${doc_comment}pub const ${name}: usize = ${value};\n"),
+        "rust_int": template("${doc_comment}pub const ${name}: i32 = ${value};\n"),
+        "rust_float": template("${doc_comment}pub const ${name}: f64 = ${value};\n"),
         "cpp_string": template("""    printf("pub static ${name}: &'static str = \\"%s\\";\\n", ${full_name});\n"""),
         "cpp_double": template("""    printf("pub const ${name}: f64 = %f;\\n", ${full_name});\n"""),
         "cpp_int": template("""    printf("pub const ${name}: i32 = 0x%x; // %i\\n", ${full_name}, ${full_name});\n"""),
@@ -1716,6 +1717,8 @@ class ConstInfo(GeneralInfo):
                 return ConstInfo.TEMPLATES["rust_usize"].substitute(params)
             elif re.match(r"^(-?[0-9]+|0x[0-9A-Fa-f]+)$", params["value"]):  # decimal or hexadecimal
                 return ConstInfo.TEMPLATES["rust_int"].substitute(params)
+            elif re.match(r"^\d+\.\d*$", params["value"]):  # float
+                return ConstInfo.TEMPLATES["rust_float"].substitute(params)
             elif re.match(r"^\(?\s*(\d+\s*<<\s*\d+)\s*\)?$", params["value"]):  # (1 << 24)
                 return ConstInfo.TEMPLATES["rust_int"].substitute(params)
             elif re.match(r"^\s*(\d+\s*\+\s*\d+)\s*$", params["value"]):  # 0 + 3
@@ -3570,11 +3573,13 @@ class RustWrapperGenerator(object):
         with open("{}/{}.types.h".format(cpp_dir, module), "w", encoding="utf_8") as f:
             f.write(self.moduleCppTypes.getvalue())
 
-        with open("{}/{}.consts.cpp".format(cpp_dir, module), "w", encoding="utf_8") as f:
-            f.write(RustWrapperGenerator.TEMPLATES["cpp"]["consts"].substitute({
-                "module": module,
-                "code": self.moduleCppConsts.getvalue(),
-            }))
+        module_cpp_consts = self.moduleCppConsts.getvalue()
+        if module_cpp_consts:
+            with open("{}/{}.consts.cpp".format(cpp_dir, module), "w", encoding="utf_8") as f:
+                f.write(RustWrapperGenerator.TEMPLATES["cpp"]["consts"].substitute({
+                    "module": module,
+                    "code": module_cpp_consts,
+                }))
 
         namespaces = ""
         for namespace in self.namespaces:

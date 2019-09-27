@@ -388,25 +388,28 @@ fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_d
     let pkg_config_args = build_pkg_config_args((opencv, pkg_name));
     let modules = get_modules(&opencv_dir.to_string_lossy())?;
     modules.par_iter().for_each(|(module, ..)| {
-        let e = compiler.to_command()
-            .current_dir(&out_dir)
-            .args(&[
-                format!("{}.consts.cpp", module),
-                "-o".into(),
-                format!("{}.consts", module)
-            ])
-            .args(&pkg_config_args)
-            .status()
-            .unwrap();
-        assert!(e.success());
-        let output = Command::new(format!("./{}.consts", module))
-            .current_dir(&out_dir)
-            .output()
-            .unwrap();
-        assert!(output.status.success());
-        {
-            let mut module_file = OpenOptions::new().append(true).open(out_dir.join(format!("{}.rs", module))).expect("Cannot open module file for append");
-            io::copy(&mut output.stdout.as_slice(), &mut module_file).expect("Cannot write constant data to module file");
+        let consts_cpp = out_dir.join(format!("{}.consts.cpp", module));
+        if consts_cpp.is_file() {
+            let e = compiler.to_command()
+                .current_dir(&out_dir)
+                .args(&[
+                    format!("{}.consts.cpp", module),
+                    "-o".into(),
+                    format!("{}.consts", module)
+                ])
+                .args(&pkg_config_args)
+                .status()
+                .unwrap();
+            assert!(e.success());
+            let output = Command::new(format!("./{}.consts", module))
+                .current_dir(&out_dir)
+                .output()
+                .unwrap();
+            assert!(output.status.success());
+            {
+                let mut module_file = OpenOptions::new().append(true).open(out_dir.join(format!("{}.rs", module))).expect("Cannot open module file for append");
+                io::copy(&mut output.stdout.as_slice(), &mut module_file).expect("Cannot write constant data to module file");
+            }
         }
     });
 
