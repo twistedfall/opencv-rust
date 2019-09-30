@@ -4,7 +4,7 @@ use std::{
     env,
     ffi::OsString,
     fs::{self, File, OpenOptions},
-    io::{self, Write},
+    io::{self, BufRead, BufReader, Write},
     iter::FromIterator,
     path::{self, PathBuf},
     process::Command,
@@ -19,6 +19,7 @@ use which_crate::which;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
+static CORE_MODULES: OnceCell<HashSet<&'static str>> = OnceCell::new();
 static MODULES: OnceCell<Vec<(String, Vec<PathBuf>)>> = OnceCell::new();
 
 trait CompilerFlagSetter {
@@ -57,6 +58,42 @@ fn get_versioned_hub_dir() -> PathBuf {
         hub_dir.push("opencv_41");
     }
     hub_dir
+}
+
+fn is_core_module(module: &str) -> bool {
+    let core_modules = match CORE_MODULES.get() {
+        None => {
+            CORE_MODULES.set(HashSet::from_iter([
+                "calib3d",
+                "core",
+                #[cfg(not(feature = "opencv-32"))]
+                "dnn",
+                "features2d",
+                "flann",
+                #[cfg(feature = "opencv-41")]
+                "gapi",
+                "highgui",
+                "imgcodecs",
+                "imgproc",
+                "ml",
+                "objdetect",
+                "photo",
+                #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
+                "shape",
+                "stitching",
+                #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
+                "superres",
+                "video",
+                "videoio",
+                #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
+                "videostab",
+                "viz",
+            ].iter().map(|x| *x))).expect("Cannot set CORE_MODULES cache");
+            CORE_MODULES.get().unwrap()
+        },
+        Some(modules) => modules,
+    };
+    core_modules.contains(module)
 }
 
 fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<PathBuf>)>> {
@@ -165,6 +202,17 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
 
     MODULES.set(modules).expect("Cannot set MODULES cache");
     Ok(MODULES.get().unwrap())
+}
+
+fn copy_indent(mut read: impl BufRead, mut write: impl Write, level: usize, indent: &str) -> Result<()> {
+    let full_indent = indent.repeat(level);
+    let mut line = Vec::with_capacity(100);
+    while read.read_until(b'\n', &mut line)? != 0 {
+        write.write(full_indent.as_bytes())?;
+        write.write(&line)?;
+        line.clear();
+    }
+    Ok(())
 }
 
 fn build_pkg_config_args((opencv, pkg_name): (&pkg_config::Library, &str)) -> Vec<String> {
@@ -467,46 +515,77 @@ fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_d
 
     {
         let mut hub = File::create(hub_dir.join("hub.rs"))?;
-        for (module, ..) in modules {
-            writeln!(&mut hub, "pub mod {};", module)?;
-            let module_filename = format!("{}.rs", module);
-            let target_file = module_dir.join(&module_filename);
-            fs::rename(out_dir.join(&module_filename), &target_file)?;
-            let mut f = OpenOptions::new().append(true).open(&target_file)?;
-            add_manual(&mut f, &module)?;
-        }
-        writeln!(&mut hub, "pub mod types;")?;
-        writeln!(&mut hub, "#[doc(hidden)]")?;
-        writeln!(&mut hub, "pub mod sys;")?;
-    }
 
-    {
         let mut types = File::create(module_dir.join("types.rs"))?;
         writeln!(&mut types, "use std::os::raw::{{c_char, c_void}};")?;
         writeln!(&mut types, "use libc::size_t;")?;
         writeln!(&mut types, "use crate::{{core, types, sys, Result}};")?;
         writeln!(&mut types, "")?;
-        for entry in glob(&format!("{}/*.type.rs", out_dir_as_str))? {
-            let entry = entry?;
-            io::copy(&mut File::open(&entry)?, &mut types)?;
-        }
-        add_manual(&mut types, "types")?;
-    }
 
-    {
         let mut sys = File::create(module_dir.join("sys.rs"))?;
         writeln!(&mut sys, "use std::os::raw::{{c_char, c_void}};")?;
         writeln!(&mut sys, "use libc::{{ptrdiff_t, size_t}};")?;
         writeln!(&mut sys, "use crate::core;")?;
         writeln!(&mut sys, "")?;
-        for entry in glob(&format!("{}/*.rv.rs", out_dir_as_str))? {
-            let entry = entry?;
-            io::copy(&mut File::open(&entry)?, &mut sys)?;
-        }
         for (module, ..) in modules {
+            let is_contrib_module = !is_core_module(module);
+            let write_if_contrib = |write: &mut File| -> Result<()> {
+                if is_contrib_module {
+                    writeln!(write, r#"#[cfg(feature = "contrib")]"#)?;
+                }
+                Ok(())
+            };
+            // hub
+            write_if_contrib(&mut hub)?;
+            writeln!(&mut hub, "pub mod {};", module)?;
+            let module_filename = format!("{}.rs", module);
+            let target_file = module_dir.join(&module_filename);
+            fs::rename(out_dir.join(&module_filename), &target_file)?;
+            let mut f = OpenOptions::new().append(true).open(&target_file)?;
+            add_manual(&mut f, module)?;
+
+            // types
+            let mut write_header = true;
+            for entry in glob(&format!("{}/{}-*.type.rs", out_dir_as_str, module))? {
+                let entry = entry?;
+                if write_header {
+                    write_if_contrib(&mut types)?;
+                    writeln!(&mut types, "mod {}_types {{", module)?;
+                    writeln!(&mut types, "    use super::*;")?;
+                    writeln!(&mut types, "")?;
+                    write_header = false;
+                }
+                copy_indent(BufReader::new(File::open(&entry)?), &mut types, 1, "    ")?;
+            }
+            if !write_header {
+                writeln!(&mut types, "}}")?;
+                write_if_contrib(&mut types)?;
+                writeln!(&mut types, "pub use {}_types::*;", module)?;
+                writeln!(&mut types, "")?;
+            }
+
+            // sys
             let path = out_dir.join(format!("{}.externs.rs", module));
-            io::copy(&mut File::open(&path)?, &mut sys)?;
+            write_if_contrib(&mut sys)?;
+            writeln!(&mut sys, "mod {}_sys {{", module)?;
+            writeln!(&mut sys, "    use super::*;")?;
+            writeln!(&mut sys, "")?;
+            for entry in glob(&format!("{}/{}-*.rv.rs", out_dir_as_str, module))? {
+                let entry: PathBuf = entry?;
+                copy_indent(BufReader::new(File::open(entry)?), &mut sys, 1, "    ")?;
+            }
+            copy_indent(BufReader::new(File::open(&path)?), &mut sys, 1, "    ")?;
+            writeln!(&mut sys, "}}")?;
+            write_if_contrib(&mut sys)?;
+            writeln!(&mut sys, "pub use {}_sys::*;", module)?;
+            writeln!(&mut sys, "")?;
         }
+        writeln!(&mut hub, "pub mod types;")?;
+        writeln!(&mut hub, "#[doc(hidden)]")?;
+        writeln!(&mut hub, "pub mod sys;")?;
+
+        add_manual(&mut types, "types")?;
+
         add_manual(&mut sys, "sys")?;
     }
 

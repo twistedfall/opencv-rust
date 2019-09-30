@@ -44,6 +44,7 @@ force-3rd-party-libs-discovery = []
 opencv-32 = []
 opencv-34 = []
 opencv-41 = []
+contrib = []
 
 [package.metadata.docs.rs]
 rustc-args = [ "--cfg feature=\"docs-only\"" ]

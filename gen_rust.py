@@ -1944,8 +1944,13 @@ class TypeInfo(object):
             "{}/{}.type.h".format(cpp_dir, template_vars["return_wrapper_type"]),
             lambda f: f.write(self.base_templates["cpp_void" if self.cpp_extern == "void" else "cpp_non_void"].substitute(template_vars))
         )
+        if self.rust_extern in ("*mut c_void", "*const c_void"):
+            # otherwise it leads to duplication of type definitions
+            rust_module = "core"
+        else:
+            rust_module = self.rust_module()
         write_exc(
-            "{}/{}.rv.rs".format(rust_dir, template_vars["return_wrapper_type"]),
+            "{}/{}-{}.rv.rs".format(rust_dir, rust_module, template_vars["return_wrapper_type"]),
             lambda f: f.write(self.base_templates["rust_void" if self.cpp_extern == "void" else "rust_non_void"].substitute(template_vars))
         )
 
@@ -1963,6 +1968,16 @@ class TypeInfo(object):
         if self.ci and self.ci.is_trait and not self.ci.is_abstract:
             out += "Trait"
         return out
+
+    def rust_module(self):
+        if self.inner is not None:
+            if self.inner.inner is not None and self.inner.inner.ci is not None:
+                return self.inner.inner.ci.module
+            elif self.inner.ci is not None:
+                return self.inner.ci.module
+        elif self.ci is not None:
+            return self.ci.module
+        return "core"
 
     def rust_generic_decl(self):
         return ""
@@ -2889,7 +2904,7 @@ class VectorTypeInfo(TypeInfo):
             impls += VectorTypeInfo.TEMPLATES["input_output_array"].substitute(template_vars)
 
         self.inner.gen_return_wrappers(self.gen.cpp_dir, self.gen.rust_dir)
-        write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), lambda f: f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(combine_dicts(template_vars, {
+        write_exc("{}/{}-{}.type.rs".format(self.gen.rust_dir, self.rust_module(), self.rust_safe_id), lambda f: f.write(VectorTypeInfo.TEMPLATES["rust_common"].substitute(combine_dicts(template_vars, {
             "vector_methods": indent(vector_methods),
             "inherent_methods": indent(inherent_methods),
             "impls": impls,
@@ -2972,7 +2987,7 @@ class SmartPtrTypeInfo(TypeInfo):
                             "base_cpp_type": cibase.cpptype,
                         })))
 
-        write_exc("{}/{}.type.rs".format(self.gen.rust_dir, self.rust_safe_id), write_rust)
+        write_exc("{}/{}-{}.type.rs".format(self.gen.rust_dir, self.rust_module(), self.rust_safe_id), write_rust)
 
     def __str__(self):
         return "SmartPtr[%s]" % (self.inner)

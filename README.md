@@ -22,9 +22,11 @@ The following OpenCV versions are supported at the moment:
 * 4.1
 
 You can choose the target OpenCV version with the following Cargo features:
-* opencv-32
-* opencv-34 (default)
-* opencv-41
+* `opencv-32`
+* `opencv-34` (default)
+* `opencv-41`
+
+If you need support for `contrib` modules, also enable `contrib` feature.
 
 ### Quickstart
 
@@ -41,6 +43,11 @@ Select OpenCV version if different from default in Cargo.toml:
 opencv = {version = "0.23", default-features = false, features = ["opencv-41"]}
 ```
 
+And enable usage of `contrib` modules:
+```toml
+opencv = {version = "0.23", default-features = false, features = ["opencv-41", "contrib"]}
+```
+
 Import prelude
 ```rust
 use opencv::prelude::*;
@@ -54,6 +61,18 @@ Generally you should use the latest stable rustc to compile this crate.
 
 Currently development and testing of the crate is only performed on Linux, please feel
 free to submit support for other platforms.
+
+### Features
+* `opencv-32` - build against OpenCV 3.2.0, this feature is aimed primarily on stable Debian and
+  Ubuntu users who can install OpenCV from the repository without having to compile it from the
+  source
+* `opencv-34` (default) - build against OpenCV 3.4.x
+* `opencv-41` - build against OpenCV 4.1.x
+* `contrib` - enable the usage of OpenCV contrib modules for corresponding OpenCV version
+* `buildtime-bindgen` - regenerate all bindings, should only be used during the crate development
+  or when building on Windows
+* `force-3rd-party-libs-discovery` - legacy feature that enables some additional logic for
+  discovery of dependent libs, should not be needed anymore
 
 ### Functionality
 
