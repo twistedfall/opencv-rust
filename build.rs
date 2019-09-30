@@ -47,7 +47,7 @@ fn set_compiler_flags<T: CompilerFlagSetter>(cc: &mut T) {
 }
 
 fn get_versioned_hub_dir() -> PathBuf {
-    let mut hub_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var"));
+    let mut hub_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var"));
     hub_dir.push("src");
     if cfg!(feature = "opencv-32") {
         hub_dir.push("opencv_32");
@@ -183,7 +183,7 @@ fn build_pkg_config_args((opencv, pkg_name): (&pkg_config::Library, &str)) -> Ve
 }
 
 fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
-    let out_dir = PathBuf::from(env::var("OUT_DIR").expect("Can't get OUT_DIR env var"));
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").expect("Can't read OUT_DIR env var"));
     let mut out = cc::Build::new();
     set_compiler_flags(&mut out);
     out.cpp(true)
@@ -275,7 +275,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     println!("cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME");
     println!("cargo:rerun-if-env-changed=OPENCV_HEADER_DIR");
 
-    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
 
     let opencv_dir = opencv_header_dir.join("opencv2");
@@ -388,7 +388,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
 }
 
 fn install_wrapper() -> Result<()> {
-    let src_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
+    let src_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").ok_or_else(|| "Can't read CARGO_MANIFEST_DIR env var")?).join("src");
     let hub_dir = get_versioned_hub_dir();
     let target_hub_dir = src_dir.join("opencv");
     let target_module_dir = target_hub_dir.join("hub");
@@ -409,9 +409,9 @@ fn install_wrapper() -> Result<()> {
 }
 
 fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_dir: &PathBuf) -> Result<()> {
-    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
     let out_dir_as_str = out_dir.to_str().unwrap();
-    let src_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR")?).join("src");
+    let src_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").ok_or_else(|| "Can't read CARGO_MANIFEST_DIR env var")?).join("src");
     let hub_dir = get_versioned_hub_dir();
     let module_dir = hub_dir.join("hub");
     let manual_dir = src_dir.join("manual");
@@ -514,7 +514,7 @@ fn gen_wrapper((opencv, pkg_name): (&pkg_config::Library, &str), opencv_header_d
 }
 
 fn cleanup(opencv_dir: &PathBuf) -> Result<()> {
-    let out_dir = PathBuf::from(env::var("OUT_DIR")?);
+    let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
     let modules = get_modules(&opencv_dir.to_string_lossy())?;
     modules.par_iter().for_each(|(module, ..)| {
         let _ = fs::remove_file(out_dir.join(format!("{}.consts", module)));
@@ -532,8 +532,8 @@ fn main() -> Result<()> {
     if features != 1 {
         panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
     }
-    let opencv_header_dir = env::var("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|_| {
-        let manifest_dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR must be set"));
+    let opencv_header_dir = env::var_os("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|| {
+        let manifest_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var"));
         if cfg!(feature = "opencv-32") {
             manifest_dir.join("headers/3.2")
         } else if cfg!(feature = "opencv-34") {
