@@ -3281,7 +3281,7 @@ class RustWrapperGenerator(object):
             """),
 
             "rust_externs": template("""
-                #[doc(hidden)] pub fn cv_${rust_local}_delete(ptr : *mut c_void);
+                pub fn cv_${rust_local}_delete(ptr : *mut c_void);
             """),
 
             "cpp": template("""

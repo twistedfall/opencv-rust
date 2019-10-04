@@ -61,32 +61,32 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
         "ximgproc",
     ].iter().map(|x| *x));
     let ignore_header_suffix = [
-        ".details.hpp",
         ".inl.hpp",
         "_c.h",
     ];
     let ignore_header_substring = [
-        "/detail/",
+        "stitching/detail/",
         "/superres/",
         "core/hal/intrin",
         "core/opencl/",
         "cuda",
     ];
     let ignore_header_files = [
-        PathBuf::from("allocator_stats.impl.hpp"),
         PathBuf::from("core/cv_cpu_dispatch.h"), // ?
         PathBuf::from("core/cvstd.hpp"), // contains functions with Rust native counterparts and c++ specific classes
         PathBuf::from("core/cvstd_wrapper.hpp"),
         PathBuf::from("core/eigen.hpp"),
         PathBuf::from("core/fast_math.hpp"), // contains functions with Rust native counterparts
+        PathBuf::from("core/ippasync.hpp"),
         PathBuf::from("core/opengl.hpp"), // ?
+        PathBuf::from("core/operations.hpp"),
         PathBuf::from("core/private.hpp"),
+        PathBuf::from("core/utils/allocator_stats.impl.hpp"),
         PathBuf::from("core/utils/filesystem.hpp"), // contains functions with Rust native counterparts
+        PathBuf::from("core/utils/trace.hpp"),
+        PathBuf::from("dnn/layer.details.hpp"),
         PathBuf::from("hal.hpp"), // ?
         PathBuf::from("imgcodecs/ios.h"),
-        PathBuf::from("ippasync.hpp"),
-        PathBuf::from("operations.hpp"),
-        PathBuf::from("utils/trace.hpp"),
         PathBuf::from("videoio/cap_ios.h"),
         PathBuf::from("viz/widget_accessor.hpp"), // wants to include vtk header
     ];
