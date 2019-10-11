@@ -526,9 +526,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     let version = if cfg!(feature = "opencv-32") {
         "3.2.0"
     } else if cfg!(feature = "opencv-34") {
-        "3.4.7"
+        "3.4.8"
     } else if cfg!(feature = "opencv-41") {
-        "4.1.1"
+        "4.1.2"
     } else {
         unreachable!();
     };

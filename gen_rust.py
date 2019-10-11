@@ -835,6 +835,16 @@ forced_class_trait = {
     "cv::_InputOutputArray",
 }
 
+# set of classes that must be forced to be non-simple, elements are declarations (decl[0])
+forced_non_simple = {
+    "class cv.ocl.Device",
+    "class cv.FileNode",
+    "class cv.dnn.Net",  # dnn::Net is incorrectly marked as simple
+    "class cv.dnn.Model",
+    "class cv.dnn.DetectionModel",
+    "class cv.dnn.ClassificationModel",
+}
+
 # dict of pointer arguments that need to be made into slices, the conversion only happens if an arg is a pointer
 # key: module name
 # value: dict
@@ -999,21 +1009,20 @@ def decl_patch(module, decl):
                     for i, _ in enumerate(decl[3]):
                         if decl[3][i][1] == force_slice_decl["arg_name"]:
                             decl[3][i][0] = decl[3][i][0].replace("*", "[]")
+
+    # force class to be non-simple
+    if decl[0] in forced_non_simple and "/Simple" in decl[2]:
+        decl[2].remove("/Simple")
+
     if module == "core":
         # size() and step() of Mat and UMat should be const
         if decl[0] == "cv.Mat.size" or decl[0] == "cv.Mat.step" or decl[0] == "cv.UMat.size" or decl[0] == "cv.UMat.step":
             decl[2].append("/C")
-        # force class to be non-simple
-        elif decl[0] in ("class cv.ocl.Device", "class cv.FileNode") and "/Simple" in decl[2]:
-            decl[2].remove("/Simple")
     elif module == "dnn":
         # set method takes generic, force it to take DictValue wrapper
         if decl[0] == "cv.dnn.Dict.set":
             decl[1] = "DictValue&"
             decl[3][1][0] = "DictValue&"
-        # dnn::Net is incorrectly marked as simple
-        elif decl[0] == "class cv.dnn.Net" and "/Simple" in decl[2]:
-            decl[2].remove("/Simple")
     elif module == "ml":
         # loadFromCSV is not parsed correctly due to default value being a comma
         if decl[0] == "cv.ml.TrainData.loadFromCSV" and len(decl[3]) == 8 and decl[3][6][0] == "'":

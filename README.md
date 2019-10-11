@@ -114,7 +114,7 @@ of the crate's API as you would treat one of C++, use `clone()` when needed.
 
 The following external dependencies are required:
 - python3
-- OpenCV 3.2.0, 3.4.7 or 4.1.1
+- OpenCV 3.2.0, 3.4.8 or 4.1.2
 
 OpenCV is a complicated dependency with a lot of different
 configurations that can break this crate since it relies on fragile

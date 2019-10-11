@@ -5,15 +5,15 @@ set -vex
 if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
     export PATH="C:\\Python37\\:$PATH:C:\\tools\\opencv\\build\\x64\\vc14\\bin"
     export OPENCV_LINK_PATHS="C:\\tools\\opencv\\build\\x64\\vc14\\lib"
-    export OPENCV_LINK_LIBS="opencv_world${OPENCV_VERSION//./}"
+    export OPENCV_LINK_LIBS="opencv_world${WIN_OPENCV_VERSION//./}"
     export OPENCV_INCLUDE_PATHS="C:\\tools\\opencv\\build\\include"
     export OPENCV_HEADER_DIR="C:\\tools\\opencv\\build\\include"
     CARGO_FEATURES="$CARGO_FEATURES,buildtime-bindgen"
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-    if [[ "$OPENCV_VERSION" == 3.4* ]]; then
+    if [[ "$OSX_OPENCV_VERSION" == "@3" ]]; then
         export PKG_CONFIG_PATH="/usr/local/opt/opencv@3/lib/pkgconfig"
         export OPENCV_HEADER_DIR="/usr/local/opt/opencv@3/include"
-    elif [[ "$OPENCV_VERSION" == 4.1* ]]; then
+    elif [[ "$OSX_OPENCV_VERSION" == "" ]]; then
         export OPENCV_HEADER_DIR="/usr/local/include/opencv4"
     fi
     CARGO_FEATURES="$CARGO_FEATURES,buildtime-bindgen"
