@@ -5159,6 +5159,62 @@ impl AsyncArray {
     
 }
 
+// boxed class cv::AsyncPromise
+/// Provides result of asynchronous operations
+pub struct AsyncPromise {
+    #[doc(hidden)] pub(crate) ptr: *mut c_void
+}
+
+impl Drop for AsyncPromise {
+    fn drop(&mut self) {
+        unsafe { sys::cv_AsyncPromise_delete(self.ptr) };
+    }
+}
+
+impl AsyncPromise {
+    #[inline(always)] pub fn as_raw_AsyncPromise(&self) -> *mut c_void { self.ptr }
+
+    pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+        Self { ptr }
+    }
+}
+
+unsafe impl Send for AsyncPromise {}
+
+impl AsyncPromise {
+    pub fn default() -> Result<core::AsyncPromise> {
+        unsafe { sys::cv_AsyncPromise_AsyncPromise() }.into_result().map(|ptr| core::AsyncPromise { ptr })
+    }
+    
+    pub fn copy(o: &core::AsyncPromise) -> Result<core::AsyncPromise> {
+        unsafe { sys::cv_AsyncPromise_AsyncPromise_AsyncPromise(o.as_raw_AsyncPromise()) }.into_result().map(|ptr| core::AsyncPromise { ptr })
+    }
+    
+    pub fn release(&mut self) -> Result<()> {
+        unsafe { sys::cv_AsyncPromise_release(self.as_raw_AsyncPromise()) }.into_result()
+    }
+    
+    /// Returns associated AsyncArray
+    ///
+    /// Note: Can be called once
+    pub fn get_array_result(&mut self) -> Result<core::AsyncArray> {
+        unsafe { sys::cv_AsyncPromise_getArrayResult(self.as_raw_AsyncPromise()) }.into_result().map(|ptr| core::AsyncArray { ptr })
+    }
+    
+    /// Stores asynchronous result.
+    /// ## Parameters
+    /// * value: result
+    pub fn set_value(&mut self, value: &dyn core::ToInputArray) -> Result<()> {
+        input_array_arg!(value);
+        unsafe { sys::cv_AsyncPromise_setValue__InputArray(self.as_raw_AsyncPromise(), value.as_raw__InputArray()) }.into_result()
+    }
+    
+    pub fn _get_impl(&self) -> Result<&mut c_void> {
+        unsafe { sys::cv_AsyncPromise__getImpl_const(self.as_raw_AsyncPromise()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+    }
+    
+}
+
 // Generating impl for trait core::BufferPoolController
 pub trait BufferPoolController {
     #[inline(always)] fn as_raw_BufferPoolController(&self) -> *mut c_void;
@@ -7736,11 +7792,6 @@ impl MatConstIterator {
     /// constructor that sets the iterator to the specified element of the matrix
     pub fn with_start(_m: &core::Mat, _pt: core::Point) -> Result<core::MatConstIterator> {
         unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat_Point(_m.as_raw_Mat(), _pt) }.into_result().map(|ptr| core::MatConstIterator { ptr })
-    }
-    
-    /// constructor that sets the iterator to the specified element of the matrix
-    pub fn with_idx(_m: &core::Mat, _idx: &i32) -> Result<core::MatConstIterator> {
-        unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat_const_int_X(_m.as_raw_Mat(), _idx) }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
     /// copy constructor

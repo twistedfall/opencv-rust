@@ -73,6 +73,8 @@ use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
+pub const MLN10: f64 = 2.30258509299404568402;
+pub const RELATIVE_ERROR_FACTOR: f64 = 100.0;
 
 /// A class to represent a line
 ///
@@ -718,6 +720,3 @@ impl LSDParam {
     
 }
 
-pub const MLN10: f64 = 2.302585;
-pub const RELATIVE_ERROR_FACTOR: f64 = 100.000000;
-pub const UINT32_1: i32 = 0x1; // 1

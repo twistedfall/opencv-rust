@@ -6930,11 +6930,6 @@ impl MatConstIterator {
         unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat_Point(_m.as_raw_Mat(), _pt) }.into_result().map(|ptr| core::MatConstIterator { ptr })
     }
     
-    /// constructor that sets the iterator to the specified element of the matrix
-    pub fn with_idx(_m: &core::Mat, _idx: &i32) -> Result<core::MatConstIterator> {
-        unsafe { sys::cv_MatConstIterator_MatConstIterator_const_Mat_const_int_X(_m.as_raw_Mat(), _idx) }.into_result().map(|ptr| core::MatConstIterator { ptr })
-    }
-    
     /// copy constructor
     pub fn copy(it: &core::MatConstIterator) -> Result<core::MatConstIterator> {
         unsafe { sys::cv_MatConstIterator_MatConstIterator_MatConstIterator(it.as_raw_MatConstIterator()) }.into_result().map(|ptr| core::MatConstIterator { ptr })

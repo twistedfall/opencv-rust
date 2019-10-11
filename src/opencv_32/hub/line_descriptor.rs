@@ -79,6 +79,8 @@ pub const DrawLinesMatchesFlags_DEFAULT: i32 = 0;
 pub const DrawLinesMatchesFlags_DRAW_OVER_OUTIMG: i32 = 1;
 /// Single keylines will not be drawn.
 pub const DrawLinesMatchesFlags_NOT_DRAW_SINGLE_LINES: i32 = 2;
+pub const MLN10: f64 = 2.30258509299404568402;
+pub const RELATIVE_ERROR_FACTOR: f64 = 100.0;
 
 /// Draws keylines.
 ///
@@ -712,6 +714,3 @@ impl LSDDetector {
     
 }
 
-pub const MLN10: f64 = 2.302585;
-pub const RELATIVE_ERROR_FACTOR: f64 = 100.000000;
-pub const UINT32_1: i32 = 0x1; // 1
