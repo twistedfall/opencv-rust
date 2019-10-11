@@ -7,8 +7,10 @@
 //! # XML/YAML Persistence
 //! # Clustering
 //! # Utility and system functions and macros
+//! # Logging facilities
 //! # SSE utilities
 //! # NEON utilities
+//! # VSX utilities
 //! # Softfloat support
 //! # Utility functions for OpenCV samples
 //! # OpenGL interoperability
@@ -96,8 +98,8 @@ pub const COVAR_SCRAMBLED: i32 = 0;
 pub const COVAR_USE_AVG: i32 = 2;
 pub const CPU_AVX: i32 = 10;
 pub const CPU_AVX2: i32 = 11;
-/// Cascade Lake with AVX-512F/CD/BW/DQ/VL/IFMA/VBMI/VNNI
-pub const CPU_AVX512_CEL: i32 = 261;
+/// Cascade Lake with AVX-512F/CD/BW/DQ/VL/VNNI
+pub const CPU_AVX512_CLX: i32 = 261;
 /// Cannon Lake with AVX-512F/CD/BW/DQ/VL/IFMA/VBMI
 pub const CPU_AVX512_CNL: i32 = 260;
 /// Common instructions AVX-512F/CD for all CPUs that support AVX-512
@@ -130,6 +132,7 @@ pub const CPU_FMA3: i32 = 12;
 pub const CPU_FP16: i32 = 9;
 pub const CPU_MAX_FEATURE: i32 = 512;
 pub const CPU_MMX: i32 = 1;
+pub const CPU_MSA: i32 = 150;
 pub const CPU_NEON: i32 = 100;
 pub const CPU_POPCNT: i32 = 8;
 pub const CPU_SSE: i32 = 2;
@@ -151,7 +154,7 @@ pub const CV_CN_MAX: i32 = 512;
 pub const CV_CN_SHIFT: i32 = 3;
 pub const CV_CPU_AVX: i32 = 10;
 pub const CV_CPU_AVX2: i32 = 11;
-pub const CV_CPU_AVX512_CEL: i32 = 261;
+pub const CV_CPU_AVX512_CLX: i32 = 261;
 pub const CV_CPU_AVX512_CNL: i32 = 260;
 pub const CV_CPU_AVX512_COMMON: i32 = 257;
 pub const CV_CPU_AVX512_ICL: i32 = 262;
@@ -178,6 +181,7 @@ pub const CV_CPU_AVX_512VPOPCNTDQ: i32 = 25;
 pub const CV_CPU_FMA3: i32 = 12;
 pub const CV_CPU_FP16: i32 = 9;
 pub const CV_CPU_MMX: i32 = 1;
+pub const CV_CPU_MSA: i32 = 150;
 pub const CV_CPU_NEON: i32 = 100;
 pub const CV_CPU_NONE: i32 = 0;
 pub const CV_CPU_POPCNT: i32 = 8;
@@ -240,10 +244,10 @@ pub const CV_MAJOR_VERSION: i32 = 3;
 pub const CV_MAT_CONT_FLAG_SHIFT: i32 = 14;
 pub const CV_MINOR_VERSION: i32 = 4;
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
-pub const CV_SUBMINOR_VERSION: i32 = 7;
+pub const CV_SUBMINOR_VERSION: i32 = 8;
 pub const CV_VERSION_MAJOR: i32 = 3;
 pub const CV_VERSION_MINOR: i32 = 4;
-pub const CV_VERSION_REVISION: i32 = 7;
+pub const CV_VERSION_REVISION: i32 = 8;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const DCT_INVERSE: i32 = 1;
 pub const DCT_ROWS: i32 = 4;
@@ -3272,7 +3276,7 @@ pub fn norm_l2_sqr(a: &f32, b: &f32, n: i32) -> Result<f32> {
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C_%7BL_2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.7/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.8/NormTypes_OneArray_1-2-INF.png)
 ///
 /// When the mask parameter is specified and it is not empty, the norm is
 ///
@@ -3339,7 +3343,7 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C_%7BL_2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C_%7BL_%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L_%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.7/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/3.4.8/NormTypes_OneArray_1-2-INF.png)
 ///
 /// When the mask parameter is specified and it is not empty, the norm is
 ///
@@ -8818,7 +8822,7 @@ impl Range {
 ///
 /// The sample below demonstrates how to use RotatedRect:
 /// @snippet snippets/core_various.cpp RotatedRect_demo
-/// ![image](https://docs.opencv.org/3.4.7/rotatedrect.png)
+/// ![image](https://docs.opencv.org/3.4.8/rotatedrect.png)
 ///
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
@@ -9621,7 +9625,7 @@ impl UMat {
         { sys::cv_UMat_UMat_Size_int_UMatUsageFlags(size, _type, usage_flags) }.into_result().map(|ptr| core::UMat { ptr })
     }
     
-    /// constucts 2D matrix and fills it with the specified value _s.
+    /// constructs 2D matrix and fills it with the specified value _s.
     ///
     /// ## C++ default parameters
     /// * usage_flags: USAGE_DEFAULT
@@ -10114,7 +10118,7 @@ impl UMatData {
 ///
 /// In general, type support is limited to cv::Mat types. Other types are forbidden.
 /// But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
-/// This data is not intented to be interpreted as an image data, or processed somehow like regular cv::Mat.
+/// This data is not intended to be interpreted as an image data, or processed somehow like regular cv::Mat.
 /// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
 /// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
 pub trait _InputArrayTrait {
@@ -10393,7 +10397,7 @@ pub trait _InputArrayTrait {
 ///
 /// In general, type support is limited to cv::Mat types. Other types are forbidden.
 /// But in some cases we need to support passing of custom non-general Mat types, like arrays of cv::KeyPoint, cv::DMatch, etc.
-/// This data is not intented to be interpreted as an image data, or processed somehow like regular cv::Mat.
+/// This data is not intended to be interpreted as an image data, or processed somehow like regular cv::Mat.
 /// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
 /// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
 pub struct _InputArray {
@@ -12004,7 +12008,7 @@ pub const CV_MAT_CONT_FLAG: i32 = 0x4000; // 16384
 pub const CV_MAT_DEPTH_MASK: i32 = 0x7; // 7
 pub const CV_MAT_TYPE_MASK: i32 = 0xfff; // 4095
 pub const CV_SUBMAT_FLAG: i32 = 0x8000; // 32768
-pub static CV_VERSION: &'static str = "3.4.7";
+pub static CV_VERSION: &'static str = "3.4.8";
 pub const Device_TYPE_DGPU: i32 = 0x10004; // 65540
 pub const Device_TYPE_IGPU: i32 = 0x20004; // 131076
 pub const FileStorage_WRITE_BASE64: i32 = 0x41; // 65

@@ -129,7 +129,7 @@ pub struct libmv_ReconstructionOptions {
 /// * R: Output 3x3 rotation matrix.
 /// * t: Output 3x1 translation vector.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) A4.1.1 pag.579
 pub fn k_rt_from_projection(p: &dyn core::ToInputArray, k: &mut dyn core::ToOutputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(p);
     output_array_arg!(k);
@@ -187,7 +187,7 @@ pub fn depth(r: &dyn core::ToInputArray, t: &dyn core::ToInputArray, x: &dyn cor
 /// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 /// * E: Output 3x3 essential matrix.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 pub fn essential_from_fundamental(f: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, e: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(f);
     input_array_arg!(k1);
@@ -204,7 +204,7 @@ pub fn essential_from_fundamental(f: &dyn core::ToInputArray, k1: &dyn core::ToI
 /// * t2: Input 3x1 second camera translation vector.
 /// * E: Output 3x3 essential matrix.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12)
 pub fn essential_from_rt(r1: &dyn core::ToInputArray, t1: &dyn core::ToInputArray, r2: &dyn core::ToInputArray, t2: &dyn core::ToInputArray, e: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(r1);
     input_array_arg!(t1);
@@ -281,7 +281,7 @@ pub fn fundamental_from_correspondences8_point_robust(x1: &dyn core::ToInputArra
 /// * K2: Input 3x3 second camera matrix. The parameters are similar to K1.
 /// * F: Output 3x3 fundamental matrix.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or http://ai.stanford.edu/~birch/projective/node20.html
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 257 (formula 9.12) or http://ai.stanford.edu/~birch/projective/node20.html
 pub fn fundamental_from_essential(e: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(e);
     input_array_arg!(k1);
@@ -342,7 +342,7 @@ pub fn import_reconstruction(file: &str, rs: &mut dyn core::ToOutputArray, ts: &
 /// Computes the transformation matrix such that each coordinate direction will be scaled equally,
 /// bringing the centroid to the origin with an average centroid ![inline formula](https://latex.codecogs.com/png.latex?%281%2C1%2C1%29%5ET).
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 pub fn isotropic_preconditioner_from_points(points: &dyn core::ToInputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(points);
     output_array_arg!(t);
@@ -375,7 +375,7 @@ pub fn mean_and_variance_along_rows(a: &dyn core::ToInputArray, mean: &mut dyn c
 /// Decides the right solution by checking that the triangulation of a match
 /// x1--x2 lies in front of the cameras. Return index of the right solution or -1 if no solution.
 ///
-/// Reference: See [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
+/// Reference: See [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (9.6.3 Geometrical interpretation of the 4 solutions).
 pub fn motion_from_essential_choose_solution(rs: &dyn core::ToInputArray, ts: &dyn core::ToInputArray, k1: &dyn core::ToInputArray, x1: &dyn core::ToInputArray, k2: &dyn core::ToInputArray, x2: &dyn core::ToInputArray) -> Result<i32> {
     input_array_arg!(rs);
     input_array_arg!(ts);
@@ -392,7 +392,7 @@ pub fn motion_from_essential_choose_solution(rs: &dyn core::ToInputArray, ts: &d
 /// * Rs: Output vector of 3x3 rotation matrices.
 /// * ts: Output vector of 3x1 translation vectors.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 9.6 pag 259 (Result 9.19)
 pub fn motion_from_essential(e: &dyn core::ToInputArray, rs: &mut dyn core::ToOutputArray, ts: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(e);
     output_array_arg!(rs);
@@ -421,7 +421,7 @@ pub fn normalize_fundamental(f: &dyn core::ToInputArray, f_normalized: &mut dyn 
 /// Internally calls @ref preconditionerFromPoints in order to get the scaling matrix before applying @ref applyTransformationToPoints.
 /// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.107.
 pub fn normalize_isotropic_points(points: &dyn core::ToInputArray, normalized_points: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(points);
     output_array_arg!(normalized_points);
@@ -438,7 +438,7 @@ pub fn normalize_isotropic_points(points: &dyn core::ToInputArray, normalized_po
 /// Internally calls @ref preconditionerFromPoints in order to get the scaling matrix before applying @ref applyTransformationToPoints.
 /// This operation is an essential step before applying the DLT algorithm in order to consider the result as optimal.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 pub fn normalize_points(points: &dyn core::ToInputArray, normalized_points: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(points);
     output_array_arg!(normalized_points);
@@ -453,7 +453,7 @@ pub fn normalize_points(points: &dyn core::ToInputArray, normalized_points: &mut
 /// * F: Output 3x3 fundamental matrix.
 ///
 /// Uses the normalized 8-point fundamental matrix solver.
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 11.2 pag.281 (x1 = x, x2 = x')
 pub fn normalized_eight_point_solver(x1: &dyn core::ToInputArray, x2: &dyn core::ToInputArray, f: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(x1);
     input_array_arg!(x2);
@@ -469,7 +469,7 @@ pub fn normalized_eight_point_solver(x1: &dyn core::ToInputArray, x2: &dyn core:
 /// Computes the transformation matrix such that the two principal moments of the set of points are equal to unity,
 /// forming an approximately symmetric circular cloud of points of radius 1 about the origin.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 4.4.4 pag.109
 pub fn preconditioner_from_points(points: &dyn core::ToInputArray, t: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(points);
     output_array_arg!(t);
@@ -632,7 +632,7 @@ pub fn relative_camera_motion(r1: &dyn core::ToInputArray, t1: &dyn core::ToInpu
 /// ## Parameters
 /// * x: Input 3x1 vector.
 ///
-/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
+/// Reference: [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00), p581, equation (A4.5).
 pub fn skew(x: &dyn core::ToInputArray) -> Result<core::Mat> {
     input_array_arg!(x);
     unsafe { sys::cv_sfm_skew__InputArray(x.as_raw__InputArray()) }.into_result().map(|ptr| core::Mat { ptr })
@@ -645,7 +645,7 @@ pub fn skew(x: &dyn core::ToInputArray) -> Result<core::Mat> {
 /// * points3d: Output array with computed 3d points. Is 3 x N.
 ///
 /// Triangulates the 3d position of 2d correspondences between several images.
-/// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
+/// Reference: Internally it uses DLT method [HartleyZ00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_HartleyZ00) 12.2 pag.312
 pub fn triangulate_points(points2d: &dyn core::ToInputArray, projection_matrices: &dyn core::ToInputArray, points3d: &mut dyn core::ToOutputArray) -> Result<()> {
     input_array_arg!(points2d);
     input_array_arg!(projection_matrices);

@@ -40,7 +40,7 @@ use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 /// ```
 ///
 ///
-/// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/3.4.7/hdfview_demo.gif)
+/// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/3.4.8/hdfview_demo.gif)
 ///
 /// - Text dump (3x3 Hilbert matrix) of hdf5 dataset using **h5dump** tool:
 /// ```ignore{.txt}
@@ -92,7 +92,7 @@ pub trait HDF5 {
     ///
     /// The corresponding result visualized using the HDFView tool is
     ///
-    /// ![Visualization of groups using the HDFView tool](https://docs.opencv.org/3.4.7/create_groups.png)
+    /// ![Visualization of groups using the HDFView tool](https://docs.opencv.org/3.4.8/create_groups.png)
     ///
     ///
     /// Note: When a dataset is created with dscreate() or kpcreate(), it can be created within a group by specifying the

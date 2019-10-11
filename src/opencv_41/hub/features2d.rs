@@ -27,6 +27,9 @@
 //! opencv_source_code/samples/cpp/bagofwords_classification.cpp
 //! *   (Python) An example using the features2D framework to perform object categorization can be
 //! found at opencv_source_code/samples/python/find_obj.py
+//!
+//! # Hardware Acceleration Layer
+//! # Interface
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
@@ -171,7 +174,7 @@ pub struct SimpleBlobDetector_Params {
 /// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 /// The 32-bit binary tree tables were generated automatically from original code using perl script.
 /// The perl script and examples of tree generation are placed in features2d/doc folder.
-/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 ///
 /// ## Overloaded parameters
 ///
@@ -198,7 +201,7 @@ pub fn AGAST(image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyP
 /// For non-Intel platforms, there is a tree optimised variant of AGAST with same numerical results.
 /// The 32-bit binary tree tables were generated automatically from original code using perl script.
 /// The perl script and examples of tree generation are placed in features2d/doc folder.
-/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_mair2010_agast) .
+/// Detects corners using the AGAST algorithm by [mair2010_agast](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_mair2010_agast) .
 pub fn AGAST_with_type(image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, threshold: i32, nonmax_suppression: bool, _type: crate::features2d::AgastFeatureDetector_DetectorType) -> Result<()> {
     input_array_arg!(image);
     unsafe { sys::cv_AGAST__InputArray_VectorOfKeyPoint_int_bool_AgastFeatureDetector_DetectorType(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, _type) }.into_result()
@@ -217,7 +220,7 @@ pub fn AGAST_with_type(image: &dyn core::ToInputArray, keypoints: &mut types::Ve
 /// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 /// FastFeatureDetector::TYPE_5_8
 ///
-/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Rosten06) .
+/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Rosten06) .
 ///
 ///
 /// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -246,7 +249,7 @@ pub fn FAST(image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPo
 /// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 /// FastFeatureDetector::TYPE_5_8
 ///
-/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Rosten06) .
+/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Rosten06) .
 ///
 ///
 /// Note: In Python API, types are given as cv.FAST_FEATURE_DETECTOR_TYPE_5_8,
@@ -377,7 +380,7 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
 }
 
 // Generating impl for trait crate::features2d::AKAZE
-/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_ANB13).
+/// Class implementing the AKAZE keypoint detector and descriptor extractor, described in [ANB13](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_ANB13).
 ///
 /// @details AKAZE descriptors can only be used with KAZE or AKAZE keypoints. This class is thread-safe.
 ///
@@ -821,7 +824,7 @@ pub trait BOWTrainer {
 }
 
 // boxed class cv::BRISK
-/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_LCS11) .
+/// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_LCS11) .
 pub struct BRISK {
     #[doc(hidden)] pub(crate) ptr: *mut c_void
 }
@@ -1553,7 +1556,7 @@ impl dyn GFTTDetector + '_ {
 }
 
 // Generating impl for trait crate::features2d::KAZE
-/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_ABD12) .
+/// Class implementing the KAZE keypoint detector and descriptor extractor, described in [ABD12](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_ABD12) .
 ///
 ///
 /// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
@@ -1707,10 +1710,10 @@ impl KeyPointsFilter {
 ///
 /// - there are two different implementation of %MSER: one for grey image, one for color image
 ///
-/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
+/// - the grey image algorithm is taken from: [nister2008linear](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_nister2008linear) ;  the paper claims to be faster
 /// than union-find method; it actually get 1.5~2m/s on my centrino L7200 1.2GHz laptop.
 ///
-/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
+/// - the color image algorithm is taken from: [forssen2007maximally](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_forssen2007maximally) ; it should be much slower
 /// than grey image method ( 3~4 times ); the chi_table.h file is taken directly from paper's source
 /// code which is distributed under GPL.
 ///
@@ -1799,7 +1802,7 @@ impl dyn MSER + '_ {
 // Generating impl for trait crate::features2d::ORB
 /// Class implementing the ORB (*oriented BRIEF*) keypoint detector and descriptor extractor
 ///
-/// described in [RRKB11](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
+/// described in [RRKB11](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_RRKB11) . The algorithm uses FAST in pyramids to detect stable keypoints, selects
 /// the strongest features using FAST or Harris response, finds their orientation using first-order
 /// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 /// k-tuples) are rotated according to the measured orientation).

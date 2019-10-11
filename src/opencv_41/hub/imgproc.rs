@@ -126,7 +126,7 @@
 //! In the figure below, the Delaunay's triangulation is marked with black lines and the Voronoi
 //! diagram with red lines.
 //!
-//! ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.1.1/delaunay_voronoi.png)
+//! ![Delaunay triangulation (black) and Voronoi (red)](https://docs.opencv.org/4.1.2/delaunay_voronoi.png)
 //!
 //! The subdivisions can be used for the 3D piece-wise transformation of a plane, morphing, fast
 //! location of points on the plane, building special graphs (such as NNG,RNG), and so forth.
@@ -168,45 +168,47 @@ pub const CHAIN_APPROX_NONE: i32 = 1;
 pub const CHAIN_APPROX_SIMPLE: i32 = 2;
 pub const CHAIN_APPROX_TC89_KCOS: i32 = 4;
 pub const CHAIN_APPROX_TC89_L1: i32 = 3;
-/// ![autumn](https://docs.opencv.org/4.1.1/colormaps/colorscale_autumn.jpg)
+/// ![autumn](https://docs.opencv.org/4.1.2/colormaps/colorscale_autumn.jpg)
 pub const COLORMAP_AUTUMN: i32 = 0;
-/// ![bone](https://docs.opencv.org/4.1.1/colormaps/colorscale_bone.jpg)
+/// ![bone](https://docs.opencv.org/4.1.2/colormaps/colorscale_bone.jpg)
 pub const COLORMAP_BONE: i32 = 1;
-/// ![cividis](https://docs.opencv.org/4.1.1/colormaps/colorscale_cividis.jpg)
+/// ![cividis](https://docs.opencv.org/4.1.2/colormaps/colorscale_cividis.jpg)
 pub const COLORMAP_CIVIDIS: i32 = 17;
-/// ![cool](https://docs.opencv.org/4.1.1/colormaps/colorscale_cool.jpg)
+/// ![cool](https://docs.opencv.org/4.1.2/colormaps/colorscale_cool.jpg)
 pub const COLORMAP_COOL: i32 = 8;
-/// ![hot](https://docs.opencv.org/4.1.1/colormaps/colorscale_hot.jpg)
+/// ![hot](https://docs.opencv.org/4.1.2/colormaps/colorscale_hot.jpg)
 pub const COLORMAP_HOT: i32 = 11;
-/// ![HSV](https://docs.opencv.org/4.1.1/colormaps/colorscale_hsv.jpg)
+/// ![HSV](https://docs.opencv.org/4.1.2/colormaps/colorscale_hsv.jpg)
 pub const COLORMAP_HSV: i32 = 9;
-/// ![inferno](https://docs.opencv.org/4.1.1/colormaps/colorscale_inferno.jpg)
+/// ![inferno](https://docs.opencv.org/4.1.2/colormaps/colorscale_inferno.jpg)
 pub const COLORMAP_INFERNO: i32 = 14;
-/// ![jet](https://docs.opencv.org/4.1.1/colormaps/colorscale_jet.jpg)
+/// ![jet](https://docs.opencv.org/4.1.2/colormaps/colorscale_jet.jpg)
 pub const COLORMAP_JET: i32 = 2;
-/// ![magma](https://docs.opencv.org/4.1.1/colormaps/colorscale_magma.jpg)
+/// ![magma](https://docs.opencv.org/4.1.2/colormaps/colorscale_magma.jpg)
 pub const COLORMAP_MAGMA: i32 = 13;
-/// ![ocean](https://docs.opencv.org/4.1.1/colormaps/colorscale_ocean.jpg)
+/// ![ocean](https://docs.opencv.org/4.1.2/colormaps/colorscale_ocean.jpg)
 pub const COLORMAP_OCEAN: i32 = 5;
-/// ![parula](https://docs.opencv.org/4.1.1/colormaps/colorscale_parula.jpg)
+/// ![parula](https://docs.opencv.org/4.1.2/colormaps/colorscale_parula.jpg)
 pub const COLORMAP_PARULA: i32 = 12;
-/// ![pink](https://docs.opencv.org/4.1.1/colormaps/colorscale_pink.jpg)
+/// ![pink](https://docs.opencv.org/4.1.2/colormaps/colorscale_pink.jpg)
 pub const COLORMAP_PINK: i32 = 10;
-/// ![plasma](https://docs.opencv.org/4.1.1/colormaps/colorscale_plasma.jpg)
+/// ![plasma](https://docs.opencv.org/4.1.2/colormaps/colorscale_plasma.jpg)
 pub const COLORMAP_PLASMA: i32 = 15;
-/// ![rainbow](https://docs.opencv.org/4.1.1/colormaps/colorscale_rainbow.jpg)
+/// ![rainbow](https://docs.opencv.org/4.1.2/colormaps/colorscale_rainbow.jpg)
 pub const COLORMAP_RAINBOW: i32 = 4;
-/// ![spring](https://docs.opencv.org/4.1.1/colormaps/colorscale_spring.jpg)
+/// ![spring](https://docs.opencv.org/4.1.2/colormaps/colorscale_spring.jpg)
 pub const COLORMAP_SPRING: i32 = 7;
-/// ![summer](https://docs.opencv.org/4.1.1/colormaps/colorscale_summer.jpg)
+/// ![summer](https://docs.opencv.org/4.1.2/colormaps/colorscale_summer.jpg)
 pub const COLORMAP_SUMMER: i32 = 6;
-/// ![twilight](https://docs.opencv.org/4.1.1/colormaps/colorscale_twilight.jpg)
+/// ![turbo](https://docs.opencv.org/4.1.2/colormaps/colorscale_turbo.jpg)
+pub const COLORMAP_TURBO: i32 = 20;
+/// ![twilight](https://docs.opencv.org/4.1.2/colormaps/colorscale_twilight.jpg)
 pub const COLORMAP_TWILIGHT: i32 = 18;
-/// ![twilight shifted](https://docs.opencv.org/4.1.1/colormaps/colorscale_twilight_shifted.jpg)
+/// ![twilight shifted](https://docs.opencv.org/4.1.2/colormaps/colorscale_twilight_shifted.jpg)
 pub const COLORMAP_TWILIGHT_SHIFTED: i32 = 19;
-/// ![viridis](https://docs.opencv.org/4.1.1/colormaps/colorscale_viridis.jpg)
+/// ![viridis](https://docs.opencv.org/4.1.2/colormaps/colorscale_viridis.jpg)
 pub const COLORMAP_VIRIDIS: i32 = 16;
-/// ![winter](https://docs.opencv.org/4.1.1/colormaps/colorscale_winter.jpg)
+/// ![winter](https://docs.opencv.org/4.1.2/colormaps/colorscale_winter.jpg)
 pub const COLORMAP_WINTER: i32 = 3;
 /// convert between RGB/BGR and BGR555 (16-bit images)
 pub const COLOR_BGR2BGR555: i32 = 22;
@@ -518,7 +520,7 @@ pub const HISTCMP_CORREL: i32 = 0;
 pub const HISTCMP_HELLINGER: i32 = 3;
 pub const HISTCMP_INTERSECT: i32 = 2;
 pub const HISTCMP_KL_DIV: i32 = 5;
-/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Yuen90)
+/// basically *21HT*, described in [Yuen90](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Yuen90)
 pub const HOUGH_GRADIENT: i32 = 3;
 pub const HOUGH_MULTI_SCALE: i32 = 2;
 pub const HOUGH_PROBABILISTIC: i32 = 1;
@@ -679,7 +681,7 @@ pub fn canny_derivative(dx: &dyn core::ToInputArray, dy: &dyn core::ToInputArray
     unsafe { sys::cv_Canny__InputArray__InputArray__OutputArray_double_double_bool(dx.as_raw__InputArray(), dy.as_raw__InputArray(), edges.as_raw__OutputArray(), threshold1, threshold2, l2gradient) }.into_result()
 }
 
-/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Canny86) .
+/// Finds edges in an image using the Canny algorithm [Canny86](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Canny86) .
 ///
 /// The function finds edges in the input image and marks them in the output map edges using the
 /// Canny algorithm. The smallest value between threshold1 and threshold2 is used for edge linking. The
@@ -709,8 +711,8 @@ pub fn canny(image: &dyn core::ToInputArray, edges: &mut dyn core::ToOutputArray
 /// Computes the "minimal work" distance between two weighted point configurations.
 ///
 /// The function computes the earth mover distance and/or a lower boundary of the distance between the
-/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_RubnerSept98),
-/// [Rubner2000](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
+/// two weighted point configurations. One of the applications described in [RubnerSept98](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_RubnerSept98),
+/// [Rubner2000](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Rubner2000) is multi-dimensional histogram comparison for image retrieval. EMD is a transportation
 /// problem that is solved using some modification of a simplex algorithm, thus the complexity is
 /// exponential in the worst case, though, on average it is much faster. In the case of a real metric
 /// the lower boundary can be calculated even faster (using linear-time algorithm) and it can be used
@@ -835,17 +837,17 @@ pub fn hough_circles(image: &dyn core::ToInputArray, circles: &mut dyn core::ToO
 /// Finds line segments in a binary image using the probabilistic Hough transform.
 ///
 /// The function implements the probabilistic Hough transform algorithm for line detection, described
-/// in [Matas00](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Matas00)
+/// in [Matas00](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Matas00)
 ///
 /// See the line detection example below:
 /// @include snippets/imgproc_HoughLinesP.cpp
 /// This is a sample picture the function parameters have been tuned for:
 ///
-/// ![image](https://docs.opencv.org/4.1.1/building.jpg)
+/// ![image](https://docs.opencv.org/4.1.2/building.jpg)
 ///
 /// And this is the output of the above program in case of the probabilistic Hough transform:
 ///
-/// ![image](https://docs.opencv.org/4.1.1/houghp.png)
+/// ![image](https://docs.opencv.org/4.1.2/houghp.png)
 ///
 /// ## Parameters
 /// * image: 8-bit, single-channel binary source image. The image may be modified by the function.
@@ -1851,7 +1853,7 @@ pub fn convert_maps(map1: &dyn core::ToInputArray, map2: &dyn core::ToInputArray
 
 /// Finds the convex hull of a point set.
 ///
-/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Sklansky82)
+/// The function cv::convexHull finds the convex hull of a 2D point set using the Sklansky's algorithm [Sklansky82](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Sklansky82)
 /// that has *O(N logN)* complexity in the current implementation.
 ///
 /// ## Parameters
@@ -1891,7 +1893,7 @@ pub fn convex_hull(points: &dyn core::ToInputArray, hull: &mut dyn core::ToOutpu
 ///
 /// The figure below displays convexity defects of a hand contour:
 ///
-/// ![image](https://docs.opencv.org/4.1.1/defects.png)
+/// ![image](https://docs.opencv.org/4.1.2/defects.png)
 ///
 /// ## Parameters
 /// * contour: Input contour.
@@ -2003,7 +2005,7 @@ pub fn corner_min_eigen_val(src: &dyn core::ToInputArray, dst: &mut dyn core::To
 /// The function iterates to find the sub-pixel accurate location of corners or radial saddle points, as
 /// shown on the figure below.
 ///
-/// ![image](https://docs.opencv.org/4.1.1/cornersubpix.png)
+/// ![image](https://docs.opencv.org/4.1.2/cornersubpix.png)
 ///
 /// Sub-pixel accurate corner locator is based on the observation that every vector from the center ![inline formula](https://latex.codecogs.com/png.latex?q)
 /// to a point ![inline formula](https://latex.codecogs.com/png.latex?p) located within a neighborhood of ![inline formula](https://latex.codecogs.com/png.latex?q) is orthogonal to the image gradient at ![inline formula](https://latex.codecogs.com/png.latex?p)
@@ -2278,9 +2280,9 @@ pub fn dilate(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, k
 /// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 ///
 /// When maskSize == #DIST_MASK_PRECISE and distanceType == #DIST_L2 , the function runs the
-/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 ///
-/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 /// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 /// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 /// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -2340,9 +2342,9 @@ pub fn distance_transform_labels(src: &dyn core::ToInputArray, dst: &mut dyn cor
 /// image pixel to the nearest zero pixel. For zero image pixels, the distance will obviously be zero.
 ///
 /// When maskSize == #DIST_MASK_PRECISE and distanceType == #DIST_L2 , the function runs the
-/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
+/// algorithm described in [Felzenszwalb04](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Felzenszwalb04) . This algorithm is parallelized with the TBB library.
 ///
-/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
+/// In other cases, the algorithm [Borgefors86](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Borgefors86) is used. This means that for a pixel the function
 /// finds the shortest path to the nearest zero pixel consisting of basic shifts: horizontal, vertical,
 /// diagonal, or knight's move (the latest is available for a ![inline formula](https://latex.codecogs.com/png.latex?5%5Ctimes%205) mask). The overall
 /// distance is calculated as a sum of these basic distances. Since the distance function should be
@@ -2531,7 +2533,7 @@ pub fn ellipse_2_poly(center: core::Point, axes: core::Size, angle: i32, arc_sta
 /// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 /// the meaning of the parameters to draw the blue arc.
 ///
-/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.1.1/ellipse.svg)
+/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.1.2/ellipse.svg)
 ///
 /// ## Parameters
 /// * img: Image.
@@ -2566,7 +2568,7 @@ pub fn ellipse(img: &mut dyn core::ToInputOutputArray, center: core::Point, axes
 /// `endAngle=360`. If `startAngle` is greater than `endAngle`, they are swapped. The figure below explains
 /// the meaning of the parameters to draw the blue arc.
 ///
-/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.1.1/ellipse.svg)
+/// ![Parameters of Elliptic Arc](https://docs.opencv.org/4.1.2/ellipse.svg)
 ///
 /// ## Parameters
 /// * img: Image.
@@ -2748,7 +2750,7 @@ pub fn filter_2d(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray
 
 /// Finds contours in a binary image.
 ///
-/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 /// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 /// OpenCV sample directory.
 ///
@@ -2784,7 +2786,7 @@ pub fn find_contours_with_hierarchy(image: &dyn core::ToInputArray, contours: &m
 
 /// Finds contours in a binary image.
 ///
-/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
+/// The function retrieves contours from the binary image using the algorithm [Suzuki85](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Suzuki85) . The contours
 /// are a useful tool for shape analysis and object detection and recognition. See squares.cpp in the
 /// OpenCV sample directory.
 ///
@@ -2823,7 +2825,7 @@ pub fn find_contours(image: &dyn core::ToInputArray, contours: &mut dyn core::To
 ///
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
-/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
+/// The Approximate Mean Square (AMS) proposed by [Taubin1991](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Taubin1991) is used.
 ///
 /// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 /// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA_%7B%5Ctext%7Bxx%7D%7D%2CA_%7B%5Ctext%7Bxy%7D%7D%2CA_%7B%5Ctext%7Byy%7D%7D%2CA_x%2CA_y%2CA_0%5Cright%5C%7D%20).
@@ -2863,7 +2865,7 @@ pub fn fit_ellipse_ams(points: &dyn core::ToInputArray) -> Result<core::RotatedR
 ///
 /// The function calculates the ellipse that fits a set of 2D points.
 /// It returns the rotated rectangle in which the ellipse is inscribed.
-/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
+/// The Direct least square (Direct) method by [Fitzgibbon1999](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Fitzgibbon1999) is used.
 ///
 /// For an ellipse, this basis set is ![inline formula](https://latex.codecogs.com/png.latex?%20%5Cchi%3D%20%5Cleft%28x%5E2%2C%20x%20y%2C%20y%5E2%2C%20x%2C%20y%2C%201%5Cright%29%20),
 /// which is a set of six free coefficients ![inline formula](https://latex.codecogs.com/png.latex?%20A%5ET%3D%5Cleft%5C%7BA_%7B%5Ctext%7Bxx%7D%7D%2CA_%7B%5Ctext%7Bxy%7D%7D%2CA_%7B%5Ctext%7Byy%7D%7D%2CA_x%2CA_y%2CA_0%5Cright%5C%7D%20).
@@ -2909,7 +2911,7 @@ pub fn fit_ellipse_direct(points: &dyn core::ToInputArray) -> Result<core::Rotat
 /// Fits an ellipse around a set of 2D points.
 ///
 /// The function calculates the ellipse that fits (in a least-squares sense) a set of 2D points best of
-/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
+/// all. It returns the rotated rectangle in which the ellipse is inscribed. The first algorithm described by [Fitzgibbon95](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Fitzgibbon95)
 /// is used. Developer should keep in mind that it is possible that the returned
 /// ellipse/rotatedRect data contains negative indices, due to the data points being close to the
 /// border of the containing Mat element.
@@ -3434,7 +3436,7 @@ pub fn get_text_size(text: &str, font_face: i32, font_scale: f64, thickness: i32
 /// Determines strong corners on an image.
 ///
 /// The function finds the most prominent corners in the image or in the specified image region, as
-/// described in [Shi94](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Shi94)
+/// described in [Shi94](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Shi94)
 ///
 /// *   Function calculates the corner quality measure at every source image pixel using the
 /// #cornerMinEigenVal or #cornerHarris .
@@ -3551,7 +3553,7 @@ pub fn grab_cut(img: &dyn core::ToInputArray, mask: &mut dyn core::ToInputOutput
 /// rectangle Rect(3,3,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 /// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 ///
-/// ![integral calculation example](https://docs.opencv.org/4.1.1/integral.png)
+/// ![integral calculation example](https://docs.opencv.org/4.1.2/integral.png)
 ///
 /// ## Parameters
 /// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -3597,7 +3599,7 @@ pub fn integral_titled_sq(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOu
 /// rectangle Rect(3,3,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 /// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 ///
-/// ![integral calculation example](https://docs.opencv.org/4.1.1/integral.png)
+/// ![integral calculation example](https://docs.opencv.org/4.1.2/integral.png)
 ///
 /// ## Parameters
 /// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -3644,7 +3646,7 @@ pub fn integral_sq_depth(src: &dyn core::ToInputArray, sum: &mut dyn core::ToOut
 /// rectangle Rect(3,3,3,2) and of a tilted rectangle Rect(5,1,2,3) . The selected pixels in the
 /// original image are shown, as well as the relative pixels in the integral images sum and tilted .
 ///
-/// ![integral calculation example](https://docs.opencv.org/4.1.1/integral.png)
+/// ![integral calculation example](https://docs.opencv.org/4.1.2/integral.png)
 ///
 /// ## Parameters
 /// * src: input image as ![inline formula](https://latex.codecogs.com/png.latex?W%20%5Ctimes%20H), 8-bit or floating-point (32f or 64f).
@@ -3911,10 +3913,10 @@ pub fn min_enclosing_circle(points: &dyn core::ToInputArray, center: &mut core::
 /// area. The output for a given 2D point set is shown in the image below. 2D points are depicted in
 /// *red* and the enclosing triangle in *yellow*.
 ///
-/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.1.1/minenclosingtriangle.png)
+/// ![Sample output of the minimum enclosing triangle function](https://docs.opencv.org/4.1.2/minenclosingtriangle.png)
 ///
-/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
-/// [KleeLaskowski85](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
+/// The implementation of the algorithm is based on O'Rourke's [ORourke86](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_ORourke86) and Klee and Laskowski's
+/// [KleeLaskowski85](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_KleeLaskowski85) papers. O'Rourke provides a ![inline formula](https://latex.codecogs.com/png.latex?%5Ctheta%28n%29) algorithm for finding the minimal
 /// enclosing triangle of a 2D convex polygon with n vertices. Since the #minEnclosingTriangle function
 /// takes a 2D point set as input an additional preprocessing step of computing the convex hull of the
 /// 2D point set is required. The complexity of the #convexHull function is ![inline formula](https://latex.codecogs.com/png.latex?O%28n%20log%28n%29%29) which is higher
@@ -4031,7 +4033,7 @@ pub fn phase_correlate(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputAr
 ///
 /// See below a sample output of the function where each image pixel is tested against the contour:
 ///
-/// ![sample output](https://docs.opencv.org/4.1.1/pointpolygon.png)
+/// ![sample output](https://docs.opencv.org/4.1.2/pointpolygon.png)
 ///
 /// ## Parameters
 /// * contour: Input contour.
@@ -4384,7 +4386,7 @@ pub fn resize(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, d
 /// Below are some examples of intersection configurations. The hatched pattern indicates the
 /// intersecting region and the red vertices are returned by the function.
 ///
-/// ![intersection examples](https://docs.opencv.org/4.1.1/intersection.png)
+/// ![intersection examples](https://docs.opencv.org/4.1.2/intersection.png)
 ///
 /// ## Parameters
 /// * rect1: First rectangle
@@ -4596,7 +4598,7 @@ pub fn warp_perspective(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 /// \brief Remaps an image to polar or semilog-polar coordinates space
 ///
 /// @anchor polar_remaps_reference_image
-/// ![Polar remaps reference](https://docs.opencv.org/4.1.1/polar_remap_doc.png)
+/// ![Polar remaps reference](https://docs.opencv.org/4.1.2/polar_remap_doc.png)
 ///
 /// Transform the source image using the following transformation:
 /// ![block formula](https://latex.codecogs.com/png.latex?%0Adst%28%5Crho%20%2C%20%5Cphi%20%29%20%3D%20src%28x%2Cy%29%0A)
@@ -4667,7 +4669,7 @@ pub fn warp_polar(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArra
 /// Performs a marker-based image segmentation using the watershed algorithm.
 ///
 /// The function implements one of the variants of watershed, non-parametric marker-based segmentation
-/// algorithm, described in [Meyer92](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Meyer92) .
+/// algorithm, described in [Meyer92](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Meyer92) .
 ///
 /// Before passing the image to the function, you have to roughly outline the desired regions in the
 /// image markers with positive (\>0) indices. So, every region is represented as one or more connected
@@ -4855,7 +4857,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 // Generating impl for trait crate::imgproc::GeneralizedHoughBallard
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 ///
-/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Ballard1981) .
+/// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Ballard1981) .
 pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
     #[inline(always)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
     /// R-Table levels.
@@ -4881,7 +4883,7 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
 // Generating impl for trait crate::imgproc::GeneralizedHoughGuil
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 ///
-/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Guil1999) .
+/// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Guil1999) .
 pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
     #[inline(always)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
     /// Angle difference in degrees between two points in feature.
@@ -5073,7 +5075,7 @@ impl LineIterator {
 // Generating impl for trait crate::imgproc::LineSegmentDetector
 /// Line segment detector class
 ///
-/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Rafael12) .
+/// following the algorithm described at [Rafael12](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Rafael12) .
 ///
 ///
 /// Note: Implementation has been removed due original code license conflict
@@ -5083,7 +5085,7 @@ pub trait LineSegmentDetector: core::AlgorithmTrait {
     ///
     /// This is the output of the default parameters of the algorithm on the above shown image.
     ///
-    /// ![image](https://docs.opencv.org/4.1.1/building_lsd.png)
+    /// ![image](https://docs.opencv.org/4.1.2/building_lsd.png)
     ///
     /// ## Parameters
     /// * _image: A grayscale (CV_8UC1) input image. If only a roi needs to be selected, use:
@@ -5333,7 +5335,7 @@ impl Subdiv2D {
     /// *   PREV_AROUND_LEFT previous around the left facet (reversed eOnext )
     /// *   PREV_AROUND_RIGHT previous around the right facet (reversed eDnext )
     ///
-    /// ![sample output](https://docs.opencv.org/4.1.1/quadedge.png)
+    /// ![sample output](https://docs.opencv.org/4.1.2/quadedge.png)
     ///
     /// ## Returns
     /// edge ID related to the input edge.

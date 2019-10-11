@@ -3,8 +3,8 @@
 //! Haar Feature-based Cascade Classifier for Object Detection
 //! ----------------------------------------------------------
 //!
-//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Viola01) and
-//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Lienhart02) .
+//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Viola01) and
+//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Lienhart02) .
 //!
 //! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 //! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -30,7 +30,7 @@
 //! classifiers, and are calculated as described below. The current algorithm uses the following
 //! Haar-like features:
 //!
-//! ![image](https://docs.opencv.org/4.1.1/haarfeatures.png)
+//! ![image](https://docs.opencv.org/4.1.2/haarfeatures.png)
 //!
 //! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 //! the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -619,7 +619,7 @@ unsafe impl Send for DetectionROI {}
 // boxed class cv::HOGDescriptor
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 ///
-/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Dalal2005) .
+/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Dalal2005) .
 ///
 /// useful links:
 ///

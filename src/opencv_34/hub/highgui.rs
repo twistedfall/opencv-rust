@@ -13,7 +13,7 @@
 //! # OpenGL support
 //! # Qt New Functions
 //!
-//! ![image](https://docs.opencv.org/3.4.7/qtgui.png)
+//! ![image](https://docs.opencv.org/3.4.8/qtgui.png)
 //!
 //! This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 //! a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.
@@ -203,6 +203,8 @@ pub const WND_PROP_AUTOSIZE: i32 = 1;
 pub const WND_PROP_FULLSCREEN: i32 = 0;
 /// opengl support.
 pub const WND_PROP_OPENGL: i32 = 3;
+/// property to toggle normal window being topmost or not
+pub const WND_PROP_TOPMOST: i32 = 5;
 /// checks whether the window exists and is visible
 pub const WND_PROP_VISIBLE: i32 = 4;
 
@@ -242,6 +244,8 @@ pub enum WindowPropertyFlags {
     WND_PROP_OPENGL = WND_PROP_OPENGL as isize,
     /// checks whether the window exists and is visible
     WND_PROP_VISIBLE = WND_PROP_VISIBLE as isize,
+    /// property to toggle normal window being topmost or not
+    WND_PROP_TOPMOST = WND_PROP_TOPMOST as isize,
 }
 
 /// Callback function for mouse events. see cv::setMouseCallback

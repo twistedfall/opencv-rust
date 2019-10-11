@@ -27,6 +27,7 @@ mod core_sys {
     pub type cv_return_value_Stitcher_Status = cv_return_value<crate::stitching::Stitcher_Status>;
     pub type cv_return_value_UMatUsageFlags = cv_return_value<core::UMatUsageFlags>;
     pub type cv_return_value_Vec2dWrapper = cv_return_value<core::Vec2d>;
+    pub type cv_return_value_Vec3bWrapper = cv_return_value<core::Vec3b>;
     pub type cv_return_value_Vec3dWrapper = cv_return_value<core::Vec3d>;
     pub type cv_return_value_Vec4fWrapper = cv_return_value<core::Vec4f>;
     pub type cv_return_value_Vec6fWrapper = cv_return_value<core::Vec6f>;
@@ -1610,6 +1611,10 @@ mod dnn_sys {
         pub fn cv_dnn_BlankLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_ChannelsPReLULayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_ChannelsPReLULayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_ClassificationModel_delete(ptr : *mut c_void);
+        pub fn cv_dnn_ClassificationModel_ClassificationModel_String_String(model: *const c_char, config: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_dnn_ClassificationModel_ClassificationModel_Net(network: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_dnn_ClassificationModel_classify__InputArray_int_float(instance: *mut c_void, frame: *mut c_void, class_id: *mut i32, conf: *mut f32) -> cv_return_value_void;
         pub fn cv_ConcatLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_ConcatLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_ConstLayer_delete(ptr : *mut c_void);
@@ -1622,6 +1627,10 @@ mod dnn_sys {
         pub fn cv_dnn_CropLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_DeconvolutionLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_DeconvolutionLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_DetectionModel_delete(ptr : *mut c_void);
+        pub fn cv_dnn_DetectionModel_DetectionModel_String_String(model: *const c_char, config: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_dnn_DetectionModel_DetectionModel_Net(network: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_dnn_DetectionModel_detect__InputArray_VectorOfint_VectorOffloat_VectorOfRect_float_float(instance: *mut c_void, frame: *mut c_void, class_ids: *mut c_void, confidences: *mut c_void, boxes: *mut c_void, conf_threshold: f32, nms_threshold: f32) -> cv_return_value_void;
         pub fn cv_DetectionOutputLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_DetectionOutputLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_dnn_Dict_has_const_String(instance: *const c_void, key: *const c_char) -> cv_return_value_bool;
@@ -1708,9 +1717,18 @@ mod dnn_sys {
         pub fn cv_dnn_MVNLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_MaxUnpoolLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_MaxUnpoolLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
-        pub fn cv_Net_delete(ptr : *mut c_void);
-        pub fn cv_dnn_Net_Net() -> cv_return_value_void_X;
-        pub fn cv_dnn_Net_readFromModelOptimizer_String_String(xml: *const c_char, bin: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_setInputSize_Size(instance: *mut c_void, size: core::Size) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_setInputSize_int_int(instance: *mut c_void, width: i32, height: i32) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_setInputMean_Scalar(instance: *mut c_void, mean: core::Scalar) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_setInputScale_double(instance: *mut c_void, scale: f64) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_setInputCrop_bool(instance: *mut c_void, crop: bool) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_setInputSwapRB_bool(instance: *mut c_void, swap_rb: bool) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_setInputParams_double_Size_Scalar_bool_bool(instance: *mut c_void, scale: f64, size: core::Size, mean: core::Scalar, swap_rb: bool, crop: bool) -> cv_return_value_void;
+        pub fn cv_dnn_Model_predict__InputArray__OutputArray(instance: *mut c_void, frame: *mut c_void, outs: *mut c_void) -> cv_return_value_void;
+        pub fn cv_Model_delete(ptr : *mut c_void);
+        pub fn cv_dnn_Model_Model() -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_Model_String_String(model: *const c_char, config: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_dnn_Model_Model_Net(network: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_dnn_Net_empty_const(instance: *const c_void) -> cv_return_value_bool;
         pub fn cv_dnn_Net_dump(instance: *mut c_void) -> cv_return_value_char_X;
         pub fn cv_dnn_Net_dumpToFile_String(instance: *mut c_void, path: *const c_char) -> cv_return_value_void;
@@ -1746,6 +1764,9 @@ mod dnn_sys {
         pub fn cv_dnn_Net_getMemoryConsumption_const_VectorOfVectorOfint_VectorOfint_VectorOfsize_t_VectorOfsize_t(instance: *const c_void, net_input_shapes: *mut c_void, layer_ids: *mut c_void, weights: *mut c_void, blobs: *mut c_void) -> cv_return_value_void;
         pub fn cv_dnn_Net_enableFusion_bool(instance: *mut c_void, fusion: bool) -> cv_return_value_void;
         pub fn cv_dnn_Net_getPerfProfile_VectorOfdouble(instance: *mut c_void, timings: *mut c_void) -> cv_return_value_int64;
+        pub fn cv_Net_delete(ptr : *mut c_void);
+        pub fn cv_dnn_Net_Net() -> cv_return_value_void_X;
+        pub fn cv_dnn_Net_readFromModelOptimizer_String_String(xml: *const c_char, bin: *const c_char) -> cv_return_value_void_X;
         pub fn cv_NormalizeBBoxLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_NormalizeBBoxLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_PaddingLayer_delete(ptr : *mut c_void);
@@ -1777,6 +1798,10 @@ mod dnn_sys {
         pub fn cv_dnn_ResizeLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_ScaleLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_ScaleLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_SegmentationModel_delete(ptr : *mut c_void);
+        pub fn cv_dnn_SegmentationModel_SegmentationModel_String_String(model: *const c_char, config: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_dnn_SegmentationModel_SegmentationModel_Net(network: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_dnn_SegmentationModel_segment__InputArray__OutputArray(instance: *mut c_void, frame: *mut c_void, mask: *mut c_void) -> cv_return_value_void;
         pub fn cv_ShiftLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_ShiftLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_ShuffleChannelLayer_delete(ptr : *mut c_void);
@@ -1795,6 +1820,27 @@ mod dnn_sys {
     }
 }
 pub use dnn_sys::*;
+
+#[cfg(feature = "contrib")]
+mod dnn_superres_sys {
+    use super::*;
+
+    extern "C" {
+        pub fn cv_DnnSuperResImpl_delete(ptr : *mut c_void);
+        pub fn cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl() -> cv_return_value_void_X;
+        pub fn cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_std_string_int(algo: *const c_char, scale: i32) -> cv_return_value_void_X;
+        pub fn cv_dnn_superres_DnnSuperResImpl_readModel_std_string(instance: *mut c_void, path: *const c_char) -> cv_return_value_void;
+        pub fn cv_dnn_superres_DnnSuperResImpl_readModel_std_string_std_string(instance: *mut c_void, weights: *const c_char, definition: *const c_char) -> cv_return_value_void;
+        pub fn cv_dnn_superres_DnnSuperResImpl_setModel_std_string_int(instance: *mut c_void, algo: *const c_char, scale: i32) -> cv_return_value_void;
+        pub fn cv_dnn_superres_DnnSuperResImpl_upsample__InputArray__OutputArray(instance: *mut c_void, img: *mut c_void, result: *mut c_void) -> cv_return_value_void;
+        pub fn cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput__InputArray_VectorOfMat_VectorOfint_VectorOfString(instance: *mut c_void, img: *mut c_void, imgs_new: *mut c_void, scale_factors: *mut c_void, node_names: *mut c_void) -> cv_return_value_void;
+        pub fn cv_dnn_superres_DnnSuperResImpl_getScale(instance: *mut c_void) -> cv_return_value_int;
+        pub fn cv_dnn_superres_DnnSuperResImpl_getAlgorithm(instance: *mut c_void) -> cv_return_value_char_X;
+    
+    }
+}
+#[cfg(feature = "contrib")]
+pub use dnn_superres_sys::*;
 
 #[cfg(feature = "contrib")]
 mod dpm_sys {
@@ -3670,6 +3716,185 @@ mod videostab_sys {
 }
 #[cfg(feature = "contrib")]
 pub use videostab_sys::*;
+
+mod viz_sys {
+    use super::*;
+
+    extern "C" {
+        pub fn cv_Vec3b_const() -> cv_return_value_void;
+        pub fn cv_viz_computeNormals_Mesh__OutputArray(mesh: *mut c_void, normals: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_getWindowByName_String(window_name: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_viz_imshow_String__InputArray_Size(window_name: *const c_char, image: *mut c_void, window_size: core::Size) -> cv_return_value_void_X;
+        pub fn cv_viz_isNan_double(x: f64) -> cv_return_value_bool;
+        pub fn cv_viz_isNan_float(x: f32) -> cv_return_value_bool;
+        pub fn cv_viz_readCloud_String__OutputArray__OutputArray(file: *const c_char, colors: *mut c_void, normals: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_readMesh_String(file: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_viz_readTrajectory__OutputArray_String_int_int_String(traj: *mut c_void, files_format: *const c_char, start: i32, end: i32, tag: *const c_char) -> cv_return_value_void;
+        pub fn cv_viz_unregisterAllWindows() -> cv_return_value_void;
+        pub fn cv_viz_writeCloud_String__InputArray__InputArray__InputArray_bool(file: *const c_char, cloud: *mut c_void, colors: *mut c_void, normals: *mut c_void, binary: bool) -> cv_return_value_void;
+        pub fn cv_viz_writeTrajectory__InputArray_String_int_String(traj: *mut c_void, files_format: *const c_char, start: i32, tag: *const c_char) -> cv_return_value_void;
+        pub fn cv_Camera_delete(ptr : *mut c_void);
+        pub fn cv_viz_Camera_Camera_double_double_double_double_Size(fx: f64, fy: f64, cx: f64, cy: f64, window_size: core::Size) -> cv_return_value_void_X;
+        pub fn cv_viz_Camera_Camera_Vec2d_Size(fov: core::Vec2d, window_size: core::Size) -> cv_return_value_void_X;
+        pub fn cv_viz_Camera_getClip_const(instance: *const c_void) -> cv_return_value_Vec2dWrapper;
+        pub fn cv_viz_Camera_setClip_Vec2d(instance: *mut c_void, clip: core::Vec2d) -> cv_return_value_void;
+        pub fn cv_viz_Camera_getWindowSize_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
+        pub fn cv_viz_Camera_setWindowSize_Size(instance: *mut c_void, window_size: core::Size) -> cv_return_value_void;
+        pub fn cv_viz_Camera_getFov_const(instance: *const c_void) -> cv_return_value_Vec2dWrapper;
+        pub fn cv_viz_Camera_setFov_Vec2d(instance: *mut c_void, fov: core::Vec2d) -> cv_return_value_void;
+        pub fn cv_viz_Camera_getPrincipalPoint_const(instance: *const c_void) -> cv_return_value_Vec2dWrapper;
+        pub fn cv_viz_Camera_getFocalLength_const(instance: *const c_void) -> cv_return_value_Vec2dWrapper;
+        pub fn cv_viz_Camera_KinectCamera_Size(window_size: core::Size) -> cv_return_value_void_X;
+        pub fn cv_Color_delete(ptr : *mut c_void);
+        pub fn cv_viz_Color_Color() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_Color_double(gray: f64) -> cv_return_value_void_X;
+        pub fn cv_viz_Color_Color_double_double_double(blue: f64, green: f64, red: f64) -> cv_return_value_void_X;
+        pub fn cv_viz_Color_Color_Scalar(color: core::Scalar) -> cv_return_value_void_X;
+        pub fn cv_viz_Color_operator_Vec3b_const(instance: *const c_void) -> cv_return_value_Vec3bWrapper;
+        pub fn cv_viz_Color_black() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_blue() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_green() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_cyan() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_red() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_magenta() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_yellow() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_white() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_gray() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_mlab() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_navy() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_olive() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_maroon() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_teal() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_rose() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_azure() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_lime() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_gold() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_brown() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_orange() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_chartreuse() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_orange_red() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_purple() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_indigo() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_pink() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_cherry() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_bluberry() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_raspberry() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_silver() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_violet() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_apricot() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_turquoise() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_celestial_blue() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_amethyst() -> cv_return_value_void_X;
+        pub fn cv_viz_Color_not_set() -> cv_return_value_void_X;
+        pub fn cv_KeyboardEvent_delete(ptr : *mut c_void);
+        pub fn cv_Mesh_delete(ptr : *mut c_void);
+        pub fn cv_viz_Mesh_load_String_int(file: *const c_char, _type: i32) -> cv_return_value_void_X;
+        pub fn cv_MouseEvent_delete(ptr : *mut c_void);
+        pub fn cv_Viz3d_delete(ptr : *mut c_void);
+        pub fn cv_viz_Viz3d_Viz3d_String(window_name: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_viz_Viz3d_Viz3d_Viz3d(unnamed_arg: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_Viz3d_removeWidget_String(instance: *mut c_void, id: *const c_char) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_removeAllWidgets(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_showImage__InputArray_Size(instance: *mut c_void, image: *mut c_void, window_size: core::Size) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setCamera_Camera(instance: *mut c_void, camera: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_getCamera_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_Viz3d_resetCameraViewpoint_String(instance: *mut c_void, id: *const c_char) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_resetCamera(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_getWindowSize_const(instance: *const c_void) -> cv_return_value_SizeWrapper;
+        pub fn cv_viz_Viz3d_setWindowSize_Size(instance: *mut c_void, window_size: core::Size) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_getWindowName_const(instance: *const c_void) -> cv_return_value_char_X;
+        pub fn cv_viz_Viz3d_getScreenshot_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_Viz3d_saveScreenshot_String(instance: *mut c_void, file: *const c_char) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setWindowPosition_Point(instance: *mut c_void, window_position: core::Point) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setFullScreen_bool(instance: *mut c_void, mode: bool) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setBackgroundColor_Color_Color(instance: *mut c_void, color: *mut c_void, color2: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setBackgroundTexture__InputArray(instance: *mut c_void, image: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setBackgroundMeshLab(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_spin(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_spinOnce_int_bool(instance: *mut c_void, time: i32, force_redraw: bool) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setOffScreenRendering(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_removeAllLights(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_addLight_Vec3d_Vec3d_Color_Color_Color_Color(instance: *mut c_void, position: core::Vec3d, focal_point: core::Vec3d, color: *mut c_void, diffuse_color: *mut c_void, ambient_color: *mut c_void, specular_color: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_wasStopped_const(instance: *const c_void) -> cv_return_value_bool;
+        pub fn cv_viz_Viz3d_close(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setRenderingProperty_String_int_double(instance: *mut c_void, id: *const c_char, property: i32, value: f64) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_getRenderingProperty_String_int(instance: *mut c_void, id: *const c_char, property: i32) -> cv_return_value_double;
+        pub fn cv_viz_Viz3d_setRepresentation_int(instance: *mut c_void, representation: i32) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_setGlobalWarnings_bool(instance: *mut c_void, enabled: bool) -> cv_return_value_void;
+        pub fn cv_WArrow_delete(ptr : *mut c_void);
+        pub fn cv_WCameraPosition_delete(ptr : *mut c_void);
+        pub fn cv_viz_WCameraPosition_WCameraPosition_double(scale: f64) -> cv_return_value_void_X;
+        pub fn cv_viz_WCameraPosition_WCameraPosition_Vec2d_double_Color(fov: core::Vec2d, scale: f64, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_WCameraPosition_WCameraPosition_Vec2d__InputArray_double_Color(fov: core::Vec2d, image: *mut c_void, scale: f64, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WCircle_delete(ptr : *mut c_void);
+        pub fn cv_viz_WCircle_WCircle_double_double_Color(radius: f64, thickness: f64, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WCloud_delete(ptr : *mut c_void);
+        pub fn cv_viz_WCloud_WCloud__InputArray__InputArray(cloud: *mut c_void, colors: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_WCloud_WCloud__InputArray_Color(cloud: *mut c_void, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_WCloud_WCloud__InputArray__InputArray__InputArray(cloud: *mut c_void, colors: *mut c_void, normals: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_WCloud_WCloud__InputArray_Color__InputArray(cloud: *mut c_void, color: *mut c_void, normals: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WCloudCollection_delete(ptr : *mut c_void);
+        pub fn cv_viz_WCloudCollection_WCloudCollection() -> cv_return_value_void_X;
+        pub fn cv_viz_WCloudCollection_finalize(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_WCloudNormals_delete(ptr : *mut c_void);
+        pub fn cv_viz_WCloudNormals_WCloudNormals__InputArray__InputArray_int_double_Color(cloud: *mut c_void, normals: *mut c_void, level: i32, scale: f64, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WCone_delete(ptr : *mut c_void);
+        pub fn cv_viz_WCone_WCone_double_double_int_Color(length: f64, radius: f64, resolution: i32, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WCoordinateSystem_delete(ptr : *mut c_void);
+        pub fn cv_viz_WCoordinateSystem_WCoordinateSystem_double(scale: f64) -> cv_return_value_void_X;
+        pub fn cv_WCube_delete(ptr : *mut c_void);
+        pub fn cv_WCylinder_delete(ptr : *mut c_void);
+        pub fn cv_WGrid_delete(ptr : *mut c_void);
+        pub fn cv_viz_WGrid_WGrid_Vec2i_Vec2d_Color(cells: core::Vec2i, cells_spacing: core::Vec2d, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WImage3D_delete(ptr : *mut c_void);
+        pub fn cv_viz_WImage3D_WImage3D__InputArray_Size2d(image: *mut c_void, size: core::Size2d) -> cv_return_value_void_X;
+        pub fn cv_viz_WImage3D_WImage3D__InputArray_Size2d_Vec3d_Vec3d_Vec3d(image: *mut c_void, size: core::Size2d, center: core::Vec3d, normal: core::Vec3d, up_vector: core::Vec3d) -> cv_return_value_void_X;
+        pub fn cv_viz_WImage3D_setImage__InputArray(instance: *mut c_void, image: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_WImage3D_setSize_Size(instance: *mut c_void, size: core::Size) -> cv_return_value_void;
+        pub fn cv_WImageOverlay_delete(ptr : *mut c_void);
+        pub fn cv_viz_WImageOverlay_WImageOverlay__InputArray_Rect(image: *mut c_void, rect: core::Rect) -> cv_return_value_void_X;
+        pub fn cv_viz_WImageOverlay_setImage__InputArray(instance: *mut c_void, image: *mut c_void) -> cv_return_value_void;
+        pub fn cv_WLine_delete(ptr : *mut c_void);
+        pub fn cv_WMesh_delete(ptr : *mut c_void);
+        pub fn cv_viz_WMesh_WMesh_Mesh(mesh: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_WMesh_WMesh__InputArray__InputArray__InputArray__InputArray(cloud: *mut c_void, polygons: *mut c_void, colors: *mut c_void, normals: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WPaintedCloud_delete(ptr : *mut c_void);
+        pub fn cv_viz_WPaintedCloud_WPaintedCloud__InputArray(cloud: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WPlane_delete(ptr : *mut c_void);
+        pub fn cv_viz_WPlane_WPlane_Size2d_Color(size: core::Size2d, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WPolyLine_delete(ptr : *mut c_void);
+        pub fn cv_viz_WPolyLine_WPolyLine__InputArray__InputArray(points: *mut c_void, colors: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_WPolyLine_WPolyLine__InputArray_Color(points: *mut c_void, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WSphere_delete(ptr : *mut c_void);
+        pub fn cv_WText_delete(ptr : *mut c_void);
+        pub fn cv_viz_WText_WText_String_Point_int_Color(text: *const c_char, pos: core::Point, font_size: i32, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_WText_setText_String(instance: *mut c_void, text: *const c_char) -> cv_return_value_void;
+        pub fn cv_viz_WText_getText_const(instance: *const c_void) -> cv_return_value_char_X;
+        pub fn cv_WText3D_delete(ptr : *mut c_void);
+        pub fn cv_viz_WText3D_setText_String(instance: *mut c_void, text: *const c_char) -> cv_return_value_void;
+        pub fn cv_viz_WText3D_getText_const(instance: *const c_void) -> cv_return_value_char_X;
+        pub fn cv_WTrajectory_delete(ptr : *mut c_void);
+        pub fn cv_viz_WTrajectory_WTrajectory__InputArray_int_double_Color(path: *mut c_void, display_mode: i32, scale: f64, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WTrajectoryFrustums_delete(ptr : *mut c_void);
+        pub fn cv_viz_WTrajectoryFrustums_WTrajectoryFrustums__InputArray_Vec2d_double_Color(path: *mut c_void, fov: core::Vec2d, scale: f64, color: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WTrajectorySpheres_delete(ptr : *mut c_void);
+        pub fn cv_viz_WTrajectorySpheres_WTrajectorySpheres__InputArray_double_double_Color_Color(path: *mut c_void, line_length: f64, radius: f64, from: *mut c_void, to: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_WWidgetMerger_delete(ptr : *mut c_void);
+        pub fn cv_viz_WWidgetMerger_WWidgetMerger() -> cv_return_value_void_X;
+        pub fn cv_viz_WWidgetMerger_finalize(instance: *mut c_void) -> cv_return_value_void;
+        pub fn cv_viz_Widget_setRenderingProperty_int_double(instance: *mut c_void, property: i32, value: f64) -> cv_return_value_void;
+        pub fn cv_viz_Widget_getRenderingProperty_const_int(instance: *const c_void, property: i32) -> cv_return_value_double;
+        pub fn cv_Widget_delete(ptr : *mut c_void);
+        pub fn cv_viz_Widget2D_setColor_Color(instance: *mut c_void, color: *mut c_void) -> cv_return_value_void;
+        pub fn cv_Widget2D_delete(ptr : *mut c_void);
+        pub fn cv_viz_Widget2D_Widget2D() -> cv_return_value_void_X;
+        pub fn cv_viz_Widget3D_setColor_Color(instance: *mut c_void, color: *mut c_void) -> cv_return_value_void;
+        pub fn cv_Widget3D_delete(ptr : *mut c_void);
+        pub fn cv_viz_Widget3D_Widget3D() -> cv_return_value_void_X;
+    
+    }
+}
+pub use viz_sys::*;
 
 #[cfg(feature = "contrib")]
 mod xfeatures2d_sys {

@@ -202,7 +202,7 @@ pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i3
 
 /// The function implements different single-image inpainting algorithms.
 ///
-/// See the original paper [He2012](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_He2012) for details.
+/// See the original paper [He2012](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_He2012) for details.
 ///
 /// ## Parameters
 /// * src: source image, it could be of any type and any number of channels from 1 to 4. In case of
@@ -218,7 +218,7 @@ pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm
 }
 
 /// oilPainting
-/// See the book [Holzmann1988](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+/// See the book [Holzmann1988](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 /// ## Parameters
 /// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 /// * dst: Output image of the same size and type as src.
@@ -231,7 +231,7 @@ pub fn oil_painting(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 }
 
 /// oilPainting
-/// See the book [Holzmann1988](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+/// See the book [Holzmann1988](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 /// ## Parameters
 /// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 /// * dst: Output image of the same size and type as src.
@@ -287,7 +287,7 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 /// As @ref GrayworldWB, this algorithm works by applying different gains to the input
 /// image channels, but their computation is a bit more involved compared to the
 /// simple gray-world assumption. More details about the algorithm can be found in
-/// [Cheng2015](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Cheng2015) .
+/// [Cheng2015](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Cheng2015) .
 ///
 /// To mask out saturated pixels this function uses only pixels that satisfy the
 /// following condition:
@@ -299,7 +299,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
     #[inline(always)] fn as_raw_LearningBasedWB(&self) -> *mut c_void;
     /// Implements the feature extraction part of the algorithm.
     ///
-    /// In accordance with [Cheng2015](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
+    /// In accordance with [Cheng2015](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
     /// 1. Chromaticity of an average (R,G,B) tuple
     /// 2. Chromaticity of the brightest (R,G,B) tuple (while ignoring saturated pixels)
     /// 3. Chromaticity of the dominant (R,G,B) tuple (the one that has the highest value in the RGB histogram)
@@ -427,7 +427,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 ///
 /// Saturation enhancement is possible as in cv::TonemapDrago.
 ///
-/// For more information see [DD02](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_DD02) .
+/// For more information see [DD02](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_DD02) .
 pub trait TonemapDurand {
     #[inline(always)] fn as_raw_TonemapDurand(&self) -> *mut c_void;
     fn get_saturation(&self) -> Result<f32> {

@@ -14,7 +14,7 @@ use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
-/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 pub const ANN_MLP_ANNEAL: i32 = 2;
 /// The back-propagation algorithm.
 pub const ANN_MLP_BACKPROP: i32 = 0;
@@ -24,7 +24,7 @@ pub const ANN_MLP_LEAKYRELU: i32 = 4;
 pub const ANN_MLP_NO_INPUT_SCALE: i32 = 2;
 pub const ANN_MLP_NO_OUTPUT_SCALE: i32 = 4;
 pub const ANN_MLP_RELU: i32 = 3;
-/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 pub const ANN_MLP_RPROP: i32 = 1;
 pub const ANN_MLP_SIGMOID_SYM: i32 = 1;
 pub const ANN_MLP_UPDATE_WEIGHTS: i32 = 1;

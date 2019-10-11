@@ -217,7 +217,7 @@ pub fn ft12_d_polynomial(matrix: &dyn core::ToInputArray, kernel: &dyn core::ToI
 ///
 ///
 /// Note:
-/// F-transform technique of first degreee is described in paper [Vlas](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Vlas):FT.
+/// F-transform technique of first degreee is described in paper [Vlas](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Vlas):FT.
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
@@ -289,7 +289,7 @@ pub fn filter(image: &dyn core::ToInputArray, kernel: &dyn core::ToInputArray, o
 ///
 ///
 /// Note:
-/// The algorithms are described in paper [Perf](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Perf):rec.
+/// The algorithms are described in paper [Perf](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Perf):rec.
 pub fn inpaint(image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, output: &mut dyn core::ToOutputArray, radius: i32, function: i32, algorithm: i32) -> Result<()> {
     input_array_arg!(image);
     input_array_arg!(mask);

@@ -1572,7 +1572,7 @@ pub trait LSTMLayer: crate::dnn::LayerTrait {
     /// h_t &= o_t \odot tanh(c_t),               \\
     /// c_t &= f_t \odot c_{t-1} + i_t \odot g_t, \\
     /// @f}
-    /// where @f$\odot@f$ is per-element multiply operation and @f$i_t, f_t, o_t, g_t@f$ is internal gates that are computed using learned wights.
+    /// where @f$\odot@f$ is per-element multiply operation and @f$i_t, f_t, o_t, g_t@f$ is internal gates that are computed using learned weights.
     ///
     /// Gates are computed as follows:
     /// @f{eqnarray*}{
@@ -2196,7 +2196,7 @@ impl Net {
     /// * inpPin: descriptor of the second layer input.
     ///
     /// Descriptors have the following template <DFN>&lt;layer_name&gt;[.input_number]</DFN>:
-    /// - the first part of the template <DFN>layer_name</DFN> is sting name of the added layer.
+    /// - the first part of the template <DFN>layer_name</DFN> is string name of the added layer.
     ///   If this part is empty then the network input pseudo layer will be used;
     /// - the second optional part of the template <DFN>input_number</DFN>
     ///   is either number of the layer input, either label one.

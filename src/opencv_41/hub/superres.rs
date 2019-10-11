@@ -2,7 +2,7 @@
 //!
 //! The Super Resolution module contains a set of functions and classes that can be used to solve the
 //! problem of resolution enhancement. There are a few methods implemented, most of them are described in
-//! the papers [Farsiu03](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Mitzel09) .
+//! the papers [Farsiu03](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Farsiu03) and [Mitzel09](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Mitzel09) .
 use std::os::raw::{c_char, c_void};
 use libc::{ptrdiff_t, size_t};
 use crate::{Error, Result, core, sys, types};
@@ -32,8 +32,8 @@ pub fn create_frame_source_video(file_name: &str) -> Result<types::PtrOfFrameSou
 
 /// Create Bilateral TV-L1 Super Resolution.
 ///
-/// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Farsiu03) and
-/// [Mitzel09](https://docs.opencv.org/4.1.1/d0/de3/citelist.html#CITEREF_Mitzel09) .
+/// This class implements Super Resolution algorithm described in the papers [Farsiu03](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Farsiu03) and
+/// [Mitzel09](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Mitzel09) .
 ///
 /// Here are important members of the class that control the algorithm, which you can set after
 /// constructing the class instance:
