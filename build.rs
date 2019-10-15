@@ -236,6 +236,8 @@ fn is_core_module(module: &str) -> bool {
                 "core",
                 #[cfg(not(feature = "opencv-32"))]
                 "dnn",
+                #[cfg(feature = "opencv-41")]
+                "dnn_superres",
                 "features2d",
                 "flann",
                 #[cfg(feature = "opencv-41")]
