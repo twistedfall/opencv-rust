@@ -35,7 +35,7 @@ files or `-dev` packages.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.23"
+opencv = "0.24"
 ```
 
 Select OpenCV version if different from default in Cargo.toml:
