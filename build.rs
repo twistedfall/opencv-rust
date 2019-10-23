@@ -10,12 +10,11 @@ use std::{
     process::Command,
 };
 
+use glob_crate::glob;
 use once_cell::sync::OnceCell;
 use rayon::prelude::*;
 use regex::Regex;
 use semver::{Version, VersionReq};
-
-use glob_crate::glob;
 use which_crate::which;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
@@ -544,11 +543,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
         if !Command::new(python3)
             .env("LC_CTYPE", "C.UTF-8") // makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
             .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, module, &version])
-            .args(
-                files.iter()
-                    .map(|p| opencv_dir.join(p).into_os_string())
-                    .collect::<Vec<OsString>>().as_slice(),
-            )
+            .args(files.iter().map(|p| opencv_dir.join(p).into_os_string()))
             .status()
             .unwrap()
             .success()
