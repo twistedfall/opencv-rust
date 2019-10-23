@@ -6,7 +6,7 @@ repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
 keywords = [ "opencv", "vision" ]
 license = "MIT"
-version = "0.24.1"
+version = "0.24.2"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
 build = "build.rs"
@@ -46,6 +46,7 @@ opencv-32 = []
 opencv-34 = []
 opencv-41 = []
 contrib = []
+docs-only = []
 
 [package.metadata.docs.rs]
-rustc-args = [ "--cfg feature=\"docs-only\"" ]
+features = ["docs-only", "contrib"]
