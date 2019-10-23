@@ -542,6 +542,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
             .unwrap_or_else(|| PathBuf::from("python3"));
         // todo ensure that this is actually python3 (e.g. run --version)
         if !Command::new(python3)
+            .env("LC_CTYPE", "C.UTF-8") // makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
             .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, module, &version])
             .args(
                 files.iter()
