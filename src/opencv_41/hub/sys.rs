@@ -1821,7 +1821,6 @@ mod dnn_sys {
 }
 pub use dnn_sys::*;
 
-#[cfg(feature = "contrib")]
 mod dnn_superres_sys {
     use super::*;
 
@@ -1839,7 +1838,6 @@ mod dnn_superres_sys {
     
     }
 }
-#[cfg(feature = "contrib")]
 pub use dnn_superres_sys::*;
 
 #[cfg(feature = "contrib")]

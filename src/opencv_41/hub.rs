@@ -11,7 +11,6 @@ pub mod ccalib;
 #[cfg(feature = "contrib")]
 pub mod cvv;
 pub mod dnn;
-#[cfg(feature = "contrib")]
 pub mod dnn_superres;
 #[cfg(feature = "contrib")]
 pub mod dpm;
