@@ -792,8 +792,8 @@ fn main() -> Result<()> {
         if cfg!(feature = "buildtime-bindgen") {
             gen_wrapper(&opencv, &opencv_header_dir)?;
         }
+        install_wrapper()?;
     }
-    install_wrapper()?;
     cleanup(&opencv_header_dir)?;
 
     let mut config = cpp_build::Config::new();
