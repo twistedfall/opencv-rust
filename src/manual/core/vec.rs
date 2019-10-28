@@ -14,7 +14,7 @@ mod scalar {
 macro_rules! vec_impl {
     ($type: ident, $count: expr, $type_trait: ident) => {
         #[repr(C)]
-        #[derive(Copy, Clone, Debug, PartialEq)]
+        #[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
         pub struct $type<T: $type_trait>(pub [T; $count]);
 
         impl<T: $type_trait> From<[T; $count]> for $type<T> {

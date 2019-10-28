@@ -22,7 +22,7 @@ impl<T: ValidPointType> Point_<T> {
 
     #[inline]
     pub fn from_size(sz: Size_<T>) -> Self where T: ValidSizeType {
-        Self { x: sz.width, y: sz.height }
+        Self::new(sz.width, sz.height)
     }
 
     #[inline]
@@ -62,7 +62,7 @@ impl<T: ValidPointType> Point_<T> {
 
     #[inline]
     pub fn to<D: ValidPointType + NumCast>(self) -> Option<Point_<D>> where T: ToPrimitive {
-        Some(Point_ { x: D::from(self.x)?, y: D::from(self.y)? })
+        Some(Point_::new(D::from(self.x)?, D::from(self.y)?))
     }
 }
 

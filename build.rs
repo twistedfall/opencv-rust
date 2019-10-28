@@ -174,6 +174,7 @@ fn set_compiler_flags<T: CompilerFlagSetter>(cc: &mut T) {
     cc.flag_if_supported("-fno-strict-aliasing")
         .flag_if_supported("-Wno-class-memaccess")
         .flag_if_supported("-Wno-deprecated-declarations")
+        .flag_if_supported("-Wno-deprecated-copy")
         .flag_if_supported("-Wno-ignored-qualifiers");
     if cfg!(target_env = "msvc") {
         cc.flag_if_supported("-wd4996")

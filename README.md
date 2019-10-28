@@ -1,7 +1,8 @@
 # Rust OpenCV bindings
 
-[![Build Status](https://travis-ci.org/twistedfall/opencv-rust.svg?branch=master)](https://travis-ci.org/twistedfall/opencv-rust)
-[![docs.rs](https://docs.rs/opencv/badge.svg)](https://docs.rs/opencv)
+[![Build status](https://travis-ci.org/twistedfall/opencv-rust.svg?branch=master)](https://travis-ci.org/twistedfall/opencv-rust)
+[![Documentation](https://docs.rs/opencv/badge.svg)](https://docs.rs/opencv)
+[![Package](https://img.shields.io/crates/v/opencv.svg)](https://crates.io/crates/opencv)
 
 Experimental Rust bindings for OpenCV 3 and 4.
 
