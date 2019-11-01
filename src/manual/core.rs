@@ -1,6 +1,7 @@
 pub use self::input_output_array::*;
 pub use self::mat::*;
 pub use self::point::*;
+pub use self::point3::*;
 pub use self::rect::*;
 pub use self::size::*;
 pub use self::vec::*;
@@ -24,6 +25,7 @@ macro_rules! valid_types {
 mod input_output_array;
 mod mat;
 mod point;
+mod point3;
 mod rect;
 mod size;
 mod vec;

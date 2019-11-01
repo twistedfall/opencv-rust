@@ -109,6 +109,9 @@ decls_manual_pre = {
         ("class cv.utils.logging.LogTag", "", ["/Ghost"], []),
         ("class cv.FileNode", "", ["/Ghost"], []),
         ("class cv.FileStorage", "", ["/Ghost"], []),
+        ("typedef DummyVectorOfPoint3i", "std::vector<Point3i>", [], []),
+        ("typedef DummyVectorOfPoint3f", "std::vector<Point3f>", [], []),
+        ("typedef DummyVectorOfPoint3d", "std::vector<Point3d>", [], []),
     ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
@@ -672,6 +675,9 @@ type_replace = {
     "Point_<int64>": "Point2l",
     "Point_<float>": "Point2f",
     "Point_<double>": "Point2d",
+    "Point3_<int>": "Point3i",
+    "Point3_<float>": "Point3f",
+    "Point3_<double>": "Point3d",
     "Rect_<int>": "Rect2i",
     "Rect_<float>": "Rect2f",
     "Rect_<double>": "Rect2d",
@@ -819,6 +825,8 @@ for s in (2, 3, 4, 6, 8):
             if t[0] in ("i", "l", "f", "d"):
                 _base_type_alias("core", "Point{}{}".format(s, t[0]), "core::Point_<{}>".format(rust_local), t[1], ("x", "y"))
                 _base_type_alias("core", "Size{}{}".format(s, t[0]), "core::Size_<{}>".format(rust_local), t[1], ("width", "height"))
+        elif s == 3 and t[0] in ("i", "f", "d"):
+            _base_type_alias("core", "Point{}{}".format(s, t[0]), "core::Point3_<{}>".format(rust_local), t[1], ("x", "y", "z"))
         if t[0] != "l":
             _base_type_alias("core", "Vec{}{}".format(s, t[0]), "core::Vec{}<{}>".format(s, rust_local), t[1], ("data[{}]".format(s),))
 
@@ -985,15 +993,16 @@ static_modules = ("core", "sys", "types")
 data_type_typeids = {
     "uchar", "char", "ushort", "short", "int",
     "float", "double",
-    "cv::Vec2b", "core::Vec3b", "cv::Vec4b",
-    "cv::Vec2s", "core::Vec3s", "cv::Vec4s",
-    "cv::Vec2i", "core::Vec3i", "cv::Vec4i",
-    "cv::Vec2f", "core::Vec3f", "cv::Vec4f",
-    "cv::Vec2d", "core::Vec3d", "cv::Vec4d",
+    "cv::Vec2b", "cv::Vec3b", "cv::Vec4b",
+    "cv::Vec2s", "cv::Vec3s", "cv::Vec4s",
+    "cv::Vec2i", "cv::Vec3i", "cv::Vec4i",
+    "cv::Vec2f", "cv::Vec3f", "cv::Vec4f",
+    "cv::Vec2d", "cv::Vec3d", "cv::Vec4d",
     "cv::Scalar",
-    "cv::Point", "core::Point2i", "cv::Point2f", "cv::Point2d",
-    "cv::Size", "core::Size2i", "cv::Size2f", "cv::Size2d",
-    "cv::Rect", "core::Rect2i", "cv::Rect2f", "cv::Rect2d",
+    "cv::Point", "cv::Point2i", "cv::Point2f", "cv::Point2d",
+    "cv::Point3i", "cv::Point3f", "cv::Point3d",
+    "cv::Size", "cv::Size2i", "cv::Size2f", "cv::Size2d",
+    "cv::Rect", "cv::Rect2i", "cv::Rect2f", "cv::Rect2d",
 }
 
 

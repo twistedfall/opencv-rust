@@ -96,6 +96,11 @@ data_type!(core::Point2i, core::CV_32S, 2);
 data_type!(core::Point2f, core::CV_32F, 2);
 data_type!(core::Point2d, core::CV_64F, 2);
 
+// point3
+data_type!(core::Point3i, core::CV_32S, 2);
+data_type!(core::Point3f, core::CV_32F, 2);
+data_type!(core::Point3d, core::CV_64F, 2);
+
 // size
 data_type!(core::Size2i, core::CV_32S, 2);
 data_type!(core::Size2f, core::CV_32F, 2);
