@@ -1,11 +1,22 @@
 use matches::assert_matches;
 
 use opencv::{
-    core::{self, Point2d, Scalar},
+    core::{self, Point2d, Point3i, Scalar},
     Error,
     prelude::*,
     Result,
-    types::{VectorOfbool, VectorOfchar, VectorOfdouble, VectorOfint, VectorOfMat, VectorOfPoint2d, VectorOfString, VectorOfuchar},
+    types::{
+        VectorOfbool,
+        VectorOfchar,
+        VectorOfdouble,
+        VectorOfint,
+        VectorOfMat,
+        VectorOfPoint2d,
+        VectorOfPoint3i,
+        VectorOfString,
+        VectorOfuchar,
+        VectorOfVectorOfPoint3i,
+    },
 };
 
 #[test]
@@ -102,6 +113,42 @@ fn simple_struct() -> Result<()> {
     assert_eq!(Point2d::new(40., 50.), unsafe { vec.get_unchecked(0) });
     assert_eq!(Point2d::new(50., 60.), unsafe { vec.get_unchecked(1) });
     assert_eq!(Point2d::new(60., 70.), unsafe { vec.get_unchecked(2) });
+    Ok(())
+}
+
+#[test]
+fn vector_of_vector_simple_struct() -> Result<()> {
+    #[inline(never)]
+    fn make_vec() -> VectorOfVectorOfPoint3i {
+        let mut outer = VectorOfVectorOfPoint3i::new();
+        outer.push({
+            let mut inner = VectorOfPoint3i::new();
+            inner.push(Point3i::new(1, 1, 1));
+            inner.push(Point3i::new(2, 2, 2));
+            inner.push(Point3i::new(3, 3, 3));
+            inner
+        });
+        outer.push({
+            let mut inner = VectorOfPoint3i::new();
+            inner.push(Point3i::new(4, 4, 4));
+            inner.push(Point3i::new(5, 5, 5));
+            inner.push(Point3i::new(6, 6, 6));
+            inner
+        });
+        outer.push({
+            let mut inner = VectorOfPoint3i::new();
+            inner.push(Point3i::new(7, 7, 7));
+            inner.push(Point3i::new(8, 8, 8));
+            inner.push(Point3i::new(9, 9, 9));
+            inner
+        });
+        outer
+    }
+
+    let mut outer = make_vec();
+    assert_eq!(6, outer.get(1)?.get(2)?.x);
+    outer.remove(1)?;
+    assert_eq!(9, outer.get(1)?.get(2)?.x);
     Ok(())
 }
 

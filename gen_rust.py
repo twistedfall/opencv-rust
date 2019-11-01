@@ -112,6 +112,9 @@ decls_manual_pre = {
         ("typedef DummyVectorOfPoint3i", "std::vector<Point3i>", [], []),
         ("typedef DummyVectorOfPoint3f", "std::vector<Point3f>", [], []),
         ("typedef DummyVectorOfPoint3d", "std::vector<Point3d>", [], []),
+        ("typedef DummyVectorOfVectorOfPoint3i", "std::vector<std::vector<Point3i>>", [], []),
+        ("typedef DummyVectorOfVectorOfPoint3f", "std::vector<std::vector<Point3f>>", [], []),
+        ("typedef DummyVectorOfVectorOfPoint3d", "std::vector<std::vector<Point3d>>", [], []),
     ],
     "dnn": [
         ("class cv.dnn.LayerParams", "", ["/Ghost"], []),
