@@ -1732,6 +1732,786 @@ mod core_types {
         }
     }
     
+    pub struct VectorOfPoint3d {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl VectorOfPoint3d {
+        #[inline(always)] pub fn as_raw_VectorOfPoint3d(&self) -> *mut c_void { self.ptr }
+    
+        #[inline]
+        pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+            crate::templ::VectorRefIterator::new(self)
+        }
+        
+        pub fn to_slice(&self) -> &[core::Point3d] {
+            unsafe {
+                let vec = self.as_raw_VectorOfPoint3d();
+                let data = cpp!(unsafe [vec as "std::vector<cv::Point3d>*"] -> *const core::Point3d as "void**" {
+                    return reinterpret_cast<void**>(vec->data());
+                });
+                ::std::slice::from_raw_parts(data, crate::templ::Vector::len(self))
+            }
+        }
+    }
+    
+    impl Drop for VectorOfPoint3d {
+        #[inline]
+        fn drop(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*"] {
+                delete vec;
+            })
+        }
+    }
+    
+    impl IntoIterator for VectorOfPoint3d {
+        type Item = core::Point3d;
+        type IntoIter = crate::templ::VectorIterator<Self>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            Self::IntoIter::new(self)
+        }
+    }
+    
+    impl<'i> IntoIterator for &'i VectorOfPoint3d {
+        type Item = core::Point3d;
+        type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfPoint3d>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            self.iter()
+        }
+    }
+    
+    impl<'i> crate::templ::Vector<'i> for VectorOfPoint3d {
+        type Storage = core::Point3d;
+    
+        #[inline]
+        fn new() -> Self {
+            Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+                return new std::vector<cv::Point3d>();
+            })}
+        }
+    
+        #[inline]
+        fn len(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3d>*"] -> size_t as "size_t" {
+                return vec->size();
+            })
+        }
+    
+        #[inline]
+        fn is_empty(&self) -> bool {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3d>*"] -> bool as "bool" {
+                return vec->empty();
+            })
+        }
+    
+        #[inline]
+        fn capacity(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3d>*"] -> size_t as "size_t" {
+                return vec->capacity();
+            })
+        }
+    
+        #[inline]
+        fn shrink_to_fit(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*"] {
+                vec->shrink_to_fit();
+            })
+        }                
+    
+        #[inline]
+        fn reserve(&mut self, additional: size_t) {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*", additional as "size_t"] {
+                vec->reserve(vec->size() + additional);
+            })
+        }
+    
+        #[inline]
+        fn remove(&mut self, index: size_t) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*", index as "size_t"] {
+                vec->erase(vec->begin() + index);
+            });
+            Ok(())
+        }
+    
+        #[inline]
+        fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
+            let len = self.len();
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+            if index1 != index2 {
+                let vec = self.as_raw_VectorOfPoint3d();
+                cpp!(unsafe [vec as "std::vector<cv::Point3d>*", index1 as "size_t", index2 as "size_t"] {
+                    swap((*vec)[index1], (*vec)[index2]);
+                });
+            }
+            Ok(())
+        }
+    
+        #[inline]
+        fn clear(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*"] {
+                vec->clear();
+            })
+        }
+    
+        type Arg = core::Point3d;
+        
+        #[inline]
+        fn push(&mut self, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*", val as "cv::Point3d"] {
+                vec->push_back(val);
+            })
+        }
+        
+        #[inline]
+        fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*", index as "size_t", val as "cv::Point3d"] {
+                vec->insert(vec->begin() + index, val);
+            });
+            Ok(())
+        }
+        
+        #[inline]
+        fn get(&self, index: size_t) -> Result<Self::Storage> {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "const std::vector<Point3dWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Point3dWrapper as "cv_return_value_Point3dWrapper" {
+                try {
+                    return { Error::Code::StsOk, NULL, vec->at(index) };
+                } VEC_CATCH(cv_return_value_Point3dWrapper)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "const std::vector<Point3dWrapper>*", index as "size_t"] -> core::Point3d as "Point3dWrapper" {
+                return (*vec)[index];
+            })
+        }
+        
+        #[inline]
+        fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*", index as "size_t", val as "cv::Point3d"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                try {
+                    vec->at(index) = val;
+                    return { Error::Code::StsOk, NULL };
+                } VEC_CATCH(cv_return_value_void)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [vec as "std::vector<cv::Point3d>*", index as "size_t", val as "cv::Point3d"] {
+                (*vec)[index] = val;
+            })
+        }
+        
+        #[inline]
+        fn to_vec(&self) -> Vec<Self::Storage> {
+            self.to_slice().to_vec()
+        }
+    }
+    
+    unsafe impl Send for VectorOfPoint3d {}
+    
+    impl core::ToInputArray for VectorOfPoint3d {
+        #[inline]
+        fn input_array(&self) -> Result<core::_InputArray> {
+            let me = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_InputArray { ptr })
+        }
+    }
+    
+    impl core::ToInputArray for &VectorOfPoint3d {
+        #[inline]
+        fn input_array(&self) -> Result<core::_InputArray> {
+            (*self).input_array()
+        }
+    }
+    
+    impl core::ToOutputArray for VectorOfPoint3d {
+        #[inline]
+        fn output_array(&mut self) -> Result<core::_OutputArray> {
+            let me = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_OutputArray { ptr })
+        }
+    }
+    
+    impl core::ToOutputArray for &mut VectorOfPoint3d {
+        #[inline]
+        fn output_array(&mut self) -> Result<core::_OutputArray> {
+            (*self).output_array()
+        }
+    }
+    
+    impl core::ToInputOutputArray for VectorOfPoint3d {
+        #[inline]
+        fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+            let me = self.as_raw_VectorOfPoint3d();
+            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_InputOutputArray { ptr })
+        }
+    }
+    
+    impl core::ToInputOutputArray for &mut VectorOfPoint3d {
+        #[inline]
+        fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+            (*self).input_output_array()
+        }
+    }
+    
+    pub struct VectorOfPoint3f {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl VectorOfPoint3f {
+        #[inline(always)] pub fn as_raw_VectorOfPoint3f(&self) -> *mut c_void { self.ptr }
+    
+        #[inline]
+        pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+            crate::templ::VectorRefIterator::new(self)
+        }
+        
+        pub fn to_slice(&self) -> &[core::Point3f] {
+            unsafe {
+                let vec = self.as_raw_VectorOfPoint3f();
+                let data = cpp!(unsafe [vec as "std::vector<cv::Point3f>*"] -> *const core::Point3f as "void**" {
+                    return reinterpret_cast<void**>(vec->data());
+                });
+                ::std::slice::from_raw_parts(data, crate::templ::Vector::len(self))
+            }
+        }
+    }
+    
+    impl Drop for VectorOfPoint3f {
+        #[inline]
+        fn drop(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*"] {
+                delete vec;
+            })
+        }
+    }
+    
+    impl IntoIterator for VectorOfPoint3f {
+        type Item = core::Point3f;
+        type IntoIter = crate::templ::VectorIterator<Self>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            Self::IntoIter::new(self)
+        }
+    }
+    
+    impl<'i> IntoIterator for &'i VectorOfPoint3f {
+        type Item = core::Point3f;
+        type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfPoint3f>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            self.iter()
+        }
+    }
+    
+    impl<'i> crate::templ::Vector<'i> for VectorOfPoint3f {
+        type Storage = core::Point3f;
+    
+        #[inline]
+        fn new() -> Self {
+            Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+                return new std::vector<cv::Point3f>();
+            })}
+        }
+    
+        #[inline]
+        fn len(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3f>*"] -> size_t as "size_t" {
+                return vec->size();
+            })
+        }
+    
+        #[inline]
+        fn is_empty(&self) -> bool {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3f>*"] -> bool as "bool" {
+                return vec->empty();
+            })
+        }
+    
+        #[inline]
+        fn capacity(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3f>*"] -> size_t as "size_t" {
+                return vec->capacity();
+            })
+        }
+    
+        #[inline]
+        fn shrink_to_fit(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*"] {
+                vec->shrink_to_fit();
+            })
+        }                
+    
+        #[inline]
+        fn reserve(&mut self, additional: size_t) {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*", additional as "size_t"] {
+                vec->reserve(vec->size() + additional);
+            })
+        }
+    
+        #[inline]
+        fn remove(&mut self, index: size_t) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*", index as "size_t"] {
+                vec->erase(vec->begin() + index);
+            });
+            Ok(())
+        }
+    
+        #[inline]
+        fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
+            let len = self.len();
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+            if index1 != index2 {
+                let vec = self.as_raw_VectorOfPoint3f();
+                cpp!(unsafe [vec as "std::vector<cv::Point3f>*", index1 as "size_t", index2 as "size_t"] {
+                    swap((*vec)[index1], (*vec)[index2]);
+                });
+            }
+            Ok(())
+        }
+    
+        #[inline]
+        fn clear(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*"] {
+                vec->clear();
+            })
+        }
+    
+        type Arg = core::Point3f;
+        
+        #[inline]
+        fn push(&mut self, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*", val as "cv::Point3f"] {
+                vec->push_back(val);
+            })
+        }
+        
+        #[inline]
+        fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*", index as "size_t", val as "cv::Point3f"] {
+                vec->insert(vec->begin() + index, val);
+            });
+            Ok(())
+        }
+        
+        #[inline]
+        fn get(&self, index: size_t) -> Result<Self::Storage> {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "const std::vector<Point3fWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Point3fWrapper as "cv_return_value_Point3fWrapper" {
+                try {
+                    return { Error::Code::StsOk, NULL, vec->at(index) };
+                } VEC_CATCH(cv_return_value_Point3fWrapper)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "const std::vector<Point3fWrapper>*", index as "size_t"] -> core::Point3f as "Point3fWrapper" {
+                return (*vec)[index];
+            })
+        }
+        
+        #[inline]
+        fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*", index as "size_t", val as "cv::Point3f"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                try {
+                    vec->at(index) = val;
+                    return { Error::Code::StsOk, NULL };
+                } VEC_CATCH(cv_return_value_void)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [vec as "std::vector<cv::Point3f>*", index as "size_t", val as "cv::Point3f"] {
+                (*vec)[index] = val;
+            })
+        }
+        
+        #[inline]
+        fn to_vec(&self) -> Vec<Self::Storage> {
+            self.to_slice().to_vec()
+        }
+    }
+    
+    unsafe impl Send for VectorOfPoint3f {}
+    
+    impl core::ToInputArray for VectorOfPoint3f {
+        #[inline]
+        fn input_array(&self) -> Result<core::_InputArray> {
+            let me = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_InputArray { ptr })
+        }
+    }
+    
+    impl core::ToInputArray for &VectorOfPoint3f {
+        #[inline]
+        fn input_array(&self) -> Result<core::_InputArray> {
+            (*self).input_array()
+        }
+    }
+    
+    impl core::ToOutputArray for VectorOfPoint3f {
+        #[inline]
+        fn output_array(&mut self) -> Result<core::_OutputArray> {
+            let me = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_OutputArray { ptr })
+        }
+    }
+    
+    impl core::ToOutputArray for &mut VectorOfPoint3f {
+        #[inline]
+        fn output_array(&mut self) -> Result<core::_OutputArray> {
+            (*self).output_array()
+        }
+    }
+    
+    impl core::ToInputOutputArray for VectorOfPoint3f {
+        #[inline]
+        fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+            let me = self.as_raw_VectorOfPoint3f();
+            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_InputOutputArray { ptr })
+        }
+    }
+    
+    impl core::ToInputOutputArray for &mut VectorOfPoint3f {
+        #[inline]
+        fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+            (*self).input_output_array()
+        }
+    }
+    
+    pub struct VectorOfPoint3i {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl VectorOfPoint3i {
+        #[inline(always)] pub fn as_raw_VectorOfPoint3i(&self) -> *mut c_void { self.ptr }
+    
+        #[inline]
+        pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+            crate::templ::VectorRefIterator::new(self)
+        }
+        
+        pub fn to_slice(&self) -> &[core::Point3i] {
+            unsafe {
+                let vec = self.as_raw_VectorOfPoint3i();
+                let data = cpp!(unsafe [vec as "std::vector<cv::Point3i>*"] -> *const core::Point3i as "void**" {
+                    return reinterpret_cast<void**>(vec->data());
+                });
+                ::std::slice::from_raw_parts(data, crate::templ::Vector::len(self))
+            }
+        }
+    }
+    
+    impl Drop for VectorOfPoint3i {
+        #[inline]
+        fn drop(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*"] {
+                delete vec;
+            })
+        }
+    }
+    
+    impl IntoIterator for VectorOfPoint3i {
+        type Item = core::Point3i;
+        type IntoIter = crate::templ::VectorIterator<Self>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            Self::IntoIter::new(self)
+        }
+    }
+    
+    impl<'i> IntoIterator for &'i VectorOfPoint3i {
+        type Item = core::Point3i;
+        type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfPoint3i>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            self.iter()
+        }
+    }
+    
+    impl<'i> crate::templ::Vector<'i> for VectorOfPoint3i {
+        type Storage = core::Point3i;
+    
+        #[inline]
+        fn new() -> Self {
+            Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+                return new std::vector<cv::Point3i>();
+            })}
+        }
+    
+        #[inline]
+        fn len(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3i>*"] -> size_t as "size_t" {
+                return vec->size();
+            })
+        }
+    
+        #[inline]
+        fn is_empty(&self) -> bool {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3i>*"] -> bool as "bool" {
+                return vec->empty();
+            })
+        }
+    
+        #[inline]
+        fn capacity(&self) -> size_t {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "const std::vector<cv::Point3i>*"] -> size_t as "size_t" {
+                return vec->capacity();
+            })
+        }
+    
+        #[inline]
+        fn shrink_to_fit(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*"] {
+                vec->shrink_to_fit();
+            })
+        }                
+    
+        #[inline]
+        fn reserve(&mut self, additional: size_t) {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*", additional as "size_t"] {
+                vec->reserve(vec->size() + additional);
+            })
+        }
+    
+        #[inline]
+        fn remove(&mut self, index: size_t) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*", index as "size_t"] {
+                vec->erase(vec->begin() + index);
+            });
+            Ok(())
+        }
+    
+        #[inline]
+        fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
+            let len = self.len();
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+            if index1 != index2 {
+                let vec = self.as_raw_VectorOfPoint3i();
+                cpp!(unsafe [vec as "std::vector<cv::Point3i>*", index1 as "size_t", index2 as "size_t"] {
+                    swap((*vec)[index1], (*vec)[index2]);
+                });
+            }
+            Ok(())
+        }
+    
+        #[inline]
+        fn clear(&mut self) {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*"] {
+                vec->clear();
+            })
+        }
+    
+        type Arg = core::Point3i;
+        
+        #[inline]
+        fn push(&mut self, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*", val as "cv::Point3i"] {
+                vec->push_back(val);
+            })
+        }
+        
+        #[inline]
+        fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*", index as "size_t", val as "cv::Point3i"] {
+                vec->insert(vec->begin() + index, val);
+            });
+            Ok(())
+        }
+        
+        #[inline]
+        fn get(&self, index: size_t) -> Result<Self::Storage> {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "const std::vector<Point3iWrapper>*", index as "size_t"] -> crate::sys::cv_return_value_Point3iWrapper as "cv_return_value_Point3iWrapper" {
+                try {
+                    return { Error::Code::StsOk, NULL, vec->at(index) };
+                } VEC_CATCH(cv_return_value_Point3iWrapper)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "const std::vector<Point3iWrapper>*", index as "size_t"] -> core::Point3i as "Point3iWrapper" {
+                return (*vec)[index];
+            })
+        }
+        
+        #[inline]
+        fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*", index as "size_t", val as "cv::Point3i"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                try {
+                    vec->at(index) = val;
+                    return { Error::Code::StsOk, NULL };
+                } VEC_CATCH(cv_return_value_void)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [vec as "std::vector<cv::Point3i>*", index as "size_t", val as "cv::Point3i"] {
+                (*vec)[index] = val;
+            })
+        }
+        
+        #[inline]
+        fn to_vec(&self) -> Vec<Self::Storage> {
+            self.to_slice().to_vec()
+        }
+    }
+    
+    unsafe impl Send for VectorOfPoint3i {}
+    
+    impl core::ToInputArray for VectorOfPoint3i {
+        #[inline]
+        fn input_array(&self) -> Result<core::_InputArray> {
+            let me = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _InputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_InputArray { ptr })
+        }
+    }
+    
+    impl core::ToInputArray for &VectorOfPoint3i {
+        #[inline]
+        fn input_array(&self) -> Result<core::_InputArray> {
+            (*self).input_array()
+        }
+    }
+    
+    impl core::ToOutputArray for VectorOfPoint3i {
+        #[inline]
+        fn output_array(&mut self) -> Result<core::_OutputArray> {
+            let me = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_OutputArray { ptr })
+        }
+    }
+    
+    impl core::ToOutputArray for &mut VectorOfPoint3i {
+        #[inline]
+        fn output_array(&mut self) -> Result<core::_OutputArray> {
+            (*self).output_array()
+        }
+    }
+    
+    impl core::ToInputOutputArray for VectorOfPoint3i {
+        #[inline]
+        fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+            let me = self.as_raw_VectorOfPoint3i();
+            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
+                } CVRS_CATCH(cv_return_value_void_X)
+            }).into_result()
+                .map(|ptr| core::_InputOutputArray { ptr })
+        }
+    }
+    
+    impl core::ToInputOutputArray for &mut VectorOfPoint3i {
+        #[inline]
+        fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
+            (*self).input_output_array()
+        }
+    }
+    
     pub struct VectorOfRange {
         pub(crate) ptr: *mut c_void
     }

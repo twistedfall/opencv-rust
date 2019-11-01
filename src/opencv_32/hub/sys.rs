@@ -10,6 +10,9 @@ mod core_sys {
     pub type cv_return_value_Moments = cv_return_value<core::Moments>;
     pub type cv_return_value_Point2dWrapper = cv_return_value<core::Point2d>;
     pub type cv_return_value_Point2fWrapper = cv_return_value<core::Point2f>;
+    pub type cv_return_value_Point3dWrapper = cv_return_value<core::Point3d>;
+    pub type cv_return_value_Point3fWrapper = cv_return_value<core::Point3f>;
+    pub type cv_return_value_Point3iWrapper = cv_return_value<core::Point3i>;
     pub type cv_return_value_PointWrapper = cv_return_value<core::Point>;
     pub type cv_return_value_Rect2fWrapper = cv_return_value<core::Rect2f>;
     pub type cv_return_value_RectWrapper = cv_return_value<core::Rect>;

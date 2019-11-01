@@ -684,6 +684,24 @@ impl Viz3d {
         unsafe { sys::cv_viz_Viz3d_resetCamera(self.as_raw_Viz3d()) }.into_result()
     }
     
+    /// Transforms a point in world coordinate system to window coordinate system.
+    ///
+    /// ## Parameters
+    /// * pt: Point in world coordinate system.
+    /// * window_coord: Output point in window coordinate system.
+    pub fn convert_to_window_coordinates(&mut self, pt: core::Point3d, window_coord: &mut core::Point3d) -> Result<()> {
+        unsafe { sys::cv_viz_Viz3d_convertToWindowCoordinates_Point3d_Point3d(self.as_raw_Viz3d(), pt, window_coord) }.into_result()
+    }
+    
+    /// Transforms a point in window coordinate system to a 3D ray in world coordinate system.
+    ///
+    /// ## Parameters
+    /// * window_coord: Point in window coordinate system. @param origin Output origin of the ray.
+    /// * direction: Output direction of the ray.
+    pub fn conver_to3_d_ray(&mut self, window_coord: core::Point3d, origin: &mut core::Point3d, direction: &mut core::Vec3d) -> Result<()> {
+        unsafe { sys::cv_viz_Viz3d_converTo3DRay_Point3d_Point3d_Vec3d(self.as_raw_Viz3d(), window_coord, origin, direction) }.into_result()
+    }
+    
     /// Returns the current size of the window.
     pub fn get_window_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_viz_Viz3d_getWindowSize_const(self.as_raw_Viz3d()) }.into_result()
@@ -925,6 +943,27 @@ impl crate::viz::Widget3DTrait for WArrow {
     #[inline(always)] fn as_raw_Widget3D(&self) -> *mut c_void { self.ptr }
 }
 
+impl WArrow {
+    /// Constructs an WArrow.
+    ///
+    /// ## Parameters
+    /// * pt1: Start point of the arrow.
+    /// * pt2: End point of the arrow.
+    /// * thickness: Thickness of the arrow. Thickness of arrow head is also adjusted
+    /// accordingly.
+    /// * color: Color of the arrow.
+    ///
+    /// Arrow head is located at the end point of the arrow.
+    ///
+    /// ## C++ default parameters
+    /// * thickness: 0.03
+    /// * color: Color::white()
+    pub fn new(pt1: core::Point3d, pt2: core::Point3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WArrow> {
+        unsafe { sys::cv_viz_WArrow_WArrow_Point3d_Point3d_double_Color(pt1, pt2, thickness, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WArrow { ptr })
+    }
+    
+}
+
 // boxed class cv::viz::WCameraPosition
 /// This 3D Widget represents camera position in a scene by its axes or viewing frustum. :
 pub struct WCameraPosition {
@@ -1049,6 +1088,22 @@ impl WCircle {
     /// * color: Color::white()
     pub fn new(radius: f64, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
         unsafe { sys::cv_viz_WCircle_WCircle_double_double_Color(radius, thickness, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCircle { ptr })
+    }
+    
+    /// Constructs repositioned planar circle.
+    ///
+    /// ## Parameters
+    /// * radius: Radius of the circle.
+    /// * center: Center of the circle.
+    /// * normal: Normal of the plane in which the circle lies.
+    /// * thickness: Thickness of the circle.
+    /// * color: Color of the circle.
+    ///
+    /// ## C++ default parameters
+    /// * thickness: 0.01
+    /// * color: Color::white()
+    pub fn new_1(radius: f64, center: core::Point3d, normal: core::Vec3d, thickness: f64, color: &crate::viz::Color) -> Result<crate::viz::WCircle> {
+        unsafe { sys::cv_viz_WCircle_WCircle_double_Point3d_Vec3d_double_Color(radius, center, normal, thickness, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCircle { ptr })
     }
     
 }
@@ -1291,6 +1346,22 @@ impl WCone {
         unsafe { sys::cv_viz_WCone_WCone_double_double_int_Color(length, radius, resolution, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCone { ptr })
     }
     
+    /// Constructs repositioned planar cone.
+    ///
+    /// ## Parameters
+    /// * radius: Radius of the cone.
+    /// * center: Center of the cone base.
+    /// * tip: Tip of the cone.
+    /// * resolution: Resolution of the cone.
+    /// * color: Color of the cone.
+    ///
+    /// ## C++ default parameters
+    /// * resolution: 6.0
+    /// * color: Color::white()
+    pub fn new_1(radius: f64, center: core::Point3d, tip: core::Point3d, resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WCone> {
+        unsafe { sys::cv_viz_WCone_WCone_double_Point3d_Point3d_int_Color(radius, center, tip, resolution, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCone { ptr })
+    }
+    
 }
 
 // boxed class cv::viz::WCoordinateSystem
@@ -1367,6 +1438,28 @@ impl crate::viz::Widget3DTrait for WCube {
     #[inline(always)] fn as_raw_Widget3D(&self) -> *mut c_void { self.ptr }
 }
 
+impl WCube {
+    /// Constructs a WCube.
+    ///
+    /// ## Parameters
+    /// * min_point: Specifies minimum point of the bounding box.
+    /// * max_point: Specifies maximum point of the bounding box.
+    /// * wire_frame: If true, cube is represented as wireframe.
+    /// * color: Color of the cube.
+    ///
+    /// ![Cube Widget](https://docs.opencv.org/3.4.8/images/cube_widget.png)
+    ///
+    /// ## C++ default parameters
+    /// * min_point: Vec3d::all(-0.5)
+    /// * max_point: Vec3d::all(0.5)
+    /// * wire_frame: true
+    /// * color: Color::white()
+    pub fn new(min_point: core::Point3d, max_point: core::Point3d, wire_frame: bool, color: &crate::viz::Color) -> Result<crate::viz::WCube> {
+        unsafe { sys::cv_viz_WCube_WCube_Point3d_Point3d_bool_Color(min_point, max_point, wire_frame, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCube { ptr })
+    }
+    
+}
+
 // boxed class cv::viz::WCylinder
 /// This 3D Widget defines a cylinder. :
 pub struct WCylinder {
@@ -1395,6 +1488,25 @@ impl crate::viz::WidgetTrait for WCylinder {
 
 impl crate::viz::Widget3DTrait for WCylinder {
     #[inline(always)] fn as_raw_Widget3D(&self) -> *mut c_void { self.ptr }
+}
+
+impl WCylinder {
+    /// Constructs a WCylinder.
+    ///
+    /// ## Parameters
+    /// * axis_point1: A point1 on the axis of the cylinder.
+    /// * axis_point2: A point2 on the axis of the cylinder.
+    /// * radius: Radius of the cylinder.
+    /// * numsides: Resolution of the cylinder.
+    /// * color: Color of the cylinder.
+    ///
+    /// ## C++ default parameters
+    /// * numsides: 30
+    /// * color: Color::white()
+    pub fn new(axis_point1: core::Point3d, axis_point2: core::Point3d, radius: f64, numsides: i32, color: &crate::viz::Color) -> Result<crate::viz::WCylinder> {
+        unsafe { sys::cv_viz_WCylinder_WCylinder_Point3d_Point3d_double_int_Color(axis_point1, axis_point2, radius, numsides, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCylinder { ptr })
+    }
+    
 }
 
 // boxed class cv::viz::WGrid
@@ -1441,6 +1553,16 @@ impl WGrid {
     /// * color: Color::white()
     pub fn new(cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
         unsafe { sys::cv_viz_WGrid_WGrid_Vec2i_Vec2d_Color(cells, cells_spacing, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WGrid { ptr })
+    }
+    
+    /// Creates repositioned grid
+    ///
+    /// ## C++ default parameters
+    /// * cells: Vec2i::all(10)
+    /// * cells_spacing: Vec2d::all(1.0)
+    /// * color: Color::white()
+    pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, cells: core::Vec2i, cells_spacing: core::Vec2d, color: &crate::viz::Color) -> Result<crate::viz::WGrid> {
+        unsafe { sys::cv_viz_WGrid_WGrid_Point3d_Vec3d_Vec3d_Vec2i_Vec2d_Color(center, normal, new_yaxis, cells, cells_spacing, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WGrid { ptr })
     }
     
 }
@@ -1600,6 +1722,22 @@ impl crate::viz::Widget3DTrait for WLine {
     #[inline(always)] fn as_raw_Widget3D(&self) -> *mut c_void { self.ptr }
 }
 
+impl WLine {
+    /// Constructs a WLine.
+    ///
+    /// ## Parameters
+    /// * pt1: Start point of the line.
+    /// * pt2: End point of the line.
+    /// * color: Color of the line.
+    ///
+    /// ## C++ default parameters
+    /// * color: Color::white()
+    pub fn new(pt1: core::Point3d, pt2: core::Point3d, color: &crate::viz::Color) -> Result<crate::viz::WLine> {
+        unsafe { sys::cv_viz_WLine_WLine_Point3d_Point3d_Color(pt1, pt2, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WLine { ptr })
+    }
+    
+}
+
 // boxed class cv::viz::WMesh
 /// Constructs a WMesh.
 ///
@@ -1692,6 +1830,18 @@ impl WPaintedCloud {
         unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud__InputArray(cloud.as_raw__InputArray()) }.into_result().map(|ptr| crate::viz::WPaintedCloud { ptr })
     }
     
+    /// Paint cloud with default gradient between given points
+    pub fn new_1(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d) -> Result<crate::viz::WPaintedCloud> {
+        input_array_arg!(cloud);
+        unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud__InputArray_Point3d_Point3d(cloud.as_raw__InputArray(), p1, p2) }.into_result().map(|ptr| crate::viz::WPaintedCloud { ptr })
+    }
+    
+    /// Paint cloud with gradient specified by given colors between given points
+    pub fn new_2(cloud: &dyn core::ToInputArray, p1: core::Point3d, p2: core::Point3d, c1: &crate::viz::Color, c2: &crate::viz::Color) -> Result<crate::viz::WPaintedCloud> {
+        input_array_arg!(cloud);
+        unsafe { sys::cv_viz_WPaintedCloud_WPaintedCloud__InputArray_Point3d_Point3d_Color_Color(cloud.as_raw__InputArray(), p1, p2, c1.as_raw_Color(), c2.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WPaintedCloud { ptr })
+    }
+    
 }
 
 // boxed class cv::viz::WPlane
@@ -1736,6 +1886,22 @@ impl WPlane {
     /// * color: Color::white()
     pub fn new(size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
         unsafe { sys::cv_viz_WPlane_WPlane_Size2d_Color(size, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WPlane { ptr })
+    }
+    
+    /// Constructs a repositioned plane
+    ///
+    /// ## Parameters
+    /// * center: Center of the plane
+    /// * normal: Plane normal orientation
+    /// * new_yaxis: Up-vector. New orientation of plane y-axis.
+    /// * size:
+    /// * color: Color of the plane.
+    ///
+    /// ## C++ default parameters
+    /// * size: Size2d(1.0, 1.0)
+    /// * color: Color::white()
+    pub fn new_1(center: core::Point3d, normal: core::Vec3d, new_yaxis: core::Vec3d, size: core::Size2d, color: &crate::viz::Color) -> Result<crate::viz::WPlane> {
+        unsafe { sys::cv_viz_WPlane_WPlane_Point3d_Vec3d_Vec3d_Size2d_Color(center, normal, new_yaxis, size, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WPlane { ptr })
     }
     
 }
@@ -1820,6 +1986,24 @@ impl crate::viz::WidgetTrait for WSphere {
 
 impl crate::viz::Widget3DTrait for WSphere {
     #[inline(always)] fn as_raw_Widget3D(&self) -> *mut c_void { self.ptr }
+}
+
+impl WSphere {
+    /// Constructs a WSphere.
+    ///
+    /// ## Parameters
+    /// * center: Center of the sphere.
+    /// * radius: Radius of the sphere.
+    /// * sphere_resolution: Resolution of the sphere.
+    /// * color: Color of the sphere.
+    ///
+    /// ## C++ default parameters
+    /// * sphere_resolution: 10
+    /// * color: Color::white()
+    pub fn new(center: core::Point3d, radius: f64, sphere_resolution: i32, color: &crate::viz::Color) -> Result<crate::viz::WSphere> {
+        unsafe { sys::cv_viz_WSphere_WSphere_Point3d_double_int_Color(center, radius, sphere_resolution, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WSphere { ptr })
+    }
+    
 }
 
 // boxed class cv::viz::WText
@@ -1916,6 +2100,24 @@ impl crate::viz::Widget3DTrait for WText3D {
 }
 
 impl WText3D {
+    /// Constructs a WText3D.
+    ///
+    /// ## Parameters
+    /// * text: Text content of the widget.
+    /// * position: Position of the text.
+    /// * text_scale: Size of the text.
+    /// * face_camera: If true, text always faces the camera.
+    /// * color: Color of the text.
+    ///
+    /// ## C++ default parameters
+    /// * text_scale: 1.
+    /// * face_camera: true
+    /// * color: Color::white()
+    pub fn new(text: &str, position: core::Point3d, text_scale: f64, face_camera: bool, color: &crate::viz::Color) -> Result<crate::viz::WText3D> {
+        string_arg!(text);
+        unsafe { sys::cv_viz_WText3D_WText3D_String_Point3d_double_bool_Color(text.as_ptr(), position, text_scale, face_camera, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WText3D { ptr })
+    }
+    
     /// Sets the text content of the widget.
     ///
     /// ## Parameters
