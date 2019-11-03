@@ -30,9 +30,7 @@ macro_rules! string_arg_output_receive {
 
 macro_rules! callback_arg {
     ($callback_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) via $userdata_name: ident => ($($fw_arg_name: ident: $fw_arg_type: ty),*)) => {
-        ::lazy_static::lazy_static!(
-            static ref callbacks: ::std::sync::Mutex<::slab::Slab<Box<dyn FnMut($($fw_arg_type),*) + Send + Sync>>> = ::std::sync::Mutex::new(::slab::Slab::with_capacity(1));
-        );
+        static callbacks: ::once_cell::sync::Lazy<::std::sync::Mutex<::slab::Slab<Box<dyn FnMut($($fw_arg_type),*) + Send + Sync>>>> = ::once_cell::sync::Lazy::new(|| ::std::sync::Mutex::new(::slab::Slab::with_capacity(1)));
 
         extern "C" fn trampoline($($tr_arg_name: $tr_arg_type),*) {
             if let Some(callback) = callbacks.lock().unwrap().get_mut($userdata_name as _) {
