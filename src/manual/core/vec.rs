@@ -1,5 +1,11 @@
 use std::ops::{Deref, DerefMut};
 
+use crate::{
+    core::{_InputArray, ToInputArray},
+    Result,
+    sys,
+};
+
 pub use self::{scalar::ValidScalarType, vec::ValidVecType};
 
 // additional modules needed because valid_types! introduces module named "private"
@@ -61,5 +67,24 @@ vec_impl!(Scalar_, 4, ValidScalarType);
 impl<T: ValidScalarType> Scalar_<T> {
     pub fn new(v0: T, v1: T, v2: T, v3: T) -> Self {
         Self([v0, v1, v2, v3])
+    }
+}
+
+impl ToInputArray for Scalar_<f64> {
+    fn input_array(&self) -> Result<_InputArray> {
+        let me = self;
+        cpp!(unsafe [me as "const ScalarWrapper*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            try {
+                return { Error::Code::StsOk, NULL, new _InputArray(*reinterpret_cast<const cv::Scalar*>(me)) };
+            } CVRS_CATCH(cv_return_value_void_X)
+        }).into_result()
+            .map(|ptr| _InputArray { ptr })
+    }
+}
+
+impl ToInputArray for &Scalar_<f64> {
+    #[inline]
+    fn input_array(&self) -> Result<_InputArray> {
+        (*self).input_array()
     }
 }

@@ -36,17 +36,17 @@ files or `-dev` packages.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.24"
+opencv = "0.25"
 ```
 
 Select OpenCV version if different from default in Cargo.toml:
 ```toml
-opencv = {version = "0.24", default-features = false, features = ["opencv-41"]}
+opencv = {version = "0.25", default-features = false, features = ["opencv-41"]}
 ```
 
 And enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.24", default-features = false, features = ["opencv-41", "contrib"]}
+opencv = {version = "0.25", default-features = false, features = ["opencv-41", "contrib"]}
 ```
 
 Import prelude
