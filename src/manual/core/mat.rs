@@ -403,13 +403,23 @@ impl Mat {
     }
 
     pub fn data_typed<T: DataType>(&self) -> Result<&[T]> {
+        self.match_format::<T>()
+            .and_then(|_| unsafe { self.data_typed_unchecked() })
+    }
+
+    pub unsafe fn data_typed_unchecked<T: DataType>(&self) -> Result<&[T]> {
         let total = self.total()?;
-        self.data().map(|x| unsafe { slice::from_raw_parts(x as *const _ as *const _, total) })
+        self.data().map(|x| slice::from_raw_parts(x as *const _ as *const _, total))
     }
 
     pub fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
+        self.match_format::<T>()?;
+        unsafe { self.data_typed_mut_unchecked() }
+    }
+
+    pub unsafe fn data_typed_mut_unchecked<T: DataType>(&mut self) -> Result<&mut [T]> {
         let total = self.total()?;
-        self.data_mut().map(|x| unsafe { slice::from_raw_parts_mut(x as *mut _ as *mut _, total) })
+        self.data_mut().map(|x| slice::from_raw_parts_mut(x as *mut _ as *mut _, total))
     }
 
     pub fn to_vec_2d<T: DataType>(&self) -> Result<Vec<Vec<T>>> {
