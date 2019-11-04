@@ -2,7 +2,7 @@ use std::ops::{Deref, DerefMut};
 
 pub use self::{scalar::ValidScalarType, vec::ValidVecType};
 
-// additional modules needed because valid_types! introduces named private module
+// additional modules needed because valid_types! introduces module named "private"
 mod vec {
     valid_types!(ValidVecType, i8, u8, i16, u16, i32, f32, f64);
 }
