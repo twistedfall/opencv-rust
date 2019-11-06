@@ -2821,10 +2821,10 @@ class VectorTypeInfo(TypeInfo):
                 #[inline]
                 fn input_array(&self) -> Result<core::_InputArray> {
                     let me = self.as_raw_${rust_local}();
-                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                         try {
                             return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                        } CVRS_CATCH(cv_return_value_void_X)
+                        } CVRS_CATCH(cv_return_value_const_void_X)
                     }).into_result()
                         .map(|ptr| core::_InputArray { ptr })
                 }
@@ -2841,10 +2841,10 @@ class VectorTypeInfo(TypeInfo):
                 #[inline]
                 fn output_array(&mut self) -> Result<core::_OutputArray> {
                     let me = self.as_raw_${rust_local}();
-                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                         try {
                             return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                        } CVRS_CATCH(cv_return_value_void_X)
+                        } CVRS_CATCH(cv_return_value_const_void_X)
                     }).into_result()
                         .map(|ptr| core::_OutputArray { ptr })
                 }
@@ -2861,10 +2861,10 @@ class VectorTypeInfo(TypeInfo):
                 #[inline]
                 fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
                     let me = self.as_raw_${rust_local}();
-                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+                    cpp!(unsafe [me as "${cpptype}*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                         try {
                             return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                        } CVRS_CATCH(cv_return_value_void_X)
+                        } CVRS_CATCH(cv_return_value_const_void_X)
                     }).into_result()
                         .map(|ptr| core::_InputOutputArray { ptr })
                 }

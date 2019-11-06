@@ -276,7 +276,7 @@ fn mat_vec() -> Result<()> {
         let mut mat = Mat::new_nd_with_default(&dims, f64::typ(), Scalar::all(2.))?;
         *mat.at_3d_mut::<f64>(1, 1, 1)? = 10.;
         assert_eq!(3, mat.dims()?);
-        if let Ok(..) = mat.to_vec_2d::<f64>() {
+        if mat.to_vec_2d::<f64>().is_ok() {
             assert!(false, "dims too high");
         }
     }
@@ -285,7 +285,7 @@ fn mat_vec() -> Result<()> {
 }
 
 #[test]
-fn mat_continous() -> Result<()> {
+fn mat_continuous() -> Result<()> {
     let s: Vec<Vec<f32>> = vec![
         vec![1., 2., 3.],
         vec![4., 5., 6.],

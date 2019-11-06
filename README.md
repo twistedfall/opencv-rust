@@ -71,7 +71,7 @@ errors try also building with `--release` flag.
 Mac OS X build currently also requires `buildtime-bindgen` feature enabled.
 
 Also refer to the corresponding [issue](https://github.com/twistedfall/opencv-rust/issues/6)
-and Travis [build script] (https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh).
+and Travis [build script](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh).
 
 ### Features
 * `opencv-32` - build against OpenCV 3.2.0, this feature is aimed primarily on stable Debian and
@@ -84,6 +84,7 @@ and Travis [build script] (https://github.com/twistedfall/opencv-rust/blob/maste
   or when building on Windows
 * `force-3rd-party-libs-discovery` - legacy feature that enables some additional logic for
   discovery of dependent libs, should not be needed anymore
+* `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ### Functionality
 
