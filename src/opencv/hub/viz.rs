@@ -639,6 +639,18 @@ impl Viz3d {
         unsafe { sys::cv_viz_Viz3d_removeWidget_String(self.as_raw_Viz3d(), id.as_ptr()) }.into_result()
     }
     
+    /// Retrieves a widget from the window.
+    ///
+    /// A widget is implicitly shared; that is, if the returned widget is modified, the changes
+    /// will be immediately visible in the window.
+    ///
+    /// ## Parameters
+    /// * id: The id of the widget that will be returned.
+    pub fn get_widget(&self, id: &str) -> Result<crate::viz::Widget> {
+        string_arg!(id);
+        unsafe { sys::cv_viz_Viz3d_getWidget_const_String(self.as_raw_Viz3d(), id.as_ptr()) }.into_result().map(|ptr| crate::viz::Widget { ptr })
+    }
+    
     /// Removes all widgets from the window.
     pub fn remove_all_widgets(&mut self) -> Result<()> {
         unsafe { sys::cv_viz_Viz3d_removeAllWidgets(self.as_raw_Viz3d()) }.into_result()
@@ -2431,6 +2443,26 @@ unsafe impl Send for Widget {}
 
 impl crate::viz::WidgetTrait for Widget {
     #[inline(always)] fn as_raw_Widget(&self) -> *mut c_void { self.ptr }
+}
+
+impl Widget {
+    pub fn default() -> Result<crate::viz::Widget> {
+        unsafe { sys::cv_viz_Widget_Widget() }.into_result().map(|ptr| crate::viz::Widget { ptr })
+    }
+    
+    pub fn copy(other: &dyn crate::viz::WidgetTrait) -> Result<crate::viz::Widget> {
+        unsafe { sys::cv_viz_Widget_Widget_Widget(other.as_raw_Widget()) }.into_result().map(|ptr| crate::viz::Widget { ptr })
+    }
+    
+    /// Creates a widget from ply file.
+    ///
+    /// ## Parameters
+    /// * file_name: Ply file name.
+    pub fn from_ply_file(file_name: &str) -> Result<crate::viz::Widget> {
+        string_arg!(file_name);
+        unsafe { sys::cv_viz_Widget_fromPlyFile_String(file_name.as_ptr()) }.into_result().map(|ptr| crate::viz::Widget { ptr })
+    }
+    
 }
 
 // Generating impl for trait crate::viz::Widget2D

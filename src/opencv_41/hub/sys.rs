@@ -3795,6 +3795,7 @@ mod viz_sys {
         pub fn cv_viz_Viz3d_Viz3d_String(window_name: *const c_char) -> cv_return_value_void_X;
         pub fn cv_viz_Viz3d_Viz3d_Viz3d(unnamed_arg: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_viz_Viz3d_removeWidget_String(instance: *mut c_void, id: *const c_char) -> cv_return_value_void;
+        pub fn cv_viz_Viz3d_getWidget_const_String(instance: *const c_void, id: *const c_char) -> cv_return_value_void_X;
         pub fn cv_viz_Viz3d_removeAllWidgets(instance: *mut c_void) -> cv_return_value_void;
         pub fn cv_viz_Viz3d_showImage__InputArray_Size(instance: *mut c_void, image: *mut c_void, window_size: core::Size) -> cv_return_value_void;
         pub fn cv_viz_Viz3d_setCamera_Camera(instance: *mut c_void, camera: *mut c_void) -> cv_return_value_void;
@@ -3900,6 +3901,9 @@ mod viz_sys {
         pub fn cv_viz_Widget_setRenderingProperty_int_double(instance: *mut c_void, property: i32, value: f64) -> cv_return_value_void;
         pub fn cv_viz_Widget_getRenderingProperty_const_int(instance: *const c_void, property: i32) -> cv_return_value_double;
         pub fn cv_Widget_delete(ptr : *mut c_void);
+        pub fn cv_viz_Widget_Widget() -> cv_return_value_void_X;
+        pub fn cv_viz_Widget_Widget_Widget(other: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_viz_Widget_fromPlyFile_String(file_name: *const c_char) -> cv_return_value_void_X;
         pub fn cv_viz_Widget2D_setColor_Color(instance: *mut c_void, color: *mut c_void) -> cv_return_value_void;
         pub fn cv_Widget2D_delete(ptr : *mut c_void);
         pub fn cv_viz_Widget2D_Widget2D() -> cv_return_value_void_X;
