@@ -7645,6 +7645,16 @@ impl Mat {
     /// * idx: Array of Mat::dims indices.
     pub fn at_nd<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> { self._at_nd(idx) }
     
+    /// special versions for 2D arrays (especially convenient for referencing image pixels)
+    /// ## Parameters
+    /// * pt: Element position specified as Point(j,i) .
+    pub fn at_pt_mut<T: core::DataType>(&mut self, pt: core::Point) -> Result<&mut T> { self._at_pt_mut(pt) }
+    
+    /// special versions for 2D arrays (especially convenient for referencing image pixels)
+    /// ## Parameters
+    /// * pt: Element position specified as Point(j,i) .
+    pub fn at_pt<T: core::DataType>(&self, pt: core::Point) -> Result<&T> { self._at_pt(pt) }
+    
     /// internal use method: updates the continuity flag
     pub fn update_continuity_flag(&mut self) -> Result<()> {
         unsafe { sys::cv_Mat_updateContinuityFlag(self.as_raw_Mat()) }.into_result()

@@ -2485,7 +2485,7 @@ pub fn project_points(object_points: &dyn core::ToInputArray, rvec: &dyn core::T
 ///
 /// ## C++ default parameters
 /// * mask: noArray()
-pub fn recover_pose_camera_with_points(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, mask: &mut dyn core::ToInputOutputArray) -> Result<i32> {
+pub fn recover_pose_camera(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, mask: &mut dyn core::ToInputOutputArray) -> Result<i32> {
     input_array_arg!(e);
     input_array_arg!(points1);
     input_array_arg!(points2);
@@ -2564,7 +2564,7 @@ pub fn recover_pose_camera_with_points(e: &dyn core::ToInputArray, points1: &dyn
 /// ## C++ default parameters
 /// * mask: noArray()
 /// * triangulated_points: noArray()
-pub fn recover_pose_camera(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, distance_thresh: f64, mask: &mut dyn core::ToInputOutputArray, triangulated_points: &mut dyn core::ToOutputArray) -> Result<i32> {
+pub fn recover_pose_camera_with_points(e: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, points2: &dyn core::ToInputArray, camera_matrix: &dyn core::ToInputArray, r: &mut dyn core::ToOutputArray, t: &mut dyn core::ToOutputArray, distance_thresh: f64, mask: &mut dyn core::ToInputOutputArray, triangulated_points: &mut dyn core::ToOutputArray) -> Result<i32> {
     input_array_arg!(e);
     input_array_arg!(points1);
     input_array_arg!(points2);

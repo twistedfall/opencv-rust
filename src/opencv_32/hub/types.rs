@@ -1156,10 +1156,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfPoint();
-            cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -1176,10 +1176,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfPoint();
-            cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -1196,10 +1196,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfPoint();
-            cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -1416,10 +1416,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfPoint2d();
-            cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -1436,10 +1436,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfPoint2d();
-            cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -1456,10 +1456,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfPoint2d();
-            cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point2d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -1676,10 +1676,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfPoint2f();
-            cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -1696,10 +1696,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfPoint2f();
-            cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -1716,10 +1716,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfPoint2f();
-            cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point2f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -1936,10 +1936,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfPoint3d();
-            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -1956,10 +1956,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfPoint3d();
-            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -1976,10 +1976,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfPoint3d();
-            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3d>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -2196,10 +2196,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfPoint3f();
-            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -2216,10 +2216,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfPoint3f();
-            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -2236,10 +2236,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfPoint3f();
-            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -2456,10 +2456,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfPoint3i();
-            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -2476,10 +2476,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfPoint3i();
-            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -2496,10 +2496,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfPoint3i();
-            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Point3i>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -2905,10 +2905,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfRect();
-            cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -2925,10 +2925,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfRect();
-            cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -2945,10 +2945,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfRect();
-            cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Rect>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -3547,10 +3547,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVec4f();
-            cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -3567,10 +3567,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVec4f();
-            cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -3587,10 +3587,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVec4f();
-            cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<cv::Vec4f>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -4374,10 +4374,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -4394,10 +4394,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -4414,10 +4414,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -4623,10 +4623,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint2f();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -4643,10 +4643,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint2f();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -4663,10 +4663,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint2f();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point2f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -4872,10 +4872,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3d();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3d>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3d>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -4892,10 +4892,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3d();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3d>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3d>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -4912,10 +4912,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3d();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3d>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3d>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -5121,10 +5121,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3f();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -5141,10 +5141,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3f();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -5161,10 +5161,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3f();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3f>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -5370,10 +5370,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3i();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3i>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3i>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -5390,10 +5390,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3i();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3i>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3i>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -5410,10 +5410,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfPoint3i();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3i>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Point3i>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -5619,10 +5619,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfRect();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -5639,10 +5639,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfRect();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -5659,10 +5659,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfRect();
-            cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<cv::Rect>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -5868,10 +5868,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfchar();
-            cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -5888,10 +5888,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfchar();
-            cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -5908,10 +5908,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfchar();
-            cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<char>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -6117,10 +6117,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfint();
-            cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -6137,10 +6137,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfint();
-            cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -6157,10 +6157,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfint();
-            cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<int>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -6366,10 +6366,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfVectorOfuchar();
-            cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -6386,10 +6386,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfVectorOfuchar();
-            cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -6406,10 +6406,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfVectorOfuchar();
-            cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<std::vector<uchar>>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -6811,10 +6811,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfchar();
-            cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -6831,10 +6831,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfchar();
-            cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -6851,10 +6851,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfchar();
-            cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<char>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -7071,10 +7071,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfdouble();
-            cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -7091,10 +7091,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfdouble();
-            cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -7111,10 +7111,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfdouble();
-            cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<double>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -7331,10 +7331,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOffloat();
-            cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -7351,10 +7351,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOffloat();
-            cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -7371,10 +7371,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOffloat();
-            cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<float>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -7591,10 +7591,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfint();
-            cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -7611,10 +7611,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfint();
-            cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -7631,10 +7631,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfint();
-            cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<int>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
@@ -8044,10 +8044,10 @@ mod core_types {
         #[inline]
         fn input_array(&self) -> Result<core::_InputArray> {
             let me = self.as_raw_VectorOfuchar();
-            cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputArray { ptr })
         }
@@ -8064,10 +8064,10 @@ mod core_types {
         #[inline]
         fn output_array(&mut self) -> Result<core::_OutputArray> {
             let me = self.as_raw_VectorOfuchar();
-            cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _OutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_OutputArray { ptr })
         }
@@ -8084,10 +8084,10 @@ mod core_types {
         #[inline]
         fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
             let me = self.as_raw_VectorOfuchar();
-            cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_void_X" {
+            cpp!(unsafe [me as "std::vector<uchar>*"] -> sys::cv_return_value_const_void_X as "cv_return_value_const_void_X" {
                 try {
                     return { Error::Code::StsOk, NULL, new _InputOutputArray(*me) };
-                } CVRS_CATCH(cv_return_value_void_X)
+                } CVRS_CATCH(cv_return_value_const_void_X)
             }).into_result()
                 .map(|ptr| core::_InputOutputArray { ptr })
         }
