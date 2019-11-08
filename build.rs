@@ -363,6 +363,8 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
         PathBuf::from("core/persistence.hpp"),
         PathBuf::from("aruco/dictionary.hpp"),
         PathBuf::from("dnn/blob.hpp"),
+        PathBuf::from("viz/types.hpp"),
+        PathBuf::from("viz/widgets.hpp"),
     ];
 
     modules.sort_by_key(|(mod_name, ..)| module_order.iter().position(|&order_module| order_module == mod_name).unwrap_or_else(|| module_order.len()));
