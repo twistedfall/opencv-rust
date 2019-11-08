@@ -228,6 +228,8 @@ func_rename = {
     "cv_Mat_at_int": "at_mut",
     "cv_Mat_at_int_int": "at_2d_mut",
     "cv_Mat_at_const_int_int": "at_2d",
+    "cv_Mat_at_Point": "at_pt_mut",
+    "cv_Mat_at_const_Point": "at_pt",
     "cv_Mat_at_int_int_int": "at_3d_mut",
     "cv_Mat_at_const_int_int_int": "at_3d",
     "cv_Mat_at_const_int_X": "at_nd_mut",
@@ -761,6 +763,12 @@ func_manual = {
         "rust_safe": _forward_mut_rust_safe,
     },
     "cv_Mat_at_const_int_int": {
+        "rust_safe": _forward_const_rust_safe,
+    },
+    "cv_Mat_at_Point": {
+        "rust_safe": _forward_mut_rust_safe,
+    },
+    "cv_Mat_at_const_Point": {
         "rust_safe": _forward_const_rust_safe,
     },
     "cv_Mat_at_int_int_int": {

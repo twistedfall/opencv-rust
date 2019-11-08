@@ -252,6 +252,23 @@ fn mat_at_row() -> Result<()> {
 }
 
 #[test]
+fn mat_at_pt() -> Result<()> {
+    let s: Vec<Vec<f32>> = vec![
+        vec![1., 2., 3.],
+        vec![4., 5., 6.],
+        vec![7., 8., 9.],
+    ];
+    let mut m = Mat::from_slice_2d(&s)?;
+    assert_eq!(5., *m.at_pt::<f32>(Point::new(1, 1))?);
+    assert_eq!(4., *m.at_pt_mut::<f32>(Point::new(0, 1))?);
+    assert_eq!(3., unsafe { *m.at_pt_unchecked::<f32>(Point::new(2, 0))? });
+    assert_eq!(9., unsafe { *m.at_pt_mut_unchecked::<f32>(Point::new(2, 2))? });
+    assert_matches!(m.at_pt::<f32>(Point::new(-1, -3)), Err(Error {code: core::StsOutOfRange, ..}));
+    assert_matches!(m.at_pt::<f32>(Point::new(3, -3)), Err(Error {code: core::StsOutOfRange, ..}));
+    Ok(())
+}
+
+#[test]
 fn mat_vec() -> Result<()> {
     {
         let s: Vec<Vec<f32>> = vec![

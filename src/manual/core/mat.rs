@@ -17,6 +17,7 @@ use crate::{
         MatExpr,
         MatSize,
         MatStep,
+        Point,
         Scalar,
         ToInputArray,
         ToInputOutputArray,
@@ -285,6 +286,26 @@ impl Mat {
     pub unsafe fn at_2d_mut_unchecked<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
         self.ptr_2d_mut(row, col)
             .map(convert_ptr_mut)
+    }
+
+    #[inline(always)]
+    pub(crate) fn _at_pt<T: DataType>(&self, pt: Point) -> Result<&T> {
+        self._at_2d(pt.y, pt.x)
+    }
+
+    /// Like `Mat::at_pt()` but performs no bounds or type checks
+    pub unsafe fn at_pt_unchecked<T: DataType>(&self, pt: Point) -> Result<&T> {
+        self.at_2d_unchecked(pt.y, pt.x)
+    }
+
+    #[inline(always)]
+    pub(crate) fn _at_pt_mut<T: DataType>(&mut self, pt: Point) -> Result<&mut T> {
+        self._at_2d_mut(pt.y, pt.x)
+    }
+
+    /// Like `Mat::at_pt_mut()` but performs no bounds or type checks
+    pub unsafe fn at_pt_mut_unchecked<T: DataType>(&mut self, pt: Point) -> Result<&mut T> {
+        self.at_2d_mut_unchecked(pt.y, pt.x)
     }
 
     #[inline(always)]
