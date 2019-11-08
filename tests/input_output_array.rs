@@ -1,3 +1,5 @@
+use matches::assert_matches;
+
 use opencv::{
     core::{self, Mat, Scalar, UMatUsageFlags},
     prelude::*,
@@ -56,5 +58,15 @@ fn input_output_array() -> Result<()> {
         assert_eq!(mat.to_vec_2d::<u8>()?, expected.to_vec_2d()?);
     }
 
+    Ok(())
+}
+
+#[test]
+fn no_array() -> Result<()> {
+    use self::core::no_array;
+    assert_eq!(Scalar::all(0.), core::sum(&no_array()?)?);
+    assert_matches!(core::complete_symm(&mut no_array()?, false), Ok(()));
+    let m = Mat::new_rows_cols_with_default(1, 1, u16::typ(), Scalar::all(0.))?;
+    assert_matches!(core::mean_std_dev(&m, &mut no_array()?, &mut no_array()?, &no_array()?), Ok(()));
     Ok(())
 }
