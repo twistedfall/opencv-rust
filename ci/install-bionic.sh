@@ -96,7 +96,9 @@ BUILD_FLAGS="
     -D WITH_VTK=ON
     -D WITH_WEBP=ON
     -D WITH_XIMEA=OFF
-    -D WITH_XINE=OFF"
+    -D WITH_XINE=OFF
+    -D OPENCV_ENABLE_MEMALIGN=OFF
+    "
 
 if [[ "$OPENCV_VERSION" == "3.2.0" ]]; then
     sudo apt -y install libopencv-dev=3.2.0*
