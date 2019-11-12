@@ -9705,6 +9705,137 @@ mod dpm_types {
 #[cfg(feature = "contrib")]
 pub use dpm_types::*;
 
+#[cfg(feature = "contrib")]
+mod face_types {
+    use super::*;
+
+    pub struct PtrOfBasicFaceRecognizer {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfBasicFaceRecognizer {
+        #[inline(always)] pub fn as_raw_PtrOfBasicFaceRecognizer(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfBasicFaceRecognizer {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::BasicFaceRecognizer>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfBasicFaceRecognizer {}
+    
+    impl core::AlgorithmTrait for PtrOfBasicFaceRecognizer {
+        #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::BasicFaceRecognizer for PtrOfBasicFaceRecognizer {
+        #[inline(always)] fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::BasicFaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::FaceRecognizer for PtrOfBasicFaceRecognizer {
+        #[inline(always)] fn as_raw_FaceRecognizer(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    pub struct PtrOfLBPHFaceRecognizer {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfLBPHFaceRecognizer {
+        #[inline(always)] pub fn as_raw_PtrOfLBPHFaceRecognizer(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfLBPHFaceRecognizer {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::LBPHFaceRecognizer>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfLBPHFaceRecognizer {}
+    
+    impl core::AlgorithmTrait for PtrOfLBPHFaceRecognizer {
+        #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::FaceRecognizer for PtrOfLBPHFaceRecognizer {
+        #[inline(always)] fn as_raw_FaceRecognizer(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::LBPHFaceRecognizer for PtrOfLBPHFaceRecognizer {
+        #[inline(always)] fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::LBPHFaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    pub struct PtrOfStandardCollector {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfStandardCollector {
+        #[inline(always)] pub fn as_raw_PtrOfStandardCollector(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfStandardCollector {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::StandardCollector>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfStandardCollector {}
+    
+}
+#[cfg(feature = "contrib")]
+pub use face_types::*;
+
 mod features2d_types {
     use super::*;
 

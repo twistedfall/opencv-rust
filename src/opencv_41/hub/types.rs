@@ -11528,6 +11528,536 @@ mod dpm_types {
 #[cfg(feature = "contrib")]
 pub use dpm_types::*;
 
+#[cfg(feature = "contrib")]
+mod face_types {
+    use super::*;
+
+    pub struct PtrOfBIF {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfBIF {
+        #[inline(always)] pub fn as_raw_PtrOfBIF(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfBIF {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::BIF>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfBIF {}
+    
+    impl core::AlgorithmTrait for PtrOfBIF {
+        #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::BIF for PtrOfBIF {
+        #[inline(always)] fn as_raw_BIF(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::BIF>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    pub struct PtrOfEigenFaceRecognizer {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfEigenFaceRecognizer {
+        #[inline(always)] pub fn as_raw_PtrOfEigenFaceRecognizer(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfEigenFaceRecognizer {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::EigenFaceRecognizer>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfEigenFaceRecognizer {}
+    
+    pub struct PtrOfFacemark {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfFacemark {
+        #[inline(always)] pub fn as_raw_PtrOfFacemark(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfFacemark {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::Facemark>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfFacemark {}
+    
+    impl core::AlgorithmTrait for PtrOfFacemark {
+        #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::Facemark for PtrOfFacemark {
+        #[inline(always)] fn as_raw_Facemark(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::Facemark>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    pub struct PtrOfFacemarkAAM {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfFacemarkAAM {
+        #[inline(always)] pub fn as_raw_PtrOfFacemarkAAM(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfFacemarkAAM {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::FacemarkAAM>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfFacemarkAAM {}
+    
+    impl core::AlgorithmTrait for PtrOfFacemarkAAM {
+        #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::Facemark for PtrOfFacemarkAAM {
+        #[inline(always)] fn as_raw_Facemark(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::Facemark>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::FacemarkAAM for PtrOfFacemarkAAM {
+        #[inline(always)] fn as_raw_FacemarkAAM(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FacemarkAAM>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::FacemarkTrain for PtrOfFacemarkAAM {
+        #[inline(always)] fn as_raw_FacemarkTrain(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FacemarkTrain>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    pub struct PtrOfFacemarkKazemi {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfFacemarkKazemi {
+        #[inline(always)] pub fn as_raw_PtrOfFacemarkKazemi(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfFacemarkKazemi {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::FacemarkKazemi>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfFacemarkKazemi {}
+    
+    impl core::AlgorithmTrait for PtrOfFacemarkKazemi {
+        #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::Facemark for PtrOfFacemarkKazemi {
+        #[inline(always)] fn as_raw_Facemark(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::Facemark>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::FacemarkKazemi for PtrOfFacemarkKazemi {
+        #[inline(always)] fn as_raw_FacemarkKazemi(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FacemarkKazemi>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    pub struct PtrOfFacemarkLBF {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfFacemarkLBF {
+        #[inline(always)] pub fn as_raw_PtrOfFacemarkLBF(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfFacemarkLBF {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::FacemarkLBF>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfFacemarkLBF {}
+    
+    pub struct PtrOfFisherFaceRecognizer {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfFisherFaceRecognizer {
+        #[inline(always)] pub fn as_raw_PtrOfFisherFaceRecognizer(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfFisherFaceRecognizer {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::FisherFaceRecognizer>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfFisherFaceRecognizer {}
+    
+    pub struct PtrOfLBPHFaceRecognizer {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfLBPHFaceRecognizer {
+        #[inline(always)] pub fn as_raw_PtrOfLBPHFaceRecognizer(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfLBPHFaceRecognizer {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::LBPHFaceRecognizer>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfLBPHFaceRecognizer {}
+    
+    impl core::AlgorithmTrait for PtrOfLBPHFaceRecognizer {
+        #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Algorithm>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::FaceRecognizer for PtrOfLBPHFaceRecognizer {
+        #[inline(always)] fn as_raw_FaceRecognizer(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    impl crate::face::LBPHFaceRecognizer for PtrOfLBPHFaceRecognizer {
+        #[inline(always)] fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::LBPHFaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    }
+    
+    pub struct PtrOfStandardCollector {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl PtrOfStandardCollector {
+        #[inline(always)] pub fn as_raw_PtrOfStandardCollector(&self) -> *mut c_void { self.ptr }
+    
+        pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+            Self { ptr }
+        }
+    }
+    
+    impl Drop for PtrOfStandardCollector {
+        fn drop(&mut self) {
+            let me = self.ptr;
+            cpp!(unsafe [me as "Ptr<cv::face::StandardCollector>*"] {
+                delete me;
+            })
+        }
+    }
+    
+    unsafe impl Send for PtrOfStandardCollector {}
+    
+    pub struct VectorOfConfig {
+        pub(crate) ptr: *mut c_void
+    }
+    
+    impl VectorOfConfig {
+        #[inline(always)] pub fn as_raw_VectorOfConfig(&self) -> *mut c_void { self.ptr }
+    
+        #[inline]
+        pub fn iter(&self) -> crate::templ::VectorRefIterator<Self> {
+            crate::templ::VectorRefIterator::new(self)
+        }
+    }
+    
+    impl Drop for VectorOfConfig {
+        #[inline]
+        fn drop(&mut self) {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*"] {
+                delete vec;
+            })
+        }
+    }
+    
+    impl IntoIterator for VectorOfConfig {
+        type Item = crate::face::FacemarkAAM_Config;
+        type IntoIter = crate::templ::VectorIterator<Self>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            Self::IntoIter::new(self)
+        }
+    }
+    
+    impl<'i> IntoIterator for &'i VectorOfConfig {
+        type Item = crate::face::FacemarkAAM_Config;
+        type IntoIter = crate::templ::VectorRefIterator<'i, VectorOfConfig>;
+    
+        #[inline]
+        fn into_iter(self) -> Self::IntoIter {
+            self.iter()
+        }
+    }
+    
+    impl<'i> crate::templ::Vector<'i> for VectorOfConfig {
+        type Storage = crate::face::FacemarkAAM_Config;
+    
+        #[inline]
+        fn new() -> Self {
+            Self { ptr: cpp!(unsafe [] -> *mut c_void as "void*" {
+                return new std::vector<cv::face::FacemarkAAM::Config>();
+            })}
+        }
+    
+        #[inline]
+        fn len(&self) -> size_t {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "const std::vector<cv::face::FacemarkAAM::Config>*"] -> size_t as "size_t" {
+                return vec->size();
+            })
+        }
+    
+        #[inline]
+        fn is_empty(&self) -> bool {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "const std::vector<cv::face::FacemarkAAM::Config>*"] -> bool as "bool" {
+                return vec->empty();
+            })
+        }
+    
+        #[inline]
+        fn capacity(&self) -> size_t {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "const std::vector<cv::face::FacemarkAAM::Config>*"] -> size_t as "size_t" {
+                return vec->capacity();
+            })
+        }
+    
+        #[inline]
+        fn shrink_to_fit(&mut self) {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*"] {
+                vec->shrink_to_fit();
+            })
+        }                
+    
+        #[inline]
+        fn reserve(&mut self, additional: size_t) {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*", additional as "size_t"] {
+                vec->reserve(vec->size() + additional);
+            })
+        }
+    
+        #[inline]
+        fn remove(&mut self, index: size_t) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len())?;
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*", index as "size_t"] {
+                vec->erase(vec->begin() + index);
+            });
+            Ok(())
+        }
+    
+        #[inline]
+        fn swap(&mut self, index1: size_t, index2: size_t) -> Result<()> {
+            let len = self.len();
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index1, len)?;
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index2, len)?;
+            if index1 != index2 {
+                let vec = self.as_raw_VectorOfConfig();
+                cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*", index1 as "size_t", index2 as "size_t"] {
+                    swap((*vec)[index1], (*vec)[index2]);
+                });
+            }
+            Ok(())
+        }
+    
+        #[inline]
+        fn clear(&mut self) {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*"] {
+                vec->clear();
+            })
+        }
+    
+        type Arg = crate::face::FacemarkAAM_Config;
+        
+        #[inline]
+        fn push(&mut self, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfConfig();
+            let val = val.as_raw_FacemarkAAM_Config();
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*", val as "cv::face::FacemarkAAM::Config*"] {
+                vec->push_back(*val);
+            })
+        }
+        
+        #[inline]
+        fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            crate::templ::Vector::<Storage=Self::Storage, Arg=Self::Arg>::index_check(index, self.len() + 1)?;
+            let vec = self.as_raw_VectorOfConfig();
+            let val = val.as_raw_FacemarkAAM_Config();
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*", index as "size_t", val as "cv::face::FacemarkAAM::Config*"] {
+                vec->insert(vec->begin() + index, *val);
+            });
+            Ok(())
+        }
+        
+        #[inline]
+        fn get(&self, index: size_t) -> Result<Self::Storage> {
+            let vec = self.as_raw_VectorOfConfig();
+            cpp!(unsafe [vec as "const std::vector<cv::face::FacemarkAAM::Config>*", index as "size_t"] -> crate::sys::cv_return_value_void_X as "cv_return_value_void_X" {
+                try {
+                    return { Error::Code::StsOk, NULL, new cv::face::FacemarkAAM::Config(vec->at(index)) };
+                } VEC_CATCH(cv_return_value_void_X)
+            }).into_result().map(|ptr| crate::face::FacemarkAAM_Config { ptr })
+        }
+        
+        #[inline]
+        unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+            let vec = self.as_raw_VectorOfConfig();
+            crate::face::FacemarkAAM_Config { ptr: cpp!(unsafe [vec as "const std::vector<cv::face::FacemarkAAM::Config>*", index as "size_t"] -> *mut c_void as "void*" {
+                return new cv::face::FacemarkAAM::Config((*vec)[index]);
+            })}
+        }
+        
+        #[inline]
+        fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+            let vec = self.as_raw_VectorOfConfig();
+            let val = val.ptr;
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*", index as "size_t", val as "cv::face::FacemarkAAM::Config*"] -> crate::sys::cv_return_value_void as "cv_return_value_void" {
+                try {
+                    vec->at(index) = *val;
+                    return { Error::Code::StsOk, NULL };
+                } VEC_CATCH(cv_return_value_void)
+            }).into_result()
+        }
+        
+        #[inline]
+        unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+            let vec = self.as_raw_VectorOfConfig();
+            let val = val.ptr;
+            cpp!(unsafe [vec as "std::vector<cv::face::FacemarkAAM::Config>*", index as "size_t", val as "cv::face::FacemarkAAM::Config*"] {
+                (*vec)[index] = *val;
+            })
+        }
+    }
+    
+    unsafe impl Send for VectorOfConfig {}
+    
+}
+#[cfg(feature = "contrib")]
+pub use face_types::*;
+
 mod features2d_types {
     use super::*;
 

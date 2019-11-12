@@ -13,6 +13,8 @@ pub mod cvv;
 pub mod dnn;
 #[cfg(feature = "contrib")]
 pub mod dpm;
+#[cfg(feature = "contrib")]
+pub mod face;
 pub mod features2d;
 #[cfg(feature = "contrib")]
 pub mod freetype;

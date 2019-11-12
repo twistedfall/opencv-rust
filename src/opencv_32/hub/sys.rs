@@ -1584,6 +1584,68 @@ mod dpm_sys {
 #[cfg(feature = "contrib")]
 pub use dpm_sys::*;
 
+#[cfg(feature = "contrib")]
+mod face_sys {
+    use super::*;
+
+    extern "C" {
+        pub fn cv_face_createEigenFaceRecognizer_int_double(num_components: i32, threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_face_createFisherFaceRecognizer_int_double(num_components: i32, threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_face_createLBPHFaceRecognizer_int_int_int_int_double(radius: i32, neighbors: i32, grid_x: i32, grid_y: i32, threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_face_BIF_getNumBands_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_BIF_getNumRotations_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_BIF_compute_const__InputArray__OutputArray(instance: *const c_void, image: *mut c_void, features: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_BasicFaceRecognizer_getNumComponents_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_BasicFaceRecognizer_setNumComponents_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_BasicFaceRecognizer_getThreshold_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_BasicFaceRecognizer_setThreshold_double(instance: *mut c_void, val: f64) -> cv_return_value_void;
+        pub fn cv_face_BasicFaceRecognizer_getProjections_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getLabels_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getEigenValues_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getEigenVectors_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getMean_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_FaceRecognizer_train__InputArray__InputArray(instance: *mut c_void, src: *mut c_void, labels: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_update__InputArray__InputArray(instance: *mut c_void, src: *mut c_void, labels: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_predict_const__InputArray(instance: *const c_void, src: *mut c_void) -> cv_return_value_int;
+        pub fn cv_face_FaceRecognizer_predict_const__InputArray_int_double(instance: *const c_void, src: *mut c_void, label: *mut i32, confidence: *mut f64) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_save_const_String(instance: *const c_void, filename: *const c_char) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_load_String(instance: *mut c_void, filename: *const c_char) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_save_const_FileStorage(instance: *const c_void, fs: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_load_FileStorage(instance: *mut c_void, fs: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_setLabelInfo_int_String(instance: *mut c_void, label: i32, str_info: *const c_char) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_getLabelInfo_const_int(instance: *const c_void, label: i32) -> cv_return_value_char_X;
+        pub fn cv_face_FaceRecognizer_getLabelsByString_const_String(instance: *const c_void, str: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_face_FaceRecognizer_getThreshold_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_FaceRecognizer_setThreshold_double(instance: *mut c_void, val: f64) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getGridX_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setGridX_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getGridY_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setGridY_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getRadius_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setRadius_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getNeighbors_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setNeighbors_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getThreshold_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_LBPHFaceRecognizer_setThreshold_double(instance: *mut c_void, val: f64) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getHistograms_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_LBPHFaceRecognizer_getLabels_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_PredictCollector_init_size_t(instance: *mut c_void, size: size_t) -> cv_return_value_void;
+        pub fn cv_face_PredictCollector_collect_int_double(instance: *mut c_void, label: i32, dist: f64) -> cv_return_value_bool;
+        pub fn cv_StandardCollector_delete(ptr : *mut c_void);
+        pub fn cv_face_StandardCollector_StandardCollector_double(threshold_: f64) -> cv_return_value_void_X;
+        pub fn cv_face_StandardCollector_init_size_t(instance: *mut c_void, size: size_t) -> cv_return_value_void;
+        pub fn cv_face_StandardCollector_collect_int_double(instance: *mut c_void, label: i32, dist: f64) -> cv_return_value_bool;
+        pub fn cv_face_StandardCollector_getMinLabel_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_StandardCollector_getMinDist_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_StandardCollector_create_double(threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_StandardCollector_PredictResult_delete(ptr : *mut c_void);
+        pub fn cv_face_StandardCollector_PredictResult_PredictResult_int_double(label_: i32, distance_: f64) -> cv_return_value_void_X;
+    
+    }
+}
+#[cfg(feature = "contrib")]
+pub use face_sys::*;
+
 mod features2d_sys {
     use super::*;
 

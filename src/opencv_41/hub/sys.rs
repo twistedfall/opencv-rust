@@ -1860,6 +1860,123 @@ mod dpm_sys {
 #[cfg(feature = "contrib")]
 pub use dpm_sys::*;
 
+#[cfg(feature = "contrib")]
+mod face_sys {
+    use super::*;
+
+    extern "C" {
+        pub fn cv_face_createFacemarkAAM() -> cv_return_value_void_X;
+        pub fn cv_face_createFacemarkKazemi() -> cv_return_value_void_X;
+        pub fn cv_face_createFacemarkLBF() -> cv_return_value_void_X;
+        pub fn cv_face_drawFacemarks__InputOutputArray__InputArray_Scalar(image: *mut c_void, points: *mut c_void, color: core::Scalar) -> cv_return_value_void;
+        pub fn cv_face_getFacesHAAR__InputArray__OutputArray_String(image: *mut c_void, faces: *mut c_void, face_cascade_name: *const c_char) -> cv_return_value_bool;
+        pub fn cv_face_getFaces__InputArray__OutputArray_CParams(image: *mut c_void, faces: *mut c_void, params: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_loadDatasetList_String_String_VectorOfString_VectorOfString(image_list: *mut c_char, annotation_list: *mut c_char, images: *mut c_void, annotations: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_loadFacePoints_String__OutputArray_float(filename: *mut c_char, points: *mut c_void, offset: f32) -> cv_return_value_bool;
+        pub fn cv_face_loadTrainingData_String_String_VectorOfString__OutputArray_float(image_list: *mut c_char, ground_truth: *mut c_char, images: *mut c_void, face_points: *mut c_void, offset: f32) -> cv_return_value_bool;
+        pub fn cv_face_loadTrainingData_String_VectorOfString__OutputArray_char_float(filename: *mut c_char, images: *mut c_void, face_points: *mut c_void, delim: i8, offset: f32) -> cv_return_value_bool;
+        pub fn cv_face_loadTrainingData_VectorOfString_VectorOfVectorOfPoint2f_VectorOfString(filename: *mut c_void, trainlandmarks: *mut c_void, trainimages: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_BIF_getNumBands_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_BIF_getNumRotations_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_BIF_compute_const__InputArray__OutputArray(instance: *const c_void, image: *mut c_void, features: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_BIF_create_int_int(num_bands: i32, num_rotations: i32) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getNumComponents_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_BasicFaceRecognizer_setNumComponents_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_BasicFaceRecognizer_getThreshold_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_BasicFaceRecognizer_setThreshold_double(instance: *mut c_void, val: f64) -> cv_return_value_void;
+        pub fn cv_face_BasicFaceRecognizer_getProjections_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getLabels_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getEigenValues_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getEigenVectors_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_getMean_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_BasicFaceRecognizer_read_FileNode(instance: *mut c_void, _fn: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_BasicFaceRecognizer_write_const_FileStorage(instance: *const c_void, fs: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_BasicFaceRecognizer_empty_const(instance: *const c_void) -> cv_return_value_bool;
+        pub fn cv_BasicFaceRecognizer_delete(ptr : *mut c_void);
+        pub fn cv_CParams_delete(ptr : *mut c_void);
+        pub fn cv_face_CParams_CParams_String_double_int_Size_Size(cascade_model: *mut c_char, sf: f64, min_n: i32, min_sz: core::Size, max_sz: core::Size) -> cv_return_value_void_X;
+        pub fn cv_EigenFaceRecognizer_delete(ptr : *mut c_void);
+        pub fn cv_face_EigenFaceRecognizer_create_int_double(num_components: i32, threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_face_FaceRecognizer_train__InputArray__InputArray(instance: *mut c_void, src: *mut c_void, labels: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_update__InputArray__InputArray(instance: *mut c_void, src: *mut c_void, labels: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_predict_const__InputArray(instance: *const c_void, src: *mut c_void) -> cv_return_value_int;
+        pub fn cv_face_FaceRecognizer_predict_const__InputArray_int_double(instance: *const c_void, src: *mut c_void, label: *mut i32, confidence: *mut f64) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_write_const_String(instance: *const c_void, filename: *const c_char) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_read_String(instance: *mut c_void, filename: *const c_char) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_write_const_FileStorage(instance: *const c_void, fs: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_read_FileNode(instance: *mut c_void, _fn: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_empty_const(instance: *const c_void) -> cv_return_value_bool;
+        pub fn cv_face_FaceRecognizer_setLabelInfo_int_String(instance: *mut c_void, label: i32, str_info: *const c_char) -> cv_return_value_void;
+        pub fn cv_face_FaceRecognizer_getLabelInfo_const_int(instance: *const c_void, label: i32) -> cv_return_value_char_X;
+        pub fn cv_face_FaceRecognizer_getLabelsByString_const_String(instance: *const c_void, str: *const c_char) -> cv_return_value_void_X;
+        pub fn cv_face_FaceRecognizer_getThreshold_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_FaceRecognizer_setThreshold_double(instance: *mut c_void, val: f64) -> cv_return_value_void;
+        pub fn cv_face_Facemark_loadModel_String(instance: *mut c_void, model: *mut c_char) -> cv_return_value_void;
+        pub fn cv_face_Facemark_fit__InputArray__InputArray__OutputArray(instance: *mut c_void, image: *mut c_void, faces: *mut c_void, landmarks: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_FacemarkAAM_fitConfig__InputArray__InputArray__OutputArray_VectorOfConfig(instance: *mut c_void, image: *mut c_void, roi: *mut c_void, _landmarks: *mut c_void, runtime_params: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_FacemarkAAM_create_Params(parameters: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_FacemarkAAM_Config_delete(ptr : *mut c_void);
+        pub fn cv_face_FacemarkAAM_Config_Config_Mat_Point2f_float_int(rot: *mut c_void, trans: core::Point2f, scaling: f32, scale_id: i32) -> cv_return_value_void_X;
+        pub fn cv_FacemarkAAM_Data_delete(ptr : *mut c_void);
+        pub fn cv_FacemarkAAM_Model_delete(ptr : *mut c_void);
+        pub fn cv_FacemarkAAM_Model_Texture_delete(ptr : *mut c_void);
+        pub fn cv_FacemarkAAM_Params_delete(ptr : *mut c_void);
+        pub fn cv_face_FacemarkAAM_Params_Params() -> cv_return_value_void_X;
+        pub fn cv_face_FacemarkAAM_Params_read_FileNode(instance: *mut c_void, unnamed_arg: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FacemarkAAM_Params_write_const_FileStorage(instance: *const c_void, unnamed_arg: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FacemarkKazemi_training_VectorOfMat_VectorOfVectorOfPoint2f_std_string_Size_std_string(instance: *mut c_void, images: *mut c_void, landmarks: *mut c_void, configfile: *mut c_char, scale: core::Size, model_filename: *mut c_char) -> cv_return_value_bool;
+        pub fn cv_face_FacemarkKazemi_getFaces__InputArray__OutputArray(instance: *mut c_void, image: *mut c_void, faces: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_FacemarkKazemi_create_Params(parameters: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_FacemarkKazemi_Params_delete(ptr : *mut c_void);
+        pub fn cv_face_FacemarkKazemi_Params_Params() -> cv_return_value_void_X;
+        pub fn cv_FacemarkLBF_delete(ptr : *mut c_void);
+        pub fn cv_face_FacemarkLBF_create_Params(parameters: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_FacemarkLBF_BBox_delete(ptr : *mut c_void);
+        pub fn cv_face_FacemarkLBF_BBox_BBox() -> cv_return_value_void_X;
+        pub fn cv_face_FacemarkLBF_BBox_BBox_double_double_double_double(x: f64, y: f64, w: f64, h: f64) -> cv_return_value_void_X;
+        pub fn cv_face_FacemarkLBF_BBox_project_const_Mat(instance: *const c_void, shape: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_face_FacemarkLBF_BBox_reproject_const_Mat(instance: *const c_void, shape: *mut c_void) -> cv_return_value_void_X;
+        pub fn cv_FacemarkLBF_Params_delete(ptr : *mut c_void);
+        pub fn cv_face_FacemarkLBF_Params_Params() -> cv_return_value_void_X;
+        pub fn cv_face_FacemarkLBF_Params_read_FileNode(instance: *mut c_void, unnamed_arg: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FacemarkLBF_Params_write_const_FileStorage(instance: *const c_void, unnamed_arg: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FacemarkTrain_addTrainingSample__InputArray__InputArray(instance: *mut c_void, image: *mut c_void, landmarks: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_FacemarkTrain_training_void_X(instance: *mut c_void, parameters: *mut c_void) -> cv_return_value_void;
+        pub fn cv_face_FacemarkTrain_getFaces__InputArray__OutputArray(instance: *mut c_void, image: *mut c_void, faces: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_face_FacemarkTrain_getData_void_X(instance: *mut c_void, items: *mut c_void) -> cv_return_value_bool;
+        pub fn cv_FisherFaceRecognizer_delete(ptr : *mut c_void);
+        pub fn cv_face_FisherFaceRecognizer_create_int_double(num_components: i32, threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_face_LBPHFaceRecognizer_getGridX_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setGridX_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getGridY_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setGridY_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getRadius_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setRadius_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getNeighbors_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_LBPHFaceRecognizer_setNeighbors_int(instance: *mut c_void, val: i32) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getThreshold_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_LBPHFaceRecognizer_setThreshold_double(instance: *mut c_void, val: f64) -> cv_return_value_void;
+        pub fn cv_face_LBPHFaceRecognizer_getHistograms_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_LBPHFaceRecognizer_getLabels_const(instance: *const c_void) -> cv_return_value_void_X;
+        pub fn cv_face_LBPHFaceRecognizer_create_int_int_int_int_double(radius: i32, neighbors: i32, grid_x: i32, grid_y: i32, threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_face_MACE_salt_String(instance: *mut c_void, passphrase: *const c_char) -> cv_return_value_void;
+        pub fn cv_face_PredictCollector_init_size_t(instance: *mut c_void, size: size_t) -> cv_return_value_void;
+        pub fn cv_face_PredictCollector_collect_int_double(instance: *mut c_void, label: i32, dist: f64) -> cv_return_value_bool;
+        pub fn cv_StandardCollector_delete(ptr : *mut c_void);
+        pub fn cv_face_StandardCollector_StandardCollector_double(threshold_: f64) -> cv_return_value_void_X;
+        pub fn cv_face_StandardCollector_init_size_t(instance: *mut c_void, size: size_t) -> cv_return_value_void;
+        pub fn cv_face_StandardCollector_collect_int_double(instance: *mut c_void, label: i32, dist: f64) -> cv_return_value_bool;
+        pub fn cv_face_StandardCollector_getMinLabel_const(instance: *const c_void) -> cv_return_value_int;
+        pub fn cv_face_StandardCollector_getMinDist_const(instance: *const c_void) -> cv_return_value_double;
+        pub fn cv_face_StandardCollector_create_double(threshold: f64) -> cv_return_value_void_X;
+        pub fn cv_StandardCollector_PredictResult_delete(ptr : *mut c_void);
+        pub fn cv_face_StandardCollector_PredictResult_PredictResult_int_double(label_: i32, distance_: f64) -> cv_return_value_void_X;
+    
+    }
+}
+#[cfg(feature = "contrib")]
+pub use face_sys::*;
+
 mod features2d_sys {
     use super::*;
 
