@@ -274,7 +274,6 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
         "core_detect",
         "cudalegacy",
         "cudev",
-        "face",
         "flann",
         "gapi",
         "hal",
@@ -501,6 +500,12 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
         for m in modules {
             writeln!(&mut types, "#include <opencv2/{}.hpp>", m.0)?;
             match m.0.as_str() {
+                "core" => {
+                    writeln!(&mut types, "#include <opencv2/{}/ocl.hpp>", m.0)?;
+                }
+                "aruco" => {
+                    writeln!(&mut types, "#include <opencv2/{}/charuco.hpp>", m.0)?;
+                }
                 "dnn" => {
                     // include it manually, otherwise it's not included
                     if cfg!(feature = "opencv-41") {
@@ -508,11 +513,8 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
                     }
                     writeln!(&mut types, "#include <opencv2/{}/all_layers.hpp>", m.0)?;
                 }
-                "aruco" => {
-                    writeln!(&mut types, "#include <opencv2/{}/charuco.hpp>", m.0)?;
-                }
-                "core" => {
-                    writeln!(&mut types, "#include <opencv2/{}/ocl.hpp>", m.0)?;
+                "face" => {
+                    writeln!(&mut types, "#include <opencv2/{}/bif.hpp>", m.0)?;
                 }
                 _ => ()
             }
