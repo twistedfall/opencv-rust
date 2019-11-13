@@ -3909,6 +3909,9 @@ class RustWrapperGenerator(object):
         # code blocks, don't run them during tests
         text = re.sub(r"@code(?: ?\{.+?\})?", "```ignore", text, 0, re.M)
         text = text.replace("@endcode", "```\n")
+        # some special casing for docs.rs build failures
+        text = text.replace("'fps'", "\"fps\"")
+        text = text.replace("'cv::Exception'", "\"cv::Exception\"")
         # see also block
         text = re.sub(r"@sa\s+", "## See also\n", text, 1, re.M)
         text = text.replace("@sa", "")

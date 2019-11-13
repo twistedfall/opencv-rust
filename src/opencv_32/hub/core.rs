@@ -4580,7 +4580,7 @@ pub trait BufferPoolController {
 /// # Bad call
 /// $ ./app -fps=aaa
 /// ERRORS:
-/// Parameter 'fps': can not convert: [aaa] to [double]
+/// Parameter "fps": can not convert: [aaa] to [double]
 /// ```
 pub struct CommandLineParser {
     #[doc(hidden)] pub(crate) ptr: *mut c_void

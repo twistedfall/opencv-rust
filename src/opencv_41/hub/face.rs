@@ -692,7 +692,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
     ///
     /// ```ignore
     /// OpenCV Error: The function/feature is not implemented (This FaceRecognizer (FaceRecognizer.Eigenfaces) does not support updating, you have to use FaceRecognizer::train to update it.) in update, file /home/philipp/git/opencv/modules/contrib/src/facerec.cpp, line 305
-    /// terminate called after throwing an instance of 'cv::Exception'
+    /// terminate called after throwing an instance of "cv::Exception"
     /// ```
     ///
     ///
