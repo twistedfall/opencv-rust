@@ -3340,7 +3340,7 @@ class RustWrapperGenerator(object):
             "rust": template("""
                 // Generating impl for trait ${rust_full}
                 ${doc_comment}pub trait ${rust_trait_local}${bases} {
-                    #[inline(always)] fn as_raw_${rust_local}(&self) -> *mut c_void;
+                    fn as_raw_${rust_local}(&self) -> *mut c_void;
                 ${methods}}
                 
             """),
