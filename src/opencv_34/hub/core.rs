@@ -1024,7 +1024,7 @@ pub fn absdiff(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, dst
 /// where I is a multi-dimensional index of array elements. In case of multi-channel arrays, each
 /// channel is processed independently.
 /// The function can be replaced with a matrix expression:
-/// ```ignore{.cpp}
+/// ```ignore
 /// dst = src1*alpha + src2*beta + gamma;
 /// ```
 ///
@@ -1067,7 +1067,7 @@ pub fn add_weighted(src1: &dyn core::ToInputArray, alpha: f64, src2: &dyn core::
 /// channel is processed independently.
 ///
 /// The first function in the list above can be replaced with matrix expressions:
-/// ```ignore{.cpp}
+/// ```ignore
 /// dst = src1 + src2;
 /// dst += src1; // equivalent to add(dst, src1, dst);
 /// ```
@@ -1272,7 +1272,7 @@ pub fn bitwise_xor(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray,
 /// cv::BORDER_WRAP mode in the horizontal direction, cv::BORDER_REFLECT_101 in the vertical direction and
 /// want to compute value of the "virtual" pixel Point(-5, 100) in a floating-point image img , it
 /// looks like:
-/// ```ignore{.cpp}
+/// ```ignore
 /// float val = img.at<float>(borderInterpolate(100, img.rows, cv::BORDER_REFLECT_101),
 /// borderInterpolate(-5, img.cols, cv::BORDER_WRAP));
 /// ```
@@ -1408,7 +1408,7 @@ pub fn check_range(a: &dyn core::ToInputArray, quiet: bool, pos: &mut core::Poin
 /// When the comparison result is true, the corresponding element of output
 /// array is set to 255. The comparison operations can be replaced with the
 /// equivalent matrix expressions:
-/// ```ignore{.cpp}
+/// ```ignore
 /// Mat dst1 = src1 >= src2;
 /// Mat dst2 = src1 < 8;
 /// ...
@@ -1479,7 +1479,7 @@ pub fn convert_fp16(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputAr
 /// emulated by calling the Mat::convertTo method (or by using matrix
 /// expressions) and then by calculating an absolute value of the result.
 /// For example:
-/// ```ignore{.cpp}
+/// ```ignore
 /// Mat_<float> A(30,30);
 /// randu(A, Scalar(-100), Scalar(100));
 /// Mat_<float> B = A*5 + 3;
@@ -1515,7 +1515,7 @@ pub fn convert_scale_abs(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOut
 /// The function supports the mode when src is already in the middle of dst . In this case, the
 /// function does not copy src itself but simply constructs the border, for example:
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// // let border be the same in all directions
 /// int border=2;
 /// // constructs a larger image to fit both the image and the border
@@ -2096,7 +2096,7 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 /// as threshold(), compare(), >, ==, etc, return all of
 /// the non-zero indices as a cv::Mat or std::vector<cv::Point> (x,y)
 /// For example:
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat binaryImage; // input, binary image
 /// cv::Mat locations;   // output, locations of non-zero pixels
 /// cv::findNonZero(binaryImage, locations);
@@ -2106,7 +2106,7 @@ pub fn fast_atan2(y: f32, x: f32) -> Result<f32> {
 /// ```
 ///
 /// or
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat binaryImage; // input, binary image
 /// vector<Point> locations;   // output, locations of non-zero pixels
 /// cv::findNonZero(binaryImage, locations);
@@ -2169,7 +2169,7 @@ pub fn flip(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fli
 ///
 /// The function can be replaced with a matrix expression. For example, the
 /// above call can be replaced with:
-/// ```ignore{.cpp}
+/// ```ignore
 /// dst = alpha*src1.t()*src2 + beta*src3.t();
 /// ```
 ///
@@ -2383,7 +2383,7 @@ pub fn have_openvx() -> Result<bool> {
 /// Applies horizontal concatenation to given matrices.
 ///
 /// The function horizontally concatenates two or more cv::Mat matrices (with the same number of rows).
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat matArray[] = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
 /// cv::Mat(4, 1, CV_8UC1, cv::Scalar(2)),
 /// cv::Mat(4, 1, CV_8UC1, cv::Scalar(3)),};
@@ -2406,7 +2406,7 @@ pub fn have_openvx() -> Result<bool> {
 ///
 /// ## Overloaded parameters
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 4,
 /// 2, 5,
 /// 3, 6);
@@ -2435,7 +2435,7 @@ pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// Applies horizontal concatenation to given matrices.
 ///
 /// The function horizontally concatenates two or more cv::Mat matrices (with the same number of rows).
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat matArray[] = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
 /// cv::Mat(4, 1, CV_8UC1, cv::Scalar(2)),
 /// cv::Mat(4, 1, CV_8UC1, cv::Scalar(3)),};
@@ -2458,7 +2458,7 @@ pub fn hconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 ///
 /// ## Overloaded parameters
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// std::vector<cv::Mat> matrices = { cv::Mat(4, 1, CV_8UC1, cv::Scalar(1)),
 /// cv::Mat(4, 1, CV_8UC1, cv::Scalar(2)),
 /// cv::Mat(4, 1, CV_8UC1, cv::Scalar(3)),};
@@ -3086,7 +3086,7 @@ pub fn min_f64_mat(s: f64, a: &core::Mat) -> Result<core::MatExpr> {
 ///
 /// In the example below, the code splits a 4-channel BGRA image into a 3-channel BGR (with B and R
 /// channels swapped) and a separate alpha-channel image:
-/// ```ignore{.cpp}
+/// ```ignore
 /// Mat bgra( 100, 100, CV_8UC4, Scalar(255,0,0,255) );
 /// Mat bgr( bgra.rows, bgra.cols, CV_8UC3 );
 /// Mat alpha( bgra.rows, bgra.cols, CV_8UC1 );
@@ -3388,7 +3388,7 @@ pub fn norm(src1: &dyn core::ToInputArray, norm_type: i32, mask: &dyn core::ToIn
 /// the range transformation for sparse matrices is not allowed since it can shift the zero level.
 ///
 /// Possible usage with some positive example data:
-/// ```ignore{.cpp}
+/// ```ignore
 /// vector<double> positiveData = { 2.0, 8.0, 10.0 };
 /// vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
 ///
@@ -3460,7 +3460,7 @@ pub fn normalize_sparse(src: &core::SparseMat, dst: &mut core::SparseMat, alpha:
 /// the range transformation for sparse matrices is not allowed since it can shift the zero level.
 ///
 /// Possible usage with some positive example data:
-/// ```ignore{.cpp}
+/// ```ignore
 /// vector<double> positiveData = { 2.0, 8.0, 10.0 };
 /// vector<double> normalizedData_l1, normalizedData_l2, normalizedData_inf, normalizedData_minmax;
 ///
@@ -3824,7 +3824,7 @@ pub fn polar_to_cart(magnitude: &dyn core::ToInputArray, angle: &dyn core::ToInp
 /// elements are used. However, it is possible to get true values for
 /// negative values using some extra operations. In the example below,
 /// computing the 5th root of array src shows:
-/// ```ignore{.cpp}
+/// ```ignore
 /// Mat mask = src < 0;
 /// pow(src, 1./5, dst);
 /// subtract(Scalar::all(0), dst, dst, mask);
@@ -4155,7 +4155,7 @@ pub fn find_file(relative_path: &str, required: bool, silent_mode: bool) -> Resu
 /// the sum of a scaled array and another array:
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bdst%7D%20%28I%29%3D%20%5Ctexttt%7Bscale%7D%20%5Ccdot%20%5Ctexttt%7Bsrc1%7D%20%28I%29%20%2B%20%20%5Ctexttt%7Bsrc2%7D%20%28I%29)
 /// The function can also be emulated with a matrix expression, for example:
-/// ```ignore{.cpp}
+/// ```ignore
 /// Mat A(3, 3, CV_64F);
 /// ...
 /// A.row(0) = A.row(1)*2 + A.row(2);
@@ -4475,7 +4475,7 @@ pub fn sqrt(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> 
 /// channel is processed independently.
 ///
 /// The first function in the list above can be replaced with matrix expressions:
-/// ```ignore{.cpp}
+/// ```ignore
 /// dst = src1 - src2;
 /// dst -= src1; // equivalent to subtract(dst, src1, dst);
 /// ```
@@ -4694,7 +4694,7 @@ pub fn convert_to_va_surface(display: &mut c_void, src: &dyn core::ToInputArray,
 /// Applies vertical concatenation to given matrices.
 ///
 /// The function vertically concatenates two or more cv::Mat matrices (with the same number of cols).
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat matArray[] = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
 /// cv::Mat(1, 4, CV_8UC1, cv::Scalar(2)),
 /// cv::Mat(1, 4, CV_8UC1, cv::Scalar(3)),};
@@ -4716,7 +4716,7 @@ pub fn convert_to_va_surface(display: &mut c_void, src: &dyn core::ToInputArray,
 ///
 /// ## Overloaded parameters
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat_<float> A = (cv::Mat_<float>(3, 2) << 1, 7,
 /// 2, 8,
 /// 3, 9);
@@ -4748,7 +4748,7 @@ pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 /// Applies vertical concatenation to given matrices.
 ///
 /// The function vertically concatenates two or more cv::Mat matrices (with the same number of cols).
-/// ```ignore{.cpp}
+/// ```ignore
 /// cv::Mat matArray[] = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
 /// cv::Mat(1, 4, CV_8UC1, cv::Scalar(2)),
 /// cv::Mat(1, 4, CV_8UC1, cv::Scalar(3)),};
@@ -4770,7 +4770,7 @@ pub fn vconcat2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, ds
 ///
 /// ## Overloaded parameters
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// std::vector<cv::Mat> matrices = { cv::Mat(1, 4, CV_8UC1, cv::Scalar(1)),
 /// cv::Mat(1, 4, CV_8UC1, cv::Scalar(2)),
 /// cv::Mat(1, 4, CV_8UC1, cv::Scalar(3)),};
@@ -5217,7 +5217,7 @@ pub trait BufferPoolController {
 ///
 /// For example:
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// const String keys =
 /// "{help h usage ? |      | print this message   }"
 /// "{@image1        |      | image1 for compare   }"
@@ -5243,7 +5243,7 @@ pub trait BufferPoolController {
 ///
 /// For the described keys:
 ///
-/// ```ignore{.sh}
+/// ```ignore
 /// # Good call (3 positional parameters: image1, image2 and repeat; N is 200, ts is true)
 /// $ ./app -N=200 1.png 2.jpg 19 -ts
 ///
@@ -5283,7 +5283,7 @@ impl CommandLineParser {
     /// This method returns the path to the executable from the command line (`argv[0]`).
     ///
     /// For example, if the application has been started with such a command:
-    /// ```ignore{.sh}
+    /// ```ignore
     /// $ ./bin/my-executable
     /// ```
     ///
@@ -8518,7 +8518,7 @@ impl NAryMatIterator {
 /// reconstructed back, and then the reconstruction error norm is computed
 /// and printed for each vector. :
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// using namespace cv;
 ///
 /// PCA compressPCA(const Mat& pcaset, int maxComponents,

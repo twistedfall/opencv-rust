@@ -3907,7 +3907,8 @@ class RustWrapperGenerator(object):
         # comment body markers
         text = text.replace("@brief", "").replace("@note", "\nNote:")
         # code blocks, don't run them during tests
-        text = text.replace("@code", "```ignore").replace("@endcode", "```\n")
+        text = re.sub(r"@code(?: ?\{.+?\})?", "```ignore", text, 0, re.M)
+        text = text.replace("@endcode", "```\n")
         # see also block
         text = re.sub(r"@sa\s+", "## See also\n", text, 1, re.M)
         text = text.replace("@sa", "")

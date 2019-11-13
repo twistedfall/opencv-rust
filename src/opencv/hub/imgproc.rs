@@ -5190,7 +5190,7 @@ pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 /// The number of pixels along the line is stored in LineIterator::count.
 /// The method LineIterator::pos returns the current position in the image:
 ///
-/// ```ignore{.cpp}
+/// ```ignore
 /// // grabs pixels along the line (pt1, pt2)
 /// // from 8-bit 3-channel image to the buffer
 /// LineIterator it(img, pt1, pt2, 8);

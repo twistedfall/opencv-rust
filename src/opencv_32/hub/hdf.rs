@@ -26,7 +26,7 @@ use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 /// is released using close().
 ///
 /// - Example below open and then release the file.
-/// ```ignore{.cpp}
+/// ```ignore
 /// // open / autocreate hdf5 file
 /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
 /// // ...
@@ -38,7 +38,7 @@ use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 /// ![Visualization of 10x10 CV_64FC2 (Hilbert matrix) using HDFView tool](https://docs.opencv.org/3.2.0/hdfview_demo.gif)
 ///
 /// - Text dump (3x3 Hilbert matrix) of hdf5 dataset using **h5dump** tool:
-/// ```ignore{.txt}
+/// ```ignore
 /// $ h5dump test.h5
 /// HDF5 "test.h5" {
 /// GROUP "/" {
@@ -82,7 +82,7 @@ pub trait HDF5 {
     /// where SubGroup1 is within the root group Group1.
     ///
     /// - In this example Group1 will have one subgrup labeled SubGroup1:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open / autocreate hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // create Group1 if does not exists
@@ -150,7 +150,7 @@ pub trait HDF5 {
     /// Note: If the dataset already exists an exception will be thrown.
     ///
     /// - Existence of the dataset can be checked using hlexists(), see in this example:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open / autocreate hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // create space for 100x50 CV_64FC2 matrix
@@ -170,7 +170,7 @@ pub trait HDF5 {
     /// as single big chunk of data.
     ///
     /// - See example of level 9 compression using internal default chunking:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open / autocreate hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // create level 9 compressed space for CV_64FC2 matrix
@@ -192,7 +192,7 @@ pub trait HDF5 {
     /// that allows to write only in predefined data space.
     ///
     /// - Example below shows no compression but unlimited dimension on cols using 100x100 internal chunking:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open / autocreate hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // create level 9 compressed space for CV_64FC2 matrix
@@ -244,7 +244,7 @@ pub trait HDF5 {
     /// using hlexists().
     ///
     /// - See example below that creates a 6 dimensional storage space:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open / autocreate hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // create space for 6 dimensional CV_64FC2 matrix
@@ -267,7 +267,7 @@ pub trait HDF5 {
     ///
     /// - See example of level 0 compression (shallow) using chunking against first
     /// dimension, thus storage will consists by 100 chunks of data:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open / autocreate hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // create space for 6 dimensional CV_64FC2 matrix
@@ -292,7 +292,7 @@ pub trait HDF5 {
     /// dswrite() that allows to write only in predefined data space.
     ///
     /// - Example below shows a 3 dimensional dataset using no compression with all unlimited sizes and one unit chunking:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open / autocreate hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// int n_dims = 3;
@@ -384,7 +384,7 @@ pub trait HDF5 {
     ///
     /// - Example below writes a 100x100 CV_64FC2 matrix into a dataset. No dataset precreation required. If routine
     /// is called multiple times dataset will be just overwritten:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // dual channel hilbert matrix
     /// cv::Mat H(100, 100, CV_64FC2);
     /// for(int i = 0; i < H.rows; i++)
@@ -405,7 +405,7 @@ pub trait HDF5 {
     ///
     /// - Example below writes a smaller 50x100 matrix into 100x100 compressed space optimised by two 50x100 chunks.
     /// Matrix is written twice into first half (0->50) and second half (50->100) of data space using offset.
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // dual channel hilbert matrix
     /// cv::Mat H(50, 100, CV_64FC2);
     /// for(int i = 0; i < H.rows; i++)
@@ -479,7 +479,7 @@ pub trait HDF5 {
     /// over the dataset. Final size will have 5x100 rows and 100 cols, reflecting H matrix five times over row's span. Chunks size is
     /// 100x100 just optimized against the H matrix size having compression disabled. If routine is called multiple times dataset will be
     /// just overwritten:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // dual channel hilbert matrix
     /// cv::Mat H(50, 100, CV_64FC2);
     /// for(int i = 0; i < H.rows; i++)
@@ -548,7 +548,7 @@ pub trait HDF5 {
     /// It is thread safe.
     ///
     /// - Example below reads a dataset:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // blank Mat container
@@ -561,7 +561,7 @@ pub trait HDF5 {
     ///
     ///
     /// - Example below perform read of 3x5 submatrix from second row and third element.
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // blank Mat container
@@ -613,7 +613,7 @@ pub trait HDF5 {
     /// using hlexists().
     ///
     /// - See example below that creates space for 100 keypoints in the dataset:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// if ( ! h5io->hlexists( "keypoints" ) )
@@ -631,7 +631,7 @@ pub trait HDF5 {
     /// growth on unlimited dimension instead of kpwrite() that allows to write only in predefined data space.
     ///
     /// - See example below that creates unlimited space for keypoints chunking size of 100 but no compression:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// if ( ! h5io->hlexists( "keypoints" ) )
@@ -664,7 +664,7 @@ pub trait HDF5 {
     ///
     /// - Example below writes a 100 keypoints into a dataset. No dataset precreation required. If routine is called multiple
     /// times dataset will be just overwritten:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // generate 100 dummy keypoints
     /// std::vector<cv::KeyPoint> keypoints;
     /// for(int i = 0; i < 100; i++)
@@ -682,7 +682,7 @@ pub trait HDF5 {
     /// Same keypoint set is written three times, first into first half (0->50) and at second half (50->75) then into remaining slots
     /// (75->99) of data space using offset and count parameters to settle the window for write access.If routine is called multiple times
     /// dataset will be just overwritten:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // generate 50 dummy keypoints
     /// std::vector<cv::KeyPoint> keypoints;
     /// for(int i = 0; i < 50; i++)
@@ -727,7 +727,7 @@ pub trait HDF5 {
     /// - Example below creates **unlimited** space for keypoints storage, and inserts a list of 10 keypoints ten times into that space.
     /// Final dataset will have 100 keypoints. Chunks size is 10 just optimized against list of keypoints. If routine is called multiple
     /// times dataset will be just overwritten:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // generate 10 dummy keypoints
     /// std::vector<cv::KeyPoint> keypoints;
     /// for(int i = 0; i < 10; i++)
@@ -765,7 +765,7 @@ pub trait HDF5 {
     /// It is thread safe.
     ///
     /// - Example below reads a dataset containing keypoints starting with second entry:
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // blank KeyPoint container
@@ -778,7 +778,7 @@ pub trait HDF5 {
     ///
     ///
     /// - Example below perform read of 3 keypoints from second entry.
-    /// ```ignore{.cpp}
+    /// ```ignore
     /// // open hdf5 file
     /// cv::Ptr<cv::hdf::HDF5> h5io = cv::hdf::open( "mytest.h5" );
     /// // blank KeyPoint container

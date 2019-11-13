@@ -441,7 +441,7 @@ impl dyn RetinaFastToneMapping + '_ {
 /// Here is the default configuration file of the retina module. It gives results such as the first
 /// retina output shown on the top of this page.
 ///
-/// ```ignore{xml}
+/// ```ignore
 /// <?xml version="1.0"?>
 /// <opencv_storage>
 /// <OPLandIPLparvo>
@@ -469,7 +469,7 @@ impl dyn RetinaFastToneMapping + '_ {
 ///
 /// Here is the 'realistic" setup used to obtain the second retina output shown on the top of this page.
 ///
-/// ```ignore{xml}
+/// ```ignore
 /// <?xml version="1.0"?>
 /// <opencv_storage>
 /// <OPLandIPLparvo>
