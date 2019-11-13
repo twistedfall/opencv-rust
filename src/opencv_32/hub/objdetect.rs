@@ -183,7 +183,7 @@ pub fn group_rectangles_meanshift(rect_list: &mut types::VectorOfRect, found_wei
 
 // Generating impl for trait crate::objdetect::BaseCascadeClassifier
 pub trait BaseCascadeClassifier: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_BaseCascadeClassifier(&self) -> *mut c_void;
+    fn as_raw_BaseCascadeClassifier(&self) -> *mut c_void;
     fn empty(&self) -> Result<bool> {
         unsafe { sys::cv_BaseCascadeClassifier_empty_const(self.as_raw_BaseCascadeClassifier()) }.into_result()
     }
@@ -236,7 +236,7 @@ pub trait BaseCascadeClassifier: core::AlgorithmTrait {
 
 // Generating impl for trait crate::objdetect::BaseCascadeClassifier_MaskGenerator
 pub trait BaseCascadeClassifier_MaskGenerator {
-    #[inline(always)] fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void;
+    fn as_raw_BaseCascadeClassifier_MaskGenerator(&self) -> *mut c_void;
     fn generate_mask(&mut self, src: &core::Mat) -> Result<core::Mat> {
         unsafe { sys::cv_BaseCascadeClassifier_MaskGenerator_generateMask_Mat(self.as_raw_BaseCascadeClassifier_MaskGenerator(), src.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
     }
@@ -502,7 +502,7 @@ impl DetectionBasedTracker_ExtObject {
 
 // Generating impl for trait crate::objdetect::DetectionBasedTracker_IDetector
 pub trait DetectionBasedTracker_IDetector {
-    #[inline(always)] fn as_raw_DetectionBasedTracker_IDetector(&self) -> *mut c_void;
+    fn as_raw_DetectionBasedTracker_IDetector(&self) -> *mut c_void;
     fn detect(&mut self, image: &core::Mat, objects: &mut types::VectorOfRect) -> Result<()> {
         unsafe { sys::cv_DetectionBasedTracker_IDetector_detect_Mat_VectorOfRect(self.as_raw_DetectionBasedTracker_IDetector(), image.as_raw_Mat(), objects.as_raw_VectorOfRect()) }.into_result()
     }

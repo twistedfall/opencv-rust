@@ -761,6 +761,6 @@ impl crate::stitching::WarperCreator for TransverseMercatorWarper {
 // Generating impl for trait crate::stitching::WarperCreator
 /// Image warper factories base class.
 pub trait WarperCreator {
-    #[inline(always)] fn as_raw_WarperCreator(&self) -> *mut c_void;
+    fn as_raw_WarperCreator(&self) -> *mut c_void;
 }
 

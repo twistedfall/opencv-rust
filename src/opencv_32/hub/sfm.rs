@@ -654,7 +654,7 @@ pub fn triangulate_points(points2d: &dyn core::ToInputArray, projection_matrices
 // Generating impl for trait crate::sfm::BaseSFM
 /// base class BaseSFM declares a common API that would be used in a typical scene reconstruction scenario
 pub trait BaseSFM {
-    #[inline(always)] fn as_raw_BaseSFM(&self) -> *mut c_void;
+    fn as_raw_BaseSFM(&self) -> *mut c_void;
     fn run(&mut self, points2d: &dyn core::ToInputArray) -> Result<()> {
         input_array_arg!(points2d);
         unsafe { sys::cv_sfm_BaseSFM_run__InputArray(self.as_raw_BaseSFM(), points2d.as_raw__InputArray()) }.into_result()
@@ -713,7 +713,7 @@ pub trait BaseSFM {
 // Generating impl for trait crate::sfm::SFMLibmvEuclideanReconstruction
 /// SFMLibmvEuclideanReconstruction class provides an interface with the Libmv Structure From Motion pipeline.
 pub trait SFMLibmvEuclideanReconstruction: crate::sfm::BaseSFM {
-    #[inline(always)] fn as_raw_SFMLibmvEuclideanReconstruction(&self) -> *mut c_void;
+    fn as_raw_SFMLibmvEuclideanReconstruction(&self) -> *mut c_void;
     /// Calls the pipeline in order to perform Eclidean reconstruction.
     /// ## Parameters
     /// * points2d: Input vector of vectors of 2d points (the inner vector is per image).

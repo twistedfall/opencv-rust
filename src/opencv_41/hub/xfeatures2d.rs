@@ -84,7 +84,7 @@ pub fn match_gms(size1: core::Size, size2: core::Size, keypoints1: &types::Vecto
 /// The interface is equivalent to @ref Feature2D, adding operations for
 /// @ref Elliptic_KeyPoint "Elliptic_KeyPoints" instead of @ref KeyPoint "KeyPoints".
 pub trait AffineFeature2D: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_AffineFeature2D(&self) -> *mut c_void;
+    fn as_raw_AffineFeature2D(&self) -> *mut c_void;
     /// Detects keypoints in the image using the wrapped detector and
     /// performs affine adaptation to augment them with their elliptic regions.
     ///
@@ -153,7 +153,7 @@ impl dyn AffineFeature2D + '_ {
 /// BoostDesc header files (boostdesc_*.i) was exported from original binaries with export-boostdesc.py script from
 /// samples subfolder.
 pub trait BoostDesc: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_BoostDesc(&self) -> *mut c_void;
+    fn as_raw_BoostDesc(&self) -> *mut c_void;
     fn set_use_scale_orientation(&mut self, use_scale_orientation: bool) -> Result<()> {
         unsafe { sys::cv_xfeatures2d_BoostDesc_setUseScaleOrientation_bool(self.as_raw_BoostDesc(), use_scale_orientation) }.into_result()
     }
@@ -242,7 +242,7 @@ impl BriefDescriptorExtractor {
 /// * interpolation: switch to disable interpolation for speed improvement at minor quality loss
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
 pub trait DAISY: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_DAISY(&self) -> *mut c_void;
+    fn as_raw_DAISY(&self) -> *mut c_void;
     /// ## Parameters
     /// * image: image to extract descriptors
     /// * keypoints: of interest within image
@@ -641,7 +641,7 @@ impl MSDDetector {
 /// [KrulisLS16](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_KrulisLS16)
 /// [BeecksUS10](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignatures: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_PCTSignatures(&self) -> *mut c_void;
+    fn as_raw_PCTSignatures(&self) -> *mut c_void;
     /// Computes signature of given image.
     /// ## Parameters
     /// * image: Input image of CV_8U type.
@@ -1043,7 +1043,7 @@ impl dyn PCTSignatures + '_ {
 ///   ACM, 2010.
 /// [BeecksUS10](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignaturesSQFD: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_PCTSignaturesSQFD(&self) -> *mut c_void;
+    fn as_raw_PCTSignaturesSQFD(&self) -> *mut c_void;
     /// Computes Signature Quadratic Form Distance of two signatures.
     /// ## Parameters
     /// * _signature0: The first signature.
@@ -1174,7 +1174,7 @@ impl SIFT {
 /// *   Another example using the SURF feature detector, extractor and matcher can be found at
 /// opencv_source_code/samples/cpp/matcher_simple.cpp
 pub trait SURF: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_SURF(&self) -> *mut c_void;
+    fn as_raw_SURF(&self) -> *mut c_void;
     fn set_hessian_threshold(&mut self, hessian_threshold: f64) -> Result<()> {
         unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_SURF(), hessian_threshold) }.into_result()
     }
@@ -1298,7 +1298,7 @@ impl StarDetector {
 ///
 /// * dsc_normalize: clamp descriptors to 255 and convert to uchar CV_8UC1 (disabled by default)
 pub trait VGG: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_VGG(&self) -> *mut c_void;
+    fn as_raw_VGG(&self) -> *mut c_void;
     fn set_sigma(&mut self, isigma: f32) -> Result<()> {
         unsafe { sys::cv_xfeatures2d_VGG_setSigma_float(self.as_raw_VGG(), isigma) }.into_result()
     }

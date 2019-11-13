@@ -266,7 +266,7 @@ pub fn oil_painting_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 ///
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
 pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
-    #[inline(always)] fn as_raw_GrayworldWB(&self) -> *mut c_void;
+    fn as_raw_GrayworldWB(&self) -> *mut c_void;
     /// Maximum saturation for a pixel to be included in the
     /// gray-world assumption
     /// @see setSaturationThreshold
@@ -296,7 +296,7 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 ///
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
 pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
-    #[inline(always)] fn as_raw_LearningBasedWB(&self) -> *mut c_void;
+    fn as_raw_LearningBasedWB(&self) -> *mut c_void;
     /// Implements the feature extraction part of the algorithm.
     ///
     /// In accordance with [Cheng2015](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
@@ -361,7 +361,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 /// each of the input image channels to the specified range. For increased robustness
 /// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
 pub trait SimpleWB: crate::xphoto::WhiteBalancer {
-    #[inline(always)] fn as_raw_SimpleWB(&self) -> *mut c_void;
+    fn as_raw_SimpleWB(&self) -> *mut c_void;
     /// Input image range minimum value
     /// @see setInputMin
     fn get_input_min(&self) -> Result<f32> {
@@ -429,7 +429,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 ///
 /// For more information see [DD02](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_DD02) .
 pub trait TonemapDurand {
-    #[inline(always)] fn as_raw_TonemapDurand(&self) -> *mut c_void;
+    fn as_raw_TonemapDurand(&self) -> *mut c_void;
     fn get_saturation(&self) -> Result<f32> {
         unsafe { sys::cv_xphoto_TonemapDurand_getSaturation_const(self.as_raw_TonemapDurand()) }.into_result()
     }
@@ -467,7 +467,7 @@ pub trait TonemapDurand {
 // Generating impl for trait crate::xphoto::WhiteBalancer
 /// The base class for auto white balance algorithms.
 pub trait WhiteBalancer: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_WhiteBalancer(&self) -> *mut c_void;
+    fn as_raw_WhiteBalancer(&self) -> *mut c_void;
     /// Applies white balancing to the input image
     ///
     /// ## Parameters

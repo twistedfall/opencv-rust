@@ -139,7 +139,7 @@ pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArra
 /// ## See also
 /// @ref ml_intro_ann
 pub trait ANN_MLP: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_ANN_MLP(&self) -> *mut c_void;
+    fn as_raw_ANN_MLP(&self) -> *mut c_void;
     /// Sets training method and common parameters.
     /// ## Parameters
     /// * method: Default value is ANN_MLP::RPROP. See ANN_MLP::TrainingMethods.
@@ -346,7 +346,7 @@ impl dyn ANN_MLP + '_ {
 /// ## See also
 /// @ref ml_intro_ann
 pub trait ANN_MLP_ANNEAL: crate::ml::ANN_MLP {
-    #[inline(always)] fn as_raw_ANN_MLP_ANNEAL(&self) -> *mut c_void;
+    fn as_raw_ANN_MLP_ANNEAL(&self) -> *mut c_void;
     /// @see setAnnealInitialT
     fn get_anneal_initial_t(&self) -> Result<f64> {
         unsafe { sys::cv_ml_ANN_MLP_ANNEAL_getAnnealInitialT_const(self.as_raw_ANN_MLP_ANNEAL()) }.into_result()
@@ -395,7 +395,7 @@ pub trait ANN_MLP_ANNEAL: crate::ml::ANN_MLP {
 /// ## See also
 /// @ref ml_intro_boost
 pub trait Boost: crate::ml::DTrees {
-    #[inline(always)] fn as_raw_Boost(&self) -> *mut c_void;
+    fn as_raw_Boost(&self) -> *mut c_void;
     /// @see setBoostType
     fn get_boost_type(&self) -> Result<i32> {
         unsafe { sys::cv_ml_Boost_getBoostType_const(self.as_raw_Boost()) }.into_result()
@@ -466,7 +466,7 @@ impl dyn Boost + '_ {
 /// ## See also
 /// @ref ml_intro_trees
 pub trait DTrees: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_DTrees(&self) -> *mut c_void;
+    fn as_raw_DTrees(&self) -> *mut c_void;
     /// @see setMaxCategories
     fn get_max_categories(&self) -> Result<i32> {
         unsafe { sys::cv_ml_DTrees_getMaxCategories_const(self.as_raw_DTrees()) }.into_result()
@@ -679,7 +679,7 @@ impl DTrees_Split {
 /// ## See also
 /// @ref ml_intro_em
 pub trait EM: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_EM(&self) -> *mut c_void;
+    fn as_raw_EM(&self) -> *mut c_void;
     /// @see setClustersNumber
     fn get_clusters_number(&self) -> Result<i32> {
         unsafe { sys::cv_ml_EM_getClustersNumber_const(self.as_raw_EM()) }.into_result()
@@ -922,7 +922,7 @@ impl dyn EM + '_ {
 /// ## See also
 /// @ref ml_intro_knn
 pub trait KNearest: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_KNearest(&self) -> *mut c_void;
+    fn as_raw_KNearest(&self) -> *mut c_void;
     /// @see setDefaultK
     fn get_default_k(&self) -> Result<i32> {
         unsafe { sys::cv_ml_KNearest_getDefaultK_const(self.as_raw_KNearest()) }.into_result()
@@ -1031,7 +1031,7 @@ impl dyn KNearest + '_ {
 /// ## See also
 /// @ref ml_intro_lr
 pub trait LogisticRegression: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_LogisticRegression(&self) -> *mut c_void;
+    fn as_raw_LogisticRegression(&self) -> *mut c_void;
     /// @see setLearningRate
     fn get_learning_rate(&self) -> Result<f64> {
         unsafe { sys::cv_ml_LogisticRegression_getLearningRate_const(self.as_raw_LogisticRegression()) }.into_result()
@@ -1153,7 +1153,7 @@ impl dyn LogisticRegression + '_ {
 /// ## See also
 /// @ref ml_intro_bayes
 pub trait NormalBayesClassifier: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_NormalBayesClassifier(&self) -> *mut c_void;
+    fn as_raw_NormalBayesClassifier(&self) -> *mut c_void;
     /// Predicts the response for sample(s).
     ///
     /// The method estimates the most probable classes for input vectors. Input vectors (one or more)
@@ -1280,7 +1280,7 @@ impl ParamGrid {
 /// ## See also
 /// @ref ml_intro_rtrees
 pub trait RTrees: crate::ml::DTrees {
-    #[inline(always)] fn as_raw_RTrees(&self) -> *mut c_void;
+    fn as_raw_RTrees(&self) -> *mut c_void;
     /// @see setCalculateVarImportance
     fn get_calculate_var_importance(&self) -> Result<bool> {
         unsafe { sys::cv_ml_RTrees_getCalculateVarImportance_const(self.as_raw_RTrees()) }.into_result()
@@ -1370,7 +1370,7 @@ impl dyn RTrees + '_ {
 /// ## See also
 /// @ref ml_intro_svm
 pub trait SVM: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_SVM(&self) -> *mut c_void;
+    fn as_raw_SVM(&self) -> *mut c_void;
     /// @see setType
     fn get_type(&self) -> Result<i32> {
         unsafe { sys::cv_ml_SVM_getType_const(self.as_raw_SVM()) }.into_result()
@@ -1659,7 +1659,7 @@ impl dyn SVM + '_ {
 
 // Generating impl for trait crate::ml::SVM_Kernel
 pub trait SVM_Kernel: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_SVM_Kernel(&self) -> *mut c_void;
+    fn as_raw_SVM_Kernel(&self) -> *mut c_void;
     fn get_type(&self) -> Result<i32> {
         unsafe { sys::cv_ml_SVM_Kernel_getType_const(self.as_raw_SVM_Kernel()) }.into_result()
     }
@@ -1674,7 +1674,7 @@ pub trait SVM_Kernel: core::AlgorithmTrait {
 /// \
 ///                        Stochastic Gradient Descent SVM Classifier                      *
 pub trait SVMSGD: crate::ml::StatModel {
-    #[inline(always)] fn as_raw_SVMSGD(&self) -> *mut c_void;
+    fn as_raw_SVMSGD(&self) -> *mut c_void;
     /// ## Returns
     /// the weights of the trained model (decision function f(x) = weights * x + shift).
     fn get_weights(&mut self) -> Result<core::Mat> {
@@ -1792,7 +1792,7 @@ impl dyn SVMSGD + '_ {
 // Generating impl for trait crate::ml::StatModel
 /// Base class for statistical models in OpenCV ML.
 pub trait StatModel: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_StatModel(&self) -> *mut c_void;
+    fn as_raw_StatModel(&self) -> *mut c_void;
     /// Returns the number of variables in training samples
     fn get_var_count(&self) -> Result<i32> {
         unsafe { sys::cv_ml_StatModel_getVarCount_const(self.as_raw_StatModel()) }.into_result()
@@ -1885,7 +1885,7 @@ pub trait StatModel: core::AlgorithmTrait {
 /// ## See also
 /// @ref ml_intro_data
 pub trait TrainData {
-    #[inline(always)] fn as_raw_TrainData(&self) -> *mut c_void;
+    fn as_raw_TrainData(&self) -> *mut c_void;
     fn missing_value(&mut self) -> Result<f32> {
         unsafe { sys::cv_ml_TrainData_missingValue(self.as_raw_TrainData()) }.into_result()
     }

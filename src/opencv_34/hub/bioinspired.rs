@@ -40,7 +40,7 @@ pub const RETINA_COLOR_RANDOM: i32 = 0;
 /// take a look at imagelogpolprojection.hpp to discover retina spatial log sampling which originates from Barthelemy Durette phd with Jeanny Herault. A Retina / V1 cortex projection is also proposed and originates from Jeanny's discussions.
 /// more informations in the above cited Jeanny Heraults's book.
 pub trait Retina: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_Retina(&self) -> *mut c_void;
+    fn as_raw_Retina(&self) -> *mut c_void;
     /// Retreive retina input buffer size
     /// ## Returns
     /// the retina input buffer size
@@ -385,7 +385,7 @@ impl dyn Retina + '_ {
 /// regarding spatio-temporal filter and the bigger retina model :
 /// Vision: Images, Signals and Neural Networks: Models of Neural Processing in Visual Perception (Progress in Neural Processing),By: Jeanny Herault, ISBN: 9814273686. WAPI (Tower ID): 113266891.
 pub trait RetinaFastToneMapping: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void;
+    fn as_raw_RetinaFastToneMapping(&self) -> *mut c_void;
     /// applies a luminance correction (initially High Dynamic Range (HDR) tone mapping)
     ///
     /// using only the 2 local adaptation stages of the retina parvocellular channel : photoreceptors
@@ -614,7 +614,7 @@ impl SegmentationParameters {
 /// - a stronger third low pass filter helps decision by providing a smooth information about the
 /// "motion context" in a wider area
 pub trait TransientAreasSegmentationModule: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_TransientAreasSegmentationModule(&self) -> *mut c_void;
+    fn as_raw_TransientAreasSegmentationModule(&self) -> *mut c_void;
     /// return the sze of the manage input and output images
     fn get_size(&mut self) -> Result<core::Size> {
         unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_getSize(self.as_raw_TransientAreasSegmentationModule()) }.into_result()

@@ -31,7 +31,7 @@ use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 ///
 /// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
 pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
-    #[inline(always)] fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void;
+    fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void;
     /// Get the reliability map computed from the wrapped phase map.
     ///
     /// ## Parameters
@@ -96,7 +96,7 @@ impl HistogramPhaseUnwrapping_Params {
 // Generating impl for trait crate::phase_unwrapping::PhaseUnwrapping
 /// Abstract base class for phase unwrapping.
 pub trait PhaseUnwrapping: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_PhaseUnwrapping(&self) -> *mut c_void;
+    fn as_raw_PhaseUnwrapping(&self) -> *mut c_void;
     /// Unwraps a 2D phase map.
     ///
     /// ## Parameters

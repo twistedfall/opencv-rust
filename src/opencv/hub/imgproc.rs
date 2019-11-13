@@ -4895,7 +4895,7 @@ pub fn wrapper_emd(signature1: &dyn core::ToInputArray, signature2: &dyn core::T
 // Generating impl for trait crate::imgproc::CLAHE
 /// Base class for Contrast Limited Adaptive Histogram Equalization.
 pub trait CLAHE: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_CLAHE(&self) -> *mut c_void;
+    fn as_raw_CLAHE(&self) -> *mut c_void;
     /// Equalizes the histogram of a grayscale image using Contrast Limited Adaptive Histogram Equalization.
     ///
     /// ## Parameters
@@ -4943,7 +4943,7 @@ pub trait CLAHE: core::AlgorithmTrait {
 // Generating impl for trait crate::imgproc::GeneralizedHough
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 pub trait GeneralizedHough: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_GeneralizedHough(&self) -> *mut c_void;
+    fn as_raw_GeneralizedHough(&self) -> *mut c_void;
     /// set template to search
     ///
     /// ## C++ default parameters
@@ -5038,7 +5038,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 ///
 /// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_Ballard1981) .
 pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
-    #[inline(always)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
+    fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
     /// R-Table levels.
     fn set_levels(&mut self, levels: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughBallard_setLevels_int(self.as_raw_GeneralizedHoughBallard(), levels) }.into_result()
@@ -5064,7 +5064,7 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
 ///
 /// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_Guil1999) .
 pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
-    #[inline(always)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
+    fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
     /// Angle difference in degrees between two points in feature.
     fn set_xi(&mut self, xi: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setXi_double(self.as_raw_GeneralizedHoughGuil(), xi) }.into_result()
@@ -5259,7 +5259,7 @@ impl LineIterator {
 ///
 /// Note: Implementation has been removed due original code license conflict
 pub trait LineSegmentDetector: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
+    fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
     /// Finds lines in the input image.
     ///
     /// This is the output of the default parameters of the algorithm on the above shown image.

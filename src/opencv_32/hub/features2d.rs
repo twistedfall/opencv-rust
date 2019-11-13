@@ -323,7 +323,7 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
 /// for Accelerated Features in Nonlinear Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien
 /// Bartoli. In British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
 pub trait AKAZE: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_AKAZE(&self) -> *mut c_void;
+    fn as_raw_AKAZE(&self) -> *mut c_void;
     fn set_descriptor_type(&mut self, dtype: i32) -> Result<()> {
         unsafe { sys::cv_AKAZE_setDescriptorType_int(self.as_raw_AKAZE(), dtype) }.into_result()
     }
@@ -413,7 +413,7 @@ impl dyn AKAZE + '_ {
 // Generating impl for trait crate::features2d::AgastFeatureDetector
 /// Wrapping class for feature detection using the AGAST method. :
 pub trait AgastFeatureDetector: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_AgastFeatureDetector(&self) -> *mut c_void;
+    fn as_raw_AgastFeatureDetector(&self) -> *mut c_void;
     fn set_threshold(&mut self, threshold: i32) -> Result<()> {
         unsafe { sys::cv_AgastFeatureDetector_setThreshold_int(self.as_raw_AgastFeatureDetector(), threshold) }.into_result()
     }
@@ -683,7 +683,7 @@ impl BOWKMeansTrainer {
 /// For details, see, for example, *Visual Categorization with Bags of Keypoints* by Gabriella Csurka,
 /// Christopher R. Dance, Lixin Fan, Jutta Willamowski, Cedric Bray, 2004. :
 pub trait BOWTrainer {
-    #[inline(always)] fn as_raw_BOWTrainer(&self) -> *mut c_void;
+    fn as_raw_BOWTrainer(&self) -> *mut c_void;
     /// Adds descriptors to a training set.
     ///
     /// ## Parameters
@@ -804,7 +804,7 @@ impl BRISK {
 /// It has two groups of match methods: for matching descriptors of an image with another image or with
 /// an image set.
 pub trait DescriptorMatcher: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_DescriptorMatcher(&self) -> *mut c_void;
+    fn as_raw_DescriptorMatcher(&self) -> *mut c_void;
     /// Adds descriptors to train a CPU(trainDescCollectionis) or GPU(utrainDescCollectionis) descriptor
     /// collection.
     ///
@@ -1048,7 +1048,7 @@ impl dyn DescriptorMatcher + '_ {
 // Generating impl for trait crate::features2d::FastFeatureDetector
 /// Wrapping class for feature detection using the FAST method. :
 pub trait FastFeatureDetector: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_FastFeatureDetector(&self) -> *mut c_void;
+    fn as_raw_FastFeatureDetector(&self) -> *mut c_void;
     fn set_threshold(&mut self, threshold: i32) -> Result<()> {
         unsafe { sys::cv_FastFeatureDetector_setThreshold_int(self.as_raw_FastFeatureDetector(), threshold) }.into_result()
     }
@@ -1090,7 +1090,7 @@ impl dyn FastFeatureDetector + '_ {
 // Generating impl for trait crate::features2d::Feature2D
 /// Abstract base class for 2D image feature detectors and descriptor extractors
 pub trait Feature2DTrait: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_Feature2D(&self) -> *mut c_void;
+    fn as_raw_Feature2D(&self) -> *mut c_void;
     /// Detects keypoints in an image (first variant) or image set (second variant).
     ///
     /// ## Parameters
@@ -1309,7 +1309,7 @@ impl FlannBasedMatcher {
 // Generating impl for trait crate::features2d::GFTTDetector
 /// Wrapping class for feature detection using the goodFeaturesToTrack function. :
 pub trait GFTTDetector: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_GFTTDetector(&self) -> *mut c_void;
+    fn as_raw_GFTTDetector(&self) -> *mut c_void;
     fn set_max_features(&mut self, max_features: i32) -> Result<()> {
         unsafe { sys::cv_GFTTDetector_setMaxFeatures_int(self.as_raw_GFTTDetector(), max_features) }.into_result()
     }
@@ -1383,7 +1383,7 @@ impl dyn GFTTDetector + '_ {
 /// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
 /// (ECCV), Fiorenze, Italy, October 2012.
 pub trait KAZE: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_KAZE(&self) -> *mut c_void;
+    fn as_raw_KAZE(&self) -> *mut c_void;
     fn set_extended(&mut self, extended: bool) -> Result<()> {
         unsafe { sys::cv_KAZE_setExtended_bool(self.as_raw_KAZE(), extended) }.into_result()
     }
@@ -1531,7 +1531,7 @@ impl KeyPointsFilter {
 ///
 /// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
 pub trait MSER: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_MSER(&self) -> *mut c_void;
+    fn as_raw_MSER(&self) -> *mut c_void;
     /// Detect %MSER regions
     ///
     /// ## Parameters
@@ -1615,7 +1615,7 @@ impl dyn MSER + '_ {
 /// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 /// k-tuples) are rotated according to the measured orientation).
 pub trait ORB: crate::features2d::Feature2DTrait {
-    #[inline(always)] fn as_raw_ORB(&self) -> *mut c_void;
+    fn as_raw_ORB(&self) -> *mut c_void;
     fn set_max_features(&mut self, max_features: i32) -> Result<()> {
         unsafe { sys::cv_ORB_setMaxFeatures_int(self.as_raw_ORB(), max_features) }.into_result()
     }

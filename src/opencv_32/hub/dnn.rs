@@ -187,7 +187,7 @@ impl BNLLLayer {
 
 // Generating impl for trait crate::dnn::BaseConvolutionLayer
 pub trait BaseConvolutionLayerTrait: crate::dnn::Layer {
-    #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
+    fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
     fn kernel(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_BaseConvolutionLayer_kernel_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
     }
@@ -876,7 +876,7 @@ impl DeconvolutionLayer {
 // Generating impl for trait crate::dnn::Dict
 /// This class implements name-value dictionary, values are instances of DictValue.
 pub trait DictTrait {
-    #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void;
+    fn as_raw_Dict(&self) -> *mut c_void;
     /// Checks a presence of the @p key in the dictionary.
     fn has(&self, key: &str) -> Result<bool> {
         string_arg!(key);
@@ -1031,7 +1031,7 @@ impl crate::dnn::Layer for EltwiseLayer {
 // Generating impl for trait crate::dnn::Importer
 /// Small interface class for loading trained serialized models of different dnn-frameworks.
 pub trait Importer {
-    #[inline(always)] fn as_raw_Importer(&self) -> *mut c_void;
+    fn as_raw_Importer(&self) -> *mut c_void;
     /// Adds loaded layers into the @p net and sets connections between them.
     fn populate_net(&mut self, net: &crate::dnn::Net) -> Result<()> {
         unsafe { sys::cv_dnn_Importer_populateNet_Net(self.as_raw_Importer(), net.as_raw_Net()) }.into_result()
@@ -1165,7 +1165,7 @@ impl LRNLayer {
 ///
 /// LSTM recurrent layer
 pub trait LSTMLayer: crate::dnn::Layer {
-    #[inline(always)] fn as_raw_LSTMLayer(&self) -> *mut c_void;
+    fn as_raw_LSTMLayer(&self) -> *mut c_void;
     /// Set trained weights for LSTM layer.
     /// LSTM behavior on each step is defined by current input, previous output, previous cell state and learned weights.
     ///
@@ -1281,7 +1281,7 @@ impl dyn LSTMLayer + '_ {
 /// Each class, derived from Layer, must implement allocate() methods to declare own outputs and forward() to compute outputs.
 /// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
 pub trait Layer {
-    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void;
+    fn as_raw_Layer(&self) -> *mut c_void;
     /// Name of the layer instance, can be used for logging or other internal purposes.
     fn name(&mut self) -> Result<String> {
         unsafe { sys::cv_dnn_Layer_name(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string_mut)
@@ -1830,7 +1830,7 @@ impl PowerLayer {
 // Generating impl for trait crate::dnn::RNNLayer
 /// Classical recurrent layer
 pub trait RNNLayer: crate::dnn::Layer {
-    #[inline(always)] fn as_raw_RNNLayer(&self) -> *mut c_void;
+    fn as_raw_RNNLayer(&self) -> *mut c_void;
     /// Setups learned weights.
     ///
     /// Recurrent-layer behavior on each step is defined by current input @f$ x_t @f$, previous state @f$ h_t @f$ and learned weights as follows:

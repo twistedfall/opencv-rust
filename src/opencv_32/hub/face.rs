@@ -128,7 +128,7 @@ pub fn create_lbph_face_recognizer(radius: i32, neighbors: i32, grid_x: i32, gri
 ///  Guo, Guodong, et al. "Human age estimation using bio-inspired features."
 ///  Computer Vision and Pattern Recognition, 2009. CVPR 2009.
 pub trait BIF: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_BIF(&self) -> *mut c_void;
+    fn as_raw_BIF(&self) -> *mut c_void;
     /// ## Returns
     /// The number of filter bands used for computing BIF.
     fn get_num_bands(&self) -> Result<i32> {
@@ -155,7 +155,7 @@ pub trait BIF: core::AlgorithmTrait {
 
 // Generating impl for trait crate::face::BasicFaceRecognizer
 pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
-    #[inline(always)] fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void;
+    fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void;
     /// @see setNumComponents
     fn get_num_components(&self) -> Result<i32> {
         unsafe { sys::cv_face_BasicFaceRecognizer_getNumComponents_const(self.as_raw_BasicFaceRecognizer()) }.into_result()
@@ -300,7 +300,7 @@ pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 /// String name = model->name();
 /// ```
 pub trait FaceRecognizer: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_FaceRecognizer(&self) -> *mut c_void;
+    fn as_raw_FaceRecognizer(&self) -> *mut c_void;
     /// Trains a FaceRecognizer with given data and associated labels.
     ///
     /// ## Parameters
@@ -536,7 +536,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 
 // Generating impl for trait crate::face::LBPHFaceRecognizer
 pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
-    #[inline(always)] fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void;
+    fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void;
     /// @see setGridX
     fn get_grid_x(&self) -> Result<i32> {
         unsafe { sys::cv_face_LBPHFaceRecognizer_getGridX_const(self.as_raw_LBPHFaceRecognizer()) }.into_result()
@@ -600,7 +600,7 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 // Generating impl for trait crate::face::PredictCollector
 /// Abstract base class for all strategies of prediction result handling
 pub trait PredictCollector {
-    #[inline(always)] fn as_raw_PredictCollector(&self) -> *mut c_void;
+    fn as_raw_PredictCollector(&self) -> *mut c_void;
     /// Interface method called by face recognizer before results processing
     /// ## Parameters
     /// * size: total size of prediction evaluation that recognizer could perform

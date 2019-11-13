@@ -2358,7 +2358,7 @@ impl WWidgetMerger {
 // Generating impl for trait crate::viz::Widget
 /// Base class of all widgets. Widget is implicitly shared.
 pub trait WidgetTrait {
-    #[inline(always)] fn as_raw_Widget(&self) -> *mut c_void;
+    fn as_raw_Widget(&self) -> *mut c_void;
     /// Sets rendering property of the widget.
     ///
     /// ## Parameters
@@ -2468,7 +2468,7 @@ impl Widget {
 // Generating impl for trait crate::viz::Widget2D
 /// Base class of all 2D widgets.
 pub trait Widget2DTrait: crate::viz::WidgetTrait {
-    #[inline(always)] fn as_raw_Widget2D(&self) -> *mut c_void;
+    fn as_raw_Widget2D(&self) -> *mut c_void;
     /// Sets the color of the widget.
     ///
     /// ## Parameters
@@ -2519,7 +2519,7 @@ impl Widget2D {
 // Generating impl for trait crate::viz::Widget3D
 /// Base class of all 3D widgets.
 pub trait Widget3DTrait: crate::viz::WidgetTrait {
-    #[inline(always)] fn as_raw_Widget3D(&self) -> *mut c_void;
+    fn as_raw_Widget3D(&self) -> *mut c_void;
     /// Sets the color of the widget.
     ///
     /// ## Parameters

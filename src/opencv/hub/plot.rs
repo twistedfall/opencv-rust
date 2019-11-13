@@ -7,7 +7,7 @@ use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 // Generating impl for trait crate::plot::Plot2d
 pub trait Plot2d: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_Plot2d(&self) -> *mut c_void;
+    fn as_raw_Plot2d(&self) -> *mut c_void;
     fn set_min_x(&mut self, _plot_min_x: f64) -> Result<()> {
         unsafe { sys::cv_plot_Plot2d_setMinX_double(self.as_raw_Plot2d(), _plot_min_x) }.into_result()
     }

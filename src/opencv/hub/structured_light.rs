@@ -41,7 +41,7 @@ pub const PSP: i32 = 1;
 ///  This provides an effective method for easily determining the intensity value of each pixel when it is lit (highest value) and
 ///  when it is not lit (lowest value). So for a a projector with resolution 1024x768, the number of pattern images will be Ncols * 2 + Nrows * 2 = 40.
 pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
-    #[inline(always)] fn as_raw_GrayCodePattern(&self) -> *mut c_void;
+    fn as_raw_GrayCodePattern(&self) -> *mut c_void;
     /// Get the number of pattern images needed for the graycode pattern.
     ///
     /// ## Returns
@@ -157,7 +157,7 @@ impl GrayCodePattern_Params {
 ///
 /// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
 pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
-    #[inline(always)] fn as_raw_SinusoidalPattern(&self) -> *mut c_void;
+    fn as_raw_SinusoidalPattern(&self) -> *mut c_void;
     /// Compute a wrapped phase map from sinusoidal patterns.
     /// ## Parameters
     /// * patternImages: Input data to compute the wrapped phase map.
@@ -304,7 +304,7 @@ impl SinusoidalPattern_Params {
 // Generating impl for trait crate::structured_light::StructuredLightPattern
 /// Abstract base class for generating and decoding structured light patterns.
 pub trait StructuredLightPattern: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_StructuredLightPattern(&self) -> *mut c_void;
+    fn as_raw_StructuredLightPattern(&self) -> *mut c_void;
     /// Generates the structured light pattern to project.
     ///
     /// ## Parameters

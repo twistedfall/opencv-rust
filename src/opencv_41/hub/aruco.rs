@@ -741,7 +741,7 @@ pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &types::Pt
 /// - The dictionary which indicates the type of markers of the board
 /// - The identifier of all the markers in the board.
 pub trait BoardTrait {
-    #[inline(always)] fn as_raw_Board(&self) -> *mut c_void;
+    fn as_raw_Board(&self) -> *mut c_void;
 }
 
 // boxed class cv::aruco::Board

@@ -208,7 +208,7 @@ impl ConsistentMosaicInpainter {
 
 // Generating impl for trait crate::videostab::DeblurerBase
 pub trait DeblurerBase {
-    #[inline(always)] fn as_raw_DeblurerBase(&self) -> *mut c_void;
+    fn as_raw_DeblurerBase(&self) -> *mut c_void;
     fn set_radius(&mut self, val: i32) -> Result<()> {
         unsafe { sys::cv_videostab_DeblurerBase_setRadius_int(self.as_raw_DeblurerBase(), val) }.into_result()
     }
@@ -381,7 +381,7 @@ impl GaussianMotionFilter {
 
 // Generating impl for trait crate::videostab::IDenseOptFlowEstimator
 pub trait IDenseOptFlowEstimator {
-    #[inline(always)] fn as_raw_IDenseOptFlowEstimator(&self) -> *mut c_void;
+    fn as_raw_IDenseOptFlowEstimator(&self) -> *mut c_void;
     fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, flow_x: &mut dyn core::ToInputOutputArray, flow_y: &mut dyn core::ToInputOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
         input_array_arg!(frame0);
         input_array_arg!(frame1);
@@ -395,7 +395,7 @@ pub trait IDenseOptFlowEstimator {
 
 // Generating impl for trait crate::videostab::IFrameSource
 pub trait IFrameSource {
-    #[inline(always)] fn as_raw_IFrameSource(&self) -> *mut c_void;
+    fn as_raw_IFrameSource(&self) -> *mut c_void;
     fn reset(&mut self) -> Result<()> {
         unsafe { sys::cv_videostab_IFrameSource_reset(self.as_raw_IFrameSource()) }.into_result()
     }
@@ -408,17 +408,17 @@ pub trait IFrameSource {
 
 // Generating impl for trait crate::videostab::ILog
 pub trait ILog {
-    #[inline(always)] fn as_raw_ILog(&self) -> *mut c_void;
+    fn as_raw_ILog(&self) -> *mut c_void;
 }
 
 // Generating impl for trait crate::videostab::IMotionStabilizer
 pub trait IMotionStabilizer {
-    #[inline(always)] fn as_raw_IMotionStabilizer(&self) -> *mut c_void;
+    fn as_raw_IMotionStabilizer(&self) -> *mut c_void;
 }
 
 // Generating impl for trait crate::videostab::IOutlierRejector
 pub trait IOutlierRejector {
-    #[inline(always)] fn as_raw_IOutlierRejector(&self) -> *mut c_void;
+    fn as_raw_IOutlierRejector(&self) -> *mut c_void;
     fn process(&mut self, frame_size: core::Size, points0: &dyn core::ToInputArray, points1: &dyn core::ToInputArray, mask: &mut dyn core::ToOutputArray) -> Result<()> {
         input_array_arg!(points0);
         input_array_arg!(points1);
@@ -430,7 +430,7 @@ pub trait IOutlierRejector {
 
 // Generating impl for trait crate::videostab::ISparseOptFlowEstimator
 pub trait ISparseOptFlowEstimator {
-    #[inline(always)] fn as_raw_ISparseOptFlowEstimator(&self) -> *mut c_void;
+    fn as_raw_ISparseOptFlowEstimator(&self) -> *mut c_void;
     fn run(&mut self, frame0: &dyn core::ToInputArray, frame1: &dyn core::ToInputArray, points0: &dyn core::ToInputArray, points1: &mut dyn core::ToInputOutputArray, status: &mut dyn core::ToOutputArray, errors: &mut dyn core::ToOutputArray) -> Result<()> {
         input_array_arg!(frame0);
         input_array_arg!(frame1);
@@ -446,7 +446,7 @@ pub trait ISparseOptFlowEstimator {
 // Generating impl for trait crate::videostab::ImageMotionEstimatorBase
 /// Base class for global 2D motion estimation methods which take frames as input.
 pub trait ImageMotionEstimatorBase {
-    #[inline(always)] fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void;
+    fn as_raw_ImageMotionEstimatorBase(&self) -> *mut c_void;
     ///
     /// ## C++ default parameters
     /// * ok: 0
@@ -458,7 +458,7 @@ pub trait ImageMotionEstimatorBase {
 
 // Generating impl for trait crate::videostab::InpainterBase
 pub trait InpainterBase {
-    #[inline(always)] fn as_raw_InpainterBase(&self) -> *mut c_void;
+    fn as_raw_InpainterBase(&self) -> *mut c_void;
     fn set_radius(&mut self, val: i32) -> Result<()> {
         unsafe { sys::cv_videostab_InpainterBase_setRadius_int(self.as_raw_InpainterBase(), val) }.into_result()
     }
@@ -753,7 +753,7 @@ impl MoreAccurateMotionWobbleSuppressor {
 
 // Generating impl for trait crate::videostab::MoreAccurateMotionWobbleSuppressorBase
 pub trait MoreAccurateMotionWobbleSuppressorBaseTrait: crate::videostab::WobbleSuppressorBase {
-    #[inline(always)] fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *mut c_void;
+    fn as_raw_MoreAccurateMotionWobbleSuppressorBase(&self) -> *mut c_void;
     fn set_period(&mut self, val: i32) -> Result<()> {
         unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressorBase_setPeriod_int(self.as_raw_MoreAccurateMotionWobbleSuppressorBase(), val) }.into_result()
     }
@@ -796,7 +796,7 @@ impl crate::videostab::WobbleSuppressorBase for MoreAccurateMotionWobbleSuppress
 // Generating impl for trait crate::videostab::MotionEstimatorBase
 /// Base class for all global motion estimation methods.
 pub trait MotionEstimatorBase {
-    #[inline(always)] fn as_raw_MotionEstimatorBase(&self) -> *mut c_void;
+    fn as_raw_MotionEstimatorBase(&self) -> *mut c_void;
     /// Estimates global motion between two 2D point clouds.
     ///
     /// ## Parameters
@@ -905,7 +905,7 @@ impl MotionEstimatorRansacL2 {
 
 // Generating impl for trait crate::videostab::MotionFilterBase
 pub trait MotionFilterBase: crate::videostab::IMotionStabilizer {
-    #[inline(always)] fn as_raw_MotionFilterBase(&self) -> *mut c_void;
+    fn as_raw_MotionFilterBase(&self) -> *mut c_void;
 }
 
 // boxed class cv::videostab::MotionInpainter
@@ -1250,7 +1250,7 @@ impl OnePassStabilizer {
 
 // Generating impl for trait crate::videostab::PyrLkOptFlowEstimatorBase
 pub trait PyrLkOptFlowEstimatorBaseTrait {
-    #[inline(always)] fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *mut c_void;
+    fn as_raw_PyrLkOptFlowEstimatorBase(&self) -> *mut c_void;
     fn set_win_size(&mut self, val: core::Size) -> Result<()> {
         unsafe { sys::cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(self.as_raw_PyrLkOptFlowEstimatorBase(), val) }.into_result()
     }
@@ -1376,7 +1376,7 @@ impl SparsePyrLkOptFlowEstimator {
 
 // Generating impl for trait crate::videostab::StabilizerBase
 pub trait StabilizerBase {
-    #[inline(always)] fn as_raw_StabilizerBase(&self) -> *mut c_void;
+    fn as_raw_StabilizerBase(&self) -> *mut c_void;
     fn set_log(&mut self, ilog: &types::PtrOfILog) -> Result<()> {
         unsafe { sys::cv_videostab_StabilizerBase_setLog_PtrOfILog(self.as_raw_StabilizerBase(), ilog.as_raw_PtrOfILog()) }.into_result()
     }
@@ -1704,7 +1704,7 @@ impl WeightingDeblurer {
 
 // Generating impl for trait crate::videostab::WobbleSuppressorBase
 pub trait WobbleSuppressorBase {
-    #[inline(always)] fn as_raw_WobbleSuppressorBase(&self) -> *mut c_void;
+    fn as_raw_WobbleSuppressorBase(&self) -> *mut c_void;
     fn set_motion_estimator(&mut self, val: &types::PtrOfImageMotionEstimatorBase) -> Result<()> {
         unsafe { sys::cv_videostab_WobbleSuppressorBase_setMotionEstimator_PtrOfImageMotionEstimatorBase(self.as_raw_WobbleSuppressorBase(), val.as_raw_PtrOfImageMotionEstimatorBase()) }.into_result()
     }

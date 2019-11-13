@@ -658,7 +658,7 @@ pub fn texture_flattening(src: &dyn core::ToInputArray, mask: &dyn core::ToInput
 // Generating impl for trait crate::photo::AlignExposures
 /// The base class for algorithms that align images of the same scene with different exposures
 pub trait AlignExposures: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_AlignExposures(&self) -> *mut c_void;
+    fn as_raw_AlignExposures(&self) -> *mut c_void;
     /// Aligns images
     ///
     /// ## Parameters
@@ -686,7 +686,7 @@ pub trait AlignExposures: core::AlgorithmTrait {
 ///
 /// For more information see [GW03](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_GW03) .
 pub trait AlignMTB: crate::photo::AlignExposures {
-    #[inline(always)] fn as_raw_AlignMTB(&self) -> *mut c_void;
+    fn as_raw_AlignMTB(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut types::VectorOfMat, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
         input_array_arg!(src);
         input_array_arg!(times);
@@ -770,7 +770,7 @@ pub trait AlignMTB: crate::photo::AlignExposures {
 // Generating impl for trait crate::photo::CalibrateCRF
 /// The base class for camera response calibration algorithms.
 pub trait CalibrateCRF: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_CalibrateCRF(&self) -> *mut c_void;
+    fn as_raw_CalibrateCRF(&self) -> *mut c_void;
     /// Recovers inverse camera response.
     ///
     /// ## Parameters
@@ -793,7 +793,7 @@ pub trait CalibrateCRF: core::AlgorithmTrait {
 ///
 /// For more information see [DM97](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait CalibrateDebevec: crate::photo::CalibrateCRF {
-    #[inline(always)] fn as_raw_CalibrateDebevec(&self) -> *mut c_void;
+    fn as_raw_CalibrateDebevec(&self) -> *mut c_void;
     fn get_lambda(&self) -> Result<f32> {
         unsafe { sys::cv_CalibrateDebevec_getLambda_const(self.as_raw_CalibrateDebevec()) }.into_result()
     }
@@ -826,7 +826,7 @@ pub trait CalibrateDebevec: crate::photo::CalibrateCRF {
 ///
 /// For more information see [RB99](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
-    #[inline(always)] fn as_raw_CalibrateRobertson(&self) -> *mut c_void;
+    fn as_raw_CalibrateRobertson(&self) -> *mut c_void;
     fn get_max_iter(&self) -> Result<i32> {
         unsafe { sys::cv_CalibrateRobertson_getMaxIter_const(self.as_raw_CalibrateRobertson()) }.into_result()
     }
@@ -855,7 +855,7 @@ pub trait CalibrateRobertson: crate::photo::CalibrateCRF {
 ///
 /// For more information see [DM97](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_DM97) .
 pub trait MergeDebevec: crate::photo::MergeExposures {
-    #[inline(always)] fn as_raw_MergeDebevec(&self) -> *mut c_void;
+    fn as_raw_MergeDebevec(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
         input_array_arg!(src);
         output_array_arg!(dst);
@@ -876,7 +876,7 @@ pub trait MergeDebevec: crate::photo::MergeExposures {
 // Generating impl for trait crate::photo::MergeExposures
 /// The base class algorithms that can merge exposure sequence to a single image.
 pub trait MergeExposures: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_MergeExposures(&self) -> *mut c_void;
+    fn as_raw_MergeExposures(&self) -> *mut c_void;
     /// Merges images.
     ///
     /// ## Parameters
@@ -907,7 +907,7 @@ pub trait MergeExposures: core::AlgorithmTrait {
 ///
 /// For more information see [MK07](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_MK07) .
 pub trait MergeMertens: crate::photo::MergeExposures {
-    #[inline(always)] fn as_raw_MergeMertens(&self) -> *mut c_void;
+    fn as_raw_MergeMertens(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
         input_array_arg!(src);
         output_array_arg!(dst);
@@ -959,7 +959,7 @@ pub trait MergeMertens: crate::photo::MergeExposures {
 ///
 /// For more information see [RB99](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_RB99) .
 pub trait MergeRobertson: crate::photo::MergeExposures {
-    #[inline(always)] fn as_raw_MergeRobertson(&self) -> *mut c_void;
+    fn as_raw_MergeRobertson(&self) -> *mut c_void;
     fn process_with_response(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, times: &dyn core::ToInputArray, response: &dyn core::ToInputArray) -> Result<()> {
         input_array_arg!(src);
         output_array_arg!(dst);
@@ -980,7 +980,7 @@ pub trait MergeRobertson: crate::photo::MergeExposures {
 // Generating impl for trait crate::photo::Tonemap
 /// Base class for tonemapping algorithms - tools that are used to map HDR image to 8-bit range.
 pub trait Tonemap: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_Tonemap(&self) -> *mut c_void;
+    fn as_raw_Tonemap(&self) -> *mut c_void;
     /// Tonemaps image
     ///
     /// ## Parameters
@@ -1013,7 +1013,7 @@ pub trait Tonemap: core::AlgorithmTrait {
 ///
 /// For more information see [DM03](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_DM03) .
 pub trait TonemapDrago: crate::photo::Tonemap {
-    #[inline(always)] fn as_raw_TonemapDrago(&self) -> *mut c_void;
+    fn as_raw_TonemapDrago(&self) -> *mut c_void;
     fn get_saturation(&self) -> Result<f32> {
         unsafe { sys::cv_TonemapDrago_getSaturation_const(self.as_raw_TonemapDrago()) }.into_result()
     }
@@ -1042,7 +1042,7 @@ pub trait TonemapDrago: crate::photo::Tonemap {
 ///
 /// For more information see [DD02](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_DD02) .
 pub trait TonemapDurand: crate::photo::Tonemap {
-    #[inline(always)] fn as_raw_TonemapDurand(&self) -> *mut c_void;
+    fn as_raw_TonemapDurand(&self) -> *mut c_void;
     fn get_saturation(&self) -> Result<f32> {
         unsafe { sys::cv_TonemapDurand_getSaturation_const(self.as_raw_TonemapDurand()) }.into_result()
     }
@@ -1084,7 +1084,7 @@ pub trait TonemapDurand: crate::photo::Tonemap {
 ///
 /// For more information see [MM06](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_MM06) .
 pub trait TonemapMantiuk: crate::photo::Tonemap {
-    #[inline(always)] fn as_raw_TonemapMantiuk(&self) -> *mut c_void;
+    fn as_raw_TonemapMantiuk(&self) -> *mut c_void;
     fn get_scale(&self) -> Result<f32> {
         unsafe { sys::cv_TonemapMantiuk_getScale_const(self.as_raw_TonemapMantiuk()) }.into_result()
     }
@@ -1111,7 +1111,7 @@ pub trait TonemapMantiuk: crate::photo::Tonemap {
 ///
 /// For more information see [RD05](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_RD05) .
 pub trait TonemapReinhard: crate::photo::Tonemap {
-    #[inline(always)] fn as_raw_TonemapReinhard(&self) -> *mut c_void;
+    fn as_raw_TonemapReinhard(&self) -> *mut c_void;
     fn get_intensity(&self) -> Result<f32> {
         unsafe { sys::cv_TonemapReinhard_getIntensity_const(self.as_raw_TonemapReinhard()) }.into_result()
     }

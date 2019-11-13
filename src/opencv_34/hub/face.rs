@@ -252,7 +252,7 @@ pub fn load_training_data_2(filename: &types::VectorOfString, trainlandmarks: &m
 ///  Guo, Guodong, et al. "Human age estimation using bio-inspired features."
 ///  Computer Vision and Pattern Recognition, 2009. CVPR 2009.
 pub trait BIF: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_BIF(&self) -> *mut c_void;
+    fn as_raw_BIF(&self) -> *mut c_void;
     /// ## Returns
     /// The number of filter bands used for computing BIF.
     fn get_num_bands(&self) -> Result<i32> {
@@ -295,7 +295,7 @@ impl dyn BIF + '_ {
 
 // Generating impl for trait crate::face::BasicFaceRecognizer
 pub trait BasicFaceRecognizerTrait: crate::face::FaceRecognizer {
-    #[inline(always)] fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void;
+    fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void;
     /// @see setNumComponents
     fn get_num_components(&self) -> Result<i32> {
         unsafe { sys::cv_face_BasicFaceRecognizer_getNumComponents_const(self.as_raw_BasicFaceRecognizer()) }.into_result()
@@ -592,7 +592,7 @@ impl EigenFaceRecognizer {
 /// String name = model->name();
 /// ```
 pub trait FaceRecognizer: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_FaceRecognizer(&self) -> *mut c_void;
+    fn as_raw_FaceRecognizer(&self) -> *mut c_void;
     /// Trains a FaceRecognizer with given data and associated labels.
     ///
     /// ## Parameters
@@ -852,7 +852,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 /// - Load the trained model using Facemark::loadModel.
 /// - Perform the fitting on an image via Facemark::fit.
 pub trait Facemark: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_Facemark(&self) -> *mut c_void;
+    fn as_raw_Facemark(&self) -> *mut c_void;
     /// A function to load the trained model before the fitting process.
     /// ## Parameters
     /// * model: A string represent the filename of a trained model.
@@ -891,7 +891,7 @@ pub trait Facemark: core::AlgorithmTrait {
 
 // Generating impl for trait crate::face::FacemarkAAM
 pub trait FacemarkAAM: crate::face::FacemarkTrain {
-    #[inline(always)] fn as_raw_FacemarkAAM(&self) -> *mut c_void;
+    fn as_raw_FacemarkAAM(&self) -> *mut c_void;
     /// overload with additional Config structures
     fn fit_config(&mut self, image: &dyn core::ToInputArray, roi: &dyn core::ToInputArray, _landmarks: &mut dyn core::ToOutputArray, runtime_params: &types::VectorOfConfig) -> Result<bool> {
         input_array_arg!(image);
@@ -1054,7 +1054,7 @@ impl FacemarkAAM_Params {
 
 // Generating impl for trait crate::face::FacemarkKazemi
 pub trait FacemarkKazemi: crate::face::Facemark {
-    #[inline(always)] fn as_raw_FacemarkKazemi(&self) -> *mut c_void;
+    fn as_raw_FacemarkKazemi(&self) -> *mut c_void;
     /// This function is used to train the model using gradient boosting to get a cascade of regressors
     /// *which can then be used to predict shape.
     /// ## Parameters
@@ -1270,7 +1270,7 @@ impl FacemarkLBF_Params {
 /// - Load the trained model using Facemark::loadModel.
 /// - Perform the fitting via the Facemark::fit.
 pub trait FacemarkTrain: crate::face::Facemark {
-    #[inline(always)] fn as_raw_FacemarkTrain(&self) -> *mut c_void;
+    fn as_raw_FacemarkTrain(&self) -> *mut c_void;
     /// Add one training sample to the trainer.
     ///
     /// ## Parameters
@@ -1466,7 +1466,7 @@ impl FisherFaceRecognizer {
 
 // Generating impl for trait crate::face::LBPHFaceRecognizer
 pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
-    #[inline(always)] fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void;
+    fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void;
     /// @see setGridX
     fn get_grid_x(&self) -> Result<i32> {
         unsafe { sys::cv_face_LBPHFaceRecognizer_getGridX_const(self.as_raw_LBPHFaceRecognizer()) }.into_result()
@@ -1625,7 +1625,7 @@ impl dyn LBPHFaceRecognizer + '_ {
 /// reloaded->same(some_image);
 /// ```
 pub trait MACE: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_MACE(&self) -> *mut c_void;
+    fn as_raw_MACE(&self) -> *mut c_void;
     /// optionally encrypt images with random convolution
     /// ## Parameters
     /// * passphrase: a crc64 random seed will get generated from this
@@ -1639,7 +1639,7 @@ pub trait MACE: core::AlgorithmTrait {
 // Generating impl for trait crate::face::PredictCollector
 /// Abstract base class for all strategies of prediction result handling
 pub trait PredictCollector {
-    #[inline(always)] fn as_raw_PredictCollector(&self) -> *mut c_void;
+    fn as_raw_PredictCollector(&self) -> *mut c_void;
     /// Interface method called by face recognizer before results processing
     /// ## Parameters
     /// * size: total size of prediction evaluation that recognizer could perform

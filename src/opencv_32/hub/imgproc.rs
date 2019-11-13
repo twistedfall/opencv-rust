@@ -4657,7 +4657,7 @@ pub fn watershed(image: &dyn core::ToInputArray, markers: &mut dyn core::ToInput
 
 // Generating impl for trait crate::imgproc::CLAHE
 pub trait CLAHE: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_CLAHE(&self) -> *mut c_void;
+    fn as_raw_CLAHE(&self) -> *mut c_void;
     fn apply(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
         input_array_arg!(src);
         output_array_arg!(dst);
@@ -4689,7 +4689,7 @@ pub trait CLAHE: core::AlgorithmTrait {
 // Generating impl for trait crate::imgproc::GeneralizedHough
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 pub trait GeneralizedHough: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_GeneralizedHough(&self) -> *mut c_void;
+    fn as_raw_GeneralizedHough(&self) -> *mut c_void;
     /// set template to search
     ///
     /// ## C++ default parameters
@@ -4783,7 +4783,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 /// Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. Pattern Recognition 13 (2): 111-122.
 /// Detects position only without traslation and rotation
 pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
-    #[inline(always)] fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
+    fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
     /// R-Table levels.
     fn set_levels(&mut self, levels: i32) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughBallard_setLevels_int(self.as_raw_GeneralizedHoughBallard(), levels) }.into_result()
@@ -4808,7 +4808,7 @@ pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
 /// Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
 /// Detects position, traslation and rotation
 pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
-    #[inline(always)] fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
+    fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
     /// Angle difference in degrees between two points in feature.
     fn set_xi(&mut self, xi: f64) -> Result<()> {
         unsafe { sys::cv_GeneralizedHoughGuil_setXi_double(self.as_raw_GeneralizedHoughGuil(), xi) }.into_result()
@@ -5000,7 +5000,7 @@ impl LineIterator {
 ///
 /// following the algorithm described at [Rafael12](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Rafael12) .
 pub trait LineSegmentDetector: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
+    fn as_raw_LineSegmentDetector(&self) -> *mut c_void;
     /// Finds lines in the input image.
     ///
     /// This is the output of the default parameters of the algorithm on the above shown image.

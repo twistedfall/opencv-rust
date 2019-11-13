@@ -431,7 +431,7 @@ pub fn mean_shift(prob_image: &dyn core::ToInputArray, window: &mut core::Rect, 
 /// The class is only used to define the common interface for the whole family of background/foreground
 /// segmentation algorithms.
 pub trait BackgroundSubtractor: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_BackgroundSubtractor(&self) -> *mut c_void;
+    fn as_raw_BackgroundSubtractor(&self) -> *mut c_void;
     /// Computes a foreground mask.
     ///
     /// ## Parameters
@@ -471,7 +471,7 @@ pub trait BackgroundSubtractor: core::AlgorithmTrait {
 /// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 /// Very efficient if number of foreground pixels is low.
 pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
-    #[inline(always)] fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
+    fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
     /// Returns the number of last frames that affect the background model
     fn get_history(&self) -> Result<i32> {
         unsafe { sys::cv_BackgroundSubtractorKNN_getHistory_const(self.as_raw_BackgroundSubtractorKNN()) }.into_result()
@@ -569,7 +569,7 @@ pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
 /// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_Zivkovic2004)
 /// and [Zivkovic2006](https://docs.opencv.org/3.4.8/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
-    #[inline(always)] fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
+    fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
     /// Returns the number of last frames that affect the background model
     fn get_history(&self) -> Result<i32> {
         unsafe { sys::cv_BackgroundSubtractorMOG2_getHistory_const(self.as_raw_BackgroundSubtractorMOG2()) }.into_result()
@@ -738,7 +738,7 @@ pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
 
 // Generating impl for trait crate::video::DenseOpticalFlow
 pub trait DenseOpticalFlow: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
+    fn as_raw_DenseOpticalFlow(&self) -> *mut c_void;
     /// Calculates an optical flow.
     ///
     /// ## Parameters
@@ -802,7 +802,7 @@ pub trait DenseOpticalFlow: core::AlgorithmTrait {
 /// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
 /// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
 pub trait DualTVL1OpticalFlow: crate::video::DenseOpticalFlow {
-    #[inline(always)] fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void;
+    fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void;
     /// @see setTau
     fn get_tau(&self) -> Result<f64> {
         unsafe { sys::cv_DualTVL1OpticalFlow_getTau_const(self.as_raw_DualTVL1OpticalFlow()) }.into_result()
@@ -950,7 +950,7 @@ impl dyn DualTVL1OpticalFlow + '_ {
 // Generating impl for trait crate::video::FarnebackOpticalFlow
 /// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
 pub trait FarnebackOpticalFlow: crate::video::DenseOpticalFlow {
-    #[inline(always)] fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
+    fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
     fn get_num_levels(&self) -> Result<i32> {
         unsafe { sys::cv_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
     }
@@ -1220,7 +1220,7 @@ impl KalmanFilter {
 // Generating impl for trait crate::video::SparseOpticalFlow
 /// Base interface for sparse optical flow algorithms.
 pub trait SparseOpticalFlow: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_SparseOpticalFlow(&self) -> *mut c_void;
+    fn as_raw_SparseOpticalFlow(&self) -> *mut c_void;
     /// Calculates a sparse optical flow.
     ///
     /// ## Parameters
@@ -1255,7 +1255,7 @@ pub trait SparseOpticalFlow: core::AlgorithmTrait {
 /// ## See also
 /// calcOpticalFlowPyrLK
 pub trait SparsePyrLKOpticalFlow: crate::video::SparseOpticalFlow {
-    #[inline(always)] fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void;
+    fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void;
     fn get_win_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result()
     }

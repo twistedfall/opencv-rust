@@ -154,7 +154,7 @@ pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, 
 ///
 /// %Algorithm by Sagi Zeevi ( https://github.com/sagi-z/BackgroundSubtractorCNT )
 pub trait BackgroundSubtractorCNT {
-    #[inline(always)] fn as_raw_BackgroundSubtractorCNT(&self) -> *mut c_void;
+    fn as_raw_BackgroundSubtractorCNT(&self) -> *mut c_void;
     ///
     /// ## C++ default parameters
     /// * learning_rate: -1
@@ -220,7 +220,7 @@ pub trait BackgroundSubtractorCNT {
 /// Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
 /// A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
 pub trait BackgroundSubtractorGMG {
-    #[inline(always)] fn as_raw_BackgroundSubtractorGMG(&self) -> *mut c_void;
+    fn as_raw_BackgroundSubtractorGMG(&self) -> *mut c_void;
     /// Returns total number of distinct colors to maintain in histogram.
     fn get_max_features(&self) -> Result<i32> {
         unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getMaxFeatures_const(self.as_raw_BackgroundSubtractorGMG()) }.into_result()
@@ -455,7 +455,7 @@ impl BackgroundSubtractorLSBPDesc {
 ///
 /// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.1.2/d0/de3/citelist.html#CITEREF_KB2001) .
 pub trait BackgroundSubtractorMOG {
-    #[inline(always)] fn as_raw_BackgroundSubtractorMOG(&self) -> *mut c_void;
+    fn as_raw_BackgroundSubtractorMOG(&self) -> *mut c_void;
     fn get_history(&self) -> Result<i32> {
         unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getHistory_const(self.as_raw_BackgroundSubtractorMOG()) }.into_result()
     }

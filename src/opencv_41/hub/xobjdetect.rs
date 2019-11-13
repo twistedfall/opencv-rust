@@ -8,7 +8,7 @@ use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 // Generating impl for trait crate::xobjdetect::WBDetector
 /// WaldBoost detector
 pub trait WBDetector {
-    #[inline(always)] fn as_raw_WBDetector(&self) -> *mut c_void;
+    fn as_raw_WBDetector(&self) -> *mut c_void;
     /// Read detector from FileNode.
     /// ## Parameters
     /// * node: FileNode for input

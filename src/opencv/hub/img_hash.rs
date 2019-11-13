@@ -202,7 +202,7 @@ impl ColorMomentHash {
 // Generating impl for trait crate::img_hash::ImgHashBase
 /// The base class for image hash algorithms
 pub trait ImgHashBaseTrait: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_ImgHashBase(&self) -> *mut c_void;
+    fn as_raw_ImgHashBase(&self) -> *mut c_void;
 }
 
 // boxed class cv::img_hash::ImgHashBase

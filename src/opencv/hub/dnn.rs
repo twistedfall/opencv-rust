@@ -640,7 +640,7 @@ impl AbsLayer {
 
 // Generating impl for trait crate::dnn::ActivationLayer
 pub trait ActivationLayer: crate::dnn::LayerTrait {
-    #[inline(always)] fn as_raw_ActivationLayer(&self) -> *mut c_void;
+    fn as_raw_ActivationLayer(&self) -> *mut c_void;
     fn forward_slice(&self, src: &f32, dst: &mut f32, len: i32, out_plane_size: size_t, cn0: i32, cn1: i32) -> Result<()> {
         unsafe { sys::cv_dnn_ActivationLayer_forwardSlice_const_const_float_X_float_X_int_size_t_int_int(self.as_raw_ActivationLayer(), src, dst, len, out_plane_size, cn0, cn1) }.into_result()
     }
@@ -719,7 +719,7 @@ impl BackendNode {
 // Generating impl for trait crate::dnn::BackendWrapper
 /// Derivatives of this class wraps cv::Mat for different backends and targets.
 pub trait BackendWrapper {
-    #[inline(always)] fn as_raw_BackendWrapper(&self) -> *mut c_void;
+    fn as_raw_BackendWrapper(&self) -> *mut c_void;
     /// Transfer data to CPU host memory.
     fn copy_to_host(&mut self) -> Result<()> {
         unsafe { sys::cv_dnn_BackendWrapper_copyToHost(self.as_raw_BackendWrapper()) }.into_result()
@@ -734,7 +734,7 @@ pub trait BackendWrapper {
 
 // Generating impl for trait crate::dnn::BaseConvolutionLayer
 pub trait BaseConvolutionLayerTrait: crate::dnn::LayerTrait {
-    #[inline(always)] fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
+    fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
 }
 
 // boxed class cv::dnn::BaseConvolutionLayer
@@ -1169,7 +1169,7 @@ impl DetectionOutputLayer {
 // Generating impl for trait crate::dnn::Dict
 /// This class implements name-value dictionary, values are instances of DictValue.
 pub trait DictTrait {
-    #[inline(always)] fn as_raw_Dict(&self) -> *mut c_void;
+    fn as_raw_Dict(&self) -> *mut c_void;
     /// Checks a presence of the @p key in the dictionary.
     fn has(&self, key: &str) -> Result<bool> {
         string_arg!(key);
@@ -1559,7 +1559,7 @@ impl LRNLayer {
 // Generating impl for trait crate::dnn::LSTMLayer
 /// LSTM recurrent layer
 pub trait LSTMLayer: crate::dnn::LayerTrait {
-    #[inline(always)] fn as_raw_LSTMLayer(&self) -> *mut c_void;
+    fn as_raw_LSTMLayer(&self) -> *mut c_void;
     /// **Deprecated**: Use LayerParams::blobs instead.
     ///
     ///  Set trained weights for LSTM layer.
@@ -1653,7 +1653,7 @@ impl dyn LSTMLayer + '_ {
 /// Each class, derived from Layer, must implement allocate() methods to declare own outputs and forward() to compute outputs.
 /// Also before using the new layer into networks you must register your layer by using one of @ref dnnLayerFactory "LayerFactory" macros.
 pub trait LayerTrait: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_Layer(&self) -> *mut c_void;
+    fn as_raw_Layer(&self) -> *mut c_void;
     /// List of learned parameters must be stored here to allow read them by using Net::getParam().
     fn blobs(&mut self) -> Result<types::VectorOfMat> {
         unsafe { sys::cv_dnn_Layer_blobs(self.as_raw_Layer()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
@@ -2778,7 +2778,7 @@ impl ProposalLayer {
 ///
 /// If setProduceHiddenOutput() is set to true then @p output[1] will contain a Mat with shape [`T`, `N`, @f$N_h@f$], where @f$N_h@f$ is number of rows in @f$ W_{hh} @f$ matrix.
 pub trait RNNLayer: crate::dnn::LayerTrait {
-    #[inline(always)] fn as_raw_RNNLayer(&self) -> *mut c_void;
+    fn as_raw_RNNLayer(&self) -> *mut c_void;
     /// Setups learned weights.
     ///
     /// Recurrent-layer behavior on each step is defined by current input @f$ x_t @f$, previous state @f$ h_t @f$ and learned weights as follows:

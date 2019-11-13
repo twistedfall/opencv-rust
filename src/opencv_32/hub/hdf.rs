@@ -64,7 +64,7 @@ pub fn open(hdf5_filename: &str) -> Result<types::PtrOfHDF5> {
 ///
 /// Notice that module is compiled only when hdf5 is correctly installed.
 pub trait HDF5 {
-    #[inline(always)] fn as_raw_HDF5(&self) -> *mut c_void;
+    fn as_raw_HDF5(&self) -> *mut c_void;
     /// Close and release hdf5 object.
     fn close(&mut self) -> Result<()> {
         unsafe { sys::cv_hdf_HDF5_close(self.as_raw_HDF5()) }.into_result()

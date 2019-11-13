@@ -3620,7 +3620,7 @@ impl CirclesGridFinderParameters {
 ///
 /// When needed, it calls user-provided callback.
 pub trait LMSolver: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_LMSolver(&self) -> *mut c_void;
+    fn as_raw_LMSolver(&self) -> *mut c_void;
     /// Runs Levenberg-Marquardt algorithm using the passed vector of parameters as the start point.
     /// The final vector of parameters (whether the algorithm converged or not) is stored at the same
     /// vector. The method returns the number of iterations used. If it's equal to the previously specified
@@ -3670,7 +3670,7 @@ impl dyn LMSolver + '_ {
 
 // Generating impl for trait crate::calib3d::LMSolver_Callback
 pub trait LMSolver_Callback {
-    #[inline(always)] fn as_raw_LMSolver_Callback(&self) -> *mut c_void;
+    fn as_raw_LMSolver_Callback(&self) -> *mut c_void;
     /// computes error and Jacobian for the specified vector of parameters
     ///
     /// ## Parameters
@@ -3695,7 +3695,7 @@ pub trait LMSolver_Callback {
 /// Class for computing stereo correspondence using the block matching algorithm, introduced and
 /// contributed to OpenCV by K. Konolige.
 pub trait StereoBM: crate::calib3d::StereoMatcher {
-    #[inline(always)] fn as_raw_StereoBM(&self) -> *mut c_void;
+    fn as_raw_StereoBM(&self) -> *mut c_void;
     fn get_pre_filter_type(&self) -> Result<i32> {
         unsafe { sys::cv_StereoBM_getPreFilterType_const(self.as_raw_StereoBM()) }.into_result()
     }
@@ -3789,7 +3789,7 @@ impl dyn StereoBM + '_ {
 // Generating impl for trait crate::calib3d::StereoMatcher
 /// The base class for stereo correspondence algorithms.
 pub trait StereoMatcher: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_StereoMatcher(&self) -> *mut c_void;
+    fn as_raw_StereoMatcher(&self) -> *mut c_void;
     /// Computes disparity map for the specified stereo pair
     ///
     /// ## Parameters
@@ -3875,7 +3875,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 /// *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
 /// at opencv_source_code/samples/python/stereo_match.py
 pub trait StereoSGBM: crate::calib3d::StereoMatcher {
-    #[inline(always)] fn as_raw_StereoSGBM(&self) -> *mut c_void;
+    fn as_raw_StereoSGBM(&self) -> *mut c_void;
     fn get_pre_filter_cap(&self) -> Result<i32> {
         unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM()) }.into_result()
     }

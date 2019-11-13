@@ -25,7 +25,7 @@ pub fn create_free_type2() -> Result<types::PtrOfFreeType2> {
 
 // Generating impl for trait crate::freetype::FreeType2
 pub trait FreeType2: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_FreeType2(&self) -> *mut c_void;
+    fn as_raw_FreeType2(&self) -> *mut c_void;
     /// Load font data.
     ///
     /// The function loadFontData loads font data.

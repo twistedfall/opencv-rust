@@ -4898,7 +4898,7 @@ pub fn write_keypoint_vec_1(fs: &mut core::FileStorage, vec: &types::VectorOfKey
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
 /// @snippet snippets/core_various.cpp Algorithm
 pub trait AlgorithmTrait {
-    #[inline(always)] fn as_raw_Algorithm(&self) -> *mut c_void;
+    fn as_raw_Algorithm(&self) -> *mut c_void;
     /// Clears the algorithm state
     fn clear(&mut self) -> Result<()> {
         unsafe { sys::cv_Algorithm_clear(self.as_raw_Algorithm()) }.into_result()
@@ -5154,7 +5154,7 @@ unsafe impl Send for AutoLock {}
 
 // Generating impl for trait core::BufferPoolController
 pub trait BufferPoolController {
-    #[inline(always)] fn as_raw_BufferPoolController(&self) -> *mut c_void;
+    fn as_raw_BufferPoolController(&self) -> *mut c_void;
     fn get_reserved_size(&self) -> Result<size_t> {
         unsafe { sys::cv_BufferPoolController_getReservedSize_const(self.as_raw_BufferPoolController()) }.into_result()
     }
@@ -5472,7 +5472,7 @@ impl DMatch {
 /// termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 /// ```
 pub trait DownhillSolver: core::MinProblemSolver {
-    #[inline(always)] fn as_raw_DownhillSolver(&self) -> *mut c_void;
+    fn as_raw_DownhillSolver(&self) -> *mut c_void;
     /// Returns the initial step that will be used in downhill simplex algorithm.
     ///
     /// ## Parameters
@@ -5962,7 +5962,7 @@ impl FileStorage {
 // Generating impl for trait core::Formatted
 /// @todo document
 pub trait Formatted {
-    #[inline(always)] fn as_raw_Formatted(&self) -> *mut c_void;
+    fn as_raw_Formatted(&self) -> *mut c_void;
     fn next(&mut self) -> Result<String> {
         unsafe { sys::cv_Formatted_next(self.as_raw_Formatted()) }.into_result().map(crate::templ::receive_string)
     }
@@ -5976,7 +5976,7 @@ pub trait Formatted {
 // Generating impl for trait core::Formatter
 /// @todo document
 pub trait Formatter {
-    #[inline(always)] fn as_raw_Formatter(&self) -> *mut c_void;
+    fn as_raw_Formatter(&self) -> *mut c_void;
     fn format(&self, mtx: &core::Mat) -> Result<types::PtrOfFormatted> {
         unsafe { sys::cv_Formatter_format_const_Mat(self.as_raw_Formatter(), mtx.as_raw_Mat()) }.into_result().map(|ptr| types::PtrOfFormatted { ptr })
     }
@@ -7894,7 +7894,7 @@ impl MatExpr {
 
 // Generating impl for trait core::MatOp
 pub trait MatOp {
-    #[inline(always)] fn as_raw_MatOp(&self) -> *mut c_void;
+    fn as_raw_MatOp(&self) -> *mut c_void;
     fn element_wise(&self, expr: &core::MatExpr) -> Result<bool> {
         unsafe { sys::cv_MatOp_elementWise_const_MatExpr(self.as_raw_MatOp(), expr.as_raw_MatExpr()) }.into_result()
     }
@@ -8302,7 +8302,7 @@ impl Matx_TOp {
 // Generating impl for trait core::MinProblemSolver
 /// Basic interface for all solvers
 pub trait MinProblemSolver: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_MinProblemSolver(&self) -> *mut c_void;
+    fn as_raw_MinProblemSolver(&self) -> *mut c_void;
     /// Getter for the optimized function.
     ///
     /// The optimized function is represented by Function interface, which requires derivatives to
@@ -8371,7 +8371,7 @@ pub trait MinProblemSolver: core::AlgorithmTrait {
 // Generating impl for trait core::MinProblemSolver_Function
 /// Represents function being optimized
 pub trait MinProblemSolver_Function {
-    #[inline(always)] fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void;
+    fn as_raw_MinProblemSolver_Function(&self) -> *mut c_void;
     fn get_dims(&self) -> Result<i32> {
         unsafe { sys::cv_MinProblemSolver_Function_getDims_const(self.as_raw_MinProblemSolver_Function()) }.into_result()
     }
@@ -8704,7 +8704,7 @@ impl PCA {
 // Generating impl for trait core::ParallelLoopBody
 /// Base class for parallel data processors
 pub trait ParallelLoopBody {
-    #[inline(always)] fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
+    fn as_raw_ParallelLoopBody(&self) -> *mut c_void;
 }
 
 // boxed class cv::ParallelLoopBodyLambdaWrapper
@@ -9314,7 +9314,7 @@ unsafe impl Send for SparseMat_Node {}
 /// s += it.value<float>();
 /// \endcode
 pub trait SparseMatConstIteratorTrait {
-    #[inline(always)] fn as_raw_SparseMatConstIterator(&self) -> *mut c_void;
+    fn as_raw_SparseMatConstIterator(&self) -> *mut c_void;
     /// returns the current node of the sparse matrix. it.node->idx is the current element index
     fn node(&self) -> Result<core::SparseMat_Node> {
         unsafe { sys::cv_SparseMatConstIterator_node_const(self.as_raw_SparseMatConstIterator()) }.into_result().map(|ptr| core::SparseMat_Node { ptr })
@@ -10135,7 +10135,7 @@ impl UMatData {
 /// To pass such custom type use rawIn() / rawOut() / rawInOut() wrappers.
 /// Custom type is wrapped as Mat-compatible `CV_8UC<N>` values (N = sizeof(T), N <= CV_CN_MAX).
 pub trait _InputArrayTrait {
-    #[inline(always)] fn as_raw__InputArray(&self) -> *mut c_void;
+    fn as_raw__InputArray(&self) -> *mut c_void;
     ///
     /// ## C++ default parameters
     /// * idx: -1
@@ -10482,7 +10482,7 @@ impl _InputArray {
 
 // Generating impl for trait core::_InputOutputArray
 pub trait _InputOutputArrayTrait: core::_OutputArrayTrait {
-    #[inline(always)] fn as_raw__InputOutputArray(&self) -> *mut c_void;
+    fn as_raw__InputOutputArray(&self) -> *mut c_void;
 }
 
 // boxed class cv::_InputOutputArray
@@ -10575,7 +10575,7 @@ impl _InputOutputArray {
 /// typedef OutputArray InputOutputArrayOfArrays;
 /// ```
 pub trait _OutputArrayTrait: core::_InputArrayTrait {
-    #[inline(always)] fn as_raw__OutputArray(&self) -> *mut c_void;
+    fn as_raw__OutputArray(&self) -> *mut c_void;
     fn fixed_size(&self) -> Result<bool> {
         unsafe { sys::cv__OutputArray_fixedSize_const(self.as_raw__OutputArray()) }.into_result()
     }
@@ -11963,7 +11963,7 @@ unsafe impl Send for ProgramEntry {}
 
 // Generating impl for trait core::AllocatorStatisticsInterface
 pub trait AllocatorStatisticsInterface {
-    #[inline(always)] fn as_raw_AllocatorStatisticsInterface(&self) -> *mut c_void;
+    fn as_raw_AllocatorStatisticsInterface(&self) -> *mut c_void;
     fn get_current_usage(&self) -> Result<u64> {
         unsafe { sys::cv_utils_AllocatorStatisticsInterface_getCurrentUsage_const(self.as_raw_AllocatorStatisticsInterface()) }.into_result()
     }

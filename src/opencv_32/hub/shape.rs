@@ -78,7 +78,7 @@ pub fn create_thin_plate_spline_shape_transformer(regularization_parameter: f64)
 // Generating impl for trait crate::shape::AffineTransformer
 /// Wrapper class for the OpenCV Affine Transformation algorithm. :
 pub trait AffineTransformer: crate::shape::ShapeTransformer {
-    #[inline(always)] fn as_raw_AffineTransformer(&self) -> *mut c_void;
+    fn as_raw_AffineTransformer(&self) -> *mut c_void;
     fn set_full_affine(&mut self, full_affine: bool) -> Result<()> {
         unsafe { sys::cv_AffineTransformer_setFullAffine_bool(self.as_raw_AffineTransformer(), full_affine) }.into_result()
     }
@@ -122,7 +122,7 @@ impl crate::shape::HistogramCostExtractor for ChiHistogramCostExtractor {
 // Generating impl for trait crate::shape::EMDHistogramCostExtractor
 /// An EMD based cost extraction. :
 pub trait EMDHistogramCostExtractor: crate::shape::HistogramCostExtractor {
-    #[inline(always)] fn as_raw_EMDHistogramCostExtractor(&self) -> *mut c_void;
+    fn as_raw_EMDHistogramCostExtractor(&self) -> *mut c_void;
     fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
         unsafe { sys::cv_EMDHistogramCostExtractor_setNormFlag_int(self.as_raw_EMDHistogramCostExtractor(), flag) }.into_result()
     }
@@ -169,7 +169,7 @@ impl crate::shape::HistogramCostExtractor for EMDL1HistogramCostExtractor {
 /// according to the paper "Comparing Images using the Hausdorff distance." by D.P. Huttenlocher, G.A.
 /// Klanderman, and W.J. Rucklidge. (PAMI 1993). :
 pub trait HausdorffDistanceExtractor: crate::shape::ShapeDistanceExtractor {
-    #[inline(always)] fn as_raw_HausdorffDistanceExtractor(&self) -> *mut c_void;
+    fn as_raw_HausdorffDistanceExtractor(&self) -> *mut c_void;
     /// Set the norm used to compute the Hausdorff value between two shapes. It can be L1 or L2 norm.
     ///
     /// ## Parameters
@@ -202,7 +202,7 @@ pub trait HausdorffDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 // Generating impl for trait crate::shape::HistogramCostExtractor
 /// Abstract base class for histogram cost algorithms.
 pub trait HistogramCostExtractor: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_HistogramCostExtractor(&self) -> *mut c_void;
+    fn as_raw_HistogramCostExtractor(&self) -> *mut c_void;
     fn build_cost_matrix(&mut self, descriptors1: &dyn core::ToInputArray, descriptors2: &dyn core::ToInputArray, cost_matrix: &mut dyn core::ToOutputArray) -> Result<()> {
         input_array_arg!(descriptors1);
         input_array_arg!(descriptors2);
@@ -231,7 +231,7 @@ pub trait HistogramCostExtractor: core::AlgorithmTrait {
 // Generating impl for trait crate::shape::NormHistogramCostExtractor
 /// A norm based cost extraction. :
 pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor {
-    #[inline(always)] fn as_raw_NormHistogramCostExtractor(&self) -> *mut c_void;
+    fn as_raw_NormHistogramCostExtractor(&self) -> *mut c_void;
     fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
         unsafe { sys::cv_NormHistogramCostExtractor_setNormFlag_int(self.as_raw_NormHistogramCostExtractor(), flag) }.into_result()
     }
@@ -249,7 +249,7 @@ pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor {
 /// 2002). This implementation is packaged in a generic scheme, in order to allow you the
 /// implementation of the common variations of the original pipeline.
 pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
-    #[inline(always)] fn as_raw_ShapeContextDistanceExtractor(&self) -> *mut c_void;
+    fn as_raw_ShapeContextDistanceExtractor(&self) -> *mut c_void;
     /// Establish the number of angular bins for the Shape Context Descriptor used in the shape matching
     /// pipeline.
     ///
@@ -411,7 +411,7 @@ pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 // Generating impl for trait crate::shape::ShapeDistanceExtractor
 /// Abstract base class for shape distance algorithms.
 pub trait ShapeDistanceExtractor: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void;
+    fn as_raw_ShapeDistanceExtractor(&self) -> *mut c_void;
     /// Compute the shape distance between two shapes defined by its contours.
     ///
     /// ## Parameters
@@ -428,7 +428,7 @@ pub trait ShapeDistanceExtractor: core::AlgorithmTrait {
 // Generating impl for trait crate::shape::ShapeTransformer
 /// Abstract base class for shape transformation algorithms.
 pub trait ShapeTransformer: core::AlgorithmTrait {
-    #[inline(always)] fn as_raw_ShapeTransformer(&self) -> *mut c_void;
+    fn as_raw_ShapeTransformer(&self) -> *mut c_void;
     /// Estimate the transformation parameters of the current transformer algorithm, based on point matches.
     ///
     /// ## Parameters
@@ -482,7 +482,7 @@ pub trait ShapeTransformer: core::AlgorithmTrait {
 /// ocupied in the paper "Principal Warps: Thin-Plate Splines and Decomposition of Deformations", by
 /// F.L. Bookstein (PAMI 1989). :
 pub trait ThinPlateSplineShapeTransformer: crate::shape::ShapeTransformer {
-    #[inline(always)] fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *mut c_void;
+    fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *mut c_void;
     /// Set the regularization parameter for relaxing the exact interpolation requirements of the TPS
     /// algorithm.
     ///

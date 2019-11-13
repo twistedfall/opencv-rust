@@ -38,7 +38,7 @@ use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 // Generating impl for trait crate::dpm::DPMDetector
 /// This is a C++ abstract class, it provides external user API to work with DPM.
 pub trait DPMDetector {
-    #[inline(always)] fn as_raw_DPMDetector(&self) -> *mut c_void;
+    fn as_raw_DPMDetector(&self) -> *mut c_void;
     fn is_empty(&self) -> Result<bool> {
         unsafe { sys::cv_dpm_DPMDetector_isEmpty_const(self.as_raw_DPMDetector()) }.into_result()
     }

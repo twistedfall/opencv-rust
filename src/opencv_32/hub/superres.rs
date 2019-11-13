@@ -58,7 +58,7 @@ pub fn create_super_resolution_btvl1_cuda() -> Result<types::PtrOfSuperResolutio
 
 // Generating impl for trait crate::superres::FrameSource
 pub trait FrameSource {
-    #[inline(always)] fn as_raw_FrameSource(&self) -> *mut c_void;
+    fn as_raw_FrameSource(&self) -> *mut c_void;
     fn next_frame(&mut self, frame: &mut dyn core::ToOutputArray) -> Result<()> {
         output_array_arg!(frame);
         unsafe { sys::cv_superres_FrameSource_nextFrame__OutputArray(self.as_raw_FrameSource(), frame.as_raw__OutputArray()) }.into_result()
@@ -76,7 +76,7 @@ pub trait FrameSource {
 /// The class is only used to define the common interface for the whole family of Super Resolution
 /// algorithms.
 pub trait SuperResolution: core::AlgorithmTrait + crate::superres::FrameSource {
-    #[inline(always)] fn as_raw_SuperResolution(&self) -> *mut c_void;
+    fn as_raw_SuperResolution(&self) -> *mut c_void;
     /// Set input frame source for Super Resolution algorithm.
     ///
     /// ## Parameters
