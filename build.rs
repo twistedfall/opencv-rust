@@ -11,7 +11,7 @@ use std::{
 };
 
 use glob_crate::glob;
-use once_cell::sync::OnceCell;
+use once_cell::sync::{Lazy, OnceCell};
 use rayon::prelude::*;
 use regex::Regex;
 use semver::{Version, VersionReq};
@@ -19,7 +19,34 @@ use which_crate::which;
 
 type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 
-static CORE_MODULES: OnceCell<HashSet<&'static str>> = OnceCell::new();
+static CORE_MODULES: Lazy<HashSet<&'static str>> = Lazy::new(|| HashSet::from_iter([
+    "calib3d",
+    "core",
+    #[cfg(not(feature = "opencv-32"))]
+    "dnn",
+    #[cfg(feature = "opencv-41")]
+    "dnn_superres",
+    "features2d",
+    "flann",
+    #[cfg(feature = "opencv-41")]
+    "gapi",
+    "highgui",
+    "imgcodecs",
+    "imgproc",
+    "ml",
+    "objdetect",
+    "photo",
+    #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
+    "shape",
+    "stitching",
+    #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
+    "superres",
+    "video",
+    "videoio",
+    #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
+    "videostab",
+    "viz",
+].iter().copied()));
 static MODULES: OnceCell<Vec<(String, Vec<PathBuf>)>> = OnceCell::new();
 
 #[derive(Debug)]
@@ -226,44 +253,6 @@ fn get_versioned_hub_dir() -> PathBuf {
         hub_dir.push("opencv_41");
     }
     hub_dir
-}
-
-fn is_core_module(module: &str) -> bool {
-    let core_modules = match CORE_MODULES.get() {
-        None => {
-            CORE_MODULES.set(HashSet::from_iter([
-                "calib3d",
-                "core",
-                #[cfg(not(feature = "opencv-32"))]
-                "dnn",
-                #[cfg(feature = "opencv-41")]
-                "dnn_superres",
-                "features2d",
-                "flann",
-                #[cfg(feature = "opencv-41")]
-                "gapi",
-                "highgui",
-                "imgcodecs",
-                "imgproc",
-                "ml",
-                "objdetect",
-                "photo",
-                #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
-                "shape",
-                "stitching",
-                #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
-                "superres",
-                "video",
-                "videoio",
-                #[cfg(any(feature = "opencv-32", feature = "opencv-34"))]
-                "videostab",
-                "viz",
-            ].iter().map(|x| *x))).expect("Cannot set CORE_MODULES cache");
-            CORE_MODULES.get().unwrap()
-        },
-        Some(modules) => modules,
-    };
-    core_modules.contains(module)
 }
 
 fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<PathBuf>)>> {
@@ -682,7 +671,7 @@ fn gen_wrapper(opencv: &Library, opencv_header_dir: &PathBuf) -> Result<()> {
         writeln!(&mut sys, "use crate::core;")?;
         writeln!(&mut sys, "")?;
         for (module, ..) in modules {
-            let is_contrib_module = !is_core_module(module);
+            let is_contrib_module = !CORE_MODULES.contains(module.as_str());
             let write_if_contrib = |write: &mut File| -> Result<()> {
                 if is_contrib_module {
                     writeln!(write, r#"#[cfg(feature = "contrib")]"#)?;
