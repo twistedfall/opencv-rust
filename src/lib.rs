@@ -28,7 +28,7 @@ mod test;
 cpp! {{
     #include "../common_opencv.h"
     using namespace cv;
-    #include "common.h"
+    #include "cpp/common.hpp"
     #include "../types.h"
     #include "../return_types.h"
 }}

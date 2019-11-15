@@ -3219,7 +3219,7 @@ class RustWrapperGenerator(object):
         "cpp": {
             "module": template("""
                 #include "stdint.h"
-                #include "common.h"
+                #include "cpp/common.hpp"
                 #include <string>
                 #include "common_opencv.h"
                 using namespace cv;
