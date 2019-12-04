@@ -10,6 +10,7 @@ use std::{
     process::Command,
 };
 
+use cfg_if::cfg_if;
 use glob_crate::glob;
 use once_cell::sync::OnceCell;
 use rayon::prelude::*;
@@ -29,17 +30,24 @@ struct Library {
     pub link_paths: Vec<PathBuf>,
     pub framework_paths: Vec<PathBuf>,
     pub include_paths: Vec<PathBuf>,
+    pub header_path: Option<PathBuf>,
     pub version: String,
     pub prefix: PathBuf,
     pub libdir: PathBuf,
 }
 
 impl Library {
-    fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
+    fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str, header_path: Option<&str>) -> Result<Self> {
         let libs: Vec<_> = link_libs.split(',')
             .map(|x| {
                 let mut path = PathBuf::from(x.trim());
-                if path.extension().map(|e| e == "lib" || e == "so" || e == "dylib").unwrap_or(false) {
+                if cfg!(target_env = "msvc") {
+                    path.set_extension("lib");
+                } else if path
+                    .extension()
+                    .map(|e| e == "lib" || e == "so" || e == "dylib")
+                    .unwrap_or(false)
+                {
                     path.set_extension("");
                 }
                 let out = path.file_name().and_then(|f| f.to_str()).expect("Invalid library name").to_owned();
@@ -74,12 +82,14 @@ impl Library {
         let version = include_paths.iter()
             .filter_map(get_version_from_headers)
             .next();
+
         let out = Self {
             pkg_name: pkg_name.to_owned(),
             libs,
             link_paths,
             framework_paths: vec![],
             include_paths,
+            header_path: header_path.map(|p| PathBuf::from(p.trim())),
             version: version.unwrap_or("0.0.0".to_owned()),
             prefix: PathBuf::from(""),
             libdir
@@ -87,26 +97,83 @@ impl Library {
         Ok(out)
     }
 
+    #[cfg(not(target_env = "msvc"))]
     fn probe_pkg_config(pkg_name: &str) -> Result<Self> {
         let opencv = pkg_config::probe_library(pkg_name)?;
+        let header_path = opencv.include_paths.first().map(|x| x.clone());
+
         Ok(Self {
             pkg_name: pkg_name.to_owned(),
             libs: opencv.libs,
             link_paths: opencv.link_paths,
             framework_paths: opencv.framework_paths,
             include_paths: opencv.include_paths,
+            header_path,
             version: opencv.version,
             prefix: PathBuf::from(pkg_config::get_variable(pkg_name, "prefix")?),
             libdir: PathBuf::from(pkg_config::get_variable(pkg_name, "libdir")?),
         })
     }
 
+    #[cfg(target_env = "msvc")]
+    fn probe_vcpkg(pkg_name: &str) -> Result<Self> {
+        let opencv = vcpkg::Config::new().find_package(pkg_name)?;
+        let libs: Vec<String> = opencv
+            .found_libs
+            .iter()
+            .map(|lib| lib.file_name().unwrap().to_string_lossy().to_string())
+            .collect();
+        let version = opencv
+            .include_paths
+            .iter()
+            .filter_map(get_version_from_headers)
+            .next();
+        let libdir = opencv
+            .link_paths
+            .first()
+            .map(|x| x.clone())
+            .unwrap_or_else(|| PathBuf::from(""));
+        let header_path = opencv
+            .include_paths
+            .first()
+            .map(|x| x.clone())
+            .unwrap_or_else(|| PathBuf::from(""));
+
+        Ok(Self {
+            pkg_name: pkg_name.to_owned(),
+            libs,
+            link_paths: opencv.link_paths,
+            framework_paths: vec![],
+            include_paths: opencv.include_paths,
+            header_path: Some(header_path),
+            version: version.unwrap_or("0.0.0".to_owned()),
+            prefix: PathBuf::from(""),
+            libdir
+        })
+    }
 
     pub fn probe(pkg_name: &str) -> Result<Self> {
-        if let (Ok(link_libs), Ok(link_paths), Ok(include_paths)) = (env::var("OPENCV_LINK_LIBS"), env::var("OPENCV_LINK_PATHS"), env::var("OPENCV_INCLUDE_PATHS")) {
-            Self::probe_from_paths(pkg_name, &link_libs, &link_paths, &include_paths)
+        if let (Ok(link_libs), Ok(link_paths), Ok(include_paths), header_path) = (
+            env::var("OPENCV_LINK_LIBS"),
+            env::var("OPENCV_LINK_PATHS"),
+            env::var("OPENCV_INCLUDE_PATHS"),
+            env::var("OPENCV_HEADER_PATH"),
+        ) {
+            Self::probe_from_paths(
+                pkg_name,
+                &link_libs,
+                &link_paths,
+                &include_paths,
+                header_path.ok().as_ref().map(String::as_ref),
+            )
         } else {
-            Self::probe_pkg_config(pkg_name)
+            cfg_if! {
+                if #[cfg(target_env = "msvc")] {
+                    Self::probe_vcpkg(pkg_name)
+                } else {
+                    Self::probe_pkg_config(pkg_name)
+                }
+            }
         }
     }
 
@@ -124,7 +191,7 @@ impl Library {
         let link_paths = self.link_paths.iter().chain(third_party_dirs.iter());
         if cfg!(target_env = "msvc") {
             for l in &self.libs {
-                extra_args.push(format!("{}.lib", l).into());
+                 extra_args.push(l.into());
             }
             extra_args.push("-link".into());
             for p in link_paths {
@@ -773,9 +840,15 @@ fn main() -> Result<()> {
     if features != 1 {
         panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
     }
+
+    // no idea if this breaks docs_only
+    let opencv = link_wrapper()?;
+
     let opencv_header_dir = env::var_os("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|| {
         let manifest_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("Can't read CARGO_MANIFEST_DIR env var"));
-        if cfg!(feature = "opencv-32") {
+        if let Some(header_path) = &opencv.header_path {
+            header_path.clone()
+        } else if cfg!(feature = "opencv-32") {
             manifest_dir.join("headers/3.2")
         } else if cfg!(feature = "opencv-34") {
             manifest_dir.join("headers/3.4")
@@ -793,7 +866,6 @@ fn main() -> Result<()> {
 
     build_wrapper(&opencv_header_dir)?;
     if !cfg!(feature = "docs-only") {
-        let opencv = link_wrapper()?;
         if cfg!(feature = "buildtime-bindgen") {
             gen_wrapper(&opencv, &opencv_header_dir)?;
         }
