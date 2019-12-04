@@ -9,5 +9,9 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
     "$ci_dir/install-osx.sh"
 elif [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
-    "$ci_dir/install-windows.sh"
+    if [[ "$CHOCO_OPENCV_VERSION" != "" ]]; then # chocolatey build
+        "$ci_dir/install-windows-chocolatey.sh"
+    else # vcpkg build
+        "$ci_dir/install-windows-vcpkg.sh"
+    fi
 fi
