@@ -456,3 +456,15 @@ fn mat_iterator() -> Result<()> {
     assert!(!iter.has_elements());
     Ok(())
 }
+
+#[test]
+fn mat_locate_roi() -> Result<()> {
+    let mat = Mat::from_slice(&[1, 2, 3, 4])?;
+    let roi = Mat::roi(&mat, Rect::new(1, 0, 2, 1))?;
+    let mut sz = Size::default();
+    let mut ofs = Point::default();
+    roi.locate_roi(&mut sz, &mut ofs)?;
+    assert_eq!(sz, Size::new(4, 1));
+    assert_eq!(ofs, Point::new(1, 0));
+    Ok(())
+}
