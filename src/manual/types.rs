@@ -11,7 +11,6 @@ pub struct Unit([u8; 0]);
 
 impl From<Unit> for () {
     fn from(_: Unit) -> Self {
-        ()
     }
 }
 

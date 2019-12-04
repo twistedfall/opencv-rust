@@ -1216,10 +1216,10 @@ class FuncInfo(GeneralInfo):
                 .map(crate::templ::receive_string_mut)"""),
 
         "rust_safe_rv_const_raw_ptr": template("""
-            .and_then(|x| ${unsafety_call}{ x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
+            .and_then(|x| ${unsafety_call}{ x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))"""),
 
         "rust_safe_rv_mut_raw_ptr": template("""
-            .and_then(|x| ${unsafety_call}{ x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))"""),
+            .and_then(|x| ${unsafety_call}{ x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))"""),
 
         "rust_safe_rv_by_ptr": template(""".map(|ptr| ${rv_rust_full} { ptr })"""),
 

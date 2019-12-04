@@ -152,7 +152,7 @@ Path specified by `LD_LIBRARY_PATH` must contain `libopencv_*.so` files.
 ### Environment variables
 
 * `OPENCV_HEADER_DIR`
-  During crate build it uses opencv headers supplied inside the crate for binding generation.
+  During crate build it uses OpenCV headers supplied inside the crate for binding generation.
   If you want to use your own (system) headers supply `OPENCV_HEADER_DIR` environment variable.
   The directory in that environment variable should contain `opencv2` dir, e.g. `/usr/include` for
   OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x.

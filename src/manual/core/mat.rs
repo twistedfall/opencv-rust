@@ -212,7 +212,7 @@ impl Mat {
             0
         };
         let mut out = unsafe { Mat::new_rows_cols(row_count, col_count, T::typ()) }?;
-        for (row_n, row) in s.into_iter().enumerate() {
+        for (row_n, row) in s.iter().enumerate() {
             let trg = out.at_row_mut(row_n as _)?;
             let src = row.as_ref();
             if trg.len() != src.len() {
@@ -420,7 +420,7 @@ impl Mat {
                 return { Error::Code::StsOk, NULL, me->data };
             } CVRS_CATCH(cv_return_value_const_unsigned_char_X)
         }).into_result()
-            .and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+            .and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
 
     pub fn data_typed<T: DataType>(&self) -> Result<&[T]> {
@@ -684,7 +684,7 @@ impl MatConstIterator {
             return me->ptr;
         }).as_ref()
             .map(convert_ptr)
-            .ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer")))
+            .ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))
     }
 }
 

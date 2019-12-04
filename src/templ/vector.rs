@@ -43,7 +43,7 @@ pub trait Vector<'i> {
     /// Free extra capacity
     fn shrink_to_fit(&mut self);
 
-    /// Reserve capacity for `additinal` new elements
+    /// Reserve capacity for `additional` new elements
     fn reserve(&mut self, additional: size_t);
 
     /// Remove all elements

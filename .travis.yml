@@ -71,6 +71,10 @@ addons:
       - qtbase5-dev
       - tree
 
+before_cache:
+  # https://stackoverflow.com/a/53331571/1433768
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cleanup; fi
+
 install:
   - ci/install.sh
 
