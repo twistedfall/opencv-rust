@@ -63,6 +63,10 @@ struct Library {
 
 impl Library {
     fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
+        eprintln!(
+            "=== Setting up OpenCV library from environment, pkg_name: {}, link_libs: {}, link_paths: {}, include_paths: {}",
+            pkg_name, link_libs, link_paths, include_paths
+        );
         let libs: Vec<_> = link_libs.split(',')
             .map(|x| {
                 let mut path = PathBuf::from(x.trim());
@@ -114,6 +118,7 @@ impl Library {
 
     #[cfg(not(target_env = "msvc"))]
     fn probe_system(pkg_name: &str) -> Result<Self> {
+        eprintln!("=== Setting up OpenCV library from pkg_config");
         let opencv = pkg_config::probe_library(pkg_name)?;
         Ok(Self {
             pkg_name: pkg_name.to_owned(),
@@ -129,6 +134,7 @@ impl Library {
 
     #[cfg(target_env = "msvc")]
     fn probe_system(pkg_name: &str) -> Result<Self> {
+        eprintln!("=== Setting up OpenCV library from vcpkg");
         let opencv = vcpkg::find_package(pkg_name)?;
         let libs = opencv.found_libs.into_iter()
             .filter_map(|lib| lib.file_name()
@@ -424,7 +430,9 @@ fn probe_opencv() -> Result<Library> {
     } else {
         unreachable!("Feature flags should have been checked in main()");
     };
-    Ok(Library::probe(&pkg_name).expect(&format!("Package {} is not found", pkg_name)))
+    let out = Library::probe(&pkg_name).expect(&format!("Package {} is not found", pkg_name));
+    eprintln!("=== OpenCV library configuration: {:#?}", out);
+    Ok(out)
 }
 
 fn link_wrapper(opencv: &Library) -> Result<()> {
