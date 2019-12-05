@@ -70,8 +70,9 @@ errors try also building with `--release` flag.
 
 Mac OS X build currently also requires `buildtime-bindgen` feature enabled.
 
-Also refer to the corresponding [issue](https://github.com/twistedfall/opencv-rust/issues/6)
-and Travis [build script](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh).
+Also refer to the corresponding [issue #6](https://github.com/twistedfall/opencv-rust/issues/6), 
+[issue #70](https://github.com/twistedfall/opencv-rust/issues/70) and Travis
+[build script](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh).
 
 ### Features
 * `opencv-32` - build against OpenCV 3.2.0, this feature is aimed primarily on stable Debian and
@@ -81,7 +82,8 @@ and Travis [build script](https://github.com/twistedfall/opencv-rust/blob/master
 * `opencv-41` - build against OpenCV 4.1.x
 * `contrib` - enable the usage of OpenCV contrib modules for corresponding OpenCV version
 * `buildtime-bindgen` - regenerate all bindings, should only be used during the crate development
-  or when building on Windows
+  or when building on Windows or Mac OS X, with this feature enabled the bundled headers are no
+  longer used for the code generation, the ones from the installed OpenCV are
 * `force-3rd-party-libs-discovery` - legacy feature that enables some additional logic for
   discovery of dependent libs, should not be needed anymore
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
@@ -167,7 +169,8 @@ Path specified by `LD_LIBRARY_PATH` must contain `libopencv_*.so` files.
   autodiscovered, but you can use `OPENCV_PYTHON3_BIN` to specify the full path to the binary to
   invoke. E.g. "/usr/bin/python3" or "C:\Python37\python.exe"
 
-The following variables must be set when building without `pkg_config` (e.g. on Windows msvc target):
+The following variables must be set when building without `pkg_config` or `vcpkg`
+(e.g. on Windows msvc target):
 
 * `OPENCV_LINK_LIBS`
   Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional.
@@ -181,8 +184,8 @@ The following variables must be set when building without `pkg_config` (e.g. on 
   "C:\tools\opencv\build\include". One of the directories specified therein must contain
   "opencv2/core/version.hpp" file, it's used to detect the version of the headers.
 
-You can also set them on other platforms, then `pkg_config` usage will be disabled and the set values will
-be used.
+You can also set them on other platforms, then `pkg_config` or `vcpkg` usage will be disabled and the set
+values will be used.
 
 ### Compiling OpenCV
 
