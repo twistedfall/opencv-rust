@@ -5217,7 +5217,7 @@ impl AsyncPromise {
     }
     
     pub fn _get_impl(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_AsyncPromise__getImpl_const(self.as_raw_AsyncPromise()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_AsyncPromise__getImpl_const(self.as_raw_AsyncPromise()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
 }
@@ -5764,11 +5764,11 @@ impl FileNode {
     }
     
     pub fn ptr(&mut self) -> Result<&mut u8> {
-        unsafe { sys::cv_FileNode_ptr(self.as_raw_FileNode()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_FileNode_ptr(self.as_raw_FileNode()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn ptr_1(&self) -> Result<&u8> {
-        unsafe { sys::cv_FileNode_ptr_const(self.as_raw_FileNode()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_FileNode_ptr_const(self.as_raw_FileNode()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// Reads node elements to the buffer with the specified format.
@@ -6590,7 +6590,7 @@ impl Mat {
     
     /// pointer to the data
     pub fn data_mut(&mut self) -> Result<&mut u8> {
-        unsafe { sys::cv_Mat_data(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_Mat_data(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// pointer to the data
@@ -6600,15 +6600,15 @@ impl Mat {
     
     /// helper fields used in locateROI and adjustROI
     pub fn datastart(&self) -> Result<&u8> {
-        unsafe { sys::cv_Mat_datastart_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_Mat_datastart_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn dataend(&self) -> Result<&u8> {
-        unsafe { sys::cv_Mat_dataend_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_Mat_dataend_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn datalimit(&self) -> Result<&u8> {
-        unsafe { sys::cv_Mat_datalimit_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_Mat_datalimit_const(self.as_raw_Mat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn mat_size(&self) -> Result<core::MatSize> {
@@ -7636,44 +7636,44 @@ impl Mat {
     /// ## C++ default parameters
     /// * i0: 0
     pub unsafe fn ptr_mut(&mut self, i0: i32) -> Result<&mut u8> {
-        { sys::cv_Mat_ptr_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     ///
     /// ## C++ default parameters
     /// * i0: 0
     pub unsafe fn ptr(&self, i0: i32) -> Result<&u8> {
-        { sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_const_int(self.as_raw_Mat(), i0) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// ## Parameters
     /// * row: Index along the dimension 0
     /// * col: Index along the dimension 1
     pub unsafe fn ptr_2d_mut(&mut self, row: i32, col: i32) -> Result<&mut u8> {
-        { sys::cv_Mat_ptr_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// ## Parameters
     /// * row: Index along the dimension 0
     /// * col: Index along the dimension 1
     pub unsafe fn ptr_2d(&self, row: i32, col: i32) -> Result<&u8> {
-        { sys::cv_Mat_ptr_const_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_const_int_int(self.as_raw_Mat(), row, col) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub unsafe fn ptr_3d_mut(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut u8> {
-        { sys::cv_Mat_ptr_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub unsafe fn ptr_3d(&self, i0: i32, i1: i32, i2: i32) -> Result<&u8> {
-        { sys::cv_Mat_ptr_const_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_const_int_int_int(self.as_raw_Mat(), i0, i1, i2) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub unsafe fn ptr_nd_mut(&mut self, idx: &[i32]) -> Result<&mut u8> {
-        { sys::cv_Mat_ptr_const_int_X(self.as_raw_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_const_int_X(self.as_raw_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub unsafe fn ptr_nd(&self, idx: &[i32]) -> Result<&u8> {
-        { sys::cv_Mat_ptr_const_const_int_X(self.as_raw_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        { sys::cv_Mat_ptr_const_const_int_X(self.as_raw_Mat(), idx.as_ptr()) }.into_result().and_then(|x| { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// Returns a reference to the specified array element.
@@ -9213,7 +9213,7 @@ impl SparseMat {
     
     /// returns the array of sizes, or NULL if the matrix is not allocated
     pub fn size(&self) -> Result<&i32> {
-        unsafe { sys::cv_SparseMat_size_const(self.as_raw_SparseMat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_SparseMat_size_const(self.as_raw_SparseMat()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// returns the size of i-th matrix dimension (or 0)
@@ -9256,7 +9256,7 @@ impl SparseMat {
     /// ## C++ default parameters
     /// * hashval: 0
     pub fn ptr(&mut self, i0: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-        unsafe { sys::cv_SparseMat_ptr_int_bool_size_t_X(self.as_raw_SparseMat(), i0, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_SparseMat_ptr_int_bool_size_t_X(self.as_raw_SparseMat(), i0, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// returns pointer to the specified element (2D case)
@@ -9264,7 +9264,7 @@ impl SparseMat {
     /// ## C++ default parameters
     /// * hashval: 0
     pub fn ptr_1(&mut self, i0: i32, i1: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-        unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_t_X(self.as_raw_SparseMat(), i0, i1, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_SparseMat_ptr_int_int_bool_size_t_X(self.as_raw_SparseMat(), i0, i1, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// returns pointer to the specified element (3D case)
@@ -9272,7 +9272,7 @@ impl SparseMat {
     /// ## C++ default parameters
     /// * hashval: 0
     pub fn ptr_2(&mut self, i0: i32, i1: i32, i2: i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-        unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_t_X(self.as_raw_SparseMat(), i0, i1, i2, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_SparseMat_ptr_int_int_int_bool_size_t_X(self.as_raw_SparseMat(), i0, i1, i2, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// returns pointer to the specified element (nD case)
@@ -9280,7 +9280,7 @@ impl SparseMat {
     /// ## C++ default parameters
     /// * hashval: 0
     pub fn ptr_3(&mut self, idx: &i32, create_missing: bool, hashval: &mut size_t) -> Result<&mut u8> {
-        unsafe { sys::cv_SparseMat_ptr_const_int_X_bool_size_t_X(self.as_raw_SparseMat(), idx, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_SparseMat_ptr_const_int_X_bool_size_t_X(self.as_raw_SparseMat(), idx, create_missing, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// erases the specified element (2D case)
@@ -9316,7 +9316,7 @@ impl SparseMat {
     }
     
     pub fn new_node(&mut self, idx: &i32, hashval: size_t) -> Result<&mut u8> {
-        unsafe { sys::cv_SparseMat_newNode_const_int_X_size_t(self.as_raw_SparseMat(), idx, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_SparseMat_newNode_const_int_X_size_t(self.as_raw_SparseMat(), idx, hashval) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn remove_node(&mut self, hidx: size_t, nidx: size_t, previdx: size_t) -> Result<()> {
@@ -10048,7 +10048,7 @@ impl UMat {
     }
     
     pub fn handle(&self, access_flags: core::AccessFlag) -> Result<&mut c_void> {
-        unsafe { sys::cv_UMat_handle_const_AccessFlag(self.as_raw_UMat(), access_flags) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_UMat_handle_const_AccessFlag(self.as_raw_UMat(), access_flags) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn ndoffset(&self, ofs: &mut size_t) -> Result<()> {
@@ -10253,7 +10253,7 @@ pub trait _InputArrayTrait {
     }
     
     fn get_obj(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv__InputArray_getObj_const(self.as_raw__InputArray()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv__InputArray_getObj_const(self.as_raw__InputArray()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     fn get_sz(&self) -> Result<core::Size> {
@@ -11016,7 +11016,7 @@ impl Context {
     }
     
     pub fn ptr(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_ocl_Context_ptr_const(self.as_raw_Context()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn use_svm(&self) -> Result<bool> {
@@ -11109,7 +11109,7 @@ impl Device {
     }
     
     pub fn ptr(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_ocl_Device_ptr_const(self.as_raw_Device()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_ocl_Device_ptr_const(self.as_raw_Device()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn _type(&self) -> Result<i32> {
@@ -11425,7 +11425,7 @@ impl Image2D {
     }
     
     pub fn ptr(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_ocl_Image2D_ptr_const(self.as_raw_Image2D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
 }
@@ -11528,7 +11528,7 @@ impl Kernel {
     }
     
     pub fn ptr(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_ocl_Kernel_ptr_const(self.as_raw_Kernel()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_ocl_Kernel_ptr_const(self.as_raw_Kernel()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
 }
@@ -11670,7 +11670,7 @@ impl Platform {
     }
     
     pub fn ptr(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_ocl_Platform_ptr_const(self.as_raw_Platform()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_ocl_Platform_ptr_const(self.as_raw_Platform()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn get_default() -> Result<core::Platform> {
@@ -11758,7 +11758,7 @@ unsafe impl Send for Program {}
 
 impl Program {
     pub fn ptr(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_ocl_Program_ptr_const(self.as_raw_Program()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_ocl_Program_ptr_const(self.as_raw_Program()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// Query device-specific program binary.
@@ -11954,7 +11954,7 @@ impl Queue {
     }
     
     pub fn ptr(&self) -> Result<&mut c_void> {
-        unsafe { sys::cv_ocl_Queue_ptr_const(self.as_raw_Queue()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_ocl_Queue_ptr_const(self.as_raw_Queue()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn get_default() -> Result<core::Queue> {

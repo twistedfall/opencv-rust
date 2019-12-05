@@ -508,7 +508,7 @@ impl Blob {
     /// * row: 0
     /// * col: 0
     pub fn ptr(&mut self, n: i32, cn: i32, row: i32, col: i32) -> Result<&mut u8> {
-        unsafe { sys::cv_dnn_Blob_ptr_int_int_int_int(self.as_raw_Blob(), n, cn, row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_dnn_Blob_ptr_int_int_int_int(self.as_raw_Blob(), n, cn, row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// ptr<float>()
@@ -519,7 +519,7 @@ impl Blob {
     /// * row: 0
     /// * col: 0
     pub fn ptrf(&mut self, n: i32, cn: i32, row: i32, col: i32) -> Result<&mut f32> {
-        unsafe { sys::cv_dnn_Blob_ptrf_int_int_int_int(self.as_raw_Blob(), n, cn, row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_dnn_Blob_ptrf_int_int_int_int(self.as_raw_Blob(), n, cn, row, col) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// Shares data from other @p blob.
@@ -684,11 +684,11 @@ impl BlobShape {
     
     /// Returns pointer to the first element of continuous size array.
     pub fn ptr(&self) -> Result<&i32> {
-        unsafe { sys::cv_dnn_BlobShape_ptr_const(self.as_raw_BlobShape()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_dnn_BlobShape_ptr_const(self.as_raw_BlobShape()) }.into_result().and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     pub fn ptr_1(&mut self) -> Result<&mut i32> {
-        unsafe { sys::cv_dnn_BlobShape_ptr(self.as_raw_BlobShape()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, format!("Function returned Null pointer"))))
+        unsafe { sys::cv_dnn_BlobShape_ptr(self.as_raw_BlobShape()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
     }
     
     /// Checks equality of two shapes.
