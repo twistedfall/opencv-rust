@@ -13,7 +13,6 @@ use std::{
 use glob_crate::glob;
 use once_cell::sync::{Lazy, OnceCell};
 use rayon::prelude::*;
-use regex::Regex;
 use semver::{Version, VersionReq};
 use which_crate::which;
 
@@ -247,20 +246,43 @@ fn get_version_from_headers(header_dir: &PathBuf) -> Option<String> {
     if !version_hpp.is_file() {
         return None;
     }
-    let version_header = fs::read_to_string(version_hpp).ok()?;
-    let get_version_part = |def| {
-        Regex::new(&format!(r"#define\s+CV_VERSION_{}\s+(\d+)", def)).ok()
-            .map(|r| {
-                r.captures(&version_header)
-                    .and_then(|c| c.get(1))
-                    .map(|m| m.as_str())
-                    .unwrap_or("0")
-            })
-    };
-    let major = get_version_part("MAJOR")?;
-    let minor = get_version_part("MINOR")?;
-    let revision = get_version_part("REVISION")?;
-    Some(format!("{}.{}.{}", major, minor, revision))
+    let mut major = None;
+    let mut minor = None;
+    let mut revision = None;
+    let mut line = String::with_capacity(196);
+    let mut reader = BufReader::new(File::open(version_hpp).ok()?);
+    while let Ok(bytes_read) = reader.read_line(&mut line) {
+        if bytes_read == 0 {
+            break
+        }
+        const PREFIX: &str = "#define CV_VERSION_";
+        if line.starts_with(PREFIX) {
+            let mut parts = line[PREFIX.len()..].split_whitespace();
+            if let (Some(ver_spec), Some(version)) = (parts.next(), parts.next()) {
+                match ver_spec {
+                    "MAJOR" => {
+                        major = Some(version.to_string());
+                    }
+                    "MINOR" => {
+                        minor = Some(version.to_string());
+                    }
+                    "REVISION" => {
+                        revision = Some(version.to_string());
+                    }
+                    _ => {}
+                }
+            }
+            if major.is_some() && minor.is_some() && revision.is_some() {
+                break;
+            }
+        }
+        line.clear();
+    }
+    if let (Some(major), Some(minor), Some(revision)) = (major, minor, revision) {
+        Some(format!("{}.{}.{}", major, minor, revision))
+    } else {
+        Some("0.0.0".to_string())
+    }
 }
 
 fn check_matching_version(version: &str) -> Result<()> {
@@ -821,6 +843,7 @@ fn main() -> Result<()> {
     });
     if let Some(version) = get_version_from_headers(&opencv_header_dir) {
         check_matching_version(&version).map_err(|e| format!("{}, (version coming from headers at: {})", e, opencv_header_dir.display()))?;
+        eprintln!("=== Found OpenCV library version: {} in headers located at: {}", version, opencv_header_dir.display());
     } else {
         panic!("Unable to find header version in: {}", opencv_header_dir.display())
     }
