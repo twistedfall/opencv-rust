@@ -30,3 +30,12 @@ fn ellipse() -> Result<()> {
     assert_eq!(Point::new(100, 300), pts.get(5)?);
     Ok(())
 }
+
+#[test]
+fn get_rotation_matrix_2d() -> Result<()> {
+    let mat = imgproc::get_rotation_matrix_2d(Point2f::new(10., 10.), 90., 2.)?;
+    assert_eq!(Size::new(3, 2), mat.size()?);
+    assert_eq!(*mat.at_2d::<f64>(0, 0)?, *mat.at_2d::<f64>(1, 1)?);
+    assert_eq!(-*mat.at_2d::<f64>(0, 1)?, *mat.at_2d::<f64>(1, 0)?);
+    Ok(())
+}
