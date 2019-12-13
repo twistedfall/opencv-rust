@@ -854,6 +854,11 @@ forced_class_trait = {
     "cv::_InputOutputArray",
 }
 
+# set of types that must be generated as traits, elements are typeids
+forced_class_abstract = {
+    "cv::dnn::BackendNode",
+}
+
 # set of classes that must be forced to be non-simple, elements are declarations (decl[0])
 forced_non_simple = {
     "class cv.ocl.Device",
@@ -1612,7 +1617,7 @@ class ClassInfo(GeneralInfo):
         self.module = module
         self.is_simple = self.is_ignored = self.is_ghost = self.is_callback = False
         self.is_trait = self.fullname in forced_class_trait
-        self.is_abstract = False
+        self.is_abstract = self.fullname in forced_class_abstract
         self.classname = self.name
         self.comment = ""
         if len(decl) > 5:
@@ -3369,6 +3374,7 @@ class RustWrapperGenerator(object):
         self.generated = set()
         self.generated_functions = []
         self.func_names = set()
+        self.opencv_version = "0.0.0"
 
     def get_class(self, classname):
         """
@@ -3529,6 +3535,7 @@ class RustWrapperGenerator(object):
         """
         :param srcfiles:
         :type module: str
+        :type opencv_version: str
         :type cpp_dir: str
         :type rust_dir: str
         :return:
@@ -3564,6 +3571,10 @@ class RustWrapperGenerator(object):
                 for decl in decls:
                     logging.info("\n--- Manual ---\n%s", pformat(decl, 4))
                     self.add_decl(m, decl)
+
+        if opencv_version.startswith("4.1."):
+            func_rename["cv_createStitcher_bool"] = "-"
+            func_rename["cv_createStitcherScans_bool"] = "-"
 
         logging.info("\n\n===== Generating... =====")
         self.moduleCppTypes = StringIO()
