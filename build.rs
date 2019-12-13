@@ -160,13 +160,33 @@ impl Library {
         })
     }
 
-    pub fn probe(pkg_name: &str) -> Result<Self> {
+    pub fn probe() -> Result<Self> {
         let env_vars = (env::var("OPENCV_LINK_LIBS"), env::var("OPENCV_LINK_PATHS"), env::var("OPENCV_INCLUDE_PATHS"));
-        if let (Ok(link_libs), Ok(link_paths), Ok(include_paths)) = env_vars {
-            Self::probe_from_paths(pkg_name, &link_libs, &link_paths, &include_paths)
+        let env_vars = if let (Ok(link_libs), Ok(link_paths), Ok(include_paths)) = env_vars {
+            Some((link_libs, link_paths, include_paths))
         } else {
-            Self::probe_system(pkg_name)
-        }
+            None
+        };
+        let pkg_name = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
+            env::var("OPENCV_PKGCONFIG_NAME")
+               .map(|x| Cow::Owned(x))
+               .unwrap_or_else(|_| if cfg!(target_env = "msvc") && env_vars.is_none() {
+                   "opencv3".into() // the package name in vcpkg for OpenCV3.x is different: https://github.com/microsoft/vcpkg/tree/master/ports/opencv3
+               } else {
+                   "opencv".into()
+               })
+        } else if cfg!(feature = "opencv-41") {
+            env::var("OPENCV_PKGCONFIG_NAME")
+               .map(|x| Cow::Owned(x))
+               .unwrap_or_else(|_| "opencv4".into())
+        } else {
+            unreachable!("Feature flags should have been checked in main()");
+        };
+        if let Some((link_libs, link_paths, include_paths)) = env_vars {
+            Self::probe_from_paths(pkg_name.as_ref(), &link_libs, &link_paths, &include_paths)
+        } else {
+            Self::probe_system(pkg_name.as_ref())
+        }.map_err(|e| format!("Package {} is not found, caused by: {}", pkg_name, e).into())
     }
 
     pub fn update_compiler(&self, cc: &mut cc::Build) -> Result<Vec<OsString>> {
@@ -442,19 +462,6 @@ fn build_compiler(opencv_header_dir: &PathBuf) -> cc::Build {
         out.flag("-std=c++11");
     }
     out
-}
-
-fn probe_opencv() -> Result<Library> {
-    let pkg_name = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
-        env::var("OPENCV_PKGCONFIG_NAME").map(|x| Cow::Owned(x)).unwrap_or_else(|_| Cow::Borrowed("opencv"))
-    } else if cfg!(feature = "opencv-41") {
-        env::var("OPENCV_PKGCONFIG_NAME").map(|x| Cow::Owned(x)).unwrap_or_else(|_| Cow::Borrowed("opencv4"))
-    } else {
-        unreachable!("Feature flags should have been checked in main()");
-    };
-    let out = Library::probe(&pkg_name).expect(&format!("Package {} is not found", pkg_name));
-    eprintln!("=== OpenCV library configuration: {:#?}", out);
-    Ok(out)
 }
 
 fn link_wrapper(opencv: &Library) -> Result<()> {
@@ -822,7 +829,8 @@ fn main() -> Result<()> {
     if features != 1 {
         panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
     }
-    let opencv = probe_opencv()?;
+    let opencv = Library::probe()?;
+    eprintln!("=== OpenCV library configuration: {:#?}", opencv);
     let opencv_header_dir = env::var_os("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|| {
         if cfg!(feature = "buildtime-bindgen") {
             opencv.include_paths.iter()
