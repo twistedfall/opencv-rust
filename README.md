@@ -159,11 +159,12 @@ Path specified by `LD_LIBRARY_PATH` must contain `libopencv_*.so` files.
   The directory in that environment variable should contain `opencv2` dir, e.g. `/usr/include` for
   OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x.
 
-* `OPENCV_PKGCONFIG_NAME`
-  In some cases you might want to override the pkgconfig package name, you can use `OPENCV_PKGCONFIG_NAME`
-  environment variable for that. If you set it pkgconfig will expect to find the file with that name
-  and `.pc` extension in the package directory.
-  
+* `OPENCV_PACKAGE_NAME`
+  In some cases you might want to override the pkgconfig or vcpkg package name, you can use this environment
+  variable for that. If you set it pkgconfig will expect to find the file with that name and `.pc` extension
+  in the package directory. And vcpkg will use that name to try to find package in `packages` directory under
+  `VCPKG_ROOT`. For compatibility reasons `OPENCV_PKGCONFIG_NAME` is also supported as variable name.
+
 * `OPENCV_PYTHON3_BIN`
   During the build crate uses Python 3 to run header parsing and generation. The binary is usually
   autodiscovered, but you can use `OPENCV_PYTHON3_BIN` to specify the full path to the binary to
@@ -175,7 +176,7 @@ The following variables must be set when building without `pkg_config` or `vcpkg
 * `OPENCV_LINK_LIBS`
   Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional.
   E.g. "opencv_world411".
-  
+
 * `OPENCV_LINK_PATHS`
   Comma separated list of paths to search for libraries to link. E.g. "C:\tools\opencv\build\x64\vc14\lib".
 

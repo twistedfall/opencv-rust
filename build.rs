@@ -172,17 +172,19 @@ impl Library {
             None
         };
         let pkg_name = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
-            env::var("OPENCV_PKGCONFIG_NAME")
-               .map(|x| Cow::Owned(x))
-               .unwrap_or_else(|_| if cfg!(target_env = "msvc") && env_vars.is_none() {
-                   "opencv3".into() // the package name in vcpkg for OpenCV3.x is different: https://github.com/microsoft/vcpkg/tree/master/ports/opencv3
-               } else {
-                   "opencv".into()
-               })
+            env::var("OPENCV_PACKAGE_NAME")
+                .or_else(|_| env::var("OPENCV_PKGCONFIG_NAME"))
+                .map(|x| Cow::Owned(x))
+                .unwrap_or_else(|_| if cfg!(target_env = "msvc") && env_vars.is_none() {
+                    "opencv3".into() // the package name in vcpkg for OpenCV3.x is different: https://github.com/microsoft/vcpkg/tree/master/ports/opencv3
+                } else {
+                    "opencv".into()
+                })
         } else if cfg!(feature = "opencv-41") {
-            env::var("OPENCV_PKGCONFIG_NAME")
-               .map(|x| Cow::Owned(x))
-               .unwrap_or_else(|_| "opencv4".into())
+            env::var("OPENCV_PACKAGE_NAME")
+                .or_else(|_| env::var("OPENCV_PKGCONFIG_NAME"))
+                .map(|x| Cow::Owned(x))
+                .unwrap_or_else(|_| "opencv4".into())
         } else {
             unreachable!("Feature flags should have been checked in main()");
         };
@@ -532,6 +534,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     println!("cargo:rerun-if-changed=hdr_parser.py");
     println!("cargo:rerun-if-changed=gen_rust.py");
     println!("cargo:rerun-if-env-changed=OPENCV_HEADER_DIR");
+    println!("cargo:rerun-if-env-changed=OPENCV_PACKAGE_NAME");
     println!("cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME");
     println!("cargo:rerun-if-env-changed=OPENCV_LINK_LIBS");
     println!("cargo:rerun-if-env-changed=OPENCV_LINK_PATHS");
