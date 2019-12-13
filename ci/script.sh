@@ -3,14 +3,16 @@
 set -vex
 
 if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
+    export PATH="C:\\Python37\\:$PATH"
     if [[ "$CHOCO_OPENCV_VERSION" != "" ]]; then # chocolatey build
-        export PATH="C:\\Python37\\:$PATH:C:\\tools\\opencv\\build\\x64\\vc14\\bin"
+        export PATH="$PATH:C:\\tools\\opencv\\build\\x64\\vc14\\bin"
         export OPENCV_LINK_PATHS="C:\\tools\\opencv\\build\\x64\\vc14\\lib"
         export OPENCV_LINK_LIBS="opencv_world${CHOCO_OPENCV_VERSION//./}"
         export OPENCV_INCLUDE_PATHS="C:\\tools\\opencv\\build\\include"
         export OPENCV_HEADER_DIR="C:\\tools\\opencv\\build\\include"
     else # vcpkg build
         export VCPKG_ROOT="$TRAVIS_BUILD_DIR\\vcpkg"
+        export VCPKGRS_DYNAMIC=1
     fi
     CARGO_FEATURES="$CARGO_FEATURES,buildtime-bindgen"
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
