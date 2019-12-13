@@ -66,24 +66,6 @@ pub enum Stitcher_Status {
     ERR_CAMERA_PARAMS_ADJUST_FAIL = Stitcher_ERR_CAMERA_PARAMS_ADJUST_FAIL as isize,
 }
 
-/// **Deprecated**: use Stitcher::create
-///
-/// ## C++ default parameters
-/// * try_use_gpu: false
-#[deprecated = "use Stitcher::create"]
-pub fn create_stitcher_scans(try_use_gpu: bool) -> Result<types::PtrOfStitcher> {
-    unsafe { sys::cv_createStitcherScans_bool(try_use_gpu) }.into_result().map(|ptr| types::PtrOfStitcher { ptr })
-}
-
-/// **Deprecated**: use Stitcher::create
-///
-/// ## C++ default parameters
-/// * try_use_gpu: false
-#[deprecated = "use Stitcher::create"]
-pub fn create_stitcher(try_use_gpu: bool) -> Result<types::PtrOfStitcher> {
-    unsafe { sys::cv_createStitcher_bool(try_use_gpu) }.into_result().map(|ptr| types::PtrOfStitcher { ptr })
-}
-
 // boxed class cv::AffineWarper
 /// Affine warper factory class.
 /// ## See also

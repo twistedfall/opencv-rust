@@ -1604,7 +1604,6 @@ mod dnn_sys {
         pub fn cv_BNLLLayer_delete(ptr : *mut c_void);
         pub fn cv_dnn_BNLLLayer_create_LayerParams(params: *mut c_void) -> cv_return_value_void_X;
         pub fn cv_BackendNode_delete(ptr : *mut c_void);
-        pub fn cv_dnn_BackendNode_BackendNode_int(backend_id: i32) -> cv_return_value_void_X;
         pub fn cv_dnn_BackendWrapper_copyToHost(instance: *mut c_void) -> cv_return_value_void;
         pub fn cv_dnn_BackendWrapper_setHostDirty(instance: *mut c_void) -> cv_return_value_void;
         pub fn cv_BaseConvolutionLayer_delete(ptr : *mut c_void);
@@ -3285,8 +3284,6 @@ mod stitching_sys {
     use super::*;
 
     extern "C" {
-        pub fn cv_createStitcherScans_bool(try_use_gpu: bool) -> cv_return_value_void_X;
-        pub fn cv_createStitcher_bool(try_use_gpu: bool) -> cv_return_value_void_X;
         pub fn cv_AffineWarper_delete(ptr : *mut c_void);
         pub fn cv_CompressedRectilinearPortraitWarper_delete(ptr : *mut c_void);
         pub fn cv_CompressedRectilinearPortraitWarper_CompressedRectilinearPortraitWarper_float_float(a: f32, b: f32) -> cv_return_value_void_X;

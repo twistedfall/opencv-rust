@@ -714,13 +714,6 @@ impl BackendNode {
 
 unsafe impl Send for BackendNode {}
 
-impl BackendNode {
-    pub fn new(backend_id: i32) -> Result<crate::dnn::BackendNode> {
-        unsafe { sys::cv_dnn_BackendNode_BackendNode_int(backend_id) }.into_result().map(|ptr| crate::dnn::BackendNode { ptr })
-    }
-    
-}
-
 // Generating impl for trait crate::dnn::BackendWrapper
 /// Derivatives of this class wraps cv::Mat for different backends and targets.
 pub trait BackendWrapper {
