@@ -61,14 +61,16 @@ struct Library {
 }
 
 impl Library {
-    fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
+    pub fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
         eprintln!(
             "=== Setting up OpenCV library from environment, pkg_name: {}, link_libs: {}, link_paths: {}, include_paths: {}",
             pkg_name, link_libs, link_paths, include_paths
         );
         let libs: Vec<_> = link_libs.split(',')
+            .map(|x| x.trim())
+            .filter(|x| !x.is_empty())
             .map(|x| {
-                let mut path = PathBuf::from(x.trim());
+                let mut path = PathBuf::from(x);
                 path.set_extension("");
                 let mut out = path.file_name().and_then(|f| f.to_str()).expect("Invalid library name").to_owned();
                 println!("cargo:rustc-link-lib={}", out);
@@ -79,10 +81,11 @@ impl Library {
             })
             .collect();
 
-        let link_paths: Vec<_> = link_paths
-            .split(',')
+        let link_paths: Vec<_> = link_paths.split(',')
+            .map(|x| x.trim())
+            .filter(|x| !x.is_empty())
             .map(|x| {
-                let out = PathBuf::from(x.trim());
+                let out = PathBuf::from(x);
                 println!("cargo:rustc-link-search=native={}", out.to_str().expect("Invalid link path"));
                 out
             })
@@ -93,9 +96,10 @@ impl Library {
             .map(|x| x.clone())
             .unwrap_or_else(|| PathBuf::from(""));
 
-        let include_paths: Vec<_> = include_paths
-            .split(',')
-            .map(|x| PathBuf::from(x.trim()))
+        let include_paths: Vec<_> = include_paths.split(',')
+            .map(|x| x.trim())
+            .filter(|x| !x.is_empty())
+            .map(PathBuf::from)
             .collect();
 
         let version = include_paths.iter()
@@ -116,7 +120,7 @@ impl Library {
     }
 
     #[cfg(not(target_env = "msvc"))]
-    fn probe_system(pkg_name: &str) -> Result<Self> {
+    pub fn probe_system(pkg_name: &str) -> Result<Self> {
         eprintln!("=== Setting up OpenCV library from pkg_config");
         let opencv = pkg_config::probe_library(pkg_name)?;
         Ok(Self {
@@ -132,17 +136,17 @@ impl Library {
     }
 
     #[cfg(target_env = "msvc")]
-    fn probe_system(pkg_name: &str) -> Result<Self> {
+    pub fn probe_system(pkg_name: &str) -> Result<Self> {
         eprintln!("=== Setting up OpenCV library from vcpkg");
         let opencv = vcpkg::find_package(pkg_name)?;
         let libs = opencv.found_libs.into_iter()
-            .filter_map(|lib| lib.file_name()
-                .and_then(|l| l.to_str())
-                .map(|l| l.to_string())
-            )
-            .collect();
+           .filter_map(|lib| lib.file_name()
+              .and_then(|l| l.to_str())
+              .map(|l| l.to_string())
+           )
+           .collect();
         let version = opencv.include_paths.iter()
-            .filter_map(get_version_from_headers)
+           .filter_map(get_version_from_headers)
             .next();
         let libdir = opencv.link_paths.first()
             .map(|x| x.clone())
@@ -829,7 +833,11 @@ fn main() -> Result<()> {
     if features != 1 {
         panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-41");
     }
-    let opencv = Library::probe()?;
+    let opencv = if cfg!(feature = "docs-only") {
+        Library::probe_from_paths("opencv", "", "", "")?
+    } else {
+        Library::probe()?
+    };
     eprintln!("=== OpenCV library configuration: {:#?}", opencv);
     let opencv_header_dir = env::var_os("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|| {
         if cfg!(feature = "buildtime-bindgen") {
