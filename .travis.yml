@@ -12,6 +12,7 @@ cache:
   cargo: false
   directories:
     - $HOME/build/opencv
+    - $TRAVIS_BUILD_DIR/vcpkg
 
 language: rust
 rust:

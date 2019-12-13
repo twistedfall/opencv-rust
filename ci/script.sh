@@ -12,6 +12,7 @@ if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then
         export OPENCV_HEADER_DIR="C:\\tools\\opencv\\build\\include"
     else # vcpkg build
         export VCPKG_ROOT="$TRAVIS_BUILD_DIR\\vcpkg"
+        export PATH="$PATH:$VCPKG_ROOT\\installed\\x64-windows\\bin"
         export VCPKGRS_DYNAMIC=1
     fi
     CARGO_FEATURES="$CARGO_FEATURES,buildtime-bindgen"
