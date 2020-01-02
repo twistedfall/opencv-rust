@@ -29,9 +29,7 @@
 //! a richer model.
 //!
 //! In OpenCV there is an C++ implementation of DPM cascade detector.
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 

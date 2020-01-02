@@ -26,9 +26,7 @@
 //! # Universal intrinsics
 //! # Private implementation helpers
 //! # Low-level API for external libraries / plugins
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 
 pub const ACCESS_FAST: i32 = 1<<26;
 pub const ACCESS_MASK: i32 = 3<<24;

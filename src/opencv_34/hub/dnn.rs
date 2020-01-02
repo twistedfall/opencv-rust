@@ -7,9 +7,7 @@
 //!
 //! Functionality of this module is designed only for forward pass computations (i.e. network testing).
 //! A network training is in principle not supported.
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CV_DNN_BACKEND_INFERENCE_ENGINE_NGRAPH: &'static str = "NGRAPH";

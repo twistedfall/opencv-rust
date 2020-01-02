@@ -22,6 +22,17 @@ pub mod prelude {
     };
 }
 
+pub(crate) mod mod_prelude {
+	pub use std::os::raw::{c_char, c_void};
+
+	pub use libc::{ptrdiff_t, size_t};
+
+	pub use crate::{
+		Error,
+		Result,
+	};
+}
+
 #[cfg(test)]
 mod test;
 

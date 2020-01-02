@@ -9,9 +9,7 @@
 //! ground is defined by the class cv::ml::StatModel that all the other ML classes are derived from.
 //!
 //! See detailed overview here: @ref ml_intro.
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.

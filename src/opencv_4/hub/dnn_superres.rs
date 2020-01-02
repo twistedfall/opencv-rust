@@ -7,9 +7,7 @@
 //! - ESPCN <https://arxiv.org/abs/1609.05158>
 //! - FSRCNN <https://arxiv.org/abs/1608.00367>
 //! - LapSRN <https://arxiv.org/abs/1710.01992>
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 

@@ -13,9 +13,7 @@
 //! This section describes the following matching strategies:
 //! - GMS: Grid-based Motion Statistics, [Bian2017gms](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Bian2017gms)
 //! - LOGOS: Local geometric support for high-outlier spatial verification, [Lowry2018LOGOSLG](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Lowry2018LOGOSLG)
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const DAISY_NRM_FULL: i32 = 102;

@@ -10,9 +10,7 @@
 //! - If thickness parameter is negative, drawing glyph is filled.
 //! - If thickness parameter is positive, drawing glyph is outlined with thickness.
 //! - If line_type parameter is 16(or CV_AA), drawing glyph is smooth.
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 

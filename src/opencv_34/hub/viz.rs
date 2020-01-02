@@ -21,9 +21,7 @@
 //! // Modify it, and it will be modified in the window.
 //! cw.setColor(viz::Color::yellow());
 //! ```
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const AMBIENT: i32 = 7;

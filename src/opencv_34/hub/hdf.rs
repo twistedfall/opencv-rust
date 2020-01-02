@@ -8,9 +8,7 @@
 //!
 //! In order to use it, the hdf5 library has to be installed, which
 //! means cmake should find it using `find_package(HDF5)` .
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 

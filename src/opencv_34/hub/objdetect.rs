@@ -53,9 +53,7 @@
 //! using a Boosted Cascade of Simple Features. IEEE CVPR, 2001. The paper is available online at
 //! <http://research.microsoft.com/en-us/um/people/viola/Pubs/Detect/violaJones_CVPR2001.pdf>
 //! # C API
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CASCADE_DO_CANNY_PRUNING: i32 = 1;

@@ -68,9 +68,7 @@
 //! consider 32 possible pairs of BD inside it; each couple of BD is compared bit by bit and comparison
 //! generates an 8 bit string. Concatenating 32 comparison strings, we get the 256-bit final binary
 //! representation of a single LBD.
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// Output image matrix will be created (Mat::create),

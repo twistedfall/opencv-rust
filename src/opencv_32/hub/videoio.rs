@@ -10,9 +10,7 @@
 //! # C API for video I/O
 //! # iOS glue for video I/O
 //! # WinRT glue for video I/O
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// Android - not used

@@ -52,9 +52,7 @@
 //! - Notice that it is compiled only when Ceres Solver is correctly installed.
 //!
 //! Check installation instructions in the following tutorial: @ref tutorial_sfm_installation
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const SFM_DISTORTION_MODEL_DIVISION: i32 = 1;

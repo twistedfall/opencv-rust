@@ -735,15 +735,11 @@ fn gen_wrapper(opencv: &Library, opencv_header_dir: &PathBuf) -> Result<()> {
         let mut hub = File::create(hub_dir.join("hub.rs"))?;
 
         let mut types = File::create(module_dir.join("types.rs"))?;
-        writeln!(&mut types, "use std::os::raw::{{c_char, c_void}};")?;
-        writeln!(&mut types, "use libc::size_t;")?;
-        writeln!(&mut types, "use crate::{{core, types, sys, Result}};")?;
+        writeln!(&mut types, "use crate::{{mod_prelude::*, core, types, sys}};")?;
         writeln!(&mut types, "")?;
 
         let mut sys = File::create(module_dir.join("sys.rs"))?;
-        writeln!(&mut sys, "use std::os::raw::{{c_char, c_void}};")?;
-        writeln!(&mut sys, "use libc::{{ptrdiff_t, size_t}};")?;
-        writeln!(&mut sys, "use crate::core;")?;
+        writeln!(&mut sys, "use crate::{{mod_prelude::*, core}};")?;
         writeln!(&mut sys, "")?;
         for (module, ..) in modules {
             let is_contrib_module = !CORE_MODULES.contains(module.as_str());

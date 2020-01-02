@@ -3587,9 +3587,7 @@ class RustWrapperGenerator(object):
         self.moduleSafeRust.write(module_comment)
 
         self.moduleSafeRust.write(template("""
-            use std::os::raw::{c_char, c_void};
-            use libc::{ptrdiff_t, size_t};
-            use crate::{Error, Result, ${static_modules}};
+            use crate::{mod_prelude::*, ${static_modules}};
             ${input_output_array}
         """).substitute({
             "static_modules": ", ".join(static_modules),

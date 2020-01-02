@@ -122,9 +122,7 @@
 //! ![block formula](https://latex.codecogs.com/png.latex?u%20%3D%20f_x%20%28x%27%20%2B%20%5Calpha%20y%27%29%20%2B%20c_x%20%5C%5C%0Av%20%3D%20f_y%20y%27%20%2B%20c_y)
 //!
 //! # C API
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 pub const CALIB_CB_ADAPTIVE_THRESH: i32 = 1;

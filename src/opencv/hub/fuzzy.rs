@@ -12,9 +12,7 @@
 //! # Fuzzy image processing
 //!
 //! Image proceesing based on fuzzy mathematics namely F-transform.
-use std::os::raw::{c_char, c_void};
-use libc::{ptrdiff_t, size_t};
-use crate::{Error, Result, core, sys, types};
+use crate::{mod_prelude::*, core, sys, types};
 use crate::core::{_InputArrayTrait, _OutputArrayTrait};
 
 /// processing in several iterations
