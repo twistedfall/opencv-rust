@@ -1759,6 +1759,8 @@ class ConstInfo(GeneralInfo):
                 return ConstInfo.TEMPLATES["rust_int"].substitute(params)
             elif re.match(r"^\s*(\d+\s*\+\s*\d+)\s*$", params["value"]):  # 0 + 3
                 return ConstInfo.TEMPLATES["rust_int"].substitute(params)
+            elif re.match(r"^CV_MAKE_?TYPE\s*\(", params["value"]):  # CV_MAKETYPE
+                return ConstInfo.TEMPLATES["rust_int"].substitute(params)
             ref_const = self.gen.get_const(params["value"])
             if ref_const is not None:
                 params["value"] = ref_const.value

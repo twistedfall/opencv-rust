@@ -28,6 +28,7 @@ pub(crate) mod mod_prelude {
 	pub use libc::{ptrdiff_t, size_t};
 
 	pub use crate::{
+		core::{CV_MAKE_TYPE, CV_MAKETYPE},
 		Error,
 		Result,
 	};

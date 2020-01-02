@@ -46,7 +46,7 @@ macro_rules! data_type {
             fn channels() -> i32 { $channels }
 
             #[inline(always)]
-            fn typ() -> i32 { $crate::core::MAKETYPE($mat_depth, $channels) }
+            fn typ() -> i32 { $crate::core::CV_MAKETYPE($mat_depth, $channels) }
         }
 
         impl private::Sealed for $rust_type {}
