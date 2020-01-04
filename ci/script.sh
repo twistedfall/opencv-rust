@@ -28,8 +28,9 @@ fi
 
 # when building both debug and release we're getting above 50min travis if not using cached build of OpenCV
 # so build stable rust only in --release, and beta only in debug
+# also windows build fails with "too many sections (34846)" and "File too big" for cpp_closures.o in debug builds
 CARGO_EXTRA_FLAGS=""
-if [[ "$TRAVIS_RUST_VERSION" == "stable" ]]; then
+if [[ "$TRAVIS_RUST_VERSION" == "stable" || "$TRAVIS_OS_NAME" == "windows" ]]; then
     CARGO_EXTRA_FLAGS="--release"
 fi
 cargo build -vv --no-default-features --features "$CARGO_FEATURES" $CARGO_EXTRA_FLAGS
