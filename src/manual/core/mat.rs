@@ -172,6 +172,14 @@ impl Mat {
         }
     }
 
+    fn match_is_continuous(&self) -> Result<()> {
+        if self.is_continuous()? {
+            Ok(())
+        } else {
+            Err(Error::new(core::StsUnmatchedSizes, format!("Mat is not continuous, operation is not applicable")))
+        }
+    }
+
     #[inline(always)]
     fn idx_to_row_col(&self, i0: i32) -> Result<(i32, i32)> {
         Ok(if self.is_continuous()? {
@@ -425,6 +433,7 @@ impl Mat {
 
     pub fn data_typed<T: DataType>(&self) -> Result<&[T]> {
         self.match_format::<T>()
+            .and_then(|_| self.match_is_continuous())
             .and_then(|_| unsafe { self.data_typed_unchecked() })
     }
 
@@ -434,7 +443,8 @@ impl Mat {
     }
 
     pub fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
-        self.match_format::<T>()?;
+        self.match_format::<T>()
+            .and_then(|_| self.match_is_continuous())?;
         unsafe { self.data_typed_mut_unchecked() }
     }
 

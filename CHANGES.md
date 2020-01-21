@@ -1,3 +1,6 @@
+* 0.30
+  * data_typed() and data_typed_mut() now do is_continuous() check
+
 * 0.29.2
   * add ability to get reference to the inner value of non-trait `PtrOf*` types (kudos to jerry73204)
 

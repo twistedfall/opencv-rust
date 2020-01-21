@@ -88,7 +88,7 @@ fn umat_for_rows_and_cols() -> Result<()> {
 }
 
 #[test]
-fn umat_continous() -> Result<()> {
+fn umat_continuous() -> Result<()> {
     let s: Vec<Vec<f32>> = vec![
         vec![1., 2., 3.],
         vec![4., 5., 6.],

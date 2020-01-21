@@ -360,6 +360,13 @@ fn mat_continuous() -> Result<()> {
         assert_eq!(9., vec[1][2]);
     }
 
+    {
+        let mut sub_mat_non_cont = Mat::roi(&mat, Rect::new(1, 1, 1, 2))?;
+        assert!(!sub_mat_non_cont.is_continuous()?);
+        assert_matches!(sub_mat_non_cont.data_typed::<f32>(), Err(Error { code: core::StsUnmatchedSizes, .. }));
+        assert_matches!(sub_mat_non_cont.data_typed_mut::<f32>(), Err(Error { code: core::StsUnmatchedSizes, .. }));
+    }
+
     Ok(())
 }
 
