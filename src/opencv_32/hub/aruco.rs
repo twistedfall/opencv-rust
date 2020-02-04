@@ -883,80 +883,160 @@ impl DetectorParameters {
         unsafe { sys::cv_aruco_DetectorParameters_adaptiveThreshWinSizeMin_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_adaptive_thresh_win_size_min(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_adaptiveThreshWinSizeMin_int(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn adaptive_thresh_win_size_max(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_adaptiveThreshWinSizeMax_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_adaptive_thresh_win_size_max(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_adaptiveThreshWinSizeMax_int(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn adaptive_thresh_win_size_step(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_adaptiveThreshWinSizeStep_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_adaptive_thresh_win_size_step(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_adaptiveThreshWinSizeStep_int(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn adaptive_thresh_constant(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_adaptiveThreshConstant_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_adaptive_thresh_constant(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_adaptiveThreshConstant_double(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn min_marker_perimeter_rate(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_minMarkerPerimeterRate_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_min_marker_perimeter_rate(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_minMarkerPerimeterRate_double(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn max_marker_perimeter_rate(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_maxMarkerPerimeterRate_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_max_marker_perimeter_rate(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_maxMarkerPerimeterRate_double(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn polygonal_approx_accuracy_rate(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_polygonalApproxAccuracyRate_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_polygonal_approx_accuracy_rate(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_polygonalApproxAccuracyRate_double(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn min_corner_distance_rate(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_minCornerDistanceRate_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_min_corner_distance_rate(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_minCornerDistanceRate_double(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn min_distance_to_border(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_minDistanceToBorder_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_min_distance_to_border(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_minDistanceToBorder_int(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn min_marker_distance_rate(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_minMarkerDistanceRate_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_min_marker_distance_rate(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_minMarkerDistanceRate_double(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn do_corner_refinement(&self) -> Result<bool> {
         unsafe { sys::cv_aruco_DetectorParameters_doCornerRefinement_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_do_corner_refinement(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_doCornerRefinement_bool(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn corner_refinement_win_size(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_cornerRefinementWinSize_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_corner_refinement_win_size(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_cornerRefinementWinSize_int(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn corner_refinement_max_iterations(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_cornerRefinementMaxIterations_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_corner_refinement_max_iterations(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_cornerRefinementMaxIterations_int(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn corner_refinement_min_accuracy(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_cornerRefinementMinAccuracy_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_corner_refinement_min_accuracy(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_cornerRefinementMinAccuracy_double(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn marker_border_bits(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_markerBorderBits_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_marker_border_bits(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_markerBorderBits_int(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn perspective_remove_pixel_per_cell(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_DetectorParameters_perspectiveRemovePixelPerCell_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_perspective_remove_pixel_per_cell(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_perspectiveRemovePixelPerCell_int(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn perspective_remove_ignored_margin_per_cell(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_perspectiveRemoveIgnoredMarginPerCell_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_perspective_remove_ignored_margin_per_cell(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_perspectiveRemoveIgnoredMarginPerCell_double(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn max_erroneous_bits_in_border_rate(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_maxErroneousBitsInBorderRate_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_max_erroneous_bits_in_border_rate(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_maxErroneousBitsInBorderRate_double(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn min_otsu_std_dev(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_minOtsuStdDev_const(self.as_raw_DetectorParameters()) }.into_result()
     }
     
+    pub fn set_min_otsu_std_dev(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_minOtsuStdDev_double(self.as_raw_DetectorParameters(), val) }.into_result()
+    }
+    
     pub fn error_correction_rate(&self) -> Result<f64> {
         unsafe { sys::cv_aruco_DetectorParameters_errorCorrectionRate_const(self.as_raw_DetectorParameters()) }.into_result()
+    }
+    
+    pub fn set_error_correction_rate(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_aruco_DetectorParameters_set_errorCorrectionRate_double(self.as_raw_DetectorParameters(), val) }.into_result()
     }
     
     pub fn default() -> Result<crate::aruco::DetectorParameters> {
@@ -1011,8 +1091,16 @@ impl Dictionary {
         unsafe { sys::cv_aruco_Dictionary_markerSize_const(self.as_raw_Dictionary()) }.into_result()
     }
     
+    pub fn set_marker_size(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_Dictionary_set_markerSize_int(self.as_raw_Dictionary(), val) }.into_result()
+    }
+    
     pub fn max_correction_bits(&self) -> Result<i32> {
         unsafe { sys::cv_aruco_Dictionary_maxCorrectionBits_const(self.as_raw_Dictionary()) }.into_result()
+    }
+    
+    pub fn set_max_correction_bits(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_aruco_Dictionary_set_maxCorrectionBits_int(self.as_raw_Dictionary(), val) }.into_result()
     }
     
     ///

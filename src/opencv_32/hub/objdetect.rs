@@ -615,40 +615,80 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_winSize_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    pub fn set_win_size(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_winSize_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     pub fn block_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_HOGDescriptor_blockSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn set_block_size(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_blockSize_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     pub fn block_stride(&self) -> Result<core::Size> {
         unsafe { sys::cv_HOGDescriptor_blockStride_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    pub fn set_block_stride(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_blockStride_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     pub fn cell_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_HOGDescriptor_cellSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn set_cell_size(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_cellSize_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     pub fn nbins(&self) -> Result<i32> {
         unsafe { sys::cv_HOGDescriptor_nbins_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    pub fn set_nbins(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_nbins_int(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     pub fn deriv_aperture(&self) -> Result<i32> {
         unsafe { sys::cv_HOGDescriptor_derivAperture_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn set_deriv_aperture(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_derivAperture_int(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     pub fn win_sigma(&self) -> Result<f64> {
         unsafe { sys::cv_HOGDescriptor_winSigma_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    pub fn set_win_sigma(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_winSigma_double(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     pub fn histogram_norm_type(&self) -> Result<i32> {
         unsafe { sys::cv_HOGDescriptor_histogramNormType_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn set_histogram_norm_type(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_histogramNormType_int(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     pub fn l2_hys_threshold(&self) -> Result<f64> {
         unsafe { sys::cv_HOGDescriptor_L2HysThreshold_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    pub fn set_l2_hys_threshold(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_L2HysThreshold_double(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     pub fn gamma_correction(&self) -> Result<bool> {
         unsafe { sys::cv_HOGDescriptor_gammaCorrection_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn set_gamma_correction(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_gammaCorrection_bool(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     pub fn svm_detector(&mut self) -> Result<types::VectorOffloat> {
@@ -663,8 +703,16 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_nlevels_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    pub fn set_nlevels(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_nlevels_int(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     pub fn signed_gradient(&self) -> Result<bool> {
         unsafe { sys::cv_HOGDescriptor_signedGradient_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    pub fn set_signed_gradient(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_signedGradient_bool(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     pub fn default() -> Result<crate::objdetect::HOGDescriptor> {

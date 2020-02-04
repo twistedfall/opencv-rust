@@ -190,16 +190,32 @@ pub trait BaseConvolutionLayerTrait: crate::dnn::Layer {
         unsafe { sys::cv_dnn_BaseConvolutionLayer_kernel_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
     }
     
+    fn set_kernel(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_set_kernel_Size(self.as_raw_BaseConvolutionLayer(), val) }.into_result()
+    }
+    
     fn stride(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_BaseConvolutionLayer_stride_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
+    }
+    
+    fn set_stride(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_set_stride_Size(self.as_raw_BaseConvolutionLayer(), val) }.into_result()
     }
     
     fn pad(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_BaseConvolutionLayer_pad_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
     }
     
+    fn set_pad(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_set_pad_Size(self.as_raw_BaseConvolutionLayer(), val) }.into_result()
+    }
+    
     fn dilation(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_BaseConvolutionLayer_dilation_const(self.as_raw_BaseConvolutionLayer()) }.into_result()
+    }
+    
+    fn set_dilation(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_dnn_BaseConvolutionLayer_set_dilation_Size(self.as_raw_BaseConvolutionLayer(), val) }.into_result()
     }
     
     fn pad_mode(&mut self) -> Result<String> {
@@ -823,6 +839,10 @@ impl CropLayer {
         unsafe { sys::cv_dnn_CropLayer_startAxis_const(self.as_raw_CropLayer()) }.into_result()
     }
     
+    pub fn set_start_axis(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_CropLayer_set_startAxis_int(self.as_raw_CropLayer(), val) }.into_result()
+    }
+    
     pub fn create(start_axis: i32, offset: &types::VectorOfint) -> Result<types::PtrOfCropLayer> {
         unsafe { sys::cv_dnn_CropLayer_create_int_VectorOfint(start_axis, offset.as_raw_VectorOfint()) }.into_result().map(|ptr| types::PtrOfCropLayer { ptr })
     }
@@ -1067,6 +1087,10 @@ impl InnerProductLayer {
         unsafe { sys::cv_dnn_InnerProductLayer_axis_const(self.as_raw_InnerProductLayer()) }.into_result()
     }
     
+    pub fn set_axis(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_InnerProductLayer_set_axis_int(self.as_raw_InnerProductLayer(), val) }.into_result()
+    }
+    
     ///
     /// ## C++ default parameters
     /// * axis: 1
@@ -1106,24 +1130,48 @@ impl LRNLayer {
         unsafe { sys::cv_dnn_LRNLayer_type_const(self.as_raw_LRNLayer()) }.into_result()
     }
     
+    pub fn set_type(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_LRNLayer_set_type_int(self.as_raw_LRNLayer(), val) }.into_result()
+    }
+    
     pub fn size(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_LRNLayer_size_const(self.as_raw_LRNLayer()) }.into_result()
+    }
+    
+    pub fn set_size(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_LRNLayer_set_size_int(self.as_raw_LRNLayer(), val) }.into_result()
     }
     
     pub fn alpha(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_LRNLayer_alpha_const(self.as_raw_LRNLayer()) }.into_result()
     }
     
+    pub fn set_alpha(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_LRNLayer_set_alpha_double(self.as_raw_LRNLayer(), val) }.into_result()
+    }
+    
     pub fn beta(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_LRNLayer_beta_const(self.as_raw_LRNLayer()) }.into_result()
+    }
+    
+    pub fn set_beta(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_LRNLayer_set_beta_double(self.as_raw_LRNLayer(), val) }.into_result()
     }
     
     pub fn bias(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_LRNLayer_bias_const(self.as_raw_LRNLayer()) }.into_result()
     }
     
+    pub fn set_bias(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_LRNLayer_set_bias_double(self.as_raw_LRNLayer(), val) }.into_result()
+    }
+    
     pub fn norm_by_size(&self) -> Result<bool> {
         unsafe { sys::cv_dnn_LRNLayer_normBySize_const(self.as_raw_LRNLayer()) }.into_result()
+    }
+    
+    pub fn set_norm_by_size(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_dnn_LRNLayer_set_normBySize_bool(self.as_raw_LRNLayer(), val) }.into_result()
     }
     
     ///
@@ -1475,12 +1523,24 @@ impl MVNLayer {
         unsafe { sys::cv_dnn_MVNLayer_eps_const(self.as_raw_MVNLayer()) }.into_result()
     }
     
+    pub fn set_eps(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_MVNLayer_set_eps_double(self.as_raw_MVNLayer(), val) }.into_result()
+    }
+    
     pub fn norm_variance(&self) -> Result<bool> {
         unsafe { sys::cv_dnn_MVNLayer_normVariance_const(self.as_raw_MVNLayer()) }.into_result()
     }
     
+    pub fn set_norm_variance(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_dnn_MVNLayer_set_normVariance_bool(self.as_raw_MVNLayer(), val) }.into_result()
+    }
+    
     pub fn across_channels(&self) -> Result<bool> {
         unsafe { sys::cv_dnn_MVNLayer_acrossChannels_const(self.as_raw_MVNLayer()) }.into_result()
+    }
+    
+    pub fn set_across_channels(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_dnn_MVNLayer_set_acrossChannels_bool(self.as_raw_MVNLayer(), val) }.into_result()
     }
     
     ///
@@ -1730,20 +1790,40 @@ impl PoolingLayer {
         unsafe { sys::cv_dnn_PoolingLayer_type_const(self.as_raw_PoolingLayer()) }.into_result()
     }
     
+    pub fn set_type(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_PoolingLayer_set_type_int(self.as_raw_PoolingLayer(), val) }.into_result()
+    }
+    
     pub fn kernel(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_PoolingLayer_kernel_const(self.as_raw_PoolingLayer()) }.into_result()
+    }
+    
+    pub fn set_kernel(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_dnn_PoolingLayer_set_kernel_Size(self.as_raw_PoolingLayer(), val) }.into_result()
     }
     
     pub fn stride(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_PoolingLayer_stride_const(self.as_raw_PoolingLayer()) }.into_result()
     }
     
+    pub fn set_stride(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_dnn_PoolingLayer_set_stride_Size(self.as_raw_PoolingLayer(), val) }.into_result()
+    }
+    
     pub fn pad(&self) -> Result<core::Size> {
         unsafe { sys::cv_dnn_PoolingLayer_pad_const(self.as_raw_PoolingLayer()) }.into_result()
     }
     
+    pub fn set_pad(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_dnn_PoolingLayer_set_pad_Size(self.as_raw_PoolingLayer(), val) }.into_result()
+    }
+    
     pub fn global_pooling(&self) -> Result<bool> {
         unsafe { sys::cv_dnn_PoolingLayer_globalPooling_const(self.as_raw_PoolingLayer()) }.into_result()
+    }
+    
+    pub fn set_global_pooling(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_dnn_PoolingLayer_set_globalPooling_bool(self.as_raw_PoolingLayer(), val) }.into_result()
     }
     
     pub fn pad_mode(&mut self) -> Result<String> {
@@ -1806,12 +1886,24 @@ impl PowerLayer {
         unsafe { sys::cv_dnn_PowerLayer_power_const(self.as_raw_PowerLayer()) }.into_result()
     }
     
+    pub fn set_power(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_PowerLayer_set_power_double(self.as_raw_PowerLayer(), val) }.into_result()
+    }
+    
     pub fn scale(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_PowerLayer_scale_const(self.as_raw_PowerLayer()) }.into_result()
     }
     
+    pub fn set_scale(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_PowerLayer_set_scale_double(self.as_raw_PowerLayer(), val) }.into_result()
+    }
+    
     pub fn shift(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_PowerLayer_shift_const(self.as_raw_PowerLayer()) }.into_result()
+    }
+    
+    pub fn set_shift(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_PowerLayer_set_shift_double(self.as_raw_PowerLayer(), val) }.into_result()
     }
     
     ///
@@ -1894,6 +1986,10 @@ impl crate::dnn::Layer for ReLULayer {
 impl ReLULayer {
     pub fn negative_slope(&self) -> Result<f64> {
         unsafe { sys::cv_dnn_ReLULayer_negativeSlope_const(self.as_raw_ReLULayer()) }.into_result()
+    }
+    
+    pub fn set_negative_slope(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_dnn_ReLULayer_set_negativeSlope_double(self.as_raw_ReLULayer(), val) }.into_result()
     }
     
     ///
@@ -2017,6 +2113,10 @@ impl crate::dnn::Layer for SliceLayer {
 impl SliceLayer {
     pub fn axis(&self) -> Result<i32> {
         unsafe { sys::cv_dnn_SliceLayer_axis_const(self.as_raw_SliceLayer()) }.into_result()
+    }
+    
+    pub fn set_axis(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_SliceLayer_set_axis_int(self.as_raw_SliceLayer(), val) }.into_result()
     }
     
     pub fn create(axis: i32) -> Result<types::PtrOfSliceLayer> {

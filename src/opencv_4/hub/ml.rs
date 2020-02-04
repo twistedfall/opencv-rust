@@ -1180,9 +1180,19 @@ impl ParamGrid {
         unsafe { sys::cv_ml_ParamGrid_minVal_const(self.as_raw_ParamGrid()) }.into_result()
     }
     
+    /// Minimum value of the statmodel parameter. Default value is 0.
+    pub fn set_min_val(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_ml_ParamGrid_set_minVal_double(self.as_raw_ParamGrid(), val) }.into_result()
+    }
+    
     /// Maximum value of the statmodel parameter. Default value is 0.
     pub fn max_val(&self) -> Result<f64> {
         unsafe { sys::cv_ml_ParamGrid_maxVal_const(self.as_raw_ParamGrid()) }.into_result()
+    }
+    
+    /// Maximum value of the statmodel parameter. Default value is 0.
+    pub fn set_max_val(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_ml_ParamGrid_set_maxVal_double(self.as_raw_ParamGrid(), val) }.into_result()
     }
     
     /// Logarithmic step for iterating the statmodel parameter.
@@ -1194,6 +1204,17 @@ impl ParamGrid {
     /// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
     pub fn log_step(&self) -> Result<f64> {
         unsafe { sys::cv_ml_ParamGrid_logStep_const(self.as_raw_ParamGrid()) }.into_result()
+    }
+    
+    /// Logarithmic step for iterating the statmodel parameter.
+    ///
+    /// The grid determines the following iteration sequence of the statmodel parameter values:
+    /// ![block formula](https://latex.codecogs.com/png.latex?%28minVal%2C%20minVal%2Astep%2C%20minVal%2A%7Bstep%7D%5E2%2C%20%5Cdots%2C%20%20minVal%2A%7BlogStep%7D%5En%29%2C)
+    /// where ![inline formula](https://latex.codecogs.com/png.latex?n) is the maximal index satisfying
+    /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BminVal%7D%20%2A%20%5Ctexttt%7BlogStep%7D%20%5En%20%3C%20%20%5Ctexttt%7BmaxVal%7D)
+    /// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
+    pub fn set_log_step(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_ml_ParamGrid_set_logStep_double(self.as_raw_ParamGrid(), val) }.into_result()
     }
     
     /// Default constructor

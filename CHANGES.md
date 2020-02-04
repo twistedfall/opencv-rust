@@ -1,3 +1,6 @@
+* 0.29.1
+  * fix generation of setters for properties (kudos to jerry73204)
+
 * 0.29
   * default features now target OpenCV 4.2.0 (instead of OpenCV 3.4.x). Feature `opencv-42` was renamed to
     `opencv-4`. Bindings were bumped to OpenCV 4.2.0 and 3.4.9.

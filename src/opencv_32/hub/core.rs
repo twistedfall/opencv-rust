@@ -5811,9 +5811,18 @@ impl Mat {
         unsafe { sys::cv_Mat_flags_const(self.as_raw_Mat()) }.into_result()
     }
     
+    pub fn set_flags(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_Mat_set_flags_int(self.as_raw_Mat(), val) }.into_result()
+    }
+    
     /// the matrix dimensionality, >= 2
     pub fn dims(&self) -> Result<i32> {
         unsafe { sys::cv_Mat_dims_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the matrix dimensionality, >= 2
+    pub fn set_dims(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_Mat_set_dims_int(self.as_raw_Mat(), val) }.into_result()
     }
     
     /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
@@ -5822,8 +5831,18 @@ impl Mat {
     }
     
     /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn set_rows(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_Mat_set_rows_int(self.as_raw_Mat(), val) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
     pub fn cols(&self) -> Result<i32> {
         unsafe { sys::cv_Mat_cols_const(self.as_raw_Mat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn set_cols(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_Mat_set_cols_int(self.as_raw_Mat(), val) }.into_result()
     }
     
     /// pointer to the data
@@ -7957,8 +7976,16 @@ impl Range {
         unsafe { sys::cv_Range_start_const(self.as_raw_Range()) }.into_result()
     }
     
+    pub fn set_start(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_Range_set_start_int(self.as_raw_Range(), val) }.into_result()
+    }
+    
     pub fn end(&self) -> Result<i32> {
         unsafe { sys::cv_Range_end_const(self.as_raw_Range()) }.into_result()
+    }
+    
+    pub fn set_end(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_Range_set_end_int(self.as_raw_Range(), val) }.into_result()
     }
     
     pub fn default() -> Result<core::Range> {
@@ -8035,12 +8062,24 @@ impl RotatedRect {
         unsafe { sys::cv_RotatedRect_center_const(self.as_raw_RotatedRect()) }.into_result()
     }
     
+    pub fn set_center(&mut self, val: core::Point2f) -> Result<()> {
+        unsafe { sys::cv_RotatedRect_set_center_Point2f(self.as_raw_RotatedRect(), val) }.into_result()
+    }
+    
     pub fn size(&self) -> Result<core::Size2f> {
         unsafe { sys::cv_RotatedRect_size_const(self.as_raw_RotatedRect()) }.into_result()
     }
     
+    pub fn set_size(&mut self, val: core::Size2f) -> Result<()> {
+        unsafe { sys::cv_RotatedRect_set_size_Size2f(self.as_raw_RotatedRect(), val) }.into_result()
+    }
+    
     pub fn angle(&self) -> Result<f32> {
         unsafe { sys::cv_RotatedRect_angle_const(self.as_raw_RotatedRect()) }.into_result()
+    }
+    
+    pub fn set_angle(&mut self, val: f32) -> Result<()> {
+        unsafe { sys::cv_RotatedRect_set_angle_float(self.as_raw_RotatedRect(), val) }.into_result()
     }
     
     /// various constructors
@@ -8598,12 +8637,25 @@ impl TermCriteria {
         unsafe { sys::cv_TermCriteria_type_const(self.as_raw_TermCriteria()) }.into_result()
     }
     
+    /// the type of termination criteria: COUNT, EPS or COUNT + EPS
+    pub fn set_type(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_TermCriteria_set_type_int(self.as_raw_TermCriteria(), val) }.into_result()
+    }
+    
     pub fn max_count(&self) -> Result<i32> {
         unsafe { sys::cv_TermCriteria_maxCount_const(self.as_raw_TermCriteria()) }.into_result()
     }
     
+    pub fn set_max_count(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_TermCriteria_set_maxCount_int(self.as_raw_TermCriteria(), val) }.into_result()
+    }
+    
     pub fn epsilon(&self) -> Result<f64> {
         unsafe { sys::cv_TermCriteria_epsilon_const(self.as_raw_TermCriteria()) }.into_result()
+    }
+    
+    pub fn set_epsilon(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_TermCriteria_set_epsilon_double(self.as_raw_TermCriteria(), val) }.into_result()
     }
     
     /// default constructor
@@ -8731,9 +8783,18 @@ impl UMat {
         unsafe { sys::cv_UMat_flags_const(self.as_raw_UMat()) }.into_result()
     }
     
+    pub fn set_flags(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_UMat_set_flags_int(self.as_raw_UMat(), val) }.into_result()
+    }
+    
     /// the matrix dimensionality, >= 2
     pub fn dims(&self) -> Result<i32> {
         unsafe { sys::cv_UMat_dims_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    /// the matrix dimensionality, >= 2
+    pub fn set_dims(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_UMat_set_dims_int(self.as_raw_UMat(), val) }.into_result()
     }
     
     /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
@@ -8742,16 +8803,34 @@ impl UMat {
     }
     
     /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn set_rows(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_UMat_set_rows_int(self.as_raw_UMat(), val) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
     pub fn cols(&self) -> Result<i32> {
         unsafe { sys::cv_UMat_cols_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    /// the number of rows and columns or (-1, -1) when the matrix has more than 2 dimensions
+    pub fn set_cols(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_UMat_set_cols_int(self.as_raw_UMat(), val) }.into_result()
     }
     
     pub fn usage_flags(&self) -> Result<core::UMatUsageFlags> {
         unsafe { sys::cv_UMat_usageFlags_const(self.as_raw_UMat()) }.into_result()
     }
     
+    pub fn set_usage_flags(&mut self, val: core::UMatUsageFlags) -> Result<()> {
+        unsafe { sys::cv_UMat_set_usageFlags_UMatUsageFlags(self.as_raw_UMat(), val) }.into_result()
+    }
+    
     pub fn offset(&self) -> Result<size_t> {
         unsafe { sys::cv_UMat_offset_const(self.as_raw_UMat()) }.into_result()
+    }
+    
+    pub fn set_offset(&mut self, val: size_t) -> Result<()> {
+        unsafe { sys::cv_UMat_set_offset_size_t(self.as_raw_UMat(), val) }.into_result()
     }
     
     pub fn mat_size(&self) -> Result<core::MatSize> {

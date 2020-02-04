@@ -656,9 +656,19 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_winSize_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    /// Detection window size. Align to block size and block stride. Default value is Size(64,128).
+    pub fn set_win_size(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_winSize_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     /// Block size in pixels. Align to cell size. Default value is Size(16,16).
     pub fn block_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_HOGDescriptor_blockSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Block size in pixels. Align to cell size. Default value is Size(16,16).
+    pub fn set_block_size(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_blockSize_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     /// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
@@ -666,9 +676,19 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_blockStride_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    /// Block stride. It must be a multiple of cell size. Default value is Size(8,8).
+    pub fn set_block_stride(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_blockStride_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     /// Cell size. Default value is Size(8,8).
     pub fn cell_size(&self) -> Result<core::Size> {
         unsafe { sys::cv_HOGDescriptor_cellSize_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Cell size. Default value is Size(8,8).
+    pub fn set_cell_size(&mut self, val: core::Size) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_cellSize_Size(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     /// Number of bins used in the calculation of histogram of gradients. Default value is 9.
@@ -676,9 +696,19 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_nbins_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    /// Number of bins used in the calculation of histogram of gradients. Default value is 9.
+    pub fn set_nbins(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_nbins_int(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     /// not documented
     pub fn deriv_aperture(&self) -> Result<i32> {
         unsafe { sys::cv_HOGDescriptor_derivAperture_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// not documented
+    pub fn set_deriv_aperture(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_derivAperture_int(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     /// Gaussian smoothing window parameter.
@@ -686,9 +716,19 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_winSigma_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    /// Gaussian smoothing window parameter.
+    pub fn set_win_sigma(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_winSigma_double(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     /// histogramNormType
     pub fn histogram_norm_type(&self) -> Result<crate::objdetect::HOGDescriptor_HistogramNormType> {
         unsafe { sys::cv_HOGDescriptor_histogramNormType_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// histogramNormType
+    pub fn set_histogram_norm_type(&mut self, val: crate::objdetect::HOGDescriptor_HistogramNormType) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_histogramNormType_HOGDescriptor_HistogramNormType(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     /// L2-Hys normalization method shrinkage.
@@ -696,9 +736,19 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_L2HysThreshold_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    /// L2-Hys normalization method shrinkage.
+    pub fn set_l2_hys_threshold(&mut self, val: f64) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_L2HysThreshold_double(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     /// Flag to specify whether the gamma correction preprocessing is required or not.
     pub fn gamma_correction(&self) -> Result<bool> {
         unsafe { sys::cv_HOGDescriptor_gammaCorrection_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Flag to specify whether the gamma correction preprocessing is required or not.
+    pub fn set_gamma_correction(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_gammaCorrection_bool(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     /// coefficients for the linear SVM classifier.
@@ -716,9 +766,19 @@ impl HOGDescriptor {
         unsafe { sys::cv_HOGDescriptor_nlevels_const(self.as_raw_HOGDescriptor()) }.into_result()
     }
     
+    /// Maximum number of detection window increases. Default value is 64
+    pub fn set_nlevels(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_nlevels_int(self.as_raw_HOGDescriptor(), val) }.into_result()
+    }
+    
     /// Indicates signed gradient will be used or not
     pub fn signed_gradient(&self) -> Result<bool> {
         unsafe { sys::cv_HOGDescriptor_signedGradient_const(self.as_raw_HOGDescriptor()) }.into_result()
+    }
+    
+    /// Indicates signed gradient will be used or not
+    pub fn set_signed_gradient(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_HOGDescriptor_set_signedGradient_bool(self.as_raw_HOGDescriptor(), val) }.into_result()
     }
     
     /// Creates the HOG descriptor and detector with default params.

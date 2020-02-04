@@ -265,32 +265,64 @@ impl SinusoidalPattern_Params {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_width_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
     }
     
+    pub fn set_width(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_width_int(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
+    }
+    
     pub fn height(&self) -> Result<i32> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_height_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
+    }
+    
+    pub fn set_height(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_height_int(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
     }
     
     pub fn nbr_of_periods(&self) -> Result<i32> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_nbrOfPeriods_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
     }
     
+    pub fn set_nbr_of_periods(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_nbrOfPeriods_int(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
+    }
+    
     pub fn shift_value(&self) -> Result<f32> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_shiftValue_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
+    }
+    
+    pub fn set_shift_value(&mut self, val: f32) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_shiftValue_float(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
     }
     
     pub fn method_id(&self) -> Result<i32> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_methodId_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
     }
     
+    pub fn set_method_id(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_methodId_int(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
+    }
+    
     pub fn nbr_of_pixels_between_markers(&self) -> Result<i32> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_nbrOfPixelsBetweenMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
+    }
+    
+    pub fn set_nbr_of_pixels_between_markers(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_nbrOfPixelsBetweenMarkers_int(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
     }
     
     pub fn horizontal(&self) -> Result<bool> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_horizontal_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
     }
     
+    pub fn set_horizontal(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_horizontal_bool(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
+    }
+    
     pub fn set_markers(&self) -> Result<bool> {
         unsafe { sys::cv_structured_light_SinusoidalPattern_Params_setMarkers_const(self.as_raw_SinusoidalPattern_Params()) }.into_result()
+    }
+    
+    pub fn set_set_markers(&mut self, val: bool) -> Result<()> {
+        unsafe { sys::cv_structured_light_SinusoidalPattern_Params_set_setMarkers_bool(self.as_raw_SinusoidalPattern_Params(), val) }.into_result()
     }
     
     pub fn default() -> Result<crate::structured_light::SinusoidalPattern_Params> {

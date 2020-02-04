@@ -1740,6 +1740,11 @@ pub trait LayerTrait: core::AlgorithmTrait {
         unsafe { sys::cv_dnn_Layer_preferableTarget_const(self.as_raw_Layer()) }.into_result()
     }
     
+    /// prefer target for layer forwarding
+    fn set_preferable_target(&mut self, val: i32) -> Result<()> {
+        unsafe { sys::cv_dnn_Layer_set_preferableTarget_int(self.as_raw_Layer(), val) }.into_result()
+    }
+    
     /// Computes and sets internal parameters according to inputs, outputs and blobs.
     /// ## Parameters
     /// * inputs: vector of already allocated input blobs
