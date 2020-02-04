@@ -3467,25 +3467,26 @@ class RustWrapperGenerator(object):
         self.classes[item.fullname] = item
         if not item.is_callback and not item.is_simple:
             for prop in item.props:
-                attrs = ["/ATTRGETTER"]
+                getter_attrs = ["/ATTRGETTER"]
                 prop_type = self.get_type_info(prop.ctype)
-                is_const = prop_type.is_const or prop_type.is_copy
-                if is_const:
-                    attrs.append("/C")
+
+                if prop_type.is_const or prop_type.is_copy:
+                    getter_attrs.append("/C")
                 read_func = self.add_decl(module, [
                     "{}.{}".format(item.fullname.replace("::", "."), prop.name),
                     prop.ctype,
-                    attrs,
+                    getter_attrs,
                     [],
                     None,
                     prop.comment
                 ])
-                if not read_func.is_ignored and not read_func.rv_type().is_ignored and not is_const:
-                    attrs = ["/ATTRSETTER"]
+
+                if not read_func.is_ignored and not read_func.rv_type().is_ignored and not prop_type.is_const:
+                    setter_attrs = ["/ATTRSETTER"]
                     self.add_decl(module, [
                         "{}.set_{}".format(item.fullname.replace("::", "."), prop.name),
                         "void",
-                        attrs,
+                        setter_attrs,
                         (
                             [prop_type.cpptype, "val", "", []],
                         ),
