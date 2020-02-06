@@ -26,6 +26,62 @@ mod core_types {
     
     unsafe impl Send for PtrOfConjGradSolver {}
     
+    impl PtrOfConjGradSolver {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::ConjGradSolver>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ConjGradSolverRef {
+            let inner = core::ConjGradSolver { ptr: self.get_inner() };
+            ConjGradSolverRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ConjGradSolverRefMut {
+            let inner = core::ConjGradSolver { ptr: self.get_inner() };
+            ConjGradSolverRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ConjGradSolverRef<'o> {
+        inner: std::mem::ManuallyDrop<core::ConjGradSolver>,
+        owner: std::marker::PhantomData<&'o types::PtrOfConjGradSolver>,
+    }
+    
+    impl std::ops::Deref for ConjGradSolverRef<'_> {
+        type Target = core::ConjGradSolver;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ConjGradSolverRefMut<'o> {
+        inner: std::mem::ManuallyDrop<core::ConjGradSolver>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfConjGradSolver>,
+    }
+    
+    impl std::ops::Deref for ConjGradSolverRefMut<'_> {
+        type Target = core::ConjGradSolver;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ConjGradSolverRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfDownhillSolver {
         pub(crate) ptr: *mut c_void
     }
@@ -99,6 +155,62 @@ mod core_types {
     
     unsafe impl Send for PtrOfFileStorage {}
     
+    impl PtrOfFileStorage {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::FileStorage>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> FileStorageRef {
+            let inner = core::FileStorage { ptr: self.get_inner() };
+            FileStorageRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> FileStorageRefMut {
+            let inner = core::FileStorage { ptr: self.get_inner() };
+            FileStorageRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct FileStorageRef<'o> {
+        inner: std::mem::ManuallyDrop<core::FileStorage>,
+        owner: std::marker::PhantomData<&'o types::PtrOfFileStorage>,
+    }
+    
+    impl std::ops::Deref for FileStorageRef<'_> {
+        type Target = core::FileStorage;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct FileStorageRefMut<'o> {
+        inner: std::mem::ManuallyDrop<core::FileStorage>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfFileStorage>,
+    }
+    
+    impl std::ops::Deref for FileStorageRefMut<'_> {
+        type Target = core::FileStorage;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for FileStorageRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfFormatted {
         pub(crate) ptr: *mut c_void
     }
@@ -9629,6 +9741,62 @@ mod aruco_types {
     
     unsafe impl Send for PtrOfCharucoBoard {}
     
+    impl PtrOfCharucoBoard {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::aruco::CharucoBoard>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> CharucoBoardRef {
+            let inner = crate::aruco::CharucoBoard { ptr: self.get_inner() };
+            CharucoBoardRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> CharucoBoardRefMut {
+            let inner = crate::aruco::CharucoBoard { ptr: self.get_inner() };
+            CharucoBoardRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct CharucoBoardRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::CharucoBoard>,
+        owner: std::marker::PhantomData<&'o types::PtrOfCharucoBoard>,
+    }
+    
+    impl std::ops::Deref for CharucoBoardRef<'_> {
+        type Target = crate::aruco::CharucoBoard;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct CharucoBoardRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::CharucoBoard>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfCharucoBoard>,
+    }
+    
+    impl std::ops::Deref for CharucoBoardRefMut<'_> {
+        type Target = crate::aruco::CharucoBoard;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for CharucoBoardRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfDetectorParameters {
         pub(crate) ptr: *mut c_void
     }
@@ -9652,6 +9820,62 @@ mod aruco_types {
     
     unsafe impl Send for PtrOfDetectorParameters {}
     
+    impl PtrOfDetectorParameters {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::aruco::DetectorParameters>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> DetectorParametersRef {
+            let inner = crate::aruco::DetectorParameters { ptr: self.get_inner() };
+            DetectorParametersRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> DetectorParametersRefMut {
+            let inner = crate::aruco::DetectorParameters { ptr: self.get_inner() };
+            DetectorParametersRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct DetectorParametersRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::DetectorParameters>,
+        owner: std::marker::PhantomData<&'o types::PtrOfDetectorParameters>,
+    }
+    
+    impl std::ops::Deref for DetectorParametersRef<'_> {
+        type Target = crate::aruco::DetectorParameters;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct DetectorParametersRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::DetectorParameters>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfDetectorParameters>,
+    }
+    
+    impl std::ops::Deref for DetectorParametersRefMut<'_> {
+        type Target = crate::aruco::DetectorParameters;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for DetectorParametersRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfDictionary {
         pub(crate) ptr: *mut c_void
     }
@@ -9675,6 +9899,62 @@ mod aruco_types {
     
     unsafe impl Send for PtrOfDictionary {}
     
+    impl PtrOfDictionary {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::aruco::Dictionary>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> DictionaryRef {
+            let inner = crate::aruco::Dictionary { ptr: self.get_inner() };
+            DictionaryRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> DictionaryRefMut {
+            let inner = crate::aruco::Dictionary { ptr: self.get_inner() };
+            DictionaryRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct DictionaryRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::Dictionary>,
+        owner: std::marker::PhantomData<&'o types::PtrOfDictionary>,
+    }
+    
+    impl std::ops::Deref for DictionaryRef<'_> {
+        type Target = crate::aruco::Dictionary;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct DictionaryRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::Dictionary>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfDictionary>,
+    }
+    
+    impl std::ops::Deref for DictionaryRefMut<'_> {
+        type Target = crate::aruco::Dictionary;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for DictionaryRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfGridBoard {
         pub(crate) ptr: *mut c_void
     }
@@ -9698,6 +9978,62 @@ mod aruco_types {
     
     unsafe impl Send for PtrOfGridBoard {}
     
+    impl PtrOfGridBoard {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::aruco::GridBoard>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> GridBoardRef {
+            let inner = crate::aruco::GridBoard { ptr: self.get_inner() };
+            GridBoardRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> GridBoardRefMut {
+            let inner = crate::aruco::GridBoard { ptr: self.get_inner() };
+            GridBoardRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct GridBoardRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::GridBoard>,
+        owner: std::marker::PhantomData<&'o types::PtrOfGridBoard>,
+    }
+    
+    impl std::ops::Deref for GridBoardRef<'_> {
+        type Target = crate::aruco::GridBoard;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct GridBoardRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::aruco::GridBoard>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfGridBoard>,
+    }
+    
+    impl std::ops::Deref for GridBoardRefMut<'_> {
+        type Target = crate::aruco::GridBoard;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for GridBoardRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
 }
 #[cfg(feature = "contrib")]
 pub use aruco_types::*;
@@ -9793,6 +10129,62 @@ mod bgsegm_types {
     
     unsafe impl Send for PtrOfBackgroundSubtractorGSOC {}
     
+    impl PtrOfBackgroundSubtractorGSOC {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::bgsegm::BackgroundSubtractorGSOC>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BackgroundSubtractorGSOCRef {
+            let inner = crate::bgsegm::BackgroundSubtractorGSOC { ptr: self.get_inner() };
+            BackgroundSubtractorGSOCRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BackgroundSubtractorGSOCRefMut {
+            let inner = crate::bgsegm::BackgroundSubtractorGSOC { ptr: self.get_inner() };
+            BackgroundSubtractorGSOCRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BackgroundSubtractorGSOCRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::bgsegm::BackgroundSubtractorGSOC>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBackgroundSubtractorGSOC>,
+    }
+    
+    impl std::ops::Deref for BackgroundSubtractorGSOCRef<'_> {
+        type Target = crate::bgsegm::BackgroundSubtractorGSOC;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BackgroundSubtractorGSOCRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::bgsegm::BackgroundSubtractorGSOC>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBackgroundSubtractorGSOC>,
+    }
+    
+    impl std::ops::Deref for BackgroundSubtractorGSOCRefMut<'_> {
+        type Target = crate::bgsegm::BackgroundSubtractorGSOC;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BackgroundSubtractorGSOCRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfBackgroundSubtractorLSBP {
         pub(crate) ptr: *mut c_void
     }
@@ -9816,6 +10208,62 @@ mod bgsegm_types {
     
     unsafe impl Send for PtrOfBackgroundSubtractorLSBP {}
     
+    impl PtrOfBackgroundSubtractorLSBP {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::bgsegm::BackgroundSubtractorLSBP>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BackgroundSubtractorLSBPRef {
+            let inner = crate::bgsegm::BackgroundSubtractorLSBP { ptr: self.get_inner() };
+            BackgroundSubtractorLSBPRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BackgroundSubtractorLSBPRefMut {
+            let inner = crate::bgsegm::BackgroundSubtractorLSBP { ptr: self.get_inner() };
+            BackgroundSubtractorLSBPRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BackgroundSubtractorLSBPRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::bgsegm::BackgroundSubtractorLSBP>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBackgroundSubtractorLSBP>,
+    }
+    
+    impl std::ops::Deref for BackgroundSubtractorLSBPRef<'_> {
+        type Target = crate::bgsegm::BackgroundSubtractorLSBP;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BackgroundSubtractorLSBPRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::bgsegm::BackgroundSubtractorLSBP>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBackgroundSubtractorLSBP>,
+    }
+    
+    impl std::ops::Deref for BackgroundSubtractorLSBPRefMut<'_> {
+        type Target = crate::bgsegm::BackgroundSubtractorLSBP;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BackgroundSubtractorLSBPRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfBackgroundSubtractorMOG {
         pub(crate) ptr: *mut c_void
     }
@@ -9871,6 +10319,62 @@ mod bgsegm_types {
     
     unsafe impl Send for PtrOfSyntheticSequenceGenerator {}
     
+    impl PtrOfSyntheticSequenceGenerator {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::bgsegm::SyntheticSequenceGenerator>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SyntheticSequenceGeneratorRef {
+            let inner = crate::bgsegm::SyntheticSequenceGenerator { ptr: self.get_inner() };
+            SyntheticSequenceGeneratorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SyntheticSequenceGeneratorRefMut {
+            let inner = crate::bgsegm::SyntheticSequenceGenerator { ptr: self.get_inner() };
+            SyntheticSequenceGeneratorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SyntheticSequenceGeneratorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::bgsegm::SyntheticSequenceGenerator>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSyntheticSequenceGenerator>,
+    }
+    
+    impl std::ops::Deref for SyntheticSequenceGeneratorRef<'_> {
+        type Target = crate::bgsegm::SyntheticSequenceGenerator;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SyntheticSequenceGeneratorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::bgsegm::SyntheticSequenceGenerator>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSyntheticSequenceGenerator>,
+    }
+    
+    impl std::ops::Deref for SyntheticSequenceGeneratorRefMut<'_> {
+        type Target = crate::bgsegm::SyntheticSequenceGenerator;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SyntheticSequenceGeneratorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
 }
 #[cfg(feature = "contrib")]
 pub use bgsegm_types::*;
@@ -10138,6 +10642,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfAbsLayer {}
     
+    impl PtrOfAbsLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::AbsLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> AbsLayerRef {
+            let inner = crate::dnn::AbsLayer { ptr: self.get_inner() };
+            AbsLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> AbsLayerRefMut {
+            let inner = crate::dnn::AbsLayer { ptr: self.get_inner() };
+            AbsLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct AbsLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::AbsLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfAbsLayer>,
+    }
+    
+    impl std::ops::Deref for AbsLayerRef<'_> {
+        type Target = crate::dnn::AbsLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct AbsLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::AbsLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfAbsLayer>,
+    }
+    
+    impl std::ops::Deref for AbsLayerRefMut<'_> {
+        type Target = crate::dnn::AbsLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for AbsLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfActivationLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10211,6 +10771,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfBNLLLayer {}
     
+    impl PtrOfBNLLLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::BNLLLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BNLLLayerRef {
+            let inner = crate::dnn::BNLLLayer { ptr: self.get_inner() };
+            BNLLLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BNLLLayerRefMut {
+            let inner = crate::dnn::BNLLLayer { ptr: self.get_inner() };
+            BNLLLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BNLLLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::BNLLLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBNLLLayer>,
+    }
+    
+    impl std::ops::Deref for BNLLLayerRef<'_> {
+        type Target = crate::dnn::BNLLLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BNLLLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::BNLLLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBNLLLayer>,
+    }
+    
+    impl std::ops::Deref for BNLLLayerRefMut<'_> {
+        type Target = crate::dnn::BNLLLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BNLLLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfBackendNode {
         pub(crate) ptr: *mut c_void
     }
@@ -10234,6 +10850,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfBackendNode {}
     
+    impl PtrOfBackendNode {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::BackendNode>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BackendNodeRef {
+            let inner = crate::dnn::BackendNode { ptr: self.get_inner() };
+            BackendNodeRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BackendNodeRefMut {
+            let inner = crate::dnn::BackendNode { ptr: self.get_inner() };
+            BackendNodeRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BackendNodeRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::BackendNode>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBackendNode>,
+    }
+    
+    impl std::ops::Deref for BackendNodeRef<'_> {
+        type Target = crate::dnn::BackendNode;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BackendNodeRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::BackendNode>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBackendNode>,
+    }
+    
+    impl std::ops::Deref for BackendNodeRefMut<'_> {
+        type Target = crate::dnn::BackendNode;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BackendNodeRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfBackendWrapper {
         pub(crate) ptr: *mut c_void
     }
@@ -10339,6 +11011,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfBatchNormLayer {}
     
+    impl PtrOfBatchNormLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::BatchNormLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BatchNormLayerRef {
+            let inner = crate::dnn::BatchNormLayer { ptr: self.get_inner() };
+            BatchNormLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BatchNormLayerRefMut {
+            let inner = crate::dnn::BatchNormLayer { ptr: self.get_inner() };
+            BatchNormLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BatchNormLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::BatchNormLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBatchNormLayer>,
+    }
+    
+    impl std::ops::Deref for BatchNormLayerRef<'_> {
+        type Target = crate::dnn::BatchNormLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BatchNormLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::BatchNormLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBatchNormLayer>,
+    }
+    
+    impl std::ops::Deref for BatchNormLayerRefMut<'_> {
+        type Target = crate::dnn::BatchNormLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BatchNormLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfConcatLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10362,6 +11090,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfConcatLayer {}
     
+    impl PtrOfConcatLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ConcatLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ConcatLayerRef {
+            let inner = crate::dnn::ConcatLayer { ptr: self.get_inner() };
+            ConcatLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ConcatLayerRefMut {
+            let inner = crate::dnn::ConcatLayer { ptr: self.get_inner() };
+            ConcatLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ConcatLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ConcatLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfConcatLayer>,
+    }
+    
+    impl std::ops::Deref for ConcatLayerRef<'_> {
+        type Target = crate::dnn::ConcatLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ConcatLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ConcatLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfConcatLayer>,
+    }
+    
+    impl std::ops::Deref for ConcatLayerRefMut<'_> {
+        type Target = crate::dnn::ConcatLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ConcatLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfDetectionOutputLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10385,6 +11169,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfDetectionOutputLayer {}
     
+    impl PtrOfDetectionOutputLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::DetectionOutputLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> DetectionOutputLayerRef {
+            let inner = crate::dnn::DetectionOutputLayer { ptr: self.get_inner() };
+            DetectionOutputLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> DetectionOutputLayerRefMut {
+            let inner = crate::dnn::DetectionOutputLayer { ptr: self.get_inner() };
+            DetectionOutputLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct DetectionOutputLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::DetectionOutputLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfDetectionOutputLayer>,
+    }
+    
+    impl std::ops::Deref for DetectionOutputLayerRef<'_> {
+        type Target = crate::dnn::DetectionOutputLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct DetectionOutputLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::DetectionOutputLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfDetectionOutputLayer>,
+    }
+    
+    impl std::ops::Deref for DetectionOutputLayerRefMut<'_> {
+        type Target = crate::dnn::DetectionOutputLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for DetectionOutputLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfELULayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10408,6 +11248,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfELULayer {}
     
+    impl PtrOfELULayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ELULayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ELULayerRef {
+            let inner = crate::dnn::ELULayer { ptr: self.get_inner() };
+            ELULayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ELULayerRefMut {
+            let inner = crate::dnn::ELULayer { ptr: self.get_inner() };
+            ELULayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ELULayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ELULayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfELULayer>,
+    }
+    
+    impl std::ops::Deref for ELULayerRef<'_> {
+        type Target = crate::dnn::ELULayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ELULayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ELULayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfELULayer>,
+    }
+    
+    impl std::ops::Deref for ELULayerRefMut<'_> {
+        type Target = crate::dnn::ELULayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ELULayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfEltwiseLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10431,6 +11327,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfEltwiseLayer {}
     
+    impl PtrOfEltwiseLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::EltwiseLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> EltwiseLayerRef {
+            let inner = crate::dnn::EltwiseLayer { ptr: self.get_inner() };
+            EltwiseLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> EltwiseLayerRefMut {
+            let inner = crate::dnn::EltwiseLayer { ptr: self.get_inner() };
+            EltwiseLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct EltwiseLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::EltwiseLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfEltwiseLayer>,
+    }
+    
+    impl std::ops::Deref for EltwiseLayerRef<'_> {
+        type Target = crate::dnn::EltwiseLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct EltwiseLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::EltwiseLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfEltwiseLayer>,
+    }
+    
+    impl std::ops::Deref for EltwiseLayerRefMut<'_> {
+        type Target = crate::dnn::EltwiseLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for EltwiseLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfFlattenLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10454,6 +11406,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfFlattenLayer {}
     
+    impl PtrOfFlattenLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::FlattenLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> FlattenLayerRef {
+            let inner = crate::dnn::FlattenLayer { ptr: self.get_inner() };
+            FlattenLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> FlattenLayerRefMut {
+            let inner = crate::dnn::FlattenLayer { ptr: self.get_inner() };
+            FlattenLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct FlattenLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::FlattenLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfFlattenLayer>,
+    }
+    
+    impl std::ops::Deref for FlattenLayerRef<'_> {
+        type Target = crate::dnn::FlattenLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct FlattenLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::FlattenLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfFlattenLayer>,
+    }
+    
+    impl std::ops::Deref for FlattenLayerRefMut<'_> {
+        type Target = crate::dnn::FlattenLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for FlattenLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfInnerProductLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10477,6 +11485,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfInnerProductLayer {}
     
+    impl PtrOfInnerProductLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::InnerProductLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> InnerProductLayerRef {
+            let inner = crate::dnn::InnerProductLayer { ptr: self.get_inner() };
+            InnerProductLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> InnerProductLayerRefMut {
+            let inner = crate::dnn::InnerProductLayer { ptr: self.get_inner() };
+            InnerProductLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct InnerProductLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::InnerProductLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfInnerProductLayer>,
+    }
+    
+    impl std::ops::Deref for InnerProductLayerRef<'_> {
+        type Target = crate::dnn::InnerProductLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct InnerProductLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::InnerProductLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfInnerProductLayer>,
+    }
+    
+    impl std::ops::Deref for InnerProductLayerRefMut<'_> {
+        type Target = crate::dnn::InnerProductLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for InnerProductLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfLRNLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10500,6 +11564,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfLRNLayer {}
     
+    impl PtrOfLRNLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::LRNLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> LRNLayerRef {
+            let inner = crate::dnn::LRNLayer { ptr: self.get_inner() };
+            LRNLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> LRNLayerRefMut {
+            let inner = crate::dnn::LRNLayer { ptr: self.get_inner() };
+            LRNLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct LRNLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::LRNLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfLRNLayer>,
+    }
+    
+    impl std::ops::Deref for LRNLayerRef<'_> {
+        type Target = crate::dnn::LRNLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct LRNLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::LRNLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfLRNLayer>,
+    }
+    
+    impl std::ops::Deref for LRNLayerRefMut<'_> {
+        type Target = crate::dnn::LRNLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for LRNLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfLSTMLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10614,6 +11734,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfMVNLayer {}
     
+    impl PtrOfMVNLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::MVNLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> MVNLayerRef {
+            let inner = crate::dnn::MVNLayer { ptr: self.get_inner() };
+            MVNLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> MVNLayerRefMut {
+            let inner = crate::dnn::MVNLayer { ptr: self.get_inner() };
+            MVNLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct MVNLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::MVNLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfMVNLayer>,
+    }
+    
+    impl std::ops::Deref for MVNLayerRef<'_> {
+        type Target = crate::dnn::MVNLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct MVNLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::MVNLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfMVNLayer>,
+    }
+    
+    impl std::ops::Deref for MVNLayerRefMut<'_> {
+        type Target = crate::dnn::MVNLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for MVNLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfMaxUnpoolLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10637,6 +11813,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfMaxUnpoolLayer {}
     
+    impl PtrOfMaxUnpoolLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::MaxUnpoolLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> MaxUnpoolLayerRef {
+            let inner = crate::dnn::MaxUnpoolLayer { ptr: self.get_inner() };
+            MaxUnpoolLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> MaxUnpoolLayerRefMut {
+            let inner = crate::dnn::MaxUnpoolLayer { ptr: self.get_inner() };
+            MaxUnpoolLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct MaxUnpoolLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::MaxUnpoolLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfMaxUnpoolLayer>,
+    }
+    
+    impl std::ops::Deref for MaxUnpoolLayerRef<'_> {
+        type Target = crate::dnn::MaxUnpoolLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct MaxUnpoolLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::MaxUnpoolLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfMaxUnpoolLayer>,
+    }
+    
+    impl std::ops::Deref for MaxUnpoolLayerRefMut<'_> {
+        type Target = crate::dnn::MaxUnpoolLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for MaxUnpoolLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfMishLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10660,6 +11892,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfMishLayer {}
     
+    impl PtrOfMishLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::MishLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> MishLayerRef {
+            let inner = crate::dnn::MishLayer { ptr: self.get_inner() };
+            MishLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> MishLayerRefMut {
+            let inner = crate::dnn::MishLayer { ptr: self.get_inner() };
+            MishLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct MishLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::MishLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfMishLayer>,
+    }
+    
+    impl std::ops::Deref for MishLayerRef<'_> {
+        type Target = crate::dnn::MishLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct MishLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::MishLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfMishLayer>,
+    }
+    
+    impl std::ops::Deref for MishLayerRefMut<'_> {
+        type Target = crate::dnn::MishLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for MishLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfNormalizeBBoxLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10683,6 +11971,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfNormalizeBBoxLayer {}
     
+    impl PtrOfNormalizeBBoxLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::NormalizeBBoxLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> NormalizeBBoxLayerRef {
+            let inner = crate::dnn::NormalizeBBoxLayer { ptr: self.get_inner() };
+            NormalizeBBoxLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> NormalizeBBoxLayerRefMut {
+            let inner = crate::dnn::NormalizeBBoxLayer { ptr: self.get_inner() };
+            NormalizeBBoxLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct NormalizeBBoxLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::NormalizeBBoxLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfNormalizeBBoxLayer>,
+    }
+    
+    impl std::ops::Deref for NormalizeBBoxLayerRef<'_> {
+        type Target = crate::dnn::NormalizeBBoxLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct NormalizeBBoxLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::NormalizeBBoxLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfNormalizeBBoxLayer>,
+    }
+    
+    impl std::ops::Deref for NormalizeBBoxLayerRefMut<'_> {
+        type Target = crate::dnn::NormalizeBBoxLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for NormalizeBBoxLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfPaddingLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10706,6 +12050,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfPaddingLayer {}
     
+    impl PtrOfPaddingLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::PaddingLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> PaddingLayerRef {
+            let inner = crate::dnn::PaddingLayer { ptr: self.get_inner() };
+            PaddingLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> PaddingLayerRefMut {
+            let inner = crate::dnn::PaddingLayer { ptr: self.get_inner() };
+            PaddingLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct PaddingLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PaddingLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfPaddingLayer>,
+    }
+    
+    impl std::ops::Deref for PaddingLayerRef<'_> {
+        type Target = crate::dnn::PaddingLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct PaddingLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PaddingLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfPaddingLayer>,
+    }
+    
+    impl std::ops::Deref for PaddingLayerRefMut<'_> {
+        type Target = crate::dnn::PaddingLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for PaddingLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfPermuteLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10729,6 +12129,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfPermuteLayer {}
     
+    impl PtrOfPermuteLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::PermuteLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> PermuteLayerRef {
+            let inner = crate::dnn::PermuteLayer { ptr: self.get_inner() };
+            PermuteLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> PermuteLayerRefMut {
+            let inner = crate::dnn::PermuteLayer { ptr: self.get_inner() };
+            PermuteLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct PermuteLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PermuteLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfPermuteLayer>,
+    }
+    
+    impl std::ops::Deref for PermuteLayerRef<'_> {
+        type Target = crate::dnn::PermuteLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct PermuteLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PermuteLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfPermuteLayer>,
+    }
+    
+    impl std::ops::Deref for PermuteLayerRefMut<'_> {
+        type Target = crate::dnn::PermuteLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for PermuteLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfPoolingLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10752,6 +12208,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfPoolingLayer {}
     
+    impl PtrOfPoolingLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::PoolingLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> PoolingLayerRef {
+            let inner = crate::dnn::PoolingLayer { ptr: self.get_inner() };
+            PoolingLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> PoolingLayerRefMut {
+            let inner = crate::dnn::PoolingLayer { ptr: self.get_inner() };
+            PoolingLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct PoolingLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PoolingLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfPoolingLayer>,
+    }
+    
+    impl std::ops::Deref for PoolingLayerRef<'_> {
+        type Target = crate::dnn::PoolingLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct PoolingLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PoolingLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfPoolingLayer>,
+    }
+    
+    impl std::ops::Deref for PoolingLayerRefMut<'_> {
+        type Target = crate::dnn::PoolingLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for PoolingLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfPowerLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10775,6 +12287,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfPowerLayer {}
     
+    impl PtrOfPowerLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::PowerLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> PowerLayerRef {
+            let inner = crate::dnn::PowerLayer { ptr: self.get_inner() };
+            PowerLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> PowerLayerRefMut {
+            let inner = crate::dnn::PowerLayer { ptr: self.get_inner() };
+            PowerLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct PowerLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PowerLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfPowerLayer>,
+    }
+    
+    impl std::ops::Deref for PowerLayerRef<'_> {
+        type Target = crate::dnn::PowerLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct PowerLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PowerLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfPowerLayer>,
+    }
+    
+    impl std::ops::Deref for PowerLayerRefMut<'_> {
+        type Target = crate::dnn::PowerLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for PowerLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfPriorBoxLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10798,6 +12366,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfPriorBoxLayer {}
     
+    impl PtrOfPriorBoxLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::PriorBoxLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> PriorBoxLayerRef {
+            let inner = crate::dnn::PriorBoxLayer { ptr: self.get_inner() };
+            PriorBoxLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> PriorBoxLayerRefMut {
+            let inner = crate::dnn::PriorBoxLayer { ptr: self.get_inner() };
+            PriorBoxLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct PriorBoxLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PriorBoxLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfPriorBoxLayer>,
+    }
+    
+    impl std::ops::Deref for PriorBoxLayerRef<'_> {
+        type Target = crate::dnn::PriorBoxLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct PriorBoxLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::PriorBoxLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfPriorBoxLayer>,
+    }
+    
+    impl std::ops::Deref for PriorBoxLayerRefMut<'_> {
+        type Target = crate::dnn::PriorBoxLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for PriorBoxLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfProposalLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10821,6 +12445,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfProposalLayer {}
     
+    impl PtrOfProposalLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ProposalLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ProposalLayerRef {
+            let inner = crate::dnn::ProposalLayer { ptr: self.get_inner() };
+            ProposalLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ProposalLayerRefMut {
+            let inner = crate::dnn::ProposalLayer { ptr: self.get_inner() };
+            ProposalLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ProposalLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ProposalLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfProposalLayer>,
+    }
+    
+    impl std::ops::Deref for ProposalLayerRef<'_> {
+        type Target = crate::dnn::ProposalLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ProposalLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ProposalLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfProposalLayer>,
+    }
+    
+    impl std::ops::Deref for ProposalLayerRefMut<'_> {
+        type Target = crate::dnn::ProposalLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ProposalLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfRNNLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10894,6 +12574,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfReLU6Layer {}
     
+    impl PtrOfReLU6Layer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ReLU6Layer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ReLU6LayerRef {
+            let inner = crate::dnn::ReLU6Layer { ptr: self.get_inner() };
+            ReLU6LayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ReLU6LayerRefMut {
+            let inner = crate::dnn::ReLU6Layer { ptr: self.get_inner() };
+            ReLU6LayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ReLU6LayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReLU6Layer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfReLU6Layer>,
+    }
+    
+    impl std::ops::Deref for ReLU6LayerRef<'_> {
+        type Target = crate::dnn::ReLU6Layer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ReLU6LayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReLU6Layer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfReLU6Layer>,
+    }
+    
+    impl std::ops::Deref for ReLU6LayerRefMut<'_> {
+        type Target = crate::dnn::ReLU6Layer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ReLU6LayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfReLULayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10917,6 +12653,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfReLULayer {}
     
+    impl PtrOfReLULayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ReLULayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ReLULayerRef {
+            let inner = crate::dnn::ReLULayer { ptr: self.get_inner() };
+            ReLULayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ReLULayerRefMut {
+            let inner = crate::dnn::ReLULayer { ptr: self.get_inner() };
+            ReLULayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ReLULayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReLULayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfReLULayer>,
+    }
+    
+    impl std::ops::Deref for ReLULayerRef<'_> {
+        type Target = crate::dnn::ReLULayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ReLULayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReLULayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfReLULayer>,
+    }
+    
+    impl std::ops::Deref for ReLULayerRefMut<'_> {
+        type Target = crate::dnn::ReLULayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ReLULayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfRegionLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10940,6 +12732,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfRegionLayer {}
     
+    impl PtrOfRegionLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::RegionLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> RegionLayerRef {
+            let inner = crate::dnn::RegionLayer { ptr: self.get_inner() };
+            RegionLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> RegionLayerRefMut {
+            let inner = crate::dnn::RegionLayer { ptr: self.get_inner() };
+            RegionLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct RegionLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::RegionLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfRegionLayer>,
+    }
+    
+    impl std::ops::Deref for RegionLayerRef<'_> {
+        type Target = crate::dnn::RegionLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct RegionLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::RegionLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfRegionLayer>,
+    }
+    
+    impl std::ops::Deref for RegionLayerRefMut<'_> {
+        type Target = crate::dnn::RegionLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for RegionLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfReorgLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10963,6 +12811,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfReorgLayer {}
     
+    impl PtrOfReorgLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ReorgLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ReorgLayerRef {
+            let inner = crate::dnn::ReorgLayer { ptr: self.get_inner() };
+            ReorgLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ReorgLayerRefMut {
+            let inner = crate::dnn::ReorgLayer { ptr: self.get_inner() };
+            ReorgLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ReorgLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReorgLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfReorgLayer>,
+    }
+    
+    impl std::ops::Deref for ReorgLayerRef<'_> {
+        type Target = crate::dnn::ReorgLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ReorgLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReorgLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfReorgLayer>,
+    }
+    
+    impl std::ops::Deref for ReorgLayerRefMut<'_> {
+        type Target = crate::dnn::ReorgLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ReorgLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfReshapeLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -10986,6 +12890,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfReshapeLayer {}
     
+    impl PtrOfReshapeLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ReshapeLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ReshapeLayerRef {
+            let inner = crate::dnn::ReshapeLayer { ptr: self.get_inner() };
+            ReshapeLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ReshapeLayerRefMut {
+            let inner = crate::dnn::ReshapeLayer { ptr: self.get_inner() };
+            ReshapeLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ReshapeLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReshapeLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfReshapeLayer>,
+    }
+    
+    impl std::ops::Deref for ReshapeLayerRef<'_> {
+        type Target = crate::dnn::ReshapeLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ReshapeLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ReshapeLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfReshapeLayer>,
+    }
+    
+    impl std::ops::Deref for ReshapeLayerRefMut<'_> {
+        type Target = crate::dnn::ReshapeLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ReshapeLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfResizeLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11009,6 +12969,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfResizeLayer {}
     
+    impl PtrOfResizeLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ResizeLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ResizeLayerRef {
+            let inner = crate::dnn::ResizeLayer { ptr: self.get_inner() };
+            ResizeLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ResizeLayerRefMut {
+            let inner = crate::dnn::ResizeLayer { ptr: self.get_inner() };
+            ResizeLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ResizeLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ResizeLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfResizeLayer>,
+    }
+    
+    impl std::ops::Deref for ResizeLayerRef<'_> {
+        type Target = crate::dnn::ResizeLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ResizeLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ResizeLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfResizeLayer>,
+    }
+    
+    impl std::ops::Deref for ResizeLayerRefMut<'_> {
+        type Target = crate::dnn::ResizeLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ResizeLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfScaleLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11032,6 +13048,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfScaleLayer {}
     
+    impl PtrOfScaleLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::ScaleLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ScaleLayerRef {
+            let inner = crate::dnn::ScaleLayer { ptr: self.get_inner() };
+            ScaleLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ScaleLayerRefMut {
+            let inner = crate::dnn::ScaleLayer { ptr: self.get_inner() };
+            ScaleLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ScaleLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ScaleLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfScaleLayer>,
+    }
+    
+    impl std::ops::Deref for ScaleLayerRef<'_> {
+        type Target = crate::dnn::ScaleLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ScaleLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::ScaleLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfScaleLayer>,
+    }
+    
+    impl std::ops::Deref for ScaleLayerRefMut<'_> {
+        type Target = crate::dnn::ScaleLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ScaleLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfSigmoidLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11055,6 +13127,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfSigmoidLayer {}
     
+    impl PtrOfSigmoidLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::SigmoidLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SigmoidLayerRef {
+            let inner = crate::dnn::SigmoidLayer { ptr: self.get_inner() };
+            SigmoidLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SigmoidLayerRefMut {
+            let inner = crate::dnn::SigmoidLayer { ptr: self.get_inner() };
+            SigmoidLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SigmoidLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SigmoidLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSigmoidLayer>,
+    }
+    
+    impl std::ops::Deref for SigmoidLayerRef<'_> {
+        type Target = crate::dnn::SigmoidLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SigmoidLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SigmoidLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSigmoidLayer>,
+    }
+    
+    impl std::ops::Deref for SigmoidLayerRefMut<'_> {
+        type Target = crate::dnn::SigmoidLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SigmoidLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfSliceLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11078,6 +13206,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfSliceLayer {}
     
+    impl PtrOfSliceLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::SliceLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SliceLayerRef {
+            let inner = crate::dnn::SliceLayer { ptr: self.get_inner() };
+            SliceLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SliceLayerRefMut {
+            let inner = crate::dnn::SliceLayer { ptr: self.get_inner() };
+            SliceLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SliceLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SliceLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSliceLayer>,
+    }
+    
+    impl std::ops::Deref for SliceLayerRef<'_> {
+        type Target = crate::dnn::SliceLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SliceLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SliceLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSliceLayer>,
+    }
+    
+    impl std::ops::Deref for SliceLayerRefMut<'_> {
+        type Target = crate::dnn::SliceLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SliceLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfSoftmaxLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11101,6 +13285,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfSoftmaxLayer {}
     
+    impl PtrOfSoftmaxLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::SoftmaxLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SoftmaxLayerRef {
+            let inner = crate::dnn::SoftmaxLayer { ptr: self.get_inner() };
+            SoftmaxLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SoftmaxLayerRefMut {
+            let inner = crate::dnn::SoftmaxLayer { ptr: self.get_inner() };
+            SoftmaxLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SoftmaxLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SoftmaxLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSoftmaxLayer>,
+    }
+    
+    impl std::ops::Deref for SoftmaxLayerRef<'_> {
+        type Target = crate::dnn::SoftmaxLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SoftmaxLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SoftmaxLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSoftmaxLayer>,
+    }
+    
+    impl std::ops::Deref for SoftmaxLayerRefMut<'_> {
+        type Target = crate::dnn::SoftmaxLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SoftmaxLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfSplitLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11124,6 +13364,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfSplitLayer {}
     
+    impl PtrOfSplitLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::SplitLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SplitLayerRef {
+            let inner = crate::dnn::SplitLayer { ptr: self.get_inner() };
+            SplitLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SplitLayerRefMut {
+            let inner = crate::dnn::SplitLayer { ptr: self.get_inner() };
+            SplitLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SplitLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SplitLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSplitLayer>,
+    }
+    
+    impl std::ops::Deref for SplitLayerRef<'_> {
+        type Target = crate::dnn::SplitLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SplitLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SplitLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSplitLayer>,
+    }
+    
+    impl std::ops::Deref for SplitLayerRefMut<'_> {
+        type Target = crate::dnn::SplitLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SplitLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfSwishLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11147,6 +13443,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfSwishLayer {}
     
+    impl PtrOfSwishLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::SwishLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SwishLayerRef {
+            let inner = crate::dnn::SwishLayer { ptr: self.get_inner() };
+            SwishLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SwishLayerRefMut {
+            let inner = crate::dnn::SwishLayer { ptr: self.get_inner() };
+            SwishLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SwishLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SwishLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSwishLayer>,
+    }
+    
+    impl std::ops::Deref for SwishLayerRef<'_> {
+        type Target = crate::dnn::SwishLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SwishLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::SwishLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSwishLayer>,
+    }
+    
+    impl std::ops::Deref for SwishLayerRefMut<'_> {
+        type Target = crate::dnn::SwishLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SwishLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfTanHLayer {
         pub(crate) ptr: *mut c_void
     }
@@ -11170,6 +13522,62 @@ mod dnn_types {
     
     unsafe impl Send for PtrOfTanHLayer {}
     
+    impl PtrOfTanHLayer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::dnn::TanHLayer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> TanHLayerRef {
+            let inner = crate::dnn::TanHLayer { ptr: self.get_inner() };
+            TanHLayerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> TanHLayerRefMut {
+            let inner = crate::dnn::TanHLayer { ptr: self.get_inner() };
+            TanHLayerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct TanHLayerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::TanHLayer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfTanHLayer>,
+    }
+    
+    impl std::ops::Deref for TanHLayerRef<'_> {
+        type Target = crate::dnn::TanHLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct TanHLayerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::dnn::TanHLayer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfTanHLayer>,
+    }
+    
+    impl std::ops::Deref for TanHLayerRefMut<'_> {
+        type Target = crate::dnn::TanHLayer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for TanHLayerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct VectorOfPtrOfBackendNode {
         pub(crate) ptr: *mut c_void
     }
@@ -12005,6 +14413,62 @@ mod face_types {
     
     unsafe impl Send for PtrOfEigenFaceRecognizer {}
     
+    impl PtrOfEigenFaceRecognizer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::EigenFaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> EigenFaceRecognizerRef {
+            let inner = crate::face::EigenFaceRecognizer { ptr: self.get_inner() };
+            EigenFaceRecognizerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> EigenFaceRecognizerRefMut {
+            let inner = crate::face::EigenFaceRecognizer { ptr: self.get_inner() };
+            EigenFaceRecognizerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct EigenFaceRecognizerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::EigenFaceRecognizer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfEigenFaceRecognizer>,
+    }
+    
+    impl std::ops::Deref for EigenFaceRecognizerRef<'_> {
+        type Target = crate::face::EigenFaceRecognizer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct EigenFaceRecognizerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::EigenFaceRecognizer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfEigenFaceRecognizer>,
+    }
+    
+    impl std::ops::Deref for EigenFaceRecognizerRefMut<'_> {
+        type Target = crate::face::EigenFaceRecognizer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for EigenFaceRecognizerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfFacemark {
         pub(crate) ptr: *mut c_void
     }
@@ -12178,6 +14642,62 @@ mod face_types {
     
     unsafe impl Send for PtrOfFacemarkLBF {}
     
+    impl PtrOfFacemarkLBF {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FacemarkLBF>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> FacemarkLBFRef {
+            let inner = crate::face::FacemarkLBF { ptr: self.get_inner() };
+            FacemarkLBFRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> FacemarkLBFRefMut {
+            let inner = crate::face::FacemarkLBF { ptr: self.get_inner() };
+            FacemarkLBFRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct FacemarkLBFRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::FacemarkLBF>,
+        owner: std::marker::PhantomData<&'o types::PtrOfFacemarkLBF>,
+    }
+    
+    impl std::ops::Deref for FacemarkLBFRef<'_> {
+        type Target = crate::face::FacemarkLBF;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct FacemarkLBFRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::FacemarkLBF>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfFacemarkLBF>,
+    }
+    
+    impl std::ops::Deref for FacemarkLBFRefMut<'_> {
+        type Target = crate::face::FacemarkLBF;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for FacemarkLBFRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfFisherFaceRecognizer {
         pub(crate) ptr: *mut c_void
     }
@@ -12201,6 +14721,62 @@ mod face_types {
     
     unsafe impl Send for PtrOfFisherFaceRecognizer {}
     
+    impl PtrOfFisherFaceRecognizer {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::FisherFaceRecognizer>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> FisherFaceRecognizerRef {
+            let inner = crate::face::FisherFaceRecognizer { ptr: self.get_inner() };
+            FisherFaceRecognizerRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> FisherFaceRecognizerRefMut {
+            let inner = crate::face::FisherFaceRecognizer { ptr: self.get_inner() };
+            FisherFaceRecognizerRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct FisherFaceRecognizerRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::FisherFaceRecognizer>,
+        owner: std::marker::PhantomData<&'o types::PtrOfFisherFaceRecognizer>,
+    }
+    
+    impl std::ops::Deref for FisherFaceRecognizerRef<'_> {
+        type Target = crate::face::FisherFaceRecognizer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct FisherFaceRecognizerRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::FisherFaceRecognizer>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfFisherFaceRecognizer>,
+    }
+    
+    impl std::ops::Deref for FisherFaceRecognizerRefMut<'_> {
+        type Target = crate::face::FisherFaceRecognizer;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for FisherFaceRecognizerRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfLBPHFaceRecognizer {
         pub(crate) ptr: *mut c_void
     }
@@ -12274,6 +14850,62 @@ mod face_types {
     
     unsafe impl Send for PtrOfStandardCollector {}
     
+    impl PtrOfStandardCollector {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::face::StandardCollector>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> StandardCollectorRef {
+            let inner = crate::face::StandardCollector { ptr: self.get_inner() };
+            StandardCollectorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> StandardCollectorRefMut {
+            let inner = crate::face::StandardCollector { ptr: self.get_inner() };
+            StandardCollectorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct StandardCollectorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::StandardCollector>,
+        owner: std::marker::PhantomData<&'o types::PtrOfStandardCollector>,
+    }
+    
+    impl std::ops::Deref for StandardCollectorRef<'_> {
+        type Target = crate::face::StandardCollector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct StandardCollectorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::face::StandardCollector>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfStandardCollector>,
+    }
+    
+    impl std::ops::Deref for StandardCollectorRefMut<'_> {
+        type Target = crate::face::StandardCollector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for StandardCollectorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct VectorOfConfig {
         pub(crate) ptr: *mut c_void
     }
@@ -12593,6 +15225,62 @@ mod features2d_types {
     
     unsafe impl Send for PtrOfBFMatcher {}
     
+    impl PtrOfBFMatcher {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::BFMatcher>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BFMatcherRef {
+            let inner = crate::features2d::BFMatcher { ptr: self.get_inner() };
+            BFMatcherRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BFMatcherRefMut {
+            let inner = crate::features2d::BFMatcher { ptr: self.get_inner() };
+            BFMatcherRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BFMatcherRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::BFMatcher>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBFMatcher>,
+    }
+    
+    impl std::ops::Deref for BFMatcherRef<'_> {
+        type Target = crate::features2d::BFMatcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BFMatcherRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::BFMatcher>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBFMatcher>,
+    }
+    
+    impl std::ops::Deref for BFMatcherRefMut<'_> {
+        type Target = crate::features2d::BFMatcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BFMatcherRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfBRISK {
         pub(crate) ptr: *mut c_void
     }
@@ -12616,6 +15304,62 @@ mod features2d_types {
     
     unsafe impl Send for PtrOfBRISK {}
     
+    impl PtrOfBRISK {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::BRISK>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BRISKRef {
+            let inner = crate::features2d::BRISK { ptr: self.get_inner() };
+            BRISKRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BRISKRefMut {
+            let inner = crate::features2d::BRISK { ptr: self.get_inner() };
+            BRISKRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BRISKRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::BRISK>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBRISK>,
+    }
+    
+    impl std::ops::Deref for BRISKRef<'_> {
+        type Target = crate::features2d::BRISK;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BRISKRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::BRISK>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBRISK>,
+    }
+    
+    impl std::ops::Deref for BRISKRefMut<'_> {
+        type Target = crate::features2d::BRISK;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BRISKRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfDescriptorMatcher {
         pub(crate) ptr: *mut c_void
     }
@@ -12771,6 +15515,62 @@ mod features2d_types {
     
     unsafe impl Send for PtrOfFlannBasedMatcher {}
     
+    impl PtrOfFlannBasedMatcher {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::FlannBasedMatcher>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> FlannBasedMatcherRef {
+            let inner = crate::features2d::FlannBasedMatcher { ptr: self.get_inner() };
+            FlannBasedMatcherRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> FlannBasedMatcherRefMut {
+            let inner = crate::features2d::FlannBasedMatcher { ptr: self.get_inner() };
+            FlannBasedMatcherRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct FlannBasedMatcherRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::FlannBasedMatcher>,
+        owner: std::marker::PhantomData<&'o types::PtrOfFlannBasedMatcher>,
+    }
+    
+    impl std::ops::Deref for FlannBasedMatcherRef<'_> {
+        type Target = crate::features2d::FlannBasedMatcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct FlannBasedMatcherRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::FlannBasedMatcher>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfFlannBasedMatcher>,
+    }
+    
+    impl std::ops::Deref for FlannBasedMatcherRefMut<'_> {
+        type Target = crate::features2d::FlannBasedMatcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for FlannBasedMatcherRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfGFTTDetector {
         pub(crate) ptr: *mut c_void
     }
@@ -12994,6 +15794,62 @@ mod features2d_types {
     
     unsafe impl Send for PtrOfSimpleBlobDetector {}
     
+    impl PtrOfSimpleBlobDetector {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::SimpleBlobDetector>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SimpleBlobDetectorRef {
+            let inner = crate::features2d::SimpleBlobDetector { ptr: self.get_inner() };
+            SimpleBlobDetectorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SimpleBlobDetectorRefMut {
+            let inner = crate::features2d::SimpleBlobDetector { ptr: self.get_inner() };
+            SimpleBlobDetectorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SimpleBlobDetectorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::SimpleBlobDetector>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSimpleBlobDetector>,
+    }
+    
+    impl std::ops::Deref for SimpleBlobDetectorRef<'_> {
+        type Target = crate::features2d::SimpleBlobDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SimpleBlobDetectorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::features2d::SimpleBlobDetector>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSimpleBlobDetector>,
+    }
+    
+    impl std::ops::Deref for SimpleBlobDetectorRefMut<'_> {
+        type Target = crate::features2d::SimpleBlobDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SimpleBlobDetectorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
 }
 pub use features2d_types::*;
 
@@ -13113,6 +15969,62 @@ mod img_hash_types {
     
     unsafe impl Send for PtrOfAverageHash {}
     
+    impl PtrOfAverageHash {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::img_hash::AverageHash>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> AverageHashRef {
+            let inner = crate::img_hash::AverageHash { ptr: self.get_inner() };
+            AverageHashRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> AverageHashRefMut {
+            let inner = crate::img_hash::AverageHash { ptr: self.get_inner() };
+            AverageHashRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct AverageHashRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::AverageHash>,
+        owner: std::marker::PhantomData<&'o types::PtrOfAverageHash>,
+    }
+    
+    impl std::ops::Deref for AverageHashRef<'_> {
+        type Target = crate::img_hash::AverageHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct AverageHashRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::AverageHash>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfAverageHash>,
+    }
+    
+    impl std::ops::Deref for AverageHashRefMut<'_> {
+        type Target = crate::img_hash::AverageHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for AverageHashRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfBlockMeanHash {
         pub(crate) ptr: *mut c_void
     }
@@ -13136,6 +16048,62 @@ mod img_hash_types {
     
     unsafe impl Send for PtrOfBlockMeanHash {}
     
+    impl PtrOfBlockMeanHash {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::img_hash::BlockMeanHash>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BlockMeanHashRef {
+            let inner = crate::img_hash::BlockMeanHash { ptr: self.get_inner() };
+            BlockMeanHashRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BlockMeanHashRefMut {
+            let inner = crate::img_hash::BlockMeanHash { ptr: self.get_inner() };
+            BlockMeanHashRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BlockMeanHashRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::BlockMeanHash>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBlockMeanHash>,
+    }
+    
+    impl std::ops::Deref for BlockMeanHashRef<'_> {
+        type Target = crate::img_hash::BlockMeanHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BlockMeanHashRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::BlockMeanHash>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBlockMeanHash>,
+    }
+    
+    impl std::ops::Deref for BlockMeanHashRefMut<'_> {
+        type Target = crate::img_hash::BlockMeanHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BlockMeanHashRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfColorMomentHash {
         pub(crate) ptr: *mut c_void
     }
@@ -13159,6 +16127,62 @@ mod img_hash_types {
     
     unsafe impl Send for PtrOfColorMomentHash {}
     
+    impl PtrOfColorMomentHash {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::img_hash::ColorMomentHash>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ColorMomentHashRef {
+            let inner = crate::img_hash::ColorMomentHash { ptr: self.get_inner() };
+            ColorMomentHashRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ColorMomentHashRefMut {
+            let inner = crate::img_hash::ColorMomentHash { ptr: self.get_inner() };
+            ColorMomentHashRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ColorMomentHashRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::ColorMomentHash>,
+        owner: std::marker::PhantomData<&'o types::PtrOfColorMomentHash>,
+    }
+    
+    impl std::ops::Deref for ColorMomentHashRef<'_> {
+        type Target = crate::img_hash::ColorMomentHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ColorMomentHashRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::ColorMomentHash>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfColorMomentHash>,
+    }
+    
+    impl std::ops::Deref for ColorMomentHashRefMut<'_> {
+        type Target = crate::img_hash::ColorMomentHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ColorMomentHashRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfMarrHildrethHash {
         pub(crate) ptr: *mut c_void
     }
@@ -13182,6 +16206,62 @@ mod img_hash_types {
     
     unsafe impl Send for PtrOfMarrHildrethHash {}
     
+    impl PtrOfMarrHildrethHash {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::img_hash::MarrHildrethHash>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> MarrHildrethHashRef {
+            let inner = crate::img_hash::MarrHildrethHash { ptr: self.get_inner() };
+            MarrHildrethHashRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> MarrHildrethHashRefMut {
+            let inner = crate::img_hash::MarrHildrethHash { ptr: self.get_inner() };
+            MarrHildrethHashRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct MarrHildrethHashRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::MarrHildrethHash>,
+        owner: std::marker::PhantomData<&'o types::PtrOfMarrHildrethHash>,
+    }
+    
+    impl std::ops::Deref for MarrHildrethHashRef<'_> {
+        type Target = crate::img_hash::MarrHildrethHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct MarrHildrethHashRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::MarrHildrethHash>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfMarrHildrethHash>,
+    }
+    
+    impl std::ops::Deref for MarrHildrethHashRefMut<'_> {
+        type Target = crate::img_hash::MarrHildrethHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for MarrHildrethHashRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfPHash {
         pub(crate) ptr: *mut c_void
     }
@@ -13205,6 +16285,62 @@ mod img_hash_types {
     
     unsafe impl Send for PtrOfPHash {}
     
+    impl PtrOfPHash {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::img_hash::PHash>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> PHashRef {
+            let inner = crate::img_hash::PHash { ptr: self.get_inner() };
+            PHashRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> PHashRefMut {
+            let inner = crate::img_hash::PHash { ptr: self.get_inner() };
+            PHashRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct PHashRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::PHash>,
+        owner: std::marker::PhantomData<&'o types::PtrOfPHash>,
+    }
+    
+    impl std::ops::Deref for PHashRef<'_> {
+        type Target = crate::img_hash::PHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct PHashRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::PHash>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfPHash>,
+    }
+    
+    impl std::ops::Deref for PHashRefMut<'_> {
+        type Target = crate::img_hash::PHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for PHashRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfRadialVarianceHash {
         pub(crate) ptr: *mut c_void
     }
@@ -13228,6 +16364,62 @@ mod img_hash_types {
     
     unsafe impl Send for PtrOfRadialVarianceHash {}
     
+    impl PtrOfRadialVarianceHash {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::img_hash::RadialVarianceHash>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> RadialVarianceHashRef {
+            let inner = crate::img_hash::RadialVarianceHash { ptr: self.get_inner() };
+            RadialVarianceHashRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> RadialVarianceHashRefMut {
+            let inner = crate::img_hash::RadialVarianceHash { ptr: self.get_inner() };
+            RadialVarianceHashRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct RadialVarianceHashRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::RadialVarianceHash>,
+        owner: std::marker::PhantomData<&'o types::PtrOfRadialVarianceHash>,
+    }
+    
+    impl std::ops::Deref for RadialVarianceHashRef<'_> {
+        type Target = crate::img_hash::RadialVarianceHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct RadialVarianceHashRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::img_hash::RadialVarianceHash>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfRadialVarianceHash>,
+    }
+    
+    impl std::ops::Deref for RadialVarianceHashRefMut<'_> {
+        type Target = crate::img_hash::RadialVarianceHash;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for RadialVarianceHashRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
 }
 #[cfg(feature = "contrib")]
 pub use img_hash_types::*;
@@ -13447,6 +16639,62 @@ mod line_descriptor_types {
     
     unsafe impl Send for PtrOfBinaryDescriptor {}
     
+    impl PtrOfBinaryDescriptor {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::line_descriptor::BinaryDescriptor>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BinaryDescriptorRef {
+            let inner = crate::line_descriptor::BinaryDescriptor { ptr: self.get_inner() };
+            BinaryDescriptorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BinaryDescriptorRefMut {
+            let inner = crate::line_descriptor::BinaryDescriptor { ptr: self.get_inner() };
+            BinaryDescriptorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BinaryDescriptorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::line_descriptor::BinaryDescriptor>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBinaryDescriptor>,
+    }
+    
+    impl std::ops::Deref for BinaryDescriptorRef<'_> {
+        type Target = crate::line_descriptor::BinaryDescriptor;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BinaryDescriptorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::line_descriptor::BinaryDescriptor>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBinaryDescriptor>,
+    }
+    
+    impl std::ops::Deref for BinaryDescriptorRefMut<'_> {
+        type Target = crate::line_descriptor::BinaryDescriptor;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BinaryDescriptorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfBinaryDescriptorMatcher {
         pub(crate) ptr: *mut c_void
     }
@@ -13470,6 +16718,62 @@ mod line_descriptor_types {
     
     unsafe impl Send for PtrOfBinaryDescriptorMatcher {}
     
+    impl PtrOfBinaryDescriptorMatcher {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::line_descriptor::BinaryDescriptorMatcher>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BinaryDescriptorMatcherRef {
+            let inner = crate::line_descriptor::BinaryDescriptorMatcher { ptr: self.get_inner() };
+            BinaryDescriptorMatcherRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BinaryDescriptorMatcherRefMut {
+            let inner = crate::line_descriptor::BinaryDescriptorMatcher { ptr: self.get_inner() };
+            BinaryDescriptorMatcherRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BinaryDescriptorMatcherRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::line_descriptor::BinaryDescriptorMatcher>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBinaryDescriptorMatcher>,
+    }
+    
+    impl std::ops::Deref for BinaryDescriptorMatcherRef<'_> {
+        type Target = crate::line_descriptor::BinaryDescriptorMatcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BinaryDescriptorMatcherRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::line_descriptor::BinaryDescriptorMatcher>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBinaryDescriptorMatcher>,
+    }
+    
+    impl std::ops::Deref for BinaryDescriptorMatcherRefMut<'_> {
+        type Target = crate::line_descriptor::BinaryDescriptorMatcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BinaryDescriptorMatcherRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfLSDDetector {
         pub(crate) ptr: *mut c_void
     }
@@ -13493,6 +16797,62 @@ mod line_descriptor_types {
     
     unsafe impl Send for PtrOfLSDDetector {}
     
+    impl PtrOfLSDDetector {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::line_descriptor::LSDDetector>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> LSDDetectorRef {
+            let inner = crate::line_descriptor::LSDDetector { ptr: self.get_inner() };
+            LSDDetectorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> LSDDetectorRefMut {
+            let inner = crate::line_descriptor::LSDDetector { ptr: self.get_inner() };
+            LSDDetectorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct LSDDetectorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::line_descriptor::LSDDetector>,
+        owner: std::marker::PhantomData<&'o types::PtrOfLSDDetector>,
+    }
+    
+    impl std::ops::Deref for LSDDetectorRef<'_> {
+        type Target = crate::line_descriptor::LSDDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct LSDDetectorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::line_descriptor::LSDDetector>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfLSDDetector>,
+    }
+    
+    impl std::ops::Deref for LSDDetectorRefMut<'_> {
+        type Target = crate::line_descriptor::LSDDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for LSDDetectorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct VectorOfKeyLine {
         pub(crate) ptr: *mut c_void
     }
@@ -14312,6 +17672,62 @@ mod ml_types {
     
     unsafe impl Send for PtrOfParamGrid {}
     
+    impl PtrOfParamGrid {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::ml::ParamGrid>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> ParamGridRef {
+            let inner = crate::ml::ParamGrid { ptr: self.get_inner() };
+            ParamGridRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> ParamGridRefMut {
+            let inner = crate::ml::ParamGrid { ptr: self.get_inner() };
+            ParamGridRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct ParamGridRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::ml::ParamGrid>,
+        owner: std::marker::PhantomData<&'o types::PtrOfParamGrid>,
+    }
+    
+    impl std::ops::Deref for ParamGridRef<'_> {
+        type Target = crate::ml::ParamGrid;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct ParamGridRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::ml::ParamGrid>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfParamGrid>,
+    }
+    
+    impl std::ops::Deref for ParamGridRefMut<'_> {
+        type Target = crate::ml::ParamGrid;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for ParamGridRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfRTrees {
         pub(crate) ptr: *mut c_void
     }
@@ -15931,6 +19347,62 @@ mod sfm_types {
     
     unsafe impl Send for PtrOfSFMLibmvEuclideanReconstruction {}
     
+    impl PtrOfSFMLibmvEuclideanReconstruction {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::sfm::SFMLibmvEuclideanReconstruction>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SFMLibmvEuclideanReconstructionRef {
+            let inner = crate::sfm::SFMLibmvEuclideanReconstruction { ptr: self.get_inner() };
+            SFMLibmvEuclideanReconstructionRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SFMLibmvEuclideanReconstructionRefMut {
+            let inner = crate::sfm::SFMLibmvEuclideanReconstruction { ptr: self.get_inner() };
+            SFMLibmvEuclideanReconstructionRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SFMLibmvEuclideanReconstructionRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::sfm::SFMLibmvEuclideanReconstruction>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSFMLibmvEuclideanReconstruction>,
+    }
+    
+    impl std::ops::Deref for SFMLibmvEuclideanReconstructionRef<'_> {
+        type Target = crate::sfm::SFMLibmvEuclideanReconstruction;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SFMLibmvEuclideanReconstructionRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::sfm::SFMLibmvEuclideanReconstruction>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSFMLibmvEuclideanReconstruction>,
+    }
+    
+    impl std::ops::Deref for SFMLibmvEuclideanReconstructionRefMut<'_> {
+        type Target = crate::sfm::SFMLibmvEuclideanReconstruction;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SFMLibmvEuclideanReconstructionRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
 }
 #[cfg(feature = "contrib")]
 pub use sfm_types::*;
@@ -16208,6 +19680,62 @@ mod stitching_types {
     
     unsafe impl Send for PtrOfStitcher {}
     
+    impl PtrOfStitcher {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::Stitcher>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> StitcherRef {
+            let inner = crate::stitching::Stitcher { ptr: self.get_inner() };
+            StitcherRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> StitcherRefMut {
+            let inner = crate::stitching::Stitcher { ptr: self.get_inner() };
+            StitcherRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct StitcherRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::stitching::Stitcher>,
+        owner: std::marker::PhantomData<&'o types::PtrOfStitcher>,
+    }
+    
+    impl std::ops::Deref for StitcherRef<'_> {
+        type Target = crate::stitching::Stitcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct StitcherRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::stitching::Stitcher>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfStitcher>,
+    }
+    
+    impl std::ops::Deref for StitcherRefMut<'_> {
+        type Target = crate::stitching::Stitcher;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for StitcherRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
 }
 pub use stitching_types::*;
 
@@ -16288,6 +19816,62 @@ mod structured_light_types {
     
     unsafe impl Send for PtrOfParams {}
     
+    impl PtrOfParams {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::structured_light::SinusoidalPattern::Params>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SinusoidalPattern_ParamsRef {
+            let inner = crate::structured_light::SinusoidalPattern_Params { ptr: self.get_inner() };
+            SinusoidalPattern_ParamsRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SinusoidalPattern_ParamsRefMut {
+            let inner = crate::structured_light::SinusoidalPattern_Params { ptr: self.get_inner() };
+            SinusoidalPattern_ParamsRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SinusoidalPattern_ParamsRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::structured_light::SinusoidalPattern_Params>,
+        owner: std::marker::PhantomData<&'o types::PtrOfParams>,
+    }
+    
+    impl std::ops::Deref for SinusoidalPattern_ParamsRef<'_> {
+        type Target = crate::structured_light::SinusoidalPattern_Params;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SinusoidalPattern_ParamsRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::structured_light::SinusoidalPattern_Params>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfParams>,
+    }
+    
+    impl std::ops::Deref for SinusoidalPattern_ParamsRefMut<'_> {
+        type Target = crate::structured_light::SinusoidalPattern_Params;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SinusoidalPattern_ParamsRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfSinusoidalPattern {
         pub(crate) ptr: *mut c_void
     }
@@ -17084,6 +20668,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfBriefDescriptorExtractor {}
     
+    impl PtrOfBriefDescriptorExtractor {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::BriefDescriptorExtractor>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> BriefDescriptorExtractorRef {
+            let inner = crate::xfeatures2d::BriefDescriptorExtractor { ptr: self.get_inner() };
+            BriefDescriptorExtractorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> BriefDescriptorExtractorRefMut {
+            let inner = crate::xfeatures2d::BriefDescriptorExtractor { ptr: self.get_inner() };
+            BriefDescriptorExtractorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct BriefDescriptorExtractorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::BriefDescriptorExtractor>,
+        owner: std::marker::PhantomData<&'o types::PtrOfBriefDescriptorExtractor>,
+    }
+    
+    impl std::ops::Deref for BriefDescriptorExtractorRef<'_> {
+        type Target = crate::xfeatures2d::BriefDescriptorExtractor;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct BriefDescriptorExtractorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::BriefDescriptorExtractor>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfBriefDescriptorExtractor>,
+    }
+    
+    impl std::ops::Deref for BriefDescriptorExtractorRefMut<'_> {
+        type Target = crate::xfeatures2d::BriefDescriptorExtractor;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for BriefDescriptorExtractorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfDAISY {
         pub(crate) ptr: *mut c_void
     }
@@ -17157,6 +20797,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfFREAK {}
     
+    impl PtrOfFREAK {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::FREAK>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> FREAKRef {
+            let inner = crate::xfeatures2d::FREAK { ptr: self.get_inner() };
+            FREAKRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> FREAKRefMut {
+            let inner = crate::xfeatures2d::FREAK { ptr: self.get_inner() };
+            FREAKRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct FREAKRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::FREAK>,
+        owner: std::marker::PhantomData<&'o types::PtrOfFREAK>,
+    }
+    
+    impl std::ops::Deref for FREAKRef<'_> {
+        type Target = crate::xfeatures2d::FREAK;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct FREAKRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::FREAK>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfFREAK>,
+    }
+    
+    impl std::ops::Deref for FREAKRefMut<'_> {
+        type Target = crate::xfeatures2d::FREAK;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for FREAKRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfHarrisLaplaceFeatureDetector {
         pub(crate) ptr: *mut c_void
     }
@@ -17180,6 +20876,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfHarrisLaplaceFeatureDetector {}
     
+    impl PtrOfHarrisLaplaceFeatureDetector {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::HarrisLaplaceFeatureDetector>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> HarrisLaplaceFeatureDetectorRef {
+            let inner = crate::xfeatures2d::HarrisLaplaceFeatureDetector { ptr: self.get_inner() };
+            HarrisLaplaceFeatureDetectorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> HarrisLaplaceFeatureDetectorRefMut {
+            let inner = crate::xfeatures2d::HarrisLaplaceFeatureDetector { ptr: self.get_inner() };
+            HarrisLaplaceFeatureDetectorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct HarrisLaplaceFeatureDetectorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::HarrisLaplaceFeatureDetector>,
+        owner: std::marker::PhantomData<&'o types::PtrOfHarrisLaplaceFeatureDetector>,
+    }
+    
+    impl std::ops::Deref for HarrisLaplaceFeatureDetectorRef<'_> {
+        type Target = crate::xfeatures2d::HarrisLaplaceFeatureDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct HarrisLaplaceFeatureDetectorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::HarrisLaplaceFeatureDetector>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfHarrisLaplaceFeatureDetector>,
+    }
+    
+    impl std::ops::Deref for HarrisLaplaceFeatureDetectorRefMut<'_> {
+        type Target = crate::xfeatures2d::HarrisLaplaceFeatureDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for HarrisLaplaceFeatureDetectorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfLATCH {
         pub(crate) ptr: *mut c_void
     }
@@ -17203,6 +20955,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfLATCH {}
     
+    impl PtrOfLATCH {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::LATCH>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> LATCHRef {
+            let inner = crate::xfeatures2d::LATCH { ptr: self.get_inner() };
+            LATCHRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> LATCHRefMut {
+            let inner = crate::xfeatures2d::LATCH { ptr: self.get_inner() };
+            LATCHRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct LATCHRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::LATCH>,
+        owner: std::marker::PhantomData<&'o types::PtrOfLATCH>,
+    }
+    
+    impl std::ops::Deref for LATCHRef<'_> {
+        type Target = crate::xfeatures2d::LATCH;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct LATCHRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::LATCH>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfLATCH>,
+    }
+    
+    impl std::ops::Deref for LATCHRefMut<'_> {
+        type Target = crate::xfeatures2d::LATCH;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for LATCHRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfLUCID {
         pub(crate) ptr: *mut c_void
     }
@@ -17226,6 +21034,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfLUCID {}
     
+    impl PtrOfLUCID {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::LUCID>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> LUCIDRef {
+            let inner = crate::xfeatures2d::LUCID { ptr: self.get_inner() };
+            LUCIDRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> LUCIDRefMut {
+            let inner = crate::xfeatures2d::LUCID { ptr: self.get_inner() };
+            LUCIDRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct LUCIDRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::LUCID>,
+        owner: std::marker::PhantomData<&'o types::PtrOfLUCID>,
+    }
+    
+    impl std::ops::Deref for LUCIDRef<'_> {
+        type Target = crate::xfeatures2d::LUCID;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct LUCIDRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::LUCID>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfLUCID>,
+    }
+    
+    impl std::ops::Deref for LUCIDRefMut<'_> {
+        type Target = crate::xfeatures2d::LUCID;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for LUCIDRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfMSDDetector {
         pub(crate) ptr: *mut c_void
     }
@@ -17249,6 +21113,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfMSDDetector {}
     
+    impl PtrOfMSDDetector {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::MSDDetector>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> MSDDetectorRef {
+            let inner = crate::xfeatures2d::MSDDetector { ptr: self.get_inner() };
+            MSDDetectorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> MSDDetectorRefMut {
+            let inner = crate::xfeatures2d::MSDDetector { ptr: self.get_inner() };
+            MSDDetectorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct MSDDetectorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::MSDDetector>,
+        owner: std::marker::PhantomData<&'o types::PtrOfMSDDetector>,
+    }
+    
+    impl std::ops::Deref for MSDDetectorRef<'_> {
+        type Target = crate::xfeatures2d::MSDDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct MSDDetectorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::MSDDetector>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfMSDDetector>,
+    }
+    
+    impl std::ops::Deref for MSDDetectorRefMut<'_> {
+        type Target = crate::xfeatures2d::MSDDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for MSDDetectorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfPCTSignatures {
         pub(crate) ptr: *mut c_void
     }
@@ -17354,6 +21274,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfSIFT {}
     
+    impl PtrOfSIFT {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::SIFT>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> SIFTRef {
+            let inner = crate::xfeatures2d::SIFT { ptr: self.get_inner() };
+            SIFTRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> SIFTRefMut {
+            let inner = crate::xfeatures2d::SIFT { ptr: self.get_inner() };
+            SIFTRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct SIFTRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::SIFT>,
+        owner: std::marker::PhantomData<&'o types::PtrOfSIFT>,
+    }
+    
+    impl std::ops::Deref for SIFTRef<'_> {
+        type Target = crate::xfeatures2d::SIFT;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct SIFTRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::SIFT>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfSIFT>,
+    }
+    
+    impl std::ops::Deref for SIFTRefMut<'_> {
+        type Target = crate::xfeatures2d::SIFT;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for SIFTRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfSURF {
         pub(crate) ptr: *mut c_void
     }
@@ -17427,6 +21403,62 @@ mod xfeatures2d_types {
     
     unsafe impl Send for PtrOfStarDetector {}
     
+    impl PtrOfStarDetector {
+        #[inline(always)] fn get_inner(&self) -> *mut c_void {
+            let me = self.ptr;
+            cpp!(unsafe [me as "cv::Ptr<cv::xfeatures2d::StarDetector>*"] -> *mut c_void as "void*" {
+                return me->get();
+            })
+        }
+    
+        pub fn get(&self) -> StarDetectorRef {
+            let inner = crate::xfeatures2d::StarDetector { ptr: self.get_inner() };
+            StarDetectorRef {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    
+        pub fn get_mut(&mut self) -> StarDetectorRefMut {
+            let inner = crate::xfeatures2d::StarDetector { ptr: self.get_inner() };
+            StarDetectorRefMut {
+                inner: std::mem::ManuallyDrop::new(inner),
+                owner: std::marker::PhantomData,
+            }
+        }
+    }
+    
+    pub struct StarDetectorRef<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::StarDetector>,
+        owner: std::marker::PhantomData<&'o types::PtrOfStarDetector>,
+    }
+    
+    impl std::ops::Deref for StarDetectorRef<'_> {
+        type Target = crate::xfeatures2d::StarDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    pub struct StarDetectorRefMut<'o> {
+        inner: std::mem::ManuallyDrop<crate::xfeatures2d::StarDetector>,
+        owner: std::marker::PhantomData<&'o mut types::PtrOfStarDetector>,
+    }
+    
+    impl std::ops::Deref for StarDetectorRefMut<'_> {
+        type Target = crate::xfeatures2d::StarDetector;
+    
+        fn deref(&self) -> &Self::Target {
+            &*self.inner
+        }
+    }
+    
+    impl std::ops::DerefMut for StarDetectorRefMut<'_> {
+        fn deref_mut(&mut self) -> &mut Self::Target {
+            &mut *self.inner
+        }
+    }
     pub struct PtrOfVGG {
         pub(crate) ptr: *mut c_void
     }
