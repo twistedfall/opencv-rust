@@ -2993,36 +2993,60 @@ class SmartPtrTypeInfo(TypeInfo):
         """),
 
         "rust_deref": template("""
-            pub struct ${rust_deref_guard}<'a> {
-                guarded: &'a ${rust_local},
-                inner: std::mem::ManuallyDrop<${inner_rust_full}>,
+            impl ${rust_local} {
+                #[inline(always)] fn get_inner(&self) -> ${rust_extern} {
+                    let me = self.ptr;
+                    cpp!(unsafe [me as "cv::Ptr<${inner_cpp_type}>*"] -> ${rust_extern} as "${cpp_extern}" {
+                        return me->get();
+                    })
+                }
+
+                pub fn get(&self) -> ${inner_rust_local}Ref {
+                    let inner = ${inner_rust_full} { ptr: self.get_inner() };
+                    ${inner_rust_local}Ref {
+                        inner: std::mem::ManuallyDrop::new(inner),
+                        owner: std::marker::PhantomData,
+                    }
+                }
+
+                pub fn get_mut(&mut self) -> ${inner_rust_local}RefMut {
+                    let inner = ${inner_rust_full} { ptr: self.get_inner() };
+                    ${inner_rust_local}RefMut {
+                        inner: std::mem::ManuallyDrop::new(inner),
+                        owner: std::marker::PhantomData,
+                    }
+                }
             }
 
-            impl<'a> std::ops::Deref for ${rust_deref_guard}<'a> {
+            pub struct ${inner_rust_local}Ref<'o> {
+                inner: std::mem::ManuallyDrop<${inner_rust_full}>,
+                owner: std::marker::PhantomData<&'o ${rust_full}>,
+            }
+
+            impl std::ops::Deref for ${inner_rust_local}Ref<'_> {
                 type Target = ${inner_rust_full};
 
                 fn deref(&self) -> &Self::Target {
-                    self.inner.deref()
+                    &*self.inner
                 }
             }
 
-            impl<'a> std::ops::DerefMut for ${rust_deref_guard}<'a> {
+            pub struct ${inner_rust_local}RefMut<'o> {
+                inner: std::mem::ManuallyDrop<${inner_rust_full}>,
+                owner: std::marker::PhantomData<&'o mut ${rust_full}>,
+            }
+
+            impl std::ops::Deref for ${inner_rust_local}RefMut<'_> {
+                type Target = ${inner_rust_full};
+
+                fn deref(&self) -> &Self::Target {
+                    &*self.inner
+                }
+            }
+
+            impl std::ops::DerefMut for ${inner_rust_local}RefMut<'_> {
                 fn deref_mut(&mut self) -> &mut Self::Target {
-                    self.inner.deref_mut()
-                }
-            }
-
-            impl ${rust_local} {
-                pub fn deref_mut<'a>(&'a mut self) -> ${rust_deref_guard}<'a> {
-                    let me = self.ptr;
-                    let inner_ptr = cpp!(unsafe [me as "cv::Ptr<${inner_cpp_type}>*"] -> ${rust_extern} as "${cpp_extern}" {
-                        return me->get();
-                    });
-                    let inner = ${inner_rust_full} { ptr: inner_ptr };
-                    ${rust_deref_guard} {
-                        guarded: self,
-                        inner: std::mem::ManuallyDrop::new(inner),
-                    }
+                    &mut *self.inner
                 }
             }
         """),
@@ -3061,11 +3085,10 @@ class SmartPtrTypeInfo(TypeInfo):
                                 "base_cpp_type": cibase.cpptype,
                             })))
                 else:
-                    rust_deref_guard = "{}Guard".format(self.rust_local)
                     f.write(SmartPtrTypeInfo.TEMPLATES["rust_deref"].substitute(combine_dicts(self.__dict__ , {
+                        "inner_rust_local": self.inner.rust_local,
                         "inner_rust_full": self.inner.rust_full,
                         "inner_cpp_type": self.inner.cpptype,
-                        "rust_deref_guard": rust_deref_guard,
                     })))
 
         write_exc("{}/{}-{}.type.rs".format(self.gen.rust_dir, self.rust_module(), self.rust_safe_id), write_rust)
