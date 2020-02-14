@@ -31,6 +31,7 @@ mod core_sys {
     pub type cv_return_value_Vec3bWrapper = cv_return_value<core::Vec3b>;
     pub type cv_return_value_Vec3dWrapper = cv_return_value<core::Vec3d>;
     pub type cv_return_value_Vec4fWrapper = cv_return_value<core::Vec4f>;
+    pub type cv_return_value_Vec4iWrapper = cv_return_value<core::Vec4i>;
     pub type cv_return_value_Vec6fWrapper = cv_return_value<core::Vec6f>;
     pub type cv_return_value_VideoCaptureAPIs = cv_return_value<crate::videoio::VideoCaptureAPIs>;
     pub type cv_return_value__InputArray_KindFlag = cv_return_value<core::_InputArray_KindFlag>;
