@@ -403,7 +403,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
                 files.extend(
                     glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
                         .filter_map(|file| {
-                            let path = file.expect("couldn't get path for file");
+                            let path = file.expect("Can't get path for file");
                             let path_str = path.to_string_lossy();
                             if !ignore_header_files.iter().any(|x| path.ends_with(x))
                                 && !ignore_header_suffix.iter().any(|&x| path_str.ends_with(x))
@@ -441,8 +441,8 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
         file_list.sort_by_key(|header| header_file_order.iter().position(|order_header| header.ends_with(order_header)).unwrap_or_else(|| header_file_order.len()));
     }
 
-    MODULES.set(modules).expect("Cannot set MODULES cache");
-    Ok(MODULES.get().expect("couldn't get the modules"))
+    MODULES.set(modules).expect("Can't set MODULES cache");
+    Ok(MODULES.get().expect("Can't get the modules"))
 }
 
 fn copy_indent(mut read: impl BufRead, mut write: impl Write, level: usize, indent: &str) -> Result<()> {
@@ -541,7 +541,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     println!("cargo:rerun-if-env-changed=OPENCV_INCLUDE_PATHS");
 
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
-    let out_dir_as_str = out_dir.to_str().expect("Couldn't parse the out directory");
+    let out_dir_as_str = out_dir.to_str().expect("Can't parse the out directory");
 
     let opencv_dir = opencv_header_dir.join("opencv2");
 
@@ -614,9 +614,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
             Command::new(&python3)
                 .arg("--version")
                 .output()
-                .expect("Couldn't run python3 --version")
+                .expect("Can't run python3 --version")
                 .stdout
-        ).expect("Couldn't parse output from python3 --version");
+        ).expect("Can't parse output from python3 --version");
 
         if !python_version.contains("Python 3") {
             panic!("Found python3 version isn't python3!");
@@ -627,7 +627,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
             .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, module, &version])
             .args(files.iter().map(|p| opencv_dir.join(p).into_os_string()))
             .status()
-            .expect("Couldn't run python3")
+            .expect("Can't run python3")
             .success()
         {
             panic!();
@@ -653,7 +653,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
             writeln!(
                 &mut hub_return_types,
                 r#"#include "{}""#,
-                entry.file_name().expect("Couldn't get filename").to_str().unwrap()
+                entry.file_name().expect("Can't get filename").to_str().unwrap()
             )?;
         }
     }
@@ -721,8 +721,8 @@ fn gen_wrapper(opencv: &Library, opencv_header_dir: &PathBuf) -> Result<()> {
                 .unwrap();
             assert!(output.status.success());
             {
-                let mut module_file = OpenOptions::new().append(true).open(out_dir.join(format!("{}.rs", module))).expect("Cannot open module file for append");
-                io::copy(&mut output.stdout.as_slice(), &mut module_file).expect("Cannot write constant data to module file");
+                let mut module_file = OpenOptions::new().append(true).open(out_dir.join(format!("{}.rs", module))).expect("Can't open module file for append");
+                io::copy(&mut output.stdout.as_slice(), &mut module_file).expect("Can't write constant data to module file");
             }
         }
     });
