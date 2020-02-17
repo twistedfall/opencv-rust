@@ -403,7 +403,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
                 files.extend(
                     glob(&format!("{}/{}/**/*.h*", opencv_dir_as_string, module)).unwrap()
                         .filter_map(|file| {
-                            let path = file.unwrap();
+                            let path = file.expect("couldn't get path for file");
                             let path_str = path.to_string_lossy();
                             if !ignore_header_files.iter().any(|x| path.ends_with(x))
                                 && !ignore_header_suffix.iter().any(|&x| path_str.ends_with(x))
@@ -442,7 +442,7 @@ fn get_modules(opencv_dir_as_string: &str) -> Result<&'static Vec<(String, Vec<P
     }
 
     MODULES.set(modules).expect("Cannot set MODULES cache");
-    Ok(MODULES.get().unwrap())
+    Ok(MODULES.get().expect("couldn't get the modules"))
 }
 
 fn copy_indent(mut read: impl BufRead, mut write: impl Write, level: usize, indent: &str) -> Result<()> {
@@ -541,7 +541,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     println!("cargo:rerun-if-env-changed=OPENCV_INCLUDE_PATHS");
 
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").ok_or_else(|| "Can't read OUT_DIR env var")?);
-    let out_dir_as_str = out_dir.to_str().unwrap();
+    let out_dir_as_str = out_dir.to_str().expect("Couldn't parse the out directory");
 
     let opencv_dir = opencv_header_dir.join("opencv2");
 
@@ -602,19 +602,32 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     } else {
         unreachable!();
     };
+
     modules.par_iter().for_each(|(module, files): &(String, Vec<PathBuf>)| {
         let python3 = env::var_os("OPENCV_PYTHON3_BIN")
             .map(PathBuf::from)
             .or_else(|| which("python3").ok())
             .or_else(|| which("python").ok())
             .unwrap_or_else(|| PathBuf::from("python3"));
-        // todo ensure that this is actually python3 (e.g. run --version)
+
+        let python_version = String::from_utf8(
+            Command::new(&python3)
+                .arg("--version")
+                .output()
+                .expect("Couldn't run python3 --version")
+                .stdout
+        ).expect("Couldn't parse output from python3 --version");
+
+        if !python_version.contains("Python 3") {
+            panic!("Found python3 version isn't python3!");
+        }
+
         if !Command::new(python3)
             .env("LC_CTYPE", "C.UTF-8") // makes python3 locale.getpreferredencoding() return utf8 encoding instead of ansi
             .args(&["-B", "gen_rust.py", "hdr_parser.py", out_dir_as_str, out_dir_as_str, module, &version])
             .args(files.iter().map(|p| opencv_dir.join(p).into_os_string()))
             .status()
-            .unwrap()
+            .expect("Couldn't run python3")
             .success()
         {
             panic!();
@@ -640,7 +653,7 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
             writeln!(
                 &mut hub_return_types,
                 r#"#include "{}""#,
-                entry.file_name().unwrap().to_str().unwrap()
+                entry.file_name().expect("Couldn't get filename").to_str().unwrap()
             )?;
         }
     }
