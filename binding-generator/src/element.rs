@@ -1,0 +1,350 @@
+use std::{
+	borrow::Cow,
+	ffi::OsStr,
+	fmt,
+	path::{Component, Path},
+};
+
+use clang::{
+	Accessibility,
+	Entity,
+	EntityKind,
+};
+
+use crate::{
+	comment,
+	IteratorExt,
+	reserved_rename,
+	settings,
+	StrExt,
+	StringExt,
+};
+
+pub struct DefaultElement;
+
+impl DefaultElement {
+	pub fn is_excluded(this: &(impl Element + ?Sized)) -> bool {
+		this.is_ignored() || this.is_system() || settings::ELEMENT_EXCLUDE.is_match(&this.cpp_fullname())
+	}
+
+	pub fn is_ignored(this: &(impl Element + ?Sized)) -> bool {
+		!this.is_public() || settings::ELEMENT_IGNORE.is_match(&this.cpp_fullname())
+	}
+
+	pub fn is_system<'tu>(this: &impl EntityElement<'tu>) -> bool {
+		this.entity().is_in_system_header() && !is_opencv_path(&this.entity()
+				.get_location().expect("Can't get entity location")
+				.get_spelling_location()
+				.file.expect("Can't get location path")
+				.get_path()
+		)
+	}
+
+	pub fn is_public<'tu>(this: &impl EntityElement<'tu>) -> bool {
+		this.entity().get_accessibility()
+			.map_or(true, |a| Accessibility::Public == a)
+	}
+
+	pub fn identifier(this: &(impl Element + ?Sized)) -> Cow<str> {
+		let mut out: String = this.cpp_fullname().into_owned();
+		out.cleanup_name();
+		out.into()
+	}
+
+	pub fn usr<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
+		this.entity().get_usr().expect("Can't get USR").0.into()
+	}
+
+	pub fn rendered_doc_comment_with_prefix<'tu>(this: &impl EntityElement<'tu>, prefix: &str, opencv_version: &str) -> String {
+		comment::render_doc_comment(&this.entity().get_comment().unwrap_or_default(), prefix, opencv_version)
+	}
+
+	pub fn rendered_doc_comment(this: &(impl Element + ?Sized), opencv_version: &str) -> String {
+		this.rendered_doc_comment_with_prefix("///", opencv_version)
+	}
+
+	pub fn cpp_namespace<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
+		let mut parts = vec![];
+		let mut e = this.entity();
+		while let Some(parent) = e.get_semantic_parent() {
+			match parent.get_kind() {
+				EntityKind::ClassDecl | EntityKind::Namespace | EntityKind::StructDecl
+				| EntityKind::EnumDecl => {
+					// handle anonymous enums inside classes and anonymous namespaces
+					if let Some(parent_name) = parent.get_name() {
+						parts.push(parent_name);
+					}
+				}
+				EntityKind::TranslationUnit | EntityKind::UnexposedDecl => {}
+				_ => {
+					unreachable!("Can't get kind of parent for cpp namespace: {:#?}", parent)
+				}
+			}
+			e = parent;
+		}
+		parts.into_iter()
+			.rev()
+			.join("::")
+			.into()
+	}
+
+	pub fn cpp_name(this: &(impl Element + ?Sized), full: bool) -> Cow<str> {
+		if full {
+			this.cpp_fullname()
+		} else {
+			this.cpp_localname()
+		}
+	}
+
+	pub fn cpp_localname<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
+		this.entity().get_name().unwrap_or_else(|| "unnamed".to_string()).into()
+	}
+
+	pub fn cpp_fullname(this: &(impl Element + ?Sized)) -> Cow<str> {
+		let mut out: String = this.cpp_namespace().into_owned();
+		let cpp_name = this.cpp_localname();
+		out.reserve(cpp_name.len() + 2);
+		if !out.is_empty() {
+			out += "::";
+		}
+		out += &cpp_name;
+		out.into()
+	}
+
+	pub fn rust_module<'tu>(this: &impl EntityElement<'tu>) -> Cow<str> {
+		let loc = this.entity().get_location().expect("Can't get location")
+			.get_spelling_location().file.expect("Can't file")
+			.get_path();
+		module_from_path(&loc)
+			.map_or_else(|| "core".into(), |x| x.to_string().into())
+	}
+
+	pub fn rust_namespace(this: &(impl Element + ?Sized)) -> Cow<str> {
+		let module = this.rust_module();
+		if settings::STATIC_MODULES.contains(module.as_ref()) {
+			module
+		} else {
+			format!("crate::{}", this.rust_module()).into()
+		}
+	}
+
+	pub fn rust_name(this: &(impl Element + ?Sized), full: bool) -> Cow<str> {
+		if full {
+			this.rust_fullname()
+		} else {
+			this.rust_localname()
+		}
+	}
+
+	pub fn rust_leafname(this: &(impl Element + ?Sized)) -> Cow<str> {
+		reserved_rename(this.cpp_localname().to_snake_case().into())
+	}
+
+	pub fn rust_localname<'tu>(this: &(impl EntityElement<'tu> + Element + ?Sized)) -> Cow<str> {
+		let mut parts = Vec::with_capacity(4);
+		parts.push(this.rust_leafname().into_owned());
+		let mut e = this.entity();
+		while let Some(parent) = e.get_semantic_parent() {
+			match parent.get_kind() {
+				EntityKind::ClassDecl | EntityKind::StructDecl => {
+					parts.push(parent.get_name().expect("Can't get parent name"));
+				}
+				EntityKind::EnumDecl => {
+					if parent.is_scoped() {
+						parts.push(parent.get_name().expect("Can't get parent name"));
+					}
+				}
+				EntityKind::TranslationUnit | EntityKind::UnexposedDecl => {
+					break;
+				}
+				EntityKind::Namespace => {
+					if let Some(&prefix) = settings::NO_SKIP_NAMESPACE_IN_LOCALNAME.get(parent.get_name().expect("Can't get parent name").as_str()) {
+						parts.push(prefix.to_string());
+					} else {
+						break
+					}
+				}
+				EntityKind::Constructor | EntityKind::FunctionTemplate | EntityKind::FunctionDecl
+				| EntityKind::Method => {}
+				_ => {
+					unreachable!("Can't get kind of parent: {:#?} for element: {:#?}", parent, e)
+				}
+			}
+			e = parent;
+		}
+		parts.into_iter()
+			.rev()
+			.join("_")
+			.into()
+	}
+
+	pub fn rust_fullname(this: &(impl Element + ?Sized)) -> Cow<str> {
+		format!("{}::{}", this.rust_namespace(), this.rust_localname()).into()
+	}
+}
+
+pub trait Element: fmt::Debug {
+	fn update_debug_struct<'dref, 'a, 'b>(&self, struct_debug: &'dref mut fmt::DebugStruct<'a, 'b>) -> &'dref mut fmt::DebugStruct<'a, 'b> {
+		struct_debug.field("cpp_fullname", &self.cpp_fullname())
+			.field("rust_fullname", &self.rust_fullname())
+			.field("identifier", &self.identifier())
+			.field("is_excluded", &self.is_excluded())
+			.field("is_ignored", &self.is_ignored())
+			.field("is_system", &self.is_system())
+			.field("is_public", &self.is_public())
+	}
+
+	/// true if an element shouldn't be generated
+	fn is_excluded(&self) -> bool {
+		DefaultElement::is_excluded(self)
+	}
+
+	/// true if there shouldn't be any references to that element
+	fn is_ignored(&self) -> bool {
+		DefaultElement::is_ignored(self)
+	}
+
+	fn is_system(&self) -> bool;
+
+	fn is_public(&self) -> bool;
+
+	fn identifier(&self) -> Cow<str> {
+		DefaultElement::identifier(self)
+	}
+
+	fn usr(&self) -> Cow<str>;
+
+	fn rendered_doc_comment_with_prefix(&self, prefix: &str, opencv_version: &str) -> String;
+
+	fn rendered_doc_comment(&self, opencv_version: &str) -> String {
+		DefaultElement::rendered_doc_comment(self, opencv_version)
+	}
+
+	fn cpp_namespace(&self) -> Cow<str>;
+
+	fn cpp_name(&self, full: bool) -> Cow<str> {
+		DefaultElement::cpp_name(self, full)
+	}
+
+	fn cpp_localname(&self) -> Cow<str>;
+
+	fn cpp_fullname(&self) -> Cow<str> {
+		DefaultElement::cpp_fullname(self)
+	}
+
+	fn rust_module(&self) -> Cow<str>;
+
+	fn rust_namespace(&self) -> Cow<str> {
+		DefaultElement::rust_namespace(self)
+	}
+
+	fn rust_name(&self, full: bool) -> Cow<str> {
+		DefaultElement::rust_name(self, full)
+	}
+
+	fn rust_leafname(&self) -> Cow<str> {
+		DefaultElement::rust_leafname(self)
+	}
+
+	fn rust_localname(&self) -> Cow<str>;
+
+	fn rust_fullname(&self) -> Cow<str> {
+		DefaultElement::rust_fullname(self)
+	}
+}
+
+pub trait EntityElement<'tu> {
+	fn entity(&self) -> Entity<'tu>;
+}
+
+pub trait GeneratedElement {
+	/// Element order in the output file, lower means earlier
+	fn element_priority(&self) -> u8 {
+		50
+	}
+
+	fn element_safe_id(&self) -> String;
+
+	fn gen_rust(&self, _opencv_version: &str) -> String {
+		"".to_string()
+	}
+
+	fn gen_rust_exports(&self) -> String {
+		"".to_string()
+	}
+
+	fn gen_cpp(&self) -> String {
+		"".to_string()
+	}
+}
+
+pub fn is_opencv_path(path: &Path) -> bool {
+	path.components()
+		.rfind(|c| {
+			if let Component::Normal(c) = c {
+				if *c == "opencv2" {
+					return true;
+				}
+			}
+			false
+		})
+		.is_some()
+}
+
+pub fn main_module_from_path(path: &Path) -> Option<&str> {
+	if path.extension().map_or(false, |ext| ext == "hpp") {
+		path.file_stem()
+			.and_then(|m| m.to_str())
+	} else {
+		None
+	}
+}
+
+fn opencv_module_component(path: &Path) -> Option<&OsStr> {
+	let mut module_comp = path.components()
+		.rev()
+		.filter_map(|c| {
+			if let Component::Normal(c) = c {
+				Some(c)
+			} else {
+				None
+			}
+		})
+		.peekable();
+	let mut module = None;
+	while let Some(cur) = module_comp.next() {
+		if let Some(&parent) = module_comp.peek() {
+			if parent == "opencv2" {
+				module = Some(cur);
+				break;
+			}
+		}
+	}
+	module
+}
+
+pub fn main_opencv_module_from_path(path: &Path) -> Option<&str> {
+	opencv_module_component(path)
+		.and_then(|m| m.to_str())
+		.and_then(|m| {
+			if let Some(dot_pos) = m.rfind('.') {
+				if &m[dot_pos..] == ".hpp" {
+					Some(&m[..dot_pos])
+				} else {
+					None
+				}
+			} else {
+				None
+			}
+		})
+}
+
+pub fn module_from_path(path: &Path) -> Option<&str> {
+	opencv_module_component(path)
+		.and_then(|m| m.to_str())
+		.map(|m| m.split('.')
+			.nth(0)
+			.unwrap()
+		)
+
+}

@@ -1,6 +1,12 @@
 use std::time;
 
-use opencv::{core, imgcodecs, imgproc, Result};
+use opencv::{
+    core,
+    imgcodecs,
+    imgproc,
+    prelude::*,
+    Result,
+};
 #[cfg(not(feature = "opencv-4"))]
 use opencv::core::ACCESS_READ;
 #[cfg(feature = "opencv-4")]

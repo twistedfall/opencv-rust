@@ -9,13 +9,18 @@ use std::{
 
 use opencv::{
     calib3d,
-    core::{self, Mat, Point, Scalar, Size},
+    core::{self, Point, Scalar, Size},
     highgui,
     imgcodecs,
     imgproc,
     prelude::*,
     types::VectorOfPoint,
 };
+
+#[cfg(not(feature = "opencv-4"))]
+use self::core::LINE_8;
+#[cfg(feature = "opencv-4")]
+use self::imgproc::LINE_8;
 
 fn help() {
     // print a welcome message, and the OpenCV version
@@ -36,11 +41,6 @@ fn help() {
 static WINDOW_TITLE: &str = "Perspective Transformation Demo";
 static LABELS: [&str; 4] = ["TL", "TR", "BR", "BL"];
 
-#[cfg(not(feature = "opencv-4"))]
-use self::core::LINE_8;
-#[cfg(feature = "opencv-4")]
-use self::imgproc::LINE_8;
-
 fn main() -> Result<(), Box<dyn Error>> {
     let roi_corners = Arc::new(Mutex::new(VectorOfPoint::new()));
     let mut dst_corners = VectorOfPoint::with_capacity(4);
@@ -55,8 +55,8 @@ fn main() -> Result<(), Box<dyn Error>> {
     let filename = core::find_file(&filename, true, false)?;
     let original_image = imgcodecs::imread(&filename, imgcodecs::IMREAD_COLOR)?;
     let mut image ;
-    let original_image_cols = original_image.cols()? as f32;
-    let original_image_rows = original_image.rows()? as f32;
+    let original_image_cols = original_image.cols() as f32;
+    let original_image_rows = original_image.rows() as f32;
     {
         let mut roi_corners = roi_corners.lock().unwrap();
         roi_corners.push(Point::new((original_image_cols / 1.7) as i32, (original_image_rows / 4.2) as i32));

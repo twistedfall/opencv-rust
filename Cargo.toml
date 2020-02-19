@@ -4,34 +4,41 @@ description = "Rust bindings for OpenCV"
 documentation = "https://docs.rs/opencv"
 repository = "https://github.com/twistedfall/opencv-rust"
 readme = "README.md"
-keywords = [ "opencv", "vision" ]
+keywords = ["opencv", "vision"]
 license = "MIT"
-version = "0.29.3"
+version = "0.30.0"
 edition = "2018"
 authors = ["Mathieu Poumeyrol <kali@zoy.org>", "Pro <twisted.fall@gmail.com>"]
-build = "build.rs"
 
 [lib]
 doctest = false
 
-[badges]
-travis-ci = { repository = "twistedfall/opencv-rust", branch = "master" }
+[workspace]
+members = ["binding-generator"]
 
 [dependencies]
-cpp = "0.5.3"
 libc = "0.2"
 num = "0.2"
 once_cell = "1.0"
 slab = "0.4"
 
+[features]
+default = ["opencv-4"]
+buildtime-bindgen = ["binding-generator", "clang"]
+opencv-32 = []
+opencv-34 = []
+opencv-4 = []
+contrib = []
+docs-only = []
+
 [build-dependencies]
 cc = {version = "1.0", features = ["parallel"]}
-cpp_build = "0.5.3"
 glob_crate = {package = "glob", version = "0.3"}
 once_cell = "1.0"
 rayon = "1.0"
 semver = "0.9"
-which_crate = {package = "which", version = "3.0", default-features = false}
+binding-generator = {path = "binding-generator", optional = true}
+clang = {version = "0.23", features = ["clang_6_0"], optional = true}
 
 [target.'cfg(not(target_env = "msvc"))'.build-dependencies]
 pkg-config = "0.3"
@@ -41,16 +48,6 @@ vcpkg = "0.2"
 
 [dev-dependencies]
 matches = "0.1"
-
-[features]
-default = ["opencv-4"]
-buildtime-bindgen = []
-force-3rd-party-libs-discovery = []
-opencv-32 = []
-opencv-34 = []
-opencv-4 = []
-contrib = []
-docs-only = []
 
 [package.metadata.docs.rs]
 features = ["docs-only", "contrib"]

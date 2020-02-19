@@ -1,8 +1,9 @@
 use std::mem::transmute;
 
 use opencv::{
-    core::{self, DataType, Mat, Size, Vec3b},
+    core::{self, Size, Vec3b},
     imgcodecs,
+    prelude::*,
     Result,
 };
 

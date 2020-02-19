@@ -31,7 +31,7 @@ impl ToInputArray for &types::VectorOfMat {
 impl ToOutputArray for types::VectorOfMat {
     #[inline]
     fn output_array(&mut self) -> Result<_OutputArray> {
-        _OutputArray::from_mat_vec(self)
+        _OutputArray::from_mat_vec_mut(self)
     }
 }
 
@@ -45,7 +45,7 @@ impl ToOutputArray for &mut types::VectorOfMat {
 impl ToInputOutputArray for types::VectorOfMat {
     #[inline]
     fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-        _InputOutputArray::from_mat_vec(self)
+        _InputOutputArray::from_mat_vec_mut(self)
     }
 }
 
@@ -73,7 +73,7 @@ impl ToInputArray for &types::VectorOfUMat {
 impl ToOutputArray for types::VectorOfUMat {
     #[inline]
     fn output_array(&mut self) -> Result<_OutputArray> {
-        _OutputArray::from_umat_vec(self)
+        _OutputArray::from_umat_vec_mut(self)
     }
 }
 
@@ -87,7 +87,7 @@ impl ToOutputArray for &mut types::VectorOfUMat {
 impl ToInputOutputArray for types::VectorOfUMat {
     #[inline]
     fn input_output_array(&mut self) -> Result<_InputOutputArray> {
-        _InputOutputArray::from_umat_vec(self)
+        _InputOutputArray::from_umat_vec_mut(self)
     }
 }
 

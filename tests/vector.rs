@@ -1,20 +1,20 @@
 use matches::assert_matches;
 
 use opencv::{
-    core::{self, Point2d, Point3i, Scalar},
+    core::{self, Point2d, Point3i, Scalar, SparseMat_Hdr},
     Error,
     prelude::*,
     Result,
     types::{
         VectorOfbool,
-        VectorOfchar,
-        VectorOfdouble,
-        VectorOfint,
+        VectorOff64,
+        VectorOfi32,
+        VectorOfi8,
         VectorOfMat,
         VectorOfPoint2d,
         VectorOfPoint3i,
         VectorOfString,
-        VectorOfuchar,
+        VectorOfu8,
         VectorOfVectorOfPoint3i,
     },
 };
@@ -50,9 +50,14 @@ fn string() -> Result<()> {
     vec.push("123");
     vec.push("456");
     vec.push("789");
+    vec.push("888\0999");
+    vec.push("\0999");
+    assert_eq!(5, vec.len());
     assert_eq!("123", vec.get(0)?);
     assert_eq!("456", vec.get(1)?);
     assert_eq!("789", vec.get(2)?);
+    assert_eq!("888", vec.get(3)?);
+    assert_eq!("", vec.get(4)?);
     vec.set(0, "qqq")?;
     unsafe { vec.set_unchecked(1, "www"); }
     vec.set(2, "eee")?;
@@ -82,7 +87,7 @@ fn boolean() -> Result<()> {
 
 #[test]
 fn primitive() -> Result<()> {
-    let mut vec = VectorOfint::with_capacity(10);
+    let mut vec = VectorOfi32::with_capacity(10);
     vec.push(1);
     vec.push(2);
     vec.push(3);
@@ -155,7 +160,7 @@ fn vector_of_vector_simple_struct() -> Result<()> {
 #[test]
 fn capacity() {
     {
-        let mut vec = VectorOfint::with_capacity(0);
+        let mut vec = VectorOfi32::with_capacity(0);
         assert_eq!(0, vec.len());
         assert!(vec.is_empty());
         assert_eq!(0, vec.capacity());
@@ -164,7 +169,7 @@ fn capacity() {
     }
 
     {
-        let mut vec = VectorOfint::with_capacity(10);
+        let mut vec = VectorOfi32::with_capacity(10);
         assert_eq!(0, vec.len());
         assert!(vec.is_empty());
         assert_eq!(10, vec.capacity());
@@ -196,7 +201,7 @@ fn capacity() {
 
 #[test]
 fn insert() -> Result<()> {
-    let mut vec = VectorOfint::from_iter(vec![1, 2, 3]);
+    let mut vec = VectorOfi32::from_iter(vec![1, 2, 3]);
     vec.insert(1, 4)?;
     assert_eq!(4, vec.len());
     assert_eq!(4, vec.get(1)?);
@@ -213,7 +218,7 @@ fn insert() -> Result<()> {
 
 #[test]
 fn remove() -> Result<()> {
-    let mut vec = VectorOfint::with_capacity(10);
+    let mut vec = VectorOfi32::with_capacity(10);
     vec.push(10);
     vec.push(20);
     vec.push(30);
@@ -236,7 +241,7 @@ fn remove() -> Result<()> {
 #[test]
 fn swap() -> Result<()> {
     {
-        let mut vec = VectorOfint::from_iter(vec![1, 2, 3]);
+        let mut vec = VectorOfi32::from_iter(vec![1, 2, 3]);
         vec.swap(0, 0)?;
         vec.swap(0, 1)?;
         assert_eq!(2, vec.get(0)?);
@@ -267,7 +272,7 @@ fn swap() -> Result<()> {
 #[test]
 fn nth() -> Result<()> {
     {
-        let mut vec = VectorOfint::new();
+        let mut vec = VectorOfi32::new();
         assert_eq!(None, vec.iter().nth(0));
         vec.push(1);
         vec.push(2);
@@ -282,7 +287,7 @@ fn nth() -> Result<()> {
 
 #[test]
 fn out_of_bounds() -> Result<()> {
-    let mut vec = VectorOfdouble::new();
+    let mut vec = VectorOff64::new();
     assert_matches!(vec.get(0), Err(Error { code: core::StsOutOfRange, .. }));
     vec.push(1.);
     vec.push(2.);
@@ -294,7 +299,7 @@ fn out_of_bounds() -> Result<()> {
 #[test]
 fn from_iter() -> Result<()> {
     {
-        let vec = VectorOfchar::from_iter(vec![1, 2, 3]);
+        let vec = VectorOfi8::from_iter(vec![1, 2, 3]);
         assert_eq!(3, vec.len());
         assert_eq!(1, vec.get(0)?);
         assert_eq!(2, vec.get(1)?);
@@ -302,7 +307,7 @@ fn from_iter() -> Result<()> {
     }
 
     {
-        let vec = VectorOfchar::from_iter([1, 2, 3].into_iter().map(|x| *x));
+        let vec = VectorOfi8::from_iter([1, 2, 3].iter().map(|x| *x));
         assert_eq!(3, vec.len());
         assert_eq!(1, vec.get(0)?);
         assert_eq!(2, vec.get(1)?);
@@ -310,7 +315,7 @@ fn from_iter() -> Result<()> {
     }
 
     {
-        let vec = VectorOfchar::from_iter(1..=3);
+        let vec = VectorOfi8::from_iter(1..=3);
         assert_eq!(3, vec.len());
         assert_eq!(1, vec.get(0)?);
         assert_eq!(2, vec.get(1)?);
@@ -323,7 +328,7 @@ fn from_iter() -> Result<()> {
 #[test]
 fn iter() -> Result<()> {
     {
-        let vec = VectorOfint::from_iter(vec![1, 2, 3, 4]);
+        let vec = VectorOfi32::from_iter(vec![1, 2, 3, 4]);
         let mut sum = 0;
         for i in &vec {
             sum += i;
@@ -348,11 +353,11 @@ fn iter() -> Result<()> {
 #[test]
 fn to_slice() -> Result<()> {
     {
-        let vec = VectorOfuchar::from_iter(vec![1, 2, 3, 4, 5]);
+        let vec = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
         assert_eq!(vec.to_slice(), &[1, 2, 3, 4, 5]);
     }
     {
-        let vec = VectorOfint::new();
+        let vec = VectorOfi32::new();
         assert_eq!(vec.to_slice(), &[]);
     }
     {
@@ -368,12 +373,31 @@ fn to_slice() -> Result<()> {
 #[test]
 fn to_vec() -> Result<()> {
     {
-        let vec = VectorOfuchar::from_iter(vec![1, 2, 3, 4, 5]);
+        let vec = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
         assert_eq!(vec.to_vec(), vec![1, 2, 3, 4, 5]);
     }
     {
-        let vec = VectorOfuchar::new();
+        let vec = VectorOfu8::new();
         assert_eq!(vec.to_vec(), Vec::new());
     }
+    Ok(())
+}
+
+#[test]
+fn property() -> Result<()> {
+    let mut hdr = SparseMat_Hdr::new(&[4, 2], i32::typ())?;
+    #[inline(never)]
+    fn f(hdr: &mut SparseMat_Hdr, pool: VectorOfu8) {
+        hdr.set_pool(pool);
+    }
+    let pool = VectorOfu8::from_iter([1, 2, 3, 4, 5, 6, 7, 8, 9].iter().copied());
+    f(&mut hdr, pool);
+    let pool = VectorOfu8::from_iter([11, 12, 13, 14, 15, 16, 17, 18, 19].iter().copied());
+    let pool_out = hdr.pool();
+    assert_eq!(pool_out.get(0)?, pool.get(0)? - 10);
+    assert_eq!(pool_out.get(2)?, pool.get(2)? - 10);
+    assert_eq!(pool_out.get(4)?, pool.get(4)? - 10);
+    assert_eq!(pool_out.get(8)?, pool.get(8)? - 10);
+    assert_eq!(pool_out.len(), pool.len());
     Ok(())
 }

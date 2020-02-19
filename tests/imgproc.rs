@@ -1,7 +1,7 @@
 use opencv::{
-    prelude::*,
     core::{Point, Point2f, Scalar, Size, Vec2f},
     imgproc,
+    prelude::*,
     Result,
     types::VectorOfPoint,
 };

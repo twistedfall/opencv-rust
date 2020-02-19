@@ -80,14 +80,12 @@ pub trait Vector<'i> {
     }
 }
 
-impl<S, A> dyn Vector<'_, Storage=S, Arg=A> + '_ {
-    #[inline(always)]
-    pub(crate) fn index_check(index: size_t, len: size_t) -> crate::Result<()> {
-        if index >= len {
-            Err(crate::Error::new(crate::core::StsOutOfRange, format!("Index: {} out of bounds: 0..{}", index, len)))
-        } else {
-            Ok(())
-        }
+#[inline(always)]
+pub(crate) fn vector_index_check(index: size_t, len: size_t) -> crate::Result<()> {
+    if index >= len {
+        Err(crate::Error::new(crate::core::StsOutOfRange, format!("Index: {} out of bounds: 0..{}", index, len)))
+    } else {
+        Ok(())
     }
 }
 

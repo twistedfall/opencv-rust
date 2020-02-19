@@ -1,18 +1,20 @@
-use opencv::prelude::*;
-use opencv::core;
-use opencv::features2d;
-use opencv::features2d::Feature2DTrait;
-use opencv::highgui;
-use opencv::imgproc;
-use opencv::videoio;
+use opencv::{
+    core,
+    features2d,
+    features2d::Feature2DTrait,
+    highgui,
+    imgproc,
+    prelude::*,
+    videoio,
+};
 
 fn run() -> opencv::Result<()> {
     let window = "video capture";
     highgui::named_window(window, 1)?;
     #[cfg(feature = "opencv-32")]
-    let mut cam = videoio::VideoCapture::new(0)?;  // 0 is the default camera
+    let mut cam = videoio::VideoCapture::new_default(0)?;  // 0 is the default camera
     #[cfg(not(feature = "opencv-32"))]
-    let mut cam = videoio::VideoCapture::new_with_backend(0, videoio::CAP_ANY)?;  // 0 is the default camera
+    let mut cam = videoio::VideoCapture::new(0, videoio::CAP_ANY)?;  // 0 is the default camera
     let opened = videoio::VideoCapture::is_opened(&cam)?;
     if !opened {
         panic!("Unable to open default camera!");

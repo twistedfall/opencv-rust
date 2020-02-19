@@ -7,7 +7,7 @@ use opencv::{
     Error,
     prelude::*,
     Result,
-    types::{VectorOfint, VectorOfMat},
+    types::{VectorOfi32, VectorOfMat},
 };
 
 const PIXEL: &[u8] = include_bytes!("pixel.png");
@@ -19,7 +19,7 @@ fn mat_default() -> Result<()> {
     assert_eq!(u8::depth(), mat.depth()?);
     assert_eq!(u8::channels(), mat.channels()?);
     assert_eq!(Size::new(0, 0), mat.size()?);
-    assert_eq!(0, mat.dims()?);
+    assert_eq!(0, mat.dims());
     assert!(!mat.is_allocated());
     assert_matches!(mat.data(), Err(Error { code: core::StsNullPtr, ..}));
     Ok(())
@@ -37,20 +37,20 @@ fn mat_create() -> Result<()> {
     mat.release()?;
     assert!(!mat.is_allocated());
     assert_eq!(Size::new(0, 0), mat.size()?);
-    assert_eq!(2, mat.dims()?);
+    assert_eq!(2, mat.dims());
     Ok(())
 }
 
 #[test]
 fn mat_from_iter() -> Result<()> {
     {
-        let mut vec = VectorOfint::new();
+        let mut vec = VectorOfi32::new();
         vec.push(1);
         vec.push(2);
         vec.push(3);
         let mat = Mat::from_exact_iter(vec.into_iter())?;
-        assert_eq!(3, mat.rows()?);
-        assert_eq!(1, mat.cols()?);
+        assert_eq!(3, mat.rows());
+        assert_eq!(1, mat.cols());
         assert_eq!(i32::typ(), mat.typ()?);
         assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
         assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
@@ -60,8 +60,8 @@ fn mat_from_iter() -> Result<()> {
     {
         let vec: Vec<i32> = vec![1, 2, 3];
         let mat = Mat::from_exact_iter(vec.into_iter())?;
-        assert_eq!(3, mat.rows()?);
-        assert_eq!(1, mat.cols()?);
+        assert_eq!(3, mat.rows());
+        assert_eq!(1, mat.cols());
         assert_eq!(i32::typ(), mat.typ()?);
         assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
         assert_eq!(2, *mat.at_2d::<i32>(1, 0)?);
@@ -79,15 +79,15 @@ fn mat_for_rows_and_cols() -> Result<()> {
     assert!(mat.is_continuous()?);
     assert!(!mat.is_submatrix()?);
     assert_eq!(Size::new(300, 400), mat.size()?);
-    assert_eq!(400, mat.rows()?);
-    assert_eq!(300, mat.cols()?);
-    assert_eq!(2, mat.mat_size()?.len());
-    assert_eq!(400, mat.mat_size()?[0]);
-    assert_eq!(300, mat.mat_size()?[1]);
-    assert_eq!(2, mat.dims()?);
-    assert_eq!(2, mat.mat_step()?.len());
-    assert_eq!(7200, mat.mat_step()?[0]);
-    assert_eq!(24, mat.mat_step()?[1]);
+    assert_eq!(400, mat.rows());
+    assert_eq!(300, mat.cols());
+    assert_eq!(2, mat.mat_size().len());
+    assert_eq!(400, mat.mat_size()[0]);
+    assert_eq!(300, mat.mat_size()[1]);
+    assert_eq!(2, mat.dims());
+    assert_eq!(2, mat.mat_step().len());
+    assert_eq!(7200, mat.mat_step()[0]);
+    assert_eq!(24, mat.mat_step()[1]);
     assert_eq!(24, mat.elem_size()?);
     assert_eq!(8, mat.elem_size1()?);
     assert_eq!(900, mat.step1(0)?);
@@ -99,22 +99,21 @@ fn mat_for_rows_and_cols() -> Result<()> {
 #[test]
 fn mat_nd() -> Result<()> {
     {
-        let dims = VectorOfint::from_iter(vec![3, 3, 3]);
-        let mut mat = Mat::new_nd_with_default(&dims, Vec4w::typ(), Scalar::default())?;
+        let mut mat = Mat::new_nd_with_default(&[3, 3, 3], Vec4w::typ(), Scalar::default())?;
         assert_matches!(mat.at::<Vec4w>(0), Err(Error { code: core::StsUnmatchedSizes, ..}));
         assert_eq!(0, mat.at_3d::<Vec4w>(1, 1, 1)?[0]);
         *mat.at_3d_mut::<Vec4w>(1, 1, 1)? = Vec4w::all(10);
         assert_eq!(10, mat.at_3d::<Vec4w>(1, 1, 1)?[0]);
         assert_eq!(0, mat.at_3d::<Vec4w>(1, 1, 2)?[2]);
-        assert_eq!(3, mat.dims()?);
-        assert_eq!([3, 3, 3], *mat.mat_size()?);
+        assert_eq!(3, mat.dims());
+        assert_eq!([3, 3, 3], *mat.mat_size());
     }
 
     {
-        let dims = VectorOfint::from_iter(vec![2, 3, 4, 5, 6, 7]);
-        let mut mat = Mat::new_nd_with_default(&dims, Vec4w::typ(), Scalar::default())?;
-        assert_eq!(-1, mat.rows()?);
-        assert_eq!(-1, mat.cols()?);
+        let dims = VectorOfi32::from_iter(vec![2, 3, 4, 5, 6, 7]);
+        let mut mat = Mat::new_nd_vec_with_default(&dims, Vec4w::typ(), Scalar::default())?;
+        assert_eq!(-1, mat.rows());
+        assert_eq!(-1, mat.cols());
         assert_matches!(mat.at_nd::<Vec4w>(&[1, 1, 1]), Err(Error { code: core::StsUnmatchedSizes, ..}));
         assert_matches!(mat.at_nd::<Vec4w>(&[1, 1, 1, 1, 1, 1, 1]), Err(Error { code: core::StsUnmatchedSizes, ..}));
         assert_matches!(mat.at_nd::<Vec4w>(&[10, 10, 10, 10, 10, 10]), Err(Error { code: core::StsOutOfRange, ..}));
@@ -139,8 +138,8 @@ fn mat_at_1d() -> Result<()> {
     {
         let mat = Mat::from_slice_2d(&s)?;
         let mut mat = mat.reshape(1, 1)?;
-        assert_eq!(1, mat.rows()?);
-        assert_eq!(9, mat.cols()?);
+        assert_eq!(1, mat.rows());
+        assert_eq!(9, mat.cols());
         assert_matches!(mat.at::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
         assert_matches!(mat.at::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
         assert_matches!(mat.at_mut::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
@@ -155,8 +154,8 @@ fn mat_at_1d() -> Result<()> {
     {
         let mat = Mat::from_slice_2d(&s)?;
         let mut mat = mat.reshape(1, 9)?;
-        assert_eq!(9, mat.rows()?);
-        assert_eq!(1, mat.cols()?);
+        assert_eq!(9, mat.rows());
+        assert_eq!(1, mat.cols());
         assert_matches!(mat.at::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
         assert_matches!(mat.at::<f32>(10), Err(Error { code: core::StsOutOfRange, ..}));
         assert_matches!(mat.at_mut::<f32>(-1), Err(Error { code: core::StsOutOfRange, ..}));
@@ -286,13 +285,13 @@ fn mat_vec() -> Result<()> {
     }
 
     {
-        let mut dims = VectorOfint::new();
+        let mut dims = VectorOfi32::new();
         dims.push(3);
         dims.push(3);
         dims.push(3);
-        let mut mat = Mat::new_nd_with_default(&dims, f64::typ(), Scalar::all(2.))?;
+        let mut mat = Mat::new_nd_vec_with_default(&dims, f64::typ(), Scalar::all(2.))?;
         *mat.at_3d_mut::<f64>(1, 1, 1)? = 10.;
-        assert_eq!(3, mat.dims()?);
+        assert_eq!(3, mat.dims());
         if mat.to_vec_2d::<f64>().is_ok() {
             assert!(false, "dims too high");
         }
@@ -314,8 +313,8 @@ fn mat_continuous() -> Result<()> {
     {
         let sub_mat_non_cont = Mat::roi(&mat, Rect::new(1, 1, 2, 2))?;
         assert_eq!(mat.typ()?, sub_mat_non_cont.typ()?);
-        assert_eq!(2, sub_mat_non_cont.rows()?);
-        assert_eq!(2, sub_mat_non_cont.cols()?);
+        assert_eq!(2, sub_mat_non_cont.rows());
+        assert_eq!(2, sub_mat_non_cont.cols());
         assert!(sub_mat_non_cont.is_submatrix()?);
         assert!(!sub_mat_non_cont.is_continuous()?);
         assert_eq!(5., *sub_mat_non_cont.at_2d::<f32>(0, 0)?);
@@ -331,8 +330,8 @@ fn mat_continuous() -> Result<()> {
 
         let mat_clone = sub_mat_non_cont.clone()?;
         assert_eq!(mat.typ()?, mat_clone.typ()?);
-        assert_eq!(2, mat_clone.rows()?);
-        assert_eq!(2, mat_clone.cols()?);
+        assert_eq!(2, mat_clone.rows());
+        assert_eq!(2, mat_clone.cols());
         assert!(!mat_clone.is_submatrix()?);
         assert!(mat_clone.is_continuous()?);
         assert_eq!(5., *mat_clone.at_2d::<f32>(0, 0)?);
@@ -344,8 +343,8 @@ fn mat_continuous() -> Result<()> {
     {
         let sub_mat_cont = Mat::roi(&mat, Rect::new(0, 1, 3, 2))?;
         assert_eq!(mat.typ()?, sub_mat_cont.typ()?);
-        assert_eq!(2, sub_mat_cont.rows()?);
-        assert_eq!(3, sub_mat_cont.cols()?);
+        assert_eq!(2, sub_mat_cont.rows());
+        assert_eq!(3, sub_mat_cont.cols());
         assert!(sub_mat_cont.is_submatrix()?);
         assert!(sub_mat_cont.is_continuous()?);
         assert_eq!(4., *sub_mat_cont.at_2d::<f32>(0, 0)?);
@@ -372,28 +371,26 @@ fn mat_continuous() -> Result<()> {
 
 #[test]
 fn mat_operations() -> Result<()> {
-    {
-        let mut src = VectorOfMat::new();
-        src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.))?);
-        src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(2.))?);
-        let mut merged = Mat::default()?;
-        core::merge(&src, &mut merged)?;
-        assert_eq!(merged.typ()?, Vec2b::typ());
-        assert_eq!(merged.at_2d::<Vec2b>(0, 1)?[0], 1);
-        assert_eq!(merged.at_2d::<Vec2b>(0, 2)?[1], 2);
+    let mut src = VectorOfMat::new();
+    src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.))?);
+    src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(2.))?);
+    let mut merged = Mat::default()?;
+    core::merge(&src, &mut merged)?;
+    assert_eq!(merged.typ()?, Vec2b::typ());
+    assert_eq!(merged.at_2d::<Vec2b>(0, 1)?[0], 1);
+    assert_eq!(merged.at_2d::<Vec2b>(0, 2)?[1], 2);
 
-        let mut split = VectorOfMat::new();
-        core::split(&merged, &mut split)?;
-        assert_eq!(2, split.len());
-        let mat = split.get(0)?;
-        assert_eq!(u8::typ(), mat.typ()?);
-        assert_eq!(1, mat.channels()?);
-        assert_eq!(1, *mat.at_2d::<u8>(0, 2)?);
-        let mat = split.get(1)?;
-        assert_eq!(u8::typ(), mat.typ()?);
-        assert_eq!(1, mat.channels()?);
-        assert_eq!(2, *mat.at_2d::<u8>(0, 0)?);
-    }
+    let mut split = VectorOfMat::new();
+    core::split(&merged, &mut split)?;
+    assert_eq!(2, split.len());
+    let mat = split.get(0)?;
+    assert_eq!(u8::typ(), mat.typ()?);
+    assert_eq!(1, mat.channels()?);
+    assert_eq!(1, *mat.at_2d::<u8>(0, 2)?);
+    let mat = split.get(1)?;
+    assert_eq!(u8::typ(), mat.typ()?);
+    assert_eq!(1, mat.channels()?);
+    assert_eq!(2, *mat.at_2d::<u8>(0, 0)?);
 
     Ok(())
 }
@@ -415,17 +412,17 @@ fn mat_from_data() -> Result<()> {
 fn mat_from_matexpr() -> Result<()> {
     {
         let mat = Mat::zeros(3, 4, f32::typ())?.to_mat()?;
-        assert_eq!(4, mat.cols()?);
-        assert_eq!(3, mat.rows()?);
+        assert_eq!(4, mat.cols());
+        assert_eq!(3, mat.rows());
         assert_eq!(0., *mat.at_2d::<f32>(0, 0)?);
         assert_eq!(0., *mat.at_2d::<f32>(1, 1)?);
         assert_eq!(0., *mat.at_2d::<f32>(2, 3)?);
     }
 
     {
-        let mat = Mat::ones_nd(2, &[6, 5], f32::typ())?.to_mat()?;
-        assert_eq!(5, mat.cols()?);
-        assert_eq!(6, mat.rows()?);
+        let mat = Mat::ones_nd(&[6, 5], f32::typ())?.to_mat()?;
+        assert_eq!(5, mat.cols());
+        assert_eq!(6, mat.rows());
         assert_eq!(1., *mat.at_2d::<f32>(0, 0)?);
         assert_eq!(1., *mat.at_2d::<f32>(1, 1)?);
         assert_eq!(1., *mat.at_2d::<f32>(5, 4)?);
@@ -438,27 +435,27 @@ fn mat_iterator() -> Result<()> {
     let mat = Mat::from_slice(&[1, 2, 3, 4])?;
     let mut iter = MatConstIterator::over(&mat)?;
     assert_eq!(iter.typ(), mat.typ()?);
-    assert_eq!(1, *iter.get::<i32>()?);
+    assert_eq!(1, *iter.current::<i32>()?);
     assert_eq!(Point::new(0, 0), iter.pos()?);
     assert!(iter.has_elements());
     iter.seek(1, true)?;
-    assert_eq!(2, *iter.get::<i32>()?);
+    assert_eq!(2, *iter.current::<i32>()?);
     assert_eq!(Point::new(1, 0), iter.pos()?);
     assert!(iter.has_elements());
     iter.seek(1, true)?;
-    assert_eq!(3, *iter.get::<i32>()?);
+    assert_eq!(3, *iter.current::<i32>()?);
     assert_eq!(Point::new(2, 0), iter.pos()?);
     assert!(iter.has_elements());
     iter.seek(1, true)?;
-    assert_eq!(4, *iter.get::<i32>()?);
+    assert_eq!(4, *iter.current::<i32>()?);
     assert_eq!(Point::new(3, 0), iter.pos()?);
     assert!(iter.has_elements());
     iter.seek(1, true)?;
-    assert_matches!(iter.get::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+    assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
     assert_eq!(Point::new(0, 1), iter.pos()?);
     assert!(!iter.has_elements());
     iter.seek(1, true)?;
-    assert_matches!(iter.get::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
+    assert_matches!(iter.current::<i32>(), Err(Error { code: core::StsOutOfRange, .. }));
     assert_eq!(Point::new(0, 1), iter.pos()?);
     assert!(!iter.has_elements());
     Ok(())

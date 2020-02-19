@@ -41,13 +41,13 @@ fn vec() -> Result<()> {
 #[test]
 fn scalar() -> Result<()> {
     let mut m = Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::new(2., 0., 0., 0.))?;
-    let sum = core::sum(&m)?;
+    let sum = core::sum_elems(&m)?;
     assert_eq!(sum[0], 6.);
     let s = m.at_row_mut::<u8>(0)?;
     s[0] = 1;
     s[1] = 2;
     s[2] = 3;
-    let sum = core::sum(&m)?;
+    let sum = core::sum_elems(&m)?;
     assert_eq!(sum[0], 6.);
     Ok(())
 }

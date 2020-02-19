@@ -2,9 +2,8 @@ use opencv::{
     core::{Rect, Size, UMat, UMatUsageFlags, Vec3d},
     prelude::*,
     Result,
-    types::VectorOfint,
+    types::VectorOfi32,
 };
-
 #[cfg(not(feature = "opencv-4"))]
 use opencv::core::ACCESS_READ;
 #[cfg(feature = "opencv-4")]
@@ -17,7 +16,7 @@ fn umat_default() -> Result<()> {
     assert_eq!(u8::depth(), mat.depth()?);
     assert_eq!(u8::channels(), mat.channels()?);
     assert_eq!(Size::new(0, 0), mat.size()?);
-    assert_eq!(0, mat.dims()?);
+    assert_eq!(0, mat.dims());
     Ok(())
 }
 
@@ -26,20 +25,20 @@ fn umat_create() -> Result<()> {
     let mut mat = UMat::new(UMatUsageFlags::USAGE_DEFAULT)?;
     unsafe { mat.create_rows_cols(10, 10, u16::typ(), UMatUsageFlags::USAGE_DEFAULT)? };
     assert_eq!(Size::new(10, 10), mat.size()?);
-    assert_eq!(2, mat.dims()?);
+    assert_eq!(2, mat.dims());
     Ok(())
 }
 
 #[test]
 fn umat_to_mat() -> Result<()> {
     {
-        let mut vec = VectorOfint::new();
+        let mut vec = VectorOfi32::new();
         vec.push(1);
         vec.push(2);
         vec.push(3);
         let umat = Mat::from_exact_iter(vec.into_iter())?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
-        assert_eq!(3, umat.rows()?);
-        assert_eq!(1, umat.cols()?);
+        assert_eq!(3, umat.rows());
+        assert_eq!(1, umat.cols());
         assert_eq!(i32::typ(), umat.typ()?);
         let mat = umat.get_mat(ACCESS_READ)?;
         assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
@@ -50,8 +49,8 @@ fn umat_to_mat() -> Result<()> {
     {
         let vec: Vec<i32> = vec![1, 2, 3];
         let umat = Mat::from_exact_iter(vec.into_iter())?.get_umat(ACCESS_READ, UMatUsageFlags::USAGE_DEFAULT)?;
-        assert_eq!(3, umat.rows()?);
-        assert_eq!(1, umat.cols()?);
+        assert_eq!(3, umat.rows());
+        assert_eq!(1, umat.cols());
         assert_eq!(i32::typ(), umat.typ()?);
         let mat = umat.get_mat(ACCESS_READ)?;
         assert_eq!(1, *mat.at_2d::<i32>(0, 0)?);
@@ -70,15 +69,15 @@ fn umat_for_rows_and_cols() -> Result<()> {
     assert!(mat.is_continuous()?);
     assert!(!mat.is_submatrix()?);
     assert_eq!(Size::new(300, 400), mat.size()?);
-    assert_eq!(400, mat.rows()?);
-    assert_eq!(300, mat.cols()?);
-    assert_eq!(2, mat.mat_size()?.len());
-    assert_eq!(400, mat.mat_size()?[0]);
-    assert_eq!(300, mat.mat_size()?[1]);
-    assert_eq!(2, mat.dims()?);
-    assert_eq!(2, mat.mat_step()?.len());
-    assert_eq!(7200, mat.mat_step()?[0]);
-    assert_eq!(24, mat.mat_step()?[1]);
+    assert_eq!(400, mat.rows());
+    assert_eq!(300, mat.cols());
+    assert_eq!(2, mat.mat_size().len());
+    assert_eq!(400, mat.mat_size()[0]);
+    assert_eq!(300, mat.mat_size()[1]);
+    assert_eq!(2, mat.dims());
+    assert_eq!(2, mat.mat_step().len());
+    assert_eq!(7200, mat.mat_step()[0]);
+    assert_eq!(24, mat.mat_step()[1]);
     assert_eq!(24, mat.elem_size()?);
     assert_eq!(8, mat.elem_size1()?);
     assert_eq!(900, mat.step1(0)?);
@@ -100,15 +99,15 @@ fn umat_continuous() -> Result<()> {
     {
         let sub_umat_non_cont = UMat::roi(&umat, Rect::new(1, 1, 2, 2))?;
         assert_eq!(umat.typ()?, sub_umat_non_cont.typ()?);
-        assert_eq!(2, sub_umat_non_cont.rows()?);
-        assert_eq!(2, sub_umat_non_cont.cols()?);
+        assert_eq!(2, sub_umat_non_cont.rows());
+        assert_eq!(2, sub_umat_non_cont.cols());
         assert!(sub_umat_non_cont.is_submatrix()?);
         assert!(!sub_umat_non_cont.is_continuous()?);
 
         let umat_clone = sub_umat_non_cont.clone()?;
         assert_eq!(umat.typ()?, umat_clone.typ()?);
-        assert_eq!(2, umat_clone.rows()?);
-        assert_eq!(2, umat_clone.cols()?);
+        assert_eq!(2, umat_clone.rows());
+        assert_eq!(2, umat_clone.cols());
         assert!(!umat_clone.is_submatrix()?);
         assert!(umat_clone.is_continuous()?);
     }
@@ -116,8 +115,8 @@ fn umat_continuous() -> Result<()> {
     {
         let sub_umat_cont = UMat::roi(&umat, Rect::new(0, 1, 3, 2))?;
         assert_eq!(umat.typ()?, sub_umat_cont.typ()?);
-        assert_eq!(2, sub_umat_cont.rows()?);
-        assert_eq!(3, sub_umat_cont.cols()?);
+        assert_eq!(2, sub_umat_cont.rows());
+        assert_eq!(3, sub_umat_cont.cols());
         assert!(sub_umat_cont.is_submatrix()?);
         assert!(sub_umat_cont.is_continuous()?);
     }
