@@ -1,0 +1,13 @@
+template struct Result<bool>;
+template struct Result<const char*>;
+template struct Result<cv::Point_<int>>;
+template struct Result<cv::Size_<int>>;
+template struct Result<cv::Vec<double, 2>>;
+template struct Result<cv::Vec<unsigned char, 3>>;
+template struct Result<cv::viz::KeyboardEvent::Action>;
+template struct Result<cv::viz::MouseEvent::MouseButton>;
+template struct Result<cv::viz::MouseEvent::Type>;
+template struct Result<double>;
+template struct Result<int>;
+template struct Result<unsigned char>;
+template struct Result<void*>;
