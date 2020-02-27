@@ -549,7 +549,12 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
     eprintln!("=== Generating code in: {}", out_dir_as_str);
 
     for entry in glob(&format!("{}/*", out_dir_as_str))? {
-        let _ = fs::remove_file(entry?);
+        let path = entry?;
+        let path = match path.extension().unwrap_or_default().to_str() {
+            Some("dll") => continue,
+            _  => path
+        };
+        let _ = fs::remove_file(path);
     }
 
     let modules = get_modules(&opencv_dir.to_string_lossy())?;
