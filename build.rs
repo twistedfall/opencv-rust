@@ -2,7 +2,7 @@ use std::{
     borrow::Cow,
     collections::HashSet,
     env,
-    ffi::OsString,
+    ffi::{OsStr, OsString},
     fs::{self, File, OpenOptions},
     io::{self, BufRead, BufReader, Write},
     iter::FromIterator,
@@ -550,11 +550,9 @@ fn build_wrapper(opencv_header_dir: &PathBuf) -> Result<()> {
 
     for entry in glob(&format!("{}/*", out_dir_as_str))? {
         let path = entry?;
-        let path = match path.extension().unwrap_or_default().to_str() {
-            Some("dll") => continue,
-            _  => path
-        };
-        let _ = fs::remove_file(path);
+        if path.extension().and_then(OsStr::to_str).map_or(true, |ext| !ext.eq_ignore_ascii_case("dll")) {
+            let _ = fs::remove_file(path);
+        }
     }
 
     let modules = get_modules(&opencv_dir.to_string_lossy())?;
