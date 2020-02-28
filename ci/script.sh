@@ -37,7 +37,7 @@ export
 echo "=== Target settings:"
 rustc --print=cfg
 
-cargo test -vv -p binding-generator
+cargo test -vv -p opencv-binding-generator
 
 # only possible to build linux without `buildtime-bindgen`
 if [[ "$OS_FAMILY" == "linux" ]]; then
