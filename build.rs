@@ -611,7 +611,6 @@ fn build_compiler(opencv_header_dir: &Path) -> cc::Build {
 }
 
 fn build_wrapper(opencv_header_dir: &Path) -> Result<()> {
-
 	println!("cargo:rerun-if-env-changed=OPENCV_HEADER_DIR");
 	println!("cargo:rerun-if-env-changed=OPENCV_PACKAGE_NAME");
 	println!("cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME");
@@ -656,18 +655,20 @@ fn install_wrapper() -> Result<()> {
 		file_copy_to_dir(&entry, &OUT_DIR)?;
 	}
 
-	for entry in glob(&format!("{}/*.rs", target_module_dir.to_str().unwrap()))? {
-		let _ = fs::remove_file(entry?);
-	}
-	for entry in glob(&format!("{}/**/*.rs", rust_hub_dir.to_str().unwrap())).unwrap() {
-		let entry = entry?;
-		let target_file = target_hub_dir.join(entry.strip_prefix(&rust_hub_dir)?);
-		if let Some(target_dir) = target_file.parent() {
-			if !target_dir.exists() {
-				fs::create_dir_all(target_dir)?;
-			}
+	if !cfg!(feature = "docs-only") {
+		for entry in glob(&format!("{}/*.rs", target_module_dir.to_str().unwrap()))? {
+			let _ = fs::remove_file(entry?);
 		}
-		fs::copy(&entry, target_file)?;
+		for entry in glob(&format!("{}/**/*.rs", rust_hub_dir.to_str().unwrap())).unwrap() {
+			let entry = entry?;
+			let target_file = target_hub_dir.join(entry.strip_prefix(&rust_hub_dir)?);
+			if let Some(target_dir) = target_file.parent() {
+				if !target_dir.exists() {
+					fs::create_dir_all(target_dir)?;
+				}
+			}
+			fs::copy(&entry, target_file)?;
+		}
 	}
 	Ok(())
 }

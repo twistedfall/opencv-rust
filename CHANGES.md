@@ -1,3 +1,6 @@
+* 0.30.1
+  * Dummy version to fix docs.rs build
+
 * 0.30
   * Total rewrite of the binding generator in Rust. It no longer relies on Python, but instead uses libclang
     to parse the C++ code. Please be sure to install clang/llvm in your system if you're going to to regenerate
