@@ -1,6 +1,9 @@
 [package]
-name = "binding-generator"
+name = "opencv-binding-generator"
+description = "Binding generator for opencv crate"
+repository = "https://github.com/twistedfall/opencv-rust"
 version = "0.1.0"
+license = "MIT"
 authors = ["Pro <twisted.fall@gmail.com>"]
 edition = "2018"
 

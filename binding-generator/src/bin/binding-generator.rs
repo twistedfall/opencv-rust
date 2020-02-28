@@ -5,7 +5,7 @@ use std::{
 
 use clang::Clang;
 
-use binding_generator::{
+use opencv_binding_generator::{
 	Generator,
 	writer::RustBindingWriter,
 };
