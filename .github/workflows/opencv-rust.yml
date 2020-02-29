@@ -1,5 +1,13 @@
 name: opencv-rust
-on: [push]
+on:
+  push:
+    branches:
+      - "*"
+    tags_ignore:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
 jobs:
   test:
     runs-on: ${{ matrix.os.image }}
