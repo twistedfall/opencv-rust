@@ -26,8 +26,8 @@ pub fn strip_comment_markers(comment: &str) -> String {
 			if line_clean.starts_with(MULTILINE_PREFIX) {
 				singleline_delimited = false;
 				line = &line_clean[MULTILINE_PREFIX.len()..];
-				if line.starts_with(MULTILINE_CONT) {
-					line = &line[MULTILINE_CONT.len()..];
+				if let Some(new_line) = line.strip_str_prefix(MULTILINE_CONT) {
+					line = new_line;
 					asterisk_indented = true;
 				} else {
 					asterisk_indented = false;
@@ -38,8 +38,8 @@ pub fn strip_comment_markers(comment: &str) -> String {
 				asterisk_indented = false;
 			}
 		} else {
-			if line_clean.starts_with(MULTILINE_PREFIX) {
-				line = line_clean[MULTILINE_PREFIX.len()..]
+			if let Some(line_clean) = line_clean.strip_str_prefix(MULTILINE_PREFIX) {
+				line = line_clean
 					.trim_start_matches(DETAIL)
 					.trim_start_matches(MULTILINE_CONT)
 					.trim_start();
@@ -47,13 +47,13 @@ pub fn strip_comment_markers(comment: &str) -> String {
 		}
 		if singleline_delimited && line_clean.starts_with(SINGLELINE) {
 			line = &line_clean[SINGLELINE.len()..];
-			if line.starts_with(SINGLELINE_DETAIL) {
-				line = &line[SINGLELINE_DETAIL.len()..];
-			} else if line.starts_with(DETAIL) {
-				line = &line[DETAIL.len()..];
+			if let Some(new_line) = line.strip_str_prefix(SINGLELINE_DETAIL) {
+				line = new_line;
+			} else if let Some(new_line) = line.strip_str_prefix(DETAIL) {
+				line = new_line;
 			}
-			if line.starts_with(SINGLELINE_SIDE) {
-				line = &line[SINGLELINE_SIDE.len()..];
+			if let Some(new_line) = line.strip_str_prefix(SINGLELINE_SIDE) {
+				line = new_line;
 			}
 		} else if asterisk_indented && i == 1 && !line_clean.starts_with(MULTILINE_CONT) {
 			asterisk_indented = false;
@@ -89,8 +89,8 @@ pub fn strip_comment_markers(comment: &str) -> String {
 	for line in &mut lines {
 		if !singleline_delimited && asterisk_indented {
 			let line_trimmed = line.trim_start();
-			if line_trimmed.starts_with(MULTILINE_CONT) {
-				*line = &line_trimmed[MULTILINE_CONT.len()..];
+			if let Some(line_trimmed) = line_trimmed.strip_str_prefix(MULTILINE_CONT) {
+				*line = line_trimmed;
 			} else {
 				let trim_start = line.trim_start_idx().min(2);
 				*line = &line[trim_start..];

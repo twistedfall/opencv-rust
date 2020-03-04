@@ -109,9 +109,8 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		const OPERATOR: &str = "operator";
 		match self.entity.get_kind() {
 			EntityKind::FunctionDecl => {
-				let name = self.entity.cpp_localname();
-				if name.starts_with(OPERATOR) {
-					Kind::FunctionOperator(name[OPERATOR.len()..].into())
+				if let Some(operator) = self.entity.cpp_localname().strip_str_prefix(OPERATOR) {
+					Kind::FunctionOperator(operator.into())
 				} else {
 					Kind::Function
 				}
@@ -130,9 +129,8 @@ impl<'tu, 'g> Func<'tu, 'g> {
 				if self.entity.is_static_method() {
 					Kind::StaticMethod(class)
 				} else {
-					let name = self.entity.cpp_localname();
-					if name.starts_with(OPERATOR) {
-						Kind::InstanceOperator(class, name[OPERATOR.len()..].into())
+					if let Some(operator) = self.entity.cpp_localname().strip_str_prefix(OPERATOR) {
+						Kind::InstanceOperator(class, operator.into())
 					} else {
 						Kind::InstanceMethod(class)
 					}

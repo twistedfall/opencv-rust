@@ -392,9 +392,8 @@ impl<'tu, 'g> Class<'tu, 'g> {
 						let mut typ = type_ref.rust_full();
 						// hack for converting the references to array types in struct definitions
 						if type_ref.as_fixed_array().is_some() {
-							const STRIP: &str = "&mut ";
-							if typ.starts_with(STRIP) {
-								typ = typ[STRIP.len()..].to_string().into()
+							if let Some(new_typ) = typ.strip_str_prefix("&mut ") {
+								typ = new_typ.to_string().into()
 							}
 						}
 						SIMPLE_FIELD_TPL.interpolate(&hashmap! {

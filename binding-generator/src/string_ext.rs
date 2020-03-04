@@ -328,6 +328,7 @@ pub trait StrExt {
 	fn compile_interpolation(&self) -> CompiledInterpolation;
 	fn trim_start_idx(&self) -> usize;
 	fn trim_end_idx(&self) -> usize;
+	fn strip_str_prefix(&self, prefix: &str) -> Option<&str>;
 }
 
 impl StrExt for str {
@@ -421,5 +422,13 @@ impl StrExt for str {
 		self.char_indices()
 			.rfind(|(_, c)| !c.is_whitespace())
 			.map_or(0, |(i, _)| i + 1)
+	}
+
+	fn strip_str_prefix(&self, prefix: &str) -> Option<&str> {
+		if self.starts_with(prefix) {
+			Some(unsafe { self.get_unchecked(prefix.len()..) })
+		} else {
+			None
+		}
 	}
 }
