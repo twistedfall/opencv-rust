@@ -1,5 +1,6 @@
 pub use CV_MAKETYPE as CV_MAKE_TYPE;
 
+pub use affine3::*;
 pub use input_output_array::*;
 pub use mat::*;
 pub use matx::*;
@@ -25,6 +26,7 @@ macro_rules! valid_types {
 	};
 }
 
+mod affine3;
 mod input_output_array;
 mod mat;
 mod matx;
