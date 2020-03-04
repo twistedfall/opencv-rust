@@ -1,4 +1,4 @@
-use opencv::core::{Point2d, Point3d, Point3f, Point3i};
+use opencv::core::{Point2d, Point3d, Point3f, Point3i, Vec3d};
 
 #[test]
 fn point3_add() {
@@ -100,4 +100,7 @@ fn point3_conv() {
     assert_eq!(Point3f::new(1.2, 2.3, 3.4), ptf.to::<f32>().unwrap());
     let pti = Point3i::new(1, 2, 3);
     assert_eq!(Point3f::new(1., 2., 3.), pti.to::<f32>().unwrap());
+
+    let vec = Vec3d::from([10., 20., 30.]);
+    assert_eq!(vec, Point3d::from_vec3(vec).to_vec3());
 }

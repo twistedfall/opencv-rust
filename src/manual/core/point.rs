@@ -2,7 +2,7 @@ use std::ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign};
 
 use num::{NumCast, ToPrimitive};
 
-use crate::core::{Rect_, Size_, ValidRectType, ValidSizeType};
+use crate::core::{Rect_, Size_, ValidRectType, ValidSizeType, ValidVecType, Vec2};
 
 valid_types!(ValidPointType, i32, i64, f32, f64);
 
@@ -18,6 +18,11 @@ impl<T: ValidPointType> Point_<T> {
     #[inline]
     pub fn new(x: T, y: T) -> Self {
         Self { x, y }
+    }
+
+    #[inline]
+    pub fn from_vec2(vec: Vec2<T>) -> Self where T: ValidVecType {
+        Self::new(vec[0], vec[1])
     }
 
     #[inline]
@@ -63,6 +68,11 @@ impl<T: ValidPointType> Point_<T> {
     #[inline]
     pub fn to<D: ValidPointType + NumCast>(self) -> Option<Point_<D>> where T: ToPrimitive {
         Some(Point_::new(D::from(self.x)?, D::from(self.y)?))
+    }
+
+    #[inline]
+    pub fn to_vec2(&self) -> Vec2<T> where T: ValidVecType {
+        Vec2::from([self.x, self.y])
     }
 }
 

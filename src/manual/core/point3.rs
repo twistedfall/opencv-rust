@@ -68,6 +68,11 @@ impl<T: ValidPoint3Type> Point3_<T> {
     pub fn to<D: ValidPoint3Type + NumCast>(self) -> Option<Point3_<D>> where T: ToPrimitive {
         Some(Point3_::new(D::from(self.x)?, D::from(self.y)?, D::from(self.z)?))
     }
+
+    #[inline]
+    pub fn to_vec3(&self) -> Vec3<T> where T: ValidVecType {
+        Vec3::from([self.x, self.y, self.z])
+    }
 }
 
 impl<T> Add for Point3_<T>
