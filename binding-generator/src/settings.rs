@@ -444,6 +444,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_Stitcher_stitch_const__InputArrayX_const__InputArrayX_const__OutputArrayX" => "+_mask",
 		"cv_Stitcher_stitch_const__InputArrayX_const_vector_vector_Rect__X_const__OutputArrayX" => "+_rois", // 3.2 3.4
 
+		// ### surface_matching ###
+		"cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X" => "+_vec",
+
 		// ### videoio ###
 		"cv_VideoCapture_VideoCapture_String_int" => "from_file_with_backend", // 3.2
 		"cv_VideoCapture_VideoCapture_const_StringX" => "from_file_default", // 3.2
@@ -720,6 +723,7 @@ pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| btreeset! {
 
 pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv::Mat_",
+	"cv::Matx",
 	"cv::Point3_",
 	"cv::Point_",
 	"cv::Rect_",

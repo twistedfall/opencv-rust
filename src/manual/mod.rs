@@ -6,7 +6,7 @@ pub mod sys;
 pub mod types;
 
 pub mod prelude {
-	pub use super::core::{MatConstIteratorTraitManual, MatTraitManual, UMatTraitManual};
+	pub use super::core::{MatConstIteratorTraitManual, MatTraitManual, MatxTrait, UMatTraitManual};
 	#[cfg(feature = "opencv-32")]
 	pub use super::core::MatSizeTraitManual;
 }

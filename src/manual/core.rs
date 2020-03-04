@@ -1,12 +1,13 @@
 pub use CV_MAKETYPE as CV_MAKE_TYPE;
 
-pub use self::input_output_array::*;
-pub use self::mat::*;
-pub use self::point::*;
-pub use self::point3::*;
-pub use self::rect::*;
-pub use self::size::*;
-pub use self::vec::*;
+pub use input_output_array::*;
+pub use mat::*;
+pub use matx::*;
+pub use point::*;
+pub use point3::*;
+pub use rect::*;
+pub use size::*;
+pub use vec::*;
 
 macro_rules! valid_types {
 	($trait: ident, $($rust_type: ty),+) => {
@@ -26,8 +27,9 @@ macro_rules! valid_types {
 
 mod input_output_array;
 mod mat;
-mod point;
+mod matx;
 mod point3;
+mod point;
 mod rect;
 mod size;
 mod vec;

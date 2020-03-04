@@ -1,7 +1,4 @@
-use std::{
-	ops::{Deref, DerefMut},
-	os::raw::c_void,
-};
+use std::ffi::c_void;
 
 use crate::{
 	core::{_InputArray, ToInputArray},
@@ -24,12 +21,12 @@ macro_rules! vec_impl {
 	($type: ident, $count: expr, $type_trait: ident) => {
 		/// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
 		#[repr(C)]
-		#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
+		#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 		pub struct $type<T: $type_trait>(pub [T; $count]);
 
 		impl<T: $type_trait> From<[T; $count]> for $type<T> {
-			fn from(s: [T; $count]) -> $type<T> {
-				$type::<T>(s)
+			fn from(s: [T; $count]) -> Self {
+				Self(s)
 			}
 		}
 
@@ -39,7 +36,7 @@ macro_rules! vec_impl {
 			}
 		}
 
-		impl<T: $type_trait> Deref for $type<T> {
+		impl<T: $type_trait> std::ops::Deref for $type<T> {
 			type Target = [T; $count];
 
 			fn deref(&self) -> &Self::Target {
@@ -47,15 +44,9 @@ macro_rules! vec_impl {
 			}
 		}
 
-		impl<T: $type_trait> DerefMut for $type<T> {
+		impl<T: $type_trait> std::ops::DerefMut for $type<T> {
 			fn deref_mut(&mut self) -> &mut Self::Target {
 				&mut self.0
-			}
-		}
-
-		impl<T: $type_trait + Default> Default for $type<T> {
-			fn default() -> Self {
-				Self([Default::default(); $count])
 			}
 		}
 	};
