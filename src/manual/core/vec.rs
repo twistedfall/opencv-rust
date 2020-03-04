@@ -22,6 +22,7 @@ mod scalar {
 
 macro_rules! vec_impl {
 	($type: ident, $count: expr, $type_trait: ident) => {
+		/// [docs.opencv.org](https://docs.opencv.org/master/d6/dcf/classcv_1_1Vec.html)
 		#[repr(C)]
 		#[derive(Copy, Clone, Debug, PartialEq, PartialOrd)]
 		pub struct $type<T: $type_trait>(pub [T; $count]);

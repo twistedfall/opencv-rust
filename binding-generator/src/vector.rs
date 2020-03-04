@@ -19,7 +19,6 @@ use crate::{
 	EntityElement,
 	GeneratedElement,
 	GeneratorEnv,
-	settings,
 	StrExt,
 	TypeRef,
 };
@@ -179,7 +178,7 @@ impl GeneratedElement for Vector<'_, '_> {
 				inherent_methods += &INHERENT_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			}
 		}
-		if settings::DATA_TYPES.contains(self.element.cpp_full().as_ref()) || self.element.as_vector().map_or(false, |v| settings::DATA_TYPES.contains(v.element_type().cpp_full().as_ref())) {
+		if self.element.is_data_type() || self.element.as_vector().map_or(false, |v| v.element_type().is_data_type()) {
 			impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
 		}
 
@@ -249,7 +248,7 @@ impl GeneratedElement for Vector<'_, '_> {
 				exports += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			}
 		}
-		if settings::DATA_TYPES.contains(self.element.cpp_full().as_ref()) || self.element.as_vector().map_or(false, |v| settings::DATA_TYPES.contains(v.element_type().cpp_full().as_ref())) {
+		if self.element.is_data_type() || self.element.as_vector().map_or(false, |v| v.element_type().is_data_type()) {
 			exports += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
 		}
 		inter_vars.insert("exports", exports.into());

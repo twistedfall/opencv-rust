@@ -498,14 +498,13 @@ impl Element for Class<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
 			|| match self.kind() { Kind::Excluded => true, _ => false }
-			|| !self.is_definition() // prevent generation of spurious empty imports
 	}
 
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self)
 			|| self.is_template()
 			|| self.is_template_specialization() && !settings::IMPLEMENTED_GENERICS.contains(self.cpp_fullname().as_ref())
-			|| !self.is_template_specialization() && self.entity.get_definition().is_none()
+			|| !self.is_template_specialization() && !self.is_definition()
 	}
 
 	fn is_system(&self) -> bool {

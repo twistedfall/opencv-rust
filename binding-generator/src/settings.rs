@@ -567,14 +567,6 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"cv::dnn::Model" => ExportConfig::default(),
 	"cv::dnn::Net" => ExportConfig::default(), // incorrectly marked as simple
 	"cv::ocl::Device" => ExportConfig::default(),
-
-	// override simple
-	"cv::Point3_" => ExportConfig::simple(),
-	"cv::Point_" => ExportConfig::simple(),
-	"cv::Rect_" => ExportConfig::simple(),
-	"cv::Scalar_" => ExportConfig::simple(),
-	"cv::Size_" => ExportConfig::simple(),
-	"cv::Vec" => ExportConfig::simple(),
 });
 
 /// set of functions that should have unsafe in their declaration, element is Func.identifier()
@@ -727,12 +719,13 @@ pub static DATA_TYPES: Lazy<BTreeSet<&str>> = Lazy::new(|| btreeset! {
 });
 
 pub static IMPLEMENTED_GENERICS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
-	"cv::Vec",
-	"cv::Scalar_",
-	"cv::Point_",
+	"cv::Mat_",
 	"cv::Point3_",
-	"cv::Size_",
+	"cv::Point_",
 	"cv::Rect_",
+	"cv::Scalar_",
+	"cv::Size_",
+	"cv::Vec",
 });
 
 #[derive(Debug)]

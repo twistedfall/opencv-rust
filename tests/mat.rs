@@ -472,3 +472,17 @@ fn mat_locate_roi() -> Result<()> {
     assert_eq!(ofs, Point::new(1, 0));
     Ok(())
 }
+
+#[test]
+fn mat_convert() -> Result<()> {
+    let mat = Mat::from_slice(&[1, 2, 3, 4])?;
+    let mut mat_ = mat.clone()?.into_typed::<i32>()?;
+    assert_eq!(3, *mat_.get(2)?);
+    *mat_.get_mut(3)? = 8;
+    assert_eq!(8, *mat_.get(3)?);
+    assert_eq!(mat.typ()?, mat_.typ()?);
+    assert_eq!(mat.size()?, mat_.size()?);
+    let mat_back = mat_.into_mat();
+    assert_eq!(mat.size()?, mat_back.size()?);
+    Ok(())
+}

@@ -229,14 +229,20 @@ impl<V: GeneratorVisitor> OpenCVWalker<'_, V> {
 
 	fn process_typedef<'tu>(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
 		let typedef = Typedef::new(typedef_decl, gen_env);
-		if gen_env.get_export_config(typedef_decl).is_some()
+		let mut export = gen_env.get_export_config(typedef_decl).is_some()
 			// we need to have a typedef even if it's not exported for e.g. cv::Size
-			|| settings::DATA_TYPES.contains(typedef.cpp_fullname().as_ref())
-			|| typedef.underlying_type_ref().as_vector().map_or(false, |v| settings::DATA_TYPES.contains(v.element_type().cpp_full().as_ref()))
-			|| typedef.underlying_type_ref().as_function().is_some() {
-			if !typedef.is_excluded() {
-				visitor.visit_typedef(typedef)
+			|| typedef.type_ref().is_data_type();
+		export = export || {
+			let underlying_type = typedef.underlying_type_ref();
+			underlying_type.as_function().is_some()
+				|| if let Some(templ) = underlying_type.as_template() {
+				settings::IMPLEMENTED_GENERICS.contains(templ.cpp_fullname().as_ref())
+			} else {
+				false
 			}
+		};
+		if export && !typedef.is_excluded() {
+			visitor.visit_typedef(typedef)
 		}
 	}
 }

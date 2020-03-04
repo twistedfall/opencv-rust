@@ -16,6 +16,7 @@ use crate::{
 	GeneratorEnv,
 	get_debug,
 	IteratorExt,
+	settings,
 	StrExt,
 	type_ref::Kind,
 	TypeRef,
@@ -31,6 +32,10 @@ pub struct Typedef<'tu, 'g> {
 impl<'tu, 'g> Typedef<'tu, 'g> {
 	pub fn new(entity: Entity<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
 		Self { entity, gen_env }
+	}
+
+	pub fn type_ref(&self) -> TypeRef<'tu, 'g> {
+		TypeRef::new(self.entity.get_type().expect("Can't get typedef type"), self.gen_env)
 	}
 
 	pub fn underlying_type_ref(&self) -> TypeRef<'tu, 'g> {
@@ -50,6 +55,11 @@ impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
 }
 
 impl Element for Typedef<'_, '_> {
+	fn is_excluded(&self) -> bool {
+		DefaultElement::is_excluded(self)
+			|| settings::PRIMITIVE_TYPEDEFS.contains_key(self.cpp_fullname().as_ref())
+	}
+
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self) || self.underlying_type_ref().is_ignored()
 	}

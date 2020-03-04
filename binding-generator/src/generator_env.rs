@@ -188,7 +188,11 @@ impl<'tu> GeneratorEnv<'tu> {
 		let id = entity.usr();
 		memo_map(&self.class_kind_cache, id.as_ref(), || {
 			if let Some(range) = entity.get_range() {
-				let name_ranges = entity.get_name_ranges();
+				let name_ranges = if let Some(tpl_decl) = entity.get_template() {
+					tpl_decl
+				} else {
+					entity
+				}.get_name_ranges();
 				if !name_ranges.is_empty() {
 					let file_location = range.get_start().get_file_location();
 					if let Some(file) = file_location.file {

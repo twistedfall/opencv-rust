@@ -1,6 +1,7 @@
 use std::{
 	ffi::c_void,
 	fmt,
+	marker::PhantomData,
 	ops::Deref,
 	slice,
 };
@@ -111,6 +112,43 @@ data_type!(core::Size2d, core::CV_64F, 2);
 data_type!(core::Rect2i, core::CV_32S, 4);
 data_type!(core::Rect2f, core::CV_32F, 4);
 data_type!(core::Rect2d, core::CV_64F, 4);
+
+/// [docs.opencv.org](https://docs.opencv.org/master/df/dfc/classcv_1_1Mat__.html)
+pub struct Mat_<T> {
+	inner: Mat,
+	_type: PhantomData<T>,
+}
+
+impl<T: DataType> Mat_<T> {
+	pub fn from_mat(s: Mat) -> Result<Self> {
+		match_mat_format::<T, _>(&s)
+			.map(|_| Mat_ { inner: s, _type: PhantomData })
+	}
+
+	#[inline(always)]
+	pub fn get(&self, i0: i32) -> Result<&T> {
+		match_dims(self, 2)
+			.and_then(|_| match_total(self, i0))
+			.and_then(|_| unsafe { self.at_unchecked(i0) })
+	}
+
+	#[inline(always)]
+	pub fn get_mut(&mut self, i0: i32) -> Result<&mut T> {
+		match_dims(self, 2)
+			.and_then(|_| match_total(self, i0))?;
+		unsafe { self.at_mut_unchecked(i0) }
+	}
+
+	pub fn into_mat(self) -> Mat {
+		self.inner
+	}
+}
+
+impl<T: DataType> MatTrait for Mat_<T> {
+	fn as_raw_Mat(&self) -> *mut c_void {
+		self.inner.as_raw_Mat()
+	}
+}
 
 #[inline(always)]
 fn convert_ptr<T>(r: &u8) -> &T {
@@ -233,6 +271,10 @@ impl Mat {
 			trg.copy_from_slice(src);
 		}
 		Ok(out)
+	}
+
+	pub fn into_typed<T: DataType>(self) -> Result<Mat_<T>> where Self: Sized {
+		Mat_::from_mat(self)
 	}
 }
 

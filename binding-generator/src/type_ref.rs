@@ -1,12 +1,10 @@
 use std::{
 	borrow::Cow,
 	cmp,
-	collections::HashSet,
 	fmt,
 };
 
 use clang::{Entity, EntityKind, Type, TypeKind};
-use maplit::hashset;
 use once_cell::{
 	sync::Lazy,
 	unsync::Lazy as UnsyncLazy,
@@ -259,25 +257,16 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			}
 
 			TypeKind::Typedef => {
-				static IGNORED_SYSTEM_TYPEDEFS: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
-					"FILE",
-					"const_iterator",
-					"ifstream",
-					"ofstream",
-					"ostream",
-				});
 				let decl = self.type_ref.get_declaration().expect("Can't get typedef declaration");
-				let decl_name = decl.get_name().expect("Can't get typedef name");
-				if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(decl_name.as_str()) {
+				let decl_name = decl.cpp_fullname();
+				if let Some(&(rust, cpp)) = settings::PRIMITIVE_TYPEDEFS.get(decl_name.as_ref()) {
 					Kind::Primitive(rust, cpp)
 				}
 				else if decl.is_system() {
-					if decl_name == "string" {
+					if decl_name.starts_with("std::") && decl_name.ends_with("::string") {
 						Kind::Class(Class::new(decl, self.gen_env))
-					} else if IGNORED_SYSTEM_TYPEDEFS.contains(decl_name.as_str()) {
-						Kind::Ignored
 					} else {
-						unreachable!("Unknown system typedef, don't know how to handle that: {:#?}", decl)
+						Kind::Ignored
 					}
 				} else {
 					Kind::Typedef(Typedef::new(decl, self.gen_env))
@@ -428,6 +417,17 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			}
 			_ => {
 				false
+			}
+		}
+	}
+
+	pub fn as_template(&self) -> Option<Class<'tu, 'g>> {
+		match self.base().kind() {
+			Kind::Class(cls) => {
+				cls.as_template()
+			}
+			_ => {
+				None
 			}
 		}
 	}
@@ -770,6 +770,10 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 
 	fn is_output(&self) -> bool {
 		!self.is_const() && (self.as_reference().is_some() || self.as_pointer().map_or(false, |t| t.is_string()))
+	}
+
+	pub fn is_data_type(&self) -> bool {
+		settings::DATA_TYPES.contains(self.cpp_full().as_ref())
 	}
 
 	pub fn rust_const_qual(&self, pointer: bool) -> &'static str {
