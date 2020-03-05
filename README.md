@@ -233,7 +233,7 @@ that.
 
 ### Errors
 
-Most functions return a `Result` to expose a potential C++ exception. Alghouth some methods like property reads
+Most functions return a `Result` to expose a potential C++ exception. Although some methods like property reads
 or functions that are marked CV_NOEXCEPT in the OpenCV headers are infallible and return a naked value.
 
 ### Properties
