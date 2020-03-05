@@ -1,5 +1,6 @@
 template struct Result<bool>;
 template struct Result<const char*>;
+template struct Result<cv::Affine3<double>>;
 template struct Result<cv::Point_<int>>;
 template struct Result<cv::Size_<int>>;
 template struct Result<cv::Vec<double, 2>>;

@@ -378,6 +378,21 @@ pub type Pose3DPtr = types::PtrOfPose3D;
 /// https://www.comp.nus.edu.sg/~lowkl/publications/lowk_point-to-plane_icp_techrep.pdf
 pub trait ICPTrait {
 	fn as_raw_ICP(&self) -> *mut c_void;
+	/// \brief Perform registration
+	/// 
+	/// ## Parameters
+	/// * srcPC: The input point cloud for the model. Expected to have the normals (Nx6). Currently,
+	/// CV_32F is the only supported data type.
+	/// * dstPC: The input point cloud for the scene. It is assumed that the model is registered on the scene. Scene remains static. Expected to have the normals (Nx6). Currently, CV_32F is the only supported data type.
+	/// * residual:[out] The output registration error.
+	/// * pose:[out] Transformation between srcPC and dstPC.
+	/// \return On successful termination, the function returns 0.
+	/// 
+	/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
+	fn register_model_to_scene(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, residual: &mut f64, pose: &mut core::Matx44d) -> Result<i32> {
+		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_doubleX_Matx44dX(self.as_raw_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose) }.into_result()
+	}
+	
 	/// \brief Perform registration with multiple initial poses
 	/// 
 	/// ## Parameters
@@ -388,7 +403,7 @@ pub trait ICPTrait {
 	/// \return On successful termination, the function returns 0.
 	/// 
 	/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
-	fn register_model_to_scene(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut types::VectorOfPose3DPtr) -> Result<i32> {
+	fn register_model_to_scene_vec(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut types::VectorOfPose3DPtr) -> Result<i32> {
 		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X(self.as_raw_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_VectorOfPose3DPtr()) }.into_result()
 	}
 	
@@ -623,6 +638,14 @@ pub trait Pose3DTrait {
 		unsafe { sys::cv_ppf_match_3d_Pose3D_setNumVotes_size_t(self.as_raw_Pose3D(), val) }.into_result().expect("Infallible function failed: set_num_votes")
 	}
 	
+	fn pose(&self) -> core::Matx44d {
+		unsafe { sys::cv_ppf_match_3d_Pose3D_pose_const(self.as_raw_Pose3D()) }.into_result().expect("Infallible function failed: pose")
+	}
+	
+	fn set_pose(&mut self, val: core::Matx44d) -> () {
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setPose_Matx44d(self.as_raw_Pose3D(), &val) }.into_result().expect("Infallible function failed: set_pose")
+	}
+	
 	fn angle(&self) -> f64 {
 		unsafe { sys::cv_ppf_match_3d_Pose3D_angle_const(self.as_raw_Pose3D()) }.into_result().expect("Infallible function failed: angle")
 	}
@@ -647,9 +670,26 @@ pub trait Pose3DTrait {
 		unsafe { sys::cv_ppf_match_3d_Pose3D_setQ_Vec4d(self.as_raw_Pose3D(), &val) }.into_result().expect("Infallible function failed: set_q")
 	}
 	
+	/// \brief Updates the pose with the new one
+	/// \param [in] NewPose New pose to overwrite
+	fn update_pose(&mut self, new_pose: &mut core::Matx44d) -> Result<()> {
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_Matx44dX(self.as_raw_Pose3D(), new_pose) }.into_result()
+	}
+	
+	/// \brief Updates the pose with the new one
+	fn update_pose_1(&mut self, new_r: &mut core::Matx33d, new_t: &mut core::Vec3d) -> Result<()> {
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_Matx33dX_Vec3dX(self.as_raw_Pose3D(), new_r, new_t) }.into_result()
+	}
+	
 	/// \brief Updates the pose with the new one, but this time using quaternions to represent rotation
 	fn update_pose_quat(&mut self, q: &mut core::Vec4d, new_t: &mut core::Vec3d) -> Result<()> {
 		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePoseQuat_Vec4dX_Vec3dX(self.as_raw_Pose3D(), q, new_t) }.into_result()
+	}
+	
+	/// \brief Left multiplies the existing pose in order to update the transformation
+	/// \param [in] IncrementalPose New pose to apply
+	fn append_pose(&mut self, incremental_pose: &mut core::Matx44d) -> Result<()> {
+		unsafe { sys::cv_ppf_match_3d_Pose3D_appendPose_Matx44dX(self.as_raw_Pose3D(), incremental_pose) }.into_result()
 	}
 	
 	fn print_pose(&mut self) -> Result<()> {

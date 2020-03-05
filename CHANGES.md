@@ -1,3 +1,8 @@
+* 0.31.0
+  * Add from/to_vec method to `Point_` and `Point3_`
+  * Add basic implementations of `Mat_`, `Matx` and `Affine3` generic types, and OpenCV methods that use them
+  * Rename `Mat::*_mut_unchecked` methods to `*_unchecked_mut` for consistency with std library
+
 * 0.30.1
   * Dummy version to fix docs.rs build
 
@@ -24,9 +29,8 @@
   * Some methods (like `Mat::new_nd_with_default`) now accept slices instead of `Vector`s. The length of the
     Rust slice is passed down to the OpenCV.
 
-  * Traits are now used way more through the API, importing prelude is a must (```use opencv::prelude::*;``).
-
-  * There are also separate preludes per module should you want to use that (```use opencv::imgproc::*;``).
+  * Traits are now used way more through the API, importing prelude is a must (```use opencv::prelude::*;```).
+    There are also separate preludes per module should you want to use that (```use opencv::imgproc::*;```).
 
   * All enums are now generated.
 
@@ -34,7 +38,7 @@
     getters and setters.
 
   * You can now access properties for `PtrOf...` objects directly without the need to go through `get()` and
-    `get_mut()` (those methods are now dropped).
+    `get_mut()` (those methods are now dropped, they were unsound).
 
   * All property setters and getters are now infallible so they don't return `Result`, but a value directly.
 

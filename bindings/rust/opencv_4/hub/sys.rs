@@ -296,6 +296,7 @@ mod calib3d_sys {
 		pub fn cv_fisheye_distortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_double(undistorted: *mut c_void, distorted: *mut c_void, k: *mut c_void, d: *mut c_void, alpha: f64) -> Result_void;
 		pub fn cv_fisheye_estimateNewCameraMatrixForUndistortRectify_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_double_const_SizeX_double(k: *mut c_void, d: *mut c_void, image_size: *const core::Size, r: *mut c_void, p: *mut c_void, balance: f64, new_size: *const core::Size, fov_scale: f64) -> Result_void;
 		pub fn cv_fisheye_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX(k: *mut c_void, d: *mut c_void, r: *mut c_void, p: *mut c_void, size: *const core::Size, m1type: i32, map1: *mut c_void, map2: *mut c_void) -> Result_void;
+		pub fn cv_fisheye_projectPoints_const__InputArrayX_const__OutputArrayX_const_Affine3dX_const__InputArrayX_const__InputArrayX_double_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, affine: *const core::Affine3d, k: *mut c_void, d: *mut c_void, alpha: f64, jacobian: *mut c_void) -> Result_void;
 		pub fn cv_fisheye_projectPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, rvec: *mut c_void, tvec: *mut c_void, k: *mut c_void, d: *mut c_void, alpha: f64, jacobian: *mut c_void) -> Result_void;
 		pub fn cv_fisheye_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points: *mut c_void, image_points1: *mut c_void, image_points2: *mut c_void, k1: *mut c_void, d1: *mut c_void, k2: *mut c_void, d2: *mut c_void, image_size: *const core::Size, r: *mut c_void, t: *mut c_void, flags: i32, criteria: *mut c_void) -> Result<f64>;
 		pub fn cv_fisheye_stereoRectify_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_const_SizeX_double_double(k1: *mut c_void, d1: *mut c_void, k2: *mut c_void, d2: *mut c_void, image_size: *const core::Size, r: *mut c_void, tvec: *mut c_void, r1: *mut c_void, r2: *mut c_void, p1: *mut c_void, p2: *mut c_void, q: *mut c_void, flags: i32, new_image_size: *const core::Size, balance: f64, fov_scale: f64) -> Result_void;
@@ -2923,6 +2924,7 @@ mod imgproc_sys {
 		pub fn cv_getPerspectiveTransform_const__InputArrayX_const__InputArrayX_int(src: *mut c_void, dst: *mut c_void, solve_method: i32) -> Result<*mut c_void>;
 		pub fn cv_getRectSubPix_const__InputArrayX_Size_Point2f_const__OutputArrayX_int(image: *mut c_void, patch_size: *const core::Size, center: *const core::Point2f, patch: *mut c_void, patch_type: i32) -> Result_void;
 		pub fn cv_getRotationMatrix2D_Point2f_double_double(center: *const core::Point2f, angle: f64, scale: f64) -> Result<*mut c_void>;
+		pub fn cv_getRotationMatrix2D__Point2f_double_double(center: *const core::Point2f, angle: f64, scale: f64) -> Result<core::Matx23d>;
 		pub fn cv_getStructuringElement_int_Size_Point(shape: i32, ksize: *const core::Size, anchor: *const core::Point) -> Result<*mut c_void>;
 		pub fn cv_getTextSize_const_StringX_int_double_int_intX(text: *const c_char, font_face: i32, font_scale: f64, thickness: i32, base_line: *mut i32) -> Result<core::Size>;
 		pub fn cv_goodFeaturesToTrack_const__InputArrayX_const__OutputArrayX_int_double_double_const__InputArrayX_int_bool_double(image: *mut c_void, corners: *mut c_void, max_corners: i32, quality_level: f64, min_distance: f64, mask: *mut c_void, block_size: i32, use_harris_detector: bool, k: f64) -> Result_void;
@@ -4325,6 +4327,7 @@ mod surface_matching_sys {
 	extern "C" {
 		pub fn cv_ppf_match_3d_ICP_ICP() -> Result<*mut c_void>;
 		pub fn cv_ppf_match_3d_ICP_ICP_int_float_float_int_int_int(iterations: i32, tolerence: f32, rejection_scale: f32, num_levels: i32, sample_type: i32, num_max_corr: i32) -> Result<*mut c_void>;
+		pub fn cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_doubleX_Matx44dX(instance: *mut c_void, src_pc: *mut c_void, dst_pc: *mut c_void, residual: *mut f64, pose: *mut core::Matx44d) -> Result<i32>;
 		pub fn cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X(instance: *mut c_void, src_pc: *mut c_void, dst_pc: *mut c_void, poses: *mut c_void) -> Result<i32>;
 		pub fn cv_ppf_match_3d_PPF3DDetector_PPF3DDetector() -> Result<*mut c_void>;
 		pub fn cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_double_double_double(relative_sampling_step: f64, relative_distance_step: f64, num_angles: f64) -> Result<*mut c_void>;
@@ -4341,6 +4344,8 @@ mod surface_matching_sys {
 		pub fn cv_ppf_match_3d_Pose3D_setModelIndex_size_t(instance: *mut c_void, val: size_t) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_numVotes_const(instance: *mut c_void) -> Result<size_t>;
 		pub fn cv_ppf_match_3d_Pose3D_setNumVotes_size_t(instance: *mut c_void, val: size_t) -> Result_void;
+		pub fn cv_ppf_match_3d_Pose3D_pose_const(instance: *mut c_void) -> Result<core::Matx44d>;
+		pub fn cv_ppf_match_3d_Pose3D_setPose_Matx44d(instance: *mut c_void, val: *const core::Matx44d) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_angle_const(instance: *mut c_void) -> Result<f64>;
 		pub fn cv_ppf_match_3d_Pose3D_setAngle_double(instance: *mut c_void, val: f64) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_t_const(instance: *mut c_void) -> Result<core::Vec3d>;
@@ -4349,7 +4354,10 @@ mod surface_matching_sys {
 		pub fn cv_ppf_match_3d_Pose3D_setQ_Vec4d(instance: *mut c_void, val: *const core::Vec4d) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_Pose3D() -> Result<*mut c_void>;
 		pub fn cv_ppf_match_3d_Pose3D_Pose3D_double_size_t_size_t(alpha: f64, model_index: size_t, num_votes: size_t) -> Result<*mut c_void>;
+		pub fn cv_ppf_match_3d_Pose3D_updatePose_Matx44dX(instance: *mut c_void, new_pose: *mut core::Matx44d) -> Result_void;
+		pub fn cv_ppf_match_3d_Pose3D_updatePose_Matx33dX_Vec3dX(instance: *mut c_void, new_r: *mut core::Matx33d, new_t: *mut core::Vec3d) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_updatePoseQuat_Vec4dX_Vec3dX(instance: *mut c_void, q: *mut core::Vec4d, new_t: *mut core::Vec3d) -> Result_void;
+		pub fn cv_ppf_match_3d_Pose3D_appendPose_Matx44dX(instance: *mut c_void, incremental_pose: *mut core::Matx44d) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_printPose(instance: *mut c_void) -> Result_void;
 		pub fn cv_ppf_match_3d_Pose3D_clone(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_ppf_match_3d_Pose3D_writePose_const_stringX(instance: *mut c_void, file_name: *const c_char) -> Result<i32>;
@@ -4914,14 +4922,20 @@ mod viz_sys {
 		pub fn cv_viz_computeNormals_const_MeshX_const__OutputArrayX(mesh: *mut c_void, normals: *mut c_void) -> Result_void;
 		pub fn cv_viz_getWindowByName_const_StringX(window_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_viz_imshow_const_StringX_const__InputArrayX_const_SizeX(window_name: *const c_char, image: *mut c_void, window_size: *const core::Size) -> Result<*mut c_void>;
+		pub fn cv_viz_makeCameraPose_const_Vec3dX_const_Vec3dX_const_Vec3dX(position: *const core::Vec3d, focal_point: *const core::Vec3d, y_dir: *const core::Vec3d) -> Result<core::Affine3d>;
+		pub fn cv_viz_makeTransformToGlobal_const_Vec3dX_const_Vec3dX_const_Vec3dX_const_Vec3dX(axis_x: *const core::Vec3d, axis_y: *const core::Vec3d, axis_z: *const core::Vec3d, origin: *const core::Vec3d) -> Result<core::Affine3d>;
 		pub fn cv_viz_readCloud_const_StringX_const__OutputArrayX_const__OutputArrayX(file: *const c_char, colors: *mut c_void, normals: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_readMesh_const_StringX(file: *const c_char) -> Result<*mut c_void>;
+		pub fn cv_viz_readPose_const_StringX_Affine3dX_const_StringX(file: *const c_char, pose: *mut core::Affine3d, tag: *const c_char) -> Result<bool>;
 		pub fn cv_viz_readTrajectory_const__OutputArrayX_const_StringX_int_int_const_StringX(traj: *mut c_void, files_format: *const c_char, start: i32, end: i32, tag: *const c_char) -> Result_void;
 		pub fn cv_viz_unregisterAllWindows() -> Result_void;
 		pub fn cv_viz_writeCloud_const_StringX_const__InputArrayX_const__InputArrayX_const__InputArrayX_bool(file: *const c_char, cloud: *mut c_void, colors: *mut c_void, normals: *mut c_void, binary: bool) -> Result_void;
+		pub fn cv_viz_writePose_const_StringX_const_Affine3dX_const_StringX(file: *const c_char, pose: *const core::Affine3d, tag: *const c_char) -> Result_void;
 		pub fn cv_viz_writeTrajectory_const__InputArrayX_const_StringX_int_const_StringX(traj: *mut c_void, files_format: *const c_char, start: i32, tag: *const c_char) -> Result_void;
 		pub fn cv_viz_Camera_Camera_double_double_double_double_const_SizeX(fx: f64, fy: f64, cx: f64, cy: f64, window_size: *const core::Size) -> Result<*mut c_void>;
 		pub fn cv_viz_Camera_Camera_const_Vec2dX_const_SizeX(fov: *const core::Vec2d, window_size: *const core::Size) -> Result<*mut c_void>;
+		pub fn cv_viz_Camera_Camera_const_Matx33dX_const_SizeX(k: *const core::Matx33d, window_size: *const core::Size) -> Result<*mut c_void>;
+		pub fn cv_viz_Camera_Camera_const_Matx44dX_const_SizeX(proj: *const core::Matx44d, window_size: *const core::Size) -> Result<*mut c_void>;
 		pub fn cv_viz_Camera_getClip_const(instance: *mut c_void) -> Result<core::Vec2d>;
 		pub fn cv_viz_Camera_setClip_const_Vec2dX(instance: *mut c_void, clip: *const core::Vec2d) -> Result_void;
 		pub fn cv_viz_Camera_getWindowSize_const(instance: *mut c_void) -> Result<core::Size>;
@@ -4930,6 +4944,7 @@ mod viz_sys {
 		pub fn cv_viz_Camera_setFov_const_Vec2dX(instance: *mut c_void, fov: *const core::Vec2d) -> Result_void;
 		pub fn cv_viz_Camera_getPrincipalPoint_const(instance: *mut c_void) -> Result<core::Vec2d>;
 		pub fn cv_viz_Camera_getFocalLength_const(instance: *mut c_void) -> Result<core::Vec2d>;
+		pub fn cv_viz_Camera_computeProjectionMatrix_const_Matx44dX(instance: *mut c_void, proj: *mut core::Matx44d) -> Result_void;
 		pub fn cv_viz_Camera_KinectCamera_const_SizeX(window_size: *const core::Size) -> Result<*mut c_void>;
 		pub fn cv_viz_Color_Color() -> Result<*mut c_void>;
 		pub fn cv_viz_Color_Color_double(gray: f64) -> Result<*mut c_void>;
@@ -5004,12 +5019,18 @@ mod viz_sys {
 		pub fn cv_viz_MouseEvent_MouseEvent_const_TypeX_const_MouseButtonX_const_PointX_int(typ: *const crate::viz::MouseEvent_Type, button: *const crate::viz::MouseEvent_MouseButton, pointer: *const core::Point, modifiers: i32) -> Result<*mut c_void>;
 		pub fn cv_viz_Viz3d_Viz3d_const_StringX(window_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_viz_Viz3d_Viz3d_const_Viz3dX(unnamed: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_viz_Viz3d_showWidget_const_StringX_const_WidgetX_const_Affine3dX(instance: *mut c_void, id: *const c_char, widget: *mut c_void, pose: *const core::Affine3d) -> Result_void;
 		pub fn cv_viz_Viz3d_removeWidget_const_StringX(instance: *mut c_void, id: *const c_char) -> Result_void;
 		pub fn cv_viz_Viz3d_getWidget_const_const_StringX(instance: *mut c_void, id: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_viz_Viz3d_removeAllWidgets(instance: *mut c_void) -> Result_void;
 		pub fn cv_viz_Viz3d_showImage_const__InputArrayX_const_SizeX(instance: *mut c_void, image: *mut c_void, window_size: *const core::Size) -> Result_void;
+		pub fn cv_viz_Viz3d_setWidgetPose_const_StringX_const_Affine3dX(instance: *mut c_void, id: *const c_char, pose: *const core::Affine3d) -> Result_void;
+		pub fn cv_viz_Viz3d_updateWidgetPose_const_StringX_const_Affine3dX(instance: *mut c_void, id: *const c_char, pose: *const core::Affine3d) -> Result_void;
+		pub fn cv_viz_Viz3d_getWidgetPose_const_const_StringX(instance: *mut c_void, id: *const c_char) -> Result<core::Affine3d>;
 		pub fn cv_viz_Viz3d_setCamera_const_CameraX(instance: *mut c_void, camera: *mut c_void) -> Result_void;
 		pub fn cv_viz_Viz3d_getCamera_const(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_viz_Viz3d_getViewerPose_const(instance: *mut c_void) -> Result<core::Affine3d>;
+		pub fn cv_viz_Viz3d_setViewerPose_const_Affine3dX(instance: *mut c_void, pose: *const core::Affine3d) -> Result_void;
 		pub fn cv_viz_Viz3d_resetCameraViewpoint_const_StringX(instance: *mut c_void, id: *const c_char) -> Result_void;
 		pub fn cv_viz_Viz3d_resetCamera(instance: *mut c_void) -> Result_void;
 		pub fn cv_viz_Viz3d_convertToWindowCoordinates_const_Point3dX_Point3dX(instance: *mut c_void, pt: *const core::Point3d, window_coord: *mut core::Point3d) -> Result_void;
@@ -5039,7 +5060,9 @@ mod viz_sys {
 		pub fn cv_viz_Viz3d_setGlobalWarnings_bool(instance: *mut c_void, enabled: bool) -> Result_void;
 		pub fn cv_viz_WArrow_WArrow_const_Point3dX_const_Point3dX_double_const_ColorX(pt1: *const core::Point3d, pt2: *const core::Point3d, thickness: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCameraPosition_WCameraPosition_double(scale: f64) -> Result<*mut c_void>;
+		pub fn cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_double_const_ColorX(k: *const core::Matx33d, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_double_const_ColorX(fov: *const core::Vec2d, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_const__InputArrayX_double_const_ColorX(k: *const core::Matx33d, image: *mut c_void, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_const__InputArrayX_double_const_ColorX(fov: *const core::Vec2d, image: *mut c_void, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCircle_WCircle_double_double_const_ColorX(radius: f64, thickness: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCircle_WCircle_double_const_Point3dX_const_Vec3dX_double_const_ColorX(radius: f64, center: *const core::Point3d, normal: *const core::Vec3d, thickness: f64, color: *mut c_void) -> Result<*mut c_void>;
@@ -5048,6 +5071,8 @@ mod viz_sys {
 		pub fn cv_viz_WCloud_WCloud_const__InputArrayX_const__InputArrayX_const__InputArrayX(cloud: *mut c_void, colors: *mut c_void, normals: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCloud_WCloud_const__InputArrayX_const_ColorX_const__InputArrayX(cloud: *mut c_void, color: *mut c_void, normals: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCloudCollection_WCloudCollection() -> Result<*mut c_void>;
+		pub fn cv_viz_WCloudCollection_addCloud_const__InputArrayX_const__InputArrayX_const_Affine3dX(instance: *mut c_void, cloud: *mut c_void, colors: *mut c_void, pose: *const core::Affine3d) -> Result_void;
+		pub fn cv_viz_WCloudCollection_addCloud_const__InputArrayX_const_ColorX_const_Affine3dX(instance: *mut c_void, cloud: *mut c_void, color: *mut c_void, pose: *const core::Affine3d) -> Result_void;
 		pub fn cv_viz_WCloudCollection_finalize(instance: *mut c_void) -> Result_void;
 		pub fn cv_viz_WCloudNormals_WCloudNormals_const__InputArrayX_const__InputArrayX_int_double_const_ColorX(cloud: *mut c_void, normals: *mut c_void, level: i32, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WCone_WCone_double_double_int_const_ColorX(length: f64, radius: f64, resolution: i32, color: *mut c_void) -> Result<*mut c_void>;
@@ -5081,9 +5106,11 @@ mod viz_sys {
 		pub fn cv_viz_WText3D_setText_const_StringX(instance: *mut c_void, text: *const c_char) -> Result_void;
 		pub fn cv_viz_WText3D_getText_const(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WTrajectory_WTrajectory_const__InputArrayX_int_double_const_ColorX(path: *mut c_void, display_mode: i32, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Matx33dX_double_const_ColorX(path: *mut c_void, k: *const core::Matx33d, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Vec2dX_double_const_ColorX(path: *mut c_void, fov: *const core::Vec2d, scale: f64, color: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WTrajectorySpheres_WTrajectorySpheres_const__InputArrayX_double_double_const_ColorX_const_ColorX(path: *mut c_void, line_length: f64, radius: f64, from: *mut c_void, to: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_viz_WWidgetMerger_WWidgetMerger() -> Result<*mut c_void>;
+		pub fn cv_viz_WWidgetMerger_addWidget_const_Widget3DX_const_Affine3dX(instance: *mut c_void, widget: *mut c_void, pose: *const core::Affine3d) -> Result_void;
 		pub fn cv_viz_WWidgetMerger_finalize(instance: *mut c_void) -> Result_void;
 		pub fn cv_viz_Widget_Widget() -> Result<*mut c_void>;
 		pub fn cv_viz_Widget_Widget_const_WidgetX(other: *mut c_void) -> Result<*mut c_void>;
@@ -5093,6 +5120,10 @@ mod viz_sys {
 		pub fn cv_viz_Widget2D_Widget2D() -> Result<*mut c_void>;
 		pub fn cv_viz_Widget2D_setColor_const_ColorX(instance: *mut c_void, color: *mut c_void) -> Result_void;
 		pub fn cv_viz_Widget3D_Widget3D() -> Result<*mut c_void>;
+		pub fn cv_viz_Widget3D_setPose_const_Affine3dX(instance: *mut c_void, pose: *const core::Affine3d) -> Result_void;
+		pub fn cv_viz_Widget3D_updatePose_const_Affine3dX(instance: *mut c_void, pose: *const core::Affine3d) -> Result_void;
+		pub fn cv_viz_Widget3D_getPose_const(instance: *mut c_void) -> Result<core::Affine3d>;
+		pub fn cv_viz_Widget3D_applyTransform_const_Affine3dX(instance: *mut c_void, transform: *const core::Affine3d) -> Result_void;
 		pub fn cv_viz_Widget3D_setColor_const_ColorX(instance: *mut c_void, color: *mut c_void) -> Result_void;
 	}
 }
@@ -5129,6 +5160,8 @@ mod xfeatures2d_sys {
 		pub fn cv_xfeatures2d_Elliptic_KeyPoint_setAxes_Size__float_(instance: *mut c_void, val: *const core::Size_<f32>) -> Result_void;
 		pub fn cv_xfeatures2d_Elliptic_KeyPoint_si_const(instance: *mut c_void) -> Result<f32>;
 		pub fn cv_xfeatures2d_Elliptic_KeyPoint_setSi_float(instance: *mut c_void, val: f32) -> Result_void;
+		pub fn cv_xfeatures2d_Elliptic_KeyPoint_transf_const(instance: *mut c_void) -> Result<core::Matx23f>;
+		pub fn cv_xfeatures2d_Elliptic_KeyPoint_setTransf_Matx23f(instance: *mut c_void, val: *const core::Matx23f) -> Result_void;
 		pub fn cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint() -> Result<*mut c_void>;
 		pub fn cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(pt: *const core::Point2f, angle: f32, axes: *const core::Size, size: f32, si: f32) -> Result<*mut c_void>;
 		pub fn cv_xfeatures2d_FREAK_NB_SCALES_const(instance: *mut c_void) -> Result<i32>;

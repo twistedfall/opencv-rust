@@ -24,6 +24,20 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
+	Result<cv::Affine3d> cv_viz_makeCameraPose_const_Vec3dX_const_Vec3dX_const_Vec3dX(const cv::Vec3d* position, const cv::Vec3d* focal_point, const cv::Vec3d* y_dir) {
+		try {
+			cv::Affine3d ret = cv::viz::makeCameraPose(*position, *focal_point, *y_dir);
+			return Ok<cv::Affine3d>(ret);
+		} OCVRS_CATCH(Result<cv::Affine3d>)
+	}
+	
+	Result<cv::Affine3d> cv_viz_makeTransformToGlobal_const_Vec3dX_const_Vec3dX_const_Vec3dX_const_Vec3dX(const cv::Vec3d* axis_x, const cv::Vec3d* axis_y, const cv::Vec3d* axis_z, const cv::Vec3d* origin) {
+		try {
+			cv::Affine3d ret = cv::viz::makeTransformToGlobal(*axis_x, *axis_y, *axis_z, *origin);
+			return Ok<cv::Affine3d>(ret);
+		} OCVRS_CATCH(Result<cv::Affine3d>)
+	}
+	
 	Result<void*> cv_viz_readCloud_const_StringX_const__OutputArrayX_const__OutputArrayX(const char* file, void* colors, void* normals) {
 		try {
 			cv::Mat ret = cv::viz::readCloud(cv::String(file), *reinterpret_cast<const cv::_OutputArray*>(colors), *reinterpret_cast<const cv::_OutputArray*>(normals));
@@ -36,6 +50,13 @@ extern "C" {
 			cv::viz::Mesh ret = cv::viz::readMesh(cv::String(file));
 			return Ok<void*>(new cv::viz::Mesh(ret));
 		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result<bool> cv_viz_readPose_const_StringX_Affine3dX_const_StringX(const char* file, cv::Affine3d* pose, const char* tag) {
+		try {
+			bool ret = cv::viz::readPose(cv::String(file), *pose, cv::String(tag));
+			return Ok<bool>(ret);
+		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result_void cv_viz_readTrajectory_const__OutputArrayX_const_StringX_int_int_const_StringX(void* traj, const char* files_format, int start, int end, const char* tag) {
@@ -55,6 +76,13 @@ extern "C" {
 	Result_void cv_viz_writeCloud_const_StringX_const__InputArrayX_const__InputArrayX_const__InputArrayX_bool(const char* file, void* cloud, void* colors, void* normals, bool binary) {
 		try {
 			cv::viz::writeCloud(cv::String(file), *reinterpret_cast<const cv::_InputArray*>(cloud), *reinterpret_cast<const cv::_InputArray*>(colors), *reinterpret_cast<const cv::_InputArray*>(normals), binary);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_viz_writePose_const_StringX_const_Affine3dX_const_StringX(const char* file, const cv::Affine3d* pose, const char* tag) {
+		try {
+			cv::viz::writePose(cv::String(file), *pose, cv::String(tag));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -79,6 +107,20 @@ extern "C" {
 	Result<void*> cv_viz_Camera_Camera_const_Vec2dX_const_SizeX(const cv::Vec2d* fov, const cv::Size* window_size) {
 		try {
 			cv::viz::Camera* ret = new cv::viz::Camera(*fov, *window_size);
+			return Ok<void*>(ret);
+		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result<void*> cv_viz_Camera_Camera_const_Matx33dX_const_SizeX(const cv::Matx33d* K, const cv::Size* window_size) {
+		try {
+			cv::viz::Camera* ret = new cv::viz::Camera(*K, *window_size);
+			return Ok<void*>(ret);
+		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result<void*> cv_viz_Camera_Camera_const_Matx44dX_const_SizeX(const cv::Matx44d* proj, const cv::Size* window_size) {
+		try {
+			cv::viz::Camera* ret = new cv::viz::Camera(*proj, *window_size);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -137,6 +179,13 @@ extern "C" {
 			cv::Vec2d ret = reinterpret_cast<cv::viz::Camera*>(instance)->getFocalLength();
 			return Ok<cv::Vec2d>(ret);
 		} OCVRS_CATCH(Result<cv::Vec2d>)
+	}
+	
+	Result_void cv_viz_Camera_computeProjectionMatrix_const_Matx44dX(void* instance, cv::Matx44d* proj) {
+		try {
+			reinterpret_cast<cv::viz::Camera*>(instance)->computeProjectionMatrix(*proj);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
 	}
 	
 	Result<void*> cv_viz_Camera_KinectCamera_const_SizeX(const cv::Size* window_size) {
@@ -672,6 +721,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
+	Result_void cv_viz_Viz3d_showWidget_const_StringX_const_WidgetX_const_Affine3dX(void* instance, const char* id, void* widget, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::Viz3d*>(instance)->showWidget(cv::String(id), *reinterpret_cast<const cv::viz::Widget*>(widget), *pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	Result_void cv_viz_Viz3d_removeWidget_const_StringX(void* instance, const char* id) {
 		try {
 			reinterpret_cast<cv::viz::Viz3d*>(instance)->removeWidget(cv::String(id));
@@ -700,6 +756,27 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
+	Result_void cv_viz_Viz3d_setWidgetPose_const_StringX_const_Affine3dX(void* instance, const char* id, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::Viz3d*>(instance)->setWidgetPose(cv::String(id), *pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_viz_Viz3d_updateWidgetPose_const_StringX_const_Affine3dX(void* instance, const char* id, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::Viz3d*>(instance)->updateWidgetPose(cv::String(id), *pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result<cv::Affine3d> cv_viz_Viz3d_getWidgetPose_const_const_StringX(void* instance, const char* id) {
+		try {
+			cv::Affine3d ret = reinterpret_cast<cv::viz::Viz3d*>(instance)->getWidgetPose(cv::String(id));
+			return Ok<cv::Affine3d>(ret);
+		} OCVRS_CATCH(Result<cv::Affine3d>)
+	}
+	
 	Result_void cv_viz_Viz3d_setCamera_const_CameraX(void* instance, void* camera) {
 		try {
 			reinterpret_cast<cv::viz::Viz3d*>(instance)->setCamera(*reinterpret_cast<const cv::viz::Camera*>(camera));
@@ -712,6 +789,20 @@ extern "C" {
 			cv::viz::Camera ret = reinterpret_cast<cv::viz::Viz3d*>(instance)->getCamera();
 			return Ok<void*>(new cv::viz::Camera(ret));
 		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result<cv::Affine3d> cv_viz_Viz3d_getViewerPose(void* instance) {
+		try {
+			cv::Affine3d ret = reinterpret_cast<cv::viz::Viz3d*>(instance)->getViewerPose();
+			return Ok<cv::Affine3d>(ret);
+		} OCVRS_CATCH(Result<cv::Affine3d>)
+	}
+	
+	Result_void cv_viz_Viz3d_setViewerPose_const_Affine3dX(void* instance, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::Viz3d*>(instance)->setViewerPose(*pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
 	}
 	
 	Result_void cv_viz_Viz3d_resetCameraViewpoint_const_StringX(void* instance, const char* id) {
@@ -923,9 +1014,23 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
+	Result<void*> cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_double_const_ColorX(const cv::Matx33d* K, double scale, void* color) {
+		try {
+			cv::viz::WCameraPosition* ret = new cv::viz::WCameraPosition(*K, scale, *reinterpret_cast<const cv::viz::Color*>(color));
+			return Ok<void*>(ret);
+		} OCVRS_CATCH(Result<void*>)
+	}
+	
 	Result<void*> cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_double_const_ColorX(const cv::Vec2d* fov, double scale, void* color) {
 		try {
 			cv::viz::WCameraPosition* ret = new cv::viz::WCameraPosition(*fov, scale, *reinterpret_cast<const cv::viz::Color*>(color));
+			return Ok<void*>(ret);
+		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result<void*> cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_const__InputArrayX_double_const_ColorX(const cv::Matx33d* K, void* image, double scale, void* color) {
+		try {
+			cv::viz::WCameraPosition* ret = new cv::viz::WCameraPosition(*K, *reinterpret_cast<const cv::_InputArray*>(image), scale, *reinterpret_cast<const cv::viz::Color*>(color));
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -993,6 +1098,20 @@ extern "C" {
 			cv::viz::WCloudCollection* ret = new cv::viz::WCloudCollection();
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result_void cv_viz_WCloudCollection_addCloud_const__InputArrayX_const__InputArrayX_const_Affine3dX(void* instance, void* cloud, void* colors, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::WCloudCollection*>(instance)->addCloud(*reinterpret_cast<const cv::_InputArray*>(cloud), *reinterpret_cast<const cv::_InputArray*>(colors), *pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_viz_WCloudCollection_addCloud_const__InputArrayX_const_ColorX_const_Affine3dX(void* instance, void* cloud, void* color, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::WCloudCollection*>(instance)->addCloud(*reinterpret_cast<const cv::_InputArray*>(cloud), *reinterpret_cast<const cv::viz::Color*>(color), *pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
 	}
 	
 	Result_void cv_viz_WCloudCollection_finalize(void* instance) {
@@ -1280,6 +1399,13 @@ extern "C" {
 	void cv_WTrajectoryFrustums_delete(cv::viz::WTrajectoryFrustums* instance) {
 		delete instance;
 	}
+	Result<void*> cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Matx33dX_double_const_ColorX(void* path, const cv::Matx33d* K, double scale, void* color) {
+		try {
+			cv::viz::WTrajectoryFrustums* ret = new cv::viz::WTrajectoryFrustums(*reinterpret_cast<const cv::_InputArray*>(path), *K, scale, *reinterpret_cast<const cv::viz::Color*>(color));
+			return Ok<void*>(ret);
+		} OCVRS_CATCH(Result<void*>)
+	}
+	
 	Result<void*> cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Vec2dX_double_const_ColorX(void* path, const cv::Vec2d* fov, double scale, void* color) {
 		try {
 			cv::viz::WTrajectoryFrustums* ret = new cv::viz::WTrajectoryFrustums(*reinterpret_cast<const cv::_InputArray*>(path), *fov, scale, *reinterpret_cast<const cv::viz::Color*>(color));
@@ -1305,6 +1431,13 @@ extern "C" {
 			cv::viz::WWidgetMerger* ret = new cv::viz::WWidgetMerger();
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result_void cv_viz_WWidgetMerger_addWidget_const_Widget3DX_const_Affine3dX(void* instance, void* widget, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::WWidgetMerger*>(instance)->addWidget(*reinterpret_cast<const cv::viz::Widget3D*>(widget), *pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
 	}
 	
 	Result_void cv_viz_WWidgetMerger_finalize(void* instance) {
@@ -1377,6 +1510,34 @@ extern "C" {
 			cv::viz::Widget3D* ret = new cv::viz::Widget3D();
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result_void cv_viz_Widget3D_setPose_const_Affine3dX(void* instance, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::Widget3D*>(instance)->setPose(*pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_viz_Widget3D_updatePose_const_Affine3dX(void* instance, const cv::Affine3d* pose) {
+		try {
+			reinterpret_cast<cv::viz::Widget3D*>(instance)->updatePose(*pose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result<cv::Affine3d> cv_viz_Widget3D_getPose_const(void* instance) {
+		try {
+			cv::Affine3d ret = reinterpret_cast<cv::viz::Widget3D*>(instance)->getPose();
+			return Ok<cv::Affine3d>(ret);
+		} OCVRS_CATCH(Result<cv::Affine3d>)
+	}
+	
+	Result_void cv_viz_Widget3D_applyTransform_const_Affine3dX(void* instance, const cv::Affine3d* transform) {
+		try {
+			reinterpret_cast<cv::viz::Widget3D*>(instance)->applyTransform(*transform);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
 	}
 	
 	Result_void cv_viz_Widget3D_setColor_const_ColorX(void* instance, void* color) {

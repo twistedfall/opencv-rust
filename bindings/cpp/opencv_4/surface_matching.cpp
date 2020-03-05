@@ -20,6 +20,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
+	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_doubleX_Matx44dX(void* instance, void* srcPC, void* dstPC, double* residual, cv::Matx44d* pose) {
+		try {
+			int ret = reinterpret_cast<cv::ppf_match_3d::ICP*>(instance)->registerModelToScene(*reinterpret_cast<const cv::Mat*>(srcPC), *reinterpret_cast<const cv::Mat*>(dstPC), *residual, *pose);
+			return Ok<int>(ret);
+		} OCVRS_CATCH(Result<int>)
+	}
+	
 	Result<int> cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X(void* instance, void* srcPC, void* dstPC, void* poses) {
 		try {
 			int ret = reinterpret_cast<cv::ppf_match_3d::ICP*>(instance)->registerModelToScene(*reinterpret_cast<const cv::Mat*>(srcPC), *reinterpret_cast<const cv::Mat*>(dstPC), *reinterpret_cast<std::vector<cv::ppf_match_3d::Pose3DPtr>*>(poses));
@@ -135,6 +142,20 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
+	Result<cv::Matx44d> cv_ppf_match_3d_Pose3D_pose_const(void* instance) {
+		try {
+			cv::Matx44d ret = reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->pose;
+			return Ok<cv::Matx44d>(ret);
+		} OCVRS_CATCH(Result<cv::Matx44d>)
+	}
+	
+	Result_void cv_ppf_match_3d_Pose3D_setPose_Matx44d(void* instance, cv::Matx44d val) {
+		try {
+			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->pose = val;
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	Result<double> cv_ppf_match_3d_Pose3D_angle_const(void* instance) {
 		try {
 			double ret = reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->angle;
@@ -194,9 +215,30 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
+	Result_void cv_ppf_match_3d_Pose3D_updatePose_Matx44dX(void* instance, cv::Matx44d* NewPose) {
+		try {
+			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->updatePose(*NewPose);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_ppf_match_3d_Pose3D_updatePose_Matx33dX_Vec3dX(void* instance, cv::Matx33d* NewR, cv::Vec3d* NewT) {
+		try {
+			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->updatePose(*NewR, *NewT);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	Result_void cv_ppf_match_3d_Pose3D_updatePoseQuat_Vec4dX_Vec3dX(void* instance, cv::Vec4d* Q, cv::Vec3d* NewT) {
 		try {
 			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->updatePoseQuat(*Q, *NewT);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_ppf_match_3d_Pose3D_appendPose_Matx44dX(void* instance, cv::Matx44d* IncrementalPose) {
+		try {
+			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->appendPose(*IncrementalPose);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

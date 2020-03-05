@@ -1,3 +1,4 @@
+template struct Result<cv::Matx<double, 4, 4>>;
 template struct Result<cv::Vec<double, 3>>;
 template struct Result<cv::Vec<double, 4>>;
 template struct Result<double>;

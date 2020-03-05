@@ -441,6 +441,16 @@ pub trait Elliptic_KeyPointTrait {
 		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setSi_float(self.as_raw_Elliptic_KeyPoint(), val) }.into_result().expect("Infallible function failed: set_si")
 	}
 	
+	/// the transformation between image space and local patch space
+	fn transf(&self) -> core::Matx23f {
+		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_transf_const(self.as_raw_Elliptic_KeyPoint()) }.into_result().expect("Infallible function failed: transf")
+	}
+	
+	/// the transformation between image space and local patch space
+	fn set_transf(&mut self, val: core::Matx23f) -> () {
+		unsafe { sys::cv_xfeatures2d_Elliptic_KeyPoint_setTransf_Matx23f(self.as_raw_Elliptic_KeyPoint(), &val) }.into_result().expect("Infallible function failed: set_transf")
+	}
+	
 }
 
 /// Elliptic region around an interest point.

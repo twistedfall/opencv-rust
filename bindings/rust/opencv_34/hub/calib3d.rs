@@ -1927,12 +1927,45 @@ pub fn fisheye_init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn co
 /// image points coordinates (as functions of all the input parameters) with respect to the particular
 /// parameters, intrinsic and/or extrinsic.
 /// 
+/// ## C++ default parameters
+/// * alpha: 0
+/// * jacobian: noArray()
+pub fn fisheye_project_points(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, affine: core::Affine3d, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
+	input_array_arg!(object_points);
+	output_array_arg!(image_points);
+	input_array_arg!(k);
+	input_array_arg!(d);
+	output_array_arg!(jacobian);
+	unsafe { sys::cv_fisheye_projectPoints_const__InputArrayX_const__OutputArrayX_const_Affine3dX_const__InputArrayX_const__InputArrayX_double_const__OutputArrayX(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), d.as_raw__InputArray(), alpha, jacobian.as_raw__OutputArray()) }.into_result()
+}
+
+/// Projects points using fisheye model
+/// 
+/// ## Parameters
+/// * objectPoints: Array of object points, 1xN/Nx1 3-channel (or vector\<Point3f\> ), where N is
+/// the number of points in the view.
+/// * imagePoints: Output array of image points, 2xN/Nx2 1-channel or 1xN/Nx1 2-channel, or
+/// vector\<Point2f\>.
+/// * affine: 
+/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%200%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20k%5F3%2C%20k%5F4%29).
+/// * alpha: The skew coefficient.
+/// * jacobian: Optional output 2Nx15 jacobian matrix of derivatives of image points with respect
+/// to components of the focal lengths, coordinates of the principal point, distortion coefficients,
+/// rotation vector, translation vector, and the skew. In the old interface different components of
+/// the jacobian are returned via different output parameters.
+/// 
+/// The function computes projections of 3D points to the image plane given intrinsic and extrinsic
+/// camera parameters. Optionally, the function computes Jacobians - matrices of partial derivatives of
+/// image points coordinates (as functions of all the input parameters) with respect to the particular
+/// parameters, intrinsic and/or extrinsic.
+/// 
 /// ## Overloaded parameters
 /// 
 /// ## C++ default parameters
 /// * alpha: 0
 /// * jacobian: noArray()
-pub fn fisheye_project_points(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
+pub fn fisheye_project_points_vec(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, rvec: &dyn core::ToInputArray, tvec: &dyn core::ToInputArray, k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, alpha: f64, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(object_points);
 	output_array_arg!(image_points);
 	input_array_arg!(rvec);

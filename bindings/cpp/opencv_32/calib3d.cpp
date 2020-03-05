@@ -226,6 +226,13 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
+	Result_void cv_fisheye_projectPoints_const__InputArrayX_const__OutputArrayX_const_Affine3dX_const__InputArrayX_const__InputArrayX_double_const__OutputArrayX(void* objectPoints, void* imagePoints, const cv::Affine3d* affine, void* K, void* D, double alpha, void* jacobian) {
+		try {
+			cv::fisheye::projectPoints(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_OutputArray*>(imagePoints), *affine, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(D), alpha, *reinterpret_cast<const cv::_OutputArray*>(jacobian));
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	Result_void cv_fisheye_projectPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_const__OutputArrayX(void* objectPoints, void* imagePoints, void* rvec, void* tvec, void* K, void* D, double alpha, void* jacobian) {
 		try {
 			cv::fisheye::projectPoints(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_OutputArray*>(imagePoints), *reinterpret_cast<const cv::_InputArray*>(rvec), *reinterpret_cast<const cv::_InputArray*>(tvec), *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(D), alpha, *reinterpret_cast<const cv::_OutputArray*>(jacobian));

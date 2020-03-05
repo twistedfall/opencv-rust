@@ -1,5 +1,6 @@
 template struct Result<bool>;
 template struct Result<const unsigned char*>;
+template struct Result<cv::Matx<double, 2, 3>>;
 template struct Result<cv::Moments>;
 template struct Result<cv::Point_<double>>;
 template struct Result<cv::Point_<float>>;

@@ -4470,6 +4470,12 @@ pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> 
 	unsafe { sys::cv_getRotationMatrix2D_Point2f_double_double(&center, angle, scale) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
+/// ## See also
+/// getRotationMatrix2D
+pub fn get_rotation_matrix2_d_(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Matx23d> {
+	unsafe { sys::cv_getRotationMatrix2D__Point2f_double_double(&center, angle, scale) }.into_result()
+}
+
 /// Returns a structuring element of the specified size and shape for morphological operations.
 /// 
 /// The function constructs and returns the structuring element that can be further passed to #erode,

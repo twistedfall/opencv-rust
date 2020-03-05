@@ -159,6 +159,39 @@ pub fn imshow(window_name: &str, image: &dyn core::ToInputArray, window_size: co
 	unsafe { sys::cv_viz_imshow_const_StringX_const__InputArrayX_const_SizeX(window_name.as_ptr(), image.as_raw__InputArray(), &window_size) }.into_result().map(|ptr| crate::viz::Viz3d { ptr })
 }
 
+/// Constructs camera pose from position, focal_point and up_vector (see gluLookAt() for more
+/// information).
+/// 
+/// ## Parameters
+/// * position: Position of the camera in global coordinate frame.
+/// * focal_point: Focal point of the camera in global coordinate frame.
+/// * y_dir: Up vector of the camera in global coordinate frame.
+/// 
+/// This function returns pose of the camera in global coordinate frame.
+pub fn make_camera_pose(position: core::Vec3d, focal_point: core::Vec3d, y_dir: core::Vec3d) -> Result<core::Affine3d> {
+	unsafe { sys::cv_viz_makeCameraPose_const_Vec3dX_const_Vec3dX_const_Vec3dX(&position, &focal_point, &y_dir) }.into_result()
+}
+
+/// Takes coordinate frame data and builds transform to global coordinate frame.
+/// 
+/// ## Parameters
+/// * axis_x: X axis vector in global coordinate frame.
+/// * axis_y: Y axis vector in global coordinate frame.
+/// * axis_z: Z axis vector in global coordinate frame.
+/// * origin: Origin of the coordinate frame in global coordinate frame.
+/// 
+/// ## Returns
+/// An affine transform that describes transformation between global coordinate frame
+/// and a given coordinate frame.
+/// The returned transforms can transform a point in the given coordinate frame to the global
+/// coordinate frame.
+/// 
+/// ## C++ default parameters
+/// * origin: Vec3d::all(0)
+pub fn make_transform_to_global(axis_x: core::Vec3d, axis_y: core::Vec3d, axis_z: core::Vec3d, origin: core::Vec3d) -> Result<core::Affine3d> {
+	unsafe { sys::cv_viz_makeTransformToGlobal_const_Vec3dX_const_Vec3dX_const_Vec3dX_const_Vec3dX(&axis_x, &axis_y, &axis_z, &origin) }.into_result()
+}
+
 /// ## Parameters
 /// * file: Filename with extension. Supported formats: PLY, XYZ, OBJ and STL.
 /// * colors: Used by PLY and STL formats only.
@@ -182,6 +215,19 @@ pub fn read_cloud(file: &str, colors: &mut dyn core::ToOutputArray, normals: &mu
 pub fn read_mesh(file: &str) -> Result<crate::viz::Mesh> {
 	string_arg!(file);
 	unsafe { sys::cv_viz_readMesh_const_StringX(file.as_ptr()) }.into_result().map(|ptr| crate::viz::Mesh { ptr })
+}
+
+/// ## Parameters
+/// * file: Filename of type supported by cv::FileStorage.
+/// * pose: Output matrix.
+/// * tag: Name of the pose in the file.
+/// 
+/// ## C++ default parameters
+/// * tag: "pose"
+pub fn read_pose(file: &str, pose: &mut core::Affine3d, tag: &str) -> Result<bool> {
+	string_arg!(file);
+	string_arg!(tag);
+	unsafe { sys::cv_viz_readPose_const_StringX_Affine3dX_const_StringX(file.as_ptr(), pose, tag.as_ptr()) }.into_result()
 }
 
 /// takes vector<Affine3<T>> with T = float/dobule and loads poses from sequence of files
@@ -231,6 +277,19 @@ pub fn write_cloud(file: &str, cloud: &dyn core::ToInputArray, colors: &dyn core
 	input_array_arg!(colors);
 	input_array_arg!(normals);
 	unsafe { sys::cv_viz_writeCloud_const_StringX_const__InputArrayX_const__InputArrayX_const__InputArrayX_bool(file.as_ptr(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), normals.as_raw__InputArray(), binary) }.into_result()
+}
+
+/// ## Parameters
+/// * file: Filename.
+/// * pose: Input matrix.
+/// * tag: Name of the pose to be saved into the given file.
+/// 
+/// ## C++ default parameters
+/// * tag: "pose"
+pub fn write_pose(file: &str, pose: core::Affine3d, tag: &str) -> Result<()> {
+	string_arg!(file);
+	string_arg!(tag);
+	unsafe { sys::cv_viz_writePose_const_StringX_const_Affine3dX_const_StringX(file.as_ptr(), &pose, tag.as_ptr()) }.into_result()
 }
 
 /// takes vector<Affine3<T>> with T = float/dobule and writes to a sequence of files with given filename format
@@ -291,6 +350,16 @@ pub trait CameraTrait {
 	
 	fn get_focal_length(&self) -> Result<core::Vec2d> {
 		unsafe { sys::cv_viz_Camera_getFocalLength_const(self.as_raw_Camera()) }.into_result()
+	}
+	
+	/// Computes projection matrix using intrinsic parameters of the camera.
+	/// 
+	/// 
+	/// ## Parameters
+	/// * proj: Output projection matrix with the following form
+	/// ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%5Cend%7Bbmatrix%7D%0A)
+	fn compute_projection_matrix(&self, proj: &mut core::Matx44d) -> Result<()> {
+		unsafe { sys::cv_viz_Camera_computeProjectionMatrix_const_Matx44dX(self.as_raw_Camera(), proj) }.into_result()
 	}
 	
 }
@@ -355,6 +424,47 @@ impl Camera {
 	///            by default.
 	pub fn new_1(fov: core::Vec2d, window_size: core::Size) -> Result<crate::viz::Camera> {
 		unsafe { sys::cv_viz_Camera_Camera_const_Vec2dX_const_SizeX(&fov, &window_size) }.into_result().map(|ptr| crate::viz::Camera { ptr })
+	}
+	
+	/// Constructs a Camera.
+	/// 
+	/// ## Parameters
+	/// * fx: Horizontal focal length.
+	/// * fy: Vertical focal length.
+	/// * cx: x coordinate of the principal point.
+	/// * cy: y coordinate of the principal point.
+	/// * window_size: Size of the window. This together with focal length and principal
+	/// point determines the field of view.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * K: Intrinsic matrix of the camera with the following form
+	///            ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20f%5Fx%20%26%20%20%200%20%26%20c%5Fx%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%26%20%20%200%20%26%20%20%201%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)
+	/// * window_size: Size of the window. This together with intrinsic matrix determines
+	///            the field of view.
+	pub fn new_2(k: core::Matx33d, window_size: core::Size) -> Result<crate::viz::Camera> {
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx33dX_const_SizeX(&k, &window_size) }.into_result().map(|ptr| crate::viz::Camera { ptr })
+	}
+	
+	/// Constructs a Camera.
+	/// 
+	/// ## Parameters
+	/// * fx: Horizontal focal length.
+	/// * fy: Vertical focal length.
+	/// * cx: x coordinate of the principal point.
+	/// * cy: y coordinate of the principal point.
+	/// * window_size: Size of the window. This together with focal length and principal
+	/// point determines the field of view.
+	/// 
+	/// ## Overloaded parameters
+	/// 
+	/// * proj: Projection matrix of the camera with the following form
+	///            ![block formula](https://latex.codecogs.com/png.latex?%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cbegin%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cfrac%7B2n%7D%7Br%2Dl%7D%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%5Cfrac%7Br%2Bl%7D%7Br%2Dl%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%5Cfrac%7B2n%7D%7Bt%2Db%7D%20%26%20%5Cfrac%7Bt%2Bb%7D%7Bt%2Db%7D%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D%5Cfrac%7Bf%2Bn%7D%7Bf%2Dn%7D%20%26%20%2D%5Cfrac%7B2fn%7D%7Bf%2Dn%7D%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%20%26%20%20%20%20%20%20%20%200%20%20%20%20%20%20%20%26%20%2D1%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%26%200%5C%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5Cend%7Bbmatrix%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20)
+	/// 
+	/// * window_size: Size of the window. This together with projection matrix determines
+	///            the field of view.
+	pub fn new_3(proj: core::Matx44d, window_size: core::Size) -> Result<crate::viz::Camera> {
+		unsafe { sys::cv_viz_Camera_Camera_const_Matx44dX_const_SizeX(&proj, &window_size) }.into_result().map(|ptr| crate::viz::Camera { ptr })
 	}
 	
 	/// Creates a Kinect Camera with
@@ -838,6 +948,19 @@ impl MouseEvent {
 /// The Viz3d class represents a 3D visualizer window. This class is implicitly shared.
 pub trait Viz3dTrait {
 	fn as_raw_Viz3d(&self) -> *mut c_void;
+	/// Shows a widget in the window.
+	/// 
+	/// ## Parameters
+	/// * id: A unique id for the widget. @param widget The widget to be displayed in the window.
+	/// * pose: Pose of the widget.
+	/// 
+	/// ## C++ default parameters
+	/// * pose: Affine3d::Identity()
+	fn show_widget(&mut self, id: &str, widget: &crate::viz::Widget, pose: core::Affine3d) -> Result<()> {
+		string_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_showWidget_const_StringX_const_WidgetX_const_Affine3dX(self.as_raw_Viz3d(), id.as_ptr(), widget.as_raw_Widget(), &pose) }.into_result()
+	}
+	
 	/// Removes a widget from the window.
 	/// 
 	/// ## Parameters
@@ -877,6 +1000,34 @@ pub trait Viz3dTrait {
 		unsafe { sys::cv_viz_Viz3d_showImage_const__InputArrayX_const_SizeX(self.as_raw_Viz3d(), image.as_raw__InputArray(), &window_size) }.into_result()
 	}
 	
+	/// Sets pose of a widget in the window.
+	/// 
+	/// ## Parameters
+	/// * id: The id of the widget whose pose will be set. @param pose The new pose of the widget.
+	fn set_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
+		string_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_setWidgetPose_const_StringX_const_Affine3dX(self.as_raw_Viz3d(), id.as_ptr(), &pose) }.into_result()
+	}
+	
+	/// Updates pose of a widget in the window by pre-multiplying its current pose.
+	/// 
+	/// ## Parameters
+	/// * id: The id of the widget whose pose will be updated. @param pose The pose that the current
+	/// pose of the widget will be pre-multiplied by.
+	fn update_widget_pose(&mut self, id: &str, pose: core::Affine3d) -> Result<()> {
+		string_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_updateWidgetPose_const_StringX_const_Affine3dX(self.as_raw_Viz3d(), id.as_ptr(), &pose) }.into_result()
+	}
+	
+	/// Returns the current pose of a widget in the window.
+	/// 
+	/// ## Parameters
+	/// * id: The id of the widget whose pose will be returned.
+	fn get_widget_pose(&self, id: &str) -> Result<core::Affine3d> {
+		string_arg!(id);
+		unsafe { sys::cv_viz_Viz3d_getWidgetPose_const_const_StringX(self.as_raw_Viz3d(), id.as_ptr()) }.into_result()
+	}
+	
 	/// Sets the intrinsic parameters of the viewer using Camera.
 	/// 
 	/// ## Parameters
@@ -888,6 +1039,19 @@ pub trait Viz3dTrait {
 	/// Returns a camera object that contains intrinsic parameters of the current viewer.
 	fn get_camera(&self) -> Result<crate::viz::Camera> {
 		unsafe { sys::cv_viz_Viz3d_getCamera_const(self.as_raw_Viz3d()) }.into_result().map(|ptr| crate::viz::Camera { ptr })
+	}
+	
+	/// Returns the current pose of the viewer.
+	fn get_viewer_pose(&self) -> Result<core::Affine3d> {
+		unsafe { sys::cv_viz_Viz3d_getViewerPose_const(self.as_raw_Viz3d()) }.into_result()
+	}
+	
+	/// Sets pose of the viewer.
+	/// 
+	/// ## Parameters
+	/// * pose: The new pose of the viewer.
+	fn set_viewer_pose(&mut self, pose: core::Affine3d) -> Result<()> {
+		unsafe { sys::cv_viz_Viz3d_setViewerPose_const_Affine3dX(self.as_raw_Viz3d(), &pose) }.into_result()
 	}
 	
 	/// Resets camera viewpoint to a 3D widget in the scene.
@@ -1317,6 +1481,23 @@ impl WCameraPosition {
 	
 	/// Display the viewing frustum
 	/// ## Parameters
+	/// * K: Intrinsic matrix of the camera.
+	/// * scale: Scale of the frustum.
+	/// * color: Color of the frustum.
+	/// 
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K.
+	/// 
+	/// ![Camera viewing frustum](https://docs.opencv.org/4.2.0/cpw2.png)
+	/// 
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	/// * color: Color::white()
+	pub fn new_1(k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_double_const_ColorX(&k, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCameraPosition { ptr })
+	}
+	
+	/// Display the viewing frustum
+	/// ## Parameters
 	/// * fov: Field of view of the camera (horizontal, vertical).
 	/// * scale: Scale of the frustum.
 	/// * color: Color of the frustum.
@@ -1328,8 +1509,29 @@ impl WCameraPosition {
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	/// * color: Color::white()
-	pub fn new_1(fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+	pub fn new_2(fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
 		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_double_const_ColorX(&fov, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCameraPosition { ptr })
+	}
+	
+	/// Display image on the far plane of the viewing frustum
+	/// 
+	/// ## Parameters
+	/// * K: Intrinsic matrix of the camera.
+	/// * image: BGR or Gray-Scale image that is going to be displayed on the far plane of the frustum.
+	/// * scale: Scale of the frustum and image.
+	/// * color: Color of the frustum.
+	/// 
+	/// Creates viewing frustum of the camera based on its intrinsic matrix K, and displays image on
+	/// the far end plane.
+	/// 
+	/// ![Camera viewing frustum with image](https://docs.opencv.org/4.2.0/cpw3.png)
+	/// 
+	/// ## C++ default parameters
+	/// * scale: 1.0
+	/// * color: Color::white()
+	pub fn new_3(k: core::Matx33d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+		input_array_arg!(image);
+		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Matx33dX_const__InputArrayX_double_const_ColorX(&k, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCameraPosition { ptr })
 	}
 	
 	///  Display image on the far plane of the viewing frustum
@@ -1348,7 +1550,7 @@ impl WCameraPosition {
 	/// ## C++ default parameters
 	/// * scale: 1.0
 	/// * color: Color::white()
-	pub fn new_2(fov: core::Vec2d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
+	pub fn new_4(fov: core::Vec2d, image: &dyn core::ToInputArray, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WCameraPosition> {
 		input_array_arg!(image);
 		unsafe { sys::cv_viz_WCameraPosition_WCameraPosition_const_Vec2dX_const__InputArrayX_double_const_ColorX(&fov, image.as_raw__InputArray(), scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WCameraPosition { ptr })
 	}
@@ -1535,6 +1737,36 @@ impl WCloud {
 /// Note: In case there are four channels in the cloud, fourth channel is ignored.
 pub trait WCloudCollectionTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
 	fn as_raw_WCloudCollection(&self) -> *mut c_void;
+	/// Adds a cloud to the collection.
+	/// 
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * colors: Set of colors. It has to be of the same size with cloud.
+	/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	/// 
+	/// ## C++ default parameters
+	/// * pose: Affine3d::Identity()
+	fn add_cloud(&mut self, cloud: &dyn core::ToInputArray, colors: &dyn core::ToInputArray, pose: core::Affine3d) -> Result<()> {
+		input_array_arg!(cloud);
+		input_array_arg!(colors);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayX_const__InputArrayX_const_Affine3dX(self.as_raw_WCloudCollection(), cloud.as_raw__InputArray(), colors.as_raw__InputArray(), &pose) }.into_result()
+	}
+	
+	/// Adds a cloud to the collection.
+	/// 
+	/// ## Parameters
+	/// * cloud: Point set which can be of type: CV_32FC3, CV_32FC4, CV_64FC3, CV_64FC4.
+	/// * color: A single Color for the whole cloud.
+	/// * pose: Pose of the cloud. Points in the cloud belong to mask when they are set to (NaN, NaN, NaN).
+	/// 
+	/// ## C++ default parameters
+	/// * color: Color::white()
+	/// * pose: Affine3d::Identity()
+	fn add_cloud_1(&mut self, cloud: &dyn core::ToInputArray, color: &crate::viz::Color, pose: core::Affine3d) -> Result<()> {
+		input_array_arg!(cloud);
+		unsafe { sys::cv_viz_WCloudCollection_addCloud_const__InputArrayX_const_ColorX_const_Affine3dX(self.as_raw_WCloudCollection(), cloud.as_raw__InputArray(), color.as_raw_Color(), &pose) }.into_result()
+	}
+	
 	/// Finalizes cloud data by repacking to single cloud.
 	/// 
 	/// Useful for large cloud collections to reduce memory usage
@@ -2734,6 +2966,24 @@ impl WTrajectoryFrustums {
 	/// 
 	/// ## Parameters
 	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
+	/// * K: Intrinsic matrix of the camera.
+	/// * scale: Scale of the frustums.
+	/// * color: Color of the frustums.
+	/// 
+	/// Displays frustums at each pose of the trajectory.
+	/// 
+	/// ## C++ default parameters
+	/// * scale: 1.
+	/// * color: Color::white()
+	pub fn new(path: &dyn core::ToInputArray, k: core::Matx33d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
+		input_array_arg!(path);
+		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Matx33dX_double_const_ColorX(path.as_raw__InputArray(), &k, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectoryFrustums { ptr })
+	}
+	
+	/// Constructs a WTrajectoryFrustums.
+	/// 
+	/// ## Parameters
+	/// * path: List of poses on a trajectory. Takes std::vector\<Affine\<T\>\> with T == [float | double]
 	/// * fov: Field of view of the camera (horizontal, vertical).
 	/// * scale: Scale of the frustums.
 	/// * color: Color of the frustums.
@@ -2743,7 +2993,7 @@ impl WTrajectoryFrustums {
 	/// ## C++ default parameters
 	/// * scale: 1.
 	/// * color: Color::white()
-	pub fn new(path: &dyn core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
+	pub fn new_1(path: &dyn core::ToInputArray, fov: core::Vec2d, scale: f64, color: &crate::viz::Color) -> Result<crate::viz::WTrajectoryFrustums> {
 		input_array_arg!(path);
 		unsafe { sys::cv_viz_WTrajectoryFrustums_WTrajectoryFrustums_const__InputArrayX_const_Vec2dX_double_const_ColorX(path.as_raw__InputArray(), &fov, scale, color.as_raw_Color()) }.into_result().map(|ptr| crate::viz::WTrajectoryFrustums { ptr })
 	}
@@ -2825,6 +3075,14 @@ impl WTrajectorySpheres {
 /// widgets. :
 pub trait WWidgetMergerTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
 	fn as_raw_WWidgetMerger(&self) -> *mut c_void;
+	/// Add widget to merge with optional position change
+	/// 
+	/// ## C++ default parameters
+	/// * pose: Affine3d::Identity()
+	fn add_widget(&mut self, widget: &crate::viz::Widget3D, pose: core::Affine3d) -> Result<()> {
+		unsafe { sys::cv_viz_WWidgetMerger_addWidget_const_Widget3DX_const_Affine3dX(self.as_raw_WWidgetMerger(), widget.as_raw_Widget3D(), &pose) }.into_result()
+	}
+	
 	/// Repacks internal structure to single widget
 	fn finalize(&mut self) -> Result<()> {
 		unsafe { sys::cv_viz_WWidgetMerger_finalize(self.as_raw_WWidgetMerger()) }.into_result()
@@ -3040,6 +3298,35 @@ impl Widget2D {
 /// Base class of all 3D widgets.
 pub trait Widget3DTrait: crate::viz::WidgetTrait {
 	fn as_raw_Widget3D(&self) -> *mut c_void;
+	/// Sets pose of the widget.
+	/// 
+	/// ## Parameters
+	/// * pose: The new pose of the widget.
+	fn set_pose(&mut self, pose: core::Affine3d) -> Result<()> {
+		unsafe { sys::cv_viz_Widget3D_setPose_const_Affine3dX(self.as_raw_Widget3D(), &pose) }.into_result()
+	}
+	
+	/// Updates pose of the widget by pre-multiplying its current pose.
+	/// 
+	/// ## Parameters
+	/// * pose: The pose that the current pose of the widget will be pre-multiplied by.
+	fn update_pose(&mut self, pose: core::Affine3d) -> Result<()> {
+		unsafe { sys::cv_viz_Widget3D_updatePose_const_Affine3dX(self.as_raw_Widget3D(), &pose) }.into_result()
+	}
+	
+	/// Returns the current pose of the widget.
+	fn get_pose(&self) -> Result<core::Affine3d> {
+		unsafe { sys::cv_viz_Widget3D_getPose_const(self.as_raw_Widget3D()) }.into_result()
+	}
+	
+	/// Transforms internal widget data (i.e. points, normals) using the given transform.
+	/// 
+	/// ## Parameters
+	/// * transform: Specified transformation to apply.
+	fn apply_transform(&mut self, transform: core::Affine3d) -> Result<()> {
+		unsafe { sys::cv_viz_Widget3D_applyTransform_const_Affine3dX(self.as_raw_Widget3D(), &transform) }.into_result()
+	}
+	
 	/// Sets the color of the widget.
 	/// 
 	/// ## Parameters

@@ -1,4 +1,5 @@
 template struct Result<bool>;
+template struct Result<cv::Matx<float, 2, 3>>;
 template struct Result<cv::Size_<float>>;
 template struct Result<double>;
 template struct Result<float>;

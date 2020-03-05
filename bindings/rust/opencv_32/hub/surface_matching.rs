@@ -408,7 +408,7 @@ pub trait ICPTrait {
 	/// \return On successful termination, the function returns 0.
 	/// 
 	/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
-	fn register_model_to_scene_1(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut types::VectorOfPose3DPtr) -> Result<i32> {
+	fn register_model_to_scene_vec(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut types::VectorOfPose3DPtr) -> Result<i32> {
 		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X(self.as_raw_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_VectorOfPose3DPtr()) }.into_result()
 	}
 	

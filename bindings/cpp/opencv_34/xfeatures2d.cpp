@@ -181,6 +181,20 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
+	Result<cv::Matx23f> cv_xfeatures2d_Elliptic_KeyPoint_transf_const(void* instance) {
+		try {
+			cv::Matx23f ret = reinterpret_cast<cv::xfeatures2d::Elliptic_KeyPoint*>(instance)->transf;
+			return Ok<cv::Matx23f>(ret);
+		} OCVRS_CATCH(Result<cv::Matx23f>)
+	}
+	
+	Result_void cv_xfeatures2d_Elliptic_KeyPoint_setTransf_Matx23f(void* instance, cv::Matx23f val) {
+		try {
+			reinterpret_cast<cv::xfeatures2d::Elliptic_KeyPoint*>(instance)->transf = val;
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	void cv_Elliptic_KeyPoint_delete(cv::xfeatures2d::Elliptic_KeyPoint* instance) {
 		delete instance;
 	}
