@@ -136,7 +136,7 @@ impl<T: DataType> Mat_<T> {
 	pub fn get_mut(&mut self, i0: i32) -> Result<&mut T> {
 		match_dims(self, 2)
 			.and_then(|_| match_total(self, i0))?;
-		unsafe { self.at_mut_unchecked(i0) }
+		unsafe { self.at_unchecked_mut(i0) }
 	}
 
 	pub fn into_mat(self) -> Mat {
@@ -244,7 +244,7 @@ impl Mat {
 	pub fn from_exact_iter<T: DataType>(s: impl ExactSizeIterator<Item=T>) -> Result<Self> {
 		let mut out = unsafe { Self::new_rows_cols(s.len() as _, 1, T::typ()) }?;
 		for (i, x) in s.enumerate() {
-			unsafe { ({ out.at_mut_unchecked::<T>(i as _) }? as *mut T).write(x) };
+			unsafe { ({ out.at_unchecked_mut::<T>(i as _) }? as *mut T).write(x) };
 		}
 		Ok(out)
 	}
@@ -294,7 +294,7 @@ pub(crate) mod mat_forward {
 		match_mat_format::<T, _>(mat)
 			.and_then(|_| match_dims(mat, 2))
 			.and_then(|_| match_total(mat, i0))?;
-		unsafe { mat.at_mut_unchecked(i0) }
+		unsafe { mat.at_unchecked_mut(i0) }
 	}
 
 	#[inline(always)]
@@ -308,7 +308,7 @@ pub(crate) mod mat_forward {
 	pub fn at_2d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), row: i32, col: i32) -> Result<&mut T> {
 		match_mat_format::<T, _>(mat)
 			.and_then(|_| match_indices(mat, &[row, col]))?;
-		unsafe { mat.at_2d_mut_unchecked(row, col) }
+		unsafe { mat.at_2d_unchecked_mut(row, col) }
 	}
 
 	#[inline(always)]
@@ -332,7 +332,7 @@ pub(crate) mod mat_forward {
 	pub fn at_3d_mut<T: DataType>(mat: &mut (impl MatTrait + ?Sized), i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
 		match_mat_format::<T, _>(mat)
 			.and_then(|_| match_indices(mat, &[i0, i1, i2]))?;
-		unsafe { mat.at_3d_mut_unchecked(i0, i1, i2) }
+		unsafe { mat.at_3d_unchecked_mut(i0, i1, i2) }
 	}
 
 	#[inline(always)]
@@ -346,7 +346,7 @@ pub(crate) mod mat_forward {
 	pub fn at_nd_mut<'s, T: core::DataType>(mat: &'s mut (impl MatTrait + ?Sized), idx: &[i32]) -> Result<&'s mut T> {
 		match_mat_format::<T, _>(mat)
 			.and_then(|_| match_indices(mat, idx))?;
-		unsafe { mat.at_nd_mut_unchecked(idx) }
+		unsafe { mat.at_nd_unchecked_mut(idx) }
 	}
 }
 
@@ -367,7 +367,7 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	/// Like `Mat::at_mut()` but performs no bounds or type checks
-	unsafe fn at_mut_unchecked<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
+	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
 		let (i, j) = idx_to_row_col(self, i0)?;
 		self.ptr_2d_mut(i, j)
 			.map(convert_ptr_mut)
@@ -380,7 +380,7 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	/// Like `Mat::at_2d_mut()` but performs no bounds or type checks
-	unsafe fn at_2d_mut_unchecked<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
+	unsafe fn at_2d_unchecked_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
 		self.ptr_2d_mut(row, col)
 			.map(convert_ptr_mut)
 	}
@@ -391,8 +391,8 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	/// Like `Mat::at_pt_mut()` but performs no bounds or type checks
-	unsafe fn at_pt_mut_unchecked<T: DataType>(&mut self, pt: Point) -> Result<&mut T> {
-		self.at_2d_mut_unchecked(pt.y, pt.x)
+	unsafe fn at_pt_unchecked_mut<T: DataType>(&mut self, pt: Point) -> Result<&mut T> {
+		self.at_2d_unchecked_mut(pt.y, pt.x)
 	}
 
 	/// Return a complete read-only row
@@ -401,7 +401,7 @@ pub trait MatTraitManual: MatTrait {
 			.map(convert_ptr)
 	}
 
-	unsafe fn at_3d_mut_unchecked<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
+	unsafe fn at_3d_unchecked_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
 		self.ptr_3d_mut(i0, i1, i2)
 			.map(convert_ptr_mut)
 	}
@@ -411,7 +411,7 @@ pub trait MatTraitManual: MatTrait {
 			.map(convert_ptr)
 	}
 
-	unsafe fn at_nd_mut_unchecked<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
+	unsafe fn at_nd_unchecked_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
 		self.ptr_nd_mut(idx)
 			.map(convert_ptr_mut)
 	}
@@ -432,11 +432,11 @@ pub trait MatTraitManual: MatTrait {
 	fn at_row_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
 		match_mat_format::<T, _>(self)
 			.and_then(|_| match_indices(self, &[row, 0]))?;
-		unsafe { self.at_row_mut_unchecked(row) }
+		unsafe { self.at_row_unchecked_mut(row) }
 	}
 
 	/// Like `Mat::at_row_mut()` but performs no bounds or type checks
-	unsafe fn at_row_mut_unchecked<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
+	unsafe fn at_row_unchecked_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
 		let width = self.size()?.width as usize;
 		self.ptr_mut(row).map(convert_ptr_mut).map(|x| slice::from_raw_parts_mut(x, width))
 	}
@@ -483,10 +483,10 @@ pub trait MatTraitManual: MatTrait {
 	fn data_typed_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		match_mat_format::<T, _>(self)
 			.and_then(|_| match_is_continuous(self))?;
-		unsafe { self.data_typed_mut_unchecked() }
+		unsafe { self.data_typed_unchecked_mut() }
 	}
 
-	unsafe fn data_typed_mut_unchecked<T: DataType>(&mut self) -> Result<&mut [T]> {
+	unsafe fn data_typed_unchecked_mut<T: DataType>(&mut self) -> Result<&mut [T]> {
 		let total = self.total()?;
 		Ok(slice::from_raw_parts_mut(self.data_mut() as *mut _ as *mut _, total))
 	}
