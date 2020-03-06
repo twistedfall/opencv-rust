@@ -24,15 +24,15 @@ macro_rules! vec_impl {
 		#[derive(Copy, Clone, Debug, Default, PartialEq, PartialOrd)]
 		pub struct $type<T: $type_trait>(pub [T; $count]);
 
-		impl<T: $type_trait> From<[T; $count]> for $type<T> {
-			fn from(s: [T; $count]) -> Self {
-				Self(s)
+		impl<T: $type_trait> $type<T> {
+			pub fn all(v0: T) -> Self {
+				Self::from([v0; $count])
 			}
 		}
 
-		impl<T: $type_trait> $type<T> {
-			pub fn all(v0: T) -> Self {
-				Self([v0; $count])
+		impl<T: $type_trait> From<[T; $count]> for $type<T> {
+			fn from(s: [T; $count]) -> Self {
+				Self(s)
 			}
 		}
 
@@ -61,7 +61,13 @@ vec_impl!(Scalar_, 4, ValidScalarType);
 
 impl<T: ValidScalarType> Scalar_<T> {
 	pub fn new(v0: T, v1: T, v2: T, v3: T) -> Self {
-		Self([v0, v1, v2, v3])
+		Self::from([v0, v1, v2, v3])
+	}
+}
+
+impl<T: ValidScalarType> From<T> for Scalar_<T> {
+	fn from(v0: T) -> Self {
+		Self::from([v0, T::zero(), T::zero(), T::zero()])
 	}
 }
 

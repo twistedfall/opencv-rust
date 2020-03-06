@@ -395,6 +395,7 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		"cv_getAffineTransform_const_Point2fX_const_Point2fX" => "+_slice",
 		"cv_getPerspectiveTransform_const_Point2fX_const_Point2fX" => "+_slice", // 3.2 3.4
 		"cv_getPerspectiveTransform_const_Point2fX_const_Point2fX_int" => "+_slice", // 4.x
+		"cv_getRotationMatrix2D__Point2f_double_double" => "get_rotation_matrix_2d_matx",
 		"cv_goodFeaturesToTrack_const__InputArrayX_const__OutputArrayX_int_double_double_const__InputArrayX_int_int_bool_double" => "+_with_gradient",
 
 		"cv_calcBackProject_const_MatX_int_const_intX_const_SparseMatX_const__OutputArrayX_const_floatXX_double_bool" => "-", // slice pointers
@@ -474,6 +475,9 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 
 		// ### dnn ###
 		out.insert("cv_dnn_BackendNode_BackendNode_int", "-"); // missing in windows dll
+
+		// ### imgproc ###
+		out.insert("cv_getRotationMatrix2D__Point2f_double_double", "-"); // missing in windows dll
 
 		// ### stitching ###
 		out.insert("cv_createStitcherScans_bool", "-"); // missing in windows dll
