@@ -1241,11 +1241,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	pub fn rust_extern_self_func_decl(&self, _method_is_const: bool) -> String {
-		let mut typ = self.rust_extern();
-		if self.as_simple_class().is_some() {
-			*typ.to_mut() = format!("*const {}", typ)
-		}
-		format!("instance: {typ}", typ=typ)
+		self.rust_extern_arg_func_decl("instance")
 	}
 
 	pub fn rust_extern_arg_func_decl(&self, name: &str) -> String {
@@ -1472,6 +1468,9 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				return typ;
 			}
 		}
+		if self.as_simple_class().is_some() {
+			return format!("const {typ}* {name}", typ=self.cpp_extern(), name=name)
+		}
 		self.cpp_extern_with_name(name).into_owned()
 	}
 
@@ -1508,7 +1507,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				format!("*reinterpret_cast<{typ}*>({name})", typ=self.cpp_full(), name=name).into()
 			};
 		}
-		if self.as_reference().is_some() || self.as_fixed_array().is_some() {
+		if self.as_reference().is_some() || self.as_fixed_array().is_some() || self.as_simple_class().is_some() {
 			return format!("*{name}", name=name).into();
 		}
 		name
