@@ -65,9 +65,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setKernel_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setKernel_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->kernel = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->kernel = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -79,9 +79,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setStride_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setStride_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->stride = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->stride = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -93,9 +93,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setPad_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setPad_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->pad = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->pad = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -107,9 +107,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setDilation_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setDilation_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->dilation = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->dilation = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -610,9 +610,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_dnn_ConvolutionLayer_create_Size_Size_Size_Size(cv::Size kernel, cv::Size stride, cv::Size pad, cv::Size dilation) {
+	Result<void*> cv_dnn_ConvolutionLayer_create_Size_Size_Size_Size(const cv::Size* kernel, const cv::Size* stride, const cv::Size* pad, const cv::Size* dilation) {
 		try {
-			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::ConvolutionLayer::create(kernel, stride, pad, dilation);
+			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::ConvolutionLayer::create(*kernel, *stride, *pad, *dilation);
 			return Ok<void*>(new cv::Ptr<cv::dnn::BaseConvolutionLayer>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -652,9 +652,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_dnn_DeconvolutionLayer_create_Size_Size_Size_Size(cv::Size kernel, cv::Size stride, cv::Size pad, cv::Size dilation) {
+	Result<void*> cv_dnn_DeconvolutionLayer_create_Size_Size_Size_Size(const cv::Size* kernel, const cv::Size* stride, const cv::Size* pad, const cv::Size* dilation) {
 		try {
-			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::DeconvolutionLayer::create(kernel, stride, pad, dilation);
+			cv::Ptr<cv::dnn::BaseConvolutionLayer> ret = cv::dnn::DeconvolutionLayer::create(*kernel, *stride, *pad, *dilation);
 			return Ok<void*>(new cv::Ptr<cv::dnn::BaseConvolutionLayer>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -1416,9 +1416,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setKernel_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_PoolingLayer_setKernel_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->kernel = val;
+			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->kernel = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1430,9 +1430,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setStride_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_PoolingLayer_setStride_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->stride = val;
+			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->stride = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1444,9 +1444,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setPad_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_PoolingLayer_setPad_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->pad = val;
+			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->pad = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1479,9 +1479,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringX(int type, cv::Size kernel, cv::Size stride, cv::Size pad, const char* padMode) {
+	Result<void*> cv_dnn_PoolingLayer_create_int_Size_Size_Size_const_StringX(int type, const cv::Size* kernel, const cv::Size* stride, const cv::Size* pad, const char* padMode) {
 		try {
-			cv::Ptr<cv::dnn::PoolingLayer> ret = cv::dnn::PoolingLayer::create(type, kernel, stride, pad, cv::String(padMode));
+			cv::Ptr<cv::dnn::PoolingLayer> ret = cv::dnn::PoolingLayer::create(type, *kernel, *stride, *pad, cv::String(padMode));
 			return Ok<void*>(new cv::Ptr<cv::dnn::PoolingLayer>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}

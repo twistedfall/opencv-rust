@@ -1,3 +1,6 @@
+* 0.31.1
+  * Fix passing bigger simple classes as arguments
+
 * 0.31.0
   * Add from/to_vec method to `Point_` and `Point3_`
   * Add basic implementations of `Mat_`, `Matx` and `Affine3` generic types, and OpenCV methods that use them

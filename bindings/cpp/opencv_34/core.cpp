@@ -1681,16 +1681,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayX(VADisplay display, VASurfaceID surface, cv::Size size, void* dst) {
+	Result_void cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayX(VADisplay display, VASurfaceID surface, const cv::Size* size, void* dst) {
 		try {
-			cv::va_intel::convertFromVASurface(display, surface, size, *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::va_intel::convertFromVASurface(display, surface, *size, *reinterpret_cast<const cv::_OutputArray*>(dst));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_va_intel_convertToVASurface_VADisplay_const__InputArrayX_VASurfaceID_Size(VADisplay display, void* src, VASurfaceID surface, cv::Size size) {
+	Result_void cv_va_intel_convertToVASurface_VADisplay_const__InputArrayX_VASurfaceID_Size(VADisplay display, void* src, VASurfaceID surface, const cv::Size* size) {
 		try {
-			cv::va_intel::convertToVASurface(display, *reinterpret_cast<const cv::_InputArray*>(src), surface, size);
+			cv::va_intel::convertToVASurface(display, *reinterpret_cast<const cv::_InputArray*>(src), surface, *size);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2834,9 +2834,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::KeyPoint>)
 	}
 	
-	Result<cv::KeyPoint> cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(cv::Point2f _pt, float _size, float _angle, float _response, int _octave, int _class_id) {
+	Result<cv::KeyPoint> cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(const cv::Point2f* _pt, float _size, float _angle, float _response, int _octave, int _class_id) {
 		try {
-			cv::KeyPoint ret(_pt, _size, _angle, _response, _octave, _class_id);
+			cv::KeyPoint ret(*_pt, _size, _angle, _response, _octave, _class_id);
 			return Ok<cv::KeyPoint>(ret);
 		} OCVRS_CATCH(Result<cv::KeyPoint>)
 	}
@@ -3106,9 +3106,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_Size_int(cv::Size size, int type) {
+	Result<void*> cv_Mat_Mat_Size_int(const cv::Size* size, int type) {
 		try {
-			cv::Mat* ret = new cv::Mat(size, type);
+			cv::Mat* ret = new cv::Mat(*size, type);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -3120,9 +3120,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_Size_int_const_ScalarX(cv::Size size, int type, const cv::Scalar* s) {
+	Result<void*> cv_Mat_Mat_Size_int_const_ScalarX(const cv::Size* size, int type, const cv::Scalar* s) {
 		try {
-			cv::Mat* ret = new cv::Mat(size, type, *s);
+			cv::Mat* ret = new cv::Mat(*size, type, *s);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -3169,9 +3169,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_Size_int_voidX_size_t(cv::Size size, int type, void* data, size_t step) {
+	Result<void*> cv_Mat_Mat_Size_int_voidX_size_t(const cv::Size* size, int type, void* data, size_t step) {
 		try {
-			cv::Mat* ret = new cv::Mat(size, type, data, step);
+			cv::Mat* ret = new cv::Mat(*size, type, data, step);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -3379,9 +3379,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Mat_zeros_Size_int(cv::Size size, int type) {
+	Result<void*> cv_Mat_zeros_Size_int(const cv::Size* size, int type) {
 		try {
-			cv::MatExpr ret = cv::Mat::zeros(size, type);
+			cv::MatExpr ret = cv::Mat::zeros(*size, type);
 			return Ok<void*>(new cv::MatExpr(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -3400,9 +3400,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Mat_ones_Size_int(cv::Size size, int type) {
+	Result<void*> cv_Mat_ones_Size_int(const cv::Size* size, int type) {
 		try {
-			cv::MatExpr ret = cv::Mat::ones(size, type);
+			cv::MatExpr ret = cv::Mat::ones(*size, type);
 			return Ok<void*>(new cv::MatExpr(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -3421,9 +3421,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Mat_eye_Size_int(cv::Size size, int type) {
+	Result<void*> cv_Mat_eye_Size_int(const cv::Size* size, int type) {
 		try {
-			cv::MatExpr ret = cv::Mat::eye(size, type);
+			cv::MatExpr ret = cv::Mat::eye(*size, type);
 			return Ok<void*>(new cv::MatExpr(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -3435,9 +3435,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_create_Size_int(void* instance, cv::Size size, int type) {
+	Result_void cv_Mat_create_Size_int(void* instance, const cv::Size* size, int type) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->create(size, type);
+			reinterpret_cast<cv::Mat*>(instance)->create(*size, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -3753,9 +3753,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_MatConstIterator_MatConstIterator_const_MatX_Point(void* _m, cv::Point _pt) {
+	Result<void*> cv_MatConstIterator_MatConstIterator_const_MatX_Point(void* _m, const cv::Point* _pt) {
 		try {
-			cv::MatConstIterator* ret = new cv::MatConstIterator(reinterpret_cast<const cv::Mat*>(_m), _pt);
+			cv::MatConstIterator* ret = new cv::MatConstIterator(reinterpret_cast<const cv::Mat*>(_m), *_pt);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -3907,9 +3907,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Scalar>)
 	}
 	
-	Result_void cv_MatExpr_setS_Scalar(void* instance, cv::Scalar val) {
+	Result_void cv_MatExpr_setS_Scalar(void* instance, const cv::Scalar* val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->s = val;
+			reinterpret_cast<cv::MatExpr*>(instance)->s = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4932,9 +4932,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result_void cv_RotatedRect_setCenter_Point2f(void* instance, cv::Point2f val) {
+	Result_void cv_RotatedRect_setCenter_Point2f(void* instance, const cv::Point2f* val) {
 		try {
-			reinterpret_cast<cv::RotatedRect*>(instance)->center = val;
+			reinterpret_cast<cv::RotatedRect*>(instance)->center = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4946,9 +4946,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size2f>)
 	}
 	
-	Result_void cv_RotatedRect_setSize_Size2f(void* instance, cv::Size2f val) {
+	Result_void cv_RotatedRect_setSize_Size2f(void* instance, const cv::Size2f* val) {
 		try {
-			reinterpret_cast<cv::RotatedRect*>(instance)->size = val;
+			reinterpret_cast<cv::RotatedRect*>(instance)->size = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -6005,9 +6005,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_Size_int_UMatUsageFlags(cv::Size size, int type, cv::UMatUsageFlags usageFlags) {
+	Result<void*> cv_UMat_UMat_Size_int_UMatUsageFlags(const cv::Size* size, int type, cv::UMatUsageFlags usageFlags) {
 		try {
-			cv::UMat* ret = new cv::UMat(size, type, usageFlags);
+			cv::UMat* ret = new cv::UMat(*size, type, usageFlags);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -6019,9 +6019,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_Size_int_const_ScalarX_UMatUsageFlags(cv::Size size, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
+	Result<void*> cv_UMat_UMat_Size_int_const_ScalarX_UMatUsageFlags(const cv::Size* size, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
 		try {
-			cv::UMat* ret = new cv::UMat(size, type, *s, usageFlags);
+			cv::UMat* ret = new cv::UMat(*size, type, *s, usageFlags);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -6222,9 +6222,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_UMat_zeros_Size_int(cv::Size size, int type) {
+	Result<void*> cv_UMat_zeros_Size_int(const cv::Size* size, int type) {
 		try {
-			cv::UMat ret = cv::UMat::zeros(size, type);
+			cv::UMat ret = cv::UMat::zeros(*size, type);
 			return Ok<void*>(new cv::UMat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -6243,9 +6243,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_UMat_ones_Size_int(cv::Size size, int type) {
+	Result<void*> cv_UMat_ones_Size_int(const cv::Size* size, int type) {
 		try {
-			cv::UMat ret = cv::UMat::ones(size, type);
+			cv::UMat ret = cv::UMat::ones(*size, type);
 			return Ok<void*>(new cv::UMat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -6264,9 +6264,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_UMat_eye_Size_int(cv::Size size, int type) {
+	Result<void*> cv_UMat_eye_Size_int(const cv::Size* size, int type) {
 		try {
-			cv::UMat ret = cv::UMat::eye(size, type);
+			cv::UMat ret = cv::UMat::eye(*size, type);
 			return Ok<void*>(new cv::UMat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -6278,9 +6278,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_create_Size_int_UMatUsageFlags(void* instance, cv::Size size, int type, cv::UMatUsageFlags usageFlags) {
+	Result_void cv_UMat_create_Size_int_UMatUsageFlags(void* instance, const cv::Size* size, int type, cv::UMatUsageFlags usageFlags) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->create(size, type, usageFlags);
+			reinterpret_cast<cv::UMat*>(instance)->create(*size, type, usageFlags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -7186,9 +7186,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv__OutputArray_create_const_Size_int_int_bool_int(void* instance, cv::Size sz, int type, int i, bool allowTransposed, int fixedDepthMask) {
+	Result_void cv__OutputArray_create_const_Size_int_int_bool_int(void* instance, const cv::Size* sz, int type, int i, bool allowTransposed, int fixedDepthMask) {
 		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->create(sz, type, i, allowTransposed, fixedDepthMask);
+			reinterpret_cast<cv::_OutputArray*>(instance)->create(*sz, type, i, allowTransposed, fixedDepthMask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

@@ -45,9 +45,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_dpm_DPMDetector_ObjectDetection_setRect_Rect(void* instance, cv::Rect val) {
+	Result_void cv_dpm_DPMDetector_ObjectDetection_setRect_Rect(void* instance, const cv::Rect* val) {
 		try {
-			reinterpret_cast<cv::dpm::DPMDetector::ObjectDetection*>(instance)->rect = val;
+			reinterpret_cast<cv::dpm::DPMDetector::ObjectDetection*>(instance)->rect = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

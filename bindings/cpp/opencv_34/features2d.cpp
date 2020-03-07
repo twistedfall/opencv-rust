@@ -1028,9 +1028,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_X_Size_int(void* keypoints, cv::Size imageSize, int borderSize) {
+	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_X_Size_int(void* keypoints, const cv::Size* imageSize, int borderSize) {
 		try {
-			cv::KeyPointsFilter::runByImageBorder(*reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), imageSize, borderSize);
+			cv::KeyPointsFilter::runByImageBorder(*reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *imageSize, borderSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

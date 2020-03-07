@@ -23,9 +23,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_GaussianBlur_const__InputArrayX_const__OutputArrayX_Size_double_double_int(void* src, void* dst, cv::Size ksize, double sigmaX, double sigmaY, int borderType) {
+	Result_void cv_GaussianBlur_const__InputArrayX_const__OutputArrayX_Size_double_double_int(void* src, void* dst, const cv::Size* ksize, double sigmaX, double sigmaY, int borderType) {
 		try {
-			cv::GaussianBlur(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ksize, sigmaX, sigmaY, borderType);
+			cv::GaussianBlur(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *ksize, sigmaX, sigmaY, borderType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -156,9 +156,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_arrowedLine_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int_double(void* img, cv::Point pt1, cv::Point pt2, const cv::Scalar* color, int thickness, int line_type, int shift, double tipLength) {
+	Result_void cv_arrowedLine_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int_double(void* img, const cv::Point* pt1, const cv::Point* pt2, const cv::Scalar* color, int thickness, int line_type, int shift, double tipLength) {
 		try {
-			cv::arrowedLine(*reinterpret_cast<const cv::_InputOutputArray*>(img), pt1, pt2, *color, thickness, line_type, shift, tipLength);
+			cv::arrowedLine(*reinterpret_cast<const cv::_InputOutputArray*>(img), *pt1, *pt2, *color, thickness, line_type, shift, tipLength);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -177,9 +177,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_blur_const__InputArrayX_const__OutputArrayX_Size_Point_int(void* src, void* dst, cv::Size ksize, cv::Point anchor, int borderType) {
+	Result_void cv_blur_const__InputArrayX_const__OutputArrayX_Size_Point_int(void* src, void* dst, const cv::Size* ksize, const cv::Point* anchor, int borderType) {
 		try {
-			cv::blur(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ksize, anchor, borderType);
+			cv::blur(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *ksize, *anchor, borderType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -191,9 +191,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_boxFilter_const__InputArrayX_const__OutputArrayX_int_Size_Point_bool_int(void* src, void* dst, int ddepth, cv::Size ksize, cv::Point anchor, bool normalize, int borderType) {
+	Result_void cv_boxFilter_const__InputArrayX_const__OutputArrayX_int_Size_Point_bool_int(void* src, void* dst, int ddepth, const cv::Size* ksize, const cv::Point* anchor, bool normalize, int borderType) {
 		try {
-			cv::boxFilter(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, ksize, anchor, normalize, borderType);
+			cv::boxFilter(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, *ksize, *anchor, normalize, borderType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -226,30 +226,30 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_circle_const__InputOutputArrayX_Point_int_const_ScalarX_int_int_int(void* img, cv::Point center, int radius, const cv::Scalar* color, int thickness, int lineType, int shift) {
+	Result_void cv_circle_const__InputOutputArrayX_Point_int_const_ScalarX_int_int_int(void* img, const cv::Point* center, int radius, const cv::Scalar* color, int thickness, int lineType, int shift) {
 		try {
-			cv::circle(*reinterpret_cast<const cv::_InputOutputArray*>(img), center, radius, *color, thickness, lineType, shift);
+			cv::circle(*reinterpret_cast<const cv::_InputOutputArray*>(img), *center, radius, *color, thickness, lineType, shift);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_clipLine_Rect_PointX_PointX(cv::Rect imgRect, cv::Point* pt1, cv::Point* pt2) {
+	Result<bool> cv_clipLine_Rect_PointX_PointX(const cv::Rect* imgRect, cv::Point* pt1, cv::Point* pt2) {
 		try {
-			bool ret = cv::clipLine(imgRect, *pt1, *pt2);
+			bool ret = cv::clipLine(*imgRect, *pt1, *pt2);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_clipLine_Size2l_Point2lX_Point2lX(cv::Size2l imgSize, cv::Point2l* pt1, cv::Point2l* pt2) {
+	Result<bool> cv_clipLine_Size2l_Point2lX_Point2lX(const cv::Size2l* imgSize, cv::Point2l* pt1, cv::Point2l* pt2) {
 		try {
-			bool ret = cv::clipLine(imgSize, *pt1, *pt2);
+			bool ret = cv::clipLine(*imgSize, *pt1, *pt2);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_clipLine_Size_PointX_PointX(cv::Size imgSize, cv::Point* pt1, cv::Point* pt2) {
+	Result<bool> cv_clipLine_Size_PointX_PointX(const cv::Size* imgSize, cv::Point* pt1, cv::Point* pt2) {
 		try {
-			bool ret = cv::clipLine(imgSize, *pt1, *pt2);
+			bool ret = cv::clipLine(*imgSize, *pt1, *pt2);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
@@ -345,16 +345,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_cornerSubPix_const__InputArrayX_const__InputOutputArrayX_Size_Size_TermCriteria(void* image, void* corners, cv::Size winSize, cv::Size zeroZone, void* criteria) {
+	Result_void cv_cornerSubPix_const__InputArrayX_const__InputOutputArrayX_Size_Size_TermCriteria(void* image, void* corners, const cv::Size* winSize, const cv::Size* zeroZone, void* criteria) {
 		try {
-			cv::cornerSubPix(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_InputOutputArray*>(corners), winSize, zeroZone, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			cv::cornerSubPix(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_InputOutputArray*>(corners), *winSize, *zeroZone, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_createCLAHE_double_Size(double clipLimit, cv::Size tileGridSize) {
+	Result<void*> cv_createCLAHE_double_Size(double clipLimit, const cv::Size* tileGridSize) {
 		try {
-			cv::Ptr<cv::CLAHE> ret = cv::createCLAHE(clipLimit, tileGridSize);
+			cv::Ptr<cv::CLAHE> ret = cv::createCLAHE(clipLimit, *tileGridSize);
 			return Ok<void*>(new cv::Ptr<cv::CLAHE>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -373,9 +373,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_createHanningWindow_const__OutputArrayX_Size_int(void* dst, cv::Size winSize, int type) {
+	Result_void cv_createHanningWindow_const__OutputArrayX_Size_int(void* dst, const cv::Size* winSize, int type) {
 		try {
-			cv::createHanningWindow(*reinterpret_cast<const cv::_OutputArray*>(dst), winSize, type);
+			cv::createHanningWindow(*reinterpret_cast<const cv::_OutputArray*>(dst), *winSize, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -408,9 +408,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_dilate_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Point_int_int_const_ScalarX(void* src, void* dst, void* kernel, cv::Point anchor, int iterations, int borderType, const cv::Scalar* borderValue) {
+	Result_void cv_dilate_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Point_int_int_const_ScalarX(void* src, void* dst, void* kernel, const cv::Point* anchor, int iterations, int borderType, const cv::Scalar* borderValue) {
 		try {
-			cv::dilate(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(kernel), anchor, iterations, borderType, *borderValue);
+			cv::dilate(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(kernel), *anchor, iterations, borderType, *borderValue);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -429,37 +429,37 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_drawContours_const__InputOutputArrayX_const__InputArrayX_int_const_ScalarX_int_int_const__InputArrayX_int_Point(void* image, void* contours, int contourIdx, const cv::Scalar* color, int thickness, int lineType, void* hierarchy, int maxLevel, cv::Point offset) {
+	Result_void cv_drawContours_const__InputOutputArrayX_const__InputArrayX_int_const_ScalarX_int_int_const__InputArrayX_int_Point(void* image, void* contours, int contourIdx, const cv::Scalar* color, int thickness, int lineType, void* hierarchy, int maxLevel, const cv::Point* offset) {
 		try {
-			cv::drawContours(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(contours), contourIdx, *color, thickness, lineType, *reinterpret_cast<const cv::_InputArray*>(hierarchy), maxLevel, offset);
+			cv::drawContours(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(contours), contourIdx, *color, thickness, lineType, *reinterpret_cast<const cv::_InputArray*>(hierarchy), maxLevel, *offset);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_drawMarker_const__InputOutputArrayX_Point_const_ScalarX_int_int_int_int(void* img, cv::Point position, const cv::Scalar* color, int markerType, int markerSize, int thickness, int line_type) {
+	Result_void cv_drawMarker_const__InputOutputArrayX_Point_const_ScalarX_int_int_int_int(void* img, const cv::Point* position, const cv::Scalar* color, int markerType, int markerSize, int thickness, int line_type) {
 		try {
-			cv::drawMarker(*reinterpret_cast<const cv::_InputOutputArray*>(img), position, *color, markerType, markerSize, thickness, line_type);
+			cv::drawMarker(*reinterpret_cast<const cv::_InputOutputArray*>(img), *position, *color, markerType, markerSize, thickness, line_type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_X(cv::Point2d center, cv::Size2d axes, int angle, int arcStart, int arcEnd, int delta, void* pts) {
+	Result_void cv_ellipse2Poly_Point2d_Size2d_int_int_int_int_vector_Point2d_X(const cv::Point2d* center, const cv::Size2d* axes, int angle, int arcStart, int arcEnd, int delta, void* pts) {
 		try {
-			cv::ellipse2Poly(center, axes, angle, arcStart, arcEnd, delta, *reinterpret_cast<std::vector<cv::Point2d>*>(pts));
+			cv::ellipse2Poly(*center, *axes, angle, arcStart, arcEnd, delta, *reinterpret_cast<std::vector<cv::Point2d>*>(pts));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_X(cv::Point center, cv::Size axes, int angle, int arcStart, int arcEnd, int delta, void* pts) {
+	Result_void cv_ellipse2Poly_Point_Size_int_int_int_int_vector_Point_X(const cv::Point* center, const cv::Size* axes, int angle, int arcStart, int arcEnd, int delta, void* pts) {
 		try {
-			cv::ellipse2Poly(center, axes, angle, arcStart, arcEnd, delta, *reinterpret_cast<std::vector<cv::Point>*>(pts));
+			cv::ellipse2Poly(*center, *axes, angle, arcStart, arcEnd, delta, *reinterpret_cast<std::vector<cv::Point>*>(pts));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ellipse_const__InputOutputArrayX_Point_Size_double_double_double_const_ScalarX_int_int_int(void* img, cv::Point center, cv::Size axes, double angle, double startAngle, double endAngle, const cv::Scalar* color, int thickness, int lineType, int shift) {
+	Result_void cv_ellipse_const__InputOutputArrayX_Point_Size_double_double_double_const_ScalarX_int_int_int(void* img, const cv::Point* center, const cv::Size* axes, double angle, double startAngle, double endAngle, const cv::Scalar* color, int thickness, int lineType, int shift) {
 		try {
-			cv::ellipse(*reinterpret_cast<const cv::_InputOutputArray*>(img), center, axes, angle, startAngle, endAngle, *color, thickness, lineType, shift);
+			cv::ellipse(*reinterpret_cast<const cv::_InputOutputArray*>(img), *center, *axes, angle, startAngle, endAngle, *color, thickness, lineType, shift);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -478,9 +478,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_erode_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Point_int_int_const_ScalarX(void* src, void* dst, void* kernel, cv::Point anchor, int iterations, int borderType, const cv::Scalar* borderValue) {
+	Result_void cv_erode_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Point_int_int_const_ScalarX(void* src, void* dst, void* kernel, const cv::Point* anchor, int iterations, int borderType, const cv::Scalar* borderValue) {
 		try {
-			cv::erode(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(kernel), anchor, iterations, borderType, *borderValue);
+			cv::erode(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(kernel), *anchor, iterations, borderType, *borderValue);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -492,30 +492,30 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_fillPoly_const__InputOutputArrayX_const__InputArrayX_const_ScalarX_int_int_Point(void* img, void* pts, const cv::Scalar* color, int lineType, int shift, cv::Point offset) {
+	Result_void cv_fillPoly_const__InputOutputArrayX_const__InputArrayX_const_ScalarX_int_int_Point(void* img, void* pts, const cv::Scalar* color, int lineType, int shift, const cv::Point* offset) {
 		try {
-			cv::fillPoly(*reinterpret_cast<const cv::_InputOutputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(pts), *color, lineType, shift, offset);
+			cv::fillPoly(*reinterpret_cast<const cv::_InputOutputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(pts), *color, lineType, shift, *offset);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_filter2D_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_Point_double_int(void* src, void* dst, int ddepth, void* kernel, cv::Point anchor, double delta, int borderType) {
+	Result_void cv_filter2D_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_Point_double_int(void* src, void* dst, int ddepth, void* kernel, const cv::Point* anchor, double delta, int borderType) {
 		try {
-			cv::filter2D(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, *reinterpret_cast<const cv::_InputArray*>(kernel), anchor, delta, borderType);
+			cv::filter2D(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, *reinterpret_cast<const cv::_InputArray*>(kernel), *anchor, delta, borderType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_findContours_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_int_Point(void* image, void* contours, void* hierarchy, int mode, int method, cv::Point offset) {
+	Result_void cv_findContours_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_int_Point(void* image, void* contours, void* hierarchy, int mode, int method, const cv::Point* offset) {
 		try {
-			cv::findContours(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_OutputArray*>(contours), *reinterpret_cast<const cv::_OutputArray*>(hierarchy), mode, method, offset);
+			cv::findContours(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_OutputArray*>(contours), *reinterpret_cast<const cv::_OutputArray*>(hierarchy), mode, method, *offset);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_findContours_const__InputArrayX_const__OutputArrayX_int_int_Point(void* image, void* contours, int mode, int method, cv::Point offset) {
+	Result_void cv_findContours_const__InputArrayX_const__OutputArrayX_int_int_Point(void* image, void* contours, int mode, int method, const cv::Point* offset) {
 		try {
-			cv::findContours(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_OutputArray*>(contours), mode, method, offset);
+			cv::findContours(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_OutputArray*>(contours), mode, method, *offset);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -548,16 +548,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_floodFill_const__InputOutputArrayX_Point_Scalar_RectX_Scalar_Scalar_int(void* image, cv::Point seedPoint, cv::Scalar newVal, cv::Rect* rect, cv::Scalar loDiff, cv::Scalar upDiff, int flags) {
+	Result<int> cv_floodFill_const__InputOutputArrayX_Point_Scalar_RectX_Scalar_Scalar_int(void* image, const cv::Point* seedPoint, const cv::Scalar* newVal, cv::Rect* rect, const cv::Scalar* loDiff, const cv::Scalar* upDiff, int flags) {
 		try {
-			int ret = cv::floodFill(*reinterpret_cast<const cv::_InputOutputArray*>(image), seedPoint, newVal, rect, loDiff, upDiff, flags);
+			int ret = cv::floodFill(*reinterpret_cast<const cv::_InputOutputArray*>(image), *seedPoint, *newVal, rect, *loDiff, *upDiff, flags);
 			return Ok<int>(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_floodFill_const__InputOutputArrayX_const__InputOutputArrayX_Point_Scalar_RectX_Scalar_Scalar_int(void* image, void* mask, cv::Point seedPoint, cv::Scalar newVal, cv::Rect* rect, cv::Scalar loDiff, cv::Scalar upDiff, int flags) {
+	Result<int> cv_floodFill_const__InputOutputArrayX_const__InputOutputArrayX_Point_Scalar_RectX_Scalar_Scalar_int(void* image, void* mask, const cv::Point* seedPoint, const cv::Scalar* newVal, cv::Rect* rect, const cv::Scalar* loDiff, const cv::Scalar* upDiff, int flags) {
 		try {
-			int ret = cv::floodFill(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputOutputArray*>(mask), seedPoint, newVal, rect, loDiff, upDiff, flags);
+			int ret = cv::floodFill(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputOutputArray*>(mask), *seedPoint, *newVal, rect, *loDiff, *upDiff, flags);
 			return Ok<int>(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
@@ -590,9 +590,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<void*> cv_getGaborKernel_Size_double_double_double_double_double_int(cv::Size ksize, double sigma, double theta, double lambd, double gamma, double psi, int ktype) {
+	Result<void*> cv_getGaborKernel_Size_double_double_double_double_double_int(const cv::Size* ksize, double sigma, double theta, double lambd, double gamma, double psi, int ktype) {
 		try {
-			cv::Mat ret = cv::getGaborKernel(ksize, sigma, theta, lambd, gamma, psi, ktype);
+			cv::Mat ret = cv::getGaborKernel(*ksize, sigma, theta, lambd, gamma, psi, ktype);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -618,30 +618,30 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_getRectSubPix_const__InputArrayX_Size_Point2f_const__OutputArrayX_int(void* image, cv::Size patchSize, cv::Point2f center, void* patch, int patchType) {
+	Result_void cv_getRectSubPix_const__InputArrayX_Size_Point2f_const__OutputArrayX_int(void* image, const cv::Size* patchSize, const cv::Point2f* center, void* patch, int patchType) {
 		try {
-			cv::getRectSubPix(*reinterpret_cast<const cv::_InputArray*>(image), patchSize, center, *reinterpret_cast<const cv::_OutputArray*>(patch), patchType);
+			cv::getRectSubPix(*reinterpret_cast<const cv::_InputArray*>(image), *patchSize, *center, *reinterpret_cast<const cv::_OutputArray*>(patch), patchType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_getRotationMatrix2D_Point2f_double_double(cv::Point2f center, double angle, double scale) {
+	Result<void*> cv_getRotationMatrix2D_Point2f_double_double(const cv::Point2f* center, double angle, double scale) {
 		try {
-			cv::Mat ret = cv::getRotationMatrix2D(center, angle, scale);
+			cv::Mat ret = cv::getRotationMatrix2D(*center, angle, scale);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Matx23d> cv_getRotationMatrix2D__Point2f_double_double(cv::Point2f center, double angle, double scale) {
+	Result<cv::Matx23d> cv_getRotationMatrix2D__Point2f_double_double(const cv::Point2f* center, double angle, double scale) {
 		try {
-			cv::Matx23d ret = cv::getRotationMatrix2D_(center, angle, scale);
+			cv::Matx23d ret = cv::getRotationMatrix2D_(*center, angle, scale);
 			return Ok<cv::Matx23d>(ret);
 		} OCVRS_CATCH(Result<cv::Matx23d>)
 	}
 	
-	Result<void*> cv_getStructuringElement_int_Size_Point(int shape, cv::Size ksize, cv::Point anchor) {
+	Result<void*> cv_getStructuringElement_int_Size_Point(int shape, const cv::Size* ksize, const cv::Point* anchor) {
 		try {
-			cv::Mat ret = cv::getStructuringElement(shape, ksize, anchor);
+			cv::Mat ret = cv::getStructuringElement(shape, *ksize, *anchor);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -667,9 +667,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_grabCut_const__InputArrayX_const__InputOutputArrayX_Rect_const__InputOutputArrayX_const__InputOutputArrayX_int_int(void* img, void* mask, cv::Rect rect, void* bgdModel, void* fgdModel, int iterCount, int mode) {
+	Result_void cv_grabCut_const__InputArrayX_const__InputOutputArrayX_Rect_const__InputOutputArrayX_const__InputOutputArrayX_int_int(void* img, void* mask, const cv::Rect* rect, void* bgdModel, void* fgdModel, int iterCount, int mode) {
 		try {
-			cv::grabCut(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputOutputArray*>(mask), rect, *reinterpret_cast<const cv::_InputOutputArray*>(bgdModel), *reinterpret_cast<const cv::_InputOutputArray*>(fgdModel), iterCount, mode);
+			cv::grabCut(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputOutputArray*>(mask), *rect, *reinterpret_cast<const cv::_InputOutputArray*>(bgdModel), *reinterpret_cast<const cv::_InputOutputArray*>(fgdModel), iterCount, mode);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -716,23 +716,23 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_line_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int(void* img, cv::Point pt1, cv::Point pt2, const cv::Scalar* color, int thickness, int lineType, int shift) {
+	Result_void cv_line_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int(void* img, const cv::Point* pt1, const cv::Point* pt2, const cv::Scalar* color, int thickness, int lineType, int shift) {
 		try {
-			cv::line(*reinterpret_cast<const cv::_InputOutputArray*>(img), pt1, pt2, *color, thickness, lineType, shift);
+			cv::line(*reinterpret_cast<const cv::_InputOutputArray*>(img), *pt1, *pt2, *color, thickness, lineType, shift);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_linearPolar_const__InputArrayX_const__OutputArrayX_Point2f_double_int(void* src, void* dst, cv::Point2f center, double maxRadius, int flags) {
+	Result_void cv_linearPolar_const__InputArrayX_const__OutputArrayX_Point2f_double_int(void* src, void* dst, const cv::Point2f* center, double maxRadius, int flags) {
 		try {
-			cv::linearPolar(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), center, maxRadius, flags);
+			cv::linearPolar(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *center, maxRadius, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_logPolar_const__InputArrayX_const__OutputArrayX_Point2f_double_int(void* src, void* dst, cv::Point2f center, double M, int flags) {
+	Result_void cv_logPolar_const__InputArrayX_const__OutputArrayX_Point2f_double_int(void* src, void* dst, const cv::Point2f* center, double M, int flags) {
 		try {
-			cv::logPolar(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), center, M, flags);
+			cv::logPolar(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *center, M, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -793,9 +793,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Scalar>)
 	}
 	
-	Result_void cv_morphologyEx_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_Point_int_int_const_ScalarX(void* src, void* dst, int op, void* kernel, cv::Point anchor, int iterations, int borderType, const cv::Scalar* borderValue) {
+	Result_void cv_morphologyEx_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_Point_int_int_const_ScalarX(void* src, void* dst, int op, void* kernel, const cv::Point* anchor, int iterations, int borderType, const cv::Scalar* borderValue) {
 		try {
-			cv::morphologyEx(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), op, *reinterpret_cast<const cv::_InputArray*>(kernel), anchor, iterations, borderType, *borderValue);
+			cv::morphologyEx(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), op, *reinterpret_cast<const cv::_InputArray*>(kernel), *anchor, iterations, borderType, *borderValue);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -807,9 +807,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2d>)
 	}
 	
-	Result<double> cv_pointPolygonTest_const__InputArrayX_Point2f_bool(void* contour, cv::Point2f pt, bool measureDist) {
+	Result<double> cv_pointPolygonTest_const__InputArrayX_Point2f_bool(void* contour, const cv::Point2f* pt, bool measureDist) {
 		try {
-			double ret = cv::pointPolygonTest(*reinterpret_cast<const cv::_InputArray*>(contour), pt, measureDist);
+			double ret = cv::pointPolygonTest(*reinterpret_cast<const cv::_InputArray*>(contour), *pt, measureDist);
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
@@ -828,9 +828,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_putText_const__InputOutputArrayX_const_StringX_Point_int_double_Scalar_int_int_bool(void* img, const char* text, cv::Point org, int fontFace, double fontScale, cv::Scalar color, int thickness, int lineType, bool bottomLeftOrigin) {
+	Result_void cv_putText_const__InputOutputArrayX_const_StringX_Point_int_double_Scalar_int_int_bool(void* img, const char* text, const cv::Point* org, int fontFace, double fontScale, const cv::Scalar* color, int thickness, int lineType, bool bottomLeftOrigin) {
 		try {
-			cv::putText(*reinterpret_cast<const cv::_InputOutputArray*>(img), std::string(text), org, fontFace, fontScale, color, thickness, lineType, bottomLeftOrigin);
+			cv::putText(*reinterpret_cast<const cv::_InputOutputArray*>(img), std::string(text), *org, fontFace, fontScale, *color, thickness, lineType, bottomLeftOrigin);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -856,16 +856,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_rectangle_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int(void* img, cv::Point pt1, cv::Point pt2, const cv::Scalar* color, int thickness, int lineType, int shift) {
+	Result_void cv_rectangle_const__InputOutputArrayX_Point_Point_const_ScalarX_int_int_int(void* img, const cv::Point* pt1, const cv::Point* pt2, const cv::Scalar* color, int thickness, int lineType, int shift) {
 		try {
-			cv::rectangle(*reinterpret_cast<const cv::_InputOutputArray*>(img), pt1, pt2, *color, thickness, lineType, shift);
+			cv::rectangle(*reinterpret_cast<const cv::_InputOutputArray*>(img), *pt1, *pt2, *color, thickness, lineType, shift);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_rectangle_const__InputOutputArrayX_Rect_const_ScalarX_int_int_int(void* img, cv::Rect rec, const cv::Scalar* color, int thickness, int lineType, int shift) {
+	Result_void cv_rectangle_const__InputOutputArrayX_Rect_const_ScalarX_int_int_int(void* img, const cv::Rect* rec, const cv::Scalar* color, int thickness, int lineType, int shift) {
 		try {
-			cv::rectangle(*reinterpret_cast<const cv::_InputOutputArray*>(img), rec, *color, thickness, lineType, shift);
+			cv::rectangle(*reinterpret_cast<const cv::_InputOutputArray*>(img), *rec, *color, thickness, lineType, shift);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -877,9 +877,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_resize_const__InputArrayX_const__OutputArrayX_Size_double_double_int(void* src, void* dst, cv::Size dsize, double fx, double fy, int interpolation) {
+	Result_void cv_resize_const__InputArrayX_const__OutputArrayX_Size_double_double_int(void* src, void* dst, const cv::Size* dsize, double fx, double fy, int interpolation) {
 		try {
-			cv::resize(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), dsize, fx, fy, interpolation);
+			cv::resize(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *dsize, fx, fy, interpolation);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -891,9 +891,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_sepFilter2D_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_const__InputArrayX_Point_double_int(void* src, void* dst, int ddepth, void* kernelX, void* kernelY, cv::Point anchor, double delta, int borderType) {
+	Result_void cv_sepFilter2D_const__InputArrayX_const__OutputArrayX_int_const__InputArrayX_const__InputArrayX_Point_double_int(void* src, void* dst, int ddepth, void* kernelX, void* kernelY, const cv::Point* anchor, double delta, int borderType) {
 		try {
-			cv::sepFilter2D(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, *reinterpret_cast<const cv::_InputArray*>(kernelX), *reinterpret_cast<const cv::_InputArray*>(kernelY), anchor, delta, borderType);
+			cv::sepFilter2D(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, *reinterpret_cast<const cv::_InputArray*>(kernelX), *reinterpret_cast<const cv::_InputArray*>(kernelY), *anchor, delta, borderType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -905,9 +905,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_sqrBoxFilter_const__InputArrayX_const__OutputArrayX_int_Size_Point_bool_int(void* src, void* dst, int ddepth, cv::Size ksize, cv::Point anchor, bool normalize, int borderType) {
+	Result_void cv_sqrBoxFilter_const__InputArrayX_const__OutputArrayX_int_Size_Point_bool_int(void* src, void* dst, int ddepth, const cv::Size* ksize, const cv::Point* anchor, bool normalize, int borderType) {
 		try {
-			cv::sqrBoxFilter(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, ksize, anchor, normalize, borderType);
+			cv::sqrBoxFilter(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), ddepth, *ksize, *anchor, normalize, borderType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -919,23 +919,23 @@ extern "C" {
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_warpAffine_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Size_int_int_const_ScalarX(void* src, void* dst, void* M, cv::Size dsize, int flags, int borderMode, const cv::Scalar* borderValue) {
+	Result_void cv_warpAffine_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Size_int_int_const_ScalarX(void* src, void* dst, void* M, const cv::Size* dsize, int flags, int borderMode, const cv::Scalar* borderValue) {
 		try {
-			cv::warpAffine(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(M), dsize, flags, borderMode, *borderValue);
+			cv::warpAffine(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(M), *dsize, flags, borderMode, *borderValue);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_warpPerspective_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Size_int_int_const_ScalarX(void* src, void* dst, void* M, cv::Size dsize, int flags, int borderMode, const cv::Scalar* borderValue) {
+	Result_void cv_warpPerspective_const__InputArrayX_const__OutputArrayX_const__InputArrayX_Size_int_int_const_ScalarX(void* src, void* dst, void* M, const cv::Size* dsize, int flags, int borderMode, const cv::Scalar* borderValue) {
 		try {
-			cv::warpPerspective(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(M), dsize, flags, borderMode, *borderValue);
+			cv::warpPerspective(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(M), *dsize, flags, borderMode, *borderValue);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_warpPolar_const__InputArrayX_const__OutputArrayX_Size_Point2f_double_int(void* src, void* dst, cv::Size dsize, cv::Point2f center, double maxRadius, int flags) {
+	Result_void cv_warpPolar_const__InputArrayX_const__OutputArrayX_Size_Point2f_double_int(void* src, void* dst, const cv::Size* dsize, const cv::Point2f* center, double maxRadius, int flags) {
 		try {
-			cv::warpPolar(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), dsize, center, maxRadius, flags);
+			cv::warpPolar(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *dsize, *center, maxRadius, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -975,9 +975,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_CLAHE_setTilesGridSize_Size(void* instance, cv::Size tileGridSize) {
+	Result_void cv_CLAHE_setTilesGridSize_Size(void* instance, const cv::Size* tileGridSize) {
 		try {
-			reinterpret_cast<cv::CLAHE*>(instance)->setTilesGridSize(tileGridSize);
+			reinterpret_cast<cv::CLAHE*>(instance)->setTilesGridSize(*tileGridSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -996,16 +996,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_GeneralizedHough_setTemplate_const__InputArrayX_Point(void* instance, void* templ, cv::Point templCenter) {
+	Result_void cv_GeneralizedHough_setTemplate_const__InputArrayX_Point(void* instance, void* templ, const cv::Point* templCenter) {
 		try {
-			reinterpret_cast<cv::GeneralizedHough*>(instance)->setTemplate(*reinterpret_cast<const cv::_InputArray*>(templ), templCenter);
+			reinterpret_cast<cv::GeneralizedHough*>(instance)->setTemplate(*reinterpret_cast<const cv::_InputArray*>(templ), *templCenter);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_GeneralizedHough_setTemplate_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point(void* instance, void* edges, void* dx, void* dy, cv::Point templCenter) {
+	Result_void cv_GeneralizedHough_setTemplate_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point(void* instance, void* edges, void* dx, void* dy, const cv::Point* templCenter) {
 		try {
-			reinterpret_cast<cv::GeneralizedHough*>(instance)->setTemplate(*reinterpret_cast<const cv::_InputArray*>(edges), *reinterpret_cast<const cv::_InputArray*>(dx), *reinterpret_cast<const cv::_InputArray*>(dy), templCenter);
+			reinterpret_cast<cv::GeneralizedHough*>(instance)->setTemplate(*reinterpret_cast<const cv::_InputArray*>(edges), *reinterpret_cast<const cv::_InputArray*>(dx), *reinterpret_cast<const cv::_InputArray*>(dy), *templCenter);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1426,9 +1426,9 @@ extern "C" {
 	void cv_LineIterator_delete(cv::LineIterator* instance) {
 		delete instance;
 	}
-	Result<void*> cv_LineIterator_LineIterator_const_MatX_Point_Point_int_bool(void* img, cv::Point pt1, cv::Point pt2, int connectivity, bool leftToRight) {
+	Result<void*> cv_LineIterator_LineIterator_const_MatX_Point_Point_int_bool(void* img, const cv::Point* pt1, const cv::Point* pt2, int connectivity, bool leftToRight) {
 		try {
-			cv::LineIterator* ret = new cv::LineIterator(*reinterpret_cast<const cv::Mat*>(img), pt1, pt2, connectivity, leftToRight);
+			cv::LineIterator* ret = new cv::LineIterator(*reinterpret_cast<const cv::Mat*>(img), *pt1, *pt2, connectivity, leftToRight);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -1471,23 +1471,23 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Subdiv2D_Subdiv2D_Rect(cv::Rect rect) {
+	Result<void*> cv_Subdiv2D_Subdiv2D_Rect(const cv::Rect* rect) {
 		try {
-			cv::Subdiv2D* ret = new cv::Subdiv2D(rect);
+			cv::Subdiv2D* ret = new cv::Subdiv2D(*rect);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_Subdiv2D_initDelaunay_Rect(void* instance, cv::Rect rect) {
+	Result_void cv_Subdiv2D_initDelaunay_Rect(void* instance, const cv::Rect* rect) {
 		try {
-			reinterpret_cast<cv::Subdiv2D*>(instance)->initDelaunay(rect);
+			reinterpret_cast<cv::Subdiv2D*>(instance)->initDelaunay(*rect);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Subdiv2D_insert_Point2f(void* instance, cv::Point2f pt) {
+	Result<int> cv_Subdiv2D_insert_Point2f(void* instance, const cv::Point2f* pt) {
 		try {
-			int ret = reinterpret_cast<cv::Subdiv2D*>(instance)->insert(pt);
+			int ret = reinterpret_cast<cv::Subdiv2D*>(instance)->insert(*pt);
 			return Ok<int>(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
@@ -1499,16 +1499,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Subdiv2D_locate_Point2f_intX_intX(void* instance, cv::Point2f pt, int* edge, int* vertex) {
+	Result<int> cv_Subdiv2D_locate_Point2f_intX_intX(void* instance, const cv::Point2f* pt, int* edge, int* vertex) {
 		try {
-			int ret = reinterpret_cast<cv::Subdiv2D*>(instance)->locate(pt, *edge, *vertex);
+			int ret = reinterpret_cast<cv::Subdiv2D*>(instance)->locate(*pt, *edge, *vertex);
 			return Ok<int>(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_Subdiv2D_findNearest_Point2f_Point2fX(void* instance, cv::Point2f pt, cv::Point2f* nearestPt) {
+	Result<int> cv_Subdiv2D_findNearest_Point2f_Point2fX(void* instance, const cv::Point2f* pt, cv::Point2f* nearestPt) {
 		try {
-			int ret = reinterpret_cast<cv::Subdiv2D*>(instance)->findNearest(pt, nearestPt);
+			int ret = reinterpret_cast<cv::Subdiv2D*>(instance)->findNearest(*pt, nearestPt);
 			return Ok<int>(ret);
 		} OCVRS_CATCH(Result<int>)
 	}

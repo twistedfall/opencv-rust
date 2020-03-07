@@ -44,9 +44,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_Rect_const__OutputArrayX(void* instance, void* image, cv::Rect roi, void* descriptors) {
+	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_Rect_const__OutputArrayX(void* instance, void* image, const cv::Rect* roi, void* descriptors) {
 		try {
-			reinterpret_cast<cv::xfeatures2d::DAISY*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(image), roi, *reinterpret_cast<const cv::_OutputArray*>(descriptors));
+			reinterpret_cast<cv::xfeatures2d::DAISY*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(image), *roi, *reinterpret_cast<const cv::_OutputArray*>(descriptors));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

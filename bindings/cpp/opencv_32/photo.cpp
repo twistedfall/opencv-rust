@@ -178,9 +178,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_seamlessClone_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point_const__OutputArrayX_int(void* src, void* dst, void* mask, cv::Point p, void* blend, int flags) {
+	Result_void cv_seamlessClone_const__InputArrayX_const__InputArrayX_const__InputArrayX_Point_const__OutputArrayX_int(void* src, void* dst, void* mask, const cv::Point* p, void* blend, int flags) {
 		try {
-			cv::seamlessClone(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask), p, *reinterpret_cast<const cv::_OutputArray*>(blend), flags);
+			cv::seamlessClone(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask), *p, *reinterpret_cast<const cv::_OutputArray*>(blend), flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -227,9 +227,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result_void cv_AlignMTB_shiftMat_const__InputArrayX_const__OutputArrayX_Point(void* instance, void* src, void* dst, cv::Point shift) {
+	Result_void cv_AlignMTB_shiftMat_const__InputArrayX_const__OutputArrayX_Point(void* instance, void* src, void* dst, const cv::Point* shift) {
 		try {
-			reinterpret_cast<cv::AlignMTB*>(instance)->shiftMat(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), shift);
+			reinterpret_cast<cv::AlignMTB*>(instance)->shiftMat(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *shift);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

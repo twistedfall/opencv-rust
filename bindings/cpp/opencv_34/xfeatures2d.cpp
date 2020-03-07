@@ -111,9 +111,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_Rect_const__OutputArrayX(void* instance, void* image, cv::Rect roi, void* descriptors) {
+	Result_void cv_xfeatures2d_DAISY_compute_const__InputArrayX_Rect_const__OutputArrayX(void* instance, void* image, const cv::Rect* roi, void* descriptors) {
 		try {
-			reinterpret_cast<cv::xfeatures2d::DAISY*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(image), roi, *reinterpret_cast<const cv::_OutputArray*>(descriptors));
+			reinterpret_cast<cv::xfeatures2d::DAISY*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(image), *roi, *reinterpret_cast<const cv::_OutputArray*>(descriptors));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -160,9 +160,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size_<float>>)
 	}
 	
-	Result_void cv_xfeatures2d_Elliptic_KeyPoint_setAxes_Size__float_(void* instance, cv::Size_<float> val) {
+	Result_void cv_xfeatures2d_Elliptic_KeyPoint_setAxes_Size__float_(void* instance, const cv::Size_<float>* val) {
 		try {
-			reinterpret_cast<cv::xfeatures2d::Elliptic_KeyPoint*>(instance)->axes = val;
+			reinterpret_cast<cv::xfeatures2d::Elliptic_KeyPoint*>(instance)->axes = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -188,9 +188,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Matx23f>)
 	}
 	
-	Result_void cv_xfeatures2d_Elliptic_KeyPoint_setTransf_Matx23f(void* instance, cv::Matx23f val) {
+	Result_void cv_xfeatures2d_Elliptic_KeyPoint_setTransf_Matx23f(void* instance, const cv::Matx23f* val) {
 		try {
-			reinterpret_cast<cv::xfeatures2d::Elliptic_KeyPoint*>(instance)->transf = val;
+			reinterpret_cast<cv::xfeatures2d::Elliptic_KeyPoint*>(instance)->transf = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -205,9 +205,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(cv::Point2f pt, float angle, cv::Size axes, float size, float si) {
+	Result<void*> cv_xfeatures2d_Elliptic_KeyPoint_Elliptic_KeyPoint_Point2f_float_Size_float_float(const cv::Point2f* pt, float angle, const cv::Size* axes, float size, float si) {
 		try {
-			cv::xfeatures2d::Elliptic_KeyPoint* ret = new cv::xfeatures2d::Elliptic_KeyPoint(pt, angle, axes, size, si);
+			cv::xfeatures2d::Elliptic_KeyPoint* ret = new cv::xfeatures2d::Elliptic_KeyPoint(*pt, angle, *axes, size, si);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}

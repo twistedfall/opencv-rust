@@ -163,16 +163,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_bioinspired_Retina_create_Size(cv::Size inputSize) {
+	Result<void*> cv_bioinspired_Retina_create_Size(const cv::Size* inputSize) {
 		try {
-			cv::Ptr<cv::bioinspired::Retina> ret = cv::bioinspired::Retina::create(inputSize);
+			cv::Ptr<cv::bioinspired::Retina> ret = cv::bioinspired::Retina::create(*inputSize);
 			return Ok<void*>(new cv::Ptr<cv::bioinspired::Retina>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(cv::Size inputSize, bool colorMode, int colorSamplingMethod, bool useRetinaLogSampling, float reductionFactor, float samplingStrenght) {
+	Result<void*> cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(const cv::Size* inputSize, bool colorMode, int colorSamplingMethod, bool useRetinaLogSampling, float reductionFactor, float samplingStrenght) {
 		try {
-			cv::Ptr<cv::bioinspired::Retina> ret = cv::bioinspired::Retina::create(inputSize, colorMode, colorSamplingMethod, useRetinaLogSampling, reductionFactor, samplingStrenght);
+			cv::Ptr<cv::bioinspired::Retina> ret = cv::bioinspired::Retina::create(*inputSize, colorMode, colorSamplingMethod, useRetinaLogSampling, reductionFactor, samplingStrenght);
 			return Ok<void*>(new cv::Ptr<cv::bioinspired::Retina>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -191,9 +191,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_bioinspired_RetinaFastToneMapping_create_Size(cv::Size inputSize) {
+	Result<void*> cv_bioinspired_RetinaFastToneMapping_create_Size(const cv::Size* inputSize) {
 		try {
-			cv::Ptr<cv::bioinspired::RetinaFastToneMapping> ret = cv::bioinspired::RetinaFastToneMapping::create(inputSize);
+			cv::Ptr<cv::bioinspired::RetinaFastToneMapping> ret = cv::bioinspired::RetinaFastToneMapping::create(*inputSize);
 			return Ok<void*>(new cv::Ptr<cv::bioinspired::RetinaFastToneMapping>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -205,9 +205,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::bioinspired::RetinaParameters::OPLandIplParvoParameters>)
 	}
 	
-	Result_void cv_bioinspired_RetinaParameters_setOPLandIplParvo_OPLandIplParvoParameters(void* instance, cv::bioinspired::RetinaParameters::OPLandIplParvoParameters val) {
+	Result_void cv_bioinspired_RetinaParameters_setOPLandIplParvo_OPLandIplParvoParameters(void* instance, const cv::bioinspired::RetinaParameters::OPLandIplParvoParameters* val) {
 		try {
-			reinterpret_cast<cv::bioinspired::RetinaParameters*>(instance)->OPLandIplParvo = val;
+			reinterpret_cast<cv::bioinspired::RetinaParameters*>(instance)->OPLandIplParvo = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -219,9 +219,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::bioinspired::RetinaParameters::IplMagnoParameters>)
 	}
 	
-	Result_void cv_bioinspired_RetinaParameters_setIplMagno_IplMagnoParameters(void* instance, cv::bioinspired::RetinaParameters::IplMagnoParameters val) {
+	Result_void cv_bioinspired_RetinaParameters_setIplMagno_IplMagnoParameters(void* instance, const cv::bioinspired::RetinaParameters::IplMagnoParameters* val) {
 		try {
-			reinterpret_cast<cv::bioinspired::RetinaParameters*>(instance)->IplMagno = val;
+			reinterpret_cast<cv::bioinspired::RetinaParameters*>(instance)->IplMagno = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -271,9 +271,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(void* instance, cv::bioinspired::SegmentationParameters newParameters) {
+	Result_void cv_bioinspired_TransientAreasSegmentationModule_setup_SegmentationParameters(void* instance, const cv::bioinspired::SegmentationParameters* newParameters) {
 		try {
-			reinterpret_cast<cv::bioinspired::TransientAreasSegmentationModule*>(instance)->setup(newParameters);
+			reinterpret_cast<cv::bioinspired::TransientAreasSegmentationModule*>(instance)->setup(*newParameters);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -327,9 +327,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_bioinspired_TransientAreasSegmentationModule_create_Size(cv::Size inputSize) {
+	Result<void*> cv_bioinspired_TransientAreasSegmentationModule_create_Size(const cv::Size* inputSize) {
 		try {
-			cv::Ptr<cv::bioinspired::TransientAreasSegmentationModule> ret = cv::bioinspired::TransientAreasSegmentationModule::create(inputSize);
+			cv::Ptr<cv::bioinspired::TransientAreasSegmentationModule> ret = cv::bioinspired::TransientAreasSegmentationModule::create(*inputSize);
 			return Ok<void*>(new cv::Ptr<cv::bioinspired::TransientAreasSegmentationModule>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}

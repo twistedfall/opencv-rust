@@ -16,30 +16,30 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, cv::Size imageSize, int iFixedPoint, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* newObjPoints, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* stdDeviationsObjPoints, void* perViewErrors, int flags, void* criteria) {
+	Result<double> cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, const cv::Size* imageSize, int iFixedPoint, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* newObjPoints, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* stdDeviationsObjPoints, void* perViewErrors, int flags, void* criteria) {
 		try {
-			double ret = cv::calibrateCameraRO(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), imageSize, iFixedPoint, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(newObjPoints), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsObjPoints), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::calibrateCameraRO(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *imageSize, iFixedPoint, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(newObjPoints), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsObjPoints), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, cv::Size imageSize, int iFixedPoint, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* newObjPoints, int flags, void* criteria) {
+	Result<double> cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, const cv::Size* imageSize, int iFixedPoint, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* newObjPoints, int flags, void* criteria) {
 		try {
-			double ret = cv::calibrateCameraRO(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), imageSize, iFixedPoint, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(newObjPoints), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::calibrateCameraRO(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *imageSize, iFixedPoint, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(newObjPoints), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, cv::Size imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* perViewErrors, int flags, void* criteria) {
+	Result<double> cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* perViewErrors, int flags, void* criteria) {
 		try {
-			double ret = cv::calibrateCamera(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::calibrateCamera(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, cv::Size imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
+	Result<double> cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
 		try {
-			double ret = cv::calibrateCamera(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::calibrateCamera(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
@@ -51,16 +51,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_calibrationMatrixValues_const__InputArrayX_Size_double_double_doubleX_doubleX_doubleX_Point2dX_doubleX(void* cameraMatrix, cv::Size imageSize, double apertureWidth, double apertureHeight, double* fovx, double* fovy, double* focalLength, cv::Point2d* principalPoint, double* aspectRatio) {
+	Result_void cv_calibrationMatrixValues_const__InputArrayX_Size_double_double_doubleX_doubleX_doubleX_Point2dX_doubleX(void* cameraMatrix, const cv::Size* imageSize, double apertureWidth, double apertureHeight, double* fovx, double* fovy, double* focalLength, cv::Point2d* principalPoint, double* aspectRatio) {
 		try {
-			cv::calibrationMatrixValues(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), imageSize, apertureWidth, apertureHeight, *fovx, *fovy, *focalLength, *principalPoint, *aspectRatio);
+			cv::calibrationMatrixValues(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *imageSize, apertureWidth, apertureHeight, *fovx, *fovy, *focalLength, *principalPoint, *aspectRatio);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_checkChessboard_const__InputArrayX_Size(void* img, cv::Size size) {
+	Result<bool> cv_checkChessboard_const__InputArrayX_Size(void* img, const cv::Size* size) {
 		try {
-			bool ret = cv::checkChessboard(*reinterpret_cast<const cv::_InputArray*>(img), size);
+			bool ret = cv::checkChessboard(*reinterpret_cast<const cv::_InputArray*>(img), *size);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
@@ -128,9 +128,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_drawChessboardCorners_const__InputOutputArrayX_Size_const__InputArrayX_bool(void* image, cv::Size patternSize, void* corners, bool patternWasFound) {
+	Result_void cv_drawChessboardCorners_const__InputOutputArrayX_Size_const__InputArrayX_bool(void* image, const cv::Size* patternSize, void* corners, bool patternWasFound) {
 		try {
-			cv::drawChessboardCorners(*reinterpret_cast<const cv::_InputOutputArray*>(image), patternSize, *reinterpret_cast<const cv::_InputArray*>(corners), patternWasFound);
+			cv::drawChessboardCorners(*reinterpret_cast<const cv::_InputOutputArray*>(image), *patternSize, *reinterpret_cast<const cv::_InputArray*>(corners), patternWasFound);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -177,37 +177,37 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_find4QuadCornerSubpix_const__InputArrayX_const__InputOutputArrayX_Size(void* img, void* corners, cv::Size region_size) {
+	Result<bool> cv_find4QuadCornerSubpix_const__InputArrayX_const__InputOutputArrayX_Size(void* img, void* corners, const cv::Size* region_size) {
 		try {
-			bool ret = cv::find4QuadCornerSubpix(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputOutputArray*>(corners), region_size);
+			bool ret = cv::find4QuadCornerSubpix(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputOutputArray*>(corners), *region_size);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_findChessboardCornersSB_const__InputArrayX_Size_const__OutputArrayX_int(void* image, cv::Size patternSize, void* corners, int flags) {
+	Result<bool> cv_findChessboardCornersSB_const__InputArrayX_Size_const__OutputArrayX_int(void* image, const cv::Size* patternSize, void* corners, int flags) {
 		try {
-			bool ret = cv::findChessboardCornersSB(*reinterpret_cast<const cv::_InputArray*>(image), patternSize, *reinterpret_cast<const cv::_OutputArray*>(corners), flags);
+			bool ret = cv::findChessboardCornersSB(*reinterpret_cast<const cv::_InputArray*>(image), *patternSize, *reinterpret_cast<const cv::_OutputArray*>(corners), flags);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_findChessboardCorners_const__InputArrayX_Size_const__OutputArrayX_int(void* image, cv::Size patternSize, void* corners, int flags) {
+	Result<bool> cv_findChessboardCorners_const__InputArrayX_Size_const__OutputArrayX_int(void* image, const cv::Size* patternSize, void* corners, int flags) {
 		try {
-			bool ret = cv::findChessboardCorners(*reinterpret_cast<const cv::_InputArray*>(image), patternSize, *reinterpret_cast<const cv::_OutputArray*>(corners), flags);
+			bool ret = cv::findChessboardCorners(*reinterpret_cast<const cv::_InputArray*>(image), *patternSize, *reinterpret_cast<const cv::_OutputArray*>(corners), flags);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X(void* image, cv::Size patternSize, void* centers, int flags, void* blobDetector) {
+	Result<bool> cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X(void* image, const cv::Size* patternSize, void* centers, int flags, void* blobDetector) {
 		try {
-			bool ret = cv::findCirclesGrid(*reinterpret_cast<const cv::_InputArray*>(image), patternSize, *reinterpret_cast<const cv::_OutputArray*>(centers), flags, *reinterpret_cast<const cv::Ptr<cv::FeatureDetector>*>(blobDetector));
+			bool ret = cv::findCirclesGrid(*reinterpret_cast<const cv::_InputArray*>(image), *patternSize, *reinterpret_cast<const cv::_OutputArray*>(centers), flags, *reinterpret_cast<const cv::Ptr<cv::FeatureDetector>*>(blobDetector));
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X_const_CirclesGridFinderParametersX(void* image, cv::Size patternSize, void* centers, int flags, void* blobDetector, const cv::CirclesGridFinderParameters* parameters) {
+	Result<bool> cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X_const_CirclesGridFinderParametersX(void* image, const cv::Size* patternSize, void* centers, int flags, void* blobDetector, const cv::CirclesGridFinderParameters* parameters) {
 		try {
-			bool ret = cv::findCirclesGrid(*reinterpret_cast<const cv::_InputArray*>(image), patternSize, *reinterpret_cast<const cv::_OutputArray*>(centers), flags, *reinterpret_cast<const cv::Ptr<cv::FeatureDetector>*>(blobDetector), *parameters);
+			bool ret = cv::findCirclesGrid(*reinterpret_cast<const cv::_InputArray*>(image), *patternSize, *reinterpret_cast<const cv::_OutputArray*>(centers), flags, *reinterpret_cast<const cv::Ptr<cv::FeatureDetector>*>(blobDetector), *parameters);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
@@ -219,9 +219,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_findEssentialMat_const__InputArrayX_const__InputArrayX_double_Point2d_int_double_double_const__OutputArrayX(void* points1, void* points2, double focal, cv::Point2d pp, int method, double prob, double threshold, void* mask) {
+	Result<void*> cv_findEssentialMat_const__InputArrayX_const__InputArrayX_double_Point2d_int_double_double_const__OutputArrayX(void* points1, void* points2, double focal, const cv::Point2d* pp, int method, double prob, double threshold, void* mask) {
 		try {
-			cv::Mat ret = cv::findEssentialMat(*reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_InputArray*>(points2), focal, pp, method, prob, threshold, *reinterpret_cast<const cv::_OutputArray*>(mask));
+			cv::Mat ret = cv::findEssentialMat(*reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_InputArray*>(points2), focal, *pp, method, prob, threshold, *reinterpret_cast<const cv::_OutputArray*>(mask));
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -296,9 +296,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_fisheye_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints1, void* imagePoints2, void* K1, void* D1, void* K2, void* D2, cv::Size imageSize, void* R, void* T, int flags, void* criteria) {
+	Result<double> cv_fisheye_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints1, void* imagePoints2, void* K1, void* D1, void* K2, void* D2, const cv::Size* imageSize, void* R, void* T, int flags, void* criteria) {
 		try {
-			double ret = cv::fisheye::stereoCalibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints1), *reinterpret_cast<const cv::_InputArray*>(imagePoints2), *reinterpret_cast<const cv::_InputOutputArray*>(K1), *reinterpret_cast<const cv::_InputOutputArray*>(D1), *reinterpret_cast<const cv::_InputOutputArray*>(K2), *reinterpret_cast<const cv::_InputOutputArray*>(D2), imageSize, *reinterpret_cast<const cv::_OutputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(T), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::fisheye::stereoCalibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints1), *reinterpret_cast<const cv::_InputArray*>(imagePoints2), *reinterpret_cast<const cv::_InputOutputArray*>(K1), *reinterpret_cast<const cv::_InputOutputArray*>(D1), *reinterpret_cast<const cv::_InputOutputArray*>(K2), *reinterpret_cast<const cv::_InputOutputArray*>(D2), *imageSize, *reinterpret_cast<const cv::_OutputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(T), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
@@ -324,44 +324,44 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_getDefaultNewCameraMatrix_const__InputArrayX_Size_bool(void* cameraMatrix, cv::Size imgsize, bool centerPrincipalPoint) {
+	Result<void*> cv_getDefaultNewCameraMatrix_const__InputArrayX_Size_bool(void* cameraMatrix, const cv::Size* imgsize, bool centerPrincipalPoint) {
 		try {
-			cv::Mat ret = cv::getDefaultNewCameraMatrix(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), imgsize, centerPrincipalPoint);
+			cv::Mat ret = cv::getDefaultNewCameraMatrix(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *imgsize, centerPrincipalPoint);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_getOptimalNewCameraMatrix_const__InputArrayX_const__InputArrayX_Size_double_Size_RectX_bool(void* cameraMatrix, void* distCoeffs, cv::Size imageSize, double alpha, cv::Size newImgSize, cv::Rect* validPixROI, bool centerPrincipalPoint) {
+	Result<void*> cv_getOptimalNewCameraMatrix_const__InputArrayX_const__InputArrayX_Size_double_Size_RectX_bool(void* cameraMatrix, void* distCoeffs, const cv::Size* imageSize, double alpha, const cv::Size* newImgSize, cv::Rect* validPixROI, bool centerPrincipalPoint) {
 		try {
-			cv::Mat ret = cv::getOptimalNewCameraMatrix(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), imageSize, alpha, newImgSize, validPixROI, centerPrincipalPoint);
+			cv::Mat ret = cv::getOptimalNewCameraMatrix(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *imageSize, alpha, *newImgSize, validPixROI, centerPrincipalPoint);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Rect> cv_getValidDisparityROI_Rect_Rect_int_int_int(cv::Rect roi1, cv::Rect roi2, int minDisparity, int numberOfDisparities, int SADWindowSize) {
+	Result<cv::Rect> cv_getValidDisparityROI_Rect_Rect_int_int_int(const cv::Rect* roi1, const cv::Rect* roi2, int minDisparity, int numberOfDisparities, int SADWindowSize) {
 		try {
-			cv::Rect ret = cv::getValidDisparityROI(roi1, roi2, minDisparity, numberOfDisparities, SADWindowSize);
+			cv::Rect ret = cv::getValidDisparityROI(*roi1, *roi2, minDisparity, numberOfDisparities, SADWindowSize);
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result<void*> cv_initCameraMatrix2D_const__InputArrayX_const__InputArrayX_Size_double(void* objectPoints, void* imagePoints, cv::Size imageSize, double aspectRatio) {
+	Result<void*> cv_initCameraMatrix2D_const__InputArrayX_const__InputArrayX_Size_double(void* objectPoints, void* imagePoints, const cv::Size* imageSize, double aspectRatio) {
 		try {
-			cv::Mat ret = cv::initCameraMatrix2D(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), imageSize, aspectRatio);
+			cv::Mat ret = cv::initCameraMatrix2D(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *imageSize, aspectRatio);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_int_const__OutputArrayX_const__OutputArrayX(void* cameraMatrix, void* distCoeffs, void* R, void* newCameraMatrix, cv::Size size, int m1type, void* map1, void* map2) {
+	Result_void cv_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_int_const__OutputArrayX_const__OutputArrayX(void* cameraMatrix, void* distCoeffs, void* R, void* newCameraMatrix, const cv::Size* size, int m1type, void* map1, void* map2) {
 		try {
-			cv::initUndistortRectifyMap(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(newCameraMatrix), size, m1type, *reinterpret_cast<const cv::_OutputArray*>(map1), *reinterpret_cast<const cv::_OutputArray*>(map2));
+			cv::initUndistortRectifyMap(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(newCameraMatrix), *size, m1type, *reinterpret_cast<const cv::_OutputArray*>(map1), *reinterpret_cast<const cv::_OutputArray*>(map2));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_initWideAngleProjMap_const__InputArrayX_const__InputArrayX_Size_int_int_const__OutputArrayX_const__OutputArrayX_UndistortTypes_double(void* cameraMatrix, void* distCoeffs, cv::Size imageSize, int destImageWidth, int m1type, void* map1, void* map2, cv::UndistortTypes projType, double alpha) {
+	Result<float> cv_initWideAngleProjMap_const__InputArrayX_const__InputArrayX_Size_int_int_const__OutputArrayX_const__OutputArrayX_UndistortTypes_double(void* cameraMatrix, void* distCoeffs, const cv::Size* imageSize, int destImageWidth, int m1type, void* map1, void* map2, cv::UndistortTypes projType, double alpha) {
 		try {
-			float ret = cv::initWideAngleProjMap(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), imageSize, destImageWidth, m1type, *reinterpret_cast<const cv::_OutputArray*>(map1), *reinterpret_cast<const cv::_OutputArray*>(map2), projType, alpha);
+			float ret = cv::initWideAngleProjMap(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *imageSize, destImageWidth, m1type, *reinterpret_cast<const cv::_OutputArray*>(map1), *reinterpret_cast<const cv::_OutputArray*>(map2), projType, alpha);
 			return Ok<float>(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
@@ -394,16 +394,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_recoverPose_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_Point2d_const__InputOutputArrayX(void* E, void* points1, void* points2, void* R, void* t, double focal, cv::Point2d pp, void* mask) {
+	Result<int> cv_recoverPose_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_Point2d_const__InputOutputArrayX(void* E, void* points1, void* points2, void* R, void* t, double focal, const cv::Point2d* pp, void* mask) {
 		try {
-			int ret = cv::recoverPose(*reinterpret_cast<const cv::_InputArray*>(E), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_InputArray*>(points2), *reinterpret_cast<const cv::_OutputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(t), focal, pp, *reinterpret_cast<const cv::_InputOutputArray*>(mask));
+			int ret = cv::recoverPose(*reinterpret_cast<const cv::_InputArray*>(E), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_InputArray*>(points2), *reinterpret_cast<const cv::_OutputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(t), focal, *pp, *reinterpret_cast<const cv::_InputOutputArray*>(mask));
 			return Ok<int>(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<float> cv_rectify3Collinear_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_double_Size_RectX_RectX_int(void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, void* cameraMatrix3, void* distCoeffs3, void* imgpt1, void* imgpt3, cv::Size imageSize, void* R12, void* T12, void* R13, void* T13, void* R1, void* R2, void* R3, void* P1, void* P2, void* P3, void* Q, double alpha, cv::Size newImgSize, cv::Rect* roi1, cv::Rect* roi2, int flags) {
+	Result<float> cv_rectify3Collinear_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_double_Size_RectX_RectX_int(void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, void* cameraMatrix3, void* distCoeffs3, void* imgpt1, void* imgpt3, const cv::Size* imageSize, void* R12, void* T12, void* R13, void* T13, void* R1, void* R2, void* R3, void* P1, void* P2, void* P3, void* Q, double alpha, const cv::Size* newImgSize, cv::Rect* roi1, cv::Rect* roi2, int flags) {
 		try {
-			float ret = cv::rectify3Collinear(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputArray*>(distCoeffs2), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix3), *reinterpret_cast<const cv::_InputArray*>(distCoeffs3), *reinterpret_cast<const cv::_InputArray*>(imgpt1), *reinterpret_cast<const cv::_InputArray*>(imgpt3), imageSize, *reinterpret_cast<const cv::_InputArray*>(R12), *reinterpret_cast<const cv::_InputArray*>(T12), *reinterpret_cast<const cv::_InputArray*>(R13), *reinterpret_cast<const cv::_InputArray*>(T13), *reinterpret_cast<const cv::_OutputArray*>(R1), *reinterpret_cast<const cv::_OutputArray*>(R2), *reinterpret_cast<const cv::_OutputArray*>(R3), *reinterpret_cast<const cv::_OutputArray*>(P1), *reinterpret_cast<const cv::_OutputArray*>(P2), *reinterpret_cast<const cv::_OutputArray*>(P3), *reinterpret_cast<const cv::_OutputArray*>(Q), alpha, newImgSize, roi1, roi2, flags);
+			float ret = cv::rectify3Collinear(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputArray*>(distCoeffs2), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix3), *reinterpret_cast<const cv::_InputArray*>(distCoeffs3), *reinterpret_cast<const cv::_InputArray*>(imgpt1), *reinterpret_cast<const cv::_InputArray*>(imgpt3), *imageSize, *reinterpret_cast<const cv::_InputArray*>(R12), *reinterpret_cast<const cv::_InputArray*>(T12), *reinterpret_cast<const cv::_InputArray*>(R13), *reinterpret_cast<const cv::_InputArray*>(T13), *reinterpret_cast<const cv::_OutputArray*>(R1), *reinterpret_cast<const cv::_OutputArray*>(R2), *reinterpret_cast<const cv::_OutputArray*>(R3), *reinterpret_cast<const cv::_OutputArray*>(P1), *reinterpret_cast<const cv::_OutputArray*>(P2), *reinterpret_cast<const cv::_OutputArray*>(P3), *reinterpret_cast<const cv::_OutputArray*>(Q), alpha, *newImgSize, roi1, roi2, flags);
 			return Ok<float>(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
@@ -464,30 +464,30 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<double> cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints1, void* imagePoints2, void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, cv::Size imageSize, void* R, void* T, void* E, void* F, void* perViewErrors, int flags, void* criteria) {
+	Result<double> cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints1, void* imagePoints2, void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, const cv::Size* imageSize, void* R, void* T, void* E, void* F, void* perViewErrors, int flags, void* criteria) {
 		try {
-			double ret = cv::stereoCalibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints1), *reinterpret_cast<const cv::_InputArray*>(imagePoints2), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs2), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(R), *reinterpret_cast<const cv::_InputOutputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(E), *reinterpret_cast<const cv::_OutputArray*>(F), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::stereoCalibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints1), *reinterpret_cast<const cv::_InputArray*>(imagePoints2), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs2), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(R), *reinterpret_cast<const cv::_InputOutputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(E), *reinterpret_cast<const cv::_OutputArray*>(F), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints1, void* imagePoints2, void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, cv::Size imageSize, void* R, void* T, void* E, void* F, int flags, void* criteria) {
+	Result<double> cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* objectPoints, void* imagePoints1, void* imagePoints2, void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, const cv::Size* imageSize, void* R, void* T, void* E, void* F, int flags, void* criteria) {
 		try {
-			double ret = cv::stereoCalibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints1), *reinterpret_cast<const cv::_InputArray*>(imagePoints2), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs2), imageSize, *reinterpret_cast<const cv::_OutputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(E), *reinterpret_cast<const cv::_OutputArray*>(F), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::stereoCalibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints1), *reinterpret_cast<const cv::_InputArray*>(imagePoints2), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs2), *imageSize, *reinterpret_cast<const cv::_OutputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(E), *reinterpret_cast<const cv::_OutputArray*>(F), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<bool> cv_stereoRectifyUncalibrated_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_const__OutputArrayX_const__OutputArrayX_double(void* points1, void* points2, void* F, cv::Size imgSize, void* H1, void* H2, double threshold) {
+	Result<bool> cv_stereoRectifyUncalibrated_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_const__OutputArrayX_const__OutputArrayX_double(void* points1, void* points2, void* F, const cv::Size* imgSize, void* H1, void* H2, double threshold) {
 		try {
-			bool ret = cv::stereoRectifyUncalibrated(*reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_InputArray*>(points2), *reinterpret_cast<const cv::_InputArray*>(F), imgSize, *reinterpret_cast<const cv::_OutputArray*>(H1), *reinterpret_cast<const cv::_OutputArray*>(H2), threshold);
+			bool ret = cv::stereoRectifyUncalibrated(*reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_InputArray*>(points2), *reinterpret_cast<const cv::_InputArray*>(F), *imgSize, *reinterpret_cast<const cv::_OutputArray*>(H1), *reinterpret_cast<const cv::_OutputArray*>(H2), threshold);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_stereoRectify_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_double_Size_RectX_RectX(void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, cv::Size imageSize, void* R, void* T, void* R1, void* R2, void* P1, void* P2, void* Q, int flags, double alpha, cv::Size newImageSize, cv::Rect* validPixROI1, cv::Rect* validPixROI2) {
+	Result_void cv_stereoRectify_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_double_Size_RectX_RectX(void* cameraMatrix1, void* distCoeffs1, void* cameraMatrix2, void* distCoeffs2, const cv::Size* imageSize, void* R, void* T, void* R1, void* R2, void* P1, void* P2, void* Q, int flags, double alpha, const cv::Size* newImageSize, cv::Rect* validPixROI1, cv::Rect* validPixROI2) {
 		try {
-			cv::stereoRectify(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputArray*>(distCoeffs2), imageSize, *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(R1), *reinterpret_cast<const cv::_OutputArray*>(R2), *reinterpret_cast<const cv::_OutputArray*>(P1), *reinterpret_cast<const cv::_OutputArray*>(P2), *reinterpret_cast<const cv::_OutputArray*>(Q), flags, alpha, newImageSize, validPixROI1, validPixROI2);
+			cv::stereoRectify(*reinterpret_cast<const cv::_InputArray*>(cameraMatrix1), *reinterpret_cast<const cv::_InputArray*>(distCoeffs1), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix2), *reinterpret_cast<const cv::_InputArray*>(distCoeffs2), *imageSize, *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(R1), *reinterpret_cast<const cv::_OutputArray*>(R2), *reinterpret_cast<const cv::_OutputArray*>(P1), *reinterpret_cast<const cv::_OutputArray*>(P2), *reinterpret_cast<const cv::_OutputArray*>(Q), flags, alpha, *newImageSize, validPixROI1, validPixROI2);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -667,9 +667,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_StereoBM_setROI1_Rect(void* instance, cv::Rect roi1) {
+	Result_void cv_StereoBM_setROI1_Rect(void* instance, const cv::Rect* roi1) {
 		try {
-			reinterpret_cast<cv::StereoBM*>(instance)->setROI1(roi1);
+			reinterpret_cast<cv::StereoBM*>(instance)->setROI1(*roi1);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -681,9 +681,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_StereoBM_setROI2_Rect(void* instance, cv::Rect roi2) {
+	Result_void cv_StereoBM_setROI2_Rect(void* instance, const cv::Rect* roi2) {
 		try {
-			reinterpret_cast<cv::StereoBM*>(instance)->setROI2(roi2);
+			reinterpret_cast<cv::StereoBM*>(instance)->setROI2(*roi2);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

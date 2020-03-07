@@ -23,9 +23,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_face_drawFacemarks_const__InputOutputArrayX_const__InputArrayX_Scalar(void* image, void* points, cv::Scalar color) {
+	Result_void cv_face_drawFacemarks_const__InputOutputArrayX_const__InputArrayX_Scalar(void* image, void* points, const cv::Scalar* color) {
 		try {
-			cv::face::drawFacemarks(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(points), color);
+			cv::face::drawFacemarks(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(points), *color);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -240,9 +240,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_face_CParams_setMinSize_Size(void* instance, cv::Size val) {
+	Result_void cv_face_CParams_setMinSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::face::CParams*>(instance)->minSize = val;
+			reinterpret_cast<cv::face::CParams*>(instance)->minSize = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -254,9 +254,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_face_CParams_setMaxSize_Size(void* instance, cv::Size val) {
+	Result_void cv_face_CParams_setMaxSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::face::CParams*>(instance)->maxSize = val;
+			reinterpret_cast<cv::face::CParams*>(instance)->maxSize = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -278,9 +278,9 @@ extern "C" {
 	void cv_CParams_delete(cv::face::CParams* instance) {
 		delete instance;
 	}
-	Result<void*> cv_face_CParams_CParams_String_double_int_Size_Size(char* cascade_model, double sf, int minN, cv::Size minSz, cv::Size maxSz) {
+	Result<void*> cv_face_CParams_CParams_String_double_int_Size_Size(char* cascade_model, double sf, int minN, const cv::Size* minSz, const cv::Size* maxSz) {
 		try {
-			cv::face::CParams* ret = new cv::face::CParams(std::string(cascade_model), sf, minN, minSz, maxSz);
+			cv::face::CParams* ret = new cv::face::CParams(std::string(cascade_model), sf, minN, *minSz, *maxSz);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -446,9 +446,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result_void cv_face_FacemarkAAM_Config_setT_Point2f(void* instance, cv::Point2f val) {
+	Result_void cv_face_FacemarkAAM_Config_setT_Point2f(void* instance, const cv::Point2f* val) {
 		try {
-			reinterpret_cast<cv::face::FacemarkAAM::Config*>(instance)->t = val;
+			reinterpret_cast<cv::face::FacemarkAAM::Config*>(instance)->t = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -484,9 +484,9 @@ extern "C" {
 	void cv_FacemarkAAM_Config_delete(cv::face::FacemarkAAM::Config* instance) {
 		delete instance;
 	}
-	Result<void*> cv_face_FacemarkAAM_Config_Config_Mat_Point2f_float_int(void* rot, cv::Point2f trans, float scaling, int scale_id) {
+	Result<void*> cv_face_FacemarkAAM_Config_Config_Mat_Point2f_float_int(void* rot, const cv::Point2f* trans, float scaling, int scale_id) {
 		try {
-			cv::face::FacemarkAAM::Config* ret = new cv::face::FacemarkAAM::Config(*reinterpret_cast<cv::Mat*>(rot), trans, scaling, scale_id);
+			cv::face::FacemarkAAM::Config* ret = new cv::face::FacemarkAAM::Config(*reinterpret_cast<cv::Mat*>(rot), *trans, scaling, scale_id);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -616,9 +616,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_face_FacemarkAAM_Model_Texture_setResolution_Rect(void* instance, cv::Rect val) {
+	Result_void cv_face_FacemarkAAM_Model_Texture_setResolution_Rect(void* instance, const cv::Rect* val) {
 		try {
-			reinterpret_cast<cv::face::FacemarkAAM::Model::Texture*>(instance)->resolution = val;
+			reinterpret_cast<cv::face::FacemarkAAM::Model::Texture*>(instance)->resolution = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -909,9 +909,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<bool> cv_face_FacemarkKazemi_training_vector_Mat_X_vector_vector_Point2f__X_string_Size_string(void* instance, void* images, void* landmarks, char* configfile, cv::Size scale, char* modelFilename) {
+	Result<bool> cv_face_FacemarkKazemi_training_vector_Mat_X_vector_vector_Point2f__X_string_Size_string(void* instance, void* images, void* landmarks, char* configfile, const cv::Size* scale, char* modelFilename) {
 		try {
-			bool ret = reinterpret_cast<cv::face::FacemarkKazemi*>(instance)->training(*reinterpret_cast<std::vector<cv::Mat>*>(images), *reinterpret_cast<std::vector<std::vector<cv::Point2f>>*>(landmarks), std::string(configfile), scale, std::string(modelFilename));
+			bool ret = reinterpret_cast<cv::face::FacemarkKazemi*>(instance)->training(*reinterpret_cast<std::vector<cv::Mat>*>(images), *reinterpret_cast<std::vector<std::vector<cv::Point2f>>*>(landmarks), std::string(configfile), *scale, std::string(modelFilename));
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
@@ -1269,9 +1269,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_face_FacemarkLBF_Params_setDetectROI_Rect(void* instance, cv::Rect val) {
+	Result_void cv_face_FacemarkLBF_Params_setDetectROI_Rect(void* instance, const cv::Rect* val) {
 		try {
-			reinterpret_cast<cv::face::FacemarkLBF::Params*>(instance)->detectROI = val;
+			reinterpret_cast<cv::face::FacemarkLBF::Params*>(instance)->detectROI = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

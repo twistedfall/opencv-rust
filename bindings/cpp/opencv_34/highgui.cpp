@@ -3,16 +3,16 @@
 #include "highgui_types.hpp"
 
 extern "C" {
-	Result_void cv_addText_const_MatX_const_StringX_Point_const_QtFontX(void* img, const char* text, cv::Point org, void* font) {
+	Result_void cv_addText_const_MatX_const_StringX_Point_const_QtFontX(void* img, const char* text, const cv::Point* org, void* font) {
 		try {
-			cv::addText(*reinterpret_cast<const cv::Mat*>(img), cv::String(text), org, *reinterpret_cast<const cv::QtFont*>(font));
+			cv::addText(*reinterpret_cast<const cv::Mat*>(img), cv::String(text), *org, *reinterpret_cast<const cv::QtFont*>(font));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(void* img, const char* text, cv::Point org, const char* nameFont, int pointSize, cv::Scalar color, int weight, int style, int spacing) {
+	Result_void cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(void* img, const char* text, const cv::Point* org, const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
 		try {
-			cv::addText(*reinterpret_cast<const cv::Mat*>(img), cv::String(text), org, cv::String(nameFont), pointSize, color, weight, style, spacing);
+			cv::addText(*reinterpret_cast<const cv::Mat*>(img), cv::String(text), *org, cv::String(nameFont), pointSize, *color, weight, style, spacing);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -59,9 +59,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_fontQt_const_StringX_int_Scalar_int_int_int(const char* nameFont, int pointSize, cv::Scalar color, int weight, int style, int spacing) {
+	Result<void*> cv_fontQt_const_StringX_int_Scalar_int_int_int(const char* nameFont, int pointSize, const cv::Scalar* color, int weight, int style, int spacing) {
 		try {
-			cv::QtFont ret = cv::fontQt(cv::String(nameFont), pointSize, color, weight, style, spacing);
+			cv::QtFont ret = cv::fontQt(cv::String(nameFont), pointSize, *color, weight, style, spacing);
 			return Ok<void*>(new cv::QtFont(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -276,9 +276,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Scalar>)
 	}
 	
-	Result_void cv_QtFont_setColor_Scalar(void* instance, cv::Scalar val) {
+	Result_void cv_QtFont_setColor_Scalar(void* instance, const cv::Scalar* val) {
 		try {
-			reinterpret_cast<cv::QtFont*>(instance)->color = val;
+			reinterpret_cast<cv::QtFont*>(instance)->color = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

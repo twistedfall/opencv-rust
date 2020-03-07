@@ -296,9 +296,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_text_ERStat_setRect_Rect(void* instance, cv::Rect val) {
+	Result_void cv_text_ERStat_setRect_Rect(void* instance, const cv::Rect* val) {
 		try {
-			reinterpret_cast<cv::text::ERStat*>(instance)->rect = val;
+			reinterpret_cast<cv::text::ERStat*>(instance)->rect = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

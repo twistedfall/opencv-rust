@@ -24,9 +24,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_videostab_ensureInclusionConstraint_const_MatX_Size_float(void* M, cv::Size size, float trimRatio) {
+	Result<void*> cv_videostab_ensureInclusionConstraint_const_MatX_Size_float(void* M, const cv::Size* size, float trimRatio) {
 		try {
-			cv::Mat ret = cv::videostab::ensureInclusionConstraint(*reinterpret_cast<const cv::Mat*>(M), size, trimRatio);
+			cv::Mat ret = cv::videostab::ensureInclusionConstraint(*reinterpret_cast<const cv::Mat*>(M), *size, trimRatio);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -45,9 +45,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<float> cv_videostab_estimateOptimalTrimRatio_const_MatX_Size(void* M, cv::Size size) {
+	Result<float> cv_videostab_estimateOptimalTrimRatio_const_MatX_Size(void* M, const cv::Size* size) {
 		try {
-			float ret = cv::videostab::estimateOptimalTrimRatio(*reinterpret_cast<const cv::Mat*>(M), size);
+			float ret = cv::videostab::estimateOptimalTrimRatio(*reinterpret_cast<const cv::Mat*>(M), *size);
 			return Ok<float>(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
@@ -273,9 +273,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_videostab_IOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* instance, cv::Size frameSize, void* points0, void* points1, void* mask) {
+	Result_void cv_videostab_IOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* instance, const cv::Size* frameSize, void* points0, void* points1, void* mask) {
 		try {
-			reinterpret_cast<cv::videostab::IOutlierRejector*>(instance)->process(frameSize, *reinterpret_cast<const cv::_InputArray*>(points0), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_OutputArray*>(mask));
+			reinterpret_cast<cv::videostab::IOutlierRejector*>(instance)->process(*frameSize, *reinterpret_cast<const cv::_InputArray*>(points0), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_OutputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -579,9 +579,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::videostab::MotionModel>)
 	}
 	
-	Result_void cv_videostab_LpMotionStabilizer_setFrameSize_Size(void* instance, cv::Size val) {
+	Result_void cv_videostab_LpMotionStabilizer_setFrameSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::videostab::LpMotionStabilizer*>(instance)->setFrameSize(val);
+			reinterpret_cast<cv::videostab::LpMotionStabilizer*>(instance)->setFrameSize(*val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -910,9 +910,9 @@ extern "C" {
 	void cv_NullOutlierRejector_delete(cv::videostab::NullOutlierRejector* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_NullOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* instance, cv::Size frameSize, void* points0, void* points1, void* mask) {
+	Result_void cv_videostab_NullOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* instance, const cv::Size* frameSize, void* points0, void* points1, void* mask) {
 		try {
-			reinterpret_cast<cv::videostab::NullOutlierRejector*>(instance)->process(frameSize, *reinterpret_cast<const cv::_InputArray*>(points0), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_OutputArray*>(mask));
+			reinterpret_cast<cv::videostab::NullOutlierRejector*>(instance)->process(*frameSize, *reinterpret_cast<const cv::_InputArray*>(points0), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_OutputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -975,9 +975,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(void* instance, cv::Size val) {
+	Result_void cv_videostab_PyrLkOptFlowEstimatorBase_setWinSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::videostab::PyrLkOptFlowEstimatorBase*>(instance)->setWinSize(val);
+			reinterpret_cast<cv::videostab::PyrLkOptFlowEstimatorBase*>(instance)->setWinSize(*val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1267,9 +1267,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_setCellSize_Size(void* instance, cv::Size val) {
+	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_setCellSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::videostab::TranslationBasedLocalOutlierRejector*>(instance)->setCellSize(val);
+			reinterpret_cast<cv::videostab::TranslationBasedLocalOutlierRejector*>(instance)->setCellSize(*val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1295,9 +1295,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* instance, cv::Size frameSize, void* points0, void* points1, void* mask) {
+	Result_void cv_videostab_TranslationBasedLocalOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* instance, const cv::Size* frameSize, void* points0, void* points1, void* mask) {
 		try {
-			reinterpret_cast<cv::videostab::TranslationBasedLocalOutlierRejector*>(instance)->process(frameSize, *reinterpret_cast<const cv::_InputArray*>(points0), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_OutputArray*>(mask));
+			reinterpret_cast<cv::videostab::TranslationBasedLocalOutlierRejector*>(instance)->process(*frameSize, *reinterpret_cast<const cv::_InputArray*>(points0), *reinterpret_cast<const cv::_InputArray*>(points1), *reinterpret_cast<const cv::_OutputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

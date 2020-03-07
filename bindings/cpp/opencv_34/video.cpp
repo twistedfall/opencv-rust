@@ -10,9 +10,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_buildOpticalFlowPyramid_const__InputArrayX_const__OutputArrayX_Size_int_bool_int_int_bool(void* img, void* pyramid, cv::Size winSize, int maxLevel, bool withDerivatives, int pyrBorder, int derivBorder, bool tryReuseInputImage) {
+	Result<int> cv_buildOpticalFlowPyramid_const__InputArrayX_const__OutputArrayX_Size_int_bool_int_int_bool(void* img, void* pyramid, const cv::Size* winSize, int maxLevel, bool withDerivatives, int pyrBorder, int derivBorder, bool tryReuseInputImage) {
 		try {
-			int ret = cv::buildOpticalFlowPyramid(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_OutputArray*>(pyramid), winSize, maxLevel, withDerivatives, pyrBorder, derivBorder, tryReuseInputImage);
+			int ret = cv::buildOpticalFlowPyramid(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_OutputArray*>(pyramid), *winSize, maxLevel, withDerivatives, pyrBorder, derivBorder, tryReuseInputImage);
 			return Ok<int>(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
@@ -24,9 +24,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(void* prevImg, void* nextImg, void* prevPts, void* nextPts, void* status, void* err, cv::Size winSize, int maxLevel, void* criteria, int flags, double minEigThreshold) {
+	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(void* prevImg, void* nextImg, void* prevPts, void* nextPts, void* status, void* err, const cv::Size* winSize, int maxLevel, void* criteria, int flags, double minEigThreshold) {
 		try {
-			cv::calcOpticalFlowPyrLK(*reinterpret_cast<const cv::_InputArray*>(prevImg), *reinterpret_cast<const cv::_InputArray*>(nextImg), *reinterpret_cast<const cv::_InputArray*>(prevPts), *reinterpret_cast<const cv::_InputOutputArray*>(nextPts), *reinterpret_cast<const cv::_OutputArray*>(status), *reinterpret_cast<const cv::_OutputArray*>(err), winSize, maxLevel, *reinterpret_cast<cv::TermCriteria*>(criteria), flags, minEigThreshold);
+			cv::calcOpticalFlowPyrLK(*reinterpret_cast<const cv::_InputArray*>(prevImg), *reinterpret_cast<const cv::_InputArray*>(nextImg), *reinterpret_cast<const cv::_InputArray*>(prevPts), *reinterpret_cast<const cv::_InputOutputArray*>(nextPts), *reinterpret_cast<const cv::_OutputArray*>(status), *reinterpret_cast<const cv::_OutputArray*>(err), *winSize, maxLevel, *reinterpret_cast<cv::TermCriteria*>(criteria), flags, minEigThreshold);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -951,9 +951,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_SparsePyrLKOpticalFlow_setWinSize_Size(void* instance, cv::Size winSize) {
+	Result_void cv_SparsePyrLKOpticalFlow_setWinSize_Size(void* instance, const cv::Size* winSize) {
 		try {
-			reinterpret_cast<cv::SparsePyrLKOpticalFlow*>(instance)->setWinSize(winSize);
+			reinterpret_cast<cv::SparsePyrLKOpticalFlow*>(instance)->setWinSize(*winSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1014,9 +1014,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(cv::Size winSize, int maxLevel, void* crit, int flags, double minEigThreshold) {
+	Result<void*> cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(const cv::Size* winSize, int maxLevel, void* crit, int flags, double minEigThreshold) {
 		try {
-			cv::Ptr<cv::SparsePyrLKOpticalFlow> ret = cv::SparsePyrLKOpticalFlow::create(winSize, maxLevel, *reinterpret_cast<cv::TermCriteria*>(crit), flags, minEigThreshold);
+			cv::Ptr<cv::SparsePyrLKOpticalFlow> ret = cv::SparsePyrLKOpticalFlow::create(*winSize, maxLevel, *reinterpret_cast<cv::TermCriteria*>(crit), flags, minEigThreshold);
 			return Ok<void*>(new cv::Ptr<cv::SparsePyrLKOpticalFlow>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}

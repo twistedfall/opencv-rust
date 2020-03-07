@@ -37,16 +37,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_dnn_blobFromImages_const__InputArrayX_const__OutputArrayX_double_Size_const_ScalarX_bool_bool_int(void* images, void* blob, double scalefactor, cv::Size size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
+	Result_void cv_dnn_blobFromImages_const__InputArrayX_const__OutputArrayX_double_Size_const_ScalarX_bool_bool_int(void* images, void* blob, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
 		try {
-			cv::dnn::blobFromImages(*reinterpret_cast<const cv::_InputArray*>(images), *reinterpret_cast<const cv::_OutputArray*>(blob), scalefactor, size, *mean, swapRB, crop, ddepth);
+			cv::dnn::blobFromImages(*reinterpret_cast<const cv::_InputArray*>(images), *reinterpret_cast<const cv::_OutputArray*>(blob), scalefactor, *size, *mean, swapRB, crop, ddepth);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_dnn_blobFromImages_const__InputArrayX_double_Size_const_ScalarX_bool_bool_int(void* images, double scalefactor, cv::Size size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
+	Result<void*> cv_dnn_blobFromImages_const__InputArrayX_double_Size_const_ScalarX_bool_bool_int(void* images, double scalefactor, const cv::Size* size, const cv::Scalar* mean, bool swapRB, bool crop, int ddepth) {
 		try {
-			cv::Mat ret = cv::dnn::blobFromImages(*reinterpret_cast<const cv::_InputArray*>(images), scalefactor, size, *mean, swapRB, crop, ddepth);
+			cv::Mat ret = cv::dnn::blobFromImages(*reinterpret_cast<const cv::_InputArray*>(images), scalefactor, *size, *mean, swapRB, crop, ddepth);
 			return Ok<void*>(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -460,9 +460,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setKernel_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setKernel_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->kernel = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->kernel = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -474,9 +474,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setStride_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setStride_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->stride = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->stride = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -488,9 +488,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setPad_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setPad_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->pad = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->pad = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -502,9 +502,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setDilation_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setDilation_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->dilation = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->dilation = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -516,9 +516,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_BaseConvolutionLayer_setAdjustPad_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_BaseConvolutionLayer_setAdjustPad_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->adjustPad = val;
+			reinterpret_cast<cv::dnn::BaseConvolutionLayer*>(instance)->adjustPad = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1556,9 +1556,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_MaxUnpoolLayer_setPoolKernel_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_MaxUnpoolLayer_setPoolKernel_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::MaxUnpoolLayer*>(instance)->poolKernel = val;
+			reinterpret_cast<cv::dnn::MaxUnpoolLayer*>(instance)->poolKernel = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1570,9 +1570,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_MaxUnpoolLayer_setPoolPad_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_MaxUnpoolLayer_setPoolPad_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::MaxUnpoolLayer*>(instance)->poolPad = val;
+			reinterpret_cast<cv::dnn::MaxUnpoolLayer*>(instance)->poolPad = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1584,9 +1584,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_MaxUnpoolLayer_setPoolStride_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_MaxUnpoolLayer_setPoolStride_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::MaxUnpoolLayer*>(instance)->poolStride = val;
+			reinterpret_cast<cv::dnn::MaxUnpoolLayer*>(instance)->poolStride = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2089,9 +2089,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setKernel_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_PoolingLayer_setKernel_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->kernel = val;
+			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->kernel = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2103,9 +2103,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setStride_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_PoolingLayer_setStride_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->stride = val;
+			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->stride = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2117,9 +2117,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setPad_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_PoolingLayer_setPad_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->pad = val;
+			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->pad = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2257,9 +2257,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_dnn_PoolingLayer_setPooledSize_Size(void* instance, cv::Size val) {
+	Result_void cv_dnn_PoolingLayer_setPooledSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->pooledSize = val;
+			reinterpret_cast<cv::dnn::PoolingLayer*>(instance)->pooledSize = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

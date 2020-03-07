@@ -80,9 +80,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_detail_overlapRoi_Point_Point_Size_Size_RectX(cv::Point tl1, cv::Point tl2, cv::Size sz1, cv::Size sz2, cv::Rect* roi) {
+	Result<bool> cv_detail_overlapRoi_Point_Point_Size_Size_RectX(const cv::Point* tl1, const cv::Point* tl2, const cv::Size* sz1, const cv::Size* sz2, cv::Rect* roi) {
 		try {
-			bool ret = cv::detail::overlapRoi(tl1, tl2, sz1, sz2, *roi);
+			bool ret = cv::detail::overlapRoi(*tl1, *tl2, *sz1, *sz2, *roi);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
@@ -292,9 +292,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result<cv::Rect> cv_PyRotationWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_PyRotationWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::PyRotationWarper*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::PyRotationWarper*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -306,16 +306,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result_void cv_PyRotationWarper_warpBackward_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_Size_const__OutputArrayX(void* instance, void* src, void* K, void* R, int interp_mode, int border_mode, cv::Size dst_size, void* dst) {
+	Result_void cv_PyRotationWarper_warpBackward_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_Size_const__OutputArrayX(void* instance, void* src, void* K, void* R, int interp_mode, int border_mode, const cv::Size* dst_size, void* dst) {
 		try {
-			reinterpret_cast<cv::PyRotationWarper*>(instance)->warpBackward(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), interp_mode, border_mode, dst_size, *reinterpret_cast<const cv::_OutputArray*>(dst));
+			reinterpret_cast<cv::PyRotationWarper*>(instance)->warpBackward(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), interp_mode, border_mode, *dst_size, *reinterpret_cast<const cv::_OutputArray*>(dst));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Rect> cv_PyRotationWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, cv::Size src_size, void* K, void* R) {
+	Result<cv::Rect> cv_PyRotationWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, const cv::Size* src_size, void* K, void* R) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::PyRotationWarper*>(instance)->warpRoi(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R));
+			cv::Rect ret = reinterpret_cast<cv::PyRotationWarper*>(instance)->warpRoi(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -768,9 +768,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result<cv::Rect> cv_detail_AffineWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* H, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_AffineWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* H, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::AffineWarper*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(H), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::AffineWarper*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(H), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -782,9 +782,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result<cv::Rect> cv_detail_AffineWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, cv::Size src_size, void* K, void* H) {
+	Result<cv::Rect> cv_detail_AffineWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, const cv::Size* src_size, void* K, void* H) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::AffineWarper*>(instance)->warpRoi(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(H));
+			cv::Rect ret = reinterpret_cast<cv::detail::AffineWarper*>(instance)->warpRoi(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(H));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -840,16 +840,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_Blender_prepare_Rect(void* instance, cv::Rect dst_roi) {
+	Result_void cv_detail_Blender_prepare_Rect(void* instance, const cv::Rect* dst_roi) {
 		try {
-			reinterpret_cast<cv::detail::Blender*>(instance)->prepare(dst_roi);
+			reinterpret_cast<cv::detail::Blender*>(instance)->prepare(*dst_roi);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_Blender_feed_const__InputArrayX_const__InputArrayX_Point(void* instance, void* img, void* mask, cv::Point tl) {
+	Result_void cv_detail_Blender_feed_const__InputArrayX_const__InputArrayX_Point(void* instance, void* img, void* mask, const cv::Point* tl) {
 		try {
-			reinterpret_cast<cv::detail::Blender*>(instance)->feed(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(mask), tl);
+			reinterpret_cast<cv::detail::Blender*>(instance)->feed(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(mask), *tl);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -871,9 +871,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_detail_BlocksCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, cv::Point corner, void* image, void* mask) {
+	Result_void cv_detail_BlocksCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, const cv::Point* corner, void* image, void* mask) {
 		try {
-			reinterpret_cast<cv::detail::BlocksCompensator*>(instance)->apply(index, corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
+			reinterpret_cast<cv::detail::BlocksCompensator*>(instance)->apply(index, *corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -913,9 +913,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_BlocksCompensator_setBlockSize_Size(void* instance, cv::Size size) {
+	Result_void cv_detail_BlocksCompensator_setBlockSize_Size(void* instance, const cv::Size* size) {
 		try {
-			reinterpret_cast<cv::detail::BlocksCompensator*>(instance)->setBlockSize(size);
+			reinterpret_cast<cv::detail::BlocksCompensator*>(instance)->setBlockSize(*size);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -958,9 +958,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_detail_BlocksGainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, cv::Point corner, void* image, void* mask) {
+	Result_void cv_detail_BlocksGainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, const cv::Point* corner, void* image, void* mask) {
 		try {
-			reinterpret_cast<cv::detail::BlocksGainCompensator*>(instance)->apply(index, corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
+			reinterpret_cast<cv::detail::BlocksGainCompensator*>(instance)->apply(index, *corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1179,9 +1179,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_detail_ChannelsCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, cv::Point corner, void* image, void* mask) {
+	Result_void cv_detail_ChannelsCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, const cv::Point* corner, void* image, void* mask) {
 		try {
-			reinterpret_cast<cv::detail::ChannelsCompensator*>(instance)->apply(index, corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
+			reinterpret_cast<cv::detail::ChannelsCompensator*>(instance)->apply(index, *corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1385,9 +1385,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Rect> cv_detail_CylindricalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_CylindricalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::CylindricalWarper*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::CylindricalWarper*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -1409,9 +1409,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Rect> cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_CylindricalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::CylindricalWarperGpu*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::CylindricalWarperGpu*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -1541,9 +1541,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_ExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, cv::Point corner, void* image, void* mask) {
+	Result_void cv_detail_ExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, const cv::Point* corner, void* image, void* mask) {
 		try {
-			reinterpret_cast<cv::detail::ExposureCompensator*>(instance)->apply(index, corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
+			reinterpret_cast<cv::detail::ExposureCompensator*>(instance)->apply(index, *corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1600,16 +1600,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_FeatherBlender_prepare_Rect(void* instance, cv::Rect dst_roi) {
+	Result_void cv_detail_FeatherBlender_prepare_Rect(void* instance, const cv::Rect* dst_roi) {
 		try {
-			reinterpret_cast<cv::detail::FeatherBlender*>(instance)->prepare(dst_roi);
+			reinterpret_cast<cv::detail::FeatherBlender*>(instance)->prepare(*dst_roi);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_FeatherBlender_feed_const__InputArrayX_const__InputArrayX_Point(void* instance, void* img, void* mask, cv::Point tl) {
+	Result_void cv_detail_FeatherBlender_feed_const__InputArrayX_const__InputArrayX_Point(void* instance, void* img, void* mask, const cv::Point* tl) {
 		try {
-			reinterpret_cast<cv::detail::FeatherBlender*>(instance)->feed(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(mask), tl);
+			reinterpret_cast<cv::detail::FeatherBlender*>(instance)->feed(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(mask), *tl);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1686,9 +1686,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_detail_GainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, cv::Point corner, void* image, void* mask) {
+	Result_void cv_detail_GainCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int index, const cv::Point* corner, void* image, void* mask) {
 		try {
-			reinterpret_cast<cv::detail::GainCompensator*>(instance)->apply(index, corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
+			reinterpret_cast<cv::detail::GainCompensator*>(instance)->apply(index, *corner, *reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1869,9 +1869,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_detail_ImageFeatures_setImg_size_Size(void* instance, cv::Size val) {
+	Result_void cv_detail_ImageFeatures_setImg_size_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::detail::ImageFeatures*>(instance)->img_size = val;
+			reinterpret_cast<cv::detail::ImageFeatures*>(instance)->img_size = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2094,16 +2094,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_MultiBandBlender_prepare_Rect(void* instance, cv::Rect dst_roi) {
+	Result_void cv_detail_MultiBandBlender_prepare_Rect(void* instance, const cv::Rect* dst_roi) {
 		try {
-			reinterpret_cast<cv::detail::MultiBandBlender*>(instance)->prepare(dst_roi);
+			reinterpret_cast<cv::detail::MultiBandBlender*>(instance)->prepare(*dst_roi);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_MultiBandBlender_feed_const__InputArrayX_const__InputArrayX_Point(void* instance, void* img, void* mask, cv::Point tl) {
+	Result_void cv_detail_MultiBandBlender_feed_const__InputArrayX_const__InputArrayX_Point(void* instance, void* img, void* mask, const cv::Point* tl) {
 		try {
-			reinterpret_cast<cv::detail::MultiBandBlender*>(instance)->feed(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(mask), tl);
+			reinterpret_cast<cv::detail::MultiBandBlender*>(instance)->feed(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cv::_InputArray*>(mask), *tl);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2128,9 +2128,9 @@ extern "C" {
 	void cv_Detail_NoExposureCompensator_delete(cv::detail::NoExposureCompensator* instance) {
 		delete instance;
 	}
-	Result_void cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int unnamed, cv::Point unnamed_1, void* unnamed_2, void* unnamed_3) {
+	Result_void cv_detail_NoExposureCompensator_apply_int_Point_const__InputOutputArrayX_const__InputArrayX(void* instance, int unnamed, const cv::Point* unnamed_1, void* unnamed_2, void* unnamed_3) {
 		try {
-			reinterpret_cast<cv::detail::NoExposureCompensator*>(instance)->apply(unnamed, unnamed_1, *reinterpret_cast<const cv::_InputOutputArray*>(unnamed_2), *reinterpret_cast<const cv::_InputArray*>(unnamed_3));
+			reinterpret_cast<cv::detail::NoExposureCompensator*>(instance)->apply(unnamed, *unnamed_1, *reinterpret_cast<const cv::_InputOutputArray*>(unnamed_2), *reinterpret_cast<const cv::_InputArray*>(unnamed_3));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2344,16 +2344,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* T, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* T, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -2372,16 +2372,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, cv::Size src_size, void* K, void* R) {
+	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, const cv::Size* src_size, void* K, void* R) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->warpRoi(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R));
+			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->warpRoi(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* T) {
+	Result<cv::Rect> cv_detail_PlaneWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* T) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->warpRoi(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T));
+			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarper*>(instance)->warpRoi(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -2396,16 +2396,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarperGpu*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarperGpu*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* T, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_PlaneWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* T, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarperGpu*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::PlaneWarperGpu*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -2490,9 +2490,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result<cv::Rect> cv_detail_RotationWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_RotationWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::RotationWarper*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::RotationWarper*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -2504,16 +2504,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result_void cv_detail_RotationWarper_warpBackward_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_Size_const__OutputArrayX(void* instance, void* src, void* K, void* R, int interp_mode, int border_mode, cv::Size dst_size, void* dst) {
+	Result_void cv_detail_RotationWarper_warpBackward_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_Size_const__OutputArrayX(void* instance, void* src, void* K, void* R, int interp_mode, int border_mode, const cv::Size* dst_size, void* dst) {
 		try {
-			reinterpret_cast<cv::detail::RotationWarper*>(instance)->warpBackward(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), interp_mode, border_mode, dst_size, *reinterpret_cast<const cv::_OutputArray*>(dst));
+			reinterpret_cast<cv::detail::RotationWarper*>(instance)->warpBackward(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), interp_mode, border_mode, *dst_size, *reinterpret_cast<const cv::_OutputArray*>(dst));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Rect> cv_detail_RotationWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, cv::Size src_size, void* K, void* R) {
+	Result<cv::Rect> cv_detail_RotationWarper_warpRoi_Size_const__InputArrayX_const__InputArrayX(void* instance, const cv::Size* src_size, void* K, void* R) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::RotationWarper*>(instance)->warpRoi(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R));
+			cv::Rect ret = reinterpret_cast<cv::detail::RotationWarper*>(instance)->warpRoi(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -2597,9 +2597,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Rect> cv_detail_SphericalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_SphericalWarper_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::SphericalWarper*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::SphericalWarper*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
@@ -2621,9 +2621,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Rect> cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, cv::Size src_size, void* K, void* R, void* xmap, void* ymap) {
+	Result<cv::Rect> cv_detail_SphericalWarperGpu_buildMaps_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, const cv::Size* src_size, void* K, void* R, void* xmap, void* ymap) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::detail::SphericalWarperGpu*>(instance)->buildMaps(src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
+			cv::Rect ret = reinterpret_cast<cv::detail::SphericalWarperGpu*>(instance)->buildMaps(*src_size, *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_OutputArray*>(xmap), *reinterpret_cast<const cv::_OutputArray*>(ymap));
 			return Ok<cv::Rect>(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}

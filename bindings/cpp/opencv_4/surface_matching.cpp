@@ -149,9 +149,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Matx44d>)
 	}
 	
-	Result_void cv_ppf_match_3d_Pose3D_setPose_Matx44d(void* instance, cv::Matx44d val) {
+	Result_void cv_ppf_match_3d_Pose3D_setPose_Matx44d(void* instance, const cv::Matx44d* val) {
 		try {
-			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->pose = val;
+			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->pose = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -177,9 +177,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Vec3d>)
 	}
 	
-	Result_void cv_ppf_match_3d_Pose3D_setT_Vec3d(void* instance, cv::Vec3d val) {
+	Result_void cv_ppf_match_3d_Pose3D_setT_Vec3d(void* instance, const cv::Vec3d* val) {
 		try {
-			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->t = val;
+			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->t = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -191,9 +191,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Vec4d>)
 	}
 	
-	Result_void cv_ppf_match_3d_Pose3D_setQ_Vec4d(void* instance, cv::Vec4d val) {
+	Result_void cv_ppf_match_3d_Pose3D_setQ_Vec4d(void* instance, const cv::Vec4d* val) {
 		try {
-			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->q = val;
+			reinterpret_cast<cv::ppf_match_3d::Pose3D*>(instance)->q = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

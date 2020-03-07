@@ -673,9 +673,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result_void cv_viz_MouseEvent_setPointer_Point(void* instance, cv::Point val) {
+	Result_void cv_viz_MouseEvent_setPointer_Point(void* instance, const cv::Point* val) {
 		try {
-			reinterpret_cast<cv::viz::MouseEvent*>(instance)->pointer = val;
+			reinterpret_cast<cv::viz::MouseEvent*>(instance)->pointer = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -931,9 +931,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_viz_Viz3d_addLight_Vec3d_Vec3d_Color_Color_Color_Color(void* instance, cv::Vec3d position, cv::Vec3d focalPoint, void* color, void* diffuseColor, void* ambientColor, void* specularColor) {
+	Result_void cv_viz_Viz3d_addLight_Vec3d_Vec3d_Color_Color_Color_Color(void* instance, const cv::Vec3d* position, const cv::Vec3d* focalPoint, void* color, void* diffuseColor, void* ambientColor, void* specularColor) {
 		try {
-			reinterpret_cast<cv::viz::Viz3d*>(instance)->addLight(position, focalPoint, *reinterpret_cast<cv::viz::Viz3d::Color*>(color), *reinterpret_cast<cv::viz::Viz3d::Color*>(diffuseColor), *reinterpret_cast<cv::viz::Viz3d::Color*>(ambientColor), *reinterpret_cast<cv::viz::Viz3d::Color*>(specularColor));
+			reinterpret_cast<cv::viz::Viz3d*>(instance)->addLight(*position, *focalPoint, *reinterpret_cast<cv::viz::Viz3d::Color*>(color), *reinterpret_cast<cv::viz::Viz3d::Color*>(diffuseColor), *reinterpret_cast<cv::viz::Viz3d::Color*>(ambientColor), *reinterpret_cast<cv::viz::Viz3d::Color*>(specularColor));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

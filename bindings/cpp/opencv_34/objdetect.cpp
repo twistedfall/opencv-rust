@@ -26,9 +26,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_groupRectangles_meanshift_vector_Rect_X_vector_double_X_vector_double_X_double_Size(void* rectList, void* foundWeights, void* foundScales, double detectThreshold, cv::Size winDetSize) {
+	Result_void cv_groupRectangles_meanshift_vector_Rect_X_vector_double_X_vector_double_X_double_Size(void* rectList, void* foundWeights, void* foundScales, double detectThreshold, const cv::Size* winDetSize) {
 		try {
-			cv::groupRectangles_meanshift(*reinterpret_cast<std::vector<cv::Rect>*>(rectList), *reinterpret_cast<std::vector<double>*>(foundWeights), *reinterpret_cast<std::vector<double>*>(foundScales), detectThreshold, winDetSize);
+			cv::groupRectangles_meanshift(*reinterpret_cast<std::vector<cv::Rect>*>(rectList), *reinterpret_cast<std::vector<double>*>(foundWeights), *reinterpret_cast<std::vector<double>*>(foundScales), detectThreshold, *winDetSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -75,23 +75,23 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(void* instance, void* image, void* objects, double scaleFactor, int minNeighbors, int flags, cv::Size minSize, cv::Size maxSize) {
+	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(void* instance, void* image, void* objects, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
-			reinterpret_cast<cv::BaseCascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), scaleFactor, minNeighbors, flags, minSize, maxSize);
+			reinterpret_cast<cv::BaseCascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(void* instance, void* image, void* objects, void* numDetections, double scaleFactor, int minNeighbors, int flags, cv::Size minSize, cv::Size maxSize) {
+	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(void* instance, void* image, void* objects, void* numDetections, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
-			reinterpret_cast<cv::BaseCascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(numDetections), scaleFactor, minNeighbors, flags, minSize, maxSize);
+			reinterpret_cast<cv::BaseCascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(numDetections), scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(void* instance, void* image, void* objects, void* rejectLevels, void* levelWeights, double scaleFactor, int minNeighbors, int flags, cv::Size minSize, cv::Size maxSize, bool outputRejectLevels) {
+	Result_void cv_BaseCascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(void* instance, void* image, void* objects, void* rejectLevels, void* levelWeights, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize, bool outputRejectLevels) {
 		try {
-			reinterpret_cast<cv::BaseCascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(rejectLevels), *reinterpret_cast<std::vector<double>*>(levelWeights), scaleFactor, minNeighbors, flags, minSize, maxSize, outputRejectLevels);
+			reinterpret_cast<cv::BaseCascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(rejectLevels), *reinterpret_cast<std::vector<double>*>(levelWeights), scaleFactor, minNeighbors, flags, *minSize, *maxSize, outputRejectLevels);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -204,23 +204,23 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(void* instance, void* image, void* objects, double scaleFactor, int minNeighbors, int flags, cv::Size minSize, cv::Size maxSize) {
+	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_double_int_int_Size_Size(void* instance, void* image, void* objects, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
-			reinterpret_cast<cv::CascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), scaleFactor, minNeighbors, flags, minSize, maxSize);
+			reinterpret_cast<cv::CascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(void* instance, void* image, void* objects, void* numDetections, double scaleFactor, int minNeighbors, int flags, cv::Size minSize, cv::Size maxSize) {
+	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_double_int_int_Size_Size(void* instance, void* image, void* objects, void* numDetections, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize) {
 		try {
-			reinterpret_cast<cv::CascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(numDetections), scaleFactor, minNeighbors, flags, minSize, maxSize);
+			reinterpret_cast<cv::CascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(numDetections), scaleFactor, minNeighbors, flags, *minSize, *maxSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(void* instance, void* image, void* objects, void* rejectLevels, void* levelWeights, double scaleFactor, int minNeighbors, int flags, cv::Size minSize, cv::Size maxSize, bool outputRejectLevels) {
+	Result_void cv_CascadeClassifier_detectMultiScale_const__InputArrayX_vector_Rect_X_vector_int_X_vector_double_X_double_int_int_Size_Size_bool(void* instance, void* image, void* objects, void* rejectLevels, void* levelWeights, double scaleFactor, int minNeighbors, int flags, const cv::Size* minSize, const cv::Size* maxSize, bool outputRejectLevels) {
 		try {
-			reinterpret_cast<cv::CascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(rejectLevels), *reinterpret_cast<std::vector<double>*>(levelWeights), scaleFactor, minNeighbors, flags, minSize, maxSize, outputRejectLevels);
+			reinterpret_cast<cv::CascadeClassifier*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::Rect>*>(objects), *reinterpret_cast<std::vector<int>*>(rejectLevels), *reinterpret_cast<std::vector<double>*>(levelWeights), scaleFactor, minNeighbors, flags, *minSize, *maxSize, outputRejectLevels);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -368,9 +368,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result_void cv_DetectionBasedTracker_ExtObject_setLocation_Rect(void* instance, cv::Rect val) {
+	Result_void cv_DetectionBasedTracker_ExtObject_setLocation_Rect(void* instance, const cv::Rect* val) {
 		try {
-			reinterpret_cast<cv::DetectionBasedTracker::ExtObject*>(instance)->location = val;
+			reinterpret_cast<cv::DetectionBasedTracker::ExtObject*>(instance)->location = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -392,9 +392,9 @@ extern "C" {
 	void cv_DetectionBasedTracker_ExtObject_delete(cv::DetectionBasedTracker::ExtObject* instance) {
 		delete instance;
 	}
-	Result<void*> cv_DetectionBasedTracker_ExtObject_ExtObject_int_Rect_ObjectStatus(int _id, cv::Rect _location, cv::DetectionBasedTracker::ObjectStatus _status) {
+	Result<void*> cv_DetectionBasedTracker_ExtObject_ExtObject_int_Rect_ObjectStatus(int _id, const cv::Rect* _location, cv::DetectionBasedTracker::ObjectStatus _status) {
 		try {
-			cv::DetectionBasedTracker::ExtObject* ret = new cv::DetectionBasedTracker::ExtObject(_id, _location, _status);
+			cv::DetectionBasedTracker::ExtObject* ret = new cv::DetectionBasedTracker::ExtObject(_id, *_location, _status);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -552,9 +552,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_HOGDescriptor_setWinSize_Size(void* instance, cv::Size val) {
+	Result_void cv_HOGDescriptor_setWinSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->winSize = val;
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->winSize = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -566,9 +566,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_HOGDescriptor_setBlockSize_Size(void* instance, cv::Size val) {
+	Result_void cv_HOGDescriptor_setBlockSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->blockSize = val;
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->blockSize = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -580,9 +580,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_HOGDescriptor_setBlockStride_Size(void* instance, cv::Size val) {
+	Result_void cv_HOGDescriptor_setBlockStride_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->blockStride = val;
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->blockStride = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -594,9 +594,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result_void cv_HOGDescriptor_setCellSize_Size(void* instance, cv::Size val) {
+	Result_void cv_HOGDescriptor_setCellSize_Size(void* instance, const cv::Size* val) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->cellSize = val;
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->cellSize = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -765,9 +765,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_HOGDescriptor_HOGDescriptor_Size_Size_Size_Size_int_int_double_int_double_bool_int_bool(cv::Size _winSize, cv::Size _blockSize, cv::Size _blockStride, cv::Size _cellSize, int _nbins, int _derivAperture, double _winSigma, int _histogramNormType, double _L2HysThreshold, bool _gammaCorrection, int _nlevels, bool _signedGradient) {
+	Result<void*> cv_HOGDescriptor_HOGDescriptor_Size_Size_Size_Size_int_int_double_int_double_bool_int_bool(const cv::Size* _winSize, const cv::Size* _blockSize, const cv::Size* _blockStride, const cv::Size* _cellSize, int _nbins, int _derivAperture, double _winSigma, int _histogramNormType, double _L2HysThreshold, bool _gammaCorrection, int _nlevels, bool _signedGradient) {
 		try {
-			cv::HOGDescriptor* ret = new cv::HOGDescriptor(_winSize, _blockSize, _blockStride, _cellSize, _nbins, _derivAperture, _winSigma, _histogramNormType, _L2HysThreshold, _gammaCorrection, _nlevels, _signedGradient);
+			cv::HOGDescriptor* ret = new cv::HOGDescriptor(*_winSize, *_blockSize, *_blockStride, *_cellSize, _nbins, _derivAperture, _winSigma, _histogramNormType, _L2HysThreshold, _gammaCorrection, _nlevels, _signedGradient);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -849,44 +849,44 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_HOGDescriptor_compute_const_const__InputArrayX_vector_float_X_Size_Size_const_vector_Point_X(void* instance, void* img, void* descriptors, cv::Size winStride, cv::Size padding, void* locations) {
+	Result_void cv_HOGDescriptor_compute_const_const__InputArrayX_vector_float_X_Size_Size_const_vector_Point_X(void* instance, void* img, void* descriptors, const cv::Size* winStride, const cv::Size* padding, void* locations) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<std::vector<float>*>(descriptors), winStride, padding, *reinterpret_cast<const std::vector<cv::Point>*>(locations));
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<std::vector<float>*>(descriptors), *winStride, *padding, *reinterpret_cast<const std::vector<cv::Point>*>(locations));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_vector_double_X_double_Size_Size_const_vector_Point_X(void* instance, void* img, void* foundLocations, void* weights, double hitThreshold, cv::Size winStride, cv::Size padding, void* searchLocations) {
+	Result_void cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_vector_double_X_double_Size_Size_const_vector_Point_X(void* instance, void* img, void* foundLocations, void* weights, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, void* searchLocations) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->detect(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<std::vector<cv::Point>*>(foundLocations), *reinterpret_cast<std::vector<double>*>(weights), hitThreshold, winStride, padding, *reinterpret_cast<const std::vector<cv::Point>*>(searchLocations));
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->detect(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<std::vector<cv::Point>*>(foundLocations), *reinterpret_cast<std::vector<double>*>(weights), hitThreshold, *winStride, *padding, *reinterpret_cast<const std::vector<cv::Point>*>(searchLocations));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_double_Size_Size_const_vector_Point_X(void* instance, void* img, void* foundLocations, double hitThreshold, cv::Size winStride, cv::Size padding, void* searchLocations) {
+	Result_void cv_HOGDescriptor_detect_const_const_MatX_vector_Point_X_double_Size_Size_const_vector_Point_X(void* instance, void* img, void* foundLocations, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, void* searchLocations) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->detect(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<std::vector<cv::Point>*>(foundLocations), hitThreshold, winStride, padding, *reinterpret_cast<const std::vector<cv::Point>*>(searchLocations));
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->detect(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<std::vector<cv::Point>*>(foundLocations), hitThreshold, *winStride, *padding, *reinterpret_cast<const std::vector<cv::Point>*>(searchLocations));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_vector_double_X_double_Size_Size_double_double_bool(void* instance, void* img, void* foundLocations, void* foundWeights, double hitThreshold, cv::Size winStride, cv::Size padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
+	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_vector_double_X_double_Size_Size_double_double_bool(void* instance, void* img, void* foundLocations, void* foundWeights, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<std::vector<cv::Rect>*>(foundLocations), *reinterpret_cast<std::vector<double>*>(foundWeights), hitThreshold, winStride, padding, scale, finalThreshold, useMeanshiftGrouping);
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<std::vector<cv::Rect>*>(foundLocations), *reinterpret_cast<std::vector<double>*>(foundWeights), hitThreshold, *winStride, *padding, scale, finalThreshold, useMeanshiftGrouping);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_double_Size_Size_double_double_bool(void* instance, void* img, void* foundLocations, double hitThreshold, cv::Size winStride, cv::Size padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
+	Result_void cv_HOGDescriptor_detectMultiScale_const_const__InputArrayX_vector_Rect_X_double_Size_Size_double_double_bool(void* instance, void* img, void* foundLocations, double hitThreshold, const cv::Size* winStride, const cv::Size* padding, double scale, double finalThreshold, bool useMeanshiftGrouping) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<std::vector<cv::Rect>*>(foundLocations), hitThreshold, winStride, padding, scale, finalThreshold, useMeanshiftGrouping);
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->detectMultiScale(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<std::vector<cv::Rect>*>(foundLocations), hitThreshold, *winStride, *padding, scale, finalThreshold, useMeanshiftGrouping);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_HOGDescriptor_computeGradient_const_const_MatX_MatX_MatX_Size_Size(void* instance, void* img, void* grad, void* angleOfs, cv::Size paddingTL, cv::Size paddingBR) {
+	Result_void cv_HOGDescriptor_computeGradient_const_const_MatX_MatX_MatX_Size_Size(void* instance, void* img, void* grad, void* angleOfs, const cv::Size* paddingTL, const cv::Size* paddingBR) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->computeGradient(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<cv::Mat*>(grad), *reinterpret_cast<cv::Mat*>(angleOfs), paddingTL, paddingBR);
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->computeGradient(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<cv::Mat*>(grad), *reinterpret_cast<cv::Mat*>(angleOfs), *paddingTL, *paddingBR);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -905,9 +905,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_HOGDescriptor_detectROI_const_const_MatX_const_vector_Point_X_vector_Point_X_vector_double_X_double_Size_Size(void* instance, void* img, void* locations, void* foundLocations, void* confidences, double hitThreshold, cv::Size winStride, cv::Size padding) {
+	Result_void cv_HOGDescriptor_detectROI_const_const_MatX_const_vector_Point_X_vector_Point_X_vector_double_X_double_Size_Size(void* instance, void* img, void* locations, void* foundLocations, void* confidences, double hitThreshold, const cv::Size* winStride, const cv::Size* padding) {
 		try {
-			reinterpret_cast<cv::HOGDescriptor*>(instance)->detectROI(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<const std::vector<cv::Point>*>(locations), *reinterpret_cast<std::vector<cv::Point>*>(foundLocations), *reinterpret_cast<std::vector<double>*>(confidences), hitThreshold, winStride, padding);
+			reinterpret_cast<cv::HOGDescriptor*>(instance)->detectROI(*reinterpret_cast<const cv::Mat*>(img), *reinterpret_cast<const std::vector<cv::Point>*>(locations), *reinterpret_cast<std::vector<cv::Point>*>(foundLocations), *reinterpret_cast<std::vector<double>*>(confidences), hitThreshold, *winStride, *padding);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

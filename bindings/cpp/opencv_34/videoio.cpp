@@ -169,30 +169,30 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_VideoWriter_VideoWriter_const_StringX_int_double_Size_bool(const char* filename, int fourcc, double fps, cv::Size frameSize, bool isColor) {
+	Result<void*> cv_VideoWriter_VideoWriter_const_StringX_int_double_Size_bool(const char* filename, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
-			cv::VideoWriter* ret = new cv::VideoWriter(cv::String(filename), fourcc, fps, frameSize, isColor);
+			cv::VideoWriter* ret = new cv::VideoWriter(cv::String(filename), fourcc, fps, *frameSize, isColor);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_VideoWriter_VideoWriter_const_StringX_int_int_double_Size_bool(const char* filename, int apiPreference, int fourcc, double fps, cv::Size frameSize, bool isColor) {
+	Result<void*> cv_VideoWriter_VideoWriter_const_StringX_int_int_double_Size_bool(const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
-			cv::VideoWriter* ret = new cv::VideoWriter(cv::String(filename), apiPreference, fourcc, fps, frameSize, isColor);
+			cv::VideoWriter* ret = new cv::VideoWriter(cv::String(filename), apiPreference, fourcc, fps, *frameSize, isColor);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<bool> cv_VideoWriter_open_const_StringX_int_double_Size_bool(void* instance, const char* filename, int fourcc, double fps, cv::Size frameSize, bool isColor) {
+	Result<bool> cv_VideoWriter_open_const_StringX_int_double_Size_bool(void* instance, const char* filename, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
-			bool ret = reinterpret_cast<cv::VideoWriter*>(instance)->open(cv::String(filename), fourcc, fps, frameSize, isColor);
+			bool ret = reinterpret_cast<cv::VideoWriter*>(instance)->open(cv::String(filename), fourcc, fps, *frameSize, isColor);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_VideoWriter_open_const_StringX_int_int_double_Size_bool(void* instance, const char* filename, int apiPreference, int fourcc, double fps, cv::Size frameSize, bool isColor) {
+	Result<bool> cv_VideoWriter_open_const_StringX_int_int_double_Size_bool(void* instance, const char* filename, int apiPreference, int fourcc, double fps, const cv::Size* frameSize, bool isColor) {
 		try {
-			bool ret = reinterpret_cast<cv::VideoWriter*>(instance)->open(cv::String(filename), apiPreference, fourcc, fps, frameSize, isColor);
+			bool ret = reinterpret_cast<cv::VideoWriter*>(instance)->open(cv::String(filename), apiPreference, fourcc, fps, *frameSize, isColor);
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}

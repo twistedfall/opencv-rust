@@ -104,9 +104,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_Size_const__InputArrayX(void* instance, void* wrappedPhaseMap, void* unwrappedPhaseMap, cv::Size camSize, void* shadowMask) {
+	Result_void cv_structured_light_SinusoidalPattern_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_Size_const__InputArrayX(void* instance, void* wrappedPhaseMap, void* unwrappedPhaseMap, const cv::Size* camSize, void* shadowMask) {
 		try {
-			reinterpret_cast<cv::structured_light::SinusoidalPattern*>(instance)->unwrapPhaseMap(*reinterpret_cast<const cv::_InputArray*>(wrappedPhaseMap), *reinterpret_cast<const cv::_OutputArray*>(unwrappedPhaseMap), camSize, *reinterpret_cast<const cv::_InputArray*>(shadowMask));
+			reinterpret_cast<cv::structured_light::SinusoidalPattern*>(instance)->unwrapPhaseMap(*reinterpret_cast<const cv::_InputArray*>(wrappedPhaseMap), *reinterpret_cast<const cv::_OutputArray*>(unwrappedPhaseMap), *camSize, *reinterpret_cast<const cv::_InputArray*>(shadowMask));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

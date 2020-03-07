@@ -351,9 +351,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(cv::line_descriptor::LSDParam _params) {
+	Result<void*> cv_line_descriptor_LSDDetector_LSDDetector_LSDParam(const cv::line_descriptor::LSDParam* _params) {
 		try {
-			cv::line_descriptor::LSDDetector* ret = new cv::line_descriptor::LSDDetector(_params);
+			cv::line_descriptor::LSDDetector* ret = new cv::line_descriptor::LSDDetector(*_params);
 			return Ok<void*>(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
@@ -365,9 +365,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(cv::line_descriptor::LSDParam params) {
+	Result<void*> cv_line_descriptor_LSDDetector_createLSDDetector_LSDParam(const cv::line_descriptor::LSDParam* params) {
 		try {
-			cv::Ptr<cv::line_descriptor::LSDDetector> ret = cv::line_descriptor::LSDDetector::createLSDDetector(params);
+			cv::Ptr<cv::line_descriptor::LSDDetector> ret = cv::line_descriptor::LSDDetector::createLSDDetector(*params);
 			return Ok<void*>(new cv::Ptr<cv::line_descriptor::LSDDetector>(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}

@@ -2,9 +2,9 @@
 #include "ccalib_types.hpp"
 
 extern "C" {
-	Result<double> cv_omnidir_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(void* objectPoints, void* imagePoints, cv::Size size, void* K, void* xi, void* D, void* rvecs, void* tvecs, int flags, void* criteria, void* idx) {
+	Result<double> cv_omnidir_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(void* objectPoints, void* imagePoints, const cv::Size* size, void* K, void* xi, void* D, void* rvecs, void* tvecs, int flags, void* criteria, void* idx) {
 		try {
-			double ret = cv::omnidir::calibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), size, *reinterpret_cast<const cv::_InputOutputArray*>(K), *reinterpret_cast<const cv::_InputOutputArray*>(xi), *reinterpret_cast<const cv::_InputOutputArray*>(D), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria), *reinterpret_cast<const cv::_OutputArray*>(idx));
+			double ret = cv::omnidir::calibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *size, *reinterpret_cast<const cv::_InputOutputArray*>(K), *reinterpret_cast<const cv::_InputOutputArray*>(xi), *reinterpret_cast<const cv::_InputOutputArray*>(D), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria), *reinterpret_cast<const cv::_OutputArray*>(idx));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
@@ -68,9 +68,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_create_const__InputArrayX_Size2f_const__OutputArrayX(void* instance, void* pattern, cv::Size2f boardSize, void* output) {
+	Result<bool> cv_ccalib_CustomPattern_create_const__InputArrayX_Size2f_const__OutputArrayX(void* instance, void* pattern, const cv::Size2f* boardSize, void* output) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->create(*reinterpret_cast<const cv::_InputArray*>(pattern), boardSize, *reinterpret_cast<const cv::_OutputArray*>(output));
+			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->create(*reinterpret_cast<const cv::_InputArray*>(pattern), *boardSize, *reinterpret_cast<const cv::_OutputArray*>(output));
 			return Ok<bool>(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
@@ -145,9 +145,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<double> cv_ccalib_CustomPattern_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* instance, void* objectPoints, void* imagePoints, cv::Size imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
+	Result<double> cv_ccalib_CustomPattern_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* instance, void* objectPoints, void* imagePoints, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
 		try {
-			double ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->calibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->calibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}

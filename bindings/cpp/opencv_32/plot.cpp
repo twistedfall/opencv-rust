@@ -59,37 +59,37 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotLineColor_Scalar(void* instance, cv::Scalar _plotLineColor) {
+	Result_void cv_plot_Plot2d_setPlotLineColor_Scalar(void* instance, const cv::Scalar* _plotLineColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotLineColor(_plotLineColor);
+			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotLineColor(*_plotLineColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotBackgroundColor_Scalar(void* instance, cv::Scalar _plotBackgroundColor) {
+	Result_void cv_plot_Plot2d_setPlotBackgroundColor_Scalar(void* instance, const cv::Scalar* _plotBackgroundColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotBackgroundColor(_plotBackgroundColor);
+			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotBackgroundColor(*_plotBackgroundColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotAxisColor_Scalar(void* instance, cv::Scalar _plotAxisColor) {
+	Result_void cv_plot_Plot2d_setPlotAxisColor_Scalar(void* instance, const cv::Scalar* _plotAxisColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotAxisColor(_plotAxisColor);
+			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotAxisColor(*_plotAxisColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotGridColor_Scalar(void* instance, cv::Scalar _plotGridColor) {
+	Result_void cv_plot_Plot2d_setPlotGridColor_Scalar(void* instance, const cv::Scalar* _plotGridColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotGridColor(_plotGridColor);
+			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotGridColor(*_plotGridColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotTextColor_Scalar(void* instance, cv::Scalar _plotTextColor) {
+	Result_void cv_plot_Plot2d_setPlotTextColor_Scalar(void* instance, const cv::Scalar* _plotTextColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotTextColor(_plotTextColor);
+			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotTextColor(*_plotTextColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

@@ -24,9 +24,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_freetype_FreeType2_putText_const__InputOutputArrayX_const_StringX_Point_int_Scalar_int_int_bool(void* instance, void* img, const char* text, cv::Point org, int fontHeight, cv::Scalar color, int thickness, int line_type, bool bottomLeftOrigin) {
+	Result_void cv_freetype_FreeType2_putText_const__InputOutputArrayX_const_StringX_Point_int_Scalar_int_int_bool(void* instance, void* img, const char* text, const cv::Point* org, int fontHeight, const cv::Scalar* color, int thickness, int line_type, bool bottomLeftOrigin) {
 		try {
-			reinterpret_cast<cv::freetype::FreeType2*>(instance)->putText(*reinterpret_cast<const cv::_InputOutputArray*>(img), cv::String(text), org, fontHeight, color, thickness, line_type, bottomLeftOrigin);
+			reinterpret_cast<cv::freetype::FreeType2*>(instance)->putText(*reinterpret_cast<const cv::_InputOutputArray*>(img), cv::String(text), *org, fontHeight, *color, thickness, line_type, bottomLeftOrigin);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

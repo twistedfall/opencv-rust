@@ -673,9 +673,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result_void cv_viz_MouseEvent_setPointer_Point(void* instance, cv::Point val) {
+	Result_void cv_viz_MouseEvent_setPointer_Point(void* instance, const cv::Point* val) {
 		try {
-			reinterpret_cast<cv::viz::MouseEvent*>(instance)->pointer = val;
+			reinterpret_cast<cv::viz::MouseEvent*>(instance)->pointer = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

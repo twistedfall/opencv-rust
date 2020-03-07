@@ -2,30 +2,30 @@
 #include "aruco_types.hpp"
 
 extern "C" {
-	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* corners, void* ids, void* counter, void* board, cv::Size imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* perViewErrors, int flags, void* criteria) {
+	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* corners, void* ids, void* counter, void* board, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* perViewErrors, int flags, void* criteria) {
 		try {
-			double ret = cv::aruco::calibrateCameraAruco(*reinterpret_cast<const cv::_InputArray*>(corners), *reinterpret_cast<const cv::_InputArray*>(ids), *reinterpret_cast<const cv::_InputArray*>(counter), *reinterpret_cast<const cv::Ptr<cv::aruco::Board>*>(board), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::aruco::calibrateCameraAruco(*reinterpret_cast<const cv::_InputArray*>(corners), *reinterpret_cast<const cv::_InputArray*>(ids), *reinterpret_cast<const cv::_InputArray*>(counter), *reinterpret_cast<const cv::Ptr<cv::aruco::Board>*>(board), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* corners, void* ids, void* counter, void* board, cv::Size imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
+	Result<double> cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* corners, void* ids, void* counter, void* board, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
 		try {
-			double ret = cv::aruco::calibrateCameraAruco(*reinterpret_cast<const cv::_InputArray*>(corners), *reinterpret_cast<const cv::_InputArray*>(ids), *reinterpret_cast<const cv::_InputArray*>(counter), *reinterpret_cast<const cv::Ptr<cv::aruco::Board>*>(board), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::aruco::calibrateCameraAruco(*reinterpret_cast<const cv::_InputArray*>(corners), *reinterpret_cast<const cv::_InputArray*>(ids), *reinterpret_cast<const cv::_InputArray*>(counter), *reinterpret_cast<const cv::Ptr<cv::aruco::Board>*>(board), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* charucoCorners, void* charucoIds, void* board, cv::Size imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* perViewErrors, int flags, void* criteria) {
+	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* charucoCorners, void* charucoIds, void* board, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, void* stdDeviationsIntrinsics, void* stdDeviationsExtrinsics, void* perViewErrors, int flags, void* criteria) {
 		try {
-			double ret = cv::aruco::calibrateCameraCharuco(*reinterpret_cast<const cv::_InputArray*>(charucoCorners), *reinterpret_cast<const cv::_InputArray*>(charucoIds), *reinterpret_cast<const cv::Ptr<cv::aruco::CharucoBoard>*>(board), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::aruco::calibrateCameraCharuco(*reinterpret_cast<const cv::_InputArray*>(charucoCorners), *reinterpret_cast<const cv::_InputArray*>(charucoIds), *reinterpret_cast<const cv::Ptr<cv::aruco::CharucoBoard>*>(board), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsIntrinsics), *reinterpret_cast<const cv::_OutputArray*>(stdDeviationsExtrinsics), *reinterpret_cast<const cv::_OutputArray*>(perViewErrors), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* charucoCorners, void* charucoIds, void* board, cv::Size imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
+	Result<double> cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* charucoCorners, void* charucoIds, void* board, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
 		try {
-			double ret = cv::aruco::calibrateCameraCharuco(*reinterpret_cast<const cv::_InputArray*>(charucoCorners), *reinterpret_cast<const cv::_InputArray*>(charucoIds), *reinterpret_cast<const cv::Ptr<cv::aruco::CharucoBoard>*>(board), imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
+			double ret = cv::aruco::calibrateCameraCharuco(*reinterpret_cast<const cv::_InputArray*>(charucoCorners), *reinterpret_cast<const cv::_InputArray*>(charucoIds), *reinterpret_cast<const cv::Ptr<cv::aruco::CharucoBoard>*>(board), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
 			return Ok<double>(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
@@ -51,30 +51,30 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_aruco_drawCharucoDiamond_const_Ptr_Dictionary_X_Vec4i_int_int_const__OutputArrayX_int_int(void* dictionary, cv::Vec4i ids, int squareLength, int markerLength, void* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_drawCharucoDiamond_const_Ptr_Dictionary_X_Vec4i_int_int_const__OutputArrayX_int_int(void* dictionary, const cv::Vec4i* ids, int squareLength, int markerLength, void* img, int marginSize, int borderBits) {
 		try {
-			cv::aruco::drawCharucoDiamond(*reinterpret_cast<const cv::Ptr<cv::aruco::Dictionary>*>(dictionary), ids, squareLength, markerLength, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
+			cv::aruco::drawCharucoDiamond(*reinterpret_cast<const cv::Ptr<cv::aruco::Dictionary>*>(dictionary), *ids, squareLength, markerLength, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(void* image, void* charucoCorners, void* charucoIds, cv::Scalar cornerColor) {
+	Result_void cv_aruco_drawDetectedCornersCharuco_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(void* image, void* charucoCorners, void* charucoIds, const cv::Scalar* cornerColor) {
 		try {
-			cv::aruco::drawDetectedCornersCharuco(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(charucoCorners), *reinterpret_cast<const cv::_InputArray*>(charucoIds), cornerColor);
+			cv::aruco::drawDetectedCornersCharuco(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(charucoCorners), *reinterpret_cast<const cv::_InputArray*>(charucoIds), *cornerColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_aruco_drawDetectedDiamonds_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(void* image, void* diamondCorners, void* diamondIds, cv::Scalar borderColor) {
+	Result_void cv_aruco_drawDetectedDiamonds_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(void* image, void* diamondCorners, void* diamondIds, const cv::Scalar* borderColor) {
 		try {
-			cv::aruco::drawDetectedDiamonds(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(diamondCorners), *reinterpret_cast<const cv::_InputArray*>(diamondIds), borderColor);
+			cv::aruco::drawDetectedDiamonds(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(diamondCorners), *reinterpret_cast<const cv::_InputArray*>(diamondIds), *borderColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_aruco_drawDetectedMarkers_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(void* image, void* corners, void* ids, cv::Scalar borderColor) {
+	Result_void cv_aruco_drawDetectedMarkers_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_Scalar(void* image, void* corners, void* ids, const cv::Scalar* borderColor) {
 		try {
-			cv::aruco::drawDetectedMarkers(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(corners), *reinterpret_cast<const cv::_InputArray*>(ids), borderColor);
+			cv::aruco::drawDetectedMarkers(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(corners), *reinterpret_cast<const cv::_InputArray*>(ids), *borderColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -86,9 +86,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_aruco_drawPlanarBoard_const_Ptr_Board_X_Size_const__OutputArrayX_int_int(void* board, cv::Size outSize, void* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_drawPlanarBoard_const_Ptr_Board_X_Size_const__OutputArrayX_int_int(void* board, const cv::Size* outSize, void* img, int marginSize, int borderBits) {
 		try {
-			cv::aruco::drawPlanarBoard(*reinterpret_cast<const cv::Ptr<cv::aruco::Board>*>(board), outSize, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
+			cv::aruco::drawPlanarBoard(*reinterpret_cast<const cv::Ptr<cv::aruco::Board>*>(board), *outSize, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -260,9 +260,9 @@ extern "C" {
 	void cv_CharucoBoard_delete(cv::aruco::CharucoBoard* instance) {
 		delete instance;
 	}
-	Result_void cv_aruco_CharucoBoard_draw_Size_const__OutputArrayX_int_int(void* instance, cv::Size outSize, void* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_CharucoBoard_draw_Size_const__OutputArrayX_int_int(void* instance, const cv::Size* outSize, void* img, int marginSize, int borderBits) {
 		try {
-			reinterpret_cast<cv::aruco::CharucoBoard*>(instance)->draw(outSize, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
+			reinterpret_cast<cv::aruco::CharucoBoard*>(instance)->draw(*outSize, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -836,9 +836,9 @@ extern "C" {
 	void cv_GridBoard_delete(cv::aruco::GridBoard* instance) {
 		delete instance;
 	}
-	Result_void cv_aruco_GridBoard_draw_Size_const__OutputArrayX_int_int(void* instance, cv::Size outSize, void* img, int marginSize, int borderBits) {
+	Result_void cv_aruco_GridBoard_draw_Size_const__OutputArrayX_int_int(void* instance, const cv::Size* outSize, void* img, int marginSize, int borderBits) {
 		try {
-			reinterpret_cast<cv::aruco::GridBoard*>(instance)->draw(outSize, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
+			reinterpret_cast<cv::aruco::GridBoard*>(instance)->draw(*outSize, *reinterpret_cast<const cv::_OutputArray*>(img), marginSize, borderBits);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

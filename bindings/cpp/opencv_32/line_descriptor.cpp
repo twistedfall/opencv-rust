@@ -358,9 +358,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result_void cv_line_descriptor_KeyLine_setPt_Point2f(void* instance, cv::Point2f val) {
+	Result_void cv_line_descriptor_KeyLine_setPt_Point2f(void* instance, const cv::Point2f* val) {
 		try {
-			reinterpret_cast<cv::line_descriptor::KeyLine*>(instance)->pt = val;
+			reinterpret_cast<cv::line_descriptor::KeyLine*>(instance)->pt = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
