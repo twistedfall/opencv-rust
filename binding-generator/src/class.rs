@@ -312,11 +312,6 @@ impl<'tu, 'g> Class<'tu, 'g> {
 
 		let mut out = String::new();
 
-		let mut bases = self.all_bases().into_iter()
-			.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
-			.collect::<Vec<_>>();
-		bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
-
 		let fields = self.fields();
 		let mut methods = if is_simple {
 			vec![]
@@ -325,11 +320,14 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		};
 		methods.extend_from_slice(self.methods().as_slice());
 		if is_trait {
-			let mut trait_bases = bases.iter()
+			let mut bases = self.bases().into_iter()
+				.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
 				.map(|x| x.rust_trait_fullname().into_owned())
-				.join(" + ");
+				.collect::<Vec<_>>();
+			bases.sort_unstable();
+			let mut trait_bases: String = bases.join(" + ");
 			if !trait_bases.is_empty() {
-				trait_bases = format!(": {}", trait_bases);
+				trait_bases.insert_str(0, ": ");
 			};
 			let trait_methods = Func::rust_generate_funcs(
 				methods.iter().filter(|m| m.as_instance_method().is_some()),
@@ -364,10 +362,13 @@ impl<'tu, 'g> Class<'tu, 'g> {
 		}
 
 		if !is_abstract {
+			let mut bases = self.all_bases().into_iter()
+				.filter(|b| !b.is_excluded() && !b.is_simple()) // todo, allow extension of simple classes for e.g. Elliptic_KeyPoint
+				.collect::<Vec<_>>();
 			if is_trait {
 				bases.push(self.clone());
-				bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
 			}
+			bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 			let bases = bases.into_iter()
 				.map(|base| {
 					let base_type_ref = base.type_ref();

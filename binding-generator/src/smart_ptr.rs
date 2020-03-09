@@ -138,7 +138,7 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 				let mut all_bases = all_bases.into_iter()
 					.filter(|b| !b.is_excluded())
 					.collect::<Vec<_>>();
-				all_bases.sort_unstable_by(|a, b| a.cpp_fullname().cmp(&b.cpp_fullname()));
+				all_bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 				for base in all_bases {
 					let mut vars = inter_vars.clone();
 					vars.insert("base_rust_local", base.rust_localname());
