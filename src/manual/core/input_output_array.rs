@@ -1,7 +1,7 @@
 use std::os::raw::c_void;
 
 use crate::{
-	core::{_InputArray, _InputOutputArray, _InputOutputArrayTrait, _OutputArray},
+	core::{_InputArray, _InputArrayTrait, _InputOutputArray, _InputOutputArrayTrait, _OutputArray, _OutputArrayTrait},
 	Result,
 	sys,
 };
@@ -50,19 +50,19 @@ pub trait ToInputOutputArray {
 	fn input_output_array(&mut self) -> Result<_InputOutputArray>;
 }
 
-impl<T: _InputOutputArrayTrait> ToInputArray for T {
+impl<T: _InputArrayTrait> ToInputArray for T {
 	fn input_array(&self) -> Result<_InputArray> {
-		extern "C" { fn cv_InputOutputArray_input_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-		unsafe { cv_InputOutputArray_input_array(self.as_raw__InputOutputArray()) }
+		extern "C" { fn cv_InputArray_input_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+		unsafe { cv_InputArray_input_array(self.as_raw__InputArray()) }
 			.into_result()
 			.map(|ptr| _InputArray { ptr })
 	}
 }
 
-impl<T: _InputOutputArrayTrait> ToOutputArray for T {
+impl<T: _OutputArrayTrait> ToOutputArray for T {
 	fn output_array(&mut self) -> Result<_OutputArray> {
-		extern "C" { fn cv_InputOutputArray_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
-		unsafe { cv_InputOutputArray_output_array(self.as_raw__InputOutputArray()) }
+		extern "C" { fn  cv_OutputArray_output_array(instance: *mut c_void) -> sys::Result<*mut c_void>; }
+		unsafe {  cv_OutputArray_output_array(self.as_raw__OutputArray()) }
 			.into_result()
 			.map(|ptr| _OutputArray { ptr })
 	}

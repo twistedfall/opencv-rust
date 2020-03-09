@@ -393,7 +393,12 @@ fn detect_indent() {
 
 #[test]
 fn to_snake_case() {
-	assert_eq!("get_path_to_application", "getPathToApplication".to_snake_case())
+	assert_eq!("get_path_to_application", "getPathToApplication".to_snake_case());
+	assert_eq!("solve_p3p", "solveP3P".to_snake_case());
+	assert_eq!("solve_pnp", "solvePnP".to_snake_case());
+	assert_eq!("reproject_image_to_3d", "reprojectImageTo3D".to_snake_case());
+	assert_eq!("filter_2d", "filter2D".to_snake_case());
+	assert_eq!("is_umat", "isUMat".to_snake_case());
 }
 
 #[test]

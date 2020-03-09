@@ -334,15 +334,23 @@ pub trait StrExt {
 impl StrExt for str {
 	fn to_snake_case(&self) -> String {
 		static R1: Lazy<Regex> = Lazy::new(|| Regex::new(r#"([^_])([A-Z][a-z]+)"#).expect("Can't compile regex"));
+		let out = R1.replace_all(self, "${1}_$2");
+
 		static R2: Lazy<Regex> = Lazy::new(|| Regex::new(r#"([a-z0-9])([A-Z])"#).expect("Can't compile regex"));
+		let out = R2.replace_all(&out, "${1}_$2");
+
 		static R3: Lazy<Regex> = Lazy::new(|| Regex::new(r#"\B([23])_(D)\b"#).expect("Can't compile regex"));
+		let out = R3.replace_all(&out, "_$1$2");
+
 		static R4: Lazy<Regex> = Lazy::new(|| Regex::new(r#"_(P[n3])_(P)"#).expect("Can't compile regex"));
+		let out = R4.replace_all(&out, "_$1$2");
+
 		static R5: Lazy<Regex> = Lazy::new(|| Regex::new(r#"Open_(CL|Gl|VX)"#).expect("Can't compile regex"));
-		let out = R1.replace_all(self, "${1}_${2}");
-		let out = R2.replace_all(&out, "${1}_${2}");
-		let out = R3.replace_all(&out, "_${1}${2}");
-		let out = R4.replace_all(&out, "_${1}${2}");
-		let out = R5.replace_all(&out, "Open${1}");
+		let out = R5.replace_all(&out, "Open$1");
+
+		static R6: Lazy<Regex> = Lazy::new(|| Regex::new(r#"U_Mat"#).expect("Can't compile regex"));
+		let out = R6.replace_all(&out, "UMat");
+
 		out.to_lowercase()
 	}
 
