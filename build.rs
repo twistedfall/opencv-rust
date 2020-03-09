@@ -288,55 +288,48 @@ static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 #[derive(Debug)]
 struct Library {
 	pub pkg_name: String,
-	pub libs: Vec<String>,
-	pub link_paths: Vec<PathBuf>,
-	pub framework_paths: Vec<PathBuf>,
 	pub include_paths: Vec<PathBuf>,
 	pub version: String,
-	pub prefix: PathBuf,
-	pub libdir: PathBuf,
 	pub cargo_metadata: Vec<String>,
 }
 
 impl Library {
-	pub fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
-		eprintln!(
-			"=== Setting up OpenCV library from environment, pkg_name: {}, link_libs: {}, link_paths: {}, include_paths: {}",
-			pkg_name, link_libs, link_paths, include_paths
-		);
-		let mut cargo_metadata = Vec::with_capacity(64);
-		let libs: Vec<_> = link_libs.split(',')
-			.map(|x| x.trim())
-			.filter(|x| !x.is_empty())
+	fn strip_library_extensions(libs: impl IntoIterator<Item=impl Into<PathBuf>>) -> impl Iterator<Item=String> {
+		libs.into_iter()
 			.map(|x| {
-				let mut path = PathBuf::from(x);
+				let mut path: PathBuf = x.into();
 				path.set_extension("");
-				let mut out = path.file_name()
+				path.file_name()
 					.and_then(|f| f.to_str()).expect("Invalid library name")
-					.to_owned();
-				cargo_metadata.push(format!("cargo:rustc-link-lib={}", out));
-				if cfg!(target_env = "msvc") {
-					out += ".lib";
+					.to_owned()
+			})
+	}
+
+	pub fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
+		eprintln!("=== Setting up OpenCV library from environment:");
+		eprintln!("===   pkg_name: {}", pkg_name);
+		eprintln!("===   link_libs: {}", link_libs);
+		eprintln!("===   link_paths: {}", link_paths);
+		eprintln!("===   include_paths: {}", include_paths);
+		let mut cargo_metadata = Vec::with_capacity(64);
+		cargo_metadata.extend(link_paths.split(',')
+			.filter_map(|path| {
+				let path = path.trim();
+				if path.is_empty() {
+					None
+				} else {
+					Some(format!("cargo:rustc-link-search=native={}", path))
 				}
-				out
 			})
-			.collect();
+		);
 
-		let link_paths: Vec<_> = link_paths.split(',')
-			.map(|x| x.trim())
-			.filter(|x| !x.is_empty())
-			.map(|x| {
-				let out = PathBuf::from(x);
-				cargo_metadata.push(
-					format!("cargo:rustc-link-search=native={}", out.to_str().expect("Invalid link path"))
-				);
-				out
-			})
-			.collect();
+		let libs = Self::strip_library_extensions(
+			link_libs.split(',')
+				.map(|x| x.trim())
+				.filter(|x| !x.is_empty())
+		);
 
-		let libdir = link_paths
-			.first()
-			.map_or_else(|| PathBuf::from(""), |x| x.clone());
+		cargo_metadata.extend(libs.map(|l| format!("cargo:rustc-link-lib={}", l)));
 
 		let include_paths: Vec<_> = include_paths.split(',')
 			.map(|x| x.trim())
@@ -348,18 +341,12 @@ impl Library {
 			.filter_map(get_version_from_headers)
 			.next();
 
-		let out = Self {
+		Ok(Self {
 			pkg_name: pkg_name.to_owned(),
-			libs,
-			link_paths,
-			framework_paths: vec![],
 			include_paths,
 			version: version.unwrap_or_else(|| "0.0.0".to_owned()),
-			prefix: PathBuf::from(""),
-			libdir,
 			cargo_metadata,
-		};
-		Ok(out)
+		})
 	}
 
 	#[cfg(not(target_env = "msvc"))]
@@ -375,13 +362,8 @@ impl Library {
 				.chain(opencv.libs.iter().map(|lib| format!("cargo:rustc-link-lib={}", lib))));
 		Ok(Self {
 			pkg_name: pkg_name.to_owned(),
-			libs: opencv.libs,
-			link_paths: opencv.link_paths,
-			framework_paths: opencv.framework_paths,
 			include_paths: opencv.include_paths,
 			version: opencv.version,
-			prefix: PathBuf::from(pkg_config::get_variable(pkg_name, "prefix")?),
-			libdir: PathBuf::from(pkg_config::get_variable(pkg_name, "libdir")?),
 			cargo_metadata,
 		})
 	}
@@ -392,27 +374,15 @@ impl Library {
 		let mut config = vcpkg::Config::new();
 		config.cargo_metadata(false);
 		let opencv = config.find_package(pkg_name)?;
-		let libs = opencv.found_libs.into_iter()
-			.filter_map(|lib| lib.file_name()
-				.and_then(|l| l.to_str())
-				.map(|l| l.to_string())
-			)
-			.collect();
+
 		let version = opencv.include_paths.iter()
 			.filter_map(get_version_from_headers)
 			.next();
-		let libdir = opencv.link_paths.first()
-			.map_or_else(|| PathBuf::from(""), |x| x.clone());
 
 		Ok(Self {
 			pkg_name: pkg_name.to_owned(),
-			libs,
-			link_paths: opencv.link_paths,
-			framework_paths: vec![],
 			include_paths: opencv.include_paths,
 			version: version.unwrap_or("0.0.0".to_owned()),
-			prefix: PathBuf::from(""),
-			libdir,
 			cargo_metadata: opencv.cargo_metadata,
 		})
 	}
@@ -429,7 +399,8 @@ impl Library {
 				.or_else(|_| env::var("OPENCV_PKGCONFIG_NAME"))
 				.map(Cow::Owned)
 				.unwrap_or_else(|_| if cfg!(target_env = "msvc") && env_vars.is_none() {
-					"opencv3".into() // the package name in vcpkg for OpenCV3.x is different: https://github.com/microsoft/vcpkg/tree/master/ports/opencv3
+					// the package name in vcpkg for OpenCV3.x is different: https://github.com/microsoft/vcpkg/tree/master/ports/opencv3
+					"opencv3".into()
 				} else {
 					"opencv".into()
 				})
@@ -442,9 +413,9 @@ impl Library {
 			unreachable!("Feature flags should have been checked in main()");
 		};
 		if let Some((link_libs, link_paths, include_paths)) = env_vars {
-			Self::probe_from_paths(pkg_name.as_ref(), &link_libs, &link_paths, &include_paths)
+			Self::probe_from_paths(&pkg_name, &link_libs, &link_paths, &include_paths)
 		} else {
-			Self::probe_system(pkg_name.as_ref())
+			Self::probe_system(&pkg_name)
 		}.map_err(|e| format!("Package {} is not found, caused by: {}", pkg_name, e).into())
 	}
 
