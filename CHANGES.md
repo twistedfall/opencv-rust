@@ -1,3 +1,7 @@
+* 0.32.0
+  * Improve Matx: better api ergonomics, add PartialEq, add ToInput/OutputArray implementations, add tests
+  * 'u_mat' the method names is now 'umat' (underscore removed)
+
 * 0.31.1
   * Fix passing bigger simple classes as arguments
 

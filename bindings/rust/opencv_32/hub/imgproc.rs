@@ -5803,7 +5803,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 
 /// Ballard, D.H. (1981). Generalizing the Hough transform to detect arbitrary shapes. Pattern Recognition 13 (2): 111-122.
 /// Detects position only without traslation and rotation
-pub trait GeneralizedHoughBallard: core::AlgorithmTrait + crate::imgproc::GeneralizedHough {
+pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
 	fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
 	/// R-Table levels.
 	fn set_levels(&mut self, levels: i32) -> Result<()> {
@@ -5827,7 +5827,7 @@ pub trait GeneralizedHoughBallard: core::AlgorithmTrait + crate::imgproc::Genera
 
 /// Guil, N., González-Linares, J.M. and Zapata, E.L. (1999). Bidimensional shape detection using an invariant approach. Pattern Recognition 32 (6): 1025-1038.
 /// Detects position, traslation and rotation
-pub trait GeneralizedHoughGuil: core::AlgorithmTrait + crate::imgproc::GeneralizedHough {
+pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 	fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
 	/// Angle difference in degrees between two points in feature.
 	fn set_xi(&mut self, xi: f64) -> Result<()> {

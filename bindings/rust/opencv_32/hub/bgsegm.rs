@@ -42,7 +42,7 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
 /// This class implements an algorithm described in "Visual Tracking of Human Visitors under
 /// Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
 /// A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
-pub trait BackgroundSubtractorGMG: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorGMG(&self) -> *mut c_void;
 	/// Returns total number of distinct colors to maintain in histogram.
 	fn get_max_features(&self) -> Result<i32> {
@@ -156,7 +156,7 @@ pub trait BackgroundSubtractorGMG: core::AlgorithmTrait + crate::video::Backgrou
 /// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 /// 
 /// The class implements the algorithm described in [KB2001](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_KB2001) .
-pub trait BackgroundSubtractorMOG: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorMOG: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorMOG(&self) -> *mut c_void;
 	fn get_history(&self) -> Result<i32> {
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getHistory_const(self.as_raw_BackgroundSubtractorMOG()) }.into_result()

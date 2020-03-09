@@ -164,7 +164,7 @@ pub trait BIF: core::AlgorithmTrait {
 	
 }
 
-pub trait BasicFaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizer {
+pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 	fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void;
 	/// ## See also
 	/// setNumComponents
@@ -593,7 +593,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	
 }
 
-pub trait LBPHFaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizer {
+pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void;
 	/// ## See also
 	/// setGridX

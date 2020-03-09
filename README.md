@@ -14,17 +14,17 @@ Make sure the supported OpenCV version (3.2, 3.4 or 4.2) is installed in your sy
 
 Update your Cargo.toml
 ```toml
-opencv = "0.31"
+opencv = "0.32"
 ```
 
 Select OpenCV version if different from default in Cargo.toml:
 ```toml
-opencv = {version = "0.31", default-features = false, features = ["opencv-34"]}
+opencv = {version = "0.32", default-features = false, features = ["opencv-34"]}
 ```
 
 And enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.31", features = ["contrib"]}
+opencv = {version = "0.32", features = ["contrib"]}
 ```
 
 Import prelude
@@ -34,7 +34,7 @@ use opencv::prelude::*;
 
 When building on Windows and macOS you must enable `buildtime-bindgen` feature to avoid link errors:
 ```toml
-opencv = {version = "0.31", features = ["buildtime-bindgen"]}
+opencv = {version = "0.32", features = ["buildtime-bindgen"]}
 ```
 
 ## Getting OpenCV
@@ -322,7 +322,7 @@ Overloaded methods have been mostly manually given different names or automatica
 
 If you can't use OpenCV 3.x or higher, the (no longer maintained) `0.2.4` version of this crate is known to
 work with OpenCV `2.4.7.13` (and probably other 2.4 versions). Please refer to the README.md file for that
-version because the crate has gone thorough the considerable rewrite since.
+version because the crate has gone through the considerable rewrite since.
 
 ## Contributor's Guide
 

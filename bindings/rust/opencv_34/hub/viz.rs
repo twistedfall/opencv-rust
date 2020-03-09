@@ -1370,7 +1370,7 @@ impl Viz3d {
 }
 
 /// This 3D Widget defines an arrow.
-pub trait WArrowTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WArrowTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WArrow(&self) -> *mut c_void;
 }
 
@@ -1430,7 +1430,7 @@ impl WArrow {
 }
 
 /// This 3D Widget represents camera position in a scene by its axes or viewing frustum. :
-pub trait WCameraPositionTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCameraPositionTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCameraPosition(&self) -> *mut c_void;
 }
 
@@ -1558,7 +1558,7 @@ impl WCameraPosition {
 }
 
 /// This 3D Widget defines a circle.
-pub trait WCircleTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCircleTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCircle(&self) -> *mut c_void;
 }
 
@@ -1633,7 +1633,7 @@ impl WCircle {
 /// 
 /// 
 /// Note: In case there are four channels in the cloud, fourth channel is ignored.
-pub trait WCloudTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCloudTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCloud(&self) -> *mut c_void;
 }
 
@@ -1735,7 +1735,7 @@ impl WCloud {
 /// This 3D Widget defines a collection of clouds. :
 /// 
 /// Note: In case there are four channels in the cloud, fourth channel is ignored.
-pub trait WCloudCollectionTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCloudCollectionTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCloudCollection(&self) -> *mut c_void;
 	/// Adds a cloud to the collection.
 	/// 
@@ -1820,7 +1820,7 @@ impl WCloudCollection {
 }
 
 /// This 3D Widget represents normals of a point cloud. :
-pub trait WCloudNormalsTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCloudNormalsTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCloudNormals(&self) -> *mut c_void;
 }
 
@@ -1884,7 +1884,7 @@ impl WCloudNormals {
 }
 
 /// This 3D Widget defines a cone. :
-pub trait WConeTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WConeTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCone(&self) -> *mut c_void;
 }
 
@@ -1957,7 +1957,7 @@ impl WCone {
 }
 
 /// This 3D Widget represents a coordinate system. :
-pub trait WCoordinateSystemTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCoordinateSystemTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCoordinateSystem(&self) -> *mut c_void;
 }
 
@@ -2010,7 +2010,7 @@ impl WCoordinateSystem {
 }
 
 /// This 3D Widget defines a cube.
-pub trait WCubeTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCubeTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCube(&self) -> *mut c_void;
 }
 
@@ -2071,7 +2071,7 @@ impl WCube {
 }
 
 /// This 3D Widget defines a cylinder. :
-pub trait WCylinderTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WCylinderTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WCylinder(&self) -> *mut c_void;
 }
 
@@ -2129,7 +2129,7 @@ impl WCylinder {
 }
 
 /// This 3D Widget defines a grid. :
-pub trait WGridTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WGridTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WGrid(&self) -> *mut c_void;
 }
 
@@ -2196,7 +2196,7 @@ impl WGrid {
 }
 
 /// This 3D Widget represents an image in 3D space. :
-pub trait WImage3DTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WImage3DTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WImage3D(&self) -> *mut c_void;
 	/// Sets the image content of the widget.
 	/// 
@@ -2278,7 +2278,7 @@ impl WImage3D {
 }
 
 /// This 2D Widget represents an image overlay. :
-pub trait WImageOverlayTrait: crate::viz::WidgetTrait + crate::viz::Widget2DTrait {
+pub trait WImageOverlayTrait: crate::viz::Widget2DTrait {
 	fn as_raw_WImageOverlay(&self) -> *mut c_void;
 	/// Sets the image content of the widget.
 	/// 
@@ -2339,7 +2339,7 @@ impl WImageOverlay {
 }
 
 /// This 3D Widget defines a finite line.
-pub trait WLineTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WLineTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WLine(&self) -> *mut c_void;
 }
 
@@ -2401,7 +2401,7 @@ impl WLine {
 /// * polygons: Points of the mesh object.
 /// * colors: Point colors.
 /// * normals: Point normals.
-pub trait WMeshTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WMeshTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WMesh(&self) -> *mut c_void;
 }
 
@@ -2464,7 +2464,7 @@ impl WMesh {
 	
 }
 
-pub trait WPaintedCloudTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WPaintedCloudTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WPaintedCloud(&self) -> *mut c_void;
 }
 
@@ -2523,7 +2523,7 @@ impl WPaintedCloud {
 }
 
 /// This 3D Widget defines a finite plane.
-pub trait WPlaneTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WPlaneTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WPlane(&self) -> *mut c_void;
 }
 
@@ -2594,7 +2594,7 @@ impl WPlane {
 }
 
 /// This 3D Widget defines a poly line. :
-pub trait WPolyLineTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WPolyLineTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WPolyLine(&self) -> *mut c_void;
 }
 
@@ -2655,7 +2655,7 @@ impl WPolyLine {
 }
 
 /// This 3D Widget defines a sphere. :
-pub trait WSphereTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WSphereTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WSphere(&self) -> *mut c_void;
 }
 
@@ -2712,7 +2712,7 @@ impl WSphere {
 }
 
 /// This 2D Widget represents text overlay.
-pub trait WTextTrait: crate::viz::WidgetTrait + crate::viz::Widget2DTrait {
+pub trait WTextTrait: crate::viz::Widget2DTrait {
 	fn as_raw_WText(&self) -> *mut c_void;
 	/// Sets the text content of the widget.
 	/// 
@@ -2784,7 +2784,7 @@ impl WText {
 }
 
 /// This 3D Widget represents 3D text. The text always faces the camera.
-pub trait WText3DTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WText3DTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WText3D(&self) -> *mut c_void;
 	/// Sets the text content of the widget.
 	/// 
@@ -2858,7 +2858,7 @@ impl WText3D {
 }
 
 /// This 3D Widget represents a trajectory. :
-pub trait WTrajectoryTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WTrajectoryTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WTrajectory(&self) -> *mut c_void;
 }
 
@@ -2923,7 +2923,7 @@ impl WTrajectory {
 }
 
 /// This 3D Widget represents a trajectory. :
-pub trait WTrajectoryFrustumsTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WTrajectoryFrustumsTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WTrajectoryFrustums(&self) -> *mut c_void;
 }
 
@@ -3004,7 +3004,7 @@ impl WTrajectoryFrustums {
 /// 
 /// where spheres represent the positions of the camera, and lines represent the direction from
 /// previous position to the current. :
-pub trait WTrajectorySpheresTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WTrajectorySpheresTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WTrajectorySpheres(&self) -> *mut c_void;
 }
 
@@ -3073,7 +3073,7 @@ impl WTrajectorySpheres {
 /// instance, if widgetA has color array and widgetB has only global color defined, then result
 /// of merge won't have color at all. The class is suitable for merging large amount of similar
 /// widgets. :
-pub trait WWidgetMergerTrait: crate::viz::WidgetTrait + crate::viz::Widget3DTrait {
+pub trait WWidgetMergerTrait: crate::viz::Widget3DTrait {
 	fn as_raw_WWidgetMerger(&self) -> *mut c_void;
 	/// Add widget to merge with optional position change
 	/// 

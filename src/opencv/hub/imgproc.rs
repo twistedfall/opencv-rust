@@ -4472,7 +4472,7 @@ pub fn get_rotation_matrix_2d(center: core::Point2f, angle: f64, scale: f64) -> 
 
 /// ## See also
 /// getRotationMatrix2D
-pub fn get_rotation_matrix2_d_(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Matx23d> {
+pub fn get_rotation_matrix_2d_matx(center: core::Point2f, angle: f64, scale: f64) -> Result<core::Matx23d> {
 	unsafe { sys::cv_getRotationMatrix2D__Point2f_double_double(&center, angle, scale) }.into_result()
 }
 
@@ -5995,7 +5995,7 @@ pub trait GeneralizedHough: core::AlgorithmTrait {
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
 /// Detects position only without translation and rotation [Ballard1981](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Ballard1981) .
-pub trait GeneralizedHoughBallard: core::AlgorithmTrait + crate::imgproc::GeneralizedHough {
+pub trait GeneralizedHoughBallard: crate::imgproc::GeneralizedHough {
 	fn as_raw_GeneralizedHoughBallard(&self) -> *mut c_void;
 	/// R-Table levels.
 	fn set_levels(&mut self, levels: i32) -> Result<()> {
@@ -6020,7 +6020,7 @@ pub trait GeneralizedHoughBallard: core::AlgorithmTrait + crate::imgproc::Genera
 /// finds arbitrary template in the grayscale image using Generalized Hough Transform
 /// 
 /// Detects position, translation and rotation [Guil1999](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Guil1999) .
-pub trait GeneralizedHoughGuil: core::AlgorithmTrait + crate::imgproc::GeneralizedHough {
+pub trait GeneralizedHoughGuil: crate::imgproc::GeneralizedHough {
 	fn as_raw_GeneralizedHoughGuil(&self) -> *mut c_void;
 	/// Angle difference in degrees between two points in feature.
 	fn set_xi(&mut self, xi: f64) -> Result<()> {

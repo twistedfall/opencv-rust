@@ -82,7 +82,7 @@ pub fn create_thin_plate_spline_shape_transformer(regularization_parameter: f64)
 }
 
 /// Wrapper class for the OpenCV Affine Transformation algorithm. :
-pub trait AffineTransformer: core::AlgorithmTrait + crate::shape::ShapeTransformer {
+pub trait AffineTransformer: crate::shape::ShapeTransformer {
 	fn as_raw_AffineTransformer(&self) -> *mut c_void;
 	fn set_full_affine(&mut self, full_affine: bool) -> Result<()> {
 		unsafe { sys::cv_AffineTransformer_setFullAffine_bool(self.as_raw_AffineTransformer(), full_affine) }.into_result()
@@ -95,12 +95,12 @@ pub trait AffineTransformer: core::AlgorithmTrait + crate::shape::ShapeTransform
 }
 
 /// An Chi based cost extraction. :
-pub trait ChiHistogramCostExtractor: core::AlgorithmTrait + crate::shape::HistogramCostExtractor {
+pub trait ChiHistogramCostExtractor: crate::shape::HistogramCostExtractor {
 	fn as_raw_ChiHistogramCostExtractor(&self) -> *mut c_void;
 }
 
 /// An EMD based cost extraction. :
-pub trait EMDHistogramCostExtractor: core::AlgorithmTrait + crate::shape::HistogramCostExtractor {
+pub trait EMDHistogramCostExtractor: crate::shape::HistogramCostExtractor {
 	fn as_raw_EMDHistogramCostExtractor(&self) -> *mut c_void;
 	fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
 		unsafe { sys::cv_EMDHistogramCostExtractor_setNormFlag_int(self.as_raw_EMDHistogramCostExtractor(), flag) }.into_result()
@@ -113,7 +113,7 @@ pub trait EMDHistogramCostExtractor: core::AlgorithmTrait + crate::shape::Histog
 }
 
 /// An EMD-L1 based cost extraction. :
-pub trait EMDL1HistogramCostExtractor: core::AlgorithmTrait + crate::shape::HistogramCostExtractor {
+pub trait EMDL1HistogramCostExtractor: crate::shape::HistogramCostExtractor {
 	fn as_raw_EMDL1HistogramCostExtractor(&self) -> *mut c_void;
 }
 
@@ -124,7 +124,7 @@ pub trait EMDL1HistogramCostExtractor: core::AlgorithmTrait + crate::shape::Hist
 /// 
 /// according to the paper "Comparing Images using the Hausdorff distance." by D.P. Huttenlocher, G.A.
 /// Klanderman, and W.J. Rucklidge. (PAMI 1993). :
-pub trait HausdorffDistanceExtractor: core::AlgorithmTrait + crate::shape::ShapeDistanceExtractor {
+pub trait HausdorffDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 	fn as_raw_HausdorffDistanceExtractor(&self) -> *mut c_void;
 	/// Set the norm used to compute the Hausdorff value between two shapes. It can be L1 or L2 norm.
 	/// 
@@ -184,7 +184,7 @@ pub trait HistogramCostExtractor: core::AlgorithmTrait {
 }
 
 /// A norm based cost extraction. :
-pub trait NormHistogramCostExtractor: core::AlgorithmTrait + crate::shape::HistogramCostExtractor {
+pub trait NormHistogramCostExtractor: crate::shape::HistogramCostExtractor {
 	fn as_raw_NormHistogramCostExtractor(&self) -> *mut c_void;
 	fn set_norm_flag(&mut self, flag: i32) -> Result<()> {
 		unsafe { sys::cv_NormHistogramCostExtractor_setNormFlag_int(self.as_raw_NormHistogramCostExtractor(), flag) }.into_result()
@@ -204,7 +204,7 @@ pub trait NormHistogramCostExtractor: core::AlgorithmTrait + crate::shape::Histo
 /// proposed by Belongie et al. in "Shape Matching and Object Recognition Using Shape Contexts" (PAMI
 /// 2002). This implementation is packaged in a generic scheme, in order to allow you the
 /// implementation of the common variations of the original pipeline.
-pub trait ShapeContextDistanceExtractor: core::AlgorithmTrait + crate::shape::ShapeDistanceExtractor {
+pub trait ShapeContextDistanceExtractor: crate::shape::ShapeDistanceExtractor {
 	fn as_raw_ShapeContextDistanceExtractor(&self) -> *mut c_void;
 	/// Establish the number of angular bins for the Shape Context Descriptor used in the shape matching
 	/// pipeline.
@@ -447,7 +447,7 @@ pub trait ShapeTransformer: core::AlgorithmTrait {
 /// 
 /// ocupied in the paper "Principal Warps: Thin-Plate Splines and Decomposition of Deformations", by
 /// F.L. Bookstein (PAMI 1989). :
-pub trait ThinPlateSplineShapeTransformer: core::AlgorithmTrait + crate::shape::ShapeTransformer {
+pub trait ThinPlateSplineShapeTransformer: crate::shape::ShapeTransformer {
 	fn as_raw_ThinPlateSplineShapeTransformer(&self) -> *mut c_void;
 	/// Set the regularization parameter for relaxing the exact interpolation requirements of the TPS
 	/// algorithm.

@@ -320,7 +320,7 @@ pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArra
 /// Additional flags for StatModel::train are available: ANN_MLP::TrainFlags.
 /// ## See also
 /// @ref ml_intro_ann
-pub trait ANN_MLP: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait ANN_MLP: crate::ml::StatModel {
 	fn as_raw_ANN_MLP(&self) -> *mut c_void;
 	/// Sets training method and common parameters.
 	/// ## Parameters
@@ -540,7 +540,7 @@ impl dyn ANN_MLP + '_ {
 /// Boosted tree classifier derived from DTrees
 /// ## See also
 /// @ref ml_intro_boost
-pub trait Boost: core::AlgorithmTrait + crate::ml::DTrees + crate::ml::StatModel {
+pub trait Boost: crate::ml::DTrees {
 	fn as_raw_Boost(&self) -> *mut c_void;
 	/// Type of the boosting algorithm.
 	///    See Boost::Types. Default value is Boost::REAL.
@@ -610,7 +610,7 @@ impl dyn Boost + '_ {
 /// use this capability to implement decision tree ensembles.
 /// ## See also
 /// @ref ml_intro_trees
-pub trait DTrees: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait DTrees: crate::ml::StatModel {
 	fn as_raw_DTrees(&self) -> *mut c_void;
 	/// Cluster possible values of a categorical variable into K\<=maxCategories clusters to
 	///    find a suboptimal split.
@@ -1108,7 +1108,7 @@ impl DTrees_Split {
 /// The class implements the Expectation Maximization algorithm.
 /// ## See also
 /// @ref ml_intro_em
-pub trait EM: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait EM: crate::ml::StatModel {
 	fn as_raw_EM(&self) -> *mut c_void;
 	/// The number of mixture components in the Gaussian mixture model.
 	///    Default value of the parameter is EM::DEFAULT_NCLUSTERS=5. Some of %EM implementation could
@@ -1339,7 +1339,7 @@ impl dyn EM + '_ {
 /// The class implements K-Nearest Neighbors model
 /// ## See also
 /// @ref ml_intro_knn
-pub trait KNearest: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait KNearest: crate::ml::StatModel {
 	fn as_raw_KNearest(&self) -> *mut c_void;
 	/// Default number of neighbors to use in predict method.
 	/// ## See also
@@ -1449,7 +1449,7 @@ impl dyn KNearest + '_ {
 /// Implements Logistic Regression classifier.
 /// ## See also
 /// @ref ml_intro_lr
-pub trait LogisticRegression: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait LogisticRegression: crate::ml::StatModel {
 	fn as_raw_LogisticRegression(&self) -> *mut c_void;
 	/// Learning rate.
 	/// ## See also
@@ -1578,7 +1578,7 @@ impl dyn LogisticRegression + '_ {
 /// Bayes classifier for normally distributed data.
 /// ## See also
 /// @ref ml_intro_bayes
-pub trait NormalBayesClassifier: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait NormalBayesClassifier: crate::ml::StatModel {
 	fn as_raw_NormalBayesClassifier(&self) -> *mut c_void;
 	/// Predicts the response for sample(s).
 	/// 
@@ -1702,7 +1702,7 @@ impl ParamGrid {
 /// The class implements the random forest predictor.
 /// ## See also
 /// @ref ml_intro_rtrees
-pub trait RTrees: core::AlgorithmTrait + crate::ml::DTrees + crate::ml::StatModel {
+pub trait RTrees: crate::ml::DTrees {
 	fn as_raw_RTrees(&self) -> *mut c_void;
 	/// If true then variable importance will be calculated and then it can be retrieved by RTrees::getVarImportance.
 	///    Default value is false.
@@ -1788,7 +1788,7 @@ impl dyn RTrees + '_ {
 /// Support Vector Machines.
 /// ## See also
 /// @ref ml_intro_svm
-pub trait SVM: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait SVM: crate::ml::StatModel {
 	fn as_raw_SVM(&self) -> *mut c_void;
 	/// Type of a %SVM formulation.
 	///    See SVM::Types. Default value is SVM::C_SVC.
@@ -2166,7 +2166,7 @@ pub trait SVM_Kernel: core::AlgorithmTrait {
 /// svmsgd->predict(samples, responses);
 /// ```
 /// 
-pub trait SVMSGD: core::AlgorithmTrait + crate::ml::StatModel {
+pub trait SVMSGD: crate::ml::StatModel {
 	fn as_raw_SVMSGD(&self) -> *mut c_void;
 	/// ## Returns
 	/// the weights of the trained model (decision function f(x) = weights * x + shift).

@@ -78,7 +78,7 @@ pub fn create_super_resolution_btvl1_cuda() -> Result<types::PtrOfSuperres_Super
 	unsafe { sys::cv_superres_createSuperResolution_BTVL1_CUDA() }.into_result().map(|ptr| types::PtrOfSuperres_SuperResolution { ptr })
 }
 
-pub trait Superres_BroxOpticalFlow: core::AlgorithmTrait + crate::superres::Superres_DenseOpticalFlowExt {
+pub trait Superres_BroxOpticalFlow: crate::superres::Superres_DenseOpticalFlowExt {
 	fn as_raw_Superres_BroxOpticalFlow(&self) -> *mut c_void;
 	/// Flow smoothness
 	/// ## See also
@@ -184,7 +184,7 @@ pub trait Superres_DenseOpticalFlowExt: core::AlgorithmTrait {
 	
 }
 
-pub trait Superres_DualTVL1OpticalFlow: core::AlgorithmTrait + crate::superres::Superres_DenseOpticalFlowExt {
+pub trait Superres_DualTVL1OpticalFlow: crate::superres::Superres_DenseOpticalFlowExt {
 	fn as_raw_Superres_DualTVL1OpticalFlow(&self) -> *mut c_void;
 	/// ## See also
 	/// setTau
@@ -284,7 +284,7 @@ pub trait Superres_DualTVL1OpticalFlow: core::AlgorithmTrait + crate::superres::
 	
 }
 
-pub trait Superres_FarnebackOpticalFlow: core::AlgorithmTrait + crate::superres::Superres_DenseOpticalFlowExt {
+pub trait Superres_FarnebackOpticalFlow: crate::superres::Superres_DenseOpticalFlowExt {
 	fn as_raw_Superres_FarnebackOpticalFlow(&self) -> *mut c_void;
 	/// ## See also
 	/// setPyrScale
@@ -385,7 +385,7 @@ pub trait Superres_FrameSource {
 	
 }
 
-pub trait Superres_PyrLKOpticalFlow: core::AlgorithmTrait + crate::superres::Superres_DenseOpticalFlowExt {
+pub trait Superres_PyrLKOpticalFlow: crate::superres::Superres_DenseOpticalFlowExt {
 	fn as_raw_Superres_PyrLKOpticalFlow(&self) -> *mut c_void;
 	/// ## See also
 	/// setWindowSize

@@ -28,7 +28,7 @@ pub mod prelude {
 /// This histogram is then used to unwrap pixels, starting from the highest quality pixel.
 /// 
 /// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
-pub trait HistogramPhaseUnwrapping: core::AlgorithmTrait + crate::phase_unwrapping::PhaseUnwrapping {
+pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
 	fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void;
 	/// Get the reliability map computed from the wrapped phase map.
 	/// 

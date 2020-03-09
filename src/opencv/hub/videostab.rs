@@ -398,7 +398,7 @@ impl FromFileMotionReader {
 	
 }
 
-pub trait GaussianMotionFilterTrait: crate::videostab::IMotionStabilizer + crate::videostab::MotionFilterBase {
+pub trait GaussianMotionFilterTrait: crate::videostab::MotionFilterBase {
 	fn as_raw_GaussianMotionFilter(&self) -> *mut c_void;
 	/// ## C++ default parameters
 	/// * stdev: -1.f
@@ -908,7 +908,7 @@ impl LpMotionStabilizer {
 	
 }
 
-pub trait MoreAccurateMotionWobbleSuppressorTrait: crate::videostab::MoreAccurateMotionWobbleSuppressorBase + crate::videostab::WobbleSuppressorBase {
+pub trait MoreAccurateMotionWobbleSuppressorTrait: crate::videostab::MoreAccurateMotionWobbleSuppressorBase {
 	fn as_raw_MoreAccurateMotionWobbleSuppressor(&self) -> *mut c_void;
 	fn suppress(&mut self, idx: i32, frame: &core::Mat, result: &mut core::Mat) -> Result<()> {
 		unsafe { sys::cv_videostab_MoreAccurateMotionWobbleSuppressor_suppress_int_const_MatX_MatX(self.as_raw_MoreAccurateMotionWobbleSuppressor(), idx, frame.as_raw_Mat(), result.as_raw_Mat()) }.into_result()

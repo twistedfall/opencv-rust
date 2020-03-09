@@ -11717,14 +11717,14 @@ mod ml_types {
 	
 	unsafe impl Send for PtrOfANN_MLP {}
 	
-	impl core::AlgorithmTrait for PtrOfANN_MLP {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::ml::ANN_MLP for PtrOfANN_MLP {
+		fn as_raw_ANN_MLP(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::ml::ANN_MLP for PtrOfANN_MLP {
-		fn as_raw_ANN_MLP(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfANN_MLP {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -16454,14 +16454,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfBoostDesc {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::BoostDescTrait for PtrOfBoostDesc {
+		fn as_raw_BoostDesc(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::BoostDescTrait for PtrOfBoostDesc {
-		fn as_raw_BoostDesc(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfBoostDesc {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -16499,14 +16499,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfBriefDescriptorExtractor {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::BriefDescriptorExtractorTrait for PtrOfBriefDescriptorExtractor {
+		fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::BriefDescriptorExtractorTrait for PtrOfBriefDescriptorExtractor {
-		fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfBriefDescriptorExtractor {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -16544,14 +16544,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfDAISY {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::DAISY for PtrOfDAISY {
+		fn as_raw_DAISY(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::DAISY for PtrOfDAISY {
-		fn as_raw_DAISY(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfDAISY {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -16589,14 +16589,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfFREAK {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::FREAKTrait for PtrOfFREAK {
+		fn as_raw_FREAK(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::FREAKTrait for PtrOfFREAK {
-		fn as_raw_FREAK(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfFREAK {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}

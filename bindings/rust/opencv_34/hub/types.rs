@@ -10044,12 +10044,6 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfAbsLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfAbsLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
-			self.get_inner_ptr()
-		}
-	}
-	
 	impl crate::dnn::AbsLayer for PtrOfAbsLayer {
 		fn as_raw_AbsLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
@@ -10058,6 +10052,12 @@ mod dnn_types {
 	
 	impl crate::dnn::ActivationLayer for PtrOfAbsLayer {
 		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+			self.get_inner_ptr()
+		}
+	}
+	
+	impl core::AlgorithmTrait for PtrOfAbsLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -10095,14 +10095,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfActivationLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfActivationLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfActivationLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfActivationLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -10140,14 +10140,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfBNLLLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfBNLLLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfBNLLLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfBNLLLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfBNLLLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -10302,14 +10302,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfBatchNormLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfBatchNormLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfBatchNormLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfBatchNormLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfBatchNormLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -10443,14 +10443,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfELULayer {}
 	
-	impl core::AlgorithmTrait for PtrOfELULayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfELULayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfELULayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfELULayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -10848,14 +10848,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfMishLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfMishLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfMishLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfMishLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfMishLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -11079,14 +11079,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfPowerLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfPowerLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfPowerLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfPowerLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfPowerLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -11265,14 +11265,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfReLU6Layer {}
 	
-	impl core::AlgorithmTrait for PtrOfReLU6Layer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfReLU6Layer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfReLU6Layer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfReLU6Layer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -11316,14 +11316,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfReLULayer {}
 	
-	impl core::AlgorithmTrait for PtrOfReLULayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfReLULayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfReLULayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfReLULayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -11592,14 +11592,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfSigmoidLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfSigmoidLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfSigmoidLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfSigmoidLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfSigmoidLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -11778,14 +11778,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfSwishLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfSwishLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfSwishLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfSwishLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfSwishLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -11829,14 +11829,14 @@ mod dnn_types {
 	
 	unsafe impl Send for PtrOfTanHLayer {}
 	
-	impl core::AlgorithmTrait for PtrOfTanHLayer {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::dnn::ActivationLayer for PtrOfTanHLayer {
+		fn as_raw_ActivationLayer(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::dnn::ActivationLayer for PtrOfTanHLayer {
-		fn as_raw_ActivationLayer(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfTanHLayer {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -15526,14 +15526,14 @@ mod ml_types {
 	
 	unsafe impl Send for PtrOfANN_MLP {}
 	
-	impl core::AlgorithmTrait for PtrOfANN_MLP {
-		fn as_raw_Algorithm(&self) -> *mut c_void {
+	impl crate::ml::ANN_MLP for PtrOfANN_MLP {
+		fn as_raw_ANN_MLP(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::ml::ANN_MLP for PtrOfANN_MLP {
-		fn as_raw_ANN_MLP(&self) -> *mut c_void {
+	impl core::AlgorithmTrait for PtrOfANN_MLP {
+		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -20525,6 +20525,12 @@ mod xfeatures2d_types {
 	
 	unsafe impl Send for PtrOfAffineFeature2D {}
 	
+	impl crate::xfeatures2d::AffineFeature2D for PtrOfAffineFeature2D {
+		fn as_raw_AffineFeature2D(&self) -> *mut c_void {
+			self.get_inner_ptr()
+		}
+	}
+	
 	impl core::AlgorithmTrait for PtrOfAffineFeature2D {
 		fn as_raw_Algorithm(&self) -> *mut c_void {
 			self.get_inner_ptr()
@@ -20533,12 +20539,6 @@ mod xfeatures2d_types {
 	
 	impl crate::features2d::Feature2DTrait for PtrOfAffineFeature2D {
 		fn as_raw_Feature2D(&self) -> *mut c_void {
-			self.get_inner_ptr()
-		}
-	}
-	
-	impl crate::xfeatures2d::AffineFeature2D for PtrOfAffineFeature2D {
-		fn as_raw_AffineFeature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -20576,14 +20576,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfBoostDesc {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::BoostDesc for PtrOfBoostDesc {
+		fn as_raw_BoostDesc(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::BoostDesc for PtrOfBoostDesc {
-		fn as_raw_BoostDesc(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfBoostDesc {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -20621,14 +20621,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfBriefDescriptorExtractor {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::BriefDescriptorExtractorTrait for PtrOfBriefDescriptorExtractor {
+		fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::BriefDescriptorExtractorTrait for PtrOfBriefDescriptorExtractor {
-		fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfBriefDescriptorExtractor {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -20666,14 +20666,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfDAISY {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::DAISY for PtrOfDAISY {
+		fn as_raw_DAISY(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::DAISY for PtrOfDAISY {
-		fn as_raw_DAISY(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfDAISY {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
@@ -20711,14 +20711,14 @@ mod xfeatures2d_types {
 		}
 	}
 	
-	impl crate::features2d::Feature2DTrait for PtrOfFREAK {
-		fn as_raw_Feature2D(&self) -> *mut c_void {
+	impl crate::xfeatures2d::FREAKTrait for PtrOfFREAK {
+		fn as_raw_FREAK(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}
 	
-	impl crate::xfeatures2d::FREAKTrait for PtrOfFREAK {
-		fn as_raw_FREAK(&self) -> *mut c_void {
+	impl crate::features2d::Feature2DTrait for PtrOfFREAK {
+		fn as_raw_Feature2D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}

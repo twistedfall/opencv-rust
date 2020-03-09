@@ -467,7 +467,7 @@ pub trait BackgroundSubtractor: core::AlgorithmTrait {
 /// 
 /// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 /// Very efficient if number of foreground pixels is low.
-pub trait BackgroundSubtractorKNN: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
 	/// Returns the number of last frames that affect the background model
 	fn get_history(&self) -> Result<i32> {
@@ -564,7 +564,7 @@ pub trait BackgroundSubtractorKNN: core::AlgorithmTrait + crate::video::Backgrou
 /// 
 /// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Zivkovic2004)
 /// and [Zivkovic2006](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
-pub trait BackgroundSubtractorMOG2: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
 	/// Returns the number of last frames that affect the background model
 	fn get_history(&self) -> Result<i32> {
@@ -795,7 +795,7 @@ pub trait DenseOpticalFlow: core::AlgorithmTrait {
 /// 
 /// C. Zach, T. Pock and H. Bischof, "A Duality Based Approach for Realtime TV-L1 Optical Flow".
 /// Javier Sanchez, Enric Meinhardt-Llopis and Gabriele Facciolo. "TV-L1 Optical Flow Estimation".
-pub trait DualTVL1OpticalFlow: core::AlgorithmTrait + crate::video::DenseOpticalFlow {
+pub trait DualTVL1OpticalFlow: crate::video::DenseOpticalFlow {
 	fn as_raw_DualTVL1OpticalFlow(&self) -> *mut c_void;
 	/// Time step of the numerical scheme
 	/// ## See also
@@ -989,7 +989,7 @@ impl dyn DualTVL1OpticalFlow + '_ {
 	
 }
 /// Class computing a dense optical flow using the Gunnar Farneback's algorithm.
-pub trait FarnebackOpticalFlow: core::AlgorithmTrait + crate::video::DenseOpticalFlow {
+pub trait FarnebackOpticalFlow: crate::video::DenseOpticalFlow {
 	fn as_raw_FarnebackOpticalFlow(&self) -> *mut c_void;
 	fn get_num_levels(&self) -> Result<i32> {
 		unsafe { sys::cv_FarnebackOpticalFlow_getNumLevels_const(self.as_raw_FarnebackOpticalFlow()) }.into_result()
@@ -1345,7 +1345,7 @@ pub trait SparseOpticalFlow: core::AlgorithmTrait {
 /// iterative Lucas-Kanade method with pyramids.
 /// ## See also
 /// calcOpticalFlowPyrLK
-pub trait SparsePyrLKOpticalFlow: core::AlgorithmTrait + crate::video::SparseOpticalFlow {
+pub trait SparsePyrLKOpticalFlow: crate::video::SparseOpticalFlow {
 	fn as_raw_SparsePyrLKOpticalFlow(&self) -> *mut c_void;
 	fn get_win_size(&self) -> Result<core::Size> {
 		unsafe { sys::cv_SparsePyrLKOpticalFlow_getWinSize_const(self.as_raw_SparsePyrLKOpticalFlow()) }.into_result()

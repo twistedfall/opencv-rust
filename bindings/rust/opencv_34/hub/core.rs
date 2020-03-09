@@ -6569,7 +6569,7 @@ impl CommandLineParser {
 ///    termcrit.type == TermCriteria::MAX_ITER) && termcrit.maxCount > 0
 /// ```
 /// 
-pub trait ConjGradSolver: core::AlgorithmTrait + core::MinProblemSolver {
+pub trait ConjGradSolver: core::MinProblemSolver {
 	fn as_raw_ConjGradSolver(&self) -> *mut c_void;
 }
 
@@ -6660,7 +6660,7 @@ impl DMatch {
 ///    termcrit.type == (TermCriteria::MAX_ITER + TermCriteria::EPS) && termcrit.epsilon > 0 && termcrit.maxCount > 0
 /// ```
 /// 
-pub trait DownhillSolver: core::AlgorithmTrait + core::MinProblemSolver {
+pub trait DownhillSolver: core::MinProblemSolver {
 	fn as_raw_DownhillSolver(&self) -> *mut c_void;
 	/// Returns the initial step that will be used in downhill simplex algorithm.
 	/// 
@@ -14348,12 +14348,12 @@ pub trait UMatDataTrait {
 		unsafe { sys::cv_UMatData_setMapcount_int(self.as_raw_UMatData(), val) }.into_result().expect("Infallible function failed: set_mapcount")
 	}
 	
-	fn original_u_mat_data(&mut self) -> core::UMatData {
-		unsafe { sys::cv_UMatData_originalUMatData(self.as_raw_UMatData()) }.into_result().map(|ptr| core::UMatData { ptr }).expect("Infallible function failed: original_u_mat_data")
+	fn original_umat_data(&mut self) -> core::UMatData {
+		unsafe { sys::cv_UMatData_originalUMatData(self.as_raw_UMatData()) }.into_result().map(|ptr| core::UMatData { ptr }).expect("Infallible function failed: original_umat_data")
 	}
 	
-	fn set_original_u_mat_data(&mut self, val: &mut core::UMatData) -> () {
-		unsafe { sys::cv_UMatData_setOriginalUMatData_UMatDataX(self.as_raw_UMatData(), val.as_raw_UMatData()) }.into_result().expect("Infallible function failed: set_original_u_mat_data")
+	fn set_original_umat_data(&mut self, val: &mut core::UMatData) -> () {
+		unsafe { sys::cv_UMatData_setOriginalUMatData_UMatDataX(self.as_raw_UMatData(), val.as_raw_UMatData()) }.into_result().expect("Infallible function failed: set_original_umat_data")
 	}
 	
 	fn lock(&mut self) -> Result<()> {
@@ -14380,11 +14380,11 @@ pub trait UMatDataTrait {
 		unsafe { sys::cv_UMatData_copyOnMap_const(self.as_raw_UMatData()) }.into_result()
 	}
 	
-	fn temp_u_mat(&self) -> Result<bool> {
+	fn temp_umat(&self) -> Result<bool> {
 		unsafe { sys::cv_UMatData_tempUMat_const(self.as_raw_UMatData()) }.into_result()
 	}
 	
-	fn temp_copied_u_mat(&self) -> Result<bool> {
+	fn temp_copied_umat(&self) -> Result<bool> {
 		unsafe { sys::cv_UMatData_tempCopiedUMat_const(self.as_raw_UMatData()) }.into_result()
 	}
 	
@@ -14532,7 +14532,7 @@ pub trait _InputArrayTrait {
 	
 	/// ## C++ default parameters
 	/// * idx: -1
-	fn get_u_mat(&self, idx: i32) -> Result<core::UMat> {
+	fn get_umat(&self, idx: i32) -> Result<core::UMat> {
 		unsafe { sys::cv__InputArray_getUMat_const_int(self.as_raw__InputArray(), idx) }.into_result().map(|ptr| core::UMat { ptr })
 	}
 	
@@ -14540,7 +14540,7 @@ pub trait _InputArrayTrait {
 		unsafe { sys::cv__InputArray_getMatVector_const_vector_Mat_X(self.as_raw__InputArray(), mv.as_raw_VectorOfMat()) }.into_result()
 	}
 	
-	fn get_u_mat_vector(&self, umv: &mut types::VectorOfUMat) -> Result<()> {
+	fn get_umat_vector(&self, umv: &mut types::VectorOfUMat) -> Result<()> {
 		unsafe { sys::cv__InputArray_getUMatVector_const_vector_UMat_X(self.as_raw__InputArray(), umv.as_raw_VectorOfUMat()) }.into_result()
 	}
 	
@@ -14662,7 +14662,7 @@ pub trait _InputArrayTrait {
 		unsafe { sys::cv__InputArray_isMat_const(self.as_raw__InputArray()) }.into_result()
 	}
 	
-	fn is_u_mat(&self) -> Result<bool> {
+	fn is_umat(&self) -> Result<bool> {
 		unsafe { sys::cv__InputArray_isUMat_const(self.as_raw__InputArray()) }.into_result()
 	}
 	
@@ -14670,7 +14670,7 @@ pub trait _InputArrayTrait {
 		unsafe { sys::cv__InputArray_isMatVector_const(self.as_raw__InputArray()) }.into_result()
 	}
 	
-	fn is_u_mat_vector(&self) -> Result<bool> {
+	fn is_umat_vector(&self) -> Result<bool> {
 		unsafe { sys::cv__InputArray_isUMatVector_const(self.as_raw__InputArray()) }.into_result()
 	}
 	
@@ -14846,7 +14846,7 @@ impl _InputArray {
 	
 }
 
-pub trait _InputOutputArrayTrait: core::_InputArrayTrait + core::_OutputArrayTrait {
+pub trait _InputOutputArrayTrait: core::_OutputArrayTrait {
 	fn as_raw__InputOutputArray(&self) -> *mut c_void;
 }
 
@@ -14978,7 +14978,7 @@ pub trait _OutputArrayTrait: core::_InputArrayTrait {
 	
 	/// ## C++ default parameters
 	/// * i: -1
-	fn get_u_mat_ref(&self, i: i32) -> Result<core::UMat> {
+	fn get_umat_ref(&self, i: i32) -> Result<core::UMat> {
 		unsafe { sys::cv__OutputArray_getUMatRef_const_int(self.as_raw__OutputArray(), i) }.into_result().map(|ptr| core::UMat { ptr })
 	}
 	

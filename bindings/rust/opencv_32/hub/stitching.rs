@@ -1173,7 +1173,7 @@ impl Detail_AffineBasedEstimator {
 /// transformation (affine trasformation estimate will be placed in matches_info).
 /// ## See also
 /// cv::detail::FeaturesMatcher cv::detail::BestOf2NearestMatcher
-pub trait Detail_AffineBestOf2NearestMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait + crate::stitching::Detail_FeaturesMatcher {
+pub trait Detail_AffineBestOf2NearestMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait {
 	fn as_raw_Detail_AffineBestOf2NearestMatcher(&self) -> *mut c_void;
 }
 
@@ -1247,7 +1247,7 @@ impl Detail_AffineBestOf2NearestMatcher {
 /// 
 /// Uses affine transformation in homogeneous coordinates to represent both rotation and
 /// translation in camera rotation matrix.
-pub trait Detail_AffineWarperTrait: crate::stitching::Detail_PlaneWarperTrait + crate::stitching::Detail_RotationWarper {
+pub trait Detail_AffineWarperTrait: crate::stitching::Detail_PlaneWarperTrait {
 	fn as_raw_Detail_AffineWarper(&self) -> *mut c_void;
 	fn warp_point(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
 		input_array_arg!(k);
@@ -1397,7 +1397,7 @@ impl Detail_BestOf2NearestMatcher {
 	
 }
 
-pub trait Detail_BestOf2NearestRangeMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait + crate::stitching::Detail_FeaturesMatcher {
+pub trait Detail_BestOf2NearestRangeMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait {
 	fn as_raw_Detail_BestOf2NearestRangeMatcher(&self) -> *mut c_void;
 }
 
@@ -1595,7 +1595,7 @@ impl Detail_BlocksGainCompensator {
 /// It estimates all transformation parameters. Refinement mask is ignored.
 /// ## See also
 /// AffineBasedEstimator AffineBestOf2NearestMatcher BundleAdjusterAffinePartial
-pub trait Detail_BundleAdjusterAffineTrait: crate::stitching::Detail_BundleAdjusterBase + crate::stitching::Detail_Estimator {
+pub trait Detail_BundleAdjusterAffineTrait: crate::stitching::Detail_BundleAdjusterBase {
 	fn as_raw_Detail_BundleAdjusterAffine(&self) -> *mut c_void;
 }
 
@@ -1655,7 +1655,7 @@ impl Detail_BundleAdjusterAffine {
 /// It estimates all transformation parameters. Refinement mask is ignored.
 /// ## See also
 /// AffineBasedEstimator AffineBestOf2NearestMatcher BundleAdjusterAffine
-pub trait Detail_BundleAdjusterAffinePartialTrait: crate::stitching::Detail_BundleAdjusterBase + crate::stitching::Detail_Estimator {
+pub trait Detail_BundleAdjusterAffinePartialTrait: crate::stitching::Detail_BundleAdjusterBase {
 	fn as_raw_Detail_BundleAdjusterAffinePartial(&self) -> *mut c_void;
 }
 
@@ -1740,7 +1740,7 @@ pub trait Detail_BundleAdjusterBase: crate::stitching::Detail_Estimator {
 /// between the rays passing through the camera center and a feature. :
 /// 
 /// It can estimate focal length. It ignores the refinement mask for now.
-pub trait Detail_BundleAdjusterRayTrait: crate::stitching::Detail_BundleAdjusterBase + crate::stitching::Detail_Estimator {
+pub trait Detail_BundleAdjusterRayTrait: crate::stitching::Detail_BundleAdjusterBase {
 	fn as_raw_Detail_BundleAdjusterRay(&self) -> *mut c_void;
 }
 
@@ -1793,7 +1793,7 @@ impl Detail_BundleAdjusterRay {
 /// 
 /// It can estimate focal length, aspect ratio, principal point.
 /// You can affect only on them via the refinement mask.
-pub trait Detail_BundleAdjusterReprojTrait: crate::stitching::Detail_BundleAdjusterBase + crate::stitching::Detail_Estimator {
+pub trait Detail_BundleAdjusterReprojTrait: crate::stitching::Detail_BundleAdjusterBase {
 	fn as_raw_Detail_BundleAdjusterReproj(&self) -> *mut c_void;
 }
 
@@ -2002,7 +2002,7 @@ impl crate::stitching::Detail_ProjectorBaseTrait for Detail_CompressedRectilinea
 impl Detail_CompressedRectilinearPortraitProjector {
 }
 
-pub trait Detail_CompressedRectilinearPortraitWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_CompressedRectilinearPortraitWarperTrait {
 	fn as_raw_Detail_CompressedRectilinearPortraitWarper(&self) -> *mut c_void;
 }
 
@@ -2105,7 +2105,7 @@ impl crate::stitching::Detail_ProjectorBaseTrait for Detail_CompressedRectilinea
 impl Detail_CompressedRectilinearProjector {
 }
 
-pub trait Detail_CompressedRectilinearWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_CompressedRectilinearWarperTrait {
 	fn as_raw_Detail_CompressedRectilinearWarper(&self) -> *mut c_void;
 }
 
@@ -2148,7 +2148,7 @@ impl Detail_CompressedRectilinearWarper {
 	
 }
 
-pub trait Detail_CylindricalPortraitWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_CylindricalPortraitWarperTrait {
 	fn as_raw_Detail_CylindricalPortraitWarper(&self) -> *mut c_void;
 }
 
@@ -2233,7 +2233,7 @@ impl Detail_CylindricalProjector {
 }
 
 /// Warper that maps an image onto the x\*x + z\*z = 1 cylinder.
-pub trait Detail_CylindricalWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_CylindricalWarperTrait {
 	fn as_raw_Detail_CylindricalWarper(&self) -> *mut c_void;
 	fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
@@ -2294,7 +2294,7 @@ impl Detail_CylindricalWarper {
 	
 }
 
-pub trait Detail_CylindricalWarperGpuTrait: crate::stitching::Detail_CylindricalWarperTrait + crate::stitching::Detail_RotationWarper {
+pub trait Detail_CylindricalWarperGpuTrait: crate::stitching::Detail_CylindricalWarperTrait {
 	fn as_raw_Detail_CylindricalWarperGpu(&self) -> *mut c_void;
 	fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
@@ -2663,7 +2663,7 @@ impl crate::stitching::Detail_ProjectorBaseTrait for Detail_FisheyeProjector {
 impl Detail_FisheyeProjector {
 }
 
-pub trait Detail_FisheyeWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_FisheyeWarperTrait {
 	fn as_raw_Detail_FisheyeWarper(&self) -> *mut c_void;
 }
 
@@ -3225,7 +3225,7 @@ impl crate::stitching::Detail_ProjectorBaseTrait for Detail_MercatorProjector {
 impl Detail_MercatorProjector {
 }
 
-pub trait Detail_MercatorWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_MercatorWarperTrait {
 	fn as_raw_Detail_MercatorWarper(&self) -> *mut c_void;
 }
 
@@ -3336,7 +3336,7 @@ impl Detail_MultiBandBlender {
 }
 
 /// Stub bundle adjuster that does nothing.
-pub trait Detail_NoBundleAdjusterTrait: crate::stitching::Detail_BundleAdjusterBase + crate::stitching::Detail_Estimator {
+pub trait Detail_NoBundleAdjusterTrait: crate::stitching::Detail_BundleAdjusterBase {
 	fn as_raw_Detail_NoBundleAdjuster(&self) -> *mut c_void;
 }
 
@@ -3587,7 +3587,7 @@ impl crate::stitching::Detail_ProjectorBaseTrait for Detail_PaniniPortraitProjec
 impl Detail_PaniniPortraitProjector {
 }
 
-pub trait Detail_PaniniPortraitWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_PaniniPortraitWarperTrait {
 	fn as_raw_Detail_PaniniPortraitWarper(&self) -> *mut c_void;
 }
 
@@ -3690,7 +3690,7 @@ impl crate::stitching::Detail_ProjectorBaseTrait for Detail_PaniniProjector {
 impl Detail_PaniniProjector {
 }
 
-pub trait Detail_PaniniWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_PaniniWarperTrait {
 	fn as_raw_Detail_PaniniWarper(&self) -> *mut c_void;
 }
 
@@ -3733,7 +3733,7 @@ impl Detail_PaniniWarper {
 	
 }
 
-pub trait Detail_PlanePortraitWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_PlanePortraitWarperTrait {
 	fn as_raw_Detail_PlanePortraitWarper(&self) -> *mut c_void;
 }
 
@@ -3818,7 +3818,7 @@ impl Detail_PlaneProjector {
 }
 
 /// Warper that maps an image onto the z = 1 plane.
-pub trait Detail_PlaneWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_PlaneWarperTrait {
 	fn as_raw_Detail_PlaneWarper(&self) -> *mut c_void;
 	fn warp_point(&mut self, pt: core::Point2f, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray) -> Result<core::Point2f> {
 		input_array_arg!(k);
@@ -3926,7 +3926,7 @@ impl Detail_PlaneWarper {
 	
 }
 
-pub trait Detail_PlaneWarperGpuTrait: crate::stitching::Detail_PlaneWarperTrait + crate::stitching::Detail_RotationWarper {
+pub trait Detail_PlaneWarperGpuTrait: crate::stitching::Detail_PlaneWarperTrait {
 	fn as_raw_Detail_PlaneWarperGpu(&self) -> *mut c_void;
 	fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
@@ -4188,7 +4188,7 @@ pub trait Detail_SeamFinder {
 	
 }
 
-pub trait Detail_SphericalPortraitWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_SphericalPortraitWarperTrait {
 	fn as_raw_Detail_SphericalPortraitWarper(&self) -> *mut c_void;
 }
 
@@ -4277,7 +4277,7 @@ impl Detail_SphericalProjector {
 /// Projects image onto unit sphere with origin at (0, 0, 0) and radius scale, measured in pixels.
 /// A 360° panorama would therefore have a resulting width of 2 * scale * PI pixels.
 /// Poles are located at (0, -1, 0) and (0, 1, 0) points.
-pub trait Detail_SphericalWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_SphericalWarperTrait {
 	fn as_raw_Detail_SphericalWarper(&self) -> *mut c_void;
 	fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
@@ -4343,7 +4343,7 @@ impl Detail_SphericalWarper {
 	
 }
 
-pub trait Detail_SphericalWarperGpuTrait: crate::stitching::Detail_RotationWarper + crate::stitching::Detail_SphericalWarperTrait {
+pub trait Detail_SphericalWarperGpuTrait: crate::stitching::Detail_SphericalWarperTrait {
 	fn as_raw_Detail_SphericalWarperGpu(&self) -> *mut c_void;
 	fn build_maps(&mut self, src_size: core::Size, k: &dyn core::ToInputArray, r: &dyn core::ToInputArray, xmap: &mut dyn core::ToOutputArray, ymap: &mut dyn core::ToOutputArray) -> Result<core::Rect> {
 		input_array_arg!(k);
@@ -4447,7 +4447,7 @@ impl crate::stitching::Detail_StereographicProjectorTrait for Detail_Stereograph
 impl Detail_StereographicProjector {
 }
 
-pub trait Detail_StereographicWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_StereographicWarperTrait {
 	fn as_raw_Detail_StereographicWarper(&self) -> *mut c_void;
 }
 
@@ -4633,7 +4633,7 @@ impl crate::stitching::Detail_TransverseMercatorProjectorTrait for Detail_Transv
 impl Detail_TransverseMercatorProjector {
 }
 
-pub trait Detail_TransverseMercatorWarperTrait: crate::stitching::Detail_RotationWarper {
+pub trait Detail_TransverseMercatorWarperTrait {
 	fn as_raw_Detail_TransverseMercatorWarper(&self) -> *mut c_void;
 }
 
@@ -4674,7 +4674,7 @@ impl Detail_TransverseMercatorWarper {
 }
 
 /// Voronoi diagram-based seam estimator.
-pub trait Detail_VoronoiSeamFinderTrait: crate::stitching::Detail_PairwiseSeamFinder + crate::stitching::Detail_SeamFinder {
+pub trait Detail_VoronoiSeamFinderTrait: crate::stitching::Detail_PairwiseSeamFinder {
 	fn as_raw_Detail_VoronoiSeamFinder(&self) -> *mut c_void;
 	fn find(&mut self, src: &types::VectorOfUMat, corners: &types::VectorOfPoint, masks: &mut types::VectorOfUMat) -> Result<()> {
 		unsafe { sys::cv_detail_VoronoiSeamFinder_find_const_vector_UMat_X_const_vector_Point_X_vector_UMat_X(self.as_raw_Detail_VoronoiSeamFinder(), src.as_raw_VectorOfUMat(), corners.as_raw_VectorOfPoint(), masks.as_raw_VectorOfUMat()) }.into_result()

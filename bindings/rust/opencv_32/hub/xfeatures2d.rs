@@ -101,7 +101,7 @@ pub enum PCTSignatures_SimilarityFunction {
 /// where each bit is computed as a thresholded linear combination of a set of weak learners.
 /// BoostDesc header files (boostdesc_*.i) was exported from original binaries with export-boostdesc.py script from
 /// samples subfolder.
-pub trait BoostDescTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait BoostDescTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_BoostDesc(&self) -> *mut c_void;
 }
 
@@ -156,12 +156,12 @@ impl core::AlgorithmTrait for BoostDesc {
 	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::features2d::Feature2DTrait for BoostDesc {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
-}
-
 impl crate::xfeatures2d::BoostDescTrait for BoostDesc {
 	fn as_raw_BoostDesc(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::features2d::Feature2DTrait for BoostDesc {
+	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl BoostDesc {
@@ -180,7 +180,7 @@ impl BoostDesc {
 /// ## Parameters
 /// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
-pub trait BriefDescriptorExtractorTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait BriefDescriptorExtractorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void;
 }
 
@@ -214,12 +214,12 @@ impl core::AlgorithmTrait for BriefDescriptorExtractor {
 	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::features2d::Feature2DTrait for BriefDescriptorExtractor {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
-}
-
 impl crate::xfeatures2d::BriefDescriptorExtractorTrait for BriefDescriptorExtractor {
 	fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::features2d::Feature2DTrait for BriefDescriptorExtractor {
+	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl BriefDescriptorExtractor {
@@ -247,7 +247,7 @@ impl BriefDescriptorExtractor {
 /// * H: optional 3x3 homography matrix used to warp the grid of daisy but sampling keypoints remains unwarped on image
 /// * interpolation: switch to disable interpolation for speed improvement at minor quality loss
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
-pub trait DAISY: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait DAISY: crate::features2d::Feature2DTrait {
 	fn as_raw_DAISY(&self) -> *mut c_void;
 	/// ## Parameters
 	/// * image: image to extract descriptors
@@ -352,7 +352,7 @@ impl dyn DAISY + '_ {
 /// Note:
 ///    *   An example on how to use the FREAK descriptor can be found at
 ///        opencv_source_code/samples/cpp/freak_demo.cpp
-pub trait FREAKTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait FREAKTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_FREAK(&self) -> *mut c_void;
 }
 
@@ -393,12 +393,12 @@ impl core::AlgorithmTrait for FREAK {
 	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
 }
 
-impl crate::features2d::Feature2DTrait for FREAK {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
-}
-
 impl crate::xfeatures2d::FREAKTrait for FREAK {
 	fn as_raw_FREAK(&self) -> *mut c_void { self.ptr }
+}
+
+impl crate::features2d::Feature2DTrait for FREAK {
+	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
 }
 
 impl FREAK {
@@ -436,7 +436,7 @@ impl FREAK {
 ///    you will have to use an extractor which estimates the patch orientation (in degrees). Examples for such extractors are ORB and SIFT.
 /// 
 /// Note: a complete example can be found under /samples/cpp/tutorial_code/xfeatures2D/latch_match.cpp
-pub trait LATCHTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait LATCHTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_LATCH(&self) -> *mut c_void;
 }
 
@@ -506,7 +506,7 @@ impl LATCH {
 /// 
 /// 
 /// Note: It requires a color image as input.
-pub trait LUCIDTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait LUCIDTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_LUCID(&self) -> *mut c_void;
 }
 
@@ -574,7 +574,7 @@ impl LUCID {
 /// it extends to contextual information the local self-dissimilarity notion embedded in established
 /// detectors of corner-like interest points, thereby achieving enhanced repeatability, distinctiveness and
 /// localization accuracy.
-pub trait MSDDetectorTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait MSDDetectorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_MSDDetector(&self) -> *mut c_void;
 }
 
@@ -1098,7 +1098,7 @@ impl dyn PCTSignaturesSQFD + '_ {
 }
 /// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
 /// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Lowe04) .
-pub trait SIFTTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait SIFTTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_SIFT(&self) -> *mut c_void;
 }
 
@@ -1196,7 +1196,7 @@ impl SIFT {
 ///        opencv_source_code/samples/cpp/generic_descriptor_match.cpp
 ///    *   Another example using the SURF feature detector, extractor and matcher can be found at
 ///        opencv_source_code/samples/cpp/matcher_simple.cpp
-pub trait SURF: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait SURF: crate::features2d::Feature2DTrait {
 	fn as_raw_SURF(&self) -> *mut c_void;
 	fn set_hessian_threshold(&mut self, hessian_threshold: f64) -> Result<()> {
 		unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_SURF(), hessian_threshold) }.into_result()
@@ -1262,7 +1262,7 @@ impl dyn SURF + '_ {
 	
 }
 /// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
-pub trait StarDetectorTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait StarDetectorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_StarDetector(&self) -> *mut c_void;
 }
 
@@ -1331,7 +1331,7 @@ impl StarDetector {
 /// 0.75f should be the scale for ORB keypoints ratio
 /// 
 /// * dsc_normalize: clamp descriptors to 255 and convert to uchar CV_8UC1 (disabled by default)
-pub trait VGG: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait VGG: crate::features2d::Feature2DTrait {
 	fn as_raw_VGG(&self) -> *mut c_void;
 	/// ## Parameters
 	/// * image: image to extract descriptors

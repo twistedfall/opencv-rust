@@ -294,7 +294,7 @@ impl dyn BIF + '_ {
 	}
 	
 }
-pub trait BasicFaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizer {
+pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 	fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void;
 	/// ## See also
 	/// setNumComponents
@@ -455,7 +455,7 @@ impl CParams {
 	
 }
 
-pub trait EigenFaceRecognizer: core::AlgorithmTrait + crate::face::BasicFaceRecognizer + crate::face::FaceRecognizer {
+pub trait EigenFaceRecognizer: crate::face::BasicFaceRecognizer {
 	fn as_raw_EigenFaceRecognizer(&self) -> *mut c_void;
 }
 
@@ -942,7 +942,7 @@ pub trait Facemark: core::AlgorithmTrait {
 	
 }
 
-pub trait FacemarkAAM: core::AlgorithmTrait + crate::face::Facemark + crate::face::FacemarkTrain {
+pub trait FacemarkAAM: crate::face::FacemarkTrain {
 	fn as_raw_FacemarkAAM(&self) -> *mut c_void;
 	/// overload with additional Config structures
 	fn fit_config(&mut self, image: &dyn core::ToInputArray, roi: &dyn core::ToInputArray, _landmarks: &mut dyn core::ToOutputArray, runtime_params: &types::VectorOfFacemarkAAM_Config) -> Result<bool> {
@@ -1405,7 +1405,7 @@ impl FacemarkAAM_Params {
 	
 }
 
-pub trait FacemarkKazemi: core::AlgorithmTrait + crate::face::Facemark {
+pub trait FacemarkKazemi: crate::face::Facemark {
 	fn as_raw_FacemarkKazemi(&self) -> *mut c_void;
 	/// This function is used to train the model using gradient boosting to get a cascade of regressors
 	/// which can then be used to predict shape.
@@ -1571,7 +1571,7 @@ impl FacemarkKazemi_Params {
 	
 }
 
-pub trait FacemarkLBF: core::AlgorithmTrait + crate::face::Facemark + crate::face::FacemarkTrain {
+pub trait FacemarkLBF: crate::face::FacemarkTrain {
 	fn as_raw_FacemarkLBF(&self) -> *mut c_void;
 }
 
@@ -1781,7 +1781,7 @@ impl FacemarkLBF_Params {
 ///   If the user already have a trained model, then this part can be omitted.
 /// - Load the trained model using Facemark::loadModel.
 /// - Perform the fitting via the Facemark::fit.
-pub trait FacemarkTrain: core::AlgorithmTrait + crate::face::Facemark {
+pub trait FacemarkTrain: crate::face::Facemark {
 	fn as_raw_FacemarkTrain(&self) -> *mut c_void;
 	/// Add one training sample to the trainer.
 	/// 
@@ -1939,7 +1939,7 @@ pub trait FacemarkTrain: core::AlgorithmTrait + crate::face::Facemark {
 	
 }
 
-pub trait FisherFaceRecognizer: core::AlgorithmTrait + crate::face::BasicFaceRecognizer + crate::face::FaceRecognizer {
+pub trait FisherFaceRecognizer: crate::face::BasicFaceRecognizer {
 	fn as_raw_FisherFaceRecognizer(&self) -> *mut c_void;
 }
 
@@ -1982,7 +1982,7 @@ impl dyn FisherFaceRecognizer + '_ {
 	}
 	
 }
-pub trait LBPHFaceRecognizer: core::AlgorithmTrait + crate::face::FaceRecognizer {
+pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void;
 	/// ## See also
 	/// setGridX

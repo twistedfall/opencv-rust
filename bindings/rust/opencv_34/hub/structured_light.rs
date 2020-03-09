@@ -38,7 +38,7 @@ pub const PSP: i32 = 1;
 /// with the same structure as the original but with inverted colors.
 /// This provides an effective method for easily determining the intensity value of each pixel when it is lit (highest value) and
 /// when it is not lit (lowest value). So for a a projector with resolution 1024x768, the number of pattern images will be Ncols * 2 + Nrows * 2 = 40.
-pub trait GrayCodePattern: core::AlgorithmTrait + crate::structured_light::StructuredLightPattern {
+pub trait GrayCodePattern: crate::structured_light::StructuredLightPattern {
 	fn as_raw_GrayCodePattern(&self) -> *mut c_void;
 	/// Get the number of pattern images needed for the graycode pattern.
 	/// 
@@ -180,7 +180,7 @@ impl GrayCodePattern_Params {
 /// and Fourier-assisted phase-shifting profilometry (FAPS) based on [faps](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_faps).
 /// 
 /// This class generates sinusoidal patterns that can be used with FTP, PSP and FAPS.
-pub trait SinusoidalPattern: core::AlgorithmTrait + crate::structured_light::StructuredLightPattern {
+pub trait SinusoidalPattern: crate::structured_light::StructuredLightPattern {
 	fn as_raw_SinusoidalPattern(&self) -> *mut c_void;
 	/// Compute a wrapped phase map from sinusoidal patterns.
 	/// ## Parameters

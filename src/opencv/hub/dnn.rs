@@ -709,7 +709,7 @@ pub fn write_text_graph(model: &str, output: &str) -> Result<()> {
 	unsafe { sys::cv_dnn_writeTextGraph_const_StringX_const_StringX(model.as_ptr(), output.as_ptr()) }.into_result()
 }
 
-pub trait AbsLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait AbsLayer: crate::dnn::ActivationLayer {
 	fn as_raw_AbsLayer(&self) -> *mut c_void;
 }
 
@@ -719,7 +719,7 @@ impl dyn AbsLayer + '_ {
 	}
 	
 }
-pub trait ActivationLayer: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ActivationLayer: crate::dnn::LayerTrait {
 	fn as_raw_ActivationLayer(&self) -> *mut c_void;
 	fn forward_slice(&self, src: &f32, dst: &mut f32, len: i32, out_plane_size: size_t, cn0: i32, cn1: i32) -> Result<()> {
 		unsafe { sys::cv_dnn_ActivationLayer_forwardSlice_const_const_floatX_floatX_int_size_t_int_int(self.as_raw_ActivationLayer(), src, dst, len, out_plane_size, cn0, cn1) }.into_result()
@@ -727,7 +727,7 @@ pub trait ActivationLayer: core::AlgorithmTrait + crate::dnn::LayerTrait {
 	
 }
 
-pub trait BNLLLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait BNLLLayer: crate::dnn::ActivationLayer {
 	fn as_raw_BNLLLayer(&self) -> *mut c_void;
 }
 
@@ -820,7 +820,7 @@ pub trait BackendWrapper {
 	
 }
 
-pub trait BaseConvolutionLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait BaseConvolutionLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_BaseConvolutionLayer(&self) -> *mut c_void;
 	fn kernel(&self) -> core::Size {
 		unsafe { sys::cv_dnn_BaseConvolutionLayer_kernel_const(self.as_raw_BaseConvolutionLayer()) }.into_result().expect("Infallible function failed: kernel")
@@ -965,7 +965,7 @@ impl crate::dnn::LayerTrait for BaseConvolutionLayer {
 impl BaseConvolutionLayer {
 }
 
-pub trait BatchNormLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait BatchNormLayer: crate::dnn::ActivationLayer {
 	fn as_raw_BatchNormLayer(&self) -> *mut c_void;
 	fn has_weights(&self) -> bool {
 		unsafe { sys::cv_dnn_BatchNormLayer_hasWeights_const(self.as_raw_BatchNormLayer()) }.into_result().expect("Infallible function failed: has_weights")
@@ -1018,7 +1018,7 @@ impl dyn BatchNormLayer + '_ {
 /// - LRN
 /// - MVN
 /// - Dropout (since it does nothing on forward pass -))
-pub trait BlankLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait BlankLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_BlankLayer(&self) -> *mut c_void;
 }
 
@@ -1081,7 +1081,7 @@ impl BlankLayer {
 	
 }
 
-pub trait ChannelsPReLULayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait ChannelsPReLULayer: crate::dnn::ActivationLayer {
 	fn as_raw_ChannelsPReLULayer(&self) -> *mut c_void;
 }
 
@@ -1096,7 +1096,7 @@ impl dyn ChannelsPReLULayer + '_ {
 /// ClassificationModel allows to set params for preprocessing input image.
 /// ClassificationModel creates net from file with trained weights and config,
 /// sets preprocessing input, runs forward pass and return top-1 prediction.
-pub trait ClassificationModelTrait: crate::dnn::ModelTrait + crate::dnn::NetTrait {
+pub trait ClassificationModelTrait: crate::dnn::ModelTrait {
 	fn as_raw_ClassificationModel(&self) -> *mut c_void;
 	/// Given the @p input frame, create input blob, run net and return top-1 prediction.
 	/// ## Parameters
@@ -1172,7 +1172,7 @@ impl ClassificationModel {
 	
 }
 
-pub trait ConcatLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ConcatLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ConcatLayer(&self) -> *mut c_void;
 	fn axis(&self) -> i32 {
 		unsafe { sys::cv_dnn_ConcatLayer_axis_const(self.as_raw_ConcatLayer()) }.into_result().expect("Infallible function failed: axis")
@@ -1241,7 +1241,7 @@ impl ConcatLayer {
 }
 
 /// Constant layer produces the same data blob at an every forward pass.
-pub trait ConstLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ConstLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ConstLayer(&self) -> *mut c_void;
 }
 
@@ -1286,7 +1286,7 @@ impl ConstLayer {
 	
 }
 
-pub trait ConvolutionLayerTrait: core::AlgorithmTrait + crate::dnn::BaseConvolutionLayerTrait + crate::dnn::LayerTrait {
+pub trait ConvolutionLayerTrait: crate::dnn::BaseConvolutionLayerTrait {
 	fn as_raw_ConvolutionLayer(&self) -> *mut c_void;
 }
 
@@ -1334,7 +1334,7 @@ impl ConvolutionLayer {
 	
 }
 
-pub trait CropAndResizeLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait CropAndResizeLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_CropAndResizeLayer(&self) -> *mut c_void;
 }
 
@@ -1378,7 +1378,7 @@ impl CropAndResizeLayer {
 	
 }
 
-pub trait CropLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait CropLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_CropLayer(&self) -> *mut c_void;
 }
 
@@ -1422,7 +1422,7 @@ impl CropLayer {
 	
 }
 
-pub trait DeconvolutionLayerTrait: core::AlgorithmTrait + crate::dnn::BaseConvolutionLayerTrait + crate::dnn::LayerTrait {
+pub trait DeconvolutionLayerTrait: crate::dnn::BaseConvolutionLayerTrait {
 	fn as_raw_DeconvolutionLayer(&self) -> *mut c_void;
 }
 
@@ -1476,7 +1476,7 @@ impl DeconvolutionLayer {
 /// DetectionModel creates net from file with trained weights and config,
 /// sets preprocessing input, runs forward pass and return result detections.
 /// For DetectionModel SSD, Faster R-CNN, YOLO topologies are supported.
-pub trait DetectionModelTrait: crate::dnn::ModelTrait + crate::dnn::NetTrait {
+pub trait DetectionModelTrait: crate::dnn::ModelTrait {
 	fn as_raw_DetectionModel(&self) -> *mut c_void;
 	/// Given the @p input frame, create input blob, run net and return result detections.
 	/// ## Parameters
@@ -1560,7 +1560,7 @@ impl DetectionModel {
 	
 }
 
-pub trait DetectionOutputLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait DetectionOutputLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_DetectionOutputLayer(&self) -> *mut c_void;
 }
 
@@ -1820,7 +1820,7 @@ impl DictValue {
 	
 }
 
-pub trait ELULayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait ELULayer: crate::dnn::ActivationLayer {
 	fn as_raw_ELULayer(&self) -> *mut c_void;
 }
 
@@ -1836,7 +1836,7 @@ impl dyn ELULayer + '_ {
 /// - "operation" as string. Values are "sum" (default), "prod", "max", "div"
 /// - "coeff" as float array. Specify weights of inputs for SUM operation
 /// - "output_channels_mode" as string. Values are "same" (default, all input must have the same layout), "input_0", "input_0_truncate", "max_input_channels"
-pub trait EltwiseLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait EltwiseLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_EltwiseLayer(&self) -> *mut c_void;
 }
 
@@ -1886,7 +1886,7 @@ impl EltwiseLayer {
 	
 }
 
-pub trait FlattenLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait FlattenLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_FlattenLayer(&self) -> *mut c_void;
 }
 
@@ -1930,7 +1930,7 @@ impl FlattenLayer {
 	
 }
 
-pub trait InnerProductLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait InnerProductLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_InnerProductLayer(&self) -> *mut c_void;
 	fn axis(&self) -> i32 {
 		unsafe { sys::cv_dnn_InnerProductLayer_axis_const(self.as_raw_InnerProductLayer()) }.into_result().expect("Infallible function failed: axis")
@@ -1985,7 +1985,7 @@ impl InnerProductLayer {
 /// Bilinear resize layer from https://github.com/cdmh/deeplab-public-ver2
 /// 
 /// It differs from @ref ResizeLayer in output shape and resize scales computations.
-pub trait InterpLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait InterpLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_InterpLayer(&self) -> *mut c_void;
 }
 
@@ -2037,7 +2037,7 @@ impl InterpLayer {
 /// KeypointsModel allows to set params for preprocessing input image.
 /// KeypointsModel creates net from file with trained weights and config,
 /// sets preprocessing input, runs forward pass and returns the x and y coordinates of each detected keypoint
-pub trait KeypointsModelTrait: crate::dnn::ModelTrait + crate::dnn::NetTrait {
+pub trait KeypointsModelTrait: crate::dnn::ModelTrait {
 	fn as_raw_KeypointsModel(&self) -> *mut c_void;
 	/// Given the @p input frame, create input blob, run net
 	/// ## Parameters
@@ -2117,7 +2117,7 @@ impl KeypointsModel {
 	
 }
 
-pub trait LRNLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait LRNLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_LRNLayer(&self) -> *mut c_void;
 	fn typ(&self) -> i32 {
 		unsafe { sys::cv_dnn_LRNLayer_type_const(self.as_raw_LRNLayer()) }.into_result().expect("Infallible function failed: typ")
@@ -2210,7 +2210,7 @@ impl LRNLayer {
 }
 
 /// LSTM recurrent layer
-pub trait LSTMLayer: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait LSTMLayer: crate::dnn::LayerTrait {
 	fn as_raw_LSTMLayer(&self) -> *mut c_void;
 	/// 
 	/// **Deprecated**: Use LayerParams::blobs instead.
@@ -2771,7 +2771,7 @@ impl crate::dnn::LayerParamsTrait for LayerParams {
 impl LayerParams {
 }
 
-pub trait MVNLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait MVNLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_MVNLayer(&self) -> *mut c_void;
 	fn eps(&self) -> f32 {
 		unsafe { sys::cv_dnn_MVNLayer_eps_const(self.as_raw_MVNLayer()) }.into_result().expect("Infallible function failed: eps")
@@ -2839,7 +2839,7 @@ impl MVNLayer {
 	
 }
 
-pub trait MaxUnpoolLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait MaxUnpoolLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_MaxUnpoolLayer(&self) -> *mut c_void;
 	fn pool_kernel(&self) -> core::Size {
 		unsafe { sys::cv_dnn_MaxUnpoolLayer_poolKernel_const(self.as_raw_MaxUnpoolLayer()) }.into_result().expect("Infallible function failed: pool_kernel")
@@ -2907,7 +2907,7 @@ impl MaxUnpoolLayer {
 	
 }
 
-pub trait MishLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait MishLayer: crate::dnn::ActivationLayer {
 	fn as_raw_MishLayer(&self) -> *mut c_void;
 }
 
@@ -3656,7 +3656,7 @@ impl Net {
 /// 
 /// An every sample in the batch is normalized separately. Optionally,
 /// output is scaled by the trained parameters.
-pub trait NormalizeBBoxLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait NormalizeBBoxLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_NormalizeBBoxLayer(&self) -> *mut c_void;
 	fn pnorm(&self) -> f32 {
 		unsafe { sys::cv_dnn_NormalizeBBoxLayer_pnorm_const(self.as_raw_NormalizeBBoxLayer()) }.into_result().expect("Infallible function failed: pnorm")
@@ -3768,7 +3768,7 @@ impl NormalizeBBoxLayer {
 ///                   is considered as a batch dimension and @p paddings are shifted
 ///                   to a one dimension. Defaults to `-1` that means padding
 ///                   corresponding to @p paddings.
-pub trait PaddingLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait PaddingLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_PaddingLayer(&self) -> *mut c_void;
 }
 
@@ -3832,7 +3832,7 @@ impl PaddingLayer {
 	
 }
 
-pub trait PermuteLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait PermuteLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_PermuteLayer(&self) -> *mut c_void;
 }
 
@@ -3876,7 +3876,7 @@ impl PermuteLayer {
 	
 }
 
-pub trait PoolingLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait PoolingLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_PoolingLayer(&self) -> *mut c_void;
 	fn typ(&self) -> i32 {
 		unsafe { sys::cv_dnn_PoolingLayer_type_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: typ")
@@ -4081,7 +4081,7 @@ impl PoolingLayer {
 	
 }
 
-pub trait PowerLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait PowerLayer: crate::dnn::ActivationLayer {
 	fn as_raw_PowerLayer(&self) -> *mut c_void;
 	fn power(&self) -> f32 {
 		unsafe { sys::cv_dnn_PowerLayer_power_const(self.as_raw_PowerLayer()) }.into_result().expect("Infallible function failed: power")
@@ -4115,7 +4115,7 @@ impl dyn PowerLayer + '_ {
 	}
 	
 }
-pub trait PriorBoxLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait PriorBoxLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_PriorBoxLayer(&self) -> *mut c_void;
 }
 
@@ -4159,7 +4159,7 @@ impl PriorBoxLayer {
 	
 }
 
-pub trait ProposalLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ProposalLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ProposalLayer(&self) -> *mut c_void;
 }
 
@@ -4215,7 +4215,7 @@ impl ProposalLayer {
 /// output[0] will have shape [`T`, `N`, @f$N_o@f$], where @f$N_o@f$ is number of rows in @f$ W_{xo} @f$ matrix.
 /// 
 /// If setProduceHiddenOutput() is set to true then @p output[1] will contain a Mat with shape [`T`, `N`, @f$N_h@f$], where @f$N_h@f$ is number of rows in @f$ W_{hh} @f$ matrix.
-pub trait RNNLayer: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait RNNLayer: crate::dnn::LayerTrait {
 	fn as_raw_RNNLayer(&self) -> *mut c_void;
 	/// Setups learned weights.
 	/// 
@@ -4253,7 +4253,7 @@ impl dyn RNNLayer + '_ {
 	}
 	
 }
-pub trait ReLU6Layer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait ReLU6Layer: crate::dnn::ActivationLayer {
 	fn as_raw_ReLU6Layer(&self) -> *mut c_void;
 	fn min_value(&self) -> f32 {
 		unsafe { sys::cv_dnn_ReLU6Layer_minValue_const(self.as_raw_ReLU6Layer()) }.into_result().expect("Infallible function failed: min_value")
@@ -4279,7 +4279,7 @@ impl dyn ReLU6Layer + '_ {
 	}
 	
 }
-pub trait ReLULayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait ReLULayer: crate::dnn::ActivationLayer {
 	fn as_raw_ReLULayer(&self) -> *mut c_void;
 	fn negative_slope(&self) -> f32 {
 		unsafe { sys::cv_dnn_ReLULayer_negativeSlope_const(self.as_raw_ReLULayer()) }.into_result().expect("Infallible function failed: negative_slope")
@@ -4297,7 +4297,7 @@ impl dyn ReLULayer + '_ {
 	}
 	
 }
-pub trait RegionLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait RegionLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_RegionLayer(&self) -> *mut c_void;
 }
 
@@ -4341,7 +4341,7 @@ impl RegionLayer {
 	
 }
 
-pub trait ReorgLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ReorgLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ReorgLayer(&self) -> *mut c_void;
 }
 
@@ -4385,7 +4385,7 @@ impl ReorgLayer {
 	
 }
 
-pub trait ReshapeLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ReshapeLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ReshapeLayer(&self) -> *mut c_void;
 	fn new_shape_desc(&mut self) -> types::VectorOfi32 {
 		unsafe { sys::cv_dnn_ReshapeLayer_newShapeDesc(self.as_raw_ReshapeLayer()) }.into_result().map(|ptr| types::VectorOfi32 { ptr }).expect("Infallible function failed: new_shape_desc")
@@ -4448,7 +4448,7 @@ impl ReshapeLayer {
 /// Resize input 4-dimensional blob by nearest neighbor or bilinear strategy.
 /// 
 /// Layer is used to support TensorFlow's resize_nearest_neighbor and resize_bilinear ops.
-pub trait ResizeLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ResizeLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ResizeLayer(&self) -> *mut c_void;
 }
 
@@ -4495,7 +4495,7 @@ impl ResizeLayer {
 	
 }
 
-pub trait ScaleLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ScaleLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ScaleLayer(&self) -> *mut c_void;
 	fn has_bias(&self) -> bool {
 		unsafe { sys::cv_dnn_ScaleLayer_hasBias_const(self.as_raw_ScaleLayer()) }.into_result().expect("Infallible function failed: has_bias")
@@ -4560,7 +4560,7 @@ impl ScaleLayer {
 /// SegmentationModel allows to set params for preprocessing input image.
 /// SegmentationModel creates net from file with trained weights and config,
 /// sets preprocessing input, runs forward pass and returns the class prediction for each pixel.
-pub trait SegmentationModelTrait: crate::dnn::ModelTrait + crate::dnn::NetTrait {
+pub trait SegmentationModelTrait: crate::dnn::ModelTrait {
 	fn as_raw_SegmentationModel(&self) -> *mut c_void;
 	/// Given the @p input frame, create input blob, run net
 	/// ## Parameters
@@ -4636,7 +4636,7 @@ impl SegmentationModel {
 	
 }
 
-pub trait ShiftLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ShiftLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ShiftLayer(&self) -> *mut c_void;
 }
 
@@ -4688,7 +4688,7 @@ impl ShiftLayer {
 /// ![block formula](https://latex.codecogs.com/png.latex?%20groupSize%20%3D%20%5Cfrac%7Bnumber%5C%20of%5C%20channels%7D%7Bgroup%7D%20)
 /// ![block formula](https://latex.codecogs.com/png.latex?%20output%28n%2C%20c%2C%20h%2C%20w%29%20%3D%20input%28n%2C%20groupSize%20%5Ctimes%20%28c%20%5C%25%20group%29%20%2B%20%5Clfloor%20%5Cfrac%7Bc%7D%7Bgroup%7D%20%5Crfloor%2C%20h%2C%20w%29%20)
 /// Read more at https://arxiv.org/pdf/1707.01083.pdf
-pub trait ShuffleChannelLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait ShuffleChannelLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_ShuffleChannelLayer(&self) -> *mut c_void;
 	fn group(&self) -> i32 {
 		unsafe { sys::cv_dnn_ShuffleChannelLayer_group_const(self.as_raw_ShuffleChannelLayer()) }.into_result().expect("Infallible function failed: group")
@@ -4748,7 +4748,7 @@ impl ShuffleChannelLayer {
 	
 }
 
-pub trait SigmoidLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait SigmoidLayer: crate::dnn::ActivationLayer {
 	fn as_raw_SigmoidLayer(&self) -> *mut c_void;
 }
 
@@ -4781,7 +4781,7 @@ impl dyn SigmoidLayer + '_ {
 /// * axis: Axis of split operation
 /// 
 /// Split input blob on the equal parts by @p axis.
-pub trait SliceLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait SliceLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_SliceLayer(&self) -> *mut c_void;
 	/// Vector of slice ranges.
 	/// 
@@ -4880,7 +4880,7 @@ impl SliceLayer {
 	
 }
 
-pub trait SoftmaxLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait SoftmaxLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_SoftmaxLayer(&self) -> *mut c_void;
 	fn log_soft_max(&self) -> bool {
 		unsafe { sys::cv_dnn_SoftmaxLayer_logSoftMax_const(self.as_raw_SoftmaxLayer()) }.into_result().expect("Infallible function failed: log_soft_max")
@@ -4932,7 +4932,7 @@ impl SoftmaxLayer {
 	
 }
 
-pub trait SplitLayerTrait: core::AlgorithmTrait + crate::dnn::LayerTrait {
+pub trait SplitLayerTrait: crate::dnn::LayerTrait {
 	fn as_raw_SplitLayer(&self) -> *mut c_void;
 	/// Number of copies that will be produced (is ignored when negative).
 	fn outputs_count(&self) -> i32 {
@@ -4986,7 +4986,7 @@ impl SplitLayer {
 	
 }
 
-pub trait SwishLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait SwishLayer: crate::dnn::ActivationLayer {
 	fn as_raw_SwishLayer(&self) -> *mut c_void;
 }
 
@@ -4996,7 +4996,7 @@ impl dyn SwishLayer + '_ {
 	}
 	
 }
-pub trait TanHLayer: core::AlgorithmTrait + crate::dnn::ActivationLayer + crate::dnn::LayerTrait {
+pub trait TanHLayer: crate::dnn::ActivationLayer {
 	fn as_raw_TanHLayer(&self) -> *mut c_void;
 }
 

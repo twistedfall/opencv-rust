@@ -158,7 +158,7 @@ pub fn create_synthetic_sequence_generator(background: &dyn core::ToInputArray, 
 /// More than twice faster than MOG2 on cheap hardware (benchmarked on Raspberry Pi3).
 /// 
 /// %Algorithm by Sagi Zeevi ( https://github.com/sagi-z/BackgroundSubtractorCNT )
-pub trait BackgroundSubtractorCNT: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorCNT: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorCNT(&self) -> *mut c_void;
 	/// ## C++ default parameters
 	/// * learning_rate: -1
@@ -222,7 +222,7 @@ pub trait BackgroundSubtractorCNT: core::AlgorithmTrait + crate::video::Backgrou
 /// This class implements an algorithm described in "Visual Tracking of Human Visitors under
 /// Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
 /// A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
-pub trait BackgroundSubtractorGMG: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorGMG(&self) -> *mut c_void;
 	/// Returns total number of distinct colors to maintain in histogram.
 	fn get_max_features(&self) -> Result<i32> {
@@ -336,7 +336,7 @@ pub trait BackgroundSubtractorGMG: core::AlgorithmTrait + crate::video::Backgrou
 /// Implementation of the different yet better algorithm which is called GSOC, as it was implemented during GSOC and was not originated from any paper.
 /// 
 /// This algorithm demonstrates better performance on CDNET 2014 dataset compared to other algorithms in OpenCV.
-pub trait BackgroundSubtractorGSOC: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorGSOC: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorGSOC(&self) -> *mut c_void;
 	/// ## C++ default parameters
 	/// * learning_rate: -1
@@ -354,7 +354,7 @@ pub trait BackgroundSubtractorGSOC: core::AlgorithmTrait + crate::video::Backgro
 }
 
 /// Background Subtraction using Local SVD Binary Pattern. More details about the algorithm can be found at [LGuo2016](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_LGuo2016)
-pub trait BackgroundSubtractorLSBP: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorLSBP: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorLSBP(&self) -> *mut c_void;
 	/// ## C++ default parameters
 	/// * learning_rate: -1
@@ -423,7 +423,7 @@ impl BackgroundSubtractorLSBPDesc {
 /// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 /// 
 /// The class implements the algorithm described in [KB2001](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_KB2001) .
-pub trait BackgroundSubtractorMOG: core::AlgorithmTrait + crate::video::BackgroundSubtractor {
+pub trait BackgroundSubtractorMOG: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorMOG(&self) -> *mut c_void;
 	fn get_history(&self) -> Result<i32> {
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getHistory_const(self.as_raw_BackgroundSubtractorMOG()) }.into_result()

@@ -306,7 +306,7 @@ pub fn get_recall(recall_precision_curve: &types::VectorOfPoint2f, l_precision: 
 /// and *detect* instead of *operator()* due to performance reasons. .. [ANB13] Fast Explicit Diffusion
 /// for Accelerated Features in Nonlinear Scale Spaces. Pablo F. Alcantarilla, Jesús Nuevo and Adrien
 /// Bartoli. In British Machine Vision Conference (BMVC), Bristol, UK, September 2013.
-pub trait AKAZE: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait AKAZE: crate::features2d::Feature2DTrait {
 	fn as_raw_AKAZE(&self) -> *mut c_void;
 	fn set_descriptor_type(&mut self, dtype: i32) -> Result<()> {
 		unsafe { sys::cv_AKAZE_setDescriptorType_int(self.as_raw_AKAZE(), dtype) }.into_result()
@@ -394,7 +394,7 @@ impl dyn AKAZE + '_ {
 	
 }
 /// Wrapping class for feature detection using the AGAST method. :
-pub trait AgastFeatureDetector: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait AgastFeatureDetector: crate::features2d::Feature2DTrait {
 	fn as_raw_AgastFeatureDetector(&self) -> *mut c_void;
 	fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 		unsafe { sys::cv_AgastFeatureDetector_setThreshold_int(self.as_raw_AgastFeatureDetector(), threshold) }.into_result()
@@ -437,7 +437,7 @@ impl dyn AgastFeatureDetector + '_ {
 /// For each descriptor in the first set, this matcher finds the closest descriptor in the second set
 /// by trying each one. This descriptor matcher supports masking permissible matches of descriptor
 /// sets.
-pub trait BFMatcherTrait: core::AlgorithmTrait + crate::features2d::DescriptorMatcher {
+pub trait BFMatcherTrait: crate::features2d::DescriptorMatcher {
 	fn as_raw_BFMatcher(&self) -> *mut c_void;
 	fn is_mask_supported(&self) -> Result<bool> {
 		unsafe { sys::cv_BFMatcher_isMaskSupported_const(self.as_raw_BFMatcher()) }.into_result()
@@ -777,7 +777,7 @@ pub trait BOWTrainer {
 }
 
 /// Class implementing the BRISK keypoint detector and descriptor extractor, described in [LCS11](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_LCS11) .
-pub trait BRISKTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait BRISKTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_BRISK(&self) -> *mut c_void;
 }
 
@@ -1192,7 +1192,7 @@ impl DrawMatchesFlags {
 }
 
 /// Wrapping class for feature detection using the FAST method. :
-pub trait FastFeatureDetector: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait FastFeatureDetector: crate::features2d::Feature2DTrait {
 	fn as_raw_FastFeatureDetector(&self) -> *mut c_void;
 	fn set_threshold(&mut self, threshold: i32) -> Result<()> {
 		unsafe { sys::cv_FastFeatureDetector_setThreshold_int(self.as_raw_FastFeatureDetector(), threshold) }.into_result()
@@ -1407,7 +1407,7 @@ impl Feature2D {
 /// methods to find the best matches. So, this matcher may be faster when matching a large train
 /// collection than the brute force matcher. FlannBasedMatcher does not support masking permissible
 /// matches of descriptor sets because flann::Index does not support this. :
-pub trait FlannBasedMatcherTrait: core::AlgorithmTrait + crate::features2d::DescriptorMatcher {
+pub trait FlannBasedMatcherTrait: crate::features2d::DescriptorMatcher {
 	fn as_raw_FlannBasedMatcher(&self) -> *mut c_void;
 	fn add(&mut self, descriptors: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(descriptors);
@@ -1496,7 +1496,7 @@ impl FlannBasedMatcher {
 }
 
 /// Wrapping class for feature detection using the goodFeaturesToTrack function. :
-pub trait GFTTDetector: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait GFTTDetector: crate::features2d::Feature2DTrait {
 	fn as_raw_GFTTDetector(&self) -> *mut c_void;
 	fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 		unsafe { sys::cv_GFTTDetector_setMaxFeatures_int(self.as_raw_GFTTDetector(), max_features) }.into_result()
@@ -1567,7 +1567,7 @@ impl dyn GFTTDetector + '_ {
 /// Note: AKAZE descriptor can only be used with KAZE or AKAZE keypoints .. [ABD12] KAZE Features. Pablo
 /// F. Alcantarilla, Adrien Bartoli and Andrew J. Davison. In European Conference on Computer Vision
 /// (ECCV), Fiorenze, Italy, October 2012.
-pub trait KAZE: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait KAZE: crate::features2d::Feature2DTrait {
 	fn as_raw_KAZE(&self) -> *mut c_void;
 	fn set_extended(&mut self, extended: bool) -> Result<()> {
 		unsafe { sys::cv_KAZE_setExtended_bool(self.as_raw_KAZE(), extended) }.into_result()
@@ -1724,7 +1724,7 @@ impl KeyPointsFilter {
 /// code which is distributed under GPL.
 /// 
 /// - (Python) A complete example showing the use of the %MSER detector can be found at samples/python/mser.py
-pub trait MSER: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait MSER: crate::features2d::Feature2DTrait {
 	fn as_raw_MSER(&self) -> *mut c_void;
 	/// Detect %MSER regions
 	/// 
@@ -1806,7 +1806,7 @@ impl dyn MSER + '_ {
 /// the strongest features using FAST or Harris response, finds their orientation using first-order
 /// moments and computes the descriptors using BRIEF (where the coordinates of random point pairs (or
 /// k-tuples) are rotated according to the measured orientation).
-pub trait ORB: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait ORB: crate::features2d::Feature2DTrait {
 	fn as_raw_ORB(&self) -> *mut c_void;
 	fn set_max_features(&mut self, max_features: i32) -> Result<()> {
 		unsafe { sys::cv_ORB_setMaxFeatures_int(self.as_raw_ORB(), max_features) }.into_result()
@@ -1959,7 +1959,7 @@ impl dyn ORB + '_ {
 /// minConvexity (inclusive) and maxConvexity (exclusive).
 /// 
 /// Default values of parameters are tuned to extract dark circular blobs.
-pub trait SimpleBlobDetectorTrait: core::AlgorithmTrait + crate::features2d::Feature2DTrait {
+pub trait SimpleBlobDetectorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_SimpleBlobDetector(&self) -> *mut c_void;
 }
 

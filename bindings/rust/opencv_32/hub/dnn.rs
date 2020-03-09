@@ -288,7 +288,7 @@ pub trait BlobTrait {
 	
 	/// ## C++ default parameters
 	/// * sync_data: true
-	fn update_u_mat(&self, sync_data: bool) -> Result<()> {
+	fn update_umat(&self, sync_data: bool) -> Result<()> {
 		unsafe { sys::cv_dnn_Blob_updateUMat_const_bool(self.as_raw_Blob(), sync_data) }.into_result()
 	}
 	
@@ -712,7 +712,7 @@ impl dyn ConcatLayer + '_ {
 	}
 	
 }
-pub trait ConvolutionLayer: crate::dnn::BaseConvolutionLayer + crate::dnn::Layer {
+pub trait ConvolutionLayer: crate::dnn::BaseConvolutionLayer {
 	fn as_raw_ConvolutionLayer(&self) -> *mut c_void;
 }
 
@@ -753,7 +753,7 @@ impl dyn CropLayer + '_ {
 	}
 	
 }
-pub trait DeconvolutionLayer: crate::dnn::BaseConvolutionLayer + crate::dnn::Layer {
+pub trait DeconvolutionLayer: crate::dnn::BaseConvolutionLayer {
 	fn as_raw_DeconvolutionLayer(&self) -> *mut c_void;
 }
 

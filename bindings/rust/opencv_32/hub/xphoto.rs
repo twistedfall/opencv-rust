@@ -248,7 +248,7 @@ pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm
 /// white-balancing saturated images.
 /// 
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
-pub trait GrayworldWB: core::AlgorithmTrait + crate::xphoto::WhiteBalancer {
+pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 	fn as_raw_GrayworldWB(&self) -> *mut c_void;
 	/// Maximum saturation for a pixel to be included in the
 	///    gray-world assumption
@@ -281,7 +281,7 @@ pub trait GrayworldWB: core::AlgorithmTrait + crate::xphoto::WhiteBalancer {
 /// ![block formula](https://latex.codecogs.com/png.latex?%20%5Cfrac%7B%5Ctextrm%7Bmax%7D%28R%2CG%2CB%29%7D%7B%5Ctexttt%7Brange%5Fmax%5Fval%7D%7D%20%3C%20%5Ctexttt%7Bsaturation%5Fthresh%7D%20)
 /// 
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
-pub trait LearningBasedWB: core::AlgorithmTrait + crate::xphoto::WhiteBalancer {
+pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	fn as_raw_LearningBasedWB(&self) -> *mut c_void;
 	/// Implements the feature extraction part of the algorithm.
 	/// 
@@ -358,7 +358,7 @@ pub trait LearningBasedWB: core::AlgorithmTrait + crate::xphoto::WhiteBalancer {
 /// A simple white balance algorithm that works by independently stretching
 /// each of the input image channels to the specified range. For increased robustness
 /// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
-pub trait SimpleWB: core::AlgorithmTrait + crate::xphoto::WhiteBalancer {
+pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	fn as_raw_SimpleWB(&self) -> *mut c_void;
 	/// Input image range minimum value
 	/// ## See also
