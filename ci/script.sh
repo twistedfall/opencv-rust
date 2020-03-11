@@ -20,10 +20,24 @@ if [[ "$OS_FAMILY" == "windows" ]]; then
 	echo "=== Installed chocolatey packages:"
 	choco list --local-only
 elif [[ "$OS_FAMILY" == "osx" ]]; then
-	if [[ "$MACOS_OPENCV_VERSION" == "@3" ]]; then
-		export PKG_CONFIG_PATH="/usr/local/opt/opencv@3/lib/pkgconfig"
-	fi
 	CARGO_FEATURES="$CARGO_FEATURES,contrib"
+	# fixme, enable building with xcode libclang
+#	xcode_path="$(xcode-select --print-path)/"
+#	toolchain_path="$xcode_path/Toolchains/XcodeDefault.xctoolchain/"
+#	export LIBCLANG_PATH="$toolchain_path/usr/lib/libclang.dylib"
+#	export CLANG_PATH="$toolchain_path/usr/bin/clang"
+#	export DYLD_LIBRARY_PATH="$toolchain_path/usr/lib/"
+	if [[ "$BREW_OPENCV_VERSION" != "" ]]; then # brew build
+		if [[ "$BREW_OPENCV_VERSION" == "@3" ]]; then
+			export PKG_CONFIG_PATH="/usr/local/opt/opencv@3/lib/pkgconfig"
+		fi
+	else # framework build
+		clang_dir="$(clang --print-search-dirs | awk -F= '/^libraries: =/ { print $2 }')"
+		export OPENCV_LINK_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build,$clang_dir/lib/darwin"
+		export OPENCV_LINK_LIBS="opencv2.framework,OpenCL.framework,Cocoa.framework,Accelerate.framework,AVFoundation.framework,CoreGraphics.framework,CoreMedia.framework,CoreVideo.framework,QuartzCore.framework,clang_rt.osx"
+#		export OPENCV_INCLUDE_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build/opencv2.framework"
+		export OPENCV_INCLUDE_PATHS="$HOME/build/opencv/opencv-$OPENCV_VERSION-build/build/build-x86_64-macosx/install/include"
+	fi
 elif [[ "$OS_FAMILY" == "linux" ]]; then
 	if [[ "$OPENCV_VERSION" != "3.2.0" ]]; then
 		# 3.2.0 version from the repository doesn't have dnn module, that's why contrib feature is not enabled
@@ -38,6 +52,8 @@ echo "=== Target settings:"
 rustc --print=cfg
 
 cargo test -vv -p opencv-binding-generator
+
+# todo: test without contrib too
 
 # only possible to build linux without `buildtime-bindgen`
 if [[ "$OS_FAMILY" == "linux" ]]; then

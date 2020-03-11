@@ -141,17 +141,20 @@ sudo ln -s /usr/lib/llvm-6.0/lib/libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
 if [[ "$OPENCV_VERSION" == "3.2.0" ]]; then
 	sudo apt -y install libopencv-dev=3.2.0*
 else
-	mkdir -p ~/build/opencv
+	base_dir="$HOME/build/opencv/"
+	mkdir -p "$base_dir"
 
-	wget -q -O- "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" | tar -xzC ~/build/opencv
-	wget -q -O- "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xzC ~/build/opencv
+	wget -q -O- "https://github.com/opencv/opencv/archive/$OPENCV_VERSION.tar.gz" | tar -xzC "$base_dir"
+	wget -q -O- "https://github.com/opencv/opencv_contrib/archive/$OPENCV_VERSION.tar.gz" | tar -xzC "$base_dir"
 
-	mkdir -p ~/"build/opencv/opencv-$OPENCV_VERSION-build"
-	pushd ~/"build/opencv/opencv-$OPENCV_VERSION-build" > /dev/null
+	build_dir="$base_dir/opencv-$OPENCV_VERSION-build/"
+	mkdir -p "$build_dir"
+
+	pushd "$build_dir" > /dev/null
 	cmake $BUILD_FLAGS \
 		-D CMAKE_INSTALL_PREFIX=/usr \
-		-D OPENCV_EXTRA_MODULES_PATH=~/"build/opencv/opencv_contrib-$OPENCV_VERSION/modules" \
-		~/"build/opencv/opencv-$OPENCV_VERSION"
+		-D OPENCV_EXTRA_MODULES_PATH="$base_dir/opencv_contrib-$OPENCV_VERSION/modules" \
+		"$base_dir/opencv-$OPENCV_VERSION"
 	sudo make -j"$(nproc)" install
 	popd > /dev/null
 fi

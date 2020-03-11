@@ -9,8 +9,7 @@ on:
     branches:
       - "*"
 jobs:
-  test:
-    runs-on: ${{ matrix.os.image }}
+  src:
     strategy:
       fail-fast: false
       matrix:
@@ -26,21 +25,19 @@ jobs:
           - beta
         version:
           - opencv: 3.4.9
-            brew: "@3"
             vcpkg: 3
             features: opencv-34
           - opencv: 4.2.0
-            brew:
             vcpkg: 4
             features: opencv-4
+    runs-on: ${{ matrix.os.image }}
     env:
-      Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
-      OPENCV_VERSION: ${{ matrix.version.opencv }}
-      MACOS_OPENCV_VERSION: ${{ matrix.version.brew }}
-      VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
-      CARGO_FEATURES: ${{ matrix.version.features }}
       OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
+      Atlas_ROOT_DIR: /usr/include/ # for cmake to find lapacke.h
+      OPENCV_VERSION: ${{ matrix.version.opencv }}
+      VCPKG_OPENCV_VERSION: ${{ matrix.version.vcpkg }}
+      CARGO_FEATURES: ${{ matrix.version.features }}
     steps:
       - uses: actions/checkout@v2
 
@@ -71,25 +68,32 @@ jobs:
           name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
           path: target
 
-  windows-choco:
-    runs-on: windows-2019
+  bin:
     strategy:
       fail-fast: false
       matrix:
+        os:
+          - image: macos-10.15
+            family: osx
+          - image: windows-2019
+            family: windows
         rust:
           - stable
           - beta
         version:
           - choco: 3.4.8
+            brew: "@3"
             features: opencv-34
           - choco: 4.1.2
+            brew: "@4"
             features: opencv-4
+    runs-on: ${{ matrix.os.image }}
     env:
-      CHOCO_OPENCV_VERSION: ${{ matrix.version.choco }}
-      CARGO_FEATURES: ${{ matrix.version.features }}
-      OS_FAMILY: windows
+      OS_FAMILY: ${{ matrix.os.family }}
       RUST_TOOLCHAIN: ${{ matrix.rust }}
-
+      CHOCO_OPENCV_VERSION: ${{ matrix.version.choco }}
+      BREW_OPENCV_VERSION: ${{ matrix.version.brew }}
+      CARGO_FEATURES: ${{ matrix.version.features }}
     steps:
       - uses: actions/checkout@v2
 
@@ -111,16 +115,16 @@ jobs:
         uses: actions/upload-artifact@v1
         if: failure()
         with:
-          name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
+          name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.choco }}
           path: target
 
-  linux-opencv-32:
+  lnx-32:
     runs-on: ubuntu-18.04
     env:
-      OPENCV_VERSION: 3.2.0
-      CARGO_FEATURES: opencv-32
       OS_FAMILY: linux
       RUST_TOOLCHAIN: stable
+      OPENCV_VERSION: 3.2.0
+      CARGO_FEATURES: opencv-32
     steps:
       - uses: actions/checkout@v2
 
@@ -142,6 +146,5 @@ jobs:
         uses: actions/upload-artifact@v1
         if: failure()
         with:
-          name: generated-failed-bindings-${{ runner.os }}-${{ matrix.version.opencv }}
+          name: generated-failed-bindings-${{ runner.os }}-3.2.0
           path: target
-

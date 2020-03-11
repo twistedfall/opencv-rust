@@ -5,7 +5,7 @@ use std::{
 	ffi::OsStr,
 	fs::{self, File},
 	io::{BufRead, BufReader},
-	iter::FromIterator,
+	iter::{self, FromIterator},
 	path::{Path, PathBuf},
 };
 
@@ -99,7 +99,7 @@ mod generator {
 		modules.par_iter().for_each(|module| {
 			let mut module_file = SRC_CPP_DIR.join(format!("{}.hpp", module));
 			if !module_file.exists() {
-				module_file = opencv_header_dir.join(format!("opencv2/{}.hpp", module));
+				module_file = opencv_dir.join(format!("{}.hpp", module));
 			}
 			let bindings_writer = binding_generator::writer::RustBindingWriter::new(
 				&*SRC_CPP_DIR,
@@ -293,14 +293,24 @@ struct Library {
 }
 
 impl Library {
-	fn strip_library_extensions(libs: impl IntoIterator<Item=impl Into<PathBuf>>) -> impl Iterator<Item=String> {
+	fn process_library_list(libs: impl IntoIterator<Item=impl Into<PathBuf>>) -> impl Iterator<Item=String> {
 		libs.into_iter()
 			.map(|x| {
 				let mut path: PathBuf = x.into();
-				path.set_extension("");
+				let extension = path.extension().and_then(OsStr::to_str).unwrap_or_default();
+				let is_framework = extension.eq_ignore_ascii_case("framework");
+				const LIB_EXTS: [&str; 7] = ["so", "a", "dll", "lib", "dylib", "framework", "tbd"];
+				if is_framework || LIB_EXTS.iter().any(|e| e.eq_ignore_ascii_case(extension)) {
+					path.set_extension("");
+				}
 				path.file_name()
-					.and_then(|f| f.to_str()).expect("Invalid library name")
-					.to_owned()
+					.and_then(|f| f.to_str()
+						.map(|f| if is_framework {
+							format!("framework={}", f)
+						} else {
+							f.to_owned()
+						})
+					).expect("Invalid library name")
 			})
 	}
 
@@ -311,27 +321,32 @@ impl Library {
 		eprintln!("===   link_paths: {}", link_paths);
 		eprintln!("===   include_paths: {}", include_paths);
 		let mut cargo_metadata = Vec::with_capacity(64);
-		cargo_metadata.extend(link_paths.split(',')
-			.filter_map(|path| {
-				let path = path.trim();
-				if path.is_empty() {
-					None
-				} else {
-					Some(format!("cargo:rustc-link-search=native={}", path))
-				}
-			})
-		);
-
-		let libs = Self::strip_library_extensions(
-			link_libs.split(',')
-				.map(|x| x.trim())
+		cargo_metadata.extend(
+			link_paths.split(',')
+				.map(str::trim)
 				.filter(|x| !x.is_empty())
+				.map(|path| {
+					let out = iter::once(format!("cargo:rustc-link-search={}", path));
+					#[cfg(target_os = "macos")] {
+						out.chain(
+							iter::once(format!("cargo:rustc-link-search=framework={}", path))
+						)
+					}
+					#[cfg(not(target_os = "macos"))] {
+						out
+					}
+				})
+				.flatten()
+				.chain(Self::process_library_list(
+					link_libs.split(',')
+						.map(str::trim)
+						.filter(|x| !x.is_empty()))
+					.map(|l| format!("cargo:rustc-link-lib={}", l))
+				)
 		);
-
-		cargo_metadata.extend(libs.map(|l| format!("cargo:rustc-link-lib={}", l)));
 
 		let include_paths: Vec<_> = include_paths.split(',')
-			.map(|x| x.trim())
+			.map(str::trim)
 			.filter(|x| !x.is_empty())
 			.map(PathBuf::from)
 			.collect();
@@ -358,7 +373,16 @@ impl Library {
 		cargo_metadata.extend(
 			opencv.link_paths.iter()
 				.map(|link_path| format!("cargo:rustc-link-search=native={}", link_path.to_str().expect("Invalid link path")))
-				.chain(opencv.libs.iter().map(|lib| format!("cargo:rustc-link-lib={}", lib))));
+				.chain(opencv.libs.iter()
+					.map(|lib| format!("cargo:rustc-link-lib={}", lib))
+				)
+				.chain(opencv.framework_paths.iter()
+					.map(|fw_path| format!("cargo:rustc-link-search=framework={}", fw_path.to_str().expect("Invalid framework path")))
+				)
+				.chain(opencv.frameworks.iter()
+					.map(|fw| format!("rustc-link-lib=framework={}", fw))
+				)
+		);
 		Ok(Self {
 			pkg_name: pkg_name.to_owned(),
 			include_paths: opencv.include_paths,
@@ -437,10 +461,19 @@ fn file_copy_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 }
 
 fn get_version_from_headers(header_dir: &PathBuf) -> Option<String> {
-	let version_hpp = header_dir.join("opencv2/core/version.hpp");
-	if !version_hpp.is_file() {
-		return None;
-	}
+	let version_hpp = {
+		let out = header_dir.join("opencv2/core/version.hpp");
+		if out.is_file() {
+			out
+		} else {
+			let out = header_dir.join("Headers/core/version.hpp");
+			if out.is_file() {
+				out
+			} else {
+				return None;
+			}
+		}
+	};
 	let mut major = None;
 	let mut minor = None;
 	let mut revision = None;
@@ -664,12 +697,12 @@ fn main() -> Result<()> {
 	eprintln!("=== OpenCV library configuration: {:#?}", opencv);
 	if !cfg!(feature = "docs-only") {
 		check_matching_version(&opencv.version)
-			.map_err(|e| format!("{}, (version coming from pkg_config for package: {})", e, opencv.pkg_name))?;
+			.map_err(|e| format!("{}, (version coming from the detected package/environment)", e))?;
 	}
 	let opencv_header_dir = env::var_os("OPENCV_HEADER_DIR").map(PathBuf::from).unwrap_or_else(|| {
 		if cfg!(feature = "buildtime-bindgen") {
 			opencv.include_paths.iter()
-				.find(|p| p.join("opencv2").exists())
+				.find(|p| p.join("opencv2/core/version.hpp").is_file() || p.join("Headers/core/version.hpp").is_file())
 				.expect("Using buildtime-bindgen, but discovered OpenCV include paths is empty or contains non-existent paths").clone()
 		} else if cfg!(feature = "opencv-32") {
 			MANIFEST_DIR.join("headers/3.2")

@@ -133,7 +133,9 @@ The following variables must be set when building without `pkg_config` or `vcpkg
 other platforms, then `pkg_config` or `vcpkg` usage will be disabled and the set values will be used.
 
 * `OPENCV_LINK_LIBS`
-  Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional.
+  Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional. If you
+  specify the ".framework" extension then build script will link a macOS framework instead of plain shared
+  library.
   E.g. "opencv_world411".
 
 * `OPENCV_LINK_PATHS`
@@ -142,7 +144,7 @@ other platforms, then `pkg_config` or `vcpkg` usage will be disabled and the set
 * `OPENCV_INCLUDE_PATHS`
   Comma separated list of paths to search for system include files during compilation. E.g.
   "C:\tools\opencv\build\include". One of the directories specified therein must contain
-  "opencv2/core/version.hpp" file, it's used to detect the version of the headers.
+  "opencv2/core/version.hpp" or "core/version.hpp" file, it's used to detect the version of the headers.
 
 The following variables are optional, but you might need to set them under some circumstances:
 
@@ -161,7 +163,7 @@ The following variables are optional, but you might need to set them under some 
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
 * `PKG_CONFIG_PATH`
-  Where to look for `*.pc` files see the [man page of `pkg-config`](https://linux.die.net/man/1/pkg-config)
+  Where to look for `*.pc` files see the [man pkg-config](https://linux.die.net/man/1/pkg-config)
   Path specified here must contain `opencv.pc` or `opencv4.pc` (for OpenCV 4.x).
 
 * `VCPKG_ROOT` and `VCPKGRS_DYNAMIC`
@@ -169,9 +171,14 @@ The following variables affect the building the of the `opencv` crate, but belon
   [documentation for `vcpkg` crate](https://docs.rs/vcpkg)
 
 * `LD_LIBRARY_PATH`
-  On Linux and macOS it sets the list of directories to look for the installed `*.so` files during runtime.
+  On Linux it sets the list of directories to look for the installed `*.so` files during runtime.
   [Linux documentation](https://tldp.org/HOWTO/Program-Library-HOWTO/shared-libraries.html) has more info.
   Path specified here must contain `libopencv_*.so` files.
+
+* `DYLD_LIBRARY_PATH`
+  Similar to `LD_LIBRARY_PATH`, but for loading `*.dylib` files on macOS, see
+  [man dyld](https://man.cx/dyld(1)) for more info.
+  Path specified here must contain `*.dylib` files.
 
 * `PATH`
   Windows searches for `*.dll`s in `PATH` among other places, be sure to set it up, or copy required OpenCV
@@ -219,11 +226,12 @@ Currently the main development and testing of the crate is performed on Linux, b
 also supported: macOS and Windows.
 
 For some more details please refer to the CI build scripts:
-[Linux OpenCV install](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-bionic.sh)
-[macOS OpenCV install](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-macos.sh)
-[Windows OpenCV install via Chocolatey](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-windows-chocolatey.sh)
-[Windows OpenCV install via vcpkg](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-windows-vcpkg.sh)
-[Crate build script](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh).
+[Linux OpenCV install](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-bionic.sh),
+[macOS OpenCV install as framework](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-macos-framework.sh),
+[macOS OpenCV install via brew](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-macos-brew.sh),
+[Windows OpenCV install via Chocolatey](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-windows-chocolatey.sh),
+[Windows OpenCV install via vcpkg](https://github.com/twistedfall/opencv-rust/blob/master/ci/install-windows-vcpkg.sh),
+[Test runner script](https://github.com/twistedfall/opencv-rust/blob/master/ci/script.sh).
 
 ### Functionality
 
