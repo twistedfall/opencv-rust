@@ -102,7 +102,6 @@ mod generator {
 				module_file = opencv_header_dir.join(format!("opencv2/{}.hpp", module));
 			}
 			let bindings_writer = binding_generator::writer::RustBindingWriter::new(
-				opencv_header_dir,
 				&*SRC_CPP_DIR,
 				&*OUT_DIR,
 				&module,

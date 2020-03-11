@@ -1,7 +1,7 @@
 use std::{
 	fmt::Debug,
 	fs::{self, File, OpenOptions},
-	io::{BufReader, ErrorKind, Write},
+	io::{ErrorKind, Write},
 	path::{Path, PathBuf},
 };
 
@@ -20,7 +20,6 @@ use crate::{
 	GeneratedElement,
 	GeneratorVisitor,
 	IteratorExt,
-	line_reader,
 	main_module_from_path,
 	module_from_path,
 	settings,
@@ -33,7 +32,6 @@ type Entries = Vec<(String, String)>;
 #[derive(Clone, Debug)]
 pub struct RustBindingWriter<'s> {
 	debug: bool,
-	opencv_header_dir: PathBuf,
 	src_cpp_dir: PathBuf,
 	module: &'s str,
 	opencv_version: &'s str,
@@ -56,7 +54,7 @@ pub struct RustBindingWriter<'s> {
 }
 
 impl<'s> RustBindingWriter<'s> {
-	pub fn new(opencv_header_dir: impl Into<PathBuf>, src_cpp_dir: &Path, out_dir: impl Into<PathBuf>, module: &'s str, opencv_version: &'s str, debug: bool) -> Self {
+	pub fn new(src_cpp_dir: &Path, out_dir: impl Into<PathBuf>, module: &'s str, opencv_version: &'s str, debug: bool) -> Self {
 		let out_dir = out_dir.into();
 		let debug_path = out_dir.join(format!("{}.log", module));
 		if debug {
@@ -75,7 +73,6 @@ impl<'s> RustBindingWriter<'s> {
 		}
 		Self {
 			debug,
-			opencv_header_dir: opencv_header_dir.into(),
 			src_cpp_dir: canonicalize(src_cpp_dir).expect("Can't canonicalize src_cpp_dir"),
 			module,
 			opencv_version,
@@ -213,44 +210,6 @@ impl Drop for RustBindingWriter<'_> {
 		rust += &join(&mut self.rust_typedefs);
 		rust += &join(&mut self.rust_funcs);
 		rust += &join(&mut self.rust_classes);
-		// fixme, this should logically be in Generator because it's not Rust-specific
-		if self.comment.is_empty() {
-			// some module level comments like "bioinspired" are not attached to anything and libclang
-			// doesn't seem to offer a way to extract them, do it the hard way then
-			let mut module_path = self.opencv_header_dir.join("opencv2");
-			module_path.push(self.module);
-			module_path.set_extension("hpp");
-			self.comment.reserve(2048);
-			let f = BufReader::new(File::open(module_path).expect("Can't open main module file"));
-			let mut found_module_comment = false;
-			let mut defgroup_found = false;
-			line_reader(f, |line| {
-				if !found_module_comment {
-					if line.trim_start().starts_with("/**") {
-						found_module_comment = true;
-						defgroup_found = false;
-					}
-				}
-				if found_module_comment {
-					if self.comment.contains("@defgroup") {
-						defgroup_found = true;
-					}
-					self.comment.push_str(&line);
-					if line.trim_end().ends_with("*/") {
-						if defgroup_found {
-							return false;
-						} else {
-							self.comment.clear();
-							found_module_comment = false;
-						}
-					}
-				}
-				true
-			});
-			if !defgroup_found {
-				self.comment.clear();
-			}
-		}
 		let prelude = RUST_PRELUDE.interpolate(&hashmap! {
 			"traits" => self.found_traits.join(", "),
 		});

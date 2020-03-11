@@ -25,7 +25,7 @@ fn main() {
 		module_file = opencv_header_dir.join(format!("opencv2/{}.hpp", module));
 	}
 	let clang = Clang::new().expect("Cannot initialize clang");
-	let bindings_writer = RustBindingWriter::new(&opencv_header_dir, &src_cpp_dir, &out_dir, module, version, debug);
+	let bindings_writer = RustBindingWriter::new(&src_cpp_dir, &out_dir, module, version, debug);
 	Generator::new(&opencv_header_dir, &src_cpp_dir, module, &clang)
 		.process_file(&module_file, bindings_writer);
 }

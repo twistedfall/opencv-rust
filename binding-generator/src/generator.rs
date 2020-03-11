@@ -1,5 +1,7 @@
 use std::{
 	fmt,
+	fs::File,
+	io::BufReader,
 	path::{Path, PathBuf},
 };
 
@@ -25,6 +27,7 @@ use crate::{
 	GeneratedElement,
 	GeneratorEnv,
 	get_definition_text,
+	line_reader,
 	settings,
 	Typedef,
 };
@@ -45,15 +48,17 @@ pub trait GeneratorVisitor {
 #[derive(Debug)]
 pub struct Generator<'m, 'c> {
 	clang_include_dirs: Vec<PathBuf>,
-	header_dir: PathBuf,
+	opencv_include_dir: PathBuf,
 	src_cpp_dir: PathBuf,
 	module: &'m str,
 	clang: &'c Clang,
 }
 
-struct OpenCVWalker<'tu, V> {
+struct OpenCVWalker<'tu, V: GeneratorVisitor> {
+	opencv_include_dir: &'tu Path,
 	visitor: V,
 	gen_env: GeneratorEnv<'tu>,
+	comment_found: bool,
 }
 
 impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V> {
@@ -64,9 +69,12 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V>
 	fn visit_entity(&mut self, entity: Entity<'tu>) -> bool {
 		match entity.get_kind() {
 			EntityKind::Namespace => {
-				if let Some(c) = entity.get_comment() {
-					if c.contains("@defgroup") {
-						self.visitor.visit_module_comment(c)
+				if !self.comment_found {
+					if let Some(c) = entity.get_comment() {
+						if c.contains("@defgroup") {
+							self.comment_found = true;
+							self.visitor.visit_module_comment(c)
+						}
 					}
 				}
 			}
@@ -81,10 +89,12 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V>
 						self.gen_env.make_export_config(entity).simple = true;
 					} else if name == "CV_EXPORTS_AS" || name == "CV_WRAP_AS" {
 						let definition = get_definition_text(entity);
-						let definition = if definition.starts_with("CV_EXPORTS_AS(") && definition.ends_with(')') {
-							definition[14..definition.len() - 1].trim()
-						} else if definition.starts_with("CV_WRAP_AS(") && definition.ends_with(')') {
-							definition[11..definition.len() - 1].trim()
+						const CV_EXPORTS_AS: &str = "CV_EXPORTS_AS(";
+						const CV_WRAP_AS: &str = "CV_WRAP_AS(";
+						let definition = if definition.starts_with(CV_EXPORTS_AS) && definition.ends_with(')') {
+							definition[CV_EXPORTS_AS.len()..definition.len() - 1].trim()
+						} else if definition.starts_with(CV_WRAP_AS) && definition.ends_with(')') {
+							definition[CV_WRAP_AS.len()..definition.len() - 1].trim()
 						} else {
 							unreachable!("Incorrect CV_EXPORTS_AS(..) or CV_WRAP_AS(..) usage")
 						};
@@ -128,7 +138,11 @@ impl<'tu, V: GeneratorVisitor> EntityWalkerVisitor<'tu> for OpenCVWalker<'tu, V>
 	}
 }
 
-impl<V: GeneratorVisitor> OpenCVWalker<'_, V> {
+impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
+	pub fn new(opencv_include_dir: &'tu Path, visitor: V, gen_env: GeneratorEnv<'tu>) -> Self {
+		Self { opencv_include_dir, visitor, gen_env, comment_found: false }
+	}
+
 	fn process_const(&mut self, const_decl: Entity) {
 		let cnst = Const::new(const_decl);
 		if !cnst.is_excluded() {
@@ -136,7 +150,7 @@ impl<V: GeneratorVisitor> OpenCVWalker<'_, V> {
 		}
 	}
 
-	fn process_class<'tu>(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, class_decl: Entity<'tu>) {
+	fn process_class(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, class_decl: Entity<'tu>) {
 		if gen_env.get_export_config(class_decl).is_some() {
 			let cls = Class::new(class_decl, gen_env);
 			if !cls.is_excluded() {
@@ -195,7 +209,7 @@ impl<V: GeneratorVisitor> OpenCVWalker<'_, V> {
 		}
 	}
 
-	fn process_func<'tu>(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
+	fn process_func(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, func_decl: Entity<'tu>) {
 		if let Some(export_config) = gen_env.get_export_config(func_decl) {
 			let only_dependent_types = export_config.only_dependent_types;
 			let func = Func::new(func_decl, gen_env);
@@ -227,7 +241,7 @@ impl<V: GeneratorVisitor> OpenCVWalker<'_, V> {
 		}
 	}
 
-	fn process_typedef<'tu>(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
+	fn process_typedef(visitor: &mut impl GeneratorVisitor, gen_env: &mut GeneratorEnv<'tu>, typedef_decl: Entity<'tu>) {
 		let typedef = Typedef::new(typedef_decl, gen_env);
 		let mut export = gen_env.get_export_config(typedef_decl).is_some()
 			// we need to have a typedef even if it's not exported for e.g. cv::Size
@@ -247,12 +261,57 @@ impl<V: GeneratorVisitor> OpenCVWalker<'_, V> {
 	}
 }
 
+impl<V: GeneratorVisitor> Drop for OpenCVWalker<'_, V> {
+	fn drop(&mut self) {
+		if !self.comment_found {
+			// some module level comments like "bioinspired" are not attached to anything and libclang
+			// doesn't seem to offer a way to extract them, do it the hard way then
+			let mut module_path = self.opencv_include_dir.join("opencv2");
+			module_path.push(self.gen_env.module());
+			module_path.set_extension("hpp");
+			let mut comment = String::with_capacity(2048);
+			let f = BufReader::new(File::open(module_path).expect("Can't open main module file"));
+			let mut found_module_comment = false;
+			let mut defgroup_found = false;
+			line_reader(f, |line| {
+				if !found_module_comment {
+					if line.trim_start().starts_with("/**") {
+						found_module_comment = true;
+						defgroup_found = false;
+					}
+				}
+				if found_module_comment {
+					if comment.contains("@defgroup") {
+						defgroup_found = true;
+					}
+					comment.push_str(&line);
+					if line.trim_end().ends_with("*/") {
+						if defgroup_found {
+							return false;
+						} else {
+							comment.clear();
+							found_module_comment = false;
+						}
+					}
+				}
+				true
+			});
+			if !defgroup_found {
+				comment.clear();
+			}
+			if found_module_comment {
+				self.visitor.visit_module_comment(comment);
+			}
+		}
+	}
+}
+
 impl<'m, 'c> Generator<'m, 'c> {
-	pub fn new(header_dir: &Path, src_cpp_dir: &Path, module: &'m str, clang: &'c Clang) -> Self {
+	pub fn new(opencv_include_dir: &Path, src_cpp_dir: &Path, module: &'m str, clang: &'c Clang) -> Self {
 		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
 		Self {
 			clang_include_dirs: clang_bin.cpp_search_paths.unwrap_or_default(),
-			header_dir: canonicalize(header_dir).expect("Can't canonicalize header_dir"),
+			opencv_include_dir: canonicalize(opencv_include_dir).expect("Can't canonicalize opencv_include_dir"),
 			src_cpp_dir: canonicalize(src_cpp_dir).expect("Can't canonicalize src_cpp_dir"),
 			module,
 			clang,
@@ -262,7 +321,7 @@ impl<'m, 'c> Generator<'m, 'c> {
 	pub fn process_file<V: GeneratorVisitor>(&self, file: &Path, visitor: V) {
 		let index = Index::new(&self.clang, true, false);
 		let args = self.clang_include_dirs.iter()
-			.chain([&self.header_dir, &self.src_cpp_dir].iter().copied())
+			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter().copied())
 			.map(|d| format!("-I{}", d.to_str().expect("Incorrect include path")))
 			.collect::<Vec<_>>();
 		let mut args = args.iter().map(|x| x.as_str()).collect::<Vec<_>>();
@@ -274,10 +333,11 @@ impl<'m, 'c> Generator<'m, 'c> {
 			.skip_function_bodies(true)
 			.parse().expect("Cannot parse");
 		let top_entity = top.get_entity();
-		let opencv_walker = OpenCVWalker {
+		let opencv_walker = OpenCVWalker::new(
+			&self.opencv_include_dir,
 			visitor,
-			gen_env: GeneratorEnv::new(top_entity, self.module),
-		};
+			GeneratorEnv::new(top_entity, self.module),
+		);
 		let walker = EntityWalker::new(top_entity);
 		walker.walk_opencv_entities(opencv_walker);
 	}
