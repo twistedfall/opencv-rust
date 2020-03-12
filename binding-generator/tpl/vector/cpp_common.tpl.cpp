@@ -3,7 +3,7 @@ extern "C" {
 		delete instance;
 	}
 
-	{{cpp_extern}} cv_{{rust_local}}_new() {
+	{{cpp_extern_return}} cv_{{rust_local}}_new() {
 		return new {{cpp_full}}();
 	}
 

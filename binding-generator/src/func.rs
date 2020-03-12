@@ -494,22 +494,20 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		if return_type.is_void() {
 			"return Ok();".into()
 		} else if return_type.is_by_ptr() && !self.as_constructor().is_some() {
-			let out = if let Some(cls) = return_type.source().as_class() {
-				if cls.is_abstract() {
-					Some(format!("return Ok<{ext}>(ret);", ext=return_type.cpp_extern_return()))
+			let out = return_type.source()
+				.as_class()
+				.and_then(|cls| if cls.is_abstract() {
+					Some(Cow::Borrowed("return Ok(ret);"))
 				} else {
 					None
-				}
-			} else {
-				None
-			};
-			out.unwrap_or_else(|| format!("return Ok<{ext}>(new {typ}(ret));", ext=return_type.cpp_extern_return(), typ=return_type.cpp_full())).into()
+				});
+			out.unwrap_or_else(|| format!("return Ok(new {typ}(ret));", typ=return_type.cpp_full()).into())
 		} else if return_type.is_cv_string() || return_type.is_std_string() {
-			format!("return Ok<{ext}>(ocvrs_create_string(ret.c_str()));", ext=return_type.cpp_extern_return()).into()
+			"return Ok(ocvrs_create_string(ret.c_str()));".into()
 		} else if return_type.is_char_ptr_string() {
-			format!("return Ok<{ext}>(ocvrs_create_string(ret));", ext=return_type.cpp_extern_return()).into()
+			"return Ok(ocvrs_create_string(ret));".into()
 		} else {
-			format!("return Ok<{ext}>(ret);", ext=return_type.cpp_extern_return()).into()
+			"return Ok(ret);".into()
 		}
 	}
 

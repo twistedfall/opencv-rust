@@ -1,3 +1,5 @@
+// todo add support for cmake: cmake --find-package -DNAME=OpenCV -DCOMPILER_ID=GNU -DLANGUAGE=CXX -DMODE=COMPILE/LINK
+
 use std::{
 	borrow::Cow,
 	collections::HashSet,

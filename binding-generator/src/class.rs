@@ -240,9 +240,9 @@ impl<'tu, 'g> Class<'tu, 'g> {
 
 	pub fn cpp_method_call_name(&self, method_name: &str) -> String {
 		if self.is_by_ptr() {
-			format!("reinterpret_cast<{typ}*>(instance)->{name}", typ=self.cpp_fullname(), name=method_name)
+			format!("instance->{name}", name=method_name)
 		} else {
-			format!("reinterpret_cast<{typ}*>(&instance)->{name}", typ=self.cpp_fullname(), name=method_name)
+			format!("instance.{name}", name=method_name)
 		}
 	}
 

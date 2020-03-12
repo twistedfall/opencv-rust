@@ -8,11 +8,11 @@ void cv_{{rust_local}}_insert({{cpp_full}}* instance, size_t index, {{inner_cpp_
 
 {{cpp_return_wrapper_type}} cv_{{rust_local}}_get(const {{cpp_full}}* instance, size_t index) {
 	try {
-		return Ok<{{inner_cpp_extern}}>(new {{inner_cpp_full}}(instance->at(index)));
+		return Ok(new {{inner_cpp_full}}(instance->at(index)));
 	} VEC_CATCH({{cpp_return_wrapper_type}})
 }
 
-{{inner_cpp_extern}} cv_{{rust_local}}_get_unchecked(const {{cpp_full}}* instance, size_t index) {
+{{inner_cpp_extern_return}} cv_{{rust_local}}_get_unchecked(const {{cpp_full}}* instance, size_t index) {
 	return new {{inner_cpp_full}}((*instance)[index]);
 }
 

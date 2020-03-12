@@ -10,12 +10,14 @@ use crate::{
 	TypeRef,
 };
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum DefinitionLocation {
 	Module,
 	Type,
+	Custom(String),
 }
 
+#[derive(Debug)]
 pub struct ReturnTypeWrapper<'tu, 'g> {
 	type_ref: TypeRef<'tu, 'g>,
 	gen_env: &'g GeneratorEnv<'tu>,
@@ -34,15 +36,18 @@ impl GeneratedElement for ReturnTypeWrapper<'_, '_> {
 	}
 
 	fn element_safe_id(&self) -> String {
-		let mut name = self.type_ref.cpp_extern().into_owned();
+		let mut name = self.type_ref.cpp_extern_return().into_owned();
 		name.cleanup_name();
-		let module = match self.definition_location {
+		let module = match &self.definition_location {
 			DefinitionLocation::Module => {
 				self.gen_env.module().into()
 			},
 			DefinitionLocation::Type => {
 				self.type_ref.rust_module()
 			},
+			DefinitionLocation::Custom(module) => {
+				module.into()
+			}
 		};
 		format!("{}-{}", module, name)
 	}
@@ -55,7 +60,7 @@ impl GeneratedElement for ReturnTypeWrapper<'_, '_> {
 		);
 
 		CPP_TPL.interpolate(&hashmap! {
-			"cpp_full" => self.type_ref.cpp_extern(),
+			"cpp_full" => self.type_ref.cpp_extern_return(),
 		})
 	}
 }

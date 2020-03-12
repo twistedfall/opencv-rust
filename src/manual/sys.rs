@@ -4,7 +4,6 @@ use std::{
 	marker::PhantomData,
 	ffi::c_void,
 };
-
 use crate::{Error, Result as CrateResult, types::Unit};
 
 #[repr(C)]
@@ -21,7 +20,7 @@ impl<S: Into<O>, O> Result<S, O> {
 		if self.error_msg.is_null() {
 			Ok(self.result.into())
 		} else {
-			Err(Error::new(self.error_code, crate::templ::receive_string(self.error_msg)))
+			Err(Error::new(self.error_code, unsafe { crate::templ::receive_string(self.error_msg as *mut String) }))
 		}
 	}
 }

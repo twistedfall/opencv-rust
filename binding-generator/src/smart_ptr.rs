@@ -11,11 +11,11 @@ use crate::{
 	CompiledInterpolation,
 	DefaultElement,
 	DefinitionLocation,
-	DependentTypeMode,
 	Element,
 	EntityElement,
 	GeneratedElement,
 	GeneratorEnv,
+	ReturnTypeWrapper,
 	StrExt,
 	TypeRef,
 };
@@ -45,7 +45,9 @@ impl<'tu, 'g> SmartPtr<'tu, 'g> {
 	}
 
 	pub fn dependent_types(&self) -> Vec<Box<dyn GeneratedElement + 'g>> {
-		self.element.dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Module))
+		vec![
+			Box::new(ReturnTypeWrapper::new(self.type_ref().canonical_clang(), self.gen_env, DefinitionLocation::Module))
+		]
 	}
 }
 

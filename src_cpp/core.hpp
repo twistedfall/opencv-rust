@@ -1,7 +1,4 @@
-#define CV_COLLECT_IMPL_DATA
-
 #include "common.hpp"
-#include <opencv2/core.hpp>
 #include <opencv2/core/affine.hpp>
 #include <opencv2/core/directx.hpp>
 #include <opencv2/core/ocl.hpp>

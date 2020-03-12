@@ -449,6 +449,10 @@ pub static FUNC_RENAME: Lazy<HashMap<&str, &str>> = Lazy::new(|| {
 		// ### surface_matching ###
 		"cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X" => "+_vec",
 
+		// ### text ###
+		"cv_text_ERStat_pixels" => "-", // fixme: reference to a vector, we don't handle it too well yet
+		"cv_text_ERStat_setPixels_vector_int_X" => "-", // fixme: reference to a vector, we don't handle it too well yet
+
 		// ### videoio ###
 		"cv_VideoCapture_VideoCapture_String_int" => "from_file_with_backend", // 3.2
 		"cv_VideoCapture_VideoCapture_const_StringX" => "from_file_default", // 3.2
@@ -521,6 +525,7 @@ pub static ELEMENT_EXPORT: Lazy<HashMap<&str, ExportConfig>> = Lazy::new(|| hash
 	"VADisplay" => ExportConfig::default(),
 	"VASurfaceID" => ExportConfig::default(),
 	"cv::DetectionROI" => ExportConfig::default(),
+	"cv::FileNodeIterator::SeqReader" => ExportConfig::default(),
 	"cv::QtFont" => ExportConfig::default(),
 	"cv::bioinspired::RetinaParameters" => ExportConfig::default(),
 	"cv::bioinspired::SegmentationParameters" => ExportConfig::simple(),

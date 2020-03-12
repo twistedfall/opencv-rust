@@ -1,5 +1,5 @@
 use std::{
-	ffi::{CStr, c_void, CString},
+	ffi::{CStr, CString},
 	os::raw::c_char,
 };
 
@@ -28,7 +28,7 @@ macro_rules! string_arg_output_send {
 macro_rules! string_arg_output_receive {
 	($result: ident, $name_via: ident => $name: ident) => {
 		if $result.is_ok() {
-			*$name = $crate::templ::receive_string($name_via);
+			*$name = unsafe { $crate::templ::receive_string($name_via as *mut String) };
 		}
 	};
 }
@@ -107,14 +107,14 @@ pub fn cstring_new_infallible(bytes: impl Into<Vec<u8>>) -> CString {
 }
 
 #[no_mangle]
-extern "C" fn ocvrs_create_string(s: *const c_char) -> *mut c_void {
-	Box::into_raw(Box::new(unsafe { CStr::from_ptr(s) }.to_string_lossy().into_owned())) as _
+extern "C" fn ocvrs_create_string(s: *const c_char) -> *mut String {
+	Box::into_raw(Box::new(unsafe { CStr::from_ptr(s) }.to_string_lossy().into_owned()))
 }
 
 #[inline]
-pub fn receive_string(s: *mut c_void) -> String {
+pub unsafe fn receive_string(s: *mut String) -> String {
 	if s.is_null() {
 		panic!("Got null pointer for receive_string()");
 	}
-	*unsafe { Box::from_raw(s as *mut c_char as *mut String) }
+	*Box::from_raw(s)
 }

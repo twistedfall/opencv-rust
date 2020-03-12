@@ -53,7 +53,7 @@ impl fmt::Display for Lifetime {
 	}
 }
 
-#[derive(Clone, Copy, Debug, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum DependentTypeMode {
 	None,
 	ForReturn(DefinitionLocation),
@@ -221,13 +221,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 					let kind = decl.get_kind();
 					let is_decl = kind == EntityKind::StructDecl || kind == EntityKind::ClassDecl;
 					if cpp_fullname.starts_with("std::") && cpp_fullname.contains("::vector") {
-						let element = self.template_args().into_iter()
-							.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
-								Some(type_ref)
-							} else {
-								None
-							}).expect("vector template argument list is empty");
-						Kind::StdVector(Vector::new(self.type_ref, element, self.gen_env))
+						Kind::StdVector(Vector::new(self.type_ref, self.gen_env))
 					} else if is_decl && cpp_fullname.starts_with("cv::Ptr") {
 						let pointee = self.template_args().into_iter()
 							.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
@@ -492,7 +486,8 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	pub fn is_std_string(&self) -> bool {
 		match self.canonical().kind() {
 			Kind::Class(cls) => {
-				cls.cpp_fullname() == "std::string"
+				let cpp_fullname = cls.cpp_fullname();
+				cpp_fullname.starts_with("std::") && cpp_fullname.ends_with("::string")
 			}
 			Kind::Reference(inner) => {
 				inner.is_std_string()
@@ -796,7 +791,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	fn template_args(&self) -> Vec<TemplateArg<'tu, 'g>> {
+	pub fn template_args(&self) -> Vec<TemplateArg<'tu, 'g>> {
 		match self.type_ref.get_kind() {
 			TypeKind::Typedef => {
 				vec![]
@@ -1299,6 +1294,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 								self.gen_env.resolve_type("const char*").expect("Can't resolve const char*"),
 								self.gen_env,
 							);
+							let def_location = match def_location {
+								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
+								dl @ _ => dl
+							};
+							// dbg!(&type_ref);
 							ReturnTypeWrapper::new(type_ref, self.gen_env, def_location)
 						} else {
 							ReturnTypeWrapper::new(self.canonical_clang(), self.gen_env, def_location)
@@ -1441,7 +1441,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	pub fn cpp_extern_with_name(&self, name: &str) -> Cow<str> {
 		let space_name = if name.is_empty() { "".to_string() } else { format!(" {}", name) };
 		if self.is_by_ptr() {
-			format!("void*{name}", name=space_name).into()
+			if self.as_pointer().is_some() || self.as_reference().is_some() {
+				format!("{typ}{name}", typ=self.cpp_full(), name=space_name).into() // fixme add const_qual
+			} else {
+				format!("{typ}*{name}", typ=self.cpp_full(), name=space_name).into()
+			}
 		} else if self.is_string() {
 			if self.is_output() {
 				format!("{cnst}void*{name}", cnst=self.cpp_const_qual(), name=space_name).into()
@@ -1453,8 +1457,17 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn cpp_self_func_decl(&self, _method_is_const: bool) -> String {
-		format!("{typ} instance", typ=self.cpp_extern())
+	pub fn cpp_self_func_decl(&self, method_is_const: bool) -> String {
+		let cnst = if method_is_const {
+			"const "
+		} else {
+			""
+		};
+		if self.is_by_ptr() {
+			format!("{cnst}{typ}* instance", cnst=cnst, typ=self.cpp_full())
+		} else {
+			format!("{cnst}{typ} instance", cnst=cnst, typ=self.cpp_full())
+		}
 	}
 
 	pub fn cpp_arg_func_decl(&self, name: &str) -> String {
@@ -1500,11 +1513,9 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 		if self.is_by_ptr() {
 			return if self.as_pointer().is_some() {
-				format!("reinterpret_cast<{typ}>({name})", typ=self.cpp_full(), name=name).into()
-			} else if self.as_reference().is_some() {
-				format!("*reinterpret_cast<{typ}>({name})", typ=self.cpp_full(), name=name).into()
+				name
 			} else {
-				format!("*reinterpret_cast<{typ}*>({name})", typ=self.cpp_full(), name=name).into()
+				format!("*{name}", name=name).into()
 			};
 		}
 		if self.as_reference().is_some() || self.as_fixed_array().is_some() || self.as_simple_class().is_some() {
@@ -1515,8 +1526,10 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	pub fn cpp_extern_return(&self) -> Cow<str> {
 		if self.is_string() {
 			"void*".into()
+		} else if self.is_by_ptr() {
+			format!("{typ}*", typ=self.cpp_full()).into()
 		} else {
-			self.cpp_extern()
+			self.cpp_full()
 		}
 	}
 
@@ -1614,7 +1627,7 @@ impl fmt::Debug for TypeRef<'_, '_> {
 }
 
 #[derive(Debug)]
-enum TemplateArg<'tu, 'g> {
+pub enum TemplateArg<'tu, 'g> {
 	Unknown,
 	Typename(TypeRef<'tu, 'g>),
 	Constant(String),

@@ -19,20 +19,25 @@ use crate::{
 	EntityElement,
 	GeneratedElement,
 	GeneratorEnv,
+	ReturnTypeWrapper,
 	StrExt,
+	type_ref::TemplateArg,
 	TypeRef,
 };
 
 #[derive(Clone)]
 pub struct Vector<'tu, 'g> {
 	type_ref: Type<'tu>,
-	element: TypeRef<'tu, 'g>,
 	gen_env: &'g GeneratorEnv<'tu>,
 }
 
 impl<'tu, 'g> Vector<'tu, 'g> {
-	pub fn new(type_ref: Type<'tu>, element: TypeRef<'tu, 'g>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
-		Self { type_ref, element, gen_env }
+	pub fn new(type_ref: Type<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+		Self { type_ref, gen_env }
+	}
+
+	fn is_data_type(&self, type_ref: &TypeRef) -> bool {
+		type_ref.is_data_type() || type_ref.as_vector().map_or(false, |v| v.element_type().is_data_type())
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'g> {
@@ -40,11 +45,47 @@ impl<'tu, 'g> Vector<'tu, 'g> {
 	}
 
 	pub fn element_type(&self) -> TypeRef<'tu, 'g> {
-		self.element.clone()
+		self.type_ref().template_args().into_iter()
+			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
+				Some(type_ref)
+			} else {
+				None
+			}).expect("vector template argument list is empty")
 	}
 
 	pub fn dependent_types(&self) -> Vec<Box<dyn GeneratedElement + 'g>> {
-		self.element.dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Type))
+		let element_type = self.element_type();
+		let needs_ioa = self.is_data_type(&element_type);
+		let needs_char_ptr = element_type.is_string();
+		let mut out = element_type.dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Type));
+		out.reserve(2 + if needs_ioa { 3 } else { 0 } + if needs_char_ptr { 1 } else { 0 });
+		out.push(Box::new(ReturnTypeWrapper::new(element_type.canonical_clang(), self.gen_env, DefinitionLocation::Type)));
+		out.push(Box::new(ReturnTypeWrapper::new(self.type_ref().canonical_clang(), self.gen_env, DefinitionLocation::Module)));
+		if needs_ioa {
+			out.push(Box::new(ReturnTypeWrapper::new(
+				TypeRef::new(self.gen_env.resolve_type("cv::_InputArray").expect("Can't resolve _InputArray"), self.gen_env),
+				self.gen_env,
+				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
+			)));
+			out.push(Box::new(ReturnTypeWrapper::new(
+				TypeRef::new(self.gen_env.resolve_type("cv::_OutputArray").expect("Can't resolve _OutputArray"), self.gen_env),
+				self.gen_env,
+				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
+			)));
+			out.push(Box::new(ReturnTypeWrapper::new(
+				TypeRef::new(self.gen_env.resolve_type("cv::_InputOutputArray").expect("Can't resolve _InputOutputArray"), self.gen_env),
+				self.gen_env,
+				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
+			)));
+		}
+		if needs_char_ptr {
+			out.push(Box::new(ReturnTypeWrapper::new(
+				TypeRef::new(self.gen_env.resolve_type("const char*").expect("Can't resolve _InputOutputArray"), self.gen_env),
+				self.gen_env,
+				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
+			)));
+		}
+		out
 	}
 }
 
@@ -58,7 +99,7 @@ impl Element for Vector<'_, '_> {
 	fn is_ignored(&self) -> bool {
 		// workaround for race when type with std::string gets generated first
 		// we only want vector<cv::String> because it's more compatible across OpenCV versions
-		DefaultElement::is_ignored(self) || self.element.is_ignored()
+		DefaultElement::is_ignored(self) || self.element_type().is_ignored()
 	}
 
 	fn is_system(&self) -> bool {
@@ -86,11 +127,11 @@ impl Element for Vector<'_, '_> {
 	}
 
 	fn rust_module(&self) -> Cow<str> {
-		self.element.rust_module()
+		self.element_type().rust_module().into_owned().into()
 	}
 
 	fn rust_leafname(&self) -> Cow<str> {
-		format!("VectorOf{typ}", typ=self.element.rust_safe_id()).into()
+		format!("VectorOf{typ}", typ = self.element_type().rust_safe_id()).into()
 	}
 
 	fn rust_localname(&self) -> Cow<str> {
@@ -145,40 +186,38 @@ impl GeneratedElement for Vector<'_, '_> {
 		);
 
 		let vec_type = self.type_ref();
+		let element_type = self.element_type();
 		let mut inter_vars = hashmap! {
 			"rust_local" => vec_type.rust_local(),
 			"rust_extern" => vec_type.rust_extern(),
 			"cpp_full" => vec_type.cpp_full(),
 			"cpp_extern" => vec_type.cpp_extern(),
-			"inner_cpp_full" => self.element.cpp_full(),
-			"inner_cpp_extern" => self.element.cpp_extern(),
-			"inner_rust_extern" => self.element.rust_extern(),
-			"inner_rust_local" => self.element.rust_local(),
-			"inner_canonical_rust_local" => self.element.canonical().rust_local().into_owned().into(),
-			"inner_rust_full" => self.element.rust_full(),
-			"rust_return_wrapper_type" => self.element.rust_extern_return_wrapper_full(),
-			"cpp_return_wrapper_type" => self.element.cpp_extern_return_wrapper_full(),
+			"inner_rust_extern" => element_type.rust_extern(),
+			"inner_rust_local" => element_type.rust_local(),
+			"inner_canonical_rust_local" => element_type.canonical().rust_local().into_owned().into(),
+			"inner_rust_full" => element_type.rust_full(),
+			"rust_return_wrapper_type" => element_type.rust_extern_return_wrapper_full(),
 		};
 		let mut vector_methods = String::new();
 		let mut inherent_methods = String::new();
 		let mut impls = String::new();
-		if self.element.is_by_ptr() {
+		if element_type.is_by_ptr() {
 			vector_methods += &METHODS_BOXED_TPL.interpolate(&inter_vars);
-		} else if self.element.is_string() {
+		} else if element_type.is_string() {
 			vector_methods += &METHODS_STRING_TPL.interpolate(&inter_vars);
 		} else {
 			vector_methods += &METHODS_NON_BOXED_COMMON_TPL.interpolate(&inter_vars);
-			if self.element.as_simple_class().is_some() {
+			if element_type.as_simple_class().is_some() {
 				vector_methods += &METHODS_SIMPLE_TPL.interpolate(&inter_vars);
 			} else {
 				vector_methods += &METHODS_NON_BOXED_TPL.interpolate(&inter_vars);
 			}
-			if self.element.is_copy() && !self.element.is_bool() {
+			if element_type.is_copy() && !element_type.is_bool() {
 				vector_methods += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 				inherent_methods += &INHERENT_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			}
 		}
-		if self.element.is_data_type() || self.element.as_vector().map_or(false, |v| v.element_type().is_data_type()) {
+		if self.is_data_type(&element_type) {
 			impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
 		}
 
@@ -222,33 +261,36 @@ impl GeneratedElement for Vector<'_, '_> {
 		);
 
 		let vec_type = self.type_ref();
+		let element_type = self.element_type();
 		let mut inter_vars = hashmap! {
 			"rust_local" => vec_type.rust_local(),
 			"cpp_full" => vec_type.cpp_full(),
 			"cpp_extern" => vec_type.cpp_extern(),
-			"inner_cpp_full" => self.element.cpp_full(),
-			"inner_cpp_extern" => self.element.cpp_extern(),
-			"cpp_return_wrapper_type" => self.element.cpp_extern_return_wrapper_full(),
-			"call_arg" => self.element.cpp_arg_func_call("val").into(),
+			"cpp_extern_return" => vec_type.cpp_extern_return(),
+			"inner_cpp_full" => element_type.cpp_full(),
+			"inner_cpp_extern" => element_type.cpp_extern(),
+			"inner_cpp_extern_return" => element_type.cpp_extern_return(),
+			"cpp_return_wrapper_type" => element_type.cpp_extern_return_wrapper_full(),
+			"call_arg" => element_type.cpp_arg_func_call("val").into(),
 		};
 
 		let mut exports = String::new();
-		if self.element.is_by_ptr() {
+		if element_type.is_by_ptr() {
 			exports += &METHODS_BOXED_TPL.interpolate(&inter_vars);
-		} else if self.element.is_string() {
+		} else if element_type.is_string() {
 			exports += &METHODS_STRING_TPL.interpolate(&inter_vars);
 		} else {
 			exports += &METHODS_NON_BOXED_COMMON_TPL.interpolate(&inter_vars);
-			if self.element.as_simple_class().is_some() {
+			if element_type.as_simple_class().is_some() {
 				exports += &METHODS_SIMPLE_TPL.interpolate(&inter_vars);
 			} else {
 				exports += &METHODS_NON_BOXED_TPL.interpolate(&inter_vars);
 			}
-			if self.element.is_copy() && !self.element.is_bool() {
+			if element_type.is_copy() && !element_type.is_bool() {
 				exports += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 			}
 		}
-		if self.element.is_data_type() || self.element.as_vector().map_or(false, |v| v.element_type().is_data_type()) {
+		if self.is_data_type(&element_type) {
 			exports += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
 		}
 		inter_vars.insert("exports", exports.into());

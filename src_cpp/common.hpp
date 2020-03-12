@@ -1,3 +1,6 @@
+#define CV_COLLECT_IMPL_DATA
+#include <opencv2/core.hpp>
+
 #define OCVRS_ONLY_DEPENDENT_TYPES
 
 #define CODE_CATCH(return_type, exc_type, code, msg) \
@@ -36,9 +39,6 @@ struct Result_void {
 	int error_code;
 	void* error_msg;
 };
-
-// these dummy explicit specializations are needed for cl.exe to prevent
-// "C linkage function cannot return C++ class" error
 
 template<typename T> inline Result<T> Ok(T result) {
 	return Result<T> { .error_code = 0, .error_msg = 0, .result = result };

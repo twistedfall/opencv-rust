@@ -7,6 +7,8 @@
 // todo allow ergonomically combining of enum variants with |
 // todo implement std::pair wrapper
 // todo prevent generation of vector<std::string> in favor of vector<cv::String>>
+// todo cv_utils_logging_internal_getGlobalLogTag() returns LogTag**, but Rust interprets it as LogTag*, check why it doesn't crash and fix if needed
+// fixme most constructors of Mat have invalid comment "download data from GpuMat"
 
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour

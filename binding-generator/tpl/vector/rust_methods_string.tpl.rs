@@ -18,18 +18,16 @@ fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 
 #[inline]
 fn get(&self, index: size_t) -> Result<Self::Storage> {
-	extern "C" { fn cv_{{rust_local}}_get(instance: {{rust_extern}}, index: size_t) -> sys::Result<*const c_char>; }
+	extern "C" { fn cv_{{rust_local}}_get(instance: {{rust_extern}}, index: size_t) -> sys::Result<*mut c_void>; }
 	unsafe { cv_{{rust_local}}_get(self.as_raw_{{rust_local}}(), index) }
 		.into_result()
-		.map(|x| unsafe { ::std::ffi::CStr::from_ptr(x) }.to_string_lossy().into_owned())
+		.map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 #[inline]
 unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-	extern "C" { fn cv_{{rust_local}}_get_unchecked(instance: {{rust_extern}}, index: size_t) -> *const c_char; }
-	::std::ffi::CStr::from_ptr(cv_{{rust_local}}_get_unchecked(self.as_raw_{{rust_local}}(), index))
-		.to_string_lossy()
-		.into_owned()
+	extern "C" { fn cv_{{rust_local}}_get_unchecked(instance: {{rust_extern}}, index: size_t) -> *mut c_void; }
+	crate::templ::receive_string(cv_{{rust_local}}_get_unchecked(self.as_raw_{{rust_local}}(), index) as *mut String)
 }
 
 #[inline]

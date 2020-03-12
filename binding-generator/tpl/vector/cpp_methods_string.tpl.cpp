@@ -6,14 +6,14 @@ void cv_{{rust_local}}_insert({{cpp_full}}* instance, size_t index, {{inner_cpp_
 	instance->insert(instance->begin() + index, {{call_arg}});
 }
 
-Result<const char*> cv_{{rust_local}}_get(const {{cpp_full}}* instance, size_t index) {
+Result<void*> cv_{{rust_local}}_get(const {{cpp_full}}* instance, size_t index) {
 	try {
-		return Ok<const char*>(instance->at(index).c_str());
-	} VEC_CATCH(Result<const char*>)
+		return Ok(ocvrs_create_string(instance->at(index).c_str()));
+	} VEC_CATCH(Result<void*>)
 }
 
-const char* cv_{{rust_local}}_get_unchecked(const {{cpp_full}}* instance, size_t index) {
-	return (*instance)[index].c_str();
+void* cv_{{rust_local}}_get_unchecked(const {{cpp_full}}* instance, size_t index) {
+	return ocvrs_create_string((*instance)[index].c_str());
 }
 
 Result_void cv_{{rust_local}}_set({{cpp_full}}* instance, size_t index, {{inner_cpp_extern}} val) {
