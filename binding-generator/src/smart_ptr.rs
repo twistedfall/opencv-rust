@@ -125,8 +125,6 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_local" => self.rust_localname(),
 			"rust_extern" => type_ref.rust_extern(),
-			"cpp_full" => self.cpp_fullname(),
-			"cpp_extern" => type_ref.cpp_extern(),
 		};
 
 		let mut impls = String::new();
@@ -143,7 +141,6 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 					let mut vars = inter_vars.clone();
 					vars.insert("base_rust_local", base.rust_localname());
 					vars.insert("base_rust_full", base.rust_trait_fullname());
-					vars.insert("base_cpp_full", base.cpp_fullname());
 					impls += &TRAIT_CAST_TPL.interpolate(&vars);
 				}
 			} else if cls.is_boxed() {
@@ -151,7 +148,6 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 				vars.insert("rust_full", type_ref.rust_full());
 				vars.insert("inner_rust_local", pointee_type.rust_local());
 				vars.insert("inner_rust_full", pointee_type.rust_full());
-				vars.insert("inner_cpp_full", pointee_type.cpp_full());
 				methods += &METHODS_NON_TRAIT_TPL.interpolate(&vars);
 			}
 		};
@@ -162,16 +158,26 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 	}
 
 	fn gen_cpp(&self) -> String {
-		static CPP_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
 			|| include_str!("../tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation()
 		);
 
-		let type_ref = self.type_ref();
+		static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+			|| include_str!("../tpl/smart_ptr/cpp_boxed.tpl.cpp").compile_interpolation()
+		);
 
-		CPP_TPL.interpolate(&hashmap! {
+		let type_ref = self.type_ref();
+		let pointee_type = self.pointee();
+
+		if pointee_type.is_by_ptr() {
+			&BOXED_TPL
+		} else {
+			&TPL
+		}.interpolate(&hashmap! {
 			"rust_local" => self.rust_localname(),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"cpp_full" => type_ref.cpp_full(),
+			"inner_cpp_extern" => pointee_type.cpp_extern_return(),
 		})
 	}
 }
