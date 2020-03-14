@@ -29,7 +29,7 @@ impl<'tu, 'g> ReturnTypeWrapper<'tu, 'g> {
 }
 
 impl GeneratedElement for ReturnTypeWrapper<'_, '_> {
-	fn element_priority(&self) -> u8 {
+	fn element_order(&self) -> u8 {
 		10
 	}
 

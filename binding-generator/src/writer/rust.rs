@@ -148,7 +148,7 @@ impl GeneratorVisitor for RustBindingWriter<'_> {
 	}
 
 	fn visit_dependent_type(&mut self, typ: &dyn GeneratedElement) {
-		let prio = typ.element_priority();
+		let prio = typ.element_order();
 		let safe_id = typ.element_safe_id();
 		let rust_path = self.types_dir.join(format!("{:03}-{}.type.rs", prio, safe_id));
 		let cpp_path = self.types_dir.join(format!("{:03}-{}.type.cpp", prio, safe_id));

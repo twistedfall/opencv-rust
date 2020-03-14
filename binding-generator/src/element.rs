@@ -259,7 +259,7 @@ pub trait EntityElement<'tu> {
 
 pub trait GeneratedElement {
 	/// Element order in the output file, lower means earlier
-	fn element_priority(&self) -> u8 {
+	fn element_order(&self) -> u8 {
 		50
 	}
 
