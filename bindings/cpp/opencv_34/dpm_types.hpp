@@ -1,14 +1,17 @@
 template struct Result<bool>;
+template struct Result<cv::Ptr<cv::dpm::DPMDetector>*>;
 template struct Result<cv::Rect_<int>>;
+template struct Result<cv::dpm::DPMDetector::ObjectDetection*>;
 template struct Result<float>;
 template struct Result<int>;
+template struct Result<std::vector<cv::dpm::DPMDetector::ObjectDetection>*>;
+template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
 template struct Result<unsigned long>;
-template struct Result<void*>;
 extern "C" void cv_PtrOfDPMDetector_delete(cv::Ptr<cv::dpm::DPMDetector>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDPMDetector_get_inner_ptr(cv::Ptr<cv::dpm::DPMDetector>* instance) {
+extern "C" cv::dpm::DPMDetector* cv_PtrOfDPMDetector_get_inner_ptr(cv::Ptr<cv::dpm::DPMDetector>* instance) {
 	return instance->get();
 }
 
@@ -17,7 +20,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfDPMDetector_ObjectDetection_new() {
+	std::vector<cv::dpm::DPMDetector::ObjectDetection>* cv_VectorOfDPMDetector_ObjectDetection_new() {
 		return new std::vector<cv::dpm::DPMDetector::ObjectDetection>();
 	}
 
@@ -61,13 +64,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfDPMDetector_ObjectDetection_get(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
+	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_VectorOfDPMDetector_ObjectDetection_get(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::dpm::DPMDetector::ObjectDetection(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::dpm::DPMDetector::ObjectDetection(instance->at(index)));
+		} VEC_CATCH(Result<cv::dpm::DPMDetector::ObjectDetection*>)
 	}
 	
-	void* cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
+	cv::dpm::DPMDetector::ObjectDetection* cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
 		return new cv::dpm::DPMDetector::ObjectDetection((*instance)[index]);
 	}
 	

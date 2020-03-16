@@ -3772,8 +3772,6 @@ mod text_sys {
 		pub fn cv_text_ERStat_setConvex_hull_ratio_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_text_ERStat_num_inflexion_points_const(instance: *mut c_void) -> Result<f32>;
 		pub fn cv_text_ERStat_setNum_inflexion_points_float(instance: *mut c_void, val: f32) -> Result_void;
-		pub fn cv_text_ERStat_pixels(instance: *mut c_void) -> Result<*mut c_void>;
-		pub fn cv_text_ERStat_setPixels_vector_int_X(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_text_ERStat_probability_const(instance: *mut c_void) -> Result<f64>;
 		pub fn cv_text_ERStat_setProbability_double(instance: *mut c_void, val: f64) -> Result_void;
 		pub fn cv_text_ERStat_parent(instance: *mut c_void) -> Result<*mut c_void>;

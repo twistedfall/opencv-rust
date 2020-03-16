@@ -1,15 +1,20 @@
 template struct Result<cv::Matx<double, 4, 4>>;
+template struct Result<cv::Ptr<cv::ppf_match_3d::Pose3D>*>;
 template struct Result<cv::Vec<double, 3>>;
 template struct Result<cv::Vec<double, 4>>;
+template struct Result<cv::ppf_match_3d::ICP*>;
+template struct Result<cv::ppf_match_3d::PPF3DDetector*>;
+template struct Result<cv::ppf_match_3d::Pose3D*>;
+template struct Result<cv::ppf_match_3d::PoseCluster3D*>;
 template struct Result<double>;
 template struct Result<int>;
+template struct Result<std::vector<cv::Ptr<cv::ppf_match_3d::Pose3D>>*>;
 template struct Result<unsigned long>;
-template struct Result<void*>;
 extern "C" void cv_PtrOfPose3D_delete(cv::Ptr<cv::ppf_match_3d::Pose3D>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfPose3D_get_inner_ptr(cv::Ptr<cv::ppf_match_3d::Pose3D>* instance) {
+extern "C" cv::ppf_match_3d::Pose3D* cv_PtrOfPose3D_get_inner_ptr(cv::Ptr<cv::ppf_match_3d::Pose3D>* instance) {
 	return instance->get();
 }
 
@@ -18,7 +23,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPose3DPtr_new() {
+	std::vector<cv::ppf_match_3d::Pose3DPtr>* cv_VectorOfPose3DPtr_new() {
 		return new std::vector<cv::ppf_match_3d::Pose3DPtr>();
 	}
 
@@ -62,13 +67,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfPose3DPtr_get(const std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index) {
+	Result<cv::ppf_match_3d::Pose3DPtr*> cv_VectorOfPose3DPtr_get(const std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::ppf_match_3d::Pose3DPtr(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::ppf_match_3d::Pose3DPtr(instance->at(index)));
+		} VEC_CATCH(Result<cv::ppf_match_3d::Pose3DPtr*>)
 	}
 	
-	void* cv_VectorOfPose3DPtr_get_unchecked(const std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index) {
+	cv::ppf_match_3d::Pose3DPtr* cv_VectorOfPose3DPtr_get_unchecked(const std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index) {
 		return new cv::ppf_match_3d::Pose3DPtr((*instance)[index]);
 	}
 	

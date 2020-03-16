@@ -358,7 +358,7 @@ pub trait CParamsTrait {
 	fn as_raw_CParams(&self) -> *mut c_void;
 	/// the face detector
 	fn cascade(&self) -> String {
-		unsafe { sys::cv_face_CParams_cascade_const(self.as_raw_CParams()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: cascade")
+		unsafe { sys::cv_face_CParams_cascade_const(self.as_raw_CParams()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: cascade")
 	}
 	
 	/// the face detector
@@ -860,7 +860,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// If an unknown label id is provided or there is no label information associated with the specified
 	/// label id the method returns an empty string.
 	fn get_label_info(&self, label: i32) -> Result<String> {
-		unsafe { sys::cv_face_FaceRecognizer_getLabelInfo_const_int(self.as_raw_FaceRecognizer(), label) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_face_FaceRecognizer_getLabelInfo_const_int(self.as_raw_FaceRecognizer(), label) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Gets vector of labels by string.
@@ -1280,7 +1280,7 @@ impl FacemarkAAM_Model_Texture {
 pub trait FacemarkAAM_ParamsTrait {
 	fn as_raw_FacemarkAAM_Params(&self) -> *mut c_void;
 	fn model_filename(&self) -> String {
-		unsafe { sys::cv_face_FacemarkAAM_Params_model_filename_const(self.as_raw_FacemarkAAM_Params()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: model_filename")
+		unsafe { sys::cv_face_FacemarkAAM_Params_model_filename_const(self.as_raw_FacemarkAAM_Params()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: model_filename")
 	}
 	
 	fn set_model_filename(&mut self, val: &str) -> () {
@@ -1527,7 +1527,7 @@ pub trait FacemarkKazemi_ParamsTrait {
 	
 	/// configfile stores the name of the file containing the values of training parameters
 	fn configfile(&self) -> String {
-		unsafe { sys::cv_face_FacemarkKazemi_Params_configfile_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: configfile")
+		unsafe { sys::cv_face_FacemarkKazemi_Params_configfile_const(self.as_raw_FacemarkKazemi_Params()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: configfile")
 	}
 	
 	/// configfile stores the name of the file containing the values of training parameters
@@ -1594,7 +1594,7 @@ pub trait FacemarkLBF_ParamsTrait {
 	}
 	
 	fn cascade_face(&self) -> String {
-		unsafe { sys::cv_face_FacemarkLBF_Params_cascade_face_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: cascade_face")
+		unsafe { sys::cv_face_FacemarkLBF_Params_cascade_face_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: cascade_face")
 	}
 	
 	fn set_cascade_face(&mut self, val: &str) -> () {
@@ -1659,7 +1659,7 @@ pub trait FacemarkLBF_ParamsTrait {
 	}
 	
 	fn model_filename(&self) -> String {
-		unsafe { sys::cv_face_FacemarkLBF_Params_model_filename_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: model_filename")
+		unsafe { sys::cv_face_FacemarkLBF_Params_model_filename_const(self.as_raw_FacemarkLBF_Params()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: model_filename")
 	}
 	
 	fn set_model_filename(&mut self, val: &str) -> () {

@@ -426,7 +426,7 @@ pub trait AKAZE: crate::features2d::Feature2DTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_AKAZE_getDefaultName_const(self.as_raw_AKAZE()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_AKAZE_getDefaultName_const(self.as_raw_AKAZE()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -486,7 +486,7 @@ pub trait AgastFeatureDetector: crate::features2d::Feature2DTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_AgastFeatureDetector_getDefaultName_const(self.as_raw_AgastFeatureDetector()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_AgastFeatureDetector_getDefaultName_const(self.as_raw_AgastFeatureDetector()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -862,7 +862,7 @@ pub trait BOWTrainer {
 pub trait BRISKTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_BRISK(&self) -> *mut c_void;
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_BRISK_getDefaultName_const(self.as_raw_BRISK()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_BRISK_getDefaultName_const(self.as_raw_BRISK()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Set detection threshold.
@@ -1325,7 +1325,7 @@ pub trait FastFeatureDetector: crate::features2d::Feature2DTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_FastFeatureDetector_getDefaultName_const(self.as_raw_FastFeatureDetector()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_FastFeatureDetector_getDefaultName_const(self.as_raw_FastFeatureDetector()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -1476,7 +1476,7 @@ pub trait Feature2DTrait: core::AlgorithmTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_Feature2D_getDefaultName_const(self.as_raw_Feature2D()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_Feature2D_getDefaultName_const(self.as_raw_Feature2D()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -1666,7 +1666,7 @@ pub trait GFTTDetector: crate::features2d::Feature2DTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_GFTTDetector_getDefaultName_const(self.as_raw_GFTTDetector()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_GFTTDetector_getDefaultName_const(self.as_raw_GFTTDetector()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -1748,7 +1748,7 @@ pub trait KAZE: crate::features2d::Feature2DTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_KAZE_getDefaultName_const(self.as_raw_KAZE()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_KAZE_getDefaultName_const(self.as_raw_KAZE()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -1908,7 +1908,7 @@ pub trait MSER: crate::features2d::Feature2DTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_MSER_getDefaultName_const(self.as_raw_MSER()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_MSER_getDefaultName_const(self.as_raw_MSER()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -2027,7 +2027,7 @@ pub trait ORB: crate::features2d::Feature2DTrait {
 	}
 	
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_ORB_getDefaultName_const(self.as_raw_ORB()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ORB_getDefaultName_const(self.as_raw_ORB()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -2113,7 +2113,7 @@ impl dyn ORB + '_ {
 pub trait SimpleBlobDetectorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_SimpleBlobDetector(&self) -> *mut c_void;
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_SimpleBlobDetector_getDefaultName_const(self.as_raw_SimpleBlobDetector()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_SimpleBlobDetector_getDefaultName_const(self.as_raw_SimpleBlobDetector()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }

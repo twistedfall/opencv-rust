@@ -1,18 +1,37 @@
 template struct Result<bool>;
-template struct Result<const char*>;
+template struct Result<cv::CascadeClassifier*>;
+template struct Result<cv::DetectionBasedTracker*>;
+template struct Result<cv::DetectionBasedTracker::ExtObject*>;
 template struct Result<cv::DetectionBasedTracker::ObjectStatus>;
+template struct Result<cv::DetectionBasedTracker::Parameters*>;
+template struct Result<cv::DetectionROI*>;
+template struct Result<cv::HOGDescriptor*>;
+template struct Result<cv::Mat*>;
+template struct Result<cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>*>;
+template struct Result<cv::Ptr<cv::BaseCascadeClassifier>*>;
+template struct Result<cv::Ptr<cv::DetectionBasedTracker::IDetector>*>;
+template struct Result<cv::QRCodeDetector*>;
 template struct Result<cv::Rect_<int>>;
+template struct Result<cv::SimilarRects*>;
 template struct Result<cv::Size_<int>>;
+template struct Result<cv::UMat*>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
+template struct Result<std::vector<cv::DetectionBasedTracker::ExtObject>*>;
+template struct Result<std::vector<cv::DetectionROI>*>;
+template struct Result<std::vector<cv::Point_<int>>*>;
+template struct Result<std::vector<cv::Rect_<int>>*>;
+template struct Result<std::vector<double>*>;
+template struct Result<std::vector<float>*>;
+template struct Result<std::vector<int>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
 extern "C" void cv_PtrOfBaseCascadeClassifier_delete(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfBaseCascadeClassifier_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
+extern "C" cv::BaseCascadeClassifier* cv_PtrOfBaseCascadeClassifier_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier>* instance) {
 	return instance->get();
 }
 
@@ -20,7 +39,7 @@ extern "C" void cv_PtrOfBaseCascadeClassifier_MaskGenerator_delete(cv::Ptr<cv::B
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
+extern "C" cv::BaseCascadeClassifier::MaskGenerator* cv_PtrOfBaseCascadeClassifier_MaskGenerator_get_inner_ptr(cv::Ptr<cv::BaseCascadeClassifier::MaskGenerator>* instance) {
 	return instance->get();
 }
 
@@ -28,7 +47,7 @@ extern "C" void cv_PtrOfDetectionBasedTracker_IDetector_delete(cv::Ptr<cv::Detec
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
+extern "C" cv::DetectionBasedTracker::IDetector* cv_PtrOfDetectionBasedTracker_IDetector_get_inner_ptr(cv::Ptr<cv::DetectionBasedTracker::IDetector>* instance) {
 	return instance->get();
 }
 
@@ -37,7 +56,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfDetectionBasedTracker_ExtObject_new() {
+	std::vector<cv::DetectionBasedTracker::ExtObject>* cv_VectorOfDetectionBasedTracker_ExtObject_new() {
 		return new std::vector<cv::DetectionBasedTracker::ExtObject>();
 	}
 
@@ -81,13 +100,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfDetectionBasedTracker_ExtObject_get(const std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index) {
+	Result<cv::DetectionBasedTracker::ExtObject*> cv_VectorOfDetectionBasedTracker_ExtObject_get(const std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::DetectionBasedTracker::ExtObject(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::DetectionBasedTracker::ExtObject(instance->at(index)));
+		} VEC_CATCH(Result<cv::DetectionBasedTracker::ExtObject*>)
 	}
 	
-	void* cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(const std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index) {
+	cv::DetectionBasedTracker::ExtObject* cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(const std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index) {
 		return new cv::DetectionBasedTracker::ExtObject((*instance)[index]);
 	}
 	
@@ -110,7 +129,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfDetectionROI_new() {
+	std::vector<cv::DetectionROI>* cv_VectorOfDetectionROI_new() {
 		return new std::vector<cv::DetectionROI>();
 	}
 
@@ -154,13 +173,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfDetectionROI_get(const std::vector<cv::DetectionROI>* instance, size_t index) {
+	Result<cv::DetectionROI*> cv_VectorOfDetectionROI_get(const std::vector<cv::DetectionROI>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::DetectionROI(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::DetectionROI(instance->at(index)));
+		} VEC_CATCH(Result<cv::DetectionROI*>)
 	}
 	
-	void* cv_VectorOfDetectionROI_get_unchecked(const std::vector<cv::DetectionROI>* instance, size_t index) {
+	cv::DetectionROI* cv_VectorOfDetectionROI_get_unchecked(const std::vector<cv::DetectionROI>* instance, size_t index) {
 		return new cv::DetectionROI((*instance)[index]);
 	}
 	

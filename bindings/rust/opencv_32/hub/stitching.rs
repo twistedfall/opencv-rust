@@ -129,7 +129,7 @@ pub fn leave_biggest_component(features: &mut types::VectorOfDetail_ImageFeature
 
 /// ///////////////////////////////////////////////////////////////////////////
 pub fn matches_graph_as_string(pathes: &mut types::VectorOfString, pairwise_matches: &mut types::VectorOfDetail_MatchesInfo, conf_threshold: f32) -> Result<String> {
-	unsafe { sys::cv_detail_matchesGraphAsString_vector_String_X_vector_MatchesInfo_X_float(pathes.as_raw_VectorOfString(), pairwise_matches.as_raw_VectorOfDetail_MatchesInfo(), conf_threshold) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_detail_matchesGraphAsString_vector_String_X_vector_MatchesInfo_X_float(pathes.as_raw_VectorOfString(), pairwise_matches.as_raw_VectorOfDetail_MatchesInfo(), conf_threshold) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// ///////////////////////////////////////////////////////////////////////////

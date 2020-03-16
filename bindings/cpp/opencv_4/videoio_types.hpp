@@ -1,15 +1,19 @@
 template struct Result<bool>;
-template struct Result<const char*>;
 template struct Result<cv::VideoCaptureAPIs>;
+template struct Result<cv::VideoCapture*>;
+template struct Result<cv::VideoWriter*>;
 template struct Result<double>;
 template struct Result<int>;
+template struct Result<std::vector<cv::VideoCaptureAPIs>*>;
+template struct Result<std::vector<cv::VideoCapture>*>;
+template struct Result<std::vector<int>*>;
 template struct Result<void*>;
 extern "C" {
 	void cv_VectorOfVideoCapture_delete(std::vector<cv::VideoCapture>* instance) {
 		delete instance;
 	}
 
-	void* cv_VectorOfVideoCapture_new() {
+	std::vector<cv::VideoCapture>* cv_VectorOfVideoCapture_new() {
 		return new std::vector<cv::VideoCapture>();
 	}
 
@@ -53,13 +57,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVideoCapture_get(const std::vector<cv::VideoCapture>* instance, size_t index) {
+	Result<cv::VideoCapture*> cv_VectorOfVideoCapture_get(const std::vector<cv::VideoCapture>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::VideoCapture(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::VideoCapture(instance->at(index)));
+		} VEC_CATCH(Result<cv::VideoCapture*>)
 	}
 	
-	void* cv_VectorOfVideoCapture_get_unchecked(const std::vector<cv::VideoCapture>* instance, size_t index) {
+	cv::VideoCapture* cv_VectorOfVideoCapture_get_unchecked(const std::vector<cv::VideoCapture>* instance, size_t index) {
 		return new cv::VideoCapture((*instance)[index]);
 	}
 	
@@ -82,7 +86,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVideoCaptureAPIs_new() {
+	std::vector<cv::VideoCaptureAPIs>* cv_VectorOfVideoCaptureAPIs_new() {
 		return new std::vector<cv::VideoCaptureAPIs>();
 	}
 
@@ -147,8 +151,8 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOfVideoCaptureAPIs_data(std::vector<cv::VideoCaptureAPIs>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::VideoCaptureAPIs* cv_VectorOfVideoCaptureAPIs_data(std::vector<cv::VideoCaptureAPIs>* instance) {
+		return instance->data();
 	}
 	
 }

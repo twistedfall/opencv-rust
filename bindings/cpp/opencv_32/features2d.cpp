@@ -3,1219 +3,1219 @@
 #include "features2d_types.hpp"
 
 extern "C" {
-	Result_void cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool(void* image, void* keypoints, int threshold, bool nonmaxSuppression) {
+	Result_void cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression) {
 		try {
-			cv::AGAST(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), threshold, nonmaxSuppression);
+			cv::AGAST(*image, *keypoints, threshold, nonmaxSuppression);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool_int(void* image, void* keypoints, int threshold, bool nonmaxSuppression, int type) {
+	Result_void cv_AGAST_const__InputArrayX_vector_KeyPoint_X_int_bool_int(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, int type) {
 		try {
-			cv::AGAST(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), threshold, nonmaxSuppression, type);
+			cv::AGAST(*image, *keypoints, threshold, nonmaxSuppression, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FAST_const__InputArrayX_vector_KeyPoint_X_int_bool(void* image, void* keypoints, int threshold, bool nonmaxSuppression) {
+	Result_void cv_FAST_const__InputArrayX_vector_KeyPoint_X_int_bool(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression) {
 		try {
-			cv::FAST(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), threshold, nonmaxSuppression);
+			cv::FAST(*image, *keypoints, threshold, nonmaxSuppression);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FAST_const__InputArrayX_vector_KeyPoint_X_int_bool_int(void* image, void* keypoints, int threshold, bool nonmaxSuppression, int type) {
+	Result_void cv_FAST_const__InputArrayX_vector_KeyPoint_X_int_bool_int(const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, int threshold, bool nonmaxSuppression, int type) {
 		try {
-			cv::FAST(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), threshold, nonmaxSuppression, type);
+			cv::FAST(*image, *keypoints, threshold, nonmaxSuppression, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_computeRecallPrecisionCurve_const_vector_vector_DMatch__X_const_vector_vector_unsigned_char__X_vector_Point2f_X(void* matches1to2, void* correctMatches1to2Mask, void* recallPrecisionCurve) {
+	Result_void cv_computeRecallPrecisionCurve_const_vector_vector_DMatch__X_const_vector_vector_unsigned_char__X_vector_Point2f_X(const std::vector<std::vector<cv::DMatch>>* matches1to2, const std::vector<std::vector<unsigned char>>* correctMatches1to2Mask, std::vector<cv::Point2f>* recallPrecisionCurve) {
 		try {
-			cv::computeRecallPrecisionCurve(*reinterpret_cast<const std::vector<std::vector<cv::DMatch>>*>(matches1to2), *reinterpret_cast<const std::vector<std::vector<unsigned char>>*>(correctMatches1to2Mask), *reinterpret_cast<std::vector<cv::Point2f>*>(recallPrecisionCurve));
+			cv::computeRecallPrecisionCurve(*matches1to2, *correctMatches1to2Mask, *recallPrecisionCurve);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_drawKeypoints_const__InputArrayX_const_vector_KeyPoint_X_const__InputOutputArrayX_const_ScalarX_int(void* image, void* keypoints, void* outImage, const cv::Scalar* color, int flags) {
+	Result_void cv_drawKeypoints_const__InputArrayX_const_vector_KeyPoint_X_const__InputOutputArrayX_const_ScalarX_int(const cv::_InputArray* image, const std::vector<cv::KeyPoint>* keypoints, const cv::_InputOutputArray* outImage, const cv::Scalar* color, int flags) {
 		try {
-			cv::drawKeypoints(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<const cv::_InputOutputArray*>(outImage), *color, flags);
+			cv::drawKeypoints(*image, *keypoints, *outImage, *color, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_drawMatches_const__InputArrayX_const_vector_KeyPoint_X_const__InputArrayX_const_vector_KeyPoint_X_const_vector_DMatch_X_const__InputOutputArrayX_const_ScalarX_const_ScalarX_const_vector_char_X_int(void* img1, void* keypoints1, void* img2, void* keypoints2, void* matches1to2, void* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, void* matchesMask, int flags) {
+	Result_void cv_drawMatches_const__InputArrayX_const_vector_KeyPoint_X_const__InputArrayX_const_vector_KeyPoint_X_const_vector_DMatch_X_const__InputOutputArrayX_const_ScalarX_const_ScalarX_const_vector_char_X_int(const cv::_InputArray* img1, const std::vector<cv::KeyPoint>* keypoints1, const cv::_InputArray* img2, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<cv::DMatch>* matches1to2, const cv::_InputOutputArray* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, const std::vector<char>* matchesMask, int flags) {
 		try {
-			cv::drawMatches(*reinterpret_cast<const cv::_InputArray*>(img1), *reinterpret_cast<const std::vector<cv::KeyPoint>*>(keypoints1), *reinterpret_cast<const cv::_InputArray*>(img2), *reinterpret_cast<const std::vector<cv::KeyPoint>*>(keypoints2), *reinterpret_cast<const std::vector<cv::DMatch>*>(matches1to2), *reinterpret_cast<const cv::_InputOutputArray*>(outImg), *matchColor, *singlePointColor, *reinterpret_cast<const std::vector<char>*>(matchesMask), flags);
+			cv::drawMatches(*img1, *keypoints1, *img2, *keypoints2, *matches1to2, *outImg, *matchColor, *singlePointColor, *matchesMask, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_drawMatches_const__InputArrayX_const_vector_KeyPoint_X_const__InputArrayX_const_vector_KeyPoint_X_const_vector_vector_DMatch__X_const__InputOutputArrayX_const_ScalarX_const_ScalarX_const_vector_vector_char__X_int(void* img1, void* keypoints1, void* img2, void* keypoints2, void* matches1to2, void* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, void* matchesMask, int flags) {
+	Result_void cv_drawMatches_const__InputArrayX_const_vector_KeyPoint_X_const__InputArrayX_const_vector_KeyPoint_X_const_vector_vector_DMatch__X_const__InputOutputArrayX_const_ScalarX_const_ScalarX_const_vector_vector_char__X_int(const cv::_InputArray* img1, const std::vector<cv::KeyPoint>* keypoints1, const cv::_InputArray* img2, const std::vector<cv::KeyPoint>* keypoints2, const std::vector<std::vector<cv::DMatch>>* matches1to2, const cv::_InputOutputArray* outImg, const cv::Scalar* matchColor, const cv::Scalar* singlePointColor, const std::vector<std::vector<char>>* matchesMask, int flags) {
 		try {
-			cv::drawMatches(*reinterpret_cast<const cv::_InputArray*>(img1), *reinterpret_cast<const std::vector<cv::KeyPoint>*>(keypoints1), *reinterpret_cast<const cv::_InputArray*>(img2), *reinterpret_cast<const std::vector<cv::KeyPoint>*>(keypoints2), *reinterpret_cast<const std::vector<std::vector<cv::DMatch>>*>(matches1to2), *reinterpret_cast<const cv::_InputOutputArray*>(outImg), *matchColor, *singlePointColor, *reinterpret_cast<const std::vector<std::vector<char>>*>(matchesMask), flags);
+			cv::drawMatches(*img1, *keypoints1, *img2, *keypoints2, *matches1to2, *outImg, *matchColor, *singlePointColor, *matchesMask, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_evaluateFeatureDetector_const_MatX_const_MatX_const_MatX_vector_KeyPoint_X_vector_KeyPoint_X_floatX_intX_const_Ptr_FeatureDetector_X(void* img1, void* img2, void* H1to2, void* keypoints1, void* keypoints2, float* repeatability, int* correspCount, void* fdetector) {
+	Result_void cv_evaluateFeatureDetector_const_MatX_const_MatX_const_MatX_vector_KeyPoint_X_vector_KeyPoint_X_floatX_intX_const_Ptr_FeatureDetector_X(const cv::Mat* img1, const cv::Mat* img2, const cv::Mat* H1to2, std::vector<cv::KeyPoint>* keypoints1, std::vector<cv::KeyPoint>* keypoints2, float* repeatability, int* correspCount, const cv::Ptr<cv::FeatureDetector>* fdetector) {
 		try {
-			cv::evaluateFeatureDetector(*reinterpret_cast<const cv::Mat*>(img1), *reinterpret_cast<const cv::Mat*>(img2), *reinterpret_cast<const cv::Mat*>(H1to2), reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints1), reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints2), *repeatability, *correspCount, *reinterpret_cast<const cv::Ptr<cv::FeatureDetector>*>(fdetector));
+			cv::evaluateFeatureDetector(*img1, *img2, *H1to2, keypoints1, keypoints2, *repeatability, *correspCount, *fdetector);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_getNearestPoint_const_vector_Point2f_X_float(void* recallPrecisionCurve, float l_precision) {
+	Result<int> cv_getNearestPoint_const_vector_Point2f_X_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
 		try {
-			int ret = cv::getNearestPoint(*reinterpret_cast<const std::vector<cv::Point2f>*>(recallPrecisionCurve), l_precision);
-			return Ok<int>(ret);
+			int ret = cv::getNearestPoint(*recallPrecisionCurve, l_precision);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<float> cv_getRecall_const_vector_Point2f_X_float(void* recallPrecisionCurve, float l_precision) {
+	Result<float> cv_getRecall_const_vector_Point2f_X_float(const std::vector<cv::Point2f>* recallPrecisionCurve, float l_precision) {
 		try {
-			float ret = cv::getRecall(*reinterpret_cast<const std::vector<cv::Point2f>*>(recallPrecisionCurve), l_precision);
-			return Ok<float>(ret);
+			float ret = cv::getRecall(*recallPrecisionCurve, l_precision);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result<void*> cv_AKAZE_create_int_int_int_float_int_int_int(int descriptor_type, int descriptor_size, int descriptor_channels, float threshold, int nOctaves, int nOctaveLayers, int diffusivity) {
+	Result<cv::Ptr<cv::AKAZE>*> cv_AKAZE_create_int_int_int_float_int_int_int(int descriptor_type, int descriptor_size, int descriptor_channels, float threshold, int nOctaves, int nOctaveLayers, int diffusivity) {
 		try {
 			cv::Ptr<cv::AKAZE> ret = cv::AKAZE::create(descriptor_type, descriptor_size, descriptor_channels, threshold, nOctaves, nOctaveLayers, diffusivity);
-			return Ok<void*>(new cv::Ptr<cv::AKAZE>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::AKAZE>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::AKAZE>*>)
 	}
 	
-	Result_void cv_AKAZE_setDescriptorType_int(void* instance, int dtype) {
+	Result_void cv_AKAZE_setDescriptorType_int(cv::AKAZE* instance, int dtype) {
 		try {
-			reinterpret_cast<cv::AKAZE*>(instance)->setDescriptorType(dtype);
+			instance->setDescriptorType(dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AKAZE_getDescriptorType_const(void* instance) {
+	Result<int> cv_AKAZE_getDescriptorType_const(const cv::AKAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AKAZE*>(instance)->getDescriptorType();
-			return Ok<int>(ret);
+			int ret = instance->getDescriptorType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_AKAZE_setDescriptorSize_int(void* instance, int dsize) {
+	Result_void cv_AKAZE_setDescriptorSize_int(cv::AKAZE* instance, int dsize) {
 		try {
-			reinterpret_cast<cv::AKAZE*>(instance)->setDescriptorSize(dsize);
+			instance->setDescriptorSize(dsize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AKAZE_getDescriptorSize_const(void* instance) {
+	Result<int> cv_AKAZE_getDescriptorSize_const(const cv::AKAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AKAZE*>(instance)->getDescriptorSize();
-			return Ok<int>(ret);
+			int ret = instance->getDescriptorSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_AKAZE_setDescriptorChannels_int(void* instance, int dch) {
+	Result_void cv_AKAZE_setDescriptorChannels_int(cv::AKAZE* instance, int dch) {
 		try {
-			reinterpret_cast<cv::AKAZE*>(instance)->setDescriptorChannels(dch);
+			instance->setDescriptorChannels(dch);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AKAZE_getDescriptorChannels_const(void* instance) {
+	Result<int> cv_AKAZE_getDescriptorChannels_const(const cv::AKAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AKAZE*>(instance)->getDescriptorChannels();
-			return Ok<int>(ret);
+			int ret = instance->getDescriptorChannels();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_AKAZE_setThreshold_double(void* instance, double threshold) {
+	Result_void cv_AKAZE_setThreshold_double(cv::AKAZE* instance, double threshold) {
 		try {
-			reinterpret_cast<cv::AKAZE*>(instance)->setThreshold(threshold);
+			instance->setThreshold(threshold);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_AKAZE_getThreshold_const(void* instance) {
+	Result<double> cv_AKAZE_getThreshold_const(const cv::AKAZE* instance) {
 		try {
-			double ret = reinterpret_cast<cv::AKAZE*>(instance)->getThreshold();
-			return Ok<double>(ret);
+			double ret = instance->getThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_AKAZE_setNOctaves_int(void* instance, int octaves) {
+	Result_void cv_AKAZE_setNOctaves_int(cv::AKAZE* instance, int octaves) {
 		try {
-			reinterpret_cast<cv::AKAZE*>(instance)->setNOctaves(octaves);
+			instance->setNOctaves(octaves);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AKAZE_getNOctaves_const(void* instance) {
+	Result<int> cv_AKAZE_getNOctaves_const(const cv::AKAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AKAZE*>(instance)->getNOctaves();
-			return Ok<int>(ret);
+			int ret = instance->getNOctaves();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_AKAZE_setNOctaveLayers_int(void* instance, int octaveLayers) {
+	Result_void cv_AKAZE_setNOctaveLayers_int(cv::AKAZE* instance, int octaveLayers) {
 		try {
-			reinterpret_cast<cv::AKAZE*>(instance)->setNOctaveLayers(octaveLayers);
+			instance->setNOctaveLayers(octaveLayers);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AKAZE_getNOctaveLayers_const(void* instance) {
+	Result<int> cv_AKAZE_getNOctaveLayers_const(const cv::AKAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AKAZE*>(instance)->getNOctaveLayers();
-			return Ok<int>(ret);
+			int ret = instance->getNOctaveLayers();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_AKAZE_setDiffusivity_int(void* instance, int diff) {
+	Result_void cv_AKAZE_setDiffusivity_int(cv::AKAZE* instance, int diff) {
 		try {
-			reinterpret_cast<cv::AKAZE*>(instance)->setDiffusivity(diff);
+			instance->setDiffusivity(diff);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AKAZE_getDiffusivity_const(void* instance) {
+	Result<int> cv_AKAZE_getDiffusivity_const(const cv::AKAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AKAZE*>(instance)->getDiffusivity();
-			return Ok<int>(ret);
+			int ret = instance->getDiffusivity();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<void*> cv_AgastFeatureDetector_create_int_bool_int(int threshold, bool nonmaxSuppression, int type) {
+	Result<cv::Ptr<cv::AgastFeatureDetector>*> cv_AgastFeatureDetector_create_int_bool_int(int threshold, bool nonmaxSuppression, int type) {
 		try {
 			cv::Ptr<cv::AgastFeatureDetector> ret = cv::AgastFeatureDetector::create(threshold, nonmaxSuppression, type);
-			return Ok<void*>(new cv::Ptr<cv::AgastFeatureDetector>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::AgastFeatureDetector>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::AgastFeatureDetector>*>)
 	}
 	
-	Result_void cv_AgastFeatureDetector_setThreshold_int(void* instance, int threshold) {
+	Result_void cv_AgastFeatureDetector_setThreshold_int(cv::AgastFeatureDetector* instance, int threshold) {
 		try {
-			reinterpret_cast<cv::AgastFeatureDetector*>(instance)->setThreshold(threshold);
+			instance->setThreshold(threshold);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AgastFeatureDetector_getThreshold_const(void* instance) {
+	Result<int> cv_AgastFeatureDetector_getThreshold_const(const cv::AgastFeatureDetector* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AgastFeatureDetector*>(instance)->getThreshold();
-			return Ok<int>(ret);
+			int ret = instance->getThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_AgastFeatureDetector_setNonmaxSuppression_bool(void* instance, bool f) {
+	Result_void cv_AgastFeatureDetector_setNonmaxSuppression_bool(cv::AgastFeatureDetector* instance, bool f) {
 		try {
-			reinterpret_cast<cv::AgastFeatureDetector*>(instance)->setNonmaxSuppression(f);
+			instance->setNonmaxSuppression(f);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_AgastFeatureDetector_getNonmaxSuppression_const(void* instance) {
+	Result<bool> cv_AgastFeatureDetector_getNonmaxSuppression_const(const cv::AgastFeatureDetector* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::AgastFeatureDetector*>(instance)->getNonmaxSuppression();
-			return Ok<bool>(ret);
+			bool ret = instance->getNonmaxSuppression();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_AgastFeatureDetector_setType_int(void* instance, int type) {
+	Result_void cv_AgastFeatureDetector_setType_int(cv::AgastFeatureDetector* instance, int type) {
 		try {
-			reinterpret_cast<cv::AgastFeatureDetector*>(instance)->setType(type);
+			instance->setType(type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_AgastFeatureDetector_getType_const(void* instance) {
+	Result<int> cv_AgastFeatureDetector_getType_const(const cv::AgastFeatureDetector* instance) {
 		try {
-			int ret = reinterpret_cast<cv::AgastFeatureDetector*>(instance)->getType();
-			return Ok<int>(ret);
+			int ret = instance->getType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	void cv_BFMatcher_delete(cv::BFMatcher* instance) {
 		delete instance;
 	}
-	Result<void*> cv_BFMatcher_BFMatcher_int_bool(int normType, bool crossCheck) {
+	Result<cv::BFMatcher*> cv_BFMatcher_BFMatcher_int_bool(int normType, bool crossCheck) {
 		try {
 			cv::BFMatcher* ret = new cv::BFMatcher(normType, crossCheck);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::BFMatcher*>)
 	}
 	
-	Result<bool> cv_BFMatcher_isMaskSupported_const(void* instance) {
+	Result<bool> cv_BFMatcher_isMaskSupported_const(const cv::BFMatcher* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::BFMatcher*>(instance)->isMaskSupported();
-			return Ok<bool>(ret);
+			bool ret = instance->isMaskSupported();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_BFMatcher_create_int_bool(int normType, bool crossCheck) {
+	Result<cv::Ptr<cv::BFMatcher>*> cv_BFMatcher_create_int_bool(int normType, bool crossCheck) {
 		try {
 			cv::Ptr<cv::BFMatcher> ret = cv::BFMatcher::create(normType, crossCheck);
-			return Ok<void*>(new cv::Ptr<cv::BFMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::BFMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::BFMatcher>*>)
 	}
 	
-	Result<void*> cv_BFMatcher_clone_const_bool(void* instance, bool emptyTrainData) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_BFMatcher_clone_const_bool(const cv::BFMatcher* instance, bool emptyTrainData) {
 		try {
-			cv::Ptr<cv::DescriptorMatcher> ret = reinterpret_cast<cv::BFMatcher*>(instance)->clone(emptyTrainData);
-			return Ok<void*>(new cv::Ptr<cv::DescriptorMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::DescriptorMatcher> ret = instance->clone(emptyTrainData);
+			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DescriptorMatcher>*>)
 	}
 	
 	void cv_BOWImgDescriptorExtractor_delete(cv::BOWImgDescriptorExtractor* instance) {
 		delete instance;
 	}
-	Result<void*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorExtractor_X_const_Ptr_DescriptorMatcher_X(void* dextractor, void* dmatcher) {
+	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorExtractor_X_const_Ptr_DescriptorMatcher_X(const cv::Ptr<cv::DescriptorExtractor>* dextractor, const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
 		try {
-			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*reinterpret_cast<const cv::Ptr<cv::DescriptorExtractor>*>(dextractor), *reinterpret_cast<const cv::Ptr<cv::DescriptorMatcher>*>(dmatcher));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*dextractor, *dmatcher);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::BOWImgDescriptorExtractor*>)
 	}
 	
-	Result<void*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorMatcher_X(void* dmatcher) {
+	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorMatcher_X(const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
 		try {
-			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*reinterpret_cast<const cv::Ptr<cv::DescriptorMatcher>*>(dmatcher));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*dmatcher);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::BOWImgDescriptorExtractor*>)
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_setVocabulary_const_MatX(void* instance, void* vocabulary) {
+	Result_void cv_BOWImgDescriptorExtractor_setVocabulary_const_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::Mat* vocabulary) {
 		try {
-			reinterpret_cast<cv::BOWImgDescriptorExtractor*>(instance)->setVocabulary(*reinterpret_cast<const cv::Mat*>(vocabulary));
+			instance->setVocabulary(*vocabulary);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_BOWImgDescriptorExtractor_getVocabulary_const(void* instance) {
+	Result<cv::Mat*> cv_BOWImgDescriptorExtractor_getVocabulary_const(const cv::BOWImgDescriptorExtractor* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::BOWImgDescriptorExtractor*>(instance)->getVocabulary();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->getVocabulary();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX_vector_vector_int__X_MatX(void* instance, void* image, void* keypoints, void* imgDescriptor, void* pointIdxsOfClusters, void* descriptors) {
+	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX_vector_vector_int__X_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* imgDescriptor, std::vector<std::vector<int>>* pointIdxsOfClusters, cv::Mat* descriptors) {
 		try {
-			reinterpret_cast<cv::BOWImgDescriptorExtractor*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<const cv::_OutputArray*>(imgDescriptor), reinterpret_cast<std::vector<std::vector<int>>*>(pointIdxsOfClusters), reinterpret_cast<cv::Mat*>(descriptors));
+			instance->compute(*image, *keypoints, *imgDescriptor, pointIdxsOfClusters, descriptors);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayX_const__OutputArrayX_vector_vector_int__X(void* instance, void* keypointDescriptors, void* imgDescriptor, void* pointIdxsOfClusters) {
+	Result_void cv_BOWImgDescriptorExtractor_compute_const__InputArrayX_const__OutputArrayX_vector_vector_int__X(cv::BOWImgDescriptorExtractor* instance, const cv::_InputArray* keypointDescriptors, const cv::_OutputArray* imgDescriptor, std::vector<std::vector<int>>* pointIdxsOfClusters) {
 		try {
-			reinterpret_cast<cv::BOWImgDescriptorExtractor*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(keypointDescriptors), *reinterpret_cast<const cv::_OutputArray*>(imgDescriptor), reinterpret_cast<std::vector<std::vector<int>>*>(pointIdxsOfClusters));
+			instance->compute(*keypointDescriptors, *imgDescriptor, pointIdxsOfClusters);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_BOWImgDescriptorExtractor_compute2_const_MatX_vector_KeyPoint_X_MatX(void* instance, void* image, void* keypoints, void* imgDescriptor) {
+	Result_void cv_BOWImgDescriptorExtractor_compute2_const_MatX_vector_KeyPoint_X_MatX(cv::BOWImgDescriptorExtractor* instance, const cv::Mat* image, std::vector<cv::KeyPoint>* keypoints, cv::Mat* imgDescriptor) {
 		try {
-			reinterpret_cast<cv::BOWImgDescriptorExtractor*>(instance)->compute2(*reinterpret_cast<const cv::Mat*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<cv::Mat*>(imgDescriptor));
+			instance->compute2(*image, *keypoints, *imgDescriptor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_BOWImgDescriptorExtractor_descriptorSize_const(void* instance) {
+	Result<int> cv_BOWImgDescriptorExtractor_descriptorSize_const(const cv::BOWImgDescriptorExtractor* instance) {
 		try {
-			int ret = reinterpret_cast<cv::BOWImgDescriptorExtractor*>(instance)->descriptorSize();
-			return Ok<int>(ret);
+			int ret = instance->descriptorSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_BOWImgDescriptorExtractor_descriptorType_const(void* instance) {
+	Result<int> cv_BOWImgDescriptorExtractor_descriptorType_const(const cv::BOWImgDescriptorExtractor* instance) {
 		try {
-			int ret = reinterpret_cast<cv::BOWImgDescriptorExtractor*>(instance)->descriptorType();
-			return Ok<int>(ret);
+			int ret = instance->descriptorType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	void cv_BOWKMeansTrainer_delete(cv::BOWKMeansTrainer* instance) {
 		delete instance;
 	}
-	Result<void*> cv_BOWKMeansTrainer_BOWKMeansTrainer_int_const_TermCriteriaX_int_int(int clusterCount, void* termcrit, int attempts, int flags) {
+	Result<cv::BOWKMeansTrainer*> cv_BOWKMeansTrainer_BOWKMeansTrainer_int_const_TermCriteriaX_int_int(int clusterCount, const cv::TermCriteria* termcrit, int attempts, int flags) {
 		try {
-			cv::BOWKMeansTrainer* ret = new cv::BOWKMeansTrainer(clusterCount, *reinterpret_cast<const cv::TermCriteria*>(termcrit), attempts, flags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::BOWKMeansTrainer* ret = new cv::BOWKMeansTrainer(clusterCount, *termcrit, attempts, flags);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::BOWKMeansTrainer*>)
 	}
 	
-	Result<void*> cv_BOWKMeansTrainer_cluster_const(void* instance) {
+	Result<cv::Mat*> cv_BOWKMeansTrainer_cluster_const(const cv::BOWKMeansTrainer* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::BOWKMeansTrainer*>(instance)->cluster();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->cluster();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_BOWKMeansTrainer_cluster_const_const_MatX(void* instance, void* descriptors) {
+	Result<cv::Mat*> cv_BOWKMeansTrainer_cluster_const_const_MatX(const cv::BOWKMeansTrainer* instance, const cv::Mat* descriptors) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::BOWKMeansTrainer*>(instance)->cluster(*reinterpret_cast<const cv::Mat*>(descriptors));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->cluster(*descriptors);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_BOWTrainer_add_const_MatX(void* instance, void* descriptors) {
+	Result_void cv_BOWTrainer_add_const_MatX(cv::BOWTrainer* instance, const cv::Mat* descriptors) {
 		try {
-			reinterpret_cast<cv::BOWTrainer*>(instance)->add(*reinterpret_cast<const cv::Mat*>(descriptors));
+			instance->add(*descriptors);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_BOWTrainer_getDescriptors_const(void* instance) {
+	Result<std::vector<cv::Mat>*> cv_BOWTrainer_getDescriptors_const(const cv::BOWTrainer* instance) {
 		try {
-			std::vector<cv::Mat> ret = reinterpret_cast<cv::BOWTrainer*>(instance)->getDescriptors();
-			return Ok<void*>(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<cv::Mat> ret = instance->getDescriptors();
+			return Ok(new std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(Result<std::vector<cv::Mat>*>)
 	}
 	
-	Result<int> cv_BOWTrainer_descriptorsCount_const(void* instance) {
+	Result<int> cv_BOWTrainer_descriptorsCount_const(const cv::BOWTrainer* instance) {
 		try {
-			int ret = reinterpret_cast<cv::BOWTrainer*>(instance)->descriptorsCount();
-			return Ok<int>(ret);
+			int ret = instance->descriptorsCount();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_BOWTrainer_clear(void* instance) {
+	Result_void cv_BOWTrainer_clear(cv::BOWTrainer* instance) {
 		try {
-			reinterpret_cast<cv::BOWTrainer*>(instance)->clear();
+			instance->clear();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_BOWTrainer_cluster_const(void* instance) {
+	Result<cv::Mat*> cv_BOWTrainer_cluster_const(const cv::BOWTrainer* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::BOWTrainer*>(instance)->cluster();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->cluster();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_BOWTrainer_cluster_const_const_MatX(void* instance, void* descriptors) {
+	Result<cv::Mat*> cv_BOWTrainer_cluster_const_const_MatX(const cv::BOWTrainer* instance, const cv::Mat* descriptors) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::BOWTrainer*>(instance)->cluster(*reinterpret_cast<const cv::Mat*>(descriptors));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->cluster(*descriptors);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
 	void cv_BRISK_delete(cv::BRISK* instance) {
 		delete instance;
 	}
-	Result<void*> cv_BRISK_create_int_int_float(int thresh, int octaves, float patternScale) {
+	Result<cv::Ptr<cv::BRISK>*> cv_BRISK_create_int_int_float(int thresh, int octaves, float patternScale) {
 		try {
 			cv::Ptr<cv::BRISK> ret = cv::BRISK::create(thresh, octaves, patternScale);
-			return Ok<void*>(new cv::Ptr<cv::BRISK>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::BRISK>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::BRISK>*>)
 	}
 	
-	Result<void*> cv_BRISK_create_const_vector_float_X_const_vector_int_X_float_float_const_vector_int_X(void* radiusList, void* numberList, float dMax, float dMin, void* indexChange) {
+	Result<cv::Ptr<cv::BRISK>*> cv_BRISK_create_const_vector_float_X_const_vector_int_X_float_float_const_vector_int_X(const std::vector<float>* radiusList, const std::vector<int>* numberList, float dMax, float dMin, const std::vector<int>* indexChange) {
 		try {
-			cv::Ptr<cv::BRISK> ret = cv::BRISK::create(*reinterpret_cast<const std::vector<float>*>(radiusList), *reinterpret_cast<const std::vector<int>*>(numberList), dMax, dMin, *reinterpret_cast<const std::vector<int>*>(indexChange));
-			return Ok<void*>(new cv::Ptr<cv::BRISK>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::BRISK> ret = cv::BRISK::create(*radiusList, *numberList, dMax, dMin, *indexChange);
+			return Ok(new cv::Ptr<cv::BRISK>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::BRISK>*>)
 	}
 	
-	Result_void cv_DescriptorMatcher_add_const__InputArrayX(void* instance, void* descriptors) {
+	Result_void cv_DescriptorMatcher_add_const__InputArrayX(cv::DescriptorMatcher* instance, const cv::_InputArray* descriptors) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->add(*reinterpret_cast<const cv::_InputArray*>(descriptors));
+			instance->add(*descriptors);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_DescriptorMatcher_getTrainDescriptors_const(void* instance) {
+	Result<std::vector<cv::Mat>*> cv_DescriptorMatcher_getTrainDescriptors_const(const cv::DescriptorMatcher* instance) {
 		try {
-			std::vector<cv::Mat> ret = reinterpret_cast<cv::DescriptorMatcher*>(instance)->getTrainDescriptors();
-			return Ok<void*>(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<cv::Mat> ret = instance->getTrainDescriptors();
+			return Ok(new std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(Result<std::vector<cv::Mat>*>)
 	}
 	
-	Result_void cv_DescriptorMatcher_clear(void* instance) {
+	Result_void cv_DescriptorMatcher_clear(cv::DescriptorMatcher* instance) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->clear();
+			instance->clear();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_DescriptorMatcher_empty_const(void* instance) {
+	Result<bool> cv_DescriptorMatcher_empty_const(const cv::DescriptorMatcher* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::DescriptorMatcher*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_DescriptorMatcher_isMaskSupported_const(void* instance) {
+	Result<bool> cv_DescriptorMatcher_isMaskSupported_const(const cv::DescriptorMatcher* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::DescriptorMatcher*>(instance)->isMaskSupported();
-			return Ok<bool>(ret);
+			bool ret = instance->isMaskSupported();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_DescriptorMatcher_train(void* instance) {
+	Result_void cv_DescriptorMatcher_train(cv::DescriptorMatcher* instance) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->train();
+			instance->train();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_match_const_const__InputArrayX_const__InputArrayX_vector_DMatch_X_const__InputArrayX(void* instance, void* queryDescriptors, void* trainDescriptors, void* matches, void* mask) {
+	Result_void cv_DescriptorMatcher_match_const_const__InputArrayX_const__InputArrayX_vector_DMatch_X_const__InputArrayX(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<cv::DMatch>* matches, const cv::_InputArray* mask) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->match(*reinterpret_cast<const cv::_InputArray*>(queryDescriptors), *reinterpret_cast<const cv::_InputArray*>(trainDescriptors), *reinterpret_cast<std::vector<cv::DMatch>*>(matches), *reinterpret_cast<const cv::_InputArray*>(mask));
+			instance->match(*queryDescriptors, *trainDescriptors, *matches, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_knnMatch_const_const__InputArrayX_const__InputArrayX_vector_vector_DMatch__X_int_const__InputArrayX_bool(void* instance, void* queryDescriptors, void* trainDescriptors, void* matches, int k, void* mask, bool compactResult) {
+	Result_void cv_DescriptorMatcher_knnMatch_const_const__InputArrayX_const__InputArrayX_vector_vector_DMatch__X_int_const__InputArrayX_bool(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::_InputArray* mask, bool compactResult) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->knnMatch(*reinterpret_cast<const cv::_InputArray*>(queryDescriptors), *reinterpret_cast<const cv::_InputArray*>(trainDescriptors), *reinterpret_cast<std::vector<std::vector<cv::DMatch>>*>(matches), k, *reinterpret_cast<const cv::_InputArray*>(mask), compactResult);
+			instance->knnMatch(*queryDescriptors, *trainDescriptors, *matches, k, *mask, compactResult);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_radiusMatch_const_const__InputArrayX_const__InputArrayX_vector_vector_DMatch__X_float_const__InputArrayX_bool(void* instance, void* queryDescriptors, void* trainDescriptors, void* matches, float maxDistance, void* mask, bool compactResult) {
+	Result_void cv_DescriptorMatcher_radiusMatch_const_const__InputArrayX_const__InputArrayX_vector_vector_DMatch__X_float_const__InputArrayX_bool(const cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, const cv::_InputArray* trainDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::_InputArray* mask, bool compactResult) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->radiusMatch(*reinterpret_cast<const cv::_InputArray*>(queryDescriptors), *reinterpret_cast<const cv::_InputArray*>(trainDescriptors), *reinterpret_cast<std::vector<std::vector<cv::DMatch>>*>(matches), maxDistance, *reinterpret_cast<const cv::_InputArray*>(mask), compactResult);
+			instance->radiusMatch(*queryDescriptors, *trainDescriptors, *matches, maxDistance, *mask, compactResult);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_match_const__InputArrayX_vector_DMatch_X_const__InputArrayX(void* instance, void* queryDescriptors, void* matches, void* masks) {
+	Result_void cv_DescriptorMatcher_match_const__InputArrayX_vector_DMatch_X_const__InputArrayX(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<cv::DMatch>* matches, const cv::_InputArray* masks) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->match(*reinterpret_cast<const cv::_InputArray*>(queryDescriptors), *reinterpret_cast<std::vector<cv::DMatch>*>(matches), *reinterpret_cast<const cv::_InputArray*>(masks));
+			instance->match(*queryDescriptors, *matches, *masks);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_knnMatch_const__InputArrayX_vector_vector_DMatch__X_int_const__InputArrayX_bool(void* instance, void* queryDescriptors, void* matches, int k, void* masks, bool compactResult) {
+	Result_void cv_DescriptorMatcher_knnMatch_const__InputArrayX_vector_vector_DMatch__X_int_const__InputArrayX_bool(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, int k, const cv::_InputArray* masks, bool compactResult) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->knnMatch(*reinterpret_cast<const cv::_InputArray*>(queryDescriptors), *reinterpret_cast<std::vector<std::vector<cv::DMatch>>*>(matches), k, *reinterpret_cast<const cv::_InputArray*>(masks), compactResult);
+			instance->knnMatch(*queryDescriptors, *matches, k, *masks, compactResult);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_radiusMatch_const__InputArrayX_vector_vector_DMatch__X_float_const__InputArrayX_bool(void* instance, void* queryDescriptors, void* matches, float maxDistance, void* masks, bool compactResult) {
+	Result_void cv_DescriptorMatcher_radiusMatch_const__InputArrayX_vector_vector_DMatch__X_float_const__InputArrayX_bool(cv::DescriptorMatcher* instance, const cv::_InputArray* queryDescriptors, std::vector<std::vector<cv::DMatch>>* matches, float maxDistance, const cv::_InputArray* masks, bool compactResult) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->radiusMatch(*reinterpret_cast<const cv::_InputArray*>(queryDescriptors), *reinterpret_cast<std::vector<std::vector<cv::DMatch>>*>(matches), maxDistance, *reinterpret_cast<const cv::_InputArray*>(masks), compactResult);
+			instance->radiusMatch(*queryDescriptors, *matches, maxDistance, *masks, compactResult);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_write_const_const_StringX(void* instance, const char* fileName) {
+	Result_void cv_DescriptorMatcher_write_const_const_StringX(const cv::DescriptorMatcher* instance, const char* fileName) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->write(cv::String(fileName));
+			instance->write(cv::String(fileName));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_read_const_StringX(void* instance, const char* fileName) {
+	Result_void cv_DescriptorMatcher_read_const_StringX(cv::DescriptorMatcher* instance, const char* fileName) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->read(cv::String(fileName));
+			instance->read(cv::String(fileName));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_read_const_FileNodeX(void* instance, void* unnamed) {
+	Result_void cv_DescriptorMatcher_read_const_FileNodeX(cv::DescriptorMatcher* instance, const cv::FileNode* unnamed) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->read(*reinterpret_cast<const cv::FileNode*>(unnamed));
+			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DescriptorMatcher_write_const_FileStorageX(void* instance, void* unnamed) {
+	Result_void cv_DescriptorMatcher_write_const_FileStorageX(const cv::DescriptorMatcher* instance, cv::FileStorage* unnamed) {
 		try {
-			reinterpret_cast<cv::DescriptorMatcher*>(instance)->write(*reinterpret_cast<cv::FileStorage*>(unnamed));
+			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_DescriptorMatcher_clone_const_bool(void* instance, bool emptyTrainData) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_DescriptorMatcher_clone_const_bool(const cv::DescriptorMatcher* instance, bool emptyTrainData) {
 		try {
-			cv::Ptr<cv::DescriptorMatcher> ret = reinterpret_cast<cv::DescriptorMatcher*>(instance)->clone(emptyTrainData);
-			return Ok<void*>(new cv::Ptr<cv::DescriptorMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::DescriptorMatcher> ret = instance->clone(emptyTrainData);
+			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DescriptorMatcher>*>)
 	}
 	
-	Result<void*> cv_DescriptorMatcher_create_const_StringX(const char* descriptorMatcherType) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_DescriptorMatcher_create_const_StringX(const char* descriptorMatcherType) {
 		try {
 			cv::Ptr<cv::DescriptorMatcher> ret = cv::DescriptorMatcher::create(cv::String(descriptorMatcherType));
-			return Ok<void*>(new cv::Ptr<cv::DescriptorMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DescriptorMatcher>*>)
 	}
 	
-	Result<void*> cv_DescriptorMatcher_create_int(int matcherType) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_DescriptorMatcher_create_int(int matcherType) {
 		try {
 			cv::Ptr<cv::DescriptorMatcher> ret = cv::DescriptorMatcher::create(matcherType);
-			return Ok<void*>(new cv::Ptr<cv::DescriptorMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DescriptorMatcher>*>)
 	}
 	
 	void cv_DrawMatchesFlags_delete(cv::DrawMatchesFlags* instance) {
 		delete instance;
 	}
-	Result<void*> cv_FastFeatureDetector_create_int_bool_int(int threshold, bool nonmaxSuppression, int type) {
+	Result<cv::Ptr<cv::FastFeatureDetector>*> cv_FastFeatureDetector_create_int_bool_int(int threshold, bool nonmaxSuppression, int type) {
 		try {
 			cv::Ptr<cv::FastFeatureDetector> ret = cv::FastFeatureDetector::create(threshold, nonmaxSuppression, type);
-			return Ok<void*>(new cv::Ptr<cv::FastFeatureDetector>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::FastFeatureDetector>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::FastFeatureDetector>*>)
 	}
 	
-	Result_void cv_FastFeatureDetector_setThreshold_int(void* instance, int threshold) {
+	Result_void cv_FastFeatureDetector_setThreshold_int(cv::FastFeatureDetector* instance, int threshold) {
 		try {
-			reinterpret_cast<cv::FastFeatureDetector*>(instance)->setThreshold(threshold);
+			instance->setThreshold(threshold);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_FastFeatureDetector_getThreshold_const(void* instance) {
+	Result<int> cv_FastFeatureDetector_getThreshold_const(const cv::FastFeatureDetector* instance) {
 		try {
-			int ret = reinterpret_cast<cv::FastFeatureDetector*>(instance)->getThreshold();
-			return Ok<int>(ret);
+			int ret = instance->getThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_FastFeatureDetector_setNonmaxSuppression_bool(void* instance, bool f) {
+	Result_void cv_FastFeatureDetector_setNonmaxSuppression_bool(cv::FastFeatureDetector* instance, bool f) {
 		try {
-			reinterpret_cast<cv::FastFeatureDetector*>(instance)->setNonmaxSuppression(f);
+			instance->setNonmaxSuppression(f);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_FastFeatureDetector_getNonmaxSuppression_const(void* instance) {
+	Result<bool> cv_FastFeatureDetector_getNonmaxSuppression_const(const cv::FastFeatureDetector* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FastFeatureDetector*>(instance)->getNonmaxSuppression();
-			return Ok<bool>(ret);
+			bool ret = instance->getNonmaxSuppression();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_FastFeatureDetector_setType_int(void* instance, int type) {
+	Result_void cv_FastFeatureDetector_setType_int(cv::FastFeatureDetector* instance, int type) {
 		try {
-			reinterpret_cast<cv::FastFeatureDetector*>(instance)->setType(type);
+			instance->setType(type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_FastFeatureDetector_getType_const(void* instance) {
+	Result<int> cv_FastFeatureDetector_getType_const(const cv::FastFeatureDetector* instance) {
 		try {
-			int ret = reinterpret_cast<cv::FastFeatureDetector*>(instance)->getType();
-			return Ok<int>(ret);
+			int ret = instance->getType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	void cv_Feature2D_delete(cv::Feature2D* instance) {
 		delete instance;
 	}
-	Result_void cv_Feature2D_detect_const__InputArrayX_vector_KeyPoint_X_const__InputArrayX(void* instance, void* image, void* keypoints, void* mask) {
+	Result_void cv_Feature2D_detect_const__InputArrayX_vector_KeyPoint_X_const__InputArrayX(cv::Feature2D* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_InputArray* mask) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->detect(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<const cv::_InputArray*>(mask));
+			instance->detect(*image, *keypoints, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Feature2D_detect_const__InputArrayX_vector_vector_KeyPoint__X_const__InputArrayX(void* instance, void* images, void* keypoints, void* masks) {
+	Result_void cv_Feature2D_detect_const__InputArrayX_vector_vector_KeyPoint__X_const__InputArrayX(cv::Feature2D* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_InputArray* masks) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->detect(*reinterpret_cast<const cv::_InputArray*>(images), *reinterpret_cast<std::vector<std::vector<cv::KeyPoint>>*>(keypoints), *reinterpret_cast<const cv::_InputArray*>(masks));
+			instance->detect(*images, *keypoints, *masks);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Feature2D_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(void* instance, void* image, void* keypoints, void* descriptors) {
+	Result_void cv_Feature2D_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(cv::Feature2D* instance, const cv::_InputArray* image, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<const cv::_OutputArray*>(descriptors));
+			instance->compute(*image, *keypoints, *descriptors);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Feature2D_compute_const__InputArrayX_vector_vector_KeyPoint__X_const__OutputArrayX(void* instance, void* images, void* keypoints, void* descriptors) {
+	Result_void cv_Feature2D_compute_const__InputArrayX_vector_vector_KeyPoint__X_const__OutputArrayX(cv::Feature2D* instance, const cv::_InputArray* images, std::vector<std::vector<cv::KeyPoint>>* keypoints, const cv::_OutputArray* descriptors) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(images), *reinterpret_cast<std::vector<std::vector<cv::KeyPoint>>*>(keypoints), *reinterpret_cast<const cv::_OutputArray*>(descriptors));
+			instance->compute(*images, *keypoints, *descriptors);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Feature2D_detectAndCompute_const__InputArrayX_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX_bool(void* instance, void* image, void* mask, void* keypoints, void* descriptors, bool useProvidedKeypoints) {
+	Result_void cv_Feature2D_detectAndCompute_const__InputArrayX_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX_bool(cv::Feature2D* instance, const cv::_InputArray* image, const cv::_InputArray* mask, std::vector<cv::KeyPoint>* keypoints, const cv::_OutputArray* descriptors, bool useProvidedKeypoints) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->detectAndCompute(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<const cv::_OutputArray*>(descriptors), useProvidedKeypoints);
+			instance->detectAndCompute(*image, *mask, *keypoints, *descriptors, useProvidedKeypoints);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Feature2D_descriptorSize_const(void* instance) {
+	Result<int> cv_Feature2D_descriptorSize_const(const cv::Feature2D* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Feature2D*>(instance)->descriptorSize();
-			return Ok<int>(ret);
+			int ret = instance->descriptorSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_Feature2D_descriptorType_const(void* instance) {
+	Result<int> cv_Feature2D_descriptorType_const(const cv::Feature2D* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Feature2D*>(instance)->descriptorType();
-			return Ok<int>(ret);
+			int ret = instance->descriptorType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_Feature2D_defaultNorm_const(void* instance) {
+	Result<int> cv_Feature2D_defaultNorm_const(const cv::Feature2D* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Feature2D*>(instance)->defaultNorm();
-			return Ok<int>(ret);
+			int ret = instance->defaultNorm();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Feature2D_write_const_const_StringX(void* instance, const char* fileName) {
+	Result_void cv_Feature2D_write_const_const_StringX(const cv::Feature2D* instance, const char* fileName) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->write(cv::String(fileName));
+			instance->write(cv::String(fileName));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Feature2D_read_const_StringX(void* instance, const char* fileName) {
+	Result_void cv_Feature2D_read_const_StringX(cv::Feature2D* instance, const char* fileName) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->read(cv::String(fileName));
+			instance->read(cv::String(fileName));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Feature2D_write_const_FileStorageX(void* instance, void* unnamed) {
+	Result_void cv_Feature2D_write_const_FileStorageX(const cv::Feature2D* instance, cv::FileStorage* unnamed) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->write(*reinterpret_cast<cv::FileStorage*>(unnamed));
+			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Feature2D_read_const_FileNodeX(void* instance, void* unnamed) {
+	Result_void cv_Feature2D_read_const_FileNodeX(cv::Feature2D* instance, const cv::FileNode* unnamed) {
 		try {
-			reinterpret_cast<cv::Feature2D*>(instance)->read(*reinterpret_cast<const cv::FileNode*>(unnamed));
+			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_Feature2D_empty_const(void* instance) {
+	Result<bool> cv_Feature2D_empty_const(const cv::Feature2D* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::Feature2D*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	void cv_FlannBasedMatcher_delete(cv::FlannBasedMatcher* instance) {
 		delete instance;
 	}
-	Result<void*> cv_FlannBasedMatcher_FlannBasedMatcher_const_Ptr_IndexParams_X_const_Ptr_SearchParams_X(void* indexParams, void* searchParams) {
+	Result<cv::FlannBasedMatcher*> cv_FlannBasedMatcher_FlannBasedMatcher_const_Ptr_IndexParams_X_const_Ptr_SearchParams_X(const cv::Ptr<cv::flann::IndexParams>* indexParams, const cv::Ptr<cv::flann::SearchParams>* searchParams) {
 		try {
-			cv::FlannBasedMatcher* ret = new cv::FlannBasedMatcher(*reinterpret_cast<const cv::Ptr<cv::flann::IndexParams>*>(indexParams), *reinterpret_cast<const cv::Ptr<cv::flann::SearchParams>*>(searchParams));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::FlannBasedMatcher* ret = new cv::FlannBasedMatcher(*indexParams, *searchParams);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FlannBasedMatcher*>)
 	}
 	
-	Result_void cv_FlannBasedMatcher_add_const__InputArrayX(void* instance, void* descriptors) {
+	Result_void cv_FlannBasedMatcher_add_const__InputArrayX(cv::FlannBasedMatcher* instance, const cv::_InputArray* descriptors) {
 		try {
-			reinterpret_cast<cv::FlannBasedMatcher*>(instance)->add(*reinterpret_cast<const cv::_InputArray*>(descriptors));
+			instance->add(*descriptors);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FlannBasedMatcher_clear(void* instance) {
+	Result_void cv_FlannBasedMatcher_clear(cv::FlannBasedMatcher* instance) {
 		try {
-			reinterpret_cast<cv::FlannBasedMatcher*>(instance)->clear();
+			instance->clear();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FlannBasedMatcher_read_const_FileNodeX(void* instance, void* unnamed) {
+	Result_void cv_FlannBasedMatcher_read_const_FileNodeX(cv::FlannBasedMatcher* instance, const cv::FileNode* unnamed) {
 		try {
-			reinterpret_cast<cv::FlannBasedMatcher*>(instance)->read(*reinterpret_cast<const cv::FileNode*>(unnamed));
+			instance->read(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FlannBasedMatcher_write_const_FileStorageX(void* instance, void* unnamed) {
+	Result_void cv_FlannBasedMatcher_write_const_FileStorageX(const cv::FlannBasedMatcher* instance, cv::FileStorage* unnamed) {
 		try {
-			reinterpret_cast<cv::FlannBasedMatcher*>(instance)->write(*reinterpret_cast<cv::FileStorage*>(unnamed));
+			instance->write(*unnamed);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FlannBasedMatcher_train(void* instance) {
+	Result_void cv_FlannBasedMatcher_train(cv::FlannBasedMatcher* instance) {
 		try {
-			reinterpret_cast<cv::FlannBasedMatcher*>(instance)->train();
+			instance->train();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_FlannBasedMatcher_isMaskSupported_const(void* instance) {
+	Result<bool> cv_FlannBasedMatcher_isMaskSupported_const(const cv::FlannBasedMatcher* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FlannBasedMatcher*>(instance)->isMaskSupported();
-			return Ok<bool>(ret);
+			bool ret = instance->isMaskSupported();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_FlannBasedMatcher_create() {
+	Result<cv::Ptr<cv::FlannBasedMatcher>*> cv_FlannBasedMatcher_create() {
 		try {
 			cv::Ptr<cv::FlannBasedMatcher> ret = cv::FlannBasedMatcher::create();
-			return Ok<void*>(new cv::Ptr<cv::FlannBasedMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::FlannBasedMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::FlannBasedMatcher>*>)
 	}
 	
-	Result<void*> cv_FlannBasedMatcher_clone_const_bool(void* instance, bool emptyTrainData) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_FlannBasedMatcher_clone_const_bool(const cv::FlannBasedMatcher* instance, bool emptyTrainData) {
 		try {
-			cv::Ptr<cv::DescriptorMatcher> ret = reinterpret_cast<cv::FlannBasedMatcher*>(instance)->clone(emptyTrainData);
-			return Ok<void*>(new cv::Ptr<cv::DescriptorMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::DescriptorMatcher> ret = instance->clone(emptyTrainData);
+			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DescriptorMatcher>*>)
 	}
 	
-	Result<void*> cv_GFTTDetector_create_int_double_double_int_bool_double(int maxCorners, double qualityLevel, double minDistance, int blockSize, bool useHarrisDetector, double k) {
+	Result<cv::Ptr<cv::GFTTDetector>*> cv_GFTTDetector_create_int_double_double_int_bool_double(int maxCorners, double qualityLevel, double minDistance, int blockSize, bool useHarrisDetector, double k) {
 		try {
 			cv::Ptr<cv::GFTTDetector> ret = cv::GFTTDetector::create(maxCorners, qualityLevel, minDistance, blockSize, useHarrisDetector, k);
-			return Ok<void*>(new cv::Ptr<cv::GFTTDetector>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::GFTTDetector>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::GFTTDetector>*>)
 	}
 	
-	Result_void cv_GFTTDetector_setMaxFeatures_int(void* instance, int maxFeatures) {
+	Result_void cv_GFTTDetector_setMaxFeatures_int(cv::GFTTDetector* instance, int maxFeatures) {
 		try {
-			reinterpret_cast<cv::GFTTDetector*>(instance)->setMaxFeatures(maxFeatures);
+			instance->setMaxFeatures(maxFeatures);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_GFTTDetector_getMaxFeatures_const(void* instance) {
+	Result<int> cv_GFTTDetector_getMaxFeatures_const(const cv::GFTTDetector* instance) {
 		try {
-			int ret = reinterpret_cast<cv::GFTTDetector*>(instance)->getMaxFeatures();
-			return Ok<int>(ret);
+			int ret = instance->getMaxFeatures();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_GFTTDetector_setQualityLevel_double(void* instance, double qlevel) {
+	Result_void cv_GFTTDetector_setQualityLevel_double(cv::GFTTDetector* instance, double qlevel) {
 		try {
-			reinterpret_cast<cv::GFTTDetector*>(instance)->setQualityLevel(qlevel);
+			instance->setQualityLevel(qlevel);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_GFTTDetector_getQualityLevel_const(void* instance) {
+	Result<double> cv_GFTTDetector_getQualityLevel_const(const cv::GFTTDetector* instance) {
 		try {
-			double ret = reinterpret_cast<cv::GFTTDetector*>(instance)->getQualityLevel();
-			return Ok<double>(ret);
+			double ret = instance->getQualityLevel();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_GFTTDetector_setMinDistance_double(void* instance, double minDistance) {
+	Result_void cv_GFTTDetector_setMinDistance_double(cv::GFTTDetector* instance, double minDistance) {
 		try {
-			reinterpret_cast<cv::GFTTDetector*>(instance)->setMinDistance(minDistance);
+			instance->setMinDistance(minDistance);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_GFTTDetector_getMinDistance_const(void* instance) {
+	Result<double> cv_GFTTDetector_getMinDistance_const(const cv::GFTTDetector* instance) {
 		try {
-			double ret = reinterpret_cast<cv::GFTTDetector*>(instance)->getMinDistance();
-			return Ok<double>(ret);
+			double ret = instance->getMinDistance();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_GFTTDetector_setBlockSize_int(void* instance, int blockSize) {
+	Result_void cv_GFTTDetector_setBlockSize_int(cv::GFTTDetector* instance, int blockSize) {
 		try {
-			reinterpret_cast<cv::GFTTDetector*>(instance)->setBlockSize(blockSize);
+			instance->setBlockSize(blockSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_GFTTDetector_getBlockSize_const(void* instance) {
+	Result<int> cv_GFTTDetector_getBlockSize_const(const cv::GFTTDetector* instance) {
 		try {
-			int ret = reinterpret_cast<cv::GFTTDetector*>(instance)->getBlockSize();
-			return Ok<int>(ret);
+			int ret = instance->getBlockSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_GFTTDetector_setHarrisDetector_bool(void* instance, bool val) {
+	Result_void cv_GFTTDetector_setHarrisDetector_bool(cv::GFTTDetector* instance, bool val) {
 		try {
-			reinterpret_cast<cv::GFTTDetector*>(instance)->setHarrisDetector(val);
+			instance->setHarrisDetector(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_GFTTDetector_getHarrisDetector_const(void* instance) {
+	Result<bool> cv_GFTTDetector_getHarrisDetector_const(const cv::GFTTDetector* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::GFTTDetector*>(instance)->getHarrisDetector();
-			return Ok<bool>(ret);
+			bool ret = instance->getHarrisDetector();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_GFTTDetector_setK_double(void* instance, double k) {
+	Result_void cv_GFTTDetector_setK_double(cv::GFTTDetector* instance, double k) {
 		try {
-			reinterpret_cast<cv::GFTTDetector*>(instance)->setK(k);
+			instance->setK(k);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_GFTTDetector_getK_const(void* instance) {
+	Result<double> cv_GFTTDetector_getK_const(const cv::GFTTDetector* instance) {
 		try {
-			double ret = reinterpret_cast<cv::GFTTDetector*>(instance)->getK();
-			return Ok<double>(ret);
+			double ret = instance->getK();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<void*> cv_KAZE_create_bool_bool_float_int_int_int(bool extended, bool upright, float threshold, int nOctaves, int nOctaveLayers, int diffusivity) {
+	Result<cv::Ptr<cv::KAZE>*> cv_KAZE_create_bool_bool_float_int_int_int(bool extended, bool upright, float threshold, int nOctaves, int nOctaveLayers, int diffusivity) {
 		try {
 			cv::Ptr<cv::KAZE> ret = cv::KAZE::create(extended, upright, threshold, nOctaves, nOctaveLayers, diffusivity);
-			return Ok<void*>(new cv::Ptr<cv::KAZE>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::KAZE>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::KAZE>*>)
 	}
 	
-	Result_void cv_KAZE_setExtended_bool(void* instance, bool extended) {
+	Result_void cv_KAZE_setExtended_bool(cv::KAZE* instance, bool extended) {
 		try {
-			reinterpret_cast<cv::KAZE*>(instance)->setExtended(extended);
+			instance->setExtended(extended);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_KAZE_getExtended_const(void* instance) {
+	Result<bool> cv_KAZE_getExtended_const(const cv::KAZE* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::KAZE*>(instance)->getExtended();
-			return Ok<bool>(ret);
+			bool ret = instance->getExtended();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_KAZE_setUpright_bool(void* instance, bool upright) {
+	Result_void cv_KAZE_setUpright_bool(cv::KAZE* instance, bool upright) {
 		try {
-			reinterpret_cast<cv::KAZE*>(instance)->setUpright(upright);
+			instance->setUpright(upright);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_KAZE_getUpright_const(void* instance) {
+	Result<bool> cv_KAZE_getUpright_const(const cv::KAZE* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::KAZE*>(instance)->getUpright();
-			return Ok<bool>(ret);
+			bool ret = instance->getUpright();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_KAZE_setThreshold_double(void* instance, double threshold) {
+	Result_void cv_KAZE_setThreshold_double(cv::KAZE* instance, double threshold) {
 		try {
-			reinterpret_cast<cv::KAZE*>(instance)->setThreshold(threshold);
+			instance->setThreshold(threshold);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_KAZE_getThreshold_const(void* instance) {
+	Result<double> cv_KAZE_getThreshold_const(const cv::KAZE* instance) {
 		try {
-			double ret = reinterpret_cast<cv::KAZE*>(instance)->getThreshold();
-			return Ok<double>(ret);
+			double ret = instance->getThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_KAZE_setNOctaves_int(void* instance, int octaves) {
+	Result_void cv_KAZE_setNOctaves_int(cv::KAZE* instance, int octaves) {
 		try {
-			reinterpret_cast<cv::KAZE*>(instance)->setNOctaves(octaves);
+			instance->setNOctaves(octaves);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_KAZE_getNOctaves_const(void* instance) {
+	Result<int> cv_KAZE_getNOctaves_const(const cv::KAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::KAZE*>(instance)->getNOctaves();
-			return Ok<int>(ret);
+			int ret = instance->getNOctaves();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_KAZE_setNOctaveLayers_int(void* instance, int octaveLayers) {
+	Result_void cv_KAZE_setNOctaveLayers_int(cv::KAZE* instance, int octaveLayers) {
 		try {
-			reinterpret_cast<cv::KAZE*>(instance)->setNOctaveLayers(octaveLayers);
+			instance->setNOctaveLayers(octaveLayers);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_KAZE_getNOctaveLayers_const(void* instance) {
+	Result<int> cv_KAZE_getNOctaveLayers_const(const cv::KAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::KAZE*>(instance)->getNOctaveLayers();
-			return Ok<int>(ret);
+			int ret = instance->getNOctaveLayers();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_KAZE_setDiffusivity_int(void* instance, int diff) {
+	Result_void cv_KAZE_setDiffusivity_int(cv::KAZE* instance, int diff) {
 		try {
-			reinterpret_cast<cv::KAZE*>(instance)->setDiffusivity(diff);
+			instance->setDiffusivity(diff);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_KAZE_getDiffusivity_const(void* instance) {
+	Result<int> cv_KAZE_getDiffusivity_const(const cv::KAZE* instance) {
 		try {
-			int ret = reinterpret_cast<cv::KAZE*>(instance)->getDiffusivity();
-			return Ok<int>(ret);
+			int ret = instance->getDiffusivity();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	void cv_KeyPointsFilter_delete(cv::KeyPointsFilter* instance) {
 		delete instance;
 	}
-	Result<void*> cv_KeyPointsFilter_KeyPointsFilter() {
+	Result<cv::KeyPointsFilter*> cv_KeyPointsFilter_KeyPointsFilter() {
 		try {
 			cv::KeyPointsFilter* ret = new cv::KeyPointsFilter();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::KeyPointsFilter*>)
 	}
 	
-	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_X_Size_int(void* keypoints, const cv::Size* imageSize, int borderSize) {
+	Result_void cv_KeyPointsFilter_runByImageBorder_vector_KeyPoint_X_Size_int(std::vector<cv::KeyPoint>* keypoints, const cv::Size* imageSize, int borderSize) {
 		try {
-			cv::KeyPointsFilter::runByImageBorder(*reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *imageSize, borderSize);
+			cv::KeyPointsFilter::runByImageBorder(*keypoints, *imageSize, borderSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_KeyPointsFilter_runByKeypointSize_vector_KeyPoint_X_float_float(void* keypoints, float minSize, float maxSize) {
+	Result_void cv_KeyPointsFilter_runByKeypointSize_vector_KeyPoint_X_float_float(std::vector<cv::KeyPoint>* keypoints, float minSize, float maxSize) {
 		try {
-			cv::KeyPointsFilter::runByKeypointSize(*reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), minSize, maxSize);
+			cv::KeyPointsFilter::runByKeypointSize(*keypoints, minSize, maxSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_KeyPointsFilter_runByPixelsMask_vector_KeyPoint_X_const_MatX(void* keypoints, void* mask) {
+	Result_void cv_KeyPointsFilter_runByPixelsMask_vector_KeyPoint_X_const_MatX(std::vector<cv::KeyPoint>* keypoints, const cv::Mat* mask) {
 		try {
-			cv::KeyPointsFilter::runByPixelsMask(*reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<const cv::Mat*>(mask));
+			cv::KeyPointsFilter::runByPixelsMask(*keypoints, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_KeyPointsFilter_removeDuplicated_vector_KeyPoint_X(void* keypoints) {
+	Result_void cv_KeyPointsFilter_removeDuplicated_vector_KeyPoint_X(std::vector<cv::KeyPoint>* keypoints) {
 		try {
-			cv::KeyPointsFilter::removeDuplicated(*reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints));
+			cv::KeyPointsFilter::removeDuplicated(*keypoints);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_KeyPointsFilter_retainBest_vector_KeyPoint_X_int(void* keypoints, int npoints) {
+	Result_void cv_KeyPointsFilter_retainBest_vector_KeyPoint_X_int(std::vector<cv::KeyPoint>* keypoints, int npoints) {
 		try {
-			cv::KeyPointsFilter::retainBest(*reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), npoints);
+			cv::KeyPointsFilter::retainBest(*keypoints, npoints);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_MSER_create_int_int_int_double_double_int_double_double_int(int _delta, int _min_area, int _max_area, double _max_variation, double _min_diversity, int _max_evolution, double _area_threshold, double _min_margin, int _edge_blur_size) {
+	Result<cv::Ptr<cv::MSER>*> cv_MSER_create_int_int_int_double_double_int_double_double_int(int _delta, int _min_area, int _max_area, double _max_variation, double _min_diversity, int _max_evolution, double _area_threshold, double _min_margin, int _edge_blur_size) {
 		try {
 			cv::Ptr<cv::MSER> ret = cv::MSER::create(_delta, _min_area, _max_area, _max_variation, _min_diversity, _max_evolution, _area_threshold, _min_margin, _edge_blur_size);
-			return Ok<void*>(new cv::Ptr<cv::MSER>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::MSER>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::MSER>*>)
 	}
 	
-	Result_void cv_MSER_detectRegions_const__InputArrayX_vector_vector_Point__X_vector_Rect_X(void* instance, void* image, void* msers, void* bboxes) {
+	Result_void cv_MSER_detectRegions_const__InputArrayX_vector_vector_Point__X_vector_Rect_X(cv::MSER* instance, const cv::_InputArray* image, std::vector<std::vector<cv::Point>>* msers, std::vector<cv::Rect>* bboxes) {
 		try {
-			reinterpret_cast<cv::MSER*>(instance)->detectRegions(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<std::vector<std::vector<cv::Point>>*>(msers), *reinterpret_cast<std::vector<cv::Rect>*>(bboxes));
+			instance->detectRegions(*image, *msers, *bboxes);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MSER_setDelta_int(void* instance, int delta) {
+	Result_void cv_MSER_setDelta_int(cv::MSER* instance, int delta) {
 		try {
-			reinterpret_cast<cv::MSER*>(instance)->setDelta(delta);
+			instance->setDelta(delta);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_MSER_getDelta_const(void* instance) {
+	Result<int> cv_MSER_getDelta_const(const cv::MSER* instance) {
 		try {
-			int ret = reinterpret_cast<cv::MSER*>(instance)->getDelta();
-			return Ok<int>(ret);
+			int ret = instance->getDelta();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_MSER_setMinArea_int(void* instance, int minArea) {
+	Result_void cv_MSER_setMinArea_int(cv::MSER* instance, int minArea) {
 		try {
-			reinterpret_cast<cv::MSER*>(instance)->setMinArea(minArea);
+			instance->setMinArea(minArea);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_MSER_getMinArea_const(void* instance) {
+	Result<int> cv_MSER_getMinArea_const(const cv::MSER* instance) {
 		try {
-			int ret = reinterpret_cast<cv::MSER*>(instance)->getMinArea();
-			return Ok<int>(ret);
+			int ret = instance->getMinArea();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_MSER_setMaxArea_int(void* instance, int maxArea) {
+	Result_void cv_MSER_setMaxArea_int(cv::MSER* instance, int maxArea) {
 		try {
-			reinterpret_cast<cv::MSER*>(instance)->setMaxArea(maxArea);
+			instance->setMaxArea(maxArea);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_MSER_getMaxArea_const(void* instance) {
+	Result<int> cv_MSER_getMaxArea_const(const cv::MSER* instance) {
 		try {
-			int ret = reinterpret_cast<cv::MSER*>(instance)->getMaxArea();
-			return Ok<int>(ret);
+			int ret = instance->getMaxArea();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_MSER_setPass2Only_bool(void* instance, bool f) {
+	Result_void cv_MSER_setPass2Only_bool(cv::MSER* instance, bool f) {
 		try {
-			reinterpret_cast<cv::MSER*>(instance)->setPass2Only(f);
+			instance->setPass2Only(f);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_MSER_getPass2Only_const(void* instance) {
+	Result<bool> cv_MSER_getPass2Only_const(const cv::MSER* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::MSER*>(instance)->getPass2Only();
-			return Ok<bool>(ret);
+			bool ret = instance->getPass2Only();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_ORB_create_int_float_int_int_int_int_int_int_int(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold, int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold) {
+	Result<cv::Ptr<cv::ORB>*> cv_ORB_create_int_float_int_int_int_int_int_int_int(int nfeatures, float scaleFactor, int nlevels, int edgeThreshold, int firstLevel, int WTA_K, int scoreType, int patchSize, int fastThreshold) {
 		try {
 			cv::Ptr<cv::ORB> ret = cv::ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K, scoreType, patchSize, fastThreshold);
-			return Ok<void*>(new cv::Ptr<cv::ORB>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::ORB>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::ORB>*>)
 	}
 	
-	Result_void cv_ORB_setMaxFeatures_int(void* instance, int maxFeatures) {
+	Result_void cv_ORB_setMaxFeatures_int(cv::ORB* instance, int maxFeatures) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setMaxFeatures(maxFeatures);
+			instance->setMaxFeatures(maxFeatures);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getMaxFeatures_const(void* instance) {
+	Result<int> cv_ORB_getMaxFeatures_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getMaxFeatures();
-			return Ok<int>(ret);
+			int ret = instance->getMaxFeatures();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ORB_setScaleFactor_double(void* instance, double scaleFactor) {
+	Result_void cv_ORB_setScaleFactor_double(cv::ORB* instance, double scaleFactor) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setScaleFactor(scaleFactor);
+			instance->setScaleFactor(scaleFactor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_ORB_getScaleFactor_const(void* instance) {
+	Result<double> cv_ORB_getScaleFactor_const(const cv::ORB* instance) {
 		try {
-			double ret = reinterpret_cast<cv::ORB*>(instance)->getScaleFactor();
-			return Ok<double>(ret);
+			double ret = instance->getScaleFactor();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_ORB_setNLevels_int(void* instance, int nlevels) {
+	Result_void cv_ORB_setNLevels_int(cv::ORB* instance, int nlevels) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setNLevels(nlevels);
+			instance->setNLevels(nlevels);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getNLevels_const(void* instance) {
+	Result<int> cv_ORB_getNLevels_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getNLevels();
-			return Ok<int>(ret);
+			int ret = instance->getNLevels();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ORB_setEdgeThreshold_int(void* instance, int edgeThreshold) {
+	Result_void cv_ORB_setEdgeThreshold_int(cv::ORB* instance, int edgeThreshold) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setEdgeThreshold(edgeThreshold);
+			instance->setEdgeThreshold(edgeThreshold);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getEdgeThreshold_const(void* instance) {
+	Result<int> cv_ORB_getEdgeThreshold_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getEdgeThreshold();
-			return Ok<int>(ret);
+			int ret = instance->getEdgeThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ORB_setFirstLevel_int(void* instance, int firstLevel) {
+	Result_void cv_ORB_setFirstLevel_int(cv::ORB* instance, int firstLevel) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setFirstLevel(firstLevel);
+			instance->setFirstLevel(firstLevel);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getFirstLevel_const(void* instance) {
+	Result<int> cv_ORB_getFirstLevel_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getFirstLevel();
-			return Ok<int>(ret);
+			int ret = instance->getFirstLevel();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ORB_setWTA_K_int(void* instance, int wta_k) {
+	Result_void cv_ORB_setWTA_K_int(cv::ORB* instance, int wta_k) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setWTA_K(wta_k);
+			instance->setWTA_K(wta_k);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getWTA_K_const(void* instance) {
+	Result<int> cv_ORB_getWTA_K_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getWTA_K();
-			return Ok<int>(ret);
+			int ret = instance->getWTA_K();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ORB_setScoreType_int(void* instance, int scoreType) {
+	Result_void cv_ORB_setScoreType_int(cv::ORB* instance, int scoreType) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setScoreType(scoreType);
+			instance->setScoreType(scoreType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getScoreType_const(void* instance) {
+	Result<int> cv_ORB_getScoreType_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getScoreType();
-			return Ok<int>(ret);
+			int ret = instance->getScoreType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ORB_setPatchSize_int(void* instance, int patchSize) {
+	Result_void cv_ORB_setPatchSize_int(cv::ORB* instance, int patchSize) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setPatchSize(patchSize);
+			instance->setPatchSize(patchSize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getPatchSize_const(void* instance) {
+	Result<int> cv_ORB_getPatchSize_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getPatchSize();
-			return Ok<int>(ret);
+			int ret = instance->getPatchSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ORB_setFastThreshold_int(void* instance, int fastThreshold) {
+	Result_void cv_ORB_setFastThreshold_int(cv::ORB* instance, int fastThreshold) {
 		try {
-			reinterpret_cast<cv::ORB*>(instance)->setFastThreshold(fastThreshold);
+			instance->setFastThreshold(fastThreshold);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ORB_getFastThreshold_const(void* instance) {
+	Result<int> cv_ORB_getFastThreshold_const(const cv::ORB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ORB*>(instance)->getFastThreshold();
-			return Ok<int>(ret);
+			int ret = instance->getFastThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	void cv_SimpleBlobDetector_delete(cv::SimpleBlobDetector* instance) {
 		delete instance;
 	}
-	Result<void*> cv_SimpleBlobDetector_create_const_ParamsX(const cv::SimpleBlobDetector::Params* parameters) {
+	Result<cv::Ptr<cv::SimpleBlobDetector>*> cv_SimpleBlobDetector_create_const_ParamsX(const cv::SimpleBlobDetector::Params* parameters) {
 		try {
 			cv::Ptr<cv::SimpleBlobDetector> ret = cv::SimpleBlobDetector::create(*parameters);
-			return Ok<void*>(new cv::Ptr<cv::SimpleBlobDetector>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::SimpleBlobDetector>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::SimpleBlobDetector>*>)
 	}
 	
 	Result<cv::SimpleBlobDetector::Params> cv_SimpleBlobDetector_Params_Params() {
 		try {
 			cv::SimpleBlobDetector::Params ret;
-			return Ok<cv::SimpleBlobDetector::Params>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::SimpleBlobDetector::Params>)
 	}
 	
-	Result_void cv_SimpleBlobDetector_Params_read_const_FileNodeX(cv::SimpleBlobDetector::Params instance, void* fn) {
+	Result_void cv_SimpleBlobDetector_Params_read_const_FileNodeX(cv::SimpleBlobDetector::Params instance, const cv::FileNode* fn) {
 		try {
-			reinterpret_cast<cv::SimpleBlobDetector::Params*>(&instance)->read(*reinterpret_cast<const cv::FileNode*>(fn));
+			instance.read(*fn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SimpleBlobDetector_Params_write_const_FileStorageX(cv::SimpleBlobDetector::Params instance, void* fs) {
+	Result_void cv_SimpleBlobDetector_Params_write_const_FileStorageX(const cv::SimpleBlobDetector::Params instance, cv::FileStorage* fs) {
 		try {
-			reinterpret_cast<cv::SimpleBlobDetector::Params*>(&instance)->write(*reinterpret_cast<cv::FileStorage*>(fs));
+			instance.write(*fs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

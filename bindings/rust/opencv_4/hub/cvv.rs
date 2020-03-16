@@ -45,7 +45,7 @@ pub fn show_image(img: &dyn core::ToInputArray, data: &crate::cvv::CallMetaData,
 pub trait CallMetaDataTrait {
 	fn as_raw_CallMetaData(&self) -> *mut c_void;
 	fn file(&self) -> String {
-		unsafe { sys::cvv_impl_CallMetaData_file_const(self.as_raw_CallMetaData()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: file")
+		unsafe { sys::cvv_impl_CallMetaData_file_const(self.as_raw_CallMetaData()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: file")
 	}
 	
 	fn line(&self) -> size_t {
@@ -53,7 +53,7 @@ pub trait CallMetaDataTrait {
 	}
 	
 	fn function(&self) -> String {
-		unsafe { sys::cvv_impl_CallMetaData_function_const(self.as_raw_CallMetaData()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: function")
+		unsafe { sys::cvv_impl_CallMetaData_function_const(self.as_raw_CallMetaData()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: function")
 	}
 	
 	/// Whether *this holds actual data.

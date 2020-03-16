@@ -200,7 +200,7 @@ pub trait BaseConvolutionLayer: crate::dnn::Layer {
 	}
 	
 	fn pad_mode(&self) -> String {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_padMode_const(self.as_raw_BaseConvolutionLayer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: pad_mode")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_padMode_const(self.as_raw_BaseConvolutionLayer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: pad_mode")
 	}
 	
 	fn set_pad_mode(&mut self, val: &str) -> () {
@@ -793,7 +793,7 @@ pub trait DictTrait {
 	fn set_str(&mut self, key: &str, value: &str) -> Result<String> {
 		string_arg!(key);
 		string_arg!(value);
-		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(self.as_raw_Dict(), key.as_ptr(), value.as_ptr()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(self.as_raw_Dict(), key.as_ptr(), value.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
@@ -852,7 +852,7 @@ pub trait DictValueTrait {
 	/// ## C++ default parameters
 	/// * idx: -1
 	fn get_str(&self, idx: i32) -> Result<String> {
-		unsafe { sys::cv_dnn_DictValue_get_cv_String_const_int(self.as_raw_DictValue(), idx) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_dnn_DictValue_get_cv_String_const_int(self.as_raw_DictValue(), idx) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -1196,7 +1196,7 @@ pub trait Layer {
 	
 	/// Name of the layer instance, can be used for logging or other internal purposes.
 	fn name(&self) -> String {
-		unsafe { sys::cv_dnn_Layer_name_const(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: name")
+		unsafe { sys::cv_dnn_Layer_name_const(self.as_raw_Layer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name")
 	}
 	
 	/// Name of the layer instance, can be used for logging or other internal purposes.
@@ -1207,7 +1207,7 @@ pub trait Layer {
 	
 	/// Type name which was used for creating layer by layer factory.
 	fn typ(&self) -> String {
-		unsafe { sys::cv_dnn_Layer_type_const(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_Layer_type_const(self.as_raw_Layer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: typ")
 	}
 	
 	/// Type name which was used for creating layer by layer factory.
@@ -1377,7 +1377,7 @@ pub trait LayerParamsTrait: crate::dnn::DictTrait {
 	
 	/// Name of the layer instance (optional, can be used internal purposes).
 	fn name(&self) -> String {
-		unsafe { sys::cv_dnn_LayerParams_name_const(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: name")
+		unsafe { sys::cv_dnn_LayerParams_name_const(self.as_raw_LayerParams()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name")
 	}
 	
 	/// Name of the layer instance (optional, can be used internal purposes).
@@ -1388,7 +1388,7 @@ pub trait LayerParamsTrait: crate::dnn::DictTrait {
 	
 	/// Type name which was used for creating layer by layer factory (optional).
 	fn typ(&self) -> String {
-		unsafe { sys::cv_dnn_LayerParams_type_const(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_LayerParams_type_const(self.as_raw_LayerParams()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: typ")
 	}
 	
 	/// Type name which was used for creating layer by layer factory (optional).
@@ -1751,7 +1751,7 @@ pub trait PoolingLayer: crate::dnn::Layer {
 	}
 	
 	fn pad_mode(&self) -> String {
-		unsafe { sys::cv_dnn_PoolingLayer_padMode_const(self.as_raw_PoolingLayer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: pad_mode")
+		unsafe { sys::cv_dnn_PoolingLayer_padMode_const(self.as_raw_PoolingLayer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: pad_mode")
 	}
 	
 	fn set_pad_mode(&mut self, val: &str) -> () {

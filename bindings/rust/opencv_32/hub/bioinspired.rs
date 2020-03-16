@@ -197,7 +197,7 @@ pub trait Retina: core::AlgorithmTrait {
 	/// ## Returns
 	/// a string which contains formated parameters information
 	fn print_setup(&mut self) -> Result<String> {
-		unsafe { sys::cv_bioinspired_Retina_printSetup(self.as_raw_Retina()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_bioinspired_Retina_printSetup(self.as_raw_Retina()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Write xml/yml formated parameters information
@@ -812,7 +812,7 @@ pub trait TransientAreasSegmentationModule: core::AlgorithmTrait {
 	/// ## Returns
 	/// a string which contains formatted parameters information
 	fn print_setup(&mut self) -> Result<String> {
-		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_printSetup(self.as_raw_TransientAreasSegmentationModule()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_bioinspired_TransientAreasSegmentationModule_printSetup(self.as_raw_TransientAreasSegmentationModule()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// write xml/yml formated parameters information

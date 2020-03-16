@@ -1,15 +1,17 @@
 template struct Result<bool>;
-template struct Result<const char*>;
 template struct Result<cv::VideoCaptureAPIs>;
+template struct Result<cv::VideoCapture*>;
+template struct Result<cv::VideoWriter*>;
 template struct Result<double>;
 template struct Result<int>;
+template struct Result<std::vector<cv::VideoCaptureAPIs>*>;
 template struct Result<void*>;
 extern "C" {
 	void cv_VectorOfVideoCaptureAPIs_delete(std::vector<cv::VideoCaptureAPIs>* instance) {
 		delete instance;
 	}
 
-	void* cv_VectorOfVideoCaptureAPIs_new() {
+	std::vector<cv::VideoCaptureAPIs>* cv_VectorOfVideoCaptureAPIs_new() {
 		return new std::vector<cv::VideoCaptureAPIs>();
 	}
 
@@ -74,8 +76,8 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOfVideoCaptureAPIs_data(std::vector<cv::VideoCaptureAPIs>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::VideoCaptureAPIs* cv_VectorOfVideoCaptureAPIs_data(std::vector<cv::VideoCaptureAPIs>* instance) {
+		return instance->data();
 	}
 	
 }

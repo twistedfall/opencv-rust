@@ -229,14 +229,14 @@ pub fn get_available_targets(be: crate::dnn::Backend) -> Result<types::VectorOfT
 /// 
 /// Default value is controlled through `OPENCV_DNN_BACKEND_INFERENCE_ENGINE_TYPE` runtime parameter (environment variable).
 pub fn get_inference_engine_backend_type() -> Result<String> {
-	unsafe { sys::cv_dnn_getInferenceEngineBackendType() }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_dnn_getInferenceEngineBackendType() }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// Returns Inference Engine VPU type.
 /// 
 /// See values of `CV_DNN_INFERENCE_ENGINE_VPU_TYPE_*` macros.
 pub fn get_inference_engine_vpu_type() -> Result<String> {
-	unsafe { sys::cv_dnn_getInferenceEngineVPUType() }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_dnn_getInferenceEngineVPUType() }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 pub fn get_plane(m: &core::Mat, n: i32, cn: i32) -> Result<core::Mat> {
@@ -605,7 +605,7 @@ pub fn reset_myriad_device() -> Result<()> {
 /// previous value of internal backend API
 pub fn set_inference_engine_backend_type(new_backend_type: &str) -> Result<String> {
 	string_arg!(new_backend_type);
-	unsafe { sys::cv_dnn_setInferenceEngineBackendType_const_StringX(new_backend_type.as_ptr()) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_dnn_setInferenceEngineBackendType_const_StringX(new_backend_type.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 pub fn shape_2(sz: &core::MatSize) -> Result<types::VectorOfi32> {
@@ -675,7 +675,7 @@ pub fn slice_3(m: &core::Mat, r0: &crate::dnn::_Range, r1: &crate::dnn::_Range, 
 /// * name: ""
 pub fn to_string(shape: &crate::dnn::MatShape, name: &str) -> Result<String> {
 	string_arg!(name);
-	unsafe { sys::cv_dnn_toString_const_MatShapeX_const_StringX(shape.as_raw_VectorOfi32(), name.as_ptr()) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_dnn_toString_const_MatShapeX_const_StringX(shape.as_raw_VectorOfi32(), name.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// ## C++ default parameters
@@ -900,7 +900,7 @@ pub trait BaseConvolutionLayerTrait: crate::dnn::LayerTrait {
 	}
 	
 	fn pad_mode(&self) -> String {
-		unsafe { sys::cv_dnn_BaseConvolutionLayer_padMode_const(self.as_raw_BaseConvolutionLayer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: pad_mode")
+		unsafe { sys::cv_dnn_BaseConvolutionLayer_padMode_const(self.as_raw_BaseConvolutionLayer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: pad_mode")
 	}
 	
 	fn set_pad_mode(&mut self, val: &str) -> () {
@@ -1455,7 +1455,7 @@ pub trait DictTrait {
 	fn set_str(&mut self, key: &str, value: &str) -> Result<String> {
 		string_arg!(key);
 		string_arg!(value);
-		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(self.as_raw_Dict(), key.as_ptr(), value.as_ptr()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_dnn_Dict_set_cv_String_const_StringX_const_StringX(self.as_raw_Dict(), key.as_ptr(), value.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Sets new @p value for the @p key, or adds new key-value pair into the dictionary.
@@ -1520,7 +1520,7 @@ pub trait DictValueTrait {
 	/// ## C++ default parameters
 	/// * idx: -1
 	fn get_str(&self, idx: i32) -> Result<String> {
-		unsafe { sys::cv_dnn_DictValue_get_cv_String_const_int(self.as_raw_DictValue(), idx) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_dnn_DictValue_get_cv_String_const_int(self.as_raw_DictValue(), idx) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -1572,7 +1572,7 @@ pub trait DictValueTrait {
 	/// ## C++ default parameters
 	/// * idx: -1
 	fn get_string_value(&self, idx: i32) -> Result<String> {
-		unsafe { sys::cv_dnn_DictValue_getStringValue_const_int(self.as_raw_DictValue(), idx) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_dnn_DictValue_getStringValue_const_int(self.as_raw_DictValue(), idx) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -2059,7 +2059,7 @@ pub trait LayerTrait: core::AlgorithmTrait {
 	
 	/// Name of the layer instance, can be used for logging or other internal purposes.
 	fn name(&self) -> String {
-		unsafe { sys::cv_dnn_Layer_name_const(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: name")
+		unsafe { sys::cv_dnn_Layer_name_const(self.as_raw_Layer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name")
 	}
 	
 	/// Name of the layer instance, can be used for logging or other internal purposes.
@@ -2070,7 +2070,7 @@ pub trait LayerTrait: core::AlgorithmTrait {
 	
 	/// Type name which was used for creating layer by layer factory.
 	fn typ(&self) -> String {
-		unsafe { sys::cv_dnn_Layer_type_const(self.as_raw_Layer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_Layer_type_const(self.as_raw_Layer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: typ")
 	}
 	
 	/// Type name which was used for creating layer by layer factory.
@@ -2432,7 +2432,7 @@ pub trait LayerParamsTrait: crate::dnn::DictTrait {
 	
 	/// Name of the layer instance (optional, can be used internal purposes).
 	fn name(&self) -> String {
-		unsafe { sys::cv_dnn_LayerParams_name_const(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: name")
+		unsafe { sys::cv_dnn_LayerParams_name_const(self.as_raw_LayerParams()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name")
 	}
 	
 	/// Name of the layer instance (optional, can be used internal purposes).
@@ -2443,7 +2443,7 @@ pub trait LayerParamsTrait: crate::dnn::DictTrait {
 	
 	/// Type name which was used for creating layer by layer factory (optional).
 	fn typ(&self) -> String {
-		unsafe { sys::cv_dnn_LayerParams_type_const(self.as_raw_LayerParams()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: typ")
+		unsafe { sys::cv_dnn_LayerParams_type_const(self.as_raw_LayerParams()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: typ")
 	}
 	
 	/// Type name which was used for creating layer by layer factory (optional).
@@ -2657,7 +2657,7 @@ pub trait NetTrait {
 	/// String with structure, hyperparameters, backend, target and fusion
 	/// Call method after setInput(). To see correct backend, target and fusion run after forward().
 	fn dump(&mut self) -> Result<String> {
-		unsafe { sys::cv_dnn_Net_dump(self.as_raw_Net()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_dnn_Net_dump(self.as_raw_Net()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Dump net structure, hyperparameters, backend, target and fusion to dot file
@@ -3559,7 +3559,7 @@ pub trait PoolingLayerTrait: crate::dnn::LayerTrait {
 	}
 	
 	fn pad_mode(&self) -> String {
-		unsafe { sys::cv_dnn_PoolingLayer_padMode_const(self.as_raw_PoolingLayer()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: pad_mode")
+		unsafe { sys::cv_dnn_PoolingLayer_padMode_const(self.as_raw_PoolingLayer()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: pad_mode")
 	}
 	
 	fn set_pad_mode(&mut self, val: &str) -> () {

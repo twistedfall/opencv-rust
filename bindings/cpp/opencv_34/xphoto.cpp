@@ -3,261 +3,261 @@
 #include "xphoto_types.hpp"
 
 extern "C" {
-	Result_void cv_xphoto_applyChannelGains_const__InputArrayX_const__OutputArrayX_float_float_float(void* src, void* dst, float gainB, float gainG, float gainR) {
+	Result_void cv_xphoto_applyChannelGains_const__InputArrayX_const__OutputArrayX_float_float_float(const cv::_InputArray* src, const cv::_OutputArray* dst, float gainB, float gainG, float gainR) {
 		try {
-			cv::xphoto::applyChannelGains(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), gainB, gainG, gainR);
+			cv::xphoto::applyChannelGains(*src, *dst, gainB, gainG, gainR);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_xphoto_bm3dDenoising_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(void* src, void* dstStep1, void* dstStep2, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
+	Result_void cv_xphoto_bm3dDenoising_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(const cv::_InputArray* src, const cv::_InputOutputArray* dstStep1, const cv::_OutputArray* dstStep2, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
 		try {
-			cv::xphoto::bm3dDenoising(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputOutputArray*>(dstStep1), *reinterpret_cast<const cv::_OutputArray*>(dstStep2), h, templateWindowSize, searchWindowSize, blockMatchingStep1, blockMatchingStep2, groupSize, slidingStep, beta, normType, step, transformType);
+			cv::xphoto::bm3dDenoising(*src, *dstStep1, *dstStep2, h, templateWindowSize, searchWindowSize, blockMatchingStep1, blockMatchingStep2, groupSize, slidingStep, beta, normType, step, transformType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_xphoto_bm3dDenoising_const__InputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(void* src, void* dst, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
+	Result_void cv_xphoto_bm3dDenoising_const__InputArrayX_const__OutputArrayX_float_int_int_int_int_int_int_float_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, float h, int templateWindowSize, int searchWindowSize, int blockMatchingStep1, int blockMatchingStep2, int groupSize, int slidingStep, float beta, int normType, int step, int transformType) {
 		try {
-			cv::xphoto::bm3dDenoising(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), h, templateWindowSize, searchWindowSize, blockMatchingStep1, blockMatchingStep2, groupSize, slidingStep, beta, normType, step, transformType);
+			cv::xphoto::bm3dDenoising(*src, *dst, h, templateWindowSize, searchWindowSize, blockMatchingStep1, blockMatchingStep2, groupSize, slidingStep, beta, normType, step, transformType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_xphoto_createGrayworldWB() {
+	Result<cv::Ptr<cv::xphoto::GrayworldWB>*> cv_xphoto_createGrayworldWB() {
 		try {
 			cv::Ptr<cv::xphoto::GrayworldWB> ret = cv::xphoto::createGrayworldWB();
-			return Ok<void*>(new cv::Ptr<cv::xphoto::GrayworldWB>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::xphoto::GrayworldWB>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::xphoto::GrayworldWB>*>)
 	}
 	
-	Result<void*> cv_xphoto_createLearningBasedWB_const_StringX(const char* path_to_model) {
+	Result<cv::Ptr<cv::xphoto::LearningBasedWB>*> cv_xphoto_createLearningBasedWB_const_StringX(const char* path_to_model) {
 		try {
 			cv::Ptr<cv::xphoto::LearningBasedWB> ret = cv::xphoto::createLearningBasedWB(cv::String(path_to_model));
-			return Ok<void*>(new cv::Ptr<cv::xphoto::LearningBasedWB>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::xphoto::LearningBasedWB>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::xphoto::LearningBasedWB>*>)
 	}
 	
-	Result<void*> cv_xphoto_createSimpleWB() {
+	Result<cv::Ptr<cv::xphoto::SimpleWB>*> cv_xphoto_createSimpleWB() {
 		try {
 			cv::Ptr<cv::xphoto::SimpleWB> ret = cv::xphoto::createSimpleWB();
-			return Ok<void*>(new cv::Ptr<cv::xphoto::SimpleWB>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::xphoto::SimpleWB>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::xphoto::SimpleWB>*>)
 	}
 	
-	Result<void*> cv_xphoto_createTonemapDurand_float_float_float_float_float(float gamma, float contrast, float saturation, float sigma_space, float sigma_color) {
+	Result<cv::Ptr<cv::xphoto::TonemapDurand>*> cv_xphoto_createTonemapDurand_float_float_float_float_float(float gamma, float contrast, float saturation, float sigma_space, float sigma_color) {
 		try {
 			cv::Ptr<cv::xphoto::TonemapDurand> ret = cv::xphoto::createTonemapDurand(gamma, contrast, saturation, sigma_space, sigma_color);
-			return Ok<void*>(new cv::Ptr<cv::xphoto::TonemapDurand>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::xphoto::TonemapDurand>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::xphoto::TonemapDurand>*>)
 	}
 	
-	Result_void cv_xphoto_dctDenoising_const_MatX_MatX_double_int(void* src, void* dst, double sigma, int psize) {
+	Result_void cv_xphoto_dctDenoising_const_MatX_MatX_double_int(const cv::Mat* src, cv::Mat* dst, double sigma, int psize) {
 		try {
-			cv::xphoto::dctDenoising(*reinterpret_cast<const cv::Mat*>(src), *reinterpret_cast<cv::Mat*>(dst), sigma, psize);
+			cv::xphoto::dctDenoising(*src, *dst, sigma, psize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(void* src, void* mask, void* dst, int algorithmType) {
+	Result_void cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(const cv::Mat* src, const cv::Mat* mask, cv::Mat* dst, int algorithmType) {
 		try {
-			cv::xphoto::inpaint(*reinterpret_cast<const cv::Mat*>(src), *reinterpret_cast<const cv::Mat*>(mask), *reinterpret_cast<cv::Mat*>(dst), algorithmType);
+			cv::xphoto::inpaint(*src, *mask, *dst, algorithmType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_GrayworldWB_getSaturationThreshold_const(void* instance) {
+	Result<float> cv_xphoto_GrayworldWB_getSaturationThreshold_const(const cv::xphoto::GrayworldWB* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::GrayworldWB*>(instance)->getSaturationThreshold();
-			return Ok<float>(ret);
+			float ret = instance->getSaturationThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_GrayworldWB_setSaturationThreshold_float(void* instance, float val) {
+	Result_void cv_xphoto_GrayworldWB_setSaturationThreshold_float(cv::xphoto::GrayworldWB* instance, float val) {
 		try {
-			reinterpret_cast<cv::xphoto::GrayworldWB*>(instance)->setSaturationThreshold(val);
+			instance->setSaturationThreshold(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayX_const__OutputArrayX(void* instance, void* src, void* dst) {
+	Result_void cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayX_const__OutputArrayX(cv::xphoto::LearningBasedWB* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			reinterpret_cast<cv::xphoto::LearningBasedWB*>(instance)->extractSimpleFeatures(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			instance->extractSimpleFeatures(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_xphoto_LearningBasedWB_getRangeMaxVal_const(void* instance) {
+	Result<int> cv_xphoto_LearningBasedWB_getRangeMaxVal_const(const cv::xphoto::LearningBasedWB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::xphoto::LearningBasedWB*>(instance)->getRangeMaxVal();
-			return Ok<int>(ret);
+			int ret = instance->getRangeMaxVal();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_xphoto_LearningBasedWB_setRangeMaxVal_int(void* instance, int val) {
+	Result_void cv_xphoto_LearningBasedWB_setRangeMaxVal_int(cv::xphoto::LearningBasedWB* instance, int val) {
 		try {
-			reinterpret_cast<cv::xphoto::LearningBasedWB*>(instance)->setRangeMaxVal(val);
+			instance->setRangeMaxVal(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_LearningBasedWB_getSaturationThreshold_const(void* instance) {
+	Result<float> cv_xphoto_LearningBasedWB_getSaturationThreshold_const(const cv::xphoto::LearningBasedWB* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::LearningBasedWB*>(instance)->getSaturationThreshold();
-			return Ok<float>(ret);
+			float ret = instance->getSaturationThreshold();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_LearningBasedWB_setSaturationThreshold_float(void* instance, float val) {
+	Result_void cv_xphoto_LearningBasedWB_setSaturationThreshold_float(cv::xphoto::LearningBasedWB* instance, float val) {
 		try {
-			reinterpret_cast<cv::xphoto::LearningBasedWB*>(instance)->setSaturationThreshold(val);
+			instance->setSaturationThreshold(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_xphoto_LearningBasedWB_getHistBinNum_const(void* instance) {
+	Result<int> cv_xphoto_LearningBasedWB_getHistBinNum_const(const cv::xphoto::LearningBasedWB* instance) {
 		try {
-			int ret = reinterpret_cast<cv::xphoto::LearningBasedWB*>(instance)->getHistBinNum();
-			return Ok<int>(ret);
+			int ret = instance->getHistBinNum();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_xphoto_LearningBasedWB_setHistBinNum_int(void* instance, int val) {
+	Result_void cv_xphoto_LearningBasedWB_setHistBinNum_int(cv::xphoto::LearningBasedWB* instance, int val) {
 		try {
-			reinterpret_cast<cv::xphoto::LearningBasedWB*>(instance)->setHistBinNum(val);
+			instance->setHistBinNum(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_SimpleWB_getInputMin_const(void* instance) {
+	Result<float> cv_xphoto_SimpleWB_getInputMin_const(const cv::xphoto::SimpleWB* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->getInputMin();
-			return Ok<float>(ret);
+			float ret = instance->getInputMin();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_SimpleWB_setInputMin_float(void* instance, float val) {
+	Result_void cv_xphoto_SimpleWB_setInputMin_float(cv::xphoto::SimpleWB* instance, float val) {
 		try {
-			reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->setInputMin(val);
+			instance->setInputMin(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_SimpleWB_getInputMax_const(void* instance) {
+	Result<float> cv_xphoto_SimpleWB_getInputMax_const(const cv::xphoto::SimpleWB* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->getInputMax();
-			return Ok<float>(ret);
+			float ret = instance->getInputMax();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_SimpleWB_setInputMax_float(void* instance, float val) {
+	Result_void cv_xphoto_SimpleWB_setInputMax_float(cv::xphoto::SimpleWB* instance, float val) {
 		try {
-			reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->setInputMax(val);
+			instance->setInputMax(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_SimpleWB_getOutputMin_const(void* instance) {
+	Result<float> cv_xphoto_SimpleWB_getOutputMin_const(const cv::xphoto::SimpleWB* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->getOutputMin();
-			return Ok<float>(ret);
+			float ret = instance->getOutputMin();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_SimpleWB_setOutputMin_float(void* instance, float val) {
+	Result_void cv_xphoto_SimpleWB_setOutputMin_float(cv::xphoto::SimpleWB* instance, float val) {
 		try {
-			reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->setOutputMin(val);
+			instance->setOutputMin(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_SimpleWB_getOutputMax_const(void* instance) {
+	Result<float> cv_xphoto_SimpleWB_getOutputMax_const(const cv::xphoto::SimpleWB* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->getOutputMax();
-			return Ok<float>(ret);
+			float ret = instance->getOutputMax();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_SimpleWB_setOutputMax_float(void* instance, float val) {
+	Result_void cv_xphoto_SimpleWB_setOutputMax_float(cv::xphoto::SimpleWB* instance, float val) {
 		try {
-			reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->setOutputMax(val);
+			instance->setOutputMax(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_SimpleWB_getP_const(void* instance) {
+	Result<float> cv_xphoto_SimpleWB_getP_const(const cv::xphoto::SimpleWB* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->getP();
-			return Ok<float>(ret);
+			float ret = instance->getP();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_SimpleWB_setP_float(void* instance, float val) {
+	Result_void cv_xphoto_SimpleWB_setP_float(cv::xphoto::SimpleWB* instance, float val) {
 		try {
-			reinterpret_cast<cv::xphoto::SimpleWB*>(instance)->setP(val);
+			instance->setP(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_TonemapDurand_getSaturation_const(void* instance) {
+	Result<float> cv_xphoto_TonemapDurand_getSaturation_const(const cv::xphoto::TonemapDurand* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->getSaturation();
-			return Ok<float>(ret);
+			float ret = instance->getSaturation();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_TonemapDurand_setSaturation_float(void* instance, float saturation) {
+	Result_void cv_xphoto_TonemapDurand_setSaturation_float(cv::xphoto::TonemapDurand* instance, float saturation) {
 		try {
-			reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->setSaturation(saturation);
+			instance->setSaturation(saturation);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_TonemapDurand_getContrast_const(void* instance) {
+	Result<float> cv_xphoto_TonemapDurand_getContrast_const(const cv::xphoto::TonemapDurand* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->getContrast();
-			return Ok<float>(ret);
+			float ret = instance->getContrast();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_TonemapDurand_setContrast_float(void* instance, float contrast) {
+	Result_void cv_xphoto_TonemapDurand_setContrast_float(cv::xphoto::TonemapDurand* instance, float contrast) {
 		try {
-			reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->setContrast(contrast);
+			instance->setContrast(contrast);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_TonemapDurand_getSigmaSpace_const(void* instance) {
+	Result<float> cv_xphoto_TonemapDurand_getSigmaSpace_const(const cv::xphoto::TonemapDurand* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->getSigmaSpace();
-			return Ok<float>(ret);
+			float ret = instance->getSigmaSpace();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_TonemapDurand_setSigmaSpace_float(void* instance, float sigma_space) {
+	Result_void cv_xphoto_TonemapDurand_setSigmaSpace_float(cv::xphoto::TonemapDurand* instance, float sigma_space) {
 		try {
-			reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->setSigmaSpace(sigma_space);
+			instance->setSigmaSpace(sigma_space);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_xphoto_TonemapDurand_getSigmaColor_const(void* instance) {
+	Result<float> cv_xphoto_TonemapDurand_getSigmaColor_const(const cv::xphoto::TonemapDurand* instance) {
 		try {
-			float ret = reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->getSigmaColor();
-			return Ok<float>(ret);
+			float ret = instance->getSigmaColor();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_xphoto_TonemapDurand_setSigmaColor_float(void* instance, float sigma_color) {
+	Result_void cv_xphoto_TonemapDurand_setSigmaColor_float(cv::xphoto::TonemapDurand* instance, float sigma_color) {
 		try {
-			reinterpret_cast<cv::xphoto::TonemapDurand*>(instance)->setSigmaColor(sigma_color);
+			instance->setSigmaColor(sigma_color);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayX_const__OutputArrayX(void* instance, void* src, void* dst) {
+	Result_void cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayX_const__OutputArrayX(cv::xphoto::WhiteBalancer* instance, const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			reinterpret_cast<cv::xphoto::WhiteBalancer*>(instance)->balanceWhite(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			instance->balanceWhite(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

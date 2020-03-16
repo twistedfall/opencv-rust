@@ -569,7 +569,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// If an unknown label id is provided or there is no label information associated with the specified
 	/// label id the method returns an empty string.
 	fn get_label_info(&self, label: i32) -> Result<String> {
-		unsafe { sys::cv_face_FaceRecognizer_getLabelInfo_const_int(self.as_raw_FaceRecognizer(), label) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_face_FaceRecognizer_getLabelInfo_const_int(self.as_raw_FaceRecognizer(), label) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Gets vector of labels by string.

@@ -3,114 +3,114 @@
 #include "fuzzy_types.hpp"
 
 extern "C" {
-	Result_void cv_ft_FT02D_FL_process_const__InputArrayX_int_const__OutputArrayX(void* matrix, int radius, void* output) {
+	Result_void cv_ft_FT02D_FL_process_const__InputArrayX_int_const__OutputArrayX(const cv::_InputArray* matrix, int radius, const cv::_OutputArray* output) {
 		try {
-			cv::ft::FT02D_FL_process(*reinterpret_cast<const cv::_InputArray*>(matrix), radius, *reinterpret_cast<const cv::_OutputArray*>(output));
+			cv::ft::FT02D_FL_process(*matrix, radius, *output);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT02D_FL_process_float_const__InputArrayX_int_const__OutputArrayX(void* matrix, int radius, void* output) {
+	Result_void cv_ft_FT02D_FL_process_float_const__InputArrayX_int_const__OutputArrayX(const cv::_InputArray* matrix, int radius, const cv::_OutputArray* output) {
 		try {
-			cv::ft::FT02D_FL_process_float(*reinterpret_cast<const cv::_InputArray*>(matrix), radius, *reinterpret_cast<const cv::_OutputArray*>(output));
+			cv::ft::FT02D_FL_process_float(*matrix, radius, *output);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT02D_components_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* matrix, void* kernel, void* components, void* mask) {
+	Result_void cv_ft_FT02D_components_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* matrix, const cv::_InputArray* kernel, const cv::_OutputArray* components, const cv::_InputArray* mask) {
 		try {
-			cv::ft::FT02D_components(*reinterpret_cast<const cv::_InputArray*>(matrix), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(components), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::ft::FT02D_components(*matrix, *kernel, *components, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT02D_inverseFT_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int(void* components, void* kernel, void* output, int width, int height) {
+	Result_void cv_ft_FT02D_inverseFT_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int(const cv::_InputArray* components, const cv::_InputArray* kernel, const cv::_OutputArray* output, int width, int height) {
 		try {
-			cv::ft::FT02D_inverseFT(*reinterpret_cast<const cv::_InputArray*>(components), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(output), width, height);
+			cv::ft::FT02D_inverseFT(*components, *kernel, *output, width, height);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ft_FT02D_iteration_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__OutputArrayX_bool(void* matrix, void* kernel, void* output, void* mask, void* maskOutput, bool firstStop) {
+	Result<int> cv_ft_FT02D_iteration_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__OutputArrayX_bool(const cv::_InputArray* matrix, const cv::_InputArray* kernel, const cv::_OutputArray* output, const cv::_InputArray* mask, const cv::_OutputArray* maskOutput, bool firstStop) {
 		try {
-			int ret = cv::ft::FT02D_iteration(*reinterpret_cast<const cv::_InputArray*>(matrix), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(output), *reinterpret_cast<const cv::_InputArray*>(mask), *reinterpret_cast<const cv::_OutputArray*>(maskOutput), firstStop);
-			return Ok<int>(ret);
+			int ret = cv::ft::FT02D_iteration(*matrix, *kernel, *output, *mask, *maskOutput, firstStop);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ft_FT02D_process_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* matrix, void* kernel, void* output, void* mask) {
+	Result_void cv_ft_FT02D_process_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* matrix, const cv::_InputArray* kernel, const cv::_OutputArray* output, const cv::_InputArray* mask) {
 		try {
-			cv::ft::FT02D_process(*reinterpret_cast<const cv::_InputArray*>(matrix), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(output), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::ft::FT02D_process(*matrix, *kernel, *output, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT12D_components_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* matrix, void* kernel, void* components) {
+	Result_void cv_ft_FT12D_components_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* matrix, const cv::_InputArray* kernel, const cv::_OutputArray* components) {
 		try {
-			cv::ft::FT12D_components(*reinterpret_cast<const cv::_InputArray*>(matrix), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(components));
+			cv::ft::FT12D_components(*matrix, *kernel, *components);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayX_int(int radius, void* matrix, int chn) {
+	Result_void cv_ft_FT12D_createPolynomMatrixHorizontal_int_const__OutputArrayX_int(int radius, const cv::_OutputArray* matrix, int chn) {
 		try {
-			cv::ft::FT12D_createPolynomMatrixHorizontal(radius, *reinterpret_cast<const cv::_OutputArray*>(matrix), chn);
+			cv::ft::FT12D_createPolynomMatrixHorizontal(radius, *matrix, chn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayX_int(int radius, void* matrix, int chn) {
+	Result_void cv_ft_FT12D_createPolynomMatrixVertical_int_const__OutputArrayX_int(int radius, const cv::_OutputArray* matrix, int chn) {
 		try {
-			cv::ft::FT12D_createPolynomMatrixVertical(radius, *reinterpret_cast<const cv::_OutputArray*>(matrix), chn);
+			cv::ft::FT12D_createPolynomMatrixVertical(radius, *matrix, chn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT12D_inverseFT_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int(void* components, void* kernel, void* output, int width, int height) {
+	Result_void cv_ft_FT12D_inverseFT_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int(const cv::_InputArray* components, const cv::_InputArray* kernel, const cv::_OutputArray* output, int width, int height) {
 		try {
-			cv::ft::FT12D_inverseFT(*reinterpret_cast<const cv::_InputArray*>(components), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(output), width, height);
+			cv::ft::FT12D_inverseFT(*components, *kernel, *output, width, height);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT12D_polynomial_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__InputArrayX(void* matrix, void* kernel, void* c00, void* c10, void* c01, void* components, void* mask) {
+	Result_void cv_ft_FT12D_polynomial_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* matrix, const cv::_InputArray* kernel, const cv::_OutputArray* c00, const cv::_OutputArray* c10, const cv::_OutputArray* c01, const cv::_OutputArray* components, const cv::_InputArray* mask) {
 		try {
-			cv::ft::FT12D_polynomial(*reinterpret_cast<const cv::_InputArray*>(matrix), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(c00), *reinterpret_cast<const cv::_OutputArray*>(c10), *reinterpret_cast<const cv::_OutputArray*>(c01), *reinterpret_cast<const cv::_OutputArray*>(components), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::ft::FT12D_polynomial(*matrix, *kernel, *c00, *c10, *c01, *components, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_FT12D_process_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* matrix, void* kernel, void* output, void* mask) {
+	Result_void cv_ft_FT12D_process_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* matrix, const cv::_InputArray* kernel, const cv::_OutputArray* output, const cv::_InputArray* mask) {
 		try {
-			cv::ft::FT12D_process(*reinterpret_cast<const cv::_InputArray*>(matrix), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(output), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::ft::FT12D_process(*matrix, *kernel, *output, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_createKernel_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(void* A, void* B, void* kernel, int chn) {
+	Result_void cv_ft_createKernel_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* A, const cv::_InputArray* B, const cv::_OutputArray* kernel, int chn) {
 		try {
-			cv::ft::createKernel(*reinterpret_cast<const cv::_InputArray*>(A), *reinterpret_cast<const cv::_InputArray*>(B), *reinterpret_cast<const cv::_OutputArray*>(kernel), chn);
+			cv::ft::createKernel(*A, *B, *kernel, chn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_createKernel_int_int_const__OutputArrayX_int(int function, int radius, void* kernel, int chn) {
+	Result_void cv_ft_createKernel_int_int_const__OutputArrayX_int(int function, int radius, const cv::_OutputArray* kernel, int chn) {
 		try {
-			cv::ft::createKernel(function, radius, *reinterpret_cast<const cv::_OutputArray*>(kernel), chn);
+			cv::ft::createKernel(function, radius, *kernel, chn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_filter_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* image, void* kernel, void* output) {
+	Result_void cv_ft_filter_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* image, const cv::_InputArray* kernel, const cv::_OutputArray* output) {
 		try {
-			cv::ft::filter(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(kernel), *reinterpret_cast<const cv::_OutputArray*>(output));
+			cv::ft::filter(*image, *kernel, *output);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ft_inpaint_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int_int(void* image, void* mask, void* output, int radius, int function, int algorithm) {
+	Result_void cv_ft_inpaint_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_int_int(const cv::_InputArray* image, const cv::_InputArray* mask, const cv::_OutputArray* output, int radius, int function, int algorithm) {
 		try {
-			cv::ft::inpaint(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(mask), *reinterpret_cast<const cv::_OutputArray*>(output), radius, function, algorithm);
+			cv::ft::inpaint(*image, *mask, *output, radius, function, algorithm);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

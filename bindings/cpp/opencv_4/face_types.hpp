@@ -1,13 +1,44 @@
 template struct Result<bool>;
-template struct Result<const char*>;
+template struct Result<cv::CascadeClassifier*>;
+template struct Result<cv::Mat*>;
 template struct Result<cv::Point_<float>>;
+template struct Result<cv::Ptr<cv::face::BIF>*>;
+template struct Result<cv::Ptr<cv::face::EigenFaceRecognizer>*>;
+template struct Result<cv::Ptr<cv::face::FacemarkAAM>*>;
+template struct Result<cv::Ptr<cv::face::FacemarkKazemi>*>;
+template struct Result<cv::Ptr<cv::face::FacemarkLBF>*>;
+template struct Result<cv::Ptr<cv::face::Facemark>*>;
+template struct Result<cv::Ptr<cv::face::FisherFaceRecognizer>*>;
+template struct Result<cv::Ptr<cv::face::LBPHFaceRecognizer>*>;
+template struct Result<cv::Ptr<cv::face::MACE>*>;
+template struct Result<cv::Ptr<cv::face::PredictCollector>*>;
+template struct Result<cv::Ptr<cv::face::StandardCollector>*>;
 template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Size_<int>>;
+template struct Result<cv::face::CParams*>;
+template struct Result<cv::face::FacemarkAAM::Config*>;
+template struct Result<cv::face::FacemarkAAM::Model::Texture*>;
+template struct Result<cv::face::FacemarkAAM::Params*>;
+template struct Result<cv::face::FacemarkKazemi::Params*>;
+template struct Result<cv::face::FacemarkLBF::Params*>;
+template struct Result<cv::face::StandardCollector*>;
 template struct Result<cv::face::StandardCollector::PredictResult>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
+template struct Result<std::vector<cv::Mat>*>;
+template struct Result<std::vector<cv::Point_<float>>*>;
+template struct Result<std::vector<cv::Point_<int>>*>;
+template struct Result<std::vector<cv::Vec<int, 3>>*>;
+template struct Result<std::vector<cv::face::FacemarkAAM::Config>*>;
+template struct Result<std::vector<cv::face::FacemarkAAM::Model::Texture>*>;
+template struct Result<std::vector<double>*>;
+template struct Result<std::vector<float>*>;
+template struct Result<std::vector<int>*>;
 template struct Result<std::vector<int>(*)[2]>;
+template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::vector<cv::Point_<float>>>*>;
+template struct Result<std::vector<std::vector<cv::Point_<int>>>*>;
 template struct Result<unsigned int>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
@@ -15,7 +46,7 @@ extern "C" void cv_PtrOfBIF_delete(cv::Ptr<cv::face::BIF>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfBIF_get_inner_ptr(cv::Ptr<cv::face::BIF>* instance) {
+extern "C" cv::face::BIF* cv_PtrOfBIF_get_inner_ptr(cv::Ptr<cv::face::BIF>* instance) {
 	return instance->get();
 }
 
@@ -23,7 +54,7 @@ extern "C" void cv_PtrOfEigenFaceRecognizer_delete(cv::Ptr<cv::face::EigenFaceRe
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfEigenFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::EigenFaceRecognizer>* instance) {
+extern "C" cv::face::EigenFaceRecognizer* cv_PtrOfEigenFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::EigenFaceRecognizer>* instance) {
 	return instance->get();
 }
 
@@ -31,7 +62,7 @@ extern "C" void cv_PtrOfFacemark_delete(cv::Ptr<cv::face::Facemark>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFacemark_get_inner_ptr(cv::Ptr<cv::face::Facemark>* instance) {
+extern "C" cv::face::Facemark* cv_PtrOfFacemark_get_inner_ptr(cv::Ptr<cv::face::Facemark>* instance) {
 	return instance->get();
 }
 
@@ -39,7 +70,7 @@ extern "C" void cv_PtrOfFacemarkAAM_delete(cv::Ptr<cv::face::FacemarkAAM>* insta
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFacemarkAAM_get_inner_ptr(cv::Ptr<cv::face::FacemarkAAM>* instance) {
+extern "C" cv::face::FacemarkAAM* cv_PtrOfFacemarkAAM_get_inner_ptr(cv::Ptr<cv::face::FacemarkAAM>* instance) {
 	return instance->get();
 }
 
@@ -47,7 +78,7 @@ extern "C" void cv_PtrOfFacemarkKazemi_delete(cv::Ptr<cv::face::FacemarkKazemi>*
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFacemarkKazemi_get_inner_ptr(cv::Ptr<cv::face::FacemarkKazemi>* instance) {
+extern "C" cv::face::FacemarkKazemi* cv_PtrOfFacemarkKazemi_get_inner_ptr(cv::Ptr<cv::face::FacemarkKazemi>* instance) {
 	return instance->get();
 }
 
@@ -55,7 +86,7 @@ extern "C" void cv_PtrOfFacemarkLBF_delete(cv::Ptr<cv::face::FacemarkLBF>* insta
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFacemarkLBF_get_inner_ptr(cv::Ptr<cv::face::FacemarkLBF>* instance) {
+extern "C" cv::face::FacemarkLBF* cv_PtrOfFacemarkLBF_get_inner_ptr(cv::Ptr<cv::face::FacemarkLBF>* instance) {
 	return instance->get();
 }
 
@@ -63,7 +94,7 @@ extern "C" void cv_PtrOfFisherFaceRecognizer_delete(cv::Ptr<cv::face::FisherFace
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFisherFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::FisherFaceRecognizer>* instance) {
+extern "C" cv::face::FisherFaceRecognizer* cv_PtrOfFisherFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::FisherFaceRecognizer>* instance) {
 	return instance->get();
 }
 
@@ -71,7 +102,7 @@ extern "C" void cv_PtrOfLBPHFaceRecognizer_delete(cv::Ptr<cv::face::LBPHFaceReco
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfLBPHFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::LBPHFaceRecognizer>* instance) {
+extern "C" cv::face::LBPHFaceRecognizer* cv_PtrOfLBPHFaceRecognizer_get_inner_ptr(cv::Ptr<cv::face::LBPHFaceRecognizer>* instance) {
 	return instance->get();
 }
 
@@ -79,7 +110,7 @@ extern "C" void cv_PtrOfMACE_delete(cv::Ptr<cv::face::MACE>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfMACE_get_inner_ptr(cv::Ptr<cv::face::MACE>* instance) {
+extern "C" cv::face::MACE* cv_PtrOfMACE_get_inner_ptr(cv::Ptr<cv::face::MACE>* instance) {
 	return instance->get();
 }
 
@@ -87,7 +118,7 @@ extern "C" void cv_PtrOfPredictCollector_delete(cv::Ptr<cv::face::PredictCollect
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfPredictCollector_get_inner_ptr(cv::Ptr<cv::face::PredictCollector>* instance) {
+extern "C" cv::face::PredictCollector* cv_PtrOfPredictCollector_get_inner_ptr(cv::Ptr<cv::face::PredictCollector>* instance) {
 	return instance->get();
 }
 
@@ -95,7 +126,7 @@ extern "C" void cv_PtrOfStandardCollector_delete(cv::Ptr<cv::face::StandardColle
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfStandardCollector_get_inner_ptr(cv::Ptr<cv::face::StandardCollector>* instance) {
+extern "C" cv::face::StandardCollector* cv_PtrOfStandardCollector_get_inner_ptr(cv::Ptr<cv::face::StandardCollector>* instance) {
 	return instance->get();
 }
 
@@ -104,7 +135,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfFacemarkAAM_Config_new() {
+	std::vector<cv::face::FacemarkAAM::Config>* cv_VectorOfFacemarkAAM_Config_new() {
 		return new std::vector<cv::face::FacemarkAAM::Config>();
 	}
 
@@ -148,13 +179,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfFacemarkAAM_Config_get(const std::vector<cv::face::FacemarkAAM::Config>* instance, size_t index) {
+	Result<cv::face::FacemarkAAM::Config*> cv_VectorOfFacemarkAAM_Config_get(const std::vector<cv::face::FacemarkAAM::Config>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::face::FacemarkAAM::Config(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::face::FacemarkAAM::Config(instance->at(index)));
+		} VEC_CATCH(Result<cv::face::FacemarkAAM::Config*>)
 	}
 	
-	void* cv_VectorOfFacemarkAAM_Config_get_unchecked(const std::vector<cv::face::FacemarkAAM::Config>* instance, size_t index) {
+	cv::face::FacemarkAAM::Config* cv_VectorOfFacemarkAAM_Config_get_unchecked(const std::vector<cv::face::FacemarkAAM::Config>* instance, size_t index) {
 		return new cv::face::FacemarkAAM::Config((*instance)[index]);
 	}
 	
@@ -177,7 +208,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfFacemarkAAM_Model_Texture_new() {
+	std::vector<cv::face::FacemarkAAM::Model::Texture>* cv_VectorOfFacemarkAAM_Model_Texture_new() {
 		return new std::vector<cv::face::FacemarkAAM::Model::Texture>();
 	}
 
@@ -221,13 +252,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfFacemarkAAM_Model_Texture_get(const std::vector<cv::face::FacemarkAAM::Model::Texture>* instance, size_t index) {
+	Result<cv::face::FacemarkAAM::Model::Texture*> cv_VectorOfFacemarkAAM_Model_Texture_get(const std::vector<cv::face::FacemarkAAM::Model::Texture>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::face::FacemarkAAM::Model::Texture(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::face::FacemarkAAM::Model::Texture(instance->at(index)));
+		} VEC_CATCH(Result<cv::face::FacemarkAAM::Model::Texture*>)
 	}
 	
-	void* cv_VectorOfFacemarkAAM_Model_Texture_get_unchecked(const std::vector<cv::face::FacemarkAAM::Model::Texture>* instance, size_t index) {
+	cv::face::FacemarkAAM::Model::Texture* cv_VectorOfFacemarkAAM_Model_Texture_get_unchecked(const std::vector<cv::face::FacemarkAAM::Model::Texture>* instance, size_t index) {
 		return new cv::face::FacemarkAAM::Model::Texture((*instance)[index]);
 	}
 	

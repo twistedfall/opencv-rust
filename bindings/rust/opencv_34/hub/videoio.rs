@@ -827,7 +827,7 @@ pub enum VideoWriterProperties {
 /// ## Parameters
 /// * api: backend ID (#VideoCaptureAPIs)
 pub fn get_backend_name(api: crate::videoio::VideoCaptureAPIs) -> Result<String> {
-	unsafe { sys::cv_videoio_registry_getBackendName_VideoCaptureAPIs(api) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_videoio_registry_getBackendName_VideoCaptureAPIs(api) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// Returns list of all builtin backends
@@ -1055,7 +1055,7 @@ pub trait VideoCaptureTrait {
 	/// 
 	/// Note: Stream should be opened.
 	fn get_backend_name(&self) -> Result<String> {
-		unsafe { sys::cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_VideoCapture_getBackendName_const(self.as_raw_VideoCapture()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -1293,7 +1293,7 @@ pub trait VideoWriterTrait {
 	/// 
 	/// Note: Stream should be opened.
 	fn get_backend_name(&self) -> Result<String> {
-		unsafe { sys::cv_VideoWriter_getBackendName_const(self.as_raw_VideoWriter()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_VideoWriter_getBackendName_const(self.as_raw_VideoWriter()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }

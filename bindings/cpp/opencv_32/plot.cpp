@@ -3,107 +3,107 @@
 #include "plot_types.hpp"
 
 extern "C" {
-	Result<void*> cv_plot_createPlot2d_const__InputArrayX(void* data) {
+	Result<cv::Ptr<cv::plot::Plot2d>*> cv_plot_createPlot2d_const__InputArrayX(const cv::_InputArray* data) {
 		try {
-			cv::Ptr<cv::plot::Plot2d> ret = cv::plot::createPlot2d(*reinterpret_cast<const cv::_InputArray*>(data));
-			return Ok<void*>(new cv::Ptr<cv::plot::Plot2d>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::plot::Plot2d> ret = cv::plot::createPlot2d(*data);
+			return Ok(new cv::Ptr<cv::plot::Plot2d>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::plot::Plot2d>*>)
 	}
 	
-	Result<void*> cv_plot_createPlot2d_const__InputArrayX_const__InputArrayX(void* dataX, void* dataY) {
+	Result<cv::Ptr<cv::plot::Plot2d>*> cv_plot_createPlot2d_const__InputArrayX_const__InputArrayX(const cv::_InputArray* dataX, const cv::_InputArray* dataY) {
 		try {
-			cv::Ptr<cv::plot::Plot2d> ret = cv::plot::createPlot2d(*reinterpret_cast<const cv::_InputArray*>(dataX), *reinterpret_cast<const cv::_InputArray*>(dataY));
-			return Ok<void*>(new cv::Ptr<cv::plot::Plot2d>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::plot::Plot2d> ret = cv::plot::createPlot2d(*dataX, *dataY);
+			return Ok(new cv::Ptr<cv::plot::Plot2d>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::plot::Plot2d>*>)
 	}
 	
-	Result_void cv_plot_Plot2d_setMinX_double(void* instance, double _plotMinX) {
+	Result_void cv_plot_Plot2d_setMinX_double(cv::plot::Plot2d* instance, double _plotMinX) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setMinX(_plotMinX);
+			instance->setMinX(_plotMinX);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setMinY_double(void* instance, double _plotMinY) {
+	Result_void cv_plot_Plot2d_setMinY_double(cv::plot::Plot2d* instance, double _plotMinY) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setMinY(_plotMinY);
+			instance->setMinY(_plotMinY);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setMaxX_double(void* instance, double _plotMaxX) {
+	Result_void cv_plot_Plot2d_setMaxX_double(cv::plot::Plot2d* instance, double _plotMaxX) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setMaxX(_plotMaxX);
+			instance->setMaxX(_plotMaxX);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setMaxY_double(void* instance, double _plotMaxY) {
+	Result_void cv_plot_Plot2d_setMaxY_double(cv::plot::Plot2d* instance, double _plotMaxY) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setMaxY(_plotMaxY);
+			instance->setMaxY(_plotMaxY);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotLineWidth_int(void* instance, int _plotLineWidth) {
+	Result_void cv_plot_Plot2d_setPlotLineWidth_int(cv::plot::Plot2d* instance, int _plotLineWidth) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotLineWidth(_plotLineWidth);
+			instance->setPlotLineWidth(_plotLineWidth);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setNeedPlotLine_bool(void* instance, bool _needPlotLine) {
+	Result_void cv_plot_Plot2d_setNeedPlotLine_bool(cv::plot::Plot2d* instance, bool _needPlotLine) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setNeedPlotLine(_needPlotLine);
+			instance->setNeedPlotLine(_needPlotLine);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotLineColor_Scalar(void* instance, const cv::Scalar* _plotLineColor) {
+	Result_void cv_plot_Plot2d_setPlotLineColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotLineColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotLineColor(*_plotLineColor);
+			instance->setPlotLineColor(*_plotLineColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotBackgroundColor_Scalar(void* instance, const cv::Scalar* _plotBackgroundColor) {
+	Result_void cv_plot_Plot2d_setPlotBackgroundColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotBackgroundColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotBackgroundColor(*_plotBackgroundColor);
+			instance->setPlotBackgroundColor(*_plotBackgroundColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotAxisColor_Scalar(void* instance, const cv::Scalar* _plotAxisColor) {
+	Result_void cv_plot_Plot2d_setPlotAxisColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotAxisColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotAxisColor(*_plotAxisColor);
+			instance->setPlotAxisColor(*_plotAxisColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotGridColor_Scalar(void* instance, const cv::Scalar* _plotGridColor) {
+	Result_void cv_plot_Plot2d_setPlotGridColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotGridColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotGridColor(*_plotGridColor);
+			instance->setPlotGridColor(*_plotGridColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotTextColor_Scalar(void* instance, const cv::Scalar* _plotTextColor) {
+	Result_void cv_plot_Plot2d_setPlotTextColor_Scalar(cv::plot::Plot2d* instance, const cv::Scalar* _plotTextColor) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotTextColor(*_plotTextColor);
+			instance->setPlotTextColor(*_plotTextColor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_setPlotSize_int_int(void* instance, int _plotSizeWidth, int _plotSizeHeight) {
+	Result_void cv_plot_Plot2d_setPlotSize_int_int(cv::plot::Plot2d* instance, int _plotSizeWidth, int _plotSizeHeight) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->setPlotSize(_plotSizeWidth, _plotSizeHeight);
+			instance->setPlotSize(_plotSizeWidth, _plotSizeHeight);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_plot_Plot2d_render_const__OutputArrayX(void* instance, void* _plotResult) {
+	Result_void cv_plot_Plot2d_render_const__OutputArrayX(cv::plot::Plot2d* instance, const cv::_OutputArray* _plotResult) {
 		try {
-			reinterpret_cast<cv::plot::Plot2d*>(instance)->render(*reinterpret_cast<const cv::_OutputArray*>(_plotResult));
+			instance->render(*_plotResult);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

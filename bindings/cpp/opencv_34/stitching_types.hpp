@@ -1,23 +1,97 @@
 template struct Result<bool>;
-template struct Result<const char*>;
+template struct Result<cv::CompressedRectilinearPortraitWarper*>;
+template struct Result<cv::CompressedRectilinearWarper*>;
+template struct Result<cv::Mat*>;
+template struct Result<cv::PaniniPortraitWarper*>;
+template struct Result<cv::PaniniWarper*>;
 template struct Result<cv::Point_<float>>;
 template struct Result<cv::Point_<int>>;
+template struct Result<cv::Ptr<cv::Stitcher>*>;
+template struct Result<cv::Ptr<cv::WarperCreator>*>;
+template struct Result<cv::Ptr<cv::detail::Blender>*>;
+template struct Result<cv::Ptr<cv::detail::BundleAdjusterBase>*>;
+template struct Result<cv::Ptr<cv::detail::ExposureCompensator>*>;
+template struct Result<cv::Ptr<cv::detail::FeaturesFinder>*>;
+template struct Result<cv::Ptr<cv::detail::FeaturesMatcher>*>;
+template struct Result<cv::Ptr<cv::detail::RotationWarper>*>;
+template struct Result<cv::Ptr<cv::detail::SeamFinder>*>;
 template struct Result<cv::Rect_<int>>;
 template struct Result<cv::Size_<int>>;
+template struct Result<cv::Stitcher*>;
 template struct Result<cv::Stitcher::Status>;
+template struct Result<cv::TermCriteria*>;
+template struct Result<cv::UMat*>;
+template struct Result<cv::detail::AKAZEFeaturesFinder*>;
+template struct Result<cv::detail::AffineBestOf2NearestMatcher*>;
+template struct Result<cv::detail::AffineWarper*>;
+template struct Result<cv::detail::BestOf2NearestMatcher*>;
+template struct Result<cv::detail::BestOf2NearestRangeMatcher*>;
+template struct Result<cv::detail::BlocksGainCompensator*>;
+template struct Result<cv::detail::BundleAdjusterAffinePartial*>;
+template struct Result<cv::detail::BundleAdjusterAffine*>;
+template struct Result<cv::detail::BundleAdjusterRay*>;
+template struct Result<cv::detail::BundleAdjusterReproj*>;
+template struct Result<cv::detail::CameraParams*>;
+template struct Result<cv::detail::CompressedRectilinearPortraitWarper*>;
+template struct Result<cv::detail::CompressedRectilinearWarper*>;
+template struct Result<cv::detail::CylindricalPortraitWarper*>;
+template struct Result<cv::detail::CylindricalWarperGpu*>;
+template struct Result<cv::detail::CylindricalWarper*>;
+template struct Result<cv::detail::DisjointSets*>;
+template struct Result<cv::detail::DpSeamFinder*>;
 template struct Result<cv::detail::DpSeamFinder::CostFunction>;
+template struct Result<cv::detail::FeatherBlender*>;
+template struct Result<cv::detail::FisheyeWarper*>;
+template struct Result<cv::detail::GraphCutSeamFinder*>;
+template struct Result<cv::detail::GraphEdge*>;
+template struct Result<cv::detail::Graph*>;
+template struct Result<cv::detail::HomographyBasedEstimator*>;
+template struct Result<cv::detail::ImageFeatures*>;
+template struct Result<cv::detail::MatchesInfo*>;
+template struct Result<cv::detail::MercatorWarper*>;
+template struct Result<cv::detail::MultiBandBlender*>;
+template struct Result<cv::detail::NoBundleAdjuster*>;
+template struct Result<cv::detail::OrbFeaturesFinder*>;
+template struct Result<cv::detail::PaniniPortraitWarper*>;
+template struct Result<cv::detail::PaniniWarper*>;
+template struct Result<cv::detail::PlanePortraitWarper*>;
+template struct Result<cv::detail::PlaneWarperGpu*>;
+template struct Result<cv::detail::PlaneWarper*>;
+template struct Result<cv::detail::SiftFeaturesFinder*>;
+template struct Result<cv::detail::SphericalPortraitWarper*>;
+template struct Result<cv::detail::SphericalWarperGpu*>;
+template struct Result<cv::detail::SphericalWarper*>;
+template struct Result<cv::detail::StereographicWarper*>;
+template struct Result<cv::detail::SurfFeaturesFinderGpu*>;
+template struct Result<cv::detail::SurfFeaturesFinder*>;
+template struct Result<cv::detail::TransverseMercatorWarper*>;
 template struct Result<cv::detail::WaveCorrectKind>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<float(*)[3]>;
 template struct Result<float(*)[9]>;
 template struct Result<int>;
+template struct Result<std::vector<cv::DMatch>*>;
+template struct Result<std::vector<cv::KeyPoint>*>;
+template struct Result<std::vector<cv::Mat>*>;
+template struct Result<std::vector<cv::Point_<int>>*>;
+template struct Result<std::vector<cv::Rect_<int>>*>;
+template struct Result<std::vector<cv::Size_<int>>*>;
+template struct Result<std::vector<cv::String>*>;
+template struct Result<std::vector<cv::UMat>*>;
+template struct Result<std::vector<cv::detail::CameraParams>*>;
+template struct Result<std::vector<cv::detail::ImageFeatures>*>;
+template struct Result<std::vector<cv::detail::MatchesInfo>*>;
+template struct Result<std::vector<double>*>;
+template struct Result<std::vector<int>*>;
+template struct Result<std::vector<std::vector<cv::Rect_<int>>>*>;
+template struct Result<std::vector<unsigned char>*>;
 template struct Result<void*>;
 extern "C" void cv_PtrOfDetail_Blender_delete(cv::Ptr<cv::detail::Blender>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetail_Blender_get_inner_ptr(cv::Ptr<cv::detail::Blender>* instance) {
+extern "C" cv::detail::Blender* cv_PtrOfDetail_Blender_get_inner_ptr(cv::Ptr<cv::detail::Blender>* instance) {
 	return instance->get();
 }
 
@@ -25,7 +99,7 @@ extern "C" void cv_PtrOfDetail_BundleAdjusterBase_delete(cv::Ptr<cv::detail::Bun
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
+extern "C" cv::detail::BundleAdjusterBase* cv_PtrOfDetail_BundleAdjusterBase_get_inner_ptr(cv::Ptr<cv::detail::BundleAdjusterBase>* instance) {
 	return instance->get();
 }
 
@@ -33,7 +107,7 @@ extern "C" void cv_PtrOfDetail_ExposureCompensator_delete(cv::Ptr<cv::detail::Ex
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetail_ExposureCompensator_get_inner_ptr(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
+extern "C" cv::detail::ExposureCompensator* cv_PtrOfDetail_ExposureCompensator_get_inner_ptr(cv::Ptr<cv::detail::ExposureCompensator>* instance) {
 	return instance->get();
 }
 
@@ -41,7 +115,7 @@ extern "C" void cv_PtrOfDetail_FeaturesFinder_delete(cv::Ptr<cv::detail::Feature
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetail_FeaturesFinder_get_inner_ptr(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
+extern "C" cv::detail::FeaturesFinder* cv_PtrOfDetail_FeaturesFinder_get_inner_ptr(cv::Ptr<cv::detail::FeaturesFinder>* instance) {
 	return instance->get();
 }
 
@@ -49,7 +123,7 @@ extern "C" void cv_PtrOfDetail_FeaturesMatcher_delete(cv::Ptr<cv::detail::Featur
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
+extern "C" cv::detail::FeaturesMatcher* cv_PtrOfDetail_FeaturesMatcher_get_inner_ptr(cv::Ptr<cv::detail::FeaturesMatcher>* instance) {
 	return instance->get();
 }
 
@@ -57,7 +131,7 @@ extern "C" void cv_PtrOfDetail_RotationWarper_delete(cv::Ptr<cv::detail::Rotatio
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetail_RotationWarper_get_inner_ptr(cv::Ptr<cv::detail::RotationWarper>* instance) {
+extern "C" cv::detail::RotationWarper* cv_PtrOfDetail_RotationWarper_get_inner_ptr(cv::Ptr<cv::detail::RotationWarper>* instance) {
 	return instance->get();
 }
 
@@ -65,7 +139,7 @@ extern "C" void cv_PtrOfDetail_SeamFinder_delete(cv::Ptr<cv::detail::SeamFinder>
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDetail_SeamFinder_get_inner_ptr(cv::Ptr<cv::detail::SeamFinder>* instance) {
+extern "C" cv::detail::SeamFinder* cv_PtrOfDetail_SeamFinder_get_inner_ptr(cv::Ptr<cv::detail::SeamFinder>* instance) {
 	return instance->get();
 }
 
@@ -73,7 +147,7 @@ extern "C" void cv_PtrOfStitcher_delete(cv::Ptr<cv::Stitcher>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfStitcher_get_inner_ptr(cv::Ptr<cv::Stitcher>* instance) {
+extern "C" cv::Stitcher* cv_PtrOfStitcher_get_inner_ptr(cv::Ptr<cv::Stitcher>* instance) {
 	return instance->get();
 }
 
@@ -81,7 +155,7 @@ extern "C" void cv_PtrOfWarperCreator_delete(cv::Ptr<cv::WarperCreator>* instanc
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfWarperCreator_get_inner_ptr(cv::Ptr<cv::WarperCreator>* instance) {
+extern "C" cv::WarperCreator* cv_PtrOfWarperCreator_get_inner_ptr(cv::Ptr<cv::WarperCreator>* instance) {
 	return instance->get();
 }
 
@@ -90,7 +164,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfDetail_CameraParams_new() {
+	std::vector<cv::detail::CameraParams>* cv_VectorOfDetail_CameraParams_new() {
 		return new std::vector<cv::detail::CameraParams>();
 	}
 
@@ -134,13 +208,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfDetail_CameraParams_get(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
+	Result<cv::detail::CameraParams*> cv_VectorOfDetail_CameraParams_get(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::detail::CameraParams(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::detail::CameraParams(instance->at(index)));
+		} VEC_CATCH(Result<cv::detail::CameraParams*>)
 	}
 	
-	void* cv_VectorOfDetail_CameraParams_get_unchecked(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
+	cv::detail::CameraParams* cv_VectorOfDetail_CameraParams_get_unchecked(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
 		return new cv::detail::CameraParams((*instance)[index]);
 	}
 	
@@ -163,7 +237,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfDetail_ImageFeatures_new() {
+	std::vector<cv::detail::ImageFeatures>* cv_VectorOfDetail_ImageFeatures_new() {
 		return new std::vector<cv::detail::ImageFeatures>();
 	}
 
@@ -207,13 +281,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfDetail_ImageFeatures_get(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
+	Result<cv::detail::ImageFeatures*> cv_VectorOfDetail_ImageFeatures_get(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::detail::ImageFeatures(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::detail::ImageFeatures(instance->at(index)));
+		} VEC_CATCH(Result<cv::detail::ImageFeatures*>)
 	}
 	
-	void* cv_VectorOfDetail_ImageFeatures_get_unchecked(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
+	cv::detail::ImageFeatures* cv_VectorOfDetail_ImageFeatures_get_unchecked(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
 		return new cv::detail::ImageFeatures((*instance)[index]);
 	}
 	
@@ -236,7 +310,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfDetail_MatchesInfo_new() {
+	std::vector<cv::detail::MatchesInfo>* cv_VectorOfDetail_MatchesInfo_new() {
 		return new std::vector<cv::detail::MatchesInfo>();
 	}
 
@@ -280,13 +354,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfDetail_MatchesInfo_get(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
+	Result<cv::detail::MatchesInfo*> cv_VectorOfDetail_MatchesInfo_get(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::detail::MatchesInfo(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::detail::MatchesInfo(instance->at(index)));
+		} VEC_CATCH(Result<cv::detail::MatchesInfo*>)
 	}
 	
-	void* cv_VectorOfDetail_MatchesInfo_get_unchecked(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
+	cv::detail::MatchesInfo* cv_VectorOfDetail_MatchesInfo_get_unchecked(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
 		return new cv::detail::MatchesInfo((*instance)[index]);
 	}
 	

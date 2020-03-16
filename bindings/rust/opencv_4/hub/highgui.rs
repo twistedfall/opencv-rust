@@ -1105,7 +1105,7 @@ pub trait QtFontTrait {
 	fn as_raw_QtFont(&self) -> *mut c_void;
 	/// Name of the font
 	fn name_font(&self) -> String {
-		unsafe { sys::cv_QtFont_nameFont_const(self.as_raw_QtFont()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: name_font")
+		unsafe { sys::cv_QtFont_nameFont_const(self.as_raw_QtFont()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name_font")
 	}
 	
 	/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])

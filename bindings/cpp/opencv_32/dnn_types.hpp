@@ -1,13 +1,49 @@
 template struct Result<bool>;
-template struct Result<const char*>;
 template struct Result<const int*>;
+template struct Result<cv::Mat*>;
+template struct Result<cv::Ptr<cv::dnn::AbsLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::BNLLLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::BaseConvolutionLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::ConcatLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::CropLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::EltwiseLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::Importer>*>;
+template struct Result<cv::Ptr<cv::dnn::InnerProductLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::LRNLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::LSTMLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::Layer>*>;
+template struct Result<cv::Ptr<cv::dnn::MVNLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::PoolingLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::PowerLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::RNNLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::ReLULayer>*>;
+template struct Result<cv::Ptr<cv::dnn::ReshapeLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::SigmoidLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::SliceLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::SoftmaxLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::SplitLayer>*>;
+template struct Result<cv::Ptr<cv::dnn::TanHLayer>*>;
+template struct Result<cv::Range*>;
 template struct Result<cv::Size_<int>>;
+template struct Result<cv::UMat*>;
 template struct Result<cv::Vec<int, 4>>;
+template struct Result<cv::dnn::BlobShape*>;
+template struct Result<cv::dnn::Blob*>;
+template struct Result<cv::dnn::Blob**>;
+template struct Result<cv::dnn::DictValue*>;
+template struct Result<cv::dnn::DictValue**>;
+template struct Result<cv::dnn::Net*>;
+template struct Result<cv::dnn::_Range*>;
 template struct Result<double>;
 template struct Result<float*>;
 template struct Result<int>;
 template struct Result<int*>;
 template struct Result<long>;
+template struct Result<std::vector<cv::String>*>;
+template struct Result<std::vector<cv::dnn::Blob*>*>;
+template struct Result<std::vector<cv::dnn::Blob>*>;
+template struct Result<std::vector<cv::dnn::DictValue>*>;
+template struct Result<std::vector<int>*>;
 template struct Result<unsigned char*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
@@ -15,7 +51,7 @@ extern "C" void cv_PtrOfAbsLayer_delete(cv::Ptr<cv::dnn::AbsLayer>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfAbsLayer_get_inner_ptr(cv::Ptr<cv::dnn::AbsLayer>* instance) {
+extern "C" cv::dnn::AbsLayer* cv_PtrOfAbsLayer_get_inner_ptr(cv::Ptr<cv::dnn::AbsLayer>* instance) {
 	return instance->get();
 }
 
@@ -23,7 +59,7 @@ extern "C" void cv_PtrOfBNLLLayer_delete(cv::Ptr<cv::dnn::BNLLLayer>* instance) 
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfBNLLLayer_get_inner_ptr(cv::Ptr<cv::dnn::BNLLLayer>* instance) {
+extern "C" cv::dnn::BNLLLayer* cv_PtrOfBNLLLayer_get_inner_ptr(cv::Ptr<cv::dnn::BNLLLayer>* instance) {
 	return instance->get();
 }
 
@@ -31,7 +67,7 @@ extern "C" void cv_PtrOfBaseConvolutionLayer_delete(cv::Ptr<cv::dnn::BaseConvolu
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfBaseConvolutionLayer_get_inner_ptr(cv::Ptr<cv::dnn::BaseConvolutionLayer>* instance) {
+extern "C" cv::dnn::BaseConvolutionLayer* cv_PtrOfBaseConvolutionLayer_get_inner_ptr(cv::Ptr<cv::dnn::BaseConvolutionLayer>* instance) {
 	return instance->get();
 }
 
@@ -39,7 +75,7 @@ extern "C" void cv_PtrOfConcatLayer_delete(cv::Ptr<cv::dnn::ConcatLayer>* instan
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfConcatLayer_get_inner_ptr(cv::Ptr<cv::dnn::ConcatLayer>* instance) {
+extern "C" cv::dnn::ConcatLayer* cv_PtrOfConcatLayer_get_inner_ptr(cv::Ptr<cv::dnn::ConcatLayer>* instance) {
 	return instance->get();
 }
 
@@ -47,7 +83,7 @@ extern "C" void cv_PtrOfCropLayer_delete(cv::Ptr<cv::dnn::CropLayer>* instance) 
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfCropLayer_get_inner_ptr(cv::Ptr<cv::dnn::CropLayer>* instance) {
+extern "C" cv::dnn::CropLayer* cv_PtrOfCropLayer_get_inner_ptr(cv::Ptr<cv::dnn::CropLayer>* instance) {
 	return instance->get();
 }
 
@@ -55,7 +91,7 @@ extern "C" void cv_PtrOfEltwiseLayer_delete(cv::Ptr<cv::dnn::EltwiseLayer>* inst
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfEltwiseLayer_get_inner_ptr(cv::Ptr<cv::dnn::EltwiseLayer>* instance) {
+extern "C" cv::dnn::EltwiseLayer* cv_PtrOfEltwiseLayer_get_inner_ptr(cv::Ptr<cv::dnn::EltwiseLayer>* instance) {
 	return instance->get();
 }
 
@@ -63,7 +99,7 @@ extern "C" void cv_PtrOfImporter_delete(cv::Ptr<cv::dnn::Importer>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfImporter_get_inner_ptr(cv::Ptr<cv::dnn::Importer>* instance) {
+extern "C" cv::dnn::Importer* cv_PtrOfImporter_get_inner_ptr(cv::Ptr<cv::dnn::Importer>* instance) {
 	return instance->get();
 }
 
@@ -71,7 +107,7 @@ extern "C" void cv_PtrOfInnerProductLayer_delete(cv::Ptr<cv::dnn::InnerProductLa
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfInnerProductLayer_get_inner_ptr(cv::Ptr<cv::dnn::InnerProductLayer>* instance) {
+extern "C" cv::dnn::InnerProductLayer* cv_PtrOfInnerProductLayer_get_inner_ptr(cv::Ptr<cv::dnn::InnerProductLayer>* instance) {
 	return instance->get();
 }
 
@@ -79,7 +115,7 @@ extern "C" void cv_PtrOfLRNLayer_delete(cv::Ptr<cv::dnn::LRNLayer>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfLRNLayer_get_inner_ptr(cv::Ptr<cv::dnn::LRNLayer>* instance) {
+extern "C" cv::dnn::LRNLayer* cv_PtrOfLRNLayer_get_inner_ptr(cv::Ptr<cv::dnn::LRNLayer>* instance) {
 	return instance->get();
 }
 
@@ -87,7 +123,7 @@ extern "C" void cv_PtrOfLSTMLayer_delete(cv::Ptr<cv::dnn::LSTMLayer>* instance) 
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfLSTMLayer_get_inner_ptr(cv::Ptr<cv::dnn::LSTMLayer>* instance) {
+extern "C" cv::dnn::LSTMLayer* cv_PtrOfLSTMLayer_get_inner_ptr(cv::Ptr<cv::dnn::LSTMLayer>* instance) {
 	return instance->get();
 }
 
@@ -95,7 +131,7 @@ extern "C" void cv_PtrOfLayer_delete(cv::Ptr<cv::dnn::Layer>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfLayer_get_inner_ptr(cv::Ptr<cv::dnn::Layer>* instance) {
+extern "C" cv::dnn::Layer* cv_PtrOfLayer_get_inner_ptr(cv::Ptr<cv::dnn::Layer>* instance) {
 	return instance->get();
 }
 
@@ -103,7 +139,7 @@ extern "C" void cv_PtrOfMVNLayer_delete(cv::Ptr<cv::dnn::MVNLayer>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfMVNLayer_get_inner_ptr(cv::Ptr<cv::dnn::MVNLayer>* instance) {
+extern "C" cv::dnn::MVNLayer* cv_PtrOfMVNLayer_get_inner_ptr(cv::Ptr<cv::dnn::MVNLayer>* instance) {
 	return instance->get();
 }
 
@@ -111,7 +147,7 @@ extern "C" void cv_PtrOfPoolingLayer_delete(cv::Ptr<cv::dnn::PoolingLayer>* inst
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfPoolingLayer_get_inner_ptr(cv::Ptr<cv::dnn::PoolingLayer>* instance) {
+extern "C" cv::dnn::PoolingLayer* cv_PtrOfPoolingLayer_get_inner_ptr(cv::Ptr<cv::dnn::PoolingLayer>* instance) {
 	return instance->get();
 }
 
@@ -119,7 +155,7 @@ extern "C" void cv_PtrOfPowerLayer_delete(cv::Ptr<cv::dnn::PowerLayer>* instance
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfPowerLayer_get_inner_ptr(cv::Ptr<cv::dnn::PowerLayer>* instance) {
+extern "C" cv::dnn::PowerLayer* cv_PtrOfPowerLayer_get_inner_ptr(cv::Ptr<cv::dnn::PowerLayer>* instance) {
 	return instance->get();
 }
 
@@ -127,7 +163,7 @@ extern "C" void cv_PtrOfRNNLayer_delete(cv::Ptr<cv::dnn::RNNLayer>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfRNNLayer_get_inner_ptr(cv::Ptr<cv::dnn::RNNLayer>* instance) {
+extern "C" cv::dnn::RNNLayer* cv_PtrOfRNNLayer_get_inner_ptr(cv::Ptr<cv::dnn::RNNLayer>* instance) {
 	return instance->get();
 }
 
@@ -135,7 +171,7 @@ extern "C" void cv_PtrOfReLULayer_delete(cv::Ptr<cv::dnn::ReLULayer>* instance) 
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfReLULayer_get_inner_ptr(cv::Ptr<cv::dnn::ReLULayer>* instance) {
+extern "C" cv::dnn::ReLULayer* cv_PtrOfReLULayer_get_inner_ptr(cv::Ptr<cv::dnn::ReLULayer>* instance) {
 	return instance->get();
 }
 
@@ -143,7 +179,7 @@ extern "C" void cv_PtrOfReshapeLayer_delete(cv::Ptr<cv::dnn::ReshapeLayer>* inst
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfReshapeLayer_get_inner_ptr(cv::Ptr<cv::dnn::ReshapeLayer>* instance) {
+extern "C" cv::dnn::ReshapeLayer* cv_PtrOfReshapeLayer_get_inner_ptr(cv::Ptr<cv::dnn::ReshapeLayer>* instance) {
 	return instance->get();
 }
 
@@ -151,7 +187,7 @@ extern "C" void cv_PtrOfSigmoidLayer_delete(cv::Ptr<cv::dnn::SigmoidLayer>* inst
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfSigmoidLayer_get_inner_ptr(cv::Ptr<cv::dnn::SigmoidLayer>* instance) {
+extern "C" cv::dnn::SigmoidLayer* cv_PtrOfSigmoidLayer_get_inner_ptr(cv::Ptr<cv::dnn::SigmoidLayer>* instance) {
 	return instance->get();
 }
 
@@ -159,7 +195,7 @@ extern "C" void cv_PtrOfSliceLayer_delete(cv::Ptr<cv::dnn::SliceLayer>* instance
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfSliceLayer_get_inner_ptr(cv::Ptr<cv::dnn::SliceLayer>* instance) {
+extern "C" cv::dnn::SliceLayer* cv_PtrOfSliceLayer_get_inner_ptr(cv::Ptr<cv::dnn::SliceLayer>* instance) {
 	return instance->get();
 }
 
@@ -167,7 +203,7 @@ extern "C" void cv_PtrOfSoftmaxLayer_delete(cv::Ptr<cv::dnn::SoftmaxLayer>* inst
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfSoftmaxLayer_get_inner_ptr(cv::Ptr<cv::dnn::SoftmaxLayer>* instance) {
+extern "C" cv::dnn::SoftmaxLayer* cv_PtrOfSoftmaxLayer_get_inner_ptr(cv::Ptr<cv::dnn::SoftmaxLayer>* instance) {
 	return instance->get();
 }
 
@@ -175,7 +211,7 @@ extern "C" void cv_PtrOfSplitLayer_delete(cv::Ptr<cv::dnn::SplitLayer>* instance
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfSplitLayer_get_inner_ptr(cv::Ptr<cv::dnn::SplitLayer>* instance) {
+extern "C" cv::dnn::SplitLayer* cv_PtrOfSplitLayer_get_inner_ptr(cv::Ptr<cv::dnn::SplitLayer>* instance) {
 	return instance->get();
 }
 
@@ -183,7 +219,7 @@ extern "C" void cv_PtrOfTanHLayer_delete(cv::Ptr<cv::dnn::TanHLayer>* instance) 
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfTanHLayer_get_inner_ptr(cv::Ptr<cv::dnn::TanHLayer>* instance) {
+extern "C" cv::dnn::TanHLayer* cv_PtrOfTanHLayer_get_inner_ptr(cv::Ptr<cv::dnn::TanHLayer>* instance) {
 	return instance->get();
 }
 
@@ -192,7 +228,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfBlob_new() {
+	std::vector<cv::dnn::Blob>* cv_VectorOfBlob_new() {
 		return new std::vector<cv::dnn::Blob>();
 	}
 
@@ -236,13 +272,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfBlob_get(const std::vector<cv::dnn::Blob>* instance, size_t index) {
+	Result<cv::dnn::Blob*> cv_VectorOfBlob_get(const std::vector<cv::dnn::Blob>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::dnn::Blob(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::dnn::Blob(instance->at(index)));
+		} VEC_CATCH(Result<cv::dnn::Blob*>)
 	}
 	
-	void* cv_VectorOfBlob_get_unchecked(const std::vector<cv::dnn::Blob>* instance, size_t index) {
+	cv::dnn::Blob* cv_VectorOfBlob_get_unchecked(const std::vector<cv::dnn::Blob>* instance, size_t index) {
 		return new cv::dnn::Blob((*instance)[index]);
 	}
 	
@@ -265,7 +301,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfNet_LayerId_new() {
+	std::vector<cv::dnn::Net::LayerId>* cv_VectorOfNet_LayerId_new() {
 		return new std::vector<cv::dnn::Net::LayerId>();
 	}
 
@@ -309,13 +345,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfNet_LayerId_get(const std::vector<cv::dnn::Net::LayerId>* instance, size_t index) {
+	Result<cv::dnn::Net::LayerId*> cv_VectorOfNet_LayerId_get(const std::vector<cv::dnn::Net::LayerId>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::dnn::Net::LayerId(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::dnn::Net::LayerId(instance->at(index)));
+		} VEC_CATCH(Result<cv::dnn::Net::LayerId*>)
 	}
 	
-	void* cv_VectorOfNet_LayerId_get_unchecked(const std::vector<cv::dnn::Net::LayerId>* instance, size_t index) {
+	cv::dnn::Net::LayerId* cv_VectorOfNet_LayerId_get_unchecked(const std::vector<cv::dnn::Net::LayerId>* instance, size_t index) {
 		return new cv::dnn::Net::LayerId((*instance)[index]);
 	}
 	

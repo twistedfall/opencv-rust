@@ -1378,7 +1378,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		input_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayX_const__InputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_QRCodeDetector_decode_const__InputArrayX_const__InputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Both detects and decodes QR code
@@ -1395,7 +1395,7 @@ pub trait QRCodeDetectorTrait {
 		input_array_arg!(img);
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
-		unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }

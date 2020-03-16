@@ -3938,18 +3938,16 @@ mod core_types {
 		
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
-			extern "C" { fn cv_VectorOfString_get(instance: *mut c_void, index: size_t) -> sys::Result<*const c_char>; }
+			extern "C" { fn cv_VectorOfString_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
 			unsafe { cv_VectorOfString_get(self.as_raw_VectorOfString(), index) }
 				.into_result()
-				.map(|x| unsafe { ::std::ffi::CStr::from_ptr(x) }.to_string_lossy().into_owned())
+				.map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 		}
 		
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfString_get_unchecked(instance: *mut c_void, index: size_t) -> *const c_char; }
-			::std::ffi::CStr::from_ptr(cv_VectorOfString_get_unchecked(self.as_raw_VectorOfString(), index))
-				.to_string_lossy()
-				.into_owned()
+			extern "C" { fn cv_VectorOfString_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
+			crate::templ::receive_string(cv_VectorOfString_get_unchecked(self.as_raw_VectorOfString(), index) as *mut String)
 		}
 		
 		#[inline]

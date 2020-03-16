@@ -2873,7 +2873,7 @@ pub fn gemm(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, alpha:
 /// compiler flags, enabled modules and third party libraries, etc. Output format depends on target
 /// architecture.
 pub fn get_build_information() -> Result<String> {
-	unsafe { sys::cv_getBuildInformation() }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_getBuildInformation() }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// Returns the number of CPU ticks.
@@ -3252,7 +3252,7 @@ pub fn invert(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, f
 }
 
 pub fn get_ipp_error_location() -> Result<String> {
-	unsafe { sys::cv_ipp_getIppErrorLocation() }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_ipp_getIppErrorLocation() }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 pub fn get_ipp_features() -> Result<i32> {
@@ -4262,7 +4262,7 @@ pub fn convert_from_image(cl_mem_image: *mut c_void, dst: &mut core::UMat) -> Re
 
 pub fn convert_type_str(sdepth: i32, ddepth: i32, cn: i32, buf: &str) -> Result<String> {
 	string_arg!(buf);
-	unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, buf.as_ptr() as _) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_ocl_convertTypeStr_int_int_int_charX(sdepth, ddepth, cn, buf.as_ptr() as _) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 pub fn finish() -> Result<()> {
@@ -4295,11 +4295,11 @@ pub fn have_svm() -> Result<bool> {
 pub fn kernel_to_str(_kernel: &dyn core::ToInputArray, ddepth: i32, name: &str) -> Result<String> {
 	input_array_arg!(_kernel);
 	string_arg!(name);
-	unsafe { sys::cv_ocl_kernelToStr_const__InputArrayX_int_const_charX(_kernel.as_raw__InputArray(), ddepth, name.as_ptr()) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_ocl_kernelToStr_const__InputArrayX_int_const_charX(_kernel.as_raw__InputArray(), ddepth, name.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 pub fn memop_type_to_str(t: i32) -> Result<String> {
-	unsafe { sys::cv_ocl_memopTypeToStr_int(t) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_ocl_memopTypeToStr_int(t) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// ## C++ default parameters
@@ -4352,7 +4352,7 @@ pub fn set_use_opencl(flag: bool) -> Result<()> {
 }
 
 pub fn type_to_str(t: i32) -> Result<String> {
-	unsafe { sys::cv_ocl_typeToStr_int(t) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_ocl_typeToStr_int(t) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 pub fn use_opencl() -> Result<bool> {
@@ -4360,7 +4360,7 @@ pub fn use_opencl() -> Result<bool> {
 }
 
 pub fn vecop_type_to_str(t: i32) -> Result<String> {
-	unsafe { sys::cv_ocl_vecopTypeToStr_int(t) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_ocl_vecopTypeToStr_int(t) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// Parallel data processor
@@ -5094,7 +5094,7 @@ pub fn swap_umat(a: &mut core::UMat, b: &mut core::UMat) -> Result<()> {
 /// * suffix: 0
 pub fn tempfile(suffix: &str) -> Result<String> {
 	string_arg!(suffix);
-	unsafe { sys::cv_tempfile_const_charX(suffix.as_ptr()) }.into_result().map(crate::templ::receive_string)
+	unsafe { sys::cv_tempfile_const_charX(suffix.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 }
 
 /// Returns the default random number generator.
@@ -5443,7 +5443,7 @@ pub trait AlgorithmTrait {
 	/// Returns the algorithm string identifier.
 	/// This string is used as top level xml/yml node tag when the object is saved to a file or string.
 	fn get_default_name(&self) -> Result<String> {
-		unsafe { sys::cv_Algorithm_getDefaultName_const(self.as_raw_Algorithm()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_Algorithm_getDefaultName_const(self.as_raw_Algorithm()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -5642,7 +5642,7 @@ pub trait CommandLineParserTrait {
 	/// 
 	/// this method will return `./bin`.
 	fn get_path_to_application(&self) -> Result<String> {
-		unsafe { sys::cv_CommandLineParser_getPathToApplication_const(self.as_raw_CommandLineParser()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_CommandLineParser_getPathToApplication_const(self.as_raw_CommandLineParser()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Check if field was provided in the command line
@@ -6011,7 +6011,7 @@ pub trait ExceptionTrait {
 	fn as_raw_Exception(&self) -> *mut c_void;
 	/// the formatted error message
 	fn msg(&self) -> String {
-		unsafe { sys::cv_Exception_msg_const(self.as_raw_Exception()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: msg")
+		unsafe { sys::cv_Exception_msg_const(self.as_raw_Exception()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: msg")
 	}
 	
 	/// the formatted error message
@@ -6032,7 +6032,7 @@ pub trait ExceptionTrait {
 	
 	/// error description
 	fn err(&self) -> String {
-		unsafe { sys::cv_Exception_err_const(self.as_raw_Exception()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: err")
+		unsafe { sys::cv_Exception_err_const(self.as_raw_Exception()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: err")
 	}
 	
 	/// error description
@@ -6043,7 +6043,7 @@ pub trait ExceptionTrait {
 	
 	/// function name. Available only when the compiler supports getting it
 	fn func(&self) -> String {
-		unsafe { sys::cv_Exception_func_const(self.as_raw_Exception()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: func")
+		unsafe { sys::cv_Exception_func_const(self.as_raw_Exception()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: func")
 	}
 	
 	/// function name. Available only when the compiler supports getting it
@@ -6054,7 +6054,7 @@ pub trait ExceptionTrait {
 	
 	/// source file name where the error has occured
 	fn file(&self) -> String {
-		unsafe { sys::cv_Exception_file_const(self.as_raw_Exception()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: file")
+		unsafe { sys::cv_Exception_file_const(self.as_raw_Exception()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: file")
 	}
 	
 	/// source file name where the error has occured
@@ -6076,7 +6076,7 @@ pub trait ExceptionTrait {
 	/// !
 	/// \return the error description and the context as a text string.
 	fn what(&self) -> Result<String> {
-		unsafe { sys::cv_Exception_what_const(self.as_raw_Exception()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_Exception_what_const(self.as_raw_Exception()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn format_message(&mut self) -> Result<()> {
@@ -6235,7 +6235,7 @@ pub trait FileNodeTrait {
 	
 	/// returns the node name or an empty string if the node is nameless
 	fn name(&self) -> Result<String> {
-		unsafe { sys::cv_FileNode_name_const(self.as_raw_FileNode()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_FileNode_name_const(self.as_raw_FileNode()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// returns the number of elements in the node, if it is a sequence or mapping, or 1 otherwise.
@@ -6260,11 +6260,11 @@ pub trait FileNodeTrait {
 	
 	/// returns the node content as text string
 	fn to_string(&self) -> Result<String> {
-		unsafe { sys::cv_FileNode_operator_cv_String_const(self.as_raw_FileNode()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_FileNode_operator_cv_String_const(self.as_raw_FileNode()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn to_string_1(&self) -> Result<String> {
-		unsafe { sys::cv_FileNode_operator_std_string_const(self.as_raw_FileNode()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_FileNode_operator_std_string_const(self.as_raw_FileNode()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// returns iterator pointing to the first node element
@@ -6302,7 +6302,7 @@ pub trait FileNodeTrait {
 	
 	/// Simplified reading API to use with bindings.
 	fn string(&self) -> Result<String> {
-		unsafe { sys::cv_FileNode_string_const(self.as_raw_FileNode()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_FileNode_string_const(self.as_raw_FileNode()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Simplified reading API to use with bindings.
@@ -6567,7 +6567,7 @@ pub trait FileStorageTrait {
 	fn as_raw_FileStorage(&self) -> *mut c_void;
 	/// the currently written element
 	fn elname(&self) -> String {
-		unsafe { sys::cv_FileStorage_elname_const(self.as_raw_FileStorage()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: elname")
+		unsafe { sys::cv_FileStorage_elname_const(self.as_raw_FileStorage()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: elname")
 	}
 	
 	/// the currently written element
@@ -6641,7 +6641,7 @@ pub trait FileStorageTrait {
 	/// Call this method after all I/O operations with the storage are finished. If the storage was
 	/// opened for writing data and FileStorage::WRITE was specified
 	fn release_and_get_string(&mut self) -> Result<String> {
-		unsafe { sys::cv_FileStorage_releaseAndGetString(self.as_raw_FileStorage()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_FileStorage_releaseAndGetString(self.as_raw_FileStorage()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Returns the first element of the top-level mapping.
@@ -6829,7 +6829,7 @@ impl FileStorage {
 	/// The normalized object name.
 	pub fn get_default_object_name(filename: &str) -> Result<String> {
 		string_arg!(filename);
-		unsafe { sys::cv_FileStorage_getDefaultObjectName_const_StringX(filename.as_ptr()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_FileStorage_getDefaultObjectName_const_StringX(filename.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -6838,7 +6838,7 @@ impl FileStorage {
 pub trait Formatted {
 	fn as_raw_Formatted(&self) -> *mut c_void;
 	fn next(&mut self) -> Result<String> {
-		unsafe { sys::cv_Formatted_next(self.as_raw_Formatted()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_Formatted_next(self.as_raw_Formatted()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn reset(&mut self) -> Result<()> {
@@ -14223,7 +14223,7 @@ impl _OutputArray {
 pub trait NodeDataTrait {
 	fn as_raw_NodeData(&self) -> *mut c_void;
 	fn m_fun_name(&self) -> String {
-		unsafe { sys::cv_instr_NodeData_m_funName_const(self.as_raw_NodeData()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: m_fun_name")
+		unsafe { sys::cv_instr_NodeData_m_funName_const(self.as_raw_NodeData()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: m_fun_name")
 	}
 	
 	fn set_m_fun_name(&mut self, val: &str) -> () {
@@ -14248,7 +14248,7 @@ pub trait NodeDataTrait {
 	}
 	
 	fn m_file_name(&self) -> String {
-		unsafe { sys::cv_instr_NodeData_m_fileName_const(self.as_raw_NodeData()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: m_file_name")
+		unsafe { sys::cv_instr_NodeData_m_fileName_const(self.as_raw_NodeData()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: m_file_name")
 	}
 	
 	fn m_line_num(&self) -> i32 {
@@ -14496,27 +14496,27 @@ pub trait DeviceTrait {
 	}
 	
 	fn name(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_name_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Device_name_const(self.as_raw_Device()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn extensions(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_extensions_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Device_extensions_const(self.as_raw_Device()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_version_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Device_version_const(self.as_raw_Device()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn vendor_name(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Device_vendorName_const(self.as_raw_Device()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn opencl_c_version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Device_OpenCL_C_Version_const(self.as_raw_Device()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn opencl_version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_OpenCLVersion_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Device_OpenCLVersion_const(self.as_raw_Device()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn device_version_major(&self) -> Result<i32> {
@@ -14528,7 +14528,7 @@ pub trait DeviceTrait {
 	}
 	
 	fn driver_version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Device_driverVersion_const(self.as_raw_Device()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Device_driverVersion_const(self.as_raw_Device()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn ptr(&self) -> Result<*mut c_void> {
@@ -15215,15 +15215,15 @@ impl Platform {
 pub trait PlatformInfoTrait {
 	fn as_raw_PlatformInfo(&self) -> *mut c_void;
 	fn name(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_PlatformInfo_name_const(self.as_raw_PlatformInfo()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_PlatformInfo_name_const(self.as_raw_PlatformInfo()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn vendor(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_PlatformInfo_vendor_const(self.as_raw_PlatformInfo()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn version(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_PlatformInfo_version_const(self.as_raw_PlatformInfo()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn device_number(&self) -> Result<i32> {
@@ -15308,7 +15308,7 @@ pub trait ProgramTrait {
 	}
 	
 	fn get_prefix(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_Program_getPrefix_const(self.as_raw_Program()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Program_getPrefix_const(self.as_raw_Program()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -15362,7 +15362,7 @@ impl Program {
 	
 	pub fn get_prefix_build_flags(buildflags: &str) -> Result<String> {
 		string_arg!(buildflags);
-		unsafe { sys::cv_ocl_Program_getPrefix_const_StringX(buildflags.as_ptr()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_Program_getPrefix_const_StringX(buildflags.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -15370,7 +15370,7 @@ impl Program {
 pub trait ProgramSourceTrait {
 	fn as_raw_ProgramSource(&self) -> *mut c_void;
 	fn source(&self) -> Result<String> {
-		unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_ocl_ProgramSource_source_const(self.as_raw_ProgramSource()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn hash(&self) -> Result<core::ProgramSource_hash_t> {

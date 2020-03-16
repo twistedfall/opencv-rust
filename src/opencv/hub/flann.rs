@@ -450,7 +450,7 @@ pub trait IndexParamsTrait {
 	fn get_string(&self, key: &str, default_val: &str) -> Result<String> {
 		string_arg!(key);
 		string_arg!(default_val);
-		unsafe { sys::cv_flann_IndexParams_getString_const_const_StringX_const_StringX(self.as_raw_IndexParams(), key.as_ptr(), default_val.as_ptr()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_flann_IndexParams_getString_const_const_StringX_const_StringX(self.as_raw_IndexParams(), key.as_ptr(), default_val.as_ptr()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters

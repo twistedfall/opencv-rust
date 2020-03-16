@@ -554,14 +554,6 @@ pub trait ERStatTrait {
 		unsafe { sys::cv_text_ERStat_setNum_inflexion_points_float(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_num_inflexion_points")
 	}
 	
-	fn pixels(&mut self) -> types::VectorOfi32 {
-		unsafe { sys::cv_text_ERStat_pixels(self.as_raw_ERStat()) }.into_result().map(|ptr| types::VectorOfi32 { ptr }).expect("Infallible function failed: pixels")
-	}
-	
-	fn set_pixels(&mut self, val: &mut types::VectorOfi32) -> () {
-		unsafe { sys::cv_text_ERStat_setPixels_vector_int_X(self.as_raw_ERStat(), val.as_raw_VectorOfi32()) }.into_result().expect("Infallible function failed: set_pixels")
-	}
-	
 	/// probability that the ER belongs to the class we are looking for
 	fn probability(&self) -> f64 {
 		unsafe { sys::cv_text_ERStat_probability_const(self.as_raw_ERStat()) }.into_result().expect("Infallible function failed: probability")
@@ -737,7 +729,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_2(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_int_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_int_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -745,7 +737,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	fn run_3(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -980,7 +972,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_2(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_int_int(self.as_raw_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_int_int(self.as_raw_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -988,7 +980,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	fn run_3(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -1187,7 +1179,7 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_2(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_int_int(self.as_raw_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_int_int(self.as_raw_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -1195,7 +1187,7 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	fn run_3(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn set_white_list(&mut self, char_whitelist: &str) -> Result<()> {

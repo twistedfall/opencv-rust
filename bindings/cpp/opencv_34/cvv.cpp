@@ -3,16 +3,16 @@
 #include "cvv_types.hpp"
 
 extern "C" {
-	Result_void cvv_impl_debugDMatch_const__InputArrayX_vector_KeyPoint__const__InputArrayX_vector_KeyPoint__vector_DMatch__const_CallMetaDataX_const_charX_const_charX_bool(void* img1, void* keypoints1, void* img2, void* keypoints2, void* matches, void* data, const char* description, const char* view, bool useTrainDescriptor) {
+	Result_void cvv_impl_debugDMatch_const__InputArrayX_vector_KeyPoint__const__InputArrayX_vector_KeyPoint__vector_DMatch__const_CallMetaDataX_const_charX_const_charX_bool(const cv::_InputArray* img1, std::vector<cv::KeyPoint>* keypoints1, const cv::_InputArray* img2, std::vector<cv::KeyPoint>* keypoints2, std::vector<cv::DMatch>* matches, const cvv::impl::CallMetaData* data, const char* description, const char* view, bool useTrainDescriptor) {
 		try {
-			cvv::impl::debugDMatch(*reinterpret_cast<const cv::_InputArray*>(img1), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints1), *reinterpret_cast<const cv::_InputArray*>(img2), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints2), *reinterpret_cast<std::vector<cv::DMatch>*>(matches), *reinterpret_cast<const cvv::impl::CallMetaData*>(data), description, view, useTrainDescriptor);
+			cvv::impl::debugDMatch(*img1, *keypoints1, *img2, *keypoints2, *matches, *data, description, view, useTrainDescriptor);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cvv_impl_debugFilter_const__InputArrayX_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(void* original, void* result, void* data, const char* description, const char* view) {
+	Result_void cvv_impl_debugFilter_const__InputArrayX_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(const cv::_InputArray* original, const cv::_InputArray* result, const cvv::impl::CallMetaData* data, const char* description, const char* view) {
 		try {
-			cvv::impl::debugFilter(*reinterpret_cast<const cv::_InputArray*>(original), *reinterpret_cast<const cv::_InputArray*>(result), *reinterpret_cast<const cvv::impl::CallMetaData*>(data), description, view);
+			cvv::impl::debugFilter(*original, *result, *data, description, view);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -24,62 +24,62 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cvv_impl_showImage_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(void* img, void* data, const char* description, const char* view) {
+	Result_void cvv_impl_showImage_const__InputArrayX_const_CallMetaDataX_const_charX_const_charX(const cv::_InputArray* img, const cvv::impl::CallMetaData* data, const char* description, const char* view) {
 		try {
-			cvv::impl::showImage(*reinterpret_cast<const cv::_InputArray*>(img), *reinterpret_cast<const cvv::impl::CallMetaData*>(data), description, view);
+			cvv::impl::showImage(*img, *data, description, view);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cvv_impl_CallMetaData_file_const(void* instance) {
+	Result<void*> cvv_impl_CallMetaData_file_const(const cvv::impl::CallMetaData* instance) {
 		try {
-			const char* ret = reinterpret_cast<cvv::impl::CallMetaData*>(instance)->file;
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->file;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<size_t> cvv_impl_CallMetaData_line_const(void* instance) {
+	Result<size_t> cvv_impl_CallMetaData_line_const(const cvv::impl::CallMetaData* instance) {
 		try {
-			size_t ret = reinterpret_cast<cvv::impl::CallMetaData*>(instance)->line;
-			return Ok<size_t>(ret);
+			size_t ret = instance->line;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<void*> cvv_impl_CallMetaData_function_const(void* instance) {
+	Result<void*> cvv_impl_CallMetaData_function_const(const cvv::impl::CallMetaData* instance) {
 		try {
-			const char* ret = reinterpret_cast<cvv::impl::CallMetaData*>(instance)->function;
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->function;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<bool> cvv_impl_CallMetaData_isKnown_const(void* instance) {
+	Result<bool> cvv_impl_CallMetaData_isKnown_const(const cvv::impl::CallMetaData* instance) {
 		try {
-			bool ret = reinterpret_cast<cvv::impl::CallMetaData*>(instance)->isKnown;
-			return Ok<bool>(ret);
+			bool ret = instance->isKnown;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	void cv_CallMetaData_delete(cvv::impl::CallMetaData* instance) {
 		delete instance;
 	}
-	Result<void*> cvv_impl_CallMetaData_CallMetaData() {
+	Result<cvv::impl::CallMetaData*> cvv_impl_CallMetaData_CallMetaData() {
 		try {
 			cvv::impl::CallMetaData* ret = new cvv::impl::CallMetaData();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cvv::impl::CallMetaData*>)
 	}
 	
-	Result<void*> cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(const char* file, size_t line, const char* function) {
+	Result<cvv::impl::CallMetaData*> cvv_impl_CallMetaData_CallMetaData_const_charX_size_t_const_charX(const char* file, size_t line, const char* function) {
 		try {
 			cvv::impl::CallMetaData* ret = new cvv::impl::CallMetaData(file, line, function);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cvv::impl::CallMetaData*>)
 	}
 	
-	Result<bool> cvv_impl_CallMetaData_operator_bool(void* instance) {
+	Result<bool> cvv_impl_CallMetaData_operator_bool(cvv::impl::CallMetaData* instance) {
 		try {
-			bool ret = reinterpret_cast<cvv::impl::CallMetaData*>(instance)->operator bool();
-			return Ok<bool>(ret);
+			bool ret = instance->operator bool();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	

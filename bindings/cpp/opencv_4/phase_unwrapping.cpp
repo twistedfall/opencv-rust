@@ -3,86 +3,86 @@
 #include "phase_unwrapping_types.hpp"
 
 extern "C" {
-	Result<void*> cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(void* parameters) {
+	Result<cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping>*> cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* parameters) {
 		try {
-			cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping> ret = cv::phase_unwrapping::HistogramPhaseUnwrapping::create(*reinterpret_cast<const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(parameters));
-			return Ok<void*>(new cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping> ret = cv::phase_unwrapping::HistogramPhaseUnwrapping::create(*parameters);
+			return Ok(new cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::phase_unwrapping::HistogramPhaseUnwrapping>*>)
 	}
 	
-	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayX(void* instance, void* reliabilityMap) {
+	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayX(cv::phase_unwrapping::HistogramPhaseUnwrapping* instance, const cv::_OutputArray* reliabilityMap) {
 		try {
-			reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping*>(instance)->getInverseReliabilityMap(*reinterpret_cast<const cv::_OutputArray*>(reliabilityMap));
+			instance->getInverseReliabilityMap(*reliabilityMap);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_width_const(void* instance) {
+	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_width_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
-			int ret = reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->width;
-			return Ok<int>(ret);
+			int ret = instance->width;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setWidth_int(void* instance, int val) {
+	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setWidth_int(cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance, int val) {
 		try {
-			reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->width = val;
+			instance->width = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_height_const(void* instance) {
+	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_height_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
-			int ret = reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->height;
-			return Ok<int>(ret);
+			int ret = instance->height;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHeight_int(void* instance, int val) {
+	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHeight_int(cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance, int val) {
 		try {
-			reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->height = val;
+			instance->height = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_histThresh_const(void* instance) {
+	Result<float> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_histThresh_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
-			float ret = reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->histThresh;
-			return Ok<float>(ret);
+			float ret = instance->histThresh;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHistThresh_float(void* instance, float val) {
+	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHistThresh_float(cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance, float val) {
 		try {
-			reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->histThresh = val;
+			instance->histThresh = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfSmallBins_const(void* instance) {
+	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfSmallBins_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
-			int ret = reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->nbrOfSmallBins;
-			return Ok<int>(ret);
+			int ret = instance->nbrOfSmallBins;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfSmallBins_int(void* instance, int val) {
+	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfSmallBins_int(cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance, int val) {
 		try {
-			reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->nbrOfSmallBins = val;
+			instance->nbrOfSmallBins = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfLargeBins_const(void* instance) {
+	Result<int> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfLargeBins_const(const cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		try {
-			int ret = reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->nbrOfLargeBins;
-			return Ok<int>(ret);
+			int ret = instance->nbrOfLargeBins;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfLargeBins_int(void* instance, int val) {
+	Result_void cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfLargeBins_int(cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance, int val) {
 		try {
-			reinterpret_cast<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>(instance)->nbrOfLargeBins = val;
+			instance->nbrOfLargeBins = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -90,16 +90,16 @@ extern "C" {
 	void cv_HistogramPhaseUnwrapping_Params_delete(cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* instance) {
 		delete instance;
 	}
-	Result<void*> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() {
+	Result<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*> cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() {
 		try {
 			cv::phase_unwrapping::HistogramPhaseUnwrapping::Params* ret = new cv::phase_unwrapping::HistogramPhaseUnwrapping::Params();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::phase_unwrapping::HistogramPhaseUnwrapping::Params*>)
 	}
 	
-	Result_void cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* instance, void* wrappedPhaseMap, void* unwrappedPhaseMap, void* shadowMask) {
+	Result_void cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(cv::phase_unwrapping::PhaseUnwrapping* instance, const cv::_InputArray* wrappedPhaseMap, const cv::_OutputArray* unwrappedPhaseMap, const cv::_InputArray* shadowMask) {
 		try {
-			reinterpret_cast<cv::phase_unwrapping::PhaseUnwrapping*>(instance)->unwrapPhaseMap(*reinterpret_cast<const cv::_InputArray*>(wrappedPhaseMap), *reinterpret_cast<const cv::_OutputArray*>(unwrappedPhaseMap), *reinterpret_cast<const cv::_InputArray*>(shadowMask));
+			instance->unwrapPhaseMap(*wrappedPhaseMap, *unwrappedPhaseMap, *shadowMask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

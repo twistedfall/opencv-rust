@@ -5,20 +5,20 @@ extern "C" {
 	Result<bool> cv_Cholesky_doubleX_size_t_int_doubleX_size_t_int(double* A, size_t astep, int m, double* b, size_t bstep, int n) {
 		try {
 			bool ret = cv::Cholesky(A, astep, m, b, bstep, n);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_Cholesky_floatX_size_t_int_floatX_size_t_int(float* A, size_t astep, int m, float* b, size_t bstep, int n) {
 		try {
 			bool ret = cv::Cholesky(A, astep, m, b, bstep, n);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_LUT_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* src, void* lut, void* dst) {
+	Result_void cv_LUT_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_InputArray* lut, const cv::_OutputArray* dst) {
 		try {
-			cv::LUT(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(lut), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::LUT(*src, *lut, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -26,153 +26,153 @@ extern "C" {
 	Result<int> cv_LU_doubleX_size_t_int_doubleX_size_t_int(double* A, size_t astep, int m, double* b, size_t bstep, int n) {
 		try {
 			int ret = cv::LU(A, astep, m, b, bstep, n);
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_LU_floatX_size_t_int_floatX_size_t_int(float* A, size_t astep, int m, float* b, size_t bstep, int n) {
 		try {
 			int ret = cv::LU(A, astep, m, b, bstep, n);
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<double> cv_Mahalanobis_const__InputArrayX_const__InputArrayX_const__InputArrayX(void* v1, void* v2, void* icovar) {
+	Result<double> cv_Mahalanobis_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* v1, const cv::_InputArray* v2, const cv::_InputArray* icovar) {
 		try {
-			double ret = cv::Mahalanobis(*reinterpret_cast<const cv::_InputArray*>(v1), *reinterpret_cast<const cv::_InputArray*>(v2), *reinterpret_cast<const cv::_InputArray*>(icovar));
-			return Ok<double>(ret);
+			double ret = cv::Mahalanobis(*v1, *v2, *icovar);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_PCABackProject_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* data, void* mean, void* eigenvectors, void* result) {
+	Result_void cv_PCABackProject_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* data, const cv::_InputArray* mean, const cv::_InputArray* eigenvectors, const cv::_OutputArray* result) {
 		try {
-			cv::PCABackProject(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputArray*>(mean), *reinterpret_cast<const cv::_InputArray*>(eigenvectors), *reinterpret_cast<const cv::_OutputArray*>(result));
+			cv::PCABackProject(*data, *mean, *eigenvectors, *result);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_double(void* data, void* mean, void* eigenvectors, void* eigenvalues, double retainedVariance) {
+	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_double(const cv::_InputArray* data, const cv::_InputOutputArray* mean, const cv::_OutputArray* eigenvectors, const cv::_OutputArray* eigenvalues, double retainedVariance) {
 		try {
-			cv::PCACompute(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputOutputArray*>(mean), *reinterpret_cast<const cv::_OutputArray*>(eigenvectors), *reinterpret_cast<const cv::_OutputArray*>(eigenvalues), retainedVariance);
+			cv::PCACompute(*data, *mean, *eigenvectors, *eigenvalues, retainedVariance);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int(void* data, void* mean, void* eigenvectors, void* eigenvalues, int maxComponents) {
+	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int(const cv::_InputArray* data, const cv::_InputOutputArray* mean, const cv::_OutputArray* eigenvectors, const cv::_OutputArray* eigenvalues, int maxComponents) {
 		try {
-			cv::PCACompute(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputOutputArray*>(mean), *reinterpret_cast<const cv::_OutputArray*>(eigenvectors), *reinterpret_cast<const cv::_OutputArray*>(eigenvalues), maxComponents);
+			cv::PCACompute(*data, *mean, *eigenvectors, *eigenvalues, maxComponents);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_double(void* data, void* mean, void* eigenvectors, double retainedVariance) {
+	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_double(const cv::_InputArray* data, const cv::_InputOutputArray* mean, const cv::_OutputArray* eigenvectors, double retainedVariance) {
 		try {
-			cv::PCACompute(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputOutputArray*>(mean), *reinterpret_cast<const cv::_OutputArray*>(eigenvectors), retainedVariance);
+			cv::PCACompute(*data, *mean, *eigenvectors, retainedVariance);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_int(void* data, void* mean, void* eigenvectors, int maxComponents) {
+	Result_void cv_PCACompute_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_int(const cv::_InputArray* data, const cv::_InputOutputArray* mean, const cv::_OutputArray* eigenvectors, int maxComponents) {
 		try {
-			cv::PCACompute(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputOutputArray*>(mean), *reinterpret_cast<const cv::_OutputArray*>(eigenvectors), maxComponents);
+			cv::PCACompute(*data, *mean, *eigenvectors, maxComponents);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_PCAProject_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* data, void* mean, void* eigenvectors, void* result) {
+	Result_void cv_PCAProject_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* data, const cv::_InputArray* mean, const cv::_InputArray* eigenvectors, const cv::_OutputArray* result) {
 		try {
-			cv::PCAProject(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputArray*>(mean), *reinterpret_cast<const cv::_InputArray*>(eigenvectors), *reinterpret_cast<const cv::_OutputArray*>(result));
+			cv::PCAProject(*data, *mean, *eigenvectors, *result);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_PSNR_const__InputArrayX_const__InputArrayX_double(void* src1, void* src2, double R) {
+	Result<double> cv_PSNR_const__InputArrayX_const__InputArrayX_double(const cv::_InputArray* src1, const cv::_InputArray* src2, double R) {
 		try {
-			double ret = cv::PSNR(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), R);
-			return Ok<double>(ret);
+			double ret = cv::PSNR(*src1, *src2, R);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_SVBackSubst_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* w, void* u, void* vt, void* rhs, void* dst) {
+	Result_void cv_SVBackSubst_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* w, const cv::_InputArray* u, const cv::_InputArray* vt, const cv::_InputArray* rhs, const cv::_OutputArray* dst) {
 		try {
-			cv::SVBackSubst(*reinterpret_cast<const cv::_InputArray*>(w), *reinterpret_cast<const cv::_InputArray*>(u), *reinterpret_cast<const cv::_InputArray*>(vt), *reinterpret_cast<const cv::_InputArray*>(rhs), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::SVBackSubst(*w, *u, *vt, *rhs, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SVDecomp_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int(void* src, void* w, void* u, void* vt, int flags) {
+	Result_void cv_SVDecomp_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* w, const cv::_OutputArray* u, const cv::_OutputArray* vt, int flags) {
 		try {
-			cv::SVDecomp(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(w), *reinterpret_cast<const cv::_OutputArray*>(u), *reinterpret_cast<const cv::_OutputArray*>(vt), flags);
+			cv::SVDecomp(*src, *w, *u, *vt, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_abs_const_MatExprX(void* e) {
+	Result<cv::MatExpr*> cv_abs_const_MatExprX(const cv::MatExpr* e) {
 		try {
-			cv::MatExpr ret = cv::abs(*reinterpret_cast<const cv::MatExpr*>(e));
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::abs(*e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_abs_const_MatX(void* m) {
+	Result<cv::MatExpr*> cv_abs_const_MatX(const cv::Mat* m) {
 		try {
-			cv::MatExpr ret = cv::abs(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::abs(*m);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_absdiff_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* src1, void* src2, void* dst) {
+	Result_void cv_absdiff_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
 		try {
-			cv::absdiff(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::absdiff(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_addWeighted_const__InputArrayX_double_const__InputArrayX_double_double_const__OutputArrayX_int(void* src1, double alpha, void* src2, double beta, double gamma, void* dst, int dtype) {
+	Result_void cv_addWeighted_const__InputArrayX_double_const__InputArrayX_double_double_const__OutputArrayX_int(const cv::_InputArray* src1, double alpha, const cv::_InputArray* src2, double beta, double gamma, const cv::_OutputArray* dst, int dtype) {
 		try {
-			cv::addWeighted(*reinterpret_cast<const cv::_InputArray*>(src1), alpha, *reinterpret_cast<const cv::_InputArray*>(src2), beta, gamma, *reinterpret_cast<const cv::_OutputArray*>(dst), dtype);
+			cv::addWeighted(*src1, alpha, *src2, beta, gamma, *dst, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_add_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_int(void* src1, void* src2, void* dst, void* mask, int dtype) {
+	Result_void cv_add_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_int(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, const cv::_InputArray* mask, int dtype) {
 		try {
-			cv::add(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask), dtype);
+			cv::add(*src1, *src2, *dst, *mask, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_batchDistance_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_const__OutputArrayX_int_int_const__InputArrayX_int_bool(void* src1, void* src2, void* dist, int dtype, void* nidx, int normType, int K, void* mask, int update, bool crosscheck) {
+	Result_void cv_batchDistance_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_const__OutputArrayX_int_int_const__InputArrayX_int_bool(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dist, int dtype, const cv::_OutputArray* nidx, int normType, int K, const cv::_InputArray* mask, int update, bool crosscheck) {
 		try {
-			cv::batchDistance(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dist), dtype, *reinterpret_cast<const cv::_OutputArray*>(nidx), normType, K, *reinterpret_cast<const cv::_InputArray*>(mask), update, crosscheck);
+			cv::batchDistance(*src1, *src2, *dist, dtype, *nidx, normType, K, *mask, update, crosscheck);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_bitwise_and_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* src1, void* src2, void* dst, void* mask) {
+	Result_void cv_bitwise_and_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, const cv::_InputArray* mask) {
 		try {
-			cv::bitwise_and(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::bitwise_and(*src1, *src2, *dst, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_bitwise_not_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* src, void* dst, void* mask) {
+	Result_void cv_bitwise_not_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* mask) {
 		try {
-			cv::bitwise_not(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::bitwise_not(*src, *dst, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_bitwise_or_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* src1, void* src2, void* dst, void* mask) {
+	Result_void cv_bitwise_or_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, const cv::_InputArray* mask) {
 		try {
-			cv::bitwise_or(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::bitwise_or(*src1, *src2, *dst, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_bitwise_xor_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* src1, void* src2, void* dst, void* mask) {
+	Result_void cv_bitwise_xor_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, const cv::_InputArray* mask) {
 		try {
-			cv::bitwise_xor(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::bitwise_xor(*src1, *src2, *dst, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -180,20 +180,20 @@ extern "C" {
 	Result<int> cv_borderInterpolate_int_int_int(int p, int len, int borderType) {
 		try {
 			int ret = cv::borderInterpolate(p, len, borderType);
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_calcCovarMatrix_const__InputArrayX_const__OutputArrayX_const__InputOutputArrayX_int_int(void* samples, void* covar, void* mean, int flags, int ctype) {
+	Result_void cv_calcCovarMatrix_const__InputArrayX_const__OutputArrayX_const__InputOutputArrayX_int_int(const cv::_InputArray* samples, const cv::_OutputArray* covar, const cv::_InputOutputArray* mean, int flags, int ctype) {
 		try {
-			cv::calcCovarMatrix(*reinterpret_cast<const cv::_InputArray*>(samples), *reinterpret_cast<const cv::_OutputArray*>(covar), *reinterpret_cast<const cv::_InputOutputArray*>(mean), flags, ctype);
+			cv::calcCovarMatrix(*samples, *covar, *mean, flags, ctype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_cartToPolar_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool(void* x, void* y, void* magnitude, void* angle, bool angleInDegrees) {
+	Result_void cv_cartToPolar_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool(const cv::_InputArray* x, const cv::_InputArray* y, const cv::_OutputArray* magnitude, const cv::_OutputArray* angle, bool angleInDegrees) {
 		try {
-			cv::cartToPolar(*reinterpret_cast<const cv::_InputArray*>(x), *reinterpret_cast<const cv::_InputArray*>(y), *reinterpret_cast<const cv::_OutputArray*>(magnitude), *reinterpret_cast<const cv::_OutputArray*>(angle), angleInDegrees);
+			cv::cartToPolar(*x, *y, *magnitude, *angle, angleInDegrees);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -201,76 +201,76 @@ extern "C" {
 	Result<bool> cv_checkHardwareSupport_int(int feature) {
 		try {
 			bool ret = cv::checkHardwareSupport(feature);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_checkRange_const__InputArrayX_bool_PointX_double_double(void* a, bool quiet, cv::Point* pos, double minVal, double maxVal) {
+	Result<bool> cv_checkRange_const__InputArrayX_bool_PointX_double_double(const cv::_InputArray* a, bool quiet, cv::Point* pos, double minVal, double maxVal) {
 		try {
-			bool ret = cv::checkRange(*reinterpret_cast<const cv::_InputArray*>(a), quiet, pos, minVal, maxVal);
-			return Ok<bool>(ret);
+			bool ret = cv::checkRange(*a, quiet, pos, minVal, maxVal);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_compare_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(void* src1, void* src2, void* dst, int cmpop) {
+	Result_void cv_compare_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, int cmpop) {
 		try {
-			cv::compare(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), cmpop);
+			cv::compare(*src1, *src2, *dst, cmpop);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_completeSymm_const__InputOutputArrayX_bool(void* m, bool lowerToUpper) {
+	Result_void cv_completeSymm_const__InputOutputArrayX_bool(const cv::_InputOutputArray* m, bool lowerToUpper) {
 		try {
-			cv::completeSymm(*reinterpret_cast<const cv::_InputOutputArray*>(m), lowerToUpper);
+			cv::completeSymm(*m, lowerToUpper);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_convertFp16_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_convertFp16_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::convertFp16(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::convertFp16(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_convertScaleAbs_const__InputArrayX_const__OutputArrayX_double_double(void* src, void* dst, double alpha, double beta) {
+	Result_void cv_convertScaleAbs_const__InputArrayX_const__OutputArrayX_double_double(const cv::_InputArray* src, const cv::_OutputArray* dst, double alpha, double beta) {
 		try {
-			cv::convertScaleAbs(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), alpha, beta);
+			cv::convertScaleAbs(*src, *dst, alpha, beta);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_copyMakeBorder_const__InputArrayX_const__OutputArrayX_int_int_int_int_int_const_ScalarX(void* src, void* dst, int top, int bottom, int left, int right, int borderType, const cv::Scalar* value) {
+	Result_void cv_copyMakeBorder_const__InputArrayX_const__OutputArrayX_int_int_int_int_int_const_ScalarX(const cv::_InputArray* src, const cv::_OutputArray* dst, int top, int bottom, int left, int right, int borderType, const cv::Scalar* value) {
 		try {
-			cv::copyMakeBorder(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), top, bottom, left, right, borderType, *value);
+			cv::copyMakeBorder(*src, *dst, top, bottom, left, right, borderType, *value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_copyTo_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* src, void* dst, void* mask) {
+	Result_void cv_copyTo_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* mask) {
 		try {
-			cv::copyTo(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::copyTo(*src, *dst, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_countNonZero_const__InputArrayX(void* src) {
+	Result<int> cv_countNonZero_const__InputArrayX(const cv::_InputArray* src) {
 		try {
-			int ret = cv::countNonZero(*reinterpret_cast<const cv::_InputArray*>(src));
-			return Ok<int>(ret);
+			int ret = cv::countNonZero(*src);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<float> cv_cubeRoot_float(float val) {
 		try {
 			float ret = cv::cubeRoot(val);
-			return Ok<float>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_dct_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int flags) {
+	Result_void cv_dct_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags) {
 		try {
-			cv::dct(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flags);
+			cv::dct(*src, *dst, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -278,132 +278,132 @@ extern "C" {
 	Result<void*> cv_depthToString_int(int depth) {
 		try {
 			const char* ret = cv::depthToString(depth);
-			return Ok<void*>(ocvrs_create_string(ret));
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_detail_check_failed_MatChannels_int_const_CheckContextX(int v, void* ctx) {
+	Result_void cv_detail_check_failed_MatChannels_int_const_CheckContextX(int v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_MatChannels(v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_MatChannels(v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_MatChannels_int_int_const_CheckContextX(int v1, int v2, void* ctx) {
+	Result_void cv_detail_check_failed_MatChannels_int_int_const_CheckContextX(int v1, int v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_MatChannels(v1, v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_MatChannels(v1, v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_MatDepth_int_const_CheckContextX(int v, void* ctx) {
+	Result_void cv_detail_check_failed_MatDepth_int_const_CheckContextX(int v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_MatDepth(v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_MatDepth(v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_MatDepth_int_int_const_CheckContextX(int v1, int v2, void* ctx) {
+	Result_void cv_detail_check_failed_MatDepth_int_int_const_CheckContextX(int v1, int v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_MatDepth(v1, v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_MatDepth(v1, v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_MatType_int_const_CheckContextX(int v, void* ctx) {
+	Result_void cv_detail_check_failed_MatType_int_const_CheckContextX(int v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_MatType(v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_MatType(v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_MatType_int_int_const_CheckContextX(int v1, int v2, void* ctx) {
+	Result_void cv_detail_check_failed_MatType_int_int_const_CheckContextX(int v1, int v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_MatType(v1, v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_MatType(v1, v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_Size__int__Size__int__const_CheckContextX(const cv::Size_<int>* v1, const cv::Size_<int>* v2, void* ctx) {
+	Result_void cv_detail_check_failed_auto_Size__int__Size__int__const_CheckContextX(const cv::Size_<int>* v1, const cv::Size_<int>* v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(*v1, *v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(*v1, *v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_Size__int__const_CheckContextX(const cv::Size_<int>* v, void* ctx) {
+	Result_void cv_detail_check_failed_auto_Size__int__const_CheckContextX(const cv::Size_<int>* v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(*v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(*v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_double_const_CheckContextX(double v, void* ctx) {
+	Result_void cv_detail_check_failed_auto_double_const_CheckContextX(double v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_double_double_const_CheckContextX(double v1, double v2, void* ctx) {
+	Result_void cv_detail_check_failed_auto_double_double_const_CheckContextX(double v1, double v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v1, v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v1, v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_float_const_CheckContextX(float v, void* ctx) {
+	Result_void cv_detail_check_failed_auto_float_const_CheckContextX(float v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_float_float_const_CheckContextX(float v1, float v2, void* ctx) {
+	Result_void cv_detail_check_failed_auto_float_float_const_CheckContextX(float v1, float v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v1, v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v1, v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_int_const_CheckContextX(int v, void* ctx) {
+	Result_void cv_detail_check_failed_auto_int_const_CheckContextX(int v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_int_int_const_CheckContextX(int v1, int v2, void* ctx) {
+	Result_void cv_detail_check_failed_auto_int_int_const_CheckContextX(int v1, int v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v1, v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v1, v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_size_t_const_CheckContextX(size_t v, void* ctx) {
+	Result_void cv_detail_check_failed_auto_size_t_const_CheckContextX(size_t v, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_detail_check_failed_auto_size_t_size_t_const_CheckContextX(size_t v1, size_t v2, void* ctx) {
+	Result_void cv_detail_check_failed_auto_size_t_size_t_const_CheckContextX(size_t v1, size_t v2, const cv::detail::CheckContext* ctx) {
 		try {
-			cv::detail::check_failed_auto(v1, v2, *reinterpret_cast<const cv::detail::CheckContext*>(ctx));
+			cv::detail::check_failed_auto(v1, v2, *ctx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_determinant_const__InputArrayX(void* mtx) {
+	Result<double> cv_determinant_const__InputArrayX(const cv::_InputArray* mtx) {
 		try {
-			double ret = cv::determinant(*reinterpret_cast<const cv::_InputArray*>(mtx));
-			return Ok<double>(ret);
+			double ret = cv::determinant(*mtx);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_dft_const__InputArrayX_const__OutputArrayX_int_int(void* src, void* dst, int flags, int nonzeroRows) {
+	Result_void cv_dft_const__InputArrayX_const__OutputArrayX_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags, int nonzeroRows) {
 		try {
-			cv::dft(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flags, nonzeroRows);
+			cv::dft(*src, *dst, flags, nonzeroRows);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -411,48 +411,48 @@ extern "C" {
 	Result<int> cv_directx_getTypeFromD3DFORMAT_int(int iD3DFORMAT) {
 		try {
 			int ret = cv::directx::getTypeFromD3DFORMAT(iD3DFORMAT);
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_directx_getTypeFromDXGI_FORMAT_int(int iDXGI_FORMAT) {
 		try {
 			int ret = cv::directx::getTypeFromDXGI_FORMAT(iDXGI_FORMAT);
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_divide_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_int(void* src1, void* src2, void* dst, double scale, int dtype) {
+	Result_void cv_divide_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_int(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, double scale, int dtype) {
 		try {
-			cv::divide(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), scale, dtype);
+			cv::divide(*src1, *src2, *dst, scale, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_divide_double_const__InputArrayX_const__OutputArrayX_int(double scale, void* src2, void* dst, int dtype) {
+	Result_void cv_divide_double_const__InputArrayX_const__OutputArrayX_int(double scale, const cv::_InputArray* src2, const cv::_OutputArray* dst, int dtype) {
 		try {
-			cv::divide(scale, *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), dtype);
+			cv::divide(scale, *src2, *dst, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_eigenNonSymmetric_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* src, void* eigenvalues, void* eigenvectors) {
+	Result_void cv_eigenNonSymmetric_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* eigenvalues, const cv::_OutputArray* eigenvectors) {
 		try {
-			cv::eigenNonSymmetric(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(eigenvalues), *reinterpret_cast<const cv::_OutputArray*>(eigenvectors));
+			cv::eigenNonSymmetric(*src, *eigenvalues, *eigenvectors);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_eigen_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* src, void* eigenvalues, void* eigenvectors) {
+	Result<bool> cv_eigen_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* eigenvalues, const cv::_OutputArray* eigenvectors) {
 		try {
-			bool ret = cv::eigen(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(eigenvalues), *reinterpret_cast<const cv::_OutputArray*>(eigenvectors));
-			return Ok<bool>(ret);
+			bool ret = cv::eigen(*src, *eigenvalues, *eigenvectors);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_error_const_ExceptionX(void* exc) {
+	Result_void cv_error_const_ExceptionX(const cv::Exception* exc) {
 		try {
-			cv::error(*reinterpret_cast<const cv::Exception*>(exc));
+			cv::error(*exc);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -464,16 +464,16 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_exp_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_exp_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::exp(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::exp(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_extractChannel_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int coi) {
+	Result_void cv_extractChannel_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int coi) {
 		try {
-			cv::extractChannel(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), coi);
+			cv::extractChannel(*src, *dst, coi);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -481,27 +481,27 @@ extern "C" {
 	Result<float> cv_fastAtan2_float_float(float y, float x) {
 		try {
 			float ret = cv::fastAtan2(y, x);
-			return Ok<float>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_findNonZero_const__InputArrayX_const__OutputArrayX(void* src, void* idx) {
+	Result_void cv_findNonZero_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* idx) {
 		try {
-			cv::findNonZero(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(idx));
+			cv::findNonZero(*src, *idx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_flip_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int flipCode) {
+	Result_void cv_flip_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flipCode) {
 		try {
-			cv::flip(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flipCode);
+			cv::flip(*src, *dst, flipCode);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_gemm_const__InputArrayX_const__InputArrayX_double_const__InputArrayX_double_const__OutputArrayX_int(void* src1, void* src2, double alpha, void* src3, double beta, void* dst, int flags) {
+	Result_void cv_gemm_const__InputArrayX_const__InputArrayX_double_const__InputArrayX_double_const__OutputArrayX_int(const cv::_InputArray* src1, const cv::_InputArray* src2, double alpha, const cv::_InputArray* src3, double beta, const cv::_OutputArray* dst, int flags) {
 		try {
-			cv::gemm(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), alpha, *reinterpret_cast<const cv::_InputArray*>(src3), beta, *reinterpret_cast<const cv::_OutputArray*>(dst), flags);
+			cv::gemm(*src1, *src2, alpha, *src3, beta, *dst, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -509,118 +509,118 @@ extern "C" {
 	Result<void*> cv_getBuildInformation() {
 		try {
 			cv::String ret = cv::getBuildInformation();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_getCPUFeaturesLine() {
 		try {
 			std::string ret = cv::getCPUFeaturesLine();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<int64_t> cv_getCPUTickCount() {
 		try {
 			int64_t ret = cv::getCPUTickCount();
-			return Ok<int64_t>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int64_t>)
 	}
 	
 	Result<size_t> cv_getElemSize_int(int type) {
 		try {
 			size_t ret = cv::getElemSize(type);
-			return Ok<size_t>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
 	Result<void*> cv_getHardwareFeatureName_int(int feature) {
 		try {
 			cv::String ret = cv::getHardwareFeatureName(feature);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_getImpl_vector_int_X_vector_String_X(void* impl, void* funName) {
+	Result<int> cv_getImpl_vector_int_X_vector_String_X(std::vector<int>* impl, std::vector<cv::String>* funName) {
 		try {
-			int ret = cv::getImpl(*reinterpret_cast<std::vector<int>*>(impl), *reinterpret_cast<std::vector<cv::String>*>(funName));
-			return Ok<int>(ret);
+			int ret = cv::getImpl(*impl, *funName);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_getNumThreads() {
 		try {
 			int ret = cv::getNumThreads();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_getNumberOfCPUs() {
 		try {
 			int ret = cv::getNumberOfCPUs();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_getOptimalDFTSize_int(int vecsize) {
 		try {
 			int ret = cv::getOptimalDFTSize(vecsize);
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_getThreadNum() {
 		try {
 			int ret = cv::getThreadNum();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int64_t> cv_getTickCount() {
 		try {
 			int64_t ret = cv::getTickCount();
-			return Ok<int64_t>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int64_t>)
 	}
 	
 	Result<double> cv_getTickFrequency() {
 		try {
 			double ret = cv::getTickFrequency();
-			return Ok<double>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
 	Result<int> cv_getVersionMajor() {
 		try {
 			int ret = cv::getVersionMajor();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_getVersionMinor() {
 		try {
 			int ret = cv::getVersionMinor();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<int> cv_getVersionRevision() {
 		try {
 			int ret = cv::getVersionRevision();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<void*> cv_getVersionString() {
 		try {
 			cv::String ret = cv::getVersionString();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_glob_String_vector_String_X_bool(char* pattern, void* result, bool recursive) {
+	Result_void cv_glob_String_vector_String_X_bool(char* pattern, std::vector<cv::String>* result, bool recursive) {
 		try {
-			cv::glob(std::string(pattern), *reinterpret_cast<std::vector<cv::String>*>(result), recursive);
+			cv::glob(std::string(pattern), *result, recursive);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -628,48 +628,48 @@ extern "C" {
 	Result<bool> cv_haveOpenVX() {
 		try {
 			bool ret = cv::haveOpenVX();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_hconcat_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* src1, void* src2, void* dst) {
+	Result_void cv_hconcat_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
 		try {
-			cv::hconcat(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::hconcat(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_hconcat_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_hconcat_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::hconcat(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::hconcat(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_idct_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int flags) {
+	Result_void cv_idct_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags) {
 		try {
-			cv::idct(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flags);
+			cv::idct(*src, *dst, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_idft_const__InputArrayX_const__OutputArrayX_int_int(void* src, void* dst, int flags, int nonzeroRows) {
+	Result_void cv_idft_const__InputArrayX_const__OutputArrayX_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags, int nonzeroRows) {
 		try {
-			cv::idft(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flags, nonzeroRows);
+			cv::idft(*src, *dst, flags, nonzeroRows);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_inRange_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* src, void* lowerb, void* upperb, void* dst) {
+	Result_void cv_inRange_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_InputArray* lowerb, const cv::_InputArray* upperb, const cv::_OutputArray* dst) {
 		try {
-			cv::inRange(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(lowerb), *reinterpret_cast<const cv::_InputArray*>(upperb), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::inRange(*src, *lowerb, *upperb, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_insertChannel_const__InputArrayX_const__InputOutputArrayX_int(void* src, void* dst, int coi) {
+	Result_void cv_insertChannel_const__InputArrayX_const__InputOutputArrayX_int(const cv::_InputArray* src, const cv::_InputOutputArray* dst, int coi) {
 		try {
-			cv::insertChannel(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputOutputArray*>(dst), coi);
+			cv::insertChannel(*src, *dst, coi);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -677,7 +677,7 @@ extern "C" {
 	Result<cv::instr::FLAGS> cv_instr_getFlags() {
 		try {
 			cv::instr::FLAGS ret = cv::instr::getFlags();
-			return Ok<cv::instr::FLAGS>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::instr::FLAGS>)
 	}
 	
@@ -705,42 +705,42 @@ extern "C" {
 	Result<bool> cv_instr_useInstrumentation() {
 		try {
 			bool ret = cv::instr::useInstrumentation();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<double> cv_invert_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int flags) {
+	Result<double> cv_invert_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags) {
 		try {
-			double ret = cv::invert(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flags);
-			return Ok<double>(ret);
+			double ret = cv::invert(*src, *dst, flags);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
 	Result<void*> cv_ipp_getIppErrorLocation() {
 		try {
 			cv::String ret = cv::ipp::getIppErrorLocation();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<unsigned long long> cv_ipp_getIppFeatures() {
 		try {
 			unsigned long long ret = cv::ipp::getIppFeatures();
-			return Ok<unsigned long long>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned long long>)
 	}
 	
 	Result<int> cv_ipp_getIppStatus() {
 		try {
 			int ret = cv::ipp::getIppStatus();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<void*> cv_ipp_getIppVersion() {
 		try {
 			cv::String ret = cv::ipp::getIppVersion();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
@@ -768,244 +768,244 @@ extern "C" {
 	Result<bool> cv_ipp_useIPP() {
 		try {
 			bool ret = cv::ipp::useIPP();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_ipp_useIPP_NotExact() {
 		try {
 			bool ret = cv::ipp::useIPP_NotExact();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<double> cv_kmeans_const__InputArrayX_int_const__InputOutputArrayX_TermCriteria_int_int_const__OutputArrayX(void* data, int K, void* bestLabels, void* criteria, int attempts, int flags, void* centers) {
+	Result<double> cv_kmeans_const__InputArrayX_int_const__InputOutputArrayX_TermCriteria_int_int_const__OutputArrayX(const cv::_InputArray* data, int K, const cv::_InputOutputArray* bestLabels, cv::TermCriteria* criteria, int attempts, int flags, const cv::_OutputArray* centers) {
 		try {
-			double ret = cv::kmeans(*reinterpret_cast<const cv::_InputArray*>(data), K, *reinterpret_cast<const cv::_InputOutputArray*>(bestLabels), *reinterpret_cast<cv::TermCriteria*>(criteria), attempts, flags, *reinterpret_cast<const cv::_OutputArray*>(centers));
-			return Ok<double>(ret);
+			double ret = cv::kmeans(*data, K, *bestLabels, *criteria, attempts, flags, *centers);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_log_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_log_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::log(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::log(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_magnitude_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* x, void* y, void* magnitude) {
+	Result_void cv_magnitude_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* x, const cv::_InputArray* y, const cv::_OutputArray* magnitude) {
 		try {
-			cv::magnitude(*reinterpret_cast<const cv::_InputArray*>(x), *reinterpret_cast<const cv::_InputArray*>(y), *reinterpret_cast<const cv::_OutputArray*>(magnitude));
+			cv::magnitude(*x, *y, *magnitude);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_max_const_MatX_const_MatX(void* a, void* b) {
+	Result<cv::MatExpr*> cv_max_const_MatX_const_MatX(const cv::Mat* a, const cv::Mat* b) {
 		try {
-			cv::MatExpr ret = cv::max(*reinterpret_cast<const cv::Mat*>(a), *reinterpret_cast<const cv::Mat*>(b));
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::max(*a, *b);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_max_const_MatX_const_MatX_MatX(void* src1, void* src2, void* dst) {
+	Result_void cv_max_const_MatX_const_MatX_MatX(const cv::Mat* src1, const cv::Mat* src2, cv::Mat* dst) {
 		try {
-			cv::max(*reinterpret_cast<const cv::Mat*>(src1), *reinterpret_cast<const cv::Mat*>(src2), *reinterpret_cast<cv::Mat*>(dst));
+			cv::max(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_max_const_MatX_double(void* a, double s) {
+	Result<cv::MatExpr*> cv_max_const_MatX_double(const cv::Mat* a, double s) {
 		try {
-			cv::MatExpr ret = cv::max(*reinterpret_cast<const cv::Mat*>(a), s);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::max(*a, s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_max_const_UMatX_const_UMatX_UMatX(void* src1, void* src2, void* dst) {
+	Result_void cv_max_const_UMatX_const_UMatX_UMatX(const cv::UMat* src1, const cv::UMat* src2, cv::UMat* dst) {
 		try {
-			cv::max(*reinterpret_cast<const cv::UMat*>(src1), *reinterpret_cast<const cv::UMat*>(src2), *reinterpret_cast<cv::UMat*>(dst));
+			cv::max(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_max_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* src1, void* src2, void* dst) {
+	Result_void cv_max_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
 		try {
-			cv::max(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::max(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_max_double_const_MatX(double s, void* a) {
+	Result<cv::MatExpr*> cv_max_double_const_MatX(double s, const cv::Mat* a) {
 		try {
-			cv::MatExpr ret = cv::max(s, *reinterpret_cast<const cv::Mat*>(a));
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::max(s, *a);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_meanStdDev_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__InputArrayX(void* src, void* mean, void* stddev, void* mask) {
+	Result_void cv_meanStdDev_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src, const cv::_OutputArray* mean, const cv::_OutputArray* stddev, const cv::_InputArray* mask) {
 		try {
-			cv::meanStdDev(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(mean), *reinterpret_cast<const cv::_OutputArray*>(stddev), *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::meanStdDev(*src, *mean, *stddev, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Scalar> cv_mean_const__InputArrayX_const__InputArrayX(void* src, void* mask) {
+	Result<cv::Scalar> cv_mean_const__InputArrayX_const__InputArrayX(const cv::_InputArray* src, const cv::_InputArray* mask) {
 		try {
-			cv::Scalar ret = cv::mean(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(mask));
-			return Ok<cv::Scalar>(ret);
+			cv::Scalar ret = cv::mean(*src, *mask);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Scalar>)
 	}
 	
-	Result_void cv_merge_const_MatX_size_t_const__OutputArrayX(void* mv, size_t count, void* dst) {
+	Result_void cv_merge_const_MatX_size_t_const__OutputArrayX(const cv::Mat* mv, size_t count, const cv::_OutputArray* dst) {
 		try {
-			cv::merge(reinterpret_cast<const cv::Mat*>(mv), count, *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::merge(mv, count, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_merge_const__InputArrayX_const__OutputArrayX(void* mv, void* dst) {
+	Result_void cv_merge_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* mv, const cv::_OutputArray* dst) {
 		try {
-			cv::merge(*reinterpret_cast<const cv::_InputArray*>(mv), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::merge(*mv, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_minMaxIdx_const__InputArrayX_doubleX_doubleX_intX_intX_const__InputArrayX(void* src, double* minVal, double* maxVal, int* minIdx, int* maxIdx, void* mask) {
+	Result_void cv_minMaxIdx_const__InputArrayX_doubleX_doubleX_intX_intX_const__InputArrayX(const cv::_InputArray* src, double* minVal, double* maxVal, int* minIdx, int* maxIdx, const cv::_InputArray* mask) {
 		try {
-			cv::minMaxIdx(*reinterpret_cast<const cv::_InputArray*>(src), minVal, maxVal, minIdx, maxIdx, *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::minMaxIdx(*src, minVal, maxVal, minIdx, maxIdx, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_minMaxLoc_const_SparseMatX_doubleX_doubleX_intX_intX(void* a, double* minVal, double* maxVal, int* minIdx, int* maxIdx) {
+	Result_void cv_minMaxLoc_const_SparseMatX_doubleX_doubleX_intX_intX(const cv::SparseMat* a, double* minVal, double* maxVal, int* minIdx, int* maxIdx) {
 		try {
-			cv::minMaxLoc(*reinterpret_cast<const cv::SparseMat*>(a), minVal, maxVal, minIdx, maxIdx);
+			cv::minMaxLoc(*a, minVal, maxVal, minIdx, maxIdx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_minMaxLoc_const__InputArrayX_doubleX_doubleX_PointX_PointX_const__InputArrayX(void* src, double* minVal, double* maxVal, cv::Point* minLoc, cv::Point* maxLoc, void* mask) {
+	Result_void cv_minMaxLoc_const__InputArrayX_doubleX_doubleX_PointX_PointX_const__InputArrayX(const cv::_InputArray* src, double* minVal, double* maxVal, cv::Point* minLoc, cv::Point* maxLoc, const cv::_InputArray* mask) {
 		try {
-			cv::minMaxLoc(*reinterpret_cast<const cv::_InputArray*>(src), minVal, maxVal, minLoc, maxLoc, *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::minMaxLoc(*src, minVal, maxVal, minLoc, maxLoc, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_min_const_MatX_const_MatX(void* a, void* b) {
+	Result<cv::MatExpr*> cv_min_const_MatX_const_MatX(const cv::Mat* a, const cv::Mat* b) {
 		try {
-			cv::MatExpr ret = cv::min(*reinterpret_cast<const cv::Mat*>(a), *reinterpret_cast<const cv::Mat*>(b));
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::min(*a, *b);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_min_const_MatX_const_MatX_MatX(void* src1, void* src2, void* dst) {
+	Result_void cv_min_const_MatX_const_MatX_MatX(const cv::Mat* src1, const cv::Mat* src2, cv::Mat* dst) {
 		try {
-			cv::min(*reinterpret_cast<const cv::Mat*>(src1), *reinterpret_cast<const cv::Mat*>(src2), *reinterpret_cast<cv::Mat*>(dst));
+			cv::min(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_min_const_MatX_double(void* a, double s) {
+	Result<cv::MatExpr*> cv_min_const_MatX_double(const cv::Mat* a, double s) {
 		try {
-			cv::MatExpr ret = cv::min(*reinterpret_cast<const cv::Mat*>(a), s);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::min(*a, s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_min_const_UMatX_const_UMatX_UMatX(void* src1, void* src2, void* dst) {
+	Result_void cv_min_const_UMatX_const_UMatX_UMatX(const cv::UMat* src1, const cv::UMat* src2, cv::UMat* dst) {
 		try {
-			cv::min(*reinterpret_cast<const cv::UMat*>(src1), *reinterpret_cast<const cv::UMat*>(src2), *reinterpret_cast<cv::UMat*>(dst));
+			cv::min(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_min_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* src1, void* src2, void* dst) {
+	Result_void cv_min_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
 		try {
-			cv::min(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::min(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_min_double_const_MatX(double s, void* a) {
+	Result<cv::MatExpr*> cv_min_double_const_MatX(double s, const cv::Mat* a) {
 		try {
-			cv::MatExpr ret = cv::min(s, *reinterpret_cast<const cv::Mat*>(a));
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = cv::min(s, *a);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_mixChannels_const__InputArrayX_const__InputOutputArrayX_const_intX_size_t(void* src, void* dst, const int* fromTo, size_t npairs) {
+	Result_void cv_mixChannels_const__InputArrayX_const__InputOutputArrayX_const_intX_size_t(const cv::_InputArray* src, const cv::_InputOutputArray* dst, const int* fromTo, size_t npairs) {
 		try {
-			cv::mixChannels(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputOutputArray*>(dst), fromTo, npairs);
+			cv::mixChannels(*src, *dst, fromTo, npairs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_mixChannels_const__InputArrayX_const__InputOutputArrayX_const_vector_int_X(void* src, void* dst, void* fromTo) {
+	Result_void cv_mixChannels_const__InputArrayX_const__InputOutputArrayX_const_vector_int_X(const cv::_InputArray* src, const cv::_InputOutputArray* dst, const std::vector<int>* fromTo) {
 		try {
-			cv::mixChannels(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputOutputArray*>(dst), *reinterpret_cast<const std::vector<int>*>(fromTo));
+			cv::mixChannels(*src, *dst, *fromTo);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_mulSpectrums_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_bool(void* a, void* b, void* c, int flags, bool conjB) {
+	Result_void cv_mulSpectrums_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_bool(const cv::_InputArray* a, const cv::_InputArray* b, const cv::_OutputArray* c, int flags, bool conjB) {
 		try {
-			cv::mulSpectrums(*reinterpret_cast<const cv::_InputArray*>(a), *reinterpret_cast<const cv::_InputArray*>(b), *reinterpret_cast<const cv::_OutputArray*>(c), flags, conjB);
+			cv::mulSpectrums(*a, *b, *c, flags, conjB);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_mulTransposed_const__InputArrayX_const__OutputArrayX_bool_const__InputArrayX_double_int(void* src, void* dst, bool aTa, void* delta, double scale, int dtype) {
+	Result_void cv_mulTransposed_const__InputArrayX_const__OutputArrayX_bool_const__InputArrayX_double_int(const cv::_InputArray* src, const cv::_OutputArray* dst, bool aTa, const cv::_InputArray* delta, double scale, int dtype) {
 		try {
-			cv::mulTransposed(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), aTa, *reinterpret_cast<const cv::_InputArray*>(delta), scale, dtype);
+			cv::mulTransposed(*src, *dst, aTa, *delta, scale, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_multiply_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_int(void* src1, void* src2, void* dst, double scale, int dtype) {
+	Result_void cv_multiply_const__InputArrayX_const__InputArrayX_const__OutputArrayX_double_int(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, double scale, int dtype) {
 		try {
-			cv::multiply(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), scale, dtype);
+			cv::multiply(*src1, *src2, *dst, scale, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_noArray() {
+	Result<cv::_InputOutputArray*> cv_noArray() {
 		try {
 			cv::_InputOutputArray ret = cv::noArray();
-			return Ok<void*>(new cv::_InputOutputArray(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(ret));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<double> cv_norm_const_SparseMatX_int(void* src, int normType) {
+	Result<double> cv_norm_const_SparseMatX_int(const cv::SparseMat* src, int normType) {
 		try {
-			double ret = cv::norm(*reinterpret_cast<const cv::SparseMat*>(src), normType);
-			return Ok<double>(ret);
+			double ret = cv::norm(*src, normType);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_norm_const__InputArrayX_const__InputArrayX_int_const__InputArrayX(void* src1, void* src2, int normType, void* mask) {
+	Result<double> cv_norm_const__InputArrayX_const__InputArrayX_int_const__InputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, int normType, const cv::_InputArray* mask) {
 		try {
-			double ret = cv::norm(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), normType, *reinterpret_cast<const cv::_InputArray*>(mask));
-			return Ok<double>(ret);
+			double ret = cv::norm(*src1, *src2, normType, *mask);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_norm_const__InputArrayX_int_const__InputArrayX(void* src1, int normType, void* mask) {
+	Result<double> cv_norm_const__InputArrayX_int_const__InputArrayX(const cv::_InputArray* src1, int normType, const cv::_InputArray* mask) {
 		try {
-			double ret = cv::norm(*reinterpret_cast<const cv::_InputArray*>(src1), normType, *reinterpret_cast<const cv::_InputArray*>(mask));
-			return Ok<double>(ret);
+			double ret = cv::norm(*src1, normType, *mask);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_normalize_const_SparseMatX_SparseMatX_double_int(void* src, void* dst, double alpha, int normType) {
+	Result_void cv_normalize_const_SparseMatX_SparseMatX_double_int(const cv::SparseMat* src, cv::SparseMat* dst, double alpha, int normType) {
 		try {
-			cv::normalize(*reinterpret_cast<const cv::SparseMat*>(src), *reinterpret_cast<cv::SparseMat*>(dst), alpha, normType);
+			cv::normalize(*src, *dst, alpha, normType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_normalize_const__InputArrayX_const__InputOutputArrayX_double_double_int_int_const__InputArrayX(void* src, void* dst, double alpha, double beta, int norm_type, int dtype, void* mask) {
+	Result_void cv_normalize_const__InputArrayX_const__InputOutputArrayX_double_double_int_int_const__InputArrayX(const cv::_InputArray* src, const cv::_InputOutputArray* dst, double alpha, double beta, int norm_type, int dtype, const cv::_InputArray* mask) {
 		try {
-			cv::normalize(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputOutputArray*>(dst), alpha, beta, norm_type, dtype, *reinterpret_cast<const cv::_InputArray*>(mask));
+			cv::normalize(*src, *dst, alpha, beta, norm_type, dtype, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1017,32 +1017,32 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ocl_buildOptionsAddMatrixDescription_StringX_const_StringX_const__InputArrayX(void** buildOptions, const char* name, void* _m) {
+	Result_void cv_ocl_buildOptionsAddMatrixDescription_StringX_const_StringX_const__InputArrayX(void** buildOptions, const char* name, const cv::_InputArray* _m) {
 		try {
 			std::string buildOptions_out;
-			cv::ocl::buildOptionsAddMatrixDescription(buildOptions_out, std::string(name), *reinterpret_cast<const cv::_InputArray*>(_m));
+			cv::ocl::buildOptionsAddMatrixDescription(buildOptions_out, std::string(name), *_m);
 			*buildOptions = ocvrs_create_string(buildOptions_out.c_str());
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_OclVectorStrategy(const int* vectorWidths, void* src1, void* src2, void* src3, void* src4, void* src5, void* src6, void* src7, void* src8, void* src9, cv::ocl::OclVectorStrategy strat) {
+	Result<int> cv_ocl_checkOptimalVectorWidth_const_intX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_OclVectorStrategy(const int* vectorWidths, const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_InputArray* src3, const cv::_InputArray* src4, const cv::_InputArray* src5, const cv::_InputArray* src6, const cv::_InputArray* src7, const cv::_InputArray* src8, const cv::_InputArray* src9, cv::ocl::OclVectorStrategy strat) {
 		try {
-			int ret = cv::ocl::checkOptimalVectorWidth(vectorWidths, *reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_InputArray*>(src3), *reinterpret_cast<const cv::_InputArray*>(src4), *reinterpret_cast<const cv::_InputArray*>(src5), *reinterpret_cast<const cv::_InputArray*>(src6), *reinterpret_cast<const cv::_InputArray*>(src7), *reinterpret_cast<const cv::_InputArray*>(src8), *reinterpret_cast<const cv::_InputArray*>(src9), strat);
-			return Ok<int>(ret);
+			int ret = cv::ocl::checkOptimalVectorWidth(vectorWidths, *src1, *src2, *src3, *src4, *src5, *src6, *src7, *src8, *src9, strat);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ocl_convertFromBuffer_voidX_size_t_int_int_int_UMatX(void* cl_mem_buffer, size_t step, int rows, int cols, int type, void* dst) {
+	Result_void cv_ocl_convertFromBuffer_voidX_size_t_int_int_int_UMatX(void* cl_mem_buffer, size_t step, int rows, int cols, int type, cv::UMat* dst) {
 		try {
-			cv::ocl::convertFromBuffer(cl_mem_buffer, step, rows, cols, type, *reinterpret_cast<cv::UMat*>(dst));
+			cv::ocl::convertFromBuffer(cl_mem_buffer, step, rows, cols, type, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ocl_convertFromImage_voidX_UMatX(void* cl_mem_image, void* dst) {
+	Result_void cv_ocl_convertFromImage_voidX_UMatX(void* cl_mem_image, cv::UMat* dst) {
 		try {
-			cv::ocl::convertFromImage(cl_mem_image, *reinterpret_cast<cv::UMat*>(dst));
+			cv::ocl::convertFromImage(cl_mem_image, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1050,7 +1050,7 @@ extern "C" {
 	Result<void*> cv_ocl_convertTypeStr_int_int_int_charX(int sdepth, int ddepth, int cn, char* buf) {
 		try {
 			const char* ret = cv::ocl::convertTypeStr(sdepth, ddepth, cn, buf);
-			return Ok<void*>(ocvrs_create_string(ret));
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
@@ -1064,13 +1064,13 @@ extern "C" {
 	Result<void*> cv_ocl_getOpenCLErrorString_int(int errorCode) {
 		try {
 			const char* ret = cv::ocl::getOpenCLErrorString(errorCode);
-			return Ok<void*>(ocvrs_create_string(ret));
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_ocl_getPlatfomsInfo_vector_PlatformInfo_X(void* platform_info) {
+	Result_void cv_ocl_getPlatfomsInfo_vector_PlatformInfo_X(std::vector<cv::ocl::PlatformInfo>* platform_info) {
 		try {
-			cv::ocl::getPlatfomsInfo(*reinterpret_cast<std::vector<cv::ocl::PlatformInfo>*>(platform_info));
+			cv::ocl::getPlatfomsInfo(*platform_info);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1078,56 +1078,56 @@ extern "C" {
 	Result<bool> cv_ocl_haveAmdBlas() {
 		try {
 			bool ret = cv::ocl::haveAmdBlas();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_ocl_haveAmdFft() {
 		try {
 			bool ret = cv::ocl::haveAmdFft();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_ocl_haveOpenCL() {
 		try {
 			bool ret = cv::ocl::haveOpenCL();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_ocl_haveSVM() {
 		try {
 			bool ret = cv::ocl::haveSVM();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_ocl_kernelToStr_const__InputArrayX_int_const_charX(void* _kernel, int ddepth, const char* name) {
+	Result<void*> cv_ocl_kernelToStr_const__InputArrayX_int_const_charX(const cv::_InputArray* _kernel, int ddepth, const char* name) {
 		try {
-			cv::String ret = cv::ocl::kernelToStr(*reinterpret_cast<const cv::_InputArray*>(_kernel), ddepth, name);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = cv::ocl::kernelToStr(*_kernel, ddepth, name);
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_ocl_memopTypeToStr_int(int t) {
 		try {
 			const char* ret = cv::ocl::memopTypeToStr(t);
-			return Ok<void*>(ocvrs_create_string(ret));
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_ocl_predictOptimalVectorWidthMax_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(void* src1, void* src2, void* src3, void* src4, void* src5, void* src6, void* src7, void* src8, void* src9) {
+	Result<int> cv_ocl_predictOptimalVectorWidthMax_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_InputArray* src3, const cv::_InputArray* src4, const cv::_InputArray* src5, const cv::_InputArray* src6, const cv::_InputArray* src7, const cv::_InputArray* src8, const cv::_InputArray* src9) {
 		try {
-			int ret = cv::ocl::predictOptimalVectorWidthMax(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_InputArray*>(src3), *reinterpret_cast<const cv::_InputArray*>(src4), *reinterpret_cast<const cv::_InputArray*>(src5), *reinterpret_cast<const cv::_InputArray*>(src6), *reinterpret_cast<const cv::_InputArray*>(src7), *reinterpret_cast<const cv::_InputArray*>(src8), *reinterpret_cast<const cv::_InputArray*>(src9));
-			return Ok<int>(ret);
+			int ret = cv::ocl::predictOptimalVectorWidthMax(*src1, *src2, *src3, *src4, *src5, *src6, *src7, *src8, *src9);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_predictOptimalVectorWidth_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_OclVectorStrategy(void* src1, void* src2, void* src3, void* src4, void* src5, void* src6, void* src7, void* src8, void* src9, cv::ocl::OclVectorStrategy strat) {
+	Result<int> cv_ocl_predictOptimalVectorWidth_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_OclVectorStrategy(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_InputArray* src3, const cv::_InputArray* src4, const cv::_InputArray* src5, const cv::_InputArray* src6, const cv::_InputArray* src7, const cv::_InputArray* src8, const cv::_InputArray* src9, cv::ocl::OclVectorStrategy strat) {
 		try {
-			int ret = cv::ocl::predictOptimalVectorWidth(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_InputArray*>(src3), *reinterpret_cast<const cv::_InputArray*>(src4), *reinterpret_cast<const cv::_InputArray*>(src5), *reinterpret_cast<const cv::_InputArray*>(src6), *reinterpret_cast<const cv::_InputArray*>(src7), *reinterpret_cast<const cv::_InputArray*>(src8), *reinterpret_cast<const cv::_InputArray*>(src9), strat);
-			return Ok<int>(ret);
+			int ret = cv::ocl::predictOptimalVectorWidth(*src1, *src2, *src3, *src4, *src5, *src6, *src7, *src8, *src9, strat);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
@@ -1141,183 +1141,183 @@ extern "C" {
 	Result<void*> cv_ocl_typeToStr_int(int t) {
 		try {
 			const char* ret = cv::ocl::typeToStr(t);
-			return Ok<void*>(ocvrs_create_string(ret));
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<bool> cv_ocl_useOpenCL() {
 		try {
 			bool ret = cv::ocl::useOpenCL();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<void*> cv_ocl_vecopTypeToStr_int(int t) {
 		try {
 			const char* ret = cv::ocl::vecopTypeToStr(t);
-			return Ok<void*>(ocvrs_create_string(ret));
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_parallel_for__const_RangeX_const_ParallelLoopBodyX_double(void* range, void* body, double nstripes) {
+	Result_void cv_parallel_for__const_RangeX_const_ParallelLoopBodyX_double(const cv::Range* range, const cv::ParallelLoopBody* body, double nstripes) {
 		try {
-			cv::parallel_for_(*reinterpret_cast<const cv::Range*>(range), *reinterpret_cast<const cv::ParallelLoopBody*>(body), nstripes);
+			cv::parallel_for_(*range, *body, nstripes);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_patchNaNs_const__InputOutputArrayX_double(void* a, double val) {
+	Result_void cv_patchNaNs_const__InputOutputArrayX_double(const cv::_InputOutputArray* a, double val) {
 		try {
-			cv::patchNaNs(*reinterpret_cast<const cv::_InputOutputArray*>(a), val);
+			cv::patchNaNs(*a, val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_perspectiveTransform_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* src, void* dst, void* m) {
+	Result_void cv_perspectiveTransform_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* m) {
 		try {
-			cv::perspectiveTransform(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(m));
+			cv::perspectiveTransform(*src, *dst, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_phase_const__InputArrayX_const__InputArrayX_const__OutputArrayX_bool(void* x, void* y, void* angle, bool angleInDegrees) {
+	Result_void cv_phase_const__InputArrayX_const__InputArrayX_const__OutputArrayX_bool(const cv::_InputArray* x, const cv::_InputArray* y, const cv::_OutputArray* angle, bool angleInDegrees) {
 		try {
-			cv::phase(*reinterpret_cast<const cv::_InputArray*>(x), *reinterpret_cast<const cv::_InputArray*>(y), *reinterpret_cast<const cv::_OutputArray*>(angle), angleInDegrees);
+			cv::phase(*x, *y, *angle, angleInDegrees);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_polarToCart_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool(void* magnitude, void* angle, void* x, void* y, bool angleInDegrees) {
+	Result_void cv_polarToCart_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool(const cv::_InputArray* magnitude, const cv::_InputArray* angle, const cv::_OutputArray* x, const cv::_OutputArray* y, bool angleInDegrees) {
 		try {
-			cv::polarToCart(*reinterpret_cast<const cv::_InputArray*>(magnitude), *reinterpret_cast<const cv::_InputArray*>(angle), *reinterpret_cast<const cv::_OutputArray*>(x), *reinterpret_cast<const cv::_OutputArray*>(y), angleInDegrees);
+			cv::polarToCart(*magnitude, *angle, *x, *y, angleInDegrees);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_pow_const__InputArrayX_double_const__OutputArrayX(void* src, double power, void* dst) {
+	Result_void cv_pow_const__InputArrayX_double_const__OutputArrayX(const cv::_InputArray* src, double power, const cv::_OutputArray* dst) {
 		try {
-			cv::pow(*reinterpret_cast<const cv::_InputArray*>(src), power, *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::pow(*src, power, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_randShuffle_const__InputOutputArrayX_double_RNGX(void* dst, double iterFactor, void* rng) {
+	Result_void cv_randShuffle_const__InputOutputArrayX_double_RNGX(const cv::_InputOutputArray* dst, double iterFactor, cv::RNG* rng) {
 		try {
-			cv::randShuffle(*reinterpret_cast<const cv::_InputOutputArray*>(dst), iterFactor, reinterpret_cast<cv::RNG*>(rng));
+			cv::randShuffle(*dst, iterFactor, rng);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_randn_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX(void* dst, void* mean, void* stddev) {
+	Result_void cv_randn_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputOutputArray* dst, const cv::_InputArray* mean, const cv::_InputArray* stddev) {
 		try {
-			cv::randn(*reinterpret_cast<const cv::_InputOutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mean), *reinterpret_cast<const cv::_InputArray*>(stddev));
+			cv::randn(*dst, *mean, *stddev);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_randu_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX(void* dst, void* low, void* high) {
+	Result_void cv_randu_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputOutputArray* dst, const cv::_InputArray* low, const cv::_InputArray* high) {
 		try {
-			cv::randu(*reinterpret_cast<const cv::_InputOutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(low), *reinterpret_cast<const cv::_InputArray*>(high));
+			cv::randu(*dst, *low, *high);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_DMatchX_const_DMatchX(void* node, cv::DMatch* value, const cv::DMatch* default_value) {
+	Result_void cv_read_const_FileNodeX_DMatchX_const_DMatchX(const cv::FileNode* node, cv::DMatch* value, const cv::DMatch* default_value) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *value, *default_value);
+			cv::read(*node, *value, *default_value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_KeyPointX_const_KeyPointX(void* node, cv::KeyPoint* value, const cv::KeyPoint* default_value) {
+	Result_void cv_read_const_FileNodeX_KeyPointX_const_KeyPointX(const cv::FileNode* node, cv::KeyPoint* value, const cv::KeyPoint* default_value) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *value, *default_value);
+			cv::read(*node, *value, *default_value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_MatX_const_MatX(void* node, void* mat, void* default_mat) {
+	Result_void cv_read_const_FileNodeX_MatX_const_MatX(const cv::FileNode* node, cv::Mat* mat, const cv::Mat* default_mat) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *reinterpret_cast<cv::Mat*>(mat), *reinterpret_cast<const cv::Mat*>(default_mat));
+			cv::read(*node, *mat, *default_mat);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_SparseMatX_const_SparseMatX(void* node, void* mat, void* default_mat) {
+	Result_void cv_read_const_FileNodeX_SparseMatX_const_SparseMatX(const cv::FileNode* node, cv::SparseMat* mat, const cv::SparseMat* default_mat) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *reinterpret_cast<cv::SparseMat*>(mat), *reinterpret_cast<const cv::SparseMat*>(default_mat));
+			cv::read(*node, *mat, *default_mat);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_doubleX_double(void* node, double* value, double default_value) {
+	Result_void cv_read_const_FileNodeX_doubleX_double(const cv::FileNode* node, double* value, double default_value) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *value, default_value);
+			cv::read(*node, *value, default_value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_floatX_float(void* node, float* value, float default_value) {
+	Result_void cv_read_const_FileNodeX_floatX_float(const cv::FileNode* node, float* value, float default_value) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *value, default_value);
+			cv::read(*node, *value, default_value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_intX_int(void* node, int* value, int default_value) {
+	Result_void cv_read_const_FileNodeX_intX_int(const cv::FileNode* node, int* value, int default_value) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *value, default_value);
+			cv::read(*node, *value, default_value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_stringX_const_stringX(void* node, void** value, const char* default_value) {
+	Result_void cv_read_const_FileNodeX_stringX_const_stringX(const cv::FileNode* node, void** value, const char* default_value) {
 		try {
 			std::string value_out;
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), value_out, std::string(default_value));
+			cv::read(*node, value_out, std::string(default_value));
 			*value = ocvrs_create_string(value_out.c_str());
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_vector_DMatch_X(void* node, void* matches) {
+	Result_void cv_read_const_FileNodeX_vector_DMatch_X(const cv::FileNode* node, std::vector<cv::DMatch>* matches) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *reinterpret_cast<std::vector<cv::DMatch>*>(matches));
+			cv::read(*node, *matches);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_read_const_FileNodeX_vector_KeyPoint_X(void* node, void* keypoints) {
+	Result_void cv_read_const_FileNodeX_vector_KeyPoint_X(const cv::FileNode* node, std::vector<cv::KeyPoint>* keypoints) {
 		try {
-			cv::read(*reinterpret_cast<const cv::FileNode*>(node), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints));
+			cv::read(*node, *keypoints);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_reduce_const__InputArrayX_const__OutputArrayX_int_int_int(void* src, void* dst, int dim, int rtype, int dtype) {
+	Result_void cv_reduce_const__InputArrayX_const__OutputArrayX_int_int_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int dim, int rtype, int dtype) {
 		try {
-			cv::reduce(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), dim, rtype, dtype);
+			cv::reduce(*src, *dst, dim, rtype, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_repeat_const_MatX_int_int(void* src, int ny, int nx) {
+	Result<cv::Mat*> cv_repeat_const_MatX_int_int(const cv::Mat* src, int ny, int nx) {
 		try {
-			cv::Mat ret = cv::repeat(*reinterpret_cast<const cv::Mat*>(src), ny, nx);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = cv::repeat(*src, ny, nx);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_repeat_const__InputArrayX_int_int_const__OutputArrayX(void* src, int ny, int nx, void* dst) {
+	Result_void cv_repeat_const__InputArrayX_int_int_const__OutputArrayX(const cv::_InputArray* src, int ny, int nx, const cv::_OutputArray* dst) {
 		try {
-			cv::repeat(*reinterpret_cast<const cv::_InputArray*>(src), ny, nx, *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::repeat(*src, ny, nx, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_rotate_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int rotateCode) {
+	Result_void cv_rotate_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int rotateCode) {
 		try {
-			cv::rotate(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), rotateCode);
+			cv::rotate(*src, *dst, rotateCode);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1339,20 +1339,20 @@ extern "C" {
 	Result<void*> cv_samples_findFileOrKeep_const_StringX_bool(const char* relative_path, bool silentMode) {
 		try {
 			cv::String ret = cv::samples::findFileOrKeep(std::string(relative_path), silentMode);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_samples_findFile_const_StringX_bool_bool(const char* relative_path, bool required, bool silentMode) {
 		try {
 			cv::String ret = cv::samples::findFile(std::string(relative_path), required, silentMode);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_scaleAdd_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(void* src1, double alpha, void* src2, void* dst) {
+	Result_void cv_scaleAdd_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src1, double alpha, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
 		try {
-			cv::scaleAdd(*reinterpret_cast<const cv::_InputArray*>(src1), alpha, *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::scaleAdd(*src1, alpha, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1360,13 +1360,13 @@ extern "C" {
 	Result<bool> cv_setBreakOnError_bool(bool flag) {
 		try {
 			bool ret = cv::setBreakOnError(flag);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_setIdentity_const__InputOutputArrayX_const_ScalarX(void* mtx, const cv::Scalar* s) {
+	Result_void cv_setIdentity_const__InputOutputArrayX_const_ScalarX(const cv::_InputOutputArray* mtx, const cv::Scalar* s) {
 		try {
-			cv::setIdentity(*reinterpret_cast<const cv::_InputOutputArray*>(mtx), *s);
+			cv::setIdentity(*mtx, *s);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1399,93 +1399,93 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_solveCubic_const__InputArrayX_const__OutputArrayX(void* coeffs, void* roots) {
+	Result<int> cv_solveCubic_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* coeffs, const cv::_OutputArray* roots) {
 		try {
-			int ret = cv::solveCubic(*reinterpret_cast<const cv::_InputArray*>(coeffs), *reinterpret_cast<const cv::_OutputArray*>(roots));
-			return Ok<int>(ret);
+			int ret = cv::solveCubic(*coeffs, *roots);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_solveLP_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* Func, void* Constr, void* z) {
+	Result<int> cv_solveLP_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* Func, const cv::_InputArray* Constr, const cv::_OutputArray* z) {
 		try {
-			int ret = cv::solveLP(*reinterpret_cast<const cv::_InputArray*>(Func), *reinterpret_cast<const cv::_InputArray*>(Constr), *reinterpret_cast<const cv::_OutputArray*>(z));
-			return Ok<int>(ret);
+			int ret = cv::solveLP(*Func, *Constr, *z);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<double> cv_solvePoly_const__InputArrayX_const__OutputArrayX_int(void* coeffs, void* roots, int maxIters) {
+	Result<double> cv_solvePoly_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* coeffs, const cv::_OutputArray* roots, int maxIters) {
 		try {
-			double ret = cv::solvePoly(*reinterpret_cast<const cv::_InputArray*>(coeffs), *reinterpret_cast<const cv::_OutputArray*>(roots), maxIters);
-			return Ok<double>(ret);
+			double ret = cv::solvePoly(*coeffs, *roots, maxIters);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<bool> cv_solve_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(void* src1, void* src2, void* dst, int flags) {
+	Result<bool> cv_solve_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, int flags) {
 		try {
-			bool ret = cv::solve(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), flags);
-			return Ok<bool>(ret);
+			bool ret = cv::solve(*src1, *src2, *dst, flags);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_sortIdx_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int flags) {
+	Result_void cv_sortIdx_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags) {
 		try {
-			cv::sortIdx(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flags);
+			cv::sortIdx(*src, *dst, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_sort_const__InputArrayX_const__OutputArrayX_int(void* src, void* dst, int flags) {
+	Result_void cv_sort_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* dst, int flags) {
 		try {
-			cv::sort(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), flags);
+			cv::sort(*src, *dst, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_split_const_MatX_MatX(void* src, void* mvbegin) {
+	Result_void cv_split_const_MatX_MatX(const cv::Mat* src, cv::Mat* mvbegin) {
 		try {
-			cv::split(*reinterpret_cast<const cv::Mat*>(src), reinterpret_cast<cv::Mat*>(mvbegin));
+			cv::split(*src, mvbegin);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_split_const__InputArrayX_const__OutputArrayX(void* m, void* mv) {
+	Result_void cv_split_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* m, const cv::_OutputArray* mv) {
 		try {
-			cv::split(*reinterpret_cast<const cv::_InputArray*>(m), *reinterpret_cast<const cv::_OutputArray*>(mv));
+			cv::split(*m, *mv);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_sqrt_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_sqrt_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::sqrt(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::sqrt(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_subtract_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_int(void* src1, void* src2, void* dst, void* mask, int dtype) {
+	Result_void cv_subtract_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX_int(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst, const cv::_InputArray* mask, int dtype) {
 		try {
-			cv::subtract(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(mask), dtype);
+			cv::subtract(*src1, *src2, *dst, *mask, dtype);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Scalar> cv_sum_const__InputArrayX(void* src) {
+	Result<cv::Scalar> cv_sum_const__InputArrayX(const cv::_InputArray* src) {
 		try {
-			cv::Scalar ret = cv::sum(*reinterpret_cast<const cv::_InputArray*>(src));
-			return Ok<cv::Scalar>(ret);
+			cv::Scalar ret = cv::sum(*src);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Scalar>)
 	}
 	
-	Result_void cv_swap_MatX_MatX(void* a, void* b) {
+	Result_void cv_swap_MatX_MatX(cv::Mat* a, cv::Mat* b) {
 		try {
-			cv::swap(*reinterpret_cast<cv::Mat*>(a), *reinterpret_cast<cv::Mat*>(b));
+			cv::swap(*a, *b);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_swap_UMatX_UMatX(void* a, void* b) {
+	Result_void cv_swap_UMatX_UMatX(cv::UMat* a, cv::UMat* b) {
 		try {
-			cv::swap(*reinterpret_cast<cv::UMat*>(a), *reinterpret_cast<cv::UMat*>(b));
+			cv::swap(*a, *b);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1493,34 +1493,34 @@ extern "C" {
 	Result<void*> cv_tempfile_const_charX(const char* suffix) {
 		try {
 			cv::String ret = cv::tempfile(suffix);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_theRNG() {
+	Result<cv::RNG*> cv_theRNG() {
 		try {
 			cv::RNG ret = cv::theRNG();
-			return Ok<void*>(new cv::RNG(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::RNG(ret));
+		} OCVRS_CATCH(Result<cv::RNG*>)
 	}
 	
-	Result<cv::Scalar> cv_trace_const__InputArrayX(void* mtx) {
+	Result<cv::Scalar> cv_trace_const__InputArrayX(const cv::_InputArray* mtx) {
 		try {
-			cv::Scalar ret = cv::trace(*reinterpret_cast<const cv::_InputArray*>(mtx));
-			return Ok<cv::Scalar>(ret);
+			cv::Scalar ret = cv::trace(*mtx);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Scalar>)
 	}
 	
-	Result_void cv_transform_const__InputArrayX_const__OutputArrayX_const__InputArrayX(void* src, void* dst, void* m) {
+	Result_void cv_transform_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst, const cv::_InputArray* m) {
 		try {
-			cv::transform(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst), *reinterpret_cast<const cv::_InputArray*>(m));
+			cv::transform(*src, *dst, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_transpose_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_transpose_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::transpose(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::transpose(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1528,120 +1528,120 @@ extern "C" {
 	Result<void*> cv_typeToString_int(int type) {
 		try {
 			cv::String ret = cv::typeToString(type);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<bool> cv_useOpenVX() {
 		try {
 			bool ret = cv::useOpenVX();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_useOptimized() {
 		try {
 			bool ret = cv::useOptimized();
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<void*> cv_utils_dumpBool_bool(bool argument) {
 		try {
 			cv::String ret = cv::utils::dumpBool(argument);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_utils_dumpCString_const_charX(const char* argument) {
 		try {
 			cv::String ret = cv::utils::dumpCString(argument);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_utils_dumpDouble_double(double argument) {
 		try {
 			cv::String ret = cv::utils::dumpDouble(argument);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_utils_dumpFloat_float(float argument) {
 		try {
 			cv::String ret = cv::utils::dumpFloat(argument);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_utils_dumpInputArrayOfArrays_const__InputArrayX(void* argument) {
+	Result<void*> cv_utils_dumpInputArrayOfArrays_const__InputArrayX(const cv::_InputArray* argument) {
 		try {
-			cv::String ret = cv::utils::dumpInputArrayOfArrays(*reinterpret_cast<const cv::_InputArray*>(argument));
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = cv::utils::dumpInputArrayOfArrays(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_utils_dumpInputArray_const__InputArrayX(void* argument) {
+	Result<void*> cv_utils_dumpInputArray_const__InputArrayX(const cv::_InputArray* argument) {
 		try {
-			cv::String ret = cv::utils::dumpInputArray(*reinterpret_cast<const cv::_InputArray*>(argument));
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = cv::utils::dumpInputArray(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayX(void* argument) {
+	Result<void*> cv_utils_dumpInputOutputArrayOfArrays_const__InputOutputArrayX(const cv::_InputOutputArray* argument) {
 		try {
-			cv::String ret = cv::utils::dumpInputOutputArrayOfArrays(*reinterpret_cast<const cv::_InputOutputArray*>(argument));
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = cv::utils::dumpInputOutputArrayOfArrays(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_utils_dumpInputOutputArray_const__InputOutputArrayX(void* argument) {
+	Result<void*> cv_utils_dumpInputOutputArray_const__InputOutputArrayX(const cv::_InputOutputArray* argument) {
 		try {
-			cv::String ret = cv::utils::dumpInputOutputArray(*reinterpret_cast<const cv::_InputOutputArray*>(argument));
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = cv::utils::dumpInputOutputArray(*argument);
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_utils_dumpInt_int(int argument) {
 		try {
 			cv::String ret = cv::utils::dumpInt(argument);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_utils_dumpSizeT_size_t(size_t argument) {
 		try {
 			cv::String ret = cv::utils::dumpSizeT(argument);
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<int> cv_utils_getThreadID() {
 		try {
 			int ret = cv::utils::getThreadID();
-			return Ok<int>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
 	Result<cv::utils::logging::LogLevel> cv_utils_logging_getLogLevel() {
 		try {
 			cv::utils::logging::LogLevel ret = cv::utils::logging::getLogLevel();
-			return Ok<cv::utils::logging::LogLevel>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::utils::logging::LogLevel>)
 	}
 	
 	Result<cv::utils::logging::LogLevel> cv_utils_logging_getLogTagLevel_const_charX(const char* tag) {
 		try {
 			cv::utils::logging::LogLevel ret = cv::utils::logging::getLogTagLevel(tag);
-			return Ok<cv::utils::logging::LogLevel>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::utils::logging::LogLevel>)
 	}
 	
-	Result<void*> cv_utils_logging_internal_getGlobalLogTag() {
+	Result<cv::utils::logging::LogTag**> cv_utils_logging_internal_getGlobalLogTag() {
 		try {
 			cv::utils::logging::LogTag* ret = cv::utils::logging::internal::getGlobalLogTag();
-			return Ok<void*>(new cv::utils::logging::LogTag*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::utils::logging::LogTag*(ret));
+		} OCVRS_CATCH(Result<cv::utils::logging::LogTag**>)
 	}
 	
 	Result_void cv_utils_logging_internal_writeLogMessageEx_LogLevel_const_charX_const_charX_int_const_charX_const_charX(cv::utils::logging::LogLevel logLevel, const char* tag, const char* file, int line, const char* func, const char* message) {
@@ -1658,9 +1658,9 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_utils_logging_registerLogTag_LogTagX(void* plogtag) {
+	Result_void cv_utils_logging_registerLogTag_LogTagX(cv::utils::logging::LogTag* plogtag) {
 		try {
-			cv::utils::logging::registerLogTag(reinterpret_cast<cv::utils::logging::LogTag*>(plogtag));
+			cv::utils::logging::registerLogTag(plogtag);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1668,7 +1668,7 @@ extern "C" {
 	Result<cv::utils::logging::LogLevel> cv_utils_logging_setLogLevel_LogLevel(cv::utils::logging::LogLevel logLevel) {
 		try {
 			cv::utils::logging::LogLevel ret = cv::utils::logging::setLogLevel(logLevel);
-			return Ok<cv::utils::logging::LogLevel>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::utils::logging::LogLevel>)
 	}
 	
@@ -1679,135 +1679,135 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_utils_testAsyncArray_const__InputArrayX(void* argument) {
+	Result<cv::AsyncArray*> cv_utils_testAsyncArray_const__InputArrayX(const cv::_InputArray* argument) {
 		try {
-			cv::AsyncArray ret = cv::utils::testAsyncArray(*reinterpret_cast<const cv::_InputArray*>(argument));
-			return Ok<void*>(new cv::AsyncArray(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::AsyncArray ret = cv::utils::testAsyncArray(*argument);
+			return Ok(new cv::AsyncArray(ret));
+		} OCVRS_CATCH(Result<cv::AsyncArray*>)
 	}
 	
-	Result<void*> cv_utils_testAsyncException() {
+	Result<cv::AsyncArray*> cv_utils_testAsyncException() {
 		try {
 			cv::AsyncArray ret = cv::utils::testAsyncException();
-			return Ok<void*>(new cv::AsyncArray(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::AsyncArray(ret));
+		} OCVRS_CATCH(Result<cv::AsyncArray*>)
 	}
 	
-	Result_void cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayX(VADisplay display, VASurfaceID surface, const cv::Size* size, void* dst) {
+	Result_void cv_va_intel_convertFromVASurface_VADisplay_VASurfaceID_Size_const__OutputArrayX(VADisplay display, VASurfaceID surface, const cv::Size* size, const cv::_OutputArray* dst) {
 		try {
-			cv::va_intel::convertFromVASurface(display, surface, *size, *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::va_intel::convertFromVASurface(display, surface, *size, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_va_intel_convertToVASurface_VADisplay_const__InputArrayX_VASurfaceID_Size(VADisplay display, void* src, VASurfaceID surface, const cv::Size* size) {
+	Result_void cv_va_intel_convertToVASurface_VADisplay_const__InputArrayX_VASurfaceID_Size(VADisplay display, const cv::_InputArray* src, VASurfaceID surface, const cv::Size* size) {
 		try {
-			cv::va_intel::convertToVASurface(display, *reinterpret_cast<const cv::_InputArray*>(src), surface, *size);
+			cv::va_intel::convertToVASurface(display, *src, surface, *size);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(VADisplay display, bool tryInterop) {
+	Result<cv::ocl::Context*> cv_va_intel_ocl_initializeContextFromVA_VADisplay_bool(VADisplay display, bool tryInterop) {
 		try {
 			cv::ocl::Context ret = cv::va_intel::ocl::initializeContextFromVA(display, tryInterop);
-			return Ok<void*>(new cv::ocl::Context(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::Context(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Context*>)
 	}
 	
-	Result_void cv_vconcat_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* src1, void* src2, void* dst) {
+	Result_void cv_vconcat_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src1, const cv::_InputArray* src2, const cv::_OutputArray* dst) {
 		try {
-			cv::vconcat(*reinterpret_cast<const cv::_InputArray*>(src1), *reinterpret_cast<const cv::_InputArray*>(src2), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::vconcat(*src1, *src2, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_vconcat_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_vconcat_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::vconcat(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::vconcat(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_writeScalar_FileStorageX_const_StringX(void* fs, const char* value) {
+	Result_void cv_writeScalar_FileStorageX_const_StringX(cv::FileStorage* fs, const char* value) {
 		try {
-			cv::writeScalar(*reinterpret_cast<cv::FileStorage*>(fs), std::string(value));
+			cv::writeScalar(*fs, std::string(value));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_writeScalar_FileStorageX_double(void* fs, double value) {
+	Result_void cv_writeScalar_FileStorageX_double(cv::FileStorage* fs, double value) {
 		try {
-			cv::writeScalar(*reinterpret_cast<cv::FileStorage*>(fs), value);
+			cv::writeScalar(*fs, value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_writeScalar_FileStorageX_float(void* fs, float value) {
+	Result_void cv_writeScalar_FileStorageX_float(cv::FileStorage* fs, float value) {
 		try {
-			cv::writeScalar(*reinterpret_cast<cv::FileStorage*>(fs), value);
+			cv::writeScalar(*fs, value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_writeScalar_FileStorageX_int(void* fs, int value) {
+	Result_void cv_writeScalar_FileStorageX_int(cv::FileStorage* fs, int value) {
 		try {
-			cv::writeScalar(*reinterpret_cast<cv::FileStorage*>(fs), value);
+			cv::writeScalar(*fs, value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_const_MatX(void* fs, const char* name, void* value) {
+	Result_void cv_write_FileStorageX_const_StringX_const_MatX(cv::FileStorage* fs, const char* name, const cv::Mat* value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), *reinterpret_cast<const cv::Mat*>(value));
+			cv::write(*fs, std::string(name), *value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_const_SparseMatX(void* fs, const char* name, void* value) {
+	Result_void cv_write_FileStorageX_const_StringX_const_SparseMatX(cv::FileStorage* fs, const char* name, const cv::SparseMat* value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), *reinterpret_cast<const cv::SparseMat*>(value));
+			cv::write(*fs, std::string(name), *value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_const_StringX(void* fs, const char* name, const char* value) {
+	Result_void cv_write_FileStorageX_const_StringX_const_StringX(cv::FileStorage* fs, const char* name, const char* value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), std::string(value));
+			cv::write(*fs, std::string(name), std::string(value));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_const_vector_DMatch_X(void* fs, const char* name, void* value) {
+	Result_void cv_write_FileStorageX_const_StringX_const_vector_DMatch_X(cv::FileStorage* fs, const char* name, const std::vector<cv::DMatch>* value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), *reinterpret_cast<const std::vector<cv::DMatch>*>(value));
+			cv::write(*fs, std::string(name), *value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_const_vector_KeyPoint_X(void* fs, const char* name, void* value) {
+	Result_void cv_write_FileStorageX_const_StringX_const_vector_KeyPoint_X(cv::FileStorage* fs, const char* name, const std::vector<cv::KeyPoint>* value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), *reinterpret_cast<const std::vector<cv::KeyPoint>*>(value));
+			cv::write(*fs, std::string(name), *value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_double(void* fs, const char* name, double value) {
+	Result_void cv_write_FileStorageX_const_StringX_double(cv::FileStorage* fs, const char* name, double value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), value);
+			cv::write(*fs, std::string(name), value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_float(void* fs, const char* name, float value) {
+	Result_void cv_write_FileStorageX_const_StringX_float(cv::FileStorage* fs, const char* name, float value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), value);
+			cv::write(*fs, std::string(name), value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_write_FileStorageX_const_StringX_int(void* fs, const char* name, int value) {
+	Result_void cv_write_FileStorageX_const_StringX_int(cv::FileStorage* fs, const char* name, int value) {
 		try {
-			cv::write(*reinterpret_cast<cv::FileStorage*>(fs), std::string(name), value);
+			cv::write(*fs, std::string(name), value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1815,382 +1815,382 @@ extern "C" {
 	void cv_Algorithm_delete(cv::Algorithm* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Algorithm_Algorithm() {
+	Result<cv::Algorithm*> cv_Algorithm_Algorithm() {
 		try {
 			cv::Algorithm* ret = new cv::Algorithm();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Algorithm*>)
 	}
 	
-	Result_void cv_Algorithm_clear(void* instance) {
+	Result_void cv_Algorithm_clear(cv::Algorithm* instance) {
 		try {
-			reinterpret_cast<cv::Algorithm*>(instance)->clear();
+			instance->clear();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Algorithm_write_const_FileStorageX(void* instance, void* fs) {
+	Result_void cv_Algorithm_write_const_FileStorageX(const cv::Algorithm* instance, cv::FileStorage* fs) {
 		try {
-			reinterpret_cast<cv::Algorithm*>(instance)->write(*reinterpret_cast<cv::FileStorage*>(fs));
+			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Algorithm_write_const_const_Ptr_FileStorage_X_const_StringX(void* instance, void* fs, const char* name) {
+	Result_void cv_Algorithm_write_const_const_Ptr_FileStorage_X_const_StringX(const cv::Algorithm* instance, const cv::Ptr<cv::FileStorage>* fs, const char* name) {
 		try {
-			reinterpret_cast<cv::Algorithm*>(instance)->write(*reinterpret_cast<const cv::Ptr<cv::FileStorage>*>(fs), std::string(name));
+			instance->write(*fs, std::string(name));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Algorithm_read_const_FileNodeX(void* instance, void* fn) {
+	Result_void cv_Algorithm_read_const_FileNodeX(cv::Algorithm* instance, const cv::FileNode* fn) {
 		try {
-			reinterpret_cast<cv::Algorithm*>(instance)->read(*reinterpret_cast<const cv::FileNode*>(fn));
+			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_Algorithm_empty_const(void* instance) {
+	Result<bool> cv_Algorithm_empty_const(const cv::Algorithm* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::Algorithm*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_Algorithm_save_const_const_StringX(void* instance, const char* filename) {
+	Result_void cv_Algorithm_save_const_const_StringX(const cv::Algorithm* instance, const char* filename) {
 		try {
-			reinterpret_cast<cv::Algorithm*>(instance)->save(std::string(filename));
+			instance->save(std::string(filename));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Algorithm_getDefaultName_const(void* instance) {
+	Result<void*> cv_Algorithm_getDefaultName_const(const cv::Algorithm* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::Algorithm*>(instance)->getDefaultName();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->getDefaultName();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	void cv_AsyncArray_delete(cv::AsyncArray* instance) {
 		delete instance;
 	}
-	Result<void*> cv_AsyncArray_AsyncArray() {
+	Result<cv::AsyncArray*> cv_AsyncArray_AsyncArray() {
 		try {
 			cv::AsyncArray* ret = new cv::AsyncArray();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::AsyncArray*>)
 	}
 	
-	Result<void*> cv_AsyncArray_AsyncArray_const_AsyncArrayX(void* o) {
+	Result<cv::AsyncArray*> cv_AsyncArray_AsyncArray_const_AsyncArrayX(const cv::AsyncArray* o) {
 		try {
-			cv::AsyncArray* ret = new cv::AsyncArray(*reinterpret_cast<const cv::AsyncArray*>(o));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::AsyncArray* ret = new cv::AsyncArray(*o);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::AsyncArray*>)
 	}
 	
-	Result_void cv_AsyncArray_release(void* instance) {
+	Result_void cv_AsyncArray_release(cv::AsyncArray* instance) {
 		try {
-			reinterpret_cast<cv::AsyncArray*>(instance)->release();
+			instance->release();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_AsyncArray_get_const_const__OutputArrayX(void* instance, void* dst) {
+	Result_void cv_AsyncArray_get_const_const__OutputArrayX(const cv::AsyncArray* instance, const cv::_OutputArray* dst) {
 		try {
-			reinterpret_cast<cv::AsyncArray*>(instance)->get(*reinterpret_cast<const cv::_OutputArray*>(dst));
+			instance->get(*dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_AsyncArray_get_const_const__OutputArrayX_int64_t(void* instance, void* dst, int64_t timeoutNs) {
+	Result<bool> cv_AsyncArray_get_const_const__OutputArrayX_int64_t(const cv::AsyncArray* instance, const cv::_OutputArray* dst, int64_t timeoutNs) {
 		try {
-			bool ret = reinterpret_cast<cv::AsyncArray*>(instance)->get(*reinterpret_cast<const cv::_OutputArray*>(dst), timeoutNs);
-			return Ok<bool>(ret);
+			bool ret = instance->get(*dst, timeoutNs);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_AsyncArray_get_const_const__OutputArrayX_double(void* instance, void* dst, double timeoutNs) {
+	Result<bool> cv_AsyncArray_get_const_const__OutputArrayX_double(const cv::AsyncArray* instance, const cv::_OutputArray* dst, double timeoutNs) {
 		try {
-			bool ret = reinterpret_cast<cv::AsyncArray*>(instance)->get(*reinterpret_cast<const cv::_OutputArray*>(dst), timeoutNs);
-			return Ok<bool>(ret);
+			bool ret = instance->get(*dst, timeoutNs);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_AsyncArray_wait_for_const_int64_t(void* instance, int64_t timeoutNs) {
+	Result<bool> cv_AsyncArray_wait_for_const_int64_t(const cv::AsyncArray* instance, int64_t timeoutNs) {
 		try {
-			bool ret = reinterpret_cast<cv::AsyncArray*>(instance)->wait_for(timeoutNs);
-			return Ok<bool>(ret);
+			bool ret = instance->wait_for(timeoutNs);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_AsyncArray_wait_for_const_double(void* instance, double timeoutNs) {
+	Result<bool> cv_AsyncArray_wait_for_const_double(const cv::AsyncArray* instance, double timeoutNs) {
 		try {
-			bool ret = reinterpret_cast<cv::AsyncArray*>(instance)->wait_for(timeoutNs);
-			return Ok<bool>(ret);
+			bool ret = instance->wait_for(timeoutNs);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_AsyncArray_valid_const(void* instance) {
+	Result<bool> cv_AsyncArray_valid_const(const cv::AsyncArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::AsyncArray*>(instance)->valid();
-			return Ok<bool>(ret);
+			bool ret = instance->valid();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_AsyncArray_AsyncArray_AsyncArrayX(void* o) {
+	Result<cv::AsyncArray*> cv_AsyncArray_AsyncArray_AsyncArrayX(cv::AsyncArray* o) {
 		try {
-			cv::AsyncArray* ret = new cv::AsyncArray(*reinterpret_cast<cv::AsyncArray*>(o));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::AsyncArray* ret = new cv::AsyncArray(*o);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::AsyncArray*>)
 	}
 	
 	void cv_AsyncPromise_delete(cv::AsyncPromise* instance) {
 		delete instance;
 	}
-	Result<void*> cv_AsyncPromise_AsyncPromise() {
+	Result<cv::AsyncPromise*> cv_AsyncPromise_AsyncPromise() {
 		try {
 			cv::AsyncPromise* ret = new cv::AsyncPromise();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::AsyncPromise*>)
 	}
 	
-	Result<void*> cv_AsyncPromise_AsyncPromise_const_AsyncPromiseX(void* o) {
+	Result<cv::AsyncPromise*> cv_AsyncPromise_AsyncPromise_const_AsyncPromiseX(const cv::AsyncPromise* o) {
 		try {
-			cv::AsyncPromise* ret = new cv::AsyncPromise(*reinterpret_cast<const cv::AsyncPromise*>(o));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::AsyncPromise* ret = new cv::AsyncPromise(*o);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::AsyncPromise*>)
 	}
 	
-	Result_void cv_AsyncPromise_release(void* instance) {
+	Result_void cv_AsyncPromise_release(cv::AsyncPromise* instance) {
 		try {
-			reinterpret_cast<cv::AsyncPromise*>(instance)->release();
+			instance->release();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_AsyncPromise_getArrayResult(void* instance) {
+	Result<cv::AsyncArray*> cv_AsyncPromise_getArrayResult(cv::AsyncPromise* instance) {
 		try {
-			cv::AsyncArray ret = reinterpret_cast<cv::AsyncPromise*>(instance)->getArrayResult();
-			return Ok<void*>(new cv::AsyncArray(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::AsyncArray ret = instance->getArrayResult();
+			return Ok(new cv::AsyncArray(ret));
+		} OCVRS_CATCH(Result<cv::AsyncArray*>)
 	}
 	
-	Result_void cv_AsyncPromise_setValue_const__InputArrayX(void* instance, void* value) {
+	Result_void cv_AsyncPromise_setValue_const__InputArrayX(cv::AsyncPromise* instance, const cv::_InputArray* value) {
 		try {
-			reinterpret_cast<cv::AsyncPromise*>(instance)->setValue(*reinterpret_cast<const cv::_InputArray*>(value));
+			instance->setValue(*value);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_AsyncPromise_setException_const_ExceptionX(void* instance, void* exception) {
+	Result_void cv_AsyncPromise_setException_const_ExceptionX(cv::AsyncPromise* instance, const cv::Exception* exception) {
 		try {
-			reinterpret_cast<cv::AsyncPromise*>(instance)->setException(*reinterpret_cast<const cv::Exception*>(exception));
+			instance->setException(*exception);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_AsyncPromise_AsyncPromise_AsyncPromiseX(void* o) {
+	Result<cv::AsyncPromise*> cv_AsyncPromise_AsyncPromise_AsyncPromiseX(cv::AsyncPromise* o) {
 		try {
-			cv::AsyncPromise* ret = new cv::AsyncPromise(*reinterpret_cast<cv::AsyncPromise*>(o));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::AsyncPromise* ret = new cv::AsyncPromise(*o);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::AsyncPromise*>)
 	}
 	
-	Result<void*> cv_AsyncPromise__getImpl_const(void* instance) {
+	Result<void*> cv_AsyncPromise__getImpl_const(const cv::AsyncPromise* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::AsyncPromise*>(instance)->_getImpl();
-			return Ok<void*>(ret);
+			void* ret = instance->_getImpl();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	void cv_CommandLineParser_delete(cv::CommandLineParser* instance) {
 		delete instance;
 	}
-	Result<void*> cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringX(int argc, const char** argv, const char* keys) {
+	Result<cv::CommandLineParser*> cv_CommandLineParser_CommandLineParser_int_const_charXX_const_StringX(int argc, const char** argv, const char* keys) {
 		try {
 			cv::CommandLineParser* ret = new cv::CommandLineParser(argc, argv, std::string(keys));
-			return Ok<void*>(ret);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::CommandLineParser*>)
+	}
+	
+	Result<cv::CommandLineParser*> cv_CommandLineParser_CommandLineParser_const_CommandLineParserX(const cv::CommandLineParser* parser) {
+		try {
+			cv::CommandLineParser* ret = new cv::CommandLineParser(*parser);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::CommandLineParser*>)
+	}
+	
+	Result<void*> cv_CommandLineParser_getPathToApplication_const(const cv::CommandLineParser* instance) {
+		try {
+			cv::String ret = instance->getPathToApplication();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_CommandLineParser_CommandLineParser_const_CommandLineParserX(void* parser) {
+	Result<bool> cv_CommandLineParser_has_const_const_StringX(const cv::CommandLineParser* instance, const char* name) {
 		try {
-			cv::CommandLineParser* ret = new cv::CommandLineParser(*reinterpret_cast<const cv::CommandLineParser*>(parser));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<void*> cv_CommandLineParser_getPathToApplication_const(void* instance) {
-		try {
-			cv::String ret = reinterpret_cast<cv::CommandLineParser*>(instance)->getPathToApplication();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<bool> cv_CommandLineParser_has_const_const_StringX(void* instance, const char* name) {
-		try {
-			bool ret = reinterpret_cast<cv::CommandLineParser*>(instance)->has(std::string(name));
-			return Ok<bool>(ret);
+			bool ret = instance->has(std::string(name));
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_CommandLineParser_check_const(void* instance) {
+	Result<bool> cv_CommandLineParser_check_const(const cv::CommandLineParser* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::CommandLineParser*>(instance)->check();
-			return Ok<bool>(ret);
+			bool ret = instance->check();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_CommandLineParser_about_const_StringX(void* instance, const char* message) {
+	Result_void cv_CommandLineParser_about_const_StringX(cv::CommandLineParser* instance, const char* message) {
 		try {
-			reinterpret_cast<cv::CommandLineParser*>(instance)->about(std::string(message));
+			instance->about(std::string(message));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_CommandLineParser_printMessage_const(void* instance) {
+	Result_void cv_CommandLineParser_printMessage_const(const cv::CommandLineParser* instance) {
 		try {
-			reinterpret_cast<cv::CommandLineParser*>(instance)->printMessage();
+			instance->printMessage();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_CommandLineParser_printErrors_const(void* instance) {
+	Result_void cv_CommandLineParser_printErrors_const(const cv::CommandLineParser* instance) {
 		try {
-			reinterpret_cast<cv::CommandLineParser*>(instance)->printErrors();
+			instance->printErrors();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_ConjGradSolver_create_const_Ptr_Function_X_TermCriteria(void* f, void* termcrit) {
+	Result<cv::Ptr<cv::ConjGradSolver>*> cv_ConjGradSolver_create_const_Ptr_Function_X_TermCriteria(const cv::Ptr<cv::MinProblemSolver::Function>* f, cv::TermCriteria* termcrit) {
 		try {
-			cv::Ptr<cv::ConjGradSolver> ret = cv::ConjGradSolver::create(*reinterpret_cast<const cv::Ptr<cv::MinProblemSolver::Function>*>(f), *reinterpret_cast<cv::TermCriteria*>(termcrit));
-			return Ok<void*>(new cv::Ptr<cv::ConjGradSolver>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::ConjGradSolver> ret = cv::ConjGradSolver::create(*f, *termcrit);
+			return Ok(new cv::Ptr<cv::ConjGradSolver>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::ConjGradSolver>*>)
 	}
 	
 	Result<cv::DMatch> cv_DMatch_DMatch() {
 		try {
 			cv::DMatch ret;
-			return Ok<cv::DMatch>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::DMatch>)
 	}
 	
 	Result<cv::DMatch> cv_DMatch_DMatch_int_int_float(int _queryIdx, int _trainIdx, float _distance) {
 		try {
 			cv::DMatch ret(_queryIdx, _trainIdx, _distance);
-			return Ok<cv::DMatch>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::DMatch>)
 	}
 	
 	Result<cv::DMatch> cv_DMatch_DMatch_int_int_int_float(int _queryIdx, int _trainIdx, int _imgIdx, float _distance) {
 		try {
 			cv::DMatch ret(_queryIdx, _trainIdx, _imgIdx, _distance);
-			return Ok<cv::DMatch>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::DMatch>)
 	}
 	
-	Result_void cv_DownhillSolver_getInitStep_const_const__OutputArrayX(void* instance, void* step) {
+	Result_void cv_DownhillSolver_getInitStep_const_const__OutputArrayX(const cv::DownhillSolver* instance, const cv::_OutputArray* step) {
 		try {
-			reinterpret_cast<cv::DownhillSolver*>(instance)->getInitStep(*reinterpret_cast<const cv::_OutputArray*>(step));
+			instance->getInitStep(*step);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_DownhillSolver_setInitStep_const__InputArrayX(void* instance, void* step) {
+	Result_void cv_DownhillSolver_setInitStep_const__InputArrayX(cv::DownhillSolver* instance, const cv::_InputArray* step) {
 		try {
-			reinterpret_cast<cv::DownhillSolver*>(instance)->setInitStep(*reinterpret_cast<const cv::_InputArray*>(step));
+			instance->setInitStep(*step);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_DownhillSolver_create_const_Ptr_Function_X_const__InputArrayX_TermCriteria(void* f, void* initStep, void* termcrit) {
+	Result<cv::Ptr<cv::DownhillSolver>*> cv_DownhillSolver_create_const_Ptr_Function_X_const__InputArrayX_TermCriteria(const cv::Ptr<cv::MinProblemSolver::Function>* f, const cv::_InputArray* initStep, cv::TermCriteria* termcrit) {
 		try {
-			cv::Ptr<cv::DownhillSolver> ret = cv::DownhillSolver::create(*reinterpret_cast<const cv::Ptr<cv::MinProblemSolver::Function>*>(f), *reinterpret_cast<const cv::_InputArray*>(initStep), *reinterpret_cast<cv::TermCriteria*>(termcrit));
-			return Ok<void*>(new cv::Ptr<cv::DownhillSolver>(ret));
+			cv::Ptr<cv::DownhillSolver> ret = cv::DownhillSolver::create(*f, *initStep, *termcrit);
+			return Ok(new cv::Ptr<cv::DownhillSolver>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DownhillSolver>*>)
+	}
+	
+	Result<void*> cv_Exception_msg_const(const cv::Exception* instance) {
+		try {
+			cv::String ret = instance->msg;
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Exception_msg_const(void* instance) {
+	Result_void cv_Exception_setMsg_String(cv::Exception* instance, char* val) {
 		try {
-			cv::String ret = reinterpret_cast<cv::Exception*>(instance)->msg;
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result_void cv_Exception_setMsg_String(void* instance, char* val) {
-		try {
-			reinterpret_cast<cv::Exception*>(instance)->msg = std::string(val);
+			instance->msg = std::string(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Exception_code_const(void* instance) {
+	Result<int> cv_Exception_code_const(const cv::Exception* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Exception*>(instance)->code;
-			return Ok<int>(ret);
+			int ret = instance->code;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Exception_setCode_int(void* instance, int val) {
+	Result_void cv_Exception_setCode_int(cv::Exception* instance, int val) {
 		try {
-			reinterpret_cast<cv::Exception*>(instance)->code = val;
+			instance->code = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Exception_err_const(void* instance) {
+	Result<void*> cv_Exception_err_const(const cv::Exception* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::Exception*>(instance)->err;
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->err;
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_Exception_setErr_String(void* instance, char* val) {
+	Result_void cv_Exception_setErr_String(cv::Exception* instance, char* val) {
 		try {
-			reinterpret_cast<cv::Exception*>(instance)->err = std::string(val);
+			instance->err = std::string(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Exception_func_const(void* instance) {
+	Result<void*> cv_Exception_func_const(const cv::Exception* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::Exception*>(instance)->func;
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->func;
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_Exception_setFunc_String(void* instance, char* val) {
+	Result_void cv_Exception_setFunc_String(cv::Exception* instance, char* val) {
 		try {
-			reinterpret_cast<cv::Exception*>(instance)->func = std::string(val);
+			instance->func = std::string(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Exception_file_const(void* instance) {
+	Result<void*> cv_Exception_file_const(const cv::Exception* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::Exception*>(instance)->file;
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->file;
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_Exception_setFile_String(void* instance, char* val) {
+	Result_void cv_Exception_setFile_String(cv::Exception* instance, char* val) {
 		try {
-			reinterpret_cast<cv::Exception*>(instance)->file = std::string(val);
+			instance->file = std::string(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Exception_line_const(void* instance) {
+	Result<int> cv_Exception_line_const(const cv::Exception* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Exception*>(instance)->line;
-			return Ok<int>(ret);
+			int ret = instance->line;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Exception_setLine_int(void* instance, int val) {
+	Result_void cv_Exception_setLine_int(cv::Exception* instance, int val) {
 		try {
-			reinterpret_cast<cv::Exception*>(instance)->line = val;
+			instance->line = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2198,65 +2198,65 @@ extern "C" {
 	void cv_Exception_delete(cv::Exception* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Exception_Exception() {
+	Result<cv::Exception*> cv_Exception_Exception() {
 		try {
 			cv::Exception* ret = new cv::Exception();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Exception*>)
 	}
 	
-	Result<void*> cv_Exception_Exception_int_const_StringX_const_StringX_const_StringX_int(int _code, const char* _err, const char* _func, const char* _file, int _line) {
+	Result<cv::Exception*> cv_Exception_Exception_int_const_StringX_const_StringX_const_StringX_int(int _code, const char* _err, const char* _func, const char* _file, int _line) {
 		try {
 			cv::Exception* ret = new cv::Exception(_code, std::string(_err), std::string(_func), std::string(_file), _line);
-			return Ok<void*>(ret);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Exception*>)
+	}
+	
+	Result<void*> cv_Exception_what_const(const cv::Exception* instance) {
+		try {
+			const char* ret = instance->what();
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_Exception_what_const(void* instance) {
+	Result_void cv_Exception_formatMessage(cv::Exception* instance) {
 		try {
-			const char* ret = reinterpret_cast<cv::Exception*>(instance)->what();
-			return Ok<void*>(ocvrs_create_string(ret));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result_void cv_Exception_formatMessage(void* instance) {
-		try {
-			reinterpret_cast<cv::Exception*>(instance)->formatMessage();
+			instance->formatMessage();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_FileNode_fs_const(void* instance) {
+	Result<const cv::FileStorage**> cv_FileNode_fs_const(const cv::FileNode* instance) {
 		try {
-			const cv::FileStorage* ret = reinterpret_cast<cv::FileNode*>(instance)->fs;
-			return Ok<void*>(new const cv::FileStorage*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			const cv::FileStorage* ret = instance->fs;
+			return Ok(new const cv::FileStorage*(ret));
+		} OCVRS_CATCH(Result<const cv::FileStorage**>)
 	}
 	
-	Result<size_t> cv_FileNode_blockIdx_const(void* instance) {
+	Result<size_t> cv_FileNode_blockIdx_const(const cv::FileNode* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::FileNode*>(instance)->blockIdx;
-			return Ok<size_t>(ret);
+			size_t ret = instance->blockIdx;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_FileNode_setBlockIdx_size_t(void* instance, size_t val) {
+	Result_void cv_FileNode_setBlockIdx_size_t(cv::FileNode* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::FileNode*>(instance)->blockIdx = val;
+			instance->blockIdx = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_FileNode_ofs_const(void* instance) {
+	Result<size_t> cv_FileNode_ofs_const(const cv::FileNode* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::FileNode*>(instance)->ofs;
-			return Ok<size_t>(ret);
+			size_t ret = instance->ofs;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_FileNode_setOfs_size_t(void* instance, size_t val) {
+	Result_void cv_FileNode_setOfs_size_t(cv::FileNode* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::FileNode*>(instance)->ofs = val;
+			instance->ofs = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2264,334 +2264,334 @@ extern "C" {
 	void cv_FileNode_delete(cv::FileNode* instance) {
 		delete instance;
 	}
-	Result<void*> cv_FileNode_FileNode() {
+	Result<cv::FileNode*> cv_FileNode_FileNode() {
 		try {
 			cv::FileNode* ret = new cv::FileNode();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(void* fs, size_t blockIdx, size_t ofs) {
+	Result<cv::FileNode*> cv_FileNode_FileNode_const_FileStorageX_size_t_size_t(const cv::FileStorage* fs, size_t blockIdx, size_t ofs) {
 		try {
-			cv::FileNode* ret = new cv::FileNode(reinterpret_cast<const cv::FileStorage*>(fs), blockIdx, ofs);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode* ret = new cv::FileNode(fs, blockIdx, ofs);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileNode_FileNode_const_FileNodeX(void* node) {
+	Result<cv::FileNode*> cv_FileNode_FileNode_const_FileNodeX(const cv::FileNode* node) {
 		try {
-			cv::FileNode* ret = new cv::FileNode(*reinterpret_cast<const cv::FileNode*>(node));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode* ret = new cv::FileNode(*node);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileNode_operator___const_const_StringX(void* instance, const char* nodename) {
+	Result<cv::FileNode*> cv_FileNode_operator___const_const_StringX(const cv::FileNode* instance, const char* nodename) {
 		try {
-			cv::FileNode ret = reinterpret_cast<cv::FileNode*>(instance)->operator[](std::string(nodename));
-			return Ok<void*>(new cv::FileNode(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode ret = instance->operator[](std::string(nodename));
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileNode_operator___const_const_charX(void* instance, const char* nodename) {
+	Result<cv::FileNode*> cv_FileNode_operator___const_const_charX(const cv::FileNode* instance, const char* nodename) {
 		try {
-			cv::FileNode ret = reinterpret_cast<cv::FileNode*>(instance)->operator[](nodename);
-			return Ok<void*>(new cv::FileNode(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode ret = instance->operator[](nodename);
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileNode_operator___const_int(void* instance, int i) {
+	Result<cv::FileNode*> cv_FileNode_operator___const_int(const cv::FileNode* instance, int i) {
 		try {
-			cv::FileNode ret = reinterpret_cast<cv::FileNode*>(instance)->operator[](i);
-			return Ok<void*>(new cv::FileNode(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode ret = instance->operator[](i);
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileNode_keys_const(void* instance) {
+	Result<std::vector<cv::String>*> cv_FileNode_keys_const(const cv::FileNode* instance) {
 		try {
-			std::vector<cv::String> ret = reinterpret_cast<cv::FileNode*>(instance)->keys();
-			return Ok<void*>(new std::vector<cv::String>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<cv::String> ret = instance->keys();
+			return Ok(new std::vector<cv::String>(ret));
+		} OCVRS_CATCH(Result<std::vector<cv::String>*>)
 	}
 	
-	Result<int> cv_FileNode_type_const(void* instance) {
+	Result<int> cv_FileNode_type_const(const cv::FileNode* instance) {
 		try {
-			int ret = reinterpret_cast<cv::FileNode*>(instance)->type();
-			return Ok<int>(ret);
+			int ret = instance->type();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv_FileNode_empty_const(void* instance) {
+	Result<bool> cv_FileNode_empty_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileNode_isNone_const(void* instance) {
+	Result<bool> cv_FileNode_isNone_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->isNone();
-			return Ok<bool>(ret);
+			bool ret = instance->isNone();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileNode_isSeq_const(void* instance) {
+	Result<bool> cv_FileNode_isSeq_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->isSeq();
-			return Ok<bool>(ret);
+			bool ret = instance->isSeq();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileNode_isMap_const(void* instance) {
+	Result<bool> cv_FileNode_isMap_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->isMap();
-			return Ok<bool>(ret);
+			bool ret = instance->isMap();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileNode_isInt_const(void* instance) {
+	Result<bool> cv_FileNode_isInt_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->isInt();
-			return Ok<bool>(ret);
+			bool ret = instance->isInt();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileNode_isReal_const(void* instance) {
+	Result<bool> cv_FileNode_isReal_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->isReal();
-			return Ok<bool>(ret);
+			bool ret = instance->isReal();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileNode_isString_const(void* instance) {
+	Result<bool> cv_FileNode_isString_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->isString();
-			return Ok<bool>(ret);
+			bool ret = instance->isString();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileNode_isNamed_const(void* instance) {
+	Result<bool> cv_FileNode_isNamed_const(const cv::FileNode* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNode*>(instance)->isNamed();
-			return Ok<bool>(ret);
+			bool ret = instance->isNamed();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_FileNode_name_const(void* instance) {
+	Result<void*> cv_FileNode_name_const(const cv::FileNode* instance) {
 		try {
-			std::string ret = reinterpret_cast<cv::FileNode*>(instance)->name();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			std::string ret = instance->name();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<size_t> cv_FileNode_size_const(void* instance) {
+	Result<size_t> cv_FileNode_size_const(const cv::FileNode* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::FileNode*>(instance)->size();
-			return Ok<size_t>(ret);
+			size_t ret = instance->size();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_FileNode_rawSize_const(void* instance) {
+	Result<size_t> cv_FileNode_rawSize_const(const cv::FileNode* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::FileNode*>(instance)->rawSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->rawSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_FileNode_operator_int_const(void* instance) {
+	Result<int> cv_FileNode_operator_int_const(const cv::FileNode* instance) {
 		try {
-			int ret = reinterpret_cast<cv::FileNode*>(instance)->operator int();
-			return Ok<int>(ret);
+			int ret = instance->operator int();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<float> cv_FileNode_operator_float_const(void* instance) {
+	Result<float> cv_FileNode_operator_float_const(const cv::FileNode* instance) {
 		try {
-			float ret = reinterpret_cast<cv::FileNode*>(instance)->operator float();
-			return Ok<float>(ret);
+			float ret = instance->operator float();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result<double> cv_FileNode_operator_double_const(void* instance) {
+	Result<double> cv_FileNode_operator_double_const(const cv::FileNode* instance) {
 		try {
-			double ret = reinterpret_cast<cv::FileNode*>(instance)->operator double();
-			return Ok<double>(ret);
+			double ret = instance->operator double();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<void*> cv_FileNode_operator_std_string_const(void* instance) {
+	Result<void*> cv_FileNode_operator_std_string_const(const cv::FileNode* instance) {
 		try {
-			std::string ret = reinterpret_cast<cv::FileNode*>(instance)->operator std::string();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			std::string ret = instance->operator std::string();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<bool> cv_FileNode_isMap_int(int flags) {
 		try {
 			bool ret = cv::FileNode::isMap(flags);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_FileNode_isSeq_int(int flags) {
 		try {
 			bool ret = cv::FileNode::isSeq(flags);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_FileNode_isCollection_int(int flags) {
 		try {
 			bool ret = cv::FileNode::isCollection(flags);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_FileNode_isEmptyCollection_int(int flags) {
 		try {
 			bool ret = cv::FileNode::isEmptyCollection(flags);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_FileNode_isFlow_int(int flags) {
 		try {
 			bool ret = cv::FileNode::isFlow(flags);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<unsigned char*> cv_FileNode_ptr(void* instance) {
+	Result<unsigned char*> cv_FileNode_ptr(cv::FileNode* instance) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::FileNode*>(instance)->ptr();
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_FileNode_ptr_const(void* instance) {
+	Result<const unsigned char*> cv_FileNode_ptr_const(const cv::FileNode* instance) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::FileNode*>(instance)->ptr();
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<void*> cv_FileNode_begin_const(void* instance) {
+	Result<cv::FileNodeIterator*> cv_FileNode_begin_const(const cv::FileNode* instance) {
 		try {
-			cv::FileNodeIterator ret = reinterpret_cast<cv::FileNode*>(instance)->begin();
-			return Ok<void*>(new cv::FileNodeIterator(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNodeIterator ret = instance->begin();
+			return Ok(new cv::FileNodeIterator(ret));
+		} OCVRS_CATCH(Result<cv::FileNodeIterator*>)
 	}
 	
-	Result<void*> cv_FileNode_end_const(void* instance) {
+	Result<cv::FileNodeIterator*> cv_FileNode_end_const(const cv::FileNode* instance) {
 		try {
-			cv::FileNodeIterator ret = reinterpret_cast<cv::FileNode*>(instance)->end();
-			return Ok<void*>(new cv::FileNodeIterator(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNodeIterator ret = instance->end();
+			return Ok(new cv::FileNodeIterator(ret));
+		} OCVRS_CATCH(Result<cv::FileNodeIterator*>)
 	}
 	
-	Result_void cv_FileNode_readRaw_const_const_StringX_voidX_size_t(void* instance, const char* fmt, void* vec, size_t len) {
+	Result_void cv_FileNode_readRaw_const_const_StringX_voidX_size_t(const cv::FileNode* instance, const char* fmt, void* vec, size_t len) {
 		try {
-			reinterpret_cast<cv::FileNode*>(instance)->readRaw(std::string(fmt), vec, len);
+			instance->readRaw(std::string(fmt), vec, len);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileNode_setValue_int_const_voidX_int(void* instance, int type, const void* value, int len) {
+	Result_void cv_FileNode_setValue_int_const_voidX_int(cv::FileNode* instance, int type, const void* value, int len) {
 		try {
-			reinterpret_cast<cv::FileNode*>(instance)->setValue(type, value, len);
+			instance->setValue(type, value, len);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_FileNode_real_const(void* instance) {
+	Result<double> cv_FileNode_real_const(const cv::FileNode* instance) {
 		try {
-			double ret = reinterpret_cast<cv::FileNode*>(instance)->real();
-			return Ok<double>(ret);
+			double ret = instance->real();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<void*> cv_FileNode_string_const(void* instance) {
+	Result<void*> cv_FileNode_string_const(const cv::FileNode* instance) {
 		try {
-			std::string ret = reinterpret_cast<cv::FileNode*>(instance)->string();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			std::string ret = instance->string();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_FileNode_mat_const(void* instance) {
+	Result<cv::Mat*> cv_FileNode_mat_const(const cv::FileNode* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::FileNode*>(instance)->mat();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->mat();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
 	void cv_FileNodeIterator_delete(cv::FileNodeIterator* instance) {
 		delete instance;
 	}
-	Result<void*> cv_FileNodeIterator_FileNodeIterator() {
+	Result<cv::FileNodeIterator*> cv_FileNodeIterator_FileNodeIterator() {
 		try {
 			cv::FileNodeIterator* ret = new cv::FileNodeIterator();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileNodeIterator*>)
 	}
 	
-	Result<void*> cv_FileNodeIterator_FileNodeIterator_const_FileNodeX_bool(void* node, bool seekEnd) {
+	Result<cv::FileNodeIterator*> cv_FileNodeIterator_FileNodeIterator_const_FileNodeX_bool(const cv::FileNode* node, bool seekEnd) {
 		try {
-			cv::FileNodeIterator* ret = new cv::FileNodeIterator(*reinterpret_cast<const cv::FileNode*>(node), seekEnd);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNodeIterator* ret = new cv::FileNodeIterator(*node, seekEnd);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileNodeIterator*>)
 	}
 	
-	Result<void*> cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorX(void* it) {
+	Result<cv::FileNodeIterator*> cv_FileNodeIterator_FileNodeIterator_const_FileNodeIteratorX(const cv::FileNodeIterator* it) {
 		try {
-			cv::FileNodeIterator* ret = new cv::FileNodeIterator(*reinterpret_cast<const cv::FileNodeIterator*>(it));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNodeIterator* ret = new cv::FileNodeIterator(*it);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileNodeIterator*>)
 	}
 	
-	Result<void*> cv_FileNodeIterator_readRaw_const_StringX_voidX_size_t(void* instance, const char* fmt, void* vec, size_t len) {
+	Result<cv::FileNodeIterator*> cv_FileNodeIterator_readRaw_const_StringX_voidX_size_t(cv::FileNodeIterator* instance, const char* fmt, void* vec, size_t len) {
 		try {
-			cv::FileNodeIterator ret = reinterpret_cast<cv::FileNodeIterator*>(instance)->readRaw(std::string(fmt), vec, len);
-			return Ok<void*>(new cv::FileNodeIterator(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNodeIterator ret = instance->readRaw(std::string(fmt), vec, len);
+			return Ok(new cv::FileNodeIterator(ret));
+		} OCVRS_CATCH(Result<cv::FileNodeIterator*>)
 	}
 	
-	Result<size_t> cv_FileNodeIterator_remaining_const(void* instance) {
+	Result<size_t> cv_FileNodeIterator_remaining_const(const cv::FileNodeIterator* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::FileNodeIterator*>(instance)->remaining();
-			return Ok<size_t>(ret);
+			size_t ret = instance->remaining();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<bool> cv_FileNodeIterator_equalTo_const_const_FileNodeIteratorX(void* instance, void* it) {
+	Result<bool> cv_FileNodeIterator_equalTo_const_const_FileNodeIteratorX(const cv::FileNodeIterator* instance, const cv::FileNodeIterator* it) {
 		try {
-			bool ret = reinterpret_cast<cv::FileNodeIterator*>(instance)->equalTo(*reinterpret_cast<const cv::FileNodeIterator*>(it));
-			return Ok<bool>(ret);
+			bool ret = instance->equalTo(*it);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<int> cv_FileStorage_state_const(void* instance) {
+	Result<int> cv_FileStorage_state_const(const cv::FileStorage* instance) {
 		try {
-			int ret = reinterpret_cast<cv::FileStorage*>(instance)->state;
-			return Ok<int>(ret);
+			int ret = instance->state;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_FileStorage_setState_int(void* instance, int val) {
+	Result_void cv_FileStorage_setState_int(cv::FileStorage* instance, int val) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->state = val;
+			instance->state = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_FileStorage_elname_const(void* instance) {
+	Result<void*> cv_FileStorage_elname_const(const cv::FileStorage* instance) {
 		try {
-			std::string ret = reinterpret_cast<cv::FileStorage*>(instance)->elname;
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			std::string ret = instance->elname;
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_FileStorage_setElname_string(void* instance, char* val) {
+	Result_void cv_FileStorage_setElname_string(cv::FileStorage* instance, char* val) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->elname = std::string(val);
+			instance->elname = std::string(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2599,135 +2599,135 @@ extern "C" {
 	void cv_FileStorage_delete(cv::FileStorage* instance) {
 		delete instance;
 	}
-	Result<void*> cv_FileStorage_FileStorage() {
+	Result<cv::FileStorage*> cv_FileStorage_FileStorage() {
 		try {
 			cv::FileStorage* ret = new cv::FileStorage();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileStorage*>)
 	}
 	
-	Result<void*> cv_FileStorage_FileStorage_const_StringX_int_const_StringX(const char* filename, int flags, const char* encoding) {
+	Result<cv::FileStorage*> cv_FileStorage_FileStorage_const_StringX_int_const_StringX(const char* filename, int flags, const char* encoding) {
 		try {
 			cv::FileStorage* ret = new cv::FileStorage(std::string(filename), flags, std::string(encoding));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::FileStorage*>)
 	}
 	
-	Result<bool> cv_FileStorage_open_const_StringX_int_const_StringX(void* instance, const char* filename, int flags, const char* encoding) {
+	Result<bool> cv_FileStorage_open_const_StringX_int_const_StringX(cv::FileStorage* instance, const char* filename, int flags, const char* encoding) {
 		try {
-			bool ret = reinterpret_cast<cv::FileStorage*>(instance)->open(std::string(filename), flags, std::string(encoding));
-			return Ok<bool>(ret);
+			bool ret = instance->open(std::string(filename), flags, std::string(encoding));
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_FileStorage_isOpened_const(void* instance) {
+	Result<bool> cv_FileStorage_isOpened_const(const cv::FileStorage* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::FileStorage*>(instance)->isOpened();
-			return Ok<bool>(ret);
+			bool ret = instance->isOpened();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_FileStorage_release(void* instance) {
+	Result_void cv_FileStorage_release(cv::FileStorage* instance) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->release();
+			instance->release();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_FileStorage_releaseAndGetString(void* instance) {
+	Result<void*> cv_FileStorage_releaseAndGetString(cv::FileStorage* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::FileStorage*>(instance)->releaseAndGetString();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->releaseAndGetString();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_FileStorage_getFirstTopLevelNode_const(void* instance) {
+	Result<cv::FileNode*> cv_FileStorage_getFirstTopLevelNode_const(const cv::FileStorage* instance) {
 		try {
-			cv::FileNode ret = reinterpret_cast<cv::FileStorage*>(instance)->getFirstTopLevelNode();
-			return Ok<void*>(new cv::FileNode(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode ret = instance->getFirstTopLevelNode();
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileStorage_root_const_int(void* instance, int streamidx) {
+	Result<cv::FileNode*> cv_FileStorage_root_const_int(const cv::FileStorage* instance, int streamidx) {
 		try {
-			cv::FileNode ret = reinterpret_cast<cv::FileStorage*>(instance)->root(streamidx);
-			return Ok<void*>(new cv::FileNode(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode ret = instance->root(streamidx);
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileStorage_operator___const_const_StringX(void* instance, const char* nodename) {
+	Result<cv::FileNode*> cv_FileStorage_operator___const_const_StringX(const cv::FileStorage* instance, const char* nodename) {
 		try {
-			cv::FileNode ret = reinterpret_cast<cv::FileStorage*>(instance)->operator[](std::string(nodename));
-			return Ok<void*>(new cv::FileNode(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode ret = instance->operator[](std::string(nodename));
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result<void*> cv_FileStorage_operator___const_const_charX(void* instance, const char* nodename) {
+	Result<cv::FileNode*> cv_FileStorage_operator___const_const_charX(const cv::FileStorage* instance, const char* nodename) {
 		try {
-			cv::FileNode ret = reinterpret_cast<cv::FileStorage*>(instance)->operator[](nodename);
-			return Ok<void*>(new cv::FileNode(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::FileNode ret = instance->operator[](nodename);
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
-	Result_void cv_FileStorage_write_const_StringX_int(void* instance, const char* name, int val) {
+	Result_void cv_FileStorage_write_const_StringX_int(cv::FileStorage* instance, const char* name, int val) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->write(std::string(name), val);
+			instance->write(std::string(name), val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_write_const_StringX_double(void* instance, const char* name, double val) {
+	Result_void cv_FileStorage_write_const_StringX_double(cv::FileStorage* instance, const char* name, double val) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->write(std::string(name), val);
+			instance->write(std::string(name), val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_write_const_StringX_const_StringX(void* instance, const char* name, const char* val) {
+	Result_void cv_FileStorage_write_const_StringX_const_StringX(cv::FileStorage* instance, const char* name, const char* val) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->write(std::string(name), std::string(val));
+			instance->write(std::string(name), std::string(val));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_write_const_StringX_const_MatX(void* instance, const char* name, void* val) {
+	Result_void cv_FileStorage_write_const_StringX_const_MatX(cv::FileStorage* instance, const char* name, const cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->write(std::string(name), *reinterpret_cast<const cv::Mat*>(val));
+			instance->write(std::string(name), *val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_write_const_StringX_const_vector_String_X(void* instance, const char* name, void* val) {
+	Result_void cv_FileStorage_write_const_StringX_const_vector_String_X(cv::FileStorage* instance, const char* name, const std::vector<cv::String>* val) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->write(std::string(name), *reinterpret_cast<const std::vector<cv::String>*>(val));
+			instance->write(std::string(name), *val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_writeRaw_const_StringX_const_voidX_size_t(void* instance, const char* fmt, const void* vec, size_t len) {
+	Result_void cv_FileStorage_writeRaw_const_StringX_const_voidX_size_t(cv::FileStorage* instance, const char* fmt, const void* vec, size_t len) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->writeRaw(std::string(fmt), vec, len);
+			instance->writeRaw(std::string(fmt), vec, len);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_writeComment_const_StringX_bool(void* instance, const char* comment, bool append) {
+	Result_void cv_FileStorage_writeComment_const_StringX_bool(cv::FileStorage* instance, const char* comment, bool append) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->writeComment(std::string(comment), append);
+			instance->writeComment(std::string(comment), append);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_startWriteStruct_const_StringX_int_const_StringX(void* instance, const char* name, int flags, const char* typeName) {
+	Result_void cv_FileStorage_startWriteStruct_const_StringX_int_const_StringX(cv::FileStorage* instance, const char* name, int flags, const char* typeName) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->startWriteStruct(std::string(name), flags, std::string(typeName));
+			instance->startWriteStruct(std::string(name), flags, std::string(typeName));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_FileStorage_endWriteStruct(void* instance) {
+	Result_void cv_FileStorage_endWriteStruct(cv::FileStorage* instance) {
 		try {
-			reinterpret_cast<cv::FileStorage*>(instance)->endWriteStruct();
+			instance->endWriteStruct();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2735,77 +2735,77 @@ extern "C" {
 	Result<void*> cv_FileStorage_getDefaultObjectName_const_StringX(const char* filename) {
 		try {
 			cv::String ret = cv::FileStorage::getDefaultObjectName(std::string(filename));
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_FileStorage_getFormat_const(void* instance) {
+	Result<int> cv_FileStorage_getFormat_const(const cv::FileStorage* instance) {
 		try {
-			int ret = reinterpret_cast<cv::FileStorage*>(instance)->getFormat();
-			return Ok<int>(ret);
+			int ret = instance->getFormat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<void*> cv_Formatted_next(void* instance) {
+	Result<void*> cv_Formatted_next(cv::Formatted* instance) {
 		try {
-			const char* ret = reinterpret_cast<cv::Formatted*>(instance)->next();
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->next();
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_Formatted_reset(void* instance) {
+	Result_void cv_Formatted_reset(cv::Formatted* instance) {
 		try {
-			reinterpret_cast<cv::Formatted*>(instance)->reset();
+			instance->reset();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Formatter_format_const_const_MatX(void* instance, void* mtx) {
+	Result<cv::Ptr<cv::Formatted>*> cv_Formatter_format_const_const_MatX(const cv::Formatter* instance, const cv::Mat* mtx) {
 		try {
-			cv::Ptr<cv::Formatted> ret = reinterpret_cast<cv::Formatter*>(instance)->format(*reinterpret_cast<const cv::Mat*>(mtx));
-			return Ok<void*>(new cv::Ptr<cv::Formatted>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::Formatted> ret = instance->format(*mtx);
+			return Ok(new cv::Ptr<cv::Formatted>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::Formatted>*>)
 	}
 	
-	Result_void cv_Formatter_set16fPrecision_int(void* instance, int p) {
+	Result_void cv_Formatter_set16fPrecision_int(cv::Formatter* instance, int p) {
 		try {
-			reinterpret_cast<cv::Formatter*>(instance)->set16fPrecision(p);
+			instance->set16fPrecision(p);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Formatter_set32fPrecision_int(void* instance, int p) {
+	Result_void cv_Formatter_set32fPrecision_int(cv::Formatter* instance, int p) {
 		try {
-			reinterpret_cast<cv::Formatter*>(instance)->set32fPrecision(p);
+			instance->set32fPrecision(p);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Formatter_set64fPrecision_int(void* instance, int p) {
+	Result_void cv_Formatter_set64fPrecision_int(cv::Formatter* instance, int p) {
 		try {
-			reinterpret_cast<cv::Formatter*>(instance)->set64fPrecision(p);
+			instance->set64fPrecision(p);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Formatter_setMultiline_bool(void* instance, bool ml) {
+	Result_void cv_Formatter_setMultiline_bool(cv::Formatter* instance, bool ml) {
 		try {
-			reinterpret_cast<cv::Formatter*>(instance)->setMultiline(ml);
+			instance->setMultiline(ml);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Formatter_get_FormatType(cv::Formatter::FormatType fmt) {
+	Result<cv::Ptr<cv::Formatter>*> cv_Formatter_get_FormatType(cv::Formatter::FormatType fmt) {
 		try {
 			cv::Ptr<cv::Formatter> ret = cv::Formatter::get(fmt);
-			return Ok<void*>(new cv::Ptr<cv::Formatter>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Ptr<cv::Formatter>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::Formatter>*>)
 	}
 	
-	Result<cv::NormTypes> cv_Hamming_normType_const(void* instance) {
+	Result<cv::NormTypes> cv_Hamming_normType_const(const cv::Hamming* instance) {
 		try {
-			cv::NormTypes ret = reinterpret_cast<cv::Hamming*>(instance)->normType;
-			return Ok<cv::NormTypes>(ret);
+			cv::NormTypes ret = instance->normType;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::NormTypes>)
 	}
 	
@@ -2815,41 +2815,41 @@ extern "C" {
 	Result<cv::KeyPoint> cv_KeyPoint_KeyPoint() {
 		try {
 			cv::KeyPoint ret;
-			return Ok<cv::KeyPoint>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::KeyPoint>)
 	}
 	
 	Result<cv::KeyPoint> cv_KeyPoint_KeyPoint_Point2f_float_float_float_int_int(const cv::Point2f* _pt, float _size, float _angle, float _response, int _octave, int _class_id) {
 		try {
 			cv::KeyPoint ret(*_pt, _size, _angle, _response, _octave, _class_id);
-			return Ok<cv::KeyPoint>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::KeyPoint>)
 	}
 	
 	Result<cv::KeyPoint> cv_KeyPoint_KeyPoint_float_float_float_float_float_int_int(float x, float y, float _size, float _angle, float _response, int _octave, int _class_id) {
 		try {
 			cv::KeyPoint ret(x, y, _size, _angle, _response, _octave, _class_id);
-			return Ok<cv::KeyPoint>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::KeyPoint>)
 	}
 	
-	Result<size_t> cv_KeyPoint_hash_const(cv::KeyPoint instance) {
+	Result<size_t> cv_KeyPoint_hash_const(const cv::KeyPoint instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::KeyPoint*>(&instance)->hash();
-			return Ok<size_t>(ret);
+			size_t ret = instance.hash();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_KeyPoint_convert_const_vector_KeyPoint_X_vector_Point2f_X_const_vector_int_X(void* keypoints, void* points2f, void* keypointIndexes) {
+	Result_void cv_KeyPoint_convert_const_vector_KeyPoint_X_vector_Point2f_X_const_vector_int_X(const std::vector<cv::KeyPoint>* keypoints, std::vector<cv::Point2f>* points2f, const std::vector<int>* keypointIndexes) {
 		try {
-			cv::KeyPoint::convert(*reinterpret_cast<const std::vector<cv::KeyPoint>*>(keypoints), *reinterpret_cast<std::vector<cv::Point2f>*>(points2f), *reinterpret_cast<const std::vector<int>*>(keypointIndexes));
+			cv::KeyPoint::convert(*keypoints, *points2f, *keypointIndexes);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_KeyPoint_convert_const_vector_Point2f_X_vector_KeyPoint_X_float_float_int_int(void* points2f, void* keypoints, float size, float response, int octave, int class_id) {
+	Result_void cv_KeyPoint_convert_const_vector_Point2f_X_vector_KeyPoint_X_float_float_int_int(const std::vector<cv::Point2f>* points2f, std::vector<cv::KeyPoint>* keypoints, float size, float response, int octave, int class_id) {
 		try {
-			cv::KeyPoint::convert(*reinterpret_cast<const std::vector<cv::Point2f>*>(points2f), *reinterpret_cast<std::vector<cv::KeyPoint>*>(keypoints), size, response, octave, class_id);
+			cv::KeyPoint::convert(*points2f, *keypoints, size, response, octave, class_id);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -2857,1044 +2857,1044 @@ extern "C" {
 	Result<float> cv_KeyPoint_overlap_const_KeyPointX_const_KeyPointX(const cv::KeyPoint* kp1, const cv::KeyPoint* kp2) {
 		try {
 			float ret = cv::KeyPoint::overlap(*kp1, *kp2);
-			return Ok<float>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
 	void cv_LDA_delete(cv::LDA* instance) {
 		delete instance;
 	}
-	Result<void*> cv_LDA_LDA_int(int num_components) {
+	Result<cv::LDA*> cv_LDA_LDA_int(int num_components) {
 		try {
 			cv::LDA* ret = new cv::LDA(num_components);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::LDA*>)
 	}
 	
-	Result<void*> cv_LDA_LDA_const__InputArrayX_const__InputArrayX_int(void* src, void* labels, int num_components) {
+	Result<cv::LDA*> cv_LDA_LDA_const__InputArrayX_const__InputArrayX_int(const cv::_InputArray* src, const cv::_InputArray* labels, int num_components) {
 		try {
-			cv::LDA* ret = new cv::LDA(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(labels), num_components);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::LDA* ret = new cv::LDA(*src, *labels, num_components);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::LDA*>)
 	}
 	
-	Result_void cv_LDA_save_const_const_StringX(void* instance, const char* filename) {
+	Result_void cv_LDA_save_const_const_StringX(const cv::LDA* instance, const char* filename) {
 		try {
-			reinterpret_cast<cv::LDA*>(instance)->save(std::string(filename));
+			instance->save(std::string(filename));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_LDA_load_const_StringX(void* instance, const char* filename) {
+	Result_void cv_LDA_load_const_StringX(cv::LDA* instance, const char* filename) {
 		try {
-			reinterpret_cast<cv::LDA*>(instance)->load(std::string(filename));
+			instance->load(std::string(filename));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_LDA_save_const_FileStorageX(void* instance, void* fs) {
+	Result_void cv_LDA_save_const_FileStorageX(const cv::LDA* instance, cv::FileStorage* fs) {
 		try {
-			reinterpret_cast<cv::LDA*>(instance)->save(*reinterpret_cast<cv::FileStorage*>(fs));
+			instance->save(*fs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_LDA_load_const_FileStorageX(void* instance, void* node) {
+	Result_void cv_LDA_load_const_FileStorageX(cv::LDA* instance, const cv::FileStorage* node) {
 		try {
-			reinterpret_cast<cv::LDA*>(instance)->load(*reinterpret_cast<const cv::FileStorage*>(node));
+			instance->load(*node);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_LDA_compute_const__InputArrayX_const__InputArrayX(void* instance, void* src, void* labels) {
+	Result_void cv_LDA_compute_const__InputArrayX_const__InputArrayX(cv::LDA* instance, const cv::_InputArray* src, const cv::_InputArray* labels) {
 		try {
-			reinterpret_cast<cv::LDA*>(instance)->compute(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_InputArray*>(labels));
+			instance->compute(*src, *labels);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_LDA_project_const__InputArrayX(void* instance, void* src) {
+	Result<cv::Mat*> cv_LDA_project_const__InputArrayX(cv::LDA* instance, const cv::_InputArray* src) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::LDA*>(instance)->project(*reinterpret_cast<const cv::_InputArray*>(src));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->project(*src);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_LDA_reconstruct_const__InputArrayX(void* instance, void* src) {
+	Result<cv::Mat*> cv_LDA_reconstruct_const__InputArrayX(cv::LDA* instance, const cv::_InputArray* src) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::LDA*>(instance)->reconstruct(*reinterpret_cast<const cv::_InputArray*>(src));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->reconstruct(*src);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_LDA_eigenvectors_const(void* instance) {
+	Result<cv::Mat*> cv_LDA_eigenvectors_const(const cv::LDA* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::LDA*>(instance)->eigenvectors();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->eigenvectors();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_LDA_eigenvalues_const(void* instance) {
+	Result<cv::Mat*> cv_LDA_eigenvalues_const(const cv::LDA* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::LDA*>(instance)->eigenvalues();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->eigenvalues();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_LDA_subspaceProject_const__InputArrayX_const__InputArrayX_const__InputArrayX(void* W, void* mean, void* src) {
+	Result<cv::Mat*> cv_LDA_subspaceProject_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* W, const cv::_InputArray* mean, const cv::_InputArray* src) {
 		try {
-			cv::Mat ret = cv::LDA::subspaceProject(*reinterpret_cast<const cv::_InputArray*>(W), *reinterpret_cast<const cv::_InputArray*>(mean), *reinterpret_cast<const cv::_InputArray*>(src));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = cv::LDA::subspaceProject(*W, *mean, *src);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_LDA_subspaceReconstruct_const__InputArrayX_const__InputArrayX_const__InputArrayX(void* W, void* mean, void* src) {
+	Result<cv::Mat*> cv_LDA_subspaceReconstruct_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* W, const cv::_InputArray* mean, const cv::_InputArray* src) {
 		try {
-			cv::Mat ret = cv::LDA::subspaceReconstruct(*reinterpret_cast<const cv::_InputArray*>(W), *reinterpret_cast<const cv::_InputArray*>(mean), *reinterpret_cast<const cv::_InputArray*>(src));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = cv::LDA::subspaceReconstruct(*W, *mean, *src);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<int> cv_Mat_flags_const(void* instance) {
+	Result<int> cv_Mat_flags_const(const cv::Mat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->flags;
-			return Ok<int>(ret);
+			int ret = instance->flags;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Mat_setFlags_int(void* instance, int val) {
+	Result_void cv_Mat_setFlags_int(cv::Mat* instance, int val) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->flags = val;
+			instance->flags = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Mat_dims_const(void* instance) {
+	Result<int> cv_Mat_dims_const(const cv::Mat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->dims;
-			return Ok<int>(ret);
+			int ret = instance->dims;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Mat_setDims_int(void* instance, int val) {
+	Result_void cv_Mat_setDims_int(cv::Mat* instance, int val) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->dims = val;
+			instance->dims = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Mat_rows_const(void* instance) {
+	Result<int> cv_Mat_rows_const(const cv::Mat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->rows;
-			return Ok<int>(ret);
+			int ret = instance->rows;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Mat_setRows_int(void* instance, int val) {
+	Result_void cv_Mat_setRows_int(cv::Mat* instance, int val) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->rows = val;
+			instance->rows = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Mat_cols_const(void* instance) {
+	Result<int> cv_Mat_cols_const(const cv::Mat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->cols;
-			return Ok<int>(ret);
+			int ret = instance->cols;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Mat_setCols_int(void* instance, int val) {
+	Result_void cv_Mat_setCols_int(cv::Mat* instance, int val) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->cols = val;
+			instance->cols = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<unsigned char*> cv_Mat_data(void* instance) {
+	Result<unsigned char*> cv_Mat_data(cv::Mat* instance) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->data;
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->data;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result_void cv_Mat_setData_unsigned_charX(void* instance, unsigned char* val) {
+	Result_void cv_Mat_setData_unsigned_charX(cv::Mat* instance, unsigned char* val) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->data = val;
+			instance->data = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<const unsigned char*> cv_Mat_datastart_const(void* instance) {
+	Result<const unsigned char*> cv_Mat_datastart_const(const cv::Mat* instance) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->datastart;
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->datastart;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_Mat_dataend_const(void* instance) {
+	Result<const unsigned char*> cv_Mat_dataend_const(const cv::Mat* instance) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->dataend;
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->dataend;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_Mat_datalimit_const(void* instance) {
+	Result<const unsigned char*> cv_Mat_datalimit_const(const cv::Mat* instance) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->datalimit;
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->datalimit;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<void*> cv_Mat_u(void* instance) {
+	Result<cv::UMatData**> cv_Mat_u(cv::Mat* instance) {
 		try {
-			cv::UMatData* ret = reinterpret_cast<cv::Mat*>(instance)->u;
-			return Ok<void*>(new cv::UMatData*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMatData* ret = instance->u;
+			return Ok(new cv::UMatData*(ret));
+		} OCVRS_CATCH(Result<cv::UMatData**>)
 	}
 	
-	Result_void cv_Mat_setU_UMatDataX(void* instance, void* val) {
+	Result_void cv_Mat_setU_UMatDataX(cv::Mat* instance, cv::UMatData* val) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->u = reinterpret_cast<cv::UMatData*>(val);
+			instance->u = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Mat_size_const(void* instance) {
+	Result<cv::MatSize*> cv_Mat_size_const(const cv::Mat* instance) {
 		try {
-			cv::MatSize ret = reinterpret_cast<cv::Mat*>(instance)->size;
-			return Ok<void*>(new cv::MatSize(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatSize ret = instance->size;
+			return Ok(new cv::MatSize(ret));
+		} OCVRS_CATCH(Result<cv::MatSize*>)
 	}
 	
-	Result<void*> cv_Mat_step_const(void* instance) {
+	Result<cv::MatStep*> cv_Mat_step_const(const cv::Mat* instance) {
 		try {
-			cv::MatStep ret = reinterpret_cast<cv::Mat*>(instance)->step;
-			return Ok<void*>(new cv::MatStep(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatStep ret = instance->step;
+			return Ok(new cv::MatStep(ret));
+		} OCVRS_CATCH(Result<cv::MatStep*>)
 	}
 	
 	void cv_Mat_delete(cv::Mat* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Mat_Mat() {
+	Result<cv::Mat*> cv_Mat_Mat() {
 		try {
 			cv::Mat* ret = new cv::Mat();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_int_int_int(int rows, int cols, int type) {
+	Result<cv::Mat*> cv_Mat_Mat_int_int_int(int rows, int cols, int type) {
 		try {
 			cv::Mat* ret = new cv::Mat(rows, cols, type);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_Size_int(const cv::Size* size, int type) {
+	Result<cv::Mat*> cv_Mat_Mat_Size_int(const cv::Size* size, int type) {
 		try {
 			cv::Mat* ret = new cv::Mat(*size, type);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_int_int_int_const_ScalarX(int rows, int cols, int type, const cv::Scalar* s) {
+	Result<cv::Mat*> cv_Mat_Mat_int_int_int_const_ScalarX(int rows, int cols, int type, const cv::Scalar* s) {
 		try {
 			cv::Mat* ret = new cv::Mat(rows, cols, type, *s);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_Size_int_const_ScalarX(const cv::Size* size, int type, const cv::Scalar* s) {
+	Result<cv::Mat*> cv_Mat_Mat_Size_int_const_ScalarX(const cv::Size* size, int type, const cv::Scalar* s) {
 		try {
 			cv::Mat* ret = new cv::Mat(*size, type, *s);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_int_const_intX_int(int ndims, const int* sizes, int type) {
+	Result<cv::Mat*> cv_Mat_Mat_int_const_intX_int(int ndims, const int* sizes, int type) {
 		try {
 			cv::Mat* ret = new cv::Mat(ndims, sizes, type);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_const_vector_int_X_int(void* sizes, int type) {
+	Result<cv::Mat*> cv_Mat_Mat_const_vector_int_X_int(const std::vector<int>* sizes, int type) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<const std::vector<int>*>(sizes), type);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*sizes, type);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_int_const_intX_int_const_ScalarX(int ndims, const int* sizes, int type, const cv::Scalar* s) {
+	Result<cv::Mat*> cv_Mat_Mat_int_const_intX_int_const_ScalarX(int ndims, const int* sizes, int type, const cv::Scalar* s) {
 		try {
 			cv::Mat* ret = new cv::Mat(ndims, sizes, type, *s);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_const_vector_int_X_int_const_ScalarX(void* sizes, int type, const cv::Scalar* s) {
+	Result<cv::Mat*> cv_Mat_Mat_const_vector_int_X_int_const_ScalarX(const std::vector<int>* sizes, int type, const cv::Scalar* s) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<const std::vector<int>*>(sizes), type, *s);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*sizes, type, *s);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_const_MatX(void* m) {
+	Result<cv::Mat*> cv_Mat_Mat_const_MatX(const cv::Mat* m) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_int_int_int_voidX_size_t(int rows, int cols, int type, void* data, size_t step) {
+	Result<cv::Mat*> cv_Mat_Mat_int_int_int_voidX_size_t(int rows, int cols, int type, void* data, size_t step) {
 		try {
 			cv::Mat* ret = new cv::Mat(rows, cols, type, data, step);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_Size_int_voidX_size_t(const cv::Size* size, int type, void* data, size_t step) {
+	Result<cv::Mat*> cv_Mat_Mat_Size_int_voidX_size_t(const cv::Size* size, int type, void* data, size_t step) {
 		try {
 			cv::Mat* ret = new cv::Mat(*size, type, data, step);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(int ndims, const int* sizes, int type, void* data, const size_t* steps) {
+	Result<cv::Mat*> cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(int ndims, const int* sizes, int type, void* data, const size_t* steps) {
 		try {
 			cv::Mat* ret = new cv::Mat(ndims, sizes, type, data, steps);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX(void* sizes, int type, void* data, const size_t* steps) {
+	Result<cv::Mat*> cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX(const std::vector<int>* sizes, int type, void* data, const size_t* steps) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<const std::vector<int>*>(sizes), type, data, steps);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*sizes, type, data, steps);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_const_MatX_const_RangeX_const_RangeX(void* m, void* rowRange, void* colRange) {
+	Result<cv::Mat*> cv_Mat_Mat_const_MatX_const_RangeX_const_RangeX(const cv::Mat* m, const cv::Range* rowRange, const cv::Range* colRange) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<const cv::Mat*>(m), *reinterpret_cast<const cv::Range*>(rowRange), *reinterpret_cast<const cv::Range*>(colRange));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*m, *rowRange, *colRange);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_const_MatX_const_RectX(void* m, const cv::Rect* roi) {
+	Result<cv::Mat*> cv_Mat_Mat_const_MatX_const_RectX(const cv::Mat* m, const cv::Rect* roi) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<const cv::Mat*>(m), *roi);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*m, *roi);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_const_MatX_const_vector_Range_X(void* m, void* ranges) {
+	Result<cv::Mat*> cv_Mat_Mat_const_MatX_const_vector_Range_X(const cv::Mat* m, const std::vector<cv::Range>* ranges) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<const cv::Mat*>(m), *reinterpret_cast<const std::vector<cv::Range>*>(ranges));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*m, *ranges);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags(void* instance, cv::AccessFlag accessFlags, cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_Mat_getUMat_const_AccessFlag_UMatUsageFlags(const cv::Mat* instance, cv::AccessFlag accessFlags, cv::UMatUsageFlags usageFlags) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::Mat*>(instance)->getUMat(accessFlags, usageFlags);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->getUMat(accessFlags, usageFlags);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_Mat_row_const_int(void* instance, int y) {
+	Result<cv::Mat*> cv_Mat_row_const_int(const cv::Mat* instance, int y) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->row(y);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->row(y);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_col_const_int(void* instance, int x) {
+	Result<cv::Mat*> cv_Mat_col_const_int(const cv::Mat* instance, int x) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->col(x);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->col(x);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_rowRange_const_int_int(void* instance, int startrow, int endrow) {
+	Result<cv::Mat*> cv_Mat_rowRange_const_int_int(const cv::Mat* instance, int startrow, int endrow) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->rowRange(startrow, endrow);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->rowRange(startrow, endrow);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_rowRange_const_const_RangeX(void* instance, void* r) {
+	Result<cv::Mat*> cv_Mat_rowRange_const_const_RangeX(const cv::Mat* instance, const cv::Range* r) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->rowRange(*reinterpret_cast<const cv::Range*>(r));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->rowRange(*r);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_colRange_const_int_int(void* instance, int startcol, int endcol) {
+	Result<cv::Mat*> cv_Mat_colRange_const_int_int(const cv::Mat* instance, int startcol, int endcol) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->colRange(startcol, endcol);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->colRange(startcol, endcol);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_colRange_const_const_RangeX(void* instance, void* r) {
+	Result<cv::Mat*> cv_Mat_colRange_const_const_RangeX(const cv::Mat* instance, const cv::Range* r) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->colRange(*reinterpret_cast<const cv::Range*>(r));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->colRange(*r);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_diag_const_int(void* instance, int d) {
+	Result<cv::Mat*> cv_Mat_diag_const_int(const cv::Mat* instance, int d) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->diag(d);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->diag(d);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_diag_const_MatX(void* d) {
+	Result<cv::Mat*> cv_Mat_diag_const_MatX(const cv::Mat* d) {
 		try {
-			cv::Mat ret = cv::Mat::diag(*reinterpret_cast<const cv::Mat*>(d));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = cv::Mat::diag(*d);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_clone_const(void* instance) {
+	Result<cv::Mat*> cv_Mat_clone_const(const cv::Mat* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->clone();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->clone();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_Mat_copyTo_const_const__OutputArrayX(void* instance, void* m) {
+	Result_void cv_Mat_copyTo_const_const__OutputArrayX(const cv::Mat* instance, const cv::_OutputArray* m) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->copyTo(*reinterpret_cast<const cv::_OutputArray*>(m));
+			instance->copyTo(*m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_copyTo_const_const__OutputArrayX_const__InputArrayX(void* instance, void* m, void* mask) {
+	Result_void cv_Mat_copyTo_const_const__OutputArrayX_const__InputArrayX(const cv::Mat* instance, const cv::_OutputArray* m, const cv::_InputArray* mask) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->copyTo(*reinterpret_cast<const cv::_OutputArray*>(m), *reinterpret_cast<const cv::_InputArray*>(mask));
+			instance->copyTo(*m, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_convertTo_const_const__OutputArrayX_int_double_double(void* instance, void* m, int rtype, double alpha, double beta) {
+	Result_void cv_Mat_convertTo_const_const__OutputArrayX_int_double_double(const cv::Mat* instance, const cv::_OutputArray* m, int rtype, double alpha, double beta) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->convertTo(*reinterpret_cast<const cv::_OutputArray*>(m), rtype, alpha, beta);
+			instance->convertTo(*m, rtype, alpha, beta);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_assignTo_const_MatX_int(void* instance, void* m, int type) {
+	Result_void cv_Mat_assignTo_const_MatX_int(const cv::Mat* instance, cv::Mat* m, int type) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->assignTo(*reinterpret_cast<cv::Mat*>(m), type);
+			instance->assignTo(*m, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Mat_setTo_const__InputArrayX_const__InputArrayX(void* instance, void* value, void* mask) {
+	Result<cv::Mat*> cv_Mat_setTo_const__InputArrayX_const__InputArrayX(cv::Mat* instance, const cv::_InputArray* value, const cv::_InputArray* mask) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->setTo(*reinterpret_cast<const cv::_InputArray*>(value), *reinterpret_cast<const cv::_InputArray*>(mask));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->setTo(*value, *mask);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_reshape_const_int_int(void* instance, int cn, int rows) {
+	Result<cv::Mat*> cv_Mat_reshape_const_int_int(const cv::Mat* instance, int cn, int rows) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->reshape(cn, rows);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->reshape(cn, rows);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_reshape_const_int_int_const_intX(void* instance, int cn, int newndims, const int* newsz) {
+	Result<cv::Mat*> cv_Mat_reshape_const_int_int_const_intX(const cv::Mat* instance, int cn, int newndims, const int* newsz) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->reshape(cn, newndims, newsz);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->reshape(cn, newndims, newsz);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_reshape_const_int_const_vector_int_X(void* instance, int cn, void* newshape) {
+	Result<cv::Mat*> cv_Mat_reshape_const_int_const_vector_int_X(const cv::Mat* instance, int cn, const std::vector<int>* newshape) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->reshape(cn, *reinterpret_cast<const std::vector<int>*>(newshape));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->reshape(cn, *newshape);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_Mat_t_const(void* instance) {
+	Result<cv::MatExpr*> cv_Mat_t_const(const cv::Mat* instance) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::Mat*>(instance)->t();
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->t();
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_inv_const_int(void* instance, int method) {
+	Result<cv::MatExpr*> cv_Mat_inv_const_int(const cv::Mat* instance, int method) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::Mat*>(instance)->inv(method);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->inv(method);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_mul_const_const__InputArrayX_double(void* instance, void* m, double scale) {
+	Result<cv::MatExpr*> cv_Mat_mul_const_const__InputArrayX_double(const cv::Mat* instance, const cv::_InputArray* m, double scale) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::Mat*>(instance)->mul(*reinterpret_cast<const cv::_InputArray*>(m), scale);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->mul(*m, scale);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_cross_const_const__InputArrayX(void* instance, void* m) {
+	Result<cv::Mat*> cv_Mat_cross_const_const__InputArrayX(const cv::Mat* instance, const cv::_InputArray* m) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->cross(*reinterpret_cast<const cv::_InputArray*>(m));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->cross(*m);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<double> cv_Mat_dot_const_const__InputArrayX(void* instance, void* m) {
+	Result<double> cv_Mat_dot_const_const__InputArrayX(const cv::Mat* instance, const cv::_InputArray* m) {
 		try {
-			double ret = reinterpret_cast<cv::Mat*>(instance)->dot(*reinterpret_cast<const cv::_InputArray*>(m));
-			return Ok<double>(ret);
+			double ret = instance->dot(*m);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<void*> cv_Mat_zeros_int_int_int(int rows, int cols, int type) {
+	Result<cv::MatExpr*> cv_Mat_zeros_int_int_int(int rows, int cols, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::zeros(rows, cols, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_zeros_Size_int(const cv::Size* size, int type) {
+	Result<cv::MatExpr*> cv_Mat_zeros_Size_int(const cv::Size* size, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::zeros(*size, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_zeros_int_const_intX_int(int ndims, const int* sz, int type) {
+	Result<cv::MatExpr*> cv_Mat_zeros_int_const_intX_int(int ndims, const int* sz, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::zeros(ndims, sz, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_ones_int_int_int(int rows, int cols, int type) {
+	Result<cv::MatExpr*> cv_Mat_ones_int_int_int(int rows, int cols, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::ones(rows, cols, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_ones_Size_int(const cv::Size* size, int type) {
+	Result<cv::MatExpr*> cv_Mat_ones_Size_int(const cv::Size* size, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::ones(*size, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_ones_int_const_intX_int(int ndims, const int* sz, int type) {
+	Result<cv::MatExpr*> cv_Mat_ones_int_const_intX_int(int ndims, const int* sz, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::ones(ndims, sz, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_eye_int_int_int(int rows, int cols, int type) {
+	Result<cv::MatExpr*> cv_Mat_eye_int_int_int(int rows, int cols, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::eye(rows, cols, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_Mat_eye_Size_int(const cv::Size* size, int type) {
+	Result<cv::MatExpr*> cv_Mat_eye_Size_int(const cv::Size* size, int type) {
 		try {
 			cv::MatExpr ret = cv::Mat::eye(*size, type);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result_void cv_Mat_create_int_int_int(void* instance, int rows, int cols, int type) {
+	Result_void cv_Mat_create_int_int_int(cv::Mat* instance, int rows, int cols, int type) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->create(rows, cols, type);
+			instance->create(rows, cols, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_create_Size_int(void* instance, const cv::Size* size, int type) {
+	Result_void cv_Mat_create_Size_int(cv::Mat* instance, const cv::Size* size, int type) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->create(*size, type);
+			instance->create(*size, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_create_int_const_intX_int(void* instance, int ndims, const int* sizes, int type) {
+	Result_void cv_Mat_create_int_const_intX_int(cv::Mat* instance, int ndims, const int* sizes, int type) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->create(ndims, sizes, type);
+			instance->create(ndims, sizes, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_create_const_vector_int_X_int(void* instance, void* sizes, int type) {
+	Result_void cv_Mat_create_const_vector_int_X_int(cv::Mat* instance, const std::vector<int>* sizes, int type) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->create(*reinterpret_cast<const std::vector<int>*>(sizes), type);
+			instance->create(*sizes, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_addref(void* instance) {
+	Result_void cv_Mat_addref(cv::Mat* instance) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->addref();
+			instance->addref();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_release(void* instance) {
+	Result_void cv_Mat_release(cv::Mat* instance) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->release();
+			instance->release();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_deallocate(void* instance) {
+	Result_void cv_Mat_deallocate(cv::Mat* instance) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->deallocate();
+			instance->deallocate();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_reserve_size_t(void* instance, size_t sz) {
+	Result_void cv_Mat_reserve_size_t(cv::Mat* instance, size_t sz) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->reserve(sz);
+			instance->reserve(sz);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_reserveBuffer_size_t(void* instance, size_t sz) {
+	Result_void cv_Mat_reserveBuffer_size_t(cv::Mat* instance, size_t sz) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->reserveBuffer(sz);
+			instance->reserveBuffer(sz);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_resize_size_t(void* instance, size_t sz) {
+	Result_void cv_Mat_resize_size_t(cv::Mat* instance, size_t sz) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->resize(sz);
+			instance->resize(sz);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_resize_size_t_const_ScalarX(void* instance, size_t sz, const cv::Scalar* s) {
+	Result_void cv_Mat_resize_size_t_const_ScalarX(cv::Mat* instance, size_t sz, const cv::Scalar* s) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->resize(sz, *s);
+			instance->resize(sz, *s);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_push_back_const_MatX(void* instance, void* m) {
+	Result_void cv_Mat_push_back_const_MatX(cv::Mat* instance, const cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->push_back(*reinterpret_cast<const cv::Mat*>(m));
+			instance->push_back(*m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_pop_back_size_t(void* instance, size_t nelems) {
+	Result_void cv_Mat_pop_back_size_t(cv::Mat* instance, size_t nelems) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->pop_back(nelems);
+			instance->pop_back(nelems);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_Mat_locateROI_const_SizeX_PointX(void* instance, cv::Size* wholeSize, cv::Point* ofs) {
+	Result_void cv_Mat_locateROI_const_SizeX_PointX(const cv::Mat* instance, cv::Size* wholeSize, cv::Point* ofs) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->locateROI(*wholeSize, *ofs);
+			instance->locateROI(*wholeSize, *ofs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_Mat_adjustROI_int_int_int_int(void* instance, int dtop, int dbottom, int dleft, int dright) {
+	Result<cv::Mat*> cv_Mat_adjustROI_int_int_int_int(cv::Mat* instance, int dtop, int dbottom, int dleft, int dright) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::Mat*>(instance)->adjustROI(dtop, dbottom, dleft, dright);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->adjustROI(dtop, dbottom, dleft, dright);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<bool> cv_Mat_isContinuous_const(void* instance) {
+	Result<bool> cv_Mat_isContinuous_const(const cv::Mat* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::Mat*>(instance)->isContinuous();
-			return Ok<bool>(ret);
+			bool ret = instance->isContinuous();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_Mat_isSubmatrix_const(void* instance) {
+	Result<bool> cv_Mat_isSubmatrix_const(const cv::Mat* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::Mat*>(instance)->isSubmatrix();
-			return Ok<bool>(ret);
+			bool ret = instance->isSubmatrix();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv_Mat_elemSize_const(void* instance) {
+	Result<size_t> cv_Mat_elemSize_const(const cv::Mat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::Mat*>(instance)->elemSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->elemSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_Mat_elemSize1_const(void* instance) {
+	Result<size_t> cv_Mat_elemSize1_const(const cv::Mat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::Mat*>(instance)->elemSize1();
-			return Ok<size_t>(ret);
+			size_t ret = instance->elemSize1();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_Mat_type_const(void* instance) {
+	Result<int> cv_Mat_type_const(const cv::Mat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->type();
-			return Ok<int>(ret);
+			int ret = instance->type();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_Mat_depth_const(void* instance) {
+	Result<int> cv_Mat_depth_const(const cv::Mat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->depth();
-			return Ok<int>(ret);
+			int ret = instance->depth();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_Mat_channels_const(void* instance) {
+	Result<int> cv_Mat_channels_const(const cv::Mat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->channels();
-			return Ok<int>(ret);
+			int ret = instance->channels();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_Mat_step1_const_int(void* instance, int i) {
+	Result<size_t> cv_Mat_step1_const_int(const cv::Mat* instance, int i) {
 		try {
-			size_t ret = reinterpret_cast<cv::Mat*>(instance)->step1(i);
-			return Ok<size_t>(ret);
+			size_t ret = instance->step1(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<bool> cv_Mat_empty_const(void* instance) {
+	Result<bool> cv_Mat_empty_const(const cv::Mat* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::Mat*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv_Mat_total_const(void* instance) {
+	Result<size_t> cv_Mat_total_const(const cv::Mat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::Mat*>(instance)->total();
-			return Ok<size_t>(ret);
+			size_t ret = instance->total();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_Mat_total_const_int_int(void* instance, int startDim, int endDim) {
+	Result<size_t> cv_Mat_total_const_int_int(const cv::Mat* instance, int startDim, int endDim) {
 		try {
-			size_t ret = reinterpret_cast<cv::Mat*>(instance)->total(startDim, endDim);
-			return Ok<size_t>(ret);
+			size_t ret = instance->total(startDim, endDim);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_Mat_checkVector_const_int_int_bool(void* instance, int elemChannels, int depth, bool requireContinuous) {
+	Result<int> cv_Mat_checkVector_const_int_int_bool(const cv::Mat* instance, int elemChannels, int depth, bool requireContinuous) {
 		try {
-			int ret = reinterpret_cast<cv::Mat*>(instance)->checkVector(elemChannels, depth, requireContinuous);
-			return Ok<int>(ret);
+			int ret = instance->checkVector(elemChannels, depth, requireContinuous);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<unsigned char*> cv_Mat_ptr_int(void* instance, int i0) {
+	Result<unsigned char*> cv_Mat_ptr_int(cv::Mat* instance, int i0) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(i0);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(i0);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_Mat_ptr_const_int(void* instance, int i0) {
+	Result<const unsigned char*> cv_Mat_ptr_const_int(const cv::Mat* instance, int i0) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(i0);
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->ptr(i0);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<unsigned char*> cv_Mat_ptr_int_int(void* instance, int row, int col) {
+	Result<unsigned char*> cv_Mat_ptr_int_int(cv::Mat* instance, int row, int col) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(row, col);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(row, col);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_Mat_ptr_const_int_int(void* instance, int row, int col) {
+	Result<const unsigned char*> cv_Mat_ptr_const_int_int(const cv::Mat* instance, int row, int col) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(row, col);
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->ptr(row, col);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<unsigned char*> cv_Mat_ptr_int_int_int(void* instance, int i0, int i1, int i2) {
+	Result<unsigned char*> cv_Mat_ptr_int_int_int(cv::Mat* instance, int i0, int i1, int i2) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(i0, i1, i2);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(i0, i1, i2);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_Mat_ptr_const_int_int_int(void* instance, int i0, int i1, int i2) {
+	Result<const unsigned char*> cv_Mat_ptr_const_int_int_int(const cv::Mat* instance, int i0, int i1, int i2) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(i0, i1, i2);
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->ptr(i0, i1, i2);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<unsigned char*> cv_Mat_ptr_const_intX(void* instance, const int* idx) {
+	Result<unsigned char*> cv_Mat_ptr_const_intX(cv::Mat* instance, const int* idx) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(idx);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(idx);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_Mat_ptr_const_const_intX(void* instance, const int* idx) {
+	Result<const unsigned char*> cv_Mat_ptr_const_const_intX(const cv::Mat* instance, const int* idx) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::Mat*>(instance)->ptr(idx);
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->ptr(idx);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<void*> cv_Mat_Mat_MatX(void* m) {
+	Result<cv::Mat*> cv_Mat_Mat_MatX(cv::Mat* m) {
 		try {
-			cv::Mat* ret = new cv::Mat(*reinterpret_cast<cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat* ret = new cv::Mat(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_Mat_updateContinuityFlag(void* instance) {
+	Result_void cv_Mat_updateContinuityFlag(cv::Mat* instance) {
 		try {
-			reinterpret_cast<cv::Mat*>(instance)->updateContinuityFlag();
+			instance->updateContinuityFlag();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_MatConstIterator_m_const(void* instance) {
+	Result<const cv::Mat**> cv_MatConstIterator_m_const(const cv::MatConstIterator* instance) {
 		try {
-			const cv::Mat* ret = reinterpret_cast<cv::MatConstIterator*>(instance)->m;
-			return Ok<void*>(new const cv::Mat*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			const cv::Mat* ret = instance->m;
+			return Ok(new const cv::Mat*(ret));
+		} OCVRS_CATCH(Result<const cv::Mat**>)
 	}
 	
-	Result<size_t> cv_MatConstIterator_elemSize_const(void* instance) {
+	Result<size_t> cv_MatConstIterator_elemSize_const(const cv::MatConstIterator* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::MatConstIterator*>(instance)->elemSize;
-			return Ok<size_t>(ret);
+			size_t ret = instance->elemSize;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_MatConstIterator_setElemSize_size_t(void* instance, size_t val) {
+	Result_void cv_MatConstIterator_setElemSize_size_t(cv::MatConstIterator* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::MatConstIterator*>(instance)->elemSize = val;
+			instance->elemSize = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<const unsigned char*> cv_MatConstIterator_ptr_const(void* instance) {
+	Result<const unsigned char*> cv_MatConstIterator_ptr_const(const cv::MatConstIterator* instance) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::MatConstIterator*>(instance)->ptr;
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->ptr;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_MatConstIterator_sliceStart_const(void* instance) {
+	Result<const unsigned char*> cv_MatConstIterator_sliceStart_const(const cv::MatConstIterator* instance) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::MatConstIterator*>(instance)->sliceStart;
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->sliceStart;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<const unsigned char*> cv_MatConstIterator_sliceEnd_const(void* instance) {
+	Result<const unsigned char*> cv_MatConstIterator_sliceEnd_const(const cv::MatConstIterator* instance) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::MatConstIterator*>(instance)->sliceEnd;
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->sliceEnd;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
 	void cv_MatConstIterator_delete(cv::MatConstIterator* instance) {
 		delete instance;
 	}
-	Result<void*> cv_MatConstIterator_MatConstIterator() {
+	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator() {
 		try {
 			cv::MatConstIterator* ret = new cv::MatConstIterator();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
-	Result<void*> cv_MatConstIterator_MatConstIterator_const_MatX(void* _m) {
+	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatX(const cv::Mat* _m) {
 		try {
-			cv::MatConstIterator* ret = new cv::MatConstIterator(reinterpret_cast<const cv::Mat*>(_m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatConstIterator* ret = new cv::MatConstIterator(_m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
-	Result<void*> cv_MatConstIterator_MatConstIterator_const_MatX_int_int(void* _m, int _row, int _col) {
+	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatX_int_int(const cv::Mat* _m, int _row, int _col) {
 		try {
-			cv::MatConstIterator* ret = new cv::MatConstIterator(reinterpret_cast<const cv::Mat*>(_m), _row, _col);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatConstIterator* ret = new cv::MatConstIterator(_m, _row, _col);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
-	Result<void*> cv_MatConstIterator_MatConstIterator_const_MatX_Point(void* _m, const cv::Point* _pt) {
+	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatX_Point(const cv::Mat* _m, const cv::Point* _pt) {
 		try {
-			cv::MatConstIterator* ret = new cv::MatConstIterator(reinterpret_cast<const cv::Mat*>(_m), *_pt);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatConstIterator* ret = new cv::MatConstIterator(_m, *_pt);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
-	Result<void*> cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(void* _m, const int* _idx) {
+	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatX_const_intX(const cv::Mat* _m, const int* _idx) {
 		try {
-			cv::MatConstIterator* ret = new cv::MatConstIterator(reinterpret_cast<const cv::Mat*>(_m), _idx);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatConstIterator* ret = new cv::MatConstIterator(_m, _idx);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
-	Result<void*> cv_MatConstIterator_MatConstIterator_const_MatConstIteratorX(void* it) {
+	Result<cv::MatConstIterator*> cv_MatConstIterator_MatConstIterator_const_MatConstIteratorX(const cv::MatConstIterator* it) {
 		try {
-			cv::MatConstIterator* ret = new cv::MatConstIterator(*reinterpret_cast<const cv::MatConstIterator*>(it));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatConstIterator* ret = new cv::MatConstIterator(*it);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
-	Result<const unsigned char*> cv_MatConstIterator_operator___const_ptrdiff_t(void* instance, ptrdiff_t i) {
+	Result<const unsigned char*> cv_MatConstIterator_operator___const_ptrdiff_t(const cv::MatConstIterator* instance, ptrdiff_t i) {
 		try {
-			const unsigned char* ret = reinterpret_cast<cv::MatConstIterator*>(instance)->operator[](i);
-			return Ok<const unsigned char*>(ret);
+			const unsigned char* ret = instance->operator[](i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const unsigned char*>)
 	}
 	
-	Result<cv::Point> cv_MatConstIterator_pos_const(void* instance) {
+	Result<cv::Point> cv_MatConstIterator_pos_const(const cv::MatConstIterator* instance) {
 		try {
-			cv::Point ret = reinterpret_cast<cv::MatConstIterator*>(instance)->pos();
-			return Ok<cv::Point>(ret);
+			cv::Point ret = instance->pos();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Point>)
 	}
 	
-	Result_void cv_MatConstIterator_pos_const_intX(void* instance, int* _idx) {
+	Result_void cv_MatConstIterator_pos_const_intX(const cv::MatConstIterator* instance, int* _idx) {
 		try {
-			reinterpret_cast<cv::MatConstIterator*>(instance)->pos(_idx);
+			instance->pos(_idx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<ptrdiff_t> cv_MatConstIterator_lpos_const(void* instance) {
+	Result<ptrdiff_t> cv_MatConstIterator_lpos_const(const cv::MatConstIterator* instance) {
 		try {
-			ptrdiff_t ret = reinterpret_cast<cv::MatConstIterator*>(instance)->lpos();
-			return Ok<ptrdiff_t>(ret);
+			ptrdiff_t ret = instance->lpos();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<ptrdiff_t>)
 	}
 	
-	Result_void cv_MatConstIterator_seek_ptrdiff_t_bool(void* instance, ptrdiff_t ofs, bool relative) {
+	Result_void cv_MatConstIterator_seek_ptrdiff_t_bool(cv::MatConstIterator* instance, ptrdiff_t ofs, bool relative) {
 		try {
-			reinterpret_cast<cv::MatConstIterator*>(instance)->seek(ofs, relative);
+			instance->seek(ofs, relative);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatConstIterator_seek_const_intX_bool(void* instance, const int* _idx, bool relative) {
+	Result_void cv_MatConstIterator_seek_const_intX_bool(cv::MatConstIterator* instance, const int* _idx, bool relative) {
 		try {
-			reinterpret_cast<cv::MatConstIterator*>(instance)->seek(_idx, relative);
+			instance->seek(_idx, relative);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_MatExpr_flags_const(void* instance) {
+	Result<int> cv_MatExpr_flags_const(const cv::MatExpr* instance) {
 		try {
-			int ret = reinterpret_cast<cv::MatExpr*>(instance)->flags;
-			return Ok<int>(ret);
+			int ret = instance->flags;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_MatExpr_setFlags_int(void* instance, int val) {
+	Result_void cv_MatExpr_setFlags_int(cv::MatExpr* instance, int val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->flags = val;
+			instance->flags = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_MatExpr_a(void* instance) {
+	Result<cv::Mat*> cv_MatExpr_a(cv::MatExpr* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::MatExpr*>(instance)->a;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->a;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_MatExpr_setA_Mat(void* instance, void* val) {
+	Result_void cv_MatExpr_setA_Mat(cv::MatExpr* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->a = *reinterpret_cast<cv::Mat*>(val);
+			instance->a = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_MatExpr_b(void* instance) {
+	Result<cv::Mat*> cv_MatExpr_b(cv::MatExpr* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::MatExpr*>(instance)->b;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->b;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_MatExpr_setB_Mat(void* instance, void* val) {
+	Result_void cv_MatExpr_setB_Mat(cv::MatExpr* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->b = *reinterpret_cast<cv::Mat*>(val);
+			instance->b = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_MatExpr_c(void* instance) {
+	Result<cv::Mat*> cv_MatExpr_c(cv::MatExpr* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::MatExpr*>(instance)->c;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->c;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_MatExpr_setC_Mat(void* instance, void* val) {
+	Result_void cv_MatExpr_setC_Mat(cv::MatExpr* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->c = *reinterpret_cast<cv::Mat*>(val);
+			instance->c = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_MatExpr_alpha_const(void* instance) {
+	Result<double> cv_MatExpr_alpha_const(const cv::MatExpr* instance) {
 		try {
-			double ret = reinterpret_cast<cv::MatExpr*>(instance)->alpha;
-			return Ok<double>(ret);
+			double ret = instance->alpha;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_MatExpr_setAlpha_double(void* instance, double val) {
+	Result_void cv_MatExpr_setAlpha_double(cv::MatExpr* instance, double val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->alpha = val;
+			instance->alpha = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_MatExpr_beta_const(void* instance) {
+	Result<double> cv_MatExpr_beta_const(const cv::MatExpr* instance) {
 		try {
-			double ret = reinterpret_cast<cv::MatExpr*>(instance)->beta;
-			return Ok<double>(ret);
+			double ret = instance->beta;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_MatExpr_setBeta_double(void* instance, double val) {
+	Result_void cv_MatExpr_setBeta_double(cv::MatExpr* instance, double val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->beta = val;
+			instance->beta = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Scalar> cv_MatExpr_s_const(void* instance) {
+	Result<cv::Scalar> cv_MatExpr_s_const(const cv::MatExpr* instance) {
 		try {
-			cv::Scalar ret = reinterpret_cast<cv::MatExpr*>(instance)->s;
-			return Ok<cv::Scalar>(ret);
+			cv::Scalar ret = instance->s;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Scalar>)
 	}
 	
-	Result_void cv_MatExpr_setS_Scalar(void* instance, const cv::Scalar* val) {
+	Result_void cv_MatExpr_setS_Scalar(cv::MatExpr* instance, const cv::Scalar* val) {
 		try {
-			reinterpret_cast<cv::MatExpr*>(instance)->s = *val;
+			instance->s = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -3902,296 +3902,296 @@ extern "C" {
 	void cv_MatExpr_delete(cv::MatExpr* instance) {
 		delete instance;
 	}
-	Result<void*> cv_MatExpr_MatExpr() {
+	Result<cv::MatExpr*> cv_MatExpr_MatExpr() {
 		try {
 			cv::MatExpr* ret = new cv::MatExpr();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_MatExpr_const_MatX(void* m) {
+	Result<cv::MatExpr*> cv_MatExpr_MatExpr_const_MatX(const cv::Mat* m) {
 		try {
-			cv::MatExpr* ret = new cv::MatExpr(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr* ret = new cv::MatExpr(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_MatExpr_const_MatOpX_int_const_MatX_const_MatX_const_MatX_double_double_const_ScalarX(void* _op, int _flags, void* _a, void* _b, void* _c, double _alpha, double _beta, const cv::Scalar* _s) {
+	Result<cv::MatExpr*> cv_MatExpr_MatExpr_const_MatOpX_int_const_MatX_const_MatX_const_MatX_double_double_const_ScalarX(const cv::MatOp* _op, int _flags, const cv::Mat* _a, const cv::Mat* _b, const cv::Mat* _c, double _alpha, double _beta, const cv::Scalar* _s) {
 		try {
-			cv::MatExpr* ret = new cv::MatExpr(reinterpret_cast<const cv::MatOp*>(_op), _flags, *reinterpret_cast<const cv::Mat*>(_a), *reinterpret_cast<const cv::Mat*>(_b), *reinterpret_cast<const cv::Mat*>(_c), _alpha, _beta, *_s);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr* ret = new cv::MatExpr(_op, _flags, *_a, *_b, *_c, _alpha, _beta, *_s);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_operator_cv_Mat_const(void* instance) {
+	Result<cv::Mat*> cv_MatExpr_operator_cv_Mat_const(const cv::MatExpr* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::MatExpr*>(instance)->operator cv::Mat();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->operator cv::Mat();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<cv::Size> cv_MatExpr_size_const(void* instance) {
+	Result<cv::Size> cv_MatExpr_size_const(const cv::MatExpr* instance) {
 		try {
-			cv::Size ret = reinterpret_cast<cv::MatExpr*>(instance)->size();
-			return Ok<cv::Size>(ret);
+			cv::Size ret = instance->size();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result<int> cv_MatExpr_type_const(void* instance) {
+	Result<int> cv_MatExpr_type_const(const cv::MatExpr* instance) {
 		try {
-			int ret = reinterpret_cast<cv::MatExpr*>(instance)->type();
-			return Ok<int>(ret);
+			int ret = instance->type();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<void*> cv_MatExpr_row_const_int(void* instance, int y) {
+	Result<cv::MatExpr*> cv_MatExpr_row_const_int(const cv::MatExpr* instance, int y) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::MatExpr*>(instance)->row(y);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->row(y);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_col_const_int(void* instance, int x) {
+	Result<cv::MatExpr*> cv_MatExpr_col_const_int(const cv::MatExpr* instance, int x) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::MatExpr*>(instance)->col(x);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->col(x);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_diag_const_int(void* instance, int d) {
+	Result<cv::MatExpr*> cv_MatExpr_diag_const_int(const cv::MatExpr* instance, int d) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::MatExpr*>(instance)->diag(d);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->diag(d);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_t_const(void* instance) {
+	Result<cv::MatExpr*> cv_MatExpr_t_const(const cv::MatExpr* instance) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::MatExpr*>(instance)->t();
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->t();
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_inv_const_int(void* instance, int method) {
+	Result<cv::MatExpr*> cv_MatExpr_inv_const_int(const cv::MatExpr* instance, int method) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::MatExpr*>(instance)->inv(method);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->inv(method);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_mul_const_const_MatExprX_double(void* instance, void* e, double scale) {
+	Result<cv::MatExpr*> cv_MatExpr_mul_const_const_MatExprX_double(const cv::MatExpr* instance, const cv::MatExpr* e, double scale) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::MatExpr*>(instance)->mul(*reinterpret_cast<const cv::MatExpr*>(e), scale);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->mul(*e, scale);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_mul_const_const_MatX_double(void* instance, void* m, double scale) {
+	Result<cv::MatExpr*> cv_MatExpr_mul_const_const_MatX_double(const cv::MatExpr* instance, const cv::Mat* m, double scale) {
 		try {
-			cv::MatExpr ret = reinterpret_cast<cv::MatExpr*>(instance)->mul(*reinterpret_cast<const cv::Mat*>(m), scale);
-			return Ok<void*>(new cv::MatExpr(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatExpr ret = instance->mul(*m, scale);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
-	Result<void*> cv_MatExpr_cross_const_const_MatX(void* instance, void* m) {
+	Result<cv::Mat*> cv_MatExpr_cross_const_const_MatX(const cv::MatExpr* instance, const cv::Mat* m) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::MatExpr*>(instance)->cross(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->cross(*m);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<double> cv_MatExpr_dot_const_const_MatX(void* instance, void* m) {
+	Result<double> cv_MatExpr_dot_const_const_MatX(const cv::MatExpr* instance, const cv::Mat* m) {
 		try {
-			double ret = reinterpret_cast<cv::MatExpr*>(instance)->dot(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<double>(ret);
+			double ret = instance->dot(*m);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<bool> cv_MatOp_elementWise_const_const_MatExprX(void* instance, void* expr) {
+	Result<bool> cv_MatOp_elementWise_const_const_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr) {
 		try {
-			bool ret = reinterpret_cast<cv::MatOp*>(instance)->elementWise(*reinterpret_cast<const cv::MatExpr*>(expr));
-			return Ok<bool>(ret);
+			bool ret = instance->elementWise(*expr);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_MatOp_assign_const_const_MatExprX_MatX_int(void* instance, void* expr, void* m, int type) {
+	Result_void cv_MatOp_assign_const_const_MatExprX_MatX_int(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m, int type) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->assign(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m), type);
+			instance->assign(*expr, *m, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_roi_const_const_MatExprX_const_RangeX_const_RangeX_MatExprX(void* instance, void* expr, void* rowRange, void* colRange, void* res) {
+	Result_void cv_MatOp_roi_const_const_MatExprX_const_RangeX_const_RangeX_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr, const cv::Range* rowRange, const cv::Range* colRange, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->roi(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<const cv::Range*>(rowRange), *reinterpret_cast<const cv::Range*>(colRange), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->roi(*expr, *rowRange, *colRange, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_diag_const_const_MatExprX_int_MatExprX(void* instance, void* expr, int d, void* res) {
+	Result_void cv_MatOp_diag_const_const_MatExprX_int_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr, int d, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->diag(*reinterpret_cast<const cv::MatExpr*>(expr), d, *reinterpret_cast<cv::MatExpr*>(res));
+			instance->diag(*expr, d, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_augAssignAdd_const_const_MatExprX_MatX(void* instance, void* expr, void* m) {
+	Result_void cv_MatOp_augAssignAdd_const_const_MatExprX_MatX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->augAssignAdd(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m));
+			instance->augAssignAdd(*expr, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_augAssignSubtract_const_const_MatExprX_MatX(void* instance, void* expr, void* m) {
+	Result_void cv_MatOp_augAssignSubtract_const_const_MatExprX_MatX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->augAssignSubtract(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m));
+			instance->augAssignSubtract(*expr, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_augAssignMultiply_const_const_MatExprX_MatX(void* instance, void* expr, void* m) {
+	Result_void cv_MatOp_augAssignMultiply_const_const_MatExprX_MatX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->augAssignMultiply(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m));
+			instance->augAssignMultiply(*expr, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_augAssignDivide_const_const_MatExprX_MatX(void* instance, void* expr, void* m) {
+	Result_void cv_MatOp_augAssignDivide_const_const_MatExprX_MatX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->augAssignDivide(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m));
+			instance->augAssignDivide(*expr, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_augAssignAnd_const_const_MatExprX_MatX(void* instance, void* expr, void* m) {
+	Result_void cv_MatOp_augAssignAnd_const_const_MatExprX_MatX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->augAssignAnd(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m));
+			instance->augAssignAnd(*expr, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_augAssignOr_const_const_MatExprX_MatX(void* instance, void* expr, void* m) {
+	Result_void cv_MatOp_augAssignOr_const_const_MatExprX_MatX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->augAssignOr(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m));
+			instance->augAssignOr(*expr, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_augAssignXor_const_const_MatExprX_MatX(void* instance, void* expr, void* m) {
+	Result_void cv_MatOp_augAssignXor_const_const_MatExprX_MatX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->augAssignXor(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::Mat*>(m));
+			instance->augAssignXor(*expr, *m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_add_const_const_MatExprX_const_MatExprX_MatExprX(void* instance, void* expr1, void* expr2, void* res) {
+	Result_void cv_MatOp_add_const_const_MatExprX_const_MatExprX_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr1, const cv::MatExpr* expr2, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->add(*reinterpret_cast<const cv::MatExpr*>(expr1), *reinterpret_cast<const cv::MatExpr*>(expr2), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->add(*expr1, *expr2, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_add_const_const_MatExprX_const_ScalarX_MatExprX(void* instance, void* expr1, const cv::Scalar* s, void* res) {
+	Result_void cv_MatOp_add_const_const_MatExprX_const_ScalarX_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr1, const cv::Scalar* s, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->add(*reinterpret_cast<const cv::MatExpr*>(expr1), *s, *reinterpret_cast<cv::MatExpr*>(res));
+			instance->add(*expr1, *s, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_subtract_const_const_MatExprX_const_MatExprX_MatExprX(void* instance, void* expr1, void* expr2, void* res) {
+	Result_void cv_MatOp_subtract_const_const_MatExprX_const_MatExprX_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr1, const cv::MatExpr* expr2, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->subtract(*reinterpret_cast<const cv::MatExpr*>(expr1), *reinterpret_cast<const cv::MatExpr*>(expr2), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->subtract(*expr1, *expr2, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_subtract_const_const_ScalarX_const_MatExprX_MatExprX(void* instance, const cv::Scalar* s, void* expr, void* res) {
+	Result_void cv_MatOp_subtract_const_const_ScalarX_const_MatExprX_MatExprX(const cv::MatOp* instance, const cv::Scalar* s, const cv::MatExpr* expr, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->subtract(*s, *reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->subtract(*s, *expr, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_multiply_const_const_MatExprX_const_MatExprX_MatExprX_double(void* instance, void* expr1, void* expr2, void* res, double scale) {
+	Result_void cv_MatOp_multiply_const_const_MatExprX_const_MatExprX_MatExprX_double(const cv::MatOp* instance, const cv::MatExpr* expr1, const cv::MatExpr* expr2, cv::MatExpr* res, double scale) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->multiply(*reinterpret_cast<const cv::MatExpr*>(expr1), *reinterpret_cast<const cv::MatExpr*>(expr2), *reinterpret_cast<cv::MatExpr*>(res), scale);
+			instance->multiply(*expr1, *expr2, *res, scale);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_multiply_const_const_MatExprX_double_MatExprX(void* instance, void* expr1, double s, void* res) {
+	Result_void cv_MatOp_multiply_const_const_MatExprX_double_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr1, double s, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->multiply(*reinterpret_cast<const cv::MatExpr*>(expr1), s, *reinterpret_cast<cv::MatExpr*>(res));
+			instance->multiply(*expr1, s, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_divide_const_const_MatExprX_const_MatExprX_MatExprX_double(void* instance, void* expr1, void* expr2, void* res, double scale) {
+	Result_void cv_MatOp_divide_const_const_MatExprX_const_MatExprX_MatExprX_double(const cv::MatOp* instance, const cv::MatExpr* expr1, const cv::MatExpr* expr2, cv::MatExpr* res, double scale) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->divide(*reinterpret_cast<const cv::MatExpr*>(expr1), *reinterpret_cast<const cv::MatExpr*>(expr2), *reinterpret_cast<cv::MatExpr*>(res), scale);
+			instance->divide(*expr1, *expr2, *res, scale);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_divide_const_double_const_MatExprX_MatExprX(void* instance, double s, void* expr, void* res) {
+	Result_void cv_MatOp_divide_const_double_const_MatExprX_MatExprX(const cv::MatOp* instance, double s, const cv::MatExpr* expr, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->divide(s, *reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->divide(s, *expr, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_abs_const_const_MatExprX_MatExprX(void* instance, void* expr, void* res) {
+	Result_void cv_MatOp_abs_const_const_MatExprX_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->abs(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->abs(*expr, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_transpose_const_const_MatExprX_MatExprX(void* instance, void* expr, void* res) {
+	Result_void cv_MatOp_transpose_const_const_MatExprX_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->transpose(*reinterpret_cast<const cv::MatExpr*>(expr), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->transpose(*expr, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_matmul_const_const_MatExprX_const_MatExprX_MatExprX(void* instance, void* expr1, void* expr2, void* res) {
+	Result_void cv_MatOp_matmul_const_const_MatExprX_const_MatExprX_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr1, const cv::MatExpr* expr2, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->matmul(*reinterpret_cast<const cv::MatExpr*>(expr1), *reinterpret_cast<const cv::MatExpr*>(expr2), *reinterpret_cast<cv::MatExpr*>(res));
+			instance->matmul(*expr1, *expr2, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_MatOp_invert_const_const_MatExprX_int_MatExprX(void* instance, void* expr, int method, void* res) {
+	Result_void cv_MatOp_invert_const_const_MatExprX_int_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr, int method, cv::MatExpr* res) {
 		try {
-			reinterpret_cast<cv::MatOp*>(instance)->invert(*reinterpret_cast<const cv::MatExpr*>(expr), method, *reinterpret_cast<cv::MatExpr*>(res));
+			instance->invert(*expr, method, *res);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Size> cv_MatOp_size_const_const_MatExprX(void* instance, void* expr) {
+	Result<cv::Size> cv_MatOp_size_const_const_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr) {
 		try {
-			cv::Size ret = reinterpret_cast<cv::MatOp*>(instance)->size(*reinterpret_cast<const cv::MatExpr*>(expr));
-			return Ok<cv::Size>(ret);
+			cv::Size ret = instance->size(*expr);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result<int> cv_MatOp_type_const_const_MatExprX(void* instance, void* expr) {
+	Result<int> cv_MatOp_type_const_const_MatExprX(const cv::MatOp* instance, const cv::MatExpr* expr) {
 		try {
-			int ret = reinterpret_cast<cv::MatOp*>(instance)->type(*reinterpret_cast<const cv::MatExpr*>(expr));
-			return Ok<int>(ret);
+			int ret = instance->type(*expr);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int*> cv_MatSize_p(void* instance) {
+	Result<int*> cv_MatSize_p(cv::MatSize* instance) {
 		try {
-			int* ret = reinterpret_cast<cv::MatSize*>(instance)->p;
-			return Ok<int*>(ret);
+			int* ret = instance->p;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int*>)
 	}
 	
-	Result_void cv_MatSize_setP_intX(void* instance, int* val) {
+	Result_void cv_MatSize_setP_intX(cv::MatSize* instance, int* val) {
 		try {
-			reinterpret_cast<cv::MatSize*>(instance)->p = val;
+			instance->p = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4199,278 +4199,278 @@ extern "C" {
 	void cv_MatSize_delete(cv::MatSize* instance) {
 		delete instance;
 	}
-	Result<void*> cv_MatSize_MatSize_intX(int* _p) {
+	Result<cv::MatSize*> cv_MatSize_MatSize_intX(int* _p) {
 		try {
 			cv::MatSize* ret = new cv::MatSize(_p);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatSize*>)
 	}
 	
-	Result<int> cv_MatSize_dims_const(void* instance) {
+	Result<int> cv_MatSize_dims_const(const cv::MatSize* instance) {
 		try {
-			int ret = reinterpret_cast<cv::MatSize*>(instance)->dims();
-			return Ok<int>(ret);
+			int ret = instance->dims();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_MatSize_operator___const_int(void* instance, int i) {
+	Result<int> cv_MatSize_operator___const_int(const cv::MatSize* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::MatSize*>(instance)->operator[](i);
-			return Ok<int>(ret);
+			int ret = instance->operator[](i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_MatSize_operator___int(void* instance, int i) {
+	Result<int> cv_MatSize_operator___int(cv::MatSize* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::MatSize*>(instance)->operator[](i);
-			return Ok<int>(ret);
+			int ret = instance->operator[](i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<const int*> cv_MatSize_operator_const_intX_const(void* instance) {
+	Result<const int*> cv_MatSize_operator_const_intX_const(const cv::MatSize* instance) {
 		try {
-			const int* ret = reinterpret_cast<cv::MatSize*>(instance)->operator const int*();
-			return Ok<const int*>(ret);
+			const int* ret = instance->operator const int*();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const int*>)
 	}
 	
-	Result<size_t*> cv_MatStep_p(void* instance) {
+	Result<size_t*> cv_MatStep_p(cv::MatStep* instance) {
 		try {
-			size_t* ret = reinterpret_cast<cv::MatStep*>(instance)->p;
-			return Ok<size_t*>(ret);
+			size_t* ret = instance->p;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t*>)
 	}
 	
-	Result_void cv_MatStep_setP_size_tX(void* instance, size_t* val) {
+	Result_void cv_MatStep_setP_size_tX(cv::MatStep* instance, size_t* val) {
 		try {
-			reinterpret_cast<cv::MatStep*>(instance)->p = val;
+			instance->p = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t(*)[2]> cv_MatStep_buf(void* instance) {
+	Result<size_t(*)[2]> cv_MatStep_buf(cv::MatStep* instance) {
 		try {
-			size_t(*ret)[2] = &reinterpret_cast<cv::MatStep*>(instance)->buf;
-			return Ok<size_t(*)[2]>(ret);
+			size_t(*ret)[2] = &instance->buf;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t(*)[2]>)
 	}
 	
 	void cv_MatStep_delete(cv::MatStep* instance) {
 		delete instance;
 	}
-	Result<void*> cv_MatStep_MatStep() {
+	Result<cv::MatStep*> cv_MatStep_MatStep() {
 		try {
 			cv::MatStep* ret = new cv::MatStep();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatStep*>)
 	}
 	
-	Result<void*> cv_MatStep_MatStep_size_t(size_t s) {
+	Result<cv::MatStep*> cv_MatStep_MatStep_size_t(size_t s) {
 		try {
 			cv::MatStep* ret = new cv::MatStep(s);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::MatStep*>)
 	}
 	
-	Result<size_t> cv_MatStep_operator___const_int(void* instance, int i) {
+	Result<size_t> cv_MatStep_operator___const_int(const cv::MatStep* instance, int i) {
 		try {
-			size_t ret = reinterpret_cast<cv::MatStep*>(instance)->operator[](i);
-			return Ok<size_t>(ret);
+			size_t ret = instance->operator[](i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_MatStep_operator___int(void* instance, int i) {
+	Result<size_t> cv_MatStep_operator___int(cv::MatStep* instance, int i) {
 		try {
-			size_t ret = reinterpret_cast<cv::MatStep*>(instance)->operator[](i);
-			return Ok<size_t>(ret);
+			size_t ret = instance->operator[](i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_MatStep_operator_size_t_const(void* instance) {
+	Result<size_t> cv_MatStep_operator_size_t_const(const cv::MatStep* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::MatStep*>(instance)->operator size_t();
-			return Ok<size_t>(ret);
+			size_t ret = instance->operator size_t();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
 	void cv_Matx_AddOp_delete(cv::Matx_AddOp* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Matx_AddOp_Matx_AddOp() {
+	Result<cv::Matx_AddOp*> cv_Matx_AddOp_Matx_AddOp() {
 		try {
 			cv::Matx_AddOp* ret = new cv::Matx_AddOp();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_AddOp*>)
 	}
 	
-	Result<void*> cv_Matx_AddOp_Matx_AddOp_const_Matx_AddOpX(void* unnamed) {
+	Result<cv::Matx_AddOp*> cv_Matx_AddOp_Matx_AddOp_const_Matx_AddOpX(const cv::Matx_AddOp* unnamed) {
 		try {
-			cv::Matx_AddOp* ret = new cv::Matx_AddOp(*reinterpret_cast<const cv::Matx_AddOp*>(unnamed));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Matx_AddOp* ret = new cv::Matx_AddOp(*unnamed);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_AddOp*>)
 	}
 	
 	void cv_Matx_DivOp_delete(cv::Matx_DivOp* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Matx_DivOp_Matx_DivOp() {
+	Result<cv::Matx_DivOp*> cv_Matx_DivOp_Matx_DivOp() {
 		try {
 			cv::Matx_DivOp* ret = new cv::Matx_DivOp();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_DivOp*>)
 	}
 	
-	Result<void*> cv_Matx_DivOp_Matx_DivOp_const_Matx_DivOpX(void* unnamed) {
+	Result<cv::Matx_DivOp*> cv_Matx_DivOp_Matx_DivOp_const_Matx_DivOpX(const cv::Matx_DivOp* unnamed) {
 		try {
-			cv::Matx_DivOp* ret = new cv::Matx_DivOp(*reinterpret_cast<const cv::Matx_DivOp*>(unnamed));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Matx_DivOp* ret = new cv::Matx_DivOp(*unnamed);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_DivOp*>)
 	}
 	
 	void cv_Matx_MatMulOp_delete(cv::Matx_MatMulOp* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Matx_MatMulOp_Matx_MatMulOp() {
+	Result<cv::Matx_MatMulOp*> cv_Matx_MatMulOp_Matx_MatMulOp() {
 		try {
 			cv::Matx_MatMulOp* ret = new cv::Matx_MatMulOp();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_MatMulOp*>)
 	}
 	
-	Result<void*> cv_Matx_MatMulOp_Matx_MatMulOp_const_Matx_MatMulOpX(void* unnamed) {
+	Result<cv::Matx_MatMulOp*> cv_Matx_MatMulOp_Matx_MatMulOp_const_Matx_MatMulOpX(const cv::Matx_MatMulOp* unnamed) {
 		try {
-			cv::Matx_MatMulOp* ret = new cv::Matx_MatMulOp(*reinterpret_cast<const cv::Matx_MatMulOp*>(unnamed));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Matx_MatMulOp* ret = new cv::Matx_MatMulOp(*unnamed);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_MatMulOp*>)
 	}
 	
 	void cv_Matx_MulOp_delete(cv::Matx_MulOp* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Matx_MulOp_Matx_MulOp() {
+	Result<cv::Matx_MulOp*> cv_Matx_MulOp_Matx_MulOp() {
 		try {
 			cv::Matx_MulOp* ret = new cv::Matx_MulOp();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_MulOp*>)
 	}
 	
-	Result<void*> cv_Matx_MulOp_Matx_MulOp_const_Matx_MulOpX(void* unnamed) {
+	Result<cv::Matx_MulOp*> cv_Matx_MulOp_Matx_MulOp_const_Matx_MulOpX(const cv::Matx_MulOp* unnamed) {
 		try {
-			cv::Matx_MulOp* ret = new cv::Matx_MulOp(*reinterpret_cast<const cv::Matx_MulOp*>(unnamed));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Matx_MulOp* ret = new cv::Matx_MulOp(*unnamed);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_MulOp*>)
 	}
 	
 	void cv_Matx_ScaleOp_delete(cv::Matx_ScaleOp* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Matx_ScaleOp_Matx_ScaleOp() {
+	Result<cv::Matx_ScaleOp*> cv_Matx_ScaleOp_Matx_ScaleOp() {
 		try {
 			cv::Matx_ScaleOp* ret = new cv::Matx_ScaleOp();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_ScaleOp*>)
 	}
 	
-	Result<void*> cv_Matx_ScaleOp_Matx_ScaleOp_const_Matx_ScaleOpX(void* unnamed) {
+	Result<cv::Matx_ScaleOp*> cv_Matx_ScaleOp_Matx_ScaleOp_const_Matx_ScaleOpX(const cv::Matx_ScaleOp* unnamed) {
 		try {
-			cv::Matx_ScaleOp* ret = new cv::Matx_ScaleOp(*reinterpret_cast<const cv::Matx_ScaleOp*>(unnamed));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Matx_ScaleOp* ret = new cv::Matx_ScaleOp(*unnamed);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_ScaleOp*>)
 	}
 	
 	void cv_Matx_SubOp_delete(cv::Matx_SubOp* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Matx_SubOp_Matx_SubOp() {
+	Result<cv::Matx_SubOp*> cv_Matx_SubOp_Matx_SubOp() {
 		try {
 			cv::Matx_SubOp* ret = new cv::Matx_SubOp();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_SubOp*>)
 	}
 	
-	Result<void*> cv_Matx_SubOp_Matx_SubOp_const_Matx_SubOpX(void* unnamed) {
+	Result<cv::Matx_SubOp*> cv_Matx_SubOp_Matx_SubOp_const_Matx_SubOpX(const cv::Matx_SubOp* unnamed) {
 		try {
-			cv::Matx_SubOp* ret = new cv::Matx_SubOp(*reinterpret_cast<const cv::Matx_SubOp*>(unnamed));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Matx_SubOp* ret = new cv::Matx_SubOp(*unnamed);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_SubOp*>)
 	}
 	
 	void cv_Matx_TOp_delete(cv::Matx_TOp* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Matx_TOp_Matx_TOp() {
+	Result<cv::Matx_TOp*> cv_Matx_TOp_Matx_TOp() {
 		try {
 			cv::Matx_TOp* ret = new cv::Matx_TOp();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_TOp*>)
 	}
 	
-	Result<void*> cv_Matx_TOp_Matx_TOp_const_Matx_TOpX(void* unnamed) {
+	Result<cv::Matx_TOp*> cv_Matx_TOp_Matx_TOp_const_Matx_TOpX(const cv::Matx_TOp* unnamed) {
 		try {
-			cv::Matx_TOp* ret = new cv::Matx_TOp(*reinterpret_cast<const cv::Matx_TOp*>(unnamed));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::Matx_TOp* ret = new cv::Matx_TOp(*unnamed);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Matx_TOp*>)
 	}
 	
-	Result<void*> cv_MinProblemSolver_getFunction_const(void* instance) {
+	Result<cv::Ptr<cv::MinProblemSolver::Function>*> cv_MinProblemSolver_getFunction_const(const cv::MinProblemSolver* instance) {
 		try {
-			cv::Ptr<cv::MinProblemSolver::Function> ret = reinterpret_cast<cv::MinProblemSolver*>(instance)->getFunction();
-			return Ok<void*>(new cv::Ptr<cv::MinProblemSolver::Function>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::MinProblemSolver::Function> ret = instance->getFunction();
+			return Ok(new cv::Ptr<cv::MinProblemSolver::Function>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::MinProblemSolver::Function>*>)
 	}
 	
-	Result_void cv_MinProblemSolver_setFunction_const_Ptr_Function_X(void* instance, void* f) {
+	Result_void cv_MinProblemSolver_setFunction_const_Ptr_Function_X(cv::MinProblemSolver* instance, const cv::Ptr<cv::MinProblemSolver::Function>* f) {
 		try {
-			reinterpret_cast<cv::MinProblemSolver*>(instance)->setFunction(*reinterpret_cast<const cv::Ptr<cv::MinProblemSolver::Function>*>(f));
+			instance->setFunction(*f);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_MinProblemSolver_getTermCriteria_const(void* instance) {
+	Result<cv::TermCriteria*> cv_MinProblemSolver_getTermCriteria_const(const cv::MinProblemSolver* instance) {
 		try {
-			cv::TermCriteria ret = reinterpret_cast<cv::MinProblemSolver*>(instance)->getTermCriteria();
-			return Ok<void*>(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::TermCriteria ret = instance->getTermCriteria();
+			return Ok(new cv::TermCriteria(ret));
+		} OCVRS_CATCH(Result<cv::TermCriteria*>)
 	}
 	
-	Result_void cv_MinProblemSolver_setTermCriteria_const_TermCriteriaX(void* instance, void* termcrit) {
+	Result_void cv_MinProblemSolver_setTermCriteria_const_TermCriteriaX(cv::MinProblemSolver* instance, const cv::TermCriteria* termcrit) {
 		try {
-			reinterpret_cast<cv::MinProblemSolver*>(instance)->setTermCriteria(*reinterpret_cast<const cv::TermCriteria*>(termcrit));
+			instance->setTermCriteria(*termcrit);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_MinProblemSolver_minimize_const__InputOutputArrayX(void* instance, void* x) {
+	Result<double> cv_MinProblemSolver_minimize_const__InputOutputArrayX(cv::MinProblemSolver* instance, const cv::_InputOutputArray* x) {
 		try {
-			double ret = reinterpret_cast<cv::MinProblemSolver*>(instance)->minimize(*reinterpret_cast<const cv::_InputOutputArray*>(x));
-			return Ok<double>(ret);
+			double ret = instance->minimize(*x);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<int> cv_MinProblemSolver_Function_getDims_const(void* instance) {
+	Result<int> cv_MinProblemSolver_Function_getDims_const(const cv::MinProblemSolver::Function* instance) {
 		try {
-			int ret = reinterpret_cast<cv::MinProblemSolver::Function*>(instance)->getDims();
-			return Ok<int>(ret);
+			int ret = instance->getDims();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<double> cv_MinProblemSolver_Function_getGradientEps_const(void* instance) {
+	Result<double> cv_MinProblemSolver_Function_getGradientEps_const(const cv::MinProblemSolver::Function* instance) {
 		try {
-			double ret = reinterpret_cast<cv::MinProblemSolver::Function*>(instance)->getGradientEps();
-			return Ok<double>(ret);
+			double ret = instance->getGradientEps();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_MinProblemSolver_Function_calc_const_const_doubleX(void* instance, const double* x) {
+	Result<double> cv_MinProblemSolver_Function_calc_const_const_doubleX(const cv::MinProblemSolver::Function* instance, const double* x) {
 		try {
-			double ret = reinterpret_cast<cv::MinProblemSolver::Function*>(instance)->calc(x);
-			return Ok<double>(ret);
+			double ret = instance->calc(x);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_MinProblemSolver_Function_getGradient_const_doubleX_doubleX(void* instance, const double* x, double* grad) {
+	Result_void cv_MinProblemSolver_Function_getGradient_const_doubleX_doubleX(cv::MinProblemSolver::Function* instance, const double* x, double* grad) {
 		try {
-			reinterpret_cast<cv::MinProblemSolver::Function*>(instance)->getGradient(x, grad);
+			instance->getGradient(x, grad);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4478,55 +4478,55 @@ extern "C" {
 	Result<cv::Moments> cv_Moments_Moments() {
 		try {
 			cv::Moments ret;
-			return Ok<cv::Moments>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Moments>)
 	}
 	
 	Result<cv::Moments> cv_Moments_Moments_double_double_double_double_double_double_double_double_double_double(double m00, double m10, double m01, double m20, double m11, double m02, double m30, double m21, double m12, double m03) {
 		try {
 			cv::Moments ret(m00, m10, m01, m20, m11, m02, m30, m21, m12, m03);
-			return Ok<cv::Moments>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Moments>)
 	}
 	
-	Result<void*> cv_PCA_eigenvectors(void* instance) {
+	Result<cv::Mat*> cv_PCA_eigenvectors(cv::PCA* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::PCA*>(instance)->eigenvectors;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->eigenvectors;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_PCA_setEigenvectors_Mat(void* instance, void* val) {
+	Result_void cv_PCA_setEigenvectors_Mat(cv::PCA* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::PCA*>(instance)->eigenvectors = *reinterpret_cast<cv::Mat*>(val);
+			instance->eigenvectors = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_PCA_eigenvalues(void* instance) {
+	Result<cv::Mat*> cv_PCA_eigenvalues(cv::PCA* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::PCA*>(instance)->eigenvalues;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->eigenvalues;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_PCA_setEigenvalues_Mat(void* instance, void* val) {
+	Result_void cv_PCA_setEigenvalues_Mat(cv::PCA* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::PCA*>(instance)->eigenvalues = *reinterpret_cast<cv::Mat*>(val);
+			instance->eigenvalues = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_PCA_mean(void* instance) {
+	Result<cv::Mat*> cv_PCA_mean(cv::PCA* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::PCA*>(instance)->mean;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->mean;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_PCA_setMean_Mat(void* instance, void* val) {
+	Result_void cv_PCA_setMean_Mat(cv::PCA* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::PCA*>(instance)->mean = *reinterpret_cast<cv::Mat*>(val);
+			instance->mean = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4534,79 +4534,79 @@ extern "C" {
 	void cv_PCA_delete(cv::PCA* instance) {
 		delete instance;
 	}
-	Result<void*> cv_PCA_PCA() {
+	Result<cv::PCA*> cv_PCA_PCA() {
 		try {
 			cv::PCA* ret = new cv::PCA();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::PCA*>)
 	}
 	
-	Result<void*> cv_PCA_PCA_const__InputArrayX_const__InputArrayX_int_int(void* data, void* mean, int flags, int maxComponents) {
+	Result<cv::PCA*> cv_PCA_PCA_const__InputArrayX_const__InputArrayX_int_int(const cv::_InputArray* data, const cv::_InputArray* mean, int flags, int maxComponents) {
 		try {
-			cv::PCA* ret = new cv::PCA(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputArray*>(mean), flags, maxComponents);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::PCA* ret = new cv::PCA(*data, *mean, flags, maxComponents);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::PCA*>)
 	}
 	
-	Result<void*> cv_PCA_PCA_const__InputArrayX_const__InputArrayX_int_double(void* data, void* mean, int flags, double retainedVariance) {
+	Result<cv::PCA*> cv_PCA_PCA_const__InputArrayX_const__InputArrayX_int_double(const cv::_InputArray* data, const cv::_InputArray* mean, int flags, double retainedVariance) {
 		try {
-			cv::PCA* ret = new cv::PCA(*reinterpret_cast<const cv::_InputArray*>(data), *reinterpret_cast<const cv::_InputArray*>(mean), flags, retainedVariance);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::PCA* ret = new cv::PCA(*data, *mean, flags, retainedVariance);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::PCA*>)
 	}
 	
-	Result<void*> cv_PCA_project_const_const__InputArrayX(void* instance, void* vec) {
+	Result<cv::Mat*> cv_PCA_project_const_const__InputArrayX(const cv::PCA* instance, const cv::_InputArray* vec) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::PCA*>(instance)->project(*reinterpret_cast<const cv::_InputArray*>(vec));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->project(*vec);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_PCA_project_const_const__InputArrayX_const__OutputArrayX(void* instance, void* vec, void* result) {
+	Result_void cv_PCA_project_const_const__InputArrayX_const__OutputArrayX(const cv::PCA* instance, const cv::_InputArray* vec, const cv::_OutputArray* result) {
 		try {
-			reinterpret_cast<cv::PCA*>(instance)->project(*reinterpret_cast<const cv::_InputArray*>(vec), *reinterpret_cast<const cv::_OutputArray*>(result));
+			instance->project(*vec, *result);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_PCA_backProject_const_const__InputArrayX(void* instance, void* vec) {
+	Result<cv::Mat*> cv_PCA_backProject_const_const__InputArrayX(const cv::PCA* instance, const cv::_InputArray* vec) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::PCA*>(instance)->backProject(*reinterpret_cast<const cv::_InputArray*>(vec));
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->backProject(*vec);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_PCA_backProject_const_const__InputArrayX_const__OutputArrayX(void* instance, void* vec, void* result) {
+	Result_void cv_PCA_backProject_const_const__InputArrayX_const__OutputArrayX(const cv::PCA* instance, const cv::_InputArray* vec, const cv::_OutputArray* result) {
 		try {
-			reinterpret_cast<cv::PCA*>(instance)->backProject(*reinterpret_cast<const cv::_InputArray*>(vec), *reinterpret_cast<const cv::_OutputArray*>(result));
+			instance->backProject(*vec, *result);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_PCA_write_const_FileStorageX(void* instance, void* fs) {
+	Result_void cv_PCA_write_const_FileStorageX(const cv::PCA* instance, cv::FileStorage* fs) {
 		try {
-			reinterpret_cast<cv::PCA*>(instance)->write(*reinterpret_cast<cv::FileStorage*>(fs));
+			instance->write(*fs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_PCA_read_const_FileNodeX(void* instance, void* fn) {
+	Result_void cv_PCA_read_const_FileNodeX(cv::PCA* instance, const cv::FileNode* fn) {
 		try {
-			reinterpret_cast<cv::PCA*>(instance)->read(*reinterpret_cast<const cv::FileNode*>(fn));
+			instance->read(*fn);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<uint64_t> cv_RNG_state_const(void* instance) {
+	Result<uint64_t> cv_RNG_state_const(const cv::RNG* instance) {
 		try {
-			uint64_t ret = reinterpret_cast<cv::RNG*>(instance)->state;
-			return Ok<uint64_t>(ret);
+			uint64_t ret = instance->state;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<uint64_t>)
 	}
 	
-	Result_void cv_RNG_setState_uint64_t(void* instance, uint64_t val) {
+	Result_void cv_RNG_setState_uint64_t(cv::RNG* instance, uint64_t val) {
 		try {
-			reinterpret_cast<cv::RNG*>(instance)->state = val;
+			instance->state = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4614,222 +4614,222 @@ extern "C" {
 	void cv_RNG_delete(cv::RNG* instance) {
 		delete instance;
 	}
-	Result<void*> cv_RNG_RNG() {
+	Result<cv::RNG*> cv_RNG_RNG() {
 		try {
 			cv::RNG* ret = new cv::RNG();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::RNG*>)
 	}
 	
-	Result<void*> cv_RNG_RNG_uint64_t(uint64_t state) {
+	Result<cv::RNG*> cv_RNG_RNG_uint64_t(uint64_t state) {
 		try {
 			cv::RNG* ret = new cv::RNG(state);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::RNG*>)
 	}
 	
-	Result<unsigned int> cv_RNG_next(void* instance) {
+	Result<unsigned int> cv_RNG_next(cv::RNG* instance) {
 		try {
-			unsigned int ret = reinterpret_cast<cv::RNG*>(instance)->next();
-			return Ok<unsigned int>(ret);
+			unsigned int ret = instance->next();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned int>)
 	}
 	
-	Result<unsigned char> cv_RNG_operator_unsigned_char(void* instance) {
+	Result<unsigned char> cv_RNG_operator_unsigned_char(cv::RNG* instance) {
 		try {
-			unsigned char ret = reinterpret_cast<cv::RNG*>(instance)->operator unsigned char();
-			return Ok<unsigned char>(ret);
+			unsigned char ret = instance->operator unsigned char();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char>)
 	}
 	
-	Result<signed char> cv_RNG_operator_signed_char(void* instance) {
+	Result<signed char> cv_RNG_operator_signed_char(cv::RNG* instance) {
 		try {
-			signed char ret = reinterpret_cast<cv::RNG*>(instance)->operator signed char();
-			return Ok<signed char>(ret);
+			signed char ret = instance->operator signed char();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<signed char>)
 	}
 	
-	Result<unsigned short> cv_RNG_operator_unsigned_short(void* instance) {
+	Result<unsigned short> cv_RNG_operator_unsigned_short(cv::RNG* instance) {
 		try {
-			unsigned short ret = reinterpret_cast<cv::RNG*>(instance)->operator unsigned short();
-			return Ok<unsigned short>(ret);
+			unsigned short ret = instance->operator unsigned short();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned short>)
 	}
 	
-	Result<short> cv_RNG_operator_short(void* instance) {
+	Result<short> cv_RNG_operator_short(cv::RNG* instance) {
 		try {
-			short ret = reinterpret_cast<cv::RNG*>(instance)->operator short();
-			return Ok<short>(ret);
+			short ret = instance->operator short();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<short>)
 	}
 	
-	Result<unsigned int> cv_RNG_operator_unsigned_int(void* instance) {
+	Result<unsigned int> cv_RNG_operator_unsigned_int(cv::RNG* instance) {
 		try {
-			unsigned int ret = reinterpret_cast<cv::RNG*>(instance)->operator unsigned int();
-			return Ok<unsigned int>(ret);
+			unsigned int ret = instance->operator unsigned int();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned int>)
 	}
 	
-	Result<int> cv_RNG_operator_int(void* instance) {
+	Result<int> cv_RNG_operator_int(cv::RNG* instance) {
 		try {
-			int ret = reinterpret_cast<cv::RNG*>(instance)->operator int();
-			return Ok<int>(ret);
+			int ret = instance->operator int();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<float> cv_RNG_operator_float(void* instance) {
+	Result<float> cv_RNG_operator_float(cv::RNG* instance) {
 		try {
-			float ret = reinterpret_cast<cv::RNG*>(instance)->operator float();
-			return Ok<float>(ret);
+			float ret = instance->operator float();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result<double> cv_RNG_operator_double(void* instance) {
+	Result<double> cv_RNG_operator_double(cv::RNG* instance) {
 		try {
-			double ret = reinterpret_cast<cv::RNG*>(instance)->operator double();
-			return Ok<double>(ret);
+			double ret = instance->operator double();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<int> cv_RNG_uniform_int_int(void* instance, int a, int b) {
+	Result<int> cv_RNG_uniform_int_int(cv::RNG* instance, int a, int b) {
 		try {
-			int ret = reinterpret_cast<cv::RNG*>(instance)->uniform(a, b);
-			return Ok<int>(ret);
+			int ret = instance->uniform(a, b);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<float> cv_RNG_uniform_float_float(void* instance, float a, float b) {
+	Result<float> cv_RNG_uniform_float_float(cv::RNG* instance, float a, float b) {
 		try {
-			float ret = reinterpret_cast<cv::RNG*>(instance)->uniform(a, b);
-			return Ok<float>(ret);
+			float ret = instance->uniform(a, b);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result<double> cv_RNG_uniform_double_double(void* instance, double a, double b) {
+	Result<double> cv_RNG_uniform_double_double(cv::RNG* instance, double a, double b) {
 		try {
-			double ret = reinterpret_cast<cv::RNG*>(instance)->uniform(a, b);
-			return Ok<double>(ret);
+			double ret = instance->uniform(a, b);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_RNG_fill_const__InputOutputArrayX_int_const__InputArrayX_const__InputArrayX_bool(void* instance, void* mat, int distType, void* a, void* b, bool saturateRange) {
+	Result_void cv_RNG_fill_const__InputOutputArrayX_int_const__InputArrayX_const__InputArrayX_bool(cv::RNG* instance, const cv::_InputOutputArray* mat, int distType, const cv::_InputArray* a, const cv::_InputArray* b, bool saturateRange) {
 		try {
-			reinterpret_cast<cv::RNG*>(instance)->fill(*reinterpret_cast<const cv::_InputOutputArray*>(mat), distType, *reinterpret_cast<const cv::_InputArray*>(a), *reinterpret_cast<const cv::_InputArray*>(b), saturateRange);
+			instance->fill(*mat, distType, *a, *b, saturateRange);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_RNG_gaussian_double(void* instance, double sigma) {
+	Result<double> cv_RNG_gaussian_double(cv::RNG* instance, double sigma) {
 		try {
-			double ret = reinterpret_cast<cv::RNG*>(instance)->gaussian(sigma);
-			return Ok<double>(ret);
+			double ret = instance->gaussian(sigma);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
 	void cv_RNG_MT19937_delete(cv::RNG_MT19937* instance) {
 		delete instance;
 	}
-	Result<void*> cv_RNG_MT19937_RNG_MT19937() {
+	Result<cv::RNG_MT19937*> cv_RNG_MT19937_RNG_MT19937() {
 		try {
 			cv::RNG_MT19937* ret = new cv::RNG_MT19937();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::RNG_MT19937*>)
 	}
 	
-	Result<void*> cv_RNG_MT19937_RNG_MT19937_unsigned_int(unsigned int s) {
+	Result<cv::RNG_MT19937*> cv_RNG_MT19937_RNG_MT19937_unsigned_int(unsigned int s) {
 		try {
 			cv::RNG_MT19937* ret = new cv::RNG_MT19937(s);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::RNG_MT19937*>)
 	}
 	
-	Result_void cv_RNG_MT19937_seed_unsigned_int(void* instance, unsigned int s) {
+	Result_void cv_RNG_MT19937_seed_unsigned_int(cv::RNG_MT19937* instance, unsigned int s) {
 		try {
-			reinterpret_cast<cv::RNG_MT19937*>(instance)->seed(s);
+			instance->seed(s);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<unsigned int> cv_RNG_MT19937_next(void* instance) {
+	Result<unsigned int> cv_RNG_MT19937_next(cv::RNG_MT19937* instance) {
 		try {
-			unsigned int ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->next();
-			return Ok<unsigned int>(ret);
+			unsigned int ret = instance->next();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned int>)
 	}
 	
-	Result<int> cv_RNG_MT19937_operator_int(void* instance) {
+	Result<int> cv_RNG_MT19937_operator_int(cv::RNG_MT19937* instance) {
 		try {
-			int ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->operator int();
-			return Ok<int>(ret);
+			int ret = instance->operator int();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<unsigned int> cv_RNG_MT19937_operator_unsigned_int(void* instance) {
+	Result<unsigned int> cv_RNG_MT19937_operator_unsigned_int(cv::RNG_MT19937* instance) {
 		try {
-			unsigned int ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->operator unsigned int();
-			return Ok<unsigned int>(ret);
+			unsigned int ret = instance->operator unsigned int();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned int>)
 	}
 	
-	Result<float> cv_RNG_MT19937_operator_float(void* instance) {
+	Result<float> cv_RNG_MT19937_operator_float(cv::RNG_MT19937* instance) {
 		try {
-			float ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->operator float();
-			return Ok<float>(ret);
+			float ret = instance->operator float();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result<double> cv_RNG_MT19937_operator_double(void* instance) {
+	Result<double> cv_RNG_MT19937_operator_double(cv::RNG_MT19937* instance) {
 		try {
-			double ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->operator double();
-			return Ok<double>(ret);
+			double ret = instance->operator double();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<int> cv_RNG_MT19937_uniform_int_int(void* instance, int a, int b) {
+	Result<int> cv_RNG_MT19937_uniform_int_int(cv::RNG_MT19937* instance, int a, int b) {
 		try {
-			int ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->uniform(a, b);
-			return Ok<int>(ret);
+			int ret = instance->uniform(a, b);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<float> cv_RNG_MT19937_uniform_float_float(void* instance, float a, float b) {
+	Result<float> cv_RNG_MT19937_uniform_float_float(cv::RNG_MT19937* instance, float a, float b) {
 		try {
-			float ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->uniform(a, b);
-			return Ok<float>(ret);
+			float ret = instance->uniform(a, b);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result<double> cv_RNG_MT19937_uniform_double_double(void* instance, double a, double b) {
+	Result<double> cv_RNG_MT19937_uniform_double_double(cv::RNG_MT19937* instance, double a, double b) {
 		try {
-			double ret = reinterpret_cast<cv::RNG_MT19937*>(instance)->uniform(a, b);
-			return Ok<double>(ret);
+			double ret = instance->uniform(a, b);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<int> cv_Range_start_const(void* instance) {
+	Result<int> cv_Range_start_const(const cv::Range* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Range*>(instance)->start;
-			return Ok<int>(ret);
+			int ret = instance->start;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Range_setStart_int(void* instance, int val) {
+	Result_void cv_Range_setStart_int(cv::Range* instance, int val) {
 		try {
-			reinterpret_cast<cv::Range*>(instance)->start = val;
+			instance->start = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_Range_end_const(void* instance) {
+	Result<int> cv_Range_end_const(const cv::Range* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Range*>(instance)->end;
-			return Ok<int>(ret);
+			int ret = instance->end;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_Range_setEnd_int(void* instance, int val) {
+	Result_void cv_Range_setEnd_int(cv::Range* instance, int val) {
 		try {
-			reinterpret_cast<cv::Range*>(instance)->end = val;
+			instance->end = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4837,79 +4837,79 @@ extern "C" {
 	void cv_Range_delete(cv::Range* instance) {
 		delete instance;
 	}
-	Result<void*> cv_Range_Range() {
+	Result<cv::Range*> cv_Range_Range() {
 		try {
 			cv::Range* ret = new cv::Range();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Range*>)
 	}
 	
-	Result<void*> cv_Range_Range_int_int(int _start, int _end) {
+	Result<cv::Range*> cv_Range_Range_int_int(int _start, int _end) {
 		try {
 			cv::Range* ret = new cv::Range(_start, _end);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Range*>)
 	}
 	
-	Result<int> cv_Range_size_const(void* instance) {
+	Result<int> cv_Range_size_const(const cv::Range* instance) {
 		try {
-			int ret = reinterpret_cast<cv::Range*>(instance)->size();
-			return Ok<int>(ret);
+			int ret = instance->size();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv_Range_empty_const(void* instance) {
+	Result<bool> cv_Range_empty_const(const cv::Range* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::Range*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_Range_all() {
+	Result<cv::Range*> cv_Range_all() {
 		try {
 			cv::Range ret = cv::Range::all();
-			return Ok<void*>(new cv::Range(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::Range(ret));
+		} OCVRS_CATCH(Result<cv::Range*>)
 	}
 	
-	Result<cv::Point2f> cv_RotatedRect_center_const(void* instance) {
+	Result<cv::Point2f> cv_RotatedRect_center_const(const cv::RotatedRect* instance) {
 		try {
-			cv::Point2f ret = reinterpret_cast<cv::RotatedRect*>(instance)->center;
-			return Ok<cv::Point2f>(ret);
+			cv::Point2f ret = instance->center;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Point2f>)
 	}
 	
-	Result_void cv_RotatedRect_setCenter_Point2f(void* instance, const cv::Point2f* val) {
+	Result_void cv_RotatedRect_setCenter_Point2f(cv::RotatedRect* instance, const cv::Point2f* val) {
 		try {
-			reinterpret_cast<cv::RotatedRect*>(instance)->center = *val;
+			instance->center = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Size2f> cv_RotatedRect_size_const(void* instance) {
+	Result<cv::Size2f> cv_RotatedRect_size_const(const cv::RotatedRect* instance) {
 		try {
-			cv::Size2f ret = reinterpret_cast<cv::RotatedRect*>(instance)->size;
-			return Ok<cv::Size2f>(ret);
+			cv::Size2f ret = instance->size;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Size2f>)
 	}
 	
-	Result_void cv_RotatedRect_setSize_Size2f(void* instance, const cv::Size2f* val) {
+	Result_void cv_RotatedRect_setSize_Size2f(cv::RotatedRect* instance, const cv::Size2f* val) {
 		try {
-			reinterpret_cast<cv::RotatedRect*>(instance)->size = *val;
+			instance->size = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<float> cv_RotatedRect_angle_const(void* instance) {
+	Result<float> cv_RotatedRect_angle_const(const cv::RotatedRect* instance) {
 		try {
-			float ret = reinterpret_cast<cv::RotatedRect*>(instance)->angle;
-			return Ok<float>(ret);
+			float ret = instance->angle;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_RotatedRect_setAngle_float(void* instance, float val) {
+	Result_void cv_RotatedRect_setAngle_float(cv::RotatedRect* instance, float val) {
 		try {
-			reinterpret_cast<cv::RotatedRect*>(instance)->angle = val;
+			instance->angle = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -4917,86 +4917,86 @@ extern "C" {
 	void cv_RotatedRect_delete(cv::RotatedRect* instance) {
 		delete instance;
 	}
-	Result<void*> cv_RotatedRect_RotatedRect() {
+	Result<cv::RotatedRect*> cv_RotatedRect_RotatedRect() {
 		try {
 			cv::RotatedRect* ret = new cv::RotatedRect();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::RotatedRect*>)
 	}
 	
-	Result<void*> cv_RotatedRect_RotatedRect_const_Point2fX_const_Size2fX_float(const cv::Point2f* center, const cv::Size2f* size, float angle) {
+	Result<cv::RotatedRect*> cv_RotatedRect_RotatedRect_const_Point2fX_const_Size2fX_float(const cv::Point2f* center, const cv::Size2f* size, float angle) {
 		try {
 			cv::RotatedRect* ret = new cv::RotatedRect(*center, *size, angle);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::RotatedRect*>)
 	}
 	
-	Result<void*> cv_RotatedRect_RotatedRect_const_Point2fX_const_Point2fX_const_Point2fX(const cv::Point2f* point1, const cv::Point2f* point2, const cv::Point2f* point3) {
+	Result<cv::RotatedRect*> cv_RotatedRect_RotatedRect_const_Point2fX_const_Point2fX_const_Point2fX(const cv::Point2f* point1, const cv::Point2f* point2, const cv::Point2f* point3) {
 		try {
 			cv::RotatedRect* ret = new cv::RotatedRect(*point1, *point2, *point3);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::RotatedRect*>)
 	}
 	
-	Result_void cv_RotatedRect_points_const_Point2fX(void* instance, cv::Point2f* pts) {
+	Result_void cv_RotatedRect_points_const_Point2fX(const cv::RotatedRect* instance, cv::Point2f* pts) {
 		try {
-			reinterpret_cast<cv::RotatedRect*>(instance)->points(pts);
+			instance->points(pts);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Rect> cv_RotatedRect_boundingRect_const(void* instance) {
+	Result<cv::Rect> cv_RotatedRect_boundingRect_const(const cv::RotatedRect* instance) {
 		try {
-			cv::Rect ret = reinterpret_cast<cv::RotatedRect*>(instance)->boundingRect();
-			return Ok<cv::Rect>(ret);
+			cv::Rect ret = instance->boundingRect();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}
 	
-	Result<cv::Rect_<float>> cv_RotatedRect_boundingRect2f_const(void* instance) {
+	Result<cv::Rect_<float>> cv_RotatedRect_boundingRect2f_const(const cv::RotatedRect* instance) {
 		try {
-			cv::Rect_<float> ret = reinterpret_cast<cv::RotatedRect*>(instance)->boundingRect2f();
-			return Ok<cv::Rect_<float>>(ret);
+			cv::Rect_<float> ret = instance->boundingRect2f();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Rect_<float>>)
 	}
 	
-	Result<void*> cv_SVD_u(void* instance) {
+	Result<cv::Mat*> cv_SVD_u(cv::SVD* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::SVD*>(instance)->u;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->u;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_SVD_setU_Mat(void* instance, void* val) {
+	Result_void cv_SVD_setU_Mat(cv::SVD* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::SVD*>(instance)->u = *reinterpret_cast<cv::Mat*>(val);
+			instance->u = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_SVD_w(void* instance) {
+	Result<cv::Mat*> cv_SVD_w(cv::SVD* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::SVD*>(instance)->w;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->w;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_SVD_setW_Mat(void* instance, void* val) {
+	Result_void cv_SVD_setW_Mat(cv::SVD* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::SVD*>(instance)->w = *reinterpret_cast<cv::Mat*>(val);
+			instance->w = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_SVD_vt(void* instance) {
+	Result<cv::Mat*> cv_SVD_vt(cv::SVD* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::SVD*>(instance)->vt;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->vt;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_SVD_setVt_Mat(void* instance, void* val) {
+	Result_void cv_SVD_setVt_Mat(cv::SVD* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::SVD*>(instance)->vt = *reinterpret_cast<cv::Mat*>(val);
+			instance->vt = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -5004,79 +5004,79 @@ extern "C" {
 	void cv_SVD_delete(cv::SVD* instance) {
 		delete instance;
 	}
-	Result<void*> cv_SVD_SVD() {
+	Result<cv::SVD*> cv_SVD_SVD() {
 		try {
 			cv::SVD* ret = new cv::SVD();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SVD*>)
 	}
 	
-	Result<void*> cv_SVD_SVD_const__InputArrayX_int(void* src, int flags) {
+	Result<cv::SVD*> cv_SVD_SVD_const__InputArrayX_int(const cv::_InputArray* src, int flags) {
 		try {
-			cv::SVD* ret = new cv::SVD(*reinterpret_cast<const cv::_InputArray*>(src), flags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SVD* ret = new cv::SVD(*src, flags);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SVD*>)
 	}
 	
-	Result_void cv_SVD_compute_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int(void* src, void* w, void* u, void* vt, int flags) {
+	Result_void cv_SVD_compute_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* w, const cv::_OutputArray* u, const cv::_OutputArray* vt, int flags) {
 		try {
-			cv::SVD::compute(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(w), *reinterpret_cast<const cv::_OutputArray*>(u), *reinterpret_cast<const cv::_OutputArray*>(vt), flags);
+			cv::SVD::compute(*src, *w, *u, *vt, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SVD_compute_const__InputArrayX_const__OutputArrayX_int(void* src, void* w, int flags) {
+	Result_void cv_SVD_compute_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* src, const cv::_OutputArray* w, int flags) {
 		try {
-			cv::SVD::compute(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(w), flags);
+			cv::SVD::compute(*src, *w, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SVD_backSubst_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(void* w, void* u, void* vt, void* rhs, void* dst) {
+	Result_void cv_SVD_backSubst_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* w, const cv::_InputArray* u, const cv::_InputArray* vt, const cv::_InputArray* rhs, const cv::_OutputArray* dst) {
 		try {
-			cv::SVD::backSubst(*reinterpret_cast<const cv::_InputArray*>(w), *reinterpret_cast<const cv::_InputArray*>(u), *reinterpret_cast<const cv::_InputArray*>(vt), *reinterpret_cast<const cv::_InputArray*>(rhs), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::SVD::backSubst(*w, *u, *vt, *rhs, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SVD_solveZ_const__InputArrayX_const__OutputArrayX(void* src, void* dst) {
+	Result_void cv_SVD_solveZ_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* src, const cv::_OutputArray* dst) {
 		try {
-			cv::SVD::solveZ(*reinterpret_cast<const cv::_InputArray*>(src), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			cv::SVD::solveZ(*src, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SVD_backSubst_const_const__InputArrayX_const__OutputArrayX(void* instance, void* rhs, void* dst) {
+	Result_void cv_SVD_backSubst_const_const__InputArrayX_const__OutputArrayX(const cv::SVD* instance, const cv::_InputArray* rhs, const cv::_OutputArray* dst) {
 		try {
-			reinterpret_cast<cv::SVD*>(instance)->backSubst(*reinterpret_cast<const cv::_InputArray*>(rhs), *reinterpret_cast<const cv::_OutputArray*>(dst));
+			instance->backSubst(*rhs, *dst);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_SparseMat_flags_const(void* instance) {
+	Result<int> cv_SparseMat_flags_const(const cv::SparseMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat*>(instance)->flags;
-			return Ok<int>(ret);
+			int ret = instance->flags;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_SparseMat_setFlags_int(void* instance, int val) {
+	Result_void cv_SparseMat_setFlags_int(cv::SparseMat* instance, int val) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->flags = val;
+			instance->flags = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_SparseMat_hdr(void* instance) {
+	Result<cv::SparseMat::Hdr**> cv_SparseMat_hdr(cv::SparseMat* instance) {
 		try {
-			cv::SparseMat::Hdr* ret = reinterpret_cast<cv::SparseMat*>(instance)->hdr;
-			return Ok<void*>(new cv::SparseMat::Hdr*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMat::Hdr* ret = instance->hdr;
+			return Ok(new cv::SparseMat::Hdr*(ret));
+		} OCVRS_CATCH(Result<cv::SparseMat::Hdr**>)
 	}
 	
-	Result_void cv_SparseMat_setHdr_HdrX(void* instance, void* val) {
+	Result_void cv_SparseMat_setHdr_HdrX(cv::SparseMat* instance, cv::SparseMat::Hdr* val) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->hdr = reinterpret_cast<cv::SparseMat::Hdr*>(val);
+			instance->hdr = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -5084,512 +5084,512 @@ extern "C" {
 	void cv_SparseMat_delete(cv::SparseMat* instance) {
 		delete instance;
 	}
-	Result<void*> cv_SparseMat_SparseMat() {
+	Result<cv::SparseMat*> cv_SparseMat_SparseMat() {
 		try {
 			cv::SparseMat* ret = new cv::SparseMat();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMat*>)
 	}
 	
-	Result<void*> cv_SparseMat_SparseMat_int_const_intX_int(int dims, const int* _sizes, int _type) {
+	Result<cv::SparseMat*> cv_SparseMat_SparseMat_int_const_intX_int(int dims, const int* _sizes, int _type) {
 		try {
 			cv::SparseMat* ret = new cv::SparseMat(dims, _sizes, _type);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMat*>)
 	}
 	
-	Result<void*> cv_SparseMat_SparseMat_const_SparseMatX(void* m) {
+	Result<cv::SparseMat*> cv_SparseMat_SparseMat_const_SparseMatX(const cv::SparseMat* m) {
 		try {
-			cv::SparseMat* ret = new cv::SparseMat(*reinterpret_cast<const cv::SparseMat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMat* ret = new cv::SparseMat(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMat*>)
 	}
 	
-	Result<void*> cv_SparseMat_SparseMat_const_MatX(void* m) {
+	Result<cv::SparseMat*> cv_SparseMat_SparseMat_const_MatX(const cv::Mat* m) {
 		try {
-			cv::SparseMat* ret = new cv::SparseMat(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMat* ret = new cv::SparseMat(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMat*>)
 	}
 	
-	Result<void*> cv_SparseMat_clone_const(void* instance) {
+	Result<cv::SparseMat*> cv_SparseMat_clone_const(const cv::SparseMat* instance) {
 		try {
-			cv::SparseMat ret = reinterpret_cast<cv::SparseMat*>(instance)->clone();
-			return Ok<void*>(new cv::SparseMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMat ret = instance->clone();
+			return Ok(new cv::SparseMat(ret));
+		} OCVRS_CATCH(Result<cv::SparseMat*>)
 	}
 	
-	Result_void cv_SparseMat_copyTo_const_SparseMatX(void* instance, void* m) {
+	Result_void cv_SparseMat_copyTo_const_SparseMatX(const cv::SparseMat* instance, cv::SparseMat* m) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->copyTo(*reinterpret_cast<cv::SparseMat*>(m));
+			instance->copyTo(*m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_copyTo_const_MatX(void* instance, void* m) {
+	Result_void cv_SparseMat_copyTo_const_MatX(const cv::SparseMat* instance, cv::Mat* m) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->copyTo(*reinterpret_cast<cv::Mat*>(m));
+			instance->copyTo(*m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_convertTo_const_SparseMatX_int_double(void* instance, void* m, int rtype, double alpha) {
+	Result_void cv_SparseMat_convertTo_const_SparseMatX_int_double(const cv::SparseMat* instance, cv::SparseMat* m, int rtype, double alpha) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->convertTo(*reinterpret_cast<cv::SparseMat*>(m), rtype, alpha);
+			instance->convertTo(*m, rtype, alpha);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_convertTo_const_MatX_int_double_double(void* instance, void* m, int rtype, double alpha, double beta) {
+	Result_void cv_SparseMat_convertTo_const_MatX_int_double_double(const cv::SparseMat* instance, cv::Mat* m, int rtype, double alpha, double beta) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->convertTo(*reinterpret_cast<cv::Mat*>(m), rtype, alpha, beta);
+			instance->convertTo(*m, rtype, alpha, beta);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_assignTo_const_SparseMatX_int(void* instance, void* m, int type) {
+	Result_void cv_SparseMat_assignTo_const_SparseMatX_int(const cv::SparseMat* instance, cv::SparseMat* m, int type) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->assignTo(*reinterpret_cast<cv::SparseMat*>(m), type);
+			instance->assignTo(*m, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_create_int_const_intX_int(void* instance, int dims, const int* _sizes, int _type) {
+	Result_void cv_SparseMat_create_int_const_intX_int(cv::SparseMat* instance, int dims, const int* _sizes, int _type) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->create(dims, _sizes, _type);
+			instance->create(dims, _sizes, _type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_clear(void* instance) {
+	Result_void cv_SparseMat_clear(cv::SparseMat* instance) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->clear();
+			instance->clear();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_addref(void* instance) {
+	Result_void cv_SparseMat_addref(cv::SparseMat* instance) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->addref();
+			instance->addref();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_release(void* instance) {
+	Result_void cv_SparseMat_release(cv::SparseMat* instance) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->release();
+			instance->release();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_SparseMat_elemSize_const(void* instance) {
+	Result<size_t> cv_SparseMat_elemSize_const(const cv::SparseMat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat*>(instance)->elemSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->elemSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_SparseMat_elemSize1_const(void* instance) {
+	Result<size_t> cv_SparseMat_elemSize1_const(const cv::SparseMat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat*>(instance)->elemSize1();
-			return Ok<size_t>(ret);
+			size_t ret = instance->elemSize1();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_SparseMat_type_const(void* instance) {
+	Result<int> cv_SparseMat_type_const(const cv::SparseMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat*>(instance)->type();
-			return Ok<int>(ret);
+			int ret = instance->type();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_SparseMat_depth_const(void* instance) {
+	Result<int> cv_SparseMat_depth_const(const cv::SparseMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat*>(instance)->depth();
-			return Ok<int>(ret);
+			int ret = instance->depth();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_SparseMat_channels_const(void* instance) {
+	Result<int> cv_SparseMat_channels_const(const cv::SparseMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat*>(instance)->channels();
-			return Ok<int>(ret);
+			int ret = instance->channels();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<const int*> cv_SparseMat_size_const(void* instance) {
+	Result<const int*> cv_SparseMat_size_const(const cv::SparseMat* instance) {
 		try {
-			const int* ret = reinterpret_cast<cv::SparseMat*>(instance)->size();
-			return Ok<const int*>(ret);
+			const int* ret = instance->size();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const int*>)
 	}
 	
-	Result<int> cv_SparseMat_size_const_int(void* instance, int i) {
+	Result<int> cv_SparseMat_size_const_int(const cv::SparseMat* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat*>(instance)->size(i);
-			return Ok<int>(ret);
+			int ret = instance->size(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_SparseMat_dims_const(void* instance) {
+	Result<int> cv_SparseMat_dims_const(const cv::SparseMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat*>(instance)->dims();
-			return Ok<int>(ret);
+			int ret = instance->dims();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_SparseMat_nzcount_const(void* instance) {
+	Result<size_t> cv_SparseMat_nzcount_const(const cv::SparseMat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat*>(instance)->nzcount();
-			return Ok<size_t>(ret);
+			size_t ret = instance->nzcount();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_SparseMat_hash_const_int(void* instance, int i0) {
+	Result<size_t> cv_SparseMat_hash_const_int(const cv::SparseMat* instance, int i0) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat*>(instance)->hash(i0);
-			return Ok<size_t>(ret);
+			size_t ret = instance->hash(i0);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_SparseMat_hash_const_int_int(void* instance, int i0, int i1) {
+	Result<size_t> cv_SparseMat_hash_const_int_int(const cv::SparseMat* instance, int i0, int i1) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat*>(instance)->hash(i0, i1);
-			return Ok<size_t>(ret);
+			size_t ret = instance->hash(i0, i1);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_SparseMat_hash_const_int_int_int(void* instance, int i0, int i1, int i2) {
+	Result<size_t> cv_SparseMat_hash_const_int_int_int(const cv::SparseMat* instance, int i0, int i1, int i2) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat*>(instance)->hash(i0, i1, i2);
-			return Ok<size_t>(ret);
+			size_t ret = instance->hash(i0, i1, i2);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_SparseMat_hash_const_const_intX(void* instance, const int* idx) {
+	Result<size_t> cv_SparseMat_hash_const_const_intX(const cv::SparseMat* instance, const int* idx) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat*>(instance)->hash(idx);
-			return Ok<size_t>(ret);
+			size_t ret = instance->hash(idx);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<unsigned char*> cv_SparseMat_ptr_int_bool_size_tX(void* instance, int i0, bool createMissing, size_t* hashval) {
+	Result<unsigned char*> cv_SparseMat_ptr_int_bool_size_tX(cv::SparseMat* instance, int i0, bool createMissing, size_t* hashval) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::SparseMat*>(instance)->ptr(i0, createMissing, hashval);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(i0, createMissing, hashval);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<unsigned char*> cv_SparseMat_ptr_int_int_bool_size_tX(void* instance, int i0, int i1, bool createMissing, size_t* hashval) {
+	Result<unsigned char*> cv_SparseMat_ptr_int_int_bool_size_tX(cv::SparseMat* instance, int i0, int i1, bool createMissing, size_t* hashval) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::SparseMat*>(instance)->ptr(i0, i1, createMissing, hashval);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(i0, i1, createMissing, hashval);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<unsigned char*> cv_SparseMat_ptr_int_int_int_bool_size_tX(void* instance, int i0, int i1, int i2, bool createMissing, size_t* hashval) {
+	Result<unsigned char*> cv_SparseMat_ptr_int_int_int_bool_size_tX(cv::SparseMat* instance, int i0, int i1, int i2, bool createMissing, size_t* hashval) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::SparseMat*>(instance)->ptr(i0, i1, i2, createMissing, hashval);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(i0, i1, i2, createMissing, hashval);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result<unsigned char*> cv_SparseMat_ptr_const_intX_bool_size_tX(void* instance, const int* idx, bool createMissing, size_t* hashval) {
+	Result<unsigned char*> cv_SparseMat_ptr_const_intX_bool_size_tX(cv::SparseMat* instance, const int* idx, bool createMissing, size_t* hashval) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::SparseMat*>(instance)->ptr(idx, createMissing, hashval);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr(idx, createMissing, hashval);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result_void cv_SparseMat_erase_int_int_size_tX(void* instance, int i0, int i1, size_t* hashval) {
+	Result_void cv_SparseMat_erase_int_int_size_tX(cv::SparseMat* instance, int i0, int i1, size_t* hashval) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->erase(i0, i1, hashval);
+			instance->erase(i0, i1, hashval);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_erase_int_int_int_size_tX(void* instance, int i0, int i1, int i2, size_t* hashval) {
+	Result_void cv_SparseMat_erase_int_int_int_size_tX(cv::SparseMat* instance, int i0, int i1, int i2, size_t* hashval) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->erase(i0, i1, i2, hashval);
+			instance->erase(i0, i1, i2, hashval);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_erase_const_intX_size_tX(void* instance, const int* idx, size_t* hashval) {
+	Result_void cv_SparseMat_erase_const_intX_size_tX(cv::SparseMat* instance, const int* idx, size_t* hashval) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->erase(idx, hashval);
+			instance->erase(idx, hashval);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_SparseMat_begin(void* instance) {
+	Result<cv::SparseMatIterator*> cv_SparseMat_begin(cv::SparseMat* instance) {
 		try {
-			cv::SparseMatIterator ret = reinterpret_cast<cv::SparseMat*>(instance)->begin();
-			return Ok<void*>(new cv::SparseMatIterator(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatIterator ret = instance->begin();
+			return Ok(new cv::SparseMatIterator(ret));
+		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
 	
-	Result<void*> cv_SparseMat_begin_const(void* instance) {
+	Result<cv::SparseMatConstIterator*> cv_SparseMat_begin_const(const cv::SparseMat* instance) {
 		try {
-			cv::SparseMatConstIterator ret = reinterpret_cast<cv::SparseMat*>(instance)->begin();
-			return Ok<void*>(new cv::SparseMatConstIterator(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatConstIterator ret = instance->begin();
+			return Ok(new cv::SparseMatConstIterator(ret));
+		} OCVRS_CATCH(Result<cv::SparseMatConstIterator*>)
 	}
 	
-	Result<void*> cv_SparseMat_end(void* instance) {
+	Result<cv::SparseMatIterator*> cv_SparseMat_end(cv::SparseMat* instance) {
 		try {
-			cv::SparseMatIterator ret = reinterpret_cast<cv::SparseMat*>(instance)->end();
-			return Ok<void*>(new cv::SparseMatIterator(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatIterator ret = instance->end();
+			return Ok(new cv::SparseMatIterator(ret));
+		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
 	
-	Result<void*> cv_SparseMat_end_const(void* instance) {
+	Result<cv::SparseMatConstIterator*> cv_SparseMat_end_const(const cv::SparseMat* instance) {
 		try {
-			cv::SparseMatConstIterator ret = reinterpret_cast<cv::SparseMat*>(instance)->end();
-			return Ok<void*>(new cv::SparseMatConstIterator(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatConstIterator ret = instance->end();
+			return Ok(new cv::SparseMatConstIterator(ret));
+		} OCVRS_CATCH(Result<cv::SparseMatConstIterator*>)
 	}
 	
-	Result<void*> cv_SparseMat_node_size_t(void* instance, size_t nidx) {
+	Result<cv::SparseMat::Node**> cv_SparseMat_node_size_t(cv::SparseMat* instance, size_t nidx) {
 		try {
-			cv::SparseMat::Node* ret = reinterpret_cast<cv::SparseMat*>(instance)->node(nidx);
-			return Ok<void*>(new cv::SparseMat::Node*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMat::Node* ret = instance->node(nidx);
+			return Ok(new cv::SparseMat::Node*(ret));
+		} OCVRS_CATCH(Result<cv::SparseMat::Node**>)
 	}
 	
-	Result<void*> cv_SparseMat_node_const_size_t(void* instance, size_t nidx) {
+	Result<const cv::SparseMat::Node**> cv_SparseMat_node_const_size_t(const cv::SparseMat* instance, size_t nidx) {
 		try {
-			const cv::SparseMat::Node* ret = reinterpret_cast<cv::SparseMat*>(instance)->node(nidx);
-			return Ok<void*>(new const cv::SparseMat::Node*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			const cv::SparseMat::Node* ret = instance->node(nidx);
+			return Ok(new const cv::SparseMat::Node*(ret));
+		} OCVRS_CATCH(Result<const cv::SparseMat::Node**>)
 	}
 	
-	Result<unsigned char*> cv_SparseMat_newNode_const_intX_size_t(void* instance, const int* idx, size_t hashval) {
+	Result<unsigned char*> cv_SparseMat_newNode_const_intX_size_t(cv::SparseMat* instance, const int* idx, size_t hashval) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::SparseMat*>(instance)->newNode(idx, hashval);
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->newNode(idx, hashval);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result_void cv_SparseMat_removeNode_size_t_size_t_size_t(void* instance, size_t hidx, size_t nidx, size_t previdx) {
+	Result_void cv_SparseMat_removeNode_size_t_size_t_size_t(cv::SparseMat* instance, size_t hidx, size_t nidx, size_t previdx) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->removeNode(hidx, nidx, previdx);
+			instance->removeNode(hidx, nidx, previdx);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_SparseMat_resizeHashTab_size_t(void* instance, size_t newsize) {
+	Result_void cv_SparseMat_resizeHashTab_size_t(cv::SparseMat* instance, size_t newsize) {
 		try {
-			reinterpret_cast<cv::SparseMat*>(instance)->resizeHashTab(newsize);
+			instance->resizeHashTab(newsize);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_SparseMat_Hdr_refcount_const(void* instance) {
+	Result<int> cv_SparseMat_Hdr_refcount_const(const cv::SparseMat::Hdr* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->refcount;
-			return Ok<int>(ret);
+			int ret = instance->refcount;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setRefcount_int(void* instance, int val) {
+	Result_void cv_SparseMat_Hdr_setRefcount_int(cv::SparseMat::Hdr* instance, int val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->refcount = val;
+			instance->refcount = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_SparseMat_Hdr_dims_const(void* instance) {
+	Result<int> cv_SparseMat_Hdr_dims_const(const cv::SparseMat::Hdr* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->dims;
-			return Ok<int>(ret);
+			int ret = instance->dims;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setDims_int(void* instance, int val) {
+	Result_void cv_SparseMat_Hdr_setDims_int(cv::SparseMat::Hdr* instance, int val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->dims = val;
+			instance->dims = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_SparseMat_Hdr_valueOffset_const(void* instance) {
+	Result<int> cv_SparseMat_Hdr_valueOffset_const(const cv::SparseMat::Hdr* instance) {
 		try {
-			int ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->valueOffset;
-			return Ok<int>(ret);
+			int ret = instance->valueOffset;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setValueOffset_int(void* instance, int val) {
+	Result_void cv_SparseMat_Hdr_setValueOffset_int(cv::SparseMat::Hdr* instance, int val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->valueOffset = val;
+			instance->valueOffset = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_SparseMat_Hdr_nodeSize_const(void* instance) {
+	Result<size_t> cv_SparseMat_Hdr_nodeSize_const(const cv::SparseMat::Hdr* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->nodeSize;
-			return Ok<size_t>(ret);
+			size_t ret = instance->nodeSize;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setNodeSize_size_t(void* instance, size_t val) {
+	Result_void cv_SparseMat_Hdr_setNodeSize_size_t(cv::SparseMat::Hdr* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->nodeSize = val;
+			instance->nodeSize = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_SparseMat_Hdr_nodeCount_const(void* instance) {
+	Result<size_t> cv_SparseMat_Hdr_nodeCount_const(const cv::SparseMat::Hdr* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->nodeCount;
-			return Ok<size_t>(ret);
+			size_t ret = instance->nodeCount;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setNodeCount_size_t(void* instance, size_t val) {
+	Result_void cv_SparseMat_Hdr_setNodeCount_size_t(cv::SparseMat::Hdr* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->nodeCount = val;
+			instance->nodeCount = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_SparseMat_Hdr_freeList_const(void* instance) {
+	Result<size_t> cv_SparseMat_Hdr_freeList_const(const cv::SparseMat::Hdr* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->freeList;
-			return Ok<size_t>(ret);
+			size_t ret = instance->freeList;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setFreeList_size_t(void* instance, size_t val) {
+	Result_void cv_SparseMat_Hdr_setFreeList_size_t(cv::SparseMat::Hdr* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->freeList = val;
+			instance->freeList = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_SparseMat_Hdr_pool(void* instance) {
+	Result<std::vector<unsigned char>*> cv_SparseMat_Hdr_pool(cv::SparseMat::Hdr* instance) {
 		try {
-			std::vector<unsigned char> ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->pool;
-			return Ok<void*>(new std::vector<unsigned char>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<unsigned char> ret = instance->pool;
+			return Ok(new std::vector<unsigned char>(ret));
+		} OCVRS_CATCH(Result<std::vector<unsigned char>*>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setPool_vector_unsigned_char_(void* instance, void* val) {
+	Result_void cv_SparseMat_Hdr_setPool_vector_unsigned_char_(cv::SparseMat::Hdr* instance, std::vector<unsigned char>* val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->pool = *reinterpret_cast<std::vector<unsigned char>*>(val);
+			instance->pool = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_SparseMat_Hdr_hashtab(void* instance) {
+	Result<std::vector<size_t>*> cv_SparseMat_Hdr_hashtab(cv::SparseMat::Hdr* instance) {
 		try {
-			std::vector<size_t> ret = reinterpret_cast<cv::SparseMat::Hdr*>(instance)->hashtab;
-			return Ok<void*>(new std::vector<size_t>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<size_t> ret = instance->hashtab;
+			return Ok(new std::vector<size_t>(ret));
+		} OCVRS_CATCH(Result<std::vector<size_t>*>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_setHashtab_vector_size_t_(void* instance, void* val) {
+	Result_void cv_SparseMat_Hdr_setHashtab_vector_size_t_(cv::SparseMat::Hdr* instance, std::vector<size_t>* val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->hashtab = *reinterpret_cast<std::vector<size_t>*>(val);
+			instance->hashtab = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int(*)[32]> cv_SparseMat_Hdr_size(void* instance) {
+	Result<int(*)[32]> cv_SparseMat_Hdr_size(cv::SparseMat::Hdr* instance) {
 		try {
-			int(*ret)[32] = &reinterpret_cast<cv::SparseMat::Hdr*>(instance)->size;
-			return Ok<int(*)[32]>(ret);
+			int(*ret)[32] = &instance->size;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int(*)[32]>)
 	}
 	
 	void cv_SparseMat_Hdr_delete(cv::SparseMat::Hdr* instance) {
 		delete instance;
 	}
-	Result<void*> cv_SparseMat_Hdr_Hdr_int_const_intX_int(int _dims, const int* _sizes, int _type) {
+	Result<cv::SparseMat::Hdr*> cv_SparseMat_Hdr_Hdr_int_const_intX_int(int _dims, const int* _sizes, int _type) {
 		try {
 			cv::SparseMat::Hdr* ret = new cv::SparseMat::Hdr(_dims, _sizes, _type);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMat::Hdr*>)
 	}
 	
-	Result_void cv_SparseMat_Hdr_clear(void* instance) {
+	Result_void cv_SparseMat_Hdr_clear(cv::SparseMat::Hdr* instance) {
 		try {
-			reinterpret_cast<cv::SparseMat::Hdr*>(instance)->clear();
+			instance->clear();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_SparseMat_Node_hashval_const(void* instance) {
+	Result<size_t> cv_SparseMat_Node_hashval_const(const cv::SparseMat::Node* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat::Node*>(instance)->hashval;
-			return Ok<size_t>(ret);
+			size_t ret = instance->hashval;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_SparseMat_Node_setHashval_size_t(void* instance, size_t val) {
+	Result_void cv_SparseMat_Node_setHashval_size_t(cv::SparseMat::Node* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Node*>(instance)->hashval = val;
+			instance->hashval = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_SparseMat_Node_next_const(void* instance) {
+	Result<size_t> cv_SparseMat_Node_next_const(const cv::SparseMat::Node* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMat::Node*>(instance)->next;
-			return Ok<size_t>(ret);
+			size_t ret = instance->next;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_SparseMat_Node_setNext_size_t(void* instance, size_t val) {
+	Result_void cv_SparseMat_Node_setNext_size_t(cv::SparseMat::Node* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::SparseMat::Node*>(instance)->next = val;
+			instance->next = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int(*)[32]> cv_SparseMat_Node_idx(void* instance) {
+	Result<int(*)[32]> cv_SparseMat_Node_idx(cv::SparseMat::Node* instance) {
 		try {
-			int(*ret)[32] = &reinterpret_cast<cv::SparseMat::Node*>(instance)->idx;
-			return Ok<int(*)[32]>(ret);
+			int(*ret)[32] = &instance->idx;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int(*)[32]>)
 	}
 	
 	void cv_SparseMat_Node_delete(cv::SparseMat::Node* instance) {
 		delete instance;
 	}
-	Result<void*> cv_SparseMatConstIterator_m_const(void* instance) {
+	Result<const cv::SparseMat**> cv_SparseMatConstIterator_m_const(const cv::SparseMatConstIterator* instance) {
 		try {
-			const cv::SparseMat* ret = reinterpret_cast<cv::SparseMatConstIterator*>(instance)->m;
-			return Ok<void*>(new const cv::SparseMat*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			const cv::SparseMat* ret = instance->m;
+			return Ok(new const cv::SparseMat*(ret));
+		} OCVRS_CATCH(Result<const cv::SparseMat**>)
 	}
 	
-	Result<size_t> cv_SparseMatConstIterator_hashidx_const(void* instance) {
+	Result<size_t> cv_SparseMatConstIterator_hashidx_const(const cv::SparseMatConstIterator* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::SparseMatConstIterator*>(instance)->hashidx;
-			return Ok<size_t>(ret);
+			size_t ret = instance->hashidx;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_SparseMatConstIterator_setHashidx_size_t(void* instance, size_t val) {
+	Result_void cv_SparseMatConstIterator_setHashidx_size_t(cv::SparseMatConstIterator* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::SparseMatConstIterator*>(instance)->hashidx = val;
+			instance->hashidx = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<unsigned char*> cv_SparseMatConstIterator_ptr(void* instance) {
+	Result<unsigned char*> cv_SparseMatConstIterator_ptr(cv::SparseMatConstIterator* instance) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::SparseMatConstIterator*>(instance)->ptr;
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->ptr;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result_void cv_SparseMatConstIterator_setPtr_unsigned_charX(void* instance, unsigned char* val) {
+	Result_void cv_SparseMatConstIterator_setPtr_unsigned_charX(cv::SparseMatConstIterator* instance, unsigned char* val) {
 		try {
-			reinterpret_cast<cv::SparseMatConstIterator*>(instance)->ptr = val;
+			instance->ptr = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -5597,37 +5597,37 @@ extern "C" {
 	void cv_SparseMatConstIterator_delete(cv::SparseMatConstIterator* instance) {
 		delete instance;
 	}
-	Result<void*> cv_SparseMatConstIterator_SparseMatConstIterator() {
+	Result<cv::SparseMatConstIterator*> cv_SparseMatConstIterator_SparseMatConstIterator() {
 		try {
 			cv::SparseMatConstIterator* ret = new cv::SparseMatConstIterator();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMatConstIterator*>)
 	}
 	
-	Result<void*> cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(void* _m) {
+	Result<cv::SparseMatConstIterator*> cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatX(const cv::SparseMat* _m) {
 		try {
-			cv::SparseMatConstIterator* ret = new cv::SparseMatConstIterator(reinterpret_cast<const cv::SparseMat*>(_m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatConstIterator* ret = new cv::SparseMatConstIterator(_m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMatConstIterator*>)
 	}
 	
-	Result<void*> cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorX(void* it) {
+	Result<cv::SparseMatConstIterator*> cv_SparseMatConstIterator_SparseMatConstIterator_const_SparseMatConstIteratorX(const cv::SparseMatConstIterator* it) {
 		try {
-			cv::SparseMatConstIterator* ret = new cv::SparseMatConstIterator(*reinterpret_cast<const cv::SparseMatConstIterator*>(it));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatConstIterator* ret = new cv::SparseMatConstIterator(*it);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMatConstIterator*>)
 	}
 	
-	Result<void*> cv_SparseMatConstIterator_node_const(void* instance) {
+	Result<const cv::SparseMat::Node**> cv_SparseMatConstIterator_node_const(const cv::SparseMatConstIterator* instance) {
 		try {
-			const cv::SparseMat::Node* ret = reinterpret_cast<cv::SparseMatConstIterator*>(instance)->node();
-			return Ok<void*>(new const cv::SparseMat::Node*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			const cv::SparseMat::Node* ret = instance->node();
+			return Ok(new const cv::SparseMat::Node*(ret));
+		} OCVRS_CATCH(Result<const cv::SparseMat::Node**>)
 	}
 	
-	Result_void cv_SparseMatConstIterator_seekEnd(void* instance) {
+	Result_void cv_SparseMatConstIterator_seekEnd(cv::SparseMatConstIterator* instance) {
 		try {
-			reinterpret_cast<cv::SparseMatConstIterator*>(instance)->seekEnd();
+			instance->seekEnd();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -5635,86 +5635,86 @@ extern "C" {
 	void cv_SparseMatIterator_delete(cv::SparseMatIterator* instance) {
 		delete instance;
 	}
-	Result<void*> cv_SparseMatIterator_SparseMatIterator() {
+	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator() {
 		try {
 			cv::SparseMatIterator* ret = new cv::SparseMatIterator();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
 	
-	Result<void*> cv_SparseMatIterator_SparseMatIterator_SparseMatX(void* _m) {
+	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator_SparseMatX(cv::SparseMat* _m) {
 		try {
-			cv::SparseMatIterator* ret = new cv::SparseMatIterator(reinterpret_cast<cv::SparseMat*>(_m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatIterator* ret = new cv::SparseMatIterator(_m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
 	
-	Result<void*> cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(void* _m, const int* idx) {
+	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator_SparseMatX_const_intX(cv::SparseMat* _m, const int* idx) {
 		try {
-			cv::SparseMatIterator* ret = new cv::SparseMatIterator(reinterpret_cast<cv::SparseMat*>(_m), idx);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatIterator* ret = new cv::SparseMatIterator(_m, idx);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
 	
-	Result<void*> cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorX(void* it) {
+	Result<cv::SparseMatIterator*> cv_SparseMatIterator_SparseMatIterator_const_SparseMatIteratorX(const cv::SparseMatIterator* it) {
 		try {
-			cv::SparseMatIterator* ret = new cv::SparseMatIterator(*reinterpret_cast<const cv::SparseMatIterator*>(it));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMatIterator* ret = new cv::SparseMatIterator(*it);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::SparseMatIterator*>)
 	}
 	
-	Result<void*> cv_SparseMatIterator_node_const(void* instance) {
+	Result<cv::SparseMat::Node**> cv_SparseMatIterator_node_const(const cv::SparseMatIterator* instance) {
 		try {
-			cv::SparseMat::Node* ret = reinterpret_cast<cv::SparseMatIterator*>(instance)->node();
-			return Ok<void*>(new cv::SparseMat::Node*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::SparseMat::Node* ret = instance->node();
+			return Ok(new cv::SparseMat::Node*(ret));
+		} OCVRS_CATCH(Result<cv::SparseMat::Node**>)
 	}
 	
-	Result_void cv_TLSDataContainer_cleanup(void* instance) {
+	Result_void cv_TLSDataContainer_cleanup(cv::TLSDataContainer* instance) {
 		try {
-			reinterpret_cast<cv::TLSDataContainer*>(instance)->cleanup();
+			instance->cleanup();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_TermCriteria_type_const(void* instance) {
+	Result<int> cv_TermCriteria_type_const(const cv::TermCriteria* instance) {
 		try {
-			int ret = reinterpret_cast<cv::TermCriteria*>(instance)->type;
-			return Ok<int>(ret);
+			int ret = instance->type;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_TermCriteria_setType_int(void* instance, int val) {
+	Result_void cv_TermCriteria_setType_int(cv::TermCriteria* instance, int val) {
 		try {
-			reinterpret_cast<cv::TermCriteria*>(instance)->type = val;
+			instance->type = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_TermCriteria_maxCount_const(void* instance) {
+	Result<int> cv_TermCriteria_maxCount_const(const cv::TermCriteria* instance) {
 		try {
-			int ret = reinterpret_cast<cv::TermCriteria*>(instance)->maxCount;
-			return Ok<int>(ret);
+			int ret = instance->maxCount;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_TermCriteria_setMaxCount_int(void* instance, int val) {
+	Result_void cv_TermCriteria_setMaxCount_int(cv::TermCriteria* instance, int val) {
 		try {
-			reinterpret_cast<cv::TermCriteria*>(instance)->maxCount = val;
+			instance->maxCount = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_TermCriteria_epsilon_const(void* instance) {
+	Result<double> cv_TermCriteria_epsilon_const(const cv::TermCriteria* instance) {
 		try {
-			double ret = reinterpret_cast<cv::TermCriteria*>(instance)->epsilon;
-			return Ok<double>(ret);
+			double ret = instance->epsilon;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_TermCriteria_setEpsilon_double(void* instance, double val) {
+	Result_void cv_TermCriteria_setEpsilon_double(cv::TermCriteria* instance, double val) {
 		try {
-			reinterpret_cast<cv::TermCriteria*>(instance)->epsilon = val;
+			instance->epsilon = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -5722,806 +5722,806 @@ extern "C" {
 	void cv_TermCriteria_delete(cv::TermCriteria* instance) {
 		delete instance;
 	}
-	Result<void*> cv_TermCriteria_TermCriteria() {
+	Result<cv::TermCriteria*> cv_TermCriteria_TermCriteria() {
 		try {
 			cv::TermCriteria* ret = new cv::TermCriteria();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria*>)
 	}
 	
-	Result<void*> cv_TermCriteria_TermCriteria_int_int_double(int type, int maxCount, double epsilon) {
+	Result<cv::TermCriteria*> cv_TermCriteria_TermCriteria_int_int_double(int type, int maxCount, double epsilon) {
 		try {
 			cv::TermCriteria* ret = new cv::TermCriteria(type, maxCount, epsilon);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria*>)
 	}
 	
-	Result<bool> cv_TermCriteria_isValid_const(void* instance) {
+	Result<bool> cv_TermCriteria_isValid_const(const cv::TermCriteria* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::TermCriteria*>(instance)->isValid();
-			return Ok<bool>(ret);
+			bool ret = instance->isValid();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	void cv_TickMeter_delete(cv::TickMeter* instance) {
 		delete instance;
 	}
-	Result<void*> cv_TickMeter_TickMeter() {
+	Result<cv::TickMeter*> cv_TickMeter_TickMeter() {
 		try {
 			cv::TickMeter* ret = new cv::TickMeter();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TickMeter*>)
 	}
 	
-	Result_void cv_TickMeter_start(void* instance) {
+	Result_void cv_TickMeter_start(cv::TickMeter* instance) {
 		try {
-			reinterpret_cast<cv::TickMeter*>(instance)->start();
+			instance->start();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_TickMeter_stop(void* instance) {
+	Result_void cv_TickMeter_stop(cv::TickMeter* instance) {
 		try {
-			reinterpret_cast<cv::TickMeter*>(instance)->stop();
+			instance->stop();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int64_t> cv_TickMeter_getTimeTicks_const(void* instance) {
+	Result<int64_t> cv_TickMeter_getTimeTicks_const(const cv::TickMeter* instance) {
 		try {
-			int64_t ret = reinterpret_cast<cv::TickMeter*>(instance)->getTimeTicks();
-			return Ok<int64_t>(ret);
+			int64_t ret = instance->getTimeTicks();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int64_t>)
 	}
 	
-	Result<double> cv_TickMeter_getTimeMicro_const(void* instance) {
+	Result<double> cv_TickMeter_getTimeMicro_const(const cv::TickMeter* instance) {
 		try {
-			double ret = reinterpret_cast<cv::TickMeter*>(instance)->getTimeMicro();
-			return Ok<double>(ret);
+			double ret = instance->getTimeMicro();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_TickMeter_getTimeMilli_const(void* instance) {
+	Result<double> cv_TickMeter_getTimeMilli_const(const cv::TickMeter* instance) {
 		try {
-			double ret = reinterpret_cast<cv::TickMeter*>(instance)->getTimeMilli();
-			return Ok<double>(ret);
+			double ret = instance->getTimeMilli();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_TickMeter_getTimeSec_const(void* instance) {
+	Result<double> cv_TickMeter_getTimeSec_const(const cv::TickMeter* instance) {
 		try {
-			double ret = reinterpret_cast<cv::TickMeter*>(instance)->getTimeSec();
-			return Ok<double>(ret);
+			double ret = instance->getTimeSec();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<int64_t> cv_TickMeter_getCounter_const(void* instance) {
+	Result<int64_t> cv_TickMeter_getCounter_const(const cv::TickMeter* instance) {
 		try {
-			int64_t ret = reinterpret_cast<cv::TickMeter*>(instance)->getCounter();
-			return Ok<int64_t>(ret);
+			int64_t ret = instance->getCounter();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int64_t>)
 	}
 	
-	Result_void cv_TickMeter_reset(void* instance) {
+	Result_void cv_TickMeter_reset(cv::TickMeter* instance) {
 		try {
-			reinterpret_cast<cv::TickMeter*>(instance)->reset();
+			instance->reset();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMat_flags_const(void* instance) {
+	Result<int> cv_UMat_flags_const(const cv::UMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->flags;
-			return Ok<int>(ret);
+			int ret = instance->flags;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMat_setFlags_int(void* instance, int val) {
+	Result_void cv_UMat_setFlags_int(cv::UMat* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->flags = val;
+			instance->flags = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMat_dims_const(void* instance) {
+	Result<int> cv_UMat_dims_const(const cv::UMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->dims;
-			return Ok<int>(ret);
+			int ret = instance->dims;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMat_setDims_int(void* instance, int val) {
+	Result_void cv_UMat_setDims_int(cv::UMat* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->dims = val;
+			instance->dims = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMat_rows_const(void* instance) {
+	Result<int> cv_UMat_rows_const(const cv::UMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->rows;
-			return Ok<int>(ret);
+			int ret = instance->rows;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMat_setRows_int(void* instance, int val) {
+	Result_void cv_UMat_setRows_int(cv::UMat* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->rows = val;
+			instance->rows = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMat_cols_const(void* instance) {
+	Result<int> cv_UMat_cols_const(const cv::UMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->cols;
-			return Ok<int>(ret);
+			int ret = instance->cols;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMat_setCols_int(void* instance, int val) {
+	Result_void cv_UMat_setCols_int(cv::UMat* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->cols = val;
+			instance->cols = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::UMatUsageFlags> cv_UMat_usageFlags_const(void* instance) {
+	Result<cv::UMatUsageFlags> cv_UMat_usageFlags_const(const cv::UMat* instance) {
 		try {
-			cv::UMatUsageFlags ret = reinterpret_cast<cv::UMat*>(instance)->usageFlags;
-			return Ok<cv::UMatUsageFlags>(ret);
+			cv::UMatUsageFlags ret = instance->usageFlags;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::UMatUsageFlags>)
 	}
 	
-	Result_void cv_UMat_setUsageFlags_UMatUsageFlags(void* instance, cv::UMatUsageFlags val) {
+	Result_void cv_UMat_setUsageFlags_UMatUsageFlags(cv::UMat* instance, cv::UMatUsageFlags val) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->usageFlags = val;
+			instance->usageFlags = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_UMat_u(void* instance) {
+	Result<cv::UMatData**> cv_UMat_u(cv::UMat* instance) {
 		try {
-			cv::UMatData* ret = reinterpret_cast<cv::UMat*>(instance)->u;
-			return Ok<void*>(new cv::UMatData*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMatData* ret = instance->u;
+			return Ok(new cv::UMatData*(ret));
+		} OCVRS_CATCH(Result<cv::UMatData**>)
 	}
 	
-	Result_void cv_UMat_setU_UMatDataX(void* instance, void* val) {
+	Result_void cv_UMat_setU_UMatDataX(cv::UMat* instance, cv::UMatData* val) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->u = reinterpret_cast<cv::UMatData*>(val);
+			instance->u = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_UMat_offset_const(void* instance) {
+	Result<size_t> cv_UMat_offset_const(const cv::UMat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::UMat*>(instance)->offset;
-			return Ok<size_t>(ret);
+			size_t ret = instance->offset;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_UMat_setOffset_size_t(void* instance, size_t val) {
+	Result_void cv_UMat_setOffset_size_t(cv::UMat* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->offset = val;
+			instance->offset = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_UMat_size_const(void* instance) {
+	Result<cv::MatSize*> cv_UMat_size_const(const cv::UMat* instance) {
 		try {
-			cv::MatSize ret = reinterpret_cast<cv::UMat*>(instance)->size;
-			return Ok<void*>(new cv::MatSize(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatSize ret = instance->size;
+			return Ok(new cv::MatSize(ret));
+		} OCVRS_CATCH(Result<cv::MatSize*>)
 	}
 	
-	Result<void*> cv_UMat_step_const(void* instance) {
+	Result<cv::MatStep*> cv_UMat_step_const(const cv::UMat* instance) {
 		try {
-			cv::MatStep ret = reinterpret_cast<cv::UMat*>(instance)->step;
-			return Ok<void*>(new cv::MatStep(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::MatStep ret = instance->step;
+			return Ok(new cv::MatStep(ret));
+		} OCVRS_CATCH(Result<cv::MatStep*>)
 	}
 	
 	void cv_UMat_delete(cv::UMat* instance) {
 		delete instance;
 	}
-	Result<void*> cv_UMat_UMat_UMatUsageFlags(cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_UMat_UMat_UMatUsageFlags(cv::UMatUsageFlags usageFlags) {
 		try {
 			cv::UMat* ret = new cv::UMat(usageFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_int_int_int_UMatUsageFlags(int rows, int cols, int type, cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_UMat_UMat_int_int_int_UMatUsageFlags(int rows, int cols, int type, cv::UMatUsageFlags usageFlags) {
 		try {
 			cv::UMat* ret = new cv::UMat(rows, cols, type, usageFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_Size_int_UMatUsageFlags(const cv::Size* size, int type, cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_UMat_UMat_Size_int_UMatUsageFlags(const cv::Size* size, int type, cv::UMatUsageFlags usageFlags) {
 		try {
 			cv::UMat* ret = new cv::UMat(*size, type, usageFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_int_int_int_const_ScalarX_UMatUsageFlags(int rows, int cols, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_UMat_UMat_int_int_int_const_ScalarX_UMatUsageFlags(int rows, int cols, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
 		try {
 			cv::UMat* ret = new cv::UMat(rows, cols, type, *s, usageFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_Size_int_const_ScalarX_UMatUsageFlags(const cv::Size* size, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_UMat_UMat_Size_int_const_ScalarX_UMatUsageFlags(const cv::Size* size, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
 		try {
 			cv::UMat* ret = new cv::UMat(*size, type, *s, usageFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(int ndims, const int* sizes, int type, cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_UMat_UMat_int_const_intX_int_UMatUsageFlags(int ndims, const int* sizes, int type, cv::UMatUsageFlags usageFlags) {
 		try {
 			cv::UMat* ret = new cv::UMat(ndims, sizes, type, usageFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_int_const_intX_int_const_ScalarX_UMatUsageFlags(int ndims, const int* sizes, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
+	Result<cv::UMat*> cv_UMat_UMat_int_const_intX_int_const_ScalarX_UMatUsageFlags(int ndims, const int* sizes, int type, const cv::Scalar* s, cv::UMatUsageFlags usageFlags) {
 		try {
 			cv::UMat* ret = new cv::UMat(ndims, sizes, type, *s, usageFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_const_UMatX(void* m) {
+	Result<cv::UMat*> cv_UMat_UMat_const_UMatX(const cv::UMat* m) {
 		try {
-			cv::UMat* ret = new cv::UMat(*reinterpret_cast<const cv::UMat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat* ret = new cv::UMat(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_const_UMatX_const_RangeX_const_RangeX(void* m, void* rowRange, void* colRange) {
+	Result<cv::UMat*> cv_UMat_UMat_const_UMatX_const_RangeX_const_RangeX(const cv::UMat* m, const cv::Range* rowRange, const cv::Range* colRange) {
 		try {
-			cv::UMat* ret = new cv::UMat(*reinterpret_cast<const cv::UMat*>(m), *reinterpret_cast<const cv::Range*>(rowRange), *reinterpret_cast<const cv::Range*>(colRange));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat* ret = new cv::UMat(*m, *rowRange, *colRange);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_const_UMatX_const_RectX(void* m, const cv::Rect* roi) {
+	Result<cv::UMat*> cv_UMat_UMat_const_UMatX_const_RectX(const cv::UMat* m, const cv::Rect* roi) {
 		try {
-			cv::UMat* ret = new cv::UMat(*reinterpret_cast<const cv::UMat*>(m), *roi);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat* ret = new cv::UMat(*m, *roi);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_UMat_const_UMatX_const_vector_Range_X(void* m, void* ranges) {
+	Result<cv::UMat*> cv_UMat_UMat_const_UMatX_const_vector_Range_X(const cv::UMat* m, const std::vector<cv::Range>* ranges) {
 		try {
-			cv::UMat* ret = new cv::UMat(*reinterpret_cast<const cv::UMat*>(m), *reinterpret_cast<const std::vector<cv::Range>*>(ranges));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat* ret = new cv::UMat(*m, *ranges);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_getMat_const_AccessFlag(void* instance, cv::AccessFlag flags) {
+	Result<cv::Mat*> cv_UMat_getMat_const_AccessFlag(const cv::UMat* instance, cv::AccessFlag flags) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::UMat*>(instance)->getMat(flags);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->getMat(flags);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv_UMat_row_const_int(void* instance, int y) {
+	Result<cv::UMat*> cv_UMat_row_const_int(const cv::UMat* instance, int y) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->row(y);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->row(y);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_col_const_int(void* instance, int x) {
+	Result<cv::UMat*> cv_UMat_col_const_int(const cv::UMat* instance, int x) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->col(x);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->col(x);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_rowRange_const_int_int(void* instance, int startrow, int endrow) {
+	Result<cv::UMat*> cv_UMat_rowRange_const_int_int(const cv::UMat* instance, int startrow, int endrow) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->rowRange(startrow, endrow);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->rowRange(startrow, endrow);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_rowRange_const_const_RangeX(void* instance, void* r) {
+	Result<cv::UMat*> cv_UMat_rowRange_const_const_RangeX(const cv::UMat* instance, const cv::Range* r) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->rowRange(*reinterpret_cast<const cv::Range*>(r));
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->rowRange(*r);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_colRange_const_int_int(void* instance, int startcol, int endcol) {
+	Result<cv::UMat*> cv_UMat_colRange_const_int_int(const cv::UMat* instance, int startcol, int endcol) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->colRange(startcol, endcol);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->colRange(startcol, endcol);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_colRange_const_const_RangeX(void* instance, void* r) {
+	Result<cv::UMat*> cv_UMat_colRange_const_const_RangeX(const cv::UMat* instance, const cv::Range* r) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->colRange(*reinterpret_cast<const cv::Range*>(r));
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->colRange(*r);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_diag_const_int(void* instance, int d) {
+	Result<cv::UMat*> cv_UMat_diag_const_int(const cv::UMat* instance, int d) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->diag(d);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->diag(d);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_diag_const_UMatX(void* d) {
+	Result<cv::UMat*> cv_UMat_diag_const_UMatX(const cv::UMat* d) {
 		try {
-			cv::UMat ret = cv::UMat::diag(*reinterpret_cast<const cv::UMat*>(d));
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = cv::UMat::diag(*d);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_clone_const(void* instance) {
+	Result<cv::UMat*> cv_UMat_clone_const(const cv::UMat* instance) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->clone();
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->clone();
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result_void cv_UMat_copyTo_const_const__OutputArrayX(void* instance, void* m) {
+	Result_void cv_UMat_copyTo_const_const__OutputArrayX(const cv::UMat* instance, const cv::_OutputArray* m) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->copyTo(*reinterpret_cast<const cv::_OutputArray*>(m));
+			instance->copyTo(*m);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_copyTo_const_const__OutputArrayX_const__InputArrayX(void* instance, void* m, void* mask) {
+	Result_void cv_UMat_copyTo_const_const__OutputArrayX_const__InputArrayX(const cv::UMat* instance, const cv::_OutputArray* m, const cv::_InputArray* mask) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->copyTo(*reinterpret_cast<const cv::_OutputArray*>(m), *reinterpret_cast<const cv::_InputArray*>(mask));
+			instance->copyTo(*m, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_convertTo_const_const__OutputArrayX_int_double_double(void* instance, void* m, int rtype, double alpha, double beta) {
+	Result_void cv_UMat_convertTo_const_const__OutputArrayX_int_double_double(const cv::UMat* instance, const cv::_OutputArray* m, int rtype, double alpha, double beta) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->convertTo(*reinterpret_cast<const cv::_OutputArray*>(m), rtype, alpha, beta);
+			instance->convertTo(*m, rtype, alpha, beta);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_assignTo_const_UMatX_int(void* instance, void* m, int type) {
+	Result_void cv_UMat_assignTo_const_UMatX_int(const cv::UMat* instance, cv::UMat* m, int type) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->assignTo(*reinterpret_cast<cv::UMat*>(m), type);
+			instance->assignTo(*m, type);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_UMat_setTo_const__InputArrayX_const__InputArrayX(void* instance, void* value, void* mask) {
+	Result<cv::UMat*> cv_UMat_setTo_const__InputArrayX_const__InputArrayX(cv::UMat* instance, const cv::_InputArray* value, const cv::_InputArray* mask) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->setTo(*reinterpret_cast<const cv::_InputArray*>(value), *reinterpret_cast<const cv::_InputArray*>(mask));
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->setTo(*value, *mask);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_reshape_const_int_int(void* instance, int cn, int rows) {
+	Result<cv::UMat*> cv_UMat_reshape_const_int_int(const cv::UMat* instance, int cn, int rows) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->reshape(cn, rows);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->reshape(cn, rows);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_reshape_const_int_int_const_intX(void* instance, int cn, int newndims, const int* newsz) {
+	Result<cv::UMat*> cv_UMat_reshape_const_int_int_const_intX(const cv::UMat* instance, int cn, int newndims, const int* newsz) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->reshape(cn, newndims, newsz);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->reshape(cn, newndims, newsz);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_t_const(void* instance) {
+	Result<cv::UMat*> cv_UMat_t_const(const cv::UMat* instance) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->t();
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->t();
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_inv_const_int(void* instance, int method) {
+	Result<cv::UMat*> cv_UMat_inv_const_int(const cv::UMat* instance, int method) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->inv(method);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->inv(method);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_mul_const_const__InputArrayX_double(void* instance, void* m, double scale) {
+	Result<cv::UMat*> cv_UMat_mul_const_const__InputArrayX_double(const cv::UMat* instance, const cv::_InputArray* m, double scale) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->mul(*reinterpret_cast<const cv::_InputArray*>(m), scale);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->mul(*m, scale);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<double> cv_UMat_dot_const_const__InputArrayX(void* instance, void* m) {
+	Result<double> cv_UMat_dot_const_const__InputArrayX(const cv::UMat* instance, const cv::_InputArray* m) {
 		try {
-			double ret = reinterpret_cast<cv::UMat*>(instance)->dot(*reinterpret_cast<const cv::_InputArray*>(m));
-			return Ok<double>(ret);
+			double ret = instance->dot(*m);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<void*> cv_UMat_zeros_int_int_int(int rows, int cols, int type) {
+	Result<cv::UMat*> cv_UMat_zeros_int_int_int(int rows, int cols, int type) {
 		try {
 			cv::UMat ret = cv::UMat::zeros(rows, cols, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_zeros_Size_int(const cv::Size* size, int type) {
+	Result<cv::UMat*> cv_UMat_zeros_Size_int(const cv::Size* size, int type) {
 		try {
 			cv::UMat ret = cv::UMat::zeros(*size, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_zeros_int_const_intX_int(int ndims, const int* sz, int type) {
+	Result<cv::UMat*> cv_UMat_zeros_int_const_intX_int(int ndims, const int* sz, int type) {
 		try {
 			cv::UMat ret = cv::UMat::zeros(ndims, sz, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_ones_int_int_int(int rows, int cols, int type) {
+	Result<cv::UMat*> cv_UMat_ones_int_int_int(int rows, int cols, int type) {
 		try {
 			cv::UMat ret = cv::UMat::ones(rows, cols, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_ones_Size_int(const cv::Size* size, int type) {
+	Result<cv::UMat*> cv_UMat_ones_Size_int(const cv::Size* size, int type) {
 		try {
 			cv::UMat ret = cv::UMat::ones(*size, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_ones_int_const_intX_int(int ndims, const int* sz, int type) {
+	Result<cv::UMat*> cv_UMat_ones_int_const_intX_int(int ndims, const int* sz, int type) {
 		try {
 			cv::UMat ret = cv::UMat::ones(ndims, sz, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_eye_int_int_int(int rows, int cols, int type) {
+	Result<cv::UMat*> cv_UMat_eye_int_int_int(int rows, int cols, int type) {
 		try {
 			cv::UMat ret = cv::UMat::eye(rows, cols, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<void*> cv_UMat_eye_Size_int(const cv::Size* size, int type) {
+	Result<cv::UMat*> cv_UMat_eye_Size_int(const cv::Size* size, int type) {
 		try {
 			cv::UMat ret = cv::UMat::eye(*size, type);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result_void cv_UMat_create_int_int_int_UMatUsageFlags(void* instance, int rows, int cols, int type, cv::UMatUsageFlags usageFlags) {
+	Result_void cv_UMat_create_int_int_int_UMatUsageFlags(cv::UMat* instance, int rows, int cols, int type, cv::UMatUsageFlags usageFlags) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->create(rows, cols, type, usageFlags);
+			instance->create(rows, cols, type, usageFlags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_create_Size_int_UMatUsageFlags(void* instance, const cv::Size* size, int type, cv::UMatUsageFlags usageFlags) {
+	Result_void cv_UMat_create_Size_int_UMatUsageFlags(cv::UMat* instance, const cv::Size* size, int type, cv::UMatUsageFlags usageFlags) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->create(*size, type, usageFlags);
+			instance->create(*size, type, usageFlags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_create_int_const_intX_int_UMatUsageFlags(void* instance, int ndims, const int* sizes, int type, cv::UMatUsageFlags usageFlags) {
+	Result_void cv_UMat_create_int_const_intX_int_UMatUsageFlags(cv::UMat* instance, int ndims, const int* sizes, int type, cv::UMatUsageFlags usageFlags) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->create(ndims, sizes, type, usageFlags);
+			instance->create(ndims, sizes, type, usageFlags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_create_const_vector_int_X_int_UMatUsageFlags(void* instance, void* sizes, int type, cv::UMatUsageFlags usageFlags) {
+	Result_void cv_UMat_create_const_vector_int_X_int_UMatUsageFlags(cv::UMat* instance, const std::vector<int>* sizes, int type, cv::UMatUsageFlags usageFlags) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->create(*reinterpret_cast<const std::vector<int>*>(sizes), type, usageFlags);
+			instance->create(*sizes, type, usageFlags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_addref(void* instance) {
+	Result_void cv_UMat_addref(cv::UMat* instance) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->addref();
+			instance->addref();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_release(void* instance) {
+	Result_void cv_UMat_release(cv::UMat* instance) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->release();
+			instance->release();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_deallocate(void* instance) {
+	Result_void cv_UMat_deallocate(cv::UMat* instance) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->deallocate();
+			instance->deallocate();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_locateROI_const_SizeX_PointX(void* instance, cv::Size* wholeSize, cv::Point* ofs) {
+	Result_void cv_UMat_locateROI_const_SizeX_PointX(const cv::UMat* instance, cv::Size* wholeSize, cv::Point* ofs) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->locateROI(*wholeSize, *ofs);
+			instance->locateROI(*wholeSize, *ofs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_UMat_adjustROI_int_int_int_int(void* instance, int dtop, int dbottom, int dleft, int dright) {
+	Result<cv::UMat*> cv_UMat_adjustROI_int_int_int_int(cv::UMat* instance, int dtop, int dbottom, int dleft, int dright) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::UMat*>(instance)->adjustROI(dtop, dbottom, dleft, dright);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->adjustROI(dtop, dbottom, dleft, dright);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result<bool> cv_UMat_isContinuous_const(void* instance) {
+	Result<bool> cv_UMat_isContinuous_const(const cv::UMat* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMat*>(instance)->isContinuous();
-			return Ok<bool>(ret);
+			bool ret = instance->isContinuous();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_UMat_isSubmatrix_const(void* instance) {
+	Result<bool> cv_UMat_isSubmatrix_const(const cv::UMat* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMat*>(instance)->isSubmatrix();
-			return Ok<bool>(ret);
+			bool ret = instance->isSubmatrix();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv_UMat_elemSize_const(void* instance) {
+	Result<size_t> cv_UMat_elemSize_const(const cv::UMat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::UMat*>(instance)->elemSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->elemSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_UMat_elemSize1_const(void* instance) {
+	Result<size_t> cv_UMat_elemSize1_const(const cv::UMat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::UMat*>(instance)->elemSize1();
-			return Ok<size_t>(ret);
+			size_t ret = instance->elemSize1();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_UMat_type_const(void* instance) {
+	Result<int> cv_UMat_type_const(const cv::UMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->type();
-			return Ok<int>(ret);
+			int ret = instance->type();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_UMat_depth_const(void* instance) {
+	Result<int> cv_UMat_depth_const(const cv::UMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->depth();
-			return Ok<int>(ret);
+			int ret = instance->depth();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_UMat_channels_const(void* instance) {
+	Result<int> cv_UMat_channels_const(const cv::UMat* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->channels();
-			return Ok<int>(ret);
+			int ret = instance->channels();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_UMat_step1_const_int(void* instance, int i) {
+	Result<size_t> cv_UMat_step1_const_int(const cv::UMat* instance, int i) {
 		try {
-			size_t ret = reinterpret_cast<cv::UMat*>(instance)->step1(i);
-			return Ok<size_t>(ret);
+			size_t ret = instance->step1(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<bool> cv_UMat_empty_const(void* instance) {
+	Result<bool> cv_UMat_empty_const(const cv::UMat* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMat*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv_UMat_total_const(void* instance) {
+	Result<size_t> cv_UMat_total_const(const cv::UMat* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::UMat*>(instance)->total();
-			return Ok<size_t>(ret);
+			size_t ret = instance->total();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_UMat_checkVector_const_int_int_bool(void* instance, int elemChannels, int depth, bool requireContinuous) {
+	Result<int> cv_UMat_checkVector_const_int_int_bool(const cv::UMat* instance, int elemChannels, int depth, bool requireContinuous) {
 		try {
-			int ret = reinterpret_cast<cv::UMat*>(instance)->checkVector(elemChannels, depth, requireContinuous);
-			return Ok<int>(ret);
+			int ret = instance->checkVector(elemChannels, depth, requireContinuous);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<void*> cv_UMat_UMat_UMatX(void* m) {
+	Result<cv::UMat*> cv_UMat_UMat_UMatX(cv::UMat* m) {
 		try {
-			cv::UMat* ret = new cv::UMat(*reinterpret_cast<cv::UMat*>(m));
-			return Ok<void*>(ret);
+			cv::UMat* ret = new cv::UMat(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::UMat*>)
+	}
+	
+	Result<void*> cv_UMat_handle_const_AccessFlag(const cv::UMat* instance, cv::AccessFlag accessFlags) {
+		try {
+			void* ret = instance->handle(accessFlags);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_UMat_handle_const_AccessFlag(void* instance, cv::AccessFlag accessFlags) {
+	Result_void cv_UMat_ndoffset_const_size_tX(const cv::UMat* instance, size_t* ofs) {
 		try {
-			void* ret = reinterpret_cast<cv::UMat*>(instance)->handle(accessFlags);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result_void cv_UMat_ndoffset_const_size_tX(void* instance, size_t* ofs) {
-		try {
-			reinterpret_cast<cv::UMat*>(instance)->ndoffset(ofs);
+			instance->ndoffset(ofs);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMat_updateContinuityFlag(void* instance) {
+	Result_void cv_UMat_updateContinuityFlag(cv::UMat* instance) {
 		try {
-			reinterpret_cast<cv::UMat*>(instance)->updateContinuityFlag();
+			instance->updateContinuityFlag();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMatData_urefcount_const(void* instance) {
+	Result<int> cv_UMatData_urefcount_const(const cv::UMatData* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMatData*>(instance)->urefcount;
-			return Ok<int>(ret);
+			int ret = instance->urefcount;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMatData_setUrefcount_int(void* instance, int val) {
+	Result_void cv_UMatData_setUrefcount_int(cv::UMatData* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->urefcount = val;
+			instance->urefcount = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMatData_refcount_const(void* instance) {
+	Result<int> cv_UMatData_refcount_const(const cv::UMatData* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMatData*>(instance)->refcount;
-			return Ok<int>(ret);
+			int ret = instance->refcount;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMatData_setRefcount_int(void* instance, int val) {
+	Result_void cv_UMatData_setRefcount_int(cv::UMatData* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->refcount = val;
+			instance->refcount = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<unsigned char*> cv_UMatData_data(void* instance) {
+	Result<unsigned char*> cv_UMatData_data(cv::UMatData* instance) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::UMatData*>(instance)->data;
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->data;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result_void cv_UMatData_setData_unsigned_charX(void* instance, unsigned char* val) {
+	Result_void cv_UMatData_setData_unsigned_charX(cv::UMatData* instance, unsigned char* val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->data = val;
+			instance->data = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<unsigned char*> cv_UMatData_origdata(void* instance) {
+	Result<unsigned char*> cv_UMatData_origdata(cv::UMatData* instance) {
 		try {
-			unsigned char* ret = reinterpret_cast<cv::UMatData*>(instance)->origdata;
-			return Ok<unsigned char*>(ret);
+			unsigned char* ret = instance->origdata;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
-	Result_void cv_UMatData_setOrigdata_unsigned_charX(void* instance, unsigned char* val) {
+	Result_void cv_UMatData_setOrigdata_unsigned_charX(cv::UMatData* instance, unsigned char* val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->origdata = val;
+			instance->origdata = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv_UMatData_size_const(void* instance) {
+	Result<size_t> cv_UMatData_size_const(const cv::UMatData* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::UMatData*>(instance)->size;
-			return Ok<size_t>(ret);
+			size_t ret = instance->size;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_UMatData_setSize_size_t(void* instance, size_t val) {
+	Result_void cv_UMatData_setSize_size_t(cv::UMatData* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->size = val;
+			instance->size = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::UMatData::MemoryFlag> cv_UMatData_flags_const(void* instance) {
+	Result<cv::UMatData::MemoryFlag> cv_UMatData_flags_const(const cv::UMatData* instance) {
 		try {
-			cv::UMatData::MemoryFlag ret = reinterpret_cast<cv::UMatData*>(instance)->flags;
-			return Ok<cv::UMatData::MemoryFlag>(ret);
+			cv::UMatData::MemoryFlag ret = instance->flags;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::UMatData::MemoryFlag>)
 	}
 	
-	Result_void cv_UMatData_setFlags_MemoryFlag(void* instance, cv::UMatData::MemoryFlag val) {
+	Result_void cv_UMatData_setFlags_MemoryFlag(cv::UMatData* instance, cv::UMatData::MemoryFlag val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->flags = val;
+			instance->flags = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_UMatData_handle(void* instance) {
+	Result<void*> cv_UMatData_handle(cv::UMatData* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::UMatData*>(instance)->handle;
-			return Ok<void*>(ret);
+			void* ret = instance->handle;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_UMatData_setHandle_voidX(void* instance, void* val) {
+	Result_void cv_UMatData_setHandle_voidX(cv::UMatData* instance, void* val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->handle = val;
+			instance->handle = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_UMatData_userdata(void* instance) {
+	Result<void*> cv_UMatData_userdata(cv::UMatData* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::UMatData*>(instance)->userdata;
-			return Ok<void*>(ret);
+			void* ret = instance->userdata;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_UMatData_setUserdata_voidX(void* instance, void* val) {
+	Result_void cv_UMatData_setUserdata_voidX(cv::UMatData* instance, void* val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->userdata = val;
+			instance->userdata = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMatData_allocatorFlags__const(void* instance) {
+	Result<int> cv_UMatData_allocatorFlags__const(const cv::UMatData* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMatData*>(instance)->allocatorFlags_;
-			return Ok<int>(ret);
+			int ret = instance->allocatorFlags_;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMatData_setAllocatorFlags__int(void* instance, int val) {
+	Result_void cv_UMatData_setAllocatorFlags__int(cv::UMatData* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->allocatorFlags_ = val;
+			instance->allocatorFlags_ = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_UMatData_mapcount_const(void* instance) {
+	Result<int> cv_UMatData_mapcount_const(const cv::UMatData* instance) {
 		try {
-			int ret = reinterpret_cast<cv::UMatData*>(instance)->mapcount;
-			return Ok<int>(ret);
+			int ret = instance->mapcount;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_UMatData_setMapcount_int(void* instance, int val) {
+	Result_void cv_UMatData_setMapcount_int(cv::UMatData* instance, int val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->mapcount = val;
+			instance->mapcount = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_UMatData_originalUMatData(void* instance) {
+	Result<cv::UMatData**> cv_UMatData_originalUMatData(cv::UMatData* instance) {
 		try {
-			cv::UMatData* ret = reinterpret_cast<cv::UMatData*>(instance)->originalUMatData;
-			return Ok<void*>(new cv::UMatData*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMatData* ret = instance->originalUMatData;
+			return Ok(new cv::UMatData*(ret));
+		} OCVRS_CATCH(Result<cv::UMatData**>)
 	}
 	
-	Result_void cv_UMatData_setOriginalUMatData_UMatDataX(void* instance, void* val) {
+	Result_void cv_UMatData_setOriginalUMatData_UMatDataX(cv::UMatData* instance, cv::UMatData* val) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->originalUMatData = reinterpret_cast<cv::UMatData*>(val);
+			instance->originalUMatData = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -6529,79 +6529,79 @@ extern "C" {
 	void cv_UMatData_delete(cv::UMatData* instance) {
 		delete instance;
 	}
-	Result_void cv_UMatData_lock(void* instance) {
+	Result_void cv_UMatData_lock(cv::UMatData* instance) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->lock();
+			instance->lock();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMatData_unlock(void* instance) {
+	Result_void cv_UMatData_unlock(cv::UMatData* instance) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->unlock();
+			instance->unlock();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_UMatData_hostCopyObsolete_const(void* instance) {
+	Result<bool> cv_UMatData_hostCopyObsolete_const(const cv::UMatData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMatData*>(instance)->hostCopyObsolete();
-			return Ok<bool>(ret);
+			bool ret = instance->hostCopyObsolete();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_UMatData_deviceCopyObsolete_const(void* instance) {
+	Result<bool> cv_UMatData_deviceCopyObsolete_const(const cv::UMatData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMatData*>(instance)->deviceCopyObsolete();
-			return Ok<bool>(ret);
+			bool ret = instance->deviceCopyObsolete();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_UMatData_deviceMemMapped_const(void* instance) {
+	Result<bool> cv_UMatData_deviceMemMapped_const(const cv::UMatData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMatData*>(instance)->deviceMemMapped();
-			return Ok<bool>(ret);
+			bool ret = instance->deviceMemMapped();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_UMatData_copyOnMap_const(void* instance) {
+	Result<bool> cv_UMatData_copyOnMap_const(const cv::UMatData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMatData*>(instance)->copyOnMap();
-			return Ok<bool>(ret);
+			bool ret = instance->copyOnMap();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_UMatData_tempUMat_const(void* instance) {
+	Result<bool> cv_UMatData_tempUMat_const(const cv::UMatData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMatData*>(instance)->tempUMat();
-			return Ok<bool>(ret);
+			bool ret = instance->tempUMat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_UMatData_tempCopiedUMat_const(void* instance) {
+	Result<bool> cv_UMatData_tempCopiedUMat_const(const cv::UMatData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::UMatData*>(instance)->tempCopiedUMat();
-			return Ok<bool>(ret);
+			bool ret = instance->tempCopiedUMat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_UMatData_markHostCopyObsolete_bool(void* instance, bool flag) {
+	Result_void cv_UMatData_markHostCopyObsolete_bool(cv::UMatData* instance, bool flag) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->markHostCopyObsolete(flag);
+			instance->markHostCopyObsolete(flag);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMatData_markDeviceCopyObsolete_bool(void* instance, bool flag) {
+	Result_void cv_UMatData_markDeviceCopyObsolete_bool(cv::UMatData* instance, bool flag) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->markDeviceCopyObsolete(flag);
+			instance->markDeviceCopyObsolete(flag);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_UMatData_markDeviceMemMapped_bool(void* instance, bool flag) {
+	Result_void cv_UMatData_markDeviceMemMapped_bool(cv::UMatData* instance, bool flag) {
 		try {
-			reinterpret_cast<cv::UMatData*>(instance)->markDeviceMemMapped(flag);
+			instance->markDeviceMemMapped(flag);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -6609,788 +6609,788 @@ extern "C" {
 	void cv__InputArray_delete(cv::_InputArray* instance) {
 		delete instance;
 	}
-	Result<void*> cv__InputArray__InputArray() {
+	Result<cv::_InputArray*> cv__InputArray__InputArray() {
 		try {
 			cv::_InputArray* ret = new cv::_InputArray();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_int_voidX(int _flags, void* _obj) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_int_voidX(int _flags, void* _obj) {
 		try {
 			cv::_InputArray* ret = new cv::_InputArray(_flags, _obj);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_const_MatX(void* m) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_MatX(const cv::Mat* m) {
 		try {
-			cv::_InputArray* ret = new cv::_InputArray(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputArray* ret = new cv::_InputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_const_MatExprX(void* expr) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_MatExprX(const cv::MatExpr* expr) {
 		try {
-			cv::_InputArray* ret = new cv::_InputArray(*reinterpret_cast<const cv::MatExpr*>(expr));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputArray* ret = new cv::_InputArray(*expr);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_const_vector_Mat_X(void* vec) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_vector_Mat_X(const std::vector<cv::Mat>* vec) {
 		try {
-			cv::_InputArray* ret = new cv::_InputArray(*reinterpret_cast<const std::vector<cv::Mat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputArray* ret = new cv::_InputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_const_vector_bool_X(void* vec) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_vector_bool_X(const std::vector<bool>* vec) {
 		try {
-			cv::_InputArray* ret = new cv::_InputArray(*reinterpret_cast<const std::vector<bool>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputArray* ret = new cv::_InputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_const_doubleX(const double* val) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_doubleX(const double* val) {
 		try {
 			cv::_InputArray* ret = new cv::_InputArray(*val);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_const_UMatX(void* um) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_UMatX(const cv::UMat* um) {
 		try {
-			cv::_InputArray* ret = new cv::_InputArray(*reinterpret_cast<const cv::UMat*>(um));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputArray* ret = new cv::_InputArray(*um);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray__InputArray_const_vector_UMat_X(void* umv) {
+	Result<cv::_InputArray*> cv__InputArray__InputArray_const_vector_UMat_X(const std::vector<cv::UMat>* umv) {
 		try {
-			cv::_InputArray* ret = new cv::_InputArray(*reinterpret_cast<const std::vector<cv::UMat>*>(umv));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputArray* ret = new cv::_InputArray(*umv);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv__InputArray_getMat_const_int(void* instance, int idx) {
+	Result<cv::Mat*> cv__InputArray_getMat_const_int(const cv::_InputArray* instance, int idx) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::_InputArray*>(instance)->getMat(idx);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->getMat(idx);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv__InputArray_getMat__const_int(void* instance, int idx) {
+	Result<cv::Mat*> cv__InputArray_getMat__const_int(const cv::_InputArray* instance, int idx) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::_InputArray*>(instance)->getMat_(idx);
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->getMat_(idx);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<void*> cv__InputArray_getUMat_const_int(void* instance, int idx) {
+	Result<cv::UMat*> cv__InputArray_getUMat_const_int(const cv::_InputArray* instance, int idx) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::_InputArray*>(instance)->getUMat(idx);
-			return Ok<void*>(new cv::UMat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat ret = instance->getUMat(idx);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
 	}
 	
-	Result_void cv__InputArray_getMatVector_const_vector_Mat_X(void* instance, void* mv) {
+	Result_void cv__InputArray_getMatVector_const_vector_Mat_X(const cv::_InputArray* instance, std::vector<cv::Mat>* mv) {
 		try {
-			reinterpret_cast<cv::_InputArray*>(instance)->getMatVector(*reinterpret_cast<std::vector<cv::Mat>*>(mv));
+			instance->getMatVector(*mv);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv__InputArray_getUMatVector_const_vector_UMat_X(void* instance, void* umv) {
+	Result_void cv__InputArray_getUMatVector_const_vector_UMat_X(const cv::_InputArray* instance, std::vector<cv::UMat>* umv) {
 		try {
-			reinterpret_cast<cv::_InputArray*>(instance)->getUMatVector(*reinterpret_cast<std::vector<cv::UMat>*>(umv));
+			instance->getUMatVector(*umv);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv__InputArray_getFlags_const(void* instance) {
+	Result<int> cv__InputArray_getFlags_const(const cv::_InputArray* instance) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->getFlags();
-			return Ok<int>(ret);
+			int ret = instance->getFlags();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<void*> cv__InputArray_getObj_const(void* instance) {
+	Result<void*> cv__InputArray_getObj_const(const cv::_InputArray* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::_InputArray*>(instance)->getObj();
-			return Ok<void*>(ret);
+			void* ret = instance->getObj();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::Size> cv__InputArray_getSz_const(void* instance) {
+	Result<cv::Size> cv__InputArray_getSz_const(const cv::_InputArray* instance) {
 		try {
-			cv::Size ret = reinterpret_cast<cv::_InputArray*>(instance)->getSz();
-			return Ok<cv::Size>(ret);
+			cv::Size ret = instance->getSz();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result<cv::_InputArray::KindFlag> cv__InputArray_kind_const(void* instance) {
+	Result<cv::_InputArray::KindFlag> cv__InputArray_kind_const(const cv::_InputArray* instance) {
 		try {
-			cv::_InputArray::KindFlag ret = reinterpret_cast<cv::_InputArray*>(instance)->kind();
-			return Ok<cv::_InputArray::KindFlag>(ret);
+			cv::_InputArray::KindFlag ret = instance->kind();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::_InputArray::KindFlag>)
 	}
 	
-	Result<int> cv__InputArray_dims_const_int(void* instance, int i) {
+	Result<int> cv__InputArray_dims_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->dims(i);
-			return Ok<int>(ret);
+			int ret = instance->dims(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv__InputArray_cols_const_int(void* instance, int i) {
+	Result<int> cv__InputArray_cols_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->cols(i);
-			return Ok<int>(ret);
+			int ret = instance->cols(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv__InputArray_rows_const_int(void* instance, int i) {
+	Result<int> cv__InputArray_rows_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->rows(i);
-			return Ok<int>(ret);
+			int ret = instance->rows(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<cv::Size> cv__InputArray_size_const_int(void* instance, int i) {
+	Result<cv::Size> cv__InputArray_size_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			cv::Size ret = reinterpret_cast<cv::_InputArray*>(instance)->size(i);
-			return Ok<cv::Size>(ret);
+			cv::Size ret = instance->size(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Size>)
 	}
 	
-	Result<int> cv__InputArray_sizend_const_intX_int(void* instance, int* sz, int i) {
+	Result<int> cv__InputArray_sizend_const_intX_int(const cv::_InputArray* instance, int* sz, int i) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->sizend(sz, i);
-			return Ok<int>(ret);
+			int ret = instance->sizend(sz, i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv__InputArray_sameSize_const_const__InputArrayX(void* instance, void* arr) {
+	Result<bool> cv__InputArray_sameSize_const_const__InputArrayX(const cv::_InputArray* instance, const cv::_InputArray* arr) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->sameSize(*reinterpret_cast<const cv::_InputArray*>(arr));
-			return Ok<bool>(ret);
+			bool ret = instance->sameSize(*arr);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv__InputArray_total_const_int(void* instance, int i) {
+	Result<size_t> cv__InputArray_total_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			size_t ret = reinterpret_cast<cv::_InputArray*>(instance)->total(i);
-			return Ok<size_t>(ret);
+			size_t ret = instance->total(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv__InputArray_type_const_int(void* instance, int i) {
+	Result<int> cv__InputArray_type_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->type(i);
-			return Ok<int>(ret);
+			int ret = instance->type(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv__InputArray_depth_const_int(void* instance, int i) {
+	Result<int> cv__InputArray_depth_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->depth(i);
-			return Ok<int>(ret);
+			int ret = instance->depth(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv__InputArray_channels_const_int(void* instance, int i) {
+	Result<int> cv__InputArray_channels_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			int ret = reinterpret_cast<cv::_InputArray*>(instance)->channels(i);
-			return Ok<int>(ret);
+			int ret = instance->channels(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv__InputArray_isContinuous_const_int(void* instance, int i) {
+	Result<bool> cv__InputArray_isContinuous_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isContinuous(i);
-			return Ok<bool>(ret);
+			bool ret = instance->isContinuous(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isSubmatrix_const_int(void* instance, int i) {
+	Result<bool> cv__InputArray_isSubmatrix_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isSubmatrix(i);
-			return Ok<bool>(ret);
+			bool ret = instance->isSubmatrix(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_empty_const(void* instance) {
+	Result<bool> cv__InputArray_empty_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->empty();
-			return Ok<bool>(ret);
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv__InputArray_copyTo_const_const__OutputArrayX(void* instance, void* arr) {
+	Result_void cv__InputArray_copyTo_const_const__OutputArrayX(const cv::_InputArray* instance, const cv::_OutputArray* arr) {
 		try {
-			reinterpret_cast<cv::_InputArray*>(instance)->copyTo(*reinterpret_cast<const cv::_OutputArray*>(arr));
+			instance->copyTo(*arr);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv__InputArray_copyTo_const_const__OutputArrayX_const__InputArrayX(void* instance, void* arr, void* mask) {
+	Result_void cv__InputArray_copyTo_const_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* instance, const cv::_OutputArray* arr, const cv::_InputArray* mask) {
 		try {
-			reinterpret_cast<cv::_InputArray*>(instance)->copyTo(*reinterpret_cast<const cv::_OutputArray*>(arr), *reinterpret_cast<const cv::_InputArray*>(mask));
+			instance->copyTo(*arr, *mask);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<size_t> cv__InputArray_offset_const_int(void* instance, int i) {
+	Result<size_t> cv__InputArray_offset_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			size_t ret = reinterpret_cast<cv::_InputArray*>(instance)->offset(i);
-			return Ok<size_t>(ret);
+			size_t ret = instance->offset(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv__InputArray_step_const_int(void* instance, int i) {
+	Result<size_t> cv__InputArray_step_const_int(const cv::_InputArray* instance, int i) {
 		try {
-			size_t ret = reinterpret_cast<cv::_InputArray*>(instance)->step(i);
-			return Ok<size_t>(ret);
+			size_t ret = instance->step(i);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<bool> cv__InputArray_isMat_const(void* instance) {
+	Result<bool> cv__InputArray_isMat_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isMat();
-			return Ok<bool>(ret);
+			bool ret = instance->isMat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isUMat_const(void* instance) {
+	Result<bool> cv__InputArray_isUMat_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isUMat();
-			return Ok<bool>(ret);
+			bool ret = instance->isUMat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isMatVector_const(void* instance) {
+	Result<bool> cv__InputArray_isMatVector_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isMatVector();
-			return Ok<bool>(ret);
+			bool ret = instance->isMatVector();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isUMatVector_const(void* instance) {
+	Result<bool> cv__InputArray_isUMatVector_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isUMatVector();
-			return Ok<bool>(ret);
+			bool ret = instance->isUMatVector();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isMatx_const(void* instance) {
+	Result<bool> cv__InputArray_isMatx_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isMatx();
-			return Ok<bool>(ret);
+			bool ret = instance->isMatx();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isVector_const(void* instance) {
+	Result<bool> cv__InputArray_isVector_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isVector();
-			return Ok<bool>(ret);
+			bool ret = instance->isVector();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isGpuMat_const(void* instance) {
+	Result<bool> cv__InputArray_isGpuMat_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isGpuMat();
-			return Ok<bool>(ret);
+			bool ret = instance->isGpuMat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__InputArray_isGpuMatVector_const(void* instance) {
+	Result<bool> cv__InputArray_isGpuMatVector_const(const cv::_InputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_InputArray*>(instance)->isGpuMatVector();
-			return Ok<bool>(ret);
+			bool ret = instance->isGpuMatVector();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	void cv__InputOutputArray_delete(cv::_InputOutputArray* instance) {
 		delete instance;
 	}
-	Result<void*> cv__InputOutputArray__InputOutputArray() {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray() {
 		try {
 			cv::_InputOutputArray* ret = new cv::_InputOutputArray();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_int_voidX(int _flags, void* _obj) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_int_voidX(int _flags, void* _obj) {
 		try {
 			cv::_InputOutputArray* ret = new cv::_InputOutputArray(_flags, _obj);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_MatX(void* m) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_MatX(cv::Mat* m) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_vector_Mat_X(void* vec) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_vector_Mat_X(std::vector<cv::Mat>* vec) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<std::vector<cv::Mat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_UMatX(void* m) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_UMatX(cv::UMat* m) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<cv::UMat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_vector_UMat_X(void* vec) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_vector_UMat_X(std::vector<cv::UMat>* vec) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<std::vector<cv::UMat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_const_MatX(void* m) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_const_MatX(const cv::Mat* m) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_const_vector_Mat_X(void* vec) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_const_vector_Mat_X(const std::vector<cv::Mat>* vec) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<const std::vector<cv::Mat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_const_UMatX(void* m) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_const_UMatX(const cv::UMat* m) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<const cv::UMat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
-	Result<void*> cv__InputOutputArray__InputOutputArray_const_vector_UMat_X(void* vec) {
+	Result<cv::_InputOutputArray*> cv__InputOutputArray__InputOutputArray_const_vector_UMat_X(const std::vector<cv::UMat>* vec) {
 		try {
-			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*reinterpret_cast<const std::vector<cv::UMat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_InputOutputArray* ret = new cv::_InputOutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 	void cv__OutputArray_delete(cv::_OutputArray* instance) {
 		delete instance;
 	}
-	Result<void*> cv__OutputArray__OutputArray() {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray() {
 		try {
 			cv::_OutputArray* ret = new cv::_OutputArray();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_int_voidX(int _flags, void* _obj) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_int_voidX(int _flags, void* _obj) {
 		try {
 			cv::_OutputArray* ret = new cv::_OutputArray(_flags, _obj);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_MatX(void* m) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_MatX(cv::Mat* m) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_vector_Mat_X(void* vec) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_vector_Mat_X(std::vector<cv::Mat>* vec) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<std::vector<cv::Mat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_UMatX(void* m) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_UMatX(cv::UMat* m) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<cv::UMat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_vector_UMat_X(void* vec) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_vector_UMat_X(std::vector<cv::UMat>* vec) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<std::vector<cv::UMat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_const_MatX(void* m) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_MatX(const cv::Mat* m) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_const_vector_Mat_X(void* vec) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_vector_Mat_X(const std::vector<cv::Mat>* vec) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<const std::vector<cv::Mat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_const_UMatX(void* m) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_UMatX(const cv::UMat* m) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<const cv::UMat*>(m));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv__OutputArray__OutputArray_const_vector_UMat_X(void* vec) {
+	Result<cv::_OutputArray*> cv__OutputArray__OutputArray_const_vector_UMat_X(const std::vector<cv::UMat>* vec) {
 		try {
-			cv::_OutputArray* ret = new cv::_OutputArray(*reinterpret_cast<const std::vector<cv::UMat>*>(vec));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::_OutputArray* ret = new cv::_OutputArray(*vec);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<bool> cv__OutputArray_fixedSize_const(void* instance) {
+	Result<bool> cv__OutputArray_fixedSize_const(const cv::_OutputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_OutputArray*>(instance)->fixedSize();
-			return Ok<bool>(ret);
+			bool ret = instance->fixedSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__OutputArray_fixedType_const(void* instance) {
+	Result<bool> cv__OutputArray_fixedType_const(const cv::_OutputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_OutputArray*>(instance)->fixedType();
-			return Ok<bool>(ret);
+			bool ret = instance->fixedType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv__OutputArray_needed_const(void* instance) {
+	Result<bool> cv__OutputArray_needed_const(const cv::_OutputArray* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::_OutputArray*>(instance)->needed();
-			return Ok<bool>(ret);
+			bool ret = instance->needed();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv__OutputArray_getMatRef_const_int(void* instance, int i) {
+	Result<cv::Mat*> cv__OutputArray_getMatRef_const_int(const cv::_OutputArray* instance, int i) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::_OutputArray*>(instance)->getMatRef(i);
-			return Ok<void*>(new cv::Mat(ret));
+			cv::Mat ret = instance->getMatRef(i);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
+	}
+	
+	Result<cv::UMat*> cv__OutputArray_getUMatRef_const_int(const cv::_OutputArray* instance, int i) {
+		try {
+			cv::UMat ret = instance->getUMatRef(i);
+			return Ok(new cv::UMat(ret));
+		} OCVRS_CATCH(Result<cv::UMat*>)
+	}
+	
+	Result_void cv__OutputArray_create_const_Size_int_int_bool_DepthMask(const cv::_OutputArray* instance, const cv::Size* sz, int type, int i, bool allowTransposed, cv::_OutputArray::DepthMask fixedDepthMask) {
+		try {
+			instance->create(*sz, type, i, allowTransposed, fixedDepthMask);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_create_const_int_int_int_int_bool_DepthMask(const cv::_OutputArray* instance, int rows, int cols, int type, int i, bool allowTransposed, cv::_OutputArray::DepthMask fixedDepthMask) {
+		try {
+			instance->create(rows, cols, type, i, allowTransposed, fixedDepthMask);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(const cv::_OutputArray* instance, int dims, const int* size, int type, int i, bool allowTransposed, cv::_OutputArray::DepthMask fixedDepthMask) {
+		try {
+			instance->create(dims, size, type, i, allowTransposed, fixedDepthMask);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_createSameSize_const_const__InputArrayX_int(const cv::_OutputArray* instance, const cv::_InputArray* arr, int mtype) {
+		try {
+			instance->createSameSize(*arr, mtype);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_release_const(const cv::_OutputArray* instance) {
+		try {
+			instance->release();
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_clear_const(const cv::_OutputArray* instance) {
+		try {
+			instance->clear();
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_setTo_const_const__InputArrayX_const__InputArrayX(const cv::_OutputArray* instance, const cv::_InputArray* value, const cv::_InputArray* mask) {
+		try {
+			instance->setTo(*value, *mask);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_assign_const_const_UMatX(const cv::_OutputArray* instance, const cv::UMat* u) {
+		try {
+			instance->assign(*u);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_assign_const_const_MatX(const cv::_OutputArray* instance, const cv::Mat* m) {
+		try {
+			instance->assign(*m);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_assign_const_const_vector_UMat_X(const cv::_OutputArray* instance, const std::vector<cv::UMat>* v) {
+		try {
+			instance->assign(*v);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_assign_const_const_vector_Mat_X(const cv::_OutputArray* instance, const std::vector<cv::Mat>* v) {
+		try {
+			instance->assign(*v);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_move_const_UMatX(const cv::_OutputArray* instance, cv::UMat* u) {
+		try {
+			instance->move(*u);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv__OutputArray_move_const_MatX(const cv::_OutputArray* instance, cv::Mat* m) {
+		try {
+			instance->move(*m);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result<void*> cv_detail_CheckContext_func_const(const cv::detail::CheckContext* instance) {
+		try {
+			const char* ret = instance->func;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv__OutputArray_getUMatRef_const_int(void* instance, int i) {
+	Result<void*> cv_detail_CheckContext_file_const(const cv::detail::CheckContext* instance) {
 		try {
-			cv::UMat ret = reinterpret_cast<cv::_OutputArray*>(instance)->getUMatRef(i);
-			return Ok<void*>(new cv::UMat(ret));
+			const char* ret = instance->file;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv__OutputArray_create_const_Size_int_int_bool_DepthMask(void* instance, const cv::Size* sz, int type, int i, bool allowTransposed, cv::_OutputArray::DepthMask fixedDepthMask) {
+	Result<int> cv_detail_CheckContext_line_const(const cv::detail::CheckContext* instance) {
 		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->create(*sz, type, i, allowTransposed, fixedDepthMask);
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_create_const_int_int_int_int_bool_DepthMask(void* instance, int rows, int cols, int type, int i, bool allowTransposed, cv::_OutputArray::DepthMask fixedDepthMask) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->create(rows, cols, type, i, allowTransposed, fixedDepthMask);
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_create_const_int_const_intX_int_int_bool_DepthMask(void* instance, int dims, const int* size, int type, int i, bool allowTransposed, cv::_OutputArray::DepthMask fixedDepthMask) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->create(dims, size, type, i, allowTransposed, fixedDepthMask);
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_createSameSize_const_const__InputArrayX_int(void* instance, void* arr, int mtype) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->createSameSize(*reinterpret_cast<const cv::_InputArray*>(arr), mtype);
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_release_const(void* instance) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->release();
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_clear_const(void* instance) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->clear();
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_setTo_const_const__InputArrayX_const__InputArrayX(void* instance, void* value, void* mask) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->setTo(*reinterpret_cast<const cv::_InputArray*>(value), *reinterpret_cast<const cv::_InputArray*>(mask));
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_assign_const_const_UMatX(void* instance, void* u) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->assign(*reinterpret_cast<const cv::UMat*>(u));
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_assign_const_const_MatX(void* instance, void* m) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->assign(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_assign_const_const_vector_UMat_X(void* instance, void* v) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->assign(*reinterpret_cast<const std::vector<cv::UMat>*>(v));
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_assign_const_const_vector_Mat_X(void* instance, void* v) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->assign(*reinterpret_cast<const std::vector<cv::Mat>*>(v));
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_move_const_UMatX(void* instance, void* u) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->move(*reinterpret_cast<cv::UMat*>(u));
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result_void cv__OutputArray_move_const_MatX(void* instance, void* m) {
-		try {
-			reinterpret_cast<cv::_OutputArray*>(instance)->move(*reinterpret_cast<cv::Mat*>(m));
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result<void*> cv_detail_CheckContext_func_const(void* instance) {
-		try {
-			const char* ret = reinterpret_cast<cv::detail::CheckContext*>(instance)->func;
-			return Ok<void*>(ocvrs_create_string(ret));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<void*> cv_detail_CheckContext_file_const(void* instance) {
-		try {
-			const char* ret = reinterpret_cast<cv::detail::CheckContext*>(instance)->file;
-			return Ok<void*>(ocvrs_create_string(ret));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<int> cv_detail_CheckContext_line_const(void* instance) {
-		try {
-			int ret = reinterpret_cast<cv::detail::CheckContext*>(instance)->line;
-			return Ok<int>(ret);
+			int ret = instance->line;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_detail_CheckContext_setLine_int(void* instance, int val) {
+	Result_void cv_detail_CheckContext_setLine_int(cv::detail::CheckContext* instance, int val) {
 		try {
-			reinterpret_cast<cv::detail::CheckContext*>(instance)->line = val;
+			instance->line = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::detail::TestOp> cv_detail_CheckContext_testOp_const(void* instance) {
+	Result<cv::detail::TestOp> cv_detail_CheckContext_testOp_const(const cv::detail::CheckContext* instance) {
 		try {
-			cv::detail::TestOp ret = reinterpret_cast<cv::detail::CheckContext*>(instance)->testOp;
-			return Ok<cv::detail::TestOp>(ret);
+			cv::detail::TestOp ret = instance->testOp;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::detail::TestOp>)
 	}
 	
-	Result_void cv_detail_CheckContext_setTestOp_TestOp(void* instance, cv::detail::TestOp val) {
+	Result_void cv_detail_CheckContext_setTestOp_TestOp(cv::detail::CheckContext* instance, cv::detail::TestOp val) {
 		try {
-			reinterpret_cast<cv::detail::CheckContext*>(instance)->testOp = val;
+			instance->testOp = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_detail_CheckContext_message_const(void* instance) {
+	Result<void*> cv_detail_CheckContext_message_const(const cv::detail::CheckContext* instance) {
 		try {
-			const char* ret = reinterpret_cast<cv::detail::CheckContext*>(instance)->message;
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->message;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_detail_CheckContext_p1_str_const(void* instance) {
+	Result<void*> cv_detail_CheckContext_p1_str_const(const cv::detail::CheckContext* instance) {
 		try {
-			const char* ret = reinterpret_cast<cv::detail::CheckContext*>(instance)->p1_str;
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->p1_str;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_detail_CheckContext_p2_str_const(void* instance) {
+	Result<void*> cv_detail_CheckContext_p2_str_const(const cv::detail::CheckContext* instance) {
 		try {
-			const char* ret = reinterpret_cast<cv::detail::CheckContext*>(instance)->p2_str;
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->p2_str;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	void cv_Detail_CheckContext_delete(cv::detail::CheckContext* instance) {
 		delete instance;
 	}
-	Result<void*> cv_instr_NodeData_m_funName_const(void* instance) {
+	Result<void*> cv_instr_NodeData_m_funName_const(const cv::instr::NodeData* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_funName;
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->m_funName;
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_funName_String(void* instance, char* val) {
+	Result_void cv_instr_NodeData_setM_funName_String(cv::instr::NodeData* instance, char* val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_funName = std::string(val);
+			instance->m_funName = std::string(val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::instr::TYPE> cv_instr_NodeData_m_instrType_const(void* instance) {
+	Result<cv::instr::TYPE> cv_instr_NodeData_m_instrType_const(const cv::instr::NodeData* instance) {
 		try {
-			cv::instr::TYPE ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_instrType;
-			return Ok<cv::instr::TYPE>(ret);
+			cv::instr::TYPE ret = instance->m_instrType;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::instr::TYPE>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_instrType_TYPE(void* instance, cv::instr::TYPE val) {
+	Result_void cv_instr_NodeData_setM_instrType_TYPE(cv::instr::NodeData* instance, cv::instr::TYPE val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_instrType = val;
+			instance->m_instrType = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::instr::IMPL> cv_instr_NodeData_m_implType_const(void* instance) {
+	Result<cv::instr::IMPL> cv_instr_NodeData_m_implType_const(const cv::instr::NodeData* instance) {
 		try {
-			cv::instr::IMPL ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_implType;
-			return Ok<cv::instr::IMPL>(ret);
+			cv::instr::IMPL ret = instance->m_implType;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::instr::IMPL>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_implType_IMPL(void* instance, cv::instr::IMPL val) {
+	Result_void cv_instr_NodeData_setM_implType_IMPL(cv::instr::NodeData* instance, cv::instr::IMPL val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_implType = val;
+			instance->m_implType = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_instr_NodeData_m_fileName_const(void* instance) {
+	Result<void*> cv_instr_NodeData_m_fileName_const(const cv::instr::NodeData* instance) {
 		try {
-			const char* ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_fileName;
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->m_fileName;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_instr_NodeData_m_lineNum_const(void* instance) {
+	Result<int> cv_instr_NodeData_m_lineNum_const(const cv::instr::NodeData* instance) {
 		try {
-			int ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_lineNum;
-			return Ok<int>(ret);
+			int ret = instance->m_lineNum;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_lineNum_int(void* instance, int val) {
+	Result_void cv_instr_NodeData_setM_lineNum_int(cv::instr::NodeData* instance, int val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_lineNum = val;
+			instance->m_lineNum = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_instr_NodeData_m_retAddress(void* instance) {
+	Result<void*> cv_instr_NodeData_m_retAddress(cv::instr::NodeData* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_retAddress;
-			return Ok<void*>(ret);
+			void* ret = instance->m_retAddress;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_retAddress_voidX(void* instance, void* val) {
+	Result_void cv_instr_NodeData_setM_retAddress_voidX(cv::instr::NodeData* instance, void* val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_retAddress = val;
+			instance->m_retAddress = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_instr_NodeData_m_alwaysExpand_const(void* instance) {
+	Result<bool> cv_instr_NodeData_m_alwaysExpand_const(const cv::instr::NodeData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_alwaysExpand;
-			return Ok<bool>(ret);
+			bool ret = instance->m_alwaysExpand;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_alwaysExpand_bool(void* instance, bool val) {
+	Result_void cv_instr_NodeData_setM_alwaysExpand_bool(cv::instr::NodeData* instance, bool val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_alwaysExpand = val;
+			instance->m_alwaysExpand = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_instr_NodeData_m_funError_const(void* instance) {
+	Result<bool> cv_instr_NodeData_m_funError_const(const cv::instr::NodeData* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_funError;
-			return Ok<bool>(ret);
+			bool ret = instance->m_funError;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_funError_bool(void* instance, bool val) {
+	Result_void cv_instr_NodeData_setM_funError_bool(cv::instr::NodeData* instance, bool val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_funError = val;
+			instance->m_funError = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_instr_NodeData_m_counter_const(void* instance) {
+	Result<int> cv_instr_NodeData_m_counter_const(const cv::instr::NodeData* instance) {
 		try {
-			int ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_counter;
-			return Ok<int>(ret);
+			int ret = instance->m_counter;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_counter_int(void* instance, int val) {
+	Result_void cv_instr_NodeData_setM_counter_int(cv::instr::NodeData* instance, int val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_counter = val;
+			instance->m_counter = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<uint64_t> cv_instr_NodeData_m_ticksTotal_const(void* instance) {
+	Result<uint64_t> cv_instr_NodeData_m_ticksTotal_const(const cv::instr::NodeData* instance) {
 		try {
-			uint64_t ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_ticksTotal;
-			return Ok<uint64_t>(ret);
+			uint64_t ret = instance->m_ticksTotal;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<uint64_t>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_ticksTotal_uint64_t(void* instance, uint64_t val) {
+	Result_void cv_instr_NodeData_setM_ticksTotal_uint64_t(cv::instr::NodeData* instance, uint64_t val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_ticksTotal = val;
+			instance->m_ticksTotal = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_instr_NodeData_m_threads_const(void* instance) {
+	Result<int> cv_instr_NodeData_m_threads_const(const cv::instr::NodeData* instance) {
 		try {
-			int ret = reinterpret_cast<cv::instr::NodeData*>(instance)->m_threads;
-			return Ok<int>(ret);
+			int ret = instance->m_threads;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_instr_NodeData_setM_threads_int(void* instance, int val) {
+	Result_void cv_instr_NodeData_setM_threads_int(cv::instr::NodeData* instance, int val) {
 		try {
-			reinterpret_cast<cv::instr::NodeData*>(instance)->m_threads = val;
+			instance->m_threads = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -7398,136 +7398,136 @@ extern "C" {
 	void cv_NodeData_delete(cv::instr::NodeData* instance) {
 		delete instance;
 	}
-	Result<void*> cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(const char* funName, const char* fileName, int lineNum, void* retAddress, bool alwaysExpand, cv::instr::TYPE instrType, cv::instr::IMPL implType) {
+	Result<cv::instr::NodeData*> cv_instr_NodeData_NodeData_const_charX_const_charX_int_voidX_bool_TYPE_IMPL(const char* funName, const char* fileName, int lineNum, void* retAddress, bool alwaysExpand, cv::instr::TYPE instrType, cv::instr::IMPL implType) {
 		try {
 			cv::instr::NodeData* ret = new cv::instr::NodeData(funName, fileName, lineNum, retAddress, alwaysExpand, instrType, implType);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::instr::NodeData*>)
 	}
 	
-	Result<void*> cv_instr_NodeData_NodeData_NodeDataX(void* ref) {
+	Result<cv::instr::NodeData*> cv_instr_NodeData_NodeData_NodeDataX(cv::instr::NodeData* ref) {
 		try {
-			cv::instr::NodeData* ret = new cv::instr::NodeData(*reinterpret_cast<cv::instr::NodeData*>(ref));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::instr::NodeData* ret = new cv::instr::NodeData(*ref);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::instr::NodeData*>)
 	}
 	
-	Result<double> cv_instr_NodeData_getTotalMs_const(void* instance) {
+	Result<double> cv_instr_NodeData_getTotalMs_const(const cv::instr::NodeData* instance) {
 		try {
-			double ret = reinterpret_cast<cv::instr::NodeData*>(instance)->getTotalMs();
-			return Ok<double>(ret);
+			double ret = instance->getTotalMs();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_instr_NodeData_getMeanMs_const(void* instance) {
+	Result<double> cv_instr_NodeData_getMeanMs_const(const cv::instr::NodeData* instance) {
 		try {
-			double ret = reinterpret_cast<cv::instr::NodeData*>(instance)->getMeanMs();
-			return Ok<double>(ret);
+			double ret = instance->getMeanMs();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
 	void cv_WriteStructContext_delete(cv::internal::WriteStructContext* instance) {
 		delete instance;
 	}
-	Result<void*> cv_internal_WriteStructContext_WriteStructContext_FileStorageX_const_StringX_int_const_StringX(void* _fs, const char* name, int flags, const char* typeName) {
+	Result<cv::internal::WriteStructContext*> cv_internal_WriteStructContext_WriteStructContext_FileStorageX_const_StringX_int_const_StringX(cv::FileStorage* _fs, const char* name, int flags, const char* typeName) {
 		try {
-			cv::internal::WriteStructContext* ret = new cv::internal::WriteStructContext(*reinterpret_cast<cv::FileStorage*>(_fs), std::string(name), flags, std::string(typeName));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::internal::WriteStructContext* ret = new cv::internal::WriteStructContext(*_fs, std::string(name), flags, std::string(typeName));
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::internal::WriteStructContext*>)
 	}
 	
 	void cv_Context_delete(cv::ocl::Context* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Context_Context() {
+	Result<cv::ocl::Context*> cv_ocl_Context_Context() {
 		try {
 			cv::ocl::Context* ret = new cv::ocl::Context();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Context*>)
 	}
 	
-	Result<void*> cv_ocl_Context_Context_int(int dtype) {
+	Result<cv::ocl::Context*> cv_ocl_Context_Context_int(int dtype) {
 		try {
 			cv::ocl::Context* ret = new cv::ocl::Context(dtype);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Context*>)
 	}
 	
-	Result<void*> cv_ocl_Context_Context_const_ContextX(void* c) {
+	Result<cv::ocl::Context*> cv_ocl_Context_Context_const_ContextX(const cv::ocl::Context* c) {
 		try {
-			cv::ocl::Context* ret = new cv::ocl::Context(*reinterpret_cast<const cv::ocl::Context*>(c));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Context* ret = new cv::ocl::Context(*c);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Context*>)
 	}
 	
-	Result<bool> cv_ocl_Context_create(void* instance) {
+	Result<bool> cv_ocl_Context_create(cv::ocl::Context* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Context*>(instance)->create();
-			return Ok<bool>(ret);
+			bool ret = instance->create();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Context_create_int(void* instance, int dtype) {
+	Result<bool> cv_ocl_Context_create_int(cv::ocl::Context* instance, int dtype) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Context*>(instance)->create(dtype);
-			return Ok<bool>(ret);
+			bool ret = instance->create(dtype);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv_ocl_Context_ndevices_const(void* instance) {
+	Result<size_t> cv_ocl_Context_ndevices_const(const cv::ocl::Context* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Context*>(instance)->ndevices();
-			return Ok<size_t>(ret);
+			size_t ret = instance->ndevices();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<void*> cv_ocl_Context_device_const_size_t(void* instance, size_t idx) {
+	Result<cv::ocl::Device*> cv_ocl_Context_device_const_size_t(const cv::ocl::Context* instance, size_t idx) {
 		try {
-			cv::ocl::Device ret = reinterpret_cast<cv::ocl::Context*>(instance)->device(idx);
-			return Ok<void*>(new cv::ocl::Device(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Device ret = instance->device(idx);
+			return Ok(new cv::ocl::Device(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Device*>)
 	}
 	
-	Result<void*> cv_ocl_Context_getProg_const_ProgramSourceX_const_StringX_StringX(void* instance, void* prog, const char* buildopt, void** errmsg) {
+	Result<cv::ocl::Program*> cv_ocl_Context_getProg_const_ProgramSourceX_const_StringX_StringX(cv::ocl::Context* instance, const cv::ocl::ProgramSource* prog, const char* buildopt, void** errmsg) {
 		try {
 			std::string errmsg_out;
-			cv::ocl::Program ret = reinterpret_cast<cv::ocl::Context*>(instance)->getProg(*reinterpret_cast<const cv::ocl::ProgramSource*>(prog), std::string(buildopt), errmsg_out);
+			cv::ocl::Program ret = instance->getProg(*prog, std::string(buildopt), errmsg_out);
 			*errmsg = ocvrs_create_string(errmsg_out.c_str());
-			return Ok<void*>(new cv::ocl::Program(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::Program(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Program*>)
 	}
 	
-	Result_void cv_ocl_Context_unloadProg_ProgramX(void* instance, void* prog) {
+	Result_void cv_ocl_Context_unloadProg_ProgramX(cv::ocl::Context* instance, cv::ocl::Program* prog) {
 		try {
-			reinterpret_cast<cv::ocl::Context*>(instance)->unloadProg(*reinterpret_cast<cv::ocl::Program*>(prog));
+			instance->unloadProg(*prog);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_ocl_Context_getDefault_bool(bool initialize) {
+	Result<cv::ocl::Context*> cv_ocl_Context_getDefault_bool(bool initialize) {
 		try {
 			cv::ocl::Context ret = cv::ocl::Context::getDefault(initialize);
-			return Ok<void*>(new cv::ocl::Context(ret));
+			return Ok(new cv::ocl::Context(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Context*>)
+	}
+	
+	Result<void*> cv_ocl_Context_ptr_const(const cv::ocl::Context* instance) {
+		try {
+			void* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Context_ptr_const(void* instance) {
+	Result<bool> cv_ocl_Context_useSVM_const(const cv::ocl::Context* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::ocl::Context*>(instance)->ptr();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<bool> cv_ocl_Context_useSVM_const(void* instance) {
-		try {
-			bool ret = reinterpret_cast<cv::ocl::Context*>(instance)->useSVM();
-			return Ok<bool>(ret);
+			bool ret = instance->useSVM();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_ocl_Context_setUseSVM_bool(void* instance, bool enabled) {
+	Result_void cv_ocl_Context_setUseSVM_bool(cv::ocl::Context* instance, bool enabled) {
 		try {
-			reinterpret_cast<cv::ocl::Context*>(instance)->setUseSVM(enabled);
+			instance->setUseSVM(enabled);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -7535,817 +7535,817 @@ extern "C" {
 	void cv_Device_delete(cv::ocl::Device* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Device_Device() {
+	Result<cv::ocl::Device*> cv_ocl_Device_Device() {
 		try {
 			cv::ocl::Device* ret = new cv::ocl::Device();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Device*>)
 	}
 	
-	Result<void*> cv_ocl_Device_Device_voidX(void* d) {
+	Result<cv::ocl::Device*> cv_ocl_Device_Device_voidX(void* d) {
 		try {
 			cv::ocl::Device* ret = new cv::ocl::Device(d);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Device*>)
 	}
 	
-	Result<void*> cv_ocl_Device_Device_const_DeviceX(void* d) {
+	Result<cv::ocl::Device*> cv_ocl_Device_Device_const_DeviceX(const cv::ocl::Device* d) {
 		try {
-			cv::ocl::Device* ret = new cv::ocl::Device(*reinterpret_cast<const cv::ocl::Device*>(d));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Device* ret = new cv::ocl::Device(*d);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Device*>)
 	}
 	
-	Result_void cv_ocl_Device_set_voidX(void* instance, void* d) {
+	Result_void cv_ocl_Device_set_voidX(cv::ocl::Device* instance, void* d) {
 		try {
-			reinterpret_cast<cv::ocl::Device*>(instance)->set(d);
+			instance->set(d);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_ocl_Device_name_const(void* instance) {
+	Result<void*> cv_ocl_Device_name_const(const cv::ocl::Device* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Device*>(instance)->name();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->name();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Device_extensions_const(void* instance) {
+	Result<void*> cv_ocl_Device_extensions_const(const cv::ocl::Device* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Device*>(instance)->extensions();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->extensions();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<bool> cv_ocl_Device_isExtensionSupported_const_const_StringX(void* instance, const char* extensionName) {
+	Result<bool> cv_ocl_Device_isExtensionSupported_const_const_StringX(const cv::ocl::Device* instance, const char* extensionName) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->isExtensionSupported(std::string(extensionName));
-			return Ok<bool>(ret);
+			bool ret = instance->isExtensionSupported(std::string(extensionName));
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_ocl_Device_version_const(void* instance) {
+	Result<void*> cv_ocl_Device_version_const(const cv::ocl::Device* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Device*>(instance)->version();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->version();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Device_vendorName_const(void* instance) {
+	Result<void*> cv_ocl_Device_vendorName_const(const cv::ocl::Device* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Device*>(instance)->vendorName();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->vendorName();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Device_OpenCL_C_Version_const(void* instance) {
+	Result<void*> cv_ocl_Device_OpenCL_C_Version_const(const cv::ocl::Device* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Device*>(instance)->OpenCL_C_Version();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->OpenCL_C_Version();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Device_OpenCLVersion_const(void* instance) {
+	Result<void*> cv_ocl_Device_OpenCLVersion_const(const cv::ocl::Device* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Device*>(instance)->OpenCLVersion();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->OpenCLVersion();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_ocl_Device_deviceVersionMajor_const(void* instance) {
+	Result<int> cv_ocl_Device_deviceVersionMajor_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->deviceVersionMajor();
-			return Ok<int>(ret);
+			int ret = instance->deviceVersionMajor();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_deviceVersionMinor_const(void* instance) {
+	Result<int> cv_ocl_Device_deviceVersionMinor_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->deviceVersionMinor();
-			return Ok<int>(ret);
+			int ret = instance->deviceVersionMinor();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<void*> cv_ocl_Device_driverVersion_const(void* instance) {
+	Result<void*> cv_ocl_Device_driverVersion_const(const cv::ocl::Device* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Device*>(instance)->driverVersion();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->driverVersion();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Device_ptr_const(void* instance) {
+	Result<void*> cv_ocl_Device_ptr_const(const cv::ocl::Device* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::ocl::Device*>(instance)->ptr();
-			return Ok<void*>(ret);
+			void* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_ocl_Device_type_const(void* instance) {
+	Result<int> cv_ocl_Device_type_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->type();
-			return Ok<int>(ret);
+			int ret = instance->type();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_addressBits_const(void* instance) {
+	Result<int> cv_ocl_Device_addressBits_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->addressBits();
-			return Ok<int>(ret);
+			int ret = instance->addressBits();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv_ocl_Device_available_const(void* instance) {
+	Result<bool> cv_ocl_Device_available_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->available();
-			return Ok<bool>(ret);
+			bool ret = instance->available();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Device_compilerAvailable_const(void* instance) {
+	Result<bool> cv_ocl_Device_compilerAvailable_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->compilerAvailable();
-			return Ok<bool>(ret);
+			bool ret = instance->compilerAvailable();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Device_linkerAvailable_const(void* instance) {
+	Result<bool> cv_ocl_Device_linkerAvailable_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->linkerAvailable();
-			return Ok<bool>(ret);
+			bool ret = instance->linkerAvailable();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<int> cv_ocl_Device_doubleFPConfig_const(void* instance) {
+	Result<int> cv_ocl_Device_doubleFPConfig_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->doubleFPConfig();
-			return Ok<int>(ret);
+			int ret = instance->doubleFPConfig();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_singleFPConfig_const(void* instance) {
+	Result<int> cv_ocl_Device_singleFPConfig_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->singleFPConfig();
-			return Ok<int>(ret);
+			int ret = instance->singleFPConfig();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_halfFPConfig_const(void* instance) {
+	Result<int> cv_ocl_Device_halfFPConfig_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->halfFPConfig();
-			return Ok<int>(ret);
+			int ret = instance->halfFPConfig();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv_ocl_Device_endianLittle_const(void* instance) {
+	Result<bool> cv_ocl_Device_endianLittle_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->endianLittle();
-			return Ok<bool>(ret);
+			bool ret = instance->endianLittle();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Device_errorCorrectionSupport_const(void* instance) {
+	Result<bool> cv_ocl_Device_errorCorrectionSupport_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->errorCorrectionSupport();
-			return Ok<bool>(ret);
+			bool ret = instance->errorCorrectionSupport();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<int> cv_ocl_Device_executionCapabilities_const(void* instance) {
+	Result<int> cv_ocl_Device_executionCapabilities_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->executionCapabilities();
-			return Ok<int>(ret);
+			int ret = instance->executionCapabilities();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_ocl_Device_globalMemCacheSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_globalMemCacheSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->globalMemCacheSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->globalMemCacheSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_ocl_Device_globalMemCacheType_const(void* instance) {
+	Result<int> cv_ocl_Device_globalMemCacheType_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->globalMemCacheType();
-			return Ok<int>(ret);
+			int ret = instance->globalMemCacheType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_globalMemCacheLineSize_const(void* instance) {
+	Result<int> cv_ocl_Device_globalMemCacheLineSize_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->globalMemCacheLineSize();
-			return Ok<int>(ret);
+			int ret = instance->globalMemCacheLineSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_ocl_Device_globalMemSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_globalMemSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->globalMemSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->globalMemSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_localMemSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_localMemSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->localMemSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->localMemSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_ocl_Device_localMemType_const(void* instance) {
+	Result<int> cv_ocl_Device_localMemType_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->localMemType();
-			return Ok<int>(ret);
+			int ret = instance->localMemType();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv_ocl_Device_hostUnifiedMemory_const(void* instance) {
+	Result<bool> cv_ocl_Device_hostUnifiedMemory_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->hostUnifiedMemory();
-			return Ok<bool>(ret);
+			bool ret = instance->hostUnifiedMemory();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Device_imageSupport_const(void* instance) {
+	Result<bool> cv_ocl_Device_imageSupport_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->imageSupport();
-			return Ok<bool>(ret);
+			bool ret = instance->imageSupport();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Device_imageFromBufferSupport_const(void* instance) {
+	Result<bool> cv_ocl_Device_imageFromBufferSupport_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->imageFromBufferSupport();
-			return Ok<bool>(ret);
+			bool ret = instance->imageFromBufferSupport();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<unsigned int> cv_ocl_Device_imagePitchAlignment_const(void* instance) {
+	Result<unsigned int> cv_ocl_Device_imagePitchAlignment_const(const cv::ocl::Device* instance) {
 		try {
-			unsigned int ret = reinterpret_cast<cv::ocl::Device*>(instance)->imagePitchAlignment();
-			return Ok<unsigned int>(ret);
+			unsigned int ret = instance->imagePitchAlignment();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned int>)
 	}
 	
-	Result<unsigned int> cv_ocl_Device_imageBaseAddressAlignment_const(void* instance) {
+	Result<unsigned int> cv_ocl_Device_imageBaseAddressAlignment_const(const cv::ocl::Device* instance) {
 		try {
-			unsigned int ret = reinterpret_cast<cv::ocl::Device*>(instance)->imageBaseAddressAlignment();
-			return Ok<unsigned int>(ret);
+			unsigned int ret = instance->imageBaseAddressAlignment();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<unsigned int>)
 	}
 	
-	Result<bool> cv_ocl_Device_intelSubgroupsSupport_const(void* instance) {
+	Result<bool> cv_ocl_Device_intelSubgroupsSupport_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->intelSubgroupsSupport();
-			return Ok<bool>(ret);
+			bool ret = instance->intelSubgroupsSupport();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv_ocl_Device_image2DMaxWidth_const(void* instance) {
+	Result<size_t> cv_ocl_Device_image2DMaxWidth_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->image2DMaxWidth();
-			return Ok<size_t>(ret);
+			size_t ret = instance->image2DMaxWidth();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_image2DMaxHeight_const(void* instance) {
+	Result<size_t> cv_ocl_Device_image2DMaxHeight_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->image2DMaxHeight();
-			return Ok<size_t>(ret);
+			size_t ret = instance->image2DMaxHeight();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_image3DMaxWidth_const(void* instance) {
+	Result<size_t> cv_ocl_Device_image3DMaxWidth_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->image3DMaxWidth();
-			return Ok<size_t>(ret);
+			size_t ret = instance->image3DMaxWidth();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_image3DMaxHeight_const(void* instance) {
+	Result<size_t> cv_ocl_Device_image3DMaxHeight_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->image3DMaxHeight();
-			return Ok<size_t>(ret);
+			size_t ret = instance->image3DMaxHeight();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_image3DMaxDepth_const(void* instance) {
+	Result<size_t> cv_ocl_Device_image3DMaxDepth_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->image3DMaxDepth();
-			return Ok<size_t>(ret);
+			size_t ret = instance->image3DMaxDepth();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_imageMaxBufferSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_imageMaxBufferSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->imageMaxBufferSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->imageMaxBufferSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_imageMaxArraySize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_imageMaxArraySize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->imageMaxArraySize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->imageMaxArraySize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_ocl_Device_vendorID_const(void* instance) {
+	Result<int> cv_ocl_Device_vendorID_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->vendorID();
-			return Ok<int>(ret);
+			int ret = instance->vendorID();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<bool> cv_ocl_Device_isAMD_const(void* instance) {
+	Result<bool> cv_ocl_Device_isAMD_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->isAMD();
-			return Ok<bool>(ret);
+			bool ret = instance->isAMD();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Device_isIntel_const(void* instance) {
+	Result<bool> cv_ocl_Device_isIntel_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->isIntel();
-			return Ok<bool>(ret);
+			bool ret = instance->isIntel();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Device_isNVidia_const(void* instance) {
+	Result<bool> cv_ocl_Device_isNVidia_const(const cv::ocl::Device* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Device*>(instance)->isNVidia();
-			return Ok<bool>(ret);
+			bool ret = instance->isNVidia();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<int> cv_ocl_Device_maxClockFrequency_const(void* instance) {
+	Result<int> cv_ocl_Device_maxClockFrequency_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxClockFrequency();
-			return Ok<int>(ret);
+			int ret = instance->maxClockFrequency();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_maxComputeUnits_const(void* instance) {
+	Result<int> cv_ocl_Device_maxComputeUnits_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxComputeUnits();
-			return Ok<int>(ret);
+			int ret = instance->maxComputeUnits();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_maxConstantArgs_const(void* instance) {
+	Result<int> cv_ocl_Device_maxConstantArgs_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxConstantArgs();
-			return Ok<int>(ret);
+			int ret = instance->maxConstantArgs();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_ocl_Device_maxConstantBufferSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_maxConstantBufferSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxConstantBufferSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->maxConstantBufferSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_maxMemAllocSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_maxMemAllocSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxMemAllocSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->maxMemAllocSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_maxParameterSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_maxParameterSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxParameterSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->maxParameterSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_ocl_Device_maxReadImageArgs_const(void* instance) {
+	Result<int> cv_ocl_Device_maxReadImageArgs_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxReadImageArgs();
-			return Ok<int>(ret);
+			int ret = instance->maxReadImageArgs();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_maxWriteImageArgs_const(void* instance) {
+	Result<int> cv_ocl_Device_maxWriteImageArgs_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxWriteImageArgs();
-			return Ok<int>(ret);
+			int ret = instance->maxWriteImageArgs();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_maxSamplers_const(void* instance) {
+	Result<int> cv_ocl_Device_maxSamplers_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxSamplers();
-			return Ok<int>(ret);
+			int ret = instance->maxSamplers();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_ocl_Device_maxWorkGroupSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_maxWorkGroupSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxWorkGroupSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->maxWorkGroupSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<int> cv_ocl_Device_maxWorkItemDims_const(void* instance) {
+	Result<int> cv_ocl_Device_maxWorkItemDims_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->maxWorkItemDims();
-			return Ok<int>(ret);
+			int ret = instance->maxWorkItemDims();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ocl_Device_maxWorkItemSizes_const_size_tX(void* instance, size_t* unnamed) {
+	Result_void cv_ocl_Device_maxWorkItemSizes_const_size_tX(const cv::ocl::Device* instance, size_t* unnamed) {
 		try {
-			reinterpret_cast<cv::ocl::Device*>(instance)->maxWorkItemSizes(unnamed);
+			instance->maxWorkItemSizes(unnamed);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ocl_Device_memBaseAddrAlign_const(void* instance) {
+	Result<int> cv_ocl_Device_memBaseAddrAlign_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->memBaseAddrAlign();
-			return Ok<int>(ret);
+			int ret = instance->memBaseAddrAlign();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_nativeVectorWidthChar_const(void* instance) {
+	Result<int> cv_ocl_Device_nativeVectorWidthChar_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->nativeVectorWidthChar();
-			return Ok<int>(ret);
+			int ret = instance->nativeVectorWidthChar();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_nativeVectorWidthShort_const(void* instance) {
+	Result<int> cv_ocl_Device_nativeVectorWidthShort_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->nativeVectorWidthShort();
-			return Ok<int>(ret);
+			int ret = instance->nativeVectorWidthShort();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_nativeVectorWidthInt_const(void* instance) {
+	Result<int> cv_ocl_Device_nativeVectorWidthInt_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->nativeVectorWidthInt();
-			return Ok<int>(ret);
+			int ret = instance->nativeVectorWidthInt();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_nativeVectorWidthLong_const(void* instance) {
+	Result<int> cv_ocl_Device_nativeVectorWidthLong_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->nativeVectorWidthLong();
-			return Ok<int>(ret);
+			int ret = instance->nativeVectorWidthLong();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_nativeVectorWidthFloat_const(void* instance) {
+	Result<int> cv_ocl_Device_nativeVectorWidthFloat_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->nativeVectorWidthFloat();
-			return Ok<int>(ret);
+			int ret = instance->nativeVectorWidthFloat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_nativeVectorWidthDouble_const(void* instance) {
+	Result<int> cv_ocl_Device_nativeVectorWidthDouble_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->nativeVectorWidthDouble();
-			return Ok<int>(ret);
+			int ret = instance->nativeVectorWidthDouble();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_nativeVectorWidthHalf_const(void* instance) {
+	Result<int> cv_ocl_Device_nativeVectorWidthHalf_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->nativeVectorWidthHalf();
-			return Ok<int>(ret);
+			int ret = instance->nativeVectorWidthHalf();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_preferredVectorWidthChar_const(void* instance) {
+	Result<int> cv_ocl_Device_preferredVectorWidthChar_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->preferredVectorWidthChar();
-			return Ok<int>(ret);
+			int ret = instance->preferredVectorWidthChar();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_preferredVectorWidthShort_const(void* instance) {
+	Result<int> cv_ocl_Device_preferredVectorWidthShort_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->preferredVectorWidthShort();
-			return Ok<int>(ret);
+			int ret = instance->preferredVectorWidthShort();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_preferredVectorWidthInt_const(void* instance) {
+	Result<int> cv_ocl_Device_preferredVectorWidthInt_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->preferredVectorWidthInt();
-			return Ok<int>(ret);
+			int ret = instance->preferredVectorWidthInt();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_preferredVectorWidthLong_const(void* instance) {
+	Result<int> cv_ocl_Device_preferredVectorWidthLong_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->preferredVectorWidthLong();
-			return Ok<int>(ret);
+			int ret = instance->preferredVectorWidthLong();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_preferredVectorWidthFloat_const(void* instance) {
+	Result<int> cv_ocl_Device_preferredVectorWidthFloat_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->preferredVectorWidthFloat();
-			return Ok<int>(ret);
+			int ret = instance->preferredVectorWidthFloat();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_preferredVectorWidthDouble_const(void* instance) {
+	Result<int> cv_ocl_Device_preferredVectorWidthDouble_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->preferredVectorWidthDouble();
-			return Ok<int>(ret);
+			int ret = instance->preferredVectorWidthDouble();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<int> cv_ocl_Device_preferredVectorWidthHalf_const(void* instance) {
+	Result<int> cv_ocl_Device_preferredVectorWidthHalf_const(const cv::ocl::Device* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Device*>(instance)->preferredVectorWidthHalf();
-			return Ok<int>(ret);
+			int ret = instance->preferredVectorWidthHalf();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result<size_t> cv_ocl_Device_printfBufferSize_const(void* instance) {
+	Result<size_t> cv_ocl_Device_printfBufferSize_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->printfBufferSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->printfBufferSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Device_profilingTimerResolution_const(void* instance) {
+	Result<size_t> cv_ocl_Device_profilingTimerResolution_const(const cv::ocl::Device* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Device*>(instance)->profilingTimerResolution();
-			return Ok<size_t>(ret);
+			size_t ret = instance->profilingTimerResolution();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<void*> cv_ocl_Device_getDefault() {
+	Result<cv::ocl::Device*> cv_ocl_Device_getDefault() {
 		try {
 			cv::ocl::Device ret = cv::ocl::Device::getDefault();
-			return Ok<void*>(new cv::ocl::Device(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::Device(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Device*>)
 	}
 	
 	void cv_Image2D_delete(cv::ocl::Image2D* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Image2D_Image2D() {
+	Result<cv::ocl::Image2D*> cv_ocl_Image2D_Image2D() {
 		try {
 			cv::ocl::Image2D* ret = new cv::ocl::Image2D();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Image2D*>)
 	}
 	
-	Result<void*> cv_ocl_Image2D_Image2D_const_UMatX_bool_bool(void* src, bool norm, bool alias) {
+	Result<cv::ocl::Image2D*> cv_ocl_Image2D_Image2D_const_UMatX_bool_bool(const cv::UMat* src, bool norm, bool alias) {
 		try {
-			cv::ocl::Image2D* ret = new cv::ocl::Image2D(*reinterpret_cast<const cv::UMat*>(src), norm, alias);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Image2D* ret = new cv::ocl::Image2D(*src, norm, alias);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Image2D*>)
 	}
 	
-	Result<void*> cv_ocl_Image2D_Image2D_const_Image2DX(void* i) {
+	Result<cv::ocl::Image2D*> cv_ocl_Image2D_Image2D_const_Image2DX(const cv::ocl::Image2D* i) {
 		try {
-			cv::ocl::Image2D* ret = new cv::ocl::Image2D(*reinterpret_cast<const cv::ocl::Image2D*>(i));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Image2D* ret = new cv::ocl::Image2D(*i);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Image2D*>)
 	}
 	
-	Result<bool> cv_ocl_Image2D_canCreateAlias_const_UMatX(void* u) {
+	Result<bool> cv_ocl_Image2D_canCreateAlias_const_UMatX(const cv::UMat* u) {
 		try {
-			bool ret = cv::ocl::Image2D::canCreateAlias(*reinterpret_cast<const cv::UMat*>(u));
-			return Ok<bool>(ret);
+			bool ret = cv::ocl::Image2D::canCreateAlias(*u);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
 	Result<bool> cv_ocl_Image2D_isFormatSupported_int_int_bool(int depth, int cn, bool norm) {
 		try {
 			bool ret = cv::ocl::Image2D::isFormatSupported(depth, cn, norm);
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_ocl_Image2D_ptr_const(void* instance) {
+	Result<void*> cv_ocl_Image2D_ptr_const(const cv::ocl::Image2D* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::ocl::Image2D*>(instance)->ptr();
-			return Ok<void*>(ret);
+			void* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	void cv_Kernel_delete(cv::ocl::Kernel* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Kernel_Kernel() {
+	Result<cv::ocl::Kernel*> cv_ocl_Kernel_Kernel() {
 		try {
 			cv::ocl::Kernel* ret = new cv::ocl::Kernel();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Kernel*>)
 	}
 	
-	Result<void*> cv_ocl_Kernel_Kernel_const_charX_const_ProgramX(const char* kname, void* prog) {
+	Result<cv::ocl::Kernel*> cv_ocl_Kernel_Kernel_const_charX_const_ProgramX(const char* kname, const cv::ocl::Program* prog) {
 		try {
-			cv::ocl::Kernel* ret = new cv::ocl::Kernel(kname, *reinterpret_cast<const cv::ocl::Program*>(prog));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Kernel* ret = new cv::ocl::Kernel(kname, *prog);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Kernel*>)
 	}
 	
-	Result<void*> cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceX_const_StringX_StringX(const char* kname, void* prog, const char* buildopts, void** errmsg) {
-		try {
-			std::string errmsg_out;
-			cv::ocl::Kernel* ret = new cv::ocl::Kernel(kname, *reinterpret_cast<const cv::ocl::ProgramSource*>(prog), std::string(buildopts), &errmsg_out);
-			*errmsg = ocvrs_create_string(errmsg_out.c_str());
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<void*> cv_ocl_Kernel_Kernel_const_KernelX(void* k) {
-		try {
-			cv::ocl::Kernel* ret = new cv::ocl::Kernel(*reinterpret_cast<const cv::ocl::Kernel*>(k));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<bool> cv_ocl_Kernel_empty_const(void* instance) {
-		try {
-			bool ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->empty();
-			return Ok<bool>(ret);
-		} OCVRS_CATCH(Result<bool>)
-	}
-	
-	Result<bool> cv_ocl_Kernel_create_const_charX_const_ProgramX(void* instance, const char* kname, void* prog) {
-		try {
-			bool ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->create(kname, *reinterpret_cast<const cv::ocl::Program*>(prog));
-			return Ok<bool>(ret);
-		} OCVRS_CATCH(Result<bool>)
-	}
-	
-	Result<bool> cv_ocl_Kernel_create_const_charX_const_ProgramSourceX_const_StringX_StringX(void* instance, const char* kname, void* prog, const char* buildopts, void** errmsg) {
+	Result<cv::ocl::Kernel*> cv_ocl_Kernel_Kernel_const_charX_const_ProgramSourceX_const_StringX_StringX(const char* kname, const cv::ocl::ProgramSource* prog, const char* buildopts, void** errmsg) {
 		try {
 			std::string errmsg_out;
-			bool ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->create(kname, *reinterpret_cast<const cv::ocl::ProgramSource*>(prog), std::string(buildopts), &errmsg_out);
+			cv::ocl::Kernel* ret = new cv::ocl::Kernel(kname, *prog, std::string(buildopts), &errmsg_out);
 			*errmsg = ocvrs_create_string(errmsg_out.c_str());
-			return Ok<bool>(ret);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Kernel*>)
+	}
+	
+	Result<cv::ocl::Kernel*> cv_ocl_Kernel_Kernel_const_KernelX(const cv::ocl::Kernel* k) {
+		try {
+			cv::ocl::Kernel* ret = new cv::ocl::Kernel(*k);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Kernel*>)
+	}
+	
+	Result<bool> cv_ocl_Kernel_empty_const(const cv::ocl::Kernel* instance) {
+		try {
+			bool ret = instance->empty();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<int> cv_ocl_Kernel_set_int_const_voidX_size_t(void* instance, int i, const void* value, size_t sz) {
+	Result<bool> cv_ocl_Kernel_create_const_charX_const_ProgramX(cv::ocl::Kernel* instance, const char* kname, const cv::ocl::Program* prog) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->set(i, value, sz);
-			return Ok<int>(ret);
-		} OCVRS_CATCH(Result<int>)
-	}
-	
-	Result<int> cv_ocl_Kernel_set_int_const_Image2DX(void* instance, int i, void* image2D) {
-		try {
-			int ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->set(i, *reinterpret_cast<const cv::ocl::Image2D*>(image2D));
-			return Ok<int>(ret);
-		} OCVRS_CATCH(Result<int>)
-	}
-	
-	Result<int> cv_ocl_Kernel_set_int_const_UMatX(void* instance, int i, void* m) {
-		try {
-			int ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->set(i, *reinterpret_cast<const cv::UMat*>(m));
-			return Ok<int>(ret);
-		} OCVRS_CATCH(Result<int>)
-	}
-	
-	Result<int> cv_ocl_Kernel_set_int_const_KernelArgX(void* instance, int i, void* arg) {
-		try {
-			int ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->set(i, *reinterpret_cast<const cv::ocl::KernelArg*>(arg));
-			return Ok<int>(ret);
-		} OCVRS_CATCH(Result<int>)
-	}
-	
-	Result<bool> cv_ocl_Kernel_run_int_size_tX_size_tX_bool_const_QueueX(void* instance, int dims, size_t* globalsize, size_t* localsize, bool sync, void* q) {
-		try {
-			bool ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->run(dims, globalsize, localsize, sync, *reinterpret_cast<const cv::ocl::Queue*>(q));
-			return Ok<bool>(ret);
+			bool ret = instance->create(kname, *prog);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Kernel_runTask_bool_const_QueueX(void* instance, bool sync, void* q) {
+	Result<bool> cv_ocl_Kernel_create_const_charX_const_ProgramSourceX_const_StringX_StringX(cv::ocl::Kernel* instance, const char* kname, const cv::ocl::ProgramSource* prog, const char* buildopts, void** errmsg) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->runTask(sync, *reinterpret_cast<const cv::ocl::Queue*>(q));
-			return Ok<bool>(ret);
+			std::string errmsg_out;
+			bool ret = instance->create(kname, *prog, std::string(buildopts), &errmsg_out);
+			*errmsg = ocvrs_create_string(errmsg_out.c_str());
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<int64_t> cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueX(void* instance, int dims, size_t* globalsize, size_t* localsize, void* q) {
+	Result<int> cv_ocl_Kernel_set_int_const_voidX_size_t(cv::ocl::Kernel* instance, int i, const void* value, size_t sz) {
 		try {
-			int64_t ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->runProfiling(dims, globalsize, localsize, *reinterpret_cast<const cv::ocl::Queue*>(q));
-			return Ok<int64_t>(ret);
+			int ret = instance->set(i, value, sz);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<int>)
+	}
+	
+	Result<int> cv_ocl_Kernel_set_int_const_Image2DX(cv::ocl::Kernel* instance, int i, const cv::ocl::Image2D* image2D) {
+		try {
+			int ret = instance->set(i, *image2D);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<int>)
+	}
+	
+	Result<int> cv_ocl_Kernel_set_int_const_UMatX(cv::ocl::Kernel* instance, int i, const cv::UMat* m) {
+		try {
+			int ret = instance->set(i, *m);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<int>)
+	}
+	
+	Result<int> cv_ocl_Kernel_set_int_const_KernelArgX(cv::ocl::Kernel* instance, int i, const cv::ocl::KernelArg* arg) {
+		try {
+			int ret = instance->set(i, *arg);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<int>)
+	}
+	
+	Result<bool> cv_ocl_Kernel_run_int_size_tX_size_tX_bool_const_QueueX(cv::ocl::Kernel* instance, int dims, size_t* globalsize, size_t* localsize, bool sync, const cv::ocl::Queue* q) {
+		try {
+			bool ret = instance->run(dims, globalsize, localsize, sync, *q);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<bool>)
+	}
+	
+	Result<bool> cv_ocl_Kernel_runTask_bool_const_QueueX(cv::ocl::Kernel* instance, bool sync, const cv::ocl::Queue* q) {
+		try {
+			bool ret = instance->runTask(sync, *q);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<bool>)
+	}
+	
+	Result<int64_t> cv_ocl_Kernel_runProfiling_int_size_tX_size_tX_const_QueueX(cv::ocl::Kernel* instance, int dims, size_t* globalsize, size_t* localsize, const cv::ocl::Queue* q) {
+		try {
+			int64_t ret = instance->runProfiling(dims, globalsize, localsize, *q);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int64_t>)
 	}
 	
-	Result<size_t> cv_ocl_Kernel_workGroupSize_const(void* instance) {
+	Result<size_t> cv_ocl_Kernel_workGroupSize_const(const cv::ocl::Kernel* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->workGroupSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->workGroupSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<size_t> cv_ocl_Kernel_preferedWorkGroupSizeMultiple_const(void* instance) {
+	Result<size_t> cv_ocl_Kernel_preferedWorkGroupSizeMultiple_const(const cv::ocl::Kernel* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->preferedWorkGroupSizeMultiple();
-			return Ok<size_t>(ret);
+			size_t ret = instance->preferedWorkGroupSizeMultiple();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<bool> cv_ocl_Kernel_compileWorkGroupSize_const_size_tX(void* instance, size_t* wsz) {
+	Result<bool> cv_ocl_Kernel_compileWorkGroupSize_const_size_tX(const cv::ocl::Kernel* instance, size_t* wsz) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->compileWorkGroupSize(wsz);
-			return Ok<bool>(ret);
+			bool ret = instance->compileWorkGroupSize(wsz);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<size_t> cv_ocl_Kernel_localMemSize_const(void* instance) {
+	Result<size_t> cv_ocl_Kernel_localMemSize_const(const cv::ocl::Kernel* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->localMemSize();
-			return Ok<size_t>(ret);
+			size_t ret = instance->localMemSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result<void*> cv_ocl_Kernel_ptr_const(void* instance) {
+	Result<void*> cv_ocl_Kernel_ptr_const(const cv::ocl::Kernel* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::ocl::Kernel*>(instance)->ptr();
-			return Ok<void*>(ret);
+			void* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<int> cv_ocl_KernelArg_flags_const(void* instance) {
+	Result<int> cv_ocl_KernelArg_flags_const(const cv::ocl::KernelArg* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::KernelArg*>(instance)->flags;
-			return Ok<int>(ret);
+			int ret = instance->flags;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ocl_KernelArg_setFlags_int(void* instance, int val) {
+	Result_void cv_ocl_KernelArg_setFlags_int(cv::ocl::KernelArg* instance, int val) {
 		try {
-			reinterpret_cast<cv::ocl::KernelArg*>(instance)->flags = val;
+			instance->flags = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_m(void* instance) {
+	Result<cv::UMat**> cv_ocl_KernelArg_m(cv::ocl::KernelArg* instance) {
 		try {
-			cv::UMat* ret = reinterpret_cast<cv::ocl::KernelArg*>(instance)->m;
-			return Ok<void*>(new cv::UMat*(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::UMat* ret = instance->m;
+			return Ok(new cv::UMat*(ret));
+		} OCVRS_CATCH(Result<cv::UMat**>)
 	}
 	
-	Result_void cv_ocl_KernelArg_setM_UMatX(void* instance, void* val) {
+	Result_void cv_ocl_KernelArg_setM_UMatX(cv::ocl::KernelArg* instance, cv::UMat* val) {
 		try {
-			reinterpret_cast<cv::ocl::KernelArg*>(instance)->m = reinterpret_cast<cv::UMat*>(val);
+			instance->m = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<const void*> cv_ocl_KernelArg_obj_const(void* instance) {
+	Result<const void*> cv_ocl_KernelArg_obj_const(const cv::ocl::KernelArg* instance) {
 		try {
-			const void* ret = reinterpret_cast<cv::ocl::KernelArg*>(instance)->obj;
-			return Ok<const void*>(ret);
+			const void* ret = instance->obj;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<const void*>)
 	}
 	
-	Result<size_t> cv_ocl_KernelArg_sz_const(void* instance) {
+	Result<size_t> cv_ocl_KernelArg_sz_const(const cv::ocl::KernelArg* instance) {
 		try {
-			size_t ret = reinterpret_cast<cv::ocl::KernelArg*>(instance)->sz;
-			return Ok<size_t>(ret);
+			size_t ret = instance->sz;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<size_t>)
 	}
 	
-	Result_void cv_ocl_KernelArg_setSz_size_t(void* instance, size_t val) {
+	Result_void cv_ocl_KernelArg_setSz_size_t(cv::ocl::KernelArg* instance, size_t val) {
 		try {
-			reinterpret_cast<cv::ocl::KernelArg*>(instance)->sz = val;
+			instance->sz = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ocl_KernelArg_wscale_const(void* instance) {
+	Result<int> cv_ocl_KernelArg_wscale_const(const cv::ocl::KernelArg* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::KernelArg*>(instance)->wscale;
-			return Ok<int>(ret);
+			int ret = instance->wscale;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ocl_KernelArg_setWscale_int(void* instance, int val) {
+	Result_void cv_ocl_KernelArg_setWscale_int(cv::ocl::KernelArg* instance, int val) {
 		try {
-			reinterpret_cast<cv::ocl::KernelArg*>(instance)->wscale = val;
+			instance->wscale = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_ocl_KernelArg_iwscale_const(void* instance) {
+	Result<int> cv_ocl_KernelArg_iwscale_const(const cv::ocl::KernelArg* instance) {
 		try {
-			int ret = reinterpret_cast<cv::ocl::KernelArg*>(instance)->iwscale;
-			return Ok<int>(ret);
+			int ret = instance->iwscale;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ocl_KernelArg_setIwscale_int(void* instance, int val) {
+	Result_void cv_ocl_KernelArg_setIwscale_int(cv::ocl::KernelArg* instance, int val) {
 		try {
-			reinterpret_cast<cv::ocl::KernelArg*>(instance)->iwscale = val;
+			instance->iwscale = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -8353,183 +8353,183 @@ extern "C" {
 	void cv_KernelArg_delete(cv::ocl::KernelArg* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(int _flags, void* _m, int wscale, int iwscale, const void* _obj, size_t _sz) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_KernelArg_int_UMatX_int_int_const_voidX_size_t(int _flags, cv::UMat* _m, int wscale, int iwscale, const void* _obj, size_t _sz) {
 		try {
-			cv::ocl::KernelArg* ret = new cv::ocl::KernelArg(_flags, reinterpret_cast<cv::UMat*>(_m), wscale, iwscale, _obj, _sz);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg* ret = new cv::ocl::KernelArg(_flags, _m, wscale, iwscale, _obj, _sz);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_KernelArg() {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_KernelArg() {
 		try {
 			cv::ocl::KernelArg* ret = new cv::ocl::KernelArg();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_Local_size_t(size_t localMemSize) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_Local_size_t(size_t localMemSize) {
 		try {
 			cv::ocl::KernelArg ret = cv::ocl::KernelArg::Local(localMemSize);
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_PtrWriteOnly_const_UMatX(void* m) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_PtrWriteOnly_const_UMatX(const cv::UMat* m) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::PtrWriteOnly(*reinterpret_cast<const cv::UMat*>(m));
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::PtrWriteOnly(*m);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_PtrReadOnly_const_UMatX(void* m) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_PtrReadOnly_const_UMatX(const cv::UMat* m) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::PtrReadOnly(*reinterpret_cast<const cv::UMat*>(m));
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::PtrReadOnly(*m);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_PtrReadWrite_const_UMatX(void* m) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_PtrReadWrite_const_UMatX(const cv::UMat* m) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::PtrReadWrite(*reinterpret_cast<const cv::UMat*>(m));
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::PtrReadWrite(*m);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_ReadWrite_const_UMatX_int_int(void* m, int wscale, int iwscale) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_ReadWrite_const_UMatX_int_int(const cv::UMat* m, int wscale, int iwscale) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadWrite(*reinterpret_cast<const cv::UMat*>(m), wscale, iwscale);
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadWrite(*m, wscale, iwscale);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_ReadWriteNoSize_const_UMatX_int_int(void* m, int wscale, int iwscale) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_ReadWriteNoSize_const_UMatX_int_int(const cv::UMat* m, int wscale, int iwscale) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadWriteNoSize(*reinterpret_cast<const cv::UMat*>(m), wscale, iwscale);
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadWriteNoSize(*m, wscale, iwscale);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_ReadOnly_const_UMatX_int_int(void* m, int wscale, int iwscale) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_ReadOnly_const_UMatX_int_int(const cv::UMat* m, int wscale, int iwscale) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadOnly(*reinterpret_cast<const cv::UMat*>(m), wscale, iwscale);
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadOnly(*m, wscale, iwscale);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_WriteOnly_const_UMatX_int_int(void* m, int wscale, int iwscale) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_WriteOnly_const_UMatX_int_int(const cv::UMat* m, int wscale, int iwscale) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::WriteOnly(*reinterpret_cast<const cv::UMat*>(m), wscale, iwscale);
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::WriteOnly(*m, wscale, iwscale);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatX_int_int(void* m, int wscale, int iwscale) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_ReadOnlyNoSize_const_UMatX_int_int(const cv::UMat* m, int wscale, int iwscale) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadOnlyNoSize(*reinterpret_cast<const cv::UMat*>(m), wscale, iwscale);
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::ReadOnlyNoSize(*m, wscale, iwscale);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatX_int_int(void* m, int wscale, int iwscale) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_WriteOnlyNoSize_const_UMatX_int_int(const cv::UMat* m, int wscale, int iwscale) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::WriteOnlyNoSize(*reinterpret_cast<const cv::UMat*>(m), wscale, iwscale);
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::WriteOnlyNoSize(*m, wscale, iwscale);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
-	Result<void*> cv_ocl_KernelArg_Constant_const_MatX(void* m) {
+	Result<cv::ocl::KernelArg*> cv_ocl_KernelArg_Constant_const_MatX(const cv::Mat* m) {
 		try {
-			cv::ocl::KernelArg ret = cv::ocl::KernelArg::Constant(*reinterpret_cast<const cv::Mat*>(m));
-			return Ok<void*>(new cv::ocl::KernelArg(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::KernelArg ret = cv::ocl::KernelArg::Constant(*m);
+			return Ok(new cv::ocl::KernelArg(ret));
+		} OCVRS_CATCH(Result<cv::ocl::KernelArg*>)
 	}
 	
 	void cv_Platform_delete(cv::ocl::Platform* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Platform_Platform() {
+	Result<cv::ocl::Platform*> cv_ocl_Platform_Platform() {
 		try {
 			cv::ocl::Platform* ret = new cv::ocl::Platform();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Platform*>)
 	}
 	
-	Result<void*> cv_ocl_Platform_Platform_const_PlatformX(void* p) {
+	Result<cv::ocl::Platform*> cv_ocl_Platform_Platform_const_PlatformX(const cv::ocl::Platform* p) {
 		try {
-			cv::ocl::Platform* ret = new cv::ocl::Platform(*reinterpret_cast<const cv::ocl::Platform*>(p));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Platform* ret = new cv::ocl::Platform(*p);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Platform*>)
 	}
 	
-	Result<void*> cv_ocl_Platform_ptr_const(void* instance) {
+	Result<void*> cv_ocl_Platform_ptr_const(const cv::ocl::Platform* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::ocl::Platform*>(instance)->ptr();
-			return Ok<void*>(ret);
+			void* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Platform_getDefault() {
+	Result<cv::ocl::Platform*> cv_ocl_Platform_getDefault() {
 		try {
 			cv::ocl::Platform ret = cv::ocl::Platform::getDefault();
-			return Ok<void*>(new cv::ocl::Platform(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::Platform(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Platform*>)
 	}
 	
 	void cv_PlatformInfo_delete(cv::ocl::PlatformInfo* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_PlatformInfo_PlatformInfo() {
+	Result<cv::ocl::PlatformInfo*> cv_ocl_PlatformInfo_PlatformInfo() {
 		try {
 			cv::ocl::PlatformInfo* ret = new cv::ocl::PlatformInfo();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::PlatformInfo*>)
 	}
 	
-	Result<void*> cv_ocl_PlatformInfo_PlatformInfo_voidX(void* id) {
+	Result<cv::ocl::PlatformInfo*> cv_ocl_PlatformInfo_PlatformInfo_voidX(void* id) {
 		try {
 			cv::ocl::PlatformInfo* ret = new cv::ocl::PlatformInfo(id);
-			return Ok<void*>(ret);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::PlatformInfo*>)
+	}
+	
+	Result<cv::ocl::PlatformInfo*> cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoX(const cv::ocl::PlatformInfo* i) {
+		try {
+			cv::ocl::PlatformInfo* ret = new cv::ocl::PlatformInfo(*i);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::PlatformInfo*>)
+	}
+	
+	Result<void*> cv_ocl_PlatformInfo_name_const(const cv::ocl::PlatformInfo* instance) {
+		try {
+			cv::String ret = instance->name();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_PlatformInfo_PlatformInfo_const_PlatformInfoX(void* i) {
+	Result<void*> cv_ocl_PlatformInfo_vendor_const(const cv::ocl::PlatformInfo* instance) {
 		try {
-			cv::ocl::PlatformInfo* ret = new cv::ocl::PlatformInfo(*reinterpret_cast<const cv::ocl::PlatformInfo*>(i));
-			return Ok<void*>(ret);
+			cv::String ret = instance->vendor();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_PlatformInfo_name_const(void* instance) {
+	Result<void*> cv_ocl_PlatformInfo_version_const(const cv::ocl::PlatformInfo* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::PlatformInfo*>(instance)->name();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->version();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_PlatformInfo_vendor_const(void* instance) {
+	Result<int> cv_ocl_PlatformInfo_deviceNumber_const(const cv::ocl::PlatformInfo* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::PlatformInfo*>(instance)->vendor();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<void*> cv_ocl_PlatformInfo_version_const(void* instance) {
-		try {
-			cv::String ret = reinterpret_cast<cv::ocl::PlatformInfo*>(instance)->version();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<int> cv_ocl_PlatformInfo_deviceNumber_const(void* instance) {
-		try {
-			int ret = reinterpret_cast<cv::ocl::PlatformInfo*>(instance)->deviceNumber();
-			return Ok<int>(ret);
+			int ret = instance->deviceNumber();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_ocl_PlatformInfo_getDevice_const_DeviceX_int(void* instance, void* device, int d) {
+	Result_void cv_ocl_PlatformInfo_getDevice_const_DeviceX_int(const cv::ocl::PlatformInfo* instance, cv::ocl::Device* device, int d) {
 		try {
-			reinterpret_cast<cv::ocl::PlatformInfo*>(instance)->getDevice(*reinterpret_cast<cv::ocl::Device*>(device), d);
+			instance->getDevice(*device, d);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -8537,255 +8537,255 @@ extern "C" {
 	void cv_Program_delete(cv::ocl::Program* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Program_Program() {
+	Result<cv::ocl::Program*> cv_ocl_Program_Program() {
 		try {
 			cv::ocl::Program* ret = new cv::ocl::Program();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Program*>)
 	}
 	
-	Result<void*> cv_ocl_Program_Program_const_ProgramSourceX_const_StringX_StringX(void* src, const char* buildflags, void** errmsg) {
+	Result<cv::ocl::Program*> cv_ocl_Program_Program_const_ProgramSourceX_const_StringX_StringX(const cv::ocl::ProgramSource* src, const char* buildflags, void** errmsg) {
 		try {
 			std::string errmsg_out;
-			cv::ocl::Program* ret = new cv::ocl::Program(*reinterpret_cast<const cv::ocl::ProgramSource*>(src), std::string(buildflags), errmsg_out);
+			cv::ocl::Program* ret = new cv::ocl::Program(*src, std::string(buildflags), errmsg_out);
 			*errmsg = ocvrs_create_string(errmsg_out.c_str());
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Program*>)
 	}
 	
-	Result<void*> cv_ocl_Program_Program_const_ProgramX(void* prog) {
+	Result<cv::ocl::Program*> cv_ocl_Program_Program_const_ProgramX(const cv::ocl::Program* prog) {
 		try {
-			cv::ocl::Program* ret = new cv::ocl::Program(*reinterpret_cast<const cv::ocl::Program*>(prog));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Program* ret = new cv::ocl::Program(*prog);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Program*>)
 	}
 	
-	Result<bool> cv_ocl_Program_create_const_ProgramSourceX_const_StringX_StringX(void* instance, void* src, const char* buildflags, void** errmsg) {
+	Result<bool> cv_ocl_Program_create_const_ProgramSourceX_const_StringX_StringX(cv::ocl::Program* instance, const cv::ocl::ProgramSource* src, const char* buildflags, void** errmsg) {
 		try {
 			std::string errmsg_out;
-			bool ret = reinterpret_cast<cv::ocl::Program*>(instance)->create(*reinterpret_cast<const cv::ocl::ProgramSource*>(src), std::string(buildflags), errmsg_out);
+			bool ret = instance->create(*src, std::string(buildflags), errmsg_out);
 			*errmsg = ocvrs_create_string(errmsg_out.c_str());
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_ocl_Program_ptr_const(void* instance) {
+	Result<void*> cv_ocl_Program_ptr_const(const cv::ocl::Program* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::ocl::Program*>(instance)->ptr();
-			return Ok<void*>(ret);
+			void* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result_void cv_ocl_Program_getBinary_const_vector_char_X(void* instance, void* binary) {
+	Result_void cv_ocl_Program_getBinary_const_vector_char_X(const cv::ocl::Program* instance, std::vector<char>* binary) {
 		try {
-			reinterpret_cast<cv::ocl::Program*>(instance)->getBinary(*reinterpret_cast<std::vector<char>*>(binary));
+			instance->getBinary(*binary);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<bool> cv_ocl_Program_read_const_StringX_const_StringX(void* instance, const char* buf, const char* buildflags) {
+	Result<bool> cv_ocl_Program_read_const_StringX_const_StringX(cv::ocl::Program* instance, const char* buf, const char* buildflags) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Program*>(instance)->read(std::string(buf), std::string(buildflags));
-			return Ok<bool>(ret);
+			bool ret = instance->read(std::string(buf), std::string(buildflags));
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ocl_Program_write_const_StringX(void* instance, void** buf) {
+	Result<bool> cv_ocl_Program_write_const_StringX(const cv::ocl::Program* instance, void** buf) {
 		try {
 			std::string buf_out;
-			bool ret = reinterpret_cast<cv::ocl::Program*>(instance)->write(buf_out);
+			bool ret = instance->write(buf_out);
 			*buf = ocvrs_create_string(buf_out.c_str());
-			return Ok<bool>(ret);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_ocl_Program_source_const(void* instance) {
+	Result<cv::ocl::ProgramSource*> cv_ocl_Program_source_const(const cv::ocl::Program* instance) {
 		try {
-			cv::ocl::ProgramSource ret = reinterpret_cast<cv::ocl::Program*>(instance)->source();
-			return Ok<void*>(new cv::ocl::ProgramSource(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::ProgramSource ret = instance->source();
+			return Ok(new cv::ocl::ProgramSource(ret));
+		} OCVRS_CATCH(Result<cv::ocl::ProgramSource*>)
 	}
 	
-	Result<void*> cv_ocl_Program_getPrefix_const(void* instance) {
+	Result<void*> cv_ocl_Program_getPrefix_const(const cv::ocl::Program* instance) {
 		try {
-			cv::String ret = reinterpret_cast<cv::ocl::Program*>(instance)->getPrefix();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			cv::String ret = instance->getPrefix();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	Result<void*> cv_ocl_Program_getPrefix_const_StringX(const char* buildflags) {
 		try {
 			cv::String ret = cv::ocl::Program::getPrefix(std::string(buildflags));
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
 	void cv_ProgramSource_delete(cv::ocl::ProgramSource* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_ProgramSource_ProgramSource() {
+	Result<cv::ocl::ProgramSource*> cv_ocl_ProgramSource_ProgramSource() {
 		try {
 			cv::ocl::ProgramSource* ret = new cv::ocl::ProgramSource();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::ProgramSource*>)
 	}
 	
-	Result<void*> cv_ocl_ProgramSource_ProgramSource_const_StringX_const_StringX_const_StringX_const_StringX(const char* module, const char* name, const char* codeStr, const char* codeHash) {
+	Result<cv::ocl::ProgramSource*> cv_ocl_ProgramSource_ProgramSource_const_StringX_const_StringX_const_StringX_const_StringX(const char* module, const char* name, const char* codeStr, const char* codeHash) {
 		try {
 			cv::ocl::ProgramSource* ret = new cv::ocl::ProgramSource(std::string(module), std::string(name), std::string(codeStr), std::string(codeHash));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::ProgramSource*>)
 	}
 	
-	Result<void*> cv_ocl_ProgramSource_ProgramSource_const_StringX(const char* prog) {
+	Result<cv::ocl::ProgramSource*> cv_ocl_ProgramSource_ProgramSource_const_StringX(const char* prog) {
 		try {
 			cv::ocl::ProgramSource* ret = new cv::ocl::ProgramSource(std::string(prog));
-			return Ok<void*>(ret);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::ProgramSource*>)
+	}
+	
+	Result<cv::ocl::ProgramSource*> cv_ocl_ProgramSource_ProgramSource_const_ProgramSourceX(const cv::ocl::ProgramSource* prog) {
+		try {
+			cv::ocl::ProgramSource* ret = new cv::ocl::ProgramSource(*prog);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::ProgramSource*>)
+	}
+	
+	Result<void*> cv_ocl_ProgramSource_source_const(const cv::ocl::ProgramSource* instance) {
+		try {
+			cv::String ret = instance->source();
+			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_ProgramSource_ProgramSource_const_ProgramSourceX(void* prog) {
+	Result<cv::ocl::ProgramSource::hash_t> cv_ocl_ProgramSource_hash_const(const cv::ocl::ProgramSource* instance) {
 		try {
-			cv::ocl::ProgramSource* ret = new cv::ocl::ProgramSource(*reinterpret_cast<const cv::ocl::ProgramSource*>(prog));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<void*> cv_ocl_ProgramSource_source_const(void* instance) {
-		try {
-			cv::String ret = reinterpret_cast<cv::ocl::ProgramSource*>(instance)->source();
-			return Ok<void*>(ocvrs_create_string(ret.c_str()));
-		} OCVRS_CATCH(Result<void*>)
-	}
-	
-	Result<cv::ocl::ProgramSource::hash_t> cv_ocl_ProgramSource_hash_const(void* instance) {
-		try {
-			cv::ocl::ProgramSource::hash_t ret = reinterpret_cast<cv::ocl::ProgramSource*>(instance)->hash();
-			return Ok<cv::ocl::ProgramSource::hash_t>(ret);
+			cv::ocl::ProgramSource::hash_t ret = instance->hash();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::ocl::ProgramSource::hash_t>)
 	}
 	
-	Result<void*> cv_ocl_ProgramSource_fromBinary_const_StringX_const_StringX_const_unsigned_charX_size_t_const_StringX(const char* module, const char* name, const unsigned char* binary, size_t size, const char* buildOptions) {
+	Result<cv::ocl::ProgramSource*> cv_ocl_ProgramSource_fromBinary_const_StringX_const_StringX_const_unsigned_charX_size_t_const_StringX(const char* module, const char* name, const unsigned char* binary, size_t size, const char* buildOptions) {
 		try {
 			cv::ocl::ProgramSource ret = cv::ocl::ProgramSource::fromBinary(std::string(module), std::string(name), binary, size, std::string(buildOptions));
-			return Ok<void*>(new cv::ocl::ProgramSource(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::ProgramSource(ret));
+		} OCVRS_CATCH(Result<cv::ocl::ProgramSource*>)
 	}
 	
-	Result<void*> cv_ocl_ProgramSource_fromSPIR_const_StringX_const_StringX_const_unsigned_charX_size_t_const_StringX(const char* module, const char* name, const unsigned char* binary, size_t size, const char* buildOptions) {
+	Result<cv::ocl::ProgramSource*> cv_ocl_ProgramSource_fromSPIR_const_StringX_const_StringX_const_unsigned_charX_size_t_const_StringX(const char* module, const char* name, const unsigned char* binary, size_t size, const char* buildOptions) {
 		try {
 			cv::ocl::ProgramSource ret = cv::ocl::ProgramSource::fromSPIR(std::string(module), std::string(name), binary, size, std::string(buildOptions));
-			return Ok<void*>(new cv::ocl::ProgramSource(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::ProgramSource(ret));
+		} OCVRS_CATCH(Result<cv::ocl::ProgramSource*>)
 	}
 	
 	void cv_Queue_delete(cv::ocl::Queue* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Queue_Queue() {
+	Result<cv::ocl::Queue*> cv_ocl_Queue_Queue() {
 		try {
 			cv::ocl::Queue* ret = new cv::ocl::Queue();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Queue*>)
 	}
 	
-	Result<void*> cv_ocl_Queue_Queue_const_ContextX_const_DeviceX(void* c, void* d) {
+	Result<cv::ocl::Queue*> cv_ocl_Queue_Queue_const_ContextX_const_DeviceX(const cv::ocl::Context* c, const cv::ocl::Device* d) {
 		try {
-			cv::ocl::Queue* ret = new cv::ocl::Queue(*reinterpret_cast<const cv::ocl::Context*>(c), *reinterpret_cast<const cv::ocl::Device*>(d));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Queue* ret = new cv::ocl::Queue(*c, *d);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Queue*>)
 	}
 	
-	Result<void*> cv_ocl_Queue_Queue_const_QueueX(void* q) {
+	Result<cv::ocl::Queue*> cv_ocl_Queue_Queue_const_QueueX(const cv::ocl::Queue* q) {
 		try {
-			cv::ocl::Queue* ret = new cv::ocl::Queue(*reinterpret_cast<const cv::ocl::Queue*>(q));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Queue* ret = new cv::ocl::Queue(*q);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Queue*>)
 	}
 	
-	Result<bool> cv_ocl_Queue_create_const_ContextX_const_DeviceX(void* instance, void* c, void* d) {
+	Result<bool> cv_ocl_Queue_create_const_ContextX_const_DeviceX(cv::ocl::Queue* instance, const cv::ocl::Context* c, const cv::ocl::Device* d) {
 		try {
-			bool ret = reinterpret_cast<cv::ocl::Queue*>(instance)->create(*reinterpret_cast<const cv::ocl::Context*>(c), *reinterpret_cast<const cv::ocl::Device*>(d));
-			return Ok<bool>(ret);
+			bool ret = instance->create(*c, *d);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_ocl_Queue_finish(void* instance) {
+	Result_void cv_ocl_Queue_finish(cv::ocl::Queue* instance) {
 		try {
-			reinterpret_cast<cv::ocl::Queue*>(instance)->finish();
+			instance->finish();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_ocl_Queue_ptr_const(void* instance) {
+	Result<void*> cv_ocl_Queue_ptr_const(const cv::ocl::Queue* instance) {
 		try {
-			void* ret = reinterpret_cast<cv::ocl::Queue*>(instance)->ptr();
-			return Ok<void*>(ret);
+			void* ret = instance->ptr();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<void*> cv_ocl_Queue_getDefault() {
+	Result<cv::ocl::Queue*> cv_ocl_Queue_getDefault() {
 		try {
 			cv::ocl::Queue ret = cv::ocl::Queue::getDefault();
-			return Ok<void*>(new cv::ocl::Queue(ret));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::ocl::Queue(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Queue*>)
 	}
 	
-	Result<void*> cv_ocl_Queue_getProfilingQueue_const(void* instance) {
+	Result<cv::ocl::Queue*> cv_ocl_Queue_getProfilingQueue_const(const cv::ocl::Queue* instance) {
 		try {
-			cv::ocl::Queue ret = reinterpret_cast<cv::ocl::Queue*>(instance)->getProfilingQueue();
-			return Ok<void*>(new cv::ocl::Queue(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Queue ret = instance->getProfilingQueue();
+			return Ok(new cv::ocl::Queue(ret));
+		} OCVRS_CATCH(Result<cv::ocl::Queue*>)
 	}
 	
 	void cv_Timer_delete(cv::ocl::Timer* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ocl_Timer_Timer_const_QueueX(void* q) {
+	Result<cv::ocl::Timer*> cv_ocl_Timer_Timer_const_QueueX(const cv::ocl::Queue* q) {
 		try {
-			cv::ocl::Timer* ret = new cv::ocl::Timer(*reinterpret_cast<const cv::ocl::Queue*>(q));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::ocl::Timer* ret = new cv::ocl::Timer(*q);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ocl::Timer*>)
 	}
 	
-	Result_void cv_ocl_Timer_start(void* instance) {
+	Result_void cv_ocl_Timer_start(cv::ocl::Timer* instance) {
 		try {
-			reinterpret_cast<cv::ocl::Timer*>(instance)->start();
+			instance->start();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_ocl_Timer_stop(void* instance) {
+	Result_void cv_ocl_Timer_stop(cv::ocl::Timer* instance) {
 		try {
-			reinterpret_cast<cv::ocl::Timer*>(instance)->stop();
+			instance->stop();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<uint64_t> cv_ocl_Timer_durationNS_const(void* instance) {
+	Result<uint64_t> cv_ocl_Timer_durationNS_const(const cv::ocl::Timer* instance) {
 		try {
-			uint64_t ret = reinterpret_cast<cv::ocl::Timer*>(instance)->durationNS();
-			return Ok<uint64_t>(ret);
+			uint64_t ret = instance->durationNS();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<uint64_t>)
 	}
 	
-	Result<void*> cv_utils_logging_LogTag_name_const(void* instance) {
+	Result<void*> cv_utils_logging_LogTag_name_const(const cv::utils::logging::LogTag* instance) {
 		try {
-			const char* ret = reinterpret_cast<cv::utils::logging::LogTag*>(instance)->name;
-			return Ok<void*>(ocvrs_create_string(ret));
+			const char* ret = instance->name;
+			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
-	Result<cv::utils::logging::LogLevel> cv_utils_logging_LogTag_level_const(void* instance) {
+	Result<cv::utils::logging::LogLevel> cv_utils_logging_LogTag_level_const(const cv::utils::logging::LogTag* instance) {
 		try {
-			cv::utils::logging::LogLevel ret = reinterpret_cast<cv::utils::logging::LogTag*>(instance)->level;
-			return Ok<cv::utils::logging::LogLevel>(ret);
+			cv::utils::logging::LogLevel ret = instance->level;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::utils::logging::LogLevel>)
 	}
 	
-	Result_void cv_utils_logging_LogTag_setLevel_LogLevel(void* instance, cv::utils::logging::LogLevel val) {
+	Result_void cv_utils_logging_LogTag_setLevel_LogLevel(cv::utils::logging::LogTag* instance, cv::utils::logging::LogLevel val) {
 		try {
-			reinterpret_cast<cv::utils::logging::LogTag*>(instance)->level = val;
+			instance->level = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -8793,11 +8793,11 @@ extern "C" {
 	void cv_LogTag_delete(cv::utils::logging::LogTag* instance) {
 		delete instance;
 	}
-	Result<void*> cv_utils_logging_LogTag_LogTag_const_charX_LogLevel(const char* _name, cv::utils::logging::LogLevel _level) {
+	Result<cv::utils::logging::LogTag*> cv_utils_logging_LogTag_LogTag_const_charX_LogLevel(const char* _name, cv::utils::logging::LogLevel _level) {
 		try {
 			cv::utils::logging::LogTag* ret = new cv::utils::logging::LogTag(_name, _level);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::utils::logging::LogTag*>)
 	}
 	
 }

@@ -1,27 +1,75 @@
 template struct Result<bool>;
 template struct Result<char>;
-template struct Result<const char*>;
+template struct Result<const cv::FileStorage**>;
+template struct Result<const cv::Mat**>;
+template struct Result<const cv::SparseMat**>;
+template struct Result<const cv::SparseMat::Node**>;
 template struct Result<const int*>;
 template struct Result<const unsigned char*>;
 template struct Result<const void*>;
+template struct Result<cv::Algorithm*>;
+template struct Result<cv::AsyncArray*>;
+template struct Result<cv::AsyncPromise*>;
+template struct Result<cv::CommandLineParser*>;
 template struct Result<cv::DMatch>;
+template struct Result<cv::Exception*>;
+template struct Result<cv::FileNodeIterator*>;
+template struct Result<cv::FileNode*>;
+template struct Result<cv::FileStorage*>;
 template struct Result<cv::KeyPoint>;
+template struct Result<cv::LDA*>;
+template struct Result<cv::MatConstIterator*>;
+template struct Result<cv::MatExpr*>;
+template struct Result<cv::MatSize*>;
+template struct Result<cv::MatStep*>;
+template struct Result<cv::Mat*>;
+template struct Result<cv::Mat**>;
+template struct Result<cv::Matx_AddOp*>;
+template struct Result<cv::Matx_DivOp*>;
+template struct Result<cv::Matx_MatMulOp*>;
+template struct Result<cv::Matx_MulOp*>;
+template struct Result<cv::Matx_ScaleOp*>;
+template struct Result<cv::Matx_SubOp*>;
+template struct Result<cv::Matx_TOp*>;
 template struct Result<cv::Moments>;
 template struct Result<cv::NormTypes>;
+template struct Result<cv::PCA*>;
 template struct Result<cv::Point3_<double>>;
 template struct Result<cv::Point3_<float>>;
 template struct Result<cv::Point3_<int>>;
 template struct Result<cv::Point_<double>>;
 template struct Result<cv::Point_<float>>;
 template struct Result<cv::Point_<int>>;
+template struct Result<cv::Ptr<cv::ConjGradSolver>*>;
+template struct Result<cv::Ptr<cv::DownhillSolver>*>;
+template struct Result<cv::Ptr<cv::FileStorage>*>;
+template struct Result<cv::Ptr<cv::Formatted>*>;
+template struct Result<cv::Ptr<cv::Formatter>*>;
+template struct Result<cv::Ptr<cv::MinProblemSolver::Function>*>;
+template struct Result<cv::RNG*>;
+template struct Result<cv::RNG_MT19937*>;
+template struct Result<cv::Range*>;
 template struct Result<cv::Rect_<double>>;
 template struct Result<cv::Rect_<float>>;
 template struct Result<cv::Rect_<int>>;
+template struct Result<cv::RotatedRect*>;
+template struct Result<cv::SVD*>;
 template struct Result<cv::Scalar_<double>>;
 template struct Result<cv::Size_<float>>;
 template struct Result<cv::Size_<int>>;
+template struct Result<cv::SparseMatConstIterator*>;
+template struct Result<cv::SparseMatIterator*>;
+template struct Result<cv::SparseMat*>;
+template struct Result<cv::SparseMat::Hdr*>;
+template struct Result<cv::SparseMat::Hdr**>;
+template struct Result<cv::SparseMat::Node**>;
+template struct Result<cv::TermCriteria*>;
+template struct Result<cv::TickMeter*>;
+template struct Result<cv::UMatData**>;
 template struct Result<cv::UMatData::MemoryFlag>;
 template struct Result<cv::UMatUsageFlags>;
+template struct Result<cv::UMat*>;
+template struct Result<cv::UMat**>;
 template struct Result<cv::Vec<double, 3>>;
 template struct Result<cv::Vec<float, 3>>;
 template struct Result<cv::Vec<float, 4>>;
@@ -29,12 +77,30 @@ template struct Result<cv::Vec<float, 6>>;
 template struct Result<cv::Vec<int, 2>>;
 template struct Result<cv::Vec<int, 3>>;
 template struct Result<cv::Vec<int, 4>>;
+template struct Result<cv::_InputArray*>;
 template struct Result<cv::_InputArray::KindFlag>;
+template struct Result<cv::_InputOutputArray*>;
+template struct Result<cv::_OutputArray*>;
 template struct Result<cv::detail::TestOp>;
 template struct Result<cv::instr::FLAGS>;
 template struct Result<cv::instr::IMPL>;
+template struct Result<cv::instr::NodeData*>;
 template struct Result<cv::instr::TYPE>;
+template struct Result<cv::internal::WriteStructContext*>;
+template struct Result<cv::ocl::Context*>;
+template struct Result<cv::ocl::Device*>;
+template struct Result<cv::ocl::Image2D*>;
+template struct Result<cv::ocl::KernelArg*>;
+template struct Result<cv::ocl::Kernel*>;
+template struct Result<cv::ocl::PlatformInfo*>;
+template struct Result<cv::ocl::Platform*>;
+template struct Result<cv::ocl::ProgramSource*>;
+template struct Result<cv::ocl::Program*>;
+template struct Result<cv::ocl::Queue*>;
+template struct Result<cv::ocl::Timer*>;
 template struct Result<cv::utils::logging::LogLevel>;
+template struct Result<cv::utils::logging::LogTag*>;
+template struct Result<cv::utils::logging::LogTag**>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
@@ -43,6 +109,27 @@ template struct Result<int(*)[32]>;
 template struct Result<long>;
 template struct Result<short>;
 template struct Result<signed char>;
+template struct Result<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>;
+template struct Result<std::vector<bool>*>;
+template struct Result<std::vector<char>*>;
+template struct Result<std::vector<cv::DMatch>*>;
+template struct Result<std::vector<cv::KeyPoint>*>;
+template struct Result<std::vector<cv::Mat>*>;
+template struct Result<std::vector<cv::Point3_<double>>*>;
+template struct Result<std::vector<cv::Point3_<float>>*>;
+template struct Result<std::vector<cv::Point3_<int>>*>;
+template struct Result<std::vector<cv::Point_<float>>*>;
+template struct Result<std::vector<cv::Point_<int>>*>;
+template struct Result<std::vector<cv::Range>*>;
+template struct Result<std::vector<cv::UMat>*>;
+template struct Result<std::vector<cv::Vec<int, 2>>*>;
+template struct Result<std::vector<cv::ocl::PlatformInfo>*>;
+template struct Result<std::vector<double>*>;
+template struct Result<std::vector<int>*>;
+template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::vector<int>>*>;
+template struct Result<std::vector<unsigned char>*>;
+template struct Result<std::vector<unsigned long>*>;
 template struct Result<unsigned char>;
 template struct Result<unsigned char*>;
 template struct Result<unsigned int>;
@@ -56,7 +143,7 @@ extern "C" void cv_PtrOfConjGradSolver_delete(cv::Ptr<cv::ConjGradSolver>* insta
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfConjGradSolver_get_inner_ptr(cv::Ptr<cv::ConjGradSolver>* instance) {
+extern "C" cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr(cv::Ptr<cv::ConjGradSolver>* instance) {
 	return instance->get();
 }
 
@@ -64,7 +151,7 @@ extern "C" void cv_PtrOfDownhillSolver_delete(cv::Ptr<cv::DownhillSolver>* insta
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfDownhillSolver_get_inner_ptr(cv::Ptr<cv::DownhillSolver>* instance) {
+extern "C" cv::DownhillSolver* cv_PtrOfDownhillSolver_get_inner_ptr(cv::Ptr<cv::DownhillSolver>* instance) {
 	return instance->get();
 }
 
@@ -72,7 +159,7 @@ extern "C" void cv_PtrOfFileStorage_delete(cv::Ptr<cv::FileStorage>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFileStorage_get_inner_ptr(cv::Ptr<cv::FileStorage>* instance) {
+extern "C" cv::FileStorage* cv_PtrOfFileStorage_get_inner_ptr(cv::Ptr<cv::FileStorage>* instance) {
 	return instance->get();
 }
 
@@ -80,7 +167,7 @@ extern "C" void cv_PtrOfFormatted_delete(cv::Ptr<cv::Formatted>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFormatted_get_inner_ptr(cv::Ptr<cv::Formatted>* instance) {
+extern "C" cv::Formatted* cv_PtrOfFormatted_get_inner_ptr(cv::Ptr<cv::Formatted>* instance) {
 	return instance->get();
 }
 
@@ -88,7 +175,7 @@ extern "C" void cv_PtrOfFormatter_delete(cv::Ptr<cv::Formatter>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfFormatter_get_inner_ptr(cv::Ptr<cv::Formatter>* instance) {
+extern "C" cv::Formatter* cv_PtrOfFormatter_get_inner_ptr(cv::Ptr<cv::Formatter>* instance) {
 	return instance->get();
 }
 
@@ -96,7 +183,7 @@ extern "C" void cv_PtrOfMinProblemSolver_Function_delete(cv::Ptr<cv::MinProblemS
 	delete instance;
 }
 
-extern "C" void* cv_PtrOfMinProblemSolver_Function_get_inner_ptr(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
+extern "C" cv::MinProblemSolver::Function* cv_PtrOfMinProblemSolver_Function_get_inner_ptr(cv::Ptr<cv::MinProblemSolver::Function>* instance) {
 	return instance->get();
 }
 
@@ -104,7 +191,7 @@ extern "C" void cv_PtrOff32_delete(cv::Ptr<float>* instance) {
 	delete instance;
 }
 
-extern "C" void* cv_PtrOff32_get_inner_ptr(cv::Ptr<float>* instance) {
+extern "C" float* cv_PtrOff32_get_inner_ptr(cv::Ptr<float>* instance) {
 	return instance->get();
 }
 
@@ -113,7 +200,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfDMatch_new() {
+	std::vector<cv::DMatch>* cv_VectorOfDMatch_new() {
 		return new std::vector<cv::DMatch>();
 	}
 
@@ -175,11 +262,11 @@ extern "C" {
 	}
 	
 	Result<cv::DMatch> cv_VectorOfDMatch_get_unchecked(const std::vector<cv::DMatch>* instance, size_t index) {
-		return Ok<cv::DMatch>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfDMatch_data(std::vector<cv::DMatch>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::DMatch* cv_VectorOfDMatch_data(std::vector<cv::DMatch>* instance) {
+		return instance->data();
 	}
 	
 }
@@ -190,7 +277,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfKeyPoint_new() {
+	std::vector<cv::KeyPoint>* cv_VectorOfKeyPoint_new() {
 		return new std::vector<cv::KeyPoint>();
 	}
 
@@ -252,11 +339,11 @@ extern "C" {
 	}
 	
 	Result<cv::KeyPoint> cv_VectorOfKeyPoint_get_unchecked(const std::vector<cv::KeyPoint>* instance, size_t index) {
-		return Ok<cv::KeyPoint>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfKeyPoint_data(std::vector<cv::KeyPoint>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::KeyPoint* cv_VectorOfKeyPoint_data(std::vector<cv::KeyPoint>* instance) {
+		return instance->data();
 	}
 	
 }
@@ -267,7 +354,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfMat_new() {
+	std::vector<cv::Mat>* cv_VectorOfMat_new() {
 		return new std::vector<cv::Mat>();
 	}
 
@@ -311,13 +398,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfMat_get(const std::vector<cv::Mat>* instance, size_t index) {
+	Result<cv::Mat*> cv_VectorOfMat_get(const std::vector<cv::Mat>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::Mat(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::Mat(instance->at(index)));
+		} VEC_CATCH(Result<cv::Mat*>)
 	}
 	
-	void* cv_VectorOfMat_get_unchecked(const std::vector<cv::Mat>* instance, size_t index) {
+	cv::Mat* cv_VectorOfMat_get_unchecked(const std::vector<cv::Mat>* instance, size_t index) {
 		return new cv::Mat((*instance)[index]);
 	}
 	
@@ -340,7 +427,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPlatformInfo_new() {
+	std::vector<cv::ocl::PlatformInfo>* cv_VectorOfPlatformInfo_new() {
 		return new std::vector<cv::ocl::PlatformInfo>();
 	}
 
@@ -384,13 +471,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfPlatformInfo_get(const std::vector<cv::ocl::PlatformInfo>* instance, size_t index) {
+	Result<cv::ocl::PlatformInfo*> cv_VectorOfPlatformInfo_get(const std::vector<cv::ocl::PlatformInfo>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::ocl::PlatformInfo(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::ocl::PlatformInfo(instance->at(index)));
+		} VEC_CATCH(Result<cv::ocl::PlatformInfo*>)
 	}
 	
-	void* cv_VectorOfPlatformInfo_get_unchecked(const std::vector<cv::ocl::PlatformInfo>* instance, size_t index) {
+	cv::ocl::PlatformInfo* cv_VectorOfPlatformInfo_get_unchecked(const std::vector<cv::ocl::PlatformInfo>* instance, size_t index) {
 		return new cv::ocl::PlatformInfo((*instance)[index]);
 	}
 	
@@ -413,7 +500,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPoint_new() {
+	std::vector<cv::Point>* cv_VectorOfPoint_new() {
 		return new std::vector<cv::Point>();
 	}
 
@@ -475,29 +562,29 @@ extern "C" {
 	}
 	
 	Result<cv::Point> cv_VectorOfPoint_get_unchecked(const std::vector<cv::Point>* instance, size_t index) {
-		return Ok<cv::Point>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfPoint_data(std::vector<cv::Point>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Point* cv_VectorOfPoint_data(std::vector<cv::Point>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfPoint_input_array(std::vector<cv::Point>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfPoint_input_array(std::vector<cv::Point>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint_output_array(std::vector<cv::Point>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfPoint_output_array(std::vector<cv::Point>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint_input_output_array(std::vector<cv::Point>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfPoint_input_output_array(std::vector<cv::Point>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -508,7 +595,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPoint2d_new() {
+	std::vector<cv::Point2d>* cv_VectorOfPoint2d_new() {
 		return new std::vector<cv::Point2d>();
 	}
 
@@ -570,29 +657,29 @@ extern "C" {
 	}
 	
 	Result<cv::Point2d> cv_VectorOfPoint2d_get_unchecked(const std::vector<cv::Point2d>* instance, size_t index) {
-		return Ok<cv::Point2d>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfPoint2d_data(std::vector<cv::Point2d>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Point2d* cv_VectorOfPoint2d_data(std::vector<cv::Point2d>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfPoint2d_input_array(std::vector<cv::Point2d>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfPoint2d_input_array(std::vector<cv::Point2d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint2d_output_array(std::vector<cv::Point2d>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfPoint2d_output_array(std::vector<cv::Point2d>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint2d_input_output_array(std::vector<cv::Point2d>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfPoint2d_input_output_array(std::vector<cv::Point2d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -603,7 +690,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPoint2f_new() {
+	std::vector<cv::Point2f>* cv_VectorOfPoint2f_new() {
 		return new std::vector<cv::Point2f>();
 	}
 
@@ -665,29 +752,29 @@ extern "C" {
 	}
 	
 	Result<cv::Point2f> cv_VectorOfPoint2f_get_unchecked(const std::vector<cv::Point2f>* instance, size_t index) {
-		return Ok<cv::Point2f>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfPoint2f_data(std::vector<cv::Point2f>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Point2f* cv_VectorOfPoint2f_data(std::vector<cv::Point2f>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfPoint2f_input_array(std::vector<cv::Point2f>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfPoint2f_input_array(std::vector<cv::Point2f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint2f_output_array(std::vector<cv::Point2f>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfPoint2f_output_array(std::vector<cv::Point2f>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint2f_input_output_array(std::vector<cv::Point2f>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfPoint2f_input_output_array(std::vector<cv::Point2f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -698,7 +785,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPoint3d_new() {
+	std::vector<cv::Point3d>* cv_VectorOfPoint3d_new() {
 		return new std::vector<cv::Point3d>();
 	}
 
@@ -760,29 +847,29 @@ extern "C" {
 	}
 	
 	Result<cv::Point3d> cv_VectorOfPoint3d_get_unchecked(const std::vector<cv::Point3d>* instance, size_t index) {
-		return Ok<cv::Point3d>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfPoint3d_data(std::vector<cv::Point3d>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Point3d* cv_VectorOfPoint3d_data(std::vector<cv::Point3d>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfPoint3d_input_array(std::vector<cv::Point3d>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfPoint3d_input_array(std::vector<cv::Point3d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint3d_output_array(std::vector<cv::Point3d>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfPoint3d_output_array(std::vector<cv::Point3d>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint3d_input_output_array(std::vector<cv::Point3d>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfPoint3d_input_output_array(std::vector<cv::Point3d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -793,7 +880,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPoint3f_new() {
+	std::vector<cv::Point3f>* cv_VectorOfPoint3f_new() {
 		return new std::vector<cv::Point3f>();
 	}
 
@@ -855,29 +942,29 @@ extern "C" {
 	}
 	
 	Result<cv::Point3f> cv_VectorOfPoint3f_get_unchecked(const std::vector<cv::Point3f>* instance, size_t index) {
-		return Ok<cv::Point3f>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfPoint3f_data(std::vector<cv::Point3f>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Point3f* cv_VectorOfPoint3f_data(std::vector<cv::Point3f>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfPoint3f_input_array(std::vector<cv::Point3f>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfPoint3f_input_array(std::vector<cv::Point3f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint3f_output_array(std::vector<cv::Point3f>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfPoint3f_output_array(std::vector<cv::Point3f>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint3f_input_output_array(std::vector<cv::Point3f>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfPoint3f_input_output_array(std::vector<cv::Point3f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -888,7 +975,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfPoint3i_new() {
+	std::vector<cv::Point3i>* cv_VectorOfPoint3i_new() {
 		return new std::vector<cv::Point3i>();
 	}
 
@@ -950,29 +1037,29 @@ extern "C" {
 	}
 	
 	Result<cv::Point3i> cv_VectorOfPoint3i_get_unchecked(const std::vector<cv::Point3i>* instance, size_t index) {
-		return Ok<cv::Point3i>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfPoint3i_data(std::vector<cv::Point3i>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Point3i* cv_VectorOfPoint3i_data(std::vector<cv::Point3i>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfPoint3i_input_array(std::vector<cv::Point3i>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfPoint3i_input_array(std::vector<cv::Point3i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint3i_output_array(std::vector<cv::Point3i>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfPoint3i_output_array(std::vector<cv::Point3i>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfPoint3i_input_output_array(std::vector<cv::Point3i>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfPoint3i_input_output_array(std::vector<cv::Point3i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -983,7 +1070,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfRange_new() {
+	std::vector<cv::Range>* cv_VectorOfRange_new() {
 		return new std::vector<cv::Range>();
 	}
 
@@ -1027,13 +1114,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfRange_get(const std::vector<cv::Range>* instance, size_t index) {
+	Result<cv::Range*> cv_VectorOfRange_get(const std::vector<cv::Range>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::Range(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::Range(instance->at(index)));
+		} VEC_CATCH(Result<cv::Range*>)
 	}
 	
-	void* cv_VectorOfRange_get_unchecked(const std::vector<cv::Range>* instance, size_t index) {
+	cv::Range* cv_VectorOfRange_get_unchecked(const std::vector<cv::Range>* instance, size_t index) {
 		return new cv::Range((*instance)[index]);
 	}
 	
@@ -1056,7 +1143,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfRect_new() {
+	std::vector<cv::Rect>* cv_VectorOfRect_new() {
 		return new std::vector<cv::Rect>();
 	}
 
@@ -1118,29 +1205,29 @@ extern "C" {
 	}
 	
 	Result<cv::Rect> cv_VectorOfRect_get_unchecked(const std::vector<cv::Rect>* instance, size_t index) {
-		return Ok<cv::Rect>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfRect_data(std::vector<cv::Rect>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Rect* cv_VectorOfRect_data(std::vector<cv::Rect>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfRect_input_array(std::vector<cv::Rect>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfRect_input_array(std::vector<cv::Rect>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfRect_output_array(std::vector<cv::Rect>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfRect_output_array(std::vector<cv::Rect>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfRect_input_output_array(std::vector<cv::Rect>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfRect_input_output_array(std::vector<cv::Rect>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -1151,7 +1238,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfRect2d_new() {
+	std::vector<cv::Rect2d>* cv_VectorOfRect2d_new() {
 		return new std::vector<cv::Rect2d>();
 	}
 
@@ -1213,29 +1300,29 @@ extern "C" {
 	}
 	
 	Result<cv::Rect2d> cv_VectorOfRect2d_get_unchecked(const std::vector<cv::Rect2d>* instance, size_t index) {
-		return Ok<cv::Rect2d>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfRect2d_data(std::vector<cv::Rect2d>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Rect2d* cv_VectorOfRect2d_data(std::vector<cv::Rect2d>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfRect2d_input_array(std::vector<cv::Rect2d>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfRect2d_input_array(std::vector<cv::Rect2d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfRect2d_output_array(std::vector<cv::Rect2d>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfRect2d_output_array(std::vector<cv::Rect2d>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfRect2d_input_output_array(std::vector<cv::Rect2d>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfRect2d_input_output_array(std::vector<cv::Rect2d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -1246,7 +1333,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfRotatedRect_new() {
+	std::vector<cv::RotatedRect>* cv_VectorOfRotatedRect_new() {
 		return new std::vector<cv::RotatedRect>();
 	}
 
@@ -1290,13 +1377,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfRotatedRect_get(const std::vector<cv::RotatedRect>* instance, size_t index) {
+	Result<cv::RotatedRect*> cv_VectorOfRotatedRect_get(const std::vector<cv::RotatedRect>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::RotatedRect(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::RotatedRect(instance->at(index)));
+		} VEC_CATCH(Result<cv::RotatedRect*>)
 	}
 	
-	void* cv_VectorOfRotatedRect_get_unchecked(const std::vector<cv::RotatedRect>* instance, size_t index) {
+	cv::RotatedRect* cv_VectorOfRotatedRect_get_unchecked(const std::vector<cv::RotatedRect>* instance, size_t index) {
 		return new cv::RotatedRect((*instance)[index]);
 	}
 	
@@ -1319,7 +1406,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfScalar_new() {
+	std::vector<cv::Scalar>* cv_VectorOfScalar_new() {
 		return new std::vector<cv::Scalar>();
 	}
 
@@ -1381,29 +1468,29 @@ extern "C" {
 	}
 	
 	Result<cv::Scalar> cv_VectorOfScalar_get_unchecked(const std::vector<cv::Scalar>* instance, size_t index) {
-		return Ok<cv::Scalar>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfScalar_data(std::vector<cv::Scalar>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Scalar* cv_VectorOfScalar_data(std::vector<cv::Scalar>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfScalar_input_array(std::vector<cv::Scalar>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfScalar_input_array(std::vector<cv::Scalar>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfScalar_output_array(std::vector<cv::Scalar>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfScalar_output_array(std::vector<cv::Scalar>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfScalar_input_output_array(std::vector<cv::Scalar>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfScalar_input_output_array(std::vector<cv::Scalar>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -1414,7 +1501,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfSize_new() {
+	std::vector<cv::Size>* cv_VectorOfSize_new() {
 		return new std::vector<cv::Size>();
 	}
 
@@ -1476,29 +1563,29 @@ extern "C" {
 	}
 	
 	Result<cv::Size> cv_VectorOfSize_get_unchecked(const std::vector<cv::Size>* instance, size_t index) {
-		return Ok<cv::Size>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfSize_data(std::vector<cv::Size>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Size* cv_VectorOfSize_data(std::vector<cv::Size>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfSize_input_array(std::vector<cv::Size>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfSize_input_array(std::vector<cv::Size>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfSize_output_array(std::vector<cv::Size>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfSize_output_array(std::vector<cv::Size>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfSize_input_output_array(std::vector<cv::Size>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfSize_input_output_array(std::vector<cv::Size>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -1509,7 +1596,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfString_new() {
+	std::vector<cv::String>* cv_VectorOfString_new() {
 		return new std::vector<cv::String>();
 	}
 
@@ -1553,14 +1640,14 @@ extern "C" {
 		instance->insert(instance->begin() + index, std::string(val));
 	}
 	
-	Result<const char*> cv_VectorOfString_get(const std::vector<cv::String>* instance, size_t index) {
+	Result<void*> cv_VectorOfString_get(const std::vector<cv::String>* instance, size_t index) {
 		try {
-			return Ok<const char*>(instance->at(index).c_str());
-		} VEC_CATCH(Result<const char*>)
+			return Ok(ocvrs_create_string(instance->at(index).c_str()));
+		} VEC_CATCH(Result<void*>)
 	}
 	
-	const char* cv_VectorOfString_get_unchecked(const std::vector<cv::String>* instance, size_t index) {
-		return (*instance)[index].c_str();
+	void* cv_VectorOfString_get_unchecked(const std::vector<cv::String>* instance, size_t index) {
+		return ocvrs_create_string((*instance)[index].c_str());
 	}
 	
 	Result_void cv_VectorOfString_set(std::vector<cv::String>* instance, size_t index, char* val) {
@@ -1582,7 +1669,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfUMat_new() {
+	std::vector<cv::UMat>* cv_VectorOfUMat_new() {
 		return new std::vector<cv::UMat>();
 	}
 
@@ -1626,13 +1713,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfUMat_get(const std::vector<cv::UMat>* instance, size_t index) {
+	Result<cv::UMat*> cv_VectorOfUMat_get(const std::vector<cv::UMat>* instance, size_t index) {
 		try {
-			return Ok<void*>(new cv::UMat(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new cv::UMat(instance->at(index)));
+		} VEC_CATCH(Result<cv::UMat*>)
 	}
 	
-	void* cv_VectorOfUMat_get_unchecked(const std::vector<cv::UMat>* instance, size_t index) {
+	cv::UMat* cv_VectorOfUMat_get_unchecked(const std::vector<cv::UMat>* instance, size_t index) {
 		return new cv::UMat((*instance)[index]);
 	}
 	
@@ -1655,7 +1742,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVec2i_new() {
+	std::vector<cv::Vec2i>* cv_VectorOfVec2i_new() {
 		return new std::vector<cv::Vec2i>();
 	}
 
@@ -1717,29 +1804,29 @@ extern "C" {
 	}
 	
 	Result<cv::Vec2i> cv_VectorOfVec2i_get_unchecked(const std::vector<cv::Vec2i>* instance, size_t index) {
-		return Ok<cv::Vec2i>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfVec2i_data(std::vector<cv::Vec2i>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Vec2i* cv_VectorOfVec2i_data(std::vector<cv::Vec2i>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfVec2i_input_array(std::vector<cv::Vec2i>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVec2i_input_array(std::vector<cv::Vec2i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec2i_output_array(std::vector<cv::Vec2i>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVec2i_output_array(std::vector<cv::Vec2i>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec2i_input_output_array(std::vector<cv::Vec2i>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVec2i_input_output_array(std::vector<cv::Vec2i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -1750,7 +1837,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVec3d_new() {
+	std::vector<cv::Vec3d>* cv_VectorOfVec3d_new() {
 		return new std::vector<cv::Vec3d>();
 	}
 
@@ -1812,29 +1899,29 @@ extern "C" {
 	}
 	
 	Result<cv::Vec3d> cv_VectorOfVec3d_get_unchecked(const std::vector<cv::Vec3d>* instance, size_t index) {
-		return Ok<cv::Vec3d>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfVec3d_data(std::vector<cv::Vec3d>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Vec3d* cv_VectorOfVec3d_data(std::vector<cv::Vec3d>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfVec3d_input_array(std::vector<cv::Vec3d>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVec3d_input_array(std::vector<cv::Vec3d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec3d_output_array(std::vector<cv::Vec3d>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVec3d_output_array(std::vector<cv::Vec3d>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec3d_input_output_array(std::vector<cv::Vec3d>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVec3d_input_output_array(std::vector<cv::Vec3d>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -1845,7 +1932,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVec3f_new() {
+	std::vector<cv::Vec3f>* cv_VectorOfVec3f_new() {
 		return new std::vector<cv::Vec3f>();
 	}
 
@@ -1907,29 +1994,29 @@ extern "C" {
 	}
 	
 	Result<cv::Vec3f> cv_VectorOfVec3f_get_unchecked(const std::vector<cv::Vec3f>* instance, size_t index) {
-		return Ok<cv::Vec3f>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfVec3f_data(std::vector<cv::Vec3f>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Vec3f* cv_VectorOfVec3f_data(std::vector<cv::Vec3f>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfVec3f_input_array(std::vector<cv::Vec3f>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVec3f_input_array(std::vector<cv::Vec3f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec3f_output_array(std::vector<cv::Vec3f>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVec3f_output_array(std::vector<cv::Vec3f>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec3f_input_output_array(std::vector<cv::Vec3f>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVec3f_input_output_array(std::vector<cv::Vec3f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -1940,7 +2027,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVec3i_new() {
+	std::vector<cv::Vec3i>* cv_VectorOfVec3i_new() {
 		return new std::vector<cv::Vec3i>();
 	}
 
@@ -2002,29 +2089,29 @@ extern "C" {
 	}
 	
 	Result<cv::Vec3i> cv_VectorOfVec3i_get_unchecked(const std::vector<cv::Vec3i>* instance, size_t index) {
-		return Ok<cv::Vec3i>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfVec3i_data(std::vector<cv::Vec3i>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Vec3i* cv_VectorOfVec3i_data(std::vector<cv::Vec3i>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfVec3i_input_array(std::vector<cv::Vec3i>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVec3i_input_array(std::vector<cv::Vec3i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec3i_output_array(std::vector<cv::Vec3i>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVec3i_output_array(std::vector<cv::Vec3i>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec3i_input_output_array(std::vector<cv::Vec3i>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVec3i_input_output_array(std::vector<cv::Vec3i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2035,7 +2122,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVec4f_new() {
+	std::vector<cv::Vec4f>* cv_VectorOfVec4f_new() {
 		return new std::vector<cv::Vec4f>();
 	}
 
@@ -2097,29 +2184,29 @@ extern "C" {
 	}
 	
 	Result<cv::Vec4f> cv_VectorOfVec4f_get_unchecked(const std::vector<cv::Vec4f>* instance, size_t index) {
-		return Ok<cv::Vec4f>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfVec4f_data(std::vector<cv::Vec4f>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Vec4f* cv_VectorOfVec4f_data(std::vector<cv::Vec4f>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfVec4f_input_array(std::vector<cv::Vec4f>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVec4f_input_array(std::vector<cv::Vec4f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec4f_output_array(std::vector<cv::Vec4f>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVec4f_output_array(std::vector<cv::Vec4f>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec4f_input_output_array(std::vector<cv::Vec4f>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVec4f_input_output_array(std::vector<cv::Vec4f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2130,7 +2217,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVec4i_new() {
+	std::vector<cv::Vec4i>* cv_VectorOfVec4i_new() {
 		return new std::vector<cv::Vec4i>();
 	}
 
@@ -2192,29 +2279,29 @@ extern "C" {
 	}
 	
 	Result<cv::Vec4i> cv_VectorOfVec4i_get_unchecked(const std::vector<cv::Vec4i>* instance, size_t index) {
-		return Ok<cv::Vec4i>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfVec4i_data(std::vector<cv::Vec4i>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Vec4i* cv_VectorOfVec4i_data(std::vector<cv::Vec4i>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfVec4i_input_array(std::vector<cv::Vec4i>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVec4i_input_array(std::vector<cv::Vec4i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec4i_output_array(std::vector<cv::Vec4i>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVec4i_output_array(std::vector<cv::Vec4i>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec4i_input_output_array(std::vector<cv::Vec4i>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVec4i_input_output_array(std::vector<cv::Vec4i>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2225,7 +2312,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVec6f_new() {
+	std::vector<cv::Vec6f>* cv_VectorOfVec6f_new() {
 		return new std::vector<cv::Vec6f>();
 	}
 
@@ -2287,29 +2374,29 @@ extern "C" {
 	}
 	
 	Result<cv::Vec6f> cv_VectorOfVec6f_get_unchecked(const std::vector<cv::Vec6f>* instance, size_t index) {
-		return Ok<cv::Vec6f>((*instance)[index]);
+		return Ok((*instance)[index]);
 	}
 	
-	const void** cv_VectorOfVec6f_data(std::vector<cv::Vec6f>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const cv::Vec6f* cv_VectorOfVec6f_data(std::vector<cv::Vec6f>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfVec6f_input_array(std::vector<cv::Vec6f>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVec6f_input_array(std::vector<cv::Vec6f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec6f_output_array(std::vector<cv::Vec6f>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVec6f_output_array(std::vector<cv::Vec6f>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVec6f_input_output_array(std::vector<cv::Vec6f>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVec6f_input_output_array(std::vector<cv::Vec6f>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2320,7 +2407,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfDMatch_new() {
+	std::vector<std::vector<cv::DMatch>>* cv_VectorOfVectorOfDMatch_new() {
 		return new std::vector<std::vector<cv::DMatch>>();
 	}
 
@@ -2364,13 +2451,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfDMatch_get(const std::vector<std::vector<cv::DMatch>>* instance, size_t index) {
+	Result<std::vector<cv::DMatch>*> cv_VectorOfVectorOfDMatch_get(const std::vector<std::vector<cv::DMatch>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::DMatch>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::DMatch>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::DMatch>*>)
 	}
 	
-	void* cv_VectorOfVectorOfDMatch_get_unchecked(const std::vector<std::vector<cv::DMatch>>* instance, size_t index) {
+	std::vector<cv::DMatch>* cv_VectorOfVectorOfDMatch_get_unchecked(const std::vector<std::vector<cv::DMatch>>* instance, size_t index) {
 		return new std::vector<cv::DMatch>((*instance)[index]);
 	}
 	
@@ -2393,7 +2480,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfKeyPoint_new() {
+	std::vector<std::vector<cv::KeyPoint>>* cv_VectorOfVectorOfKeyPoint_new() {
 		return new std::vector<std::vector<cv::KeyPoint>>();
 	}
 
@@ -2437,13 +2524,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfKeyPoint_get(const std::vector<std::vector<cv::KeyPoint>>* instance, size_t index) {
+	Result<std::vector<cv::KeyPoint>*> cv_VectorOfVectorOfKeyPoint_get(const std::vector<std::vector<cv::KeyPoint>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::KeyPoint>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::KeyPoint>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::KeyPoint>*>)
 	}
 	
-	void* cv_VectorOfVectorOfKeyPoint_get_unchecked(const std::vector<std::vector<cv::KeyPoint>>* instance, size_t index) {
+	std::vector<cv::KeyPoint>* cv_VectorOfVectorOfKeyPoint_get_unchecked(const std::vector<std::vector<cv::KeyPoint>>* instance, size_t index) {
 		return new std::vector<cv::KeyPoint>((*instance)[index]);
 	}
 	
@@ -2466,7 +2553,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfMat_new() {
+	std::vector<std::vector<cv::Mat>>* cv_VectorOfVectorOfMat_new() {
 		return new std::vector<std::vector<cv::Mat>>();
 	}
 
@@ -2510,13 +2597,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfMat_get(const std::vector<std::vector<cv::Mat>>* instance, size_t index) {
+	Result<std::vector<cv::Mat>*> cv_VectorOfVectorOfMat_get(const std::vector<std::vector<cv::Mat>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Mat>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Mat>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Mat>*>)
 	}
 	
-	void* cv_VectorOfVectorOfMat_get_unchecked(const std::vector<std::vector<cv::Mat>>* instance, size_t index) {
+	std::vector<cv::Mat>* cv_VectorOfVectorOfMat_get_unchecked(const std::vector<std::vector<cv::Mat>>* instance, size_t index) {
 		return new std::vector<cv::Mat>((*instance)[index]);
 	}
 	
@@ -2539,7 +2626,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfPoint_new() {
+	std::vector<std::vector<cv::Point>>* cv_VectorOfVectorOfPoint_new() {
 		return new std::vector<std::vector<cv::Point>>();
 	}
 
@@ -2583,13 +2670,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint_get(const std::vector<std::vector<cv::Point>>* instance, size_t index) {
+	Result<std::vector<cv::Point>*> cv_VectorOfVectorOfPoint_get(const std::vector<std::vector<cv::Point>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Point>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Point>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Point>*>)
 	}
 	
-	void* cv_VectorOfVectorOfPoint_get_unchecked(const std::vector<std::vector<cv::Point>>* instance, size_t index) {
+	std::vector<cv::Point>* cv_VectorOfVectorOfPoint_get_unchecked(const std::vector<std::vector<cv::Point>>* instance, size_t index) {
 		return new std::vector<cv::Point>((*instance)[index]);
 	}
 	
@@ -2604,22 +2691,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint_input_array(std::vector<std::vector<cv::Point>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfPoint_input_array(std::vector<std::vector<cv::Point>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint_output_array(std::vector<std::vector<cv::Point>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfPoint_output_array(std::vector<std::vector<cv::Point>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint_input_output_array(std::vector<std::vector<cv::Point>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfPoint_input_output_array(std::vector<std::vector<cv::Point>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2630,7 +2717,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfPoint2f_new() {
+	std::vector<std::vector<cv::Point2f>>* cv_VectorOfVectorOfPoint2f_new() {
 		return new std::vector<std::vector<cv::Point2f>>();
 	}
 
@@ -2674,13 +2761,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint2f_get(const std::vector<std::vector<cv::Point2f>>* instance, size_t index) {
+	Result<std::vector<cv::Point2f>*> cv_VectorOfVectorOfPoint2f_get(const std::vector<std::vector<cv::Point2f>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Point2f>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Point2f>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Point2f>*>)
 	}
 	
-	void* cv_VectorOfVectorOfPoint2f_get_unchecked(const std::vector<std::vector<cv::Point2f>>* instance, size_t index) {
+	std::vector<cv::Point2f>* cv_VectorOfVectorOfPoint2f_get_unchecked(const std::vector<std::vector<cv::Point2f>>* instance, size_t index) {
 		return new std::vector<cv::Point2f>((*instance)[index]);
 	}
 	
@@ -2695,22 +2782,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint2f_input_array(std::vector<std::vector<cv::Point2f>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfPoint2f_input_array(std::vector<std::vector<cv::Point2f>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint2f_output_array(std::vector<std::vector<cv::Point2f>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfPoint2f_output_array(std::vector<std::vector<cv::Point2f>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint2f_input_output_array(std::vector<std::vector<cv::Point2f>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfPoint2f_input_output_array(std::vector<std::vector<cv::Point2f>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2721,7 +2808,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfPoint3d_new() {
+	std::vector<std::vector<cv::Point3d>>* cv_VectorOfVectorOfPoint3d_new() {
 		return new std::vector<std::vector<cv::Point3d>>();
 	}
 
@@ -2765,13 +2852,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3d_get(const std::vector<std::vector<cv::Point3d>>* instance, size_t index) {
+	Result<std::vector<cv::Point3d>*> cv_VectorOfVectorOfPoint3d_get(const std::vector<std::vector<cv::Point3d>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Point3d>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Point3d>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Point3d>*>)
 	}
 	
-	void* cv_VectorOfVectorOfPoint3d_get_unchecked(const std::vector<std::vector<cv::Point3d>>* instance, size_t index) {
+	std::vector<cv::Point3d>* cv_VectorOfVectorOfPoint3d_get_unchecked(const std::vector<std::vector<cv::Point3d>>* instance, size_t index) {
 		return new std::vector<cv::Point3d>((*instance)[index]);
 	}
 	
@@ -2786,22 +2873,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3d_input_array(std::vector<std::vector<cv::Point3d>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfPoint3d_input_array(std::vector<std::vector<cv::Point3d>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3d_output_array(std::vector<std::vector<cv::Point3d>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfPoint3d_output_array(std::vector<std::vector<cv::Point3d>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3d_input_output_array(std::vector<std::vector<cv::Point3d>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfPoint3d_input_output_array(std::vector<std::vector<cv::Point3d>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2812,7 +2899,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfPoint3f_new() {
+	std::vector<std::vector<cv::Point3f>>* cv_VectorOfVectorOfPoint3f_new() {
 		return new std::vector<std::vector<cv::Point3f>>();
 	}
 
@@ -2856,13 +2943,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3f_get(const std::vector<std::vector<cv::Point3f>>* instance, size_t index) {
+	Result<std::vector<cv::Point3f>*> cv_VectorOfVectorOfPoint3f_get(const std::vector<std::vector<cv::Point3f>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Point3f>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Point3f>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Point3f>*>)
 	}
 	
-	void* cv_VectorOfVectorOfPoint3f_get_unchecked(const std::vector<std::vector<cv::Point3f>>* instance, size_t index) {
+	std::vector<cv::Point3f>* cv_VectorOfVectorOfPoint3f_get_unchecked(const std::vector<std::vector<cv::Point3f>>* instance, size_t index) {
 		return new std::vector<cv::Point3f>((*instance)[index]);
 	}
 	
@@ -2877,22 +2964,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3f_input_array(std::vector<std::vector<cv::Point3f>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfPoint3f_input_array(std::vector<std::vector<cv::Point3f>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3f_output_array(std::vector<std::vector<cv::Point3f>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfPoint3f_output_array(std::vector<std::vector<cv::Point3f>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3f_input_output_array(std::vector<std::vector<cv::Point3f>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfPoint3f_input_output_array(std::vector<std::vector<cv::Point3f>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2903,7 +2990,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfPoint3i_new() {
+	std::vector<std::vector<cv::Point3i>>* cv_VectorOfVectorOfPoint3i_new() {
 		return new std::vector<std::vector<cv::Point3i>>();
 	}
 
@@ -2947,13 +3034,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3i_get(const std::vector<std::vector<cv::Point3i>>* instance, size_t index) {
+	Result<std::vector<cv::Point3i>*> cv_VectorOfVectorOfPoint3i_get(const std::vector<std::vector<cv::Point3i>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Point3i>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Point3i>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Point3i>*>)
 	}
 	
-	void* cv_VectorOfVectorOfPoint3i_get_unchecked(const std::vector<std::vector<cv::Point3i>>* instance, size_t index) {
+	std::vector<cv::Point3i>* cv_VectorOfVectorOfPoint3i_get_unchecked(const std::vector<std::vector<cv::Point3i>>* instance, size_t index) {
 		return new std::vector<cv::Point3i>((*instance)[index]);
 	}
 	
@@ -2968,22 +3055,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3i_input_array(std::vector<std::vector<cv::Point3i>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfPoint3i_input_array(std::vector<std::vector<cv::Point3i>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3i_output_array(std::vector<std::vector<cv::Point3i>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfPoint3i_output_array(std::vector<std::vector<cv::Point3i>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfPoint3i_input_output_array(std::vector<std::vector<cv::Point3i>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfPoint3i_input_output_array(std::vector<std::vector<cv::Point3i>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -2994,7 +3081,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfRange_new() {
+	std::vector<std::vector<cv::Range>>* cv_VectorOfVectorOfRange_new() {
 		return new std::vector<std::vector<cv::Range>>();
 	}
 
@@ -3038,13 +3125,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfRange_get(const std::vector<std::vector<cv::Range>>* instance, size_t index) {
+	Result<std::vector<cv::Range>*> cv_VectorOfVectorOfRange_get(const std::vector<std::vector<cv::Range>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Range>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Range>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Range>*>)
 	}
 	
-	void* cv_VectorOfVectorOfRange_get_unchecked(const std::vector<std::vector<cv::Range>>* instance, size_t index) {
+	std::vector<cv::Range>* cv_VectorOfVectorOfRange_get_unchecked(const std::vector<std::vector<cv::Range>>* instance, size_t index) {
 		return new std::vector<cv::Range>((*instance)[index]);
 	}
 	
@@ -3067,7 +3154,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfVec2i_new() {
+	std::vector<std::vector<cv::Vec2i>>* cv_VectorOfVectorOfVec2i_new() {
 		return new std::vector<std::vector<cv::Vec2i>>();
 	}
 
@@ -3111,13 +3198,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfVec2i_get(const std::vector<std::vector<cv::Vec2i>>* instance, size_t index) {
+	Result<std::vector<cv::Vec2i>*> cv_VectorOfVectorOfVec2i_get(const std::vector<std::vector<cv::Vec2i>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<cv::Vec2i>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<cv::Vec2i>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<cv::Vec2i>*>)
 	}
 	
-	void* cv_VectorOfVectorOfVec2i_get_unchecked(const std::vector<std::vector<cv::Vec2i>>* instance, size_t index) {
+	std::vector<cv::Vec2i>* cv_VectorOfVectorOfVec2i_get_unchecked(const std::vector<std::vector<cv::Vec2i>>* instance, size_t index) {
 		return new std::vector<cv::Vec2i>((*instance)[index]);
 	}
 	
@@ -3132,22 +3219,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfVec2i_input_array(std::vector<std::vector<cv::Vec2i>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfVec2i_input_array(std::vector<std::vector<cv::Vec2i>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfVec2i_output_array(std::vector<std::vector<cv::Vec2i>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfVec2i_output_array(std::vector<std::vector<cv::Vec2i>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfVec2i_input_output_array(std::vector<std::vector<cv::Vec2i>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfVec2i_input_output_array(std::vector<std::vector<cv::Vec2i>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3158,7 +3245,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOff64_new() {
+	std::vector<std::vector<double>>* cv_VectorOfVectorOff64_new() {
 		return new std::vector<std::vector<double>>();
 	}
 
@@ -3202,13 +3289,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOff64_get(const std::vector<std::vector<double>>* instance, size_t index) {
+	Result<std::vector<double>*> cv_VectorOfVectorOff64_get(const std::vector<std::vector<double>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<double>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<double>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<double>*>)
 	}
 	
-	void* cv_VectorOfVectorOff64_get_unchecked(const std::vector<std::vector<double>>* instance, size_t index) {
+	std::vector<double>* cv_VectorOfVectorOff64_get_unchecked(const std::vector<std::vector<double>>* instance, size_t index) {
 		return new std::vector<double>((*instance)[index]);
 	}
 	
@@ -3223,22 +3310,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOff64_input_array(std::vector<std::vector<double>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOff64_input_array(std::vector<std::vector<double>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOff64_output_array(std::vector<std::vector<double>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOff64_output_array(std::vector<std::vector<double>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOff64_input_output_array(std::vector<std::vector<double>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOff64_input_output_array(std::vector<std::vector<double>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3249,7 +3336,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfi32_new() {
+	std::vector<std::vector<int>>* cv_VectorOfVectorOfi32_new() {
 		return new std::vector<std::vector<int>>();
 	}
 
@@ -3293,13 +3380,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi32_get(const std::vector<std::vector<int>>* instance, size_t index) {
+	Result<std::vector<int>*> cv_VectorOfVectorOfi32_get(const std::vector<std::vector<int>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<int>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<int>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<int>*>)
 	}
 	
-	void* cv_VectorOfVectorOfi32_get_unchecked(const std::vector<std::vector<int>>* instance, size_t index) {
+	std::vector<int>* cv_VectorOfVectorOfi32_get_unchecked(const std::vector<std::vector<int>>* instance, size_t index) {
 		return new std::vector<int>((*instance)[index]);
 	}
 	
@@ -3314,22 +3401,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi32_input_array(std::vector<std::vector<int>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfi32_input_array(std::vector<std::vector<int>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi32_output_array(std::vector<std::vector<int>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfi32_output_array(std::vector<std::vector<int>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi32_input_output_array(std::vector<std::vector<int>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfi32_input_output_array(std::vector<std::vector<int>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3340,7 +3427,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfi8_new() {
+	std::vector<std::vector<char>>* cv_VectorOfVectorOfi8_new() {
 		return new std::vector<std::vector<char>>();
 	}
 
@@ -3384,13 +3471,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi8_get(const std::vector<std::vector<char>>* instance, size_t index) {
+	Result<std::vector<char>*> cv_VectorOfVectorOfi8_get(const std::vector<std::vector<char>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<char>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<char>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<char>*>)
 	}
 	
-	void* cv_VectorOfVectorOfi8_get_unchecked(const std::vector<std::vector<char>>* instance, size_t index) {
+	std::vector<char>* cv_VectorOfVectorOfi8_get_unchecked(const std::vector<std::vector<char>>* instance, size_t index) {
 		return new std::vector<char>((*instance)[index]);
 	}
 	
@@ -3405,22 +3492,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi8_input_array(std::vector<std::vector<char>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfi8_input_array(std::vector<std::vector<char>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi8_output_array(std::vector<std::vector<char>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfi8_output_array(std::vector<std::vector<char>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfi8_input_output_array(std::vector<std::vector<char>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfi8_input_output_array(std::vector<std::vector<char>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3431,7 +3518,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfVectorOfu8_new() {
+	std::vector<std::vector<unsigned char>>* cv_VectorOfVectorOfu8_new() {
 		return new std::vector<std::vector<unsigned char>>();
 	}
 
@@ -3475,13 +3562,13 @@ extern "C" {
 		instance->insert(instance->begin() + index, *val);
 	}
 	
-	Result<void*> cv_VectorOfVectorOfu8_get(const std::vector<std::vector<unsigned char>>* instance, size_t index) {
+	Result<std::vector<unsigned char>*> cv_VectorOfVectorOfu8_get(const std::vector<std::vector<unsigned char>>* instance, size_t index) {
 		try {
-			return Ok<void*>(new std::vector<unsigned char>(instance->at(index)));
-		} VEC_CATCH(Result<void*>)
+			return Ok(new std::vector<unsigned char>(instance->at(index)));
+		} VEC_CATCH(Result<std::vector<unsigned char>*>)
 	}
 	
-	void* cv_VectorOfVectorOfu8_get_unchecked(const std::vector<std::vector<unsigned char>>* instance, size_t index) {
+	std::vector<unsigned char>* cv_VectorOfVectorOfu8_get_unchecked(const std::vector<std::vector<unsigned char>>* instance, size_t index) {
 		return new std::vector<unsigned char>((*instance)[index]);
 	}
 	
@@ -3496,22 +3583,22 @@ extern "C" {
 		(*instance)[index] = *val;
 	}
 	
-	Result<void*> cv_VectorOfVectorOfu8_input_array(std::vector<std::vector<unsigned char>>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfVectorOfu8_input_array(std::vector<std::vector<unsigned char>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfu8_output_array(std::vector<std::vector<unsigned char>>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfVectorOfu8_output_array(std::vector<std::vector<unsigned char>>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfVectorOfu8_input_output_array(std::vector<std::vector<unsigned char>>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfVectorOfu8_input_output_array(std::vector<std::vector<unsigned char>>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3522,7 +3609,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfbool_new() {
+	std::vector<bool>* cv_VectorOfbool_new() {
 		return new std::vector<bool>();
 	}
 
@@ -3595,7 +3682,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOff32_new() {
+	std::vector<float>* cv_VectorOff32_new() {
 		return new std::vector<float>();
 	}
 
@@ -3660,26 +3747,26 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOff32_data(std::vector<float>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const float* cv_VectorOff32_data(std::vector<float>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOff32_input_array(std::vector<float>* instance) {
+	Result<cv::_InputArray*> cv_VectorOff32_input_array(std::vector<float>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOff32_output_array(std::vector<float>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOff32_output_array(std::vector<float>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOff32_input_output_array(std::vector<float>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOff32_input_output_array(std::vector<float>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3690,7 +3777,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOff64_new() {
+	std::vector<double>* cv_VectorOff64_new() {
 		return new std::vector<double>();
 	}
 
@@ -3755,26 +3842,26 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOff64_data(std::vector<double>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const double* cv_VectorOff64_data(std::vector<double>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOff64_input_array(std::vector<double>* instance) {
+	Result<cv::_InputArray*> cv_VectorOff64_input_array(std::vector<double>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOff64_output_array(std::vector<double>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOff64_output_array(std::vector<double>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOff64_input_output_array(std::vector<double>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOff64_input_output_array(std::vector<double>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3785,7 +3872,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfi32_new() {
+	std::vector<int>* cv_VectorOfi32_new() {
 		return new std::vector<int>();
 	}
 
@@ -3850,26 +3937,26 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOfi32_data(std::vector<int>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const int* cv_VectorOfi32_data(std::vector<int>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfi32_input_array(std::vector<int>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfi32_input_array(std::vector<int>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfi32_output_array(std::vector<int>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfi32_output_array(std::vector<int>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfi32_input_output_array(std::vector<int>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfi32_input_output_array(std::vector<int>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3880,7 +3967,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfi8_new() {
+	std::vector<char>* cv_VectorOfi8_new() {
 		return new std::vector<char>();
 	}
 
@@ -3945,26 +4032,26 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOfi8_data(std::vector<char>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const char* cv_VectorOfi8_data(std::vector<char>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfi8_input_array(std::vector<char>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfi8_input_array(std::vector<char>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfi8_output_array(std::vector<char>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfi8_output_array(std::vector<char>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfi8_input_output_array(std::vector<char>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfi8_input_output_array(std::vector<char>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }
@@ -3975,7 +4062,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfsize_t_new() {
+	std::vector<size_t>* cv_VectorOfsize_t_new() {
 		return new std::vector<size_t>();
 	}
 
@@ -4040,8 +4127,8 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOfsize_t_data(std::vector<size_t>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const size_t* cv_VectorOfsize_t_data(std::vector<size_t>* instance) {
+		return instance->data();
 	}
 	
 }
@@ -4052,7 +4139,7 @@ extern "C" {
 		delete instance;
 	}
 
-	void* cv_VectorOfu8_new() {
+	std::vector<unsigned char>* cv_VectorOfu8_new() {
 		return new std::vector<unsigned char>();
 	}
 
@@ -4117,26 +4204,26 @@ extern "C" {
 		return (*instance)[index];
 	}
 	
-	const void** cv_VectorOfu8_data(std::vector<unsigned char>* instance) {
-		return reinterpret_cast<const void**>(instance->data());
+	const unsigned char* cv_VectorOfu8_data(std::vector<unsigned char>* instance) {
+		return instance->data();
 	}
 	
-	Result<void*> cv_VectorOfu8_input_array(std::vector<unsigned char>* instance) {
+	Result<cv::_InputArray*> cv_VectorOfu8_input_array(std::vector<unsigned char>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfu8_output_array(std::vector<unsigned char>* instance) {
+	Result<cv::_OutputArray*> cv_VectorOfu8_output_array(std::vector<unsigned char>* instance) {
 		try {
-			return Ok<void*>(new cv::_OutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_OutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_OutputArray*>)
 	}
 	
-	Result<void*> cv_VectorOfu8_input_output_array(std::vector<unsigned char>* instance) {
+	Result<cv::_InputOutputArray*> cv_VectorOfu8_input_output_array(std::vector<unsigned char>* instance) {
 		try {
-			return Ok<void*>(new cv::_InputOutputArray(*instance));
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(new cv::_InputOutputArray(*instance));
+		} OCVRS_CATCH(Result<cv::_InputOutputArray*>)
 	}
 	
 }

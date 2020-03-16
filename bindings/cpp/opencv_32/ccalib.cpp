@@ -2,58 +2,58 @@
 #include "ccalib_types.hpp"
 
 extern "C" {
-	Result<double> cv_omnidir_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(void* objectPoints, void* imagePoints, const cv::Size* size, void* K, void* xi, void* D, void* rvecs, void* tvecs, int flags, void* criteria, void* idx) {
+	Result<double> cv_omnidir_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::Size* size, const cv::_InputOutputArray* K, const cv::_InputOutputArray* xi, const cv::_InputOutputArray* D, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, cv::TermCriteria* criteria, const cv::_OutputArray* idx) {
 		try {
-			double ret = cv::omnidir::calibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *size, *reinterpret_cast<const cv::_InputOutputArray*>(K), *reinterpret_cast<const cv::_InputOutputArray*>(xi), *reinterpret_cast<const cv::_InputOutputArray*>(D), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria), *reinterpret_cast<const cv::_OutputArray*>(idx));
-			return Ok<double>(ret);
+			double ret = cv::omnidir::calibrate(*objectPoints, *imagePoints, *size, *K, *xi, *D, *rvecs, *tvecs, flags, *criteria, *idx);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(void* K, void* D, void* xi, void* R, void* P, const cv::Size* size, int mltype, void* map1, void* map2, int flags) {
+	Result_void cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R, const cv::_InputArray* P, const cv::Size* size, int mltype, const cv::_OutputArray* map1, const cv::_OutputArray* map2, int flags) {
 		try {
-			cv::omnidir::initUndistortRectifyMap(*reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(D), *reinterpret_cast<const cv::_InputArray*>(xi), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(P), *size, mltype, *reinterpret_cast<const cv::_OutputArray*>(map1), *reinterpret_cast<const cv::_OutputArray*>(map2), flags);
+			cv::omnidir::initUndistortRectifyMap(*K, *D, *xi, *R, *P, *size, mltype, *map1, *map2, flags);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(void* objectPoints, void* imagePoints, void* rvec, void* tvec, void* K, double xi, void* D, void* jacobian) {
+	Result_void cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* objectPoints, const cv::_OutputArray* imagePoints, const cv::_InputArray* rvec, const cv::_InputArray* tvec, const cv::_InputArray* K, double xi, const cv::_InputArray* D, const cv::_OutputArray* jacobian) {
 		try {
-			cv::omnidir::projectPoints(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_OutputArray*>(imagePoints), *reinterpret_cast<const cv::_InputArray*>(rvec), *reinterpret_cast<const cv::_InputArray*>(tvec), *reinterpret_cast<const cv::_InputArray*>(K), xi, *reinterpret_cast<const cv::_InputArray*>(D), *reinterpret_cast<const cv::_OutputArray*>(jacobian));
+			cv::omnidir::projectPoints(*objectPoints, *imagePoints, *rvec, *tvec, *K, xi, *D, *jacobian);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_omnidir_stereoCalibrate_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const_SizeX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(void* objectPoints, void* imagePoints1, void* imagePoints2, const cv::Size* imageSize1, const cv::Size* imageSize2, void* K1, void* xi1, void* D1, void* K2, void* xi2, void* D2, void* rvec, void* tvec, void* rvecsL, void* tvecsL, int flags, void* criteria, void* idx) {
+	Result<double> cv_omnidir_stereoCalibrate_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const_SizeX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(const cv::_InputOutputArray* objectPoints, const cv::_InputOutputArray* imagePoints1, const cv::_InputOutputArray* imagePoints2, const cv::Size* imageSize1, const cv::Size* imageSize2, const cv::_InputOutputArray* K1, const cv::_InputOutputArray* xi1, const cv::_InputOutputArray* D1, const cv::_InputOutputArray* K2, const cv::_InputOutputArray* xi2, const cv::_InputOutputArray* D2, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, const cv::_OutputArray* rvecsL, const cv::_OutputArray* tvecsL, int flags, cv::TermCriteria* criteria, const cv::_OutputArray* idx) {
 		try {
-			double ret = cv::omnidir::stereoCalibrate(*reinterpret_cast<const cv::_InputOutputArray*>(objectPoints), *reinterpret_cast<const cv::_InputOutputArray*>(imagePoints1), *reinterpret_cast<const cv::_InputOutputArray*>(imagePoints2), *imageSize1, *imageSize2, *reinterpret_cast<const cv::_InputOutputArray*>(K1), *reinterpret_cast<const cv::_InputOutputArray*>(xi1), *reinterpret_cast<const cv::_InputOutputArray*>(D1), *reinterpret_cast<const cv::_InputOutputArray*>(K2), *reinterpret_cast<const cv::_InputOutputArray*>(xi2), *reinterpret_cast<const cv::_InputOutputArray*>(D2), *reinterpret_cast<const cv::_OutputArray*>(rvec), *reinterpret_cast<const cv::_OutputArray*>(tvec), *reinterpret_cast<const cv::_OutputArray*>(rvecsL), *reinterpret_cast<const cv::_OutputArray*>(tvecsL), flags, *reinterpret_cast<cv::TermCriteria*>(criteria), *reinterpret_cast<const cv::_OutputArray*>(idx));
-			return Ok<double>(ret);
+			double ret = cv::omnidir::stereoCalibrate(*objectPoints, *imagePoints1, *imagePoints2, *imageSize1, *imageSize2, *K1, *xi1, *D1, *K2, *xi2, *D2, *rvec, *tvec, *rvecsL, *tvecsL, flags, *criteria, *idx);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_omnidir_stereoReconstruct_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_int_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_int(void* image1, void* image2, void* K1, void* D1, void* xi1, void* K2, void* D2, void* xi2, void* R, void* T, int flag, int numDisparities, int SADWindowSize, void* disparity, void* image1Rec, void* image2Rec, const cv::Size* newSize, void* Knew, void* pointCloud, int pointType) {
+	Result_void cv_omnidir_stereoReconstruct_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_int_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_int(const cv::_InputArray* image1, const cv::_InputArray* image2, const cv::_InputArray* K1, const cv::_InputArray* D1, const cv::_InputArray* xi1, const cv::_InputArray* K2, const cv::_InputArray* D2, const cv::_InputArray* xi2, const cv::_InputArray* R, const cv::_InputArray* T, int flag, int numDisparities, int SADWindowSize, const cv::_OutputArray* disparity, const cv::_OutputArray* image1Rec, const cv::_OutputArray* image2Rec, const cv::Size* newSize, const cv::_InputArray* Knew, const cv::_OutputArray* pointCloud, int pointType) {
 		try {
-			cv::omnidir::stereoReconstruct(*reinterpret_cast<const cv::_InputArray*>(image1), *reinterpret_cast<const cv::_InputArray*>(image2), *reinterpret_cast<const cv::_InputArray*>(K1), *reinterpret_cast<const cv::_InputArray*>(D1), *reinterpret_cast<const cv::_InputArray*>(xi1), *reinterpret_cast<const cv::_InputArray*>(K2), *reinterpret_cast<const cv::_InputArray*>(D2), *reinterpret_cast<const cv::_InputArray*>(xi2), *reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), flag, numDisparities, SADWindowSize, *reinterpret_cast<const cv::_OutputArray*>(disparity), *reinterpret_cast<const cv::_OutputArray*>(image1Rec), *reinterpret_cast<const cv::_OutputArray*>(image2Rec), *newSize, *reinterpret_cast<const cv::_InputArray*>(Knew), *reinterpret_cast<const cv::_OutputArray*>(pointCloud), pointType);
+			cv::omnidir::stereoReconstruct(*image1, *image2, *K1, *D1, *xi1, *K2, *D2, *xi2, *R, *T, flag, numDisparities, SADWindowSize, *disparity, *image1Rec, *image2Rec, *newSize, *Knew, *pointCloud, pointType);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_omnidir_stereoRectify_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(void* R, void* T, void* R1, void* R2) {
+	Result_void cv_omnidir_stereoRectify_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(const cv::_InputArray* R, const cv::_InputArray* T, const cv::_OutputArray* R1, const cv::_OutputArray* R2) {
 		try {
-			cv::omnidir::stereoRectify(*reinterpret_cast<const cv::_InputArray*>(R), *reinterpret_cast<const cv::_InputArray*>(T), *reinterpret_cast<const cv::_OutputArray*>(R1), *reinterpret_cast<const cv::_OutputArray*>(R2));
+			cv::omnidir::stereoRectify(*R, *T, *R1, *R2);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_omnidir_undistortImage_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_const__InputArrayX_const_SizeX_const__InputArrayX(void* distorted, void* undistorted, void* K, void* D, void* xi, int flags, void* Knew, const cv::Size* new_size, void* R) {
+	Result_void cv_omnidir_undistortImage_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_const__InputArrayX_const_SizeX_const__InputArrayX(const cv::_InputArray* distorted, const cv::_OutputArray* undistorted, const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, int flags, const cv::_InputArray* Knew, const cv::Size* new_size, const cv::_InputArray* R) {
 		try {
-			cv::omnidir::undistortImage(*reinterpret_cast<const cv::_InputArray*>(distorted), *reinterpret_cast<const cv::_OutputArray*>(undistorted), *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(D), *reinterpret_cast<const cv::_InputArray*>(xi), flags, *reinterpret_cast<const cv::_InputArray*>(Knew), *new_size, *reinterpret_cast<const cv::_InputArray*>(R));
+			cv::omnidir::undistortImage(*distorted, *undistorted, *K, *D, *xi, flags, *Knew, *new_size, *R);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_omnidir_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(void* distorted, void* undistorted, void* K, void* D, void* xi, void* R) {
+	Result_void cv_omnidir_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(const cv::_InputArray* distorted, const cv::_OutputArray* undistorted, const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R) {
 		try {
-			cv::omnidir::undistortPoints(*reinterpret_cast<const cv::_InputArray*>(distorted), *reinterpret_cast<const cv::_OutputArray*>(undistorted), *reinterpret_cast<const cv::_InputArray*>(K), *reinterpret_cast<const cv::_InputArray*>(D), *reinterpret_cast<const cv::_InputArray*>(xi), *reinterpret_cast<const cv::_InputArray*>(R));
+			cv::omnidir::undistortPoints(*distorted, *undistorted, *K, *D, *xi, *R);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -61,128 +61,128 @@ extern "C" {
 	void cv_CustomPattern_delete(cv::ccalib::CustomPattern* instance) {
 		delete instance;
 	}
-	Result<void*> cv_ccalib_CustomPattern_CustomPattern() {
+	Result<cv::ccalib::CustomPattern*> cv_ccalib_CustomPattern_CustomPattern() {
 		try {
 			cv::ccalib::CustomPattern* ret = new cv::ccalib::CustomPattern();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::ccalib::CustomPattern*>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_create_const__InputArrayX_Size2f_const__OutputArrayX(void* instance, void* pattern, const cv::Size2f* boardSize, void* output) {
+	Result<bool> cv_ccalib_CustomPattern_create_const__InputArrayX_Size2f_const__OutputArrayX(cv::ccalib::CustomPattern* instance, const cv::_InputArray* pattern, const cv::Size2f* boardSize, const cv::_OutputArray* output) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->create(*reinterpret_cast<const cv::_InputArray*>(pattern), *boardSize, *reinterpret_cast<const cv::_OutputArray*>(output));
-			return Ok<bool>(ret);
+			bool ret = instance->create(*pattern, *boardSize, *output);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findPattern_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_double_bool_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(void* instance, void* image, void* matched_features, void* pattern_points, double ratio, double proj_error, bool refine_position, void* out, void* H, void* pattern_corners) {
+	Result<bool> cv_ccalib_CustomPattern_findPattern_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_double_bool_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_OutputArray* matched_features, const cv::_OutputArray* pattern_points, double ratio, double proj_error, bool refine_position, const cv::_OutputArray* out, const cv::_OutputArray* H, const cv::_OutputArray* pattern_corners) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->findPattern(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_OutputArray*>(matched_features), *reinterpret_cast<const cv::_OutputArray*>(pattern_points), ratio, proj_error, refine_position, *reinterpret_cast<const cv::_OutputArray*>(out), *reinterpret_cast<const cv::_OutputArray*>(H), *reinterpret_cast<const cv::_OutputArray*>(pattern_corners));
-			return Ok<bool>(ret);
+			bool ret = instance->findPattern(*image, *matched_features, *pattern_points, ratio, proj_error, refine_position, *out, *H, *pattern_corners);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_isInitialized(void* instance) {
+	Result<bool> cv_ccalib_CustomPattern_isInitialized(cv::ccalib::CustomPattern* instance) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->isInitialized();
-			return Ok<bool>(ret);
+			bool ret = instance->isInitialized();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_ccalib_CustomPattern_getPatternPoints_const__OutputArrayX(void* instance, void* original_points) {
+	Result_void cv_ccalib_CustomPattern_getPatternPoints_const__OutputArrayX(cv::ccalib::CustomPattern* instance, const cv::_OutputArray* original_points) {
 		try {
-			reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->getPatternPoints(*reinterpret_cast<const cv::_OutputArray*>(original_points));
+			instance->getPatternPoints(*original_points);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_ccalib_CustomPattern_getPixelSize(void* instance) {
+	Result<double> cv_ccalib_CustomPattern_getPixelSize(cv::ccalib::CustomPattern* instance) {
 		try {
-			double ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->getPixelSize();
-			return Ok<double>(ret);
+			double ret = instance->getPixelSize();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_setFeatureDetector_Ptr_FeatureDetector_(void* instance, void* featureDetector) {
+	Result<bool> cv_ccalib_CustomPattern_setFeatureDetector_Ptr_FeatureDetector_(cv::ccalib::CustomPattern* instance, cv::Ptr<cv::FeatureDetector>* featureDetector) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->setFeatureDetector(*reinterpret_cast<cv::Ptr<cv::FeatureDetector>*>(featureDetector));
-			return Ok<bool>(ret);
+			bool ret = instance->setFeatureDetector(*featureDetector);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_setDescriptorExtractor_Ptr_DescriptorExtractor_(void* instance, void* extractor) {
+	Result<bool> cv_ccalib_CustomPattern_setDescriptorExtractor_Ptr_DescriptorExtractor_(cv::ccalib::CustomPattern* instance, cv::Ptr<cv::DescriptorExtractor>* extractor) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->setDescriptorExtractor(*reinterpret_cast<cv::Ptr<cv::DescriptorExtractor>*>(extractor));
-			return Ok<bool>(ret);
+			bool ret = instance->setDescriptorExtractor(*extractor);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_setDescriptorMatcher_Ptr_DescriptorMatcher_(void* instance, void* matcher) {
+	Result<bool> cv_ccalib_CustomPattern_setDescriptorMatcher_Ptr_DescriptorMatcher_(cv::ccalib::CustomPattern* instance, cv::Ptr<cv::DescriptorMatcher>* matcher) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->setDescriptorMatcher(*reinterpret_cast<cv::Ptr<cv::DescriptorMatcher>*>(matcher));
-			return Ok<bool>(ret);
+			bool ret = instance->setDescriptorMatcher(*matcher);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<void*> cv_ccalib_CustomPattern_getFeatureDetector(void* instance) {
+	Result<cv::Ptr<cv::FeatureDetector>*> cv_ccalib_CustomPattern_getFeatureDetector(cv::ccalib::CustomPattern* instance) {
 		try {
-			cv::Ptr<cv::FeatureDetector> ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->getFeatureDetector();
-			return Ok<void*>(new cv::Ptr<cv::FeatureDetector>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::FeatureDetector> ret = instance->getFeatureDetector();
+			return Ok(new cv::Ptr<cv::FeatureDetector>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::FeatureDetector>*>)
 	}
 	
-	Result<void*> cv_ccalib_CustomPattern_getDescriptorExtractor(void* instance) {
+	Result<cv::Ptr<cv::DescriptorExtractor>*> cv_ccalib_CustomPattern_getDescriptorExtractor(cv::ccalib::CustomPattern* instance) {
 		try {
-			cv::Ptr<cv::DescriptorExtractor> ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->getDescriptorExtractor();
-			return Ok<void*>(new cv::Ptr<cv::DescriptorExtractor>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::DescriptorExtractor> ret = instance->getDescriptorExtractor();
+			return Ok(new cv::Ptr<cv::DescriptorExtractor>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DescriptorExtractor>*>)
 	}
 	
-	Result<void*> cv_ccalib_CustomPattern_getDescriptorMatcher(void* instance) {
+	Result<cv::Ptr<cv::DescriptorMatcher>*> cv_ccalib_CustomPattern_getDescriptorMatcher(cv::ccalib::CustomPattern* instance) {
 		try {
-			cv::Ptr<cv::DescriptorMatcher> ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->getDescriptorMatcher();
-			return Ok<void*>(new cv::Ptr<cv::DescriptorMatcher>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Ptr<cv::DescriptorMatcher> ret = instance->getDescriptorMatcher();
+			return Ok(new cv::Ptr<cv::DescriptorMatcher>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::DescriptorMatcher>*>)
 	}
 	
-	Result<double> cv_ccalib_CustomPattern_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(void* instance, void* objectPoints, void* imagePoints, const cv::Size* imageSize, void* cameraMatrix, void* distCoeffs, void* rvecs, void* tvecs, int flags, void* criteria) {
+	Result<double> cv_ccalib_CustomPattern_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::Size* imageSize, const cv::_InputOutputArray* cameraMatrix, const cv::_InputOutputArray* distCoeffs, const cv::_OutputArray* rvecs, const cv::_OutputArray* tvecs, int flags, cv::TermCriteria* criteria) {
 		try {
-			double ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->calibrate(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *imageSize, *reinterpret_cast<const cv::_InputOutputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputOutputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvecs), *reinterpret_cast<const cv::_OutputArray*>(tvecs), flags, *reinterpret_cast<cv::TermCriteria*>(criteria));
-			return Ok<double>(ret);
+			double ret = instance->calibrate(*objectPoints, *imagePoints, *imageSize, *cameraMatrix, *distCoeffs, *rvecs, *tvecs, flags, *criteria);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int(void* instance, void* objectPoints, void* imagePoints, void* cameraMatrix, void* distCoeffs, void* rvec, void* tvec, bool useExtrinsicGuess, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int flags) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->findRt(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvec), *reinterpret_cast<const cv::_OutputArray*>(tvec), useExtrinsicGuess, flags);
-			return Ok<bool>(ret);
+			bool ret = instance->findRt(*objectPoints, *imagePoints, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, flags);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int(void* instance, void* image, void* cameraMatrix, void* distCoeffs, void* rvec, void* tvec, bool useExtrinsicGuess, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRt_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int flags) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->findRt(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvec), *reinterpret_cast<const cv::_OutputArray*>(tvec), useExtrinsicGuess, flags);
-			return Ok<bool>(ret);
+			bool ret = instance->findRt(*image, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, flags);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int_float_int_const__OutputArrayX_int(void* instance, void* objectPoints, void* imagePoints, void* cameraMatrix, void* distCoeffs, void* rvec, void* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, void* inliers, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int_float_int_const__OutputArrayX_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* objectPoints, const cv::_InputArray* imagePoints, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, const cv::_OutputArray* inliers, int flags) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->findRtRANSAC(*reinterpret_cast<const cv::_InputArray*>(objectPoints), *reinterpret_cast<const cv::_InputArray*>(imagePoints), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvec), *reinterpret_cast<const cv::_OutputArray*>(tvec), useExtrinsicGuess, iterationsCount, reprojectionError, minInliersCount, *reinterpret_cast<const cv::_OutputArray*>(inliers), flags);
-			return Ok<bool>(ret);
+			bool ret = instance->findRtRANSAC(*objectPoints, *imagePoints, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, iterationsCount, reprojectionError, minInliersCount, *inliers, flags);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int_float_int_const__OutputArrayX_int(void* instance, void* image, void* cameraMatrix, void* distCoeffs, void* rvec, void* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, void* inliers, int flags) {
+	Result<bool> cv_ccalib_CustomPattern_findRtRANSAC_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_bool_int_float_int_const__OutputArrayX_int(cv::ccalib::CustomPattern* instance, const cv::_InputArray* image, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, const cv::_OutputArray* rvec, const cv::_OutputArray* tvec, bool useExtrinsicGuess, int iterationsCount, float reprojectionError, int minInliersCount, const cv::_OutputArray* inliers, int flags) {
 		try {
-			bool ret = reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->findRtRANSAC(*reinterpret_cast<const cv::_InputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), *reinterpret_cast<const cv::_OutputArray*>(rvec), *reinterpret_cast<const cv::_OutputArray*>(tvec), useExtrinsicGuess, iterationsCount, reprojectionError, minInliersCount, *reinterpret_cast<const cv::_OutputArray*>(inliers), flags);
-			return Ok<bool>(ret);
+			bool ret = instance->findRtRANSAC(*image, *cameraMatrix, *distCoeffs, *rvec, *tvec, useExtrinsicGuess, iterationsCount, reprojectionError, minInliersCount, *inliers, flags);
+			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result_void cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_int(void* instance, void* image, void* tvec, void* rvec, void* cameraMatrix, void* distCoeffs, double axis_length, int axis_width) {
+	Result_void cv_ccalib_CustomPattern_drawOrientation_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_int(cv::ccalib::CustomPattern* instance, const cv::_InputOutputArray* image, const cv::_InputArray* tvec, const cv::_InputArray* rvec, const cv::_InputArray* cameraMatrix, const cv::_InputArray* distCoeffs, double axis_length, int axis_width) {
 		try {
-			reinterpret_cast<cv::ccalib::CustomPattern*>(instance)->drawOrientation(*reinterpret_cast<const cv::_InputOutputArray*>(image), *reinterpret_cast<const cv::_InputArray*>(tvec), *reinterpret_cast<const cv::_InputArray*>(rvec), *reinterpret_cast<const cv::_InputArray*>(cameraMatrix), *reinterpret_cast<const cv::_InputArray*>(distCoeffs), axis_length, axis_width);
+			instance->drawOrientation(*image, *tvec, *rvec, *cameraMatrix, *distCoeffs, axis_length, axis_width);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -190,100 +190,100 @@ extern "C" {
 	void cv_MultiCameraCalibration_delete(cv::multicalib::MultiCameraCalibration* instance) {
 		delete instance;
 	}
-	Result<void*> cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringX_float_float_int_int_int_int_TermCriteria_Ptr_FeatureDetector__Ptr_DescriptorExtractor__Ptr_DescriptorMatcher_(int cameraType, int nCameras, const char* fileName, float patternWidth, float patternHeight, int verbose, int showExtration, int nMiniMatches, int flags, void* criteria, void* detector, void* descriptor, void* matcher) {
+	Result<cv::multicalib::MultiCameraCalibration*> cv_multicalib_MultiCameraCalibration_MultiCameraCalibration_int_int_const_stringX_float_float_int_int_int_int_TermCriteria_Ptr_FeatureDetector__Ptr_DescriptorExtractor__Ptr_DescriptorMatcher_(int cameraType, int nCameras, const char* fileName, float patternWidth, float patternHeight, int verbose, int showExtration, int nMiniMatches, int flags, cv::TermCriteria* criteria, cv::Ptr<cv::FeatureDetector>* detector, cv::Ptr<cv::DescriptorExtractor>* descriptor, cv::Ptr<cv::DescriptorMatcher>* matcher) {
 		try {
-			cv::multicalib::MultiCameraCalibration* ret = new cv::multicalib::MultiCameraCalibration(cameraType, nCameras, std::string(fileName), patternWidth, patternHeight, verbose, showExtration, nMiniMatches, flags, *reinterpret_cast<cv::TermCriteria*>(criteria), *reinterpret_cast<cv::Ptr<cv::FeatureDetector>*>(detector), *reinterpret_cast<cv::Ptr<cv::DescriptorExtractor>*>(descriptor), *reinterpret_cast<cv::Ptr<cv::DescriptorMatcher>*>(matcher));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::multicalib::MultiCameraCalibration* ret = new cv::multicalib::MultiCameraCalibration(cameraType, nCameras, std::string(fileName), patternWidth, patternHeight, verbose, showExtration, nMiniMatches, flags, *criteria, *detector, *descriptor, *matcher);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::multicalib::MultiCameraCalibration*>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_loadImages(void* instance) {
+	Result_void cv_multicalib_MultiCameraCalibration_loadImages(cv::multicalib::MultiCameraCalibration* instance) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration*>(instance)->loadImages();
+			instance->loadImages();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_initialize(void* instance) {
+	Result_void cv_multicalib_MultiCameraCalibration_initialize(cv::multicalib::MultiCameraCalibration* instance) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration*>(instance)->initialize();
+			instance->initialize();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<double> cv_multicalib_MultiCameraCalibration_optimizeExtrinsics(void* instance) {
+	Result<double> cv_multicalib_MultiCameraCalibration_optimizeExtrinsics(cv::multicalib::MultiCameraCalibration* instance) {
 		try {
-			double ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration*>(instance)->optimizeExtrinsics();
-			return Ok<double>(ret);
+			double ret = instance->optimizeExtrinsics();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_multicalib_MultiCameraCalibration_run(void* instance) {
+	Result<double> cv_multicalib_MultiCameraCalibration_run(cv::multicalib::MultiCameraCalibration* instance) {
 		try {
-			double ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration*>(instance)->run();
-			return Ok<double>(ret);
+			double ret = instance->run();
+			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_writeParameters_const_stringX(void* instance, const char* filename) {
+	Result_void cv_multicalib_MultiCameraCalibration_writeParameters_const_stringX(cv::multicalib::MultiCameraCalibration* instance, const char* filename) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration*>(instance)->writeParameters(std::string(filename));
+			instance->writeParameters(std::string(filename));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_multicalib_MultiCameraCalibration_edge_cameraVertex_const(void* instance) {
+	Result<int> cv_multicalib_MultiCameraCalibration_edge_cameraVertex_const(const cv::multicalib::MultiCameraCalibration::edge* instance) {
 		try {
-			int ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->cameraVertex;
-			return Ok<int>(ret);
+			int ret = instance->cameraVertex;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_edge_setCameraVertex_int(void* instance, int val) {
+	Result_void cv_multicalib_MultiCameraCalibration_edge_setCameraVertex_int(cv::multicalib::MultiCameraCalibration::edge* instance, int val) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->cameraVertex = val;
+			instance->cameraVertex = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_multicalib_MultiCameraCalibration_edge_photoVertex_const(void* instance) {
+	Result<int> cv_multicalib_MultiCameraCalibration_edge_photoVertex_const(const cv::multicalib::MultiCameraCalibration::edge* instance) {
 		try {
-			int ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->photoVertex;
-			return Ok<int>(ret);
+			int ret = instance->photoVertex;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_edge_setPhotoVertex_int(void* instance, int val) {
+	Result_void cv_multicalib_MultiCameraCalibration_edge_setPhotoVertex_int(cv::multicalib::MultiCameraCalibration::edge* instance, int val) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->photoVertex = val;
+			instance->photoVertex = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_multicalib_MultiCameraCalibration_edge_photoIndex_const(void* instance) {
+	Result<int> cv_multicalib_MultiCameraCalibration_edge_photoIndex_const(const cv::multicalib::MultiCameraCalibration::edge* instance) {
 		try {
-			int ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->photoIndex;
-			return Ok<int>(ret);
+			int ret = instance->photoIndex;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_edge_setPhotoIndex_int(void* instance, int val) {
+	Result_void cv_multicalib_MultiCameraCalibration_edge_setPhotoIndex_int(cv::multicalib::MultiCameraCalibration::edge* instance, int val) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->photoIndex = val;
+			instance->photoIndex = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_multicalib_MultiCameraCalibration_edge_transform(void* instance) {
+	Result<cv::Mat*> cv_multicalib_MultiCameraCalibration_edge_transform(cv::multicalib::MultiCameraCalibration::edge* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->transform;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->transform;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_edge_setTransform_Mat(void* instance, void* val) {
+	Result_void cv_multicalib_MultiCameraCalibration_edge_setTransform_Mat(cv::multicalib::MultiCameraCalibration::edge* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration::edge*>(instance)->transform = *reinterpret_cast<cv::Mat*>(val);
+			instance->transform = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -291,37 +291,37 @@ extern "C" {
 	void cv_MultiCameraCalibration_edge_delete(cv::multicalib::MultiCameraCalibration::edge* instance) {
 		delete instance;
 	}
-	Result<void*> cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(int cv, int pv, int pi, void* trans) {
+	Result<cv::multicalib::MultiCameraCalibration::edge*> cv_multicalib_MultiCameraCalibration_edge_edge_int_int_int_Mat(int cv, int pv, int pi, cv::Mat* trans) {
 		try {
-			cv::multicalib::MultiCameraCalibration::edge* ret = new cv::multicalib::MultiCameraCalibration::edge(cv, pv, pi, *reinterpret_cast<cv::Mat*>(trans));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::multicalib::MultiCameraCalibration::edge* ret = new cv::multicalib::MultiCameraCalibration::edge(cv, pv, pi, *trans);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::multicalib::MultiCameraCalibration::edge*>)
 	}
 	
-	Result<void*> cv_multicalib_MultiCameraCalibration_vertex_pose(void* instance) {
+	Result<cv::Mat*> cv_multicalib_MultiCameraCalibration_vertex_pose(cv::multicalib::MultiCameraCalibration::vertex* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration::vertex*>(instance)->pose;
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->pose;
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_vertex_setPose_Mat(void* instance, void* val) {
+	Result_void cv_multicalib_MultiCameraCalibration_vertex_setPose_Mat(cv::multicalib::MultiCameraCalibration::vertex* instance, cv::Mat* val) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration::vertex*>(instance)->pose = *reinterpret_cast<cv::Mat*>(val);
+			instance->pose = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_multicalib_MultiCameraCalibration_vertex_timestamp_const(void* instance) {
+	Result<int> cv_multicalib_MultiCameraCalibration_vertex_timestamp_const(const cv::multicalib::MultiCameraCalibration::vertex* instance) {
 		try {
-			int ret = reinterpret_cast<cv::multicalib::MultiCameraCalibration::vertex*>(instance)->timestamp;
-			return Ok<int>(ret);
+			int ret = instance->timestamp;
+			return Ok(ret);
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_multicalib_MultiCameraCalibration_vertex_setTimestamp_int(void* instance, int val) {
+	Result_void cv_multicalib_MultiCameraCalibration_vertex_setTimestamp_int(cv::multicalib::MultiCameraCalibration::vertex* instance, int val) {
 		try {
-			reinterpret_cast<cv::multicalib::MultiCameraCalibration::vertex*>(instance)->timestamp = val;
+			instance->timestamp = val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -329,87 +329,87 @@ extern "C" {
 	void cv_MultiCameraCalibration_vertex_delete(cv::multicalib::MultiCameraCalibration::vertex* instance) {
 		delete instance;
 	}
-	Result<void*> cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(void* po, int ts) {
+	Result<cv::multicalib::MultiCameraCalibration::vertex*> cv_multicalib_MultiCameraCalibration_vertex_vertex_Mat_int(cv::Mat* po, int ts) {
 		try {
-			cv::multicalib::MultiCameraCalibration::vertex* ret = new cv::multicalib::MultiCameraCalibration::vertex(*reinterpret_cast<cv::Mat*>(po), ts);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::multicalib::MultiCameraCalibration::vertex* ret = new cv::multicalib::MultiCameraCalibration::vertex(*po, ts);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::multicalib::MultiCameraCalibration::vertex*>)
 	}
 	
-	Result<void*> cv_multicalib_MultiCameraCalibration_vertex_vertex() {
+	Result<cv::multicalib::MultiCameraCalibration::vertex*> cv_multicalib_MultiCameraCalibration_vertex_vertex() {
 		try {
 			cv::multicalib::MultiCameraCalibration::vertex* ret = new cv::multicalib::MultiCameraCalibration::vertex();
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::multicalib::MultiCameraCalibration::vertex*>)
 	}
 	
 	void cv_RandomPatternCornerFinder_delete(cv::randpattern::RandomPatternCornerFinder* instance) {
 		delete instance;
 	}
-	Result<void*> cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_Ptr_FeatureDetector__Ptr_DescriptorExtractor__Ptr_DescriptorMatcher_(float patternWidth, float patternHeight, int nminiMatch, int depth, int verbose, int showExtraction, void* detector, void* descriptor, void* matcher) {
+	Result<cv::randpattern::RandomPatternCornerFinder*> cv_randpattern_RandomPatternCornerFinder_RandomPatternCornerFinder_float_float_int_int_int_int_Ptr_FeatureDetector__Ptr_DescriptorExtractor__Ptr_DescriptorMatcher_(float patternWidth, float patternHeight, int nminiMatch, int depth, int verbose, int showExtraction, cv::Ptr<cv::FeatureDetector>* detector, cv::Ptr<cv::DescriptorExtractor>* descriptor, cv::Ptr<cv::DescriptorMatcher>* matcher) {
 		try {
-			cv::randpattern::RandomPatternCornerFinder* ret = new cv::randpattern::RandomPatternCornerFinder(patternWidth, patternHeight, nminiMatch, depth, verbose, showExtraction, *reinterpret_cast<cv::Ptr<cv::FeatureDetector>*>(detector), *reinterpret_cast<cv::Ptr<cv::DescriptorExtractor>*>(descriptor), *reinterpret_cast<cv::Ptr<cv::DescriptorMatcher>*>(matcher));
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			cv::randpattern::RandomPatternCornerFinder* ret = new cv::randpattern::RandomPatternCornerFinder(patternWidth, patternHeight, nminiMatch, depth, verbose, showExtraction, *detector, *descriptor, *matcher);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::randpattern::RandomPatternCornerFinder*>)
 	}
 	
-	Result_void cv_randpattern_RandomPatternCornerFinder_loadPattern_Mat(void* instance, void* patternImage) {
+	Result_void cv_randpattern_RandomPatternCornerFinder_loadPattern_Mat(cv::randpattern::RandomPatternCornerFinder* instance, cv::Mat* patternImage) {
 		try {
-			reinterpret_cast<cv::randpattern::RandomPatternCornerFinder*>(instance)->loadPattern(*reinterpret_cast<cv::Mat*>(patternImage));
+			instance->loadPattern(*patternImage);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_randpattern_RandomPatternCornerFinder_computeObjectImagePoints_vector_Mat_(void* instance, void* inputImages) {
+	Result_void cv_randpattern_RandomPatternCornerFinder_computeObjectImagePoints_vector_Mat_(cv::randpattern::RandomPatternCornerFinder* instance, std::vector<cv::Mat>* inputImages) {
 		try {
-			reinterpret_cast<cv::randpattern::RandomPatternCornerFinder*>(instance)->computeObjectImagePoints(*reinterpret_cast<std::vector<cv::Mat>*>(inputImages));
+			instance->computeObjectImagePoints(*inputImages);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_randpattern_RandomPatternCornerFinder_computeObjectImagePointsForSingle_Mat(void* instance, void* inputImage) {
+	Result<std::vector<cv::Mat>*> cv_randpattern_RandomPatternCornerFinder_computeObjectImagePointsForSingle_Mat(cv::randpattern::RandomPatternCornerFinder* instance, cv::Mat* inputImage) {
 		try {
-			std::vector<cv::Mat> ret = reinterpret_cast<cv::randpattern::RandomPatternCornerFinder*>(instance)->computeObjectImagePointsForSingle(*reinterpret_cast<cv::Mat*>(inputImage));
-			return Ok<void*>(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<cv::Mat> ret = instance->computeObjectImagePointsForSingle(*inputImage);
+			return Ok(new std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(Result<std::vector<cv::Mat>*>)
 	}
 	
-	Result<void*> cv_randpattern_RandomPatternCornerFinder_getObjectPoints(void* instance) {
+	Result<std::vector<cv::Mat>*> cv_randpattern_RandomPatternCornerFinder_getObjectPoints(cv::randpattern::RandomPatternCornerFinder* instance) {
 		try {
-			std::vector<cv::Mat> ret = reinterpret_cast<cv::randpattern::RandomPatternCornerFinder*>(instance)->getObjectPoints();
-			return Ok<void*>(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<cv::Mat> ret = instance->getObjectPoints();
+			return Ok(new std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(Result<std::vector<cv::Mat>*>)
 	}
 	
-	Result<void*> cv_randpattern_RandomPatternCornerFinder_getImagePoints(void* instance) {
+	Result<std::vector<cv::Mat>*> cv_randpattern_RandomPatternCornerFinder_getImagePoints(cv::randpattern::RandomPatternCornerFinder* instance) {
 		try {
-			std::vector<cv::Mat> ret = reinterpret_cast<cv::randpattern::RandomPatternCornerFinder*>(instance)->getImagePoints();
-			return Ok<void*>(new std::vector<cv::Mat>(ret));
-		} OCVRS_CATCH(Result<void*>)
+			std::vector<cv::Mat> ret = instance->getImagePoints();
+			return Ok(new std::vector<cv::Mat>(ret));
+		} OCVRS_CATCH(Result<std::vector<cv::Mat>*>)
 	}
 	
 	void cv_RandomPatternGenerator_delete(cv::randpattern::RandomPatternGenerator* instance) {
 		delete instance;
 	}
-	Result<void*> cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(int imageWidth, int imageHeight) {
+	Result<cv::randpattern::RandomPatternGenerator*> cv_randpattern_RandomPatternGenerator_RandomPatternGenerator_int_int(int imageWidth, int imageHeight) {
 		try {
 			cv::randpattern::RandomPatternGenerator* ret = new cv::randpattern::RandomPatternGenerator(imageWidth, imageHeight);
-			return Ok<void*>(ret);
-		} OCVRS_CATCH(Result<void*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::randpattern::RandomPatternGenerator*>)
 	}
 	
-	Result_void cv_randpattern_RandomPatternGenerator_generatePattern(void* instance) {
+	Result_void cv_randpattern_RandomPatternGenerator_generatePattern(cv::randpattern::RandomPatternGenerator* instance) {
 		try {
-			reinterpret_cast<cv::randpattern::RandomPatternGenerator*>(instance)->generatePattern();
+			instance->generatePattern();
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<void*> cv_randpattern_RandomPatternGenerator_getPattern(void* instance) {
+	Result<cv::Mat*> cv_randpattern_RandomPatternGenerator_getPattern(cv::randpattern::RandomPatternGenerator* instance) {
 		try {
-			cv::Mat ret = reinterpret_cast<cv::randpattern::RandomPatternGenerator*>(instance)->getPattern();
-			return Ok<void*>(new cv::Mat(ret));
-		} OCVRS_CATCH(Result<void*>)
+			cv::Mat ret = instance->getPattern();
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
 }

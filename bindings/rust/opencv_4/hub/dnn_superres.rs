@@ -84,7 +84,7 @@ pub trait DnnSuperResImplTrait {
 	/// ## Returns
 	/// Current algorithm.
 	fn get_algorithm(&mut self) -> Result<String> {
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getAlgorithm(self.as_raw_DnnSuperResImpl()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_getAlgorithm(self.as_raw_DnnSuperResImpl()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }

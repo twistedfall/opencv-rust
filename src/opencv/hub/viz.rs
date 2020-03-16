@@ -690,7 +690,7 @@ pub trait KeyboardEventTrait {
 	}
 	
 	fn symbol(&self) -> String {
-		unsafe { sys::cv_viz_KeyboardEvent_symbol_const(self.as_raw_KeyboardEvent()) }.into_result().map(crate::templ::receive_string).expect("Infallible function failed: symbol")
+		unsafe { sys::cv_viz_KeyboardEvent_symbol_const(self.as_raw_KeyboardEvent()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: symbol")
 	}
 	
 	fn set_symbol(&mut self, val: &str) -> () {
@@ -1102,7 +1102,7 @@ pub trait Viz3dTrait {
 	/// Returns the name of the window which has been set in the constructor.
 	/// `Viz - ` is prepended to the name if necessary.
 	fn get_window_name(&self) -> Result<String> {
-		unsafe { sys::cv_viz_Viz3d_getWindowName_const(self.as_raw_Viz3d()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_viz_Viz3d_getWindowName_const(self.as_raw_Viz3d()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// Returns the Mat screenshot of the current scene.
@@ -2725,7 +2725,7 @@ pub trait WTextTrait: crate::viz::Widget2DTrait {
 	
 	/// Returns the current text content of the widget.
 	fn get_text(&self) -> Result<String> {
-		unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_viz_WText_getText_const(self.as_raw_WText()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -2797,7 +2797,7 @@ pub trait WText3DTrait: crate::viz::Widget3DTrait {
 	
 	/// Returns the current text content of the widget.
 	fn get_text(&self) -> Result<String> {
-		unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D()) }.into_result().map(crate::templ::receive_string)
+		unsafe { sys::cv_viz_WText3D_getText_const(self.as_raw_WText3D()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
