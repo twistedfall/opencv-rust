@@ -23,12 +23,12 @@ template<typename T> inline Result<void*> ocvrs_input_output_array(T* instance) 
 }
 
 #define ocvrs_matx(base) \
-	Result<void*> cv_##base##f_input_array(const cv::base##f * instance) { return ocvrs_input_array(instance); } \
-	Result<void*> cv_##base##f_output_array(cv::base##f * instance) { return ocvrs_output_array(instance); } \
-	Result<void*> cv_##base##f_input_output_array(cv::base##f * instance) { return ocvrs_input_output_array(instance); } \
-	Result<void*> cv_##base##d_input_array(const cv::base##d * instance) { return ocvrs_input_array(instance); } \
-	Result<void*> cv_##base##d_output_array(cv::base##d * instance) { return ocvrs_output_array(instance); } \
-	Result<void*> cv_##base##d_input_output_array(cv::base##d * instance) { return ocvrs_input_output_array(instance); }
+	Result<void*> cv_##base##f_input_array(const cv::base##f* instance) { return ocvrs_input_array(instance); } \
+	Result<void*> cv_##base##f_output_array(cv::base##f* instance) { return ocvrs_output_array(instance); } \
+	Result<void*> cv_##base##f_input_output_array(cv::base##f* instance) { return ocvrs_input_output_array(instance); } \
+	Result<void*> cv_##base##d_input_array(const cv::base##d* instance) { return ocvrs_input_array(instance); } \
+	Result<void*> cv_##base##d_output_array(cv::base##d* instance) { return ocvrs_output_array(instance); } \
+	Result<void*> cv_##base##d_input_output_array(cv::base##d* instance) { return ocvrs_input_output_array(instance); }
 
 extern "C" {
 	Result<cv::Size> cv_manual_Mat_size(const cv::Mat* instance) {

@@ -1,7 +1,7 @@
 use matches::assert_matches;
 
 use opencv::{
-	core::{self, Matx23f, Matx32f, Matx33d, Matx44d, Point2f, Scalar},
+	core::{self, Matx22d, Matx23f, Matx32f, Matx33d, Matx44d, Matx66f, Point2f, Scalar},
 	imgproc,
 	prelude::*,
 	Result,
@@ -17,6 +17,24 @@ fn matx_get() {
 	assert_matches!(a.get((3, 1)), None);
 	assert_matches!(a.get_mut((1, 3)), None);
 	assert_matches!(a.get((3, 3)), None);
+}
+
+#[test]
+fn matx_set() {
+	let mut a = Matx33d::eye();
+	*a.get_mut((0, 1)).unwrap() = 2.;
+	a[(1, 2)] = 3.;
+	assert_eq!(a[(0, 1)], 2.);
+	assert_eq!(a[(1, 2)], 3.);
+	assert_eq!(a[(0, 0)], 1.);
+	assert_eq!(a[(1, 0)], 0.);
+	let mut a = Matx66f::eye();
+	*a.get_mut((0, 1)).unwrap() = 2.;
+	a[(1, 2)] = 3.;
+	assert_eq!(a[(0, 1)], 2.);
+	assert_eq!(a[(1, 2)], 3.);
+	assert_eq!(a[(0, 0)], 1.);
+	assert_eq!(a[(1, 0)], 0.);
 }
 
 #[cfg(all(feature = "opencv-4", not(target_env = "msvc")))]
@@ -63,5 +81,23 @@ fn matx_input_output_array() -> Result<()> {
 		3., 6., 9.,
 	]);
 	assert_eq!(expected, mat);
+	Ok(())
+}
+
+#[test]
+fn matx_default() -> Result<()> {
+	let mat = Matx22d::default();
+	assert_eq!(mat[(1, 1)], f64::default());
+	let mat = Matx66f::default();
+	assert_eq!(mat[(1, 1)], f32::default());
+	Ok(())
+}
+
+#[test]
+fn matx_all() -> Result<()> {
+	let mat = Matx22d::all(9.);
+	assert_eq!(mat[(0, 1)], 9.);
+	let mat = Matx66f::all(81.);
+	assert_eq!(mat[(3, 4)], 81.);
 	Ok(())
 }

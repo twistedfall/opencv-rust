@@ -8,6 +8,7 @@ pub use point::*;
 pub use point3::*;
 pub use rect::*;
 pub use size::*;
+pub use sized::*;
 pub use vec::*;
 
 macro_rules! valid_types {
@@ -34,6 +35,7 @@ mod point3;
 mod point;
 mod rect;
 mod size;
+mod sized;
 mod vec;
 
 #[inline(always)]
