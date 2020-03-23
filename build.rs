@@ -166,7 +166,6 @@ mod generator {
 			let mut hub_rs = File::create(rust_hub_dir.join("hub.rs"))?;
 
 			let mut types_rs = File::create(module_dir.join("types.rs"))?;
-			writeln!(&mut types_rs, "use crate::{{mod_prelude::*, core, types, sys}};")?;
 			writeln!(&mut types_rs)?;
 
 			let mut sys_rs = File::create(module_dir.join("sys.rs"))?;
@@ -196,7 +195,7 @@ mod generator {
 						if write_header {
 							write_if_contrib(&mut types_rs)?;
 							writeln!(&mut types_rs, "mod {}_types {{", module)?;
-							writeln!(&mut types_rs, "\tuse super::*;")?;
+							writeln!(&mut types_rs, "\tuse crate::{{mod_prelude::*, core, types, sys}};")?;
 							writeln!(&mut types_rs)?;
 							write_header = false;
 						}

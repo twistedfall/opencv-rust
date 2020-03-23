@@ -117,10 +117,6 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 			|| include_str!("../tpl/smart_ptr/trait_cast.tpl.rs").compile_interpolation()
 		);
 
-		static METHODS_NON_TRAIT_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/smart_ptr/methods_non_trait.tpl.rs").compile_interpolation()
-		);
-
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
 
@@ -130,7 +126,6 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 		};
 
 		let mut impls = String::new();
-		let mut methods = String::new();
 		if let Some(cls) = pointee_type.as_class() {
 			if cls.is_trait() {
 				let mut all_bases = cls.all_bases();
@@ -145,15 +140,8 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 					vars.insert("base_rust_full", base.rust_trait_fullname());
 					impls += &TRAIT_CAST_TPL.interpolate(&vars);
 				}
-			} else if cls.is_boxed() {
-				let mut vars = inter_vars.clone();
-				vars.insert("rust_full", type_ref.rust_full());
-				vars.insert("inner_rust_local", pointee_type.rust_local());
-				vars.insert("inner_rust_full", pointee_type.rust_full());
-				methods += &METHODS_NON_TRAIT_TPL.interpolate(&vars);
 			}
 		};
-		inter_vars.insert("methods", methods.into());
 		inter_vars.insert("impls", impls.into());
 
 		COMMON_TPL.interpolate(&inter_vars)
@@ -164,22 +152,19 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 			|| include_str!("../tpl/smart_ptr/cpp.tpl.cpp").compile_interpolation()
 		);
 
-		static BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/smart_ptr/cpp_boxed.tpl.cpp").compile_interpolation()
-		);
-
 		let type_ref = self.type_ref();
 		let pointee_type = self.pointee();
 
-		if pointee_type.is_by_ptr() {
-			&BOXED_TPL
-		} else {
-			&TPL
-		}.interpolate(&hashmap! {
+		let mut inner_cpp_extern = pointee_type.cpp_extern_return();
+		if !pointee_type.is_by_ptr() {
+			inner_cpp_extern.to_mut().push('*');
+		}
+
+		TPL.interpolate(&hashmap! {
 			"rust_local" => self.rust_localname(),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"cpp_full" => type_ref.cpp_full(),
-			"inner_cpp_extern" => pointee_type.cpp_extern_return(),
+			"inner_cpp_extern" => inner_cpp_extern,
 		})
 	}
 }

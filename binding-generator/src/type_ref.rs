@@ -1,7 +1,7 @@
 use std::{
 	borrow::Cow,
 	cmp,
-	fmt,
+	fmt::{self, Write},
 };
 
 use clang::{Entity, EntityKind, Type, TypeKind};
@@ -897,7 +897,6 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			}.into();
 		}
 		let next_lifetime = lifetime.map(|l| l.next());
-		let lt = lifetime.map_or_else(|| "".to_string(), |l| format!("{} ", l.to_string()));
 		match self.kind() {
 			Kind::Primitive(rust, _) => {
 				rust.into()
@@ -921,6 +920,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 						cnst=self.rust_const_qual(true),
 					).into()
 				} else {
+					let lt = lifetime.map_or_else(|| "".to_string(), |l| format!("{} ", l));
 					format!(
 						"&{lt}{cnst}{typ}",
 						cnst=self.rust_const_qual(false),
@@ -1043,8 +1043,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			}
 			if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
 				let mut out = String::with_capacity(64);
-				out.push('*');
-				out.push_str(&self.rust_const_qual(true));
+				out.write_fmt(format_args!("*{}", self.rust_const_qual(true))).expect("Impossible");
 				if inner.is_void() {
 					out += "c_void";
 				} else if self.is_string() {

@@ -155,8 +155,8 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 			let cls = Class::new(class_decl, gen_env);
 			if !cls.is_excluded() {
 				cls.dependent_types().into_iter()
-					.for_each(|type_ref| {
-						visitor.visit_dependent_type(type_ref.as_ref());
+					.for_each(|dep| {
+						visitor.visit_dependent_type(dep.as_ref());
 					});
 				class_decl.walk_enums_while(|enm| {
 					let enm = Enum::new(enm);
@@ -230,8 +230,8 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 					// we need to stop holding &gen_env for a while to be able to mutate it above
 					let func = Func::new_ext(func_decl, type_hint, Some(name.as_ref()), gen_env);
 					func.dependent_types().into_iter()
-						.for_each(|type_ref| {
-							visitor.visit_dependent_type(type_ref.as_ref());
+						.for_each(|dep| {
+							visitor.visit_dependent_type(dep.as_ref());
 						});
 					if !only_dependent_types {
 						visitor.visit_func(func);

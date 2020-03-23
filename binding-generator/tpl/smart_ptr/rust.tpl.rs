@@ -14,7 +14,6 @@ impl {{rust_local}} {
 		extern "C" { fn cv_{{rust_local}}_get_inner_ptr(instance: {{rust_extern}}) -> {{rust_extern}}; }
 		unsafe { cv_{{rust_local}}_get_inner_ptr(self.as_raw_{{rust_local}}()) }
 	}
-	{{methods}}
 }
 
 impl Drop for {{rust_local}} {

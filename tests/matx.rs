@@ -30,7 +30,7 @@ fn matx_return() -> Result<()> {
 	Ok(())
 }
 
-#[cfg(feature = "contrib")]
+#[cfg(all(feature = "contrib", not(feature = "opencv-32")))]
 #[test]
 fn matx_arg() -> Result<()> {
 	use opencv::surface_matching::Pose3D;
