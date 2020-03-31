@@ -12,6 +12,7 @@ use once_cell::sync::Lazy;
 
 use crate::{
 	CompiledInterpolation,
+	Constness,
 	DefaultElement,
 	DefinitionLocation,
 	DependentTypeMode,
@@ -200,7 +201,8 @@ impl GeneratedElement for Vector<'_, '_> {
 		}
 		let mut inter_vars = hashmap! {
 			"rust_local" => vec_type.rust_local(),
-			"rust_extern" => vec_type.rust_extern(),
+			"rust_extern_const" => vec_type.rust_extern_with_const(Constness::Const),
+			"rust_extern_mut" => vec_type.rust_extern_with_const(Constness::Mut),
 			"inner_rust_extern_func_decl" => element_type.rust_extern_arg_func_decl("val").into(),
 			"inner_rust_func_call" => element_type.rust_arg_func_call("val").into(),
 			"inner_rust_full" => element_type.rust_full(),

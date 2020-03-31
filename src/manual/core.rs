@@ -1,11 +1,12 @@
 pub use CV_MAKETYPE as CV_MAKE_TYPE;
 
 pub use affine3::*;
+pub use boxed::*;
 pub use input_output_array::*;
 pub use mat::*;
 pub use matx::*;
-pub use point::*;
 pub use point3::*;
+pub use point::*;
 pub use rect::*;
 pub use size::*;
 pub use sized::*;
@@ -28,6 +29,7 @@ macro_rules! valid_types {
 }
 
 mod affine3;
+mod boxed;
 mod input_output_array;
 mod mat;
 mod matx;

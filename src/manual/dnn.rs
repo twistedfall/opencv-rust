@@ -32,6 +32,6 @@ impl LayerParams {
 		extern "C" { fn cv_dnn_LayerParams_LayerParams() -> sys::Result<*mut c_void>; }
 		unsafe { cv_dnn_LayerParams_LayerParams() }
 			.into_result()
-			.map(|ptr| LayerParams { ptr })
+			.map(|ptr| unsafe { LayerParams::from_raw(ptr) })
 	}
 }

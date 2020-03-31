@@ -22,15 +22,19 @@ pub mod prelude {
 
 pub(crate) mod mod_prelude_types {
 	pub use std::os::raw::{c_char, c_void};
-	pub use libc::{ptrdiff_t, size_t, clock_t, FILE};
+
+	pub use libc::{clock_t, FILE, ptrdiff_t, size_t};
+
+	pub use crate::core::Boxed;
 }
 
 pub(crate) mod mod_prelude {
-	pub use crate::mod_prelude_types::*;
-
 	pub use crate::{
+		boxed_ptr,
 		core::{CV_MAKE_TYPE, CV_MAKETYPE},
 		Error,
+		mod_prelude_types::*,
+		ptr_extern,
 		Result,
 	};
 }

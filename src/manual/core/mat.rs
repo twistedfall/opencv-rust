@@ -146,9 +146,8 @@ impl<T: DataType> Mat_<T> {
 }
 
 impl<T: DataType> MatTrait for Mat_<T> {
-	fn as_raw_Mat(&self) -> *mut c_void {
-		self.inner.as_raw_Mat()
-	}
+	fn as_raw_Mat(&self) -> *const c_void { self.inner.as_raw_Mat() }
+	fn as_raw_mut_Mat(&mut self) -> *mut c_void { self.inner.as_raw_mut_Mat() }
 }
 
 #[inline(always)]
@@ -435,13 +434,13 @@ pub trait MatTraitManual: MatTrait {
 	}
 
 	fn size(&self) -> Result<core::Size> {
-		extern "C" { fn cv_manual_Mat_size(instance: *mut c_void) -> sys::Result<core::Size>; }
+		extern "C" { fn cv_manual_Mat_size(instance: *const c_void) -> sys::Result<core::Size>; }
 		unsafe { cv_manual_Mat_size(self.as_raw_Mat()) }
 			.into_result()
 	}
 
 	fn is_allocated(&self) -> bool {
-		extern "C" { fn cv_manual_Mat_is_allocated(instance: *mut c_void) -> bool; }
+		extern "C" { fn cv_manual_Mat_is_allocated(instance: *const c_void) -> bool; }
 		unsafe { cv_manual_Mat_is_allocated(self.as_raw_Mat()) }
 	}
 
@@ -451,12 +450,12 @@ pub trait MatTraitManual: MatTrait {
 	/// * s: Assigned scalar converted to the actual array type.
 	fn set(&mut self, s: Scalar) -> Result<()> {
 		extern "C" { fn cv_manual_Mat_set(instance: *mut c_void, s: *const Scalar) -> sys::Result_void; }
-		unsafe { cv_manual_Mat_set(self.as_raw_Mat(), &s) }
+		unsafe { cv_manual_Mat_set(self.as_raw_mut_Mat(), &s) }
 			.into_result()
 	}
 
 	fn data(&self) -> Result<&u8> {
-		extern "C" { fn cv_manual_Mat_data(instance: *mut c_void) -> sys::Result<*const u8>; }
+		extern "C" { fn cv_manual_Mat_data(instance: *const c_void) -> sys::Result<*const u8>; }
 		unsafe { cv_manual_Mat_data(self.as_raw_Mat()) }
 			.into_result()
 			.and_then(|x| unsafe { x.as_ref() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string())))
@@ -590,7 +589,7 @@ impl fmt::Debug for Mat {
 pub trait UMatTraitManual: UMatTrait {
 	#[inline]
 	fn size(&self) -> Result<core::Size> {
-		extern "C" { fn cv_manual_UMat_size(instance: *mut c_void) -> sys::Result<core::Size>; }
+		extern "C" { fn cv_manual_UMat_size(instance: *const c_void) -> sys::Result<core::Size>; }
 		unsafe { cv_manual_UMat_size(self.as_raw_UMat()) }
 			.into_result()
 	}
@@ -644,7 +643,7 @@ impl ToInputOutputArray for &mut UMat {
 pub trait MatSizeTraitManual: MatSizeTrait {
 	#[inline]
 	fn dims(&self) -> Result<i32> {
-		extern "C" { fn cv_manual_MatSize_dims(instance: *mut c_void) -> i32; }
+		extern "C" { fn cv_manual_MatSize_dims(instance: *const c_void) -> i32; }
 		Ok(unsafe { cv_manual_MatSize_dims(self.as_raw_MatSize()) })
 	}
 }
@@ -656,7 +655,7 @@ impl Deref for MatSize {
 	type Target = [i32];
 
 	fn deref(&self) -> &Self::Target {
-		extern "C" { fn cv_manual_MatSize_deref(instance: *mut c_void) -> *const i32; }
+		extern "C" { fn cv_manual_MatSize_deref(instance: *const c_void) -> *const i32; }
 		let ptr = unsafe { cv_manual_MatSize_deref(self.as_raw_MatSize()) };
 		unsafe { slice::from_raw_parts(ptr, self.dims().expect("Cannot get dims") as usize) }
 	}
@@ -672,7 +671,7 @@ impl Deref for MatStep {
 	type Target = [size_t];
 
 	fn deref(&self) -> &Self::Target {
-		extern "C" { fn cv_manual_MatStep_deref(instance: *mut c_void) -> *const size_t; }
+		extern "C" { fn cv_manual_MatStep_deref(instance: *const c_void) -> *const size_t; }
 		let ptr = unsafe { cv_manual_MatStep_deref(self.as_raw_MatStep()) };
 		unsafe { slice::from_raw_parts(ptr, 2) }
 	}
@@ -687,13 +686,13 @@ impl fmt::Debug for MatStep {
 pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 	#[inline]
 	fn typ(&self) -> i32 {
-		extern "C" { fn cv_manual_MatConstIterator_type(instance: *mut c_void) -> i32; }
+		extern "C" { fn cv_manual_MatConstIterator_type(instance: *const c_void) -> i32; }
 		unsafe { cv_manual_MatConstIterator_type(self.as_raw_MatConstIterator()) }
 	}
 
 	#[inline]
 	fn has_elements(&self) -> bool {
-		extern "C" { fn cv_manual_MatConstIterator_has_elements(instance: *mut c_void) -> bool; }
+		extern "C" { fn cv_manual_MatConstIterator_has_elements(instance: *const c_void) -> bool; }
 		unsafe { cv_manual_MatConstIterator_has_elements(self.as_raw_MatConstIterator()) }
 	}
 

@@ -8,6 +8,7 @@ use maplit::hashmap;
 use once_cell::sync::Lazy;
 
 use crate::{
+	Constness,
 	CompiledInterpolation,
 	DefaultElement,
 	DefinitionLocation,
@@ -122,7 +123,8 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 
 		let mut inter_vars = hashmap! {
 			"rust_local" => self.rust_localname(),
-			"rust_extern" => type_ref.rust_extern(),
+			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
+			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
 		};
 
 		let mut impls = String::new();

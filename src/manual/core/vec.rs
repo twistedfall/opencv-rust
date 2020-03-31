@@ -1,7 +1,7 @@
 use std::ffi::c_void;
 
 use crate::{
-	core::{_InputArray, ToInputArray},
+	core::{_InputArray, Boxed, ToInputArray},
 	Result,
 	sys,
 };
@@ -76,7 +76,7 @@ impl ToInputArray for Scalar_<f64> {
 		extern "C" { fn cv_Scalar_input_array(instance: *const Scalar_<f64>) -> sys::Result<*mut c_void>; }
 		unsafe { cv_Scalar_input_array(self) }
 			.into_result()
-			.map(|ptr| _InputArray { ptr })
+			.map(|ptr| unsafe { _InputArray::from_raw(ptr) })
 	}
 }
 

@@ -13,6 +13,7 @@ use once_cell::sync::Lazy;
 
 use crate::{
 	CompiledInterpolation,
+	Constness,
 	DefaultElement,
 	DefinitionLocation,
 	DependentTypeMode,
@@ -354,7 +355,8 @@ impl<'tu, 'g> Class<'tu, 'g> {
 				"debug" => get_debug(self).into(),
 				"rust_trait_local" => self.rust_trait_localname(),
 				"rust_local" => type_ref.rust_local(),
-				"rust_extern" => type_ref.rust_extern(),
+				"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
+				"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
 				"bases" => trait_bases.into(),
 				"trait_methods" => trait_methods.into(),
 				"dyn_impl" => dyn_impl.into(),
@@ -381,7 +383,8 @@ impl<'tu, 'g> Class<'tu, 'g> {
 						"base_rust_full" => base.rust_trait_fullname(),
 						"rust_local" => type_ref.rust_local(),
 						"base_rust_local" => base_type_ref.rust_local(),
-						"base_rust_extern" => base_type_ref.rust_extern(),
+						"base_rust_extern_const" => base_type_ref.rust_extern_with_const(Constness::Const),
+						"base_rust_extern_mut" => base_type_ref.rust_extern_with_const(Constness::Mut),
 					})
 				})
 				.collect::<Vec<_>>();
@@ -441,7 +444,8 @@ impl<'tu, 'g> Class<'tu, 'g> {
 				"doc_comment" => Cow::Owned(self.rendered_doc_comment(opencv_version)),
 				"debug" => get_debug(self).into(),
 				"rust_local" => type_ref.rust_local(),
-				"rust_extern" => type_ref.rust_extern(),
+				"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
+				"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
 				"fields" => fields.join("").into(),
 				"bases" => bases.join("").into(),
 				"impl" => IMPL_TPL.interpolate(&hashmap! {

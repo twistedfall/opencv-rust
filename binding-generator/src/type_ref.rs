@@ -59,6 +59,31 @@ pub enum DependentTypeMode {
 	ForReturn(DefinitionLocation),
 }
 
+#[derive(Clone, Debug, PartialEq)]
+pub enum Constness {
+	Auto,
+	Const,
+	Mut,
+}
+
+impl Constness {
+	pub fn is_const(self, type_ref: &TypeRef) -> bool {
+		match self {
+			Constness::Auto => type_ref.is_const(),
+			Constness::Const => true,
+			Constness::Mut => false,
+		}
+	}
+
+	pub fn is_mut(self, type_ref: &TypeRef) -> bool {
+		match self {
+			Constness::Auto => !type_ref.is_const(),
+			Constness::Const => false,
+			Constness::Mut => true,
+		}
+	}
+}
+
 #[derive(Clone, Debug)]
 pub enum Kind<'tu, 'g> {
 	/// (rust name, cpp name)
@@ -1058,9 +1083,13 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	pub fn rust_extern(&self) -> Cow<str> {
+		self.rust_extern_with_const(Constness::Auto)
+	}
+
+	pub fn rust_extern_with_const(&self, constness: Constness) -> Cow<str> {
 		'typ: loop {
 			if self.is_string() {
-				break 'typ if self.is_const() {
+				break 'typ if constness.is_const(self) {
 					"*const c_char".into()
 				} else if self.is_output() {
 					"*mut *mut c_void".into()
@@ -1069,7 +1098,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				};
 			}
 			if self.is_by_ptr() {
-				break 'typ "*mut c_void".into();
+				break 'typ if constness.is_const(self) {
+					"*const c_void"
+				} else {
+					"*mut c_void"
+				}.into()
 			}
 			if let Some(inner) = self.as_pointer().or_else(|| self.as_reference()) {
 				let mut out = String::with_capacity(64);
@@ -1079,7 +1112,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				} else if self.is_string() {
 					out += "c_char";
 				} else {
-					out += &inner.rust_extern()
+					out += &inner.rust_extern_with_const(constness)
 				}
 				break 'typ out.into();
 			}
@@ -1087,7 +1120,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				break 'typ format!(
 					"*{cnst}[{typ}; {len}]",
 					cnst = self.rust_const_qual(true),
-					typ = elem.rust_extern(),
+					typ = elem.rust_extern_with_const(constness),
 					len = len,
 				).into();
 			}
@@ -1095,7 +1128,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				break 'typ format!(
 					"*{cnst}{typ}",
 					cnst = self.rust_const_qual(true),
-					typ = elem.rust_extern(),
+					typ = elem.rust_extern_with_const(constness),
 				).into()
 			}
 			if let Some(func) = self.as_function() {
@@ -1105,9 +1138,9 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
-	pub fn rust_self_func_decl(&self, method_is_const: bool) -> String {
+	pub fn rust_self_func_decl(&self, is_method_const: bool) -> String {
 		if self.is_by_ptr() {
-			if method_is_const {
+			if is_method_const {
 				"&self".to_string()
 			} else {
 				"&mut self".to_string()
@@ -1136,7 +1169,12 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			}
 			break 'decl_type self.rust_full();
 		};
-		format!("{name}: {typ}", name=name, typ=typ)
+		let mutable = if self.is_by_ptr() && !self.is_const() && !self.as_pointer().is_some() && !self.as_reference().is_some() {
+			"mut "
+		} else {
+			""
+		};
+		format!("{mutable}{name}: {typ}", mutable=mutable, name=name, typ=typ)
 	}
 
 	pub fn rust_return_func_decl(&self) -> Cow<str> {
@@ -1155,7 +1193,11 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				unsafety_call=unsafety_call,
 			).into()
 		} else if self.is_by_ptr() {
-			format!(".map(|ptr| {typ} {{ ptr }})", typ=self.rust_return_func_decl()).into()
+			format!(
+				".map(|ptr| {unsafety_call}{{ {typ}::from_raw(ptr) }})",
+				unsafety_call=unsafety_call,
+				typ=self.rust_return_func_decl()
+			).into()
 		} else if !self.is_void_ptr() && (self.as_pointer().is_some() || self.as_fixed_array().is_some()) {
 			let ptr_call = if self.is_const() { "ref" } else { "mut" };
 			format!(
@@ -1194,10 +1236,10 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			if let Some((userdata_name, _)) = args.iter().find(|(_, f)| f.is_user_data()).cloned() {
 				let ret = func.return_type();
 				let tramp_args = args.into_iter()
-					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name))
+					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, Constness::Auto))
 					.join(", ");
 				let fw_args = Field::rust_disambiguate_names(func.rust_arguments())
-					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name))
+					.map(|(name, a)| a.type_ref().rust_extern_arg_func_decl(&name, Constness::Auto))
 					.join(", ");
 				return format!(
 					"callback_arg!({name}_trampoline({tramp_args}) -> {tramp_ret} => {tramp_userdata_arg} in callbacks => {name}({fw_args}) -> {fw_ret})",
@@ -1221,30 +1263,34 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		)
 	}
 
-	pub fn rust_self_func_call(&self, _is_const: bool) -> String {
-		self.rust_arg_func_call("self")
+	pub fn rust_self_func_call(&self, is_method_const: bool) -> String {
+		self.rust_arg_func_call("self", is_method_const)
 	}
 
-	pub fn rust_arg_func_call(&self, name: &str) -> String {
+	pub fn rust_arg_func_call(&self, name: &str, is_const: bool) -> String {
 		if self.is_string() {
 			return if self.is_output() {
 				format!("&mut {name}_via", name=name)
-			} else if self.is_const() {
+			} else if self.is_const() || is_const {
 				format!("{name}.as_ptr()", name=name)
 			} else {
 				format!("{name}.as_ptr() as _", name=name) // fixme: use as_mut_ptr() when it's stabilized
 			}
 		}
-		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && inner.is_const())
+		if self.as_reference().map_or(false, |inner| (inner.as_simple_class().is_some() || inner.is_enum()) && (inner.is_const() || is_const))
 			|| self.as_simple_class().is_some() {
 			return format!("&{name}", name=name);
 		}
 		if self.is_by_ptr() {
 			let typ = self.source();
-			return format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id());
+			return if self.is_const() || is_const {
+				format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id())
+			} else {
+				format!("{name}.as_raw_mut_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id())
+			};
 		}
 		if self.as_variable_array().is_some() {
-			return if self.is_const() {
+			return if self.is_const() || is_const {
 				format!("{name}.as_ptr()", name=name)
 			} else {
 				format!("{name}.as_mut_ptr()", name=name)
@@ -1272,12 +1318,17 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		name.to_string()
 	}
 
-	pub fn rust_extern_self_func_decl(&self, _method_is_const: bool) -> String {
-		self.rust_extern_arg_func_decl("instance")
+	pub fn rust_extern_self_func_decl(&self, is_method_const: bool) -> String {
+		let method_constness = if is_method_const {
+			Constness::Const
+		} else {
+			Constness::Mut
+		};
+		self.rust_extern_arg_func_decl("instance", method_constness)
 	}
 
-	pub fn rust_extern_arg_func_decl(&self, name: &str) -> String {
-		let mut typ = self.rust_extern();
+	pub fn rust_extern_arg_func_decl(&self, name: &str, constness: Constness) -> String {
+		let mut typ = self.rust_extern_with_const(constness);
 		if self.as_simple_class().is_some() {
 			*typ.to_mut() = format!("*const {}", typ)
 		}
@@ -1288,7 +1339,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		if self.is_string() {
 			"*mut c_void".into()
 		} else {
-			self.rust_extern()
+			self.rust_extern_with_const(Constness::Mut)
 		}
 	}
 
@@ -1482,9 +1533,9 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		let space_name = if name.is_empty() { "".to_string() } else { format!(" {}", name) };
 		if self.is_by_ptr() {
 			if self.as_pointer().is_some() || self.as_reference().is_some() {
-				format!("{typ}{name}", typ=self.cpp_full(), name=space_name).into() // fixme add const_qual
+				format!("{typ}{name}", typ=self.cpp_full(), name=space_name).into()
 			} else {
-				format!("{typ}*{name}", typ=self.cpp_full(), name=space_name).into()
+				format!("{cnst}{typ}*{name}", cnst=self.cpp_const_qual(), typ=self.cpp_full(), name=space_name).into()
 			}
 		} else if self.is_string() {
 			if self.is_output() {

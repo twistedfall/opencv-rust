@@ -49,7 +49,7 @@ use name_pool::NamePool;
 use return_type_wrapper::{DefinitionLocation, ReturnTypeWrapper};
 use smart_ptr::SmartPtr;
 pub use string_ext::{CompiledInterpolation, StrExt, StringExt};
-use type_ref::{DependentTypeMode, TypeRef, TypeRefTypeHint};
+use type_ref::{Constness, DependentTypeMode, TypeRef, TypeRefTypeHint};
 pub use typedef::Typedef;
 use vector::Vector;
 use walker::{EntityWalker, EntityWalkerVisitor};

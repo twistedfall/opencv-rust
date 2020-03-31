@@ -13,6 +13,7 @@ use crate::{
 	Class,
 	comment,
 	CompiledInterpolation,
+	Constness,
 	DefaultElement,
 	DefinitionLocation,
 	DependentTypeMode,
@@ -552,7 +553,7 @@ impl<'tu, 'g> Func<'tu, 'g> {
 
 		let args = Field::rust_disambiguate_names(self.arguments()).collect::<Vec<_>>();
 		let as_instance_method = self.as_instance_method();
-		let is_const = self.is_const();
+		let is_method_const = self.is_const();
 		let is_infallible = self.is_infallible();
 		let mut decl_args = Vec::with_capacity(args.len());
 		let mut call_args = Vec::with_capacity(args.len());
@@ -560,8 +561,8 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		let mut pre_call_args = Vec::with_capacity(args.len());
 		let mut post_call_args = Vec::with_capacity(args.len());
 		if let Some(cls) = &as_instance_method {
-			decl_args.push(cls.type_ref().rust_self_func_decl(is_const));
-			call_args.push(cls.type_ref().rust_self_func_call(is_const));
+			decl_args.push(cls.type_ref().rust_self_func_decl(is_method_const));
+			call_args.push(cls.type_ref().rust_self_func_call(is_method_const));
 		}
 		let mut callback_arg_name: Option<String> = None;
 		for (name, arg) in args {
@@ -588,7 +589,7 @@ impl<'tu, 'g> Func<'tu, 'g> {
 				};
 				call_args.push(slice_call);
 			} else {
-				call_args.push(type_ref.rust_arg_func_call(&name));
+				call_args.push(type_ref.rust_arg_func_call(&name, false));
 			}
 			forward_args.push(type_ref.rust_arg_forward(&name));
 			Self::pre_post_arg_handle(type_ref.rust_arg_post_call(&name, is_infallible), &mut post_call_args);
@@ -905,7 +906,7 @@ impl GeneratedElement for Func<'_, '_> {
 			args.push(cls.type_ref().rust_extern_self_func_decl(self.is_const()));
 		}
 		for arg in self.arguments() {
-			args.push(arg.type_ref().rust_extern_arg_func_decl(&arg.rust_leafname()))
+			args.push(arg.type_ref().rust_extern_arg_func_decl(&arg.rust_leafname(), Constness::Auto))
 		}
 		let return_type = self.return_type();
 		let return_wrapper_type = return_type.rust_extern_return_wrapper_full();

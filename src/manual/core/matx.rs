@@ -6,7 +6,7 @@ use std::{
 use num::{One, Zero};
 
 use crate::{
-	core::{self, ToInputArray, ToInputOutputArray, ToOutputArray},
+	core::{self, Boxed, ToInputArray, ToInputOutputArray, ToOutputArray},
 	Error,
 	manual::core::sized::*,
 	Result,
@@ -163,7 +163,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToInputArray for Matx<T, A> where Self:
 	fn input_array(&self) -> Result<core::_InputArray> {
 		unsafe { self.extern_input_array() }
 			.into_result()
-			.map(|ptr| core::_InputArray { ptr })
+			.map(|ptr| unsafe { core::_InputArray::from_raw(ptr) })
 	}
 }
 
@@ -177,7 +177,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToOutputArray for Matx<T, A> where Self
 	fn output_array(&mut self) -> Result<core::_OutputArray> {
 		unsafe { self.extern_output_array() }
 			.into_result()
-			.map(|ptr| core::_OutputArray { ptr })
+			.map(|ptr| unsafe { core::_OutputArray::from_raw(ptr) })
 	}
 }
 
@@ -191,7 +191,7 @@ impl<T: ValidMatxType, A: SizedArray<T>> ToInputOutputArray for Matx<T, A> where
 	fn input_output_array(&mut self) -> Result<core::_InputOutputArray> {
 		unsafe { self.extern_input_output_array() }
 			.into_result()
-			.map(|ptr| core::_InputOutputArray { ptr })
+			.map(|ptr| unsafe { core::_InputOutputArray::from_raw(ptr) })
 	}
 }
 
