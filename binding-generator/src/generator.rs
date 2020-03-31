@@ -249,6 +249,7 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 		export = export || {
 			let underlying_type = typedef.underlying_type_ref();
 			underlying_type.as_function().is_some()
+				|| !underlying_type.is_excluded()
 				|| if let Some(templ) = underlying_type.as_template() {
 				settings::IMPLEMENTED_GENERICS.contains(templ.cpp_fullname().as_ref())
 			} else {
@@ -256,6 +257,10 @@ impl<'tu, V: GeneratorVisitor> OpenCVWalker<'tu, V> {
 			}
 		};
 		if export && !typedef.is_excluded() {
+			typedef.dependent_types().into_iter()
+				.for_each(|dep| {
+					visitor.visit_dependent_type(dep.as_ref())
+				});
 			visitor.visit_typedef(typedef)
 		}
 	}

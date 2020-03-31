@@ -41,7 +41,7 @@ impl Default for Lifetime {
 }
 
 impl Lifetime {
-	pub fn next(&self) -> Self {
+	pub fn next(self) -> Self {
 		Self { number: self.number + 1 }
 	}
 }
@@ -716,6 +716,17 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
+	pub fn as_typedef(&self) -> Option<Typedef<'tu, 'g>> {
+		match self.kind() {
+			Kind::Typedef(out) => {
+				Some(out)
+			}
+			_ => {
+				None
+			}
+		}
+	}
+
 //	pub fn as_entity(&self) -> Option<Box<dyn EntityElement<'tu> + 'tu>> where 'g: 'tu {
 //		match self.kind() {
 //			Kind::Primitive(..) | Kind::Array(..) | Kind::Pointer(..)
@@ -896,13 +907,12 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				"String"
 			}.into();
 		}
-		let next_lifetime = lifetime.map(|l| l.next());
 		match self.kind() {
 			Kind::Primitive(rust, _) => {
 				rust.into()
 			}
 			Kind::Array(elem, size) => {
-				self.format_as_array(&elem.rust_type_ref(full, next_lifetime), size).into()
+				self.format_as_array(&elem.rust_type_ref(full, lifetime.map(Lifetime::next)), size).into()
 			}
 			Kind::StdVector(vec) => {
 				vec.rust_name(full).into_owned().into()
@@ -911,7 +921,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				// const references to simple classes are passed by value for performance
 				// fixme: it kind of works now, but probably it's not the best idea
 				//  because some functions can potentially save the pointer to the value, but it will be destroyed after function call
-				inner.rust_type_ref(full, next_lifetime).into_owned().into()
+				inner.rust_type_ref(full, lifetime.map(Lifetime::next)).into_owned().into()
 			}
 			Kind::Pointer(inner) | Kind::Reference(inner) => {
 				if inner.is_void() {
@@ -925,7 +935,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 						"&{lt}{cnst}{typ}",
 						cnst=self.rust_const_qual(false),
 						lt=lt,
-						typ=inner.rust_type_ref(full, next_lifetime)
+						typ=inner.rust_type_ref(full, lifetime.map(Lifetime::next))
 					).into()
 				}
 			}
@@ -944,7 +954,18 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				enm.rust_name(full).into_owned().into()
 			}
 			Kind::Typedef(decl) => {
-				decl.rust_name(full).into_owned().into()
+				let mut out: String = decl.rust_name(full).into_owned();
+				let lifetime_count = decl.underlying_type_ref().rust_lifetime_count();
+				if lifetime_count >= 1 {
+					if lifetime_count >= 2 {
+						unimplemented!("Support for lifetime count >= 2 is not implemented yet");
+					}
+					if let Some(lt) = lifetime.map(|x| x.to_string()) {
+						out.reserve(lt.len() + 2);
+						out.write_fmt(format_args!("<{}>", lt)).expect("Impossible");
+					}
+				}
+				out.into()
 			}
 			Kind::Generic(name) => {
 				name.into()
@@ -997,23 +1018,32 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 	}
 
 	fn rust_lifetime_count(&self) -> usize {
-		let mut out = 0;
-		if !self.is_string() {
+		if self.is_string() {
+			0
+		} else {
 			match self.kind() {
 				Kind::Pointer(inner) => {
-					if !inner.is_void() {
-						out += 1 + inner.rust_lifetime_count();
+					if inner.is_void() {
+						0
+					} else {
+						1 + inner.rust_lifetime_count()
 					}
 				}
 				Kind::Reference(inner) => {
 					if !((inner.as_simple_class().is_some() || inner.is_enum()) && inner.is_const()) {
-						out += 1 + inner.rust_lifetime_count()
+						1 + inner.rust_lifetime_count()
+					} else {
+						0
 					}
 				}
-				_ => {}
+				Kind::Typedef(tdef) => {
+					tdef.underlying_type_ref().rust_lifetime_count()
+				}
+				_ => {
+					0
+				}
 			}
 		}
-		out
 	}
 
 	pub fn rust_lifetimes(&self) -> Vec<Lifetime> {
@@ -1293,6 +1323,9 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				out = ptr.dependent_types();
 				out.push(Box::new(ptr))
 			},
+			Kind::Typedef(typedef) => {
+				out = typedef.dependent_types();
+			}
 			_ => {
 				if let DependentTypeMode::ForReturn(def_location) = mode {
 					if !self.is_generic() && !self.is_void() {

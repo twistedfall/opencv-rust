@@ -499,6 +499,7 @@ impl Element for Class<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
 			|| match self.kind() { Kind::Excluded => true, _ => false }
+			|| self.cpp_namespace() == "" // we don't process out of namespace (legacy C) items, so mark them as excluded
 	}
 
 	fn is_ignored(&self) -> bool {

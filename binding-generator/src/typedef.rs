@@ -46,6 +46,10 @@ impl<'tu, 'g> Typedef<'tu, 'g> {
 			self.gen_env,
 		)
 	}
+
+	pub fn dependent_types(&self) -> Vec<Box<dyn GeneratedElement + 'g>> {
+		self.underlying_type_ref().dependent_types()
+	}
 }
 
 impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
@@ -57,6 +61,7 @@ impl<'tu> EntityElement<'tu> for Typedef<'tu, '_> {
 impl Element for Typedef<'_, '_> {
 	fn is_excluded(&self) -> bool {
 		DefaultElement::is_excluded(self)
+			|| self.rust_fullname() == self.underlying_type_ref().rust_full() // fixes recursive typedefs like Cv16suf
 			|| settings::PRIMITIVE_TYPEDEFS.contains_key(self.cpp_fullname().as_ref())
 	}
 

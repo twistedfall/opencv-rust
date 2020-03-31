@@ -69,7 +69,7 @@ impl DefaultElement {
 		while let Some(parent) = e.get_semantic_parent() {
 			match parent.get_kind() {
 				EntityKind::ClassDecl | EntityKind::Namespace | EntityKind::StructDecl
-				| EntityKind::EnumDecl => {
+				| EntityKind::EnumDecl | EntityKind::UnionDecl => {
 					// handle anonymous enums inside classes and anonymous namespaces
 					if let Some(parent_name) = parent.get_name() {
 						parts.push(parent_name);
