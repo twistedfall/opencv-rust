@@ -18,19 +18,19 @@ use crate::{
 	GeneratorEnv,
 	ReturnTypeWrapper,
 	StrExt,
+	type_ref::TemplateArg,
 	TypeRef,
 };
 
 #[derive(Clone)]
 pub struct SmartPtr<'tu, 'g> {
 	entity: Entity<'tu>,
-	element: TypeRef<'tu, 'g>,
 	gen_env: &'g GeneratorEnv<'tu>,
 }
 
 impl<'tu, 'g> SmartPtr<'tu, 'g> {
-	pub fn new(entity: Entity<'tu>, element: TypeRef<'tu, 'g>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
-		Self { entity, element, gen_env }
+	pub fn new(entity: Entity<'tu>, gen_env: &'g GeneratorEnv<'tu>) -> Self {
+		Self { entity, gen_env }
 	}
 
 	pub fn type_ref(&self) -> TypeRef<'tu, 'g> {
@@ -38,17 +38,31 @@ impl<'tu, 'g> SmartPtr<'tu, 'g> {
 	}
 
 	pub fn pointee(&self) -> TypeRef<'tu, 'g> {
-		self.element.clone()
-	}
-
-	pub fn canonical(&self) -> Self {
-		Self::new(self.entity, self.element.canonical(), self.gen_env)
+		self.type_ref().template_args().into_iter()
+			.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
+				Some(type_ref)
+			} else {
+				None
+			}).expect("smart pointer template argument list is empty")
 	}
 
 	pub fn dependent_types(&self) -> Vec<Box<dyn GeneratedElement + 'g>> {
-		vec![
-			Box::new(ReturnTypeWrapper::new(self.type_ref().canonical_clang(), self.gen_env, DefinitionLocation::Module))
-		]
+		let canon = self.type_ref().canonical_clang();
+		let mut out = vec![
+			Box::new(ReturnTypeWrapper::new(canon.clone(), self.gen_env, DefinitionLocation::Module)) as Box<dyn GeneratedElement>
+		];
+		if self.pointee().as_typedef().is_some() {
+			out.extend(canon.dependent_types())
+		}
+		out
+	}
+
+	pub fn rust_localalias(&self) -> Cow<str> {
+		format!("PtrOf{typ}", typ=self.pointee().rust_safe_id()).into()
+	}
+
+	pub fn rust_fullalias(&self) -> Cow<str> {
+		format!("types::{}", self.rust_localalias()).into()
 	}
 }
 
@@ -59,6 +73,10 @@ impl<'tu> EntityElement<'tu> for SmartPtr<'tu, '_> {
 }
 
 impl Element for SmartPtr<'_, '_> {
+	fn is_excluded(&self) -> bool {
+		DefaultElement::is_excluded(self) || self.pointee().is_excluded()
+	}
+
 	fn is_ignored(&self) -> bool {
 		DefaultElement::is_ignored(self) || self.pointee().is_ignored()
 	}
@@ -88,29 +106,29 @@ impl Element for SmartPtr<'_, '_> {
 	}
 
 	fn rust_module(&self) -> Cow<str> {
-		self.element.rust_module()
+		self.pointee().rust_module().into_owned().into()
+	}
+
+	fn rust_namespace(&self) -> Cow<str> {
+		"core".into()
 	}
 
 	fn rust_leafname(&self) -> Cow<str> {
-		format!("PtrOf{typ}", typ=self.element.rust_safe_id()).into()
+		format!("Ptr::<{typ}>", typ=self.pointee().rust_full()).into()
 	}
 
 	fn rust_localname(&self) -> Cow<str> {
 		DefaultElement::rust_localname(self)
 	}
-
-	fn rust_fullname(&self) -> Cow<str> {
-		format!("types::{}", self.rust_localname()).into()
-	}
 }
 
 impl GeneratedElement for SmartPtr<'_, '_> {
 	fn element_safe_id(&self) -> String {
-		format!("{}-{}", self.rust_module(), self.rust_localname())
+		format!("{}-{}", self.rust_module(), self.rust_localalias())
 	}
 
 	fn gen_rust(&self, _opencv_version: &str) -> String {
-		static COMMON_TPL: Lazy<CompiledInterpolation> = Lazy::new(
+		static TPL: Lazy<CompiledInterpolation> = Lazy::new(
 			|| include_str!("../tpl/smart_ptr/rust.tpl.rs").compile_interpolation()
 		);
 
@@ -119,12 +137,15 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 		);
 
 		let type_ref = self.type_ref();
-		let pointee_type = self.pointee();
+		let pointee = self.pointee();
+		let pointee_type = pointee.canonical();
 
 		let mut inter_vars = hashmap! {
-			"rust_local" => self.rust_localname(),
+			"rust_localalias" => self.rust_localalias(),
+			"rust_full" => self.rust_fullname(),
 			"rust_extern_const" => type_ref.rust_extern_with_const(Constness::Const),
 			"rust_extern_mut" => type_ref.rust_extern_with_const(Constness::Mut),
+			"inner_rust_full" => pointee_type.rust_full(),
 		};
 
 		let mut impls = String::new();
@@ -137,16 +158,14 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 					.collect::<Vec<_>>();
 				all_bases.sort_unstable_by(|a, b| a.cpp_localname().cmp(&b.cpp_localname()));
 				for base in all_bases {
-					let mut vars = inter_vars.clone();
-					vars.insert("base_rust_local", base.rust_localname());
-					vars.insert("base_rust_full", base.rust_trait_fullname());
-					impls += &TRAIT_CAST_TPL.interpolate(&vars);
+					inter_vars.insert("base_rust_local", base.rust_localname().into_owned().into());
+					inter_vars.insert("base_rust_full", base.rust_trait_fullname().into_owned().into());
+					impls += &TRAIT_CAST_TPL.interpolate(&inter_vars);
 				}
 			}
 		};
 		inter_vars.insert("impls", impls.into());
-
-		COMMON_TPL.interpolate(&inter_vars)
+		TPL.interpolate(&inter_vars)
 	}
 
 	fn gen_cpp(&self) -> String {
@@ -163,9 +182,10 @@ impl GeneratedElement for SmartPtr<'_, '_> {
 		}
 
 		TPL.interpolate(&hashmap! {
-			"rust_local" => self.rust_localname(),
+			"rust_localalias" => self.rust_localalias(),
 			"cpp_extern" => type_ref.cpp_extern(),
 			"cpp_full" => type_ref.cpp_full(),
+			"inner_cpp_full" => pointee_type.cpp_full(),
 			"inner_cpp_extern" => inner_cpp_extern,
 		})
 	}

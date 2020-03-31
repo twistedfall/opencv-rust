@@ -248,13 +248,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 					if cpp_fullname.starts_with("std::") && cpp_fullname.contains("::vector") {
 						Kind::StdVector(Vector::new(self.type_ref, self.gen_env))
 					} else if is_decl && cpp_fullname.starts_with("cv::Ptr") {
-						let pointee = self.template_args().into_iter()
-							.find_map(|a| if let TemplateArg::Typename(type_ref) = a {
-								Some(type_ref)
-							} else {
-								None
-							}).expect("smart pointer template argument list is empty");
-						Kind::SmartPtr(SmartPtr::new(decl, pointee, self.gen_env))
+						Kind::SmartPtr(SmartPtr::new(decl, self.gen_env))
 					} else {
 						Kind::Class(Class::new(decl, self.gen_env))
 					}
@@ -880,7 +874,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				inner.rust_safe_id().into_owned()
 			}
 			Kind::SmartPtr(ptr) => {
-				ptr.rust_localname().into_owned()
+				ptr.rust_localalias().into_owned()
 			}
 			Kind::Primitive(..) | Kind::Class(..) | Kind::Enum(..)
 			| Kind::Function(..) | Kind::Typedef(..) | Kind::Generic(..)

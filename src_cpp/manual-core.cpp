@@ -107,4 +107,8 @@ extern "C" {
 
 	ocvrs_matx(Matx44)
 	ocvrs_matx(Matx66)
+
+	cv::Ptr<float>* cv_PtrOff32_new(float val) {
+		return new cv::Ptr<float>(new float(val));
+	}
 }
