@@ -199,23 +199,10 @@ extern "C" {
 	}
 
 	Result<cv::xfeatures2d::Elliptic_KeyPoint*> cv_VectorOfElliptic_KeyPoint_get(const std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* instance, size_t index) {
-		try {
-			return Ok<cv::xfeatures2d::Elliptic_KeyPoint*>(new cv::xfeatures2d::Elliptic_KeyPoint(instance->at(index)));
-		} VEC_CATCH(Result<cv::xfeatures2d::Elliptic_KeyPoint*>)
-	}
-
-	Result<cv::xfeatures2d::Elliptic_KeyPoint*> cv_VectorOfElliptic_KeyPoint_get_unchecked(const std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* instance, size_t index) {
 		return Ok<cv::xfeatures2d::Elliptic_KeyPoint*>(new cv::xfeatures2d::Elliptic_KeyPoint((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfElliptic_KeyPoint_set(std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* instance, size_t index, cv::xfeatures2d::Elliptic_KeyPoint* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfElliptic_KeyPoint_set_unchecked(std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* instance, size_t index, cv::xfeatures2d::Elliptic_KeyPoint* val) {
+	void cv_VectorOfElliptic_KeyPoint_set(std::vector<cv::xfeatures2d::Elliptic_KeyPoint>* instance, size_t index, cv::xfeatures2d::Elliptic_KeyPoint* val) {
 		(*instance)[index] = *val;
 	}
 

@@ -184,14 +184,14 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_sfm_reconstruct_vector_string__const__OutputArrayX_const__OutputArrayX_const__InputOutputArrayX_bool(std::vector<std::string>* images, const cv::_OutputArray* Ps, const cv::_OutputArray* points3d, const cv::_InputOutputArray* K, bool is_projective) {
+	Result_void cv_sfm_reconstruct_vector_string__const__OutputArrayX_const__OutputArrayX_const__InputOutputArrayX_bool(const std::vector<std::string>* images, const cv::_OutputArray* Ps, const cv::_OutputArray* points3d, const cv::_InputOutputArray* K, bool is_projective) {
 		try {
 			cv::sfm::reconstruct(*images, *Ps, *points3d, *K, is_projective);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_sfm_reconstruct_vector_string__const__OutputArrayX_const__OutputArrayX_const__InputOutputArrayX_const__OutputArrayX_bool(std::vector<std::string>* images, const cv::_OutputArray* Rs, const cv::_OutputArray* Ts, const cv::_InputOutputArray* K, const cv::_OutputArray* points3d, bool is_projective) {
+	Result_void cv_sfm_reconstruct_vector_string__const__OutputArrayX_const__OutputArrayX_const__InputOutputArrayX_const__OutputArrayX_bool(const std::vector<std::string>* images, const cv::_OutputArray* Rs, const cv::_OutputArray* Ts, const cv::_InputOutputArray* K, const cv::_OutputArray* points3d, bool is_projective) {
 		try {
 			cv::sfm::reconstruct(*images, *Rs, *Ts, *K, *points3d, is_projective);
 			return Ok();

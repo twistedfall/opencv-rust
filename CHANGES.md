@@ -1,3 +1,17 @@
+* 0.36.0
+  * Large internal rework of `Matx`, `PtrOf…` and `VectorOf…` structs. They have been made generic and their
+    code generation have been mostly moved to Rust macros. This change should have no user facing consequences,
+    type aliases with the old names are kept for backwards compatibility and code brevity.
+  * Methods for accessing raw pointers for boxed classes have been moved into a common `Boxed` trait.
+    Additionally, `from_raw_ptr()` is now `from_raw()`, `as_raw()` is now returning `*const c_void` (as
+    opposed to `mut`) and new methods have been added: `as_raw_mut()`, `into_raw()`. This applies to all
+    structs that are allocated by C++ side (e.g. Mat), `Ptr<T>` and `Vector<T>`.
+  * `TermCriteria` is now a simple class so you can write and read its properties directly without using
+    accessor methods, APIs involving this class have also been updated.
+  * C++ operators * (multiplication, dereferencing), / (division), + (addition) and - (subtraction) are now
+    also exposed to Rust under function names `mul_*`/`try_deref`, `div_*`, `add_*` and `sub_*`.
+  
+
 * 0.35.0
   * Add beta-level support for doing OpenCV library discovery using cmake, which is now a recommended method
     by the upstream.

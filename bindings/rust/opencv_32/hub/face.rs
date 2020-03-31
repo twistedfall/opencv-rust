@@ -17,8 +17,8 @@ pub mod prelude {
 /// ## C++ default parameters
 /// * num_bands: 8
 /// * num_rotations: 12
-pub fn create_bif(num_bands: i32, num_rotations: i32) -> Result<types::PtrOfBIF> {
-	unsafe { sys::cv_face_createBIF_int_int(num_bands, num_rotations) }.into_result().map(|ptr| types::PtrOfBIF { ptr })
+pub fn create_bif(num_bands: i32, num_rotations: i32) -> Result<core::Ptr::<dyn crate::face::BIF>> {
+	unsafe { sys::cv_face_createBIF_int_int(num_bands, num_rotations) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::face::BIF>::from_raw(ptr) })
 }
 
 /// ## Parameters
@@ -53,8 +53,8 @@ pub fn create_bif(num_bands: i32, num_rotations: i32) -> Result<types::PtrOfBIF>
 /// ## C++ default parameters
 /// * num_components: 0
 /// * threshold: DBL_MAX
-pub fn create_eigen_face_recognizer(num_components: i32, threshold: f64) -> Result<types::PtrOfBasicFaceRecognizer> {
-	unsafe { sys::cv_face_createEigenFaceRecognizer_int_double(num_components, threshold) }.into_result().map(|ptr| types::PtrOfBasicFaceRecognizer { ptr })
+pub fn create_eigen_face_recognizer(num_components: i32, threshold: f64) -> Result<core::Ptr::<dyn crate::face::BasicFaceRecognizer>> {
+	unsafe { sys::cv_face_createEigenFaceRecognizer_int_double(num_components, threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::face::BasicFaceRecognizer>::from_raw(ptr) })
 }
 
 /// ## Parameters
@@ -90,8 +90,8 @@ pub fn create_eigen_face_recognizer(num_components: i32, threshold: f64) -> Resu
 /// ## C++ default parameters
 /// * num_components: 0
 /// * threshold: DBL_MAX
-pub fn create_fisher_face_recognizer(num_components: i32, threshold: f64) -> Result<types::PtrOfBasicFaceRecognizer> {
-	unsafe { sys::cv_face_createFisherFaceRecognizer_int_double(num_components, threshold) }.into_result().map(|ptr| types::PtrOfBasicFaceRecognizer { ptr })
+pub fn create_fisher_face_recognizer(num_components: i32, threshold: f64) -> Result<core::Ptr::<dyn crate::face::BasicFaceRecognizer>> {
+	unsafe { sys::cv_face_createFisherFaceRecognizer_int_double(num_components, threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::face::BasicFaceRecognizer>::from_raw(ptr) })
 }
 
 /// ## Parameters
@@ -132,15 +132,17 @@ pub fn create_fisher_face_recognizer(num_components: i32, threshold: f64) -> Res
 /// * grid_x: 8
 /// * grid_y: 8
 /// * threshold: DBL_MAX
-pub fn create_lbph_face_recognizer(radius: i32, neighbors: i32, grid_x: i32, grid_y: i32, threshold: f64) -> Result<types::PtrOfLBPHFaceRecognizer> {
-	unsafe { sys::cv_face_createLBPHFaceRecognizer_int_int_int_int_double(radius, neighbors, grid_x, grid_y, threshold) }.into_result().map(|ptr| types::PtrOfLBPHFaceRecognizer { ptr })
+pub fn create_lbph_face_recognizer(radius: i32, neighbors: i32, grid_x: i32, grid_y: i32, threshold: f64) -> Result<core::Ptr::<dyn crate::face::LBPHFaceRecognizer>> {
+	unsafe { sys::cv_face_createLBPHFaceRecognizer_int_int_int_int_double(radius, neighbors, grid_x, grid_y, threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::face::LBPHFaceRecognizer>::from_raw(ptr) })
 }
 
 /// Implementation of bio-inspired features (BIF) from the paper:
 /// Guo, Guodong, et al. "Human age estimation using bio-inspired features."
 /// Computer Vision and Pattern Recognition, 2009. CVPR 2009.
 pub trait BIF: core::AlgorithmTrait {
-	fn as_raw_BIF(&self) -> *mut c_void;
+	fn as_raw_BIF(&self) -> *const c_void;
+	fn as_raw_mut_BIF(&mut self) -> *mut c_void;
+
 	/// ## Returns
 	/// The number of filter bands used for computing BIF.
 	fn get_num_bands(&self) -> Result<i32> {
@@ -166,7 +168,9 @@ pub trait BIF: core::AlgorithmTrait {
 }
 
 pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
-	fn as_raw_BasicFaceRecognizer(&self) -> *mut c_void;
+	fn as_raw_BasicFaceRecognizer(&self) -> *const c_void;
+	fn as_raw_mut_BasicFaceRecognizer(&mut self) -> *mut c_void;
+
 	/// ## See also
 	/// setNumComponents
 	fn get_num_components(&self) -> Result<i32> {
@@ -176,7 +180,7 @@ pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 	/// ## See also
 	/// setNumComponents getNumComponents
 	fn set_num_components(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_setNumComponents_int(self.as_raw_BasicFaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_BasicFaceRecognizer_setNumComponents_int(self.as_raw_mut_BasicFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
@@ -188,27 +192,27 @@ pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 	/// ## See also
 	/// setThreshold getThreshold
 	fn set_threshold(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_setThreshold_double(self.as_raw_BasicFaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_BasicFaceRecognizer_setThreshold_double(self.as_raw_mut_BasicFaceRecognizer(), val) }.into_result()
 	}
 	
-	fn get_projections(&self) -> Result<types::VectorOfMat> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_getProjections_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
+	fn get_projections(&self) -> Result<core::Vector::<core::Mat>> {
+		unsafe { sys::cv_face_BasicFaceRecognizer_getProjections_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Mat>::from_raw(ptr) })
 	}
 	
 	fn get_labels(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_getLabels_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_face_BasicFaceRecognizer_getLabels_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_eigen_values(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_getEigenValues_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_face_BasicFaceRecognizer_getEigenValues_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_eigen_vectors(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_getEigenVectors_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_face_BasicFaceRecognizer_getEigenVectors_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_mean(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_face_BasicFaceRecognizer_getMean_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_face_BasicFaceRecognizer_getMean_const(self.as_raw_BasicFaceRecognizer()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 }
@@ -315,7 +319,9 @@ pub trait BasicFaceRecognizer: crate::face::FaceRecognizer {
 /// ```
 /// 
 pub trait FaceRecognizer: core::AlgorithmTrait {
-	fn as_raw_FaceRecognizer(&self) -> *mut c_void;
+	fn as_raw_FaceRecognizer(&self) -> *const c_void;
+	fn as_raw_mut_FaceRecognizer(&mut self) -> *mut c_void;
+
 	/// Trains a FaceRecognizer with given data and associated labels.
 	/// 
 	/// ## Parameters
@@ -369,7 +375,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	fn train(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(labels);
-		unsafe { sys::cv_face_FaceRecognizer_train_const__InputArrayX_const__InputArrayX(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_train_const__InputArrayX_const__InputArrayX(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Updates a FaceRecognizer with given data and associated labels.
@@ -425,7 +431,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	fn update(&mut self, src: &dyn core::ToInputArray, labels: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(src);
 		input_array_arg!(labels);
-		unsafe { sys::cv_face_FaceRecognizer_update_const__InputArrayX_const__InputArrayX(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_update_const__InputArrayX_const__InputArrayX(self.as_raw_mut_FaceRecognizer(), src.as_raw__InputArray(), labels.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// - if implemented - send all result of prediction to collector that can be used for somehow custom result handling
@@ -491,9 +497,9 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// 
 	/// To implement this method u just have to do same internal cycle as in predict(InputArray src, CV_OUT int &label, CV_OUT double &confidence) but
 	/// not try to get "best@ result, just resend it to caller side with given collector
-	fn predict_collect(&self, src: &dyn core::ToInputArray, collector: types::PtrOfPredictCollector) -> Result<()> {
+	fn predict_collect(&self, src: &dyn core::ToInputArray, mut collector: core::Ptr::<dyn crate::face::PredictCollector>) -> Result<()> {
 		input_array_arg!(src);
-		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayX_Ptr_PredictCollector_(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_PtrOfPredictCollector()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_predict_const_const__InputArrayX_Ptr_PredictCollector_(self.as_raw_FaceRecognizer(), src.as_raw__InputArray(), collector.as_raw_mut_PtrOfPredictCollector()) }.into_result()
 	}
 	
 	/// Saves a FaceRecognizer and its model state.
@@ -521,7 +527,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// FaceRecognizer::load(const String& filename), to ease saving a model.
 	fn load(&mut self, filename: &str) -> Result<()> {
 		string_arg!(filename);
-		unsafe { sys::cv_face_FaceRecognizer_load_const_StringX(self.as_raw_FaceRecognizer(), filename.as_ptr()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_load_const_StringX(self.as_raw_mut_FaceRecognizer(), filename.as_ptr()) }.into_result()
 	}
 	
 	/// Saves a FaceRecognizer and its model state.
@@ -542,7 +548,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	///    Saves this model to a given FileStorage.
 	/// * fs: The FileStorage to store this FaceRecognizer to.
 	fn save_1(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_face_FaceRecognizer_save_const_FileStorageX(self.as_raw_FaceRecognizer(), fs.as_raw_FileStorage()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_save_const_FileStorageX(self.as_raw_FaceRecognizer(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 	/// Loads a FaceRecognizer and its model state.
@@ -554,7 +560,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// 
 	/// ## Overloaded parameters
 	fn load_1(&mut self, fs: &core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_face_FaceRecognizer_load_const_FileStorageX(self.as_raw_FaceRecognizer(), fs.as_raw_FileStorage()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_load_const_FileStorageX(self.as_raw_mut_FaceRecognizer(), fs.as_raw_FileStorage()) }.into_result()
 	}
 	
 	/// Sets string info for the specified model's label.
@@ -562,7 +568,7 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// The string info is replaced by the provided value if it was set before for the specified label.
 	fn set_label_info(&mut self, label: i32, str_info: &str) -> Result<()> {
 		string_arg!(str_info);
-		unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringX(self.as_raw_FaceRecognizer(), label, str_info.as_ptr()) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_setLabelInfo_int_const_StringX(self.as_raw_mut_FaceRecognizer(), label, str_info.as_ptr()) }.into_result()
 	}
 	
 	/// Gets string information by label.
@@ -577,9 +583,9 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	/// 
 	/// The function searches for the labels containing the specified sub-string in the associated string
 	/// info.
-	fn get_labels_by_string(&self, str: &str) -> Result<types::VectorOfi32> {
+	fn get_labels_by_string(&self, str: &str) -> Result<core::Vector::<i32>> {
 		string_arg!(str);
-		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringX(self.as_raw_FaceRecognizer(), str.as_ptr()) }.into_result().map(|ptr| types::VectorOfi32 { ptr })
+		unsafe { sys::cv_face_FaceRecognizer_getLabelsByString_const_const_StringX(self.as_raw_FaceRecognizer(), str.as_ptr()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
 	}
 	
 	/// threshold parameter accessor - required for default BestMinDist collector
@@ -589,13 +595,15 @@ pub trait FaceRecognizer: core::AlgorithmTrait {
 	
 	/// Sets threshold of model
 	fn set_threshold(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_face_FaceRecognizer_setThreshold_double(self.as_raw_FaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_FaceRecognizer_setThreshold_double(self.as_raw_mut_FaceRecognizer(), val) }.into_result()
 	}
 	
 }
 
 pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
-	fn as_raw_LBPHFaceRecognizer(&self) -> *mut c_void;
+	fn as_raw_LBPHFaceRecognizer(&self) -> *const c_void;
+	fn as_raw_mut_LBPHFaceRecognizer(&mut self) -> *mut c_void;
+
 	/// ## See also
 	/// setGridX
 	fn get_grid_x(&self) -> Result<i32> {
@@ -605,7 +613,7 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	/// ## See also
 	/// setGridX getGridX
 	fn set_grid_x(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridX_int(self.as_raw_LBPHFaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridX_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
@@ -617,7 +625,7 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	/// ## See also
 	/// setGridY getGridY
 	fn set_grid_y(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridY_int(self.as_raw_LBPHFaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setGridY_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
@@ -629,7 +637,7 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	/// ## See also
 	/// setRadius getRadius
 	fn set_radius(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setRadius_int(self.as_raw_LBPHFaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setRadius_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
@@ -641,7 +649,7 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	/// ## See also
 	/// setNeighbors getNeighbors
 	fn set_neighbors(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setNeighbors_int(self.as_raw_LBPHFaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setNeighbors_int(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
 	/// ## See also
@@ -653,27 +661,29 @@ pub trait LBPHFaceRecognizer: crate::face::FaceRecognizer {
 	/// ## See also
 	/// setThreshold getThreshold
 	fn set_threshold(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_setThreshold_double(self.as_raw_LBPHFaceRecognizer(), val) }.into_result()
+		unsafe { sys::cv_face_LBPHFaceRecognizer_setThreshold_double(self.as_raw_mut_LBPHFaceRecognizer(), val) }.into_result()
 	}
 	
-	fn get_histograms(&self) -> Result<types::VectorOfMat> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_getHistograms_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|ptr| types::VectorOfMat { ptr })
+	fn get_histograms(&self) -> Result<core::Vector::<core::Mat>> {
+		unsafe { sys::cv_face_LBPHFaceRecognizer_getHistograms_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Mat>::from_raw(ptr) })
 	}
 	
 	fn get_labels(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_face_LBPHFaceRecognizer_getLabels_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_face_LBPHFaceRecognizer_getLabels_const(self.as_raw_LBPHFaceRecognizer()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 }
 
 /// Abstract base class for all strategies of prediction result handling
 pub trait PredictCollector {
-	fn as_raw_PredictCollector(&self) -> *mut c_void;
+	fn as_raw_PredictCollector(&self) -> *const c_void;
+	fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void;
+
 	/// Interface method called by face recognizer before results processing
 	/// ## Parameters
 	/// * size: total size of prediction evaluation that recognizer could perform
 	fn init(&mut self, size: size_t) -> Result<()> {
-		unsafe { sys::cv_face_PredictCollector_init_size_t(self.as_raw_PredictCollector(), size) }.into_result()
+		unsafe { sys::cv_face_PredictCollector_init_size_t(self.as_raw_mut_PredictCollector(), size) }.into_result()
 	}
 	
 	/// Interface method called by face recognizer for each result
@@ -681,7 +691,7 @@ pub trait PredictCollector {
 	/// * label: current prediction label
 	/// * dist: current prediction distance (confidence)
 	fn collect(&mut self, label: i32, dist: f64) -> Result<bool> {
-		unsafe { sys::cv_face_PredictCollector_collect_int_double(self.as_raw_PredictCollector(), label, dist) }.into_result()
+		unsafe { sys::cv_face_PredictCollector_collect_int_double(self.as_raw_mut_PredictCollector(), label, dist) }.into_result()
 	}
 	
 }
@@ -690,15 +700,17 @@ pub trait PredictCollector {
 /// 
 /// Trace minimal distance with treshhold checking (that is default behavior for most predict logic)
 pub trait StandardCollectorTrait: crate::face::PredictCollector {
-	fn as_raw_StandardCollector(&self) -> *mut c_void;
+	fn as_raw_StandardCollector(&self) -> *const c_void;
+	fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void;
+
 	/// overloaded interface method
 	fn init(&mut self, size: size_t) -> Result<()> {
-		unsafe { sys::cv_face_StandardCollector_init_size_t(self.as_raw_StandardCollector(), size) }.into_result()
+		unsafe { sys::cv_face_StandardCollector_init_size_t(self.as_raw_mut_StandardCollector(), size) }.into_result()
 	}
 	
 	/// overloaded interface method
 	fn collect(&mut self, label: i32, dist: f64) -> Result<bool> {
-		unsafe { sys::cv_face_StandardCollector_collect_int_double(self.as_raw_StandardCollector(), label, dist) }.into_result()
+		unsafe { sys::cv_face_StandardCollector_collect_int_double(self.as_raw_mut_StandardCollector(), label, dist) }.into_result()
 	}
 	
 	/// Returns label with minimal distance
@@ -717,32 +729,33 @@ pub trait StandardCollectorTrait: crate::face::PredictCollector {
 /// 
 /// Trace minimal distance with treshhold checking (that is default behavior for most predict logic)
 pub struct StandardCollector {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { StandardCollector }
 
 impl Drop for StandardCollector {
 	fn drop(&mut self) {
 		extern "C" { fn cv_StandardCollector_delete(instance: *mut c_void); }
-		unsafe { cv_StandardCollector_delete(self.as_raw_StandardCollector()) };
+		unsafe { cv_StandardCollector_delete(self.as_raw_mut_StandardCollector()) };
 	}
 }
 
 impl StandardCollector {
-	pub fn as_raw_StandardCollector(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for StandardCollector {}
 
 impl crate::face::PredictCollector for StandardCollector {
-	fn as_raw_PredictCollector(&self) -> *mut c_void { self.ptr }
+	fn as_raw_PredictCollector(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_PredictCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::face::StandardCollectorTrait for StandardCollector {
-	fn as_raw_StandardCollector(&self) -> *mut c_void { self.ptr }
+	fn as_raw_StandardCollector(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_StandardCollector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl StandardCollector {
@@ -753,7 +766,7 @@ impl StandardCollector {
 	/// ## C++ default parameters
 	/// * threshold_: DBL_MAX
 	pub fn new(threshold_: f64) -> Result<crate::face::StandardCollector> {
-		unsafe { sys::cv_face_StandardCollector_StandardCollector_double(threshold_) }.into_result().map(|ptr| crate::face::StandardCollector { ptr })
+		unsafe { sys::cv_face_StandardCollector_StandardCollector_double(threshold_) }.into_result().map(|ptr| unsafe { crate::face::StandardCollector::from_raw(ptr) })
 	}
 	
 	/// Static constructor
@@ -762,8 +775,8 @@ impl StandardCollector {
 	/// 
 	/// ## C++ default parameters
 	/// * threshold: DBL_MAX
-	pub fn create(threshold: f64) -> Result<types::PtrOfStandardCollector> {
-		unsafe { sys::cv_face_StandardCollector_create_double(threshold) }.into_result().map(|ptr| types::PtrOfStandardCollector { ptr })
+	pub fn create(threshold: f64) -> Result<core::Ptr::<crate::face::StandardCollector>> {
+		unsafe { sys::cv_face_StandardCollector_create_double(threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::face::StandardCollector>::from_raw(ptr) })
 	}
 	
 }

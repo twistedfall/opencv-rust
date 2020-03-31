@@ -561,6 +561,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
+	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_operatorA_const_const_BlobShapeX(const cv::dnn::BlobShape* instance, const cv::dnn::BlobShape* r) {
+		try {
+			cv::dnn::BlobShape ret = instance->operator+(*r);
+			return Ok(new cv::dnn::BlobShape(ret));
+		} OCVRS_CATCH(Result<cv::dnn::BlobShape*>)
+	}
+	
 	Result<cv::dnn::BlobShape*> cv_dnn_BlobShape_like_const_MatX(const cv::Mat* m) {
 		try {
 			cv::dnn::BlobShape ret = cv::dnn::BlobShape::like(*m);

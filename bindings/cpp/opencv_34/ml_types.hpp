@@ -13,7 +13,7 @@ template struct Result<cv::Ptr<cv::ml::SVMSGD>*>;
 template struct Result<cv::Ptr<cv::ml::SVM::Kernel>*>;
 template struct Result<cv::Ptr<cv::ml::SVM>*>;
 template struct Result<cv::Ptr<cv::ml::TrainData>*>;
-template struct Result<cv::TermCriteria*>;
+template struct Result<cv::TermCriteria>;
 template struct Result<cv::Vec<double, 2>>;
 template struct Result<cv::ml::DTrees::Node*>;
 template struct Result<cv::ml::DTrees::Split*>;
@@ -180,23 +180,10 @@ extern "C" {
 	}
 
 	Result<cv::ml::DTrees::Node*> cv_VectorOfDTrees_Node_get(const std::vector<cv::ml::DTrees::Node>* instance, size_t index) {
-		try {
-			return Ok<cv::ml::DTrees::Node*>(new cv::ml::DTrees::Node(instance->at(index)));
-		} VEC_CATCH(Result<cv::ml::DTrees::Node*>)
-	}
-
-	Result<cv::ml::DTrees::Node*> cv_VectorOfDTrees_Node_get_unchecked(const std::vector<cv::ml::DTrees::Node>* instance, size_t index) {
 		return Ok<cv::ml::DTrees::Node*>(new cv::ml::DTrees::Node((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfDTrees_Node_set(std::vector<cv::ml::DTrees::Node>* instance, size_t index, cv::ml::DTrees::Node* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfDTrees_Node_set_unchecked(std::vector<cv::ml::DTrees::Node>* instance, size_t index, cv::ml::DTrees::Node* val) {
+	void cv_VectorOfDTrees_Node_set(std::vector<cv::ml::DTrees::Node>* instance, size_t index, cv::ml::DTrees::Node* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -253,23 +240,10 @@ extern "C" {
 	}
 
 	Result<cv::ml::DTrees::Split*> cv_VectorOfDTrees_Split_get(const std::vector<cv::ml::DTrees::Split>* instance, size_t index) {
-		try {
-			return Ok<cv::ml::DTrees::Split*>(new cv::ml::DTrees::Split(instance->at(index)));
-		} VEC_CATCH(Result<cv::ml::DTrees::Split*>)
-	}
-
-	Result<cv::ml::DTrees::Split*> cv_VectorOfDTrees_Split_get_unchecked(const std::vector<cv::ml::DTrees::Split>* instance, size_t index) {
 		return Ok<cv::ml::DTrees::Split*>(new cv::ml::DTrees::Split((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfDTrees_Split_set(std::vector<cv::ml::DTrees::Split>* instance, size_t index, cv::ml::DTrees::Split* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfDTrees_Split_set_unchecked(std::vector<cv::ml::DTrees::Split>* instance, size_t index, cv::ml::DTrees::Split* val) {
+	void cv_VectorOfDTrees_Split_set(std::vector<cv::ml::DTrees::Split>* instance, size_t index, cv::ml::DTrees::Split* val) {
 		(*instance)[index] = *val;
 	}
 

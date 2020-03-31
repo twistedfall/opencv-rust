@@ -14,8 +14,8 @@ pub mod prelude {
 /// ## C++ default parameters
 /// * initialization_frames: 120
 /// * decision_threshold: 0.8
-pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_threshold: f64) -> Result<types::PtrOfBackgroundSubtractorGMG> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold) }.into_result().map(|ptr| types::PtrOfBackgroundSubtractorGMG { ptr })
+pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_threshold: f64) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>> {
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorGMG_int_double(initialization_frames, decision_threshold) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorGMG>::from_raw(ptr) })
 }
 
 /// Creates mixture-of-gaussian background subtractor
@@ -32,8 +32,8 @@ pub fn create_background_subtractor_gmg(initialization_frames: i32, decision_thr
 /// * nmixtures: 5
 /// * background_ratio: 0.7
 /// * noise_sigma: 0
-pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background_ratio: f64, noise_sigma: f64) -> Result<types::PtrOfBackgroundSubtractorMOG> {
-	unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma) }.into_result().map(|ptr| types::PtrOfBackgroundSubtractorMOG { ptr })
+pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background_ratio: f64, noise_sigma: f64) -> Result<core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>> {
+	unsafe { sys::cv_bgsegm_createBackgroundSubtractorMOG_int_int_double_double(history, nmixtures, background_ratio, noise_sigma) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::bgsegm::BackgroundSubtractorMOG>::from_raw(ptr) })
 }
 
 /// Background Subtractor module based on the algorithm given in [Gold2012](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Gold2012) .
@@ -44,7 +44,9 @@ pub fn create_background_subtractor_mog(history: i32, nmixtures: i32, background
 /// Variable-Lighting Conditions for a Responsive Audio Art Installation," A. Godbehere,
 /// A. Matsukawa, K. Goldberg, American Control Conference, Montreal, June 2012.
 pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
-	fn as_raw_BackgroundSubtractorGMG(&self) -> *mut c_void;
+	fn as_raw_BackgroundSubtractorGMG(&self) -> *const c_void;
+	fn as_raw_mut_BackgroundSubtractorGMG(&mut self) -> *mut c_void;
+
 	/// Returns total number of distinct colors to maintain in histogram.
 	fn get_max_features(&self) -> Result<i32> {
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_getMaxFeatures_const(self.as_raw_BackgroundSubtractorGMG()) }.into_result()
@@ -52,7 +54,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets total number of distinct colors to maintain in histogram.
 	fn set_max_features(&mut self, max_features: i32) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMaxFeatures_int(self.as_raw_BackgroundSubtractorGMG(), max_features) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMaxFeatures_int(self.as_raw_mut_BackgroundSubtractorGMG(), max_features) }.into_result()
 	}
 	
 	/// Returns the learning rate of the algorithm.
@@ -65,7 +67,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the learning rate of the algorithm.
 	fn set_default_learning_rate(&mut self, lr: f64) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setDefaultLearningRate_double(self.as_raw_BackgroundSubtractorGMG(), lr) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setDefaultLearningRate_double(self.as_raw_mut_BackgroundSubtractorGMG(), lr) }.into_result()
 	}
 	
 	/// Returns the number of frames used to initialize background model.
@@ -75,7 +77,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the number of frames used to initialize background model.
 	fn set_num_frames(&mut self, nframes: i32) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setNumFrames_int(self.as_raw_BackgroundSubtractorGMG(), nframes) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setNumFrames_int(self.as_raw_mut_BackgroundSubtractorGMG(), nframes) }.into_result()
 	}
 	
 	/// Returns the parameter used for quantization of color-space.
@@ -87,7 +89,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the parameter used for quantization of color-space
 	fn set_quantization_levels(&mut self, nlevels: i32) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setQuantizationLevels_int(self.as_raw_BackgroundSubtractorGMG(), nlevels) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setQuantizationLevels_int(self.as_raw_mut_BackgroundSubtractorGMG(), nlevels) }.into_result()
 	}
 	
 	/// Returns the prior probability that each individual pixel is a background pixel.
@@ -97,7 +99,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the prior probability that each individual pixel is a background pixel.
 	fn set_background_prior(&mut self, bgprior: f64) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setBackgroundPrior_double(self.as_raw_BackgroundSubtractorGMG(), bgprior) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setBackgroundPrior_double(self.as_raw_mut_BackgroundSubtractorGMG(), bgprior) }.into_result()
 	}
 	
 	/// Returns the kernel radius used for morphological operations
@@ -107,7 +109,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the kernel radius used for morphological operations
 	fn set_smoothing_radius(&mut self, radius: i32) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setSmoothingRadius_int(self.as_raw_BackgroundSubtractorGMG(), radius) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setSmoothingRadius_int(self.as_raw_mut_BackgroundSubtractorGMG(), radius) }.into_result()
 	}
 	
 	/// Returns the value of decision threshold.
@@ -119,7 +121,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the value of decision threshold.
 	fn set_decision_threshold(&mut self, thresh: f64) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setDecisionThreshold_double(self.as_raw_BackgroundSubtractorGMG(), thresh) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setDecisionThreshold_double(self.as_raw_mut_BackgroundSubtractorGMG(), thresh) }.into_result()
 	}
 	
 	/// Returns the status of background model update
@@ -129,7 +131,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the status of background model update
 	fn set_update_background_model(&mut self, update: bool) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setUpdateBackgroundModel_bool(self.as_raw_BackgroundSubtractorGMG(), update) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setUpdateBackgroundModel_bool(self.as_raw_mut_BackgroundSubtractorGMG(), update) }.into_result()
 	}
 	
 	/// Returns the minimum value taken on by pixels in image sequence. Usually 0.
@@ -139,7 +141,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the minimum value taken on by pixels in image sequence.
 	fn set_min_val(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMinVal_double(self.as_raw_BackgroundSubtractorGMG(), val) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMinVal_double(self.as_raw_mut_BackgroundSubtractorGMG(), val) }.into_result()
 	}
 	
 	/// Returns the maximum value taken on by pixels in image sequence. e.g. 1.0 or 255.
@@ -149,7 +151,7 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 	
 	/// Sets the maximum value taken on by pixels in image sequence.
 	fn set_max_val(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMaxVal_double(self.as_raw_BackgroundSubtractorGMG(), val) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorGMG_setMaxVal_double(self.as_raw_mut_BackgroundSubtractorGMG(), val) }.into_result()
 	}
 	
 }
@@ -158,13 +160,15 @@ pub trait BackgroundSubtractorGMG: crate::video::BackgroundSubtractor {
 /// 
 /// The class implements the algorithm described in [KB2001](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_KB2001) .
 pub trait BackgroundSubtractorMOG: crate::video::BackgroundSubtractor {
-	fn as_raw_BackgroundSubtractorMOG(&self) -> *mut c_void;
+	fn as_raw_BackgroundSubtractorMOG(&self) -> *const c_void;
+	fn as_raw_mut_BackgroundSubtractorMOG(&mut self) -> *mut c_void;
+
 	fn get_history(&self) -> Result<i32> {
 		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_getHistory_const(self.as_raw_BackgroundSubtractorMOG()) }.into_result()
 	}
 	
 	fn set_history(&mut self, nframes: i32) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setHistory_int(self.as_raw_BackgroundSubtractorMOG(), nframes) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setHistory_int(self.as_raw_mut_BackgroundSubtractorMOG(), nframes) }.into_result()
 	}
 	
 	fn get_n_mixtures(&self) -> Result<i32> {
@@ -172,7 +176,7 @@ pub trait BackgroundSubtractorMOG: crate::video::BackgroundSubtractor {
 	}
 	
 	fn set_n_mixtures(&mut self, nmix: i32) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setNMixtures_int(self.as_raw_BackgroundSubtractorMOG(), nmix) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setNMixtures_int(self.as_raw_mut_BackgroundSubtractorMOG(), nmix) }.into_result()
 	}
 	
 	fn get_background_ratio(&self) -> Result<f64> {
@@ -180,7 +184,7 @@ pub trait BackgroundSubtractorMOG: crate::video::BackgroundSubtractor {
 	}
 	
 	fn set_background_ratio(&mut self, background_ratio: f64) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setBackgroundRatio_double(self.as_raw_BackgroundSubtractorMOG(), background_ratio) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setBackgroundRatio_double(self.as_raw_mut_BackgroundSubtractorMOG(), background_ratio) }.into_result()
 	}
 	
 	fn get_noise_sigma(&self) -> Result<f64> {
@@ -188,7 +192,7 @@ pub trait BackgroundSubtractorMOG: crate::video::BackgroundSubtractor {
 	}
 	
 	fn set_noise_sigma(&mut self, noise_sigma: f64) -> Result<()> {
-		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setNoiseSigma_double(self.as_raw_BackgroundSubtractorMOG(), noise_sigma) }.into_result()
+		unsafe { sys::cv_bgsegm_BackgroundSubtractorMOG_setNoiseSigma_double(self.as_raw_mut_BackgroundSubtractorMOG(), noise_sigma) }.into_result()
 	}
 	
 }

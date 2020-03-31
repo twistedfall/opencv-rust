@@ -570,7 +570,7 @@ pub fn display_status_bar(winname: &str, text: &str, delayms: i32) -> Result<()>
 /// * spacing: 0
 pub fn font_qt(name_font: &str, point_size: i32, color: core::Scalar, weight: i32, style: i32, spacing: i32) -> Result<crate::highgui::QtFont> {
 	string_arg!(name_font);
-	unsafe { sys::cv_fontQt_const_StringX_int_Scalar_int_int_int(name_font.as_ptr(), point_size, &color, weight, style, spacing) }.into_result().map(|ptr| crate::highgui::QtFont { ptr })
+	unsafe { sys::cv_fontQt_const_StringX_int_Scalar_int_int_int(name_font.as_ptr(), point_size, &color, weight, style, spacing) }.into_result().map(|ptr| unsafe { crate::highgui::QtFont::from_raw(ptr) })
 }
 
 /// Gets the mouse-wheel motion delta, when handling mouse-wheel events cv::EVENT_MOUSEWHEEL and
@@ -868,10 +868,10 @@ pub fn select_roi(img: &dyn core::ToInputArray, show_crosshair: bool, from_cente
 /// ## C++ default parameters
 /// * show_crosshair: true
 /// * from_center: false
-pub fn select_rois(window_name: &str, img: &dyn core::ToInputArray, bounding_boxes: &mut types::VectorOfRect, show_crosshair: bool, from_center: bool) -> Result<()> {
+pub fn select_rois(window_name: &str, img: &dyn core::ToInputArray, bounding_boxes: &mut core::Vector::<core::Rect>, show_crosshair: bool, from_center: bool) -> Result<()> {
 	string_arg!(window_name);
 	input_array_arg!(img);
-	unsafe { sys::cv_selectROIs_const_StringX_const__InputArrayX_vector_Rect_X_bool_bool(window_name.as_ptr(), img.as_raw__InputArray(), bounding_boxes.as_raw_VectorOfRect(), show_crosshair, from_center) }.into_result()
+	unsafe { sys::cv_selectROIs_const_StringX_const__InputArrayX_vector_Rect_X_bool_bool(window_name.as_ptr(), img.as_raw__InputArray(), bounding_boxes.as_raw_mut_VectorOfRect(), show_crosshair, from_center) }.into_result()
 }
 
 /// @example samples/cpp/create_mask.cpp
@@ -1103,7 +1103,9 @@ pub fn wait_key(delay: i32) -> Result<i32> {
 
 /// QtFont available only for Qt. See cv::fontQt
 pub trait QtFontTrait {
-	fn as_raw_QtFont(&self) -> *mut c_void;
+	fn as_raw_QtFont(&self) -> *const c_void;
+	fn as_raw_mut_QtFont(&mut self) -> *mut c_void;
+
 	/// Name of the font
 	fn name_font(&self) -> String {
 		unsafe { sys::cv_QtFont_nameFont_const(self.as_raw_QtFont()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) }).expect("Infallible function failed: name_font")
@@ -1116,7 +1118,7 @@ pub trait QtFontTrait {
 	
 	/// Color of the font. Scalar(blue_component, green_component, red_component[, alpha_component])
 	fn set_color(&mut self, val: core::Scalar) -> () {
-		unsafe { sys::cv_QtFont_setColor_Scalar(self.as_raw_QtFont(), &val) }.into_result().expect("Infallible function failed: set_color")
+		unsafe { sys::cv_QtFont_setColor_Scalar(self.as_raw_mut_QtFont(), &val) }.into_result().expect("Infallible function failed: set_color")
 	}
 	
 	/// See cv::QtFontStyles
@@ -1126,7 +1128,7 @@ pub trait QtFontTrait {
 	
 	/// See cv::QtFontStyles
 	fn set_font_face(&mut self, val: i32) -> () {
-		unsafe { sys::cv_QtFont_setFont_face_int(self.as_raw_QtFont(), val) }.into_result().expect("Infallible function failed: set_font_face")
+		unsafe { sys::cv_QtFont_setFont_face_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_font_face")
 	}
 	
 	/// font data and metrics
@@ -1147,7 +1149,7 @@ pub trait QtFontTrait {
 	}
 	
 	fn set_hscale(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setHscale_float(self.as_raw_QtFont(), val) }.into_result().expect("Infallible function failed: set_hscale")
+		unsafe { sys::cv_QtFont_setHscale_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_hscale")
 	}
 	
 	fn vscale(&self) -> f32 {
@@ -1155,7 +1157,7 @@ pub trait QtFontTrait {
 	}
 	
 	fn set_vscale(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setVscale_float(self.as_raw_QtFont(), val) }.into_result().expect("Infallible function failed: set_vscale")
+		unsafe { sys::cv_QtFont_setVscale_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_vscale")
 	}
 	
 	/// slope coefficient: 0 - normal, >0 - italic
@@ -1165,7 +1167,7 @@ pub trait QtFontTrait {
 	
 	/// slope coefficient: 0 - normal, >0 - italic
 	fn set_shear(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setShear_float(self.as_raw_QtFont(), val) }.into_result().expect("Infallible function failed: set_shear")
+		unsafe { sys::cv_QtFont_setShear_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_shear")
 	}
 	
 	/// See cv::QtFontWeights
@@ -1175,7 +1177,7 @@ pub trait QtFontTrait {
 	
 	/// See cv::QtFontWeights
 	fn set_thickness(&mut self, val: i32) -> () {
-		unsafe { sys::cv_QtFont_setThickness_int(self.as_raw_QtFont(), val) }.into_result().expect("Infallible function failed: set_thickness")
+		unsafe { sys::cv_QtFont_setThickness_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_thickness")
 	}
 	
 	/// horizontal interval between letters
@@ -1185,7 +1187,7 @@ pub trait QtFontTrait {
 	
 	/// horizontal interval between letters
 	fn set_dx(&mut self, val: f32) -> () {
-		unsafe { sys::cv_QtFont_setDx_float(self.as_raw_QtFont(), val) }.into_result().expect("Infallible function failed: set_dx")
+		unsafe { sys::cv_QtFont_setDx_float(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_dx")
 	}
 	
 	/// PointSize
@@ -1195,35 +1197,35 @@ pub trait QtFontTrait {
 	
 	/// PointSize
 	fn set_line_type(&mut self, val: i32) -> () {
-		unsafe { sys::cv_QtFont_setLine_type_int(self.as_raw_QtFont(), val) }.into_result().expect("Infallible function failed: set_line_type")
+		unsafe { sys::cv_QtFont_setLine_type_int(self.as_raw_mut_QtFont(), val) }.into_result().expect("Infallible function failed: set_line_type")
 	}
 	
 }
 
 /// QtFont available only for Qt. See cv::fontQt
 pub struct QtFont {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { QtFont }
 
 impl Drop for QtFont {
 	fn drop(&mut self) {
 		extern "C" { fn cv_QtFont_delete(instance: *mut c_void); }
-		unsafe { cv_QtFont_delete(self.as_raw_QtFont()) };
+		unsafe { cv_QtFont_delete(self.as_raw_mut_QtFont()) };
 	}
 }
 
 impl QtFont {
-	pub fn as_raw_QtFont(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for QtFont {}
 
 impl crate::highgui::QtFontTrait for QtFont {
-	fn as_raw_QtFont(&self) -> *mut c_void { self.ptr }
+	fn as_raw_QtFont(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_QtFont(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl QtFont {

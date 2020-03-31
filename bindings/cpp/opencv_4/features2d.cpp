@@ -59,7 +59,7 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_evaluateFeatureDetector_const_MatX_const_MatX_const_MatX_vector_KeyPoint_X_vector_KeyPoint_X_floatX_intX_const_Ptr_FeatureDetector_X(const cv::Mat* img1, const cv::Mat* img2, const cv::Mat* H1to2, std::vector<cv::KeyPoint>* keypoints1, std::vector<cv::KeyPoint>* keypoints2, float* repeatability, int* correspCount, const cv::Ptr<cv::FeatureDetector>* fdetector) {
+	Result_void cv_evaluateFeatureDetector_const_MatX_const_MatX_const_MatX_vector_KeyPoint_X_vector_KeyPoint_X_floatX_intX_const_Ptr_Feature2D_X(const cv::Mat* img1, const cv::Mat* img2, const cv::Mat* H1to2, std::vector<cv::KeyPoint>* keypoints1, std::vector<cv::KeyPoint>* keypoints2, float* repeatability, int* correspCount, const cv::Ptr<cv::Feature2D>* fdetector) {
 		try {
 			cv::evaluateFeatureDetector(*img1, *img2, *H1to2, keypoints1, keypoints2, *repeatability, *correspCount, *fdetector);
 			return Ok();
@@ -282,7 +282,7 @@ extern "C" {
 	void cv_BOWImgDescriptorExtractor_delete(cv::BOWImgDescriptorExtractor* instance) {
 		delete instance;
 	}
-	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_DescriptorExtractor_X_const_Ptr_DescriptorMatcher_X(const cv::Ptr<cv::DescriptorExtractor>* dextractor, const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
+	Result<cv::BOWImgDescriptorExtractor*> cv_BOWImgDescriptorExtractor_BOWImgDescriptorExtractor_const_Ptr_Feature2D_X_const_Ptr_DescriptorMatcher_X(const cv::Ptr<cv::Feature2D>* dextractor, const cv::Ptr<cv::DescriptorMatcher>* dmatcher) {
 		try {
 			cv::BOWImgDescriptorExtractor* ret = new cv::BOWImgDescriptorExtractor(*dextractor, *dmatcher);
 			return Ok(ret);

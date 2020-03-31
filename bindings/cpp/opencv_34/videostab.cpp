@@ -489,18 +489,18 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::videostab::MotionModel>)
 	}
 	
-	Result_void cv_videostab_KeypointBasedMotionEstimator_setDetector_Ptr_FeatureDetector_(cv::videostab::KeypointBasedMotionEstimator* instance, cv::Ptr<cv::FeatureDetector>* val) {
+	Result_void cv_videostab_KeypointBasedMotionEstimator_setDetector_Ptr_Feature2D_(cv::videostab::KeypointBasedMotionEstimator* instance, cv::Ptr<cv::Feature2D>* val) {
 		try {
 			instance->setDetector(*val);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Ptr<cv::FeatureDetector>*> cv_videostab_KeypointBasedMotionEstimator_detector_const(const cv::videostab::KeypointBasedMotionEstimator* instance) {
+	Result<cv::Ptr<cv::Feature2D>*> cv_videostab_KeypointBasedMotionEstimator_detector_const(const cv::videostab::KeypointBasedMotionEstimator* instance) {
 		try {
-			cv::Ptr<cv::FeatureDetector> ret = instance->detector();
-			return Ok(new cv::Ptr<cv::FeatureDetector>(ret));
-		} OCVRS_CATCH(Result<cv::Ptr<cv::FeatureDetector>*>)
+			cv::Ptr<cv::Feature2D> ret = instance->detector();
+			return Ok(new cv::Ptr<cv::Feature2D>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::Feature2D>*>)
 	}
 	
 	Result_void cv_videostab_KeypointBasedMotionEstimator_setOpticalFlowEstimator_Ptr_ISparseOptFlowEstimator_(cv::videostab::KeypointBasedMotionEstimator* instance, cv::Ptr<cv::videostab::ISparseOptFlowEstimator>* val) {

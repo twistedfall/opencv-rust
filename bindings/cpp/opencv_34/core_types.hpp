@@ -41,7 +41,6 @@ template struct Result<cv::Point3_<int>>;
 template struct Result<cv::Point_<double>>;
 template struct Result<cv::Point_<float>>;
 template struct Result<cv::Point_<int>>;
-template struct Result<cv::Ptr<CvMemStorage>*>;
 template struct Result<cv::Ptr<cv::ConjGradSolver>*>;
 template struct Result<cv::Ptr<cv::DownhillSolver>*>;
 template struct Result<cv::Ptr<cv::FileStorage>*>;
@@ -65,7 +64,7 @@ template struct Result<cv::SparseMat*>;
 template struct Result<cv::SparseMat::Hdr*>;
 template struct Result<cv::SparseMat::Hdr**>;
 template struct Result<cv::SparseMat::Node**>;
-template struct Result<cv::TermCriteria*>;
+template struct Result<cv::TermCriteria>;
 template struct Result<cv::TickMeter*>;
 template struct Result<cv::UMatData**>;
 template struct Result<cv::UMatUsageFlags>;
@@ -143,14 +142,6 @@ extern "C" void cv_PtrOfConjGradSolver_delete(cv::Ptr<cv::ConjGradSolver>* insta
 }
 
 extern "C" cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr(cv::Ptr<cv::ConjGradSolver>* instance) {
-	return instance->get();
-}
-
-extern "C" void cv_PtrOfCvMemStorage_delete(cv::Ptr<CvMemStorage>* instance) {
-	delete instance;
-}
-
-extern "C" CvMemStorage* cv_PtrOfCvMemStorage_get_inner_ptr(cv::Ptr<CvMemStorage>* instance) {
 	return instance->get();
 }
 
@@ -252,23 +243,10 @@ extern "C" {
 	}
 
 	Result<cv::DMatch> cv_VectorOfDMatch_get(const std::vector<cv::DMatch>* instance, size_t index) {
-		try {
-			return Ok<cv::DMatch>(instance->at(index));
-		} VEC_CATCH(Result<cv::DMatch>)
-	}
-
-	Result<cv::DMatch> cv_VectorOfDMatch_get_unchecked(const std::vector<cv::DMatch>* instance, size_t index) {
 		return Ok<cv::DMatch>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfDMatch_set(std::vector<cv::DMatch>* instance, size_t index, const cv::DMatch* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfDMatch_set_unchecked(std::vector<cv::DMatch>* instance, size_t index, const cv::DMatch* val) {
+	void cv_VectorOfDMatch_set(std::vector<cv::DMatch>* instance, size_t index, const cv::DMatch* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -329,23 +307,10 @@ extern "C" {
 	}
 
 	Result<cv::KeyPoint> cv_VectorOfKeyPoint_get(const std::vector<cv::KeyPoint>* instance, size_t index) {
-		try {
-			return Ok<cv::KeyPoint>(instance->at(index));
-		} VEC_CATCH(Result<cv::KeyPoint>)
-	}
-
-	Result<cv::KeyPoint> cv_VectorOfKeyPoint_get_unchecked(const std::vector<cv::KeyPoint>* instance, size_t index) {
 		return Ok<cv::KeyPoint>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfKeyPoint_set(std::vector<cv::KeyPoint>* instance, size_t index, const cv::KeyPoint* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfKeyPoint_set_unchecked(std::vector<cv::KeyPoint>* instance, size_t index, const cv::KeyPoint* val) {
+	void cv_VectorOfKeyPoint_set(std::vector<cv::KeyPoint>* instance, size_t index, const cv::KeyPoint* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -406,23 +371,10 @@ extern "C" {
 	}
 
 	Result<cv::Mat*> cv_VectorOfMat_get(const std::vector<cv::Mat>* instance, size_t index) {
-		try {
-			return Ok<cv::Mat*>(new cv::Mat(instance->at(index)));
-		} VEC_CATCH(Result<cv::Mat*>)
-	}
-
-	Result<cv::Mat*> cv_VectorOfMat_get_unchecked(const std::vector<cv::Mat>* instance, size_t index) {
 		return Ok<cv::Mat*>(new cv::Mat((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfMat_set(std::vector<cv::Mat>* instance, size_t index, cv::Mat* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfMat_set_unchecked(std::vector<cv::Mat>* instance, size_t index, cv::Mat* val) {
+	void cv_VectorOfMat_set(std::vector<cv::Mat>* instance, size_t index, cv::Mat* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -479,23 +431,10 @@ extern "C" {
 	}
 
 	Result<cv::ocl::PlatformInfo*> cv_VectorOfPlatformInfo_get(const std::vector<cv::ocl::PlatformInfo>* instance, size_t index) {
-		try {
-			return Ok<cv::ocl::PlatformInfo*>(new cv::ocl::PlatformInfo(instance->at(index)));
-		} VEC_CATCH(Result<cv::ocl::PlatformInfo*>)
-	}
-
-	Result<cv::ocl::PlatformInfo*> cv_VectorOfPlatformInfo_get_unchecked(const std::vector<cv::ocl::PlatformInfo>* instance, size_t index) {
 		return Ok<cv::ocl::PlatformInfo*>(new cv::ocl::PlatformInfo((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfPlatformInfo_set(std::vector<cv::ocl::PlatformInfo>* instance, size_t index, cv::ocl::PlatformInfo* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPlatformInfo_set_unchecked(std::vector<cv::ocl::PlatformInfo>* instance, size_t index, cv::ocl::PlatformInfo* val) {
+	void cv_VectorOfPlatformInfo_set(std::vector<cv::ocl::PlatformInfo>* instance, size_t index, cv::ocl::PlatformInfo* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -552,23 +491,10 @@ extern "C" {
 	}
 
 	Result<cv::Point> cv_VectorOfPoint_get(const std::vector<cv::Point>* instance, size_t index) {
-		try {
-			return Ok<cv::Point>(instance->at(index));
-		} VEC_CATCH(Result<cv::Point>)
-	}
-
-	Result<cv::Point> cv_VectorOfPoint_get_unchecked(const std::vector<cv::Point>* instance, size_t index) {
 		return Ok<cv::Point>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfPoint_set(std::vector<cv::Point>* instance, size_t index, const cv::Point* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPoint_set_unchecked(std::vector<cv::Point>* instance, size_t index, const cv::Point* val) {
+	void cv_VectorOfPoint_set(std::vector<cv::Point>* instance, size_t index, const cv::Point* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -647,23 +573,10 @@ extern "C" {
 	}
 
 	Result<cv::Point2d> cv_VectorOfPoint2d_get(const std::vector<cv::Point2d>* instance, size_t index) {
-		try {
-			return Ok<cv::Point2d>(instance->at(index));
-		} VEC_CATCH(Result<cv::Point2d>)
-	}
-
-	Result<cv::Point2d> cv_VectorOfPoint2d_get_unchecked(const std::vector<cv::Point2d>* instance, size_t index) {
 		return Ok<cv::Point2d>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfPoint2d_set(std::vector<cv::Point2d>* instance, size_t index, const cv::Point2d* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPoint2d_set_unchecked(std::vector<cv::Point2d>* instance, size_t index, const cv::Point2d* val) {
+	void cv_VectorOfPoint2d_set(std::vector<cv::Point2d>* instance, size_t index, const cv::Point2d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -742,23 +655,10 @@ extern "C" {
 	}
 
 	Result<cv::Point2f> cv_VectorOfPoint2f_get(const std::vector<cv::Point2f>* instance, size_t index) {
-		try {
-			return Ok<cv::Point2f>(instance->at(index));
-		} VEC_CATCH(Result<cv::Point2f>)
-	}
-
-	Result<cv::Point2f> cv_VectorOfPoint2f_get_unchecked(const std::vector<cv::Point2f>* instance, size_t index) {
 		return Ok<cv::Point2f>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfPoint2f_set(std::vector<cv::Point2f>* instance, size_t index, const cv::Point2f* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPoint2f_set_unchecked(std::vector<cv::Point2f>* instance, size_t index, const cv::Point2f* val) {
+	void cv_VectorOfPoint2f_set(std::vector<cv::Point2f>* instance, size_t index, const cv::Point2f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -837,23 +737,10 @@ extern "C" {
 	}
 
 	Result<cv::Point3d> cv_VectorOfPoint3d_get(const std::vector<cv::Point3d>* instance, size_t index) {
-		try {
-			return Ok<cv::Point3d>(instance->at(index));
-		} VEC_CATCH(Result<cv::Point3d>)
-	}
-
-	Result<cv::Point3d> cv_VectorOfPoint3d_get_unchecked(const std::vector<cv::Point3d>* instance, size_t index) {
 		return Ok<cv::Point3d>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfPoint3d_set(std::vector<cv::Point3d>* instance, size_t index, const cv::Point3d* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPoint3d_set_unchecked(std::vector<cv::Point3d>* instance, size_t index, const cv::Point3d* val) {
+	void cv_VectorOfPoint3d_set(std::vector<cv::Point3d>* instance, size_t index, const cv::Point3d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -932,23 +819,10 @@ extern "C" {
 	}
 
 	Result<cv::Point3f> cv_VectorOfPoint3f_get(const std::vector<cv::Point3f>* instance, size_t index) {
-		try {
-			return Ok<cv::Point3f>(instance->at(index));
-		} VEC_CATCH(Result<cv::Point3f>)
-	}
-
-	Result<cv::Point3f> cv_VectorOfPoint3f_get_unchecked(const std::vector<cv::Point3f>* instance, size_t index) {
 		return Ok<cv::Point3f>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfPoint3f_set(std::vector<cv::Point3f>* instance, size_t index, const cv::Point3f* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPoint3f_set_unchecked(std::vector<cv::Point3f>* instance, size_t index, const cv::Point3f* val) {
+	void cv_VectorOfPoint3f_set(std::vector<cv::Point3f>* instance, size_t index, const cv::Point3f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1027,23 +901,10 @@ extern "C" {
 	}
 
 	Result<cv::Point3i> cv_VectorOfPoint3i_get(const std::vector<cv::Point3i>* instance, size_t index) {
-		try {
-			return Ok<cv::Point3i>(instance->at(index));
-		} VEC_CATCH(Result<cv::Point3i>)
-	}
-
-	Result<cv::Point3i> cv_VectorOfPoint3i_get_unchecked(const std::vector<cv::Point3i>* instance, size_t index) {
 		return Ok<cv::Point3i>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfPoint3i_set(std::vector<cv::Point3i>* instance, size_t index, const cv::Point3i* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPoint3i_set_unchecked(std::vector<cv::Point3i>* instance, size_t index, const cv::Point3i* val) {
+	void cv_VectorOfPoint3i_set(std::vector<cv::Point3i>* instance, size_t index, const cv::Point3i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1122,23 +983,10 @@ extern "C" {
 	}
 
 	Result<cv::Range*> cv_VectorOfRange_get(const std::vector<cv::Range>* instance, size_t index) {
-		try {
-			return Ok<cv::Range*>(new cv::Range(instance->at(index)));
-		} VEC_CATCH(Result<cv::Range*>)
-	}
-
-	Result<cv::Range*> cv_VectorOfRange_get_unchecked(const std::vector<cv::Range>* instance, size_t index) {
 		return Ok<cv::Range*>(new cv::Range((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfRange_set(std::vector<cv::Range>* instance, size_t index, cv::Range* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfRange_set_unchecked(std::vector<cv::Range>* instance, size_t index, cv::Range* val) {
+	void cv_VectorOfRange_set(std::vector<cv::Range>* instance, size_t index, cv::Range* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1195,23 +1043,10 @@ extern "C" {
 	}
 
 	Result<cv::Rect> cv_VectorOfRect_get(const std::vector<cv::Rect>* instance, size_t index) {
-		try {
-			return Ok<cv::Rect>(instance->at(index));
-		} VEC_CATCH(Result<cv::Rect>)
-	}
-
-	Result<cv::Rect> cv_VectorOfRect_get_unchecked(const std::vector<cv::Rect>* instance, size_t index) {
 		return Ok<cv::Rect>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfRect_set(std::vector<cv::Rect>* instance, size_t index, const cv::Rect* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfRect_set_unchecked(std::vector<cv::Rect>* instance, size_t index, const cv::Rect* val) {
+	void cv_VectorOfRect_set(std::vector<cv::Rect>* instance, size_t index, const cv::Rect* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1290,23 +1125,10 @@ extern "C" {
 	}
 
 	Result<cv::Rect2d> cv_VectorOfRect2d_get(const std::vector<cv::Rect2d>* instance, size_t index) {
-		try {
-			return Ok<cv::Rect2d>(instance->at(index));
-		} VEC_CATCH(Result<cv::Rect2d>)
-	}
-
-	Result<cv::Rect2d> cv_VectorOfRect2d_get_unchecked(const std::vector<cv::Rect2d>* instance, size_t index) {
 		return Ok<cv::Rect2d>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfRect2d_set(std::vector<cv::Rect2d>* instance, size_t index, const cv::Rect2d* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfRect2d_set_unchecked(std::vector<cv::Rect2d>* instance, size_t index, const cv::Rect2d* val) {
+	void cv_VectorOfRect2d_set(std::vector<cv::Rect2d>* instance, size_t index, const cv::Rect2d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1385,23 +1207,10 @@ extern "C" {
 	}
 
 	Result<cv::RotatedRect*> cv_VectorOfRotatedRect_get(const std::vector<cv::RotatedRect>* instance, size_t index) {
-		try {
-			return Ok<cv::RotatedRect*>(new cv::RotatedRect(instance->at(index)));
-		} VEC_CATCH(Result<cv::RotatedRect*>)
-	}
-
-	Result<cv::RotatedRect*> cv_VectorOfRotatedRect_get_unchecked(const std::vector<cv::RotatedRect>* instance, size_t index) {
 		return Ok<cv::RotatedRect*>(new cv::RotatedRect((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfRotatedRect_set(std::vector<cv::RotatedRect>* instance, size_t index, cv::RotatedRect* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfRotatedRect_set_unchecked(std::vector<cv::RotatedRect>* instance, size_t index, cv::RotatedRect* val) {
+	void cv_VectorOfRotatedRect_set(std::vector<cv::RotatedRect>* instance, size_t index, cv::RotatedRect* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1458,23 +1267,10 @@ extern "C" {
 	}
 
 	Result<cv::Size> cv_VectorOfSize_get(const std::vector<cv::Size>* instance, size_t index) {
-		try {
-			return Ok<cv::Size>(instance->at(index));
-		} VEC_CATCH(Result<cv::Size>)
-	}
-
-	Result<cv::Size> cv_VectorOfSize_get_unchecked(const std::vector<cv::Size>* instance, size_t index) {
 		return Ok<cv::Size>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfSize_set(std::vector<cv::Size>* instance, size_t index, const cv::Size* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfSize_set_unchecked(std::vector<cv::Size>* instance, size_t index, const cv::Size* val) {
+	void cv_VectorOfSize_set(std::vector<cv::Size>* instance, size_t index, const cv::Size* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1553,23 +1349,10 @@ extern "C" {
 	}
 
 	Result<void*> cv_VectorOfString_get(const std::vector<cv::String>* instance, size_t index) {
-		try {
-			return Ok<void*>(ocvrs_create_string(instance->at(index).c_str()));
-		} VEC_CATCH(Result<void*>)
-	}
-
-	Result<void*> cv_VectorOfString_get_unchecked(const std::vector<cv::String>* instance, size_t index) {
 		return Ok<void*>(ocvrs_create_string((*instance)[index].c_str()));
 	}
 
-	Result_void cv_VectorOfString_set(std::vector<cv::String>* instance, size_t index, char* val) {
-		try {
-			instance->at(index) = cv::String(val);
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfString_set_unchecked(std::vector<cv::String>* instance, size_t index, char* val) {
+	void cv_VectorOfString_set(std::vector<cv::String>* instance, size_t index, char* val) {
 		(*instance)[index] = cv::String(val);
 	}
 
@@ -1626,23 +1409,10 @@ extern "C" {
 	}
 
 	Result<cv::UMat*> cv_VectorOfUMat_get(const std::vector<cv::UMat>* instance, size_t index) {
-		try {
-			return Ok<cv::UMat*>(new cv::UMat(instance->at(index)));
-		} VEC_CATCH(Result<cv::UMat*>)
-	}
-
-	Result<cv::UMat*> cv_VectorOfUMat_get_unchecked(const std::vector<cv::UMat>* instance, size_t index) {
 		return Ok<cv::UMat*>(new cv::UMat((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfUMat_set(std::vector<cv::UMat>* instance, size_t index, cv::UMat* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfUMat_set_unchecked(std::vector<cv::UMat>* instance, size_t index, cv::UMat* val) {
+	void cv_VectorOfUMat_set(std::vector<cv::UMat>* instance, size_t index, cv::UMat* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1699,23 +1469,10 @@ extern "C" {
 	}
 
 	Result<cv::Vec2i> cv_VectorOfVec2i_get(const std::vector<cv::Vec2i>* instance, size_t index) {
-		try {
-			return Ok<cv::Vec2i>(instance->at(index));
-		} VEC_CATCH(Result<cv::Vec2i>)
-	}
-
-	Result<cv::Vec2i> cv_VectorOfVec2i_get_unchecked(const std::vector<cv::Vec2i>* instance, size_t index) {
 		return Ok<cv::Vec2i>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVec2i_set(std::vector<cv::Vec2i>* instance, size_t index, const cv::Vec2i* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVec2i_set_unchecked(std::vector<cv::Vec2i>* instance, size_t index, const cv::Vec2i* val) {
+	void cv_VectorOfVec2i_set(std::vector<cv::Vec2i>* instance, size_t index, const cv::Vec2i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1794,23 +1551,10 @@ extern "C" {
 	}
 
 	Result<cv::Vec3d> cv_VectorOfVec3d_get(const std::vector<cv::Vec3d>* instance, size_t index) {
-		try {
-			return Ok<cv::Vec3d>(instance->at(index));
-		} VEC_CATCH(Result<cv::Vec3d>)
-	}
-
-	Result<cv::Vec3d> cv_VectorOfVec3d_get_unchecked(const std::vector<cv::Vec3d>* instance, size_t index) {
 		return Ok<cv::Vec3d>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVec3d_set(std::vector<cv::Vec3d>* instance, size_t index, const cv::Vec3d* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVec3d_set_unchecked(std::vector<cv::Vec3d>* instance, size_t index, const cv::Vec3d* val) {
+	void cv_VectorOfVec3d_set(std::vector<cv::Vec3d>* instance, size_t index, const cv::Vec3d* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1889,23 +1633,10 @@ extern "C" {
 	}
 
 	Result<cv::Vec3f> cv_VectorOfVec3f_get(const std::vector<cv::Vec3f>* instance, size_t index) {
-		try {
-			return Ok<cv::Vec3f>(instance->at(index));
-		} VEC_CATCH(Result<cv::Vec3f>)
-	}
-
-	Result<cv::Vec3f> cv_VectorOfVec3f_get_unchecked(const std::vector<cv::Vec3f>* instance, size_t index) {
 		return Ok<cv::Vec3f>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVec3f_set(std::vector<cv::Vec3f>* instance, size_t index, const cv::Vec3f* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVec3f_set_unchecked(std::vector<cv::Vec3f>* instance, size_t index, const cv::Vec3f* val) {
+	void cv_VectorOfVec3f_set(std::vector<cv::Vec3f>* instance, size_t index, const cv::Vec3f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -1984,23 +1715,10 @@ extern "C" {
 	}
 
 	Result<cv::Vec3i> cv_VectorOfVec3i_get(const std::vector<cv::Vec3i>* instance, size_t index) {
-		try {
-			return Ok<cv::Vec3i>(instance->at(index));
-		} VEC_CATCH(Result<cv::Vec3i>)
-	}
-
-	Result<cv::Vec3i> cv_VectorOfVec3i_get_unchecked(const std::vector<cv::Vec3i>* instance, size_t index) {
 		return Ok<cv::Vec3i>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVec3i_set(std::vector<cv::Vec3i>* instance, size_t index, const cv::Vec3i* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVec3i_set_unchecked(std::vector<cv::Vec3i>* instance, size_t index, const cv::Vec3i* val) {
+	void cv_VectorOfVec3i_set(std::vector<cv::Vec3i>* instance, size_t index, const cv::Vec3i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2079,23 +1797,10 @@ extern "C" {
 	}
 
 	Result<cv::Vec4f> cv_VectorOfVec4f_get(const std::vector<cv::Vec4f>* instance, size_t index) {
-		try {
-			return Ok<cv::Vec4f>(instance->at(index));
-		} VEC_CATCH(Result<cv::Vec4f>)
-	}
-
-	Result<cv::Vec4f> cv_VectorOfVec4f_get_unchecked(const std::vector<cv::Vec4f>* instance, size_t index) {
 		return Ok<cv::Vec4f>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVec4f_set(std::vector<cv::Vec4f>* instance, size_t index, const cv::Vec4f* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVec4f_set_unchecked(std::vector<cv::Vec4f>* instance, size_t index, const cv::Vec4f* val) {
+	void cv_VectorOfVec4f_set(std::vector<cv::Vec4f>* instance, size_t index, const cv::Vec4f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2174,23 +1879,10 @@ extern "C" {
 	}
 
 	Result<cv::Vec4i> cv_VectorOfVec4i_get(const std::vector<cv::Vec4i>* instance, size_t index) {
-		try {
-			return Ok<cv::Vec4i>(instance->at(index));
-		} VEC_CATCH(Result<cv::Vec4i>)
-	}
-
-	Result<cv::Vec4i> cv_VectorOfVec4i_get_unchecked(const std::vector<cv::Vec4i>* instance, size_t index) {
 		return Ok<cv::Vec4i>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVec4i_set(std::vector<cv::Vec4i>* instance, size_t index, const cv::Vec4i* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVec4i_set_unchecked(std::vector<cv::Vec4i>* instance, size_t index, const cv::Vec4i* val) {
+	void cv_VectorOfVec4i_set(std::vector<cv::Vec4i>* instance, size_t index, const cv::Vec4i* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2269,23 +1961,10 @@ extern "C" {
 	}
 
 	Result<cv::Vec6f> cv_VectorOfVec6f_get(const std::vector<cv::Vec6f>* instance, size_t index) {
-		try {
-			return Ok<cv::Vec6f>(instance->at(index));
-		} VEC_CATCH(Result<cv::Vec6f>)
-	}
-
-	Result<cv::Vec6f> cv_VectorOfVec6f_get_unchecked(const std::vector<cv::Vec6f>* instance, size_t index) {
 		return Ok<cv::Vec6f>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVec6f_set(std::vector<cv::Vec6f>* instance, size_t index, const cv::Vec6f* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVec6f_set_unchecked(std::vector<cv::Vec6f>* instance, size_t index, const cv::Vec6f* val) {
+	void cv_VectorOfVec6f_set(std::vector<cv::Vec6f>* instance, size_t index, const cv::Vec6f* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2364,23 +2043,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::DMatch>*> cv_VectorOfVectorOfDMatch_get(const std::vector<std::vector<cv::DMatch>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::DMatch>*>(new std::vector<cv::DMatch>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::DMatch>*>)
-	}
-
-	Result<std::vector<cv::DMatch>*> cv_VectorOfVectorOfDMatch_get_unchecked(const std::vector<std::vector<cv::DMatch>>* instance, size_t index) {
 		return Ok<std::vector<cv::DMatch>*>(new std::vector<cv::DMatch>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfDMatch_set(std::vector<std::vector<cv::DMatch>>* instance, size_t index, std::vector<cv::DMatch>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfDMatch_set_unchecked(std::vector<std::vector<cv::DMatch>>* instance, size_t index, std::vector<cv::DMatch>* val) {
+	void cv_VectorOfVectorOfDMatch_set(std::vector<std::vector<cv::DMatch>>* instance, size_t index, std::vector<cv::DMatch>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2437,23 +2103,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::KeyPoint>*> cv_VectorOfVectorOfKeyPoint_get(const std::vector<std::vector<cv::KeyPoint>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::KeyPoint>*>(new std::vector<cv::KeyPoint>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::KeyPoint>*>)
-	}
-
-	Result<std::vector<cv::KeyPoint>*> cv_VectorOfVectorOfKeyPoint_get_unchecked(const std::vector<std::vector<cv::KeyPoint>>* instance, size_t index) {
 		return Ok<std::vector<cv::KeyPoint>*>(new std::vector<cv::KeyPoint>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfKeyPoint_set(std::vector<std::vector<cv::KeyPoint>>* instance, size_t index, std::vector<cv::KeyPoint>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfKeyPoint_set_unchecked(std::vector<std::vector<cv::KeyPoint>>* instance, size_t index, std::vector<cv::KeyPoint>* val) {
+	void cv_VectorOfVectorOfKeyPoint_set(std::vector<std::vector<cv::KeyPoint>>* instance, size_t index, std::vector<cv::KeyPoint>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2510,23 +2163,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Mat>*> cv_VectorOfVectorOfMat_get(const std::vector<std::vector<cv::Mat>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Mat>*>(new std::vector<cv::Mat>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Mat>*>)
-	}
-
-	Result<std::vector<cv::Mat>*> cv_VectorOfVectorOfMat_get_unchecked(const std::vector<std::vector<cv::Mat>>* instance, size_t index) {
 		return Ok<std::vector<cv::Mat>*>(new std::vector<cv::Mat>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfMat_set(std::vector<std::vector<cv::Mat>>* instance, size_t index, std::vector<cv::Mat>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfMat_set_unchecked(std::vector<std::vector<cv::Mat>>* instance, size_t index, std::vector<cv::Mat>* val) {
+	void cv_VectorOfVectorOfMat_set(std::vector<std::vector<cv::Mat>>* instance, size_t index, std::vector<cv::Mat>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2583,23 +2223,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Point>*> cv_VectorOfVectorOfPoint_get(const std::vector<std::vector<cv::Point>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Point>*>(new std::vector<cv::Point>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Point>*>)
-	}
-
-	Result<std::vector<cv::Point>*> cv_VectorOfVectorOfPoint_get_unchecked(const std::vector<std::vector<cv::Point>>* instance, size_t index) {
 		return Ok<std::vector<cv::Point>*>(new std::vector<cv::Point>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfPoint_set(std::vector<std::vector<cv::Point>>* instance, size_t index, std::vector<cv::Point>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfPoint_set_unchecked(std::vector<std::vector<cv::Point>>* instance, size_t index, std::vector<cv::Point>* val) {
+	void cv_VectorOfVectorOfPoint_set(std::vector<std::vector<cv::Point>>* instance, size_t index, std::vector<cv::Point>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2674,23 +2301,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Point2f>*> cv_VectorOfVectorOfPoint2f_get(const std::vector<std::vector<cv::Point2f>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Point2f>*>(new std::vector<cv::Point2f>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Point2f>*>)
-	}
-
-	Result<std::vector<cv::Point2f>*> cv_VectorOfVectorOfPoint2f_get_unchecked(const std::vector<std::vector<cv::Point2f>>* instance, size_t index) {
 		return Ok<std::vector<cv::Point2f>*>(new std::vector<cv::Point2f>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfPoint2f_set(std::vector<std::vector<cv::Point2f>>* instance, size_t index, std::vector<cv::Point2f>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfPoint2f_set_unchecked(std::vector<std::vector<cv::Point2f>>* instance, size_t index, std::vector<cv::Point2f>* val) {
+	void cv_VectorOfVectorOfPoint2f_set(std::vector<std::vector<cv::Point2f>>* instance, size_t index, std::vector<cv::Point2f>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2765,23 +2379,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Point3d>*> cv_VectorOfVectorOfPoint3d_get(const std::vector<std::vector<cv::Point3d>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Point3d>*>(new std::vector<cv::Point3d>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Point3d>*>)
-	}
-
-	Result<std::vector<cv::Point3d>*> cv_VectorOfVectorOfPoint3d_get_unchecked(const std::vector<std::vector<cv::Point3d>>* instance, size_t index) {
 		return Ok<std::vector<cv::Point3d>*>(new std::vector<cv::Point3d>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfPoint3d_set(std::vector<std::vector<cv::Point3d>>* instance, size_t index, std::vector<cv::Point3d>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfPoint3d_set_unchecked(std::vector<std::vector<cv::Point3d>>* instance, size_t index, std::vector<cv::Point3d>* val) {
+	void cv_VectorOfVectorOfPoint3d_set(std::vector<std::vector<cv::Point3d>>* instance, size_t index, std::vector<cv::Point3d>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2856,23 +2457,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Point3f>*> cv_VectorOfVectorOfPoint3f_get(const std::vector<std::vector<cv::Point3f>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Point3f>*>(new std::vector<cv::Point3f>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Point3f>*>)
-	}
-
-	Result<std::vector<cv::Point3f>*> cv_VectorOfVectorOfPoint3f_get_unchecked(const std::vector<std::vector<cv::Point3f>>* instance, size_t index) {
 		return Ok<std::vector<cv::Point3f>*>(new std::vector<cv::Point3f>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfPoint3f_set(std::vector<std::vector<cv::Point3f>>* instance, size_t index, std::vector<cv::Point3f>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfPoint3f_set_unchecked(std::vector<std::vector<cv::Point3f>>* instance, size_t index, std::vector<cv::Point3f>* val) {
+	void cv_VectorOfVectorOfPoint3f_set(std::vector<std::vector<cv::Point3f>>* instance, size_t index, std::vector<cv::Point3f>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -2947,23 +2535,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Point3i>*> cv_VectorOfVectorOfPoint3i_get(const std::vector<std::vector<cv::Point3i>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Point3i>*>(new std::vector<cv::Point3i>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Point3i>*>)
-	}
-
-	Result<std::vector<cv::Point3i>*> cv_VectorOfVectorOfPoint3i_get_unchecked(const std::vector<std::vector<cv::Point3i>>* instance, size_t index) {
 		return Ok<std::vector<cv::Point3i>*>(new std::vector<cv::Point3i>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfPoint3i_set(std::vector<std::vector<cv::Point3i>>* instance, size_t index, std::vector<cv::Point3i>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfPoint3i_set_unchecked(std::vector<std::vector<cv::Point3i>>* instance, size_t index, std::vector<cv::Point3i>* val) {
+	void cv_VectorOfVectorOfPoint3i_set(std::vector<std::vector<cv::Point3i>>* instance, size_t index, std::vector<cv::Point3i>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3038,23 +2613,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Range>*> cv_VectorOfVectorOfRange_get(const std::vector<std::vector<cv::Range>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Range>*>(new std::vector<cv::Range>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Range>*>)
-	}
-
-	Result<std::vector<cv::Range>*> cv_VectorOfVectorOfRange_get_unchecked(const std::vector<std::vector<cv::Range>>* instance, size_t index) {
 		return Ok<std::vector<cv::Range>*>(new std::vector<cv::Range>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfRange_set(std::vector<std::vector<cv::Range>>* instance, size_t index, std::vector<cv::Range>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfRange_set_unchecked(std::vector<std::vector<cv::Range>>* instance, size_t index, std::vector<cv::Range>* val) {
+	void cv_VectorOfVectorOfRange_set(std::vector<std::vector<cv::Range>>* instance, size_t index, std::vector<cv::Range>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3111,23 +2673,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Rect>*> cv_VectorOfVectorOfRect_get(const std::vector<std::vector<cv::Rect>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Rect>*>(new std::vector<cv::Rect>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Rect>*>)
-	}
-
-	Result<std::vector<cv::Rect>*> cv_VectorOfVectorOfRect_get_unchecked(const std::vector<std::vector<cv::Rect>>* instance, size_t index) {
 		return Ok<std::vector<cv::Rect>*>(new std::vector<cv::Rect>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfRect_set(std::vector<std::vector<cv::Rect>>* instance, size_t index, std::vector<cv::Rect>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfRect_set_unchecked(std::vector<std::vector<cv::Rect>>* instance, size_t index, std::vector<cv::Rect>* val) {
+	void cv_VectorOfVectorOfRect_set(std::vector<std::vector<cv::Rect>>* instance, size_t index, std::vector<cv::Rect>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3202,23 +2751,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::Vec2i>*> cv_VectorOfVectorOfVec2i_get(const std::vector<std::vector<cv::Vec2i>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::Vec2i>*>(new std::vector<cv::Vec2i>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::Vec2i>*>)
-	}
-
-	Result<std::vector<cv::Vec2i>*> cv_VectorOfVectorOfVec2i_get_unchecked(const std::vector<std::vector<cv::Vec2i>>* instance, size_t index) {
 		return Ok<std::vector<cv::Vec2i>*>(new std::vector<cv::Vec2i>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfVec2i_set(std::vector<std::vector<cv::Vec2i>>* instance, size_t index, std::vector<cv::Vec2i>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfVec2i_set_unchecked(std::vector<std::vector<cv::Vec2i>>* instance, size_t index, std::vector<cv::Vec2i>* val) {
+	void cv_VectorOfVectorOfVec2i_set(std::vector<std::vector<cv::Vec2i>>* instance, size_t index, std::vector<cv::Vec2i>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3293,23 +2829,10 @@ extern "C" {
 	}
 
 	Result<std::vector<bool>*> cv_VectorOfVectorOfbool_get(const std::vector<std::vector<bool>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<bool>*>(new std::vector<bool>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<bool>*>)
-	}
-
-	Result<std::vector<bool>*> cv_VectorOfVectorOfbool_get_unchecked(const std::vector<std::vector<bool>>* instance, size_t index) {
 		return Ok<std::vector<bool>*>(new std::vector<bool>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfbool_set(std::vector<std::vector<bool>>* instance, size_t index, std::vector<bool>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfbool_set_unchecked(std::vector<std::vector<bool>>* instance, size_t index, std::vector<bool>* val) {
+	void cv_VectorOfVectorOfbool_set(std::vector<std::vector<bool>>* instance, size_t index, std::vector<bool>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3366,23 +2889,10 @@ extern "C" {
 	}
 
 	Result<std::vector<double>*> cv_VectorOfVectorOff64_get(const std::vector<std::vector<double>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<double>*>(new std::vector<double>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<double>*>)
-	}
-
-	Result<std::vector<double>*> cv_VectorOfVectorOff64_get_unchecked(const std::vector<std::vector<double>>* instance, size_t index) {
 		return Ok<std::vector<double>*>(new std::vector<double>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOff64_set(std::vector<std::vector<double>>* instance, size_t index, std::vector<double>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOff64_set_unchecked(std::vector<std::vector<double>>* instance, size_t index, std::vector<double>* val) {
+	void cv_VectorOfVectorOff64_set(std::vector<std::vector<double>>* instance, size_t index, std::vector<double>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3457,23 +2967,10 @@ extern "C" {
 	}
 
 	Result<std::vector<int>*> cv_VectorOfVectorOfi32_get(const std::vector<std::vector<int>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<int>*>(new std::vector<int>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<int>*>)
-	}
-
-	Result<std::vector<int>*> cv_VectorOfVectorOfi32_get_unchecked(const std::vector<std::vector<int>>* instance, size_t index) {
 		return Ok<std::vector<int>*>(new std::vector<int>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfi32_set(std::vector<std::vector<int>>* instance, size_t index, std::vector<int>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfi32_set_unchecked(std::vector<std::vector<int>>* instance, size_t index, std::vector<int>* val) {
+	void cv_VectorOfVectorOfi32_set(std::vector<std::vector<int>>* instance, size_t index, std::vector<int>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3548,23 +3045,10 @@ extern "C" {
 	}
 
 	Result<std::vector<char>*> cv_VectorOfVectorOfi8_get(const std::vector<std::vector<char>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<char>*>(new std::vector<char>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<char>*>)
-	}
-
-	Result<std::vector<char>*> cv_VectorOfVectorOfi8_get_unchecked(const std::vector<std::vector<char>>* instance, size_t index) {
 		return Ok<std::vector<char>*>(new std::vector<char>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfi8_set(std::vector<std::vector<char>>* instance, size_t index, std::vector<char>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfi8_set_unchecked(std::vector<std::vector<char>>* instance, size_t index, std::vector<char>* val) {
+	void cv_VectorOfVectorOfi8_set(std::vector<std::vector<char>>* instance, size_t index, std::vector<char>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3639,23 +3123,10 @@ extern "C" {
 	}
 
 	Result<std::vector<unsigned char>*> cv_VectorOfVectorOfu8_get(const std::vector<std::vector<unsigned char>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<unsigned char>*>(new std::vector<unsigned char>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<unsigned char>*>)
-	}
-
-	Result<std::vector<unsigned char>*> cv_VectorOfVectorOfu8_get_unchecked(const std::vector<std::vector<unsigned char>>* instance, size_t index) {
 		return Ok<std::vector<unsigned char>*>(new std::vector<unsigned char>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfu8_set(std::vector<std::vector<unsigned char>>* instance, size_t index, std::vector<unsigned char>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfu8_set_unchecked(std::vector<std::vector<unsigned char>>* instance, size_t index, std::vector<unsigned char>* val) {
+	void cv_VectorOfVectorOfu8_set(std::vector<std::vector<unsigned char>>* instance, size_t index, std::vector<unsigned char>* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -3730,23 +3201,10 @@ extern "C" {
 	}
 
 	Result<bool> cv_VectorOfbool_get(const std::vector<bool>* instance, size_t index) {
-		try {
-			return Ok<bool>(instance->at(index));
-		} VEC_CATCH(Result<bool>)
-	}
-
-	Result<bool> cv_VectorOfbool_get_unchecked(const std::vector<bool>* instance, size_t index) {
 		return Ok<bool>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfbool_set(std::vector<bool>* instance, size_t index, bool val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfbool_set_unchecked(std::vector<bool>* instance, size_t index, bool val) {
+	void cv_VectorOfbool_set(std::vector<bool>* instance, size_t index, bool val) {
 		(*instance)[index] = val;
 	}
 
@@ -3803,23 +3261,10 @@ extern "C" {
 	}
 
 	Result<float> cv_VectorOff32_get(const std::vector<float>* instance, size_t index) {
-		try {
-			return Ok<float>(instance->at(index));
-		} VEC_CATCH(Result<float>)
-	}
-
-	Result<float> cv_VectorOff32_get_unchecked(const std::vector<float>* instance, size_t index) {
 		return Ok<float>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOff32_set(std::vector<float>* instance, size_t index, float val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOff32_set_unchecked(std::vector<float>* instance, size_t index, float val) {
+	void cv_VectorOff32_set(std::vector<float>* instance, size_t index, float val) {
 		(*instance)[index] = val;
 	}
 
@@ -3898,23 +3343,10 @@ extern "C" {
 	}
 
 	Result<double> cv_VectorOff64_get(const std::vector<double>* instance, size_t index) {
-		try {
-			return Ok<double>(instance->at(index));
-		} VEC_CATCH(Result<double>)
-	}
-
-	Result<double> cv_VectorOff64_get_unchecked(const std::vector<double>* instance, size_t index) {
 		return Ok<double>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOff64_set(std::vector<double>* instance, size_t index, double val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOff64_set_unchecked(std::vector<double>* instance, size_t index, double val) {
+	void cv_VectorOff64_set(std::vector<double>* instance, size_t index, double val) {
 		(*instance)[index] = val;
 	}
 
@@ -3993,23 +3425,10 @@ extern "C" {
 	}
 
 	Result<int> cv_VectorOfi32_get(const std::vector<int>* instance, size_t index) {
-		try {
-			return Ok<int>(instance->at(index));
-		} VEC_CATCH(Result<int>)
-	}
-
-	Result<int> cv_VectorOfi32_get_unchecked(const std::vector<int>* instance, size_t index) {
 		return Ok<int>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfi32_set(std::vector<int>* instance, size_t index, int val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfi32_set_unchecked(std::vector<int>* instance, size_t index, int val) {
+	void cv_VectorOfi32_set(std::vector<int>* instance, size_t index, int val) {
 		(*instance)[index] = val;
 	}
 
@@ -4088,23 +3507,10 @@ extern "C" {
 	}
 
 	Result<char> cv_VectorOfi8_get(const std::vector<char>* instance, size_t index) {
-		try {
-			return Ok<char>(instance->at(index));
-		} VEC_CATCH(Result<char>)
-	}
-
-	Result<char> cv_VectorOfi8_get_unchecked(const std::vector<char>* instance, size_t index) {
 		return Ok<char>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfi8_set(std::vector<char>* instance, size_t index, char val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfi8_set_unchecked(std::vector<char>* instance, size_t index, char val) {
+	void cv_VectorOfi8_set(std::vector<char>* instance, size_t index, char val) {
 		(*instance)[index] = val;
 	}
 
@@ -4183,23 +3589,10 @@ extern "C" {
 	}
 
 	Result<size_t> cv_VectorOfsize_t_get(const std::vector<size_t>* instance, size_t index) {
-		try {
-			return Ok<size_t>(instance->at(index));
-		} VEC_CATCH(Result<size_t>)
-	}
-
-	Result<size_t> cv_VectorOfsize_t_get_unchecked(const std::vector<size_t>* instance, size_t index) {
 		return Ok<size_t>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfsize_t_set(std::vector<size_t>* instance, size_t index, size_t val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfsize_t_set_unchecked(std::vector<size_t>* instance, size_t index, size_t val) {
+	void cv_VectorOfsize_t_set(std::vector<size_t>* instance, size_t index, size_t val) {
 		(*instance)[index] = val;
 	}
 
@@ -4260,23 +3653,10 @@ extern "C" {
 	}
 
 	Result<unsigned char> cv_VectorOfu8_get(const std::vector<unsigned char>* instance, size_t index) {
-		try {
-			return Ok<unsigned char>(instance->at(index));
-		} VEC_CATCH(Result<unsigned char>)
-	}
-
-	Result<unsigned char> cv_VectorOfu8_get_unchecked(const std::vector<unsigned char>* instance, size_t index) {
 		return Ok<unsigned char>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfu8_set(std::vector<unsigned char>* instance, size_t index, unsigned char val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfu8_set_unchecked(std::vector<unsigned char>* instance, size_t index, unsigned char val) {
+	void cv_VectorOfu8_set(std::vector<unsigned char>* instance, size_t index, unsigned char val) {
 		(*instance)[index] = val;
 	}
 

@@ -103,23 +103,10 @@ extern "C" {
 	}
 
 	Result<cv::DetectionBasedTracker::ExtObject*> cv_VectorOfDetectionBasedTracker_ExtObject_get(const std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index) {
-		try {
-			return Ok<cv::DetectionBasedTracker::ExtObject*>(new cv::DetectionBasedTracker::ExtObject(instance->at(index)));
-		} VEC_CATCH(Result<cv::DetectionBasedTracker::ExtObject*>)
-	}
-
-	Result<cv::DetectionBasedTracker::ExtObject*> cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(const std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index) {
 		return Ok<cv::DetectionBasedTracker::ExtObject*>(new cv::DetectionBasedTracker::ExtObject((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfDetectionBasedTracker_ExtObject_set(std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index, cv::DetectionBasedTracker::ExtObject* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfDetectionBasedTracker_ExtObject_set_unchecked(std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index, cv::DetectionBasedTracker::ExtObject* val) {
+	void cv_VectorOfDetectionBasedTracker_ExtObject_set(std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index, cv::DetectionBasedTracker::ExtObject* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -176,23 +163,10 @@ extern "C" {
 	}
 
 	Result<cv::DetectionROI*> cv_VectorOfDetectionROI_get(const std::vector<cv::DetectionROI>* instance, size_t index) {
-		try {
-			return Ok<cv::DetectionROI*>(new cv::DetectionROI(instance->at(index)));
-		} VEC_CATCH(Result<cv::DetectionROI*>)
-	}
-
-	Result<cv::DetectionROI*> cv_VectorOfDetectionROI_get_unchecked(const std::vector<cv::DetectionROI>* instance, size_t index) {
 		return Ok<cv::DetectionROI*>(new cv::DetectionROI((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfDetectionROI_set(std::vector<cv::DetectionROI>* instance, size_t index, cv::DetectionROI* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfDetectionROI_set_unchecked(std::vector<cv::DetectionROI>* instance, size_t index, cv::DetectionROI* val) {
+	void cv_VectorOfDetectionROI_set(std::vector<cv::DetectionROI>* instance, size_t index, cv::DetectionROI* val) {
 		(*instance)[index] = *val;
 	}
 

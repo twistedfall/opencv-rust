@@ -174,8 +174,8 @@ pub fn bm3d_denoising_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutp
 }
 
 /// Creates an instance of GrayworldWB
-pub fn create_grayworld_wb() -> Result<types::PtrOfGrayworldWB> {
-	unsafe { sys::cv_xphoto_createGrayworldWB() }.into_result().map(|ptr| types::PtrOfGrayworldWB { ptr })
+pub fn create_grayworld_wb() -> Result<core::Ptr::<dyn crate::xphoto::GrayworldWB>> {
+	unsafe { sys::cv_xphoto_createGrayworldWB() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xphoto::GrayworldWB>::from_raw(ptr) })
 }
 
 /// Creates an instance of LearningBasedWB
@@ -185,14 +185,14 @@ pub fn create_grayworld_wb() -> Result<types::PtrOfGrayworldWB> {
 /// 
 /// ## C++ default parameters
 /// * path_to_model: String()
-pub fn create_learning_based_wb(path_to_model: &str) -> Result<types::PtrOfLearningBasedWB> {
+pub fn create_learning_based_wb(path_to_model: &str) -> Result<core::Ptr::<dyn crate::xphoto::LearningBasedWB>> {
 	string_arg!(path_to_model);
-	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringX(path_to_model.as_ptr()) }.into_result().map(|ptr| types::PtrOfLearningBasedWB { ptr })
+	unsafe { sys::cv_xphoto_createLearningBasedWB_const_StringX(path_to_model.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xphoto::LearningBasedWB>::from_raw(ptr) })
 }
 
 /// Creates an instance of SimpleWB
-pub fn create_simple_wb() -> Result<types::PtrOfSimpleWB> {
-	unsafe { sys::cv_xphoto_createSimpleWB() }.into_result().map(|ptr| types::PtrOfSimpleWB { ptr })
+pub fn create_simple_wb() -> Result<core::Ptr::<dyn crate::xphoto::SimpleWB>> {
+	unsafe { sys::cv_xphoto_createSimpleWB() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xphoto::SimpleWB>::from_raw(ptr) })
 }
 
 /// The function implements simple dct-based denoising
@@ -209,7 +209,7 @@ pub fn create_simple_wb() -> Result<types::PtrOfSimpleWB> {
 /// ## C++ default parameters
 /// * psize: 16
 pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i32) -> Result<()> {
-	unsafe { sys::cv_xphoto_dctDenoising_const_MatX_MatX_double_int(src.as_raw_Mat(), dst.as_raw_Mat(), sigma, psize) }.into_result()
+	unsafe { sys::cv_xphoto_dctDenoising_const_MatX_MatX_double_int(src.as_raw_Mat(), dst.as_raw_mut_Mat(), sigma, psize) }.into_result()
 }
 
 /// The function implements different single-image inpainting algorithms.
@@ -226,7 +226,7 @@ pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i3
 /// * dst: destination image
 /// * algorithmType: see xphoto::InpaintTypes
 pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm_type: i32) -> Result<()> {
-	unsafe { sys::cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_Mat(), algorithm_type) }.into_result()
+	unsafe { sys::cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(src.as_raw_Mat(), mask.as_raw_Mat(), dst.as_raw_mut_Mat(), algorithm_type) }.into_result()
 }
 
 /// Gray-world white balance algorithm
@@ -250,7 +250,9 @@ pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm
 /// 
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
 pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
-	fn as_raw_GrayworldWB(&self) -> *mut c_void;
+	fn as_raw_GrayworldWB(&self) -> *const c_void;
+	fn as_raw_mut_GrayworldWB(&mut self) -> *mut c_void;
+
 	/// Maximum saturation for a pixel to be included in the
 	///    gray-world assumption
 	/// ## See also
@@ -264,7 +266,7 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setSaturationThreshold getSaturationThreshold
 	fn set_saturation_threshold(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_GrayworldWB_setSaturationThreshold_float(self.as_raw_GrayworldWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_GrayworldWB_setSaturationThreshold_float(self.as_raw_mut_GrayworldWB(), val) }.into_result()
 	}
 	
 }
@@ -283,7 +285,9 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 /// 
 /// Currently supports images of type @ref CV_8UC3 and @ref CV_16UC3.
 pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
-	fn as_raw_LearningBasedWB(&self) -> *mut c_void;
+	fn as_raw_LearningBasedWB(&self) -> *const c_void;
+	fn as_raw_mut_LearningBasedWB(&mut self) -> *mut c_void;
+
 	/// Implements the feature extraction part of the algorithm.
 	/// 
 	/// In accordance with [Cheng2015](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
@@ -301,7 +305,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	fn extract_simple_features(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayX_const__OutputArrayX(self.as_raw_LearningBasedWB(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xphoto_LearningBasedWB_extractSimpleFeatures_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_LearningBasedWB(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Maximum possible value of the input image (e.g. 255 for 8 bit images,
@@ -317,7 +321,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setRangeMaxVal getRangeMaxVal
 	fn set_range_max_val(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_xphoto_LearningBasedWB_setRangeMaxVal_int(self.as_raw_LearningBasedWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_LearningBasedWB_setRangeMaxVal_int(self.as_raw_mut_LearningBasedWB(), val) }.into_result()
 	}
 	
 	/// Threshold that is used to determine saturated pixels, i.e. pixels where at least one of the
@@ -333,7 +337,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setSaturationThreshold getSaturationThreshold
 	fn set_saturation_threshold(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_LearningBasedWB_setSaturationThreshold_float(self.as_raw_LearningBasedWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_LearningBasedWB_setSaturationThreshold_float(self.as_raw_mut_LearningBasedWB(), val) }.into_result()
 	}
 	
 	/// Defines the size of one dimension of a three-dimensional RGB histogram that is used internally
@@ -351,7 +355,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setHistBinNum getHistBinNum
 	fn set_hist_bin_num(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_xphoto_LearningBasedWB_setHistBinNum_int(self.as_raw_LearningBasedWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_LearningBasedWB_setHistBinNum_int(self.as_raw_mut_LearningBasedWB(), val) }.into_result()
 	}
 	
 }
@@ -360,7 +364,9 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 /// each of the input image channels to the specified range. For increased robustness
 /// it ignores the top and bottom ![inline formula](https://latex.codecogs.com/png.latex?p%5C%25) of pixel values.
 pub trait SimpleWB: crate::xphoto::WhiteBalancer {
-	fn as_raw_SimpleWB(&self) -> *mut c_void;
+	fn as_raw_SimpleWB(&self) -> *const c_void;
+	fn as_raw_mut_SimpleWB(&mut self) -> *mut c_void;
+
 	/// Input image range minimum value
 	/// ## See also
 	/// setInputMin
@@ -372,7 +378,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setInputMin getInputMin
 	fn set_input_min(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_SimpleWB_setInputMin_float(self.as_raw_SimpleWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_SimpleWB_setInputMin_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
 	}
 	
 	/// Input image range maximum value
@@ -386,7 +392,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setInputMax getInputMax
 	fn set_input_max(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_SimpleWB_setInputMax_float(self.as_raw_SimpleWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_SimpleWB_setInputMax_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
 	}
 	
 	/// Output image range minimum value
@@ -400,7 +406,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setOutputMin getOutputMin
 	fn set_output_min(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_SimpleWB_setOutputMin_float(self.as_raw_SimpleWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_SimpleWB_setOutputMin_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
 	}
 	
 	/// Output image range maximum value
@@ -414,7 +420,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setOutputMax getOutputMax
 	fn set_output_max(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_SimpleWB_setOutputMax_float(self.as_raw_SimpleWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_SimpleWB_setOutputMax_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
 	}
 	
 	/// Percent of top/bottom values to ignore
@@ -428,14 +434,16 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 	/// ## See also
 	/// setP getP
 	fn set_p(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_xphoto_SimpleWB_setP_float(self.as_raw_SimpleWB(), val) }.into_result()
+		unsafe { sys::cv_xphoto_SimpleWB_setP_float(self.as_raw_mut_SimpleWB(), val) }.into_result()
 	}
 	
 }
 
 /// The base class for auto white balance algorithms.
 pub trait WhiteBalancer: core::AlgorithmTrait {
-	fn as_raw_WhiteBalancer(&self) -> *mut c_void;
+	fn as_raw_WhiteBalancer(&self) -> *const c_void;
+	fn as_raw_mut_WhiteBalancer(&mut self) -> *mut c_void;
+
 	/// Applies white balancing to the input image
 	/// 
 	/// ## Parameters
@@ -446,7 +454,7 @@ pub trait WhiteBalancer: core::AlgorithmTrait {
 	fn balance_white(&mut self, src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(src);
 		output_array_arg!(dst);
-		unsafe { sys::cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayX_const__OutputArrayX(self.as_raw_WhiteBalancer(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xphoto_WhiteBalancer_balanceWhite_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_WhiteBalancer(), src.as_raw__InputArray(), dst.as_raw__OutputArray()) }.into_result()
 	}
 	
 }

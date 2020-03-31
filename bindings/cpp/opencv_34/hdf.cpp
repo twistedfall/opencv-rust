@@ -270,14 +270,14 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_hdf_HDF5_kpwrite_const_vector_KeyPoint__const_StringX_int_int(const cv::hdf::HDF5* instance, std::vector<cv::KeyPoint>* keypoints, const char* kplabel, int offset, int counts) {
+	Result_void cv_hdf_HDF5_kpwrite_const_vector_KeyPoint__const_StringX_int_int(const cv::hdf::HDF5* instance, const std::vector<cv::KeyPoint>* keypoints, const char* kplabel, int offset, int counts) {
 		try {
 			instance->kpwrite(*keypoints, cv::String(kplabel), offset, counts);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_hdf_HDF5_kpinsert_const_vector_KeyPoint__const_StringX_int_int(const cv::hdf::HDF5* instance, std::vector<cv::KeyPoint>* keypoints, const char* kplabel, int offset, int counts) {
+	Result_void cv_hdf_HDF5_kpinsert_const_vector_KeyPoint__const_StringX_int_int(const cv::hdf::HDF5* instance, const std::vector<cv::KeyPoint>* keypoints, const char* kplabel, int offset, int counts) {
 		try {
 			instance->kpinsert(*keypoints, cv::String(kplabel), offset, counts);
 			return Ok();

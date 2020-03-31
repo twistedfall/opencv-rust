@@ -153,23 +153,10 @@ extern "C" {
 	}
 
 	Result<cv::text::ERStat*> cv_VectorOfERStat_get(const std::vector<cv::text::ERStat>* instance, size_t index) {
-		try {
-			return Ok<cv::text::ERStat*>(new cv::text::ERStat(instance->at(index)));
-		} VEC_CATCH(Result<cv::text::ERStat*>)
-	}
-
-	Result<cv::text::ERStat*> cv_VectorOfERStat_get_unchecked(const std::vector<cv::text::ERStat>* instance, size_t index) {
 		return Ok<cv::text::ERStat*>(new cv::text::ERStat((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfERStat_set(std::vector<cv::text::ERStat>* instance, size_t index, cv::text::ERStat* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfERStat_set_unchecked(std::vector<cv::text::ERStat>* instance, size_t index, cv::text::ERStat* val) {
+	void cv_VectorOfERStat_set(std::vector<cv::text::ERStat>* instance, size_t index, cv::text::ERStat* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -226,23 +213,10 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::text::ERStat>*> cv_VectorOfVectorOfERStat_get(const std::vector<std::vector<cv::text::ERStat>>* instance, size_t index) {
-		try {
-			return Ok<std::vector<cv::text::ERStat>*>(new std::vector<cv::text::ERStat>(instance->at(index)));
-		} VEC_CATCH(Result<std::vector<cv::text::ERStat>*>)
-	}
-
-	Result<std::vector<cv::text::ERStat>*> cv_VectorOfVectorOfERStat_get_unchecked(const std::vector<std::vector<cv::text::ERStat>>* instance, size_t index) {
 		return Ok<std::vector<cv::text::ERStat>*>(new std::vector<cv::text::ERStat>((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfVectorOfERStat_set(std::vector<std::vector<cv::text::ERStat>>* instance, size_t index, std::vector<cv::text::ERStat>* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVectorOfERStat_set_unchecked(std::vector<std::vector<cv::text::ERStat>>* instance, size_t index, std::vector<cv::text::ERStat>* val) {
+	void cv_VectorOfVectorOfERStat_set(std::vector<std::vector<cv::text::ERStat>>* instance, size_t index, std::vector<cv::text::ERStat>* val) {
 		(*instance)[index] = *val;
 	}
 

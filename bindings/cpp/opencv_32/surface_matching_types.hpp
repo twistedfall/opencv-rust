@@ -77,23 +77,10 @@ extern "C" {
 	}
 
 	Result<cv::ppf_match_3d::Pose3DPtr*> cv_VectorOfPose3DPtr_get(const std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index) {
-		try {
-			return Ok<cv::ppf_match_3d::Pose3DPtr*>(new cv::ppf_match_3d::Pose3DPtr(instance->at(index)));
-		} VEC_CATCH(Result<cv::ppf_match_3d::Pose3DPtr*>)
-	}
-
-	Result<cv::ppf_match_3d::Pose3DPtr*> cv_VectorOfPose3DPtr_get_unchecked(const std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index) {
 		return Ok<cv::ppf_match_3d::Pose3DPtr*>(new cv::ppf_match_3d::Pose3DPtr((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfPose3DPtr_set(std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index, cv::ppf_match_3d::Pose3DPtr* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfPose3DPtr_set_unchecked(std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index, cv::ppf_match_3d::Pose3DPtr* val) {
+	void cv_VectorOfPose3DPtr_set(std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index, cv::ppf_match_3d::Pose3DPtr* val) {
 		(*instance)[index] = *val;
 	}
 

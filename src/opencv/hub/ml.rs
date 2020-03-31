@@ -329,7 +329,9 @@ pub fn rand_mv_normal(mean: &dyn core::ToInputArray, cov: &dyn core::ToInputArra
 /// ## See also
 /// @ref ml_intro_ann
 pub trait ANN_MLP: crate::ml::StatModel {
-	fn as_raw_ANN_MLP(&self) -> *mut c_void;
+	fn as_raw_ANN_MLP(&self) -> *const c_void;
+	fn as_raw_mut_ANN_MLP(&mut self) -> *mut c_void;
+
 	/// Sets training method and common parameters.
 	/// ## Parameters
 	/// * method: Default value is ANN_MLP::RPROP. See ANN_MLP::TrainingMethods.
@@ -340,7 +342,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// * param1: 0
 	/// * param2: 0
 	fn set_train_method(&mut self, method: i32, param1: f64, param2: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setTrainMethod_int_double_double(self.as_raw_ANN_MLP(), method, param1, param2) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setTrainMethod_int_double_double(self.as_raw_mut_ANN_MLP(), method, param1, param2) }.into_result()
 	}
 	
 	/// Returns current training method
@@ -359,7 +361,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// * param1: 0
 	/// * param2: 0
 	fn set_activation_function(&mut self, typ: i32, param1: f64, param2: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setActivationFunction_int_double_double(self.as_raw_ANN_MLP(), typ, param1, param2) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setActivationFunction_int_double_double(self.as_raw_mut_ANN_MLP(), typ, param1, param2) }.into_result()
 	}
 	
 	/// Integer vector specifying the number of neurons in each layer including the input and output layers.
@@ -369,7 +371,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// getLayerSizes
 	fn set_layer_sizes(&mut self, _layer_sizes: &dyn core::ToInputArray) -> Result<()> {
 		input_array_arg!(_layer_sizes);
-		unsafe { sys::cv_ml_ANN_MLP_setLayerSizes_const__InputArrayX(self.as_raw_ANN_MLP(), _layer_sizes.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setLayerSizes_const__InputArrayX(self.as_raw_mut_ANN_MLP(), _layer_sizes.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Integer vector specifying the number of neurons in each layer including the input and output layers.
@@ -378,7 +380,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setLayerSizes
 	fn get_layer_sizes(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_ANN_MLP_getLayerSizes_const(self.as_raw_ANN_MLP()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_ANN_MLP_getLayerSizes_const(self.as_raw_ANN_MLP()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Termination criteria of the training algorithm.
@@ -388,7 +390,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setTermCriteria
 	fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_ml_ANN_MLP_getTermCriteria_const(self.as_raw_ANN_MLP()) }.into_result().map(|ptr| core::TermCriteria { ptr })
+		unsafe { sys::cv_ml_ANN_MLP_getTermCriteria_const(self.as_raw_ANN_MLP()) }.into_result()
 	}
 	
 	/// Termination criteria of the training algorithm.
@@ -398,7 +400,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setTermCriteria getTermCriteria
 	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setTermCriteria_TermCriteria(self.as_raw_ANN_MLP(), val.as_raw_TermCriteria()) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setTermCriteria_TermCriteria(self.as_raw_mut_ANN_MLP(), &val) }.into_result()
 	}
 	
 	/// BPROP: Strength of the weight gradient term.
@@ -414,7 +416,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setBackpropWeightScale getBackpropWeightScale
 	fn set_backprop_weight_scale(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setBackpropWeightScale_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setBackpropWeightScale_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// BPROP: Strength of the momentum term (the difference between weights on the 2 previous iterations).
@@ -434,7 +436,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setBackpropMomentumScale getBackpropMomentumScale
 	fn set_backprop_momentum_scale(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setBackpropMomentumScale_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setBackpropMomentumScale_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// RPROP: Initial value ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F0) of update-values ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bij%7D).
@@ -450,7 +452,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setRpropDW0 getRpropDW0
 	fn set_rprop_dw0(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setRpropDW0_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setRpropDW0_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// RPROP: Increase factor ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5E%2B).
@@ -466,7 +468,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setRpropDWPlus getRpropDWPlus
 	fn set_rprop_dw_plus(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setRpropDWPlus_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setRpropDWPlus_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// RPROP: Decrease factor ![inline formula](https://latex.codecogs.com/png.latex?%5Ceta%5E%2D).
@@ -482,7 +484,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setRpropDWMinus getRpropDWMinus
 	fn set_rprop_dw_minus(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setRpropDWMinus_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setRpropDWMinus_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// RPROP: Update-values lower limit ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bmin%7D).
@@ -498,7 +500,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setRpropDWMin getRpropDWMin
 	fn set_rprop_dw_min(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setRpropDWMin_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setRpropDWMin_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// RPROP: Update-values upper limit ![inline formula](https://latex.codecogs.com/png.latex?%5CDelta%5F%7Bmax%7D).
@@ -514,7 +516,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setRpropDWMax getRpropDWMax
 	fn set_rprop_dw_max(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setRpropDWMax_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setRpropDWMax_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// ANNEAL: Update initial temperature.
@@ -530,7 +532,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setAnnealInitialT getAnnealInitialT
 	fn set_anneal_initial_t(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setAnnealInitialT_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setAnnealInitialT_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// ANNEAL: Update final temperature.
@@ -546,7 +548,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setAnnealFinalT getAnnealFinalT
 	fn set_anneal_final_t(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setAnnealFinalT_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setAnnealFinalT_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// ANNEAL: Update cooling ratio.
@@ -562,7 +564,7 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setAnnealCoolingRatio getAnnealCoolingRatio
 	fn set_anneal_cooling_ratio(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setAnnealCoolingRatio_double(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setAnnealCoolingRatio_double(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// ANNEAL: Update iteration per step.
@@ -578,16 +580,16 @@ pub trait ANN_MLP: crate::ml::StatModel {
 	/// ## See also
 	/// setAnnealItePerStep getAnnealItePerStep
 	fn set_anneal_ite_per_step(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setAnnealItePerStep_int(self.as_raw_ANN_MLP(), val) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setAnnealItePerStep_int(self.as_raw_mut_ANN_MLP(), val) }.into_result()
 	}
 	
 	/// Set/initialize anneal RNG
 	fn set_anneal_energy_rng(&mut self, rng: &core::RNG) -> Result<()> {
-		unsafe { sys::cv_ml_ANN_MLP_setAnnealEnergyRNG_const_RNGX(self.as_raw_ANN_MLP(), rng.as_raw_RNG()) }.into_result()
+		unsafe { sys::cv_ml_ANN_MLP_setAnnealEnergyRNG_const_RNGX(self.as_raw_mut_ANN_MLP(), rng.as_raw_RNG()) }.into_result()
 	}
 	
 	fn get_weights(&self, layer_idx: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_ANN_MLP_getWeights_const_int(self.as_raw_ANN_MLP(), layer_idx) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_ANN_MLP_getWeights_const_int(self.as_raw_ANN_MLP(), layer_idx) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 }
@@ -597,8 +599,8 @@ impl dyn ANN_MLP + '_ {
 	/// 
 	/// Use StatModel::train to train the model, Algorithm::load\<ANN_MLP\>(filename) to load the pre-trained model.
 	/// Note that the train method has optional flags: ANN_MLP::TrainFlags.
-	pub fn create() -> Result<types::PtrOfANN_MLP> {
-		unsafe { sys::cv_ml_ANN_MLP_create() }.into_result().map(|ptr| types::PtrOfANN_MLP { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::ANN_MLP>> {
+		unsafe { sys::cv_ml_ANN_MLP_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::ANN_MLP>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized ANN from a file
@@ -608,9 +610,9 @@ impl dyn ANN_MLP + '_ {
 	/// 
 	/// ## Parameters
 	/// * filepath: path to serialized ANN
-	pub fn load(filepath: &str) -> Result<types::PtrOfANN_MLP> {
+	pub fn load(filepath: &str) -> Result<core::Ptr::<dyn crate::ml::ANN_MLP>> {
 		string_arg!(filepath);
-		unsafe { sys::cv_ml_ANN_MLP_load_const_StringX(filepath.as_ptr()) }.into_result().map(|ptr| types::PtrOfANN_MLP { ptr })
+		unsafe { sys::cv_ml_ANN_MLP_load_const_StringX(filepath.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::ANN_MLP>::from_raw(ptr) })
 	}
 	
 }
@@ -618,7 +620,9 @@ impl dyn ANN_MLP + '_ {
 /// ## See also
 /// @ref ml_intro_boost
 pub trait Boost: crate::ml::DTrees {
-	fn as_raw_Boost(&self) -> *mut c_void;
+	fn as_raw_Boost(&self) -> *const c_void;
+	fn as_raw_mut_Boost(&mut self) -> *mut c_void;
+
 	/// Type of the boosting algorithm.
 	///    See Boost::Types. Default value is Boost::REAL.
 	/// ## See also
@@ -632,7 +636,7 @@ pub trait Boost: crate::ml::DTrees {
 	/// ## See also
 	/// setBoostType getBoostType
 	fn set_boost_type(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_Boost_setBoostType_int(self.as_raw_Boost(), val) }.into_result()
+		unsafe { sys::cv_ml_Boost_setBoostType_int(self.as_raw_mut_Boost(), val) }.into_result()
 	}
 	
 	/// The number of weak classifiers.
@@ -648,7 +652,7 @@ pub trait Boost: crate::ml::DTrees {
 	/// ## See also
 	/// setWeakCount getWeakCount
 	fn set_weak_count(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_Boost_setWeakCount_int(self.as_raw_Boost(), val) }.into_result()
+		unsafe { sys::cv_ml_Boost_setWeakCount_int(self.as_raw_mut_Boost(), val) }.into_result()
 	}
 	
 	/// A threshold between 0 and 1 used to save computational time.
@@ -666,7 +670,7 @@ pub trait Boost: crate::ml::DTrees {
 	/// ## See also
 	/// setWeightTrimRate getWeightTrimRate
 	fn set_weight_trim_rate(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_Boost_setWeightTrimRate_double(self.as_raw_Boost(), val) }.into_result()
+		unsafe { sys::cv_ml_Boost_setWeightTrimRate_double(self.as_raw_mut_Boost(), val) }.into_result()
 	}
 	
 }
@@ -674,8 +678,8 @@ pub trait Boost: crate::ml::DTrees {
 impl dyn Boost + '_ {
 	/// Creates the empty model.
 	/// Use StatModel::train to train the model, Algorithm::load\<Boost\>(filename) to load the pre-trained model.
-	pub fn create() -> Result<types::PtrOfBoost> {
-		unsafe { sys::cv_ml_Boost_create() }.into_result().map(|ptr| types::PtrOfBoost { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::Boost>> {
+		unsafe { sys::cv_ml_Boost_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::Boost>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized Boost from a file
@@ -690,10 +694,10 @@ impl dyn Boost + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * node_name: String()
-	pub fn load(filepath: &str, node_name: &str) -> Result<types::PtrOfBoost> {
+	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::Boost>> {
 		string_arg!(filepath);
 		string_arg!(node_name);
-		unsafe { sys::cv_ml_Boost_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfBoost { ptr })
+		unsafe { sys::cv_ml_Boost_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::Boost>::from_raw(ptr) })
 	}
 	
 }
@@ -706,7 +710,9 @@ impl dyn Boost + '_ {
 /// ## See also
 /// @ref ml_intro_trees
 pub trait DTrees: crate::ml::StatModel {
-	fn as_raw_DTrees(&self) -> *mut c_void;
+	fn as_raw_DTrees(&self) -> *const c_void;
+	fn as_raw_mut_DTrees(&mut self) -> *mut c_void;
+
 	/// Cluster possible values of a categorical variable into K\<=maxCategories clusters to
 	///    find a suboptimal split.
 	///    If a discrete variable, on which the training procedure tries to make a split, takes more than
@@ -738,7 +744,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setMaxCategories getMaxCategories
 	fn set_max_categories(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setMaxCategories_int(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setMaxCategories_int(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// The maximum possible depth of the tree.
@@ -760,7 +766,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setMaxDepth getMaxDepth
 	fn set_max_depth(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setMaxDepth_int(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setMaxDepth_int(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// If the number of samples in a node is less than this parameter then the node will not be split.
@@ -778,7 +784,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setMinSampleCount getMinSampleCount
 	fn set_min_sample_count(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setMinSampleCount_int(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setMinSampleCount_int(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// If CVFolds \> 1 then algorithms prunes the built decision tree using K-fold
@@ -796,7 +802,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setCVFolds getCVFolds
 	fn set_cv_folds(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setCVFolds_int(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setCVFolds_int(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// If true then surrogate splits will be built.
@@ -818,7 +824,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setUseSurrogates getUseSurrogates
 	fn set_use_surrogates(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setUseSurrogates_bool(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setUseSurrogates_bool(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// If true then a pruning will be harsher.
@@ -836,7 +842,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setUse1SERule getUse1SERule
 	fn set_use1_se_rule(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setUse1SERule_bool(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setUse1SERule_bool(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// If true then pruned branches are physically removed from the tree.
@@ -854,7 +860,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setTruncatePrunedTree getTruncatePrunedTree
 	fn set_truncate_pruned_tree(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setTruncatePrunedTree_bool(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setTruncatePrunedTree_bool(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// Termination criteria for regression trees.
@@ -874,7 +880,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setRegressionAccuracy getRegressionAccuracy
 	fn set_regression_accuracy(&mut self, val: f32) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setRegressionAccuracy_float(self.as_raw_DTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setRegressionAccuracy_float(self.as_raw_mut_DTrees(), val) }.into_result()
 	}
 	
 	/// The array of a priori class probabilities, sorted by the class label value.
@@ -895,7 +901,7 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setPriors
 	fn get_priors(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_DTrees_getPriors_const(self.as_raw_DTrees()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_DTrees_getPriors_const(self.as_raw_DTrees()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// The array of a priori class probabilities, sorted by the class label value.
@@ -916,33 +922,33 @@ pub trait DTrees: crate::ml::StatModel {
 	/// ## See also
 	/// setPriors getPriors
 	fn set_priors(&mut self, val: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_ml_DTrees_setPriors_const_MatX(self.as_raw_DTrees(), val.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_ml_DTrees_setPriors_const_MatX(self.as_raw_mut_DTrees(), val.as_raw_Mat()) }.into_result()
 	}
 	
 	/// Returns indices of root nodes
-	fn get_roots(&self) -> Result<types::VectorOfi32> {
-		unsafe { sys::cv_ml_DTrees_getRoots_const(self.as_raw_DTrees()) }.into_result().map(|ptr| types::VectorOfi32 { ptr })
+	fn get_roots(&self) -> Result<core::Vector::<i32>> {
+		unsafe { sys::cv_ml_DTrees_getRoots_const(self.as_raw_DTrees()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
 	}
 	
 	/// Returns all the nodes
 	/// 
 	/// all the node indices are indices in the returned vector
-	fn get_nodes(&self) -> Result<types::VectorOfDTrees_Node> {
-		unsafe { sys::cv_ml_DTrees_getNodes_const(self.as_raw_DTrees()) }.into_result().map(|ptr| types::VectorOfDTrees_Node { ptr })
+	fn get_nodes(&self) -> Result<core::Vector::<crate::ml::DTrees_Node>> {
+		unsafe { sys::cv_ml_DTrees_getNodes_const(self.as_raw_DTrees()) }.into_result().map(|ptr| unsafe { core::Vector::<crate::ml::DTrees_Node>::from_raw(ptr) })
 	}
 	
 	/// Returns all the splits
 	/// 
 	/// all the split indices are indices in the returned vector
-	fn get_splits(&self) -> Result<types::VectorOfDTrees_Split> {
-		unsafe { sys::cv_ml_DTrees_getSplits_const(self.as_raw_DTrees()) }.into_result().map(|ptr| types::VectorOfDTrees_Split { ptr })
+	fn get_splits(&self) -> Result<core::Vector::<crate::ml::DTrees_Split>> {
+		unsafe { sys::cv_ml_DTrees_getSplits_const(self.as_raw_DTrees()) }.into_result().map(|ptr| unsafe { core::Vector::<crate::ml::DTrees_Split>::from_raw(ptr) })
 	}
 	
 	/// Returns all the bitsets for categorical splits
 	/// 
 	/// Split::subsetOfs is an offset in the returned vector
-	fn get_subsets(&self) -> Result<types::VectorOfi32> {
-		unsafe { sys::cv_ml_DTrees_getSubsets_const(self.as_raw_DTrees()) }.into_result().map(|ptr| types::VectorOfi32 { ptr })
+	fn get_subsets(&self) -> Result<core::Vector::<i32>> {
+		unsafe { sys::cv_ml_DTrees_getSubsets_const(self.as_raw_DTrees()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
 	}
 	
 }
@@ -953,8 +959,8 @@ impl dyn DTrees + '_ {
 	/// The static method creates empty decision tree with the specified parameters. It should be then
 	/// trained using train method (see StatModel::train). Alternatively, you can load the model from
 	/// file using Algorithm::load\<DTrees\>(filename).
-	pub fn create() -> Result<types::PtrOfDTrees> {
-		unsafe { sys::cv_ml_DTrees_create() }.into_result().map(|ptr| types::PtrOfDTrees { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::DTrees>> {
+		unsafe { sys::cv_ml_DTrees_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::DTrees>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized DTrees from a file
@@ -969,16 +975,18 @@ impl dyn DTrees + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * node_name: String()
-	pub fn load(filepath: &str, node_name: &str) -> Result<types::PtrOfDTrees> {
+	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::DTrees>> {
 		string_arg!(filepath);
 		string_arg!(node_name);
-		unsafe { sys::cv_ml_DTrees_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfDTrees { ptr })
+		unsafe { sys::cv_ml_DTrees_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::DTrees>::from_raw(ptr) })
 	}
 	
 }
 /// The class represents a decision tree node.
 pub trait DTrees_NodeTrait {
-	fn as_raw_DTrees_Node(&self) -> *mut c_void;
+	fn as_raw_DTrees_Node(&self) -> *const c_void;
+	fn as_raw_mut_DTrees_Node(&mut self) -> *mut c_void;
+
 	/// Value at the node: a class label in case of classification or estimated
 	/// function value in case of regression.
 	fn value(&self) -> f64 {
@@ -988,7 +996,7 @@ pub trait DTrees_NodeTrait {
 	/// Value at the node: a class label in case of classification or estimated
 	/// function value in case of regression.
 	fn set_value(&mut self, val: f64) -> () {
-		unsafe { sys::cv_ml_DTrees_Node_setValue_double(self.as_raw_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_value")
+		unsafe { sys::cv_ml_DTrees_Node_setValue_double(self.as_raw_mut_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_value")
 	}
 	
 	/// Class index normalized to 0..class_count-1 range and assigned to the
@@ -1000,7 +1008,7 @@ pub trait DTrees_NodeTrait {
 	/// Class index normalized to 0..class_count-1 range and assigned to the
 	/// node. It is used internally in classification trees and tree ensembles.
 	fn set_class_idx(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Node_setClassIdx_int(self.as_raw_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_class_idx")
+		unsafe { sys::cv_ml_DTrees_Node_setClassIdx_int(self.as_raw_mut_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_class_idx")
 	}
 	
 	/// Index of the parent node
@@ -1010,7 +1018,7 @@ pub trait DTrees_NodeTrait {
 	
 	/// Index of the parent node
 	fn set_parent(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Node_setParent_int(self.as_raw_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_parent")
+		unsafe { sys::cv_ml_DTrees_Node_setParent_int(self.as_raw_mut_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_parent")
 	}
 	
 	/// Index of the left child node
@@ -1020,7 +1028,7 @@ pub trait DTrees_NodeTrait {
 	
 	/// Index of the left child node
 	fn set_left(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Node_setLeft_int(self.as_raw_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_left")
+		unsafe { sys::cv_ml_DTrees_Node_setLeft_int(self.as_raw_mut_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_left")
 	}
 	
 	/// Index of right child node
@@ -1030,7 +1038,7 @@ pub trait DTrees_NodeTrait {
 	
 	/// Index of right child node
 	fn set_right(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Node_setRight_int(self.as_raw_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_right")
+		unsafe { sys::cv_ml_DTrees_Node_setRight_int(self.as_raw_mut_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_right")
 	}
 	
 	/// Default direction where to go (-1: left or +1: right). It helps in the
@@ -1042,7 +1050,7 @@ pub trait DTrees_NodeTrait {
 	/// Default direction where to go (-1: left or +1: right). It helps in the
 	/// case of missing values.
 	fn set_default_dir(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Node_setDefaultDir_int(self.as_raw_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_default_dir")
+		unsafe { sys::cv_ml_DTrees_Node_setDefaultDir_int(self.as_raw_mut_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_default_dir")
 	}
 	
 	/// Index of the first split
@@ -1052,47 +1060,49 @@ pub trait DTrees_NodeTrait {
 	
 	/// Index of the first split
 	fn set_split(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Node_setSplit_int(self.as_raw_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_split")
+		unsafe { sys::cv_ml_DTrees_Node_setSplit_int(self.as_raw_mut_DTrees_Node(), val) }.into_result().expect("Infallible function failed: set_split")
 	}
 	
 }
 
 /// The class represents a decision tree node.
 pub struct DTrees_Node {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { DTrees_Node }
 
 impl Drop for DTrees_Node {
 	fn drop(&mut self) {
 		extern "C" { fn cv_DTrees_Node_delete(instance: *mut c_void); }
-		unsafe { cv_DTrees_Node_delete(self.as_raw_DTrees_Node()) };
+		unsafe { cv_DTrees_Node_delete(self.as_raw_mut_DTrees_Node()) };
 	}
 }
 
 impl DTrees_Node {
-	pub fn as_raw_DTrees_Node(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_DTrees_Node(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_DTrees_Node(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DTrees_Node {}
 
 impl crate::ml::DTrees_NodeTrait for DTrees_Node {
-	fn as_raw_DTrees_Node(&self) -> *mut c_void { self.ptr }
+	fn as_raw_DTrees_Node(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_DTrees_Node(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DTrees_Node {
 	pub fn default() -> Result<crate::ml::DTrees_Node> {
-		unsafe { sys::cv_ml_DTrees_Node_Node() }.into_result().map(|ptr| crate::ml::DTrees_Node { ptr })
+		unsafe { sys::cv_ml_DTrees_Node_Node() }.into_result().map(|ptr| unsafe { crate::ml::DTrees_Node::from_raw(ptr) })
 	}
 	
 }
 
 /// The class represents split in a decision tree.
 pub trait DTrees_SplitTrait {
-	fn as_raw_DTrees_Split(&self) -> *mut c_void;
+	fn as_raw_DTrees_Split(&self) -> *const c_void;
+	fn as_raw_mut_DTrees_Split(&mut self) -> *mut c_void;
+
 	/// Index of variable on which the split is created.
 	fn var_idx(&self) -> i32 {
 		unsafe { sys::cv_ml_DTrees_Split_varIdx_const(self.as_raw_DTrees_Split()) }.into_result().expect("Infallible function failed: var_idx")
@@ -1100,7 +1110,7 @@ pub trait DTrees_SplitTrait {
 	
 	/// Index of variable on which the split is created.
 	fn set_var_idx(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Split_setVarIdx_int(self.as_raw_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_var_idx")
+		unsafe { sys::cv_ml_DTrees_Split_setVarIdx_int(self.as_raw_mut_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_var_idx")
 	}
 	
 	/// If true, then the inverse split rule is used (i.e. left and right
@@ -1112,7 +1122,7 @@ pub trait DTrees_SplitTrait {
 	/// If true, then the inverse split rule is used (i.e. left and right
 	/// branches are exchanged in the rule expressions below).
 	fn set_inversed(&mut self, val: bool) -> () {
-		unsafe { sys::cv_ml_DTrees_Split_setInversed_bool(self.as_raw_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_inversed")
+		unsafe { sys::cv_ml_DTrees_Split_setInversed_bool(self.as_raw_mut_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_inversed")
 	}
 	
 	/// The split quality, a positive number. It is used to choose the best split.
@@ -1122,7 +1132,7 @@ pub trait DTrees_SplitTrait {
 	
 	/// The split quality, a positive number. It is used to choose the best split.
 	fn set_quality(&mut self, val: f32) -> () {
-		unsafe { sys::cv_ml_DTrees_Split_setQuality_float(self.as_raw_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_quality")
+		unsafe { sys::cv_ml_DTrees_Split_setQuality_float(self.as_raw_mut_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_quality")
 	}
 	
 	/// Index of the next split in the list of splits for the node
@@ -1132,7 +1142,7 @@ pub trait DTrees_SplitTrait {
 	
 	/// Index of the next split in the list of splits for the node
 	fn set_next(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Split_setNext_int(self.as_raw_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_next")
+		unsafe { sys::cv_ml_DTrees_Split_setNext_int(self.as_raw_mut_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_next")
 	}
 	
 	/// < The threshold value in case of split on an ordered variable.
@@ -1156,7 +1166,7 @@ pub trait DTrees_SplitTrait {
 	/// ```
 	/// 
 	fn set_c(&mut self, val: f32) -> () {
-		unsafe { sys::cv_ml_DTrees_Split_setC_float(self.as_raw_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_c")
+		unsafe { sys::cv_ml_DTrees_Split_setC_float(self.as_raw_mut_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_c")
 	}
 	
 	/// < Offset of the bitset used by the split on a categorical variable.
@@ -1180,40 +1190,40 @@ pub trait DTrees_SplitTrait {
 	/// ```
 	/// 
 	fn set_subset_ofs(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ml_DTrees_Split_setSubsetOfs_int(self.as_raw_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_subset_ofs")
+		unsafe { sys::cv_ml_DTrees_Split_setSubsetOfs_int(self.as_raw_mut_DTrees_Split(), val) }.into_result().expect("Infallible function failed: set_subset_ofs")
 	}
 	
 }
 
 /// The class represents split in a decision tree.
 pub struct DTrees_Split {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { DTrees_Split }
 
 impl Drop for DTrees_Split {
 	fn drop(&mut self) {
 		extern "C" { fn cv_DTrees_Split_delete(instance: *mut c_void); }
-		unsafe { cv_DTrees_Split_delete(self.as_raw_DTrees_Split()) };
+		unsafe { cv_DTrees_Split_delete(self.as_raw_mut_DTrees_Split()) };
 	}
 }
 
 impl DTrees_Split {
-	pub fn as_raw_DTrees_Split(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_DTrees_Split(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_DTrees_Split(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DTrees_Split {}
 
 impl crate::ml::DTrees_SplitTrait for DTrees_Split {
-	fn as_raw_DTrees_Split(&self) -> *mut c_void { self.ptr }
+	fn as_raw_DTrees_Split(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_DTrees_Split(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DTrees_Split {
 	pub fn default() -> Result<crate::ml::DTrees_Split> {
-		unsafe { sys::cv_ml_DTrees_Split_Split() }.into_result().map(|ptr| crate::ml::DTrees_Split { ptr })
+		unsafe { sys::cv_ml_DTrees_Split_Split() }.into_result().map(|ptr| unsafe { crate::ml::DTrees_Split::from_raw(ptr) })
 	}
 	
 }
@@ -1222,7 +1232,9 @@ impl DTrees_Split {
 /// ## See also
 /// @ref ml_intro_em
 pub trait EM: crate::ml::StatModel {
-	fn as_raw_EM(&self) -> *mut c_void;
+	fn as_raw_EM(&self) -> *const c_void;
+	fn as_raw_mut_EM(&mut self) -> *mut c_void;
+
 	/// The number of mixture components in the Gaussian mixture model.
 	///    Default value of the parameter is EM::DEFAULT_NCLUSTERS=5. Some of %EM implementation could
 	///    determine the optimal number of mixtures within a specified value range, but that is not the
@@ -1240,7 +1252,7 @@ pub trait EM: crate::ml::StatModel {
 	/// ## See also
 	/// setClustersNumber getClustersNumber
 	fn set_clusters_number(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_EM_setClustersNumber_int(self.as_raw_EM(), val) }.into_result()
+		unsafe { sys::cv_ml_EM_setClustersNumber_int(self.as_raw_mut_EM(), val) }.into_result()
 	}
 	
 	/// Constraint on covariance matrices which defines type of matrices.
@@ -1256,7 +1268,7 @@ pub trait EM: crate::ml::StatModel {
 	/// ## See also
 	/// setCovarianceMatrixType getCovarianceMatrixType
 	fn set_covariance_matrix_type(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_EM_setCovarianceMatrixType_int(self.as_raw_EM(), val) }.into_result()
+		unsafe { sys::cv_ml_EM_setCovarianceMatrixType_int(self.as_raw_mut_EM(), val) }.into_result()
 	}
 	
 	/// The termination criteria of the %EM algorithm.
@@ -1266,7 +1278,7 @@ pub trait EM: crate::ml::StatModel {
 	/// ## See also
 	/// setTermCriteria
 	fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_ml_EM_getTermCriteria_const(self.as_raw_EM()) }.into_result().map(|ptr| core::TermCriteria { ptr })
+		unsafe { sys::cv_ml_EM_getTermCriteria_const(self.as_raw_EM()) }.into_result()
 	}
 	
 	/// The termination criteria of the %EM algorithm.
@@ -1275,15 +1287,15 @@ pub trait EM: crate::ml::StatModel {
 	///    maximum number of iterations is EM::DEFAULT_MAX_ITERS=100.
 	/// ## See also
 	/// setTermCriteria getTermCriteria
-	fn set_term_criteria(&mut self, val: &core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_EM_setTermCriteria_const_TermCriteriaX(self.as_raw_EM(), val.as_raw_TermCriteria()) }.into_result()
+	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
+		unsafe { sys::cv_ml_EM_setTermCriteria_const_TermCriteriaX(self.as_raw_mut_EM(), &val) }.into_result()
 	}
 	
 	/// Returns weights of the mixtures
 	/// 
 	/// Returns vector with the number of elements equal to the number of mixtures.
 	fn get_weights(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_EM_getWeights_const(self.as_raw_EM()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_EM_getWeights_const(self.as_raw_EM()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Returns the cluster centers (means of the Gaussian mixture)
@@ -1291,15 +1303,15 @@ pub trait EM: crate::ml::StatModel {
 	/// Returns matrix with the number of rows equal to the number of mixtures and number of columns
 	/// equal to the space dimensionality.
 	fn get_means(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_EM_getMeans_const(self.as_raw_EM()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_EM_getMeans_const(self.as_raw_EM()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Returns covariation matrices
 	/// 
 	/// Returns vector of covariation matrices. Number of matrices is the number of gaussian mixtures,
 	/// each matrix is a square floating-point matrix NxN, where N is the space dimensionality.
-	fn get_covs(&self, covs: &mut types::VectorOfMat) -> Result<()> {
-		unsafe { sys::cv_ml_EM_getCovs_const_vector_Mat_X(self.as_raw_EM(), covs.as_raw_VectorOfMat()) }.into_result()
+	fn get_covs(&self, covs: &mut core::Vector::<core::Mat>) -> Result<()> {
+		unsafe { sys::cv_ml_EM_getCovs_const_vector_Mat_X(self.as_raw_EM(), covs.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
 	/// Returns posterior probabilities for the provided samples
@@ -1375,7 +1387,7 @@ pub trait EM: crate::ml::StatModel {
 		output_array_arg!(log_likelihoods);
 		output_array_arg!(labels);
 		output_array_arg!(probs);
-		unsafe { sys::cv_ml_EM_trainEM_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_EM(), samples.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_ml_EM_trainEM_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_EM(), samples.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Estimate the Gaussian mixture parameters from a samples set.
@@ -1420,7 +1432,7 @@ pub trait EM: crate::ml::StatModel {
 		output_array_arg!(log_likelihoods);
 		output_array_arg!(labels);
 		output_array_arg!(probs);
-		unsafe { sys::cv_ml_EM_trainE_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), covs0.as_raw__InputArray(), weights0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_ml_EM_trainE_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_EM(), samples.as_raw__InputArray(), means0.as_raw__InputArray(), covs0.as_raw__InputArray(), weights0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// Estimate the Gaussian mixture parameters from a samples set.
@@ -1452,7 +1464,7 @@ pub trait EM: crate::ml::StatModel {
 		output_array_arg!(log_likelihoods);
 		output_array_arg!(labels);
 		output_array_arg!(probs);
-		unsafe { sys::cv_ml_EM_trainM_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_ml_EM_trainM_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_mut_EM(), samples.as_raw__InputArray(), probs0.as_raw__InputArray(), log_likelihoods.as_raw__OutputArray(), labels.as_raw__OutputArray(), probs.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -1461,8 +1473,8 @@ impl dyn EM + '_ {
 	/// Creates empty %EM model.
 	/// The model should be trained then using StatModel::train(traindata, flags) method. Alternatively, you
 	/// can use one of the EM::train\* methods or load it from file using Algorithm::load\<EM\>(filename).
-	pub fn create() -> Result<types::PtrOfEM> {
-		unsafe { sys::cv_ml_EM_create() }.into_result().map(|ptr| types::PtrOfEM { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::EM>> {
+		unsafe { sys::cv_ml_EM_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::EM>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized EM from a file
@@ -1477,10 +1489,10 @@ impl dyn EM + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * node_name: String()
-	pub fn load(filepath: &str, node_name: &str) -> Result<types::PtrOfEM> {
+	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::EM>> {
 		string_arg!(filepath);
 		string_arg!(node_name);
-		unsafe { sys::cv_ml_EM_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfEM { ptr })
+		unsafe { sys::cv_ml_EM_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::EM>::from_raw(ptr) })
 	}
 	
 }
@@ -1488,7 +1500,9 @@ impl dyn EM + '_ {
 /// ## See also
 /// @ref ml_intro_knn
 pub trait KNearest: crate::ml::StatModel {
-	fn as_raw_KNearest(&self) -> *mut c_void;
+	fn as_raw_KNearest(&self) -> *const c_void;
+	fn as_raw_mut_KNearest(&mut self) -> *mut c_void;
+
 	/// Default number of neighbors to use in predict method.
 	/// ## See also
 	/// setDefaultK
@@ -1500,7 +1514,7 @@ pub trait KNearest: crate::ml::StatModel {
 	/// ## See also
 	/// setDefaultK getDefaultK
 	fn set_default_k(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_KNearest_setDefaultK_int(self.as_raw_KNearest(), val) }.into_result()
+		unsafe { sys::cv_ml_KNearest_setDefaultK_int(self.as_raw_mut_KNearest(), val) }.into_result()
 	}
 	
 	/// Whether classification or regression model should be trained.
@@ -1514,7 +1528,7 @@ pub trait KNearest: crate::ml::StatModel {
 	/// ## See also
 	/// setIsClassifier getIsClassifier
 	fn set_is_classifier(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_ml_KNearest_setIsClassifier_bool(self.as_raw_KNearest(), val) }.into_result()
+		unsafe { sys::cv_ml_KNearest_setIsClassifier_bool(self.as_raw_mut_KNearest(), val) }.into_result()
 	}
 	
 	/// Parameter for KDTree implementation.
@@ -1528,7 +1542,7 @@ pub trait KNearest: crate::ml::StatModel {
 	/// ## See also
 	/// setEmax getEmax
 	fn set_emax(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_KNearest_setEmax_int(self.as_raw_KNearest(), val) }.into_result()
+		unsafe { sys::cv_ml_KNearest_setEmax_int(self.as_raw_mut_KNearest(), val) }.into_result()
 	}
 	
 	/// %Algorithm type, one of KNearest::Types.
@@ -1542,7 +1556,7 @@ pub trait KNearest: crate::ml::StatModel {
 	/// ## See also
 	/// setAlgorithmType getAlgorithmType
 	fn set_algorithm_type(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_KNearest_setAlgorithmType_int(self.as_raw_KNearest(), val) }.into_result()
+		unsafe { sys::cv_ml_KNearest_setAlgorithmType_int(self.as_raw_mut_KNearest(), val) }.into_result()
 	}
 	
 	/// Finds the neighbors and predicts responses for input vectors.
@@ -1589,8 +1603,8 @@ impl dyn KNearest + '_ {
 	/// Creates the empty model
 	/// 
 	/// The static method creates empty %KNearest classifier. It should be then trained using StatModel::train method.
-	pub fn create() -> Result<types::PtrOfKNearest> {
-		unsafe { sys::cv_ml_KNearest_create() }.into_result().map(|ptr| types::PtrOfKNearest { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::KNearest>> {
+		unsafe { sys::cv_ml_KNearest_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::KNearest>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized knearest from a file
@@ -1600,9 +1614,9 @@ impl dyn KNearest + '_ {
 	/// 
 	/// ## Parameters
 	/// * filepath: path to serialized KNearest
-	pub fn load(filepath: &str) -> Result<types::PtrOfKNearest> {
+	pub fn load(filepath: &str) -> Result<core::Ptr::<dyn crate::ml::KNearest>> {
 		string_arg!(filepath);
-		unsafe { sys::cv_ml_KNearest_load_const_StringX(filepath.as_ptr()) }.into_result().map(|ptr| types::PtrOfKNearest { ptr })
+		unsafe { sys::cv_ml_KNearest_load_const_StringX(filepath.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::KNearest>::from_raw(ptr) })
 	}
 	
 }
@@ -1610,7 +1624,9 @@ impl dyn KNearest + '_ {
 /// ## See also
 /// @ref ml_intro_lr
 pub trait LogisticRegression: crate::ml::StatModel {
-	fn as_raw_LogisticRegression(&self) -> *mut c_void;
+	fn as_raw_LogisticRegression(&self) -> *const c_void;
+	fn as_raw_mut_LogisticRegression(&mut self) -> *mut c_void;
+
 	/// Learning rate.
 	/// ## See also
 	/// setLearningRate
@@ -1622,7 +1638,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	/// ## See also
 	/// setLearningRate getLearningRate
 	fn set_learning_rate(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_LogisticRegression_setLearningRate_double(self.as_raw_LogisticRegression(), val) }.into_result()
+		unsafe { sys::cv_ml_LogisticRegression_setLearningRate_double(self.as_raw_mut_LogisticRegression(), val) }.into_result()
 	}
 	
 	/// Number of iterations.
@@ -1636,7 +1652,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	/// ## See also
 	/// setIterations getIterations
 	fn set_iterations(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_LogisticRegression_setIterations_int(self.as_raw_LogisticRegression(), val) }.into_result()
+		unsafe { sys::cv_ml_LogisticRegression_setIterations_int(self.as_raw_mut_LogisticRegression(), val) }.into_result()
 	}
 	
 	/// Kind of regularization to be applied. See LogisticRegression::RegKinds.
@@ -1650,7 +1666,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	/// ## See also
 	/// setRegularization getRegularization
 	fn set_regularization(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_LogisticRegression_setRegularization_int(self.as_raw_LogisticRegression(), val) }.into_result()
+		unsafe { sys::cv_ml_LogisticRegression_setRegularization_int(self.as_raw_mut_LogisticRegression(), val) }.into_result()
 	}
 	
 	/// Kind of training method used. See LogisticRegression::Methods.
@@ -1664,7 +1680,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	/// ## See also
 	/// setTrainMethod getTrainMethod
 	fn set_train_method(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_LogisticRegression_setTrainMethod_int(self.as_raw_LogisticRegression(), val) }.into_result()
+		unsafe { sys::cv_ml_LogisticRegression_setTrainMethod_int(self.as_raw_mut_LogisticRegression(), val) }.into_result()
 	}
 	
 	/// Specifies the number of training samples taken in each step of Mini-Batch Gradient
@@ -1682,21 +1698,21 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	/// ## See also
 	/// setMiniBatchSize getMiniBatchSize
 	fn set_mini_batch_size(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_LogisticRegression_setMiniBatchSize_int(self.as_raw_LogisticRegression(), val) }.into_result()
+		unsafe { sys::cv_ml_LogisticRegression_setMiniBatchSize_int(self.as_raw_mut_LogisticRegression(), val) }.into_result()
 	}
 	
 	/// Termination criteria of the algorithm.
 	/// ## See also
 	/// setTermCriteria
 	fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_ml_LogisticRegression_getTermCriteria_const(self.as_raw_LogisticRegression()) }.into_result().map(|ptr| core::TermCriteria { ptr })
+		unsafe { sys::cv_ml_LogisticRegression_getTermCriteria_const(self.as_raw_LogisticRegression()) }.into_result()
 	}
 	
 	/// Termination criteria of the algorithm.
 	/// ## See also
 	/// setTermCriteria getTermCriteria
 	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_LogisticRegression_setTermCriteria_TermCriteria(self.as_raw_LogisticRegression(), val.as_raw_TermCriteria()) }.into_result()
+		unsafe { sys::cv_ml_LogisticRegression_setTermCriteria_TermCriteria(self.as_raw_mut_LogisticRegression(), &val) }.into_result()
 	}
 	
 	/// Predicts responses for input samples and returns a float type.
@@ -1721,7 +1737,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	/// For a two class classification problem, it returns a row matrix. It returns learnt parameters of
 	/// the Logistic Regression as a matrix of type CV_32F.
 	fn get_learnt_thetas(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_LogisticRegression_get_learnt_thetas_const(self.as_raw_LogisticRegression()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_LogisticRegression_get_learnt_thetas_const(self.as_raw_LogisticRegression()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 }
@@ -1730,8 +1746,8 @@ impl dyn LogisticRegression + '_ {
 	/// Creates empty model.
 	/// 
 	/// Creates Logistic Regression model with parameters given.
-	pub fn create() -> Result<types::PtrOfLogisticRegression> {
-		unsafe { sys::cv_ml_LogisticRegression_create() }.into_result().map(|ptr| types::PtrOfLogisticRegression { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::LogisticRegression>> {
+		unsafe { sys::cv_ml_LogisticRegression_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::LogisticRegression>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized LogisticRegression from a file
@@ -1746,10 +1762,10 @@ impl dyn LogisticRegression + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * node_name: String()
-	pub fn load(filepath: &str, node_name: &str) -> Result<types::PtrOfLogisticRegression> {
+	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::LogisticRegression>> {
 		string_arg!(filepath);
 		string_arg!(node_name);
-		unsafe { sys::cv_ml_LogisticRegression_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfLogisticRegression { ptr })
+		unsafe { sys::cv_ml_LogisticRegression_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::LogisticRegression>::from_raw(ptr) })
 	}
 	
 }
@@ -1757,7 +1773,9 @@ impl dyn LogisticRegression + '_ {
 /// ## See also
 /// @ref ml_intro_bayes
 pub trait NormalBayesClassifier: crate::ml::StatModel {
-	fn as_raw_NormalBayesClassifier(&self) -> *mut c_void;
+	fn as_raw_NormalBayesClassifier(&self) -> *const c_void;
+	fn as_raw_mut_NormalBayesClassifier(&mut self) -> *mut c_void;
+
 	/// Predicts the response for sample(s).
 	/// 
 	/// The method estimates the most probable classes for input vectors. Input vectors (one or more)
@@ -1780,8 +1798,8 @@ pub trait NormalBayesClassifier: crate::ml::StatModel {
 impl dyn NormalBayesClassifier + '_ {
 	/// Creates empty model
 	/// Use StatModel::train to train the model after creation.
-	pub fn create() -> Result<types::PtrOfNormalBayesClassifier> {
-		unsafe { sys::cv_ml_NormalBayesClassifier_create() }.into_result().map(|ptr| types::PtrOfNormalBayesClassifier { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::NormalBayesClassifier>> {
+		unsafe { sys::cv_ml_NormalBayesClassifier_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::NormalBayesClassifier>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized NormalBayesClassifier from a file
@@ -1796,10 +1814,10 @@ impl dyn NormalBayesClassifier + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * node_name: String()
-	pub fn load(filepath: &str, node_name: &str) -> Result<types::PtrOfNormalBayesClassifier> {
+	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::NormalBayesClassifier>> {
 		string_arg!(filepath);
 		string_arg!(node_name);
-		unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfNormalBayesClassifier { ptr })
+		unsafe { sys::cv_ml_NormalBayesClassifier_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::NormalBayesClassifier>::from_raw(ptr) })
 	}
 	
 }
@@ -1808,7 +1826,9 @@ impl dyn NormalBayesClassifier + '_ {
 /// It is used for optimizing statmodel accuracy by varying model parameters, the accuracy estimate
 /// being computed by cross-validation.
 pub trait ParamGridTrait {
-	fn as_raw_ParamGrid(&self) -> *mut c_void;
+	fn as_raw_ParamGrid(&self) -> *const c_void;
+	fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void;
+
 	/// Minimum value of the statmodel parameter. Default value is 0.
 	fn min_val(&self) -> f64 {
 		unsafe { sys::cv_ml_ParamGrid_minVal_const(self.as_raw_ParamGrid()) }.into_result().expect("Infallible function failed: min_val")
@@ -1816,7 +1836,7 @@ pub trait ParamGridTrait {
 	
 	/// Minimum value of the statmodel parameter. Default value is 0.
 	fn set_min_val(&mut self, val: f64) -> () {
-		unsafe { sys::cv_ml_ParamGrid_setMinVal_double(self.as_raw_ParamGrid(), val) }.into_result().expect("Infallible function failed: set_min_val")
+		unsafe { sys::cv_ml_ParamGrid_setMinVal_double(self.as_raw_mut_ParamGrid(), val) }.into_result().expect("Infallible function failed: set_min_val")
 	}
 	
 	/// Maximum value of the statmodel parameter. Default value is 0.
@@ -1826,7 +1846,7 @@ pub trait ParamGridTrait {
 	
 	/// Maximum value of the statmodel parameter. Default value is 0.
 	fn set_max_val(&mut self, val: f64) -> () {
-		unsafe { sys::cv_ml_ParamGrid_setMaxVal_double(self.as_raw_ParamGrid(), val) }.into_result().expect("Infallible function failed: set_max_val")
+		unsafe { sys::cv_ml_ParamGrid_setMaxVal_double(self.as_raw_mut_ParamGrid(), val) }.into_result().expect("Infallible function failed: set_max_val")
 	}
 	
 	/// Logarithmic step for iterating the statmodel parameter.
@@ -1848,7 +1868,7 @@ pub trait ParamGridTrait {
 	/// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BminVal%7D%20%2A%20%5Ctexttt%7BlogStep%7D%20%5En%20%3C%20%20%5Ctexttt%7BmaxVal%7D)
 	/// The grid is logarithmic, so logStep must always be greater than 1. Default value is 1.
 	fn set_log_step(&mut self, val: f64) -> () {
-		unsafe { sys::cv_ml_ParamGrid_setLogStep_double(self.as_raw_ParamGrid(), val) }.into_result().expect("Infallible function failed: set_log_step")
+		unsafe { sys::cv_ml_ParamGrid_setLogStep_double(self.as_raw_mut_ParamGrid(), val) }.into_result().expect("Infallible function failed: set_log_step")
 	}
 	
 }
@@ -1858,39 +1878,39 @@ pub trait ParamGridTrait {
 /// It is used for optimizing statmodel accuracy by varying model parameters, the accuracy estimate
 /// being computed by cross-validation.
 pub struct ParamGrid {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { ParamGrid }
 
 impl Drop for ParamGrid {
 	fn drop(&mut self) {
 		extern "C" { fn cv_ParamGrid_delete(instance: *mut c_void); }
-		unsafe { cv_ParamGrid_delete(self.as_raw_ParamGrid()) };
+		unsafe { cv_ParamGrid_delete(self.as_raw_mut_ParamGrid()) };
 	}
 }
 
 impl ParamGrid {
-	pub fn as_raw_ParamGrid(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_ParamGrid(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ParamGrid {}
 
 impl crate::ml::ParamGridTrait for ParamGrid {
-	fn as_raw_ParamGrid(&self) -> *mut c_void { self.ptr }
+	fn as_raw_ParamGrid(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_ParamGrid(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ParamGrid {
 	/// Default constructor
 	pub fn default() -> Result<crate::ml::ParamGrid> {
-		unsafe { sys::cv_ml_ParamGrid_ParamGrid() }.into_result().map(|ptr| crate::ml::ParamGrid { ptr })
+		unsafe { sys::cv_ml_ParamGrid_ParamGrid() }.into_result().map(|ptr| unsafe { crate::ml::ParamGrid::from_raw(ptr) })
 	}
 	
 	/// Constructor with parameters
 	pub fn for_range(_min_val: f64, _max_val: f64, _log_step: f64) -> Result<crate::ml::ParamGrid> {
-		unsafe { sys::cv_ml_ParamGrid_ParamGrid_double_double_double(_min_val, _max_val, _log_step) }.into_result().map(|ptr| crate::ml::ParamGrid { ptr })
+		unsafe { sys::cv_ml_ParamGrid_ParamGrid_double_double_double(_min_val, _max_val, _log_step) }.into_result().map(|ptr| unsafe { crate::ml::ParamGrid::from_raw(ptr) })
 	}
 	
 	/// Creates a ParamGrid Ptr that can be given to the %SVM::trainAuto method
@@ -1904,8 +1924,8 @@ impl ParamGrid {
 	/// * min_val: 0.
 	/// * max_val: 0.
 	/// * logstep: 1.
-	pub fn create(min_val: f64, max_val: f64, logstep: f64) -> Result<types::PtrOfParamGrid> {
-		unsafe { sys::cv_ml_ParamGrid_create_double_double_double(min_val, max_val, logstep) }.into_result().map(|ptr| types::PtrOfParamGrid { ptr })
+	pub fn create(min_val: f64, max_val: f64, logstep: f64) -> Result<core::Ptr::<crate::ml::ParamGrid>> {
+		unsafe { sys::cv_ml_ParamGrid_create_double_double_double(min_val, max_val, logstep) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::ml::ParamGrid>::from_raw(ptr) })
 	}
 	
 }
@@ -1914,7 +1934,9 @@ impl ParamGrid {
 /// ## See also
 /// @ref ml_intro_rtrees
 pub trait RTrees: crate::ml::DTrees {
-	fn as_raw_RTrees(&self) -> *mut c_void;
+	fn as_raw_RTrees(&self) -> *const c_void;
+	fn as_raw_mut_RTrees(&mut self) -> *mut c_void;
+
 	/// If true then variable importance will be calculated and then it can be retrieved by RTrees::getVarImportance.
 	///    Default value is false.
 	/// ## See also
@@ -1928,7 +1950,7 @@ pub trait RTrees: crate::ml::DTrees {
 	/// ## See also
 	/// setCalculateVarImportance getCalculateVarImportance
 	fn set_calculate_var_importance(&mut self, val: bool) -> Result<()> {
-		unsafe { sys::cv_ml_RTrees_setCalculateVarImportance_bool(self.as_raw_RTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_RTrees_setCalculateVarImportance_bool(self.as_raw_mut_RTrees(), val) }.into_result()
 	}
 	
 	/// The size of the randomly selected subset of features at each tree node and that are used
@@ -1948,7 +1970,7 @@ pub trait RTrees: crate::ml::DTrees {
 	/// ## See also
 	/// setActiveVarCount getActiveVarCount
 	fn set_active_var_count(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_RTrees_setActiveVarCount_int(self.as_raw_RTrees(), val) }.into_result()
+		unsafe { sys::cv_ml_RTrees_setActiveVarCount_int(self.as_raw_mut_RTrees(), val) }.into_result()
 	}
 	
 	/// The termination criteria that specifies when the training algorithm stops.
@@ -1961,7 +1983,7 @@ pub trait RTrees: crate::ml::DTrees {
 	/// ## See also
 	/// setTermCriteria
 	fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_ml_RTrees_getTermCriteria_const(self.as_raw_RTrees()) }.into_result().map(|ptr| core::TermCriteria { ptr })
+		unsafe { sys::cv_ml_RTrees_getTermCriteria_const(self.as_raw_RTrees()) }.into_result()
 	}
 	
 	/// The termination criteria that specifies when the training algorithm stops.
@@ -1973,8 +1995,8 @@ pub trait RTrees: crate::ml::DTrees {
 	///    TermCriteria::EPS, 50, 0.1)
 	/// ## See also
 	/// setTermCriteria getTermCriteria
-	fn set_term_criteria(&mut self, val: &core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_RTrees_setTermCriteria_const_TermCriteriaX(self.as_raw_RTrees(), val.as_raw_TermCriteria()) }.into_result()
+	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
+		unsafe { sys::cv_ml_RTrees_setTermCriteria_const_TermCriteriaX(self.as_raw_mut_RTrees(), &val) }.into_result()
 	}
 	
 	/// Returns the variable importance array.
@@ -1982,7 +2004,7 @@ pub trait RTrees: crate::ml::DTrees {
 	/// CalculateVarImportance is set to true. If this flag was set to false, the empty matrix is
 	/// returned.
 	fn get_var_importance(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_RTrees_getVarImportance_const(self.as_raw_RTrees()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_RTrees_getVarImportance_const(self.as_raw_RTrees()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Returns the result of each individual tree in the forest.
@@ -2006,8 +2028,8 @@ impl dyn RTrees + '_ {
 	/// Creates the empty model.
 	/// Use StatModel::train to train the model, StatModel::train to create and train the model,
 	/// Algorithm::load to load the pre-trained model.
-	pub fn create() -> Result<types::PtrOfRTrees> {
-		unsafe { sys::cv_ml_RTrees_create() }.into_result().map(|ptr| types::PtrOfRTrees { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::RTrees>> {
+		unsafe { sys::cv_ml_RTrees_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::RTrees>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized RTree from a file
@@ -2022,10 +2044,10 @@ impl dyn RTrees + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * node_name: String()
-	pub fn load(filepath: &str, node_name: &str) -> Result<types::PtrOfRTrees> {
+	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::RTrees>> {
 		string_arg!(filepath);
 		string_arg!(node_name);
-		unsafe { sys::cv_ml_RTrees_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfRTrees { ptr })
+		unsafe { sys::cv_ml_RTrees_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::RTrees>::from_raw(ptr) })
 	}
 	
 }
@@ -2033,7 +2055,9 @@ impl dyn RTrees + '_ {
 /// ## See also
 /// @ref ml_intro_svm
 pub trait SVM: crate::ml::StatModel {
-	fn as_raw_SVM(&self) -> *mut c_void;
+	fn as_raw_SVM(&self) -> *const c_void;
+	fn as_raw_mut_SVM(&mut self) -> *mut c_void;
+
 	/// Type of a %SVM formulation.
 	///    See SVM::Types. Default value is SVM::C_SVC.
 	/// ## See also
@@ -2047,7 +2071,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setType getType
 	fn set_type(&mut self, val: i32) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setType_int(self.as_raw_SVM(), val) }.into_result()
+		unsafe { sys::cv_ml_SVM_setType_int(self.as_raw_mut_SVM(), val) }.into_result()
 	}
 	
 	/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cgamma) of a kernel function.
@@ -2063,7 +2087,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setGamma getGamma
 	fn set_gamma(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setGamma_double(self.as_raw_SVM(), val) }.into_result()
+		unsafe { sys::cv_ml_SVM_setGamma_double(self.as_raw_mut_SVM(), val) }.into_result()
 	}
 	
 	/// Parameter _coef0_ of a kernel function.
@@ -2079,7 +2103,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setCoef0 getCoef0
 	fn set_coef0(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setCoef0_double(self.as_raw_SVM(), val) }.into_result()
+		unsafe { sys::cv_ml_SVM_setCoef0_double(self.as_raw_mut_SVM(), val) }.into_result()
 	}
 	
 	/// Parameter _degree_ of a kernel function.
@@ -2095,7 +2119,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setDegree getDegree
 	fn set_degree(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setDegree_double(self.as_raw_SVM(), val) }.into_result()
+		unsafe { sys::cv_ml_SVM_setDegree_double(self.as_raw_mut_SVM(), val) }.into_result()
 	}
 	
 	/// Parameter _C_ of a %SVM optimization problem.
@@ -2111,7 +2135,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setC getC
 	fn set_c(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setC_double(self.as_raw_SVM(), val) }.into_result()
+		unsafe { sys::cv_ml_SVM_setC_double(self.as_raw_mut_SVM(), val) }.into_result()
 	}
 	
 	/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) of a %SVM optimization problem.
@@ -2127,7 +2151,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setNu getNu
 	fn set_nu(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setNu_double(self.as_raw_SVM(), val) }.into_result()
+		unsafe { sys::cv_ml_SVM_setNu_double(self.as_raw_mut_SVM(), val) }.into_result()
 	}
 	
 	/// Parameter ![inline formula](https://latex.codecogs.com/png.latex?%5Cepsilon) of a %SVM optimization problem.
@@ -2143,7 +2167,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setP getP
 	fn set_p(&mut self, val: f64) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setP_double(self.as_raw_SVM(), val) }.into_result()
+		unsafe { sys::cv_ml_SVM_setP_double(self.as_raw_mut_SVM(), val) }.into_result()
 	}
 	
 	/// Optional weights in the SVM::C_SVC problem, assigned to particular classes.
@@ -2154,7 +2178,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setClassWeights
 	fn get_class_weights(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_SVM_getClassWeights_const(self.as_raw_SVM()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_SVM_getClassWeights_const(self.as_raw_SVM()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Optional weights in the SVM::C_SVC problem, assigned to particular classes.
@@ -2165,7 +2189,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setClassWeights getClassWeights
 	fn set_class_weights(&mut self, val: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setClassWeights_const_MatX(self.as_raw_SVM(), val.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_ml_SVM_setClassWeights_const_MatX(self.as_raw_mut_SVM(), val.as_raw_Mat()) }.into_result()
 	}
 	
 	/// Termination criteria of the iterative %SVM training procedure which solves a partial
@@ -2175,7 +2199,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// ## See also
 	/// setTermCriteria
 	fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_ml_SVM_getTermCriteria_const(self.as_raw_SVM()) }.into_result().map(|ptr| core::TermCriteria { ptr })
+		unsafe { sys::cv_ml_SVM_getTermCriteria_const(self.as_raw_SVM()) }.into_result()
 	}
 	
 	/// Termination criteria of the iterative %SVM training procedure which solves a partial
@@ -2184,8 +2208,8 @@ pub trait SVM: crate::ml::StatModel {
 	///    `TermCriteria( TermCriteria::MAX_ITER + TermCriteria::EPS, 1000, FLT_EPSILON )`;
 	/// ## See also
 	/// setTermCriteria getTermCriteria
-	fn set_term_criteria(&mut self, val: &core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setTermCriteria_const_TermCriteriaX(self.as_raw_SVM(), val.as_raw_TermCriteria()) }.into_result()
+	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
+		unsafe { sys::cv_ml_SVM_setTermCriteria_const_TermCriteriaX(self.as_raw_mut_SVM(), &val) }.into_result()
 	}
 	
 	/// Type of a %SVM kernel.
@@ -2197,13 +2221,13 @@ pub trait SVM: crate::ml::StatModel {
 	/// Initialize with one of predefined kernels.
 	/// See SVM::KernelTypes.
 	fn set_kernel(&mut self, kernel_type: i32) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setKernel_int(self.as_raw_SVM(), kernel_type) }.into_result()
+		unsafe { sys::cv_ml_SVM_setKernel_int(self.as_raw_mut_SVM(), kernel_type) }.into_result()
 	}
 	
 	/// Initialize with custom kernel.
 	/// See SVM::Kernel class for implementation details
-	fn set_custom_kernel(&mut self, _kernel: &types::PtrOfSVM_Kernel) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_setCustomKernel_const_Ptr_Kernel_X(self.as_raw_SVM(), _kernel.as_raw_PtrOfSVM_Kernel()) }.into_result()
+	fn set_custom_kernel(&mut self, _kernel: &core::Ptr::<dyn crate::ml::SVM_Kernel>) -> Result<()> {
+		unsafe { sys::cv_ml_SVM_setCustomKernel_const_Ptr_Kernel_X(self.as_raw_mut_SVM(), _kernel.as_raw_PtrOfSVM_Kernel()) }.into_result()
 	}
 	
 	/// Trains an %SVM with optimal parameters.
@@ -2250,8 +2274,8 @@ pub trait SVM: crate::ml::StatModel {
 	/// * coeff_grid: getDefaultGrid(COEF)
 	/// * degree_grid: getDefaultGrid(DEGREE)
 	/// * balanced: false
-	fn train_auto(&mut self, data: &types::PtrOfTrainData, k_fold: i32, cgrid: crate::ml::ParamGrid, gamma_grid: crate::ml::ParamGrid, p_grid: crate::ml::ParamGrid, nu_grid: crate::ml::ParamGrid, coeff_grid: crate::ml::ParamGrid, degree_grid: crate::ml::ParamGrid, balanced: bool) -> Result<bool> {
-		unsafe { sys::cv_ml_SVM_trainAuto_const_Ptr_TrainData_X_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(self.as_raw_SVM(), data.as_raw_PtrOfTrainData(), k_fold, cgrid.as_raw_ParamGrid(), gamma_grid.as_raw_ParamGrid(), p_grid.as_raw_ParamGrid(), nu_grid.as_raw_ParamGrid(), coeff_grid.as_raw_ParamGrid(), degree_grid.as_raw_ParamGrid(), balanced) }.into_result()
+	fn train_auto(&mut self, data: &core::Ptr::<dyn crate::ml::TrainData>, k_fold: i32, mut cgrid: crate::ml::ParamGrid, mut gamma_grid: crate::ml::ParamGrid, mut p_grid: crate::ml::ParamGrid, mut nu_grid: crate::ml::ParamGrid, mut coeff_grid: crate::ml::ParamGrid, mut degree_grid: crate::ml::ParamGrid, balanced: bool) -> Result<bool> {
+		unsafe { sys::cv_ml_SVM_trainAuto_const_Ptr_TrainData_X_int_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_ParamGrid_bool(self.as_raw_mut_SVM(), data.as_raw_PtrOfTrainData(), k_fold, cgrid.as_raw_mut_ParamGrid(), gamma_grid.as_raw_mut_ParamGrid(), p_grid.as_raw_mut_ParamGrid(), nu_grid.as_raw_mut_ParamGrid(), coeff_grid.as_raw_mut_ParamGrid(), degree_grid.as_raw_mut_ParamGrid(), balanced) }.into_result()
 	}
 	
 	/// Trains an %SVM with optimal parameters
@@ -2292,10 +2316,10 @@ pub trait SVM: crate::ml::StatModel {
 	/// * coeff_grid: SVM::getDefaultGridPtr(SVM::COEF)
 	/// * degree_grid: SVM::getDefaultGridPtr(SVM::DEGREE)
 	/// * balanced: false
-	fn train_auto_with_data(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, k_fold: i32, cgrid: types::PtrOfParamGrid, gamma_grid: types::PtrOfParamGrid, p_grid: types::PtrOfParamGrid, nu_grid: types::PtrOfParamGrid, coeff_grid: types::PtrOfParamGrid, degree_grid: types::PtrOfParamGrid, balanced: bool) -> Result<bool> {
+	fn train_auto_with_data(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, k_fold: i32, mut cgrid: core::Ptr::<crate::ml::ParamGrid>, mut gamma_grid: core::Ptr::<crate::ml::ParamGrid>, mut p_grid: core::Ptr::<crate::ml::ParamGrid>, mut nu_grid: core::Ptr::<crate::ml::ParamGrid>, mut coeff_grid: core::Ptr::<crate::ml::ParamGrid>, mut degree_grid: core::Ptr::<crate::ml::ParamGrid>, balanced: bool) -> Result<bool> {
 		input_array_arg!(samples);
 		input_array_arg!(responses);
-		unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayX_int_const__InputArrayX_int_Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__bool(self.as_raw_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_PtrOfParamGrid(), gamma_grid.as_raw_PtrOfParamGrid(), p_grid.as_raw_PtrOfParamGrid(), nu_grid.as_raw_PtrOfParamGrid(), coeff_grid.as_raw_PtrOfParamGrid(), degree_grid.as_raw_PtrOfParamGrid(), balanced) }.into_result()
+		unsafe { sys::cv_ml_SVM_trainAuto_const__InputArrayX_int_const__InputArrayX_int_Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__Ptr_ParamGrid__bool(self.as_raw_mut_SVM(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), k_fold, cgrid.as_raw_mut_PtrOfParamGrid(), gamma_grid.as_raw_mut_PtrOfParamGrid(), p_grid.as_raw_mut_PtrOfParamGrid(), nu_grid.as_raw_mut_PtrOfParamGrid(), coeff_grid.as_raw_mut_PtrOfParamGrid(), degree_grid.as_raw_mut_PtrOfParamGrid(), balanced) }.into_result()
 	}
 	
 	/// Retrieves all the support vectors
@@ -2303,7 +2327,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// The method returns all the support vectors as a floating-point matrix, where support vectors are
 	/// stored as matrix rows.
 	fn get_support_vectors(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_SVM_getSupportVectors_const(self.as_raw_SVM()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_SVM_getSupportVectors_const(self.as_raw_SVM()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Retrieves all the uncompressed support vectors of a linear %SVM
@@ -2312,7 +2336,7 @@ pub trait SVM: crate::ml::StatModel {
 	/// support vector, used for prediction, was derived from. They are returned in a floating-point
 	/// matrix, where the support vectors are stored as matrix rows.
 	fn get_uncompressed_support_vectors(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_SVM_getUncompressedSupportVectors_const(self.as_raw_SVM()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_SVM_getUncompressedSupportVectors_const(self.as_raw_SVM()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Retrieves the decision function
@@ -2348,7 +2372,7 @@ impl dyn SVM + '_ {
 	/// The function generates a grid for the specified parameter of the %SVM algorithm. The grid may be
 	/// passed to the function SVM::trainAuto.
 	pub fn get_default_grid(param_id: i32) -> Result<crate::ml::ParamGrid> {
-		unsafe { sys::cv_ml_SVM_getDefaultGrid_int(param_id) }.into_result().map(|ptr| crate::ml::ParamGrid { ptr })
+		unsafe { sys::cv_ml_SVM_getDefaultGrid_int(param_id) }.into_result().map(|ptr| unsafe { crate::ml::ParamGrid::from_raw(ptr) })
 	}
 	
 	/// Generates a grid for %SVM parameters.
@@ -2359,15 +2383,15 @@ impl dyn SVM + '_ {
 	/// 
 	/// The function generates a grid pointer for the specified parameter of the %SVM algorithm.
 	/// The grid may be passed to the function SVM::trainAuto.
-	pub fn get_default_grid_ptr(param_id: i32) -> Result<types::PtrOfParamGrid> {
-		unsafe { sys::cv_ml_SVM_getDefaultGridPtr_int(param_id) }.into_result().map(|ptr| types::PtrOfParamGrid { ptr })
+	pub fn get_default_grid_ptr(param_id: i32) -> Result<core::Ptr::<crate::ml::ParamGrid>> {
+		unsafe { sys::cv_ml_SVM_getDefaultGridPtr_int(param_id) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::ml::ParamGrid>::from_raw(ptr) })
 	}
 	
 	/// Creates empty model.
 	/// Use StatModel::train to train the model. Since %SVM has several parameters, you may want to
 	/// find the best parameters for your problem, it can be done with SVM::trainAuto.
-	pub fn create() -> Result<types::PtrOfSVM> {
-		unsafe { sys::cv_ml_SVM_create() }.into_result().map(|ptr| types::PtrOfSVM { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::SVM>> {
+		unsafe { sys::cv_ml_SVM_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::SVM>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized svm from a file
@@ -2377,20 +2401,22 @@ impl dyn SVM + '_ {
 	/// 
 	/// ## Parameters
 	/// * filepath: path to serialized svm
-	pub fn load(filepath: &str) -> Result<types::PtrOfSVM> {
+	pub fn load(filepath: &str) -> Result<core::Ptr::<dyn crate::ml::SVM>> {
 		string_arg!(filepath);
-		unsafe { sys::cv_ml_SVM_load_const_StringX(filepath.as_ptr()) }.into_result().map(|ptr| types::PtrOfSVM { ptr })
+		unsafe { sys::cv_ml_SVM_load_const_StringX(filepath.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::SVM>::from_raw(ptr) })
 	}
 	
 }
 pub trait SVM_Kernel: core::AlgorithmTrait {
-	fn as_raw_SVM_Kernel(&self) -> *mut c_void;
+	fn as_raw_SVM_Kernel(&self) -> *const c_void;
+	fn as_raw_mut_SVM_Kernel(&mut self) -> *mut c_void;
+
 	fn get_type(&self) -> Result<i32> {
 		unsafe { sys::cv_ml_SVM_Kernel_getType_const(self.as_raw_SVM_Kernel()) }.into_result()
 	}
 	
 	fn calc(&mut self, vcount: i32, n: i32, vecs: &f32, another: &f32, results: &mut f32) -> Result<()> {
-		unsafe { sys::cv_ml_SVM_Kernel_calc_int_int_const_floatX_const_floatX_floatX(self.as_raw_SVM_Kernel(), vcount, n, vecs, another, results) }.into_result()
+		unsafe { sys::cv_ml_SVM_Kernel_calc_int_int_const_floatX_const_floatX_floatX(self.as_raw_mut_SVM_Kernel(), vcount, n, vecs, another, results) }.into_result()
 	}
 	
 }
@@ -2467,17 +2493,19 @@ pub trait SVM_Kernel: core::AlgorithmTrait {
 /// ```
 /// 
 pub trait SVMSGD: crate::ml::StatModel {
-	fn as_raw_SVMSGD(&self) -> *mut c_void;
+	fn as_raw_SVMSGD(&self) -> *const c_void;
+	fn as_raw_mut_SVMSGD(&mut self) -> *mut c_void;
+
 	/// ## Returns
 	/// the weights of the trained model (decision function f(x) = weights * x + shift).
 	fn get_weights(&mut self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_SVMSGD_getWeights(self.as_raw_SVMSGD()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_SVMSGD_getWeights(self.as_raw_mut_SVMSGD()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// ## Returns
 	/// the shift of the trained model (decision function f(x) = weights * x + shift).
 	fn get_shift(&mut self) -> Result<f32> {
-		unsafe { sys::cv_ml_SVMSGD_getShift(self.as_raw_SVMSGD()) }.into_result()
+		unsafe { sys::cv_ml_SVMSGD_getShift(self.as_raw_mut_SVMSGD()) }.into_result()
 	}
 	
 	/// Function sets optimal parameters values for chosen SVM SGD model.
@@ -2489,7 +2517,7 @@ pub trait SVMSGD: crate::ml::StatModel {
 	/// * svmsgd_type: SVMSGD::ASGD
 	/// * margin_type: SVMSGD::SOFT_MARGIN
 	fn set_optimal_parameters(&mut self, svmsgd_type: i32, margin_type: i32) -> Result<()> {
-		unsafe { sys::cv_ml_SVMSGD_setOptimalParameters_int_int(self.as_raw_SVMSGD(), svmsgd_type, margin_type) }.into_result()
+		unsafe { sys::cv_ml_SVMSGD_setOptimalParameters_int_int(self.as_raw_mut_SVMSGD(), svmsgd_type, margin_type) }.into_result()
 	}
 	
 	/// %Algorithm type, one of SVMSGD::SvmsgdType.
@@ -2503,7 +2531,7 @@ pub trait SVMSGD: crate::ml::StatModel {
 	/// ## See also
 	/// setSvmsgdType getSvmsgdType
 	fn set_svmsgd_type(&mut self, svmsgd_type: i32) -> Result<()> {
-		unsafe { sys::cv_ml_SVMSGD_setSvmsgdType_int(self.as_raw_SVMSGD(), svmsgd_type) }.into_result()
+		unsafe { sys::cv_ml_SVMSGD_setSvmsgdType_int(self.as_raw_mut_SVMSGD(), svmsgd_type) }.into_result()
 	}
 	
 	/// %Margin type, one of SVMSGD::MarginType.
@@ -2517,7 +2545,7 @@ pub trait SVMSGD: crate::ml::StatModel {
 	/// ## See also
 	/// setMarginType getMarginType
 	fn set_margin_type(&mut self, margin_type: i32) -> Result<()> {
-		unsafe { sys::cv_ml_SVMSGD_setMarginType_int(self.as_raw_SVMSGD(), margin_type) }.into_result()
+		unsafe { sys::cv_ml_SVMSGD_setMarginType_int(self.as_raw_mut_SVMSGD(), margin_type) }.into_result()
 	}
 	
 	/// Parameter marginRegularization of a %SVMSGD optimization problem.
@@ -2531,7 +2559,7 @@ pub trait SVMSGD: crate::ml::StatModel {
 	/// ## See also
 	/// setMarginRegularization getMarginRegularization
 	fn set_margin_regularization(&mut self, margin_regularization: f32) -> Result<()> {
-		unsafe { sys::cv_ml_SVMSGD_setMarginRegularization_float(self.as_raw_SVMSGD(), margin_regularization) }.into_result()
+		unsafe { sys::cv_ml_SVMSGD_setMarginRegularization_float(self.as_raw_mut_SVMSGD(), margin_regularization) }.into_result()
 	}
 	
 	/// Parameter initialStepSize of a %SVMSGD optimization problem.
@@ -2545,7 +2573,7 @@ pub trait SVMSGD: crate::ml::StatModel {
 	/// ## See also
 	/// setInitialStepSize getInitialStepSize
 	fn set_initial_step_size(&mut self, initial_step_size: f32) -> Result<()> {
-		unsafe { sys::cv_ml_SVMSGD_setInitialStepSize_float(self.as_raw_SVMSGD(), initial_step_size) }.into_result()
+		unsafe { sys::cv_ml_SVMSGD_setInitialStepSize_float(self.as_raw_mut_SVMSGD(), initial_step_size) }.into_result()
 	}
 	
 	/// Parameter stepDecreasingPower of a %SVMSGD optimization problem.
@@ -2559,7 +2587,7 @@ pub trait SVMSGD: crate::ml::StatModel {
 	/// ## See also
 	/// setStepDecreasingPower getStepDecreasingPower
 	fn set_step_decreasing_power(&mut self, step_decreasing_power: f32) -> Result<()> {
-		unsafe { sys::cv_ml_SVMSGD_setStepDecreasingPower_float(self.as_raw_SVMSGD(), step_decreasing_power) }.into_result()
+		unsafe { sys::cv_ml_SVMSGD_setStepDecreasingPower_float(self.as_raw_mut_SVMSGD(), step_decreasing_power) }.into_result()
 	}
 	
 	/// Termination criteria of the training algorithm.
@@ -2568,7 +2596,7 @@ pub trait SVMSGD: crate::ml::StatModel {
 	/// ## See also
 	/// setTermCriteria
 	fn get_term_criteria(&self) -> Result<core::TermCriteria> {
-		unsafe { sys::cv_ml_SVMSGD_getTermCriteria_const(self.as_raw_SVMSGD()) }.into_result().map(|ptr| core::TermCriteria { ptr })
+		unsafe { sys::cv_ml_SVMSGD_getTermCriteria_const(self.as_raw_SVMSGD()) }.into_result()
 	}
 	
 	/// Termination criteria of the training algorithm.
@@ -2576,8 +2604,8 @@ pub trait SVMSGD: crate::ml::StatModel {
 	///    change between the iterations to make the algorithm continue (epsilon).
 	/// ## See also
 	/// setTermCriteria getTermCriteria
-	fn set_term_criteria(&mut self, val: &core::TermCriteria) -> Result<()> {
-		unsafe { sys::cv_ml_SVMSGD_setTermCriteria_const_TermCriteriaX(self.as_raw_SVMSGD(), val.as_raw_TermCriteria()) }.into_result()
+	fn set_term_criteria(&mut self, val: core::TermCriteria) -> Result<()> {
+		unsafe { sys::cv_ml_SVMSGD_setTermCriteria_const_TermCriteriaX(self.as_raw_mut_SVMSGD(), &val) }.into_result()
 	}
 	
 }
@@ -2586,8 +2614,8 @@ impl dyn SVMSGD + '_ {
 	/// Creates empty model.
 	/// Use StatModel::train to train the model. Since %SVMSGD has several parameters, you may want to
 	/// find the best parameters for your problem or use setOptimalParameters() to set some default parameters.
-	pub fn create() -> Result<types::PtrOfSVMSGD> {
-		unsafe { sys::cv_ml_SVMSGD_create() }.into_result().map(|ptr| types::PtrOfSVMSGD { ptr })
+	pub fn create() -> Result<core::Ptr::<dyn crate::ml::SVMSGD>> {
+		unsafe { sys::cv_ml_SVMSGD_create() }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::SVMSGD>::from_raw(ptr) })
 	}
 	
 	/// Loads and creates a serialized SVMSGD from a file
@@ -2602,16 +2630,18 @@ impl dyn SVMSGD + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * node_name: String()
-	pub fn load(filepath: &str, node_name: &str) -> Result<types::PtrOfSVMSGD> {
+	pub fn load(filepath: &str, node_name: &str) -> Result<core::Ptr::<dyn crate::ml::SVMSGD>> {
 		string_arg!(filepath);
 		string_arg!(node_name);
-		unsafe { sys::cv_ml_SVMSGD_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| types::PtrOfSVMSGD { ptr })
+		unsafe { sys::cv_ml_SVMSGD_load_const_StringX_const_StringX(filepath.as_ptr(), node_name.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::SVMSGD>::from_raw(ptr) })
 	}
 	
 }
 /// Base class for statistical models in OpenCV ML.
 pub trait StatModel: core::AlgorithmTrait {
-	fn as_raw_StatModel(&self) -> *mut c_void;
+	fn as_raw_StatModel(&self) -> *const c_void;
+	fn as_raw_mut_StatModel(&mut self) -> *mut c_void;
+
 	/// Returns the number of variables in training samples
 	fn get_var_count(&self) -> Result<i32> {
 		unsafe { sys::cv_ml_StatModel_getVarCount_const(self.as_raw_StatModel()) }.into_result()
@@ -2641,8 +2671,8 @@ pub trait StatModel: core::AlgorithmTrait {
 	/// 
 	/// ## C++ default parameters
 	/// * flags: 0
-	fn train_with_data(&mut self, train_data: &types::PtrOfTrainData, flags: i32) -> Result<bool> {
-		unsafe { sys::cv_ml_StatModel_train_const_Ptr_TrainData_X_int(self.as_raw_StatModel(), train_data.as_raw_PtrOfTrainData(), flags) }.into_result()
+	fn train_with_data(&mut self, train_data: &core::Ptr::<dyn crate::ml::TrainData>, flags: i32) -> Result<bool> {
+		unsafe { sys::cv_ml_StatModel_train_const_Ptr_TrainData_X_int(self.as_raw_mut_StatModel(), train_data.as_raw_PtrOfTrainData(), flags) }.into_result()
 	}
 	
 	/// Trains the statistical model
@@ -2654,7 +2684,7 @@ pub trait StatModel: core::AlgorithmTrait {
 	fn train(&mut self, samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray) -> Result<bool> {
 		input_array_arg!(samples);
 		input_array_arg!(responses);
-		unsafe { sys::cv_ml_StatModel_train_const__InputArrayX_int_const__InputArrayX(self.as_raw_StatModel(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_ml_StatModel_train_const__InputArrayX_int_const__InputArrayX(self.as_raw_mut_StatModel(), samples.as_raw__InputArray(), layout, responses.as_raw__InputArray()) }.into_result()
 	}
 	
 	/// Computes error on the training or test dataset
@@ -2670,7 +2700,7 @@ pub trait StatModel: core::AlgorithmTrait {
 	/// 
 	/// The method uses StatModel::predict to compute the error. For regression models the error is
 	/// computed as RMS, for classifiers - as a percent of missclassified samples (0%-100%).
-	fn calc_error(&self, data: &types::PtrOfTrainData, test: bool, resp: &mut dyn core::ToOutputArray) -> Result<f32> {
+	fn calc_error(&self, data: &core::Ptr::<dyn crate::ml::TrainData>, test: bool, resp: &mut dyn core::ToOutputArray) -> Result<f32> {
 		output_array_arg!(resp);
 		unsafe { sys::cv_ml_StatModel_calcError_const_const_Ptr_TrainData_X_bool_const__OutputArrayX(self.as_raw_StatModel(), data.as_raw_PtrOfTrainData(), test, resp.as_raw__OutputArray()) }.into_result()
 	}
@@ -2702,7 +2732,9 @@ pub trait StatModel: core::AlgorithmTrait {
 /// ## See also
 /// @ref ml_intro_data
 pub trait TrainData {
-	fn as_raw_TrainData(&self) -> *mut c_void;
+	fn as_raw_TrainData(&self) -> *const c_void;
+	fn as_raw_mut_TrainData(&mut self) -> *mut c_void;
+
 	fn get_layout(&self) -> Result<i32> {
 		unsafe { sys::cv_ml_TrainData_getLayout_const(self.as_raw_TrainData()) }.into_result()
 	}
@@ -2733,11 +2765,11 @@ pub trait TrainData {
 	}
 	
 	fn get_samples(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getSamples_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getSamples_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_missing(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getMissing_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getMissing_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Returns matrix of train samples
@@ -2758,7 +2790,7 @@ pub trait TrainData {
 	/// * compress_samples: true
 	/// * compress_vars: true
 	fn get_train_samples(&self, layout: i32, compress_samples: bool, compress_vars: bool) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTrainSamples_const_int_bool_bool(self.as_raw_TrainData(), layout, compress_samples, compress_vars) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTrainSamples_const_int_bool_bool(self.as_raw_TrainData(), layout, compress_samples, compress_vars) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Returns the vector of responses
@@ -2766,7 +2798,7 @@ pub trait TrainData {
 	/// The function returns ordered or the original categorical responses. Usually it's used in
 	/// regression algorithms.
 	fn get_train_responses(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTrainResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTrainResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Returns the vector of normalized categorical responses
@@ -2775,47 +2807,47 @@ pub trait TrainData {
 	/// classes>-1`. The actual label value can be retrieved then from the class label vector, see
 	/// TrainData::getClassLabels.
 	fn get_train_norm_cat_responses(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTrainNormCatResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTrainNormCatResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_test_responses(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTestResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTestResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_test_norm_cat_responses(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTestNormCatResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTestNormCatResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_responses(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_norm_cat_responses(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getNormCatResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getNormCatResponses_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_sample_weights(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getSampleWeights_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getSampleWeights_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_train_sample_weights(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTrainSampleWeights_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTrainSampleWeights_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_test_sample_weights(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTestSampleWeights_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTestSampleWeights_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_var_idx(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getVarIdx_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getVarIdx_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_var_type(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getVarType_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getVarType_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_var_symbol_flags(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getVarSymbolFlags_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getVarSymbolFlags_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_response_type(&self) -> Result<i32> {
@@ -2823,11 +2855,11 @@ pub trait TrainData {
 	}
 	
 	fn get_train_sample_idx(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTrainSampleIdx_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTrainSampleIdx_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_test_sample_idx(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTestSampleIdx_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTestSampleIdx_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_values(&self, vi: i32, sidx: &dyn core::ToInputArray, values: &mut f32) -> Result<()> {
@@ -2841,7 +2873,7 @@ pub trait TrainData {
 	}
 	
 	fn get_default_subst_values(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getDefaultSubstValues_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getDefaultSubstValues_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_cat_count(&self, vi: i32) -> Result<i32> {
@@ -2852,15 +2884,15 @@ pub trait TrainData {
 	/// 
 	/// The function returns vector of unique labels occurred in the responses.
 	fn get_class_labels(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getClassLabels_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getClassLabels_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_cat_ofs(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getCatOfs_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getCatOfs_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	fn get_cat_map(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getCatMap_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getCatMap_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Splits the training data into the training and test parts
@@ -2870,7 +2902,7 @@ pub trait TrainData {
 	/// ## C++ default parameters
 	/// * shuffle: true
 	fn set_train_test_split(&mut self, count: i32, shuffle: bool) -> Result<()> {
-		unsafe { sys::cv_ml_TrainData_setTrainTestSplit_int_bool(self.as_raw_TrainData(), count, shuffle) }.into_result()
+		unsafe { sys::cv_ml_TrainData_setTrainTestSplit_int_bool(self.as_raw_mut_TrainData(), count, shuffle) }.into_result()
 	}
 	
 	/// Splits the training data into the training and test parts
@@ -2885,21 +2917,21 @@ pub trait TrainData {
 	/// ## C++ default parameters
 	/// * shuffle: true
 	fn set_train_test_split_ratio(&mut self, ratio: f64, shuffle: bool) -> Result<()> {
-		unsafe { sys::cv_ml_TrainData_setTrainTestSplitRatio_double_bool(self.as_raw_TrainData(), ratio, shuffle) }.into_result()
+		unsafe { sys::cv_ml_TrainData_setTrainTestSplitRatio_double_bool(self.as_raw_mut_TrainData(), ratio, shuffle) }.into_result()
 	}
 	
 	fn shuffle_train_test(&mut self) -> Result<()> {
-		unsafe { sys::cv_ml_TrainData_shuffleTrainTest(self.as_raw_TrainData()) }.into_result()
+		unsafe { sys::cv_ml_TrainData_shuffleTrainTest(self.as_raw_mut_TrainData()) }.into_result()
 	}
 	
 	/// Returns matrix of test samples
 	fn get_test_samples(&self) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getTestSamples_const(self.as_raw_TrainData()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getTestSamples_const(self.as_raw_TrainData()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Returns vector of symbolic names captured in loadFromCSV()
-	fn get_names(&self, names: &mut types::VectorOfString) -> Result<()> {
-		unsafe { sys::cv_ml_TrainData_getNames_const_vector_String_X(self.as_raw_TrainData(), names.as_raw_VectorOfString()) }.into_result()
+	fn get_names(&self, names: &mut core::Vector::<String>) -> Result<()> {
+		unsafe { sys::cv_ml_TrainData_getNames_const_vector_String_X(self.as_raw_TrainData(), names.as_raw_mut_VectorOfString()) }.into_result()
 	}
 	
 }
@@ -2914,7 +2946,7 @@ impl dyn TrainData + '_ {
 	/// * vec: input vector (supported types: CV_32S, CV_32F, CV_64F)
 	/// * idx: 1D index vector
 	pub fn get_sub_vector(vec: &core::Mat, idx: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getSubVector_const_MatX_const_MatX(vec.as_raw_Mat(), idx.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getSubVector_const_MatX_const_MatX(vec.as_raw_Mat(), idx.as_raw_Mat()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Extract from matrix rows/cols specified by passed indexes.
@@ -2923,7 +2955,7 @@ impl dyn TrainData + '_ {
 	/// * idx: 1D index vector
 	/// * layout: specifies to extract rows (cv::ml::ROW_SAMPLES) or to extract columns (cv::ml::COL_SAMPLES)
 	pub fn get_sub_matrix(matrix: &core::Mat, idx: &core::Mat, layout: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_ml_TrainData_getSubMatrix_const_MatX_const_MatX_int(matrix.as_raw_Mat(), idx.as_raw_Mat(), layout) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_ml_TrainData_getSubMatrix_const_MatX_const_MatX_int(matrix.as_raw_Mat(), idx.as_raw_Mat(), layout) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Reads the dataset from a .csv file and returns the ready-to-use training data.
@@ -2963,10 +2995,10 @@ impl dyn TrainData + '_ {
 	/// * var_type_spec: String()
 	/// * delimiter: ','
 	/// * missch: '?'
-	pub fn load_from_csv(filename: &str, header_line_count: i32, response_start_idx: i32, response_end_idx: i32, var_type_spec: &str, delimiter: i8, missch: i8) -> Result<types::PtrOfTrainData> {
+	pub fn load_from_csv(filename: &str, header_line_count: i32, response_start_idx: i32, response_end_idx: i32, var_type_spec: &str, delimiter: i8, missch: i8) -> Result<core::Ptr::<dyn crate::ml::TrainData>> {
 		string_arg!(filename);
 		string_arg!(var_type_spec);
-		unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringX_int_int_int_const_StringX_char_char(filename.as_ptr(), header_line_count, response_start_idx, response_end_idx, var_type_spec.as_ptr(), delimiter, missch) }.into_result().map(|ptr| types::PtrOfTrainData { ptr })
+		unsafe { sys::cv_ml_TrainData_loadFromCSV_const_StringX_int_int_int_const_StringX_char_char(filename.as_ptr(), header_line_count, response_start_idx, response_end_idx, var_type_spec.as_ptr(), delimiter, missch) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::TrainData>::from_raw(ptr) })
 	}
 	
 	/// Creates training data from in-memory arrays.
@@ -2994,14 +3026,14 @@ impl dyn TrainData + '_ {
 	/// * sample_idx: noArray()
 	/// * sample_weights: noArray()
 	/// * var_type: noArray()
-	pub fn create(samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, var_idx: &dyn core::ToInputArray, sample_idx: &dyn core::ToInputArray, sample_weights: &dyn core::ToInputArray, var_type: &dyn core::ToInputArray) -> Result<types::PtrOfTrainData> {
+	pub fn create(samples: &dyn core::ToInputArray, layout: i32, responses: &dyn core::ToInputArray, var_idx: &dyn core::ToInputArray, sample_idx: &dyn core::ToInputArray, sample_weights: &dyn core::ToInputArray, var_type: &dyn core::ToInputArray) -> Result<core::Ptr::<dyn crate::ml::TrainData>> {
 		input_array_arg!(samples);
 		input_array_arg!(responses);
 		input_array_arg!(var_idx);
 		input_array_arg!(sample_idx);
 		input_array_arg!(sample_weights);
 		input_array_arg!(var_type);
-		unsafe { sys::cv_ml_TrainData_create_const__InputArrayX_int_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), var_idx.as_raw__InputArray(), sample_idx.as_raw__InputArray(), sample_weights.as_raw__InputArray(), var_type.as_raw__InputArray()) }.into_result().map(|ptr| types::PtrOfTrainData { ptr })
+		unsafe { sys::cv_ml_TrainData_create_const__InputArrayX_int_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(samples.as_raw__InputArray(), layout, responses.as_raw__InputArray(), var_idx.as_raw__InputArray(), sample_idx.as_raw__InputArray(), sample_weights.as_raw__InputArray(), var_type.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::ml::TrainData>::from_raw(ptr) })
 	}
 	
 }

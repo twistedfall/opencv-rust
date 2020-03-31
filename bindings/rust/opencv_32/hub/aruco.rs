@@ -107,7 +107,7 @@ pub enum PREDEFINED_DICTIONARY_NAME {
 /// ## C++ default parameters
 /// * flags: 0
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
-pub fn calibrate_camera_aruco_extended(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, counter: &dyn core::ToInputArray, board: &types::PtrOfBoard, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+pub fn calibrate_camera_aruco_extended(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, counter: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::Board>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 	input_array_arg!(corners);
 	input_array_arg!(ids);
 	input_array_arg!(counter);
@@ -118,7 +118,7 @@ pub fn calibrate_camera_aruco_extended(corners: &dyn core::ToInputArray, ids: &d
 	output_array_arg!(std_deviations_intrinsics);
 	output_array_arg!(std_deviations_extrinsics);
 	output_array_arg!(per_view_errors);
-	unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// It's the same function as #calibrateCameraAruco but without calibration error estimation.
@@ -128,7 +128,7 @@ pub fn calibrate_camera_aruco_extended(corners: &dyn core::ToInputArray, ids: &d
 /// * tvecs: noArray()
 /// * flags: 0
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
-pub fn calibrate_camera_aruco(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, counter: &dyn core::ToInputArray, board: &types::PtrOfBoard, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+pub fn calibrate_camera_aruco(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, counter: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::Board>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 	input_array_arg!(corners);
 	input_array_arg!(ids);
 	input_array_arg!(counter);
@@ -136,7 +136,7 @@ pub fn calibrate_camera_aruco(corners: &dyn core::ToInputArray, ids: &dyn core::
 	input_output_array_arg!(dist_coeffs);
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
-	unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_aruco_calibrateCameraAruco_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_Ptr_Board_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(corners.as_raw__InputArray(), ids.as_raw__InputArray(), counter.as_raw__InputArray(), board.as_raw_PtrOfBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Calibrate a camera using Charuco corners
@@ -175,7 +175,7 @@ pub fn calibrate_camera_aruco(corners: &dyn core::ToInputArray, ids: &dyn core::
 /// ## C++ default parameters
 /// * flags: 0
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
-pub fn calibrate_camera_charuco_extended(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &types::PtrOfCharucoBoard, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+pub fn calibrate_camera_charuco_extended(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::CharucoBoard>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, std_deviations_intrinsics: &mut dyn core::ToOutputArray, std_deviations_extrinsics: &mut dyn core::ToOutputArray, per_view_errors: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 	input_array_arg!(charuco_corners);
 	input_array_arg!(charuco_ids);
 	input_output_array_arg!(camera_matrix);
@@ -185,7 +185,7 @@ pub fn calibrate_camera_charuco_extended(charuco_corners: &dyn core::ToInputArra
 	output_array_arg!(std_deviations_intrinsics);
 	output_array_arg!(std_deviations_extrinsics);
 	output_array_arg!(per_view_errors);
-	unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// It's the same function as #calibrateCameraCharuco but without calibration error estimation.
@@ -195,14 +195,14 @@ pub fn calibrate_camera_charuco_extended(charuco_corners: &dyn core::ToInputArra
 /// * tvecs: noArray()
 /// * flags: 0
 /// * criteria: TermCriteria(TermCriteria::COUNT+TermCriteria::EPS,30,DBL_EPSILON)
-pub fn calibrate_camera_charuco(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &types::PtrOfCharucoBoard, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
+pub fn calibrate_camera_charuco(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::CharucoBoard>, image_size: core::Size, camera_matrix: &mut dyn core::ToInputOutputArray, dist_coeffs: &mut dyn core::ToInputOutputArray, rvecs: &mut dyn core::ToOutputArray, tvecs: &mut dyn core::ToOutputArray, flags: i32, criteria: core::TermCriteria) -> Result<f64> {
 	input_array_arg!(charuco_corners);
 	input_array_arg!(charuco_ids);
 	input_output_array_arg!(camera_matrix);
 	input_output_array_arg!(dist_coeffs);
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
-	unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_aruco_calibrateCameraCharuco_const__InputArrayX_const__InputArrayX_const_Ptr_CharucoBoard_X_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(charuco_corners.as_raw__InputArray(), charuco_ids.as_raw__InputArray(), board.as_raw_PtrOfCharucoBoard(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Detect ChArUco Diamond markers
@@ -266,7 +266,7 @@ pub fn detect_charuco_diamond(image: &dyn core::ToInputArray, marker_corners: &d
 /// ## C++ default parameters
 /// * parameters: DetectorParameters::create()
 /// * rejected_img_points: noArray()
-pub fn detect_markers(image: &dyn core::ToInputArray, dictionary: &types::PtrOfDictionary, corners: &mut dyn core::ToOutputArray, ids: &mut dyn core::ToOutputArray, parameters: &types::PtrOfDetectorParameters, rejected_img_points: &mut dyn core::ToOutputArray) -> Result<()> {
+pub fn detect_markers(image: &dyn core::ToInputArray, dictionary: &core::Ptr::<crate::aruco::Dictionary>, corners: &mut dyn core::ToOutputArray, ids: &mut dyn core::ToOutputArray, parameters: &core::Ptr::<crate::aruco::DetectorParameters>, rejected_img_points: &mut dyn core::ToOutputArray) -> Result<()> {
 	input_array_arg!(image);
 	output_array_arg!(corners);
 	output_array_arg!(ids);
@@ -301,7 +301,7 @@ pub fn draw_axis(image: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn c
 /// ## C++ default parameters
 /// * margin_size: 0
 /// * border_bits: 1
-pub fn draw_charuco_diamond(dictionary: &types::PtrOfDictionary, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
+pub fn draw_charuco_diamond(dictionary: &core::Ptr::<crate::aruco::Dictionary>, ids: core::Vec4i, square_length: i32, marker_length: i32, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
 	output_array_arg!(img);
 	unsafe { sys::cv_aruco_drawCharucoDiamond_const_Ptr_Dictionary_X_Vec4i_int_int_const__OutputArrayX_int_int(dictionary.as_raw_PtrOfDictionary(), &ids, square_length, marker_length, img.as_raw__OutputArray(), margin_size, border_bits) }.into_result()
 }
@@ -396,7 +396,7 @@ pub fn draw_detected_markers(image: &mut dyn core::ToInputOutputArray, corners: 
 /// 
 /// ## C++ default parameters
 /// * border_bits: 1
-pub fn draw_marker(dictionary: &types::PtrOfDictionary, id: i32, side_pixels: i32, img: &mut dyn core::ToOutputArray, border_bits: i32) -> Result<()> {
+pub fn draw_marker(dictionary: &core::Ptr::<crate::aruco::Dictionary>, id: i32, side_pixels: i32, img: &mut dyn core::ToOutputArray, border_bits: i32) -> Result<()> {
 	output_array_arg!(img);
 	unsafe { sys::cv_aruco_drawMarker_const_Ptr_Dictionary_X_int_int_const__OutputArrayX_int(dictionary.as_raw_PtrOfDictionary(), id, side_pixels, img.as_raw__OutputArray(), border_bits) }.into_result()
 }
@@ -420,7 +420,7 @@ pub fn draw_marker(dictionary: &types::PtrOfDictionary, id: i32, side_pixels: i3
 /// ## C++ default parameters
 /// * margin_size: 0
 /// * border_bits: 1
-pub fn draw_planar_board(board: &types::PtrOfBoard, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
+pub fn draw_planar_board(board: &core::Ptr::<crate::aruco::Board>, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
 	output_array_arg!(img);
 	unsafe { sys::cv_aruco_drawPlanarBoard_const_Ptr_Board_X_Size_const__OutputArrayX_int_int(board.as_raw_PtrOfBoard(), &out_size, img.as_raw__OutputArray(), margin_size, border_bits) }.into_result()
 }
@@ -451,7 +451,7 @@ pub fn draw_planar_board(board: &types::PtrOfBoard, out_size: core::Size, img: &
 /// Input markers that are not included in the board layout are ignored.
 /// The function returns the number of markers from the input employed for the board pose estimation.
 /// Note that returning a 0 means the pose has not been estimated.
-pub fn estimate_pose_board(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, board: &types::PtrOfBoard, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray) -> Result<i32> {
+pub fn estimate_pose_board(corners: &dyn core::ToInputArray, ids: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::Board>, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray) -> Result<i32> {
 	input_array_arg!(corners);
 	input_array_arg!(ids);
 	input_array_arg!(camera_matrix);
@@ -477,7 +477,7 @@ pub fn estimate_pose_board(corners: &dyn core::ToInputArray, ids: &dyn core::ToI
 /// This function estimates a Charuco board pose from some detected corners.
 /// The function checks if the input corners are enough and valid to perform pose estimation.
 /// If pose estimation is valid, returns true, else returns false.
-pub fn estimate_pose_charuco_board(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &types::PtrOfCharucoBoard, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray) -> Result<bool> {
+pub fn estimate_pose_charuco_board(charuco_corners: &dyn core::ToInputArray, charuco_ids: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::CharucoBoard>, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, rvec: &mut dyn core::ToOutputArray, tvec: &mut dyn core::ToOutputArray) -> Result<bool> {
 	input_array_arg!(charuco_corners);
 	input_array_arg!(charuco_ids);
 	input_array_arg!(camera_matrix);
@@ -526,8 +526,8 @@ pub fn estimate_pose_single_markers(corners: &dyn core::ToInputArray, marker_len
 
 /// ## See also
 /// generateCustomDictionary
-pub fn custom_dictionary(n_markers: i32, marker_size: i32) -> Result<types::PtrOfDictionary> {
-	unsafe { sys::cv_aruco_generateCustomDictionary_int_int(n_markers, marker_size) }.into_result().map(|ptr| types::PtrOfDictionary { ptr })
+pub fn custom_dictionary(n_markers: i32, marker_size: i32) -> Result<core::Ptr::<crate::aruco::Dictionary>> {
+	unsafe { sys::cv_aruco_generateCustomDictionary_int_int(n_markers, marker_size) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) })
 }
 
 /// Generates a new customizable marker dictionary
@@ -541,18 +541,18 @@ pub fn custom_dictionary(n_markers: i32, marker_size: i32) -> Result<types::PtrO
 /// by markerSize x markerSize bits. If baseDictionary is provided, its markers are directly
 /// included and the rest are generated based on them. If the size of baseDictionary is higher
 /// than nMarkers, only the first nMarkers in baseDictionary are taken and no new marker is added.
-pub fn custom_dictionary_from(n_markers: i32, marker_size: i32, base_dictionary: &types::PtrOfDictionary) -> Result<types::PtrOfDictionary> {
-	unsafe { sys::cv_aruco_generateCustomDictionary_int_int_const_Ptr_Dictionary_X(n_markers, marker_size, base_dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| types::PtrOfDictionary { ptr })
+pub fn custom_dictionary_from(n_markers: i32, marker_size: i32, base_dictionary: &core::Ptr::<crate::aruco::Dictionary>) -> Result<core::Ptr::<crate::aruco::Dictionary>> {
+	unsafe { sys::cv_aruco_generateCustomDictionary_int_int_const_Ptr_Dictionary_X(n_markers, marker_size, base_dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) })
 }
 
 /// Returns one of the predefined dictionaries defined in PREDEFINED_DICTIONARY_NAME
-pub fn get_predefined_dictionary(name: crate::aruco::PREDEFINED_DICTIONARY_NAME) -> Result<types::PtrOfDictionary> {
-	unsafe { sys::cv_aruco_getPredefinedDictionary_PREDEFINED_DICTIONARY_NAME(name) }.into_result().map(|ptr| types::PtrOfDictionary { ptr })
+pub fn get_predefined_dictionary(name: crate::aruco::PREDEFINED_DICTIONARY_NAME) -> Result<core::Ptr::<crate::aruco::Dictionary>> {
+	unsafe { sys::cv_aruco_getPredefinedDictionary_PREDEFINED_DICTIONARY_NAME(name) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) })
 }
 
 /// Returns one of the predefined dictionaries referenced by DICT_*.
-pub fn get_predefined_dictionary_i32(dict: i32) -> Result<types::PtrOfDictionary> {
-	unsafe { sys::cv_aruco_getPredefinedDictionary_int(dict) }.into_result().map(|ptr| types::PtrOfDictionary { ptr })
+pub fn get_predefined_dictionary_i32(dict: i32) -> Result<core::Ptr::<crate::aruco::Dictionary>> {
+	unsafe { sys::cv_aruco_getPredefinedDictionary_int(dict) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) })
 }
 
 /// Interpolate position of ChArUco board corners
@@ -583,7 +583,7 @@ pub fn get_predefined_dictionary_i32(dict: i32) -> Result<types::PtrOfDictionary
 /// * camera_matrix: noArray()
 /// * dist_coeffs: noArray()
 /// * min_markers: 2
-pub fn interpolate_corners_charuco(marker_corners: &dyn core::ToInputArray, marker_ids: &dyn core::ToInputArray, image: &dyn core::ToInputArray, board: &types::PtrOfCharucoBoard, charuco_corners: &mut dyn core::ToOutputArray, charuco_ids: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, min_markers: i32) -> Result<i32> {
+pub fn interpolate_corners_charuco(marker_corners: &dyn core::ToInputArray, marker_ids: &dyn core::ToInputArray, image: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::CharucoBoard>, charuco_corners: &mut dyn core::ToOutputArray, charuco_ids: &mut dyn core::ToOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, min_markers: i32) -> Result<i32> {
 	input_array_arg!(marker_corners);
 	input_array_arg!(marker_ids);
 	input_array_arg!(image);
@@ -633,7 +633,7 @@ pub fn interpolate_corners_charuco(marker_corners: &dyn core::ToInputArray, mark
 /// * check_all_orders: true
 /// * recovered_idxs: noArray()
 /// * parameters: DetectorParameters::create()
-pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &types::PtrOfBoard, detected_corners: &mut dyn core::ToInputOutputArray, detected_ids: &mut dyn core::ToInputOutputArray, rejected_corners: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, min_rep_distance: f32, error_correction_rate: f32, check_all_orders: bool, recovered_idxs: &mut dyn core::ToOutputArray, parameters: &types::PtrOfDetectorParameters) -> Result<()> {
+pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &core::Ptr::<crate::aruco::Board>, detected_corners: &mut dyn core::ToInputOutputArray, detected_ids: &mut dyn core::ToInputOutputArray, rejected_corners: &mut dyn core::ToInputOutputArray, camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, min_rep_distance: f32, error_correction_rate: f32, check_all_orders: bool, recovered_idxs: &mut dyn core::ToOutputArray, parameters: &core::Ptr::<crate::aruco::DetectorParameters>) -> Result<()> {
 	input_array_arg!(image);
 	input_output_array_arg!(detected_corners);
 	input_output_array_arg!(detected_ids);
@@ -653,39 +653,41 @@ pub fn refine_detected_markers(image: &dyn core::ToInputArray, board: &types::Pt
 /// - The dictionary which indicates the type of markers of the board
 /// - The identifier of all the markers in the board.
 pub trait BoardTrait {
-	fn as_raw_Board(&self) -> *mut c_void;
+	fn as_raw_Board(&self) -> *const c_void;
+	fn as_raw_mut_Board(&mut self) -> *mut c_void;
+
 	/// array of object points of all the marker corners in the board
 	/// each marker include its 4 corners in CCW order. For M markers, the size is Mx4.
-	fn obj_points(&mut self) -> types::VectorOfVectorOfPoint3f {
-		unsafe { sys::cv_aruco_Board_objPoints(self.as_raw_Board()) }.into_result().map(|ptr| types::VectorOfVectorOfPoint3f { ptr }).expect("Infallible function failed: obj_points")
+	fn obj_points(&mut self) -> core::Vector::<core::Vector::<core::Point3f>> {
+		unsafe { sys::cv_aruco_Board_objPoints(self.as_raw_mut_Board()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Vector::<core::Point3f>>::from_raw(ptr) }).expect("Infallible function failed: obj_points")
 	}
 	
 	/// array of object points of all the marker corners in the board
 	/// each marker include its 4 corners in CCW order. For M markers, the size is Mx4.
-	fn set_obj_points(&mut self, val: types::VectorOfVectorOfPoint3f) -> () {
-		unsafe { sys::cv_aruco_Board_setObjPoints_vector_vector_Point3f__(self.as_raw_Board(), val.as_raw_VectorOfVectorOfPoint3f()) }.into_result().expect("Infallible function failed: set_obj_points")
+	fn set_obj_points(&mut self, mut val: core::Vector::<core::Vector::<core::Point3f>>) -> () {
+		unsafe { sys::cv_aruco_Board_setObjPoints_vector_vector_Point3f__(self.as_raw_mut_Board(), val.as_raw_mut_VectorOfVectorOfPoint3f()) }.into_result().expect("Infallible function failed: set_obj_points")
 	}
 	
 	/// the dictionary of markers employed for this board
-	fn dictionary(&mut self) -> types::PtrOfDictionary {
-		unsafe { sys::cv_aruco_Board_dictionary(self.as_raw_Board()) }.into_result().map(|ptr| types::PtrOfDictionary { ptr }).expect("Infallible function failed: dictionary")
+	fn dictionary(&mut self) -> core::Ptr::<crate::aruco::Dictionary> {
+		unsafe { sys::cv_aruco_Board_dictionary(self.as_raw_mut_Board()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) }).expect("Infallible function failed: dictionary")
 	}
 	
 	/// the dictionary of markers employed for this board
-	fn set_dictionary(&mut self, val: types::PtrOfDictionary) -> () {
-		unsafe { sys::cv_aruco_Board_setDictionary_Ptr_Dictionary_(self.as_raw_Board(), val.as_raw_PtrOfDictionary()) }.into_result().expect("Infallible function failed: set_dictionary")
+	fn set_dictionary(&mut self, mut val: core::Ptr::<crate::aruco::Dictionary>) -> () {
+		unsafe { sys::cv_aruco_Board_setDictionary_Ptr_Dictionary_(self.as_raw_mut_Board(), val.as_raw_mut_PtrOfDictionary()) }.into_result().expect("Infallible function failed: set_dictionary")
 	}
 	
 	/// vector of the identifiers of the markers in the board (same size than objPoints)
 	/// The identifiers refers to the board dictionary
-	fn ids(&mut self) -> types::VectorOfi32 {
-		unsafe { sys::cv_aruco_Board_ids(self.as_raw_Board()) }.into_result().map(|ptr| types::VectorOfi32 { ptr }).expect("Infallible function failed: ids")
+	fn ids(&mut self) -> core::Vector::<i32> {
+		unsafe { sys::cv_aruco_Board_ids(self.as_raw_mut_Board()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) }).expect("Infallible function failed: ids")
 	}
 	
 	/// vector of the identifiers of the markers in the board (same size than objPoints)
 	/// The identifiers refers to the board dictionary
-	fn set_ids(&mut self, val: types::VectorOfi32) -> () {
-		unsafe { sys::cv_aruco_Board_setIds_vector_int_(self.as_raw_Board(), val.as_raw_VectorOfi32()) }.into_result().expect("Infallible function failed: set_ids")
+	fn set_ids(&mut self, mut val: core::Vector::<i32>) -> () {
+		unsafe { sys::cv_aruco_Board_setIds_vector_int_(self.as_raw_mut_Board(), val.as_raw_mut_VectorOfi32()) }.into_result().expect("Infallible function failed: set_ids")
 	}
 	
 }
@@ -699,28 +701,28 @@ pub trait BoardTrait {
 /// - The dictionary which indicates the type of markers of the board
 /// - The identifier of all the markers in the board.
 pub struct Board {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { Board }
 
 impl Drop for Board {
 	fn drop(&mut self) {
 		extern "C" { fn cv_Board_delete(instance: *mut c_void); }
-		unsafe { cv_Board_delete(self.as_raw_Board()) };
+		unsafe { cv_Board_delete(self.as_raw_mut_Board()) };
 	}
 }
 
 impl Board {
-	pub fn as_raw_Board(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_Board(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_Board(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Board {}
 
 impl crate::aruco::BoardTrait for Board {
-	fn as_raw_Board(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Board(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Board(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Board {
@@ -730,10 +732,10 @@ impl Board {
 	/// * objPoints: array of object points of all the marker corners in the board
 	/// * dictionary: the dictionary of markers employed for this board
 	/// * ids: vector of the identifiers of the markers in the board
-	pub fn create(obj_points: &dyn core::ToInputArray, dictionary: &types::PtrOfDictionary, ids: &dyn core::ToInputArray) -> Result<types::PtrOfBoard> {
+	pub fn create(obj_points: &dyn core::ToInputArray, dictionary: &core::Ptr::<crate::aruco::Dictionary>, ids: &dyn core::ToInputArray) -> Result<core::Ptr::<crate::aruco::Board>> {
 		input_array_arg!(obj_points);
 		input_array_arg!(ids);
-		unsafe { sys::cv_aruco_Board_create_const__InputArrayX_const_Ptr_Dictionary_X_const__InputArrayX(obj_points.as_raw__InputArray(), dictionary.as_raw_PtrOfDictionary(), ids.as_raw__InputArray()) }.into_result().map(|ptr| types::PtrOfBoard { ptr })
+		unsafe { sys::cv_aruco_Board_create_const__InputArrayX_const_Ptr_Dictionary_X_const__InputArrayX(obj_points.as_raw__InputArray(), dictionary.as_raw_PtrOfDictionary(), ids.as_raw__InputArray()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Board>::from_raw(ptr) })
 	}
 	
 }
@@ -745,29 +747,31 @@ impl Board {
 /// calibration and pose estimation.
 /// This class also allows the easy creation and drawing of ChArUco boards.
 pub trait CharucoBoardTrait: crate::aruco::BoardTrait {
-	fn as_raw_CharucoBoard(&self) -> *mut c_void;
-	fn chessboard_corners(&mut self) -> types::VectorOfPoint3f {
-		unsafe { sys::cv_aruco_CharucoBoard_chessboardCorners(self.as_raw_CharucoBoard()) }.into_result().map(|ptr| types::VectorOfPoint3f { ptr }).expect("Infallible function failed: chessboard_corners")
+	fn as_raw_CharucoBoard(&self) -> *const c_void;
+	fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void;
+
+	fn chessboard_corners(&mut self) -> core::Vector::<core::Point3f> {
+		unsafe { sys::cv_aruco_CharucoBoard_chessboardCorners(self.as_raw_mut_CharucoBoard()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Point3f>::from_raw(ptr) }).expect("Infallible function failed: chessboard_corners")
 	}
 	
-	fn set_chessboard_corners(&mut self, val: types::VectorOfPoint3f) -> () {
-		unsafe { sys::cv_aruco_CharucoBoard_setChessboardCorners_vector_Point3f_(self.as_raw_CharucoBoard(), val.as_raw_VectorOfPoint3f()) }.into_result().expect("Infallible function failed: set_chessboard_corners")
+	fn set_chessboard_corners(&mut self, mut val: core::Vector::<core::Point3f>) -> () {
+		unsafe { sys::cv_aruco_CharucoBoard_setChessboardCorners_vector_Point3f_(self.as_raw_mut_CharucoBoard(), val.as_raw_mut_VectorOfPoint3f()) }.into_result().expect("Infallible function failed: set_chessboard_corners")
 	}
 	
-	fn nearest_marker_idx(&mut self) -> types::VectorOfVectorOfi32 {
-		unsafe { sys::cv_aruco_CharucoBoard_nearestMarkerIdx(self.as_raw_CharucoBoard()) }.into_result().map(|ptr| types::VectorOfVectorOfi32 { ptr }).expect("Infallible function failed: nearest_marker_idx")
+	fn nearest_marker_idx(&mut self) -> core::Vector::<core::Vector::<i32>> {
+		unsafe { sys::cv_aruco_CharucoBoard_nearestMarkerIdx(self.as_raw_mut_CharucoBoard()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Vector::<i32>>::from_raw(ptr) }).expect("Infallible function failed: nearest_marker_idx")
 	}
 	
-	fn set_nearest_marker_idx(&mut self, val: types::VectorOfVectorOfi32) -> () {
-		unsafe { sys::cv_aruco_CharucoBoard_setNearestMarkerIdx_vector_vector_int__(self.as_raw_CharucoBoard(), val.as_raw_VectorOfVectorOfi32()) }.into_result().expect("Infallible function failed: set_nearest_marker_idx")
+	fn set_nearest_marker_idx(&mut self, mut val: core::Vector::<core::Vector::<i32>>) -> () {
+		unsafe { sys::cv_aruco_CharucoBoard_setNearestMarkerIdx_vector_vector_int__(self.as_raw_mut_CharucoBoard(), val.as_raw_mut_VectorOfVectorOfi32()) }.into_result().expect("Infallible function failed: set_nearest_marker_idx")
 	}
 	
-	fn nearest_marker_corners(&mut self) -> types::VectorOfVectorOfi32 {
-		unsafe { sys::cv_aruco_CharucoBoard_nearestMarkerCorners(self.as_raw_CharucoBoard()) }.into_result().map(|ptr| types::VectorOfVectorOfi32 { ptr }).expect("Infallible function failed: nearest_marker_corners")
+	fn nearest_marker_corners(&mut self) -> core::Vector::<core::Vector::<i32>> {
+		unsafe { sys::cv_aruco_CharucoBoard_nearestMarkerCorners(self.as_raw_mut_CharucoBoard()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Vector::<i32>>::from_raw(ptr) }).expect("Infallible function failed: nearest_marker_corners")
 	}
 	
-	fn set_nearest_marker_corners(&mut self, val: types::VectorOfVectorOfi32) -> () {
-		unsafe { sys::cv_aruco_CharucoBoard_setNearestMarkerCorners_vector_vector_int__(self.as_raw_CharucoBoard(), val.as_raw_VectorOfVectorOfi32()) }.into_result().expect("Infallible function failed: set_nearest_marker_corners")
+	fn set_nearest_marker_corners(&mut self, mut val: core::Vector::<core::Vector::<i32>>) -> () {
+		unsafe { sys::cv_aruco_CharucoBoard_setNearestMarkerCorners_vector_vector_int__(self.as_raw_mut_CharucoBoard(), val.as_raw_mut_VectorOfVectorOfi32()) }.into_result().expect("Infallible function failed: set_nearest_marker_corners")
 	}
 	
 	/// Draw a ChArUco board
@@ -786,7 +790,7 @@ pub trait CharucoBoardTrait: crate::aruco::BoardTrait {
 	/// * border_bits: 1
 	fn draw(&mut self, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
 		output_array_arg!(img);
-		unsafe { sys::cv_aruco_CharucoBoard_draw_Size_const__OutputArrayX_int_int(self.as_raw_CharucoBoard(), &out_size, img.as_raw__OutputArray(), margin_size, border_bits) }.into_result()
+		unsafe { sys::cv_aruco_CharucoBoard_draw_Size_const__OutputArrayX_int_int(self.as_raw_mut_CharucoBoard(), &out_size, img.as_raw__OutputArray(), margin_size, border_bits) }.into_result()
 	}
 	
 	fn get_chessboard_size(&self) -> Result<core::Size> {
@@ -810,32 +814,33 @@ pub trait CharucoBoardTrait: crate::aruco::BoardTrait {
 /// calibration and pose estimation.
 /// This class also allows the easy creation and drawing of ChArUco boards.
 pub struct CharucoBoard {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { CharucoBoard }
 
 impl Drop for CharucoBoard {
 	fn drop(&mut self) {
 		extern "C" { fn cv_CharucoBoard_delete(instance: *mut c_void); }
-		unsafe { cv_CharucoBoard_delete(self.as_raw_CharucoBoard()) };
+		unsafe { cv_CharucoBoard_delete(self.as_raw_mut_CharucoBoard()) };
 	}
 }
 
 impl CharucoBoard {
-	pub fn as_raw_CharucoBoard(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_CharucoBoard(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for CharucoBoard {}
 
 impl crate::aruco::BoardTrait for CharucoBoard {
-	fn as_raw_Board(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Board(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Board(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::aruco::CharucoBoardTrait for CharucoBoard {
-	fn as_raw_CharucoBoard(&self) -> *mut c_void { self.ptr }
+	fn as_raw_CharucoBoard(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_CharucoBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CharucoBoard {
@@ -853,8 +858,8 @@ impl CharucoBoard {
 	/// 
 	/// This functions creates a CharucoBoard object given the number of squares in each direction
 	/// and the size of the markers and chessboard squares.
-	pub fn create(squares_x: i32, squares_y: i32, square_length: f32, marker_length: f32, dictionary: &types::PtrOfDictionary) -> Result<types::PtrOfCharucoBoard> {
-		unsafe { sys::cv_aruco_CharucoBoard_create_int_int_float_float_const_Ptr_Dictionary_X(squares_x, squares_y, square_length, marker_length, dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| types::PtrOfCharucoBoard { ptr })
+	pub fn create(squares_x: i32, squares_y: i32, square_length: f32, marker_length: f32, dictionary: &core::Ptr::<crate::aruco::Dictionary>) -> Result<core::Ptr::<crate::aruco::CharucoBoard>> {
+		unsafe { sys::cv_aruco_CharucoBoard_create_int_int_float_float_const_Ptr_Dictionary_X(squares_x, squares_y, square_length, marker_length, dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::CharucoBoard>::from_raw(ptr) })
 	}
 	
 }
@@ -901,13 +906,15 @@ impl CharucoBoard {
 /// - errorCorrectionRate error correction rate respect to the maximun error correction capability
 ///   for each dictionary. (default 0.6).
 pub trait DetectorParametersTrait {
-	fn as_raw_DetectorParameters(&self) -> *mut c_void;
+	fn as_raw_DetectorParameters(&self) -> *const c_void;
+	fn as_raw_mut_DetectorParameters(&mut self) -> *mut c_void;
+
 	fn adaptive_thresh_win_size_min(&self) -> i32 {
 		unsafe { sys::cv_aruco_DetectorParameters_adaptiveThreshWinSizeMin_const(self.as_raw_DetectorParameters()) }.into_result().expect("Infallible function failed: adaptive_thresh_win_size_min")
 	}
 	
 	fn set_adaptive_thresh_win_size_min(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshWinSizeMin_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_min")
+		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshWinSizeMin_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_min")
 	}
 	
 	fn adaptive_thresh_win_size_max(&self) -> i32 {
@@ -915,7 +922,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_adaptive_thresh_win_size_max(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshWinSizeMax_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_max")
+		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshWinSizeMax_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_max")
 	}
 	
 	fn adaptive_thresh_win_size_step(&self) -> i32 {
@@ -923,7 +930,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_adaptive_thresh_win_size_step(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshWinSizeStep_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_step")
+		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshWinSizeStep_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_win_size_step")
 	}
 	
 	fn adaptive_thresh_constant(&self) -> f64 {
@@ -931,7 +938,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_adaptive_thresh_constant(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshConstant_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_constant")
+		unsafe { sys::cv_aruco_DetectorParameters_setAdaptiveThreshConstant_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_adaptive_thresh_constant")
 	}
 	
 	fn min_marker_perimeter_rate(&self) -> f64 {
@@ -939,7 +946,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_min_marker_perimeter_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMinMarkerPerimeterRate_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_marker_perimeter_rate")
+		unsafe { sys::cv_aruco_DetectorParameters_setMinMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_marker_perimeter_rate")
 	}
 	
 	fn max_marker_perimeter_rate(&self) -> f64 {
@@ -947,7 +954,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_max_marker_perimeter_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMaxMarkerPerimeterRate_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_max_marker_perimeter_rate")
+		unsafe { sys::cv_aruco_DetectorParameters_setMaxMarkerPerimeterRate_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_max_marker_perimeter_rate")
 	}
 	
 	fn polygonal_approx_accuracy_rate(&self) -> f64 {
@@ -955,7 +962,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_polygonal_approx_accuracy_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setPolygonalApproxAccuracyRate_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_polygonal_approx_accuracy_rate")
+		unsafe { sys::cv_aruco_DetectorParameters_setPolygonalApproxAccuracyRate_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_polygonal_approx_accuracy_rate")
 	}
 	
 	fn min_corner_distance_rate(&self) -> f64 {
@@ -963,7 +970,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_min_corner_distance_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMinCornerDistanceRate_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_corner_distance_rate")
+		unsafe { sys::cv_aruco_DetectorParameters_setMinCornerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_corner_distance_rate")
 	}
 	
 	fn min_distance_to_border(&self) -> i32 {
@@ -971,7 +978,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_min_distance_to_border(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMinDistanceToBorder_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_distance_to_border")
+		unsafe { sys::cv_aruco_DetectorParameters_setMinDistanceToBorder_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_distance_to_border")
 	}
 	
 	fn min_marker_distance_rate(&self) -> f64 {
@@ -979,7 +986,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_min_marker_distance_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMinMarkerDistanceRate_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_marker_distance_rate")
+		unsafe { sys::cv_aruco_DetectorParameters_setMinMarkerDistanceRate_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_marker_distance_rate")
 	}
 	
 	fn do_corner_refinement(&self) -> bool {
@@ -987,7 +994,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_do_corner_refinement(&mut self, val: bool) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setDoCornerRefinement_bool(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_do_corner_refinement")
+		unsafe { sys::cv_aruco_DetectorParameters_setDoCornerRefinement_bool(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_do_corner_refinement")
 	}
 	
 	fn corner_refinement_win_size(&self) -> i32 {
@@ -995,7 +1002,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_corner_refinement_win_size(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setCornerRefinementWinSize_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_corner_refinement_win_size")
+		unsafe { sys::cv_aruco_DetectorParameters_setCornerRefinementWinSize_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_corner_refinement_win_size")
 	}
 	
 	fn corner_refinement_max_iterations(&self) -> i32 {
@@ -1003,7 +1010,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_corner_refinement_max_iterations(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setCornerRefinementMaxIterations_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_corner_refinement_max_iterations")
+		unsafe { sys::cv_aruco_DetectorParameters_setCornerRefinementMaxIterations_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_corner_refinement_max_iterations")
 	}
 	
 	fn corner_refinement_min_accuracy(&self) -> f64 {
@@ -1011,7 +1018,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_corner_refinement_min_accuracy(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setCornerRefinementMinAccuracy_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_corner_refinement_min_accuracy")
+		unsafe { sys::cv_aruco_DetectorParameters_setCornerRefinementMinAccuracy_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_corner_refinement_min_accuracy")
 	}
 	
 	fn marker_border_bits(&self) -> i32 {
@@ -1019,7 +1026,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_marker_border_bits(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMarkerBorderBits_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_marker_border_bits")
+		unsafe { sys::cv_aruco_DetectorParameters_setMarkerBorderBits_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_marker_border_bits")
 	}
 	
 	fn perspective_remove_pixel_per_cell(&self) -> i32 {
@@ -1027,7 +1034,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_perspective_remove_pixel_per_cell(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setPerspectiveRemovePixelPerCell_int(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_perspective_remove_pixel_per_cell")
+		unsafe { sys::cv_aruco_DetectorParameters_setPerspectiveRemovePixelPerCell_int(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_perspective_remove_pixel_per_cell")
 	}
 	
 	fn perspective_remove_ignored_margin_per_cell(&self) -> f64 {
@@ -1035,7 +1042,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_perspective_remove_ignored_margin_per_cell(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setPerspectiveRemoveIgnoredMarginPerCell_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_perspective_remove_ignored_margin_per_cell")
+		unsafe { sys::cv_aruco_DetectorParameters_setPerspectiveRemoveIgnoredMarginPerCell_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_perspective_remove_ignored_margin_per_cell")
 	}
 	
 	fn max_erroneous_bits_in_border_rate(&self) -> f64 {
@@ -1043,7 +1050,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_max_erroneous_bits_in_border_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMaxErroneousBitsInBorderRate_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_max_erroneous_bits_in_border_rate")
+		unsafe { sys::cv_aruco_DetectorParameters_setMaxErroneousBitsInBorderRate_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_max_erroneous_bits_in_border_rate")
 	}
 	
 	fn min_otsu_std_dev(&self) -> f64 {
@@ -1051,7 +1058,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_min_otsu_std_dev(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setMinOtsuStdDev_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_otsu_std_dev")
+		unsafe { sys::cv_aruco_DetectorParameters_setMinOtsuStdDev_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_min_otsu_std_dev")
 	}
 	
 	fn error_correction_rate(&self) -> f64 {
@@ -1059,7 +1066,7 @@ pub trait DetectorParametersTrait {
 	}
 	
 	fn set_error_correction_rate(&mut self, val: f64) -> () {
-		unsafe { sys::cv_aruco_DetectorParameters_setErrorCorrectionRate_double(self.as_raw_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_error_correction_rate")
+		unsafe { sys::cv_aruco_DetectorParameters_setErrorCorrectionRate_double(self.as_raw_mut_DetectorParameters(), val) }.into_result().expect("Infallible function failed: set_error_correction_rate")
 	}
 	
 }
@@ -1106,37 +1113,37 @@ pub trait DetectorParametersTrait {
 /// - errorCorrectionRate error correction rate respect to the maximun error correction capability
 ///   for each dictionary. (default 0.6).
 pub struct DetectorParameters {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { DetectorParameters }
 
 impl Drop for DetectorParameters {
 	fn drop(&mut self) {
 		extern "C" { fn cv_DetectorParameters_delete(instance: *mut c_void); }
-		unsafe { cv_DetectorParameters_delete(self.as_raw_DetectorParameters()) };
+		unsafe { cv_DetectorParameters_delete(self.as_raw_mut_DetectorParameters()) };
 	}
 }
 
 impl DetectorParameters {
-	pub fn as_raw_DetectorParameters(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_DetectorParameters(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for DetectorParameters {}
 
 impl crate::aruco::DetectorParametersTrait for DetectorParameters {
-	fn as_raw_DetectorParameters(&self) -> *mut c_void { self.ptr }
+	fn as_raw_DetectorParameters(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_DetectorParameters(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl DetectorParameters {
 	pub fn default() -> Result<crate::aruco::DetectorParameters> {
-		unsafe { sys::cv_aruco_DetectorParameters_DetectorParameters() }.into_result().map(|ptr| crate::aruco::DetectorParameters { ptr })
+		unsafe { sys::cv_aruco_DetectorParameters_DetectorParameters() }.into_result().map(|ptr| unsafe { crate::aruco::DetectorParameters::from_raw(ptr) })
 	}
 	
-	pub fn create() -> Result<types::PtrOfDetectorParameters> {
-		unsafe { sys::cv_aruco_DetectorParameters_create() }.into_result().map(|ptr| types::PtrOfDetectorParameters { ptr })
+	pub fn create() -> Result<core::Ptr::<crate::aruco::DetectorParameters>> {
+		unsafe { sys::cv_aruco_DetectorParameters_create() }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::DetectorParameters>::from_raw(ptr) })
 	}
 	
 }
@@ -1150,13 +1157,15 @@ impl DetectorParameters {
 /// 
 /// `bytesList.ptr(i)[k*nbytes + j]` is then the j-th byte of i-th marker, in its k-th rotation.
 pub trait DictionaryTrait {
-	fn as_raw_Dictionary(&self) -> *mut c_void;
+	fn as_raw_Dictionary(&self) -> *const c_void;
+	fn as_raw_mut_Dictionary(&mut self) -> *mut c_void;
+
 	fn bytes_list(&mut self) -> core::Mat {
-		unsafe { sys::cv_aruco_Dictionary_bytesList(self.as_raw_Dictionary()) }.into_result().map(|ptr| core::Mat { ptr }).expect("Infallible function failed: bytes_list")
+		unsafe { sys::cv_aruco_Dictionary_bytesList(self.as_raw_mut_Dictionary()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) }).expect("Infallible function failed: bytes_list")
 	}
 	
-	fn set_bytes_list(&mut self, val: core::Mat) -> () {
-		unsafe { sys::cv_aruco_Dictionary_setBytesList_Mat(self.as_raw_Dictionary(), val.as_raw_Mat()) }.into_result().expect("Infallible function failed: set_bytes_list")
+	fn set_bytes_list(&mut self, mut val: core::Mat) -> () {
+		unsafe { sys::cv_aruco_Dictionary_setBytesList_Mat(self.as_raw_mut_Dictionary(), val.as_raw_mut_Mat()) }.into_result().expect("Infallible function failed: set_bytes_list")
 	}
 	
 	fn marker_size(&self) -> i32 {
@@ -1164,7 +1173,7 @@ pub trait DictionaryTrait {
 	}
 	
 	fn set_marker_size(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_Dictionary_setMarkerSize_int(self.as_raw_Dictionary(), val) }.into_result().expect("Infallible function failed: set_marker_size")
+		unsafe { sys::cv_aruco_Dictionary_setMarkerSize_int(self.as_raw_mut_Dictionary(), val) }.into_result().expect("Infallible function failed: set_marker_size")
 	}
 	
 	fn max_correction_bits(&self) -> i32 {
@@ -1172,7 +1181,7 @@ pub trait DictionaryTrait {
 	}
 	
 	fn set_max_correction_bits(&mut self, val: i32) -> () {
-		unsafe { sys::cv_aruco_Dictionary_setMaxCorrectionBits_int(self.as_raw_Dictionary(), val) }.into_result().expect("Infallible function failed: set_max_correction_bits")
+		unsafe { sys::cv_aruco_Dictionary_setMaxCorrectionBits_int(self.as_raw_mut_Dictionary(), val) }.into_result().expect("Infallible function failed: set_max_correction_bits")
 	}
 	
 	/// Given a matrix of bits. Returns whether if marker is identified or not.
@@ -1211,28 +1220,28 @@ pub trait DictionaryTrait {
 /// 
 /// `bytesList.ptr(i)[k*nbytes + j]` is then the j-th byte of i-th marker, in its k-th rotation.
 pub struct Dictionary {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { Dictionary }
 
 impl Drop for Dictionary {
 	fn drop(&mut self) {
 		extern "C" { fn cv_Dictionary_delete(instance: *mut c_void); }
-		unsafe { cv_Dictionary_delete(self.as_raw_Dictionary()) };
+		unsafe { cv_Dictionary_delete(self.as_raw_mut_Dictionary()) };
 	}
 }
 
 impl Dictionary {
-	pub fn as_raw_Dictionary(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_Dictionary(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_Dictionary(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Dictionary {}
 
 impl crate::aruco::DictionaryTrait for Dictionary {
-	fn as_raw_Dictionary(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Dictionary(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Dictionary(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Dictionary {
@@ -1241,39 +1250,39 @@ impl Dictionary {
 	/// * _marker_size: 0
 	/// * _maxcorr: 0
 	pub fn new(_bytes_list: &core::Mat, _marker_size: i32, _maxcorr: i32) -> Result<crate::aruco::Dictionary> {
-		unsafe { sys::cv_aruco_Dictionary_Dictionary_const_MatX_int_int(_bytes_list.as_raw_Mat(), _marker_size, _maxcorr) }.into_result().map(|ptr| crate::aruco::Dictionary { ptr })
+		unsafe { sys::cv_aruco_Dictionary_Dictionary_const_MatX_int_int(_bytes_list.as_raw_Mat(), _marker_size, _maxcorr) }.into_result().map(|ptr| unsafe { crate::aruco::Dictionary::from_raw(ptr) })
 	}
 	
-	pub fn copy(_dictionary: &types::PtrOfDictionary) -> Result<crate::aruco::Dictionary> {
-		unsafe { sys::cv_aruco_Dictionary_Dictionary_const_Ptr_Dictionary_X(_dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| crate::aruco::Dictionary { ptr })
-	}
-	
-	/// ## See also
-	/// generateCustomDictionary
-	pub fn create(n_markers: i32, marker_size: i32) -> Result<types::PtrOfDictionary> {
-		unsafe { sys::cv_aruco_Dictionary_create_int_int(n_markers, marker_size) }.into_result().map(|ptr| types::PtrOfDictionary { ptr })
+	pub fn copy(_dictionary: &core::Ptr::<crate::aruco::Dictionary>) -> Result<crate::aruco::Dictionary> {
+		unsafe { sys::cv_aruco_Dictionary_Dictionary_const_Ptr_Dictionary_X(_dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| unsafe { crate::aruco::Dictionary::from_raw(ptr) })
 	}
 	
 	/// ## See also
 	/// generateCustomDictionary
-	pub fn create_from(n_markers: i32, marker_size: i32, base_dictionary: &types::PtrOfDictionary) -> Result<types::PtrOfDictionary> {
-		unsafe { sys::cv_aruco_Dictionary_create_int_int_const_Ptr_Dictionary_X(n_markers, marker_size, base_dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| types::PtrOfDictionary { ptr })
+	pub fn create(n_markers: i32, marker_size: i32) -> Result<core::Ptr::<crate::aruco::Dictionary>> {
+		unsafe { sys::cv_aruco_Dictionary_create_int_int(n_markers, marker_size) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) })
+	}
+	
+	/// ## See also
+	/// generateCustomDictionary
+	pub fn create_from(n_markers: i32, marker_size: i32, base_dictionary: &core::Ptr::<crate::aruco::Dictionary>) -> Result<core::Ptr::<crate::aruco::Dictionary>> {
+		unsafe { sys::cv_aruco_Dictionary_create_int_int_const_Ptr_Dictionary_X(n_markers, marker_size, base_dictionary.as_raw_PtrOfDictionary()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) })
 	}
 	
 	/// ## See also
 	/// getPredefinedDictionary
-	pub fn get(dict: i32) -> Result<types::PtrOfDictionary> {
-		unsafe { sys::cv_aruco_Dictionary_get_int(dict) }.into_result().map(|ptr| types::PtrOfDictionary { ptr })
+	pub fn get(dict: i32) -> Result<core::Ptr::<crate::aruco::Dictionary>> {
+		unsafe { sys::cv_aruco_Dictionary_get_int(dict) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::Dictionary>::from_raw(ptr) })
 	}
 	
 	/// Transform matrix of bits to list of bytes in the 4 rotations
 	pub fn get_byte_list_from_bits(bits: &core::Mat) -> Result<core::Mat> {
-		unsafe { sys::cv_aruco_Dictionary_getByteListFromBits_const_MatX(bits.as_raw_Mat()) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_aruco_Dictionary_getByteListFromBits_const_MatX(bits.as_raw_Mat()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 	/// Transform list of bytes to matrix of bits
 	pub fn get_bits_from_byte_list(byte_list: &core::Mat, marker_size: i32) -> Result<core::Mat> {
-		unsafe { sys::cv_aruco_Dictionary_getBitsFromByteList_const_MatX_int(byte_list.as_raw_Mat(), marker_size) }.into_result().map(|ptr| core::Mat { ptr })
+		unsafe { sys::cv_aruco_Dictionary_getBitsFromByteList_const_MatX_int(byte_list.as_raw_Mat(), marker_size) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 	}
 	
 }
@@ -1282,7 +1291,9 @@ impl Dictionary {
 /// More common type of board. All markers are placed in the same plane in a grid arrangment.
 /// The board can be drawn using drawPlanarBoard() function (see also: drawPlanarBoard)
 pub trait GridBoardTrait: crate::aruco::BoardTrait {
-	fn as_raw_GridBoard(&self) -> *mut c_void;
+	fn as_raw_GridBoard(&self) -> *const c_void;
+	fn as_raw_mut_GridBoard(&mut self) -> *mut c_void;
+
 	/// Draw a GridBoard
 	/// 
 	/// ## Parameters
@@ -1299,7 +1310,7 @@ pub trait GridBoardTrait: crate::aruco::BoardTrait {
 	/// * border_bits: 1
 	fn draw(&mut self, out_size: core::Size, img: &mut dyn core::ToOutputArray, margin_size: i32, border_bits: i32) -> Result<()> {
 		output_array_arg!(img);
-		unsafe { sys::cv_aruco_GridBoard_draw_Size_const__OutputArrayX_int_int(self.as_raw_GridBoard(), &out_size, img.as_raw__OutputArray(), margin_size, border_bits) }.into_result()
+		unsafe { sys::cv_aruco_GridBoard_draw_Size_const__OutputArrayX_int_int(self.as_raw_mut_GridBoard(), &out_size, img.as_raw__OutputArray(), margin_size, border_bits) }.into_result()
 	}
 	
 	fn get_grid_size(&self) -> Result<core::Size> {
@@ -1320,32 +1331,33 @@ pub trait GridBoardTrait: crate::aruco::BoardTrait {
 /// More common type of board. All markers are placed in the same plane in a grid arrangment.
 /// The board can be drawn using drawPlanarBoard() function (see also: drawPlanarBoard)
 pub struct GridBoard {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { GridBoard }
 
 impl Drop for GridBoard {
 	fn drop(&mut self) {
 		extern "C" { fn cv_GridBoard_delete(instance: *mut c_void); }
-		unsafe { cv_GridBoard_delete(self.as_raw_GridBoard()) };
+		unsafe { cv_GridBoard_delete(self.as_raw_mut_GridBoard()) };
 	}
 }
 
 impl GridBoard {
-	pub fn as_raw_GridBoard(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_GridBoard(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_GridBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for GridBoard {}
 
 impl crate::aruco::BoardTrait for GridBoard {
-	fn as_raw_Board(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Board(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Board(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::aruco::GridBoardTrait for GridBoard {
-	fn as_raw_GridBoard(&self) -> *mut c_void { self.ptr }
+	fn as_raw_GridBoard(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_GridBoard(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl GridBoard {
@@ -1366,8 +1378,8 @@ impl GridBoard {
 	/// 
 	/// ## C++ default parameters
 	/// * first_marker: 0
-	pub fn create(markers_x: i32, markers_y: i32, marker_length: f32, marker_separation: f32, dictionary: &types::PtrOfDictionary, first_marker: i32) -> Result<types::PtrOfGridBoard> {
-		unsafe { sys::cv_aruco_GridBoard_create_int_int_float_float_const_Ptr_Dictionary_X_int(markers_x, markers_y, marker_length, marker_separation, dictionary.as_raw_PtrOfDictionary(), first_marker) }.into_result().map(|ptr| types::PtrOfGridBoard { ptr })
+	pub fn create(markers_x: i32, markers_y: i32, marker_length: f32, marker_separation: f32, dictionary: &core::Ptr::<crate::aruco::Dictionary>, first_marker: i32) -> Result<core::Ptr::<crate::aruco::GridBoard>> {
+		unsafe { sys::cv_aruco_GridBoard_create_int_int_float_float_const_Ptr_Dictionary_X_int(markers_x, markers_y, marker_length, marker_separation, dictionary.as_raw_PtrOfDictionary(), first_marker) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::aruco::GridBoard>::from_raw(ptr) })
 	}
 	
 }

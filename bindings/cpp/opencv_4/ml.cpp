@@ -52,14 +52,14 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<cv::TermCriteria*> cv_ml_ANN_MLP_getTermCriteria_const(const cv::ml::ANN_MLP* instance) {
+	Result<cv::TermCriteria> cv_ml_ANN_MLP_getTermCriteria_const(const cv::ml::ANN_MLP* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
-	Result_void cv_ml_ANN_MLP_setTermCriteria_TermCriteria(cv::ml::ANN_MLP* instance, cv::TermCriteria* val) {
+	Result_void cv_ml_ANN_MLP_setTermCriteria_TermCriteria(cv::ml::ANN_MLP* instance, const cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -702,11 +702,11 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_ml_EM_getTermCriteria_const(const cv::ml::EM* instance) {
+	Result<cv::TermCriteria> cv_ml_EM_getTermCriteria_const(const cv::ml::EM* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
 	Result_void cv_ml_EM_setTermCriteria_const_TermCriteriaX(cv::ml::EM* instance, const cv::TermCriteria* val) {
@@ -933,14 +933,14 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_ml_LogisticRegression_getTermCriteria_const(const cv::ml::LogisticRegression* instance) {
+	Result<cv::TermCriteria> cv_ml_LogisticRegression_getTermCriteria_const(const cv::ml::LogisticRegression* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
-	Result_void cv_ml_LogisticRegression_setTermCriteria_TermCriteria(cv::ml::LogisticRegression* instance, cv::TermCriteria* val) {
+	Result_void cv_ml_LogisticRegression_setTermCriteria_TermCriteria(cv::ml::LogisticRegression* instance, const cv::TermCriteria* val) {
 		try {
 			instance->setTermCriteria(*val);
 			return Ok();
@@ -1090,11 +1090,11 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_ml_RTrees_getTermCriteria_const(const cv::ml::RTrees* instance) {
+	Result<cv::TermCriteria> cv_ml_RTrees_getTermCriteria_const(const cv::ml::RTrees* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
 	Result_void cv_ml_RTrees_setTermCriteria_const_TermCriteriaX(cv::ml::RTrees* instance, const cv::TermCriteria* val) {
@@ -1244,11 +1244,11 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_ml_SVM_getTermCriteria_const(const cv::ml::SVM* instance) {
+	Result<cv::TermCriteria> cv_ml_SVM_getTermCriteria_const(const cv::ml::SVM* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
 	Result_void cv_ml_SVM_setTermCriteria_const_TermCriteriaX(cv::ml::SVM* instance, const cv::TermCriteria* val) {
@@ -1461,11 +1461,11 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_ml_SVMSGD_getTermCriteria_const(const cv::ml::SVMSGD* instance) {
+	Result<cv::TermCriteria> cv_ml_SVMSGD_getTermCriteria_const(const cv::ml::SVMSGD* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
 	Result_void cv_ml_SVMSGD_setTermCriteria_const_TermCriteriaX(cv::ml::SVMSGD* instance, const cv::TermCriteria* val) {

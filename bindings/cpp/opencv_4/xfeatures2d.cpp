@@ -24,14 +24,14 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*> cv_xfeatures2d_AffineFeature2D_create_Ptr_FeatureDetector__Ptr_DescriptorExtractor_(cv::Ptr<cv::FeatureDetector>* keypoint_detector, cv::Ptr<cv::DescriptorExtractor>* descriptor_extractor) {
+	Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*> cv_xfeatures2d_AffineFeature2D_create_Ptr_Feature2D__Ptr_Feature2D_(cv::Ptr<cv::Feature2D>* keypoint_detector, cv::Ptr<cv::Feature2D>* descriptor_extractor) {
 		try {
 			cv::Ptr<cv::xfeatures2d::AffineFeature2D> ret = cv::xfeatures2d::AffineFeature2D::create(*keypoint_detector, *descriptor_extractor);
 			return Ok(new cv::Ptr<cv::xfeatures2d::AffineFeature2D>(ret));
 		} OCVRS_CATCH(Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*>)
 	}
 	
-	Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*> cv_xfeatures2d_AffineFeature2D_create_Ptr_FeatureDetector_(cv::Ptr<cv::FeatureDetector>* keypoint_detector) {
+	Result<cv::Ptr<cv::xfeatures2d::AffineFeature2D>*> cv_xfeatures2d_AffineFeature2D_create_Ptr_Feature2D_(cv::Ptr<cv::Feature2D>* keypoint_detector) {
 		try {
 			cv::Ptr<cv::xfeatures2d::AffineFeature2D> ret = cv::xfeatures2d::AffineFeature2D::create(*keypoint_detector);
 			return Ok(new cv::Ptr<cv::xfeatures2d::AffineFeature2D>(ret));

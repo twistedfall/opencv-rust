@@ -56,23 +56,10 @@ extern "C" {
 	}
 
 	Result<cv::VideoCaptureAPIs> cv_VectorOfVideoCaptureAPIs_get(const std::vector<cv::VideoCaptureAPIs>* instance, size_t index) {
-		try {
-			return Ok<cv::VideoCaptureAPIs>(instance->at(index));
-		} VEC_CATCH(Result<cv::VideoCaptureAPIs>)
-	}
-
-	Result<cv::VideoCaptureAPIs> cv_VectorOfVideoCaptureAPIs_get_unchecked(const std::vector<cv::VideoCaptureAPIs>* instance, size_t index) {
 		return Ok<cv::VideoCaptureAPIs>((*instance)[index]);
 	}
 
-	Result_void cv_VectorOfVideoCaptureAPIs_set(std::vector<cv::VideoCaptureAPIs>* instance, size_t index, cv::VideoCaptureAPIs val) {
-		try {
-			instance->at(index) = val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfVideoCaptureAPIs_set_unchecked(std::vector<cv::VideoCaptureAPIs>* instance, size_t index, cv::VideoCaptureAPIs val) {
+	void cv_VectorOfVideoCaptureAPIs_set(std::vector<cv::VideoCaptureAPIs>* instance, size_t index, cv::VideoCaptureAPIs val) {
 		(*instance)[index] = val;
 	}
 

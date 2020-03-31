@@ -60,19 +60,21 @@ pub const HDF5_H5_UNLIMITED: i32 = -1;
 /// }
 /// ```
 /// 
-pub fn open(hdf5_filename: &str) -> Result<types::PtrOfHDF5> {
+pub fn open(hdf5_filename: &str) -> Result<core::Ptr::<dyn crate::hdf::HDF5>> {
 	string_arg!(hdf5_filename);
-	unsafe { sys::cv_hdf_open_String(hdf5_filename.as_ptr() as _) }.into_result().map(|ptr| types::PtrOfHDF5 { ptr })
+	unsafe { sys::cv_hdf_open_String(hdf5_filename.as_ptr() as _) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::hdf::HDF5>::from_raw(ptr) })
 }
 
 /// Hierarchical Data Format version 5 interface.
 /// 
 /// Notice that module is compiled only when hdf5 is correctly installed.
 pub trait HDF5 {
-	fn as_raw_HDF5(&self) -> *mut c_void;
+	fn as_raw_HDF5(&self) -> *const c_void;
+	fn as_raw_mut_HDF5(&mut self) -> *mut c_void;
+
 	/// Close and release hdf5 object.
 	fn close(&mut self) -> Result<()> {
-		unsafe { sys::cv_hdf_HDF5_close(self.as_raw_HDF5()) }.into_result()
+		unsafe { sys::cv_hdf_HDF5_close(self.as_raw_mut_HDF5()) }.into_result()
 	}
 	
 	/// Create a group.
@@ -110,7 +112,7 @@ pub trait HDF5 {
 	/// full path within the label, in our example would be: 'Group1/SubGroup1/MyDataSet'. It is not thread safe.
 	fn grcreate(&mut self, grlabel: &str) -> Result<()> {
 		string_arg!(grlabel);
-		unsafe { sys::cv_hdf_HDF5_grcreate_String(self.as_raw_HDF5(), grlabel.as_ptr() as _) }.into_result()
+		unsafe { sys::cv_hdf_HDF5_grcreate_String(self.as_raw_mut_HDF5(), grlabel.as_ptr() as _) }.into_result()
 	}
 	
 	/// Check if label exists or not.
@@ -136,7 +138,7 @@ pub trait HDF5 {
 		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int(self.as_raw_HDF5(), rows, cols, typ, dslabel.as_ptr() as _, compresslevel) }.into_result()
 	}
 	
-	fn dscreate_2(&self, rows: i32, cols: i32, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &types::VectorOfi32) -> Result<()> {
+	fn dscreate_2(&self, rows: i32, cols: i32, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &core::Vector::<i32>) -> Result<()> {
 		string_arg!(dslabel);
 		unsafe { sys::cv_hdf_HDF5_dscreate_const_int_int_int_String_int_const_vector_int_X(self.as_raw_HDF5(), rows, cols, typ, dslabel.as_ptr() as _, compresslevel, dims_chunks.as_raw_VectorOfi32()) }.into_result()
 	}
@@ -229,7 +231,7 @@ pub trait HDF5 {
 	/// ## C++ default parameters
 	/// * compresslevel: HDF5::H5_NONE
 	/// * dims_chunks: vector<int>()
-	fn dscreate_6(&self, sizes: &types::VectorOfi32, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &types::VectorOfi32) -> Result<()> {
+	fn dscreate_6(&self, sizes: &core::Vector::<i32>, typ: i32, dslabel: &str, compresslevel: i32, dims_chunks: &core::Vector::<i32>) -> Result<()> {
 		string_arg!(dslabel);
 		unsafe { sys::cv_hdf_HDF5_dscreate_const_const_vector_int_X_int_String_int_const_vector_int_X(self.as_raw_HDF5(), sizes.as_raw_VectorOfi32(), typ, dslabel.as_ptr() as _, compresslevel, dims_chunks.as_raw_VectorOfi32()) }.into_result()
 	}
@@ -330,9 +332,9 @@ pub trait HDF5 {
 	/// 
 	/// ## C++ default parameters
 	/// * dims_flag: HDF5::H5_GETDIMS
-	fn dsgetsize(&self, dslabel: &str, dims_flag: i32) -> Result<types::VectorOfi32> {
+	fn dsgetsize(&self, dslabel: &str, dims_flag: i32) -> Result<core::Vector::<i32>> {
 		string_arg!(dslabel);
-		unsafe { sys::cv_hdf_HDF5_dsgetsize_const_String_int(self.as_raw_HDF5(), dslabel.as_ptr() as _, dims_flag) }.into_result().map(|ptr| types::VectorOfi32 { ptr })
+		unsafe { sys::cv_hdf_HDF5_dsgetsize_const_String_int(self.as_raw_HDF5(), dslabel.as_ptr() as _, dims_flag) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
 	}
 	
 	/// Fetch dataset type
@@ -364,7 +366,7 @@ pub trait HDF5 {
 	
 	/// ## C++ default parameters
 	/// * dims_counts: vector<int>()
-	fn dswrite_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &types::VectorOfi32, dims_counts: &types::VectorOfi32) -> Result<()> {
+	fn dswrite_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &core::Vector::<i32>, dims_counts: &core::Vector::<i32>) -> Result<()> {
 		input_array_arg!(array);
 		string_arg!(dslabel);
 		unsafe { sys::cv_hdf_HDF5_dswrite_const_const__InputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
@@ -455,7 +457,7 @@ pub trait HDF5 {
 	
 	/// ## C++ default parameters
 	/// * dims_counts: vector<int>()
-	fn dsinsert_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &types::VectorOfi32, dims_counts: &types::VectorOfi32) -> Result<()> {
+	fn dsinsert_2(&self, array: &dyn core::ToInputArray, dslabel: &str, dims_offset: &core::Vector::<i32>, dims_counts: &core::Vector::<i32>) -> Result<()> {
 		input_array_arg!(array);
 		string_arg!(dslabel);
 		unsafe { sys::cv_hdf_HDF5_dsinsert_const_const__InputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__InputArray(), dslabel.as_ptr() as _, dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
@@ -530,7 +532,7 @@ pub trait HDF5 {
 	
 	/// ## C++ default parameters
 	/// * dims_counts: vector<int>()
-	fn dsread_2(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &types::VectorOfi32, dims_counts: &types::VectorOfi32) -> Result<()> {
+	fn dsread_2(&self, array: &mut dyn core::ToOutputArray, dslabel: &str, dims_offset: &core::Vector::<i32>, dims_counts: &core::Vector::<i32>) -> Result<()> {
 		output_array_arg!(array);
 		string_arg!(dslabel);
 		unsafe { sys::cv_hdf_HDF5_dsread_const_const__OutputArrayX_String_const_vector_int_X_const_vector_int_X(self.as_raw_HDF5(), array.as_raw__OutputArray(), dslabel.as_ptr() as _, dims_offset.as_raw_VectorOfi32(), dims_counts.as_raw_VectorOfi32()) }.into_result()
@@ -711,7 +713,7 @@ pub trait HDF5 {
 	/// ## C++ default parameters
 	/// * offset: H5_NONE
 	/// * counts: H5_NONE
-	fn kpwrite(&self, keypoints: types::VectorOfKeyPoint, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
+	fn kpwrite(&self, keypoints: core::Vector::<core::KeyPoint>, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
 		string_arg!(kplabel);
 		unsafe { sys::cv_hdf_HDF5_kpwrite_const_vector_KeyPoint__String_int_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.as_ptr() as _, offset, counts) }.into_result()
 	}
@@ -754,7 +756,7 @@ pub trait HDF5 {
 	/// ## C++ default parameters
 	/// * offset: H5_NONE
 	/// * counts: H5_NONE
-	fn kpinsert(&self, keypoints: types::VectorOfKeyPoint, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
+	fn kpinsert(&self, keypoints: core::Vector::<core::KeyPoint>, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
 		string_arg!(kplabel);
 		unsafe { sys::cv_hdf_HDF5_kpinsert_const_vector_KeyPoint__String_int_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.as_ptr() as _, offset, counts) }.into_result()
 	}
@@ -801,9 +803,9 @@ pub trait HDF5 {
 	/// ## C++ default parameters
 	/// * offset: H5_NONE
 	/// * counts: H5_NONE
-	fn kpread(&self, keypoints: &mut types::VectorOfKeyPoint, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
+	fn kpread(&self, keypoints: &mut core::Vector::<core::KeyPoint>, kplabel: &str, offset: i32, counts: i32) -> Result<()> {
 		string_arg!(kplabel);
-		unsafe { sys::cv_hdf_HDF5_kpread_const_vector_KeyPoint_X_String_int_int(self.as_raw_HDF5(), keypoints.as_raw_VectorOfKeyPoint(), kplabel.as_ptr() as _, offset, counts) }.into_result()
+		unsafe { sys::cv_hdf_HDF5_kpread_const_vector_KeyPoint_X_String_int_int(self.as_raw_HDF5(), keypoints.as_raw_mut_VectorOfKeyPoint(), kplabel.as_ptr() as _, offset, counts) }.into_result()
 	}
 	
 }

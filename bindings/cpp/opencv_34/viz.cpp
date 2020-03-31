@@ -1287,7 +1287,7 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::viz::WPaintedCloud*>)
 	}
 	
-	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX_const_ColorX_Color(const cv::_InputArray* cloud, const cv::Point3d* p1, const cv::Point3d* p2, const cv::viz::Color* c1, cv::viz::Color* c2) {
+	Result<cv::viz::WPaintedCloud*> cv_viz_WPaintedCloud_WPaintedCloud_const__InputArrayX_const_Point3dX_const_Point3dX_const_ColorX_Color(const cv::_InputArray* cloud, const cv::Point3d* p1, const cv::Point3d* p2, const cv::viz::Color* c1, const cv::viz::Color* c2) {
 		try {
 			cv::viz::WPaintedCloud* ret = new cv::viz::WPaintedCloud(*cloud, *p1, *p2, *c1, *c2);
 			return Ok(ret);

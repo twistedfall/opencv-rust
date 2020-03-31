@@ -30,14 +30,16 @@ pub mod prelude {
 /// 
 /// The wrapped phase map and the unwrapped result are stored in CV_32FC1 Mat.
 pub trait HistogramPhaseUnwrapping: crate::phase_unwrapping::PhaseUnwrapping {
-	fn as_raw_HistogramPhaseUnwrapping(&self) -> *mut c_void;
+	fn as_raw_HistogramPhaseUnwrapping(&self) -> *const c_void;
+	fn as_raw_mut_HistogramPhaseUnwrapping(&mut self) -> *mut c_void;
+
 	/// Get the reliability map computed from the wrapped phase map.
 	/// 
 	/// ## Parameters
 	/// * reliabilityMap: Image where the reliability map is stored.
 	fn get_inverse_reliability_map(&mut self, reliability_map: &mut dyn core::ToOutputArray) -> Result<()> {
 		output_array_arg!(reliability_map);
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayX(self.as_raw_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayX(self.as_raw_mut_HistogramPhaseUnwrapping(), reliability_map.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -50,8 +52,8 @@ impl dyn HistogramPhaseUnwrapping + '_ {
 	/// 
 	/// ## C++ default parameters
 	/// * parameters: HistogramPhaseUnwrapping::Params()
-	pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<types::PtrOfHistogramPhaseUnwrapping> {
-		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(&parameters) }.into_result().map(|ptr| types::PtrOfHistogramPhaseUnwrapping { ptr })
+	pub fn create(parameters: crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>> {
+		unsafe { sys::cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(&parameters) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::phase_unwrapping::HistogramPhaseUnwrapping>::from_raw(ptr) })
 	}
 	
 }
@@ -82,7 +84,9 @@ impl HistogramPhaseUnwrapping_Params {
 
 /// Abstract base class for phase unwrapping.
 pub trait PhaseUnwrapping: core::AlgorithmTrait {
-	fn as_raw_PhaseUnwrapping(&self) -> *mut c_void;
+	fn as_raw_PhaseUnwrapping(&self) -> *const c_void;
+	fn as_raw_mut_PhaseUnwrapping(&mut self) -> *mut c_void;
+
 	/// Unwraps a 2D phase map.
 	/// 
 	/// ## Parameters
@@ -96,7 +100,7 @@ pub trait PhaseUnwrapping: core::AlgorithmTrait {
 		input_array_arg!(wrapped_phase_map);
 		output_array_arg!(unwrapped_phase_map);
 		input_array_arg!(shadow_mask);
-		unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(self.as_raw_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()
+		unsafe { sys::cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(self.as_raw_mut_PhaseUnwrapping(), wrapped_phase_map.as_raw__InputArray(), unwrapped_phase_map.as_raw__OutputArray(), shadow_mask.as_raw__InputArray()) }.into_result()
 	}
 	
 }

@@ -563,7 +563,7 @@ pub fn calibrate_camera_ro_extended(object_points: &dyn core::ToInputArray, imag
 	output_array_arg!(std_deviations_extrinsics);
 	output_array_arg!(std_deviations_obj_points);
 	output_array_arg!(per_view_errors);
-	unsafe { sys::cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), std_deviations_obj_points.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration pattern.
@@ -638,7 +638,7 @@ pub fn calibrate_camera_ro(object_points: &dyn core::ToInputArray, image_points:
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
 	output_array_arg!(new_obj_points);
-	unsafe { sys::cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_calibrateCameraRO_const__InputArrayX_const__InputArrayX_Size_int_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, i_fixed_point, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), new_obj_points.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration
@@ -773,7 +773,7 @@ pub fn calibrate_camera_extended(object_points: &dyn core::ToInputArray, image_p
 	output_array_arg!(std_deviations_intrinsics);
 	output_array_arg!(std_deviations_extrinsics);
 	output_array_arg!(per_view_errors);
-	unsafe { sys::cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), std_deviations_intrinsics.as_raw__OutputArray(), std_deviations_extrinsics.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Finds the camera intrinsic and extrinsic parameters from several views of a calibration
@@ -907,7 +907,7 @@ pub fn calibrate_camera(object_points: &dyn core::ToInputArray, image_points: &d
 	input_output_array_arg!(dist_coeffs);
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
-	unsafe { sys::cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_calibrateCamera_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, camera_matrix.as_raw__InputOutputArray(), dist_coeffs.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Computes Hand-Eye calibration: ![inline formula](https://latex.codecogs.com/png.latex?%5F%7B%7D%5E%7Bg%7D%5Ctextrm%7BT%7D%5Fc)
@@ -1370,7 +1370,7 @@ pub fn estimate_affine_2d(from: &dyn core::ToInputArray, to: &dyn core::ToInputA
 	input_array_arg!(from);
 	input_array_arg!(to);
 	output_array_arg!(inliers);
-	unsafe { sys::cv_estimateAffine2D_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_estimateAffine2D_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Computes an optimal affine transformation between two 3D point sets.
@@ -1459,7 +1459,7 @@ pub fn estimate_affine_partial_2d(from: &dyn core::ToInputArray, to: &dyn core::
 	input_array_arg!(from);
 	input_array_arg!(to);
 	output_array_arg!(inliers);
-	unsafe { sys::cv_estimateAffinePartial2D_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_estimateAffinePartial2D_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_size_t_double_size_t(from.as_raw__InputArray(), to.as_raw__InputArray(), inliers.as_raw__OutputArray(), method, ransac_reproj_threshold, max_iters, confidence, refine_iters) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Estimates the sharpness of a detected chessboard.
@@ -1776,10 +1776,10 @@ pub fn find_chessboard_corners(image: &dyn core::ToInputArray, pattern_size: cor
 /// ## C++ default parameters
 /// * flags: CALIB_CB_SYMMETRIC_GRID
 /// * blob_detector: SimpleBlobDetector::create()
-pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &types::PtrOfFeatureDetector) -> Result<bool> {
+pub fn find_circles_grid_1(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr::<crate::features2d::Feature2D>) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(centers);
-	unsafe { sys::cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeatureDetector()) }.into_result()
+	unsafe { sys::cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_Feature2D_X(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D()) }.into_result()
 }
 
 /// Finds centers in the grid of circles.
@@ -1816,10 +1816,10 @@ pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Siz
 /// 
 /// Note: The function requires white space (like a square-thick border, the wider the better) around
 /// the board to make the detection more robust in various environments.
-pub fn find_circles_grid_params(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &types::PtrOfFeatureDetector, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
+pub fn find_circles_grid(image: &dyn core::ToInputArray, pattern_size: core::Size, centers: &mut dyn core::ToOutputArray, flags: i32, blob_detector: &core::Ptr::<crate::features2d::Feature2D>, parameters: crate::calib3d::CirclesGridFinderParameters) -> Result<bool> {
 	input_array_arg!(image);
 	output_array_arg!(centers);
-	unsafe { sys::cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X_const_CirclesGridFinderParametersX(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeatureDetector(), &parameters) }.into_result()
+	unsafe { sys::cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_Feature2D_X_const_CirclesGridFinderParametersX(image.as_raw__InputArray(), &pattern_size, centers.as_raw__OutputArray(), flags, blob_detector.as_raw_PtrOfFeature2D(), &parameters) }.into_result()
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -1862,7 +1862,7 @@ pub fn find_essential_mat_matrix(points1: &dyn core::ToInputArray, points2: &dyn
 	input_array_arg!(points2);
 	input_array_arg!(camera_matrix);
 	output_array_arg!(mask);
-	unsafe { sys::cv_findEssentialMat_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray()) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_findEssentialMat_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), method, prob, threshold, mask.as_raw__OutputArray()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Calculates an essential matrix from the corresponding points in two images.
@@ -1931,7 +1931,7 @@ pub fn find_essential_mat(points1: &dyn core::ToInputArray, points2: &dyn core::
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	unsafe { sys::cv_findEssentialMat_const__InputArrayX_const__InputArrayX_double_Point2d_int_double_double_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, &pp, method, prob, threshold, mask.as_raw__OutputArray()) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_findEssentialMat_const__InputArrayX_const__InputArrayX_double_Point2d_int_double_double_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), focal, &pp, method, prob, threshold, mask.as_raw__OutputArray()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
@@ -1997,7 +1997,7 @@ pub fn find_fundamental_mat_mask(points1: &dyn core::ToInputArray, points2: &dyn
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	unsafe { sys::cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, confidence) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_double(points1.as_raw__InputArray(), points2.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold, confidence) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
@@ -2064,7 +2064,7 @@ pub fn find_fundamental_mat_1(points1: &dyn core::ToInputArray, points2: &dyn co
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	unsafe { sys::cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, mask.as_raw__OutputArray()) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, mask.as_raw__OutputArray()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Calculates a fundamental matrix from the corresponding points in two images.
@@ -2126,7 +2126,7 @@ pub fn find_fundamental_mat(points1: &dyn core::ToInputArray, points2: &dyn core
 	input_array_arg!(points1);
 	input_array_arg!(points2);
 	output_array_arg!(mask);
-	unsafe { sys::cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_int_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, max_iters, mask.as_raw__OutputArray()) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_int_const__OutputArrayX(points1.as_raw__InputArray(), points2.as_raw__InputArray(), method, ransac_reproj_threshold, confidence, max_iters, mask.as_raw__OutputArray()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Finds a perspective transformation between two planes.
@@ -2197,7 +2197,7 @@ pub fn find_homography(src_points: &dyn core::ToInputArray, dst_points: &dyn cor
 	input_array_arg!(src_points);
 	input_array_arg!(dst_points);
 	output_array_arg!(mask);
-	unsafe { sys::cv_findHomography_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_findHomography_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), mask.as_raw__OutputArray(), method, ransac_reproj_threshold) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Finds a perspective transformation between two planes.
@@ -2269,7 +2269,7 @@ pub fn find_homography_ext(src_points: &dyn core::ToInputArray, dst_points: &dyn
 	input_array_arg!(src_points);
 	input_array_arg!(dst_points);
 	output_array_arg!(mask);
-	unsafe { sys::cv_findHomography_const__InputArrayX_const__InputArrayX_int_double_const__OutputArrayX_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), method, ransac_reproj_threshold, mask.as_raw__OutputArray(), max_iters, confidence) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_findHomography_const__InputArrayX_const__InputArrayX_int_double_const__OutputArrayX_int_double(src_points.as_raw__InputArray(), dst_points.as_raw__InputArray(), method, ransac_reproj_threshold, mask.as_raw__OutputArray(), max_iters, confidence) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Performs camera calibaration
@@ -2316,7 +2316,7 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 	input_output_array_arg!(d);
 	output_array_arg!(rvecs);
 	output_array_arg!(tvecs);
-	unsafe { sys::cv_fisheye_calibrate_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_fisheye_calibrate_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, k.as_raw__InputOutputArray(), d.as_raw__InputOutputArray(), rvecs.as_raw__OutputArray(), tvecs.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Distorts 2D points using fisheye model.
@@ -2509,7 +2509,7 @@ pub fn fisheye_stereo_calibrate(object_points: &dyn core::ToInputArray, image_po
 	input_output_array_arg!(d2);
 	output_array_arg!(r);
 	output_array_arg!(t);
-	unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_fisheye_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), k1.as_raw__InputOutputArray(), d1.as_raw__InputOutputArray(), k2.as_raw__InputOutputArray(), d2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Stereo rectification for fisheye camera model
@@ -2656,7 +2656,7 @@ pub fn fisheye_undistort_points(distorted: &dyn core::ToInputArray, undistorted:
 /// * center_principal_point: false
 pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, imgsize: core::Size, center_principal_point: bool) -> Result<core::Mat> {
 	input_array_arg!(camera_matrix);
-	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayX_Size_bool(camera_matrix.as_raw__InputArray(), &imgsize, center_principal_point) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_getDefaultNewCameraMatrix_const__InputArrayX_Size_bool(camera_matrix.as_raw__InputArray(), &imgsize, center_principal_point) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Returns the new camera matrix based on the free scaling parameter.
@@ -2695,7 +2695,7 @@ pub fn get_default_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, img
 pub fn get_optimal_new_camera_matrix(camera_matrix: &dyn core::ToInputArray, dist_coeffs: &dyn core::ToInputArray, image_size: core::Size, alpha: f64, new_img_size: core::Size, valid_pix_roi: &mut core::Rect, center_principal_point: bool) -> Result<core::Mat> {
 	input_array_arg!(camera_matrix);
 	input_array_arg!(dist_coeffs);
-	unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayX_const__InputArrayX_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, alpha, &new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_getOptimalNewCameraMatrix_const__InputArrayX_const__InputArrayX_Size_double_Size_RectX_bool(camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), &image_size, alpha, &new_img_size, valid_pix_roi, center_principal_point) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// computes valid disparity ROI from the valid ROIs of the rectified images (that are returned by cv::stereoRectify())
@@ -2724,7 +2724,7 @@ pub fn get_valid_disparity_roi(roi1: core::Rect, roi2: core::Rect, min_disparity
 pub fn init_camera_matrix_2d(object_points: &dyn core::ToInputArray, image_points: &dyn core::ToInputArray, image_size: core::Size, aspect_ratio: f64) -> Result<core::Mat> {
 	input_array_arg!(object_points);
 	input_array_arg!(image_points);
-	unsafe { sys::cv_initCameraMatrix2D_const__InputArrayX_const__InputArrayX_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, aspect_ratio) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_initCameraMatrix2D_const__InputArrayX_const__InputArrayX_Size_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), &image_size, aspect_ratio) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Computes the undistortion and rectification transformation map.
@@ -3460,7 +3460,7 @@ pub fn solve_pnp_refine_lm(object_points: &dyn core::ToInputArray, image_points:
 	input_array_arg!(dist_coeffs);
 	input_output_array_arg!(rvec);
 	input_output_array_arg!(tvec);
-	unsafe { sys::cv_solvePnPRefineLM_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_solvePnPRefineLM_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_TermCriteria(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), &criteria) }.into_result()
 }
 
 /// Refine a pose (the translation and the rotation that transform a 3D point expressed in the object coordinate frame
@@ -3499,7 +3499,7 @@ pub fn solve_pnp_refine_vvs(object_points: &dyn core::ToInputArray, image_points
 	input_array_arg!(dist_coeffs);
 	input_output_array_arg!(rvec);
 	input_output_array_arg!(tvec);
-	unsafe { sys::cv_solvePnPRefineVVS_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), criteria.as_raw_TermCriteria(), vv_slambda) }.into_result()
+	unsafe { sys::cv_solvePnPRefineVVS_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_TermCriteria_double(object_points.as_raw__InputArray(), image_points.as_raw__InputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), rvec.as_raw__InputOutputArray(), tvec.as_raw__InputOutputArray(), &criteria, vv_slambda) }.into_result()
 }
 
 /// Finds an object pose from 3D-2D point correspondences.
@@ -3748,7 +3748,7 @@ pub fn stereo_calibrate_extended(object_points: &dyn core::ToInputArray, image_p
 	output_array_arg!(e);
 	output_array_arg!(f);
 	output_array_arg!(per_view_errors);
-	unsafe { sys::cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__InputOutputArray(), t.as_raw__InputOutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), per_view_errors.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Calibrates a stereo camera set up. This function finds the intrinsic parameters
@@ -3878,7 +3878,7 @@ pub fn stereo_calibrate(object_points: &dyn core::ToInputArray, image_points1: &
 	output_array_arg!(t);
 	output_array_arg!(e);
 	output_array_arg!(f);
-	unsafe { sys::cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_stereoCalibrate_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_Size_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points.as_raw__InputArray(), image_points1.as_raw__InputArray(), image_points2.as_raw__InputArray(), camera_matrix1.as_raw__InputOutputArray(), dist_coeffs1.as_raw__InputOutputArray(), camera_matrix2.as_raw__InputOutputArray(), dist_coeffs2.as_raw__InputOutputArray(), &image_size, r.as_raw__OutputArray(), t.as_raw__OutputArray(), e.as_raw__OutputArray(), f.as_raw__OutputArray(), flags, &criteria) }.into_result()
 }
 
 /// Computes a rectification transform for an uncalibrated stereo camera.
@@ -4150,7 +4150,7 @@ pub fn undistort_points_iter(src: &dyn core::ToInputArray, dst: &mut dyn core::T
 	input_array_arg!(dist_coeffs);
 	input_array_arg!(r);
 	input_array_arg!(p);
-	unsafe { sys::cv_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), criteria.as_raw_TermCriteria()) }.into_result()
+	unsafe { sys::cv_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_TermCriteria(src.as_raw__InputArray(), dst.as_raw__OutputArray(), camera_matrix.as_raw__InputArray(), dist_coeffs.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &criteria) }.into_result()
 }
 
 /// Transforms an image to compensate for lens distortion.
@@ -4239,7 +4239,9 @@ impl CirclesGridFinderParameters {
 /// 
 /// When needed, it calls user-provided callback.
 pub trait LMSolver: core::AlgorithmTrait {
-	fn as_raw_LMSolver(&self) -> *mut c_void;
+	fn as_raw_LMSolver(&self) -> *const c_void;
+	fn as_raw_mut_LMSolver(&mut self) -> *mut c_void;
+
 	/// Runs Levenberg-Marquardt algorithm using the passed vector of parameters as the start point.
 	/// The final vector of parameters (whether the algorithm converged or not) is stored at the same
 	/// vector. The method returns the number of iterations used. If it's equal to the previously specified
@@ -4260,7 +4262,7 @@ pub trait LMSolver: core::AlgorithmTrait {
 	/// ## Parameters
 	/// * maxIters: the number of iterations
 	fn set_max_iters(&mut self, max_iters: i32) -> Result<()> {
-		unsafe { sys::cv_LMSolver_setMaxIters_int(self.as_raw_LMSolver(), max_iters) }.into_result()
+		unsafe { sys::cv_LMSolver_setMaxIters_int(self.as_raw_mut_LMSolver(), max_iters) }.into_result()
 	}
 	
 	/// Retrieves the current maximum number of iterations
@@ -4277,17 +4279,19 @@ impl dyn LMSolver + '_ {
 	/// * cb: callback
 	/// * maxIters: maximum number of iterations that can be further
 	///   modified using setMaxIters() method.
-	pub fn create(cb: &types::PtrOfLMSolver_Callback, max_iters: i32) -> Result<types::PtrOfLMSolver> {
-		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_X_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters) }.into_result().map(|ptr| types::PtrOfLMSolver { ptr })
+	pub fn create(cb: &core::Ptr::<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32) -> Result<core::Ptr::<dyn crate::calib3d::LMSolver>> {
+		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_X_int(cb.as_raw_PtrOfLMSolver_Callback(), max_iters) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::from_raw(ptr) })
 	}
 	
-	pub fn create_ext(cb: &types::PtrOfLMSolver_Callback, max_iters: i32, eps: f64) -> Result<types::PtrOfLMSolver> {
-		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_X_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps) }.into_result().map(|ptr| types::PtrOfLMSolver { ptr })
+	pub fn create_ext(cb: &core::Ptr::<dyn crate::calib3d::LMSolver_Callback>, max_iters: i32, eps: f64) -> Result<core::Ptr::<dyn crate::calib3d::LMSolver>> {
+		unsafe { sys::cv_LMSolver_create_const_Ptr_Callback_X_int_double(cb.as_raw_PtrOfLMSolver_Callback(), max_iters, eps) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::calib3d::LMSolver>::from_raw(ptr) })
 	}
 	
 }
 pub trait LMSolver_Callback {
-	fn as_raw_LMSolver_Callback(&self) -> *mut c_void;
+	fn as_raw_LMSolver_Callback(&self) -> *const c_void;
+	fn as_raw_mut_LMSolver_Callback(&mut self) -> *mut c_void;
+
 	/// computes error and Jacobian for the specified vector of parameters
 	/// 
 	/// ## Parameters
@@ -4311,13 +4315,15 @@ pub trait LMSolver_Callback {
 /// Class for computing stereo correspondence using the block matching algorithm, introduced and
 /// contributed to OpenCV by K. Konolige.
 pub trait StereoBM: crate::calib3d::StereoMatcher {
-	fn as_raw_StereoBM(&self) -> *mut c_void;
+	fn as_raw_StereoBM(&self) -> *const c_void;
+	fn as_raw_mut_StereoBM(&mut self) -> *mut c_void;
+
 	fn get_pre_filter_type(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoBM_getPreFilterType_const(self.as_raw_StereoBM()) }.into_result()
 	}
 	
 	fn set_pre_filter_type(&mut self, pre_filter_type: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setPreFilterType_int(self.as_raw_StereoBM(), pre_filter_type) }.into_result()
+		unsafe { sys::cv_StereoBM_setPreFilterType_int(self.as_raw_mut_StereoBM(), pre_filter_type) }.into_result()
 	}
 	
 	fn get_pre_filter_size(&self) -> Result<i32> {
@@ -4325,7 +4331,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_pre_filter_size(&mut self, pre_filter_size: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setPreFilterSize_int(self.as_raw_StereoBM(), pre_filter_size) }.into_result()
+		unsafe { sys::cv_StereoBM_setPreFilterSize_int(self.as_raw_mut_StereoBM(), pre_filter_size) }.into_result()
 	}
 	
 	fn get_pre_filter_cap(&self) -> Result<i32> {
@@ -4333,7 +4339,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setPreFilterCap_int(self.as_raw_StereoBM(), pre_filter_cap) }.into_result()
+		unsafe { sys::cv_StereoBM_setPreFilterCap_int(self.as_raw_mut_StereoBM(), pre_filter_cap) }.into_result()
 	}
 	
 	fn get_texture_threshold(&self) -> Result<i32> {
@@ -4341,7 +4347,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_texture_threshold(&mut self, texture_threshold: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setTextureThreshold_int(self.as_raw_StereoBM(), texture_threshold) }.into_result()
+		unsafe { sys::cv_StereoBM_setTextureThreshold_int(self.as_raw_mut_StereoBM(), texture_threshold) }.into_result()
 	}
 	
 	fn get_uniqueness_ratio(&self) -> Result<i32> {
@@ -4349,7 +4355,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setUniquenessRatio_int(self.as_raw_StereoBM(), uniqueness_ratio) }.into_result()
+		unsafe { sys::cv_StereoBM_setUniquenessRatio_int(self.as_raw_mut_StereoBM(), uniqueness_ratio) }.into_result()
 	}
 	
 	fn get_smaller_block_size(&self) -> Result<i32> {
@@ -4357,7 +4363,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_smaller_block_size(&mut self, block_size: i32) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setSmallerBlockSize_int(self.as_raw_StereoBM(), block_size) }.into_result()
+		unsafe { sys::cv_StereoBM_setSmallerBlockSize_int(self.as_raw_mut_StereoBM(), block_size) }.into_result()
 	}
 	
 	fn get_roi1(&self) -> Result<core::Rect> {
@@ -4365,7 +4371,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_roi1(&mut self, roi1: core::Rect) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_StereoBM(), &roi1) }.into_result()
+		unsafe { sys::cv_StereoBM_setROI1_Rect(self.as_raw_mut_StereoBM(), &roi1) }.into_result()
 	}
 	
 	fn get_roi2(&self) -> Result<core::Rect> {
@@ -4373,7 +4379,7 @@ pub trait StereoBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_roi2(&mut self, roi2: core::Rect) -> Result<()> {
-		unsafe { sys::cv_StereoBM_setROI2_Rect(self.as_raw_StereoBM(), &roi2) }.into_result()
+		unsafe { sys::cv_StereoBM_setROI2_Rect(self.as_raw_mut_StereoBM(), &roi2) }.into_result()
 	}
 	
 }
@@ -4396,14 +4402,16 @@ impl dyn StereoBM + '_ {
 	/// ## C++ default parameters
 	/// * num_disparities: 0
 	/// * block_size: 21
-	pub fn create(num_disparities: i32, block_size: i32) -> Result<types::PtrOfStereoBM> {
-		unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size) }.into_result().map(|ptr| types::PtrOfStereoBM { ptr })
+	pub fn create(num_disparities: i32, block_size: i32) -> Result<core::Ptr::<dyn crate::calib3d::StereoBM>> {
+		unsafe { sys::cv_StereoBM_create_int_int(num_disparities, block_size) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::calib3d::StereoBM>::from_raw(ptr) })
 	}
 	
 }
 /// The base class for stereo correspondence algorithms.
 pub trait StereoMatcher: core::AlgorithmTrait {
-	fn as_raw_StereoMatcher(&self) -> *mut c_void;
+	fn as_raw_StereoMatcher(&self) -> *const c_void;
+	fn as_raw_mut_StereoMatcher(&mut self) -> *mut c_void;
+
 	/// Computes disparity map for the specified stereo pair
 	/// 
 	/// ## Parameters
@@ -4416,7 +4424,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 		input_array_arg!(left);
 		input_array_arg!(right);
 		output_array_arg!(disparity);
-		unsafe { sys::cv_StereoMatcher_compute_const__InputArrayX_const__InputArrayX_const__OutputArrayX(self.as_raw_StereoMatcher(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_StereoMatcher_compute_const__InputArrayX_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_StereoMatcher(), left.as_raw__InputArray(), right.as_raw__InputArray(), disparity.as_raw__OutputArray()) }.into_result()
 	}
 	
 	fn get_min_disparity(&self) -> Result<i32> {
@@ -4424,7 +4432,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 	}
 	
 	fn set_min_disparity(&mut self, min_disparity: i32) -> Result<()> {
-		unsafe { sys::cv_StereoMatcher_setMinDisparity_int(self.as_raw_StereoMatcher(), min_disparity) }.into_result()
+		unsafe { sys::cv_StereoMatcher_setMinDisparity_int(self.as_raw_mut_StereoMatcher(), min_disparity) }.into_result()
 	}
 	
 	fn get_num_disparities(&self) -> Result<i32> {
@@ -4432,7 +4440,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 	}
 	
 	fn set_num_disparities(&mut self, num_disparities: i32) -> Result<()> {
-		unsafe { sys::cv_StereoMatcher_setNumDisparities_int(self.as_raw_StereoMatcher(), num_disparities) }.into_result()
+		unsafe { sys::cv_StereoMatcher_setNumDisparities_int(self.as_raw_mut_StereoMatcher(), num_disparities) }.into_result()
 	}
 	
 	fn get_block_size(&self) -> Result<i32> {
@@ -4440,7 +4448,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 	}
 	
 	fn set_block_size(&mut self, block_size: i32) -> Result<()> {
-		unsafe { sys::cv_StereoMatcher_setBlockSize_int(self.as_raw_StereoMatcher(), block_size) }.into_result()
+		unsafe { sys::cv_StereoMatcher_setBlockSize_int(self.as_raw_mut_StereoMatcher(), block_size) }.into_result()
 	}
 	
 	fn get_speckle_window_size(&self) -> Result<i32> {
@@ -4448,7 +4456,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 	}
 	
 	fn set_speckle_window_size(&mut self, speckle_window_size: i32) -> Result<()> {
-		unsafe { sys::cv_StereoMatcher_setSpeckleWindowSize_int(self.as_raw_StereoMatcher(), speckle_window_size) }.into_result()
+		unsafe { sys::cv_StereoMatcher_setSpeckleWindowSize_int(self.as_raw_mut_StereoMatcher(), speckle_window_size) }.into_result()
 	}
 	
 	fn get_speckle_range(&self) -> Result<i32> {
@@ -4456,7 +4464,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 	}
 	
 	fn set_speckle_range(&mut self, speckle_range: i32) -> Result<()> {
-		unsafe { sys::cv_StereoMatcher_setSpeckleRange_int(self.as_raw_StereoMatcher(), speckle_range) }.into_result()
+		unsafe { sys::cv_StereoMatcher_setSpeckleRange_int(self.as_raw_mut_StereoMatcher(), speckle_range) }.into_result()
 	}
 	
 	fn get_disp12_max_diff(&self) -> Result<i32> {
@@ -4464,7 +4472,7 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 	}
 	
 	fn set_disp12_max_diff(&mut self, disp12_max_diff: i32) -> Result<()> {
-		unsafe { sys::cv_StereoMatcher_setDisp12MaxDiff_int(self.as_raw_StereoMatcher(), disp12_max_diff) }.into_result()
+		unsafe { sys::cv_StereoMatcher_setDisp12MaxDiff_int(self.as_raw_mut_StereoMatcher(), disp12_max_diff) }.into_result()
 	}
 	
 }
@@ -4488,13 +4496,15 @@ pub trait StereoMatcher: core::AlgorithmTrait {
 ///    *   (Python) An example illustrating the use of the StereoSGBM matching algorithm can be found
 ///        at opencv_source_code/samples/python/stereo_match.py
 pub trait StereoSGBM: crate::calib3d::StereoMatcher {
-	fn as_raw_StereoSGBM(&self) -> *mut c_void;
+	fn as_raw_StereoSGBM(&self) -> *const c_void;
+	fn as_raw_mut_StereoSGBM(&mut self) -> *mut c_void;
+
 	fn get_pre_filter_cap(&self) -> Result<i32> {
 		unsafe { sys::cv_StereoSGBM_getPreFilterCap_const(self.as_raw_StereoSGBM()) }.into_result()
 	}
 	
 	fn set_pre_filter_cap(&mut self, pre_filter_cap: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_StereoSGBM(), pre_filter_cap) }.into_result()
+		unsafe { sys::cv_StereoSGBM_setPreFilterCap_int(self.as_raw_mut_StereoSGBM(), pre_filter_cap) }.into_result()
 	}
 	
 	fn get_uniqueness_ratio(&self) -> Result<i32> {
@@ -4502,7 +4512,7 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_uniqueness_ratio(&mut self, uniqueness_ratio: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_StereoSGBM(), uniqueness_ratio) }.into_result()
+		unsafe { sys::cv_StereoSGBM_setUniquenessRatio_int(self.as_raw_mut_StereoSGBM(), uniqueness_ratio) }.into_result()
 	}
 	
 	fn get_p1(&self) -> Result<i32> {
@@ -4510,7 +4520,7 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_p1(&mut self, p1: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_StereoSGBM(), p1) }.into_result()
+		unsafe { sys::cv_StereoSGBM_setP1_int(self.as_raw_mut_StereoSGBM(), p1) }.into_result()
 	}
 	
 	fn get_p2(&self) -> Result<i32> {
@@ -4518,7 +4528,7 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_p2(&mut self, p2: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_StereoSGBM(), p2) }.into_result()
+		unsafe { sys::cv_StereoSGBM_setP2_int(self.as_raw_mut_StereoSGBM(), p2) }.into_result()
 	}
 	
 	fn get_mode(&self) -> Result<i32> {
@@ -4526,7 +4536,7 @@ pub trait StereoSGBM: crate::calib3d::StereoMatcher {
 	}
 	
 	fn set_mode(&mut self, mode: i32) -> Result<()> {
-		unsafe { sys::cv_StereoSGBM_setMode_int(self.as_raw_StereoSGBM(), mode) }.into_result()
+		unsafe { sys::cv_StereoSGBM_setMode_int(self.as_raw_mut_StereoSGBM(), mode) }.into_result()
 	}
 	
 }
@@ -4582,8 +4592,8 @@ impl dyn StereoSGBM + '_ {
 	/// * speckle_window_size: 0
 	/// * speckle_range: 0
 	/// * mode: StereoSGBM::MODE_SGBM
-	pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<types::PtrOfStereoSGBM> {
-		unsafe { sys::cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode) }.into_result().map(|ptr| types::PtrOfStereoSGBM { ptr })
+	pub fn create(min_disparity: i32, num_disparities: i32, block_size: i32, p1: i32, p2: i32, disp12_max_diff: i32, pre_filter_cap: i32, uniqueness_ratio: i32, speckle_window_size: i32, speckle_range: i32, mode: i32) -> Result<core::Ptr::<dyn crate::calib3d::StereoSGBM>> {
+		unsafe { sys::cv_StereoSGBM_create_int_int_int_int_int_int_int_int_int_int_int(min_disparity, num_disparities, block_size, p1, p2, disp12_max_diff, pre_filter_cap, uniqueness_ratio, speckle_window_size, speckle_range, mode) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::calib3d::StereoSGBM>::from_raw(ptr) })
 	}
 	
 }

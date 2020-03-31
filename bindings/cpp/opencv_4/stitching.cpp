@@ -1027,11 +1027,11 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_detail_BundleAdjusterBase_termCriteria(cv::detail::BundleAdjusterBase* instance) {
+	Result<cv::TermCriteria> cv_detail_BundleAdjusterBase_termCriteria(cv::detail::BundleAdjusterBase* instance) {
 		try {
 			cv::TermCriteria ret = instance->termCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
 	Result_void cv_detail_BundleAdjusterBase_setTermCriteria_const_TermCriteriaX(cv::detail::BundleAdjusterBase* instance, const cv::TermCriteria* term_criteria) {

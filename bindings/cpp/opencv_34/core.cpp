@@ -814,7 +814,7 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
-	Result<double> cv_kmeans_const__InputArrayX_int_const__InputOutputArrayX_TermCriteria_int_int_const__OutputArrayX(const cv::_InputArray* data, int K, const cv::_InputOutputArray* bestLabels, cv::TermCriteria* criteria, int attempts, int flags, const cv::_OutputArray* centers) {
+	Result<double> cv_kmeans_const__InputArrayX_int_const__InputOutputArrayX_TermCriteria_int_int_const__OutputArrayX(const cv::_InputArray* data, int K, const cv::_InputOutputArray* bestLabels, const cv::TermCriteria* criteria, int attempts, int flags, const cv::_OutputArray* centers) {
 		try {
 			double ret = cv::kmeans(*data, K, *bestLabels, *criteria, attempts, flags, *centers);
 			return Ok(ret);
@@ -1192,6 +1192,244 @@ extern "C" {
 			const char* ret = cv::ocl::vecopTypeToStr(t);
 			return Ok(ocvrs_create_string(ret));
 		} OCVRS_CATCH(Result<void*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_MatExprX_const_MatExprX(const cv::MatExpr* e1, const cv::MatExpr* e2) {
+		try {
+			cv::MatExpr ret = cv::operator+(*e1, *e2);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_MatExprX_const_MatX(const cv::MatExpr* e, const cv::Mat* m) {
+		try {
+			cv::MatExpr ret = cv::operator+(*e, *m);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_MatExprX_const_ScalarX(const cv::MatExpr* e, const cv::Scalar* s) {
+		try {
+			cv::MatExpr ret = cv::operator+(*e, *s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_MatX_const_MatExprX(const cv::Mat* m, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator+(*m, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_MatX_const_MatX(const cv::Mat* a, const cv::Mat* b) {
+		try {
+			cv::MatExpr ret = cv::operator+(*a, *b);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_MatX_const_ScalarX(const cv::Mat* a, const cv::Scalar* s) {
+		try {
+			cv::MatExpr ret = cv::operator+(*a, *s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_ScalarX_const_MatExprX(const cv::Scalar* s, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator+(*s, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorA_const_ScalarX_const_MatX(const cv::Scalar* s, const cv::Mat* a) {
+		try {
+			cv::MatExpr ret = cv::operator+(*s, *a);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_const_MatExprX_const_MatExprX(const cv::MatExpr* e1, const cv::MatExpr* e2) {
+		try {
+			cv::MatExpr ret = cv::operator/(*e1, *e2);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_const_MatExprX_const_MatX(const cv::MatExpr* e, const cv::Mat* m) {
+		try {
+			cv::MatExpr ret = cv::operator/(*e, *m);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_const_MatExprX_double(const cv::MatExpr* e, double s) {
+		try {
+			cv::MatExpr ret = cv::operator/(*e, s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_const_MatX_const_MatExprX(const cv::Mat* m, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator/(*m, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_const_MatX_const_MatX(const cv::Mat* a, const cv::Mat* b) {
+		try {
+			cv::MatExpr ret = cv::operator/(*a, *b);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_const_MatX_double(const cv::Mat* a, double s) {
+		try {
+			cv::MatExpr ret = cv::operator/(*a, s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_double_const_MatExprX(double s, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator/(s, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorD_double_const_MatX(double s, const cv::Mat* a) {
+		try {
+			cv::MatExpr ret = cv::operator/(s, *a);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatExprX(const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator-(*e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatExprX_const_MatExprX(const cv::MatExpr* e1, const cv::MatExpr* e2) {
+		try {
+			cv::MatExpr ret = cv::operator-(*e1, *e2);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatExprX_const_MatX(const cv::MatExpr* e, const cv::Mat* m) {
+		try {
+			cv::MatExpr ret = cv::operator-(*e, *m);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatExprX_const_ScalarX(const cv::MatExpr* e, const cv::Scalar* s) {
+		try {
+			cv::MatExpr ret = cv::operator-(*e, *s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatX(const cv::Mat* m) {
+		try {
+			cv::MatExpr ret = cv::operator-(*m);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatX_const_MatExprX(const cv::Mat* m, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator-(*m, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatX_const_MatX(const cv::Mat* a, const cv::Mat* b) {
+		try {
+			cv::MatExpr ret = cv::operator-(*a, *b);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_MatX_const_ScalarX(const cv::Mat* a, const cv::Scalar* s) {
+		try {
+			cv::MatExpr ret = cv::operator-(*a, *s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_ScalarX_const_MatExprX(const cv::Scalar* s, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator-(*s, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorS_const_ScalarX_const_MatX(const cv::Scalar* s, const cv::Mat* a) {
+		try {
+			cv::MatExpr ret = cv::operator-(*s, *a);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_const_MatExprX_const_MatExprX(const cv::MatExpr* e1, const cv::MatExpr* e2) {
+		try {
+			cv::MatExpr ret = cv::operator*(*e1, *e2);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_const_MatExprX_const_MatX(const cv::MatExpr* e, const cv::Mat* m) {
+		try {
+			cv::MatExpr ret = cv::operator*(*e, *m);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_const_MatExprX_double(const cv::MatExpr* e, double s) {
+		try {
+			cv::MatExpr ret = cv::operator*(*e, s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_const_MatX_const_MatExprX(const cv::Mat* m, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator*(*m, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_const_MatX_const_MatX(const cv::Mat* a, const cv::Mat* b) {
+		try {
+			cv::MatExpr ret = cv::operator*(*a, *b);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_const_MatX_double(const cv::Mat* a, double s) {
+		try {
+			cv::MatExpr ret = cv::operator*(*a, s);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_double_const_MatExprX(double s, const cv::MatExpr* e) {
+		try {
+			cv::MatExpr ret = cv::operator*(s, *e);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
+	}
+	
+	Result<cv::MatExpr*> cv_operatorX_double_const_MatX(double s, const cv::Mat* a) {
+		try {
+			cv::MatExpr ret = cv::operator*(s, *a);
+			return Ok(new cv::MatExpr(ret));
+		} OCVRS_CATCH(Result<cv::MatExpr*>)
 	}
 	
 	Result_void cv_parallel_for__const_RangeX_const_ParallelLoopBodyX_double(const cv::Range* range, const cv::ParallelLoopBody* body, double nstripes) {
@@ -2081,7 +2319,7 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Ptr<cv::ConjGradSolver>*> cv_ConjGradSolver_create_const_Ptr_Function_X_TermCriteria(const cv::Ptr<cv::MinProblemSolver::Function>* f, cv::TermCriteria* termcrit) {
+	Result<cv::Ptr<cv::ConjGradSolver>*> cv_ConjGradSolver_create_const_Ptr_Function_X_TermCriteria(const cv::Ptr<cv::MinProblemSolver::Function>* f, const cv::TermCriteria* termcrit) {
 		try {
 			cv::Ptr<cv::ConjGradSolver> ret = cv::ConjGradSolver::create(*f, *termcrit);
 			return Ok(new cv::Ptr<cv::ConjGradSolver>(ret));
@@ -2123,7 +2361,7 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Ptr<cv::DownhillSolver>*> cv_DownhillSolver_create_const_Ptr_Function_X_const__InputArrayX_TermCriteria(const cv::Ptr<cv::MinProblemSolver::Function>* f, const cv::_InputArray* initStep, cv::TermCriteria* termcrit) {
+	Result<cv::Ptr<cv::DownhillSolver>*> cv_DownhillSolver_create_const_Ptr_Function_X_const__InputArrayX_TermCriteria(const cv::Ptr<cv::MinProblemSolver::Function>* f, const cv::_InputArray* initStep, const cv::TermCriteria* termcrit) {
 		try {
 			cv::Ptr<cv::DownhillSolver> ret = cv::DownhillSolver::create(*f, *initStep, *termcrit);
 			return Ok(new cv::Ptr<cv::DownhillSolver>(ret));
@@ -2494,6 +2732,13 @@ extern "C" {
 			cv::FileNodeIterator* ret = new cv::FileNodeIterator(*it);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::FileNodeIterator*>)
+	}
+	
+	Result<cv::FileNode*> cv_FileNodeIterator_operatorX_const(const cv::FileNodeIterator* instance) {
+		try {
+			cv::FileNode ret = instance->operator*();
+			return Ok(new cv::FileNode(ret));
+		} OCVRS_CATCH(Result<cv::FileNode*>)
 	}
 	
 	Result<cv::FileNodeIterator*> cv_FileNodeIterator_readRaw_const_StringX_unsigned_charX_size_t(cv::FileNodeIterator* instance, const char* fmt, unsigned char* vec, size_t len) {
@@ -3795,6 +4040,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::MatConstIterator*>)
 	}
 	
+	Result<const unsigned char*> cv_MatConstIterator_operatorX_const(const cv::MatConstIterator* instance) {
+		try {
+			const unsigned char* ret = instance->operator*();
+			return Ok(ret);
+		} OCVRS_CATCH(Result<const unsigned char*>)
+	}
+	
 	Result<const unsigned char*> cv_MatConstIterator_operator___const_ptrdiff_t(const cv::MatConstIterator* instance, ptrdiff_t i) {
 		try {
 			const unsigned char* ret = instance->operator[](i);
@@ -4462,11 +4714,11 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_MinProblemSolver_getTermCriteria_const(const cv::MinProblemSolver* instance) {
+	Result<cv::TermCriteria> cv_MinProblemSolver_getTermCriteria_const(const cv::MinProblemSolver* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
 	Result_void cv_MinProblemSolver_setTermCriteria_const_TermCriteriaX(cv::MinProblemSolver* instance, const cv::TermCriteria* termcrit) {
@@ -5765,68 +6017,23 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<int> cv_TermCriteria_type_const(const cv::TermCriteria* instance) {
+	Result<cv::TermCriteria> cv_TermCriteria_TermCriteria() {
 		try {
-			int ret = instance->type;
+			cv::TermCriteria ret;
 			return Ok(ret);
-		} OCVRS_CATCH(Result<int>)
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
-	Result_void cv_TermCriteria_setType_int(cv::TermCriteria* instance, int val) {
+	Result<cv::TermCriteria> cv_TermCriteria_TermCriteria_int_int_double(int type, int maxCount, double epsilon) {
 		try {
-			instance->type = val;
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result<int> cv_TermCriteria_maxCount_const(const cv::TermCriteria* instance) {
-		try {
-			int ret = instance->maxCount;
+			cv::TermCriteria ret(type, maxCount, epsilon);
 			return Ok(ret);
-		} OCVRS_CATCH(Result<int>)
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
-	Result_void cv_TermCriteria_setMaxCount_int(cv::TermCriteria* instance, int val) {
+	Result<bool> cv_TermCriteria_isValid_const(const cv::TermCriteria instance) {
 		try {
-			instance->maxCount = val;
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	Result<double> cv_TermCriteria_epsilon_const(const cv::TermCriteria* instance) {
-		try {
-			double ret = instance->epsilon;
-			return Ok(ret);
-		} OCVRS_CATCH(Result<double>)
-	}
-	
-	Result_void cv_TermCriteria_setEpsilon_double(cv::TermCriteria* instance, double val) {
-		try {
-			instance->epsilon = val;
-			return Ok();
-		} OCVRS_CATCH(Result_void)
-	}
-	
-	void cv_TermCriteria_delete(cv::TermCriteria* instance) {
-		delete instance;
-	}
-	Result<cv::TermCriteria*> cv_TermCriteria_TermCriteria() {
-		try {
-			cv::TermCriteria* ret = new cv::TermCriteria();
-			return Ok(ret);
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
-	}
-	
-	Result<cv::TermCriteria*> cv_TermCriteria_TermCriteria_int_int_double(int type, int maxCount, double epsilon) {
-		try {
-			cv::TermCriteria* ret = new cv::TermCriteria(type, maxCount, epsilon);
-			return Ok(ret);
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
-	}
-	
-	Result<bool> cv_TermCriteria_isValid_const(const cv::TermCriteria* instance) {
-		try {
-			bool ret = instance->isValid();
+			bool ret = instance.isValid();
 			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}

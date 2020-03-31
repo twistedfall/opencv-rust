@@ -107,7 +107,9 @@ pub type SurfFeatureDetector = dyn crate::xfeatures2d::SURF;
 /// BoostDesc header files (boostdesc_*.i) was exported from original binaries with export-boostdesc.py script from
 /// samples subfolder.
 pub trait BoostDescTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_BoostDesc(&self) -> *mut c_void;
+	fn as_raw_BoostDesc(&self) -> *const c_void;
+	fn as_raw_mut_BoostDesc(&mut self) -> *mut c_void;
+
 }
 
 /// Class implementing BoostDesc (Learning Image Descriptors with Boosting), described in
@@ -137,36 +139,38 @@ pub trait BoostDescTrait: crate::features2d::Feature2DTrait {
 /// BoostDesc header files (boostdesc_*.i) was exported from original binaries with export-boostdesc.py script from
 /// samples subfolder.
 pub struct BoostDesc {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { BoostDesc }
 
 impl Drop for BoostDesc {
 	fn drop(&mut self) {
 		extern "C" { fn cv_BoostDesc_delete(instance: *mut c_void); }
-		unsafe { cv_BoostDesc_delete(self.as_raw_BoostDesc()) };
+		unsafe { cv_BoostDesc_delete(self.as_raw_mut_BoostDesc()) };
 	}
 }
 
 impl BoostDesc {
-	pub fn as_raw_BoostDesc(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_BoostDesc(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_BoostDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for BoostDesc {}
 
 impl core::AlgorithmTrait for BoostDesc {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::BoostDescTrait for BoostDesc {
-	fn as_raw_BoostDesc(&self) -> *mut c_void { self.ptr }
+	fn as_raw_BoostDesc(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_BoostDesc(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for BoostDesc {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl BoostDesc {
@@ -174,8 +178,8 @@ impl BoostDesc {
 	/// * desc: BoostDesc::BINBOOST_256
 	/// * use_scale_orientation: true
 	/// * scale_factor: 6.25f
-	pub fn create(desc: i32, use_scale_orientation: bool, scale_factor: f32) -> Result<types::PtrOfBoostDesc> {
-		unsafe { sys::cv_xfeatures2d_BoostDesc_create_int_bool_float(desc, use_scale_orientation, scale_factor) }.into_result().map(|ptr| types::PtrOfBoostDesc { ptr })
+	pub fn create(desc: i32, use_scale_orientation: bool, scale_factor: f32) -> Result<core::Ptr::<crate::xfeatures2d::BoostDesc>> {
+		unsafe { sys::cv_xfeatures2d_BoostDesc_create_int_bool_float(desc, use_scale_orientation, scale_factor) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::BoostDesc>::from_raw(ptr) })
 	}
 	
 }
@@ -186,7 +190,9 @@ impl BoostDesc {
 /// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
 pub trait BriefDescriptorExtractorTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void;
+	fn as_raw_BriefDescriptorExtractor(&self) -> *const c_void;
+	fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void;
+
 }
 
 /// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_calon2010) .
@@ -195,44 +201,46 @@ pub trait BriefDescriptorExtractorTrait: crate::features2d::Feature2DTrait {
 /// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
 pub struct BriefDescriptorExtractor {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { BriefDescriptorExtractor }
 
 impl Drop for BriefDescriptorExtractor {
 	fn drop(&mut self) {
 		extern "C" { fn cv_BriefDescriptorExtractor_delete(instance: *mut c_void); }
-		unsafe { cv_BriefDescriptorExtractor_delete(self.as_raw_BriefDescriptorExtractor()) };
+		unsafe { cv_BriefDescriptorExtractor_delete(self.as_raw_mut_BriefDescriptorExtractor()) };
 	}
 }
 
 impl BriefDescriptorExtractor {
-	pub fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_BriefDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for BriefDescriptorExtractor {}
 
 impl core::AlgorithmTrait for BriefDescriptorExtractor {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::BriefDescriptorExtractorTrait for BriefDescriptorExtractor {
-	fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void { self.ptr }
+	fn as_raw_BriefDescriptorExtractor(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_BriefDescriptorExtractor(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for BriefDescriptorExtractor {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl BriefDescriptorExtractor {
 	/// ## C++ default parameters
 	/// * bytes: 32
 	/// * use_orientation: false
-	pub fn create(bytes: i32, use_orientation: bool) -> Result<types::PtrOfBriefDescriptorExtractor> {
-		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes, use_orientation) }.into_result().map(|ptr| types::PtrOfBriefDescriptorExtractor { ptr })
+	pub fn create(bytes: i32, use_orientation: bool) -> Result<core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>> {
+		unsafe { sys::cv_xfeatures2d_BriefDescriptorExtractor_create_int_bool(bytes, use_orientation) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::BriefDescriptorExtractor>::from_raw(ptr) })
 	}
 	
 }
@@ -253,21 +261,23 @@ impl BriefDescriptorExtractor {
 /// * interpolation: switch to disable interpolation for speed improvement at minor quality loss
 /// * use_orientation: sample patterns using keypoints orientation, disabled by default.
 pub trait DAISY: crate::features2d::Feature2DTrait {
-	fn as_raw_DAISY(&self) -> *mut c_void;
+	fn as_raw_DAISY(&self) -> *const c_void;
+	fn as_raw_mut_DAISY(&mut self) -> *mut c_void;
+
 	/// ## Parameters
 	/// * image: image to extract descriptors
 	/// * keypoints: of interest within image
 	/// * descriptors: resulted descriptors array
-	fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
+	fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector::<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(self.as_raw_DAISY(), image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
 	}
 	
-	fn compute_1(&mut self, images: &dyn core::ToInputArray, keypoints: &mut types::VectorOfVectorOfKeyPoint, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
+	fn compute_1(&mut self, images: &dyn core::ToInputArray, keypoints: &mut core::Vector::<core::Vector::<core::KeyPoint>>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(images);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_vector_vector_KeyPoint__X_const__OutputArrayX(self.as_raw_DAISY(), images.as_raw__InputArray(), keypoints.as_raw_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_vector_vector_KeyPoint__X_const__OutputArrayX(self.as_raw_mut_DAISY(), images.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfVectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## Parameters
@@ -277,7 +287,7 @@ pub trait DAISY: crate::features2d::Feature2DTrait {
 	fn compute_2(&mut self, image: &dyn core::ToInputArray, roi: core::Rect, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_Rect_const__OutputArrayX(self.as_raw_DAISY(), image.as_raw__InputArray(), &roi, descriptors.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_Rect_const__OutputArrayX(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), &roi, descriptors.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## Parameters
@@ -286,7 +296,7 @@ pub trait DAISY: crate::features2d::Feature2DTrait {
 	fn compute_3(&mut self, image: &dyn core::ToInputArray, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_const__OutputArrayX(self.as_raw_DAISY(), image.as_raw__InputArray(), descriptors.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xfeatures2d_DAISY_compute_const__InputArrayX_const__OutputArrayX(self.as_raw_mut_DAISY(), image.as_raw__InputArray(), descriptors.as_raw__OutputArray()) }.into_result()
 	}
 	
 	/// ## Parameters
@@ -339,9 +349,9 @@ impl dyn DAISY + '_ {
 	/// * h: noArray()
 	/// * interpolation: true
 	/// * use_orientation: false
-	pub fn create(radius: f32, q_radius: i32, q_theta: i32, q_hist: i32, norm: i32, h: &dyn core::ToInputArray, interpolation: bool, use_orientation: bool) -> Result<types::PtrOfDAISY> {
+	pub fn create(radius: f32, q_radius: i32, q_theta: i32, q_hist: i32, norm: i32, h: &dyn core::ToInputArray, interpolation: bool, use_orientation: bool) -> Result<core::Ptr::<dyn crate::xfeatures2d::DAISY>> {
 		input_array_arg!(h);
-		unsafe { sys::cv_xfeatures2d_DAISY_create_float_int_int_int_int_const__InputArrayX_bool_bool(radius, q_radius, q_theta, q_hist, norm, h.as_raw__InputArray(), interpolation, use_orientation) }.into_result().map(|ptr| types::PtrOfDAISY { ptr })
+		unsafe { sys::cv_xfeatures2d_DAISY_create_float_int_int_int_int_const__InputArrayX_bool_bool(radius, q_radius, q_theta, q_hist, norm, h.as_raw__InputArray(), interpolation, use_orientation) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xfeatures2d::DAISY>::from_raw(ptr) })
 	}
 	
 }
@@ -358,7 +368,9 @@ impl dyn DAISY + '_ {
 ///    *   An example on how to use the FREAK descriptor can be found at
 ///        opencv_source_code/samples/cpp/freak_demo.cpp
 pub trait FREAKTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_FREAK(&self) -> *mut c_void;
+	fn as_raw_FREAK(&self) -> *const c_void;
+	fn as_raw_mut_FREAK(&mut self) -> *mut c_void;
+
 }
 
 /// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_AOV12) .
@@ -374,36 +386,38 @@ pub trait FREAKTrait: crate::features2d::Feature2DTrait {
 ///    *   An example on how to use the FREAK descriptor can be found at
 ///        opencv_source_code/samples/cpp/freak_demo.cpp
 pub struct FREAK {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { FREAK }
 
 impl Drop for FREAK {
 	fn drop(&mut self) {
 		extern "C" { fn cv_FREAK_delete(instance: *mut c_void); }
-		unsafe { cv_FREAK_delete(self.as_raw_FREAK()) };
+		unsafe { cv_FREAK_delete(self.as_raw_mut_FREAK()) };
 	}
 }
 
 impl FREAK {
-	pub fn as_raw_FREAK(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_FREAK(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_FREAK(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for FREAK {}
 
 impl core::AlgorithmTrait for FREAK {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::FREAKTrait for FREAK {
-	fn as_raw_FREAK(&self) -> *mut c_void { self.ptr }
+	fn as_raw_FREAK(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_FREAK(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for FREAK {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl FREAK {
@@ -420,8 +434,8 @@ impl FREAK {
 	/// * pattern_scale: 22.0f
 	/// * n_octaves: 4
 	/// * selected_pairs: std::vector<int>()
-	pub fn create(orientation_normalized: bool, scale_normalized: bool, pattern_scale: f32, n_octaves: i32, selected_pairs: &types::VectorOfi32) -> Result<types::PtrOfFREAK> {
-		unsafe { sys::cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vector_int_X(orientation_normalized, scale_normalized, pattern_scale, n_octaves, selected_pairs.as_raw_VectorOfi32()) }.into_result().map(|ptr| types::PtrOfFREAK { ptr })
+	pub fn create(orientation_normalized: bool, scale_normalized: bool, pattern_scale: f32, n_octaves: i32, selected_pairs: &core::Vector::<i32>) -> Result<core::Ptr::<crate::xfeatures2d::FREAK>> {
+		unsafe { sys::cv_xfeatures2d_FREAK_create_bool_bool_float_int_const_vector_int_X(orientation_normalized, scale_normalized, pattern_scale, n_octaves, selected_pairs.as_raw_VectorOfi32()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::FREAK>::from_raw(ptr) })
 	}
 	
 }
@@ -442,7 +456,9 @@ impl FREAK {
 /// 
 /// Note: a complete example can be found under /samples/cpp/tutorial_code/xfeatures2D/latch_match.cpp
 pub trait LATCHTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_LATCH(&self) -> *mut c_void;
+	fn as_raw_LATCH(&self) -> *const c_void;
+	fn as_raw_mut_LATCH(&mut self) -> *mut c_void;
+
 }
 
 /// latch Class for computing the LATCH descriptor.
@@ -461,36 +477,38 @@ pub trait LATCHTrait: crate::features2d::Feature2DTrait {
 /// 
 /// Note: a complete example can be found under /samples/cpp/tutorial_code/xfeatures2D/latch_match.cpp
 pub struct LATCH {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { LATCH }
 
 impl Drop for LATCH {
 	fn drop(&mut self) {
 		extern "C" { fn cv_LATCH_delete(instance: *mut c_void); }
-		unsafe { cv_LATCH_delete(self.as_raw_LATCH()) };
+		unsafe { cv_LATCH_delete(self.as_raw_mut_LATCH()) };
 	}
 }
 
 impl LATCH {
-	pub fn as_raw_LATCH(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_LATCH(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_LATCH(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for LATCH {}
 
 impl core::AlgorithmTrait for LATCH {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for LATCH {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::LATCHTrait for LATCH {
-	fn as_raw_LATCH(&self) -> *mut c_void { self.ptr }
+	fn as_raw_LATCH(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_LATCH(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LATCH {
@@ -498,8 +516,8 @@ impl LATCH {
 	/// * bytes: 32
 	/// * rotation_invariance: true
 	/// * half_ssd_size: 3
-	pub fn create(bytes: i32, rotation_invariance: bool, half_ssd_size: i32) -> Result<types::PtrOfLATCH> {
-		unsafe { sys::cv_xfeatures2d_LATCH_create_int_bool_int(bytes, rotation_invariance, half_ssd_size) }.into_result().map(|ptr| types::PtrOfLATCH { ptr })
+	pub fn create(bytes: i32, rotation_invariance: bool, half_ssd_size: i32) -> Result<core::Ptr::<crate::xfeatures2d::LATCH>> {
+		unsafe { sys::cv_xfeatures2d_LATCH_create_int_bool_int(bytes, rotation_invariance, half_ssd_size) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::LATCH>::from_raw(ptr) })
 	}
 	
 }
@@ -512,7 +530,9 @@ impl LATCH {
 /// 
 /// Note: It requires a color image as input.
 pub trait LUCIDTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_LUCID(&self) -> *mut c_void;
+	fn as_raw_LUCID(&self) -> *const c_void;
+	fn as_raw_mut_LUCID(&mut self) -> *mut c_void;
+
 }
 
 /// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_LUCID)
@@ -523,36 +543,38 @@ pub trait LUCIDTrait: crate::features2d::Feature2DTrait {
 /// 
 /// Note: It requires a color image as input.
 pub struct LUCID {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { LUCID }
 
 impl Drop for LUCID {
 	fn drop(&mut self) {
 		extern "C" { fn cv_LUCID_delete(instance: *mut c_void); }
-		unsafe { cv_LUCID_delete(self.as_raw_LUCID()) };
+		unsafe { cv_LUCID_delete(self.as_raw_mut_LUCID()) };
 	}
 }
 
 impl LUCID {
-	pub fn as_raw_LUCID(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_LUCID(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_LUCID(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for LUCID {}
 
 impl core::AlgorithmTrait for LUCID {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for LUCID {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::LUCIDTrait for LUCID {
-	fn as_raw_LUCID(&self) -> *mut c_void { self.ptr }
+	fn as_raw_LUCID(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_LUCID(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LUCID {
@@ -563,8 +585,8 @@ impl LUCID {
 	/// ## C++ default parameters
 	/// * lucid_kernel: 1
 	/// * blur_kernel: 2
-	pub fn create(lucid_kernel: i32, blur_kernel: i32) -> Result<types::PtrOfLUCID> {
-		unsafe { sys::cv_xfeatures2d_LUCID_create_int_int(lucid_kernel, blur_kernel) }.into_result().map(|ptr| types::PtrOfLUCID { ptr })
+	pub fn create(lucid_kernel: i32, blur_kernel: i32) -> Result<core::Ptr::<crate::xfeatures2d::LUCID>> {
+		unsafe { sys::cv_xfeatures2d_LUCID_create_int_int(lucid_kernel, blur_kernel) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::LUCID>::from_raw(ptr) })
 	}
 	
 }
@@ -580,7 +602,9 @@ impl LUCID {
 /// detectors of corner-like interest points, thereby achieving enhanced repeatability, distinctiveness and
 /// localization accuracy.
 pub trait MSDDetectorTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_MSDDetector(&self) -> *mut c_void;
+	fn as_raw_MSDDetector(&self) -> *const c_void;
+	fn as_raw_mut_MSDDetector(&mut self) -> *mut c_void;
+
 }
 
 /// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Tombari14).
@@ -594,36 +618,38 @@ pub trait MSDDetectorTrait: crate::features2d::Feature2DTrait {
 /// detectors of corner-like interest points, thereby achieving enhanced repeatability, distinctiveness and
 /// localization accuracy.
 pub struct MSDDetector {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { MSDDetector }
 
 impl Drop for MSDDetector {
 	fn drop(&mut self) {
 		extern "C" { fn cv_MSDDetector_delete(instance: *mut c_void); }
-		unsafe { cv_MSDDetector_delete(self.as_raw_MSDDetector()) };
+		unsafe { cv_MSDDetector_delete(self.as_raw_mut_MSDDetector()) };
 	}
 }
 
 impl MSDDetector {
-	pub fn as_raw_MSDDetector(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_MSDDetector(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_MSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for MSDDetector {}
 
 impl core::AlgorithmTrait for MSDDetector {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for MSDDetector {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::MSDDetectorTrait for MSDDetector {
-	fn as_raw_MSDDetector(&self) -> *mut c_void { self.ptr }
+	fn as_raw_MSDDetector(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_MSDDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl MSDDetector {
@@ -637,8 +663,8 @@ impl MSDDetector {
 	/// * m_scale_factor: 1.25f
 	/// * m_n_scales: -1
 	/// * m_compute_orientation: false
-	pub fn create(m_patch_radius: i32, m_search_area_radius: i32, m_nms_radius: i32, m_nms_scale_radius: i32, m_th_saliency: f32, m_k_nn: i32, m_scale_factor: f32, m_n_scales: i32, m_compute_orientation: bool) -> Result<types::PtrOfMSDDetector> {
-		unsafe { sys::cv_xfeatures2d_MSDDetector_create_int_int_int_int_float_int_float_int_bool(m_patch_radius, m_search_area_radius, m_nms_radius, m_nms_scale_radius, m_th_saliency, m_k_nn, m_scale_factor, m_n_scales, m_compute_orientation) }.into_result().map(|ptr| types::PtrOfMSDDetector { ptr })
+	pub fn create(m_patch_radius: i32, m_search_area_radius: i32, m_nms_radius: i32, m_nms_scale_radius: i32, m_th_saliency: f32, m_k_nn: i32, m_scale_factor: f32, m_n_scales: i32, m_compute_orientation: bool) -> Result<core::Ptr::<crate::xfeatures2d::MSDDetector>> {
+		unsafe { sys::cv_xfeatures2d_MSDDetector_create_int_int_int_int_float_int_float_int_bool(m_patch_radius, m_search_area_radius, m_nms_radius, m_nms_scale_radius, m_th_saliency, m_k_nn, m_scale_factor, m_n_scales, m_compute_orientation) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::MSDDetector>::from_raw(ptr) })
 	}
 	
 }
@@ -656,7 +682,9 @@ impl MSDDetector {
 /// [KrulisLS16](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_KrulisLS16)
 /// [BeecksUS10](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignatures: core::AlgorithmTrait {
-	fn as_raw_PCTSignatures(&self) -> *mut c_void;
+	fn as_raw_PCTSignatures(&self) -> *const c_void;
+	fn as_raw_mut_PCTSignatures(&mut self) -> *mut c_void;
+
 	/// Computes signature of given image.
 	/// ## Parameters
 	/// * image: Input image of CV_8U type.
@@ -671,8 +699,8 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// ## Parameters
 	/// * images: Vector of input images of CV_8U type.
 	/// * signatures: Vector of computed signatures.
-	fn compute_signatures(&self, images: &types::VectorOfMat, signatures: &mut types::VectorOfMat) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignatures_const_const_vector_Mat_X_vector_Mat_X(self.as_raw_PCTSignatures(), images.as_raw_VectorOfMat(), signatures.as_raw_VectorOfMat()) }.into_result()
+	fn compute_signatures(&self, images: &core::Vector::<core::Mat>, signatures: &mut core::Vector::<core::Mat>) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_computeSignatures_const_const_vector_Mat_X_vector_Mat_X(self.as_raw_PCTSignatures(), images.as_raw_VectorOfMat(), signatures.as_raw_mut_VectorOfMat()) }.into_result()
 	}
 	
 	/// Number of initial samples taken from the image.
@@ -691,7 +719,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       (i.e., value 4 means that 16 shades of grey are used).
 	///       The greyscale bitmap is used for computing contrast and entropy values.
 	fn set_grayscale_bits(&mut self, grayscale_bits: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setGrayscaleBits_int(self.as_raw_PCTSignatures(), grayscale_bits) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setGrayscaleBits_int(self.as_raw_mut_PCTSignatures(), grayscale_bits) }.into_result()
 	}
 	
 	/// Size of the texture sampling window used to compute contrast and entropy
@@ -705,7 +733,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       (center of the window is always in the pixel selected by x,y coordinates
 	///       of the corresponding feature sample).
 	fn set_window_radius(&mut self, radius: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWindowRadius_int(self.as_raw_PCTSignatures(), radius) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWindowRadius_int(self.as_raw_mut_PCTSignatures(), radius) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
@@ -717,7 +745,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	fn set_weight_x(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightX_float(self.as_raw_PCTSignatures(), weight) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightX_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
@@ -729,7 +757,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	fn set_weight_y(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightY_float(self.as_raw_PCTSignatures(), weight) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightY_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
@@ -741,7 +769,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	fn set_weight_l(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightL_float(self.as_raw_PCTSignatures(), weight) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightL_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
@@ -753,7 +781,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	fn set_weight_a(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightA_float(self.as_raw_PCTSignatures(), weight) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightA_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
@@ -765,7 +793,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	fn set_weight_b(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightB_float(self.as_raw_PCTSignatures(), weight) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightB_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
@@ -777,7 +805,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	fn set_weight_contrast(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightContrast_float(self.as_raw_PCTSignatures(), weight) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightContrast_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
@@ -789,13 +817,13 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space
 	///       (x,y = position; L,a,b = color in CIE Lab space; c = contrast. e = entropy)
 	fn set_weight_entropy(&mut self, weight: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightEntropy_float(self.as_raw_PCTSignatures(), weight) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeightEntropy_float(self.as_raw_mut_PCTSignatures(), weight) }.into_result()
 	}
 	
 	/// Initial samples taken from the image.
 	///       These sampled features become the input for clustering.
-	fn get_sampling_points(&self) -> Result<types::VectorOfPoint2f> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getSamplingPoints_const(self.as_raw_PCTSignatures()) }.into_result().map(|ptr| types::VectorOfPoint2f { ptr })
+	fn get_sampling_points(&self) -> Result<core::Vector::<core::Point2f>> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_getSamplingPoints_const(self.as_raw_PCTSignatures()) }.into_result().map(|ptr| unsafe { core::Vector::<core::Point2f>::from_raw(ptr) })
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space.
@@ -813,7 +841,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       CONTRAST_IDX = 6;
 	///       ENTROPY_IDX = 7;
 	fn set_weight(&mut self, idx: i32, value: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeight_int_float(self.as_raw_PCTSignatures(), idx, value) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeight_int_float(self.as_raw_mut_PCTSignatures(), idx, value) }.into_result()
 	}
 	
 	/// Weights (multiplicative constants) that linearly stretch individual axes of the feature space.
@@ -829,8 +857,8 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       B_IDX = 5;
 	///       CONTRAST_IDX = 6;
 	///       ENTROPY_IDX = 7;
-	fn set_weights(&mut self, weights: &types::VectorOff32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeights_const_vector_float_X(self.as_raw_PCTSignatures(), weights.as_raw_VectorOff32()) }.into_result()
+	fn set_weights(&mut self, weights: &core::Vector::<f32>) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setWeights_const_vector_float_X(self.as_raw_mut_PCTSignatures(), weights.as_raw_VectorOff32()) }.into_result()
 	}
 	
 	/// Translations of the individual axes of the feature space.
@@ -848,7 +876,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       CONTRAST_IDX = 6;
 	///       ENTROPY_IDX = 7;
 	fn set_translation(&mut self, idx: i32, value: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslation_int_float(self.as_raw_PCTSignatures(), idx, value) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslation_int_float(self.as_raw_mut_PCTSignatures(), idx, value) }.into_result()
 	}
 	
 	/// Translations of the individual axes of the feature space.
@@ -864,8 +892,8 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       B_IDX = 5;
 	///       CONTRAST_IDX = 6;
 	///       ENTROPY_IDX = 7;
-	fn set_translations(&mut self, translations: &types::VectorOff32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslations_const_vector_float_X(self.as_raw_PCTSignatures(), translations.as_raw_VectorOff32()) }.into_result()
+	fn set_translations(&mut self, translations: &core::Vector::<f32>) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setTranslations_const_vector_float_X(self.as_raw_mut_PCTSignatures(), translations.as_raw_VectorOff32()) }.into_result()
 	}
 	
 	/// Sets sampling points used to sample the input image.
@@ -873,20 +901,20 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// * samplingPoints: Vector of sampling points in range [0..1)
 	/// 
 	/// Note: Number of sampling points must be greater or equal to clusterization seed count.
-	fn set_sampling_points(&mut self, sampling_points: types::VectorOfPoint2f) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setSamplingPoints_vector_Point2f_(self.as_raw_PCTSignatures(), sampling_points.as_raw_VectorOfPoint2f()) }.into_result()
+	fn set_sampling_points(&mut self, mut sampling_points: core::Vector::<core::Point2f>) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setSamplingPoints_vector_Point2f_(self.as_raw_mut_PCTSignatures(), sampling_points.as_raw_mut_VectorOfPoint2f()) }.into_result()
 	}
 	
 	/// ** clusterizer ***
 	/// 
 	/// * Initial seeds (initial number of clusters) for the k-means algorithm.
-	fn get_init_seed_indexes(&self) -> Result<types::VectorOfi32> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedIndexes_const(self.as_raw_PCTSignatures()) }.into_result().map(|ptr| types::VectorOfi32 { ptr })
+	fn get_init_seed_indexes(&self) -> Result<core::Vector::<i32>> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_getInitSeedIndexes_const(self.as_raw_PCTSignatures()) }.into_result().map(|ptr| unsafe { core::Vector::<i32>::from_raw(ptr) })
 	}
 	
 	/// Initial seed indexes for the k-means algorithm.
-	fn set_init_seed_indexes(&mut self, init_seed_indexes: types::VectorOfi32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setInitSeedIndexes_vector_int_(self.as_raw_PCTSignatures(), init_seed_indexes.as_raw_VectorOfi32()) }.into_result()
+	fn set_init_seed_indexes(&mut self, mut init_seed_indexes: core::Vector::<i32>) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setInitSeedIndexes_vector_int_(self.as_raw_mut_PCTSignatures(), init_seed_indexes.as_raw_mut_VectorOfi32()) }.into_result()
 	}
 	
 	/// Number of initial seeds (initial number of clusters) for the k-means algorithm.
@@ -905,7 +933,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       We use fixed number of iterations, since the modified clustering is pruning clusters
 	///       (not iteratively refining k clusters).
 	fn set_iteration_count(&mut self, iteration_count: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setIterationCount_int(self.as_raw_PCTSignatures(), iteration_count) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setIterationCount_int(self.as_raw_mut_PCTSignatures(), iteration_count) }.into_result()
 	}
 	
 	/// Maximal number of generated clusters. If the number is exceeded,
@@ -917,7 +945,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Maximal number of generated clusters. If the number is exceeded,
 	///       the clusters are sorted by their weights and the smallest clusters are cropped.
 	fn set_max_clusters_count(&mut self, max_clusters_count: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setMaxClustersCount_int(self.as_raw_PCTSignatures(), max_clusters_count) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setMaxClustersCount_int(self.as_raw_mut_PCTSignatures(), max_clusters_count) }.into_result()
 	}
 	
 	/// This parameter multiplied by the index of iteration gives lower limit for cluster size.
@@ -931,7 +959,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       Clusters containing fewer points than specified by the limit have their centroid dismissed
 	///       and points are reassigned.
 	fn set_cluster_min_size(&mut self, cluster_min_size: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setClusterMinSize_int(self.as_raw_PCTSignatures(), cluster_min_size) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setClusterMinSize_int(self.as_raw_mut_PCTSignatures(), cluster_min_size) }.into_result()
 	}
 	
 	/// Threshold euclidean distance between two centroids.
@@ -945,7 +973,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	///       If two cluster centers are closer than this distance,
 	///       one of the centroid is dismissed and points are reassigned.
 	fn set_joining_distance(&mut self, joining_distance: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setJoiningDistance_float(self.as_raw_PCTSignatures(), joining_distance) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setJoiningDistance_float(self.as_raw_mut_PCTSignatures(), joining_distance) }.into_result()
 	}
 	
 	/// Remove centroids in k-means whose weight is lesser or equal to given threshold.
@@ -955,7 +983,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	
 	/// Remove centroids in k-means whose weight is lesser or equal to given threshold.
 	fn set_drop_threshold(&mut self, drop_threshold: f32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setDropThreshold_float(self.as_raw_PCTSignatures(), drop_threshold) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setDropThreshold_float(self.as_raw_mut_PCTSignatures(), drop_threshold) }.into_result()
 	}
 	
 	/// Distance function selector used for measuring distance between two points in k-means.
@@ -966,7 +994,7 @@ pub trait PCTSignatures: core::AlgorithmTrait {
 	/// Distance function selector used for measuring distance between two points in k-means.
 	///       Available: L0_25, L0_5, L1, L2, L2SQUARED, L5, L_INFINITY.
 	fn set_distance_function(&mut self, distance_function: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_setDistanceFunction_int(self.as_raw_PCTSignatures(), distance_function) }.into_result()
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_setDistanceFunction_int(self.as_raw_mut_PCTSignatures(), distance_function) }.into_result()
 	}
 	
 }
@@ -987,8 +1015,8 @@ impl dyn PCTSignatures + '_ {
 	/// * init_sample_count: 2000
 	/// * init_seed_count: 400
 	/// * point_distribution: 0
-	pub fn create(init_sample_count: i32, init_seed_count: i32, point_distribution: i32) -> Result<types::PtrOfPCTSignatures> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_int_int_int(init_sample_count, init_seed_count, point_distribution) }.into_result().map(|ptr| types::PtrOfPCTSignatures { ptr })
+	pub fn create(init_sample_count: i32, init_seed_count: i32, point_distribution: i32) -> Result<core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_int_int_int(init_sample_count, init_seed_count, point_distribution) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::from_raw(ptr) })
 	}
 	
 	/// Creates PCTSignatures algorithm using pre-generated sampling points
@@ -1000,8 +1028,8 @@ impl dyn PCTSignatures + '_ {
 	///       Must be lower or equal to initSamplingPoints.size().
 	/// ## Returns
 	/// Created algorithm.
-	pub fn create_1(init_sampling_points: &types::VectorOfPoint2f, init_seed_count: i32) -> Result<types::PtrOfPCTSignatures> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_X_int(init_sampling_points.as_raw_VectorOfPoint2f(), init_seed_count) }.into_result().map(|ptr| types::PtrOfPCTSignatures { ptr })
+	pub fn create_1(init_sampling_points: &core::Vector::<core::Point2f>, init_seed_count: i32) -> Result<core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_X_int(init_sampling_points.as_raw_VectorOfPoint2f(), init_seed_count) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::from_raw(ptr) })
 	}
 	
 	/// Creates PCTSignatures algorithm using pre-generated sampling points
@@ -1012,8 +1040,8 @@ impl dyn PCTSignatures + '_ {
 	///       Its size must be lower or equal to initSamplingPoints.size().
 	/// ## Returns
 	/// Created algorithm.
-	pub fn create_2(init_sampling_points: &types::VectorOfPoint2f, init_cluster_seed_indexes: &types::VectorOfi32) -> Result<types::PtrOfPCTSignatures> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_X_const_vector_int_X(init_sampling_points.as_raw_VectorOfPoint2f(), init_cluster_seed_indexes.as_raw_VectorOfi32()) }.into_result().map(|ptr| types::PtrOfPCTSignatures { ptr })
+	pub fn create_2(init_sampling_points: &core::Vector::<core::Point2f>, init_cluster_seed_indexes: &core::Vector::<i32>) -> Result<core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_create_const_vector_Point2f_X_const_vector_int_X(init_sampling_points.as_raw_VectorOfPoint2f(), init_cluster_seed_indexes.as_raw_VectorOfi32()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignatures>::from_raw(ptr) })
 	}
 	
 	/// Draws signature in the source image and outputs the result.
@@ -1046,8 +1074,8 @@ impl dyn PCTSignatures + '_ {
 	///       Available: UNIFORM, REGULAR, NORMAL.
 	/// 
 	/// Note: Generated coordinates are in range [0..1)
-	pub fn generate_init_points(init_points: &mut types::VectorOfPoint2f, count: i32, point_distribution: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_X_int_int(init_points.as_raw_VectorOfPoint2f(), count, point_distribution) }.into_result()
+	pub fn generate_init_points(init_points: &mut core::Vector::<core::Point2f>, count: i32, point_distribution: i32) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_PCTSignatures_generateInitPoints_vector_Point2f_X_int_int(init_points.as_raw_mut_VectorOfPoint2f(), count, point_distribution) }.into_result()
 	}
 	
 }
@@ -1059,7 +1087,9 @@ impl dyn PCTSignatures + '_ {
 ///   ACM, 2010.
 /// [BeecksUS10](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignaturesSQFD: core::AlgorithmTrait {
-	fn as_raw_PCTSignaturesSQFD(&self) -> *mut c_void;
+	fn as_raw_PCTSignaturesSQFD(&self) -> *const c_void;
+	fn as_raw_mut_PCTSignaturesSQFD(&mut self) -> *mut c_void;
+
 	/// Computes Signature Quadratic Form Distance of two signatures.
 	/// ## Parameters
 	/// * _signature0: The first signature.
@@ -1076,8 +1106,8 @@ pub trait PCTSignaturesSQFD: core::AlgorithmTrait {
 	/// * sourceSignature: The signature to measure distance of other signatures from.
 	/// * imageSignatures: Vector of signatures to measure distance from the source signature.
 	/// * distances: Output vector of measured distances.
-	fn compute_quadratic_form_distances(&self, source_signature: &core::Mat, image_signatures: &types::VectorOfMat, distances: &mut types::VectorOff32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatX_const_vector_Mat_X_vector_float_X(self.as_raw_PCTSignaturesSQFD(), source_signature.as_raw_Mat(), image_signatures.as_raw_VectorOfMat(), distances.as_raw_VectorOff32()) }.into_result()
+	fn compute_quadratic_form_distances(&self, source_signature: &core::Mat, image_signatures: &core::Vector::<core::Mat>, distances: &mut core::Vector::<f32>) -> Result<()> {
+		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_computeQuadraticFormDistances_const_const_MatX_const_vector_Mat_X_vector_float_X(self.as_raw_PCTSignaturesSQFD(), source_signature.as_raw_Mat(), image_signatures.as_raw_VectorOfMat(), distances.as_raw_mut_VectorOff32()) }.into_result()
 	}
 	
 }
@@ -1096,50 +1126,54 @@ impl dyn PCTSignaturesSQFD + '_ {
 	/// * distance_function: 3
 	/// * similarity_function: 2
 	/// * similarity_parameter: 1.0f
-	pub fn create(distance_function: i32, similarity_function: i32, similarity_parameter: f32) -> Result<types::PtrOfPCTSignaturesSQFD> {
-		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create_int_int_float(distance_function, similarity_function, similarity_parameter) }.into_result().map(|ptr| types::PtrOfPCTSignaturesSQFD { ptr })
+	pub fn create(distance_function: i32, similarity_function: i32, similarity_parameter: f32) -> Result<core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>> {
+		unsafe { sys::cv_xfeatures2d_PCTSignaturesSQFD_create_int_int_float(distance_function, similarity_function, similarity_parameter) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xfeatures2d::PCTSignaturesSQFD>::from_raw(ptr) })
 	}
 	
 }
 /// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
 /// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 pub trait SIFTTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_SIFT(&self) -> *mut c_void;
+	fn as_raw_SIFT(&self) -> *const c_void;
+	fn as_raw_mut_SIFT(&mut self) -> *mut c_void;
+
 }
 
 /// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
 /// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Lowe04) .
 pub struct SIFT {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { SIFT }
 
 impl Drop for SIFT {
 	fn drop(&mut self) {
 		extern "C" { fn cv_SIFT_delete(instance: *mut c_void); }
-		unsafe { cv_SIFT_delete(self.as_raw_SIFT()) };
+		unsafe { cv_SIFT_delete(self.as_raw_mut_SIFT()) };
 	}
 }
 
 impl SIFT {
-	pub fn as_raw_SIFT(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_SIFT(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for SIFT {}
 
 impl core::AlgorithmTrait for SIFT {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for SIFT {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::SIFTTrait for SIFT {
-	fn as_raw_SIFT(&self) -> *mut c_void { self.ptr }
+	fn as_raw_SIFT(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_SIFT(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl SIFT {
@@ -1166,8 +1200,8 @@ impl SIFT {
 	/// * contrast_threshold: 0.04
 	/// * edge_threshold: 10
 	/// * sigma: 1.6
-	pub fn create(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<types::PtrOfSIFT> {
-		unsafe { sys::cv_xfeatures2d_SIFT_create_int_int_double_double_double(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma) }.into_result().map(|ptr| types::PtrOfSIFT { ptr })
+	pub fn create(nfeatures: i32, n_octave_layers: i32, contrast_threshold: f64, edge_threshold: f64, sigma: f64) -> Result<core::Ptr::<crate::xfeatures2d::SIFT>> {
+		unsafe { sys::cv_xfeatures2d_SIFT_create_int_int_double_double_double(nfeatures, n_octave_layers, contrast_threshold, edge_threshold, sigma) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::SIFT>::from_raw(ptr) })
 	}
 	
 }
@@ -1202,9 +1236,11 @@ impl SIFT {
 ///    *   Another example using the SURF feature detector, extractor and matcher can be found at
 ///        opencv_source_code/samples/cpp/matcher_simple.cpp
 pub trait SURF: crate::features2d::Feature2DTrait {
-	fn as_raw_SURF(&self) -> *mut c_void;
+	fn as_raw_SURF(&self) -> *const c_void;
+	fn as_raw_mut_SURF(&mut self) -> *mut c_void;
+
 	fn set_hessian_threshold(&mut self, hessian_threshold: f64) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_SURF(), hessian_threshold) }.into_result()
+		unsafe { sys::cv_xfeatures2d_SURF_setHessianThreshold_double(self.as_raw_mut_SURF(), hessian_threshold) }.into_result()
 	}
 	
 	fn get_hessian_threshold(&self) -> Result<f64> {
@@ -1212,7 +1248,7 @@ pub trait SURF: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_n_octaves(&mut self, n_octaves: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setNOctaves_int(self.as_raw_SURF(), n_octaves) }.into_result()
+		unsafe { sys::cv_xfeatures2d_SURF_setNOctaves_int(self.as_raw_mut_SURF(), n_octaves) }.into_result()
 	}
 	
 	fn get_n_octaves(&self) -> Result<i32> {
@@ -1220,7 +1256,7 @@ pub trait SURF: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_n_octave_layers(&mut self, n_octave_layers: i32) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setNOctaveLayers_int(self.as_raw_SURF(), n_octave_layers) }.into_result()
+		unsafe { sys::cv_xfeatures2d_SURF_setNOctaveLayers_int(self.as_raw_mut_SURF(), n_octave_layers) }.into_result()
 	}
 	
 	fn get_n_octave_layers(&self) -> Result<i32> {
@@ -1228,7 +1264,7 @@ pub trait SURF: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_extended(&mut self, extended: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setExtended_bool(self.as_raw_SURF(), extended) }.into_result()
+		unsafe { sys::cv_xfeatures2d_SURF_setExtended_bool(self.as_raw_mut_SURF(), extended) }.into_result()
 	}
 	
 	fn get_extended(&self) -> Result<bool> {
@@ -1236,7 +1272,7 @@ pub trait SURF: crate::features2d::Feature2DTrait {
 	}
 	
 	fn set_upright(&mut self, upright: bool) -> Result<()> {
-		unsafe { sys::cv_xfeatures2d_SURF_setUpright_bool(self.as_raw_SURF(), upright) }.into_result()
+		unsafe { sys::cv_xfeatures2d_SURF_setUpright_bool(self.as_raw_mut_SURF(), upright) }.into_result()
 	}
 	
 	fn get_upright(&self) -> Result<bool> {
@@ -1261,48 +1297,52 @@ impl dyn SURF + '_ {
 	/// * n_octave_layers: 3
 	/// * extended: false
 	/// * upright: false
-	pub fn create(hessian_threshold: f64, n_octaves: i32, n_octave_layers: i32, extended: bool, upright: bool) -> Result<types::PtrOfSURF> {
-		unsafe { sys::cv_xfeatures2d_SURF_create_double_int_int_bool_bool(hessian_threshold, n_octaves, n_octave_layers, extended, upright) }.into_result().map(|ptr| types::PtrOfSURF { ptr })
+	pub fn create(hessian_threshold: f64, n_octaves: i32, n_octave_layers: i32, extended: bool, upright: bool) -> Result<core::Ptr::<dyn crate::xfeatures2d::SURF>> {
+		unsafe { sys::cv_xfeatures2d_SURF_create_double_int_int_bool_bool(hessian_threshold, n_octaves, n_octave_layers, extended, upright) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xfeatures2d::SURF>::from_raw(ptr) })
 	}
 	
 }
 /// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
 pub trait StarDetectorTrait: crate::features2d::Feature2DTrait {
-	fn as_raw_StarDetector(&self) -> *mut c_void;
+	fn as_raw_StarDetector(&self) -> *const c_void;
+	fn as_raw_mut_StarDetector(&mut self) -> *mut c_void;
+
 }
 
 /// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
 pub struct StarDetector {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { StarDetector }
 
 impl Drop for StarDetector {
 	fn drop(&mut self) {
 		extern "C" { fn cv_StarDetector_delete(instance: *mut c_void); }
-		unsafe { cv_StarDetector_delete(self.as_raw_StarDetector()) };
+		unsafe { cv_StarDetector_delete(self.as_raw_mut_StarDetector()) };
 	}
 }
 
 impl StarDetector {
-	pub fn as_raw_StarDetector(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_StarDetector(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_StarDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for StarDetector {}
 
 impl core::AlgorithmTrait for StarDetector {
-	fn as_raw_Algorithm(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Algorithm(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Algorithm(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::features2d::Feature2DTrait for StarDetector {
-	fn as_raw_Feature2D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Feature2D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Feature2D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::xfeatures2d::StarDetectorTrait for StarDetector {
-	fn as_raw_StarDetector(&self) -> *mut c_void { self.ptr }
+	fn as_raw_StarDetector(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_StarDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl StarDetector {
@@ -1314,8 +1354,8 @@ impl StarDetector {
 	/// * line_threshold_projected: 10
 	/// * line_threshold_binarized: 8
 	/// * suppress_nonmax_size: 5
-	pub fn create(max_size: i32, response_threshold: i32, line_threshold_projected: i32, line_threshold_binarized: i32, suppress_nonmax_size: i32) -> Result<types::PtrOfStarDetector> {
-		unsafe { sys::cv_xfeatures2d_StarDetector_create_int_int_int_int_int(max_size, response_threshold, line_threshold_projected, line_threshold_binarized, suppress_nonmax_size) }.into_result().map(|ptr| types::PtrOfStarDetector { ptr })
+	pub fn create(max_size: i32, response_threshold: i32, line_threshold_projected: i32, line_threshold_binarized: i32, suppress_nonmax_size: i32) -> Result<core::Ptr::<crate::xfeatures2d::StarDetector>> {
+		unsafe { sys::cv_xfeatures2d_StarDetector_create_int_int_int_int_int(max_size, response_threshold, line_threshold_projected, line_threshold_binarized, suppress_nonmax_size) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::xfeatures2d::StarDetector>::from_raw(ptr) })
 	}
 	
 }
@@ -1337,15 +1377,17 @@ impl StarDetector {
 /// 
 /// * dsc_normalize: clamp descriptors to 255 and convert to uchar CV_8UC1 (disabled by default)
 pub trait VGG: crate::features2d::Feature2DTrait {
-	fn as_raw_VGG(&self) -> *mut c_void;
+	fn as_raw_VGG(&self) -> *const c_void;
+	fn as_raw_mut_VGG(&mut self) -> *mut c_void;
+
 	/// ## Parameters
 	/// * image: image to extract descriptors
 	/// * keypoints: of interest within image
 	/// * descriptors: resulted descriptors array
-	fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut types::VectorOfKeyPoint, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
+	fn compute(&mut self, image: &dyn core::ToInputArray, keypoints: &mut core::Vector::<core::KeyPoint>, descriptors: &mut dyn core::ToOutputArray) -> Result<()> {
 		input_array_arg!(image);
 		output_array_arg!(descriptors);
-		unsafe { sys::cv_xfeatures2d_VGG_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(self.as_raw_VGG(), image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
+		unsafe { sys::cv_xfeatures2d_VGG_compute_const__InputArrayX_vector_KeyPoint_X_const__OutputArrayX(self.as_raw_mut_VGG(), image.as_raw__InputArray(), keypoints.as_raw_mut_VectorOfKeyPoint(), descriptors.as_raw__OutputArray()) }.into_result()
 	}
 	
 }
@@ -1358,8 +1400,8 @@ impl dyn VGG + '_ {
 	/// * use_scale_orientation: true
 	/// * scale_factor: 6.25f
 	/// * dsc_normalize: false
-	pub fn create(desc: i32, isigma: f32, img_normalize: bool, use_scale_orientation: bool, scale_factor: f32, dsc_normalize: bool) -> Result<types::PtrOfVGG> {
-		unsafe { sys::cv_xfeatures2d_VGG_create_int_float_bool_bool_float_bool(desc, isigma, img_normalize, use_scale_orientation, scale_factor, dsc_normalize) }.into_result().map(|ptr| types::PtrOfVGG { ptr })
+	pub fn create(desc: i32, isigma: f32, img_normalize: bool, use_scale_orientation: bool, scale_factor: f32, dsc_normalize: bool) -> Result<core::Ptr::<dyn crate::xfeatures2d::VGG>> {
+		unsafe { sys::cv_xfeatures2d_VGG_create_int_float_bool_bool_float_bool(desc, isigma, img_normalize, use_scale_orientation, scale_factor, dsc_normalize) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::xfeatures2d::VGG>::from_raw(ptr) })
 	}
 	
 }

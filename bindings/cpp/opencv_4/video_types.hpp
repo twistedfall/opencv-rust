@@ -9,7 +9,7 @@ template struct Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*>;
 template struct Result<cv::Ptr<cv::VariationalRefinement>*>;
 template struct Result<cv::RotatedRect*>;
 template struct Result<cv::Size_<int>>;
-template struct Result<cv::TermCriteria*>;
+template struct Result<cv::TermCriteria>;
 template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;

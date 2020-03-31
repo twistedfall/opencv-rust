@@ -124,9 +124,9 @@ pub enum erGrouping_Modes {
 /// 
 /// An example of MSERsToERStats in use can be found in the text detection webcam_demo:
 /// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
-pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut types::VectorOfVectorOfPoint, regions: &mut types::VectorOfVectorOfERStat) -> Result<()> {
+pub fn mse_rs_to_er_stats(image: &dyn core::ToInputArray, contours: &mut core::Vector::<core::Vector::<core::Point>>, regions: &mut core::Vector::<core::Vector::<crate::text::ERStat>>) -> Result<()> {
 	input_array_arg!(image);
-	unsafe { sys::cv_text_MSERsToERStats_const__InputArrayX_vector_vector_Point__X_vector_vector_ERStat__X(image.as_raw__InputArray(), contours.as_raw_VectorOfVectorOfPoint(), regions.as_raw_VectorOfVectorOfERStat()) }.into_result()
+	unsafe { sys::cv_text_MSERsToERStats_const__InputArrayX_vector_vector_Point__X_vector_vector_ERStat__X(image.as_raw__InputArray(), contours.as_raw_mut_VectorOfVectorOfPoint(), regions.as_raw_mut_VectorOfVectorOfERStat()) }.into_result()
 }
 
 /// Compute the different channels to be processed independently in the N&M algorithm [Neumann12].
@@ -180,8 +180,8 @@ pub fn compute_nm_channels(_src: &dyn core::ToInputArray, _channels: &mut dyn co
 /// * min_probability: (float)0.4
 /// * non_max_suppression: true
 /// * min_probability_diff: (float)0.1
-pub fn create_er_filter_nm1(cb: &types::PtrOfERFilter_Callback, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<types::PtrOfERFilter> {
-	unsafe { sys::cv_text_createERFilterNM1_const_Ptr_Callback_X_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|ptr| types::PtrOfERFilter { ptr })
+pub fn create_er_filter_nm1(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>, threshold_delta: i32, min_area: f32, max_area: f32, min_probability: f32, non_max_suppression: bool, min_probability_diff: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
+	unsafe { sys::cv_text_createERFilterNM1_const_Ptr_Callback_X_int_float_float_float_bool_float(cb.as_raw_PtrOfERFilter_Callback(), threshold_delta, min_area, max_area, min_probability, non_max_suppression, min_probability_diff) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::text::ERFilter>::from_raw(ptr) })
 }
 
 /// Create an Extremal Region Filter for the 2nd stage classifier of N&M algorithm [Neumann12].
@@ -198,13 +198,13 @@ pub fn create_er_filter_nm1(cb: &types::PtrOfERFilter_Callback, threshold_delta:
 /// 
 /// ## C++ default parameters
 /// * min_probability: (float)0.3
-pub fn create_er_filter_nm2(cb: &types::PtrOfERFilter_Callback, min_probability: f32) -> Result<types::PtrOfERFilter> {
-	unsafe { sys::cv_text_createERFilterNM2_const_Ptr_Callback_X_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability) }.into_result().map(|ptr| types::PtrOfERFilter { ptr })
+pub fn create_er_filter_nm2(cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>, min_probability: f32) -> Result<core::Ptr::<dyn crate::text::ERFilter>> {
+	unsafe { sys::cv_text_createERFilterNM2_const_Ptr_Callback_X_float(cb.as_raw_PtrOfERFilter_Callback(), min_probability) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::text::ERFilter>::from_raw(ptr) })
 }
 
-pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut types::VectorOfString) -> Result<core::Mat> {
+pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut core::Vector::<String>) -> Result<core::Mat> {
 	string_arg!(vocabulary);
-	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringX_vector_String_X(vocabulary.as_ptr(), lexicon.as_raw_VectorOfString()) }.into_result().map(|ptr| core::Mat { ptr })
+	unsafe { sys::cv_text_createOCRHMMTransitionsTable_const_StringX_vector_String_X(vocabulary.as_ptr(), lexicon.as_raw_mut_VectorOfString()) }.into_result().map(|ptr| unsafe { core::Mat::from_raw(ptr) })
 }
 
 /// Utility function to create a tailored language model transitions table from a given list of words (lexicon).
@@ -221,17 +221,17 @@ pub fn create_ocrhmm_transitions_table_1(vocabulary: &str, lexicon: &mut types::
 /// Note:
 ///    *   (C++) An alternative would be to load the default generic language transition table provided in the text module samples folder (created from ispell 42869 english words list) :
 ///            <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRHMM_transitions_table.xml>
-pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut types::VectorOfString, transition_probabilities_table: &mut dyn core::ToOutputArray) -> Result<()> {
+pub fn create_ocrhmm_transitions_table(vocabulary: &mut String, lexicon: &mut core::Vector::<String>, transition_probabilities_table: &mut dyn core::ToOutputArray) -> Result<()> {
 	string_arg_output_send!(via vocabulary_via);
 	output_array_arg!(transition_probabilities_table);
-	let out = unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringX_vector_string_X_const__OutputArrayX(&mut vocabulary_via, lexicon.as_raw_VectorOfString(), transition_probabilities_table.as_raw__OutputArray()) }.into_result();
+	let out = unsafe { sys::cv_text_createOCRHMMTransitionsTable_stringX_vector_string_X_const__OutputArrayX(&mut vocabulary_via, lexicon.as_raw_mut_VectorOfString(), transition_probabilities_table.as_raw__OutputArray()) }.into_result();
 	string_arg_output_receive!(out, vocabulary_via => vocabulary);
 	out
 }
 
-pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &types::PtrOfERFilter, er_filter2: &types::PtrOfERFilter, regions: &mut types::VectorOfVectorOfPoint) -> Result<()> {
+pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &core::Ptr::<dyn crate::text::ERFilter>, er_filter2: &core::Ptr::<dyn crate::text::ERFilter>, regions: &mut core::Vector::<core::Vector::<core::Point>>) -> Result<()> {
 	input_array_arg!(image);
-	unsafe { sys::cv_text_detectRegions_const__InputArrayX_const_Ptr_ERFilter_X_const_Ptr_ERFilter_X_vector_vector_Point__X(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_VectorOfVectorOfPoint()) }.into_result()
+	unsafe { sys::cv_text_detectRegions_const__InputArrayX_const_Ptr_ERFilter_X_const_Ptr_ERFilter_X_vector_vector_Point__X(image.as_raw__InputArray(), er_filter1.as_raw_PtrOfERFilter(), er_filter2.as_raw_PtrOfERFilter(), regions.as_raw_mut_VectorOfVectorOfPoint()) }.into_result()
 }
 
 /// Find groups of Extremal Regions that are organized as text blocks.
@@ -262,22 +262,22 @@ pub fn detect_regions(image: &dyn core::ToInputArray, er_filter1: &types::PtrOfE
 /// * method: ERGROUPING_ORIENTATION_HORIZ
 /// * filename: std::string()
 /// * min_probablity: 0.5
-pub fn er_grouping(img: &dyn core::ToInputArray, channels: &dyn core::ToInputArray, regions: &mut types::VectorOfVectorOfERStat, groups: &mut types::VectorOfVectorOfVec2i, groups_rects: &mut types::VectorOfRect, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
+pub fn er_grouping(img: &dyn core::ToInputArray, channels: &dyn core::ToInputArray, regions: &mut core::Vector::<core::Vector::<crate::text::ERStat>>, groups: &mut core::Vector::<core::Vector::<core::Vec2i>>, groups_rects: &mut core::Vector::<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
 	input_array_arg!(img);
 	input_array_arg!(channels);
 	string_arg!(filename);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayX_const__InputArrayX_vector_vector_ERStat__X_vector_vector_Vec2i__X_vector_Rect_X_int_const_stringX_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_VectorOfVectorOfERStat(), groups.as_raw_VectorOfVectorOfVec2i(), groups_rects.as_raw_VectorOfRect(), method, filename.as_ptr(), min_probablity) }.into_result()
+	unsafe { sys::cv_text_erGrouping_const__InputArrayX_const__InputArrayX_vector_vector_ERStat__X_vector_vector_Vec2i__X_vector_Rect_X_int_const_stringX_float(img.as_raw__InputArray(), channels.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfERStat(), groups.as_raw_mut_VectorOfVectorOfVec2i(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.as_ptr(), min_probablity) }.into_result()
 }
 
 /// ## C++ default parameters
 /// * method: ERGROUPING_ORIENTATION_HORIZ
 /// * filename: String()
 /// * min_probablity: (float)0.5
-pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInputArray, regions: types::VectorOfVectorOfPoint, groups_rects: &mut types::VectorOfRect, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
+pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInputArray, mut regions: core::Vector::<core::Vector::<core::Point>>, groups_rects: &mut core::Vector::<core::Rect>, method: i32, filename: &str, min_probablity: f32) -> Result<()> {
 	input_array_arg!(image);
 	input_array_arg!(channel);
 	string_arg!(filename);
-	unsafe { sys::cv_text_erGrouping_const__InputArrayX_const__InputArrayX_vector_vector_Point___vector_Rect_X_int_const_StringX_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_VectorOfVectorOfPoint(), groups_rects.as_raw_VectorOfRect(), method, filename.as_ptr(), min_probablity) }.into_result()
+	unsafe { sys::cv_text_erGrouping_const__InputArrayX_const__InputArrayX_vector_vector_Point___vector_Rect_X_int_const_StringX_float(image.as_raw__InputArray(), channel.as_raw__InputArray(), regions.as_raw_mut_VectorOfVectorOfPoint(), groups_rects.as_raw_mut_VectorOfRect(), method, filename.as_ptr(), min_probablity) }.into_result()
 }
 
 /// Allow to implicitly load the default classifier when creating an ERFilter object.
@@ -286,9 +286,9 @@ pub fn er_grouping_1(image: &dyn core::ToInputArray, channel: &dyn core::ToInput
 /// * filename: The XML or YAML file with the classifier model (e.g. trained_classifierNM1.xml)
 /// 
 /// returns a pointer to ERFilter::Callback.
-pub fn load_classifier_nm1(filename: &str) -> Result<types::PtrOfERFilter_Callback> {
+pub fn load_classifier_nm1(filename: &str) -> Result<core::Ptr::<dyn crate::text::ERFilter_Callback>> {
 	string_arg!(filename);
-	unsafe { sys::cv_text_loadClassifierNM1_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| types::PtrOfERFilter_Callback { ptr })
+	unsafe { sys::cv_text_loadClassifierNM1_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::from_raw(ptr) })
 }
 
 /// Allow to implicitly load the default classifier when creating an ERFilter object.
@@ -297,9 +297,9 @@ pub fn load_classifier_nm1(filename: &str) -> Result<types::PtrOfERFilter_Callba
 /// * filename: The XML or YAML file with the classifier model (e.g. trained_classifierNM2.xml)
 /// 
 /// returns a pointer to ERFilter::Callback.
-pub fn load_classifier_nm2(filename: &str) -> Result<types::PtrOfERFilter_Callback> {
+pub fn load_classifier_nm2(filename: &str) -> Result<core::Ptr::<dyn crate::text::ERFilter_Callback>> {
 	string_arg!(filename);
-	unsafe { sys::cv_text_loadClassifierNM2_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| types::PtrOfERFilter_Callback { ptr })
+	unsafe { sys::cv_text_loadClassifierNM2_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::text::ERFilter_Callback>::from_raw(ptr) })
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRBeamSearchDecoder object.
@@ -311,9 +311,9 @@ pub fn load_classifier_nm2(filename: &str) -> Result<types::PtrOfERFilter_Callba
 /// Andrew NG in [Coates11a]. The character classifier consists in a Single Layer Convolutional Neural Network and
 /// a linear classifier. It is applied to the input image in a sliding window fashion, providing a set of recognitions
 /// at each window location.
-pub fn load_ocr_beam_search_classifier_cnn(filename: &str) -> Result<types::PtrOfOCRBeamSearchDecoder_ClassifierCallback> {
+pub fn load_ocr_beam_search_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>> {
 	string_arg!(filename);
-	unsafe { sys::cv_text_loadOCRBeamSearchClassifierCNN_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| types::PtrOfOCRBeamSearchDecoder_ClassifierCallback { ptr })
+	unsafe { sys::cv_text_loadOCRBeamSearchClassifierCNN_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>::from_raw(ptr) })
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -325,9 +325,9 @@ pub fn load_ocr_beam_search_classifier_cnn(filename: &str) -> Result<types::PtrO
 /// Andrew NG in [Coates11a]. The character classifier consists in a Single Layer Convolutional Neural Network and
 /// a linear classifier. It is applied to the input image in a sliding window fashion, providing a set of recognitions
 /// at each window location.
-pub fn load_ocrhmm_classifier_cnn(filename: &str) -> Result<types::PtrOfOCRHMMDecoder_ClassifierCallback> {
+pub fn load_ocrhmm_classifier_cnn(filename: &str) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	string_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifierCNN_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| types::PtrOfOCRHMMDecoder_ClassifierCallback { ptr })
+	unsafe { sys::cv_text_loadOCRHMMClassifierCNN_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::from_raw(ptr) })
 }
 
 /// Allow to implicitly load the default character classifier when creating an OCRHMMDecoder object.
@@ -341,21 +341,23 @@ pub fn load_ocrhmm_classifier_cnn(filename: &str) -> Result<types::PtrOfOCRHMMDe
 /// based on gradient orientations along the chain-code of its perimeter. Then, the region is classified
 /// using a KNN model trained with synthetic data of rendered characters with different standard font
 /// types.
-pub fn load_ocrhmm_classifier_nm(filename: &str) -> Result<types::PtrOfOCRHMMDecoder_ClassifierCallback> {
+pub fn load_ocrhmm_classifier_nm(filename: &str) -> Result<core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>> {
 	string_arg!(filename);
-	unsafe { sys::cv_text_loadOCRHMMClassifierNM_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| types::PtrOfOCRHMMDecoder_ClassifierCallback { ptr })
+	unsafe { sys::cv_text_loadOCRHMMClassifierNM_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>::from_raw(ptr) })
 }
 
 pub trait BaseOCR {
-	fn as_raw_BaseOCR(&self) -> *mut c_void;
+	fn as_raw_BaseOCR(&self) -> *const c_void;
+	fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void;
+
 	/// ## C++ default parameters
 	/// * component_rects: NULL
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_BaseOCR_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_BaseOCR(), image.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_BaseOCR_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -365,9 +367,9 @@ pub trait BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_BaseOCR_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_BaseOCR(), image.as_raw_Mat(), mask.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_BaseOCR_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_BaseOCR(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -378,7 +380,9 @@ pub trait BaseOCR {
 /// 
 /// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given classifier.
 pub trait ERFilter: core::AlgorithmTrait {
-	fn as_raw_ERFilter(&self) -> *mut c_void;
+	fn as_raw_ERFilter(&self) -> *const c_void;
+	fn as_raw_mut_ERFilter(&mut self) -> *mut c_void;
+
 	/// The key method of ERFilter algorithm.
 	/// 
 	/// Takes image on input and returns the selected regions in a vector of ERStat only distinctive
@@ -392,42 +396,42 @@ pub trait ERFilter: core::AlgorithmTrait {
 	/// 
 	/// Extracts the component tree (if needed) and filter the extremal regions (ER's) by using a given
 	/// classifier.
-	fn run(&mut self, image: &dyn core::ToInputArray, regions: &mut types::VectorOfERStat) -> Result<()> {
+	fn run(&mut self, image: &dyn core::ToInputArray, regions: &mut core::Vector::<crate::text::ERStat>) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_ERFilter_run_const__InputArrayX_vector_ERStat_X(self.as_raw_ERFilter(), image.as_raw__InputArray(), regions.as_raw_VectorOfERStat()) }.into_result()
+		unsafe { sys::cv_text_ERFilter_run_const__InputArrayX_vector_ERStat_X(self.as_raw_mut_ERFilter(), image.as_raw__InputArray(), regions.as_raw_mut_VectorOfERStat()) }.into_result()
 	}
 	
 	/// set/get methods to set the algorithm properties,
-	fn set_callback(&mut self, cb: &types::PtrOfERFilter_Callback) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setCallback_const_Ptr_Callback_X(self.as_raw_ERFilter(), cb.as_raw_PtrOfERFilter_Callback()) }.into_result()
+	fn set_callback(&mut self, cb: &core::Ptr::<dyn crate::text::ERFilter_Callback>) -> Result<()> {
+		unsafe { sys::cv_text_ERFilter_setCallback_const_Ptr_Callback_X(self.as_raw_mut_ERFilter(), cb.as_raw_PtrOfERFilter_Callback()) }.into_result()
 	}
 	
 	fn set_threshold_delta(&mut self, threshold_delta: i32) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setThresholdDelta_int(self.as_raw_ERFilter(), threshold_delta) }.into_result()
+		unsafe { sys::cv_text_ERFilter_setThresholdDelta_int(self.as_raw_mut_ERFilter(), threshold_delta) }.into_result()
 	}
 	
 	fn set_min_area(&mut self, min_area: f32) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setMinArea_float(self.as_raw_ERFilter(), min_area) }.into_result()
+		unsafe { sys::cv_text_ERFilter_setMinArea_float(self.as_raw_mut_ERFilter(), min_area) }.into_result()
 	}
 	
 	fn set_max_area(&mut self, max_area: f32) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setMaxArea_float(self.as_raw_ERFilter(), max_area) }.into_result()
+		unsafe { sys::cv_text_ERFilter_setMaxArea_float(self.as_raw_mut_ERFilter(), max_area) }.into_result()
 	}
 	
 	fn set_min_probability(&mut self, min_probability: f32) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setMinProbability_float(self.as_raw_ERFilter(), min_probability) }.into_result()
+		unsafe { sys::cv_text_ERFilter_setMinProbability_float(self.as_raw_mut_ERFilter(), min_probability) }.into_result()
 	}
 	
 	fn set_min_probability_diff(&mut self, min_probability_diff: f32) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setMinProbabilityDiff_float(self.as_raw_ERFilter(), min_probability_diff) }.into_result()
+		unsafe { sys::cv_text_ERFilter_setMinProbabilityDiff_float(self.as_raw_mut_ERFilter(), min_probability_diff) }.into_result()
 	}
 	
 	fn set_non_max_suppression(&mut self, non_max_suppression: bool) -> Result<()> {
-		unsafe { sys::cv_text_ERFilter_setNonMaxSuppression_bool(self.as_raw_ERFilter(), non_max_suppression) }.into_result()
+		unsafe { sys::cv_text_ERFilter_setNonMaxSuppression_bool(self.as_raw_mut_ERFilter(), non_max_suppression) }.into_result()
 	}
 	
 	fn get_num_rejected(&mut self) -> Result<i32> {
-		unsafe { sys::cv_text_ERFilter_getNumRejected(self.as_raw_ERFilter()) }.into_result()
+		unsafe { sys::cv_text_ERFilter_getNumRejected(self.as_raw_mut_ERFilter()) }.into_result()
 	}
 	
 }
@@ -437,13 +441,15 @@ pub trait ERFilter: core::AlgorithmTrait {
 /// By doing it we hide SVM, Boost etc. Developers can provide their own classifiers to the
 /// ERFilter algorithm.
 pub trait ERFilter_Callback {
-	fn as_raw_ERFilter_Callback(&self) -> *mut c_void;
+	fn as_raw_ERFilter_Callback(&self) -> *const c_void;
+	fn as_raw_mut_ERFilter_Callback(&mut self) -> *mut c_void;
+
 	/// The classifier must return probability measure for the region.
 	/// 
 	/// ## Parameters
 	/// * stat: :   The region to be classified
 	fn eval(&mut self, stat: &crate::text::ERStat) -> Result<f64> {
-		unsafe { sys::cv_text_ERFilter_Callback_eval_const_ERStatX(self.as_raw_ERFilter_Callback(), stat.as_raw_ERStat()) }.into_result()
+		unsafe { sys::cv_text_ERFilter_Callback_eval_const_ERStatX(self.as_raw_mut_ERFilter_Callback(), stat.as_raw_ERStat()) }.into_result()
 	}
 	
 }
@@ -454,7 +460,9 @@ pub trait ERFilter_Callback {
 /// outer boundary. A class-specific ER is selected (using a classifier) from all the ER's in the
 /// component tree of the image. :
 pub trait ERStatTrait {
-	fn as_raw_ERStat(&self) -> *mut c_void;
+	fn as_raw_ERStat(&self) -> *const c_void;
+	fn as_raw_mut_ERStat(&mut self) -> *mut c_void;
+
 	/// seed point and the threshold (max grey-level value)
 	fn pixel(&self) -> i32 {
 		unsafe { sys::cv_text_ERStat_pixel_const(self.as_raw_ERStat()) }.into_result().expect("Infallible function failed: pixel")
@@ -462,7 +470,7 @@ pub trait ERStatTrait {
 	
 	/// seed point and the threshold (max grey-level value)
 	fn set_pixel(&mut self, val: i32) -> () {
-		unsafe { sys::cv_text_ERStat_setPixel_int(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_pixel")
+		unsafe { sys::cv_text_ERStat_setPixel_int(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_pixel")
 	}
 	
 	fn level(&self) -> i32 {
@@ -470,7 +478,7 @@ pub trait ERStatTrait {
 	}
 	
 	fn set_level(&mut self, val: i32) -> () {
-		unsafe { sys::cv_text_ERStat_setLevel_int(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_level")
+		unsafe { sys::cv_text_ERStat_setLevel_int(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_level")
 	}
 	
 	/// incrementally computable features
@@ -480,7 +488,7 @@ pub trait ERStatTrait {
 	
 	/// incrementally computable features
 	fn set_area(&mut self, val: i32) -> () {
-		unsafe { sys::cv_text_ERStat_setArea_int(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_area")
+		unsafe { sys::cv_text_ERStat_setArea_int(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_area")
 	}
 	
 	fn perimeter(&self) -> i32 {
@@ -488,7 +496,7 @@ pub trait ERStatTrait {
 	}
 	
 	fn set_perimeter(&mut self, val: i32) -> () {
-		unsafe { sys::cv_text_ERStat_setPerimeter_int(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_perimeter")
+		unsafe { sys::cv_text_ERStat_setPerimeter_int(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_perimeter")
 	}
 	
 	/// euler number
@@ -498,7 +506,7 @@ pub trait ERStatTrait {
 	
 	/// euler number
 	fn set_euler(&mut self, val: i32) -> () {
-		unsafe { sys::cv_text_ERStat_setEuler_int(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_euler")
+		unsafe { sys::cv_text_ERStat_setEuler_int(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_euler")
 	}
 	
 	fn rect(&self) -> core::Rect {
@@ -506,17 +514,17 @@ pub trait ERStatTrait {
 	}
 	
 	fn set_rect(&mut self, val: core::Rect) -> () {
-		unsafe { sys::cv_text_ERStat_setRect_Rect(self.as_raw_ERStat(), &val) }.into_result().expect("Infallible function failed: set_rect")
+		unsafe { sys::cv_text_ERStat_setRect_Rect(self.as_raw_mut_ERStat(), &val) }.into_result().expect("Infallible function failed: set_rect")
 	}
 	
 	/// order 1 raw moments to derive the centroid
 	fn raw_moments(&mut self) -> &mut [f64; 2] {
-		unsafe { sys::cv_text_ERStat_raw_moments(self.as_raw_ERStat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: raw_moments")
+		unsafe { sys::cv_text_ERStat_raw_moments(self.as_raw_mut_ERStat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: raw_moments")
 	}
 	
 	/// order 2 central moments to construct the covariance matrix
 	fn central_moments(&mut self) -> &mut [f64; 3] {
-		unsafe { sys::cv_text_ERStat_central_moments(self.as_raw_ERStat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: central_moments")
+		unsafe { sys::cv_text_ERStat_central_moments(self.as_raw_mut_ERStat()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: central_moments")
 	}
 	
 	/// median of the crossings at three different height levels
@@ -526,7 +534,7 @@ pub trait ERStatTrait {
 	
 	/// median of the crossings at three different height levels
 	fn set_med_crossings(&mut self, val: f32) -> () {
-		unsafe { sys::cv_text_ERStat_setMed_crossings_float(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_med_crossings")
+		unsafe { sys::cv_text_ERStat_setMed_crossings_float(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_med_crossings")
 	}
 	
 	/// 2nd stage features
@@ -536,7 +544,7 @@ pub trait ERStatTrait {
 	
 	/// 2nd stage features
 	fn set_hole_area_ratio(&mut self, val: f32) -> () {
-		unsafe { sys::cv_text_ERStat_setHole_area_ratio_float(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_hole_area_ratio")
+		unsafe { sys::cv_text_ERStat_setHole_area_ratio_float(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_hole_area_ratio")
 	}
 	
 	fn convex_hull_ratio(&self) -> f32 {
@@ -544,7 +552,7 @@ pub trait ERStatTrait {
 	}
 	
 	fn set_convex_hull_ratio(&mut self, val: f32) -> () {
-		unsafe { sys::cv_text_ERStat_setConvex_hull_ratio_float(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_convex_hull_ratio")
+		unsafe { sys::cv_text_ERStat_setConvex_hull_ratio_float(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_convex_hull_ratio")
 	}
 	
 	fn num_inflexion_points(&self) -> f32 {
@@ -552,7 +560,7 @@ pub trait ERStatTrait {
 	}
 	
 	fn set_num_inflexion_points(&mut self, val: f32) -> () {
-		unsafe { sys::cv_text_ERStat_setNum_inflexion_points_float(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_num_inflexion_points")
+		unsafe { sys::cv_text_ERStat_setNum_inflexion_points_float(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_num_inflexion_points")
 	}
 	
 	/// probability that the ER belongs to the class we are looking for
@@ -562,41 +570,41 @@ pub trait ERStatTrait {
 	
 	/// probability that the ER belongs to the class we are looking for
 	fn set_probability(&mut self, val: f64) -> () {
-		unsafe { sys::cv_text_ERStat_setProbability_double(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_probability")
+		unsafe { sys::cv_text_ERStat_setProbability_double(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_probability")
 	}
 	
 	/// pointers preserving the tree structure of the component tree
 	fn parent(&mut self) -> crate::text::ERStat {
-		unsafe { sys::cv_text_ERStat_parent(self.as_raw_ERStat()) }.into_result().map(|ptr| crate::text::ERStat { ptr }).expect("Infallible function failed: parent")
+		unsafe { sys::cv_text_ERStat_parent(self.as_raw_mut_ERStat()) }.into_result().map(|ptr| unsafe { crate::text::ERStat::from_raw(ptr) }).expect("Infallible function failed: parent")
 	}
 	
 	/// pointers preserving the tree structure of the component tree
 	fn set_parent(&mut self, val: &mut crate::text::ERStat) -> () {
-		unsafe { sys::cv_text_ERStat_setParent_ERStatX(self.as_raw_ERStat(), val.as_raw_ERStat()) }.into_result().expect("Infallible function failed: set_parent")
+		unsafe { sys::cv_text_ERStat_setParent_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) }.into_result().expect("Infallible function failed: set_parent")
 	}
 	
 	fn child(&mut self) -> crate::text::ERStat {
-		unsafe { sys::cv_text_ERStat_child(self.as_raw_ERStat()) }.into_result().map(|ptr| crate::text::ERStat { ptr }).expect("Infallible function failed: child")
+		unsafe { sys::cv_text_ERStat_child(self.as_raw_mut_ERStat()) }.into_result().map(|ptr| unsafe { crate::text::ERStat::from_raw(ptr) }).expect("Infallible function failed: child")
 	}
 	
 	fn set_child(&mut self, val: &mut crate::text::ERStat) -> () {
-		unsafe { sys::cv_text_ERStat_setChild_ERStatX(self.as_raw_ERStat(), val.as_raw_ERStat()) }.into_result().expect("Infallible function failed: set_child")
+		unsafe { sys::cv_text_ERStat_setChild_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) }.into_result().expect("Infallible function failed: set_child")
 	}
 	
 	fn next(&mut self) -> crate::text::ERStat {
-		unsafe { sys::cv_text_ERStat_next(self.as_raw_ERStat()) }.into_result().map(|ptr| crate::text::ERStat { ptr }).expect("Infallible function failed: next")
+		unsafe { sys::cv_text_ERStat_next(self.as_raw_mut_ERStat()) }.into_result().map(|ptr| unsafe { crate::text::ERStat::from_raw(ptr) }).expect("Infallible function failed: next")
 	}
 	
 	fn set_next(&mut self, val: &mut crate::text::ERStat) -> () {
-		unsafe { sys::cv_text_ERStat_setNext_ERStatX(self.as_raw_ERStat(), val.as_raw_ERStat()) }.into_result().expect("Infallible function failed: set_next")
+		unsafe { sys::cv_text_ERStat_setNext_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) }.into_result().expect("Infallible function failed: set_next")
 	}
 	
 	fn prev(&mut self) -> crate::text::ERStat {
-		unsafe { sys::cv_text_ERStat_prev(self.as_raw_ERStat()) }.into_result().map(|ptr| crate::text::ERStat { ptr }).expect("Infallible function failed: prev")
+		unsafe { sys::cv_text_ERStat_prev(self.as_raw_mut_ERStat()) }.into_result().map(|ptr| unsafe { crate::text::ERStat::from_raw(ptr) }).expect("Infallible function failed: prev")
 	}
 	
 	fn set_prev(&mut self, val: &mut crate::text::ERStat) -> () {
-		unsafe { sys::cv_text_ERStat_setPrev_ERStatX(self.as_raw_ERStat(), val.as_raw_ERStat()) }.into_result().expect("Infallible function failed: set_prev")
+		unsafe { sys::cv_text_ERStat_setPrev_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) }.into_result().expect("Infallible function failed: set_prev")
 	}
 	
 	/// wenever the regions is a local maxima of the probability
@@ -606,23 +614,23 @@ pub trait ERStatTrait {
 	
 	/// wenever the regions is a local maxima of the probability
 	fn set_local_maxima(&mut self, val: bool) -> () {
-		unsafe { sys::cv_text_ERStat_setLocal_maxima_bool(self.as_raw_ERStat(), val) }.into_result().expect("Infallible function failed: set_local_maxima")
+		unsafe { sys::cv_text_ERStat_setLocal_maxima_bool(self.as_raw_mut_ERStat(), val) }.into_result().expect("Infallible function failed: set_local_maxima")
 	}
 	
 	fn max_probability_ancestor(&mut self) -> crate::text::ERStat {
-		unsafe { sys::cv_text_ERStat_max_probability_ancestor(self.as_raw_ERStat()) }.into_result().map(|ptr| crate::text::ERStat { ptr }).expect("Infallible function failed: max_probability_ancestor")
+		unsafe { sys::cv_text_ERStat_max_probability_ancestor(self.as_raw_mut_ERStat()) }.into_result().map(|ptr| unsafe { crate::text::ERStat::from_raw(ptr) }).expect("Infallible function failed: max_probability_ancestor")
 	}
 	
 	fn set_max_probability_ancestor(&mut self, val: &mut crate::text::ERStat) -> () {
-		unsafe { sys::cv_text_ERStat_setMax_probability_ancestor_ERStatX(self.as_raw_ERStat(), val.as_raw_ERStat()) }.into_result().expect("Infallible function failed: set_max_probability_ancestor")
+		unsafe { sys::cv_text_ERStat_setMax_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) }.into_result().expect("Infallible function failed: set_max_probability_ancestor")
 	}
 	
 	fn min_probability_ancestor(&mut self) -> crate::text::ERStat {
-		unsafe { sys::cv_text_ERStat_min_probability_ancestor(self.as_raw_ERStat()) }.into_result().map(|ptr| crate::text::ERStat { ptr }).expect("Infallible function failed: min_probability_ancestor")
+		unsafe { sys::cv_text_ERStat_min_probability_ancestor(self.as_raw_mut_ERStat()) }.into_result().map(|ptr| unsafe { crate::text::ERStat::from_raw(ptr) }).expect("Infallible function failed: min_probability_ancestor")
 	}
 	
 	fn set_min_probability_ancestor(&mut self, val: &mut crate::text::ERStat) -> () {
-		unsafe { sys::cv_text_ERStat_setMin_probability_ancestor_ERStatX(self.as_raw_ERStat(), val.as_raw_ERStat()) }.into_result().expect("Infallible function failed: set_min_probability_ancestor")
+		unsafe { sys::cv_text_ERStat_setMin_probability_ancestor_ERStatX(self.as_raw_mut_ERStat(), val.as_raw_mut_ERStat()) }.into_result().expect("Infallible function failed: set_min_probability_ancestor")
 	}
 	
 }
@@ -633,28 +641,28 @@ pub trait ERStatTrait {
 /// outer boundary. A class-specific ER is selected (using a classifier) from all the ER's in the
 /// component tree of the image. :
 pub struct ERStat {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { ERStat }
 
 impl Drop for ERStat {
 	fn drop(&mut self) {
 		extern "C" { fn cv_ERStat_delete(instance: *mut c_void); }
-		unsafe { cv_ERStat_delete(self.as_raw_ERStat()) };
+		unsafe { cv_ERStat_delete(self.as_raw_mut_ERStat()) };
 	}
 }
 
 impl ERStat {
-	pub fn as_raw_ERStat(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ERStat {}
 
 impl crate::text::ERStatTrait for ERStat {
-	fn as_raw_ERStat(&self) -> *mut c_void { self.ptr }
+	fn as_raw_ERStat(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_ERStat(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ERStat {
@@ -666,7 +674,7 @@ impl ERStat {
 	/// * x: 0
 	/// * y: 0
 	pub fn new(level: i32, pixel: i32, x: i32, y: i32) -> Result<crate::text::ERStat> {
-		unsafe { sys::cv_text_ERStat_ERStat_int_int_int_int(level, pixel, x, y) }.into_result().map(|ptr| crate::text::ERStat { ptr })
+		unsafe { sys::cv_text_ERStat_ERStat_int_int_int_int(level, pixel, x, y) }.into_result().map(|ptr| unsafe { crate::text::ERStat::from_raw(ptr) })
 	}
 	
 }
@@ -679,7 +687,9 @@ impl ERStat {
 ///        be found at the demo sample:
 ///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/word_recognition.cpp>
 pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
-	fn as_raw_OCRBeamSearchDecoder(&self) -> *mut c_void;
+	fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void;
+	fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void;
+
 	/// Recognize text using Beam Search.
 	/// 
 	/// Takes image on input and returns recognized text in the output_text parameter. Optionally
@@ -707,9 +717,9 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -719,9 +729,9 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw_Mat(), mask.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRBeamSearchDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -730,7 +740,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_2(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_int_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -738,7 +748,7 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 	fn run_3(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_mut_OCRBeamSearchDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -751,32 +761,33 @@ pub trait OCRBeamSearchDecoderTrait: crate::text::BaseOCR {
 ///        be found at the demo sample:
 ///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/word_recognition.cpp>
 pub struct OCRBeamSearchDecoder {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { OCRBeamSearchDecoder }
 
 impl Drop for OCRBeamSearchDecoder {
 	fn drop(&mut self) {
 		extern "C" { fn cv_OCRBeamSearchDecoder_delete(instance: *mut c_void); }
-		unsafe { cv_OCRBeamSearchDecoder_delete(self.as_raw_OCRBeamSearchDecoder()) };
+		unsafe { cv_OCRBeamSearchDecoder_delete(self.as_raw_mut_OCRBeamSearchDecoder()) };
 	}
 }
 
 impl OCRBeamSearchDecoder {
-	pub fn as_raw_OCRBeamSearchDecoder(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRBeamSearchDecoder {}
 
 impl crate::text::BaseOCR for OCRBeamSearchDecoder {
-	fn as_raw_BaseOCR(&self) -> *mut c_void { self.ptr }
+	fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::text::OCRBeamSearchDecoderTrait for OCRBeamSearchDecoder {
-	fn as_raw_OCRBeamSearchDecoder(&self) -> *mut c_void { self.ptr }
+	fn as_raw_OCRBeamSearchDecoder(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_OCRBeamSearchDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRBeamSearchDecoder {
@@ -802,21 +813,21 @@ impl OCRBeamSearchDecoder {
 	/// ## C++ default parameters
 	/// * mode: OCR_DECODER_VITERBI
 	/// * beam_size: 500
-	pub fn create(classifier: types::PtrOfOCRBeamSearchDecoder_ClassifierCallback, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<types::PtrOfOCRBeamSearchDecoder> {
+	pub fn create(classifier: core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: crate::text::decoder_mode, beam_size: i32) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder>> {
 		string_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_stringX_const__InputArrayX_const__InputArrayX_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|ptr| types::PtrOfOCRBeamSearchDecoder { ptr })
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_stringX_const__InputArrayX_const__InputArrayX_decoder_mode_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::from_raw(ptr) })
 	}
 	
 	/// ## C++ default parameters
 	/// * mode: OCR_DECODER_VITERBI
 	/// * beam_size: 500
-	pub fn create_1(classifier: types::PtrOfOCRBeamSearchDecoder_ClassifierCallback, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32, beam_size: i32) -> Result<types::PtrOfOCRBeamSearchDecoder> {
+	pub fn create_1(classifier: core::Ptr::<crate::text::OCRBeamSearchDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32, beam_size: i32) -> Result<core::Ptr::<crate::text::OCRBeamSearchDecoder>> {
 		string_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_StringX_const__InputArrayX_const__InputArrayX_int_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|ptr| types::PtrOfOCRBeamSearchDecoder { ptr })
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_create_Ptr_ClassifierCallback__const_StringX_const__InputArrayX_const__InputArrayX_int_int(classifier.as_raw_PtrOfOCRBeamSearchDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode, beam_size) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::text::OCRBeamSearchDecoder>::from_raw(ptr) })
 	}
 	
 }
@@ -830,7 +841,9 @@ impl OCRBeamSearchDecoder {
 /// loadOCRBeamSearchClassifierCNN with all its parameters provided in
 /// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRBeamSearch_CNN_model_data.xml.gz>.
 pub trait OCRBeamSearchDecoder_ClassifierCallbackTrait {
-	fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *mut c_void;
+	fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void;
+	fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void;
+
 	/// The character classifier must return a (ranked list of) class(es) id('s)
 	/// 
 	/// ## Parameters
@@ -839,17 +852,17 @@ pub trait OCRBeamSearchDecoder_ClassifierCallbackTrait {
 	/// class probabilities for each class.
 	/// * oversegmentation: The classifier returns a list of N+1 character locations' x-coordinates,
 	/// including 0 as start-sequence location.
-	fn eval(&mut self, image: &dyn core::ToInputArray, recognition_probabilities: &mut types::VectorOfVectorOff64, oversegmentation: &mut types::VectorOfi32) -> Result<()> {
+	fn eval(&mut self, image: &dyn core::ToInputArray, recognition_probabilities: &mut core::Vector::<core::Vector::<f64>>, oversegmentation: &mut core::Vector::<i32>) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayX_vector_vector_double__X_vector_int_X(self.as_raw_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_VectorOfVectorOff64(), oversegmentation.as_raw_VectorOfi32()) }.into_result()
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_eval_const__InputArrayX_vector_vector_double__X_vector_int_X(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(), image.as_raw__InputArray(), recognition_probabilities.as_raw_mut_VectorOfVectorOff64(), oversegmentation.as_raw_mut_VectorOfi32()) }.into_result()
 	}
 	
 	fn get_window_size(&mut self) -> Result<i32> {
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_getWindowSize(self.as_raw_OCRBeamSearchDecoder_ClassifierCallback()) }.into_result()
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_getWindowSize(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) }.into_result()
 	}
 	
 	fn get_step_size(&mut self) -> Result<i32> {
-		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_getStepSize(self.as_raw_OCRBeamSearchDecoder_ClassifierCallback()) }.into_result()
+		unsafe { sys::cv_text_OCRBeamSearchDecoder_ClassifierCallback_getStepSize(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) }.into_result()
 	}
 	
 }
@@ -863,28 +876,28 @@ pub trait OCRBeamSearchDecoder_ClassifierCallbackTrait {
 /// loadOCRBeamSearchClassifierCNN with all its parameters provided in
 /// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRBeamSearch_CNN_model_data.xml.gz>.
 pub struct OCRBeamSearchDecoder_ClassifierCallback {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { OCRBeamSearchDecoder_ClassifierCallback }
 
 impl Drop for OCRBeamSearchDecoder_ClassifierCallback {
 	fn drop(&mut self) {
 		extern "C" { fn cv_OCRBeamSearchDecoder_ClassifierCallback_delete(instance: *mut c_void); }
-		unsafe { cv_OCRBeamSearchDecoder_ClassifierCallback_delete(self.as_raw_OCRBeamSearchDecoder_ClassifierCallback()) };
+		unsafe { cv_OCRBeamSearchDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback()) };
 	}
 }
 
 impl OCRBeamSearchDecoder_ClassifierCallback {
-	pub fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRBeamSearchDecoder_ClassifierCallback {}
 
 impl crate::text::OCRBeamSearchDecoder_ClassifierCallbackTrait for OCRBeamSearchDecoder_ClassifierCallback {
-	fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *mut c_void { self.ptr }
+	fn as_raw_OCRBeamSearchDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_OCRBeamSearchDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRBeamSearchDecoder_ClassifierCallback {
@@ -898,7 +911,9 @@ impl OCRBeamSearchDecoder_ClassifierCallback {
 ///        be found at the webcam_demo sample:
 ///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
 pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
-	fn as_raw_OCRHMMDecoder(&self) -> *mut c_void;
+	fn as_raw_OCRHMMDecoder(&self) -> *const c_void;
+	fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void;
+
 	/// Recognize text using HMM.
 	/// 
 	/// Takes binary image on input and returns recognized text in the output_text parameter. Optionally
@@ -926,9 +941,9 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_OCRHMMDecoder(), image.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -962,9 +977,9 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_OCRHMMDecoder(), image.as_raw_Mat(), mask.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRHMMDecoder_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -973,7 +988,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_2(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_int_int(self.as_raw_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -981,7 +996,7 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 	fn run_3(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_text_OCRHMMDecoder_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_mut_OCRHMMDecoder(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 }
@@ -994,32 +1009,33 @@ pub trait OCRHMMDecoderTrait: crate::text::BaseOCR {
 ///        be found at the webcam_demo sample:
 ///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
 pub struct OCRHMMDecoder {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { OCRHMMDecoder }
 
 impl Drop for OCRHMMDecoder {
 	fn drop(&mut self) {
 		extern "C" { fn cv_OCRHMMDecoder_delete(instance: *mut c_void); }
-		unsafe { cv_OCRHMMDecoder_delete(self.as_raw_OCRHMMDecoder()) };
+		unsafe { cv_OCRHMMDecoder_delete(self.as_raw_mut_OCRHMMDecoder()) };
 	}
 }
 
 impl OCRHMMDecoder {
-	pub fn as_raw_OCRHMMDecoder(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRHMMDecoder {}
 
 impl crate::text::BaseOCR for OCRHMMDecoder {
-	fn as_raw_BaseOCR(&self) -> *mut c_void { self.ptr }
+	fn as_raw_BaseOCR(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_BaseOCR(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::text::OCRHMMDecoderTrait for OCRHMMDecoder {
-	fn as_raw_OCRHMMDecoder(&self) -> *mut c_void { self.ptr }
+	fn as_raw_OCRHMMDecoder(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_OCRHMMDecoder(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRHMMDecoder {
@@ -1042,20 +1058,20 @@ impl OCRHMMDecoder {
 	/// 
 	/// ## C++ default parameters
 	/// * mode: OCR_DECODER_VITERBI
-	pub fn create(classifier: types::PtrOfOCRHMMDecoder_ClassifierCallback, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: crate::text::decoder_mode) -> Result<types::PtrOfOCRHMMDecoder> {
+	pub fn create(classifier: core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: crate::text::decoder_mode) -> Result<core::Ptr::<crate::text::OCRHMMDecoder>> {
 		string_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_stringX_const__InputArrayX_const__InputArrayX_decoder_mode(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|ptr| types::PtrOfOCRHMMDecoder { ptr })
+		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_stringX_const__InputArrayX_const__InputArrayX_decoder_mode(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::from_raw(ptr) })
 	}
 	
 	/// ## C++ default parameters
 	/// * mode: OCR_DECODER_VITERBI
-	pub fn create_1(classifier: types::PtrOfOCRHMMDecoder_ClassifierCallback, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32) -> Result<types::PtrOfOCRHMMDecoder> {
+	pub fn create_1(classifier: core::Ptr::<crate::text::OCRHMMDecoder_ClassifierCallback>, vocabulary: &str, transition_probabilities_table: &dyn core::ToInputArray, emission_probabilities_table: &dyn core::ToInputArray, mode: i32) -> Result<core::Ptr::<crate::text::OCRHMMDecoder>> {
 		string_arg!(vocabulary);
 		input_array_arg!(transition_probabilities_table);
 		input_array_arg!(emission_probabilities_table);
-		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_StringX_const__InputArrayX_const__InputArrayX_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|ptr| types::PtrOfOCRHMMDecoder { ptr })
+		unsafe { sys::cv_text_OCRHMMDecoder_create_Ptr_ClassifierCallback__const_StringX_const__InputArrayX_const__InputArrayX_int(classifier.as_raw_PtrOfOCRHMMDecoder_ClassifierCallback(), vocabulary.as_ptr(), transition_probabilities_table.as_raw__InputArray(), emission_probabilities_table.as_raw__InputArray(), mode) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::text::OCRHMMDecoder>::from_raw(ptr) })
 	}
 	
 }
@@ -1069,7 +1085,9 @@ impl OCRHMMDecoder {
 /// loadOCRHMMClassifierNM and KNN model provided in
 /// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRHMM_knn_model_data.xml.gz>.
 pub trait OCRHMMDecoder_ClassifierCallbackTrait {
-	fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *mut c_void;
+	fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void;
+	fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void;
+
 	/// The character classifier must return a (ranked list of) class(es) id('s)
 	/// 
 	/// ## Parameters
@@ -1078,9 +1096,9 @@ pub trait OCRHMMDecoder_ClassifierCallbackTrait {
 	/// class labels, to which the input image corresponds.
 	/// * out_confidence: The classifier returns the probability of the input image
 	/// corresponding to each classes in out_class.
-	fn eval(&mut self, image: &dyn core::ToInputArray, out_class: &mut types::VectorOfi32, out_confidence: &mut types::VectorOff64) -> Result<()> {
+	fn eval(&mut self, image: &dyn core::ToInputArray, out_class: &mut core::Vector::<i32>, out_confidence: &mut core::Vector::<f64>) -> Result<()> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayX_vector_int_X_vector_double_X(self.as_raw_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_VectorOfi32(), out_confidence.as_raw_VectorOff64()) }.into_result()
+		unsafe { sys::cv_text_OCRHMMDecoder_ClassifierCallback_eval_const__InputArrayX_vector_int_X_vector_double_X(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback(), image.as_raw__InputArray(), out_class.as_raw_mut_VectorOfi32(), out_confidence.as_raw_mut_VectorOff64()) }.into_result()
 	}
 	
 }
@@ -1094,28 +1112,28 @@ pub trait OCRHMMDecoder_ClassifierCallbackTrait {
 /// loadOCRHMMClassifierNM and KNN model provided in
 /// <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/OCRHMM_knn_model_data.xml.gz>.
 pub struct OCRHMMDecoder_ClassifierCallback {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { OCRHMMDecoder_ClassifierCallback }
 
 impl Drop for OCRHMMDecoder_ClassifierCallback {
 	fn drop(&mut self) {
 		extern "C" { fn cv_OCRHMMDecoder_ClassifierCallback_delete(instance: *mut c_void); }
-		unsafe { cv_OCRHMMDecoder_ClassifierCallback_delete(self.as_raw_OCRHMMDecoder_ClassifierCallback()) };
+		unsafe { cv_OCRHMMDecoder_ClassifierCallback_delete(self.as_raw_mut_OCRHMMDecoder_ClassifierCallback()) };
 	}
 }
 
 impl OCRHMMDecoder_ClassifierCallback {
-	pub fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for OCRHMMDecoder_ClassifierCallback {}
 
 impl crate::text::OCRHMMDecoder_ClassifierCallbackTrait for OCRHMMDecoder_ClassifierCallback {
-	fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *mut c_void { self.ptr }
+	fn as_raw_OCRHMMDecoder_ClassifierCallback(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_OCRHMMDecoder_ClassifierCallback(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl OCRHMMDecoder_ClassifierCallback {
@@ -1134,7 +1152,9 @@ impl OCRHMMDecoder_ClassifierCallback {
 ///        found at the webcam_demo:
 ///        <https://github.com/opencv/opencv_contrib/blob/master/modules/text/samples/webcam_demo.cpp>
 pub trait OCRTesseract: crate::text::BaseOCR {
-	fn as_raw_OCRTesseract(&self) -> *mut c_void;
+	fn as_raw_OCRTesseract(&self) -> *const c_void;
+	fn as_raw_mut_OCRTesseract(&mut self) -> *mut c_void;
+
 	/// Recognize text using the tesseract-ocr API.
 	/// 
 	/// Takes image on input and returns recognized text in the output_text parameter. Optionally
@@ -1157,9 +1177,9 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run(&mut self, image: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRTesseract_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_OCRTesseract(), image.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRTesseract_run_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -1169,9 +1189,9 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	/// * component_texts: NULL
 	/// * component_confidences: NULL
 	/// * component_level: 0
-	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut types::VectorOfRect, component_texts: &mut types::VectorOfString, component_confidences: &mut types::VectorOff32, component_level: i32) -> Result<()> {
+	fn run_1(&mut self, image: &mut core::Mat, mask: &mut core::Mat, output_text: &mut String, component_rects: &mut core::Vector::<core::Rect>, component_texts: &mut core::Vector::<String>, component_confidences: &mut core::Vector::<f32>, component_level: i32) -> Result<()> {
 		string_arg_output_send!(via output_text_via);
-		let out = unsafe { sys::cv_text_OCRTesseract_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_OCRTesseract(), image.as_raw_Mat(), mask.as_raw_Mat(), &mut output_text_via, component_rects.as_raw_VectorOfRect(), component_texts.as_raw_VectorOfString(), component_confidences.as_raw_VectorOff32(), component_level) }.into_result();
+		let out = unsafe { sys::cv_text_OCRTesseract_run_MatX_MatX_stringX_vector_Rect_X_vector_string_X_vector_float_X_int(self.as_raw_mut_OCRTesseract(), image.as_raw_mut_Mat(), mask.as_raw_mut_Mat(), &mut output_text_via, component_rects.as_raw_mut_VectorOfRect(), component_texts.as_raw_mut_VectorOfString(), component_confidences.as_raw_mut_VectorOff32(), component_level) }.into_result();
 		string_arg_output_receive!(out, output_text_via => output_text);
 		out
 	}
@@ -1180,7 +1200,7 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	/// * component_level: 0
 	fn run_2(&mut self, image: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
-		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_int_int(self.as_raw_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	/// ## C++ default parameters
@@ -1188,12 +1208,12 @@ pub trait OCRTesseract: crate::text::BaseOCR {
 	fn run_3(&mut self, image: &dyn core::ToInputArray, mask: &dyn core::ToInputArray, min_confidence: i32, component_level: i32) -> Result<String> {
 		input_array_arg!(image);
 		input_array_arg!(mask);
-		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+		unsafe { sys::cv_text_OCRTesseract_run_const__InputArrayX_const__InputArrayX_int_int(self.as_raw_mut_OCRTesseract(), image.as_raw__InputArray(), mask.as_raw__InputArray(), min_confidence, component_level) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 	}
 	
 	fn set_white_list(&mut self, char_whitelist: &str) -> Result<()> {
 		string_arg!(char_whitelist);
-		unsafe { sys::cv_text_OCRTesseract_setWhiteList_const_StringX(self.as_raw_OCRTesseract(), char_whitelist.as_ptr()) }.into_result()
+		unsafe { sys::cv_text_OCRTesseract_setWhiteList_const_StringX(self.as_raw_mut_OCRTesseract(), char_whitelist.as_ptr()) }.into_result()
 	}
 	
 }
@@ -1220,11 +1240,11 @@ impl dyn OCRTesseract + '_ {
 	/// * char_whitelist: NULL
 	/// * oem: 3
 	/// * psmode: 3
-	pub fn create(datapath: &str, language: &str, char_whitelist: &str, oem: i32, psmode: i32) -> Result<types::PtrOfOCRTesseract> {
+	pub fn create(datapath: &str, language: &str, char_whitelist: &str, oem: i32, psmode: i32) -> Result<core::Ptr::<dyn crate::text::OCRTesseract>> {
 		string_arg!(datapath);
 		string_arg!(language);
 		string_arg!(char_whitelist);
-		unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.as_ptr(), language.as_ptr(), char_whitelist.as_ptr(), oem, psmode) }.into_result().map(|ptr| types::PtrOfOCRTesseract { ptr })
+		unsafe { sys::cv_text_OCRTesseract_create_const_charX_const_charX_const_charX_int_int(datapath.as_ptr(), language.as_ptr(), char_whitelist.as_ptr(), oem, psmode) }.into_result().map(|ptr| unsafe { core::Ptr::<dyn crate::text::OCRTesseract>::from_raw(ptr) })
 	}
 	
 }

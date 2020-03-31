@@ -214,36 +214,39 @@ pub fn set_distance_type(distance_type: crate::flann::flann_distance_t, order: i
 }
 
 pub trait AutotunedIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_AutotunedIndexParams(&self) -> *mut c_void;
+	fn as_raw_AutotunedIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct AutotunedIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { AutotunedIndexParams }
 
 impl Drop for AutotunedIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_AutotunedIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_AutotunedIndexParams_delete(self.as_raw_AutotunedIndexParams()) };
+		unsafe { cv_AutotunedIndexParams_delete(self.as_raw_mut_AutotunedIndexParams()) };
 	}
 }
 
 impl AutotunedIndexParams {
-	pub fn as_raw_AutotunedIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_AutotunedIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for AutotunedIndexParams {}
 
 impl crate::flann::AutotunedIndexParamsTrait for AutotunedIndexParams {
-	fn as_raw_AutotunedIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_AutotunedIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_AutotunedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::IndexParamsTrait for AutotunedIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl AutotunedIndexParams {
@@ -253,42 +256,45 @@ impl AutotunedIndexParams {
 	/// * memory_weight: 0
 	/// * sample_fraction: 0.1f
 	pub fn new(target_precision: f32, build_weight: f32, memory_weight: f32, sample_fraction: f32) -> Result<crate::flann::AutotunedIndexParams> {
-		unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams_float_float_float_float(target_precision, build_weight, memory_weight, sample_fraction) }.into_result().map(|ptr| crate::flann::AutotunedIndexParams { ptr })
+		unsafe { sys::cv_flann_AutotunedIndexParams_AutotunedIndexParams_float_float_float_float(target_precision, build_weight, memory_weight, sample_fraction) }.into_result().map(|ptr| unsafe { crate::flann::AutotunedIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait CompositeIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_CompositeIndexParams(&self) -> *mut c_void;
+	fn as_raw_CompositeIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct CompositeIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { CompositeIndexParams }
 
 impl Drop for CompositeIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_CompositeIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_CompositeIndexParams_delete(self.as_raw_CompositeIndexParams()) };
+		unsafe { cv_CompositeIndexParams_delete(self.as_raw_mut_CompositeIndexParams()) };
 	}
 }
 
 impl CompositeIndexParams {
-	pub fn as_raw_CompositeIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_CompositeIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for CompositeIndexParams {}
 
 impl crate::flann::CompositeIndexParamsTrait for CompositeIndexParams {
-	fn as_raw_CompositeIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_CompositeIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_CompositeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::IndexParamsTrait for CompositeIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl CompositeIndexParams {
@@ -299,42 +305,45 @@ impl CompositeIndexParams {
 	/// * centers_init: cvflann::FLANN_CENTERS_RANDOM
 	/// * cb_index: 0.2f
 	pub fn new(trees: i32, branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::CompositeIndexParams> {
-		unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams_int_int_int_flann_centers_init_t_float(trees, branching, iterations, centers_init, cb_index) }.into_result().map(|ptr| crate::flann::CompositeIndexParams { ptr })
+		unsafe { sys::cv_flann_CompositeIndexParams_CompositeIndexParams_int_int_int_flann_centers_init_t_float(trees, branching, iterations, centers_init, cb_index) }.into_result().map(|ptr| unsafe { crate::flann::CompositeIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait HierarchicalClusteringIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_HierarchicalClusteringIndexParams(&self) -> *mut c_void;
+	fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct HierarchicalClusteringIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { HierarchicalClusteringIndexParams }
 
 impl Drop for HierarchicalClusteringIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_HierarchicalClusteringIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_HierarchicalClusteringIndexParams_delete(self.as_raw_HierarchicalClusteringIndexParams()) };
+		unsafe { cv_HierarchicalClusteringIndexParams_delete(self.as_raw_mut_HierarchicalClusteringIndexParams()) };
 	}
 }
 
 impl HierarchicalClusteringIndexParams {
-	pub fn as_raw_HierarchicalClusteringIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for HierarchicalClusteringIndexParams {}
 
 impl crate::flann::HierarchicalClusteringIndexParamsTrait for HierarchicalClusteringIndexParams {
-	fn as_raw_HierarchicalClusteringIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_HierarchicalClusteringIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_HierarchicalClusteringIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::IndexParamsTrait for HierarchicalClusteringIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl HierarchicalClusteringIndexParams {
@@ -344,18 +353,20 @@ impl HierarchicalClusteringIndexParams {
 	/// * trees: 4
 	/// * leaf_size: 100
 	pub fn new(branching: i32, centers_init: crate::flann::flann_centers_init_t, trees: i32, leaf_size: i32) -> Result<crate::flann::HierarchicalClusteringIndexParams> {
-		unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams_int_flann_centers_init_t_int_int(branching, centers_init, trees, leaf_size) }.into_result().map(|ptr| crate::flann::HierarchicalClusteringIndexParams { ptr })
+		unsafe { sys::cv_flann_HierarchicalClusteringIndexParams_HierarchicalClusteringIndexParams_int_flann_centers_init_t_int_int(branching, centers_init, trees, leaf_size) }.into_result().map(|ptr| unsafe { crate::flann::HierarchicalClusteringIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait IndexTrait {
-	fn as_raw_Index(&self) -> *mut c_void;
+	fn as_raw_Index(&self) -> *const c_void;
+	fn as_raw_mut_Index(&mut self) -> *mut c_void;
+
 	/// ## C++ default parameters
 	/// * dist_type: cvflann::FLANN_DIST_L2
 	fn build(&mut self, features: &dyn core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<()> {
 		input_array_arg!(features);
-		unsafe { sys::cv_flann_Index_build_const__InputArrayX_const_IndexParamsX_flann_distance_t(self.as_raw_Index(), features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type) }.into_result()
+		unsafe { sys::cv_flann_Index_build_const__InputArrayX_const_IndexParamsX_flann_distance_t(self.as_raw_mut_Index(), features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -364,7 +375,7 @@ pub trait IndexTrait {
 		input_array_arg!(query);
 		output_array_arg!(indices);
 		output_array_arg!(dists);
-		unsafe { sys::cv_flann_Index_knnSearch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_const_SearchParamsX(self.as_raw_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), knn, params.as_raw_SearchParams()) }.into_result()
+		unsafe { sys::cv_flann_Index_knnSearch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_int_const_SearchParamsX(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), knn, params.as_raw_SearchParams()) }.into_result()
 	}
 	
 	/// ## C++ default parameters
@@ -373,7 +384,7 @@ pub trait IndexTrait {
 		input_array_arg!(query);
 		output_array_arg!(indices);
 		output_array_arg!(dists);
-		unsafe { sys::cv_flann_Index_radiusSearch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_int_const_SearchParamsX(self.as_raw_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), radius, max_results, params.as_raw_SearchParams()) }.into_result()
+		unsafe { sys::cv_flann_Index_radiusSearch_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_int_const_SearchParamsX(self.as_raw_mut_Index(), query.as_raw__InputArray(), indices.as_raw__OutputArray(), dists.as_raw__OutputArray(), radius, max_results, params.as_raw_SearchParams()) }.into_result()
 	}
 	
 	fn save(&self, filename: &str) -> Result<()> {
@@ -384,11 +395,11 @@ pub trait IndexTrait {
 	fn load(&mut self, features: &dyn core::ToInputArray, filename: &str) -> Result<bool> {
 		input_array_arg!(features);
 		string_arg!(filename);
-		unsafe { sys::cv_flann_Index_load_const__InputArrayX_const_StringX(self.as_raw_Index(), features.as_raw__InputArray(), filename.as_ptr()) }.into_result()
+		unsafe { sys::cv_flann_Index_load_const__InputArrayX_const_StringX(self.as_raw_mut_Index(), features.as_raw__InputArray(), filename.as_ptr()) }.into_result()
 	}
 	
 	fn release(&mut self) -> Result<()> {
-		unsafe { sys::cv_flann_Index_release(self.as_raw_Index()) }.into_result()
+		unsafe { sys::cv_flann_Index_release(self.as_raw_mut_Index()) }.into_result()
 	}
 	
 	fn get_distance(&self) -> Result<crate::flann::flann_distance_t> {
@@ -402,52 +413,54 @@ pub trait IndexTrait {
 }
 
 pub struct Index {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { Index }
 
 impl Drop for Index {
 	fn drop(&mut self) {
 		extern "C" { fn cv_Index_delete(instance: *mut c_void); }
-		unsafe { cv_Index_delete(self.as_raw_Index()) };
+		unsafe { cv_Index_delete(self.as_raw_mut_Index()) };
 	}
 }
 
 impl Index {
-	pub fn as_raw_Index(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_Index(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_Index(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Index {}
 
 impl crate::flann::IndexTrait for Index {
-	fn as_raw_Index(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Index(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Index(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Index {
 	pub fn default() -> Result<crate::flann::Index> {
-		unsafe { sys::cv_flann_Index_Index() }.into_result().map(|ptr| crate::flann::Index { ptr })
+		unsafe { sys::cv_flann_Index_Index() }.into_result().map(|ptr| unsafe { crate::flann::Index::from_raw(ptr) })
 	}
 	
 	/// ## C++ default parameters
 	/// * dist_type: cvflann::FLANN_DIST_L2
 	pub fn new(features: &dyn core::ToInputArray, params: &crate::flann::IndexParams, dist_type: crate::flann::flann_distance_t) -> Result<crate::flann::Index> {
 		input_array_arg!(features);
-		unsafe { sys::cv_flann_Index_Index_const__InputArrayX_const_IndexParamsX_flann_distance_t(features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type) }.into_result().map(|ptr| crate::flann::Index { ptr })
+		unsafe { sys::cv_flann_Index_Index_const__InputArrayX_const_IndexParamsX_flann_distance_t(features.as_raw__InputArray(), params.as_raw_IndexParams(), dist_type) }.into_result().map(|ptr| unsafe { crate::flann::Index::from_raw(ptr) })
 	}
 	
 }
 
 pub trait IndexParamsTrait {
-	fn as_raw_IndexParams(&self) -> *mut c_void;
+	fn as_raw_IndexParams(&self) -> *const c_void;
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void;
+
 	fn params(&mut self) -> *mut c_void {
-		unsafe { sys::cv_flann_IndexParams_params(self.as_raw_IndexParams()) }.into_result().expect("Infallible function failed: params")
+		unsafe { sys::cv_flann_IndexParams_params(self.as_raw_mut_IndexParams()) }.into_result().expect("Infallible function failed: params")
 	}
 	
 	fn set_params(&mut self, val: *mut c_void) -> () {
-		unsafe { sys::cv_flann_IndexParams_setParams_voidX(self.as_raw_IndexParams(), val) }.into_result().expect("Infallible function failed: set_params")
+		unsafe { sys::cv_flann_IndexParams_setParams_voidX(self.as_raw_mut_IndexParams(), val) }.into_result().expect("Infallible function failed: set_params")
 	}
 	
 	/// ## C++ default parameters
@@ -475,144 +488,150 @@ pub trait IndexParamsTrait {
 	fn set_string(&mut self, key: &str, value: &str) -> Result<()> {
 		string_arg!(key);
 		string_arg!(value);
-		unsafe { sys::cv_flann_IndexParams_setString_const_StringX_const_StringX(self.as_raw_IndexParams(), key.as_ptr(), value.as_ptr()) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setString_const_StringX_const_StringX(self.as_raw_mut_IndexParams(), key.as_ptr(), value.as_ptr()) }.into_result()
 	}
 	
 	fn set_int(&mut self, key: &str, value: i32) -> Result<()> {
 		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setInt_const_StringX_int(self.as_raw_IndexParams(), key.as_ptr(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setInt_const_StringX_int(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
 	}
 	
 	fn set_double(&mut self, key: &str, value: f64) -> Result<()> {
 		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setDouble_const_StringX_double(self.as_raw_IndexParams(), key.as_ptr(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setDouble_const_StringX_double(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
 	}
 	
 	fn set_float(&mut self, key: &str, value: f32) -> Result<()> {
 		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setFloat_const_StringX_float(self.as_raw_IndexParams(), key.as_ptr(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setFloat_const_StringX_float(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
 	}
 	
 	fn set_bool(&mut self, key: &str, value: bool) -> Result<()> {
 		string_arg!(key);
-		unsafe { sys::cv_flann_IndexParams_setBool_const_StringX_bool(self.as_raw_IndexParams(), key.as_ptr(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setBool_const_StringX_bool(self.as_raw_mut_IndexParams(), key.as_ptr(), value) }.into_result()
 	}
 	
 	fn set_algorithm(&mut self, value: i32) -> Result<()> {
-		unsafe { sys::cv_flann_IndexParams_setAlgorithm_int(self.as_raw_IndexParams(), value) }.into_result()
+		unsafe { sys::cv_flann_IndexParams_setAlgorithm_int(self.as_raw_mut_IndexParams(), value) }.into_result()
 	}
 	
-	fn get_all(&self, names: &mut types::VectorOfString, types: &mut types::VectorOfFlannIndexType, str_values: &mut types::VectorOfString, num_values: &mut types::VectorOff64) -> Result<()> {
-		unsafe { sys::cv_flann_IndexParams_getAll_const_vector_String_X_vector_FlannIndexType_X_vector_String_X_vector_double_X(self.as_raw_IndexParams(), names.as_raw_VectorOfString(), types.as_raw_VectorOfFlannIndexType(), str_values.as_raw_VectorOfString(), num_values.as_raw_VectorOff64()) }.into_result()
+	fn get_all(&self, names: &mut core::Vector::<String>, types: &mut core::Vector::<crate::flann::FlannIndexType>, str_values: &mut core::Vector::<String>, num_values: &mut core::Vector::<f64>) -> Result<()> {
+		unsafe { sys::cv_flann_IndexParams_getAll_const_vector_String_X_vector_FlannIndexType_X_vector_String_X_vector_double_X(self.as_raw_IndexParams(), names.as_raw_mut_VectorOfString(), types.as_raw_mut_VectorOfFlannIndexType(), str_values.as_raw_mut_VectorOfString(), num_values.as_raw_mut_VectorOff64()) }.into_result()
 	}
 	
 }
 
 pub struct IndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { IndexParams }
 
 impl Drop for IndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_IndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_IndexParams_delete(self.as_raw_IndexParams()) };
+		unsafe { cv_IndexParams_delete(self.as_raw_mut_IndexParams()) };
 	}
 }
 
 impl IndexParams {
-	pub fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for IndexParams {}
 
 impl crate::flann::IndexParamsTrait for IndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl IndexParams {
 	pub fn default() -> Result<crate::flann::IndexParams> {
-		unsafe { sys::cv_flann_IndexParams_IndexParams() }.into_result().map(|ptr| crate::flann::IndexParams { ptr })
+		unsafe { sys::cv_flann_IndexParams_IndexParams() }.into_result().map(|ptr| unsafe { crate::flann::IndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait KDTreeIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_KDTreeIndexParams(&self) -> *mut c_void;
+	fn as_raw_KDTreeIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_KDTreeIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct KDTreeIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { KDTreeIndexParams }
 
 impl Drop for KDTreeIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_KDTreeIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_KDTreeIndexParams_delete(self.as_raw_KDTreeIndexParams()) };
+		unsafe { cv_KDTreeIndexParams_delete(self.as_raw_mut_KDTreeIndexParams()) };
 	}
 }
 
 impl KDTreeIndexParams {
-	pub fn as_raw_KDTreeIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_KDTreeIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_KDTreeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for KDTreeIndexParams {}
 
 impl crate::flann::IndexParamsTrait for KDTreeIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::KDTreeIndexParamsTrait for KDTreeIndexParams {
-	fn as_raw_KDTreeIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_KDTreeIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_KDTreeIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl KDTreeIndexParams {
 	/// ## C++ default parameters
 	/// * trees: 4
 	pub fn new(trees: i32) -> Result<crate::flann::KDTreeIndexParams> {
-		unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams_int(trees) }.into_result().map(|ptr| crate::flann::KDTreeIndexParams { ptr })
+		unsafe { sys::cv_flann_KDTreeIndexParams_KDTreeIndexParams_int(trees) }.into_result().map(|ptr| unsafe { crate::flann::KDTreeIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait KMeansIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_KMeansIndexParams(&self) -> *mut c_void;
+	fn as_raw_KMeansIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct KMeansIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { KMeansIndexParams }
 
 impl Drop for KMeansIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_KMeansIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_KMeansIndexParams_delete(self.as_raw_KMeansIndexParams()) };
+		unsafe { cv_KMeansIndexParams_delete(self.as_raw_mut_KMeansIndexParams()) };
 	}
 }
 
 impl KMeansIndexParams {
-	pub fn as_raw_KMeansIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_KMeansIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for KMeansIndexParams {}
 
 impl crate::flann::IndexParamsTrait for KMeansIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::KMeansIndexParamsTrait for KMeansIndexParams {
-	fn as_raw_KMeansIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_KMeansIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_KMeansIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl KMeansIndexParams {
@@ -622,163 +641,175 @@ impl KMeansIndexParams {
 	/// * centers_init: cvflann::FLANN_CENTERS_RANDOM
 	/// * cb_index: 0.2f
 	pub fn new(branching: i32, iterations: i32, centers_init: crate::flann::flann_centers_init_t, cb_index: f32) -> Result<crate::flann::KMeansIndexParams> {
-		unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams_int_int_flann_centers_init_t_float(branching, iterations, centers_init, cb_index) }.into_result().map(|ptr| crate::flann::KMeansIndexParams { ptr })
+		unsafe { sys::cv_flann_KMeansIndexParams_KMeansIndexParams_int_int_flann_centers_init_t_float(branching, iterations, centers_init, cb_index) }.into_result().map(|ptr| unsafe { crate::flann::KMeansIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait LinearIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_LinearIndexParams(&self) -> *mut c_void;
+	fn as_raw_LinearIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct LinearIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { LinearIndexParams }
 
 impl Drop for LinearIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_LinearIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_LinearIndexParams_delete(self.as_raw_LinearIndexParams()) };
+		unsafe { cv_LinearIndexParams_delete(self.as_raw_mut_LinearIndexParams()) };
 	}
 }
 
 impl LinearIndexParams {
-	pub fn as_raw_LinearIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_LinearIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for LinearIndexParams {}
 
 impl crate::flann::IndexParamsTrait for LinearIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::LinearIndexParamsTrait for LinearIndexParams {
-	fn as_raw_LinearIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_LinearIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_LinearIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LinearIndexParams {
 	pub fn default() -> Result<crate::flann::LinearIndexParams> {
-		unsafe { sys::cv_flann_LinearIndexParams_LinearIndexParams() }.into_result().map(|ptr| crate::flann::LinearIndexParams { ptr })
+		unsafe { sys::cv_flann_LinearIndexParams_LinearIndexParams() }.into_result().map(|ptr| unsafe { crate::flann::LinearIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait LshIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_LshIndexParams(&self) -> *mut c_void;
+	fn as_raw_LshIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_LshIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct LshIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { LshIndexParams }
 
 impl Drop for LshIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_LshIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_LshIndexParams_delete(self.as_raw_LshIndexParams()) };
+		unsafe { cv_LshIndexParams_delete(self.as_raw_mut_LshIndexParams()) };
 	}
 }
 
 impl LshIndexParams {
-	pub fn as_raw_LshIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_LshIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_LshIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for LshIndexParams {}
 
 impl crate::flann::IndexParamsTrait for LshIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::LshIndexParamsTrait for LshIndexParams {
-	fn as_raw_LshIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_LshIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_LshIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl LshIndexParams {
 	pub fn new(table_number: i32, key_size: i32, multi_probe_level: i32) -> Result<crate::flann::LshIndexParams> {
-		unsafe { sys::cv_flann_LshIndexParams_LshIndexParams_int_int_int(table_number, key_size, multi_probe_level) }.into_result().map(|ptr| crate::flann::LshIndexParams { ptr })
+		unsafe { sys::cv_flann_LshIndexParams_LshIndexParams_int_int_int(table_number, key_size, multi_probe_level) }.into_result().map(|ptr| unsafe { crate::flann::LshIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait SavedIndexParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_SavedIndexParams(&self) -> *mut c_void;
+	fn as_raw_SavedIndexParams(&self) -> *const c_void;
+	fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct SavedIndexParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { SavedIndexParams }
 
 impl Drop for SavedIndexParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_SavedIndexParams_delete(instance: *mut c_void); }
-		unsafe { cv_SavedIndexParams_delete(self.as_raw_SavedIndexParams()) };
+		unsafe { cv_SavedIndexParams_delete(self.as_raw_mut_SavedIndexParams()) };
 	}
 }
 
 impl SavedIndexParams {
-	pub fn as_raw_SavedIndexParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_SavedIndexParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for SavedIndexParams {}
 
 impl crate::flann::IndexParamsTrait for SavedIndexParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::SavedIndexParamsTrait for SavedIndexParams {
-	fn as_raw_SavedIndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_SavedIndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_SavedIndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl SavedIndexParams {
 	pub fn new(filename: &str) -> Result<crate::flann::SavedIndexParams> {
 		string_arg!(filename);
-		unsafe { sys::cv_flann_SavedIndexParams_SavedIndexParams_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| crate::flann::SavedIndexParams { ptr })
+		unsafe { sys::cv_flann_SavedIndexParams_SavedIndexParams_const_StringX(filename.as_ptr()) }.into_result().map(|ptr| unsafe { crate::flann::SavedIndexParams::from_raw(ptr) })
 	}
 	
 }
 
 pub trait SearchParamsTrait: crate::flann::IndexParamsTrait {
-	fn as_raw_SearchParams(&self) -> *mut c_void;
+	fn as_raw_SearchParams(&self) -> *const c_void;
+	fn as_raw_mut_SearchParams(&mut self) -> *mut c_void;
+
 }
 
 pub struct SearchParams {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { SearchParams }
 
 impl Drop for SearchParams {
 	fn drop(&mut self) {
 		extern "C" { fn cv_SearchParams_delete(instance: *mut c_void); }
-		unsafe { cv_SearchParams_delete(self.as_raw_SearchParams()) };
+		unsafe { cv_SearchParams_delete(self.as_raw_mut_SearchParams()) };
 	}
 }
 
 impl SearchParams {
-	pub fn as_raw_SearchParams(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_SearchParams(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_SearchParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for SearchParams {}
 
 impl crate::flann::IndexParamsTrait for SearchParams {
-	fn as_raw_IndexParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_IndexParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_IndexParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl crate::flann::SearchParamsTrait for SearchParams {
-	fn as_raw_SearchParams(&self) -> *mut c_void { self.ptr }
+	fn as_raw_SearchParams(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_SearchParams(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl SearchParams {
@@ -787,7 +818,7 @@ impl SearchParams {
 	/// * eps: 0
 	/// * sorted: true
 	pub fn new(checks: i32, eps: f32, sorted: bool) -> Result<crate::flann::SearchParams> {
-		unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool(checks, eps, sorted) }.into_result().map(|ptr| crate::flann::SearchParams { ptr })
+		unsafe { sys::cv_flann_SearchParams_SearchParams_int_float_bool(checks, eps, sorted) }.into_result().map(|ptr| unsafe { crate::flann::SearchParams::from_raw(ptr) })
 	}
 	
 }

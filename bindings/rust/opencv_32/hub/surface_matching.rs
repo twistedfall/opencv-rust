@@ -366,8 +366,8 @@ pub enum ICP_ICP_SAMPLING_TYPE {
 }
 
 pub type key_type = u32;
-pub type Pose3DPtr = types::PtrOfPose3D;
-pub type PoseCluster3DPtr = types::PtrOfPoseCluster3D;
+pub type Pose3DPtr = core::Ptr::<crate::surface_matching::Pose3D>;
+pub type PoseCluster3DPtr = core::Ptr::<crate::surface_matching::PoseCluster3D>;
 /// This class implements a very efficient and robust variant of the iterative closest point (ICP) algorithm.
 /// The task is to register a 3D model (or point cloud) against a set of noisy target data. The variants are put together
 /// by myself after certain tests. The task is to be able to match partial, noisy point clouds in cluttered scenes, quickly.
@@ -385,7 +385,9 @@ pub type PoseCluster3DPtr = types::PtrOfPoseCluster3D;
 /// 5. Linearization of Point-to-Plane metric by Kok Lim Low:
 /// https://www.comp.nus.edu.sg/~lowkl/publications/lowk_point-to-plane_icp_techrep.pdf
 pub trait ICPTrait {
-	fn as_raw_ICP(&self) -> *mut c_void;
+	fn as_raw_ICP(&self) -> *const c_void;
+	fn as_raw_mut_ICP(&mut self) -> *mut c_void;
+
 	/// \brief Perform registration
 	/// 
 	/// ## Parameters
@@ -398,7 +400,7 @@ pub trait ICPTrait {
 	/// 
 	/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
 	fn register_model_to_scene(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, residual: &mut f64, pose: &mut [f64; 16]) -> Result<i32> {
-		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_doubleX_double_X__16_(self.as_raw_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_doubleX_double_X__16_(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), residual, pose) }.into_result()
 	}
 	
 	/// \brief Perform registration with multiple initial poses
@@ -411,8 +413,8 @@ pub trait ICPTrait {
 	/// \return On successful termination, the function returns 0.
 	/// 
 	/// \details It is assumed that the model is registered on the scene. Scene remains static, while the model transforms. The output poses transform the models onto the scene. Because of the point to plane minimization, the scene is expected to have the normals available. Expected to have the normals (Nx6).
-	fn register_model_to_scene_vec(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut types::VectorOfPose3DPtr) -> Result<i32> {
-		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X(self.as_raw_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_VectorOfPose3DPtr()) }.into_result()
+	fn register_model_to_scene_vec(&mut self, src_pc: &core::Mat, dst_pc: &core::Mat, poses: &mut core::Vector::<crate::surface_matching::Pose3DPtr>) -> Result<i32> {
+		unsafe { sys::cv_ppf_match_3d_ICP_registerModelToScene_const_MatX_const_MatX_vector_Pose3DPtr_X(self.as_raw_mut_ICP(), src_pc.as_raw_Mat(), dst_pc.as_raw_Mat(), poses.as_raw_mut_VectorOfPose3DPtr()) }.into_result()
 	}
 	
 }
@@ -434,33 +436,33 @@ pub trait ICPTrait {
 /// 5. Linearization of Point-to-Plane metric by Kok Lim Low:
 /// https://www.comp.nus.edu.sg/~lowkl/publications/lowk_point-to-plane_icp_techrep.pdf
 pub struct ICP {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { ICP }
 
 impl Drop for ICP {
 	fn drop(&mut self) {
 		extern "C" { fn cv_ICP_delete(instance: *mut c_void); }
-		unsafe { cv_ICP_delete(self.as_raw_ICP()) };
+		unsafe { cv_ICP_delete(self.as_raw_mut_ICP()) };
 	}
 }
 
 impl ICP {
-	pub fn as_raw_ICP(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_ICP(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_ICP(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for ICP {}
 
 impl crate::surface_matching::ICPTrait for ICP {
-	fn as_raw_ICP(&self) -> *mut c_void { self.ptr }
+	fn as_raw_ICP(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_ICP(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl ICP {
 	pub fn default() -> Result<crate::surface_matching::ICP> {
-		unsafe { sys::cv_ppf_match_3d_ICP_ICP() }.into_result().map(|ptr| crate::surface_matching::ICP { ptr })
+		unsafe { sys::cv_ppf_match_3d_ICP_ICP() }.into_result().map(|ptr| unsafe { crate::surface_matching::ICP::from_raw(ptr) })
 	}
 	
 	/// \brief ICP constructor with default arguments.
@@ -485,7 +487,7 @@ impl ICP {
 	/// * sample_type: ICP_SAMPLING_TYPE_UNIFORM
 	/// * num_max_corr: 1
 	pub fn new(iterations: i32, tolerence: f32, rejection_scale: f32, num_levels: i32, sample_type: crate::surface_matching::ICP_ICP_SAMPLING_TYPE, num_max_corr: i32) -> Result<crate::surface_matching::ICP> {
-		unsafe { sys::cv_ppf_match_3d_ICP_ICP_int_float_float_int_ICP_SAMPLING_TYPE_int(iterations, tolerence, rejection_scale, num_levels, sample_type, num_max_corr) }.into_result().map(|ptr| crate::surface_matching::ICP { ptr })
+		unsafe { sys::cv_ppf_match_3d_ICP_ICP_int_float_float_int_ICP_SAMPLING_TYPE_int(iterations, tolerence, rejection_scale, num_levels, sample_type, num_max_corr) }.into_result().map(|ptr| unsafe { crate::surface_matching::ICP::from_raw(ptr) })
 	}
 	
 }
@@ -502,7 +504,9 @@ impl ICP {
 /// ```
 /// 
 pub trait PPF3DDetectorTrait {
-	fn as_raw_PPF3DDetector(&self) -> *mut c_void;
+	fn as_raw_PPF3DDetector(&self) -> *const c_void;
+	fn as_raw_mut_PPF3DDetector(&mut self) -> *mut c_void;
+
 	/// Set the parameters for the search
 	/// ## Parameters
 	/// * positionThreshold: Position threshold controlling the similarity of translations. Depends on the units of calibration/model.
@@ -514,7 +518,7 @@ pub trait PPF3DDetectorTrait {
 	/// * rotation_threshold: -1
 	/// * use_weighted_clustering: false
 	fn set_search_params(&mut self, position_threshold: f64, rotation_threshold: f64, use_weighted_clustering: bool) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_setSearchParams_double_double_bool(self.as_raw_PPF3DDetector(), position_threshold, rotation_threshold, use_weighted_clustering) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_setSearchParams_double_double_bool(self.as_raw_mut_PPF3DDetector(), position_threshold, rotation_threshold, use_weighted_clustering) }.into_result()
 	}
 	
 	/// \brief Trains a new model.
@@ -524,7 +528,7 @@ pub trait PPF3DDetectorTrait {
 	/// 
 	/// \details Uses the parameters set in the constructor to downsample and learn a new model. When the model is learnt, the instance gets ready for calling "match".
 	fn train_model(&mut self, model: &core::Mat) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatX(self.as_raw_PPF3DDetector(), model.as_raw_Mat()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_trainModel_const_MatX(self.as_raw_mut_PPF3DDetector(), model.as_raw_Mat()) }.into_result()
 	}
 	
 	/// \brief Matches a trained model across a provided scene.
@@ -538,16 +542,16 @@ pub trait PPF3DDetectorTrait {
 	/// ## C++ default parameters
 	/// * relative_scene_sample_step: 1.0/5.0
 	/// * relative_scene_distance: 0.03
-	fn match_(&mut self, scene: &core::Mat, results: &mut types::VectorOfPose3DPtr, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatX_vector_Pose3DPtr_X_double_double(self.as_raw_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance) }.into_result()
+	fn match_(&mut self, scene: &core::Mat, results: &mut core::Vector::<crate::surface_matching::Pose3DPtr>, relative_scene_sample_step: f64, relative_scene_distance: f64) -> Result<()> {
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_match_const_MatX_vector_Pose3DPtr_X_double_double(self.as_raw_mut_PPF3DDetector(), scene.as_raw_Mat(), results.as_raw_mut_VectorOfPose3DPtr(), relative_scene_sample_step, relative_scene_distance) }.into_result()
 	}
 	
 	fn read(&mut self, fn_: &core::FileNode) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeX(self.as_raw_PPF3DDetector(), fn_.as_raw_FileNode()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_read_const_FileNodeX(self.as_raw_mut_PPF3DDetector(), fn_.as_raw_FileNode()) }.into_result()
 	}
 	
 	fn write(&self, fs: &mut core::FileStorage) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageX(self.as_raw_PPF3DDetector(), fs.as_raw_FileStorage()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_write_const_FileStorageX(self.as_raw_PPF3DDetector(), fs.as_raw_mut_FileStorage()) }.into_result()
 	}
 	
 }
@@ -564,34 +568,34 @@ pub trait PPF3DDetectorTrait {
 /// ```
 /// 
 pub struct PPF3DDetector {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { PPF3DDetector }
 
 impl Drop for PPF3DDetector {
 	fn drop(&mut self) {
 		extern "C" { fn cv_PPF3DDetector_delete(instance: *mut c_void); }
-		unsafe { cv_PPF3DDetector_delete(self.as_raw_PPF3DDetector()) };
+		unsafe { cv_PPF3DDetector_delete(self.as_raw_mut_PPF3DDetector()) };
 	}
 }
 
 impl PPF3DDetector {
-	pub fn as_raw_PPF3DDetector(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_PPF3DDetector(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_PPF3DDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for PPF3DDetector {}
 
 impl crate::surface_matching::PPF3DDetectorTrait for PPF3DDetector {
-	fn as_raw_PPF3DDetector(&self) -> *mut c_void { self.ptr }
+	fn as_raw_PPF3DDetector(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_PPF3DDetector(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PPF3DDetector {
 	/// \brief Empty constructor. Sets default arguments
 	pub fn default() -> Result<crate::surface_matching::PPF3DDetector> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector() }.into_result().map(|ptr| crate::surface_matching::PPF3DDetector { ptr })
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector() }.into_result().map(|ptr| unsafe { crate::surface_matching::PPF3DDetector::from_raw(ptr) })
 	}
 	
 	/// Constructor with arguments
@@ -604,7 +608,7 @@ impl PPF3DDetector {
 	/// * relative_distance_step: 0.05
 	/// * num_angles: 30
 	pub fn new(relative_sampling_step: f64, relative_distance_step: f64, num_angles: f64) -> Result<crate::surface_matching::PPF3DDetector> {
-		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_double_double_double(relative_sampling_step, relative_distance_step, num_angles) }.into_result().map(|ptr| crate::surface_matching::PPF3DDetector { ptr })
+		unsafe { sys::cv_ppf_match_3d_PPF3DDetector_PPF3DDetector_double_double_double(relative_sampling_step, relative_distance_step, num_angles) }.into_result().map(|ptr| unsafe { crate::surface_matching::PPF3DDetector::from_raw(ptr) })
 	}
 	
 }
@@ -613,13 +617,15 @@ impl PPF3DDetector {
 /// the quaternions and the matrix forms. It supports IO functionality together with
 /// various helper methods to work with poses
 pub trait Pose3DTrait {
-	fn as_raw_Pose3D(&self) -> *mut c_void;
+	fn as_raw_Pose3D(&self) -> *const c_void;
+	fn as_raw_mut_Pose3D(&mut self) -> *mut c_void;
+
 	fn alpha(&self) -> f64 {
 		unsafe { sys::cv_ppf_match_3d_Pose3D_alpha_const(self.as_raw_Pose3D()) }.into_result().expect("Infallible function failed: alpha")
 	}
 	
 	fn set_alpha(&mut self, val: f64) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setAlpha_double(self.as_raw_Pose3D(), val) }.into_result().expect("Infallible function failed: set_alpha")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setAlpha_double(self.as_raw_mut_Pose3D(), val) }.into_result().expect("Infallible function failed: set_alpha")
 	}
 	
 	fn residual(&self) -> f64 {
@@ -627,7 +633,7 @@ pub trait Pose3DTrait {
 	}
 	
 	fn set_residual(&mut self, val: f64) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setResidual_double(self.as_raw_Pose3D(), val) }.into_result().expect("Infallible function failed: set_residual")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setResidual_double(self.as_raw_mut_Pose3D(), val) }.into_result().expect("Infallible function failed: set_residual")
 	}
 	
 	fn model_index(&self) -> u32 {
@@ -635,7 +641,7 @@ pub trait Pose3DTrait {
 	}
 	
 	fn set_model_index(&mut self, val: u32) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setModelIndex_unsigned_int(self.as_raw_Pose3D(), val) }.into_result().expect("Infallible function failed: set_model_index")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setModelIndex_unsigned_int(self.as_raw_mut_Pose3D(), val) }.into_result().expect("Infallible function failed: set_model_index")
 	}
 	
 	fn num_votes(&self) -> u32 {
@@ -643,11 +649,11 @@ pub trait Pose3DTrait {
 	}
 	
 	fn set_num_votes(&mut self, val: u32) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setNumVotes_unsigned_int(self.as_raw_Pose3D(), val) }.into_result().expect("Infallible function failed: set_num_votes")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setNumVotes_unsigned_int(self.as_raw_mut_Pose3D(), val) }.into_result().expect("Infallible function failed: set_num_votes")
 	}
 	
 	fn pose(&mut self) -> &mut [f64; 16] {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_pose(self.as_raw_Pose3D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: pose")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_pose(self.as_raw_mut_Pose3D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: pose")
 	}
 	
 	fn angle(&self) -> f64 {
@@ -655,55 +661,55 @@ pub trait Pose3DTrait {
 	}
 	
 	fn set_angle(&mut self, val: f64) -> () {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_setAngle_double(self.as_raw_Pose3D(), val) }.into_result().expect("Infallible function failed: set_angle")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_setAngle_double(self.as_raw_mut_Pose3D(), val) }.into_result().expect("Infallible function failed: set_angle")
 	}
 	
 	fn t(&mut self) -> &mut [f64; 3] {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_t(self.as_raw_Pose3D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: t")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_t(self.as_raw_mut_Pose3D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: t")
 	}
 	
 	fn q(&mut self) -> &mut [f64; 4] {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_q(self.as_raw_Pose3D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: q")
+		unsafe { sys::cv_ppf_match_3d_Pose3D_q(self.as_raw_mut_Pose3D()) }.into_result().and_then(|x| unsafe { x.as_mut() }.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))).expect("Infallible function failed: q")
 	}
 	
 	/// \brief Updates the pose with the new one
 	/// \param [in] NewPose New pose to overwrite
 	fn update_pose(&mut self, new_pose: &mut [f64; 16]) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_double_X__16_(self.as_raw_Pose3D(), new_pose) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_double_X__16_(self.as_raw_mut_Pose3D(), new_pose) }.into_result()
 	}
 	
 	/// \brief Updates the pose with the new one
 	fn update_pose_1(&mut self, new_r: &mut [f64; 9], new_t: &mut [f64; 3]) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_double_X__9__double_X__3_(self.as_raw_Pose3D(), new_r, new_t) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePose_double_X__9__double_X__3_(self.as_raw_mut_Pose3D(), new_r, new_t) }.into_result()
 	}
 	
 	/// \brief Updates the pose with the new one, but this time using quaternions to represent rotation
 	fn update_pose_quat(&mut self, q: &mut [f64; 4], new_t: &mut [f64; 3]) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePoseQuat_double_X__4__double_X__3_(self.as_raw_Pose3D(), q, new_t) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_updatePoseQuat_double_X__4__double_X__3_(self.as_raw_mut_Pose3D(), q, new_t) }.into_result()
 	}
 	
 	/// \brief Left multiplies the existing pose in order to update the transformation
 	/// \param [in] IncrementalPose New pose to apply
 	fn append_pose(&mut self, incremental_pose: &mut [f64; 16]) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_appendPose_double_X__16_(self.as_raw_Pose3D(), incremental_pose) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_appendPose_double_X__16_(self.as_raw_mut_Pose3D(), incremental_pose) }.into_result()
 	}
 	
 	fn print_pose(&mut self) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_printPose(self.as_raw_Pose3D()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_printPose(self.as_raw_mut_Pose3D()) }.into_result()
 	}
 	
-	fn clone(&mut self) -> Result<types::PtrOfPose3D> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_clone(self.as_raw_Pose3D()) }.into_result().map(|ptr| types::PtrOfPose3D { ptr })
+	fn clone(&mut self) -> Result<core::Ptr::<crate::surface_matching::Pose3D>> {
+		unsafe { sys::cv_ppf_match_3d_Pose3D_clone(self.as_raw_mut_Pose3D()) }.into_result().map(|ptr| unsafe { core::Ptr::<crate::surface_matching::Pose3D>::from_raw(ptr) })
 	}
 	
 	fn write_pose(&mut self, file_name: &str) -> Result<i32> {
 		string_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringX(self.as_raw_Pose3D(), file_name.as_ptr()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_writePose_const_stringX(self.as_raw_mut_Pose3D(), file_name.as_ptr()) }.into_result()
 	}
 	
 	fn read_pose(&mut self, file_name: &str) -> Result<i32> {
 		string_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringX(self.as_raw_Pose3D(), file_name.as_ptr()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_Pose3D_readPose_const_stringX(self.as_raw_mut_Pose3D(), file_name.as_ptr()) }.into_result()
 	}
 	
 }
@@ -712,40 +718,40 @@ pub trait Pose3DTrait {
 /// the quaternions and the matrix forms. It supports IO functionality together with
 /// various helper methods to work with poses
 pub struct Pose3D {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { Pose3D }
 
 impl Drop for Pose3D {
 	fn drop(&mut self) {
 		extern "C" { fn cv_Pose3D_delete(instance: *mut c_void); }
-		unsafe { cv_Pose3D_delete(self.as_raw_Pose3D()) };
+		unsafe { cv_Pose3D_delete(self.as_raw_mut_Pose3D()) };
 	}
 }
 
 impl Pose3D {
-	pub fn as_raw_Pose3D(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_Pose3D(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for Pose3D {}
 
 impl crate::surface_matching::Pose3DTrait for Pose3D {
-	fn as_raw_Pose3D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_Pose3D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_Pose3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl Pose3D {
 	pub fn default() -> Result<crate::surface_matching::Pose3D> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D() }.into_result().map(|ptr| crate::surface_matching::Pose3D { ptr })
+		unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D() }.into_result().map(|ptr| unsafe { crate::surface_matching::Pose3D::from_raw(ptr) })
 	}
 	
 	/// ## C++ default parameters
 	/// * model_index: 0
 	/// * num_votes: 0
 	pub fn new(alpha: f64, model_index: u32, num_votes: u32) -> Result<crate::surface_matching::Pose3D> {
-		unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double_unsigned_int_unsigned_int(alpha, model_index, num_votes) }.into_result().map(|ptr| crate::surface_matching::Pose3D { ptr })
+		unsafe { sys::cv_ppf_match_3d_Pose3D_Pose3D_double_unsigned_int_unsigned_int(alpha, model_index, num_votes) }.into_result().map(|ptr| unsafe { crate::surface_matching::Pose3D::from_raw(ptr) })
 	}
 	
 }
@@ -754,13 +760,15 @@ impl Pose3D {
 /// pose clusters occur. This class is a general container for such groups of poses. It is possible to store,
 /// load and perform IO on these poses.
 pub trait PoseCluster3DTrait {
-	fn as_raw_PoseCluster3D(&self) -> *mut c_void;
-	fn pose_list(&mut self) -> types::VectorOfPose3DPtr {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_poseList(self.as_raw_PoseCluster3D()) }.into_result().map(|ptr| types::VectorOfPose3DPtr { ptr }).expect("Infallible function failed: pose_list")
+	fn as_raw_PoseCluster3D(&self) -> *const c_void;
+	fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void;
+
+	fn pose_list(&mut self) -> core::Vector::<crate::surface_matching::Pose3DPtr> {
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_poseList(self.as_raw_mut_PoseCluster3D()) }.into_result().map(|ptr| unsafe { core::Vector::<crate::surface_matching::Pose3DPtr>::from_raw(ptr) }).expect("Infallible function failed: pose_list")
 	}
 	
-	fn set_pose_list(&mut self, val: types::VectorOfPose3DPtr) -> () {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setPoseList_vector_Pose3DPtr_(self.as_raw_PoseCluster3D(), val.as_raw_VectorOfPose3DPtr()) }.into_result().expect("Infallible function failed: set_pose_list")
+	fn set_pose_list(&mut self, mut val: core::Vector::<crate::surface_matching::Pose3DPtr>) -> () {
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setPoseList_vector_Pose3DPtr_(self.as_raw_mut_PoseCluster3D(), val.as_raw_mut_VectorOfPose3DPtr()) }.into_result().expect("Infallible function failed: set_pose_list")
 	}
 	
 	fn num_votes(&self) -> i32 {
@@ -768,7 +776,7 @@ pub trait PoseCluster3DTrait {
 	}
 	
 	fn set_num_votes(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setNumVotes_int(self.as_raw_PoseCluster3D(), val) }.into_result().expect("Infallible function failed: set_num_votes")
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setNumVotes_int(self.as_raw_mut_PoseCluster3D(), val) }.into_result().expect("Infallible function failed: set_num_votes")
 	}
 	
 	fn id(&self) -> i32 {
@@ -776,24 +784,24 @@ pub trait PoseCluster3DTrait {
 	}
 	
 	fn set_id(&mut self, val: i32) -> () {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setId_int(self.as_raw_PoseCluster3D(), val) }.into_result().expect("Infallible function failed: set_id")
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_setId_int(self.as_raw_mut_PoseCluster3D(), val) }.into_result().expect("Infallible function failed: set_id")
 	}
 	
 	/// \brief Adds a new pose to the cluster. The pose should be "close" to the mean poses
 	/// in order to preserve the consistency
 	/// \param [in] newPose Pose to add to the cluster
-	fn add_pose(&mut self, new_pose: crate::surface_matching::Pose3DPtr) -> Result<()> {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_addPose_Pose3DPtr(self.as_raw_PoseCluster3D(), new_pose.as_raw_PtrOfPose3D()) }.into_result()
+	fn add_pose(&mut self, mut new_pose: crate::surface_matching::Pose3DPtr) -> Result<()> {
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_addPose_Pose3DPtr(self.as_raw_mut_PoseCluster3D(), new_pose.as_raw_mut_PtrOfPose3D()) }.into_result()
 	}
 	
 	fn write_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		string_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringX(self.as_raw_PoseCluster3D(), file_name.as_ptr()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_writePoseCluster_const_stringX(self.as_raw_mut_PoseCluster3D(), file_name.as_ptr()) }.into_result()
 	}
 	
 	fn read_pose_cluster(&mut self, file_name: &str) -> Result<i32> {
 		string_arg!(file_name);
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringX(self.as_raw_PoseCluster3D(), file_name.as_ptr()) }.into_result()
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_readPoseCluster_const_stringX(self.as_raw_mut_PoseCluster3D(), file_name.as_ptr()) }.into_result()
 	}
 	
 }
@@ -802,41 +810,41 @@ pub trait PoseCluster3DTrait {
 /// pose clusters occur. This class is a general container for such groups of poses. It is possible to store,
 /// load and perform IO on these poses.
 pub struct PoseCluster3D {
-	pub(crate) ptr: *mut c_void
+	ptr: *mut c_void
 }
+
+boxed_ptr! { PoseCluster3D }
 
 impl Drop for PoseCluster3D {
 	fn drop(&mut self) {
 		extern "C" { fn cv_PoseCluster3D_delete(instance: *mut c_void); }
-		unsafe { cv_PoseCluster3D_delete(self.as_raw_PoseCluster3D()) };
+		unsafe { cv_PoseCluster3D_delete(self.as_raw_mut_PoseCluster3D()) };
 	}
 }
 
 impl PoseCluster3D {
-	pub fn as_raw_PoseCluster3D(&self) -> *mut c_void { self.ptr }
-
-	pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
-		Self { ptr }
-	}
+	pub fn as_raw_PoseCluster3D(&self) -> *const c_void { self.as_raw() }
+	pub fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 unsafe impl Send for PoseCluster3D {}
 
 impl crate::surface_matching::PoseCluster3DTrait for PoseCluster3D {
-	fn as_raw_PoseCluster3D(&self) -> *mut c_void { self.ptr }
+	fn as_raw_PoseCluster3D(&self) -> *const c_void { self.as_raw() }
+	fn as_raw_mut_PoseCluster3D(&mut self) -> *mut c_void { self.as_raw_mut() }
 }
 
 impl PoseCluster3D {
 	pub fn default() -> Result<crate::surface_matching::PoseCluster3D> {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D() }.into_result().map(|ptr| crate::surface_matching::PoseCluster3D { ptr })
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D() }.into_result().map(|ptr| unsafe { crate::surface_matching::PoseCluster3D::from_raw(ptr) })
 	}
 	
-	pub fn new(new_pose: crate::surface_matching::Pose3DPtr) -> Result<crate::surface_matching::PoseCluster3D> {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr(new_pose.as_raw_PtrOfPose3D()) }.into_result().map(|ptr| crate::surface_matching::PoseCluster3D { ptr })
+	pub fn new(mut new_pose: crate::surface_matching::Pose3DPtr) -> Result<crate::surface_matching::PoseCluster3D> {
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr(new_pose.as_raw_mut_PtrOfPose3D()) }.into_result().map(|ptr| unsafe { crate::surface_matching::PoseCluster3D::from_raw(ptr) })
 	}
 	
-	pub fn new_1(new_pose: crate::surface_matching::Pose3DPtr, new_id: i32) -> Result<crate::surface_matching::PoseCluster3D> {
-		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr_int(new_pose.as_raw_PtrOfPose3D(), new_id) }.into_result().map(|ptr| crate::surface_matching::PoseCluster3D { ptr })
+	pub fn new_1(mut new_pose: crate::surface_matching::Pose3DPtr, new_id: i32) -> Result<crate::surface_matching::PoseCluster3D> {
+		unsafe { sys::cv_ppf_match_3d_PoseCluster3D_PoseCluster3D_Pose3DPtr_int(new_pose.as_raw_mut_PtrOfPose3D(), new_id) }.into_result().map(|ptr| unsafe { crate::surface_matching::PoseCluster3D::from_raw(ptr) })
 	}
 	
 }

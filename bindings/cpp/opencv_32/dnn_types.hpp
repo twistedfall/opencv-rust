@@ -273,23 +273,10 @@ extern "C" {
 	}
 
 	Result<cv::dnn::Blob*> cv_VectorOfBlob_get(const std::vector<cv::dnn::Blob>* instance, size_t index) {
-		try {
-			return Ok<cv::dnn::Blob*>(new cv::dnn::Blob(instance->at(index)));
-		} VEC_CATCH(Result<cv::dnn::Blob*>)
-	}
-
-	Result<cv::dnn::Blob*> cv_VectorOfBlob_get_unchecked(const std::vector<cv::dnn::Blob>* instance, size_t index) {
 		return Ok<cv::dnn::Blob*>(new cv::dnn::Blob((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfBlob_set(std::vector<cv::dnn::Blob>* instance, size_t index, cv::dnn::Blob* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfBlob_set_unchecked(std::vector<cv::dnn::Blob>* instance, size_t index, cv::dnn::Blob* val) {
+	void cv_VectorOfBlob_set(std::vector<cv::dnn::Blob>* instance, size_t index, cv::dnn::Blob* val) {
 		(*instance)[index] = *val;
 	}
 
@@ -346,23 +333,10 @@ extern "C" {
 	}
 
 	Result<cv::dnn::Net::LayerId*> cv_VectorOfNet_LayerId_get(const std::vector<cv::dnn::Net::LayerId>* instance, size_t index) {
-		try {
-			return Ok<cv::dnn::Net::LayerId*>(new cv::dnn::Net::LayerId(instance->at(index)));
-		} VEC_CATCH(Result<cv::dnn::Net::LayerId*>)
-	}
-
-	Result<cv::dnn::Net::LayerId*> cv_VectorOfNet_LayerId_get_unchecked(const std::vector<cv::dnn::Net::LayerId>* instance, size_t index) {
 		return Ok<cv::dnn::Net::LayerId*>(new cv::dnn::Net::LayerId((*instance)[index]));
 	}
 
-	Result_void cv_VectorOfNet_LayerId_set(std::vector<cv::dnn::Net::LayerId>* instance, size_t index, cv::dnn::Net::LayerId* val) {
-		try {
-			instance->at(index) = *val;
-			return Ok();
-		} VEC_CATCH(Result_void)
-	}
-
-	void cv_VectorOfNet_LayerId_set_unchecked(std::vector<cv::dnn::Net::LayerId>* instance, size_t index, cv::dnn::Net::LayerId* val) {
+	void cv_VectorOfNet_LayerId_set(std::vector<cv::dnn::Net::LayerId>* instance, size_t index, cv::dnn::Net::LayerId* val) {
 		(*instance)[index] = *val;
 	}
 

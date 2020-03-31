@@ -345,7 +345,7 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_cornerSubPix_const__InputArrayX_const__InputOutputArrayX_Size_Size_TermCriteria(const cv::_InputArray* image, const cv::_InputOutputArray* corners, const cv::Size* winSize, const cv::Size* zeroZone, cv::TermCriteria* criteria) {
+	Result_void cv_cornerSubPix_const__InputArrayX_const__InputOutputArrayX_Size_Size_TermCriteria(const cv::_InputArray* image, const cv::_InputOutputArray* corners, const cv::Size* winSize, const cv::Size* zeroZone, const cv::TermCriteria* criteria) {
 		try {
 			cv::cornerSubPix(*image, *corners, *winSize, *zeroZone, *criteria);
 			return Ok();
@@ -842,7 +842,7 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_pyrMeanShiftFiltering_const__InputArrayX_const__OutputArrayX_double_double_int_TermCriteria(const cv::_InputArray* src, const cv::_OutputArray* dst, double sp, double sr, int maxLevel, cv::TermCriteria* termcrit) {
+	Result_void cv_pyrMeanShiftFiltering_const__InputArrayX_const__OutputArrayX_double_double_int_TermCriteria(const cv::_InputArray* src, const cv::_OutputArray* dst, double sp, double sr, int maxLevel, const cv::TermCriteria* termcrit) {
 		try {
 			cv::pyrMeanShiftFiltering(*src, *dst, sp, sr, maxLevel, *termcrit);
 			return Ok();
@@ -1431,6 +1431,13 @@ extern "C" {
 			cv::LineIterator* ret = new cv::LineIterator(*img, *pt1, *pt2, connectivity, leftToRight);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::LineIterator*>)
+	}
+	
+	Result<unsigned char*> cv_LineIterator_operatorX(cv::LineIterator* instance) {
+		try {
+			unsigned char* ret = instance->operator*();
+			return Ok(ret);
+		} OCVRS_CATCH(Result<unsigned char*>)
 	}
 	
 	Result<cv::Point> cv_LineIterator_pos_const(const cv::LineIterator* instance) {

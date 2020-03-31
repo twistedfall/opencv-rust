@@ -76,14 +76,6 @@ extern "C" cv::BRISK* cv_PtrOfBRISK_get_inner_ptr(cv::Ptr<cv::BRISK>* instance) 
 	return instance->get();
 }
 
-extern "C" void cv_PtrOfDescriptorExtractor_delete(cv::Ptr<cv::Feature2D>* instance) {
-	delete instance;
-}
-
-extern "C" cv::DescriptorExtractor* cv_PtrOfDescriptorExtractor_get_inner_ptr(cv::Ptr<cv::Feature2D>* instance) {
-	return instance->get();
-}
-
 extern "C" void cv_PtrOfDescriptorMatcher_delete(cv::Ptr<cv::DescriptorMatcher>* instance) {
 	delete instance;
 }
@@ -100,11 +92,11 @@ extern "C" cv::FastFeatureDetector* cv_PtrOfFastFeatureDetector_get_inner_ptr(cv
 	return instance->get();
 }
 
-extern "C" void cv_PtrOfFeatureDetector_delete(cv::Ptr<cv::Feature2D>* instance) {
+extern "C" void cv_PtrOfFeature2D_delete(cv::Ptr<cv::Feature2D>* instance) {
 	delete instance;
 }
 
-extern "C" cv::FeatureDetector* cv_PtrOfFeatureDetector_get_inner_ptr(cv::Ptr<cv::Feature2D>* instance) {
+extern "C" cv::Feature2D* cv_PtrOfFeature2D_get_inner_ptr(cv::Ptr<cv::Feature2D>* instance) {
 	return instance->get();
 }
 

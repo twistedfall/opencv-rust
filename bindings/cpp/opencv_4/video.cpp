@@ -3,7 +3,7 @@
 #include "video_types.hpp"
 
 extern "C" {
-	Result<cv::RotatedRect*> cv_CamShift_const__InputArrayX_RectX_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, cv::TermCriteria* criteria) {
+	Result<cv::RotatedRect*> cv_CamShift_const__InputArrayX_RectX_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
 		try {
 			cv::RotatedRect ret = cv::CamShift(*probImage, *window, *criteria);
 			return Ok(new cv::RotatedRect(ret));
@@ -24,7 +24,7 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err, const cv::Size* winSize, int maxLevel, cv::TermCriteria* criteria, int flags, double minEigThreshold) {
+	Result_void cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(const cv::_InputArray* prevImg, const cv::_InputArray* nextImg, const cv::_InputArray* prevPts, const cv::_InputOutputArray* nextPts, const cv::_OutputArray* status, const cv::_OutputArray* err, const cv::Size* winSize, int maxLevel, const cv::TermCriteria* criteria, int flags, double minEigThreshold) {
 		try {
 			cv::calcOpticalFlowPyrLK(*prevImg, *nextImg, *prevPts, *nextPts, *status, *err, *winSize, maxLevel, *criteria, flags, minEigThreshold);
 			return Ok();
@@ -59,21 +59,21 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<double> cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, cv::TermCriteria* criteria, const cv::_InputArray* inputMask) {
+	Result<double> cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask) {
 		try {
 			double ret = cv::findTransformECC(*templateImage, *inputImage, *warpMatrix, motionType, *criteria, *inputMask);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<double> cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX_int(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, cv::TermCriteria* criteria, const cv::_InputArray* inputMask, int gaussFiltSize) {
+	Result<double> cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX_int(const cv::_InputArray* templateImage, const cv::_InputArray* inputImage, const cv::_InputOutputArray* warpMatrix, int motionType, const cv::TermCriteria* criteria, const cv::_InputArray* inputMask, int gaussFiltSize) {
 		try {
 			double ret = cv::findTransformECC(*templateImage, *inputImage, *warpMatrix, motionType, *criteria, *inputMask, gaussFiltSize);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result<int> cv_meanShift_const__InputArrayX_RectX_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, cv::TermCriteria* criteria) {
+	Result<int> cv_meanShift_const__InputArrayX_RectX_TermCriteria(const cv::_InputArray* probImage, cv::Rect* window, const cv::TermCriteria* criteria) {
 		try {
 			int ret = cv::meanShift(*probImage, *window, *criteria);
 			return Ok(ret);
@@ -944,11 +944,11 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::TermCriteria*> cv_SparsePyrLKOpticalFlow_getTermCriteria_const(const cv::SparsePyrLKOpticalFlow* instance) {
+	Result<cv::TermCriteria> cv_SparsePyrLKOpticalFlow_getTermCriteria_const(const cv::SparsePyrLKOpticalFlow* instance) {
 		try {
 			cv::TermCriteria ret = instance->getTermCriteria();
-			return Ok(new cv::TermCriteria(ret));
-		} OCVRS_CATCH(Result<cv::TermCriteria*>)
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::TermCriteria>)
 	}
 	
 	Result_void cv_SparsePyrLKOpticalFlow_setTermCriteria_TermCriteriaX(cv::SparsePyrLKOpticalFlow* instance, cv::TermCriteria* crit) {
@@ -986,7 +986,7 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*> cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(const cv::Size* winSize, int maxLevel, cv::TermCriteria* crit, int flags, double minEigThreshold) {
+	Result<cv::Ptr<cv::SparsePyrLKOpticalFlow>*> cv_SparsePyrLKOpticalFlow_create_Size_int_TermCriteria_int_double(const cv::Size* winSize, int maxLevel, const cv::TermCriteria* crit, int flags, double minEigThreshold) {
 		try {
 			cv::Ptr<cv::SparsePyrLKOpticalFlow> ret = cv::SparsePyrLKOpticalFlow::create(*winSize, maxLevel, *crit, flags, minEigThreshold);
 			return Ok(new cv::Ptr<cv::SparsePyrLKOpticalFlow>(ret));
