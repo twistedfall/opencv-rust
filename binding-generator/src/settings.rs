@@ -605,6 +605,10 @@ pub static FUNC_UNSAFE: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
 	"cv__OutputArray_create_const_int_const_intX_int_int_bool_int",
 	"cv__OutputArray_create_const_int_int_int_int_bool_int",
 	// allows passing arbitrary data
+	"cv_Mat_Mat_int_int_int_voidX_size_t",
+	"cv_Mat_Mat_Size_int_voidX_size_t",
+	"cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX",
+	"cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX",
 	"cv_Mat_setData_unsigned_charX",
 	"cv_UMatData_setData_unsigned_charX",
 	// no bounds checking

@@ -1,4 +1,4 @@
-use std::mem::transmute;
+use std::ffi::c_void;
 
 use matches::assert_matches;
 
@@ -397,7 +397,7 @@ fn mat_operations() -> Result<()> {
 #[test]
 fn mat_from_data() -> Result<()> {
 	let mut bytes = PIXEL.to_vec();
-	let src = Mat::new_rows_cols_with_data(1, PIXEL.len() as _, u8::typ(), unsafe { transmute(bytes.as_mut_ptr()) }, core::Mat_AUTO_STEP)?;
+	let src = unsafe { Mat::new_rows_cols_with_data(1, PIXEL.len() as _, u8::typ(), bytes.as_mut_ptr() as *mut c_void, core::Mat_AUTO_STEP)? };
 	assert_eq!(src.size()?, Size::new(PIXEL.len() as _, 1));
 	assert_eq!(src.total()?, PIXEL.len());
 	let row = src.at_row::<u8>(0)?;
