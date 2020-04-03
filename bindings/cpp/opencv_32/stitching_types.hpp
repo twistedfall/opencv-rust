@@ -202,32 +202,32 @@ extern "C" {
 	void cv_VectorOfDetail_CameraParams_push(std::vector<cv::detail::CameraParams>* instance, cv::detail::CameraParams* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfDetail_CameraParams_insert(std::vector<cv::detail::CameraParams>* instance, size_t index, cv::detail::CameraParams* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::detail::CameraParams*> cv_VectorOfDetail_CameraParams_get(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
 		try {
-			return Ok(new cv::detail::CameraParams(instance->at(index)));
+			return Ok<cv::detail::CameraParams*>(new cv::detail::CameraParams(instance->at(index)));
 		} VEC_CATCH(Result<cv::detail::CameraParams*>)
 	}
-	
-	cv::detail::CameraParams* cv_VectorOfDetail_CameraParams_get_unchecked(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
-		return new cv::detail::CameraParams((*instance)[index]);
+
+	Result<cv::detail::CameraParams*> cv_VectorOfDetail_CameraParams_get_unchecked(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
+		return Ok(new cv::detail::CameraParams((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfDetail_CameraParams_set(std::vector<cv::detail::CameraParams>* instance, size_t index, cv::detail::CameraParams* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfDetail_CameraParams_set_unchecked(std::vector<cv::detail::CameraParams>* instance, size_t index, cv::detail::CameraParams* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 
@@ -275,32 +275,32 @@ extern "C" {
 	void cv_VectorOfDetail_ImageFeatures_push(std::vector<cv::detail::ImageFeatures>* instance, cv::detail::ImageFeatures* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfDetail_ImageFeatures_insert(std::vector<cv::detail::ImageFeatures>* instance, size_t index, cv::detail::ImageFeatures* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::detail::ImageFeatures*> cv_VectorOfDetail_ImageFeatures_get(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
 		try {
-			return Ok(new cv::detail::ImageFeatures(instance->at(index)));
+			return Ok<cv::detail::ImageFeatures*>(new cv::detail::ImageFeatures(instance->at(index)));
 		} VEC_CATCH(Result<cv::detail::ImageFeatures*>)
 	}
-	
-	cv::detail::ImageFeatures* cv_VectorOfDetail_ImageFeatures_get_unchecked(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
-		return new cv::detail::ImageFeatures((*instance)[index]);
+
+	Result<cv::detail::ImageFeatures*> cv_VectorOfDetail_ImageFeatures_get_unchecked(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
+		return Ok(new cv::detail::ImageFeatures((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfDetail_ImageFeatures_set(std::vector<cv::detail::ImageFeatures>* instance, size_t index, cv::detail::ImageFeatures* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfDetail_ImageFeatures_set_unchecked(std::vector<cv::detail::ImageFeatures>* instance, size_t index, cv::detail::ImageFeatures* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 
@@ -348,32 +348,32 @@ extern "C" {
 	void cv_VectorOfDetail_MatchesInfo_push(std::vector<cv::detail::MatchesInfo>* instance, cv::detail::MatchesInfo* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfDetail_MatchesInfo_insert(std::vector<cv::detail::MatchesInfo>* instance, size_t index, cv::detail::MatchesInfo* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::detail::MatchesInfo*> cv_VectorOfDetail_MatchesInfo_get(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
 		try {
-			return Ok(new cv::detail::MatchesInfo(instance->at(index)));
+			return Ok<cv::detail::MatchesInfo*>(new cv::detail::MatchesInfo(instance->at(index)));
 		} VEC_CATCH(Result<cv::detail::MatchesInfo*>)
 	}
-	
-	cv::detail::MatchesInfo* cv_VectorOfDetail_MatchesInfo_get_unchecked(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
-		return new cv::detail::MatchesInfo((*instance)[index]);
+
+	Result<cv::detail::MatchesInfo*> cv_VectorOfDetail_MatchesInfo_get_unchecked(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
+		return Ok(new cv::detail::MatchesInfo((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfDetail_MatchesInfo_set(std::vector<cv::detail::MatchesInfo>* instance, size_t index, cv::detail::MatchesInfo* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfDetail_MatchesInfo_set_unchecked(std::vector<cv::detail::MatchesInfo>* instance, size_t index, cv::detail::MatchesInfo* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 

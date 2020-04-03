@@ -1,8 +1,7 @@
-use crate::{mod_prelude::*, core, types, sys};
 
 #[cfg(feature = "contrib")]
 mod aruco_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfBoard {
 		pub(crate) ptr: *mut c_void
@@ -187,7 +186,7 @@ pub use aruco_types::*;
 
 #[cfg(feature = "contrib")]
 mod bgsegm_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfBackgroundSubtractorGMG {
 		pub(crate) ptr: *mut c_void
@@ -285,7 +284,7 @@ pub use bgsegm_types::*;
 
 #[cfg(feature = "contrib")]
 mod bioinspired_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfRetina {
 		pub(crate) ptr: *mut c_void
@@ -409,7 +408,7 @@ mod bioinspired_types {
 pub use bioinspired_types::*;
 
 mod calib3d_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfStereoBM {
 		pub(crate) ptr: *mut c_void
@@ -505,7 +504,7 @@ mod calib3d_types {
 pub use calib3d_types::*;
 
 mod core_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfConjGradSolver {
 		pub(crate) ptr: *mut c_void
@@ -747,6 +746,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDMatch {
 		type Storage = core::DMatch;
+		type Arg = core::DMatch;
 	
 		#[inline]
 		fn new() -> Self {
@@ -810,49 +810,49 @@ mod core_types {
 			unsafe { cv_VectorOfDMatch_clear(self.as_raw_VectorOfDMatch()) }
 		}
 	
-		type Arg = core::DMatch;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfDMatch_push(instance: *mut c_void, val: *const core::DMatch); }
+			unsafe { cv_VectorOfDMatch_push(self.as_raw_VectorOfDMatch(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfDMatch_insert(instance: *mut c_void, index: size_t, val: *const core::DMatch); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfDMatch_insert(self.as_raw_VectorOfDMatch(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDMatch_get(instance: *mut c_void, index: size_t) -> sys::Result<core::DMatch>; }
 			unsafe { cv_VectorOfDMatch_get(self.as_raw_VectorOfDMatch(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfDMatch_push(instance: *mut c_void, val: *const core::DMatch); }
-			unsafe { cv_VectorOfDMatch_push(self.as_raw_VectorOfDMatch(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfDMatch_insert(instance: *mut c_void, index: size_t, val: *const core::DMatch); }
-			unsafe { cv_VectorOfDMatch_insert(self.as_raw_VectorOfDMatch(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfDMatch_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::DMatch>; }
 			cv_VectorOfDMatch_get_unchecked(self.as_raw_VectorOfDMatch(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfDMatch::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDMatch_set(instance: *mut c_void, index: size_t, val: *const core::DMatch) -> sys::Result_void; }
 			unsafe { cv_VectorOfDMatch_set(self.as_raw_VectorOfDMatch(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDMatch_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::DMatch); }
 			cv_VectorOfDMatch_set_unchecked(self.as_raw_VectorOfDMatch(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -912,6 +912,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfKeyPoint {
 		type Storage = core::KeyPoint;
+		type Arg = core::KeyPoint;
 	
 		#[inline]
 		fn new() -> Self {
@@ -975,49 +976,49 @@ mod core_types {
 			unsafe { cv_VectorOfKeyPoint_clear(self.as_raw_VectorOfKeyPoint()) }
 		}
 	
-		type Arg = core::KeyPoint;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfKeyPoint_push(instance: *mut c_void, val: *const core::KeyPoint); }
+			unsafe { cv_VectorOfKeyPoint_push(self.as_raw_VectorOfKeyPoint(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfKeyPoint_insert(instance: *mut c_void, index: size_t, val: *const core::KeyPoint); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfKeyPoint_insert(self.as_raw_VectorOfKeyPoint(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfKeyPoint_get(instance: *mut c_void, index: size_t) -> sys::Result<core::KeyPoint>; }
 			unsafe { cv_VectorOfKeyPoint_get(self.as_raw_VectorOfKeyPoint(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfKeyPoint_push(instance: *mut c_void, val: *const core::KeyPoint); }
-			unsafe { cv_VectorOfKeyPoint_push(self.as_raw_VectorOfKeyPoint(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfKeyPoint_insert(instance: *mut c_void, index: size_t, val: *const core::KeyPoint); }
-			unsafe { cv_VectorOfKeyPoint_insert(self.as_raw_VectorOfKeyPoint(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfKeyPoint_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::KeyPoint>; }
 			cv_VectorOfKeyPoint_get_unchecked(self.as_raw_VectorOfKeyPoint(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfKeyPoint::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfKeyPoint_set(instance: *mut c_void, index: size_t, val: *const core::KeyPoint) -> sys::Result_void; }
 			unsafe { cv_VectorOfKeyPoint_set(self.as_raw_VectorOfKeyPoint(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfKeyPoint_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::KeyPoint); }
 			cv_VectorOfKeyPoint_set_unchecked(self.as_raw_VectorOfKeyPoint(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -1069,6 +1070,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfMat {
 		type Storage = core::Mat;
+		type Arg = core::Mat;
 	
 		#[inline]
 		fn new() -> Self {
@@ -1132,22 +1134,20 @@ mod core_types {
 			unsafe { cv_VectorOfMat_clear(self.as_raw_VectorOfMat()) }
 		}
 	
-		type Arg = core::Mat;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfMat_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfMat_push(self.as_raw_VectorOfMat(), val.as_raw_Mat()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfMat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfMat_insert(self.as_raw_VectorOfMat(), index, val.as_raw_Mat()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfMat_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -1155,25 +1155,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| core::Mat { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfMat_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			core::Mat { ptr: cv_VectorOfMat_get_unchecked(self.as_raw_VectorOfMat(), index) }
+			extern "C" { fn cv_VectorOfMat_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfMat_get_unchecked(self.as_raw_VectorOfMat(), index)
+				.into_result()
+				.map(|ptr| core::Mat { ptr })
+				.expect("Infallible function failed: VectorOfMat::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfMat_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfMat_set(self.as_raw_VectorOfMat(), index, val.as_raw_Mat()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfMat_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfMat_set_unchecked(self.as_raw_VectorOfMat(), index, val.as_raw_Mat())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfMat {}
@@ -1221,6 +1225,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPlatformInfo {
 		type Storage = core::PlatformInfo;
+		type Arg = core::PlatformInfo;
 	
 		#[inline]
 		fn new() -> Self {
@@ -1284,22 +1289,20 @@ mod core_types {
 			unsafe { cv_VectorOfPlatformInfo_clear(self.as_raw_VectorOfPlatformInfo()) }
 		}
 	
-		type Arg = core::PlatformInfo;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPlatformInfo_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfPlatformInfo_push(self.as_raw_VectorOfPlatformInfo(), val.as_raw_PlatformInfo()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfPlatformInfo_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfPlatformInfo_insert(self.as_raw_VectorOfPlatformInfo(), index, val.as_raw_PlatformInfo()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPlatformInfo_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -1307,25 +1310,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| core::PlatformInfo { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfPlatformInfo_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			core::PlatformInfo { ptr: cv_VectorOfPlatformInfo_get_unchecked(self.as_raw_VectorOfPlatformInfo(), index) }
+			extern "C" { fn cv_VectorOfPlatformInfo_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfPlatformInfo_get_unchecked(self.as_raw_VectorOfPlatformInfo(), index)
+				.into_result()
+				.map(|ptr| core::PlatformInfo { ptr })
+				.expect("Infallible function failed: VectorOfPlatformInfo::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPlatformInfo_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfPlatformInfo_set(self.as_raw_VectorOfPlatformInfo(), index, val.as_raw_PlatformInfo()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPlatformInfo_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfPlatformInfo_set_unchecked(self.as_raw_VectorOfPlatformInfo(), index, val.as_raw_PlatformInfo())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfPlatformInfo {}
@@ -1381,6 +1388,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPoint {
 		type Storage = core::Point;
+		type Arg = core::Point;
 	
 		#[inline]
 		fn new() -> Self {
@@ -1444,49 +1452,49 @@ mod core_types {
 			unsafe { cv_VectorOfPoint_clear(self.as_raw_VectorOfPoint()) }
 		}
 	
-		type Arg = core::Point;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfPoint_push(instance: *mut c_void, val: *const core::Point); }
+			unsafe { cv_VectorOfPoint_push(self.as_raw_VectorOfPoint(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfPoint_insert(instance: *mut c_void, index: size_t, val: *const core::Point); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfPoint_insert(self.as_raw_VectorOfPoint(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPoint_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Point>; }
 			unsafe { cv_VectorOfPoint_get(self.as_raw_VectorOfPoint(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfPoint_push(instance: *mut c_void, val: *const core::Point); }
-			unsafe { cv_VectorOfPoint_push(self.as_raw_VectorOfPoint(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfPoint_insert(instance: *mut c_void, index: size_t, val: *const core::Point); }
-			unsafe { cv_VectorOfPoint_insert(self.as_raw_VectorOfPoint(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfPoint_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Point>; }
 			cv_VectorOfPoint_get_unchecked(self.as_raw_VectorOfPoint(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfPoint::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPoint_set(instance: *mut c_void, index: size_t, val: *const core::Point) -> sys::Result_void; }
 			unsafe { cv_VectorOfPoint_set(self.as_raw_VectorOfPoint(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPoint_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Point); }
 			cv_VectorOfPoint_set_unchecked(self.as_raw_VectorOfPoint(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -1597,6 +1605,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPoint2d {
 		type Storage = core::Point2d;
+		type Arg = core::Point2d;
 	
 		#[inline]
 		fn new() -> Self {
@@ -1660,49 +1669,49 @@ mod core_types {
 			unsafe { cv_VectorOfPoint2d_clear(self.as_raw_VectorOfPoint2d()) }
 		}
 	
-		type Arg = core::Point2d;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfPoint2d_push(instance: *mut c_void, val: *const core::Point2d); }
+			unsafe { cv_VectorOfPoint2d_push(self.as_raw_VectorOfPoint2d(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfPoint2d_insert(instance: *mut c_void, index: size_t, val: *const core::Point2d); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfPoint2d_insert(self.as_raw_VectorOfPoint2d(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPoint2d_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Point2d>; }
 			unsafe { cv_VectorOfPoint2d_get(self.as_raw_VectorOfPoint2d(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfPoint2d_push(instance: *mut c_void, val: *const core::Point2d); }
-			unsafe { cv_VectorOfPoint2d_push(self.as_raw_VectorOfPoint2d(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfPoint2d_insert(instance: *mut c_void, index: size_t, val: *const core::Point2d); }
-			unsafe { cv_VectorOfPoint2d_insert(self.as_raw_VectorOfPoint2d(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfPoint2d_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Point2d>; }
 			cv_VectorOfPoint2d_get_unchecked(self.as_raw_VectorOfPoint2d(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfPoint2d::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPoint2d_set(instance: *mut c_void, index: size_t, val: *const core::Point2d) -> sys::Result_void; }
 			unsafe { cv_VectorOfPoint2d_set(self.as_raw_VectorOfPoint2d(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPoint2d_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Point2d); }
 			cv_VectorOfPoint2d_set_unchecked(self.as_raw_VectorOfPoint2d(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -1813,6 +1822,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPoint2f {
 		type Storage = core::Point2f;
+		type Arg = core::Point2f;
 	
 		#[inline]
 		fn new() -> Self {
@@ -1876,49 +1886,49 @@ mod core_types {
 			unsafe { cv_VectorOfPoint2f_clear(self.as_raw_VectorOfPoint2f()) }
 		}
 	
-		type Arg = core::Point2f;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfPoint2f_push(instance: *mut c_void, val: *const core::Point2f); }
+			unsafe { cv_VectorOfPoint2f_push(self.as_raw_VectorOfPoint2f(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfPoint2f_insert(instance: *mut c_void, index: size_t, val: *const core::Point2f); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfPoint2f_insert(self.as_raw_VectorOfPoint2f(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPoint2f_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Point2f>; }
 			unsafe { cv_VectorOfPoint2f_get(self.as_raw_VectorOfPoint2f(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfPoint2f_push(instance: *mut c_void, val: *const core::Point2f); }
-			unsafe { cv_VectorOfPoint2f_push(self.as_raw_VectorOfPoint2f(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfPoint2f_insert(instance: *mut c_void, index: size_t, val: *const core::Point2f); }
-			unsafe { cv_VectorOfPoint2f_insert(self.as_raw_VectorOfPoint2f(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfPoint2f_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Point2f>; }
 			cv_VectorOfPoint2f_get_unchecked(self.as_raw_VectorOfPoint2f(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfPoint2f::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPoint2f_set(instance: *mut c_void, index: size_t, val: *const core::Point2f) -> sys::Result_void; }
 			unsafe { cv_VectorOfPoint2f_set(self.as_raw_VectorOfPoint2f(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPoint2f_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Point2f); }
 			cv_VectorOfPoint2f_set_unchecked(self.as_raw_VectorOfPoint2f(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -2029,6 +2039,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPoint3d {
 		type Storage = core::Point3d;
+		type Arg = core::Point3d;
 	
 		#[inline]
 		fn new() -> Self {
@@ -2092,49 +2103,49 @@ mod core_types {
 			unsafe { cv_VectorOfPoint3d_clear(self.as_raw_VectorOfPoint3d()) }
 		}
 	
-		type Arg = core::Point3d;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfPoint3d_push(instance: *mut c_void, val: *const core::Point3d); }
+			unsafe { cv_VectorOfPoint3d_push(self.as_raw_VectorOfPoint3d(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfPoint3d_insert(instance: *mut c_void, index: size_t, val: *const core::Point3d); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfPoint3d_insert(self.as_raw_VectorOfPoint3d(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPoint3d_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Point3d>; }
 			unsafe { cv_VectorOfPoint3d_get(self.as_raw_VectorOfPoint3d(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfPoint3d_push(instance: *mut c_void, val: *const core::Point3d); }
-			unsafe { cv_VectorOfPoint3d_push(self.as_raw_VectorOfPoint3d(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfPoint3d_insert(instance: *mut c_void, index: size_t, val: *const core::Point3d); }
-			unsafe { cv_VectorOfPoint3d_insert(self.as_raw_VectorOfPoint3d(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfPoint3d_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Point3d>; }
 			cv_VectorOfPoint3d_get_unchecked(self.as_raw_VectorOfPoint3d(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfPoint3d::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPoint3d_set(instance: *mut c_void, index: size_t, val: *const core::Point3d) -> sys::Result_void; }
 			unsafe { cv_VectorOfPoint3d_set(self.as_raw_VectorOfPoint3d(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPoint3d_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Point3d); }
 			cv_VectorOfPoint3d_set_unchecked(self.as_raw_VectorOfPoint3d(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -2245,6 +2256,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPoint3f {
 		type Storage = core::Point3f;
+		type Arg = core::Point3f;
 	
 		#[inline]
 		fn new() -> Self {
@@ -2308,49 +2320,49 @@ mod core_types {
 			unsafe { cv_VectorOfPoint3f_clear(self.as_raw_VectorOfPoint3f()) }
 		}
 	
-		type Arg = core::Point3f;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfPoint3f_push(instance: *mut c_void, val: *const core::Point3f); }
+			unsafe { cv_VectorOfPoint3f_push(self.as_raw_VectorOfPoint3f(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfPoint3f_insert(instance: *mut c_void, index: size_t, val: *const core::Point3f); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfPoint3f_insert(self.as_raw_VectorOfPoint3f(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPoint3f_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Point3f>; }
 			unsafe { cv_VectorOfPoint3f_get(self.as_raw_VectorOfPoint3f(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfPoint3f_push(instance: *mut c_void, val: *const core::Point3f); }
-			unsafe { cv_VectorOfPoint3f_push(self.as_raw_VectorOfPoint3f(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfPoint3f_insert(instance: *mut c_void, index: size_t, val: *const core::Point3f); }
-			unsafe { cv_VectorOfPoint3f_insert(self.as_raw_VectorOfPoint3f(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfPoint3f_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Point3f>; }
 			cv_VectorOfPoint3f_get_unchecked(self.as_raw_VectorOfPoint3f(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfPoint3f::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPoint3f_set(instance: *mut c_void, index: size_t, val: *const core::Point3f) -> sys::Result_void; }
 			unsafe { cv_VectorOfPoint3f_set(self.as_raw_VectorOfPoint3f(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPoint3f_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Point3f); }
 			cv_VectorOfPoint3f_set_unchecked(self.as_raw_VectorOfPoint3f(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -2461,6 +2473,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPoint3i {
 		type Storage = core::Point3i;
+		type Arg = core::Point3i;
 	
 		#[inline]
 		fn new() -> Self {
@@ -2524,49 +2537,49 @@ mod core_types {
 			unsafe { cv_VectorOfPoint3i_clear(self.as_raw_VectorOfPoint3i()) }
 		}
 	
-		type Arg = core::Point3i;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfPoint3i_push(instance: *mut c_void, val: *const core::Point3i); }
+			unsafe { cv_VectorOfPoint3i_push(self.as_raw_VectorOfPoint3i(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfPoint3i_insert(instance: *mut c_void, index: size_t, val: *const core::Point3i); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfPoint3i_insert(self.as_raw_VectorOfPoint3i(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPoint3i_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Point3i>; }
 			unsafe { cv_VectorOfPoint3i_get(self.as_raw_VectorOfPoint3i(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfPoint3i_push(instance: *mut c_void, val: *const core::Point3i); }
-			unsafe { cv_VectorOfPoint3i_push(self.as_raw_VectorOfPoint3i(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfPoint3i_insert(instance: *mut c_void, index: size_t, val: *const core::Point3i); }
-			unsafe { cv_VectorOfPoint3i_insert(self.as_raw_VectorOfPoint3i(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfPoint3i_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Point3i>; }
 			cv_VectorOfPoint3i_get_unchecked(self.as_raw_VectorOfPoint3i(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfPoint3i::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPoint3i_set(instance: *mut c_void, index: size_t, val: *const core::Point3i) -> sys::Result_void; }
 			unsafe { cv_VectorOfPoint3i_set(self.as_raw_VectorOfPoint3i(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPoint3i_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Point3i); }
 			cv_VectorOfPoint3i_set_unchecked(self.as_raw_VectorOfPoint3i(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -2669,6 +2682,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfRange {
 		type Storage = core::Range;
+		type Arg = core::Range;
 	
 		#[inline]
 		fn new() -> Self {
@@ -2732,22 +2746,20 @@ mod core_types {
 			unsafe { cv_VectorOfRange_clear(self.as_raw_VectorOfRange()) }
 		}
 	
-		type Arg = core::Range;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfRange_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfRange_push(self.as_raw_VectorOfRange(), val.as_raw_Range()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfRange_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfRange_insert(self.as_raw_VectorOfRange(), index, val.as_raw_Range()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfRange_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -2755,25 +2767,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| core::Range { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfRange_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			core::Range { ptr: cv_VectorOfRange_get_unchecked(self.as_raw_VectorOfRange(), index) }
+			extern "C" { fn cv_VectorOfRange_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfRange_get_unchecked(self.as_raw_VectorOfRange(), index)
+				.into_result()
+				.map(|ptr| core::Range { ptr })
+				.expect("Infallible function failed: VectorOfRange::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfRange_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfRange_set(self.as_raw_VectorOfRange(), index, val.as_raw_Range()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfRange_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfRange_set_unchecked(self.as_raw_VectorOfRange(), index, val.as_raw_Range())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfRange {}
@@ -2829,6 +2845,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfRect {
 		type Storage = core::Rect;
+		type Arg = core::Rect;
 	
 		#[inline]
 		fn new() -> Self {
@@ -2892,49 +2909,49 @@ mod core_types {
 			unsafe { cv_VectorOfRect_clear(self.as_raw_VectorOfRect()) }
 		}
 	
-		type Arg = core::Rect;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfRect_push(instance: *mut c_void, val: *const core::Rect); }
+			unsafe { cv_VectorOfRect_push(self.as_raw_VectorOfRect(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfRect_insert(instance: *mut c_void, index: size_t, val: *const core::Rect); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfRect_insert(self.as_raw_VectorOfRect(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfRect_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Rect>; }
 			unsafe { cv_VectorOfRect_get(self.as_raw_VectorOfRect(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfRect_push(instance: *mut c_void, val: *const core::Rect); }
-			unsafe { cv_VectorOfRect_push(self.as_raw_VectorOfRect(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfRect_insert(instance: *mut c_void, index: size_t, val: *const core::Rect); }
-			unsafe { cv_VectorOfRect_insert(self.as_raw_VectorOfRect(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfRect_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Rect>; }
 			cv_VectorOfRect_get_unchecked(self.as_raw_VectorOfRect(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfRect::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfRect_set(instance: *mut c_void, index: size_t, val: *const core::Rect) -> sys::Result_void; }
 			unsafe { cv_VectorOfRect_set(self.as_raw_VectorOfRect(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfRect_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Rect); }
 			cv_VectorOfRect_set_unchecked(self.as_raw_VectorOfRect(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -3045,6 +3062,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfSize {
 		type Storage = core::Size;
+		type Arg = core::Size;
 	
 		#[inline]
 		fn new() -> Self {
@@ -3108,49 +3126,49 @@ mod core_types {
 			unsafe { cv_VectorOfSize_clear(self.as_raw_VectorOfSize()) }
 		}
 	
-		type Arg = core::Size;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfSize_push(instance: *mut c_void, val: *const core::Size); }
+			unsafe { cv_VectorOfSize_push(self.as_raw_VectorOfSize(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfSize_insert(instance: *mut c_void, index: size_t, val: *const core::Size); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfSize_insert(self.as_raw_VectorOfSize(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfSize_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Size>; }
 			unsafe { cv_VectorOfSize_get(self.as_raw_VectorOfSize(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfSize_push(instance: *mut c_void, val: *const core::Size); }
-			unsafe { cv_VectorOfSize_push(self.as_raw_VectorOfSize(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfSize_insert(instance: *mut c_void, index: size_t, val: *const core::Size); }
-			unsafe { cv_VectorOfSize_insert(self.as_raw_VectorOfSize(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfSize_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Size>; }
 			cv_VectorOfSize_get_unchecked(self.as_raw_VectorOfSize(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfSize::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfSize_set(instance: *mut c_void, index: size_t, val: *const core::Size) -> sys::Result_void; }
 			unsafe { cv_VectorOfSize_set(self.as_raw_VectorOfSize(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfSize_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Size); }
 			cv_VectorOfSize_set_unchecked(self.as_raw_VectorOfSize(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -3253,6 +3271,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfString {
 		type Storage = String;
+		type Arg = &'i str;
 	
 		#[inline]
 		fn new() -> Self {
@@ -3316,24 +3335,22 @@ mod core_types {
 			unsafe { cv_VectorOfString_clear(self.as_raw_VectorOfString()) }
 		}
 	
-		type Arg = &'i str;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfString_push(instance: *mut c_void, val: *mut c_char); }
 			string_arg_infallible!(val);
 			unsafe { cv_VectorOfString_push(self.as_raw_VectorOfString(), val.as_ptr() as _) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfString_insert(instance: *mut c_void, index: size_t, val: *mut c_char); }
 			crate::templ::vector_index_check(index, self.len() + 1)?;
-			string_arg_infallible!(val);
+			string_arg!(val);
 			unsafe { cv_VectorOfString_insert(self.as_raw_VectorOfString(), index, val.as_ptr() as _) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfString_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -3341,27 +3358,31 @@ mod core_types {
 				.into_result()
 				.map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfString_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::templ::receive_string(cv_VectorOfString_get_unchecked(self.as_raw_VectorOfString(), index) as *mut String)
+			extern "C" { fn cv_VectorOfString_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfString_get_unchecked(self.as_raw_VectorOfString(), index)
+				.into_result()
+				.map(|s| { crate::templ::receive_string(s as *mut String) })
+				.expect("Infallible function failed: VectorOfString::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfString_set(instance: *mut c_void, index: size_t, val: *mut c_char) -> sys::Result_void; }
-			string_arg_infallible!(val);
+			string_arg!(val);
 			unsafe { cv_VectorOfString_set(self.as_raw_VectorOfString(), index, val.as_ptr() as _) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfString_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_char); }
 			string_arg_infallible!(val);
 			cv_VectorOfString_set_unchecked(self.as_raw_VectorOfString(), index, val.as_ptr() as _)
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfString {}
@@ -3409,6 +3430,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfUMat {
 		type Storage = core::UMat;
+		type Arg = core::UMat;
 	
 		#[inline]
 		fn new() -> Self {
@@ -3472,22 +3494,20 @@ mod core_types {
 			unsafe { cv_VectorOfUMat_clear(self.as_raw_VectorOfUMat()) }
 		}
 	
-		type Arg = core::UMat;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfUMat_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfUMat_push(self.as_raw_VectorOfUMat(), val.as_raw_UMat()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfUMat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfUMat_insert(self.as_raw_VectorOfUMat(), index, val.as_raw_UMat()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfUMat_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -3495,25 +3515,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| core::UMat { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfUMat_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			core::UMat { ptr: cv_VectorOfUMat_get_unchecked(self.as_raw_VectorOfUMat(), index) }
+			extern "C" { fn cv_VectorOfUMat_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfUMat_get_unchecked(self.as_raw_VectorOfUMat(), index)
+				.into_result()
+				.map(|ptr| core::UMat { ptr })
+				.expect("Infallible function failed: VectorOfUMat::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfUMat_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfUMat_set(self.as_raw_VectorOfUMat(), index, val.as_raw_UMat()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfUMat_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfUMat_set_unchecked(self.as_raw_VectorOfUMat(), index, val.as_raw_UMat())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfUMat {}
@@ -3569,6 +3593,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVec2i {
 		type Storage = core::Vec2i;
+		type Arg = core::Vec2i;
 	
 		#[inline]
 		fn new() -> Self {
@@ -3632,49 +3657,49 @@ mod core_types {
 			unsafe { cv_VectorOfVec2i_clear(self.as_raw_VectorOfVec2i()) }
 		}
 	
-		type Arg = core::Vec2i;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfVec2i_push(instance: *mut c_void, val: *const core::Vec2i); }
+			unsafe { cv_VectorOfVec2i_push(self.as_raw_VectorOfVec2i(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfVec2i_insert(instance: *mut c_void, index: size_t, val: *const core::Vec2i); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfVec2i_insert(self.as_raw_VectorOfVec2i(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVec2i_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec2i>; }
 			unsafe { cv_VectorOfVec2i_get(self.as_raw_VectorOfVec2i(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfVec2i_push(instance: *mut c_void, val: *const core::Vec2i); }
-			unsafe { cv_VectorOfVec2i_push(self.as_raw_VectorOfVec2i(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfVec2i_insert(instance: *mut c_void, index: size_t, val: *const core::Vec2i); }
-			unsafe { cv_VectorOfVec2i_insert(self.as_raw_VectorOfVec2i(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfVec2i_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec2i>; }
 			cv_VectorOfVec2i_get_unchecked(self.as_raw_VectorOfVec2i(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfVec2i::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVec2i_set(instance: *mut c_void, index: size_t, val: *const core::Vec2i) -> sys::Result_void; }
 			unsafe { cv_VectorOfVec2i_set(self.as_raw_VectorOfVec2i(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVec2i_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Vec2i); }
 			cv_VectorOfVec2i_set_unchecked(self.as_raw_VectorOfVec2i(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -3785,6 +3810,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVec3d {
 		type Storage = core::Vec3d;
+		type Arg = core::Vec3d;
 	
 		#[inline]
 		fn new() -> Self {
@@ -3848,49 +3874,49 @@ mod core_types {
 			unsafe { cv_VectorOfVec3d_clear(self.as_raw_VectorOfVec3d()) }
 		}
 	
-		type Arg = core::Vec3d;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfVec3d_push(instance: *mut c_void, val: *const core::Vec3d); }
+			unsafe { cv_VectorOfVec3d_push(self.as_raw_VectorOfVec3d(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfVec3d_insert(instance: *mut c_void, index: size_t, val: *const core::Vec3d); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfVec3d_insert(self.as_raw_VectorOfVec3d(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVec3d_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec3d>; }
 			unsafe { cv_VectorOfVec3d_get(self.as_raw_VectorOfVec3d(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfVec3d_push(instance: *mut c_void, val: *const core::Vec3d); }
-			unsafe { cv_VectorOfVec3d_push(self.as_raw_VectorOfVec3d(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfVec3d_insert(instance: *mut c_void, index: size_t, val: *const core::Vec3d); }
-			unsafe { cv_VectorOfVec3d_insert(self.as_raw_VectorOfVec3d(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfVec3d_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec3d>; }
 			cv_VectorOfVec3d_get_unchecked(self.as_raw_VectorOfVec3d(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfVec3d::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVec3d_set(instance: *mut c_void, index: size_t, val: *const core::Vec3d) -> sys::Result_void; }
 			unsafe { cv_VectorOfVec3d_set(self.as_raw_VectorOfVec3d(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVec3d_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Vec3d); }
 			cv_VectorOfVec3d_set_unchecked(self.as_raw_VectorOfVec3d(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -4001,6 +4027,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVec3f {
 		type Storage = core::Vec3f;
+		type Arg = core::Vec3f;
 	
 		#[inline]
 		fn new() -> Self {
@@ -4064,49 +4091,49 @@ mod core_types {
 			unsafe { cv_VectorOfVec3f_clear(self.as_raw_VectorOfVec3f()) }
 		}
 	
-		type Arg = core::Vec3f;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfVec3f_push(instance: *mut c_void, val: *const core::Vec3f); }
+			unsafe { cv_VectorOfVec3f_push(self.as_raw_VectorOfVec3f(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfVec3f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec3f); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfVec3f_insert(self.as_raw_VectorOfVec3f(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVec3f_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec3f>; }
 			unsafe { cv_VectorOfVec3f_get(self.as_raw_VectorOfVec3f(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfVec3f_push(instance: *mut c_void, val: *const core::Vec3f); }
-			unsafe { cv_VectorOfVec3f_push(self.as_raw_VectorOfVec3f(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfVec3f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec3f); }
-			unsafe { cv_VectorOfVec3f_insert(self.as_raw_VectorOfVec3f(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfVec3f_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec3f>; }
 			cv_VectorOfVec3f_get_unchecked(self.as_raw_VectorOfVec3f(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfVec3f::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVec3f_set(instance: *mut c_void, index: size_t, val: *const core::Vec3f) -> sys::Result_void; }
 			unsafe { cv_VectorOfVec3f_set(self.as_raw_VectorOfVec3f(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVec3f_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Vec3f); }
 			cv_VectorOfVec3f_set_unchecked(self.as_raw_VectorOfVec3f(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -4217,6 +4244,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVec4f {
 		type Storage = core::Vec4f;
+		type Arg = core::Vec4f;
 	
 		#[inline]
 		fn new() -> Self {
@@ -4280,49 +4308,49 @@ mod core_types {
 			unsafe { cv_VectorOfVec4f_clear(self.as_raw_VectorOfVec4f()) }
 		}
 	
-		type Arg = core::Vec4f;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfVec4f_push(instance: *mut c_void, val: *const core::Vec4f); }
+			unsafe { cv_VectorOfVec4f_push(self.as_raw_VectorOfVec4f(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfVec4f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec4f); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfVec4f_insert(self.as_raw_VectorOfVec4f(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVec4f_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec4f>; }
 			unsafe { cv_VectorOfVec4f_get(self.as_raw_VectorOfVec4f(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfVec4f_push(instance: *mut c_void, val: *const core::Vec4f); }
-			unsafe { cv_VectorOfVec4f_push(self.as_raw_VectorOfVec4f(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfVec4f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec4f); }
-			unsafe { cv_VectorOfVec4f_insert(self.as_raw_VectorOfVec4f(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfVec4f_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec4f>; }
 			cv_VectorOfVec4f_get_unchecked(self.as_raw_VectorOfVec4f(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfVec4f::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVec4f_set(instance: *mut c_void, index: size_t, val: *const core::Vec4f) -> sys::Result_void; }
 			unsafe { cv_VectorOfVec4f_set(self.as_raw_VectorOfVec4f(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVec4f_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Vec4f); }
 			cv_VectorOfVec4f_set_unchecked(self.as_raw_VectorOfVec4f(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -4433,6 +4461,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVec4i {
 		type Storage = core::Vec4i;
+		type Arg = core::Vec4i;
 	
 		#[inline]
 		fn new() -> Self {
@@ -4496,49 +4525,49 @@ mod core_types {
 			unsafe { cv_VectorOfVec4i_clear(self.as_raw_VectorOfVec4i()) }
 		}
 	
-		type Arg = core::Vec4i;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfVec4i_push(instance: *mut c_void, val: *const core::Vec4i); }
+			unsafe { cv_VectorOfVec4i_push(self.as_raw_VectorOfVec4i(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfVec4i_insert(instance: *mut c_void, index: size_t, val: *const core::Vec4i); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfVec4i_insert(self.as_raw_VectorOfVec4i(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVec4i_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec4i>; }
 			unsafe { cv_VectorOfVec4i_get(self.as_raw_VectorOfVec4i(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfVec4i_push(instance: *mut c_void, val: *const core::Vec4i); }
-			unsafe { cv_VectorOfVec4i_push(self.as_raw_VectorOfVec4i(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfVec4i_insert(instance: *mut c_void, index: size_t, val: *const core::Vec4i); }
-			unsafe { cv_VectorOfVec4i_insert(self.as_raw_VectorOfVec4i(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfVec4i_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec4i>; }
 			cv_VectorOfVec4i_get_unchecked(self.as_raw_VectorOfVec4i(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfVec4i::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVec4i_set(instance: *mut c_void, index: size_t, val: *const core::Vec4i) -> sys::Result_void; }
 			unsafe { cv_VectorOfVec4i_set(self.as_raw_VectorOfVec4i(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVec4i_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Vec4i); }
 			cv_VectorOfVec4i_set_unchecked(self.as_raw_VectorOfVec4i(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -4649,6 +4678,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVec6f {
 		type Storage = core::Vec6f;
+		type Arg = core::Vec6f;
 	
 		#[inline]
 		fn new() -> Self {
@@ -4712,49 +4742,49 @@ mod core_types {
 			unsafe { cv_VectorOfVec6f_clear(self.as_raw_VectorOfVec6f()) }
 		}
 	
-		type Arg = core::Vec6f;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfVec6f_push(instance: *mut c_void, val: *const core::Vec6f); }
+			unsafe { cv_VectorOfVec6f_push(self.as_raw_VectorOfVec6f(), &val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfVec6f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec6f); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfVec6f_insert(self.as_raw_VectorOfVec6f(), index, &val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVec6f_get(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec6f>; }
 			unsafe { cv_VectorOfVec6f_get(self.as_raw_VectorOfVec6f(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfVec6f_push(instance: *mut c_void, val: *const core::Vec6f); }
-			unsafe { cv_VectorOfVec6f_push(self.as_raw_VectorOfVec6f(), &val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfVec6f_insert(instance: *mut c_void, index: size_t, val: *const core::Vec6f); }
-			unsafe { cv_VectorOfVec6f_insert(self.as_raw_VectorOfVec6f(), index, &val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
 			extern "C" { fn cv_VectorOfVec6f_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<core::Vec6f>; }
 			cv_VectorOfVec6f_get_unchecked(self.as_raw_VectorOfVec6f(), index)
 				.into_result()
-				.expect("Invalid call to vector get_unchecked() method")
+				.expect("Infallible function failed: VectorOfVec6f::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVec6f_set(instance: *mut c_void, index: size_t, val: *const core::Vec6f) -> sys::Result_void; }
 			unsafe { cv_VectorOfVec6f_set(self.as_raw_VectorOfVec6f(), index, &val) }
 				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVec6f_set_unchecked(instance: *mut c_void, index: size_t, val: *const core::Vec6f); }
 			cv_VectorOfVec6f_set_unchecked(self.as_raw_VectorOfVec6f(), index, &val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -4857,6 +4887,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfDMatch {
 		type Storage = types::VectorOfDMatch;
+		type Arg = types::VectorOfDMatch;
 	
 		#[inline]
 		fn new() -> Self {
@@ -4920,22 +4951,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfDMatch_clear(self.as_raw_VectorOfVectorOfDMatch()) }
 		}
 	
-		type Arg = types::VectorOfDMatch;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfDMatch_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfDMatch_push(self.as_raw_VectorOfVectorOfDMatch(), val.as_raw_VectorOfDMatch()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfDMatch_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfDMatch_insert(self.as_raw_VectorOfVectorOfDMatch(), index, val.as_raw_VectorOfDMatch()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfDMatch_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -4943,25 +4972,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfDMatch { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfDMatch_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfDMatch { ptr: cv_VectorOfVectorOfDMatch_get_unchecked(self.as_raw_VectorOfVectorOfDMatch(), index) }
+			extern "C" { fn cv_VectorOfVectorOfDMatch_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfDMatch_get_unchecked(self.as_raw_VectorOfVectorOfDMatch(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfDMatch { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfDMatch::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfDMatch_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfDMatch_set(self.as_raw_VectorOfVectorOfDMatch(), index, val.as_raw_VectorOfDMatch()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfDMatch_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfDMatch_set_unchecked(self.as_raw_VectorOfVectorOfDMatch(), index, val.as_raw_VectorOfDMatch())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfDMatch {}
@@ -5009,6 +5042,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyPoint {
 		type Storage = types::VectorOfKeyPoint;
+		type Arg = types::VectorOfKeyPoint;
 	
 		#[inline]
 		fn new() -> Self {
@@ -5072,22 +5106,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfKeyPoint_clear(self.as_raw_VectorOfVectorOfKeyPoint()) }
 		}
 	
-		type Arg = types::VectorOfKeyPoint;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfKeyPoint_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfKeyPoint_push(self.as_raw_VectorOfVectorOfKeyPoint(), val.as_raw_VectorOfKeyPoint()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfKeyPoint_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfKeyPoint_insert(self.as_raw_VectorOfVectorOfKeyPoint(), index, val.as_raw_VectorOfKeyPoint()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfKeyPoint_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -5095,25 +5127,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfKeyPoint { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfKeyPoint_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfKeyPoint { ptr: cv_VectorOfVectorOfKeyPoint_get_unchecked(self.as_raw_VectorOfVectorOfKeyPoint(), index) }
+			extern "C" { fn cv_VectorOfVectorOfKeyPoint_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfKeyPoint_get_unchecked(self.as_raw_VectorOfVectorOfKeyPoint(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfKeyPoint { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfKeyPoint::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfKeyPoint_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfKeyPoint_set(self.as_raw_VectorOfVectorOfKeyPoint(), index, val.as_raw_VectorOfKeyPoint()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfKeyPoint_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfKeyPoint_set_unchecked(self.as_raw_VectorOfVectorOfKeyPoint(), index, val.as_raw_VectorOfKeyPoint())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfKeyPoint {}
@@ -5161,6 +5197,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint {
 		type Storage = types::VectorOfPoint;
+		type Arg = types::VectorOfPoint;
 	
 		#[inline]
 		fn new() -> Self {
@@ -5224,22 +5261,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint_clear(self.as_raw_VectorOfVectorOfPoint()) }
 		}
 	
-		type Arg = types::VectorOfPoint;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfPoint_push(self.as_raw_VectorOfVectorOfPoint(), val.as_raw_VectorOfPoint()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfPoint_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfPoint_insert(self.as_raw_VectorOfVectorOfPoint(), index, val.as_raw_VectorOfPoint()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfPoint_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -5247,25 +5282,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfPoint { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfPoint_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfPoint { ptr: cv_VectorOfVectorOfPoint_get_unchecked(self.as_raw_VectorOfVectorOfPoint(), index) }
+			extern "C" { fn cv_VectorOfVectorOfPoint_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfPoint_get_unchecked(self.as_raw_VectorOfVectorOfPoint(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfPoint { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfPoint::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfPoint_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfPoint_set(self.as_raw_VectorOfVectorOfPoint(), index, val.as_raw_VectorOfPoint()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfPoint_set_unchecked(self.as_raw_VectorOfVectorOfPoint(), index, val.as_raw_VectorOfPoint())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfPoint {}
@@ -5364,6 +5403,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint2f {
 		type Storage = types::VectorOfPoint2f;
+		type Arg = types::VectorOfPoint2f;
 	
 		#[inline]
 		fn new() -> Self {
@@ -5427,22 +5467,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint2f_clear(self.as_raw_VectorOfVectorOfPoint2f()) }
 		}
 	
-		type Arg = types::VectorOfPoint2f;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint2f_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfPoint2f_push(self.as_raw_VectorOfVectorOfPoint2f(), val.as_raw_VectorOfPoint2f()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfPoint2f_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfPoint2f_insert(self.as_raw_VectorOfVectorOfPoint2f(), index, val.as_raw_VectorOfPoint2f()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfPoint2f_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -5450,25 +5488,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfPoint2f { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfPoint2f_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfPoint2f { ptr: cv_VectorOfVectorOfPoint2f_get_unchecked(self.as_raw_VectorOfVectorOfPoint2f(), index) }
+			extern "C" { fn cv_VectorOfVectorOfPoint2f_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfPoint2f_get_unchecked(self.as_raw_VectorOfVectorOfPoint2f(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfPoint2f { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfPoint2f::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfPoint2f_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfPoint2f_set(self.as_raw_VectorOfVectorOfPoint2f(), index, val.as_raw_VectorOfPoint2f()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint2f_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfPoint2f_set_unchecked(self.as_raw_VectorOfVectorOfPoint2f(), index, val.as_raw_VectorOfPoint2f())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfPoint2f {}
@@ -5567,6 +5609,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint3d {
 		type Storage = types::VectorOfPoint3d;
+		type Arg = types::VectorOfPoint3d;
 	
 		#[inline]
 		fn new() -> Self {
@@ -5630,22 +5673,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint3d_clear(self.as_raw_VectorOfVectorOfPoint3d()) }
 		}
 	
-		type Arg = types::VectorOfPoint3d;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint3d_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfPoint3d_push(self.as_raw_VectorOfVectorOfPoint3d(), val.as_raw_VectorOfPoint3d()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfPoint3d_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfPoint3d_insert(self.as_raw_VectorOfVectorOfPoint3d(), index, val.as_raw_VectorOfPoint3d()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfPoint3d_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -5653,25 +5694,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfPoint3d { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfPoint3d_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfPoint3d { ptr: cv_VectorOfVectorOfPoint3d_get_unchecked(self.as_raw_VectorOfVectorOfPoint3d(), index) }
+			extern "C" { fn cv_VectorOfVectorOfPoint3d_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfPoint3d_get_unchecked(self.as_raw_VectorOfVectorOfPoint3d(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfPoint3d { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfPoint3d::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfPoint3d_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfPoint3d_set(self.as_raw_VectorOfVectorOfPoint3d(), index, val.as_raw_VectorOfPoint3d()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint3d_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfPoint3d_set_unchecked(self.as_raw_VectorOfVectorOfPoint3d(), index, val.as_raw_VectorOfPoint3d())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfPoint3d {}
@@ -5770,6 +5815,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint3f {
 		type Storage = types::VectorOfPoint3f;
+		type Arg = types::VectorOfPoint3f;
 	
 		#[inline]
 		fn new() -> Self {
@@ -5833,22 +5879,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint3f_clear(self.as_raw_VectorOfVectorOfPoint3f()) }
 		}
 	
-		type Arg = types::VectorOfPoint3f;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint3f_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfPoint3f_push(self.as_raw_VectorOfVectorOfPoint3f(), val.as_raw_VectorOfPoint3f()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfPoint3f_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfPoint3f_insert(self.as_raw_VectorOfVectorOfPoint3f(), index, val.as_raw_VectorOfPoint3f()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfPoint3f_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -5856,25 +5900,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfPoint3f { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfPoint3f_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfPoint3f { ptr: cv_VectorOfVectorOfPoint3f_get_unchecked(self.as_raw_VectorOfVectorOfPoint3f(), index) }
+			extern "C" { fn cv_VectorOfVectorOfPoint3f_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfPoint3f_get_unchecked(self.as_raw_VectorOfVectorOfPoint3f(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfPoint3f { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfPoint3f::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfPoint3f_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfPoint3f_set(self.as_raw_VectorOfVectorOfPoint3f(), index, val.as_raw_VectorOfPoint3f()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint3f_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfPoint3f_set_unchecked(self.as_raw_VectorOfVectorOfPoint3f(), index, val.as_raw_VectorOfPoint3f())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfPoint3f {}
@@ -5973,6 +6021,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfPoint3i {
 		type Storage = types::VectorOfPoint3i;
+		type Arg = types::VectorOfPoint3i;
 	
 		#[inline]
 		fn new() -> Self {
@@ -6036,22 +6085,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfPoint3i_clear(self.as_raw_VectorOfVectorOfPoint3i()) }
 		}
 	
-		type Arg = types::VectorOfPoint3i;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint3i_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfPoint3i_push(self.as_raw_VectorOfVectorOfPoint3i(), val.as_raw_VectorOfPoint3i()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfPoint3i_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfPoint3i_insert(self.as_raw_VectorOfVectorOfPoint3i(), index, val.as_raw_VectorOfPoint3i()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfPoint3i_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -6059,25 +6106,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfPoint3i { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfPoint3i_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfPoint3i { ptr: cv_VectorOfVectorOfPoint3i_get_unchecked(self.as_raw_VectorOfVectorOfPoint3i(), index) }
+			extern "C" { fn cv_VectorOfVectorOfPoint3i_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfPoint3i_get_unchecked(self.as_raw_VectorOfVectorOfPoint3i(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfPoint3i { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfPoint3i::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfPoint3i_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfPoint3i_set(self.as_raw_VectorOfVectorOfPoint3i(), index, val.as_raw_VectorOfPoint3i()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfPoint3i_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfPoint3i_set_unchecked(self.as_raw_VectorOfVectorOfPoint3i(), index, val.as_raw_VectorOfPoint3i())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfPoint3i {}
@@ -6176,6 +6227,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfRect {
 		type Storage = types::VectorOfRect;
+		type Arg = types::VectorOfRect;
 	
 		#[inline]
 		fn new() -> Self {
@@ -6239,22 +6291,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfRect_clear(self.as_raw_VectorOfVectorOfRect()) }
 		}
 	
-		type Arg = types::VectorOfRect;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfRect_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfRect_push(self.as_raw_VectorOfVectorOfRect(), val.as_raw_VectorOfRect()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfRect_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfRect_insert(self.as_raw_VectorOfVectorOfRect(), index, val.as_raw_VectorOfRect()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfRect_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -6262,25 +6312,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfRect { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfRect_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfRect { ptr: cv_VectorOfVectorOfRect_get_unchecked(self.as_raw_VectorOfVectorOfRect(), index) }
+			extern "C" { fn cv_VectorOfVectorOfRect_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfRect_get_unchecked(self.as_raw_VectorOfVectorOfRect(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfRect { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfRect::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfRect_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfRect_set(self.as_raw_VectorOfVectorOfRect(), index, val.as_raw_VectorOfRect()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfRect_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfRect_set_unchecked(self.as_raw_VectorOfVectorOfRect(), index, val.as_raw_VectorOfRect())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfRect {}
@@ -6379,6 +6433,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfVec2i {
 		type Storage = types::VectorOfVec2i;
+		type Arg = types::VectorOfVec2i;
 	
 		#[inline]
 		fn new() -> Self {
@@ -6442,22 +6497,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfVec2i_clear(self.as_raw_VectorOfVectorOfVec2i()) }
 		}
 	
-		type Arg = types::VectorOfVec2i;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfVec2i_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfVec2i_push(self.as_raw_VectorOfVectorOfVec2i(), val.as_raw_VectorOfVec2i()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfVec2i_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfVec2i_insert(self.as_raw_VectorOfVectorOfVec2i(), index, val.as_raw_VectorOfVec2i()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfVec2i_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -6465,25 +6518,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfVec2i { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfVec2i_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfVec2i { ptr: cv_VectorOfVectorOfVec2i_get_unchecked(self.as_raw_VectorOfVectorOfVec2i(), index) }
+			extern "C" { fn cv_VectorOfVectorOfVec2i_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfVec2i_get_unchecked(self.as_raw_VectorOfVectorOfVec2i(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfVec2i { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfVec2i::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfVec2i_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfVec2i_set(self.as_raw_VectorOfVectorOfVec2i(), index, val.as_raw_VectorOfVec2i()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfVec2i_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfVec2i_set_unchecked(self.as_raw_VectorOfVectorOfVec2i(), index, val.as_raw_VectorOfVec2i())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfVec2i {}
@@ -6582,6 +6639,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOff64 {
 		type Storage = types::VectorOff64;
+		type Arg = types::VectorOff64;
 	
 		#[inline]
 		fn new() -> Self {
@@ -6645,22 +6703,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOff64_clear(self.as_raw_VectorOfVectorOff64()) }
 		}
 	
-		type Arg = types::VectorOff64;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOff64_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOff64_push(self.as_raw_VectorOfVectorOff64(), val.as_raw_VectorOff64()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOff64_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOff64_insert(self.as_raw_VectorOfVectorOff64(), index, val.as_raw_VectorOff64()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOff64_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -6668,25 +6724,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOff64 { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOff64_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOff64 { ptr: cv_VectorOfVectorOff64_get_unchecked(self.as_raw_VectorOfVectorOff64(), index) }
+			extern "C" { fn cv_VectorOfVectorOff64_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOff64_get_unchecked(self.as_raw_VectorOfVectorOff64(), index)
+				.into_result()
+				.map(|ptr| types::VectorOff64 { ptr })
+				.expect("Infallible function failed: VectorOfVectorOff64::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOff64_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOff64_set(self.as_raw_VectorOfVectorOff64(), index, val.as_raw_VectorOff64()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOff64_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOff64_set_unchecked(self.as_raw_VectorOfVectorOff64(), index, val.as_raw_VectorOff64())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOff64 {}
@@ -6785,6 +6845,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfi32 {
 		type Storage = types::VectorOfi32;
+		type Arg = types::VectorOfi32;
 	
 		#[inline]
 		fn new() -> Self {
@@ -6848,22 +6909,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfi32_clear(self.as_raw_VectorOfVectorOfi32()) }
 		}
 	
-		type Arg = types::VectorOfi32;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfi32_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfi32_push(self.as_raw_VectorOfVectorOfi32(), val.as_raw_VectorOfi32()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfi32_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfi32_insert(self.as_raw_VectorOfVectorOfi32(), index, val.as_raw_VectorOfi32()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfi32_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -6871,25 +6930,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfi32 { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfi32_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfi32 { ptr: cv_VectorOfVectorOfi32_get_unchecked(self.as_raw_VectorOfVectorOfi32(), index) }
+			extern "C" { fn cv_VectorOfVectorOfi32_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfi32_get_unchecked(self.as_raw_VectorOfVectorOfi32(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfi32 { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfi32::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfi32_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfi32_set(self.as_raw_VectorOfVectorOfi32(), index, val.as_raw_VectorOfi32()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfi32_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfi32_set_unchecked(self.as_raw_VectorOfVectorOfi32(), index, val.as_raw_VectorOfi32())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfi32 {}
@@ -6988,6 +7051,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfi8 {
 		type Storage = types::VectorOfi8;
+		type Arg = types::VectorOfi8;
 	
 		#[inline]
 		fn new() -> Self {
@@ -7051,22 +7115,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfi8_clear(self.as_raw_VectorOfVectorOfi8()) }
 		}
 	
-		type Arg = types::VectorOfi8;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfi8_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfi8_push(self.as_raw_VectorOfVectorOfi8(), val.as_raw_VectorOfi8()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfi8_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfi8_insert(self.as_raw_VectorOfVectorOfi8(), index, val.as_raw_VectorOfi8()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfi8_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -7074,25 +7136,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfi8 { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfi8_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfi8 { ptr: cv_VectorOfVectorOfi8_get_unchecked(self.as_raw_VectorOfVectorOfi8(), index) }
+			extern "C" { fn cv_VectorOfVectorOfi8_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfi8_get_unchecked(self.as_raw_VectorOfVectorOfi8(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfi8 { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfi8::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfi8_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfi8_set(self.as_raw_VectorOfVectorOfi8(), index, val.as_raw_VectorOfi8()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfi8_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfi8_set_unchecked(self.as_raw_VectorOfVectorOfi8(), index, val.as_raw_VectorOfi8())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfi8 {}
@@ -7191,6 +7257,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfu8 {
 		type Storage = types::VectorOfu8;
+		type Arg = types::VectorOfu8;
 	
 		#[inline]
 		fn new() -> Self {
@@ -7254,22 +7321,20 @@ mod core_types {
 			unsafe { cv_VectorOfVectorOfu8_clear(self.as_raw_VectorOfVectorOfu8()) }
 		}
 	
-		type Arg = types::VectorOfu8;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfu8_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfu8_push(self.as_raw_VectorOfVectorOfu8(), val.as_raw_VectorOfu8()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfu8_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfu8_insert(self.as_raw_VectorOfVectorOfu8(), index, val.as_raw_VectorOfu8()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfu8_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -7277,25 +7342,29 @@ mod core_types {
 				.into_result()
 				.map(|ptr| types::VectorOfu8 { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfu8_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfu8 { ptr: cv_VectorOfVectorOfu8_get_unchecked(self.as_raw_VectorOfVectorOfu8(), index) }
+			extern "C" { fn cv_VectorOfVectorOfu8_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfu8_get_unchecked(self.as_raw_VectorOfVectorOfu8(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfu8 { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfu8::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfu8_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfu8_set(self.as_raw_VectorOfVectorOfu8(), index, val.as_raw_VectorOfu8()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfu8_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfu8_set_unchecked(self.as_raw_VectorOfVectorOfu8(), index, val.as_raw_VectorOfu8())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfu8 {}
@@ -7394,6 +7463,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfbool {
 		type Storage = bool;
+		type Arg = bool;
 	
 		#[inline]
 		fn new() -> Self {
@@ -7457,47 +7527,48 @@ mod core_types {
 			unsafe { cv_VectorOfbool_clear(self.as_raw_VectorOfbool()) }
 		}
 	
-		type Arg = bool;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfbool_push(instance: *mut c_void, val: bool); }
+			unsafe { cv_VectorOfbool_push(self.as_raw_VectorOfbool(), val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfbool_insert(instance: *mut c_void, index: size_t, val: bool); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfbool_insert(self.as_raw_VectorOfbool(), index, val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfbool_get(instance: *mut c_void, index: size_t) -> sys::Result<bool>; }
 			unsafe { cv_VectorOfbool_get(self.as_raw_VectorOfbool(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfbool_push(instance: *mut c_void, val: bool); }
-			unsafe { cv_VectorOfbool_push(self.as_raw_VectorOfbool(), val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfbool_insert(instance: *mut c_void, index: size_t, val: bool); }
-			unsafe { cv_VectorOfbool_insert(self.as_raw_VectorOfbool(), index, val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfbool_get_unchecked(instance: *mut c_void, index: size_t) -> bool; }
+			extern "C" { fn cv_VectorOfbool_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<bool>; }
 			cv_VectorOfbool_get_unchecked(self.as_raw_VectorOfbool(), index)
+				.into_result()
+				.expect("Infallible function failed: VectorOfbool::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfbool_set(instance: *mut c_void, index: size_t, val: bool) -> sys::Result_void; }
 			unsafe { cv_VectorOfbool_set(self.as_raw_VectorOfbool(), index, val) }
-			.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfbool_set_unchecked(instance: *mut c_void, index: size_t, val: bool); }
 			cv_VectorOfbool_set_unchecked(self.as_raw_VectorOfbool(), index, val)
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfbool {}
@@ -7553,6 +7624,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOff32 {
 		type Storage = f32;
+		type Arg = f32;
 	
 		#[inline]
 		fn new() -> Self {
@@ -7616,47 +7688,49 @@ mod core_types {
 			unsafe { cv_VectorOff32_clear(self.as_raw_VectorOff32()) }
 		}
 	
-		type Arg = f32;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOff32_push(instance: *mut c_void, val: f32); }
+			unsafe { cv_VectorOff32_push(self.as_raw_VectorOff32(), val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOff32_insert(instance: *mut c_void, index: size_t, val: f32); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOff32_insert(self.as_raw_VectorOff32(), index, val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOff32_get(instance: *mut c_void, index: size_t) -> sys::Result<f32>; }
 			unsafe { cv_VectorOff32_get(self.as_raw_VectorOff32(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOff32_push(instance: *mut c_void, val: f32); }
-			unsafe { cv_VectorOff32_push(self.as_raw_VectorOff32(), val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOff32_insert(instance: *mut c_void, index: size_t, val: f32); }
-			unsafe { cv_VectorOff32_insert(self.as_raw_VectorOff32(), index, val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOff32_get_unchecked(instance: *mut c_void, index: size_t) -> f32; }
+			extern "C" { fn cv_VectorOff32_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<f32>; }
 			cv_VectorOff32_get_unchecked(self.as_raw_VectorOff32(), index)
+				.into_result()
+				.expect("Infallible function failed: VectorOff32::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOff32_set(instance: *mut c_void, index: size_t, val: f32) -> sys::Result_void; }
 			unsafe { cv_VectorOff32_set(self.as_raw_VectorOff32(), index, val) }
-			.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOff32_set_unchecked(instance: *mut c_void, index: size_t, val: f32); }
 			cv_VectorOff32_set_unchecked(self.as_raw_VectorOff32(), index, val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -7767,6 +7841,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOff64 {
 		type Storage = f64;
+		type Arg = f64;
 	
 		#[inline]
 		fn new() -> Self {
@@ -7830,47 +7905,49 @@ mod core_types {
 			unsafe { cv_VectorOff64_clear(self.as_raw_VectorOff64()) }
 		}
 	
-		type Arg = f64;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOff64_push(instance: *mut c_void, val: f64); }
+			unsafe { cv_VectorOff64_push(self.as_raw_VectorOff64(), val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOff64_insert(instance: *mut c_void, index: size_t, val: f64); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOff64_insert(self.as_raw_VectorOff64(), index, val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOff64_get(instance: *mut c_void, index: size_t) -> sys::Result<f64>; }
 			unsafe { cv_VectorOff64_get(self.as_raw_VectorOff64(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOff64_push(instance: *mut c_void, val: f64); }
-			unsafe { cv_VectorOff64_push(self.as_raw_VectorOff64(), val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOff64_insert(instance: *mut c_void, index: size_t, val: f64); }
-			unsafe { cv_VectorOff64_insert(self.as_raw_VectorOff64(), index, val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOff64_get_unchecked(instance: *mut c_void, index: size_t) -> f64; }
+			extern "C" { fn cv_VectorOff64_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<f64>; }
 			cv_VectorOff64_get_unchecked(self.as_raw_VectorOff64(), index)
+				.into_result()
+				.expect("Infallible function failed: VectorOff64::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOff64_set(instance: *mut c_void, index: size_t, val: f64) -> sys::Result_void; }
 			unsafe { cv_VectorOff64_set(self.as_raw_VectorOff64(), index, val) }
-			.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOff64_set_unchecked(instance: *mut c_void, index: size_t, val: f64); }
 			cv_VectorOff64_set_unchecked(self.as_raw_VectorOff64(), index, val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -7981,6 +8058,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfi32 {
 		type Storage = i32;
+		type Arg = i32;
 	
 		#[inline]
 		fn new() -> Self {
@@ -8044,47 +8122,49 @@ mod core_types {
 			unsafe { cv_VectorOfi32_clear(self.as_raw_VectorOfi32()) }
 		}
 	
-		type Arg = i32;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfi32_push(instance: *mut c_void, val: i32); }
+			unsafe { cv_VectorOfi32_push(self.as_raw_VectorOfi32(), val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfi32_insert(instance: *mut c_void, index: size_t, val: i32); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfi32_insert(self.as_raw_VectorOfi32(), index, val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfi32_get(instance: *mut c_void, index: size_t) -> sys::Result<i32>; }
 			unsafe { cv_VectorOfi32_get(self.as_raw_VectorOfi32(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfi32_push(instance: *mut c_void, val: i32); }
-			unsafe { cv_VectorOfi32_push(self.as_raw_VectorOfi32(), val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfi32_insert(instance: *mut c_void, index: size_t, val: i32); }
-			unsafe { cv_VectorOfi32_insert(self.as_raw_VectorOfi32(), index, val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfi32_get_unchecked(instance: *mut c_void, index: size_t) -> i32; }
+			extern "C" { fn cv_VectorOfi32_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<i32>; }
 			cv_VectorOfi32_get_unchecked(self.as_raw_VectorOfi32(), index)
+				.into_result()
+				.expect("Infallible function failed: VectorOfi32::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfi32_set(instance: *mut c_void, index: size_t, val: i32) -> sys::Result_void; }
 			unsafe { cv_VectorOfi32_set(self.as_raw_VectorOfi32(), index, val) }
-			.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfi32_set_unchecked(instance: *mut c_void, index: size_t, val: i32); }
 			cv_VectorOfi32_set_unchecked(self.as_raw_VectorOfi32(), index, val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -8195,6 +8275,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfi8 {
 		type Storage = i8;
+		type Arg = i8;
 	
 		#[inline]
 		fn new() -> Self {
@@ -8258,47 +8339,49 @@ mod core_types {
 			unsafe { cv_VectorOfi8_clear(self.as_raw_VectorOfi8()) }
 		}
 	
-		type Arg = i8;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfi8_push(instance: *mut c_void, val: i8); }
+			unsafe { cv_VectorOfi8_push(self.as_raw_VectorOfi8(), val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfi8_insert(instance: *mut c_void, index: size_t, val: i8); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfi8_insert(self.as_raw_VectorOfi8(), index, val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfi8_get(instance: *mut c_void, index: size_t) -> sys::Result<i8>; }
 			unsafe { cv_VectorOfi8_get(self.as_raw_VectorOfi8(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfi8_push(instance: *mut c_void, val: i8); }
-			unsafe { cv_VectorOfi8_push(self.as_raw_VectorOfi8(), val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfi8_insert(instance: *mut c_void, index: size_t, val: i8); }
-			unsafe { cv_VectorOfi8_insert(self.as_raw_VectorOfi8(), index, val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfi8_get_unchecked(instance: *mut c_void, index: size_t) -> i8; }
+			extern "C" { fn cv_VectorOfi8_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<i8>; }
 			cv_VectorOfi8_get_unchecked(self.as_raw_VectorOfi8(), index)
+				.into_result()
+				.expect("Infallible function failed: VectorOfi8::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfi8_set(instance: *mut c_void, index: size_t, val: i8) -> sys::Result_void; }
 			unsafe { cv_VectorOfi8_set(self.as_raw_VectorOfi8(), index, val) }
-			.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfi8_set_unchecked(instance: *mut c_void, index: size_t, val: i8); }
 			cv_VectorOfi8_set_unchecked(self.as_raw_VectorOfi8(), index, val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -8409,6 +8492,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfsize_t {
 		type Storage = size_t;
+		type Arg = size_t;
 	
 		#[inline]
 		fn new() -> Self {
@@ -8472,47 +8556,49 @@ mod core_types {
 			unsafe { cv_VectorOfsize_t_clear(self.as_raw_VectorOfsize_t()) }
 		}
 	
-		type Arg = size_t;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfsize_t_push(instance: *mut c_void, val: size_t); }
+			unsafe { cv_VectorOfsize_t_push(self.as_raw_VectorOfsize_t(), val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfsize_t_insert(instance: *mut c_void, index: size_t, val: size_t); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfsize_t_insert(self.as_raw_VectorOfsize_t(), index, val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfsize_t_get(instance: *mut c_void, index: size_t) -> sys::Result<size_t>; }
 			unsafe { cv_VectorOfsize_t_get(self.as_raw_VectorOfsize_t(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfsize_t_push(instance: *mut c_void, val: size_t); }
-			unsafe { cv_VectorOfsize_t_push(self.as_raw_VectorOfsize_t(), val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfsize_t_insert(instance: *mut c_void, index: size_t, val: size_t); }
-			unsafe { cv_VectorOfsize_t_insert(self.as_raw_VectorOfsize_t(), index, val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfsize_t_get_unchecked(instance: *mut c_void, index: size_t) -> size_t; }
+			extern "C" { fn cv_VectorOfsize_t_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<size_t>; }
 			cv_VectorOfsize_t_get_unchecked(self.as_raw_VectorOfsize_t(), index)
+				.into_result()
+				.expect("Infallible function failed: VectorOfsize_t::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfsize_t_set(instance: *mut c_void, index: size_t, val: size_t) -> sys::Result_void; }
 			unsafe { cv_VectorOfsize_t_set(self.as_raw_VectorOfsize_t(), index, val) }
-			.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfsize_t_set_unchecked(instance: *mut c_void, index: size_t, val: size_t); }
 			cv_VectorOfsize_t_set_unchecked(self.as_raw_VectorOfsize_t(), index, val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -8572,6 +8658,7 @@ mod core_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfu8 {
 		type Storage = u8;
+		type Arg = u8;
 	
 		#[inline]
 		fn new() -> Self {
@@ -8635,47 +8722,49 @@ mod core_types {
 			unsafe { cv_VectorOfu8_clear(self.as_raw_VectorOfu8()) }
 		}
 	
-		type Arg = u8;
-		
+		#[inline]
+		fn push(&mut self, val: Self::Arg) {
+			extern "C" { fn cv_VectorOfu8_push(instance: *mut c_void, val: u8); }
+			unsafe { cv_VectorOfu8_push(self.as_raw_VectorOfu8(), val) }
+		}
+	
+		#[inline]
+		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+			extern "C" { fn cv_VectorOfu8_insert(instance: *mut c_void, index: size_t, val: u8); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
+			unsafe { cv_VectorOfu8_insert(self.as_raw_VectorOfu8(), index, val) }
+			Ok(())
+		}
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfu8_get(instance: *mut c_void, index: size_t) -> sys::Result<u8>; }
 			unsafe { cv_VectorOfu8_get(self.as_raw_VectorOfu8(), index) }
 				.into_result()
 		}
-		
-		#[inline]
-		fn push(&mut self, val: Self::Arg) {
-			extern "C" { fn cv_VectorOfu8_push(instance: *mut c_void, val: u8); }
-			unsafe { cv_VectorOfu8_push(self.as_raw_VectorOfu8(), val) }
-		}
-		
-		#[inline]
-		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
-			extern "C" { fn cv_VectorOfu8_insert(instance: *mut c_void, index: size_t, val: u8); }
-			unsafe { cv_VectorOfu8_insert(self.as_raw_VectorOfu8(), index, val) }
-			Ok(())
-		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfu8_get_unchecked(instance: *mut c_void, index: size_t) -> u8; }
+			extern "C" { fn cv_VectorOfu8_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<u8>; }
 			cv_VectorOfu8_get_unchecked(self.as_raw_VectorOfu8(), index)
+				.into_result()
+				.expect("Infallible function failed: VectorOfu8::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfu8_set(instance: *mut c_void, index: size_t, val: u8) -> sys::Result_void; }
 			unsafe { cv_VectorOfu8_set(self.as_raw_VectorOfu8(), index, val) }
-			.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfu8_set_unchecked(instance: *mut c_void, index: size_t, val: u8); }
 			cv_VectorOfu8_set_unchecked(self.as_raw_VectorOfu8(), index, val)
 		}
+	
+		
 		#[inline]
 		fn to_vec(&self) -> Vec<Self::Storage> {
 			self.to_slice().to_vec()
@@ -8740,7 +8829,7 @@ pub use core_types::*;
 
 #[cfg(feature = "contrib")]
 mod dnn_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfAbsLayer {
 		pub(crate) ptr: *mut c_void
@@ -9631,6 +9720,7 @@ mod dnn_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfBlob {
 		type Storage = crate::dnn::Blob;
+		type Arg = crate::dnn::Blob;
 	
 		#[inline]
 		fn new() -> Self {
@@ -9694,22 +9784,20 @@ mod dnn_types {
 			unsafe { cv_VectorOfBlob_clear(self.as_raw_VectorOfBlob()) }
 		}
 	
-		type Arg = crate::dnn::Blob;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfBlob_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfBlob_push(self.as_raw_VectorOfBlob(), val.as_raw_Blob()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfBlob_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfBlob_insert(self.as_raw_VectorOfBlob(), index, val.as_raw_Blob()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfBlob_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -9717,25 +9805,29 @@ mod dnn_types {
 				.into_result()
 				.map(|ptr| crate::dnn::Blob { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfBlob_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::dnn::Blob { ptr: cv_VectorOfBlob_get_unchecked(self.as_raw_VectorOfBlob(), index) }
+			extern "C" { fn cv_VectorOfBlob_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfBlob_get_unchecked(self.as_raw_VectorOfBlob(), index)
+				.into_result()
+				.map(|ptr| crate::dnn::Blob { ptr })
+				.expect("Infallible function failed: VectorOfBlob::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfBlob_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfBlob_set(self.as_raw_VectorOfBlob(), index, val.as_raw_Blob()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfBlob_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfBlob_set_unchecked(self.as_raw_VectorOfBlob(), index, val.as_raw_Blob())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfBlob {}
@@ -9783,6 +9875,7 @@ mod dnn_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfNet_LayerId {
 		type Storage = crate::dnn::Net_LayerId;
+		type Arg = crate::dnn::Net_LayerId;
 	
 		#[inline]
 		fn new() -> Self {
@@ -9846,48 +9939,50 @@ mod dnn_types {
 			unsafe { cv_VectorOfNet_LayerId_clear(self.as_raw_VectorOfNet_LayerId()) }
 		}
 	
-		type Arg = crate::dnn::Net_LayerId;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfNet_LayerId_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfNet_LayerId_push(self.as_raw_VectorOfNet_LayerId(), val.as_raw_DictValue()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfNet_LayerId_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfNet_LayerId_insert(self.as_raw_VectorOfNet_LayerId(), index, val.as_raw_DictValue()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfNet_LayerId_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
 			unsafe { cv_VectorOfNet_LayerId_get(self.as_raw_VectorOfNet_LayerId(), index) }
 				.into_result()
-				.map(|ptr| crate::dnn::Net_LayerId { ptr })
+				.map(|ptr| crate::dnn::DictValue { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfNet_LayerId_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::dnn::Net_LayerId { ptr: cv_VectorOfNet_LayerId_get_unchecked(self.as_raw_VectorOfNet_LayerId(), index) }
+			extern "C" { fn cv_VectorOfNet_LayerId_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfNet_LayerId_get_unchecked(self.as_raw_VectorOfNet_LayerId(), index)
+				.into_result()
+				.map(|ptr| crate::dnn::DictValue { ptr })
+				.expect("Infallible function failed: VectorOfNet_LayerId::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfNet_LayerId_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfNet_LayerId_set(self.as_raw_VectorOfNet_LayerId(), index, val.as_raw_DictValue()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfNet_LayerId_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfNet_LayerId_set_unchecked(self.as_raw_VectorOfNet_LayerId(), index, val.as_raw_DictValue())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfNet_LayerId {}
@@ -9898,7 +9993,7 @@ pub use dnn_types::*;
 
 #[cfg(feature = "contrib")]
 mod dpm_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfDPMDetector {
 		pub(crate) ptr: *mut c_void
@@ -9976,6 +10071,7 @@ mod dpm_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDPMDetector_ObjectDetection {
 		type Storage = crate::dpm::DPMDetector_ObjectDetection;
+		type Arg = crate::dpm::DPMDetector_ObjectDetection;
 	
 		#[inline]
 		fn new() -> Self {
@@ -10039,22 +10135,20 @@ mod dpm_types {
 			unsafe { cv_VectorOfDPMDetector_ObjectDetection_clear(self.as_raw_VectorOfDPMDetector_ObjectDetection()) }
 		}
 	
-		type Arg = crate::dpm::DPMDetector_ObjectDetection;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDPMDetector_ObjectDetection_push(self.as_raw_VectorOfDPMDetector_ObjectDetection(), val.as_raw_DPMDetector_ObjectDetection()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDPMDetector_ObjectDetection_insert(self.as_raw_VectorOfDPMDetector_ObjectDetection(), index, val.as_raw_DPMDetector_ObjectDetection()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -10062,25 +10156,29 @@ mod dpm_types {
 				.into_result()
 				.map(|ptr| crate::dpm::DPMDetector_ObjectDetection { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::dpm::DPMDetector_ObjectDetection { ptr: cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(self.as_raw_VectorOfDPMDetector_ObjectDetection(), index) }
+			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(self.as_raw_VectorOfDPMDetector_ObjectDetection(), index)
+				.into_result()
+				.map(|ptr| crate::dpm::DPMDetector_ObjectDetection { ptr })
+				.expect("Infallible function failed: VectorOfDPMDetector_ObjectDetection::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDPMDetector_ObjectDetection_set(self.as_raw_VectorOfDPMDetector_ObjectDetection(), index, val.as_raw_DPMDetector_ObjectDetection()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDPMDetector_ObjectDetection_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDPMDetector_ObjectDetection_set_unchecked(self.as_raw_VectorOfDPMDetector_ObjectDetection(), index, val.as_raw_DPMDetector_ObjectDetection())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDPMDetector_ObjectDetection {}
@@ -10091,7 +10189,7 @@ pub use dpm_types::*;
 
 #[cfg(feature = "contrib")]
 mod face_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfBIF {
 		pub(crate) ptr: *mut c_void
@@ -10299,7 +10397,7 @@ mod face_types {
 pub use face_types::*;
 
 mod features2d_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfAKAZE {
 		pub(crate) ptr: *mut c_void
@@ -10917,7 +11015,7 @@ mod features2d_types {
 pub use features2d_types::*;
 
 mod flann_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfIndexParams {
 		pub(crate) ptr: *mut c_void
@@ -10996,7 +11094,7 @@ pub use flann_types::*;
 
 #[cfg(feature = "contrib")]
 mod freetype_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfFreeType2 {
 		pub(crate) ptr: *mut c_void
@@ -11043,7 +11141,7 @@ pub use freetype_types::*;
 
 #[cfg(feature = "contrib")]
 mod hdf_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfHDF5 {
 		pub(crate) ptr: *mut c_void
@@ -11083,7 +11181,7 @@ mod hdf_types {
 pub use hdf_types::*;
 
 mod imgproc_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfCLAHE {
 		pub(crate) ptr: *mut c_void
@@ -11258,7 +11356,7 @@ pub use imgproc_types::*;
 
 #[cfg(feature = "contrib")]
 mod line_descriptor_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfBinaryDescriptor {
 		pub(crate) ptr: *mut c_void
@@ -11420,6 +11518,7 @@ mod line_descriptor_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfKeyLine {
 		type Storage = crate::line_descriptor::KeyLine;
+		type Arg = crate::line_descriptor::KeyLine;
 	
 		#[inline]
 		fn new() -> Self {
@@ -11483,22 +11582,20 @@ mod line_descriptor_types {
 			unsafe { cv_VectorOfKeyLine_clear(self.as_raw_VectorOfKeyLine()) }
 		}
 	
-		type Arg = crate::line_descriptor::KeyLine;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfKeyLine_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfKeyLine_push(self.as_raw_VectorOfKeyLine(), val.as_raw_KeyLine()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfKeyLine_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfKeyLine_insert(self.as_raw_VectorOfKeyLine(), index, val.as_raw_KeyLine()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfKeyLine_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -11506,25 +11603,29 @@ mod line_descriptor_types {
 				.into_result()
 				.map(|ptr| crate::line_descriptor::KeyLine { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfKeyLine_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::line_descriptor::KeyLine { ptr: cv_VectorOfKeyLine_get_unchecked(self.as_raw_VectorOfKeyLine(), index) }
+			extern "C" { fn cv_VectorOfKeyLine_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfKeyLine_get_unchecked(self.as_raw_VectorOfKeyLine(), index)
+				.into_result()
+				.map(|ptr| crate::line_descriptor::KeyLine { ptr })
+				.expect("Infallible function failed: VectorOfKeyLine::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfKeyLine_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfKeyLine_set(self.as_raw_VectorOfKeyLine(), index, val.as_raw_KeyLine()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfKeyLine_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfKeyLine_set_unchecked(self.as_raw_VectorOfKeyLine(), index, val.as_raw_KeyLine())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfKeyLine {}
@@ -11572,6 +11673,7 @@ mod line_descriptor_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfKeyLine {
 		type Storage = types::VectorOfKeyLine;
+		type Arg = types::VectorOfKeyLine;
 	
 		#[inline]
 		fn new() -> Self {
@@ -11635,22 +11737,20 @@ mod line_descriptor_types {
 			unsafe { cv_VectorOfVectorOfKeyLine_clear(self.as_raw_VectorOfVectorOfKeyLine()) }
 		}
 	
-		type Arg = types::VectorOfKeyLine;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfKeyLine_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfKeyLine_push(self.as_raw_VectorOfVectorOfKeyLine(), val.as_raw_VectorOfKeyLine()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfKeyLine_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfKeyLine_insert(self.as_raw_VectorOfVectorOfKeyLine(), index, val.as_raw_VectorOfKeyLine()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfKeyLine_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -11658,25 +11758,29 @@ mod line_descriptor_types {
 				.into_result()
 				.map(|ptr| types::VectorOfKeyLine { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfKeyLine_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfKeyLine { ptr: cv_VectorOfVectorOfKeyLine_get_unchecked(self.as_raw_VectorOfVectorOfKeyLine(), index) }
+			extern "C" { fn cv_VectorOfVectorOfKeyLine_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfKeyLine_get_unchecked(self.as_raw_VectorOfVectorOfKeyLine(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfKeyLine { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfKeyLine::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfKeyLine_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfKeyLine_set(self.as_raw_VectorOfVectorOfKeyLine(), index, val.as_raw_VectorOfKeyLine()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfKeyLine_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfKeyLine_set_unchecked(self.as_raw_VectorOfVectorOfKeyLine(), index, val.as_raw_VectorOfKeyLine())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfKeyLine {}
@@ -11686,7 +11790,7 @@ mod line_descriptor_types {
 pub use line_descriptor_types::*;
 
 mod ml_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfANN_MLP {
 		pub(crate) ptr: *mut c_void
@@ -12265,6 +12369,7 @@ mod ml_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDTrees_Node {
 		type Storage = crate::ml::DTrees_Node;
+		type Arg = crate::ml::DTrees_Node;
 	
 		#[inline]
 		fn new() -> Self {
@@ -12328,22 +12433,20 @@ mod ml_types {
 			unsafe { cv_VectorOfDTrees_Node_clear(self.as_raw_VectorOfDTrees_Node()) }
 		}
 	
-		type Arg = crate::ml::DTrees_Node;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDTrees_Node_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDTrees_Node_push(self.as_raw_VectorOfDTrees_Node(), val.as_raw_DTrees_Node()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDTrees_Node_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDTrees_Node_insert(self.as_raw_VectorOfDTrees_Node(), index, val.as_raw_DTrees_Node()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDTrees_Node_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -12351,25 +12454,29 @@ mod ml_types {
 				.into_result()
 				.map(|ptr| crate::ml::DTrees_Node { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDTrees_Node_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::ml::DTrees_Node { ptr: cv_VectorOfDTrees_Node_get_unchecked(self.as_raw_VectorOfDTrees_Node(), index) }
+			extern "C" { fn cv_VectorOfDTrees_Node_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDTrees_Node_get_unchecked(self.as_raw_VectorOfDTrees_Node(), index)
+				.into_result()
+				.map(|ptr| crate::ml::DTrees_Node { ptr })
+				.expect("Infallible function failed: VectorOfDTrees_Node::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDTrees_Node_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDTrees_Node_set(self.as_raw_VectorOfDTrees_Node(), index, val.as_raw_DTrees_Node()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDTrees_Node_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDTrees_Node_set_unchecked(self.as_raw_VectorOfDTrees_Node(), index, val.as_raw_DTrees_Node())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDTrees_Node {}
@@ -12417,6 +12524,7 @@ mod ml_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDTrees_Split {
 		type Storage = crate::ml::DTrees_Split;
+		type Arg = crate::ml::DTrees_Split;
 	
 		#[inline]
 		fn new() -> Self {
@@ -12480,22 +12588,20 @@ mod ml_types {
 			unsafe { cv_VectorOfDTrees_Split_clear(self.as_raw_VectorOfDTrees_Split()) }
 		}
 	
-		type Arg = crate::ml::DTrees_Split;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDTrees_Split_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDTrees_Split_push(self.as_raw_VectorOfDTrees_Split(), val.as_raw_DTrees_Split()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDTrees_Split_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDTrees_Split_insert(self.as_raw_VectorOfDTrees_Split(), index, val.as_raw_DTrees_Split()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDTrees_Split_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -12503,25 +12609,29 @@ mod ml_types {
 				.into_result()
 				.map(|ptr| crate::ml::DTrees_Split { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDTrees_Split_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::ml::DTrees_Split { ptr: cv_VectorOfDTrees_Split_get_unchecked(self.as_raw_VectorOfDTrees_Split(), index) }
+			extern "C" { fn cv_VectorOfDTrees_Split_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDTrees_Split_get_unchecked(self.as_raw_VectorOfDTrees_Split(), index)
+				.into_result()
+				.map(|ptr| crate::ml::DTrees_Split { ptr })
+				.expect("Infallible function failed: VectorOfDTrees_Split::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDTrees_Split_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDTrees_Split_set(self.as_raw_VectorOfDTrees_Split(), index, val.as_raw_DTrees_Split()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDTrees_Split_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDTrees_Split_set_unchecked(self.as_raw_VectorOfDTrees_Split(), index, val.as_raw_DTrees_Split())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDTrees_Split {}
@@ -12530,7 +12640,7 @@ mod ml_types {
 pub use ml_types::*;
 
 mod objdetect_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfBaseCascadeClassifier {
 		pub(crate) ptr: *mut c_void
@@ -12680,6 +12790,7 @@ mod objdetect_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDetectionBasedTracker_ExtObject {
 		type Storage = crate::objdetect::DetectionBasedTracker_ExtObject;
+		type Arg = crate::objdetect::DetectionBasedTracker_ExtObject;
 	
 		#[inline]
 		fn new() -> Self {
@@ -12743,22 +12854,20 @@ mod objdetect_types {
 			unsafe { cv_VectorOfDetectionBasedTracker_ExtObject_clear(self.as_raw_VectorOfDetectionBasedTracker_ExtObject()) }
 		}
 	
-		type Arg = crate::objdetect::DetectionBasedTracker_ExtObject;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDetectionBasedTracker_ExtObject_push(self.as_raw_VectorOfDetectionBasedTracker_ExtObject(), val.as_raw_DetectionBasedTracker_ExtObject()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDetectionBasedTracker_ExtObject_insert(self.as_raw_VectorOfDetectionBasedTracker_ExtObject(), index, val.as_raw_DetectionBasedTracker_ExtObject()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -12766,25 +12875,29 @@ mod objdetect_types {
 				.into_result()
 				.map(|ptr| crate::objdetect::DetectionBasedTracker_ExtObject { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::objdetect::DetectionBasedTracker_ExtObject { ptr: cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(self.as_raw_VectorOfDetectionBasedTracker_ExtObject(), index) }
+			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(self.as_raw_VectorOfDetectionBasedTracker_ExtObject(), index)
+				.into_result()
+				.map(|ptr| crate::objdetect::DetectionBasedTracker_ExtObject { ptr })
+				.expect("Infallible function failed: VectorOfDetectionBasedTracker_ExtObject::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDetectionBasedTracker_ExtObject_set(self.as_raw_VectorOfDetectionBasedTracker_ExtObject(), index, val.as_raw_DetectionBasedTracker_ExtObject()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetectionBasedTracker_ExtObject_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDetectionBasedTracker_ExtObject_set_unchecked(self.as_raw_VectorOfDetectionBasedTracker_ExtObject(), index, val.as_raw_DetectionBasedTracker_ExtObject())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDetectionBasedTracker_ExtObject {}
@@ -12832,6 +12945,7 @@ mod objdetect_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDetectionROI {
 		type Storage = crate::objdetect::DetectionROI;
+		type Arg = crate::objdetect::DetectionROI;
 	
 		#[inline]
 		fn new() -> Self {
@@ -12895,22 +13009,20 @@ mod objdetect_types {
 			unsafe { cv_VectorOfDetectionROI_clear(self.as_raw_VectorOfDetectionROI()) }
 		}
 	
-		type Arg = crate::objdetect::DetectionROI;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetectionROI_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDetectionROI_push(self.as_raw_VectorOfDetectionROI(), val.as_raw_DetectionROI()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDetectionROI_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDetectionROI_insert(self.as_raw_VectorOfDetectionROI(), index, val.as_raw_DetectionROI()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDetectionROI_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -12918,25 +13030,29 @@ mod objdetect_types {
 				.into_result()
 				.map(|ptr| crate::objdetect::DetectionROI { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDetectionROI_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::objdetect::DetectionROI { ptr: cv_VectorOfDetectionROI_get_unchecked(self.as_raw_VectorOfDetectionROI(), index) }
+			extern "C" { fn cv_VectorOfDetectionROI_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDetectionROI_get_unchecked(self.as_raw_VectorOfDetectionROI(), index)
+				.into_result()
+				.map(|ptr| crate::objdetect::DetectionROI { ptr })
+				.expect("Infallible function failed: VectorOfDetectionROI::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDetectionROI_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDetectionROI_set(self.as_raw_VectorOfDetectionROI(), index, val.as_raw_DetectionROI()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetectionROI_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDetectionROI_set_unchecked(self.as_raw_VectorOfDetectionROI(), index, val.as_raw_DetectionROI())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDetectionROI {}
@@ -12946,7 +13062,7 @@ pub use objdetect_types::*;
 
 #[cfg(feature = "contrib")]
 mod phase_unwrapping_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfHistogramPhaseUnwrapping {
 		pub(crate) ptr: *mut c_void
@@ -12998,7 +13114,7 @@ mod phase_unwrapping_types {
 pub use phase_unwrapping_types::*;
 
 mod photo_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfAlignMTB {
 		pub(crate) ptr: *mut c_void
@@ -13494,7 +13610,7 @@ pub use photo_types::*;
 
 #[cfg(feature = "contrib")]
 mod plot_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfPlot2d {
 		pub(crate) ptr: *mut c_void
@@ -13541,7 +13657,7 @@ pub use plot_types::*;
 
 #[cfg(feature = "contrib")]
 mod sfm_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfSFMLibmvEuclideanReconstruction {
 		pub(crate) ptr: *mut c_void
@@ -13587,7 +13703,7 @@ mod sfm_types {
 pub use sfm_types::*;
 
 mod shape_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfAffineTransformer {
 		pub(crate) ptr: *mut c_void
@@ -13851,7 +13967,7 @@ mod shape_types {
 pub use shape_types::*;
 
 mod stitching_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfDetail_Blender {
 		pub(crate) ptr: *mut c_void
@@ -14199,6 +14315,7 @@ mod stitching_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDetail_CameraParams {
 		type Storage = crate::stitching::Detail_CameraParams;
+		type Arg = crate::stitching::Detail_CameraParams;
 	
 		#[inline]
 		fn new() -> Self {
@@ -14262,22 +14379,20 @@ mod stitching_types {
 			unsafe { cv_VectorOfDetail_CameraParams_clear(self.as_raw_VectorOfDetail_CameraParams()) }
 		}
 	
-		type Arg = crate::stitching::Detail_CameraParams;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetail_CameraParams_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDetail_CameraParams_push(self.as_raw_VectorOfDetail_CameraParams(), val.as_raw_Detail_CameraParams()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDetail_CameraParams_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDetail_CameraParams_insert(self.as_raw_VectorOfDetail_CameraParams(), index, val.as_raw_Detail_CameraParams()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDetail_CameraParams_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -14285,25 +14400,29 @@ mod stitching_types {
 				.into_result()
 				.map(|ptr| crate::stitching::Detail_CameraParams { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDetail_CameraParams_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::stitching::Detail_CameraParams { ptr: cv_VectorOfDetail_CameraParams_get_unchecked(self.as_raw_VectorOfDetail_CameraParams(), index) }
+			extern "C" { fn cv_VectorOfDetail_CameraParams_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDetail_CameraParams_get_unchecked(self.as_raw_VectorOfDetail_CameraParams(), index)
+				.into_result()
+				.map(|ptr| crate::stitching::Detail_CameraParams { ptr })
+				.expect("Infallible function failed: VectorOfDetail_CameraParams::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDetail_CameraParams_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDetail_CameraParams_set(self.as_raw_VectorOfDetail_CameraParams(), index, val.as_raw_Detail_CameraParams()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetail_CameraParams_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDetail_CameraParams_set_unchecked(self.as_raw_VectorOfDetail_CameraParams(), index, val.as_raw_Detail_CameraParams())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDetail_CameraParams {}
@@ -14351,6 +14470,7 @@ mod stitching_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDetail_ImageFeatures {
 		type Storage = crate::stitching::Detail_ImageFeatures;
+		type Arg = crate::stitching::Detail_ImageFeatures;
 	
 		#[inline]
 		fn new() -> Self {
@@ -14414,22 +14534,20 @@ mod stitching_types {
 			unsafe { cv_VectorOfDetail_ImageFeatures_clear(self.as_raw_VectorOfDetail_ImageFeatures()) }
 		}
 	
-		type Arg = crate::stitching::Detail_ImageFeatures;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetail_ImageFeatures_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDetail_ImageFeatures_push(self.as_raw_VectorOfDetail_ImageFeatures(), val.as_raw_Detail_ImageFeatures()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDetail_ImageFeatures_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDetail_ImageFeatures_insert(self.as_raw_VectorOfDetail_ImageFeatures(), index, val.as_raw_Detail_ImageFeatures()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDetail_ImageFeatures_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -14437,25 +14555,29 @@ mod stitching_types {
 				.into_result()
 				.map(|ptr| crate::stitching::Detail_ImageFeatures { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDetail_ImageFeatures_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::stitching::Detail_ImageFeatures { ptr: cv_VectorOfDetail_ImageFeatures_get_unchecked(self.as_raw_VectorOfDetail_ImageFeatures(), index) }
+			extern "C" { fn cv_VectorOfDetail_ImageFeatures_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDetail_ImageFeatures_get_unchecked(self.as_raw_VectorOfDetail_ImageFeatures(), index)
+				.into_result()
+				.map(|ptr| crate::stitching::Detail_ImageFeatures { ptr })
+				.expect("Infallible function failed: VectorOfDetail_ImageFeatures::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDetail_ImageFeatures_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDetail_ImageFeatures_set(self.as_raw_VectorOfDetail_ImageFeatures(), index, val.as_raw_Detail_ImageFeatures()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetail_ImageFeatures_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDetail_ImageFeatures_set_unchecked(self.as_raw_VectorOfDetail_ImageFeatures(), index, val.as_raw_Detail_ImageFeatures())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDetail_ImageFeatures {}
@@ -14503,6 +14625,7 @@ mod stitching_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfDetail_MatchesInfo {
 		type Storage = crate::stitching::Detail_MatchesInfo;
+		type Arg = crate::stitching::Detail_MatchesInfo;
 	
 		#[inline]
 		fn new() -> Self {
@@ -14566,22 +14689,20 @@ mod stitching_types {
 			unsafe { cv_VectorOfDetail_MatchesInfo_clear(self.as_raw_VectorOfDetail_MatchesInfo()) }
 		}
 	
-		type Arg = crate::stitching::Detail_MatchesInfo;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetail_MatchesInfo_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfDetail_MatchesInfo_push(self.as_raw_VectorOfDetail_MatchesInfo(), val.as_raw_Detail_MatchesInfo()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfDetail_MatchesInfo_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfDetail_MatchesInfo_insert(self.as_raw_VectorOfDetail_MatchesInfo(), index, val.as_raw_Detail_MatchesInfo()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfDetail_MatchesInfo_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -14589,25 +14710,29 @@ mod stitching_types {
 				.into_result()
 				.map(|ptr| crate::stitching::Detail_MatchesInfo { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfDetail_MatchesInfo_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::stitching::Detail_MatchesInfo { ptr: cv_VectorOfDetail_MatchesInfo_get_unchecked(self.as_raw_VectorOfDetail_MatchesInfo(), index) }
+			extern "C" { fn cv_VectorOfDetail_MatchesInfo_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfDetail_MatchesInfo_get_unchecked(self.as_raw_VectorOfDetail_MatchesInfo(), index)
+				.into_result()
+				.map(|ptr| crate::stitching::Detail_MatchesInfo { ptr })
+				.expect("Infallible function failed: VectorOfDetail_MatchesInfo::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfDetail_MatchesInfo_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfDetail_MatchesInfo_set(self.as_raw_VectorOfDetail_MatchesInfo(), index, val.as_raw_Detail_MatchesInfo()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfDetail_MatchesInfo_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfDetail_MatchesInfo_set_unchecked(self.as_raw_VectorOfDetail_MatchesInfo(), index, val.as_raw_Detail_MatchesInfo())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfDetail_MatchesInfo {}
@@ -14617,7 +14742,7 @@ pub use stitching_types::*;
 
 #[cfg(feature = "contrib")]
 mod structured_light_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfGrayCodePattern {
 		pub(crate) ptr: *mut c_void
@@ -14714,7 +14839,7 @@ mod structured_light_types {
 pub use structured_light_types::*;
 
 mod superres_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfSuperres_BroxOpticalFlow {
 		pub(crate) ptr: *mut c_void
@@ -15018,7 +15143,7 @@ pub use superres_types::*;
 
 #[cfg(feature = "contrib")]
 mod surface_matching_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfPose3D {
 		pub(crate) ptr: *mut c_void
@@ -15096,6 +15221,7 @@ mod surface_matching_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfPose3DPtr {
 		type Storage = crate::surface_matching::Pose3DPtr;
+		type Arg = crate::surface_matching::Pose3DPtr;
 	
 		#[inline]
 		fn new() -> Self {
@@ -15159,48 +15285,50 @@ mod surface_matching_types {
 			unsafe { cv_VectorOfPose3DPtr_clear(self.as_raw_VectorOfPose3DPtr()) }
 		}
 	
-		type Arg = crate::surface_matching::Pose3DPtr;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPose3DPtr_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfPose3DPtr_push(self.as_raw_VectorOfPose3DPtr(), val.as_raw_PtrOfPose3D()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfPose3DPtr_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfPose3DPtr_insert(self.as_raw_VectorOfPose3DPtr(), index, val.as_raw_PtrOfPose3D()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfPose3DPtr_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
 			unsafe { cv_VectorOfPose3DPtr_get(self.as_raw_VectorOfPose3DPtr(), index) }
 				.into_result()
-				.map(|ptr| crate::surface_matching::Pose3DPtr { ptr })
+				.map(|ptr| types::PtrOfPose3D { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfPose3DPtr_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::surface_matching::Pose3DPtr { ptr: cv_VectorOfPose3DPtr_get_unchecked(self.as_raw_VectorOfPose3DPtr(), index) }
+			extern "C" { fn cv_VectorOfPose3DPtr_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfPose3DPtr_get_unchecked(self.as_raw_VectorOfPose3DPtr(), index)
+				.into_result()
+				.map(|ptr| types::PtrOfPose3D { ptr })
+				.expect("Infallible function failed: VectorOfPose3DPtr::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfPose3DPtr_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfPose3DPtr_set(self.as_raw_VectorOfPose3DPtr(), index, val.as_raw_PtrOfPose3D()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfPose3DPtr_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfPose3DPtr_set_unchecked(self.as_raw_VectorOfPose3DPtr(), index, val.as_raw_PtrOfPose3D())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfPose3DPtr {}
@@ -15211,7 +15339,7 @@ pub use surface_matching_types::*;
 
 #[cfg(feature = "contrib")]
 mod text_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfERFilter {
 		pub(crate) ptr: *mut c_void
@@ -15511,6 +15639,7 @@ mod text_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfERStat {
 		type Storage = crate::text::ERStat;
+		type Arg = crate::text::ERStat;
 	
 		#[inline]
 		fn new() -> Self {
@@ -15574,22 +15703,20 @@ mod text_types {
 			unsafe { cv_VectorOfERStat_clear(self.as_raw_VectorOfERStat()) }
 		}
 	
-		type Arg = crate::text::ERStat;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfERStat_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfERStat_push(self.as_raw_VectorOfERStat(), val.as_raw_ERStat()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfERStat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfERStat_insert(self.as_raw_VectorOfERStat(), index, val.as_raw_ERStat()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfERStat_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -15597,25 +15724,29 @@ mod text_types {
 				.into_result()
 				.map(|ptr| crate::text::ERStat { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfERStat_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			crate::text::ERStat { ptr: cv_VectorOfERStat_get_unchecked(self.as_raw_VectorOfERStat(), index) }
+			extern "C" { fn cv_VectorOfERStat_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfERStat_get_unchecked(self.as_raw_VectorOfERStat(), index)
+				.into_result()
+				.map(|ptr| crate::text::ERStat { ptr })
+				.expect("Infallible function failed: VectorOfERStat::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfERStat_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfERStat_set(self.as_raw_VectorOfERStat(), index, val.as_raw_ERStat()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfERStat_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfERStat_set_unchecked(self.as_raw_VectorOfERStat(), index, val.as_raw_ERStat())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfERStat {}
@@ -15663,6 +15794,7 @@ mod text_types {
 	
 	impl<'i> crate::templ::Vector<'i> for VectorOfVectorOfERStat {
 		type Storage = types::VectorOfERStat;
+		type Arg = types::VectorOfERStat;
 	
 		#[inline]
 		fn new() -> Self {
@@ -15726,22 +15858,20 @@ mod text_types {
 			unsafe { cv_VectorOfVectorOfERStat_clear(self.as_raw_VectorOfVectorOfERStat()) }
 		}
 	
-		type Arg = types::VectorOfERStat;
-		
 		#[inline]
 		fn push(&mut self, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfERStat_push(instance: *mut c_void, val: *mut c_void); }
 			unsafe { cv_VectorOfVectorOfERStat_push(self.as_raw_VectorOfVectorOfERStat(), val.as_raw_VectorOfERStat()) }
 		}
-		
+	
 		#[inline]
 		fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
-			crate::templ::vector_index_check(index, self.len() + 1)?;
 			extern "C" { fn cv_VectorOfVectorOfERStat_insert(instance: *mut c_void, index: size_t, val: *mut c_void); }
+			crate::templ::vector_index_check(index, self.len() + 1)?;
 			unsafe { cv_VectorOfVectorOfERStat_insert(self.as_raw_VectorOfVectorOfERStat(), index, val.as_raw_VectorOfERStat()) }
 			Ok(())
 		}
-		
+	
 		#[inline]
 		fn get(&self, index: size_t) -> Result<Self::Storage> {
 			extern "C" { fn cv_VectorOfVectorOfERStat_get(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
@@ -15749,25 +15879,29 @@ mod text_types {
 				.into_result()
 				.map(|ptr| types::VectorOfERStat { ptr })
 		}
-		
+	
 		#[inline]
 		unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
-			extern "C" { fn cv_VectorOfVectorOfERStat_get_unchecked(instance: *mut c_void, index: size_t) -> *mut c_void; }
-			types::VectorOfERStat { ptr: cv_VectorOfVectorOfERStat_get_unchecked(self.as_raw_VectorOfVectorOfERStat(), index) }
+			extern "C" { fn cv_VectorOfVectorOfERStat_get_unchecked(instance: *mut c_void, index: size_t) -> sys::Result<*mut c_void>; }
+			cv_VectorOfVectorOfERStat_get_unchecked(self.as_raw_VectorOfVectorOfERStat(), index)
+				.into_result()
+				.map(|ptr| types::VectorOfERStat { ptr })
+				.expect("Infallible function failed: VectorOfVectorOfERStat::get_unchecked")
 		}
-		
+	
 		#[inline]
 		fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
 			extern "C" { fn cv_VectorOfVectorOfERStat_set(instance: *mut c_void, index: size_t, val: *mut c_void) -> sys::Result_void; }
 			unsafe { cv_VectorOfVectorOfERStat_set(self.as_raw_VectorOfVectorOfERStat(), index, val.as_raw_VectorOfERStat()) }
-		.into_result()
+				.into_result()
 		}
-		
+	
 		#[inline]
 		unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
 			extern "C" { fn cv_VectorOfVectorOfERStat_set_unchecked(instance: *mut c_void, index: size_t, val: *mut c_void); }
 			cv_VectorOfVectorOfERStat_set_unchecked(self.as_raw_VectorOfVectorOfERStat(), index, val.as_raw_VectorOfERStat())
 		}
+	
 	}
 	
 	unsafe impl Send for VectorOfVectorOfERStat {}
@@ -15777,7 +15911,7 @@ mod text_types {
 pub use text_types::*;
 
 mod video_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfBackgroundSubtractorKNN {
 		pub(crate) ptr: *mut c_void
@@ -16008,7 +16142,7 @@ mod video_types {
 pub use video_types::*;
 
 mod videostab_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfDeblurerBase {
 		pub(crate) ptr: *mut c_void
@@ -16417,7 +16551,7 @@ pub use videostab_types::*;
 
 #[cfg(feature = "contrib")]
 mod xfeatures2d_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfBoostDesc {
 		pub(crate) ptr: *mut c_void
@@ -16998,7 +17132,7 @@ pub use xfeatures2d_types::*;
 
 #[cfg(feature = "contrib")]
 mod xobjdetect_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfWBDetector {
 		pub(crate) ptr: *mut c_void
@@ -17039,7 +17173,7 @@ pub use xobjdetect_types::*;
 
 #[cfg(feature = "contrib")]
 mod xphoto_types {
-	use super::*;
+	use crate::{mod_prelude::*, core, types, sys};
 
 	pub struct PtrOfGrayworldWB {
 		pub(crate) ptr: *mut c_void

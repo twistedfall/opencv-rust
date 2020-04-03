@@ -59,32 +59,32 @@ extern "C" {
 	void cv_VectorOfDPMDetector_ObjectDetection_push(std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, cv::dpm::DPMDetector::ObjectDetection* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfDPMDetector_ObjectDetection_insert(std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index, cv::dpm::DPMDetector::ObjectDetection* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_VectorOfDPMDetector_ObjectDetection_get(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
 		try {
-			return Ok(new cv::dpm::DPMDetector::ObjectDetection(instance->at(index)));
+			return Ok<cv::dpm::DPMDetector::ObjectDetection*>(new cv::dpm::DPMDetector::ObjectDetection(instance->at(index)));
 		} VEC_CATCH(Result<cv::dpm::DPMDetector::ObjectDetection*>)
 	}
-	
-	cv::dpm::DPMDetector::ObjectDetection* cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
-		return new cv::dpm::DPMDetector::ObjectDetection((*instance)[index]);
+
+	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
+		return Ok(new cv::dpm::DPMDetector::ObjectDetection((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfDPMDetector_ObjectDetection_set(std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index, cv::dpm::DPMDetector::ObjectDetection* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfDPMDetector_ObjectDetection_set_unchecked(std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index, cv::dpm::DPMDetector::ObjectDetection* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 

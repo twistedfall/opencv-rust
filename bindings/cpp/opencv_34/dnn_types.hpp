@@ -443,32 +443,32 @@ extern "C" {
 	void cv_VectorOfMatShape_push(std::vector<cv::dnn::MatShape>* instance, cv::dnn::MatShape* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfMatShape_insert(std::vector<cv::dnn::MatShape>* instance, size_t index, cv::dnn::MatShape* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::dnn::MatShape*> cv_VectorOfMatShape_get(const std::vector<cv::dnn::MatShape>* instance, size_t index) {
 		try {
-			return Ok(new cv::dnn::MatShape(instance->at(index)));
+			return Ok<cv::dnn::MatShape*>(new cv::dnn::MatShape(instance->at(index)));
 		} VEC_CATCH(Result<cv::dnn::MatShape*>)
 	}
-	
-	cv::dnn::MatShape* cv_VectorOfMatShape_get_unchecked(const std::vector<cv::dnn::MatShape>* instance, size_t index) {
-		return new cv::dnn::MatShape((*instance)[index]);
+
+	Result<cv::dnn::MatShape*> cv_VectorOfMatShape_get_unchecked(const std::vector<cv::dnn::MatShape>* instance, size_t index) {
+		return Ok(new cv::dnn::MatShape((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfMatShape_set(std::vector<cv::dnn::MatShape>* instance, size_t index, cv::dnn::MatShape* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfMatShape_set_unchecked(std::vector<cv::dnn::MatShape>* instance, size_t index, cv::dnn::MatShape* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 	Result<cv::_InputArray*> cv_VectorOfMatShape_input_array(std::vector<cv::dnn::MatShape>* instance) {
 		try {
 			return Ok(new cv::_InputArray(*instance));
@@ -534,32 +534,32 @@ extern "C" {
 	void cv_VectorOfPtrOfBackendNode_push(std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, cv::Ptr<cv::dnn::BackendNode>* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfPtrOfBackendNode_insert(std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index, cv::Ptr<cv::dnn::BackendNode>* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_VectorOfPtrOfBackendNode_get(const std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index) {
 		try {
-			return Ok(new cv::Ptr<cv::dnn::BackendNode>(instance->at(index)));
+			return Ok<cv::Ptr<cv::dnn::BackendNode>*>(new cv::Ptr<cv::dnn::BackendNode>(instance->at(index)));
 		} VEC_CATCH(Result<cv::Ptr<cv::dnn::BackendNode>*>)
 	}
-	
-	cv::Ptr<cv::dnn::BackendNode>* cv_VectorOfPtrOfBackendNode_get_unchecked(const std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index) {
-		return new cv::Ptr<cv::dnn::BackendNode>((*instance)[index]);
+
+	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_VectorOfPtrOfBackendNode_get_unchecked(const std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index) {
+		return Ok(new cv::Ptr<cv::dnn::BackendNode>((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfPtrOfBackendNode_set(std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index, cv::Ptr<cv::dnn::BackendNode>* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfPtrOfBackendNode_set_unchecked(std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index, cv::Ptr<cv::dnn::BackendNode>* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 
@@ -607,32 +607,32 @@ extern "C" {
 	void cv_VectorOfPtrOfBackendWrapper_push(std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, cv::Ptr<cv::dnn::BackendWrapper>* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfPtrOfBackendWrapper_insert(std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index, cv::Ptr<cv::dnn::BackendWrapper>* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::Ptr<cv::dnn::BackendWrapper>*> cv_VectorOfPtrOfBackendWrapper_get(const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index) {
 		try {
-			return Ok(new cv::Ptr<cv::dnn::BackendWrapper>(instance->at(index)));
+			return Ok<cv::Ptr<cv::dnn::BackendWrapper>*>(new cv::Ptr<cv::dnn::BackendWrapper>(instance->at(index)));
 		} VEC_CATCH(Result<cv::Ptr<cv::dnn::BackendWrapper>*>)
 	}
-	
-	cv::Ptr<cv::dnn::BackendWrapper>* cv_VectorOfPtrOfBackendWrapper_get_unchecked(const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index) {
-		return new cv::Ptr<cv::dnn::BackendWrapper>((*instance)[index]);
+
+	Result<cv::Ptr<cv::dnn::BackendWrapper>*> cv_VectorOfPtrOfBackendWrapper_get_unchecked(const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index) {
+		return Ok(new cv::Ptr<cv::dnn::BackendWrapper>((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfPtrOfBackendWrapper_set(std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index, cv::Ptr<cv::dnn::BackendWrapper>* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfPtrOfBackendWrapper_set_unchecked(std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index, cv::Ptr<cv::dnn::BackendWrapper>* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 
@@ -680,32 +680,32 @@ extern "C" {
 	void cv_VectorOfPtrOfLayer_push(std::vector<cv::Ptr<cv::dnn::Layer>>* instance, cv::Ptr<cv::dnn::Layer>* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfPtrOfLayer_insert(std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index, cv::Ptr<cv::dnn::Layer>* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::Ptr<cv::dnn::Layer>*> cv_VectorOfPtrOfLayer_get(const std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index) {
 		try {
-			return Ok(new cv::Ptr<cv::dnn::Layer>(instance->at(index)));
+			return Ok<cv::Ptr<cv::dnn::Layer>*>(new cv::Ptr<cv::dnn::Layer>(instance->at(index)));
 		} VEC_CATCH(Result<cv::Ptr<cv::dnn::Layer>*>)
 	}
-	
-	cv::Ptr<cv::dnn::Layer>* cv_VectorOfPtrOfLayer_get_unchecked(const std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index) {
-		return new cv::Ptr<cv::dnn::Layer>((*instance)[index]);
+
+	Result<cv::Ptr<cv::dnn::Layer>*> cv_VectorOfPtrOfLayer_get_unchecked(const std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index) {
+		return Ok(new cv::Ptr<cv::dnn::Layer>((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfPtrOfLayer_set(std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index, cv::Ptr<cv::dnn::Layer>* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfPtrOfLayer_set_unchecked(std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index, cv::Ptr<cv::dnn::Layer>* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 
@@ -753,32 +753,32 @@ extern "C" {
 	void cv_VectorOfTarget_push(std::vector<cv::dnn::Target>* instance, cv::dnn::Target val) {
 		instance->push_back(val);
 	}
-	
+
 	void cv_VectorOfTarget_insert(std::vector<cv::dnn::Target>* instance, size_t index, cv::dnn::Target val) {
 		instance->insert(instance->begin() + index, val);
 	}
-	
+
 	Result<cv::dnn::Target> cv_VectorOfTarget_get(const std::vector<cv::dnn::Target>* instance, size_t index) {
 		try {
 			return Ok<cv::dnn::Target>(instance->at(index));
 		} VEC_CATCH(Result<cv::dnn::Target>)
 	}
-	
+
+	Result<cv::dnn::Target> cv_VectorOfTarget_get_unchecked(const std::vector<cv::dnn::Target>* instance, size_t index) {
+		return Ok((*instance)[index]);
+	}
+
 	Result_void cv_VectorOfTarget_set(std::vector<cv::dnn::Target>* instance, size_t index, cv::dnn::Target val) {
 		try {
 			instance->at(index) = val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfTarget_set_unchecked(std::vector<cv::dnn::Target>* instance, size_t index, cv::dnn::Target val) {
 		(*instance)[index] = val;
 	}
-	
-	cv::dnn::Target cv_VectorOfTarget_get_unchecked(const std::vector<cv::dnn::Target>* instance, size_t index) {
-		return (*instance)[index];
-	}
-	
+
 	const cv::dnn::Target* cv_VectorOfTarget_data(std::vector<cv::dnn::Target>* instance) {
 		return instance->data();
 	}
@@ -830,32 +830,32 @@ extern "C" {
 	void cv_VectorOfVectorOfMatShape_push(std::vector<std::vector<cv::dnn::MatShape>>* instance, std::vector<cv::dnn::MatShape>* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfVectorOfMatShape_insert(std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index, std::vector<cv::dnn::MatShape>* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<std::vector<cv::dnn::MatShape>*> cv_VectorOfVectorOfMatShape_get(const std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index) {
 		try {
-			return Ok(new std::vector<cv::dnn::MatShape>(instance->at(index)));
+			return Ok<std::vector<cv::dnn::MatShape>*>(new std::vector<cv::dnn::MatShape>(instance->at(index)));
 		} VEC_CATCH(Result<std::vector<cv::dnn::MatShape>*>)
 	}
-	
-	std::vector<cv::dnn::MatShape>* cv_VectorOfVectorOfMatShape_get_unchecked(const std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index) {
-		return new std::vector<cv::dnn::MatShape>((*instance)[index]);
+
+	Result<std::vector<cv::dnn::MatShape>*> cv_VectorOfVectorOfMatShape_get_unchecked(const std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index) {
+		return Ok(new std::vector<cv::dnn::MatShape>((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfVectorOfMatShape_set(std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index, std::vector<cv::dnn::MatShape>* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfVectorOfMatShape_set_unchecked(std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index, std::vector<cv::dnn::MatShape>* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 

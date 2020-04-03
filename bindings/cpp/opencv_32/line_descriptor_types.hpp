@@ -83,32 +83,32 @@ extern "C" {
 	void cv_VectorOfKeyLine_push(std::vector<cv::line_descriptor::KeyLine>* instance, cv::line_descriptor::KeyLine* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfKeyLine_insert(std::vector<cv::line_descriptor::KeyLine>* instance, size_t index, cv::line_descriptor::KeyLine* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<cv::line_descriptor::KeyLine*> cv_VectorOfKeyLine_get(const std::vector<cv::line_descriptor::KeyLine>* instance, size_t index) {
 		try {
-			return Ok(new cv::line_descriptor::KeyLine(instance->at(index)));
+			return Ok<cv::line_descriptor::KeyLine*>(new cv::line_descriptor::KeyLine(instance->at(index)));
 		} VEC_CATCH(Result<cv::line_descriptor::KeyLine*>)
 	}
-	
-	cv::line_descriptor::KeyLine* cv_VectorOfKeyLine_get_unchecked(const std::vector<cv::line_descriptor::KeyLine>* instance, size_t index) {
-		return new cv::line_descriptor::KeyLine((*instance)[index]);
+
+	Result<cv::line_descriptor::KeyLine*> cv_VectorOfKeyLine_get_unchecked(const std::vector<cv::line_descriptor::KeyLine>* instance, size_t index) {
+		return Ok(new cv::line_descriptor::KeyLine((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfKeyLine_set(std::vector<cv::line_descriptor::KeyLine>* instance, size_t index, cv::line_descriptor::KeyLine* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfKeyLine_set_unchecked(std::vector<cv::line_descriptor::KeyLine>* instance, size_t index, cv::line_descriptor::KeyLine* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 
@@ -156,32 +156,32 @@ extern "C" {
 	void cv_VectorOfVectorOfKeyLine_push(std::vector<std::vector<cv::line_descriptor::KeyLine>>* instance, std::vector<cv::line_descriptor::KeyLine>* val) {
 		instance->push_back(*val);
 	}
-	
+
 	void cv_VectorOfVectorOfKeyLine_insert(std::vector<std::vector<cv::line_descriptor::KeyLine>>* instance, size_t index, std::vector<cv::line_descriptor::KeyLine>* val) {
 		instance->insert(instance->begin() + index, *val);
 	}
-	
+
 	Result<std::vector<cv::line_descriptor::KeyLine>*> cv_VectorOfVectorOfKeyLine_get(const std::vector<std::vector<cv::line_descriptor::KeyLine>>* instance, size_t index) {
 		try {
-			return Ok(new std::vector<cv::line_descriptor::KeyLine>(instance->at(index)));
+			return Ok<std::vector<cv::line_descriptor::KeyLine>*>(new std::vector<cv::line_descriptor::KeyLine>(instance->at(index)));
 		} VEC_CATCH(Result<std::vector<cv::line_descriptor::KeyLine>*>)
 	}
-	
-	std::vector<cv::line_descriptor::KeyLine>* cv_VectorOfVectorOfKeyLine_get_unchecked(const std::vector<std::vector<cv::line_descriptor::KeyLine>>* instance, size_t index) {
-		return new std::vector<cv::line_descriptor::KeyLine>((*instance)[index]);
+
+	Result<std::vector<cv::line_descriptor::KeyLine>*> cv_VectorOfVectorOfKeyLine_get_unchecked(const std::vector<std::vector<cv::line_descriptor::KeyLine>>* instance, size_t index) {
+		return Ok(new std::vector<cv::line_descriptor::KeyLine>((*instance)[index]));
 	}
-	
+
 	Result_void cv_VectorOfVectorOfKeyLine_set(std::vector<std::vector<cv::line_descriptor::KeyLine>>* instance, size_t index, std::vector<cv::line_descriptor::KeyLine>* val) {
 		try {
 			instance->at(index) = *val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfVectorOfKeyLine_set_unchecked(std::vector<std::vector<cv::line_descriptor::KeyLine>>* instance, size_t index, std::vector<cv::line_descriptor::KeyLine>* val) {
 		(*instance)[index] = *val;
 	}
-	
+
 }
 
 

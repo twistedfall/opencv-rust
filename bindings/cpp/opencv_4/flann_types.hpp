@@ -79,32 +79,32 @@ extern "C" {
 	void cv_VectorOfFlannIndexType_push(std::vector<cv::flann::FlannIndexType>* instance, cv::flann::FlannIndexType val) {
 		instance->push_back(val);
 	}
-	
+
 	void cv_VectorOfFlannIndexType_insert(std::vector<cv::flann::FlannIndexType>* instance, size_t index, cv::flann::FlannIndexType val) {
 		instance->insert(instance->begin() + index, val);
 	}
-	
+
 	Result<cv::flann::FlannIndexType> cv_VectorOfFlannIndexType_get(const std::vector<cv::flann::FlannIndexType>* instance, size_t index) {
 		try {
 			return Ok<cv::flann::FlannIndexType>(instance->at(index));
 		} VEC_CATCH(Result<cv::flann::FlannIndexType>)
 	}
-	
+
+	Result<cv::flann::FlannIndexType> cv_VectorOfFlannIndexType_get_unchecked(const std::vector<cv::flann::FlannIndexType>* instance, size_t index) {
+		return Ok((*instance)[index]);
+	}
+
 	Result_void cv_VectorOfFlannIndexType_set(std::vector<cv::flann::FlannIndexType>* instance, size_t index, cv::flann::FlannIndexType val) {
 		try {
 			instance->at(index) = val;
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
-	
+
 	void cv_VectorOfFlannIndexType_set_unchecked(std::vector<cv::flann::FlannIndexType>* instance, size_t index, cv::flann::FlannIndexType val) {
 		(*instance)[index] = val;
 	}
-	
-	cv::flann::FlannIndexType cv_VectorOfFlannIndexType_get_unchecked(const std::vector<cv::flann::FlannIndexType>* instance, size_t index) {
-		return (*instance)[index];
-	}
-	
+
 	const cv::flann::FlannIndexType* cv_VectorOfFlannIndexType_data(std::vector<cv::flann::FlannIndexType>* instance) {
 		return instance->data();
 	}
