@@ -153,26 +153,6 @@ impl GeneratedElement for Vector<'_, '_> {
 			|| include_str!("../tpl/vector/rust_common.tpl.rs").compile_interpolation()
 		);
 
-		static METHODS_BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/rust_methods_boxed.tpl.rs").compile_interpolation()
-		);
-
-		static METHODS_STRING_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/rust_methods_string.tpl.rs").compile_interpolation()
-		);
-
-		static METHODS_NON_BOXED_COMMON_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/rust_methods_non_boxed_common.tpl.rs").compile_interpolation()
-		);
-
-		static METHODS_SIMPLE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/rust_methods_simple.tpl.rs").compile_interpolation()
-		);
-
-		static METHODS_NON_BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/rust_methods_non_boxed.tpl.rs").compile_interpolation()
-		);
-
 		static METHODS_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> = Lazy::new(
 			|| include_str!("../tpl/vector/rust_methods_copy_non_bool.tpl.rs").compile_interpolation()
 		);
@@ -187,35 +167,39 @@ impl GeneratedElement for Vector<'_, '_> {
 
 		let vec_type = self.type_ref();
 		let element_type = self.element_type();
+		let inner_rust_full_arg = if element_type.is_string() {
+			"&'i str".into()
+		} else {
+			element_type.rust_full()
+		};
+		let mut pre_call = element_type.rust_arg_pre_call("val", false);
+		if !pre_call.is_empty() {
+			pre_call.push_str(";");
+		}
+		let mut pre_call_infallible = element_type.rust_arg_pre_call("val", true);
+		if !pre_call_infallible.is_empty() {
+			pre_call_infallible.push_str(";");
+		}
 		let mut inter_vars = hashmap! {
 			"rust_local" => vec_type.rust_local(),
 			"rust_extern" => vec_type.rust_extern(),
-			"cpp_full" => vec_type.cpp_full(),
-			"cpp_extern" => vec_type.cpp_extern(),
-			"inner_rust_extern" => element_type.rust_extern(),
-			"inner_rust_local" => element_type.rust_local(),
-			"inner_canonical_rust_local" => element_type.canonical().rust_local().into_owned().into(),
+			"inner_rust_extern_func_decl" => element_type.rust_extern_arg_func_decl("val").into(),
+			"inner_rust_func_call" => element_type.rust_arg_func_call("val").into(),
 			"inner_rust_full" => element_type.rust_full(),
-			"rust_return_wrapper_type" => element_type.rust_extern_return_wrapper_full(),
+			"inner_rust_full_arg" => inner_rust_full_arg.into(),
+			"pre_call" => pre_call.into(),
+			"pre_call_infallible" => pre_call_infallible.into(),
+			"inner_rust_extern_return" => element_type.rust_extern_return(),
+			"inner_rust_extern_return_wrapper" => element_type.rust_extern_return_wrapper_full(),
+			"ret_map" => element_type.rust_return_map(true),
+			"ret_map_unsafe" => element_type.rust_return_map(false),
 		};
 		let mut vector_methods = String::new();
 		let mut inherent_methods = String::new();
 		let mut impls = String::new();
-		if element_type.is_by_ptr() {
-			vector_methods += &METHODS_BOXED_TPL.interpolate(&inter_vars);
-		} else if element_type.is_string() {
-			vector_methods += &METHODS_STRING_TPL.interpolate(&inter_vars);
-		} else {
-			vector_methods += &METHODS_NON_BOXED_COMMON_TPL.interpolate(&inter_vars);
-			if element_type.as_simple_class().is_some() {
-				vector_methods += &METHODS_SIMPLE_TPL.interpolate(&inter_vars);
-			} else {
-				vector_methods += &METHODS_NON_BOXED_TPL.interpolate(&inter_vars);
-			}
-			if element_type.is_copy() && !element_type.is_bool() {
-				vector_methods += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
-				inherent_methods += &INHERENT_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
-			}
+		if element_type.is_copy() && !element_type.is_bool() {
+			vector_methods += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
+			inherent_methods += &INHERENT_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 		}
 		if self.is_data_type(&element_type) {
 			impls += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);
@@ -232,32 +216,12 @@ impl GeneratedElement for Vector<'_, '_> {
 			|| include_str!("../tpl/vector/cpp_common.tpl.cpp").compile_interpolation()
 		);
 
-		static METHODS_BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/cpp_methods_boxed.tpl.cpp").compile_interpolation()
-		);
-
-		static METHODS_STRING_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/cpp_methods_string.tpl.cpp").compile_interpolation()
-		);
-
-		static METHODS_NON_BOXED_COMMON_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/cpp_methods_non_boxed_common.tpl.cpp").compile_interpolation()
-		);
-
-		static METHODS_SIMPLE_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/cpp_methods_simple.tpl.cpp").compile_interpolation()
-		);
-
-		static METHODS_NON_BOXED_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/cpp_methods_non_boxed.tpl.cpp").compile_interpolation()
-		);
-
 		static METHODS_COPY_NON_BOOL_TPL: Lazy<CompiledInterpolation> = Lazy::new(
 			|| include_str!("../tpl/vector/cpp_methods_copy_non_bool.tpl.cpp").compile_interpolation()
 		);
 
 		static INPUT_OUTPUT_ARRAY_TPL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/vector/cpp_input_output_aray.tpl.cpp").compile_interpolation()
+			|| include_str!("../tpl/vector/cpp_input_output_array.tpl.cpp").compile_interpolation()
 		);
 
 		let vec_type = self.type_ref();
@@ -265,30 +229,28 @@ impl GeneratedElement for Vector<'_, '_> {
 		let mut inter_vars = hashmap! {
 			"rust_local" => vec_type.rust_local(),
 			"cpp_full" => vec_type.cpp_full(),
-			"cpp_extern" => vec_type.cpp_extern(),
 			"cpp_extern_return" => vec_type.cpp_extern_return(),
 			"inner_cpp_full" => element_type.cpp_full(),
-			"inner_cpp_extern" => element_type.cpp_extern(),
+			"inner_cpp_func_decl" => element_type.cpp_arg_func_decl("val").into(),
+			"inner_cpp_func_call" => element_type.cpp_arg_func_call("val").into(),
 			"inner_cpp_extern_return" => element_type.cpp_extern_return(),
-			"cpp_return_wrapper_type" => element_type.cpp_extern_return_wrapper_full(),
-			"call_arg" => element_type.cpp_arg_func_call("val").into(),
+			"inner_cpp_extern_return_wrapper" => element_type.cpp_extern_return_wrapper_full(),
 		};
 
-		let mut exports = String::new();
+		let mut prefix = Cow::Borrowed("");
+		let mut suffix = Cow::Borrowed("");
 		if element_type.is_by_ptr() {
-			exports += &METHODS_BOXED_TPL.interpolate(&inter_vars);
+			prefix = format!("new {inner_cpp_full}(", inner_cpp_full=element_type.cpp_full()).into();
+			suffix = ")".into();
 		} else if element_type.is_string() {
-			exports += &METHODS_STRING_TPL.interpolate(&inter_vars);
-		} else {
-			exports += &METHODS_NON_BOXED_COMMON_TPL.interpolate(&inter_vars);
-			if element_type.as_simple_class().is_some() {
-				exports += &METHODS_SIMPLE_TPL.interpolate(&inter_vars);
-			} else {
-				exports += &METHODS_NON_BOXED_TPL.interpolate(&inter_vars);
-			}
-			if element_type.is_copy() && !element_type.is_bool() {
-				exports += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
-			}
+			prefix = "ocvrs_create_string(".into();
+			suffix = ".c_str())".into();
+		}
+		inter_vars.insert("prefix", prefix);
+		inter_vars.insert("suffix", suffix);
+		let mut exports = String::new();
+		if element_type.is_copy() && !element_type.is_bool() {
+			exports += &METHODS_COPY_NON_BOOL_TPL.interpolate(&inter_vars);
 		}
 		if self.is_data_type(&element_type) {
 			exports += &INPUT_OUTPUT_ARRAY_TPL.interpolate(&inter_vars);

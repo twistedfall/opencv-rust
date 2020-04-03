@@ -527,18 +527,6 @@ impl<'tu, 'g> Func<'tu, 'g> {
 			|| include_str!("../tpl/func/rust_no_fail.tpl.rs").compile_interpolation()
 		);
 
-		static RET_MAP_STRING: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/func/rust_ret_map_string.tpl.rs").compile_interpolation()
-		);
-
-		static RET_MAP_BY_PTR: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/func/rust_ret_map_by_ptr.tpl.rs").compile_interpolation()
-		);
-
-		static RET_MAP_RAW_PTR: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/func/rust_ret_map_raw_ptr.tpl.rs").compile_interpolation()
-		);
-
 		let args = Field::rust_disambiguate_names(self.arguments()).collect::<Vec<_>>();
 		let as_instance_method = self.as_instance_method();
 		let is_const = self.is_const();
@@ -610,8 +598,16 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		let call_args = call_args.join(", ");
 		let forward_args = forward_args.join(", ");
 		let post_call_args = post_call_args.join("\n");
+		let ret_map = return_type.rust_return_map(is_safe);
 
-		let mut templ_vars = hashmap! {
+		let tpl = if let Some(tpl) = settings::FUNC_MANUAL.get(identifier.as_ref()) {
+			tpl
+		} else if is_infallible {
+			&TPL_NO_FAIL
+		} else {
+			&TPL
+		};
+		tpl.interpolate(&hashmap! {
 			"doc_comment" => doc_comment.as_str(),
 			"debug" => &debug,
 			"visibility" => &visibility,
@@ -628,32 +624,8 @@ impl<'tu, 'g> Func<'tu, 'g> {
 			"forward_args" => &forward_args,
 			"suffix" => &suffix,
 			"post_call_args" => &post_call_args,
-		};
-
-		let ret_map = if return_type.is_string() {
-			RET_MAP_STRING.interpolate(&templ_vars)
-		} else if return_type.is_by_ptr() {
-			RET_MAP_BY_PTR.interpolate(&templ_vars)
-		} else if !return_type.is_void_ptr() && (return_type.as_pointer().is_some() || return_type.as_fixed_array().is_some()) {
-			if return_type.is_const() {
-				templ_vars.insert("ptr_call", "ref");
-			} else {
-				templ_vars.insert("ptr_call", "mut");
-			}
-			RET_MAP_RAW_PTR.interpolate(&templ_vars)
-		} else {
-			"".to_string()
-		};
-		templ_vars.insert("ret_map", &ret_map);
-
-		let tpl = if let Some(tpl) = settings::FUNC_MANUAL.get(identifier.as_ref()) {
-			tpl
-		} else if is_infallible {
-			&TPL_NO_FAIL
-		} else {
-			&TPL
-		};
-		tpl.interpolate(&templ_vars)
+			"ret_map" => ret_map.as_ref(),
+		})
 	}
 }
 

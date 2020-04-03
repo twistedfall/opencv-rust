@@ -42,6 +42,7 @@ impl<'i> IntoIterator for &'i {{rust_local}} {
 
 impl<'i> crate::templ::Vector<'i> for {{rust_local}} {
 	type Storage = {{inner_rust_full}};
+	type Arg = {{inner_rust_full_arg}};
 
 	#[inline]
 	fn new() -> Self {
@@ -103,6 +104,54 @@ impl<'i> crate::templ::Vector<'i> for {{rust_local}} {
 	fn clear(&mut self) {
 		extern "C" { fn cv_{{rust_local}}_clear(instance: {{rust_extern}}); }
 		unsafe { cv_{{rust_local}}_clear(self.as_raw_{{rust_local}}()) }
+	}
+
+	#[inline]
+	fn push(&mut self, val: Self::Arg) {
+		extern "C" { fn cv_{{rust_local}}_push(instance: {{rust_extern}}, {{inner_rust_extern_func_decl}}); }
+		{{pre_call_infallible}}
+		unsafe { cv_{{rust_local}}_push(self.as_raw_{{rust_local}}(), {{inner_rust_func_call}}) }
+	}
+
+	#[inline]
+	fn insert(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+		extern "C" { fn cv_{{rust_local}}_insert(instance: {{rust_extern}}, index: size_t, {{inner_rust_extern_func_decl}}); }
+		crate::templ::vector_index_check(index, self.len() + 1)?;
+		{{pre_call}}
+		unsafe { cv_{{rust_local}}_insert(self.as_raw_{{rust_local}}(), index, {{inner_rust_func_call}}) }
+		Ok(())
+	}
+
+	#[inline]
+	fn get(&self, index: size_t) -> Result<Self::Storage> {
+		extern "C" { fn cv_{{rust_local}}_get(instance: {{rust_extern}}, index: size_t) -> sys::{{inner_rust_extern_return_wrapper}}; }
+		unsafe { cv_{{rust_local}}_get(self.as_raw_{{rust_local}}(), index) }
+			.into_result()
+			{{ret_map}}
+	}
+
+	#[inline]
+	unsafe fn get_unchecked(&self, index: size_t) -> Self::Storage {
+		extern "C" { fn cv_{{rust_local}}_get_unchecked(instance: {{rust_extern}}, index: size_t) -> sys::{{inner_rust_extern_return_wrapper}}; }
+		cv_{{rust_local}}_get_unchecked(self.as_raw_{{rust_local}}(), index)
+			.into_result()
+			{{ret_map_unsafe}}
+			.expect("Infallible function failed: {{rust_local}}::get_unchecked")
+	}
+
+	#[inline]
+	fn set(&mut self, index: size_t, val: Self::Arg) -> Result<()> {
+		extern "C" { fn cv_{{rust_local}}_set(instance: {{rust_extern}}, index: size_t, {{inner_rust_extern_func_decl}}) -> sys::Result_void; }
+		{{pre_call}}
+		unsafe { cv_{{rust_local}}_set(self.as_raw_{{rust_local}}(), index, {{inner_rust_func_call}}) }
+			.into_result()
+	}
+
+	#[inline]
+	unsafe fn set_unchecked(&mut self, index: size_t, val: Self::Arg) {
+		extern "C" { fn cv_{{rust_local}}_set_unchecked(instance: {{rust_extern}}, index: size_t, {{inner_rust_extern_func_decl}}); }
+		{{pre_call_infallible}}
+		cv_{{rust_local}}_set_unchecked(self.as_raw_{{rust_local}}(), index, {{inner_rust_func_call}})
 	}
 
 	{{vector_methods}}

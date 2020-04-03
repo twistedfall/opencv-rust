@@ -1117,6 +1117,27 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
+	pub fn rust_return_map(&self, is_safe_context: bool) -> Cow<str> {
+		let unsafety_call = if is_safe_context { "unsafe " } else { "" };
+		if self.is_string() {
+			format!(
+				".map(|s| {unsafety_call}{{ crate::templ::receive_string(s as *mut String) }})",
+				unsafety_call=unsafety_call,
+			).into()
+		} else if self.is_by_ptr() {
+			format!(".map(|ptr| {typ} {{ ptr }})", typ=self.rust_return_func_decl()).into()
+		} else if !self.is_void_ptr() && (self.as_pointer().is_some() || self.as_fixed_array().is_some()) {
+			let ptr_call = if self.is_const() { "ref" } else { "mut" };
+			format!(
+				".and_then(|x| {unsafety_call}{{ x.as_{ptr_call}() }}.ok_or_else(|| Error::new(core::StsNullPtr, \"Function returned Null pointer\".to_string())))",
+				unsafety_call=unsafety_call,
+				ptr_call=ptr_call,
+			).into()
+		} else {
+			"".into()
+		}
+	}
+
 	pub fn rust_arg_pre_call(&self, name: &str, is_function_infallible: bool) -> String {
 		if self.is_string() {
 			return if self.is_output() {
