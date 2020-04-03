@@ -279,7 +279,7 @@ extern "C" {
 	}
 
 	Result<cv::dnn::Blob*> cv_VectorOfBlob_get_unchecked(const std::vector<cv::dnn::Blob>* instance, size_t index) {
-		return Ok(new cv::dnn::Blob((*instance)[index]));
+		return Ok<cv::dnn::Blob*>(new cv::dnn::Blob((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfBlob_set(std::vector<cv::dnn::Blob>* instance, size_t index, cv::dnn::Blob* val) {
@@ -352,7 +352,7 @@ extern "C" {
 	}
 
 	Result<cv::dnn::Net::LayerId*> cv_VectorOfNet_LayerId_get_unchecked(const std::vector<cv::dnn::Net::LayerId>* instance, size_t index) {
-		return Ok(new cv::dnn::Net::LayerId((*instance)[index]));
+		return Ok<cv::dnn::Net::LayerId*>(new cv::dnn::Net::LayerId((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfNet_LayerId_set(std::vector<cv::dnn::Net::LayerId>* instance, size_t index, cv::dnn::Net::LayerId* val) {

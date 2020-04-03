@@ -106,7 +106,7 @@ extern "C" {
 	}
 
 	Result<cv::DetectionBasedTracker::ExtObject*> cv_VectorOfDetectionBasedTracker_ExtObject_get_unchecked(const std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index) {
-		return Ok(new cv::DetectionBasedTracker::ExtObject((*instance)[index]));
+		return Ok<cv::DetectionBasedTracker::ExtObject*>(new cv::DetectionBasedTracker::ExtObject((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDetectionBasedTracker_ExtObject_set(std::vector<cv::DetectionBasedTracker::ExtObject>* instance, size_t index, cv::DetectionBasedTracker::ExtObject* val) {
@@ -179,7 +179,7 @@ extern "C" {
 	}
 
 	Result<cv::DetectionROI*> cv_VectorOfDetectionROI_get_unchecked(const std::vector<cv::DetectionROI>* instance, size_t index) {
-		return Ok(new cv::DetectionROI((*instance)[index]));
+		return Ok<cv::DetectionROI*>(new cv::DetectionROI((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDetectionROI_set(std::vector<cv::DetectionROI>* instance, size_t index, cv::DetectionROI* val) {

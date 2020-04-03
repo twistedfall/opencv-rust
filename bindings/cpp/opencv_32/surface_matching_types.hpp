@@ -74,7 +74,7 @@ extern "C" {
 	}
 
 	Result<cv::ppf_match_3d::Pose3DPtr*> cv_VectorOfPose3DPtr_get_unchecked(const std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index) {
-		return Ok(new cv::ppf_match_3d::Pose3DPtr((*instance)[index]));
+		return Ok<cv::ppf_match_3d::Pose3DPtr*>(new cv::ppf_match_3d::Pose3DPtr((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfPose3DPtr_set(std::vector<cv::ppf_match_3d::Pose3DPtr>* instance, size_t index, cv::ppf_match_3d::Pose3DPtr* val) {

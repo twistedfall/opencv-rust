@@ -186,7 +186,7 @@ extern "C" {
 	}
 
 	Result<cv::face::FacemarkAAM::Config*> cv_VectorOfFacemarkAAM_Config_get_unchecked(const std::vector<cv::face::FacemarkAAM::Config>* instance, size_t index) {
-		return Ok(new cv::face::FacemarkAAM::Config((*instance)[index]));
+		return Ok<cv::face::FacemarkAAM::Config*>(new cv::face::FacemarkAAM::Config((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfFacemarkAAM_Config_set(std::vector<cv::face::FacemarkAAM::Config>* instance, size_t index, cv::face::FacemarkAAM::Config* val) {
@@ -259,7 +259,7 @@ extern "C" {
 	}
 
 	Result<cv::face::FacemarkAAM::Model::Texture*> cv_VectorOfFacemarkAAM_Model_Texture_get_unchecked(const std::vector<cv::face::FacemarkAAM::Model::Texture>* instance, size_t index) {
-		return Ok(new cv::face::FacemarkAAM::Model::Texture((*instance)[index]));
+		return Ok<cv::face::FacemarkAAM::Model::Texture*>(new cv::face::FacemarkAAM::Model::Texture((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfFacemarkAAM_Model_Texture_set(std::vector<cv::face::FacemarkAAM::Model::Texture>* instance, size_t index, cv::face::FacemarkAAM::Model::Texture* val) {

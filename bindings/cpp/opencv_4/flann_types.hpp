@@ -91,7 +91,7 @@ extern "C" {
 	}
 
 	Result<cv::flann::FlannIndexType> cv_VectorOfFlannIndexType_get_unchecked(const std::vector<cv::flann::FlannIndexType>* instance, size_t index) {
-		return Ok((*instance)[index]);
+		return Ok<cv::flann::FlannIndexType>((*instance)[index]);
 	}
 
 	Result_void cv_VectorOfFlannIndexType_set(std::vector<cv::flann::FlannIndexType>* instance, size_t index, cv::flann::FlannIndexType val) {

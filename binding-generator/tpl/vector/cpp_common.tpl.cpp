@@ -54,7 +54,7 @@ extern "C" {
 	}
 
 	{{inner_cpp_extern_return_wrapper}} cv_{{rust_local}}_get_unchecked(const {{cpp_full}}* instance, size_t index) {
-		return Ok({{prefix}}(*instance)[index]{{suffix}});
+		return Ok<{{inner_cpp_extern_return}}>({{prefix}}(*instance)[index]{{suffix}});
 	}
 
 	Result_void cv_{{rust_local}}_set({{cpp_full}}* instance, size_t index, {{inner_cpp_func_decl}}) {

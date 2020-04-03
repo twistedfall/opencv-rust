@@ -71,7 +71,7 @@ extern "C" {
 	}
 
 	Result<cv::dpm::DPMDetector::ObjectDetection*> cv_VectorOfDPMDetector_ObjectDetection_get_unchecked(const std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index) {
-		return Ok(new cv::dpm::DPMDetector::ObjectDetection((*instance)[index]));
+		return Ok<cv::dpm::DPMDetector::ObjectDetection*>(new cv::dpm::DPMDetector::ObjectDetection((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDPMDetector_ObjectDetection_set(std::vector<cv::dpm::DPMDetector::ObjectDetection>* instance, size_t index, cv::dpm::DPMDetector::ObjectDetection* val) {

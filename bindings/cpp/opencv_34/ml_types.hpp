@@ -186,7 +186,7 @@ extern "C" {
 	}
 
 	Result<cv::ml::DTrees::Node*> cv_VectorOfDTrees_Node_get_unchecked(const std::vector<cv::ml::DTrees::Node>* instance, size_t index) {
-		return Ok(new cv::ml::DTrees::Node((*instance)[index]));
+		return Ok<cv::ml::DTrees::Node*>(new cv::ml::DTrees::Node((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDTrees_Node_set(std::vector<cv::ml::DTrees::Node>* instance, size_t index, cv::ml::DTrees::Node* val) {
@@ -259,7 +259,7 @@ extern "C" {
 	}
 
 	Result<cv::ml::DTrees::Split*> cv_VectorOfDTrees_Split_get_unchecked(const std::vector<cv::ml::DTrees::Split>* instance, size_t index) {
-		return Ok(new cv::ml::DTrees::Split((*instance)[index]));
+		return Ok<cv::ml::DTrees::Split*>(new cv::ml::DTrees::Split((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDTrees_Split_set(std::vector<cv::ml::DTrees::Split>* instance, size_t index, cv::ml::DTrees::Split* val) {

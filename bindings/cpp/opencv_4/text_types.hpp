@@ -159,7 +159,7 @@ extern "C" {
 	}
 
 	Result<cv::text::ERStat*> cv_VectorOfERStat_get_unchecked(const std::vector<cv::text::ERStat>* instance, size_t index) {
-		return Ok(new cv::text::ERStat((*instance)[index]));
+		return Ok<cv::text::ERStat*>(new cv::text::ERStat((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfERStat_set(std::vector<cv::text::ERStat>* instance, size_t index, cv::text::ERStat* val) {
@@ -232,7 +232,7 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::text::ERStat>*> cv_VectorOfVectorOfERStat_get_unchecked(const std::vector<std::vector<cv::text::ERStat>>* instance, size_t index) {
-		return Ok(new std::vector<cv::text::ERStat>((*instance)[index]));
+		return Ok<std::vector<cv::text::ERStat>*>(new std::vector<cv::text::ERStat>((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfVectorOfERStat_set(std::vector<std::vector<cv::text::ERStat>>* instance, size_t index, std::vector<cv::text::ERStat>* val) {

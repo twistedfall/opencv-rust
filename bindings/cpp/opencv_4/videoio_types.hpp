@@ -64,7 +64,7 @@ extern "C" {
 	}
 
 	Result<cv::VideoCapture*> cv_VectorOfVideoCapture_get_unchecked(const std::vector<cv::VideoCapture>* instance, size_t index) {
-		return Ok(new cv::VideoCapture((*instance)[index]));
+		return Ok<cv::VideoCapture*>(new cv::VideoCapture((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfVideoCapture_set(std::vector<cv::VideoCapture>* instance, size_t index, cv::VideoCapture* val) {
@@ -137,7 +137,7 @@ extern "C" {
 	}
 
 	Result<cv::VideoCaptureAPIs> cv_VectorOfVideoCaptureAPIs_get_unchecked(const std::vector<cv::VideoCaptureAPIs>* instance, size_t index) {
-		return Ok((*instance)[index]);
+		return Ok<cv::VideoCaptureAPIs>((*instance)[index]);
 	}
 
 	Result_void cv_VectorOfVideoCaptureAPIs_set(std::vector<cv::VideoCaptureAPIs>* instance, size_t index, cv::VideoCaptureAPIs val) {

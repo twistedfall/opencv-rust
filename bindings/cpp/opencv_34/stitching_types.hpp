@@ -215,7 +215,7 @@ extern "C" {
 	}
 
 	Result<cv::detail::CameraParams*> cv_VectorOfDetail_CameraParams_get_unchecked(const std::vector<cv::detail::CameraParams>* instance, size_t index) {
-		return Ok(new cv::detail::CameraParams((*instance)[index]));
+		return Ok<cv::detail::CameraParams*>(new cv::detail::CameraParams((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDetail_CameraParams_set(std::vector<cv::detail::CameraParams>* instance, size_t index, cv::detail::CameraParams* val) {
@@ -288,7 +288,7 @@ extern "C" {
 	}
 
 	Result<cv::detail::ImageFeatures*> cv_VectorOfDetail_ImageFeatures_get_unchecked(const std::vector<cv::detail::ImageFeatures>* instance, size_t index) {
-		return Ok(new cv::detail::ImageFeatures((*instance)[index]));
+		return Ok<cv::detail::ImageFeatures*>(new cv::detail::ImageFeatures((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDetail_ImageFeatures_set(std::vector<cv::detail::ImageFeatures>* instance, size_t index, cv::detail::ImageFeatures* val) {
@@ -361,7 +361,7 @@ extern "C" {
 	}
 
 	Result<cv::detail::MatchesInfo*> cv_VectorOfDetail_MatchesInfo_get_unchecked(const std::vector<cv::detail::MatchesInfo>* instance, size_t index) {
-		return Ok(new cv::detail::MatchesInfo((*instance)[index]));
+		return Ok<cv::detail::MatchesInfo*>(new cv::detail::MatchesInfo((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfDetail_MatchesInfo_set(std::vector<cv::detail::MatchesInfo>* instance, size_t index, cv::detail::MatchesInfo* val) {

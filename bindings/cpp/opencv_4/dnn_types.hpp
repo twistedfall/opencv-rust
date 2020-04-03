@@ -461,7 +461,7 @@ extern "C" {
 	}
 
 	Result<cv::dnn::MatShape*> cv_VectorOfMatShape_get_unchecked(const std::vector<cv::dnn::MatShape>* instance, size_t index) {
-		return Ok(new cv::dnn::MatShape((*instance)[index]));
+		return Ok<cv::dnn::MatShape*>(new cv::dnn::MatShape((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfMatShape_set(std::vector<cv::dnn::MatShape>* instance, size_t index, cv::dnn::MatShape* val) {
@@ -552,7 +552,7 @@ extern "C" {
 	}
 
 	Result<cv::Ptr<cv::dnn::BackendNode>*> cv_VectorOfPtrOfBackendNode_get_unchecked(const std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index) {
-		return Ok(new cv::Ptr<cv::dnn::BackendNode>((*instance)[index]));
+		return Ok<cv::Ptr<cv::dnn::BackendNode>*>(new cv::Ptr<cv::dnn::BackendNode>((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfPtrOfBackendNode_set(std::vector<cv::Ptr<cv::dnn::BackendNode>>* instance, size_t index, cv::Ptr<cv::dnn::BackendNode>* val) {
@@ -625,7 +625,7 @@ extern "C" {
 	}
 
 	Result<cv::Ptr<cv::dnn::BackendWrapper>*> cv_VectorOfPtrOfBackendWrapper_get_unchecked(const std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index) {
-		return Ok(new cv::Ptr<cv::dnn::BackendWrapper>((*instance)[index]));
+		return Ok<cv::Ptr<cv::dnn::BackendWrapper>*>(new cv::Ptr<cv::dnn::BackendWrapper>((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfPtrOfBackendWrapper_set(std::vector<cv::Ptr<cv::dnn::BackendWrapper>>* instance, size_t index, cv::Ptr<cv::dnn::BackendWrapper>* val) {
@@ -698,7 +698,7 @@ extern "C" {
 	}
 
 	Result<cv::Ptr<cv::dnn::Layer>*> cv_VectorOfPtrOfLayer_get_unchecked(const std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index) {
-		return Ok(new cv::Ptr<cv::dnn::Layer>((*instance)[index]));
+		return Ok<cv::Ptr<cv::dnn::Layer>*>(new cv::Ptr<cv::dnn::Layer>((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfPtrOfLayer_set(std::vector<cv::Ptr<cv::dnn::Layer>>* instance, size_t index, cv::Ptr<cv::dnn::Layer>* val) {
@@ -771,7 +771,7 @@ extern "C" {
 	}
 
 	Result<cv::dnn::Target> cv_VectorOfTarget_get_unchecked(const std::vector<cv::dnn::Target>* instance, size_t index) {
-		return Ok((*instance)[index]);
+		return Ok<cv::dnn::Target>((*instance)[index]);
 	}
 
 	Result_void cv_VectorOfTarget_set(std::vector<cv::dnn::Target>* instance, size_t index, cv::dnn::Target val) {
@@ -848,7 +848,7 @@ extern "C" {
 	}
 
 	Result<std::vector<cv::dnn::MatShape>*> cv_VectorOfVectorOfMatShape_get_unchecked(const std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index) {
-		return Ok(new std::vector<cv::dnn::MatShape>((*instance)[index]));
+		return Ok<std::vector<cv::dnn::MatShape>*>(new std::vector<cv::dnn::MatShape>((*instance)[index]));
 	}
 
 	Result_void cv_VectorOfVectorOfMatShape_set(std::vector<std::vector<cv::dnn::MatShape>>* instance, size_t index, std::vector<cv::dnn::MatShape>* val) {
