@@ -1,3 +1,13 @@
+* 0.33.1
+  * Internal rework of `VectorOf…` generation logic, fix https://github.com/twistedfall/opencv-rust/issues/109
+
+* 0.33.0
+  * Basic support for building against OpenCV.framework on macOS, for details see
+    [ci files](https://github.com/twistedfall/opencv-rust/blob/v0.33.0/ci/script.sh#L34)
+  * Fix internals of `PtrOff32`
+  * Big internal refactoring getting rid of most instances of type casting and `void*`
+  
+
 * 0.32.0
   * Improve Matx: better api ergonomics, add PartialEq, add ToInput/OutputArray implementations, add tests
   * 'u_mat' the method names is now 'umat' (underscore removed)
