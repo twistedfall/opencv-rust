@@ -40,7 +40,7 @@ impl ExportConfig {
 	}
 }
 
-pub type ExportIdx = (PathBuf, u32, u32);
+type ExportIdx = (PathBuf, u32, u32);
 
 struct CacheFiller<'ge, 'tu> {
 	gen_env: &'ge mut GeneratorEnv<'tu>,

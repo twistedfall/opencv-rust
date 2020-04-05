@@ -79,11 +79,11 @@ impl Element for SmartPtr<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self)
+		"cv".into()
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
-		DefaultElement::cpp_localname(self)
+		"Ptr".into()
 	}
 
 	fn rust_module(&self) -> Cow<str> {

@@ -136,7 +136,7 @@ sudo apt -y install \
 	wget
 
 # workaround to make clang_sys crate detect installed libclang
-sudo ln -s /usr/lib/llvm-6.0/lib/libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
+sudo ln -s libclang.so.1 /usr/lib/llvm-6.0/lib/libclang.so
 
 if [[ "$OPENCV_VERSION" == "3.2.0" ]]; then
 	sudo apt -y install libopencv-dev=3.2.0*

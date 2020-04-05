@@ -28,10 +28,10 @@ impl NamePool {
 	}
 
 	pub fn into_disambiguator<T>(mut self, args: impl IntoIterator<Item=T>, mut name_cb: impl for<'a> FnMut(&'a T) -> Cow<'a, str>) -> impl Iterator<Item=(String, T)> {
-		let args = args.into_iter();
-		args.map(move |f| {
-			let name = self.get_name(name_cb(&f)).into_owned();
-			(name, f)
-		})
+		args.into_iter()
+			.map(move |f| {
+				let name = self.get_name(name_cb(&f)).into_owned();
+				(name, f)
+			})
 	}
 }

@@ -1210,21 +1210,8 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 			return format!("&{name}", name=name);
 		}
 		if self.is_by_ptr() {
-			let safe_id = match self.source().kind() {
-				Kind::Class(cls) => {
-					cls.rust_localname().into_owned()
-				}
-				Kind::StdVector(vec) => {
-					vec.rust_localname().into_owned()
-				}
-				Kind::SmartPtr(ptr) => {
-					ptr.rust_localname().into_owned()
-				}
-				_ => {
-					self.rust_safe_id().into_owned()
-				}
-			};
-			return format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=safe_id);
+			let typ = self.source();
+			return format!("{name}.as_raw_{rust_safe_id}()", name=name, rust_safe_id=typ.rust_safe_id());
 		}
 		if self.as_variable_array().is_some() {
 			return if self.is_const() {

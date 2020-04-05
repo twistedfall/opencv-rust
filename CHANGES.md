@@ -6,7 +6,6 @@
     [ci files](https://github.com/twistedfall/opencv-rust/blob/v0.33.0/ci/script.sh#L34)
   * Fix internals of `PtrOff32`
   * Big internal refactoring getting rid of most instances of type casting and `void*`
-  
 
 * 0.32.0
   * Improve Matx: better api ergonomics, add PartialEq, add ToInput/OutputArray implementations, add tests

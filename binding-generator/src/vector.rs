@@ -119,11 +119,11 @@ impl Element for Vector<'_, '_> {
 	}
 
 	fn cpp_namespace(&self) -> Cow<str> {
-		DefaultElement::cpp_namespace(self)
+		"std".into()
 	}
 
 	fn cpp_localname(&self) -> Cow<str> {
-		DefaultElement::cpp_localname(self)
+		"vector".into()
 	}
 
 	fn rust_module(&self) -> Cow<str> {
