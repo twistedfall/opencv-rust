@@ -224,7 +224,7 @@ mod bioinspired_sys {
 		pub fn cv_bioinspired_Retina_activateMovingContoursProcessing_bool(instance: *mut c_void, activate: bool) -> Result_void;
 		pub fn cv_bioinspired_Retina_activateContoursProcessing_bool(instance: *mut c_void, activate: bool) -> Result_void;
 		pub fn cv_bioinspired_Retina_create_Size(input_size: *const core::Size) -> Result<*mut c_void>;
-		pub fn cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(input_size: *const core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strenght: f32) -> Result<*mut c_void>;
+		pub fn cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(input_size: *const core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<*mut c_void>;
 		pub fn cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, input_image: *mut c_void, output_tone_mapped_image: *mut c_void) -> Result_void;
 		pub fn cv_bioinspired_RetinaFastToneMapping_setup_float_float_float(instance: *mut c_void, photoreceptors_neighborhood_radius: f32, ganglioncells_neighborhood_radius: f32, mean_luminance_modulator_k: f32) -> Result_void;
 		pub fn cv_bioinspired_RetinaFastToneMapping_create_Size(input_size: *const core::Size) -> Result<*mut c_void>;
@@ -287,6 +287,7 @@ mod calib3d_sys {
 		pub fn cv_findEssentialMat_const__InputArrayX_const__InputArrayX_double_Point2d_int_double_double_const__OutputArrayX(points1: *mut c_void, points2: *mut c_void, focal: f64, pp: *const core::Point2d, method: i32, prob: f64, threshold: f64, mask: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_double(points1: *mut c_void, points2: *mut c_void, mask: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX(points1: *mut c_void, points2: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_int_const__OutputArrayX(points1: *mut c_void, points2: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32, mask: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_findHomography_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double(src_points: *mut c_void, dst_points: *mut c_void, mask: *mut c_void, method: i32, ransac_reproj_threshold: f64) -> Result<*mut c_void>;
 		pub fn cv_findHomography_const__InputArrayX_const__InputArrayX_int_double_const__OutputArrayX_int_double(src_points: *mut c_void, dst_points: *mut c_void, method: i32, ransac_reproj_threshold: f64, mask: *mut c_void, max_iters: i32, confidence: f64) -> Result<*mut c_void>;
 		pub fn cv_fisheye_calibrate_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points: *mut c_void, image_points: *mut c_void, image_size: *const core::Size, k: *mut c_void, d: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, flags: i32, criteria: *mut c_void) -> Result<f64>;
@@ -300,7 +301,7 @@ mod calib3d_sys {
 		pub fn cv_fisheye_undistortImage_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX(distorted: *mut c_void, undistorted: *mut c_void, k: *mut c_void, d: *mut c_void, knew: *mut c_void, new_size: *const core::Size) -> Result_void;
 		pub fn cv_fisheye_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(distorted: *mut c_void, undistorted: *mut c_void, k: *mut c_void, d: *mut c_void, r: *mut c_void, p: *mut c_void) -> Result_void;
 		pub fn cv_getOptimalNewCameraMatrix_const__InputArrayX_const__InputArrayX_Size_double_Size_RectX_bool(camera_matrix: *mut c_void, dist_coeffs: *mut c_void, image_size: *const core::Size, alpha: f64, new_img_size: *const core::Size, valid_pix_roi: *mut core::Rect, center_principal_point: bool) -> Result<*mut c_void>;
-		pub fn cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1: *const core::Rect, roi2: *const core::Rect, min_disparity: i32, number_of_disparities: i32, sad_window_size: i32) -> Result<core::Rect>;
+		pub fn cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1: *const core::Rect, roi2: *const core::Rect, min_disparity: i32, number_of_disparities: i32, block_size: i32) -> Result<core::Rect>;
 		pub fn cv_initCameraMatrix2D_const__InputArrayX_const__InputArrayX_Size_double(object_points: *mut c_void, image_points: *mut c_void, image_size: *const core::Size, aspect_ratio: f64) -> Result<*mut c_void>;
 		pub fn cv_matMulDeriv_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(a: *mut c_void, b: *mut c_void, d_a_bd_a: *mut c_void, d_a_bd_b: *mut c_void) -> Result_void;
 		pub fn cv_projectPoints_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double(object_points: *mut c_void, rvec: *mut c_void, tvec: *mut c_void, camera_matrix: *mut c_void, dist_coeffs: *mut c_void, image_points: *mut c_void, jacobian: *mut c_void, aspect_ratio: f64) -> Result_void;
@@ -375,7 +376,8 @@ mod ccalib_sys {
 
 	extern "C" {
 		pub fn cv_omnidir_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, size: *const core::Size, k: *mut c_void, xi: *mut c_void, d: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, flags: i32, criteria: *mut c_void, idx: *mut c_void) -> Result<f64>;
-		pub fn cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(k: *mut c_void, d: *mut c_void, xi: *mut c_void, r: *mut c_void, p: *mut c_void, size: *const core::Size, mltype: i32, map1: *mut c_void, map2: *mut c_void, flags: i32) -> Result_void;
+		pub fn cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(k: *mut c_void, d: *mut c_void, xi: *mut c_void, r: *mut c_void, p: *mut c_void, size: *const core::Size, m1type: i32, map1: *mut c_void, map2: *mut c_void, flags: i32) -> Result_void;
+		pub fn cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const_Affine3dX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, affine: *const core::Affine3d, k: *mut c_void, xi: f64, d: *mut c_void, jacobian: *mut c_void) -> Result_void;
 		pub fn cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, rvec: *mut c_void, tvec: *mut c_void, k: *mut c_void, xi: f64, d: *mut c_void, jacobian: *mut c_void) -> Result_void;
 		pub fn cv_omnidir_stereoCalibrate_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const_SizeX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(object_points: *mut c_void, image_points1: *mut c_void, image_points2: *mut c_void, image_size1: *const core::Size, image_size2: *const core::Size, k1: *mut c_void, xi1: *mut c_void, d1: *mut c_void, k2: *mut c_void, xi2: *mut c_void, d2: *mut c_void, rvec: *mut c_void, tvec: *mut c_void, rvecs_l: *mut c_void, tvecs_l: *mut c_void, flags: i32, criteria: *mut c_void, idx: *mut c_void) -> Result<f64>;
 		pub fn cv_omnidir_stereoReconstruct_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_int_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_int(image1: *mut c_void, image2: *mut c_void, k1: *mut c_void, d1: *mut c_void, xi1: *mut c_void, k2: *mut c_void, d2: *mut c_void, xi2: *mut c_void, r: *mut c_void, t: *mut c_void, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: *mut c_void, image1_rec: *mut c_void, image2_rec: *mut c_void, new_size: *const core::Size, knew: *mut c_void, point_cloud: *mut c_void, point_type: i32) -> Result_void;
@@ -485,6 +487,9 @@ mod core_sys {
 		pub fn cv_detail_check_failed_MatDepth_int_int_const_CheckContextX(v1: i32, v2: i32, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_MatType_int_const_CheckContextX(v: i32, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_MatType_int_int_const_CheckContextX(v1: i32, v2: i32, ctx: *mut c_void) -> Result_void;
+		pub fn cv_detail_check_failed_auto_Size__int__Size__int__const_CheckContextX(v1: *const core::Size_<i32>, v2: *const core::Size_<i32>, ctx: *mut c_void) -> Result_void;
+		pub fn cv_detail_check_failed_auto_Size__int__const_CheckContextX(v: *const core::Size_<i32>, ctx: *mut c_void) -> Result_void;
+		pub fn cv_detail_check_failed_auto_const_stringX_const_CheckContextX(v1: *const c_char, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_double_const_CheckContextX(v: f64, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_double_double_const_CheckContextX(v1: f64, v2: f64, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_float_const_CheckContextX(v: f32, ctx: *mut c_void) -> Result_void;
@@ -1944,6 +1949,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Net_connect_String_String(instance: *mut c_void, out_pin: *mut c_char, inp_pin: *mut c_char) -> Result_void;
 		pub fn cv_dnn_Net_connect_int_int_int_int(instance: *mut c_void, out_layer_id: i32, out_num: i32, inp_layer_id: i32, inp_num: i32) -> Result_void;
 		pub fn cv_dnn_Net_setInputsNames_const_vector_String_X(instance: *mut c_void, input_blob_names: *mut c_void) -> Result_void;
+		pub fn cv_dnn_Net_setInputShape_const_StringX_const_MatShapeX(instance: *mut c_void, input_name: *const c_char, shape: *mut c_void) -> Result_void;
 		pub fn cv_dnn_Net_forward_const_StringX(instance: *mut c_void, output_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_dnn_Net_forwardAsync_const_StringX(instance: *mut c_void, output_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_dnn_Net_forward_const__OutputArrayX_const_StringX(instance: *mut c_void, output_blobs: *mut c_void, output_name: *const c_char) -> Result_void;
@@ -2010,6 +2016,8 @@ mod dnn_sys {
 		pub fn cv_dnn_PoolingLayer_setPad_b_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_globalPooling_const(instance: *mut c_void) -> Result<bool>;
 		pub fn cv_dnn_PoolingLayer_setGlobalPooling_bool(instance: *mut c_void, val: bool) -> Result_void;
+		pub fn cv_dnn_PoolingLayer_isGlobalPooling(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_PoolingLayer_setIsGlobalPooling_vector_bool_(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_computeMaxIdx_const(instance: *mut c_void) -> Result<bool>;
 		pub fn cv_dnn_PoolingLayer_setComputeMaxIdx_bool(instance: *mut c_void, val: bool) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_padMode_const(instance: *mut c_void) -> Result<*mut c_void>;
@@ -3494,6 +3502,11 @@ mod objdetect_sys {
 		pub fn cv_QRCodeDetector_detect_const_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void) -> Result<bool>;
 		pub fn cv_QRCodeDetector_decode_const__InputArrayX_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_QRCodeDetector_detectAndDecode_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_QRCodeDetector_detectMulti_const_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void) -> Result<bool>;
+		pub fn cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_String_X_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void, decoded_info: *mut c_void, straight_qrcode: *mut c_void) -> Result<bool>;
+		pub fn cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_String_X_const__OutputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, decoded_info: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> Result<bool>;
+		pub fn cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_string_X_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void, decoded_info: *mut c_void, straight_qrcode: *mut c_void) -> Result<bool>;
+		pub fn cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_string_X_const__OutputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, decoded_info: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> Result<bool>;
 		pub fn cv_SimilarRects_eps_const(instance: *mut c_void) -> Result<f64>;
 		pub fn cv_SimilarRects_setEps_double(instance: *mut c_void, val: f64) -> Result_void;
 		pub fn cv_SimilarRects_SimilarRects_double(_eps: f64) -> Result<*mut c_void>;
@@ -3506,19 +3519,9 @@ mod phase_unwrapping_sys {
 	use super::*;
 
 	extern "C" {
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(parameters: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(parameters: *const crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<*mut c_void>;
 		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayX(instance: *mut c_void, reliability_map: *mut c_void) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_width_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setWidth_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_height_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHeight_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_histThresh_const(instance: *mut c_void) -> Result<f32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHistThresh_float(instance: *mut c_void, val: f32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfSmallBins_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfSmallBins_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfLargeBins_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfLargeBins_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() -> Result<*mut c_void>;
+		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params>;
 		pub fn cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(instance: *mut c_void, wrapped_phase_map: *mut c_void, unwrapped_phase_map: *mut c_void, shadow_mask: *mut c_void) -> Result_void;
 	}
 }
@@ -5162,7 +5165,7 @@ mod xphoto_sys {
 		pub fn cv_xphoto_createGrayworldWB() -> Result<*mut c_void>;
 		pub fn cv_xphoto_createLearningBasedWB_const_StringX(path_to_model: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_xphoto_createSimpleWB() -> Result<*mut c_void>;
-		pub fn cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma: f32, contrast: f32, saturation: f32, sigma_space: f32, sigma_color: f32) -> Result<*mut c_void>;
+		pub fn cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma: f32, contrast: f32, saturation: f32, sigma_color: f32, sigma_space: f32) -> Result<*mut c_void>;
 		pub fn cv_xphoto_dctDenoising_const_MatX_MatX_double_int(src: *mut c_void, dst: *mut c_void, sigma: f64, psize: i32) -> Result_void;
 		pub fn cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(src: *mut c_void, mask: *mut c_void, dst: *mut c_void, algorithm_type: i32) -> Result_void;
 		pub fn cv_xphoto_GrayworldWB_getSaturationThreshold_const(instance: *mut c_void) -> Result<f32>;

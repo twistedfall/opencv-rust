@@ -108,6 +108,8 @@ pub const CAP_OPENNI_VALID_DEPTH_MASK: i32 = 4;
 pub const CAP_OPENNI_VGA_30HZ: i32 = 0;
 /// Aperture. Can be readonly, depends on camera program.
 pub const CAP_PROP_APERTURE: i32 = 17008;
+/// Automatically trigger frame capture if camera is configured with software trigger
+pub const CAP_PROP_ARAVIS_AUTOTRIGGER: i32 = 600;
 pub const CAP_PROP_AUTOFOCUS: i32 = 39;
 /// DC1394: exposure control done by camera, user can adjust reference level using this feature.
 pub const CAP_PROP_AUTO_EXPOSURE: i32 = 21;
@@ -116,6 +118,8 @@ pub const CAP_PROP_AUTO_WB: i32 = 44;
 /// Current backend (enum VideoCaptureAPIs). Read-only property
 pub const CAP_PROP_BACKEND: i32 = 42;
 pub const CAP_PROP_BACKLIGHT: i32 = 32;
+/// (read-only) Video bitrate in kbits/s
+pub const CAP_PROP_BITRATE: i32 = 47;
 /// Brightness of the image (only for those cameras that support).
 pub const CAP_PROP_BRIGHTNESS: i32 = 10;
 pub const CAP_PROP_BUFFERSIZE: i32 = 38;
@@ -125,7 +129,8 @@ pub const CAP_PROP_CHANNEL: i32 = 43;
 pub const CAP_PROP_CODEC_PIXEL_FORMAT: i32 = 46;
 /// Contrast of the image (only for cameras).
 pub const CAP_PROP_CONTRAST: i32 = 11;
-/// Boolean flags indicating whether images should be converted to RGB.
+/// Boolean flags indicating whether images should be converted to RGB. <br/>
+/// *GStreamer note*: The flag is ignored in case if custom pipeline is used. It's user responsibility to interpret pipeline output.
 pub const CAP_PROP_CONVERT_RGB: i32 = 16;
 pub const CAP_PROP_DC1394_MAX: i32 = 31;
 pub const CAP_PROP_DC1394_MODE_AUTO: i32 = -2;
@@ -617,7 +622,7 @@ pub const CAP_WINRT: i32 = 1410;
 pub const CAP_XIAPI: i32 = 1100;
 /// XINE engine (Linux)
 pub const CAP_XINE: i32 = 2400;
-pub const CV__CAP_PROP_LATEST: i32 = 47;
+pub const CV__CAP_PROP_LATEST: i32 = 48;
 /// (Read-only): Size of just encoded video frame. Note that the encoding order may be different from representation order.
 pub const VIDEOWRITER_PROP_FRAMEBYTES: i32 = 2;
 /// Number of stripes for parallel encoding. -1 for auto detection.
@@ -745,7 +750,8 @@ pub enum VideoCaptureProperties {
 	CAP_PROP_GAIN = 14 as isize,
 	/// Exposure (only for those cameras that support).
 	CAP_PROP_EXPOSURE = 15 as isize,
-	/// Boolean flags indicating whether images should be converted to RGB.
+	/// Boolean flags indicating whether images should be converted to RGB. <br/>
+	/// *GStreamer note*: The flag is ignored in case if custom pipeline is used. It's user responsibility to interpret pipeline output.
 	CAP_PROP_CONVERT_RGB = 16 as isize,
 	/// Currently unsupported.
 	CAP_PROP_WHITE_BALANCE_BLUE_U = 17 as isize,
@@ -787,7 +793,9 @@ pub enum VideoCaptureProperties {
 	CAP_PROP_WB_TEMPERATURE = 45 as isize,
 	/// (read-only) codec's pixel format. 4-character code - see VideoWriter::fourcc . Subset of [AV_PIX_FMT_*](https://github.com/FFmpeg/FFmpeg/blob/master/libavcodec/raw.c) or -1 if unknown
 	CAP_PROP_CODEC_PIXEL_FORMAT = 46 as isize,
-	CV__CAP_PROP_LATEST = 47 as isize,
+	/// (read-only) Video bitrate in kbits/s
+	CAP_PROP_BITRATE = 47 as isize,
+	CV__CAP_PROP_LATEST = 48 as isize,
 }
 
 /// %VideoWriter generic properties identifier.
@@ -1106,13 +1114,14 @@ impl VideoCapture {
 	/// * filename: it can be:
 	///    - name of video file (eg. `video.avi`)
 	///    - or image sequence (eg. `img_%02d.jpg`, which will read samples like `img_00.jpg, img_01.jpg, img_02.jpg, ...`)
-	///    - or URL of video stream (eg. `protocol://host:port/script_name?script_params|auth`).
+	///    - or URL of video stream (eg. `protocol://host:port/script_name?script_params|auth`)
+	///    - or GStreamer pipeline string in gst-launch tool format in case if GStreamer is used as backend
 	///       Note that each video stream or IP camera feed has its own URL scheme. Please refer to the
 	///       documentation of source stream to know the right URL.
 	/// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
 	///    implementation if multiple are available: e.g. cv::CAP_FFMPEG or cv::CAP_IMAGES or cv::CAP_DSHOW.
 	/// ## See also
-	/// The list of supported API backends cv::VideoCaptureAPIs
+	/// cv::VideoCaptureAPIs
 	/// 
 	/// ## C++ default parameters
 	/// * api_preference: CAP_ANY
@@ -1137,7 +1146,7 @@ impl VideoCapture {
 	/// * apiPreference: preferred Capture API backends to use. Can be used to enforce a specific reader
 	///    implementation if multiple are available: e.g. cv::CAP_DSHOW or cv::CAP_MSMF or cv::CAP_V4L.
 	/// ## See also
-	/// The list of supported API backends cv::VideoCaptureAPIs
+	/// cv::VideoCaptureAPIs
 	/// 
 	/// ## C++ default parameters
 	/// * api_preference: CAP_ANY

@@ -77,9 +77,9 @@ pub enum ANN_MLP_TrainFlags {
 pub enum ANN_MLP_TrainingMethods {
 	/// The back-propagation algorithm.
 	BACKPROP = 0 as isize,
-	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_RPROP93) for details.
+	/// The RPROP algorithm. See [RPROP93](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_RPROP93) for details.
 	RPROP = 1 as isize,
-	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
+	/// The simulated annealing algorithm. See [Kirkpatrick83](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Kirkpatrick83) for details.
 	ANNEAL = 2 as isize,
 }
 
@@ -201,7 +201,7 @@ pub enum SVMSGD_SvmsgdType {
 /// SVM::C_SVC SVMs have been trained (one against rest) with auto_train. Evaluation on three
 /// different kernels (SVM::CHI2, SVM::INTER, SVM::RBF). The color depicts the class with max score.
 /// Bright means max-score \> 0, dark means max-score \< 0.
-/// ![image](https://docs.opencv.org/3.4.9/SVM_Comparison.png)
+/// ![image](https://docs.opencv.org/3.4.10/SVM_Comparison.png)
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum SVM_KernelTypes {
@@ -257,7 +257,7 @@ pub enum SVM_Types {
 	/// penalty multiplier C is used.
 	EPS_SVR = 103 as isize,
 	/// ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu)-Support Vector Regression. ![inline formula](https://latex.codecogs.com/png.latex?%5Cnu) is used instead of p.
-	/// See [LibSVM](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_LibSVM) for details.
+	/// See [LibSVM](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_LibSVM) for details.
 	NU_SVR = 104 as isize,
 }
 
@@ -1788,7 +1788,7 @@ pub trait LogisticRegression: crate::ml::StatModel {
 	
 	/// This function returns the trained parameters arranged across rows.
 	/// 
-	/// For a two class classifcation problem, it returns a row matrix. It returns learnt parameters of
+	/// For a two class classification problem, it returns a row matrix. It returns learnt parameters of
 	/// the Logistic Regression as a matrix of type CV_32F.
 	fn get_learnt_thetas(&self) -> Result<core::Mat> {
 		unsafe { sys::cv_ml_LogisticRegression_get_learnt_thetas_const(self.as_raw_LogisticRegression()) }.into_result().map(|ptr| core::Mat { ptr })
@@ -2469,7 +2469,7 @@ pub trait SVM_Kernel: core::AlgorithmTrait {
 /// Stochastic Gradient Descent SVM classifier
 /// 
 /// SVMSGD provides a fast and easy-to-use implementation of the SVM classifier using the Stochastic Gradient Descent approach,
-/// as presented in [bottou2010large](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_bottou2010large).
+/// as presented in [bottou2010large](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_bottou2010large).
 /// 
 /// The classifier has following parameters:
 /// - model type,
@@ -2492,7 +2492,7 @@ pub trait SVM_Kernel: core::AlgorithmTrait {
 /// - \ref ASGD is Average Stochastic Gradient Descent SVM Classifier. ASGD classifier averages weights vector on each step of algorithm by the formula
 /// ![inline formula](https://latex.codecogs.com/png.latex?%5Cwidehat%7Bw%7D%5F%7Bt%2B1%7D%20%3D%20%5Cfrac%7Bt%7D%7B1%2Bt%7D%5Cwidehat%7Bw%7D%5F%7Bt%7D%20%2B%20%5Cfrac%7B1%7D%7B1%2Bt%7Dw%5F%7Bt%2B1%7D)
 /// 
-/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_bottou2010large)).
+/// The recommended model type is ASGD (following [bottou2010large](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_bottou2010large)).
 /// 
 /// The margin type may have one of the following values: \ref SOFT_MARGIN or \ref HARD_MARGIN.
 /// 

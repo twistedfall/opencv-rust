@@ -6,6 +6,13 @@ extern "C" {
 	void cv_DnnSuperResImpl_delete(cv::dnn_superres::DnnSuperResImpl* instance) {
 		delete instance;
 	}
+	Result<cv::Ptr<cv::dnn_superres::DnnSuperResImpl>*> cv_dnn_superres_DnnSuperResImpl_create() {
+		try {
+			cv::Ptr<cv::dnn_superres::DnnSuperResImpl> ret = cv::dnn_superres::DnnSuperResImpl::create();
+			return Ok(new cv::Ptr<cv::dnn_superres::DnnSuperResImpl>(ret));
+		} OCVRS_CATCH(Result<cv::Ptr<cv::dnn_superres::DnnSuperResImpl>*>)
+	}
+	
 	Result<cv::dnn_superres::DnnSuperResImpl*> cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl() {
 		try {
 			cv::dnn_superres::DnnSuperResImpl* ret = new cv::dnn_superres::DnnSuperResImpl();
@@ -13,28 +20,28 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::dnn_superres::DnnSuperResImpl*>)
 	}
 	
-	Result<cv::dnn_superres::DnnSuperResImpl*> cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_stringX_int(const char* algo, int scale) {
+	Result<cv::dnn_superres::DnnSuperResImpl*> cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringX_int(const char* algo, int scale) {
 		try {
 			cv::dnn_superres::DnnSuperResImpl* ret = new cv::dnn_superres::DnnSuperResImpl(std::string(algo), scale);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::dnn_superres::DnnSuperResImpl*>)
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_stringX(cv::dnn_superres::DnnSuperResImpl* instance, const char* path) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX(cv::dnn_superres::DnnSuperResImpl* instance, const char* path) {
 		try {
 			instance->readModel(std::string(path));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_stringX_const_stringX(cv::dnn_superres::DnnSuperResImpl* instance, const char* weights, const char* definition) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX_const_StringX(cv::dnn_superres::DnnSuperResImpl* instance, const char* weights, const char* definition) {
 		try {
 			instance->readModel(std::string(weights), std::string(definition));
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
 	
-	Result_void cv_dnn_superres_DnnSuperResImpl_setModel_const_stringX_int(cv::dnn_superres::DnnSuperResImpl* instance, const char* algo, int scale) {
+	Result_void cv_dnn_superres_DnnSuperResImpl_setModel_const_StringX_int(cv::dnn_superres::DnnSuperResImpl* instance, const char* algo, int scale) {
 		try {
 			instance->setModel(std::string(algo), scale);
 			return Ok();
@@ -64,7 +71,7 @@ extern "C" {
 	
 	Result<void*> cv_dnn_superres_DnnSuperResImpl_getAlgorithm(cv::dnn_superres::DnnSuperResImpl* instance) {
 		try {
-			std::string ret = instance->getAlgorithm();
+			cv::String ret = instance->getAlgorithm();
 			return Ok(ocvrs_create_string(ret.c_str()));
 		} OCVRS_CATCH(Result<void*>)
 	}

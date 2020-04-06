@@ -10,9 +10,9 @@
 //! - Detection of ChArUco diamond markers
 //! The samples directory includes easy examples of how to use the module.
 //! 
-//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Aruco2014).
+//! The implementation is based on the ArUco Library by R. Muñoz-Salinas and S. Garrido-Jurado [Aruco2014](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Aruco2014).
 //! 
-//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
+//! Markers can also be detected based on the AprilTag 2 [wang2016iros](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_wang2016iros) fiducial detection method.
 //! ## See also
 //! S. Garrido-Jurado, R. Muñoz-Salinas, F. J. Madrid-Cuevas, and M. J. Marín-Jiménez. 2014.
 //! "Automatic generation and detection of highly reliable fiducial markers under occlusion".
@@ -27,7 +27,7 @@ pub mod prelude {
 	pub use { super::DictionaryTrait, super::DetectorParametersTrait, super::BoardTrait, super::GridBoardTrait, super::CharucoBoardTrait };
 }
 
-/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_wang2016iros)
+/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_wang2016iros)
 pub const CORNER_REFINE_APRILTAG: i32 = 3;
 /// ArUco approach and refine the corners locations using the contour-points line fitting
 pub const CORNER_REFINE_CONTOUR: i32 = 2;
@@ -69,7 +69,7 @@ pub enum CornerRefineMethod {
 	CORNER_REFINE_SUBPIX = 1 as isize,
 	/// ArUco approach and refine the corners locations using the contour-points line fitting
 	CORNER_REFINE_CONTOUR = 2 as isize,
-	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_wang2016iros)
+	/// Tag and corners detection based on the AprilTag 2 approach [wang2016iros](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_wang2016iros)
 	CORNER_REFINE_APRILTAG = 3 as isize,
 }
 

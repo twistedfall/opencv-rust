@@ -2,7 +2,7 @@
 //! 
 //! The video stabilization module contains a set of functions and classes that can be used to solve the
 //! problem of video stabilization. There are a few methods implemented, most of them are described in
-//! the papers [OF06](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
+//! the papers [OF06](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_OF06) and [G11](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_G11) . However, there are some extensions and deviations from the original
 //! paper methods.
 //! 
 //! ### References
@@ -20,7 +20,7 @@
 //! 
 //!          # Fast Marching Method
 //! 
-//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
+//! The Fast Marching Method [Telea04](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Telea04) is used in of the video stabilization routines to do motion and
 //! color inpainting. The method is implemented is a flexible way and it's made public for other users.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
@@ -273,8 +273,8 @@ pub trait DeblurerBase {
 		unsafe { sys::cv_videostab_DeblurerBase_radius_const(self.as_raw_DeblurerBase()) }.into_result()
 	}
 	
-	fn deblur(&mut self, idx: i32, frame: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_videostab_DeblurerBase_deblur_int_MatX(self.as_raw_DeblurerBase(), idx, frame.as_raw_Mat()) }.into_result()
+	fn deblur(&mut self, idx: i32, frame: &mut core::Mat, range: &core::Range) -> Result<()> {
+		unsafe { sys::cv_videostab_DeblurerBase_deblur_int_MatX_const_RangeX(self.as_raw_DeblurerBase(), idx, frame.as_raw_Mat(), range.as_raw_Range()) }.into_result()
 	}
 	
 	fn set_frames(&mut self, val: &types::VectorOfMat) -> Result<()> {
@@ -414,6 +414,10 @@ pub trait GaussianMotionFilterTrait: crate::videostab::MotionFilterBase {
 		unsafe { sys::cv_videostab_GaussianMotionFilter_stdev_const(self.as_raw_GaussianMotionFilter()) }.into_result()
 	}
 	
+	fn stabilize(&mut self, idx: i32, motions: &types::VectorOfMat, range: &core::Range) -> Result<core::Mat> {
+		unsafe { sys::cv_videostab_GaussianMotionFilter_stabilize_int_const_vector_Mat_X_const_RangeX(self.as_raw_GaussianMotionFilter(), idx, motions.as_raw_VectorOfMat(), range.as_raw_Range()) }.into_result().map(|ptr| core::Mat { ptr })
+	}
+	
 }
 
 pub struct GaussianMotionFilter {
@@ -495,6 +499,11 @@ pub trait ILog {
 
 pub trait IMotionStabilizer {
 	fn as_raw_IMotionStabilizer(&self) -> *mut c_void;
+	/// assumes that [0, size-1) is in or equals to [range.first, range.second)
+	fn stabilize(&mut self, size: i32, motions: &types::VectorOfMat, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+		unsafe { sys::cv_videostab_IMotionStabilizer_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(self.as_raw_IMotionStabilizer(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_Mat()) }.into_result()
+	}
+	
 }
 
 pub trait IOutlierRejector {
@@ -868,6 +877,10 @@ pub trait LpMotionStabilizerTrait: crate::videostab::IMotionStabilizer {
 		unsafe { sys::cv_videostab_LpMotionStabilizer_weight4_const(self.as_raw_LpMotionStabilizer()) }.into_result()
 	}
 	
+	fn stabilize(&mut self, size: i32, motions: &types::VectorOfMat, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+		unsafe { sys::cv_videostab_LpMotionStabilizer_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(self.as_raw_LpMotionStabilizer(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_Mat()) }.into_result()
+	}
+	
 }
 
 pub struct LpMotionStabilizer {
@@ -1128,6 +1141,14 @@ impl MotionEstimatorRansacL2 {
 
 pub trait MotionFilterBase: crate::videostab::IMotionStabilizer {
 	fn as_raw_MotionFilterBase(&self) -> *mut c_void;
+	fn stabilize(&mut self, idx: i32, motions: &types::VectorOfMat, range: &core::Range) -> Result<core::Mat> {
+		unsafe { sys::cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_X_const_RangeX(self.as_raw_MotionFilterBase(), idx, motions.as_raw_VectorOfMat(), range.as_raw_Range()) }.into_result().map(|ptr| core::Mat { ptr })
+	}
+	
+	fn stabilize_1(&mut self, size: i32, motions: &types::VectorOfMat, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+		unsafe { sys::cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(self.as_raw_MotionFilterBase(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_Mat()) }.into_result()
+	}
+	
 }
 
 pub trait MotionInpainterTrait: crate::videostab::InpainterBase {
@@ -1216,6 +1237,10 @@ pub trait MotionStabilizationPipelineTrait: crate::videostab::IMotionStabilizer 
 		unsafe { sys::cv_videostab_MotionStabilizationPipeline_empty_const(self.as_raw_MotionStabilizationPipeline()) }.into_result()
 	}
 	
+	fn stabilize(&mut self, size: i32, motions: &types::VectorOfMat, range: &core::Range, stabilization_motions: &mut core::Mat) -> Result<()> {
+		unsafe { sys::cv_videostab_MotionStabilizationPipeline_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(self.as_raw_MotionStabilizationPipeline(), size, motions.as_raw_VectorOfMat(), range.as_raw_Range(), stabilization_motions.as_raw_Mat()) }.into_result()
+	}
+	
 }
 
 pub struct MotionStabilizationPipeline {
@@ -1252,8 +1277,8 @@ impl MotionStabilizationPipeline {
 
 pub trait NullDeblurerTrait: crate::videostab::DeblurerBase {
 	fn as_raw_NullDeblurer(&self) -> *mut c_void;
-	fn deblur(&mut self, unnamed: i32, unnamed_1: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_videostab_NullDeblurer_deblur_int_MatX(self.as_raw_NullDeblurer(), unnamed, unnamed_1.as_raw_Mat()) }.into_result()
+	fn deblur(&mut self, unnamed: i32, unnamed_1: &mut core::Mat, unnamed_2: &core::Range) -> Result<()> {
+		unsafe { sys::cv_videostab_NullDeblurer_deblur_int_MatX_const_RangeX(self.as_raw_NullDeblurer(), unnamed, unnamed_1.as_raw_Mat(), unnamed_2.as_raw_Range()) }.into_result()
 	}
 	
 }
@@ -2122,8 +2147,8 @@ pub trait WeightingDeblurerTrait: crate::videostab::DeblurerBase {
 		unsafe { sys::cv_videostab_WeightingDeblurer_sensitivity_const(self.as_raw_WeightingDeblurer()) }.into_result()
 	}
 	
-	fn deblur(&mut self, idx: i32, frame: &mut core::Mat) -> Result<()> {
-		unsafe { sys::cv_videostab_WeightingDeblurer_deblur_int_MatX(self.as_raw_WeightingDeblurer(), idx, frame.as_raw_Mat()) }.into_result()
+	fn deblur(&mut self, idx: i32, frame: &mut core::Mat, range: &core::Range) -> Result<()> {
+		unsafe { sys::cv_videostab_WeightingDeblurer_deblur_int_MatX_const_RangeX(self.as_raw_WeightingDeblurer(), idx, frame.as_raw_Mat(), range.as_raw_Range()) }.into_result()
 	}
 	
 }

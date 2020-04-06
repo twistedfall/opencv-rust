@@ -219,6 +219,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
+	Result<cv::Mat*> cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_int_const__OutputArrayX(const cv::_InputArray* points1, const cv::_InputArray* points2, int method, double ransacReprojThreshold, double confidence, int maxIters, const cv::_OutputArray* mask) {
+		try {
+			cv::Mat ret = cv::findFundamentalMat(*points1, *points2, method, ransacReprojThreshold, confidence, maxIters, *mask);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
+	}
+	
 	Result<cv::Mat*> cv_findHomography_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double(const cv::_InputArray* srcPoints, const cv::_InputArray* dstPoints, const cv::_OutputArray* mask, int method, double ransacReprojThreshold) {
 		try {
 			cv::Mat ret = cv::findHomography(*srcPoints, *dstPoints, *mask, method, ransacReprojThreshold);
@@ -310,9 +317,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<cv::Rect> cv_getValidDisparityROI_Rect_Rect_int_int_int(const cv::Rect* roi1, const cv::Rect* roi2, int minDisparity, int numberOfDisparities, int SADWindowSize) {
+	Result<cv::Rect> cv_getValidDisparityROI_Rect_Rect_int_int_int(const cv::Rect* roi1, const cv::Rect* roi2, int minDisparity, int numberOfDisparities, int blockSize) {
 		try {
-			cv::Rect ret = cv::getValidDisparityROI(*roi1, *roi2, minDisparity, numberOfDisparities, SADWindowSize);
+			cv::Rect ret = cv::getValidDisparityROI(*roi1, *roi2, minDisparity, numberOfDisparities, blockSize);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}

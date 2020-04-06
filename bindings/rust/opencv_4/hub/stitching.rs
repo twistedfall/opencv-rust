@@ -5,9 +5,9 @@
 //! the particular needs. All building blocks from the pipeline are available in the detail namespace,
 //! one can combine and use them separately.
 //! 
-//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_BL07) .
+//! The implemented stitching pipeline is very similar to the one proposed in [BL07](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_BL07) .
 //! 
-//! ![stitching pipeline](https://docs.opencv.org/4.2.0/StitchingPipeline.jpg)
+//! ![stitching pipeline](https://docs.opencv.org/4.3.0/StitchingPipeline.jpg)
 //! 
 //! Camera models
 //! -------------
@@ -1304,7 +1304,7 @@ impl Detail_AffineBasedEstimator {
 /// ratio between descriptor distances is greater than the threshold match_conf.
 /// 
 /// Unlike cv::detail::BestOf2NearestMatcher this matcher uses affine
-/// transformation (affine trasformation estimate will be placed in matches_info).
+/// transformation (affine transformation estimate will be placed in matches_info).
 /// ## See also
 /// cv::detail::FeaturesMatcher cv::detail::BestOf2NearestMatcher
 pub trait Detail_AffineBestOf2NearestMatcherTrait: crate::stitching::Detail_BestOf2NearestMatcherTrait {
@@ -1316,7 +1316,7 @@ pub trait Detail_AffineBestOf2NearestMatcherTrait: crate::stitching::Detail_Best
 /// ratio between descriptor distances is greater than the threshold match_conf.
 /// 
 /// Unlike cv::detail::BestOf2NearestMatcher this matcher uses affine
-/// transformation (affine trasformation estimate will be placed in matches_info).
+/// transformation (affine transformation estimate will be placed in matches_info).
 /// ## See also
 /// cv::detail::FeaturesMatcher cv::detail::BestOf2NearestMatcher
 pub struct Detail_AffineBestOf2NearestMatcher {
@@ -1353,7 +1353,7 @@ impl crate::stitching::Detail_FeaturesMatcher for Detail_AffineBestOf2NearestMat
 }
 
 impl Detail_AffineBestOf2NearestMatcher {
-	/// Constructs a "best of 2 nearest" matcher that expects affine trasformation
+	/// Constructs a "best of 2 nearest" matcher that expects affine transformation
 	/// between images
 	/// 
 	/// ## Parameters
@@ -1812,7 +1812,7 @@ pub trait Detail_BlocksCompensator: crate::stitching::Detail_ExposureCompensator
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksCompensator {
 	fn as_raw_Detail_BlocksGainCompensator(&self) -> *mut c_void;
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
@@ -1832,7 +1832,7 @@ pub trait Detail_BlocksGainCompensatorTrait: crate::stitching::Detail_BlocksComp
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image block
-/// intensities, see [UES01](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_UES01) for details.
+/// intensities, see [UES01](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_UES01) for details.
 pub struct Detail_BlocksGainCompensator {
 	pub(crate) ptr: *mut c_void
 }
@@ -3129,7 +3129,7 @@ impl Detail_FisheyeWarper {
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensator {
 	fn as_raw_Detail_GainCompensator(&self) -> *mut c_void;
 	fn apply(&mut self, index: i32, corner: core::Point, image: &mut dyn core::ToInputOutputArray, mask: &dyn core::ToInputArray) -> Result<()> {
@@ -3161,7 +3161,7 @@ pub trait Detail_GainCompensatorTrait: crate::stitching::Detail_ExposureCompensa
 }
 
 /// Exposure compensator which tries to remove exposure related artifacts by adjusting image
-/// intensities, see [BL07](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
+/// intensities, see [BL07](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_BL07) and [WJ10](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_WJ10) for details.
 pub struct Detail_GainCompensator {
 	pub(crate) ptr: *mut c_void
 }
@@ -3252,7 +3252,7 @@ impl Detail_Graph {
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_V03) .
 pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamFinderBaseTrait + crate::stitching::Detail_SeamFinder {
 	fn as_raw_Detail_GraphCutSeamFinder(&self) -> *mut c_void;
 	fn find(&mut self, src: &types::VectorOfUMat, corners: &types::VectorOfPoint, masks: &mut types::VectorOfUMat) -> Result<()> {
@@ -3261,7 +3261,7 @@ pub trait Detail_GraphCutSeamFinderTrait: crate::stitching::Detail_GraphCutSeamF
 	
 }
 
-/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_V03) .
+/// Minimum graph cut-based seam estimator. See details in [V03](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_V03) .
 pub struct Detail_GraphCutSeamFinder {
 	pub(crate) ptr: *mut c_void
 }
@@ -3732,7 +3732,7 @@ impl Detail_MercatorWarper {
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_BA83)).
 pub trait Detail_MultiBandBlenderTrait: crate::stitching::Detail_BlenderTrait {
 	fn as_raw_Detail_MultiBandBlender(&self) -> *mut c_void;
 	fn num_bands(&self) -> Result<i32> {
@@ -3761,7 +3761,7 @@ pub trait Detail_MultiBandBlenderTrait: crate::stitching::Detail_BlenderTrait {
 	
 }
 
-/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_BA83)).
+/// Blender which uses multi-band blending algorithm (see [BA83](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_BA83)).
 pub struct Detail_MultiBandBlender {
 	pub(crate) ptr: *mut c_void
 }

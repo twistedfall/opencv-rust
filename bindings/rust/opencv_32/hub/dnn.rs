@@ -56,6 +56,7 @@ pub enum PoolingLayer_Type {
 pub type LayerFactory_Constuctor = Option<extern "C" fn(*mut c_void) -> *mut c_void>;
 /// Container for strings and integers.
 pub type Net_LayerId = crate::dnn::DictValue;
+pub type Shape = crate::dnn::BlobShape;
 /// Creates the importer of <a href="http://caffe.berkeleyvision.org">Caffe</a> framework network.
 /// ## Parameters
 /// * prototxt: path to the .prototxt file with text description of the network architecture.

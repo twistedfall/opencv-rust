@@ -3,8 +3,8 @@
 //! Haar Feature-based Cascade Classifier for Object Detection
 //! ----------------------------------------------------------
 //! 
-//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Viola01) and
-//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Lienhart02) .
+//! The object detector described below has been initially proposed by Paul Viola [Viola01](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Viola01) and
+//! improved by Rainer Lienhart [Lienhart02](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Lienhart02) .
 //! 
 //! First, a classifier (namely a *cascade of boosted classifiers working with haar-like features*) is
 //! trained with a few hundred sample views of a particular object (i.e., a face or a car), called
@@ -30,7 +30,7 @@
 //! classifiers, and are calculated as described below. The current algorithm uses the following
 //! Haar-like features:
 //! 
-//! ![image](https://docs.opencv.org/3.4.9/haarfeatures.png)
+//! ![image](https://docs.opencv.org/3.4.10/haarfeatures.png)
 //! 
 //! The feature used in a particular classifier is specified by its shape (1a, 2b etc.), position within
 //! the region of interest and the scale (this scale is not the same as the scale used at the detection
@@ -825,7 +825,7 @@ impl DetectionROI {
 
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 /// 
-/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Dalal2005) .
+/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Dalal2005) .
 /// 
 /// useful links:
 /// 
@@ -1250,7 +1250,7 @@ pub trait HOGDescriptorTrait {
 
 /// Implementation of HOG (Histogram of Oriented Gradients) descriptor and object detector.
 /// 
-/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Dalal2005) .
+/// the HOG descriptor algorithm introduced by Navneet Dalal and Bill Triggs [Dalal2005](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Dalal2005) .
 /// 
 /// useful links:
 /// 
@@ -1396,8 +1396,8 @@ pub trait QRCodeDetectorTrait {
 	}
 	
 	/// Decodes QR code in image once it's found by the detect() method.
-	/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
 	/// 
+	/// Returns UTF8-encoded output string or empty string if the code cannot be decoded.
 	/// ## Parameters
 	/// * img: grayscale or color (BGR) image containing QR code.
 	/// * points: Quadrangle vertices found by detect() method (or some other algorithm).
@@ -1416,7 +1416,7 @@ pub trait QRCodeDetectorTrait {
 	/// 
 	/// ## Parameters
 	/// * img: grayscale or color (BGR) image containing QR code.
-	/// * points: opiotnal output array of vertices of the found QR code quadrangle. Will be empty if not found.
+	/// * points: optional output array of vertices of the found QR code quadrangle. Will be empty if not found.
 	/// * straight_qrcode: The optional output image containing rectified and binarized QR code
 	/// 
 	/// ## C++ default parameters
@@ -1427,6 +1427,68 @@ pub trait QRCodeDetectorTrait {
 		output_array_arg!(points);
 		output_array_arg!(straight_qrcode);
 		unsafe { sys::cv_QRCodeDetector_detectAndDecode_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result().map(|s| unsafe { crate::templ::receive_string(s as *mut String) })
+	}
+	
+	/// Detects QR codes in image and returns the vector of the quadrangles containing the codes.
+	/// ## Parameters
+	/// * img: grayscale or color (BGR) image containing (or not) QR codes.
+	/// * points: Output vector of vector of vertices of the minimum-area quadrangle containing the codes.
+	fn detect_multi(&self, img: &dyn core::ToInputArray, points: &mut dyn core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(img);
+		output_array_arg!(points);
+		unsafe { sys::cv_QRCodeDetector_detectMulti_const_const__InputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Decodes QR codes in image once it's found by the detect() method.
+	/// ## Parameters
+	/// * img: grayscale or color (BGR) image containing QR codes.
+	/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
+	/// * points: vector of Quadrangle vertices found by detect() method (or some other algorithm).
+	/// * straight_qrcode: The optional output vector of images containing rectified and binarized QR codes
+	/// 
+	/// ## C++ default parameters
+	/// * straight_qrcode: noArray()
+	fn decode_multi(&self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut types::VectorOfString, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(img);
+		input_array_arg!(points);
+		output_array_arg!(straight_qrcode);
+		unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_String_X_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_VectorOfString(), straight_qrcode.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// Both detects and decodes QR codes
+	/// ## Parameters
+	/// * img: grayscale or color (BGR) image containing QR codes.
+	/// * decoded_info: UTF8-encoded output vector of string or empty vector of string if the codes cannot be decoded.
+	/// * points: optional output vector of vertices of the found QR code quadrangles. Will be empty if not found.
+	/// * straight_qrcode: The optional output vector of images containing rectified and binarized QR codes
+	/// 
+	/// ## C++ default parameters
+	/// * points: noArray()
+	/// * straight_qrcode: noArray()
+	fn detect_and_decode_multi(&self, img: &dyn core::ToInputArray, decoded_info: &mut types::VectorOfString, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(img);
+		output_array_arg!(points);
+		output_array_arg!(straight_qrcode);
+		unsafe { sys::cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_String_X_const__OutputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_VectorOfString(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// ## C++ default parameters
+	/// * straight_qrcode: noArray()
+	fn decode_multi_1(&self, img: &dyn core::ToInputArray, points: &dyn core::ToInputArray, decoded_info: &mut types::VectorOfString, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(img);
+		input_array_arg!(points);
+		output_array_arg!(straight_qrcode);
+		unsafe { sys::cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_string_X_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), points.as_raw__InputArray(), decoded_info.as_raw_VectorOfString(), straight_qrcode.as_raw__OutputArray()) }.into_result()
+	}
+	
+	/// ## C++ default parameters
+	/// * points: noArray()
+	/// * straight_qrcode: noArray()
+	fn detect_and_decode_multi_1(&self, img: &dyn core::ToInputArray, decoded_info: &mut types::VectorOfString, points: &mut dyn core::ToOutputArray, straight_qrcode: &mut dyn core::ToOutputArray) -> Result<bool> {
+		input_array_arg!(img);
+		output_array_arg!(points);
+		output_array_arg!(straight_qrcode);
+		unsafe { sys::cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_string_X_const__OutputArrayX_const__OutputArrayX(self.as_raw_QRCodeDetector(), img.as_raw__InputArray(), decoded_info.as_raw_VectorOfString(), points.as_raw__OutputArray(), straight_qrcode.as_raw__OutputArray()) }.into_result()
 	}
 	
 }

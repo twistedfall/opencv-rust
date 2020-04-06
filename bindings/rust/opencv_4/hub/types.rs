@@ -12877,6 +12877,45 @@ mod dnn_types {
 }
 pub use dnn_types::*;
 
+mod dnn_superres_types {
+	use crate::{mod_prelude::*, core, types, sys};
+
+	pub struct PtrOfDnnSuperResImpl {
+		pub(crate) ptr: *mut c_void
+	}
+	
+	impl PtrOfDnnSuperResImpl {
+		pub fn as_raw_PtrOfDnnSuperResImpl(&self) -> *mut c_void { self.ptr }
+	
+		pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+			Self { ptr }
+		}
+	
+		/// Get raw pointer to the inner object
+		pub fn get_inner_ptr(&self) -> *mut c_void {
+			extern "C" { fn cv_PtrOfDnnSuperResImpl_get_inner_ptr(instance: *mut c_void) -> *mut c_void; }
+			unsafe { cv_PtrOfDnnSuperResImpl_get_inner_ptr(self.as_raw_PtrOfDnnSuperResImpl()) }
+		}
+	}
+	
+	impl Drop for PtrOfDnnSuperResImpl {
+		fn drop(&mut self) {
+			extern "C" { fn cv_PtrOfDnnSuperResImpl_delete(instance: *mut c_void); }
+			unsafe { cv_PtrOfDnnSuperResImpl_delete(self.as_raw_PtrOfDnnSuperResImpl()) };
+		}
+	}
+	
+	unsafe impl Send for PtrOfDnnSuperResImpl {}
+	
+	impl crate::dnn_superres::DnnSuperResImplTrait for PtrOfDnnSuperResImpl {
+		fn as_raw_DnnSuperResImpl(&self) -> *mut c_void {
+			self.get_inner_ptr()
+		}
+	}
+	
+}
+pub use dnn_superres_types::*;
+
 #[cfg(feature = "contrib")]
 mod dpm_types {
 	use crate::{mod_prelude::*, core, types, sys};
@@ -19210,6 +19249,39 @@ mod surface_matching_types {
 	
 	impl crate::surface_matching::Pose3DTrait for PtrOfPose3D {
 		fn as_raw_Pose3D(&self) -> *mut c_void {
+			self.get_inner_ptr()
+		}
+	}
+	
+	pub struct PtrOfPoseCluster3D {
+		pub(crate) ptr: *mut c_void
+	}
+	
+	impl PtrOfPoseCluster3D {
+		pub fn as_raw_PtrOfPoseCluster3D(&self) -> *mut c_void { self.ptr }
+	
+		pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+			Self { ptr }
+		}
+	
+		/// Get raw pointer to the inner object
+		pub fn get_inner_ptr(&self) -> *mut c_void {
+			extern "C" { fn cv_PtrOfPoseCluster3D_get_inner_ptr(instance: *mut c_void) -> *mut c_void; }
+			unsafe { cv_PtrOfPoseCluster3D_get_inner_ptr(self.as_raw_PtrOfPoseCluster3D()) }
+		}
+	}
+	
+	impl Drop for PtrOfPoseCluster3D {
+		fn drop(&mut self) {
+			extern "C" { fn cv_PtrOfPoseCluster3D_delete(instance: *mut c_void); }
+			unsafe { cv_PtrOfPoseCluster3D_delete(self.as_raw_PtrOfPoseCluster3D()) };
+		}
+	}
+	
+	unsafe impl Send for PtrOfPoseCluster3D {}
+	
+	impl crate::surface_matching::PoseCluster3DTrait for PtrOfPoseCluster3D {
+		fn as_raw_PoseCluster3D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}

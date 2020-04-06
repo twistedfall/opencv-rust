@@ -31,6 +31,7 @@ template struct Result<cv::Point3_<int>>;
 template struct Result<cv::Point_<double>>;
 template struct Result<cv::Point_<float>>;
 template struct Result<cv::Point_<int>>;
+template struct Result<cv::Ptr<CvMemStorage>*>;
 template struct Result<cv::Ptr<cv::ConjGradSolver>*>;
 template struct Result<cv::Ptr<cv::DownhillSolver>*>;
 template struct Result<cv::Ptr<cv::Formatted>*>;
@@ -92,7 +93,6 @@ template struct Result<long>;
 template struct Result<short>;
 template struct Result<signed char>;
 template struct Result<signed char*>;
-template struct Result<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>;
 template struct Result<std::vector<bool>*>;
 template struct Result<std::vector<char>*>;
 template struct Result<std::vector<cv::DMatch>*>;
@@ -126,6 +126,14 @@ extern "C" void cv_PtrOfConjGradSolver_delete(cv::Ptr<cv::ConjGradSolver>* insta
 }
 
 extern "C" cv::ConjGradSolver* cv_PtrOfConjGradSolver_get_inner_ptr(cv::Ptr<cv::ConjGradSolver>* instance) {
+	return instance->get();
+}
+
+extern "C" void cv_PtrOfCvMemStorage_delete(cv::Ptr<CvMemStorage>* instance) {
+	delete instance;
+}
+
+extern "C" CvMemStorage* cv_PtrOfCvMemStorage_get_inner_ptr(cv::Ptr<CvMemStorage>* instance) {
 	return instance->get();
 }
 

@@ -393,7 +393,7 @@ impl dyn Retina + '_ {
 	/// * reductionFactor: only usefull if param useRetinaLogSampling=true, specifies the reduction
 	/// factor of the output frame (as the center (fovea) is high resolution and corners can be
 	/// underscaled, then a reduction of the output is allowed without precision leak
-	/// * samplingStrenght: only usefull if param useRetinaLogSampling=true, specifies the strenght of
+	/// * samplingStrength: only usefull if param useRetinaLogSampling=true, specifies the strength of
 	/// the log scale that is applied
 	/// 
 	/// ## Overloaded parameters
@@ -415,16 +415,16 @@ impl dyn Retina + '_ {
 	/// * reductionFactor: only usefull if param useRetinaLogSampling=true, specifies the reduction
 	/// factor of the output frame (as the center (fovea) is high resolution and corners can be
 	/// underscaled, then a reduction of the output is allowed without precision leak
-	/// * samplingStrenght: only usefull if param useRetinaLogSampling=true, specifies the strenght of
+	/// * samplingStrength: only usefull if param useRetinaLogSampling=true, specifies the strength of
 	/// the log scale that is applied
 	/// 
 	/// ## C++ default parameters
 	/// * color_sampling_method: RETINA_COLOR_BAYER
 	/// * use_retina_log_sampling: false
 	/// * reduction_factor: 1.0f
-	/// * sampling_strenght: 10.0f
-	pub fn create_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strenght: f32) -> Result<types::PtrOfRetina> {
-		unsafe { sys::cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(&input_size, color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strenght) }.into_result().map(|ptr| types::PtrOfRetina { ptr })
+	/// * sampling_strength: 10.0f
+	pub fn create_ext(input_size: core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<types::PtrOfRetina> {
+		unsafe { sys::cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(&input_size, color_mode, color_sampling_method, use_retina_log_sampling, reduction_factor, sampling_strength) }.into_result().map(|ptr| types::PtrOfRetina { ptr })
 	}
 	
 }

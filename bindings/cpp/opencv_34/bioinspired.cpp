@@ -170,9 +170,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Ptr<cv::bioinspired::Retina>*>)
 	}
 	
-	Result<cv::Ptr<cv::bioinspired::Retina>*> cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(const cv::Size* inputSize, bool colorMode, int colorSamplingMethod, bool useRetinaLogSampling, float reductionFactor, float samplingStrenght) {
+	Result<cv::Ptr<cv::bioinspired::Retina>*> cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(const cv::Size* inputSize, bool colorMode, int colorSamplingMethod, bool useRetinaLogSampling, float reductionFactor, float samplingStrength) {
 		try {
-			cv::Ptr<cv::bioinspired::Retina> ret = cv::bioinspired::Retina::create(*inputSize, colorMode, colorSamplingMethod, useRetinaLogSampling, reductionFactor, samplingStrenght);
+			cv::Ptr<cv::bioinspired::Retina> ret = cv::bioinspired::Retina::create(*inputSize, colorMode, colorSamplingMethod, useRetinaLogSampling, reductionFactor, samplingStrength);
 			return Ok(new cv::Ptr<cv::bioinspired::Retina>(ret));
 		} OCVRS_CATCH(Result<cv::Ptr<cv::bioinspired::Retina>*>)
 	}

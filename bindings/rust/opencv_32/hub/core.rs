@@ -1472,12 +1472,30 @@ pub enum UMatUsageFlags {
 	__UMAT_USAGE_FLAGS_32BIT = 2147483647 as isize,
 }
 
+pub type cv_status = i32;
+/// This is the "metatype" used *only* as a function parameter.
+/// 
+/// It denotes that the function accepts arrays of multiple types, such as IplImage*, CvMat* or even
+/// CvSeq* sometimes. The particular array type is determined at runtime by analyzing the first 4
+/// bytes of the header. In C++ interface the role of CvArr is played by InputArray and OutputArray.
+pub type cv_arr = ();
+/// *************************************************************************************\
+///                                          Histogram                                      *
+/// \***************************************************************************************
+pub type cv_hist_type = i32;
+/// ************ Random number generation ******************
+pub type cv_rng = u64;
 pub type va_display = *mut c_void;
 pub type va_surface_id = u32;
 pub type Affine3d = core::Affine3<f64>;
 pub type Affine3f = core::Affine3<f32>;
 pub type Hamming_result_type = i32;
 pub type Hamming_value_type = u8;
+pub type HammingLUT = core::Hamming;
+pub type InputArray<'a> = &'a core::_InputArray;
+pub type InputArrayOfArrays<'a> = core::InputArray<'a>;
+pub type InputOutputArray<'a> = &'a core::_InputOutputArray;
+pub type InputOutputArrayOfArrays<'a> = core::InputOutputArray<'a>;
 pub type Mat1b = core::Mat_<u8>;
 pub type Mat1d = core::Mat_<f64>;
 pub type Mat1f = core::Mat_<f32>;
@@ -1506,6 +1524,7 @@ pub type MatConstIterator_difference_type = ptrdiff_t;
 pub type MatConstIterator_pointer<'a, 'b> = &'a &'b u8;
 pub type MatConstIterator_reference<'a> = &'a mut u8;
 pub type MatConstIterator_value_type<'a> = &'a mut u8;
+pub type MatND = core::Mat;
 pub type Matx12d = core::Matx12<f64>;
 pub type Matx12f = core::Matx12<f32>;
 pub type Matx13d = core::Matx13<f64>;
@@ -1538,6 +1557,9 @@ pub type Matx61d = core::Matx61<f64>;
 pub type Matx61f = core::Matx61<f32>;
 pub type Matx66d = core::Matx66<f64>;
 pub type Matx66f = core::Matx66<f32>;
+pub type MemStorage = types::PtrOfCvMemStorage;
+pub type OutputArray<'a> = &'a core::_OutputArray;
+pub type OutputArrayOfArrays<'a> = core::OutputArray<'a>;
 pub type Point = core::Point2i;
 pub type Point2d = core::Point_<f64>;
 pub type Point2f = core::Point_<f32>;
@@ -9190,8 +9212,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * step: AUTO_STEP
-	pub fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat
@@ -9214,8 +9236,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * step: AUTO_STEP
-	pub fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat
@@ -9237,8 +9259,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * steps: 0
-	pub fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat
@@ -9259,8 +9281,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * steps: 0
-	pub fn new_nd_vec_with_data(sizes: &types::VectorOfi32, typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_nd_vec_with_data(sizes: &types::VectorOfi32, typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat

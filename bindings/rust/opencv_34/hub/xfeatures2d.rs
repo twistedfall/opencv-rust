@@ -13,7 +13,7 @@
 //! This section describes the GMS (Grid-based Motion Statistics) matching strategy.
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {
-	pub use { super::SIFTTrait, super::SURF, super::FREAKTrait, super::StarDetectorTrait, super::BriefDescriptorExtractorTrait, super::LUCIDTrait, super::LATCHTrait, super::DAISY, super::MSDDetectorTrait, super::VGG, super::BoostDesc, super::PCTSignatures, super::PCTSignaturesSQFD, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorTrait, super::AffineFeature2D };
+	pub use { super::SURF, super::SIFTTrait, super::FREAKTrait, super::StarDetectorTrait, super::BriefDescriptorExtractorTrait, super::LUCIDTrait, super::LATCHTrait, super::DAISY, super::MSDDetectorTrait, super::VGG, super::BoostDesc, super::PCTSignatures, super::PCTSignaturesSQFD, super::Elliptic_KeyPointTrait, super::HarrisLaplaceFeatureDetectorTrait, super::AffineFeature2D };
 }
 
 pub const BoostDesc_BGM: i32 = 100;
@@ -65,7 +65,7 @@ pub enum PCTSignatures_PointDistribution {
 ///       Signature quadratic form distance.
 ///       In Proceedings of the ACM International Conference on Image and Video Retrieval, pages 438-445.
 ///       ACM, 2010.
-/// [BeecksUS10](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_BeecksUS10)
+/// [BeecksUS10](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_BeecksUS10)
 /// 
 /// Note: For selected distance function: ![block formula](https://latex.codecogs.com/png.latex?%20d%28c%5Fi%2C%20c%5Fj%29%20)  and parameter: ![block formula](https://latex.codecogs.com/png.latex?%20%5Calpha%20)
 #[repr(C)]
@@ -79,6 +79,10 @@ pub enum PCTSignatures_SimilarityFunction {
 	HEURISTIC = 2 as isize,
 }
 
+pub type SiftDescriptorExtractor = crate::xfeatures2d::SIFT;
+pub type SiftFeatureDetector = crate::xfeatures2d::SIFT;
+pub type SurfDescriptorExtractor = dyn crate::xfeatures2d::SURF;
+pub type SurfFeatureDetector = dyn crate::xfeatures2d::SURF;
 /// Estimates cornerness for prespecified KeyPoints using the FAST algorithm
 /// 
 /// ## Parameters
@@ -93,7 +97,7 @@ pub enum PCTSignatures_SimilarityFunction {
 /// FastFeatureDetector::TYPE_9_16, FastFeatureDetector::TYPE_7_12,
 /// FastFeatureDetector::TYPE_5_8
 /// 
-/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Rosten06) .
+/// Detects corners using the FAST algorithm by [Rosten06](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Rosten06) .
 /// 
 /// ## C++ default parameters
 /// * nonmax_suppression: true
@@ -103,7 +107,7 @@ pub fn fast_for_point_set(image: &dyn core::ToInputArray, keypoints: &mut types:
 	unsafe { sys::cv_xfeatures2d_FASTForPointSet_const__InputArrayX_vector_KeyPoint_X_int_bool_int(image.as_raw__InputArray(), keypoints.as_raw_VectorOfKeyPoint(), threshold, nonmax_suppression, typ) }.into_result()
 }
 
-/// GMS  (Grid-based Motion Statistics) feature matching strategy by [Bian2017gms](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Bian2017gms) .
+/// GMS  (Grid-based Motion Statistics) feature matching strategy by [Bian2017gms](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bian2017gms) .
 /// ## Parameters
 /// * size1: Input size of image1.
 /// * size2: Input size of image2.
@@ -178,7 +182,7 @@ impl dyn AffineFeature2D + '_ {
 	
 }
 /// Class implementing BoostDesc (Learning Image Descriptors with Boosting), described in
-/// [Trzcinski13a](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Trzcinski13b).
+/// [Trzcinski13a](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Trzcinski13b).
 /// 
 /// ## Parameters
 /// * desc: type of descriptor to use, BoostDesc::BINBOOST_256 is default (256 bit long dimension)
@@ -233,7 +237,7 @@ impl dyn BoostDesc + '_ {
 	}
 	
 }
-/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_calon2010) .
+/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_calon2010) .
 /// 
 /// ## Parameters
 /// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
@@ -242,7 +246,7 @@ pub trait BriefDescriptorExtractorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_BriefDescriptorExtractor(&self) -> *mut c_void;
 }
 
-/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_calon2010) .
+/// Class for computing BRIEF descriptors described in [calon2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_calon2010) .
 /// 
 /// ## Parameters
 /// * bytes: legth of the descriptor in bytes, valid values are: 16, 32 (default) or 64 .
@@ -290,7 +294,7 @@ impl BriefDescriptorExtractor {
 	
 }
 
-/// Class implementing DAISY descriptor, described in [Tola10](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Tola10)
+/// Class implementing DAISY descriptor, described in [Tola10](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Tola10)
 /// 
 /// ## Parameters
 /// * radius: radius of the descriptor at the initial scale
@@ -470,7 +474,7 @@ impl Elliptic_KeyPoint {
 	
 }
 
-/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_AOV12) .
+/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_AOV12) .
 /// 
 /// The algorithm propose a novel keypoint descriptor inspired by the human visual system and more
 /// precisely the retina, coined Fast Retina Key- point (FREAK). A cascade of binary strings is
@@ -486,7 +490,7 @@ pub trait FREAKTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_FREAK(&self) -> *mut c_void;
 }
 
-/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_AOV12) .
+/// Class implementing the FREAK (*Fast Retina Keypoint*) keypoint descriptor, described in [AOV12](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_AOV12) .
 /// 
 /// The algorithm propose a novel keypoint descriptor inspired by the human visual system and more
 /// precisely the retina, coined Fast Retina Key- point (FREAK). A cascade of binary strings is
@@ -551,12 +555,12 @@ impl FREAK {
 	
 }
 
-/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
+/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
 pub trait HarrisLaplaceFeatureDetectorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_HarrisLaplaceFeatureDetector(&self) -> *mut c_void;
 }
 
-/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
+/// Class implementing the Harris-Laplace feature detector as described in [Mikolajczyk2004](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Mikolajczyk2004).
 pub struct HarrisLaplaceFeatureDetector {
 	pub(crate) ptr: *mut c_void
 }
@@ -693,7 +697,7 @@ impl LATCH {
 	
 }
 
-/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_LUCID)
+/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_LUCID)
 /// 
 /// An image descriptor that can be computed very fast, while being
 /// about as robust as, for example, SURF or BRIEF.
@@ -704,7 +708,7 @@ pub trait LUCIDTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_LUCID(&self) -> *mut c_void;
 }
 
-/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_LUCID)
+/// Class implementing the locally uniform comparison image descriptor, described in [LUCID](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_LUCID)
 /// 
 /// An image descriptor that can be computed very fast, while being
 /// about as robust as, for example, SURF or BRIEF.
@@ -758,7 +762,7 @@ impl LUCID {
 	
 }
 
-/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Tombari14).
+/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Tombari14).
 /// 
 /// The algorithm implements a novel interest point detector stemming from the intuition that image patches
 /// which are highly dissimilar over a relatively large extent of their surroundings hold the property of
@@ -772,7 +776,7 @@ pub trait MSDDetectorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_MSDDetector(&self) -> *mut c_void;
 }
 
-/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Tombari14).
+/// Class implementing the MSD (*Maximal Self-Dissimilarity*) keypoint detector, described in [Tombari14](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Tombari14).
 /// 
 /// The algorithm implements a novel interest point detector stemming from the intuition that image patches
 /// which are highly dissimilar over a relatively large extent of their surroundings hold the property of
@@ -833,7 +837,7 @@ impl MSDDetector {
 }
 
 /// Class implementing PCT (position-color-texture) signature extraction
-///       as described in [KrulisLS16](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_KrulisLS16).
+///       as described in [KrulisLS16](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_KrulisLS16).
 ///       The algorithm is divided to a feature sampler and a clusterizer.
 ///       Feature sampler produces samples at given set of coordinates.
 ///       Clusterizer then produces clusters of these samples using k-means algorithm.
@@ -842,8 +846,8 @@ impl MSDDetector {
 ///       A signature is an array of SIGNATURE_DIMENSION-dimensional points.
 ///       Used dimensions are:
 ///       weight, x, y position; lab color, contrast, entropy.
-/// [KrulisLS16](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_KrulisLS16)
-/// [BeecksUS10](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_BeecksUS10)
+/// [KrulisLS16](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_KrulisLS16)
+/// [BeecksUS10](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignatures: core::AlgorithmTrait {
 	fn as_raw_PCTSignatures(&self) -> *mut c_void;
 	/// Computes signature of given image.
@@ -1246,7 +1250,7 @@ impl dyn PCTSignatures + '_ {
 ///   Signature quadratic form distance.
 ///   In Proceedings of the ACM International Conference on Image and Video Retrieval, pages 438-445.
 ///   ACM, 2010.
-/// [BeecksUS10](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_BeecksUS10)
+/// [BeecksUS10](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_BeecksUS10)
 pub trait PCTSignaturesSQFD: core::AlgorithmTrait {
 	fn as_raw_PCTSignaturesSQFD(&self) -> *mut c_void;
 	/// Computes Signature Quadratic Form Distance of two signatures.
@@ -1291,13 +1295,13 @@ impl dyn PCTSignaturesSQFD + '_ {
 	
 }
 /// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Lowe04) .
+/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Lowe04) .
 pub trait SIFTTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_SIFT(&self) -> *mut c_void;
 }
 
 /// Class for extracting keypoints and computing descriptors using the Scale Invariant Feature Transform
-/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Lowe04) .
+/// (SIFT) algorithm by D. Lowe [Lowe04](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Lowe04) .
 pub struct SIFT {
 	pub(crate) ptr: *mut c_void
 }
@@ -1361,7 +1365,7 @@ impl SIFT {
 	
 }
 
-/// Class for extracting Speeded Up Robust Features from an image [Bay06](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Bay06) .
+/// Class for extracting Speeded Up Robust Features from an image [Bay06](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Bay06) .
 /// 
 /// The algorithm parameters:
 /// *   member int extended
@@ -1455,12 +1459,12 @@ impl dyn SURF + '_ {
 	}
 	
 }
-/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
+/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
 pub trait StarDetectorTrait: crate::features2d::Feature2DTrait {
 	fn as_raw_StarDetector(&self) -> *mut c_void;
 }
 
-/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
+/// The class implements the keypoint detector introduced by [Agrawal08](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Agrawal08), synonym of StarDetector. :
 pub struct StarDetector {
 	pub(crate) ptr: *mut c_void
 }
@@ -1510,7 +1514,7 @@ impl StarDetector {
 }
 
 /// Class implementing VGG (Oxford Visual Geometry Group) descriptor trained end to end
-/// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Simonyan14).
+/// using "Descriptor Learning Using Convex Optimisation" (DLCO) aparatus described in [Simonyan14](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Simonyan14).
 /// 
 /// ## Parameters
 /// * desc: type of descriptor to use, VGG::VGG_120 is default (120 dimensions float)

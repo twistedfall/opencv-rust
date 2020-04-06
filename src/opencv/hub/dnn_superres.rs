@@ -26,7 +26,7 @@ pub trait DnnSuperResImplTrait {
 	/// * path: Path to the model file.
 	fn read_model(&mut self, path: &str) -> Result<()> {
 		string_arg!(path);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_stringX(self.as_raw_DnnSuperResImpl(), path.as_ptr()) }.into_result()
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX(self.as_raw_DnnSuperResImpl(), path.as_ptr()) }.into_result()
 	}
 	
 	/// Read the model from the given path
@@ -36,7 +36,7 @@ pub trait DnnSuperResImplTrait {
 	fn read_model_1(&mut self, weights: &str, definition: &str) -> Result<()> {
 		string_arg!(weights);
 		string_arg!(definition);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_stringX_const_stringX(self.as_raw_DnnSuperResImpl(), weights.as_ptr(), definition.as_ptr()) }.into_result()
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX_const_StringX(self.as_raw_DnnSuperResImpl(), weights.as_ptr(), definition.as_ptr()) }.into_result()
 	}
 	
 	/// Set desired model
@@ -49,7 +49,7 @@ pub trait DnnSuperResImplTrait {
 	/// * scale: Integer specifying the upscale factor
 	fn set_model(&mut self, algo: &str, scale: i32) -> Result<()> {
 		string_arg!(algo);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setModel_const_stringX_int(self.as_raw_DnnSuperResImpl(), algo.as_ptr(), scale) }.into_result()
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_setModel_const_StringX_int(self.as_raw_DnnSuperResImpl(), algo.as_ptr(), scale) }.into_result()
 	}
 	
 	/// Upsample via neural network
@@ -122,7 +122,11 @@ impl crate::dnn_superres::DnnSuperResImplTrait for DnnSuperResImpl {
 }
 
 impl DnnSuperResImpl {
-	/// Empty constructor
+	/// Empty constructor for python
+	pub fn create() -> Result<types::PtrOfDnnSuperResImpl> {
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_create() }.into_result().map(|ptr| types::PtrOfDnnSuperResImpl { ptr })
+	}
+	
 	pub fn default() -> Result<crate::dnn_superres::DnnSuperResImpl> {
 		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl() }.into_result().map(|ptr| crate::dnn_superres::DnnSuperResImpl { ptr })
 	}
@@ -137,7 +141,7 @@ impl DnnSuperResImpl {
 	/// * scale: Integer specifying the upscale factor
 	pub fn new(algo: &str, scale: i32) -> Result<crate::dnn_superres::DnnSuperResImpl> {
 		string_arg!(algo);
-		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_stringX_int(algo.as_ptr(), scale) }.into_result().map(|ptr| crate::dnn_superres::DnnSuperResImpl { ptr })
+		unsafe { sys::cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringX_int(algo.as_ptr(), scale) }.into_result().map(|ptr| crate::dnn_superres::DnnSuperResImpl { ptr })
 	}
 	
 }

@@ -17,8 +17,8 @@
 //! ---------------------------------
 //! 
 //! To obtatin a binary descriptor representing a certain line detected from a certain octave of an
-//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
-//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
+//! image, we first compute a non-binary descriptor as described in [LBD](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_LBD) . Such algorithm works on
+//! lines extracted using EDLine detector, as explained in [EDL](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_EDL) . Given a line, we consider a
 //! rectangular region centered at it and called *line support region (LSR)*. Such region is divided
 //! into a set of bands ![inline formula](https://latex.codecogs.com/png.latex?%5C%7BB%5F1%2C%20B%5F2%2C%20%2E%2E%2E%2C%20B%5Fm%5C%7D), whose length equals the one of line.
 //! 
@@ -86,6 +86,10 @@ pub const DrawLinesMatchesFlags_DRAW_OVER_OUTIMG: i32 = 1;
 pub const DrawLinesMatchesFlags_NOT_DRAW_SINGLE_LINES: i32 = 2;
 pub const MLN10: f64 = 2.30258509299404568402;
 pub const RELATIVE_ERROR_FACTOR: f64 = 100.0;
+pub type uint16 = u16;
+pub type uint32 = u32;
+pub type uint64 = u64;
+pub type uint8 = u8;
 /// Draws keylines.
 /// 
 /// ## Parameters
@@ -437,7 +441,7 @@ impl BinaryDescriptor_Params {
 /// Multi-Index Hashing
 /// -------------------
 /// 
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+/// The theory described in this section is based on [MIH](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 /// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 /// has been divided into. Thus, given a query code, all the entries close to it at least in one
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -640,7 +644,7 @@ pub trait BinaryDescriptorMatcherTrait: core::AlgorithmTrait {
 /// Multi-Index Hashing
 /// -------------------
 /// 
-/// The theory described in this section is based on [MIH](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
+/// The theory described in this section is based on [MIH](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_MIH) . Given a dataset populated with binary
 /// codes, each code is indexed *m* times into *m* different hash tables, according to *m* substrings it
 /// has been divided into. Thus, given a query code, all the entries close to it at least in one
 /// substring are returned by search as *neighbor candidates*. Returned entries are then checked for
@@ -893,7 +897,7 @@ impl LSDDetector {
 /// Lines extraction methodology
 /// ----------------------------
 /// 
-/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_EDL) . The
+/// The lines extraction methodology described in the following is mainly based on [EDL](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_EDL) . The
 /// extraction starts with a Gaussian pyramid generated from an original image, downsampled N-1 times,
 /// blurred N times, to obtain N layers (one for each octave), with layer 0 corresponding to input
 /// image. Then, from each layer (octave) in the pyramid, lines are extracted using LSD algorithm.

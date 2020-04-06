@@ -75,6 +75,10 @@ pub enum PCTSignatures_SimilarityFunction {
 	HEURISTIC = 2 as isize,
 }
 
+pub type SiftDescriptorExtractor = crate::xfeatures2d::SIFT;
+pub type SiftFeatureDetector = crate::xfeatures2d::SIFT;
+pub type SurfDescriptorExtractor = dyn crate::xfeatures2d::SURF;
+pub type SurfFeatureDetector = dyn crate::xfeatures2d::SURF;
 /// Class implementing BoostDesc (Learning Image Descriptors with Boosting), described in
 /// [Trzcinski13a](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Trzcinski13a) and [Trzcinski13b](https://docs.opencv.org/3.2.0/d0/de3/citelist.html#CITEREF_Trzcinski13b).
 /// 

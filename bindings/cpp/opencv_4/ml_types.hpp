@@ -25,7 +25,7 @@ template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::ml::DTrees::Node>*>;
 template struct Result<std::vector<cv::ml::DTrees::Split>*>;
 template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::string>*>;
 extern "C" void cv_PtrOfANN_MLP_delete(cv::Ptr<cv::ml::ANN_MLP>* instance) {
 	delete instance;
 }

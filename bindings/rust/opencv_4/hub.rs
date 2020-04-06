@@ -1,4 +1,6 @@
 #[cfg(feature = "contrib")]
+pub mod alphamat;
+#[cfg(feature = "contrib")]
 pub mod aruco;
 #[cfg(feature = "contrib")]
 pub mod bgsegm;
@@ -30,6 +32,8 @@ pub mod img_hash;
 pub mod imgcodecs;
 pub mod imgproc;
 #[cfg(feature = "contrib")]
+pub mod intensity_transform;
+#[cfg(feature = "contrib")]
 pub mod line_descriptor;
 pub mod ml;
 pub mod objdetect;
@@ -38,6 +42,8 @@ pub mod phase_unwrapping;
 pub mod photo;
 #[cfg(feature = "contrib")]
 pub mod plot;
+#[cfg(feature = "contrib")]
+pub mod rapid;
 #[cfg(feature = "contrib")]
 pub mod sfm;
 #[cfg(feature = "contrib")]
@@ -66,6 +72,8 @@ pub mod types;
 #[doc(hidden)]
 pub mod sys;
 pub mod hub_prelude {
+	#[cfg(feature = "contrib")]
+	pub use super::alphamat::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::aruco::prelude::*;
 	#[cfg(feature = "contrib")]
@@ -98,6 +106,8 @@ pub mod hub_prelude {
 	pub use super::imgcodecs::prelude::*;
 	pub use super::imgproc::prelude::*;
 	#[cfg(feature = "contrib")]
+	pub use super::intensity_transform::prelude::*;
+	#[cfg(feature = "contrib")]
 	pub use super::line_descriptor::prelude::*;
 	pub use super::ml::prelude::*;
 	pub use super::objdetect::prelude::*;
@@ -106,6 +116,8 @@ pub mod hub_prelude {
 	pub use super::photo::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::plot::prelude::*;
+	#[cfg(feature = "contrib")]
+	pub use super::rapid::prelude::*;
 	#[cfg(feature = "contrib")]
 	pub use super::sfm::prelude::*;
 	#[cfg(feature = "contrib")]

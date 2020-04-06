@@ -317,6 +317,27 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
+	Result_void cv_detail_check_failed_auto_Size__int__Size__int__const_CheckContextX(const cv::Size_<int>* v1, const cv::Size_<int>* v2, const cv::detail::CheckContext* ctx) {
+		try {
+			cv::detail::check_failed_auto(*v1, *v2, *ctx);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_detail_check_failed_auto_Size__int__const_CheckContextX(const cv::Size_<int>* v, const cv::detail::CheckContext* ctx) {
+		try {
+			cv::detail::check_failed_auto(*v, *ctx);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_detail_check_failed_auto_const_stringX_const_CheckContextX(const char* v1, const cv::detail::CheckContext* ctx) {
+		try {
+			cv::detail::check_failed_auto(std::string(v1), *ctx);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	Result_void cv_detail_check_failed_auto_double_const_CheckContextX(double v, const cv::detail::CheckContext* ctx) {
 		try {
 			cv::detail::check_failed_auto(v, *ctx);

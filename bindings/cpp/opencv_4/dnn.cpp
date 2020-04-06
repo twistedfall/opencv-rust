@@ -1889,6 +1889,13 @@ extern "C" {
 		} OCVRS_CATCH(Result_void)
 	}
 	
+	Result_void cv_dnn_Net_setInputShape_const_StringX_const_MatShapeX(cv::dnn::Net* instance, const char* inputName, const cv::dnn::MatShape* shape) {
+		try {
+			instance->setInputShape(std::string(inputName), *shape);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	Result<cv::Mat*> cv_dnn_Net_forward_const_StringX(cv::dnn::Net* instance, const char* outputName) {
 		try {
 			cv::Mat ret = instance->forward(std::string(outputName));
@@ -2356,6 +2363,20 @@ extern "C" {
 	Result_void cv_dnn_PoolingLayer_setGlobalPooling_bool(cv::dnn::PoolingLayer* instance, bool val) {
 		try {
 			instance->globalPooling = val;
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result<std::vector<bool>*> cv_dnn_PoolingLayer_isGlobalPooling(cv::dnn::PoolingLayer* instance) {
+		try {
+			std::vector<bool> ret = instance->isGlobalPooling;
+			return Ok(new std::vector<bool>(ret));
+		} OCVRS_CATCH(Result<std::vector<bool>*>)
+	}
+	
+	Result_void cv_dnn_PoolingLayer_setIsGlobalPooling_vector_bool_(cv::dnn::PoolingLayer* instance, std::vector<bool>* val) {
+		try {
+			instance->isGlobalPooling = *val;
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

@@ -77,6 +77,15 @@ pub const KAZE_DIFF_WEICKERT: i32 = 2;
 pub const ORB_FAST_SCORE: i32 = 1;
 pub const ORB_HARRIS_SCORE: i32 = 0;
 pub const ORB_kBytes: i32 = 32;
+/// Extractors of keypoint descriptors in OpenCV have wrappers with a common interface that enables you
+/// to easily switch between different algorithms solving the same problem. This section is devoted to
+/// computing descriptors represented as vectors in a multidimensional space. All objects that implement
+/// the vector descriptor extractors inherit the DescriptorExtractor interface.
+pub type DescriptorExtractor = crate::features2d::Feature2D;
+/// Feature detectors in OpenCV have wrappers with a common interface that enables you to easily switch
+/// between different algorithms solving the same problem. All objects that implement keypoint detectors
+/// inherit the FeatureDetector interface.
+pub type FeatureDetector = crate::features2d::Feature2D;
 /// Detects corners using the AGAST algorithm
 /// 
 /// ## Parameters

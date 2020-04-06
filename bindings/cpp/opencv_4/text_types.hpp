@@ -25,7 +25,7 @@ template struct Result<std::vector<cv::text::ERStat>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::string>*>;
 template struct Result<std::vector<std::vector<cv::Point_<int>>>*>;
 template struct Result<std::vector<std::vector<cv::Vec<int, 2>>>*>;
 template struct Result<std::vector<std::vector<cv::text::ERStat>>*>;

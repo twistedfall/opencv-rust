@@ -955,6 +955,27 @@ extern "C" {
 		} OCVRS_CATCH(Result<void*>)
 	}
 	
+	Result<bool> cv_QRCodeDetector_detectMulti_const_const__InputArrayX_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_OutputArray* points) {
+		try {
+			bool ret = instance->detectMulti(*img, *points);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<bool>)
+	}
+	
+	Result<bool> cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_string_X_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, const cv::_InputArray* points, std::vector<std::string>* decoded_info, const cv::_OutputArray* straight_qrcode) {
+		try {
+			bool ret = instance->decodeMulti(*img, *points, *decoded_info, *straight_qrcode);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<bool>)
+	}
+	
+	Result<bool> cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_string_X_const__OutputArrayX_const__OutputArrayX(const cv::QRCodeDetector* instance, const cv::_InputArray* img, std::vector<std::string>* decoded_info, const cv::_OutputArray* points, const cv::_OutputArray* straight_qrcode) {
+		try {
+			bool ret = instance->detectAndDecodeMulti(*img, *decoded_info, *points, *straight_qrcode);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<bool>)
+	}
+	
 	Result<double> cv_SimilarRects_eps_const(const cv::SimilarRects* instance) {
 		try {
 			double ret = instance->eps;

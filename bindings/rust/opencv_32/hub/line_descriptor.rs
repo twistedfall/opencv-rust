@@ -86,6 +86,10 @@ pub const DrawLinesMatchesFlags_DRAW_OVER_OUTIMG: i32 = 1;
 pub const DrawLinesMatchesFlags_NOT_DRAW_SINGLE_LINES: i32 = 2;
 pub const MLN10: f64 = 2.30258509299404568402;
 pub const RELATIVE_ERROR_FACTOR: f64 = 100.0;
+pub type uint16 = u16;
+pub type uint32 = u32;
+pub type uint64 = u64;
+pub type uint8 = u8;
 /// Draws keylines.
 /// 
 /// ## Parameters

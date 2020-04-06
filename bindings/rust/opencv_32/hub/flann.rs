@@ -173,6 +173,10 @@ pub enum flann_log_level_t {
 	FLANN_LOG_INFO = 4 as isize,
 }
 
+/// The id from which we can get a bucket back in an LSH table
+pub type bucket_key = u32;
+/// What is stored in an LSH bucket
+pub type feature_index = u32;
 pub fn flann_distance_type() -> Result<crate::flann::flann_distance_t> {
 	unsafe { sys::cvflann_flann_distance_type() }.into_result()
 }

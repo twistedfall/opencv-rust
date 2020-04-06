@@ -45,9 +45,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Ptr<cv::xphoto::SimpleWB>*>)
 	}
 	
-	Result<cv::Ptr<cv::xphoto::TonemapDurand>*> cv_xphoto_createTonemapDurand_float_float_float_float_float(float gamma, float contrast, float saturation, float sigma_space, float sigma_color) {
+	Result<cv::Ptr<cv::xphoto::TonemapDurand>*> cv_xphoto_createTonemapDurand_float_float_float_float_float(float gamma, float contrast, float saturation, float sigma_color, float sigma_space) {
 		try {
-			cv::Ptr<cv::xphoto::TonemapDurand> ret = cv::xphoto::createTonemapDurand(gamma, contrast, saturation, sigma_space, sigma_color);
+			cv::Ptr<cv::xphoto::TonemapDurand> ret = cv::xphoto::createTonemapDurand(gamma, contrast, saturation, sigma_color, sigma_space);
 			return Ok(new cv::Ptr<cv::xphoto::TonemapDurand>(ret));
 		} OCVRS_CATCH(Result<cv::Ptr<cv::xphoto::TonemapDurand>*>)
 	}

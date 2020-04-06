@@ -14,7 +14,7 @@ pub const BM3D_STEPALL: i32 = 0;
 pub const HAAR: i32 = 0;
 /// Performs Frequency Selective Reconstruction (FSR).
 /// One of the two quality profiles BEST and FAST can be chosen, depending on the time available for reconstruction.
-/// See [GenserPCS2018](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
+/// See [GenserPCS2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
 /// 
 /// The algorithm may be utilized for the following areas of application:
 /// 1. %Error Concealment (Inpainting).
@@ -22,7 +22,7 @@ pub const HAAR: i32 = 0;
 ///    image to be reconstructed.
 /// 2. Non-Regular Sampling.
 ///    For more information on how to choose a good sampling mask, please review
-///    [GroscheICIP2018](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
+///    [GroscheICIP2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
 /// 
 /// 1-channel grayscale or 3-channel BGR image are accepted.
 /// 
@@ -61,7 +61,7 @@ pub enum InpaintTypes {
 	INPAINT_SHIFTMAP = 0 as isize,
 	/// Performs Frequency Selective Reconstruction (FSR).
 	/// One of the two quality profiles BEST and FAST can be chosen, depending on the time available for reconstruction.
-	/// See [GenserPCS2018](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
+	/// See [GenserPCS2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) for details.
 	/// 
 	/// The algorithm may be utilized for the following areas of application:
 	/// 1. %Error Concealment (Inpainting).
@@ -69,7 +69,7 @@ pub enum InpaintTypes {
 	///    image to be reconstructed.
 	/// 2. Non-Regular Sampling.
 	///    For more information on how to choose a good sampling mask, please review
-	///    [GroscheICIP2018](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
+	///    [GroscheICIP2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GroscheICIP2018) and [GroscheIST2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GroscheIST2018).
 	/// 
 	/// 1-channel grayscale or 3-channel BGR image are accepted.
 	/// 
@@ -247,17 +247,17 @@ pub fn create_simple_wb() -> Result<types::PtrOfSimpleWB> {
 /// * contrast: resulting contrast on logarithmic scale, i. e. log(max / min), where max and min
 /// are maximum and minimum luminance values of the resulting image.
 /// * saturation: saturation enhancement value. See createTonemapDrago
-/// * sigma_space: bilateral filter sigma in color space
-/// * sigma_color: bilateral filter sigma in coordinate space
+/// * sigma_color: bilateral filter sigma in color space
+/// * sigma_space: bilateral filter sigma in coordinate space
 /// 
 /// ## C++ default parameters
 /// * gamma: 1.0f
 /// * contrast: 4.0f
 /// * saturation: 1.0f
-/// * sigma_space: 2.0f
 /// * sigma_color: 2.0f
-pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_space: f32, sigma_color: f32) -> Result<types::PtrOfTonemapDurand> {
-	unsafe { sys::cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma, contrast, saturation, sigma_space, sigma_color) }.into_result().map(|ptr| types::PtrOfTonemapDurand { ptr })
+/// * sigma_space: 2.0f
+pub fn create_tonemap_durand(gamma: f32, contrast: f32, saturation: f32, sigma_color: f32, sigma_space: f32) -> Result<types::PtrOfTonemapDurand> {
+	unsafe { sys::cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma, contrast, saturation, sigma_color, sigma_space) }.into_result().map(|ptr| types::PtrOfTonemapDurand { ptr })
 }
 
 /// The function implements simple dct-based denoising
@@ -279,7 +279,7 @@ pub fn dct_denoising(src: &core::Mat, dst: &mut core::Mat, sigma: f64, psize: i3
 
 /// The function implements different single-image inpainting algorithms.
 /// 
-/// See the original papers [He2012](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_He2012) (Shiftmap) or [GenserPCS2018](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) (FSR) for details.
+/// See the original papers [He2012](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_He2012) (Shiftmap) or [GenserPCS2018](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_GenserPCS2018) and [SeilerTIP2015](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_SeilerTIP2015) (FSR) for details.
 /// 
 /// ## Parameters
 /// * src: source image
@@ -297,7 +297,7 @@ pub fn inpaint(src: &core::Mat, mask: &core::Mat, dst: &mut core::Mat, algorithm
 }
 
 /// oilPainting
-/// See the book [Holzmann1988](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+/// See the book [Holzmann1988](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 /// ## Parameters
 /// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 /// * dst: Output image of the same size and type as src.
@@ -310,7 +310,7 @@ pub fn oil_painting_1(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutput
 }
 
 /// oilPainting
-/// See the book [Holzmann1988](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
+/// See the book [Holzmann1988](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Holzmann1988) for details.
 /// ## Parameters
 /// * src: Input three-channel or one channel image (either CV_8UC3 or CV_8UC1)
 /// * dst: Output image of the same size and type as src.
@@ -368,7 +368,7 @@ pub trait GrayworldWB: crate::xphoto::WhiteBalancer {
 /// As @ref GrayworldWB, this algorithm works by applying different gains to the input
 /// image channels, but their computation is a bit more involved compared to the
 /// simple gray-world assumption. More details about the algorithm can be found in
-/// [Cheng2015](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
+/// [Cheng2015](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Cheng2015) .
 /// 
 /// To mask out saturated pixels this function uses only pixels that satisfy the
 /// following condition:
@@ -380,7 +380,7 @@ pub trait LearningBasedWB: crate::xphoto::WhiteBalancer {
 	fn as_raw_LearningBasedWB(&self) -> *mut c_void;
 	/// Implements the feature extraction part of the algorithm.
 	/// 
-	/// In accordance with [Cheng2015](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
+	/// In accordance with [Cheng2015](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Cheng2015) , computes the following features for the input image:
 	/// 1. Chromaticity of an average (R,G,B) tuple
 	/// 2. Chromaticity of the brightest (R,G,B) tuple (while ignoring saturated pixels)
 	/// 3. Chromaticity of the dominant (R,G,B) tuple (the one that has the highest value in the RGB histogram)
@@ -534,7 +534,7 @@ pub trait SimpleWB: crate::xphoto::WhiteBalancer {
 /// 
 /// Saturation enhancement is possible as in cv::TonemapDrago.
 /// 
-/// For more information see [DD02](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_DD02) .
+/// For more information see [DD02](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_DD02) .
 pub trait TonemapDurand: crate::photo::Tonemap {
 	fn as_raw_TonemapDurand(&self) -> *mut c_void;
 	fn get_saturation(&self) -> Result<f32> {

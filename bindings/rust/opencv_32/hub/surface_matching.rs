@@ -364,7 +364,9 @@ pub enum ICP_ICP_SAMPLING_TYPE {
 	ICP_SAMPLING_TYPE_GELFAND = 1 as isize,
 }
 
+pub type key_type = u32;
 pub type Pose3DPtr = types::PtrOfPose3D;
+pub type PoseCluster3DPtr = types::PtrOfPoseCluster3D;
 /// This class implements a very efficient and robust variant of the iterative closest point (ICP) algorithm.
 /// The task is to register a 3D model (or point cloud) against a set of noisy target data. The variants are put together
 /// by myself after certain tests. The task is to be able to match partial, noisy point clouds in cluttered scenes, quickly.

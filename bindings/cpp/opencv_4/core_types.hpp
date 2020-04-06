@@ -109,7 +109,6 @@ template struct Result<int(*)[32]>;
 template struct Result<long>;
 template struct Result<short>;
 template struct Result<signed char>;
-template struct Result<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>;
 template struct Result<std::vector<bool>*>;
 template struct Result<std::vector<char>*>;
 template struct Result<std::vector<cv::DMatch>*>;
@@ -126,7 +125,7 @@ template struct Result<std::vector<cv::Vec<int, 2>>*>;
 template struct Result<std::vector<cv::ocl::PlatformInfo>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::string>*>;
 template struct Result<std::vector<std::vector<int>>*>;
 template struct Result<std::vector<unsigned char>*>;
 template struct Result<std::vector<unsigned long>*>;
@@ -1592,72 +1591,72 @@ extern "C" {
 
 
 extern "C" {
-	void cv_VectorOfString_delete(std::vector<cv::String>* instance) {
+	void cv_VectorOfString_delete(std::vector<std::string>* instance) {
 		delete instance;
 	}
 
-	std::vector<cv::String>* cv_VectorOfString_new() {
-		return new std::vector<cv::String>();
+	std::vector<std::string>* cv_VectorOfString_new() {
+		return new std::vector<std::string>();
 	}
 
-	size_t cv_VectorOfString_len(const std::vector<cv::String>* instance) {
+	size_t cv_VectorOfString_len(const std::vector<std::string>* instance) {
 		return instance->size();
 	}
 
-	bool cv_VectorOfString_is_empty(const std::vector<cv::String>* instance) {
+	bool cv_VectorOfString_is_empty(const std::vector<std::string>* instance) {
 		return instance->empty();
 	}
 
-	size_t cv_VectorOfString_capacity(const std::vector<cv::String>* instance) {
+	size_t cv_VectorOfString_capacity(const std::vector<std::string>* instance) {
 		return instance->capacity();
 	}
 
-	void cv_VectorOfString_shrink_to_fit(std::vector<cv::String>* instance) {
+	void cv_VectorOfString_shrink_to_fit(std::vector<std::string>* instance) {
 		instance->shrink_to_fit();
 	}
 
-	void cv_VectorOfString_reserve(std::vector<cv::String>* instance, size_t additional) {
+	void cv_VectorOfString_reserve(std::vector<std::string>* instance, size_t additional) {
 		instance->reserve(instance->size() + additional);
 	}
 
-	void cv_VectorOfString_remove(std::vector<cv::String>* instance, size_t index) {
+	void cv_VectorOfString_remove(std::vector<std::string>* instance, size_t index) {
 		instance->erase(instance->begin() + index);
 	}
 
-	void cv_VectorOfString_swap(std::vector<cv::String>* instance, size_t index1, size_t index2) {
+	void cv_VectorOfString_swap(std::vector<std::string>* instance, size_t index1, size_t index2) {
 		std::swap((*instance)[index1], (*instance)[index2]);
 	}
 
-	void cv_VectorOfString_clear(std::vector<cv::String>* instance) {
+	void cv_VectorOfString_clear(std::vector<std::string>* instance) {
 		instance->clear();
 	}
 
-	void cv_VectorOfString_push(std::vector<cv::String>* instance, char* val) {
+	void cv_VectorOfString_push(std::vector<std::string>* instance, char* val) {
 		instance->push_back(std::string(val));
 	}
 
-	void cv_VectorOfString_insert(std::vector<cv::String>* instance, size_t index, char* val) {
+	void cv_VectorOfString_insert(std::vector<std::string>* instance, size_t index, char* val) {
 		instance->insert(instance->begin() + index, std::string(val));
 	}
 
-	Result<void*> cv_VectorOfString_get(const std::vector<cv::String>* instance, size_t index) {
+	Result<void*> cv_VectorOfString_get(const std::vector<std::string>* instance, size_t index) {
 		try {
 			return Ok<void*>(ocvrs_create_string(instance->at(index).c_str()));
 		} VEC_CATCH(Result<void*>)
 	}
 
-	Result<void*> cv_VectorOfString_get_unchecked(const std::vector<cv::String>* instance, size_t index) {
+	Result<void*> cv_VectorOfString_get_unchecked(const std::vector<std::string>* instance, size_t index) {
 		return Ok<void*>(ocvrs_create_string((*instance)[index].c_str()));
 	}
 
-	Result_void cv_VectorOfString_set(std::vector<cv::String>* instance, size_t index, char* val) {
+	Result_void cv_VectorOfString_set(std::vector<std::string>* instance, size_t index, char* val) {
 		try {
 			instance->at(index) = std::string(val);
 			return Ok();
 		} VEC_CATCH(Result_void)
 	}
 
-	void cv_VectorOfString_set_unchecked(std::vector<cv::String>* instance, size_t index, char* val) {
+	void cv_VectorOfString_set_unchecked(std::vector<std::string>* instance, size_t index, char* val) {
 		(*instance)[index] = std::string(val);
 	}
 

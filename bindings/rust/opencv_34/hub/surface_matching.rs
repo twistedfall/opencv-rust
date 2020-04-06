@@ -58,7 +58,7 @@
 //! ----------------------------------------------
 //! 
 //! The state of the algorithms in order to achieve the task 3D matching is heavily based on
-//! [drost2010](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
+//! [drost2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_drost2010), which is one of the first and main practical methods presented in this area. The
 //! approach is composed of extracting 3D feature points randomly from depth images or generic point
 //! clouds, indexing them and later in runtime querying them efficiently. Only the 3D structure is
 //! considered, and a trivial hash table is used for feature queries.
@@ -68,7 +68,7 @@
 //! methods (Typically for such algorithms training on a CAD model is not needed, and a point cloud
 //! would be sufficient). Below is the outline of the entire algorithm:
 //! 
-//! ![Outline of the Algorithm](https://docs.opencv.org/3.4.9/outline.jpg)
+//! ![Outline of the Algorithm](https://docs.opencv.org/3.4.10/outline.jpg)
 //! 
 //! As explained, the algorithm relies on the extraction and indexing of point pair features, which are
 //! defined as follows:
@@ -217,7 +217,7 @@
 //! increase the speed. However this is not an optimality guarantee and many times causes wrong points
 //! to be matched. Luckily the assignments are corrected over iterations.
 //! 
-//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
+//! To overcome some of the limitations, Picky ICP [pickyicp](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_pickyicp) and BC-ICP (ICP using bi-unique
 //! correspondences) are two well-known methods. Picky ICP first finds the correspondences in the
 //! old-fashioned way and then among the resulting corresponding pairs, if more than one scene point
 //! ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) is assigned to the same model point ![inline formula](https://latex.codecogs.com/png.latex?m%5Fj), it selects ![inline formula](https://latex.codecogs.com/png.latex?p%5Fi) that corresponds to the minimum
@@ -244,7 +244,7 @@
 //! 
 //! ### Error Metric
 //! 
-//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
+//! As described in , a linearization of point to plane as in [koklimlow](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_koklimlow) error metric is used. This
 //! both speeds up the registration process and improves convergence.
 //! 
 //! ### Minimization
@@ -293,11 +293,11 @@
 //! This section is dedicated to the results of surface matching (point-pair-feature matching and a
 //! following ICP refinement):
 //! 
-//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/3.4.9/gsoc_forg_matches.jpg)
+//! ![Several matches of a single frog model using ppf + icp](https://docs.opencv.org/3.4.10/gsoc_forg_matches.jpg)
 //! 
 //! Matches of different models for Mian dataset is presented below:
 //! 
-//! ![Matches of different models for Mian dataset](https://docs.opencv.org/3.4.9/snapshot27.jpg)
+//! ![Matches of different models for Mian dataset](https://docs.opencv.org/3.4.10/snapshot27.jpg)
 //! 
 //! You might checkout the video on [youTube here](http://www.youtube.com/watch?v=uFnqLFznuZU).
 //! 
@@ -321,8 +321,8 @@
 //! quadratically increased as the complexity is O(N\^2). This is especially a concern for 32 bit
 //! systems, where large models can easily overshoot the available memory. Typically, values in the
 //! range of 0.025 - 0.05 seem adequate for most of the applications, where the default value is 0.03.
-//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_drost2010) . In
-//! [drost2010](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
+//! (Note that there is a difference in this paremeter with the one presented in [drost2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_drost2010) . In
+//! [drost2010](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_drost2010) a uniform cuboid is used for quantization and model diameter is used for reference of
 //! sampling. In my implementation, the cuboid is a rectangular prism, and each dimension is quantized
 //! independently. I do not take reference from the diameter but along the individual dimensions.
 //! 
@@ -359,7 +359,9 @@ pub mod prelude {
 
 pub const ICP_ICP_SAMPLING_TYPE_GELFAND: i32 = 1;
 pub const ICP_ICP_SAMPLING_TYPE_UNIFORM: i32 = 0;
+pub type key_type = u32;
 pub type Pose3DPtr = types::PtrOfPose3D;
+pub type PoseCluster3DPtr = types::PtrOfPoseCluster3D;
 /// This class implements a very efficient and robust variant of the iterative closest point (ICP) algorithm.
 /// The task is to register a 3D model (or point cloud) against a set of noisy target data. The variants are put together
 /// by myself after certain tests. The task is to be able to match partial, noisy point clouds in cluttered scenes, quickly.

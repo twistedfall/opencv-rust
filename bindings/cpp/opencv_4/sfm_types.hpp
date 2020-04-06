@@ -4,7 +4,7 @@ template struct Result<cv::sfm::libmv_CameraIntrinsicsOptions>;
 template struct Result<cv::sfm::libmv_ReconstructionOptions>;
 template struct Result<double>;
 template struct Result<int>;
-template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::string>*>;
 extern "C" void cv_PtrOfSFMLibmvEuclideanReconstruction_delete(cv::Ptr<cv::sfm::SFMLibmvEuclideanReconstruction>* instance) {
 	delete instance;
 }

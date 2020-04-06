@@ -17,7 +17,7 @@ template struct Result<double>;
 template struct Result<int>;
 template struct Result<std::vector<cv::flann::FlannIndexType>*>;
 template struct Result<std::vector<double>*>;
-template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::string>*>;
 template struct Result<void*>;
 extern "C" void cv_PtrOfIndexParams_delete(cv::Ptr<cv::flann::IndexParams>* instance) {
 	delete instance;

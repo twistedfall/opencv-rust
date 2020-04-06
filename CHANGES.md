@@ -1,3 +1,10 @@
+* 0.34.0
+  * Bump bindings to OpenCV version 4.3.0 and 3.4.10
+  * Mark `Mat::new_*_with_data` functions unsafe because they allow passing arbitrary data pointer
+  * Sort out internal generation of string return type wrappers, should help on some platforms in avoiding
+    `buildtime-bindgen`, see https://github.com/twistedfall/opencv-rust/issues/110
+  * Fix examples
+
 * 0.33.1
   * Internal rework of `VectorOf…` generation logic, fix https://github.com/twistedfall/opencv-rust/issues/109
 

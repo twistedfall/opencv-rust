@@ -16,8 +16,8 @@
 //! 
 //! You can study more about image hashing from following paper and websites:
 //! 
-//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_zauner2010implementation)
-//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+//! - "Implementation and benchmarking of perceptual image hash functions" [zauner2010implementation](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_zauner2010implementation)
+//! - "Looks Like It" [lookslikeit](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 //! 
 //! ### Code Example
 //! 
@@ -25,12 +25,12 @@
 //! 
 //! ### Performance under different attacks
 //! 
-//! ![Performance chart](https://docs.opencv.org/4.2.0/attack_performance.JPG)
+//! ![Performance chart](https://docs.opencv.org/4.3.0/attack_performance.JPG)
 //! 
 //! ### Speed comparison with PHash library (100 images from ukbench)
 //! 
-//! ![Hash Computation chart](https://docs.opencv.org/4.2.0/hash_computation_chart.JPG)
-//! ![Hash comparison chart](https://docs.opencv.org/4.2.0/hash_comparison_chart.JPG)
+//! ![Hash Computation chart](https://docs.opencv.org/4.3.0/hash_computation_chart.JPG)
+//! ![Hash comparison chart](https://docs.opencv.org/4.3.0/hash_comparison_chart.JPG)
 //! 
 //! As you can see, hash computation speed of img_hash module outperform [PHash library](http://www.phash.org/) a lot.
 //! 
@@ -161,7 +161,7 @@ pub fn radial_variance_hash(input_arr: &dyn core::ToInputArray, output_arr: &mut
 /// Computes average hash value of the input image
 /// 
 /// This is a fast image hashing algorithm, but only work on simple case. For more details, please
-/// refer to [lookslikeit](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// refer to [lookslikeit](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub trait AverageHashTrait: crate::img_hash::ImgHashBaseTrait {
 	fn as_raw_AverageHash(&self) -> *mut c_void;
 }
@@ -169,7 +169,7 @@ pub trait AverageHashTrait: crate::img_hash::ImgHashBaseTrait {
 /// Computes average hash value of the input image
 /// 
 /// This is a fast image hashing algorithm, but only work on simple case. For more details, please
-/// refer to [lookslikeit](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// refer to [lookslikeit](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub struct AverageHash {
 	pub(crate) ptr: *mut c_void
 }
@@ -212,7 +212,7 @@ impl AverageHash {
 
 /// Image hash based on block mean.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub trait BlockMeanHashTrait: crate::img_hash::ImgHashBaseTrait {
 	fn as_raw_BlockMeanHash(&self) -> *mut c_void;
 	/// Create BlockMeanHash object
@@ -230,7 +230,7 @@ pub trait BlockMeanHashTrait: crate::img_hash::ImgHashBaseTrait {
 
 /// Image hash based on block mean.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub struct BlockMeanHash {
 	pub(crate) ptr: *mut c_void
 }
@@ -275,14 +275,14 @@ impl BlockMeanHash {
 
 /// Image hash based on color moments.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub trait ColorMomentHashTrait: crate::img_hash::ImgHashBaseTrait {
 	fn as_raw_ColorMomentHash(&self) -> *mut c_void;
 }
 
 /// Image hash based on color moments.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub struct ColorMomentHash {
 	pub(crate) ptr: *mut c_void
 }
@@ -386,7 +386,7 @@ impl ImgHashBase {
 
 /// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub trait MarrHildrethHashTrait: crate::img_hash::ImgHashBaseTrait {
 	fn as_raw_MarrHildrethHash(&self) -> *mut c_void;
 	/// self explain
@@ -411,7 +411,7 @@ pub trait MarrHildrethHashTrait: crate::img_hash::ImgHashBaseTrait {
 
 /// Marr-Hildreth Operator Based Hash, slowest but more discriminative.
 /// 
-/// See [zauner2010implementation](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
+/// See [zauner2010implementation](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_zauner2010implementation) for details.
 pub struct MarrHildrethHash {
 	pub(crate) ptr: *mut c_void
 }
@@ -463,7 +463,7 @@ impl MarrHildrethHash {
 /// 
 /// Slower than average_hash, but tolerant of minor modifications
 /// 
-/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub trait PHashTrait: crate::img_hash::ImgHashBaseTrait {
 	fn as_raw_PHash(&self) -> *mut c_void;
 }
@@ -472,7 +472,7 @@ pub trait PHashTrait: crate::img_hash::ImgHashBaseTrait {
 /// 
 /// Slower than average_hash, but tolerant of minor modifications
 /// 
-/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_lookslikeit)
+/// This algorithm can combat more variation than averageHash, for more details please refer to [lookslikeit](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_lookslikeit)
 pub struct PHash {
 	pub(crate) ptr: *mut c_void
 }
@@ -515,7 +515,7 @@ impl PHash {
 
 /// Image hash based on Radon transform.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub trait RadialVarianceHashTrait: crate::img_hash::ImgHashBaseTrait {
 	fn as_raw_RadialVarianceHash(&self) -> *mut c_void;
 	fn get_num_of_angle_line(&self) -> Result<i32> {
@@ -554,7 +554,7 @@ pub trait RadialVarianceHashTrait: crate::img_hash::ImgHashBaseTrait {
 
 /// Image hash based on Radon transform.
 /// 
-/// See [tang2012perceptual](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
+/// See [tang2012perceptual](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_tang2012perceptual) for details.
 pub struct RadialVarianceHash {
 	pub(crate) ptr: *mut c_void
 }

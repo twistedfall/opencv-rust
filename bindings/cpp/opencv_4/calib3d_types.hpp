@@ -8,6 +8,7 @@ template struct Result<cv::Ptr<cv::LMSolver>*>;
 template struct Result<cv::Ptr<cv::StereoBM>*>;
 template struct Result<cv::Ptr<cv::StereoSGBM>*>;
 template struct Result<cv::Rect_<int>>;
+template struct Result<cv::Scalar_<double>>;
 template struct Result<cv::Size_<float>>;
 template struct Result<cv::Vec<double, 3>>;
 template struct Result<double>;

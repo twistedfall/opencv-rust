@@ -4,7 +4,7 @@
 //! ---------------------------------------------------------------
 //! 
 //! The object detector described below has been initially proposed by P.F. Felzenszwalb in
-//! [Felzenszwalb2010a](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
+//! [Felzenszwalb2010a](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Felzenszwalb2010a) . It is based on a Dalal-Triggs detector that uses a single filter on histogram
 //! of oriented gradients (HOG) features to represent an object category. This detector uses a sliding
 //! window approach, where a filter is applied at all positions and scales of an image. The first
 //! innovation is enriching the Dalal-Triggs model using a star-structured part-based model defined by a
@@ -20,7 +20,7 @@
 //! location.
 //! 
 //! The detector was dramatically speeded-up with cascade algorithm proposed by P.F. Felzenszwalb in
-//! [Felzenszwalb2010b](https://docs.opencv.org/3.4.9/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
+//! [Felzenszwalb2010b](https://docs.opencv.org/3.4.10/d0/de3/citelist.html#CITEREF_Felzenszwalb2010b) . The algorithm prunes partial hypotheses using thresholds on their scores.The
 //! basic idea of the algorithm is to use a hierarchy of models defined by an ordering of the original
 //! model's parts. For a model with (n+1) parts, including the root, a sequence of (n+1) models is
 //! obtained. The i-th model in this sequence is defined by the first i parts from the original model.

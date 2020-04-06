@@ -351,12 +351,13 @@ pub const CV_SSE3: i32 = 0;
 pub const CV_SSE4_1: i32 = 0;
 pub const CV_SSE4_2: i32 = 0;
 pub const CV_SSSE3: i32 = 0;
+pub const CV_STRONG_ALIGNMENT: i32 = 0;
 pub const CV_SUBMAT_FLAG: i32 = (1<<CV_SUBMAT_FLAG_SHIFT);
 pub const CV_SUBMAT_FLAG_SHIFT: i32 = 15;
 pub const CV_SUBMINOR_VERSION: i32 = CV_VERSION_REVISION;
-pub const CV_VERSION: &'static str = "4.2.0";
+pub const CV_VERSION: &'static str = "4.3.0";
 pub const CV_VERSION_MAJOR: i32 = 4;
-pub const CV_VERSION_MINOR: i32 = 2;
+pub const CV_VERSION_MINOR: i32 = 3;
 pub const CV_VERSION_REVISION: i32 = 0;
 pub const CV_VERSION_STATUS: &'static str = "";
 pub const CV_VSX: i32 = 0;
@@ -1371,6 +1372,11 @@ pub type Affine3d = core::Affine3<f64>;
 pub type Affine3f = core::Affine3<f32>;
 pub type Hamming_result_type = i32;
 pub type Hamming_value_type = u8;
+pub type HammingLUT = core::Hamming;
+pub type InputArray<'a> = &'a core::_InputArray;
+pub type InputArrayOfArrays<'a> = core::InputArray<'a>;
+pub type InputOutputArray<'a> = &'a core::_InputOutputArray;
+pub type InputOutputArrayOfArrays<'a> = core::InputOutputArray<'a>;
 pub type Mat1b = core::Mat_<u8>;
 pub type Mat1d = core::Mat_<f64>;
 pub type Mat1f = core::Mat_<f32>;
@@ -1399,6 +1405,7 @@ pub type MatConstIterator_difference_type = ptrdiff_t;
 pub type MatConstIterator_pointer<'a, 'b> = &'a &'b u8;
 pub type MatConstIterator_reference<'a> = &'a mut u8;
 pub type MatConstIterator_value_type<'a> = &'a mut u8;
+pub type MatND = core::Mat;
 pub type Matx12d = core::Matx12<f64>;
 pub type Matx12f = core::Matx12<f32>;
 pub type Matx13d = core::Matx13<f64>;
@@ -1431,6 +1438,8 @@ pub type Matx61d = core::Matx61<f64>;
 pub type Matx61f = core::Matx61<f32>;
 pub type Matx66d = core::Matx66<f64>;
 pub type Matx66f = core::Matx66<f32>;
+pub type OutputArray<'a> = &'a core::_OutputArray;
+pub type OutputArrayOfArrays<'a> = core::OutputArray<'a>;
 pub type Point = core::Point2i;
 pub type Point2d = core::Point_<f64>;
 pub type Point2f = core::Point_<f32>;
@@ -2367,6 +2376,11 @@ pub fn check_failed_auto_4(v1: core::Size_<i32>, v2: core::Size_<i32>, ctx: &cor
 
 pub fn check_failed_auto_9(v: core::Size_<i32>, ctx: &core::Detail_CheckContext) -> Result<()> {
 	unsafe { sys::cv_detail_check_failed_auto_Size__int__const_CheckContextX(&v, ctx.as_raw_Detail_CheckContext()) }.into_result()
+}
+
+pub fn check_failed_auto_10(v1: &str, ctx: &core::Detail_CheckContext) -> Result<()> {
+	string_arg!(v1);
+	unsafe { sys::cv_detail_check_failed_auto_const_stringX_const_CheckContextX(v1.as_ptr(), ctx.as_raw_Detail_CheckContext()) }.into_result()
 }
 
 pub fn check_failed_auto_8(v: f64, ctx: &core::Detail_CheckContext) -> Result<()> {
@@ -3585,7 +3599,7 @@ pub fn mean(src: &dyn core::ToInputArray, mask: &dyn core::ToInputArray) -> Resu
 /// advanced way, use cv::mixChannels.
 /// 
 /// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 /// 
 /// ## Parameters
 /// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -3610,7 +3624,7 @@ pub fn merge_slice(mv: &core::Mat, count: size_t, dst: &mut dyn core::ToOutputAr
 /// advanced way, use cv::mixChannels.
 /// 
 /// The following example shows how to merge 3 single channel matrices into a single 3-channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_merge.cpp#L1)
 /// 
 /// ## Parameters
 /// * mv: input array of matrices to be merged; all the matrices in mv must have the same
@@ -4105,7 +4119,7 @@ pub fn norm2(src1: &dyn core::ToInputArray, src2: &dyn core::ToInputArray, norm_
 /// \f}
 /// The following graphic shows all values for the three norm functions ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F1%7D%2C%20%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F2%7D) and ![inline formula](https://latex.codecogs.com/png.latex?%5C%7C%20r%28x%29%20%5C%7C%5F%7BL%5F%5Cinfty%7D).
 /// It is notable that the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B1%7D%20) norm forms the upper and the ![inline formula](https://latex.codecogs.com/png.latex?%20L%5F%7B%5Cinfty%7D%20) norm forms the lower border for the example function ![inline formula](https://latex.codecogs.com/png.latex?%20r%28x%29%20).
-/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.2.0/NormTypes_OneArray_1-2-INF.png)
+/// ![Graphs for the different norm functions from the above example](https://docs.opencv.org/4.3.0/NormTypes_OneArray_1-2-INF.png)
 /// 
 /// When the mask parameter is specified and it is not empty, the norm is
 /// 
@@ -4718,10 +4732,10 @@ pub fn read_keypoint_vec_legacy(node: &core::FileNode, keypoints: &mut types::Ve
 /// And multi-channel arrays are also supported in these two reduction modes.
 /// 
 /// The following code demonstrates its usage for a single channel matrix.
-/// [example](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// And the following code demonstrates its usage for a two-channel matrix.
-/// [example2](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
+/// [example2](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_reduce.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input 2D matrix.
@@ -5149,7 +5163,7 @@ pub fn sort(src: &dyn core::ToInputArray, dst: &mut dyn core::ToOutputArray, fla
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -5169,7 +5183,7 @@ pub fn split_slice(src: &core::Mat, mvbegin: &mut core::Mat) -> Result<()> {
 /// mixChannels .
 /// 
 /// The following example demonstrates how to split a 3-channel matrix into 3 single channel matrices.
-/// [example](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
+/// [example](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_split.cpp#L1)
 /// 
 /// ## Parameters
 /// * src: input multi-channel array.
@@ -5685,7 +5699,7 @@ pub fn write_i32(fs: &mut core::FileStorage, name: &str, value: i32) -> Result<(
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub trait AlgorithmTrait {
 	fn as_raw_Algorithm(&self) -> *mut c_void;
 	/// Clears the algorithm state
@@ -5744,7 +5758,7 @@ pub trait AlgorithmTrait {
 /// etc.).
 /// 
 /// Here is example of SimpleBlobDetector use in your application via Algorithm interface:
-/// [Algorithm](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// [Algorithm](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
 pub struct Algorithm {
 	pub(crate) ptr: *mut c_void
 }
@@ -6367,7 +6381,7 @@ pub trait DownhillSolver: core::MinProblemSolver {
 	
 	/// Sets the initial step that will be used in downhill simplex algorithm.
 	/// 
-	/// Step, together with initial point (givin in DownhillSolver::minimize) are two `n`-dimensional
+	/// Step, together with initial point (given in DownhillSolver::minimize) are two `n`-dimensional
 	/// vectors that are used to determine the shape of initial simplex. Roughly said, initial point
 	/// determines the position of a simplex (it will become simplex's centroid), while step determines the
 	/// spread (size in each dimension) of a simplex. To be more precise, if ![inline formula](https://latex.codecogs.com/png.latex?s%2Cx%5F0%5Cin%5Cmathbb%7BR%7D%5En) are
@@ -8821,10 +8835,10 @@ pub trait MatTrait {
 	///        that an element may have multiple channels.
 	/// 
 	/// The following code demonstrates its usage for a 2-d matrix:
-	/// [example-2d](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-2d](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// The following code demonstrates its usage for a 3-d matrix:
-	/// [example-3d](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
+	/// [example-3d](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_mat_checkVector.cpp#L1)
 	/// 
 	/// ## C++ default parameters
 	/// * depth: -1
@@ -9706,8 +9720,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * step: AUTO_STEP
-	pub fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_rows_cols_with_data(rows: i32, cols: i32, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_int_int_int_voidX_size_t(rows, cols, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat
@@ -9730,8 +9744,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * step: AUTO_STEP
-	pub fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_size_with_data(size: core::Size, typ: i32, data: *mut c_void, step: size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_Size_int_voidX_size_t(&size, typ, data, step) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat
@@ -9753,8 +9767,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * steps: 0
-	pub fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_nd_with_data(sizes: &[i32], typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_int_const_intX_int_voidX_const_size_tX(sizes.len() as _, sizes.as_ptr(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat
@@ -9775,8 +9789,8 @@ impl Mat {
 	/// 
 	/// ## C++ default parameters
 	/// * steps: 0
-	pub fn new_nd_vec_with_data(sizes: &types::VectorOfi32, typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
-		unsafe { sys::cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
+	pub unsafe fn new_nd_vec_with_data(sizes: &types::VectorOfi32, typ: i32, data: *mut c_void, steps: &size_t) -> Result<core::Mat> {
+		{ sys::cv_Mat_Mat_const_vector_int_X_int_voidX_const_size_tX(sizes.as_raw_VectorOfi32(), typ, data, steps) }.into_result().map(|ptr| core::Mat { ptr })
 	}
 	
 	/// download data from GpuMat
@@ -12005,8 +12019,8 @@ impl Range {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.2.0/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.3.0/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub trait RotatedRectTrait {
@@ -12066,8 +12080,8 @@ pub trait RotatedRectTrait {
 /// #Size2f structure) and the rotation angle in degrees.
 /// 
 /// The sample below demonstrates how to use RotatedRect:
-/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.2.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
-/// ![image](https://docs.opencv.org/4.2.0/rotatedrect.png)
+/// [RotatedRect_demo](https://github.com/opencv/opencv/blob/4.3.0/samples/cpp/tutorial_code/snippets/core_various.cpp#L1)
+/// ![image](https://docs.opencv.org/4.3.0/rotatedrect.png)
 /// ## See also
 /// CamShift, fitEllipse, minAreaRect, CvBox2D
 pub struct RotatedRect {

@@ -9,9 +9,16 @@ extern "C" {
 		} OCVRS_CATCH(Result<double>)
 	}
 	
-	Result_void cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R, const cv::_InputArray* P, const cv::Size* size, int mltype, const cv::_OutputArray* map1, const cv::_OutputArray* map2, int flags) {
+	Result_void cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(const cv::_InputArray* K, const cv::_InputArray* D, const cv::_InputArray* xi, const cv::_InputArray* R, const cv::_InputArray* P, const cv::Size* size, int m1type, const cv::_OutputArray* map1, const cv::_OutputArray* map2, int flags) {
 		try {
-			cv::omnidir::initUndistortRectifyMap(*K, *D, *xi, *R, *P, *size, mltype, *map1, *map2, flags);
+			cv::omnidir::initUndistortRectifyMap(*K, *D, *xi, *R, *P, *size, m1type, *map1, *map2, flags);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const_Affine3dX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(const cv::_InputArray* objectPoints, const cv::_OutputArray* imagePoints, const cv::Affine3d* affine, const cv::_InputArray* K, double xi, const cv::_InputArray* D, const cv::_OutputArray* jacobian) {
+		try {
+			cv::omnidir::projectPoints(*objectPoints, *imagePoints, *affine, *K, xi, *D, *jacobian);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

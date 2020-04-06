@@ -85,7 +85,7 @@ template struct Result<std::vector<cv::detail::ImageFeatures>*>;
 template struct Result<std::vector<cv::detail::MatchesInfo>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<int>*>;
-template struct Result<std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>>*>;
+template struct Result<std::vector<std::string>*>;
 template struct Result<std::vector<unsigned char>*>;
 template struct Result<void*>;
 extern "C" void cv_PtrOfDetail_BestOf2NearestMatcher_delete(cv::Ptr<cv::detail::BestOf2NearestMatcher>* instance) {

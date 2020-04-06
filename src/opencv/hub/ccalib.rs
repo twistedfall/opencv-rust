@@ -66,13 +66,13 @@ pub fn calibrate(object_points: &dyn core::ToInputArray, image_points: &dyn core
 /// * R: Rotation transform between the original and object space : 3x3 1-channel, or vector: 3x1/1x3, with depth CV_32F or CV_64F
 /// * P: New camera matrix (3x3) or new projection matrix (3x4)
 /// * size: Undistorted image size.
-/// * mltype: Type of the first output map that can be CV_32FC1 or CV_16SC2 . See convertMaps()
+/// * m1type: Type of the first output map that can be CV_32FC1 or CV_16SC2 . See convertMaps()
 /// for details.
 /// * map1: The first output map.
 /// * map2: The second output map.
 /// * flags: Flags indicates the rectification type,  RECTIFY_PERSPECTIVE, RECTIFY_CYLINDRICAL, RECTIFY_LONGLATI and RECTIFY_STEREOGRAPHIC
 /// are supported.
-pub fn init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, size: core::Size, mltype: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
+pub fn init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToInputArray, xi: &dyn core::ToInputArray, r: &dyn core::ToInputArray, p: &dyn core::ToInputArray, size: core::Size, m1type: i32, map1: &mut dyn core::ToOutputArray, map2: &mut dyn core::ToOutputArray, flags: i32) -> Result<()> {
 	input_array_arg!(k);
 	input_array_arg!(d);
 	input_array_arg!(xi);
@@ -80,7 +80,40 @@ pub fn init_undistort_rectify_map(k: &dyn core::ToInputArray, d: &dyn core::ToIn
 	input_array_arg!(p);
 	output_array_arg!(map1);
 	output_array_arg!(map2);
-	unsafe { sys::cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, mltype, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), flags) }.into_result()
+	unsafe { sys::cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(k.as_raw__InputArray(), d.as_raw__InputArray(), xi.as_raw__InputArray(), r.as_raw__InputArray(), p.as_raw__InputArray(), &size, m1type, map1.as_raw__OutputArray(), map2.as_raw__OutputArray(), flags) }.into_result()
+}
+
+/// Projects points for omnidirectional camera using CMei's model
+/// 
+/// ## Parameters
+/// * objectPoints: Object points in world coordinate, vector of vector of Vec3f or Mat of
+/// 1xN/Nx1 3-channel of type CV_32F and N is the number of points. 64F is also acceptable.
+/// * imagePoints: Output array of image points, vector of vector of Vec2f or
+/// 1xN/Nx1 2-channel of type CV_32F. 64F is also acceptable.
+/// * rvec: vector of rotation between world coordinate and camera coordinate, i.e., om
+/// * tvec: vector of translation between pattern coordinate and camera coordinate
+/// * K: Camera matrix ![inline formula](https://latex.codecogs.com/png.latex?K%20%3D%20%5Cbegin%7Bbmatrix%7D%20f%5Fx%20%26%20s%20%26%20c%5Fx%5C%5C%200%20%26%20f%5Fy%20%26%20c%5Fy%5C%5C%200%20%26%200%20%26%20%5F1%20%5Cend%7Bbmatrix%7D).
+/// * D: Input vector of distortion coefficients ![inline formula](https://latex.codecogs.com/png.latex?%28k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2%29).
+/// * xi: The parameter xi for CMei's model
+/// * jacobian: Optional output 2Nx16 of type CV_64F jacobian matrix, contains the derivatives of
+/// image pixel points wrt parameters including ![inline formula](https://latex.codecogs.com/png.latex?om%2C%20T%2C%20f%5Fx%2C%20f%5Fy%2C%20s%2C%20c%5Fx%2C%20c%5Fy%2C%20xi%2C%20k%5F1%2C%20k%5F2%2C%20p%5F1%2C%20p%5F2).
+/// This matrix will be used in calibration by optimization.
+/// 
+/// The function projects object 3D points of world coordinate to image pixels, parameter by intrinsic
+/// and extrinsic parameters. Also, it optionally compute a by-product: the jacobian matrix containing
+/// contains the derivatives of image pixel points wrt intrinsic and extrinsic parameters.
+/// 
+/// ## Overloaded parameters
+/// 
+/// ## C++ default parameters
+/// * jacobian: noArray()
+pub fn project_points_1(object_points: &dyn core::ToInputArray, image_points: &mut dyn core::ToOutputArray, affine: core::Affine3d, k: &dyn core::ToInputArray, xi: f64, d: &dyn core::ToInputArray, jacobian: &mut dyn core::ToOutputArray) -> Result<()> {
+	input_array_arg!(object_points);
+	output_array_arg!(image_points);
+	input_array_arg!(k);
+	input_array_arg!(d);
+	output_array_arg!(jacobian);
+	unsafe { sys::cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const_Affine3dX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(object_points.as_raw__InputArray(), image_points.as_raw__OutputArray(), &affine, k.as_raw__InputArray(), xi, d.as_raw__InputArray(), jacobian.as_raw__OutputArray()) }.into_result()
 }
 
 /// Projects points for omnidirectional camera using CMei's model

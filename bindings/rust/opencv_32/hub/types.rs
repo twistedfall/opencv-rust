@@ -551,6 +551,33 @@ mod core_types {
 		}
 	}
 	
+	pub struct PtrOfCvMemStorage {
+		pub(crate) ptr: *mut c_void
+	}
+	
+	impl PtrOfCvMemStorage {
+		pub fn as_raw_PtrOfCvMemStorage(&self) -> *mut c_void { self.ptr }
+	
+		pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+			Self { ptr }
+		}
+	
+		/// Get raw pointer to the inner object
+		pub fn get_inner_ptr(&self) -> *mut c_void {
+			extern "C" { fn cv_PtrOfCvMemStorage_get_inner_ptr(instance: *mut c_void) -> *mut c_void; }
+			unsafe { cv_PtrOfCvMemStorage_get_inner_ptr(self.as_raw_PtrOfCvMemStorage()) }
+		}
+	}
+	
+	impl Drop for PtrOfCvMemStorage {
+		fn drop(&mut self) {
+			extern "C" { fn cv_PtrOfCvMemStorage_delete(instance: *mut c_void); }
+			unsafe { cv_PtrOfCvMemStorage_delete(self.as_raw_PtrOfCvMemStorage()) };
+		}
+	}
+	
+	unsafe impl Send for PtrOfCvMemStorage {}
+	
 	pub struct PtrOfDownhillSolver {
 		pub(crate) ptr: *mut c_void
 	}
@@ -15174,6 +15201,39 @@ mod surface_matching_types {
 	
 	impl crate::surface_matching::Pose3DTrait for PtrOfPose3D {
 		fn as_raw_Pose3D(&self) -> *mut c_void {
+			self.get_inner_ptr()
+		}
+	}
+	
+	pub struct PtrOfPoseCluster3D {
+		pub(crate) ptr: *mut c_void
+	}
+	
+	impl PtrOfPoseCluster3D {
+		pub fn as_raw_PtrOfPoseCluster3D(&self) -> *mut c_void { self.ptr }
+	
+		pub unsafe fn from_raw_ptr(ptr: *mut c_void) -> Self {
+			Self { ptr }
+		}
+	
+		/// Get raw pointer to the inner object
+		pub fn get_inner_ptr(&self) -> *mut c_void {
+			extern "C" { fn cv_PtrOfPoseCluster3D_get_inner_ptr(instance: *mut c_void) -> *mut c_void; }
+			unsafe { cv_PtrOfPoseCluster3D_get_inner_ptr(self.as_raw_PtrOfPoseCluster3D()) }
+		}
+	}
+	
+	impl Drop for PtrOfPoseCluster3D {
+		fn drop(&mut self) {
+			extern "C" { fn cv_PtrOfPoseCluster3D_delete(instance: *mut c_void); }
+			unsafe { cv_PtrOfPoseCluster3D_delete(self.as_raw_PtrOfPoseCluster3D()) };
+		}
+	}
+	
+	unsafe impl Send for PtrOfPoseCluster3D {}
+	
+	impl crate::surface_matching::PoseCluster3DTrait for PtrOfPoseCluster3D {
+		fn as_raw_PoseCluster3D(&self) -> *mut c_void {
 			self.get_inner_ptr()
 		}
 	}

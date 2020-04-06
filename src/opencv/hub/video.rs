@@ -25,7 +25,7 @@ pub const OPTFLOW_USE_INITIAL_FLOW: i32 = 4;
 /// * criteria: Stop criteria for the underlying meanShift.
 /// returns
 /// (in old interfaces) Number of iterations CAMSHIFT took to converge
-/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
+/// The function implements the CAMSHIFT object tracking algorithm [Bradski98](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bradski98) . First, it finds an
 /// object center using meanShift and then adjusts the window size and finds the optimal rotation. The
 /// function returns the rotated rectangle structure that includes the object position, size, and
 /// orientation. The next position of the search window can be obtained with RotatedRect::boundingRect()
@@ -97,7 +97,7 @@ pub fn build_optical_flow_pyramid(img: &dyn core::ToInputArray, pyramid: &mut dy
 ///      normally, winsize for a Gaussian window should be set to a larger value to achieve the same
 ///      level of robustness.
 /// 
-/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
+/// The function finds an optical flow for each prev pixel using the [Farneback2003](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Farneback2003) algorithm so that
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7Bprev%7D%20%28y%2Cx%29%20%20%5Csim%20%5Ctexttt%7Bnext%7D%20%28%20y%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B1%5D%2C%20%20x%20%2B%20%5Ctexttt%7Bflow%7D%20%28y%2Cx%29%5B0%5D%29)
 /// 
@@ -146,13 +146,13 @@ pub fn calc_optical_flow_farneback(prev: &dyn core::ToInputArray, next: &dyn cor
 ///      around the original and a moved point, divided by number of pixels in a window, is used as a
 ///      error measure.
 /// * minEigThreshold: the algorithm calculates the minimum eigen value of a 2x2 normal matrix of
-/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
+/// optical flow equations (this matrix is called a spatial gradient matrix in [Bouguet00](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bouguet00)), divided
 /// by number of pixels in a window; if this value is less than minEigThreshold, then a corresponding
 /// feature is filtered out and its flow is not processed, so it allows to remove bad points and get a
 /// performance boost.
 /// 
 /// The function implements a sparse iterative version of the Lucas-Kanade optical flow in pyramids. See
-/// [Bouguet00](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
+/// [Bouguet00](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Bouguet00) . The function is parallelized with the TBB library.
 /// 
 /// 
 /// Note:
@@ -180,7 +180,7 @@ pub fn calc_optical_flow_pyr_lk(prev_img: &dyn core::ToInputArray, next_img: &dy
 	unsafe { sys::cv_calcOpticalFlowPyrLK_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_Size_int_TermCriteria_int_double(prev_img.as_raw__InputArray(), next_img.as_raw__InputArray(), prev_pts.as_raw__InputArray(), next_pts.as_raw__InputOutputArray(), status.as_raw__OutputArray(), err.as_raw__OutputArray(), &win_size, max_level, criteria.as_raw_TermCriteria(), flags, min_eig_threshold) }.into_result()
 }
 
-/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_EP08) .
+/// Computes the Enhanced Correlation Coefficient value between two images [EP08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_EP08) .
 /// 
 /// ## Parameters
 /// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -271,7 +271,7 @@ pub fn estimate_rigid_transform(src: &dyn core::ToInputArray, dst: &dyn core::To
 	unsafe { sys::cv_estimateRigidTransform_const__InputArrayX_const__InputArrayX_bool(src.as_raw__InputArray(), dst.as_raw__InputArray(), full_affine) }.into_result().map(|ptr| core::Mat { ptr })
 }
 
-/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_EP08) .
+/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_EP08) .
 /// 
 /// ## Parameters
 /// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -296,7 +296,7 @@ pub fn estimate_rigid_transform(src: &dyn core::ToInputArray, dst: &dyn core::To
 /// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 /// 
 /// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-/// ([EP08](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+/// ([EP08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 /// 
@@ -336,7 +336,7 @@ pub fn find_transform_ecc_1(template_image: &dyn core::ToInputArray, input_image
 	unsafe { sys::cv_findTransformECC_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_int_TermCriteria_const__InputArrayX(template_image.as_raw__InputArray(), input_image.as_raw__InputArray(), warp_matrix.as_raw__InputOutputArray(), motion_type, criteria.as_raw_TermCriteria(), input_mask.as_raw__InputArray()) }.into_result()
 }
 
-/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_EP08) .
+/// Finds the geometric transform (warp) between two images in terms of the ECC criterion [EP08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_EP08) .
 /// 
 /// ## Parameters
 /// * templateImage: single-channel template image; CV_8U or CV_32F array.
@@ -361,7 +361,7 @@ pub fn find_transform_ecc_1(template_image: &dyn core::ToInputArray, input_image
 /// * gaussFiltSize: An optional value indicating size of gaussian blur filter; (DEFAULT: 5)
 /// 
 /// The function estimates the optimum transformation (warpMatrix) with respect to ECC criterion
-/// ([EP08](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_EP08)), that is
+/// ([EP08](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_EP08)), that is
 /// 
 /// ![block formula](https://latex.codecogs.com/png.latex?%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Ctexttt%7BwarpMatrix%7D%20%3D%20%5Carg%5Cmax%5F%7BW%7D%20%5Ctexttt%7BECC%7D%28%5Ctexttt%7BtemplateImage%7D%28x%2Cy%29%2C%5Ctexttt%7BinputImage%7D%28x%27%2Cy%27%29%29)
 /// 
@@ -486,7 +486,7 @@ pub trait BackgroundSubtractor: core::AlgorithmTrait {
 
 /// K-nearest neighbours - based Background/Foreground Segmentation Algorithm.
 /// 
-/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+/// The class implements the K-nearest neighbours background subtraction described in [Zivkovic2006](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 /// Very efficient if number of foreground pixels is low.
 pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorKNN(&self) -> *mut c_void;
@@ -583,8 +583,8 @@ pub trait BackgroundSubtractorKNN: crate::video::BackgroundSubtractor {
 
 /// Gaussian Mixture-based Background/Foreground Segmentation Algorithm.
 /// 
-/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
-/// and [Zivkovic2006](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
+/// The class implements the Gaussian mixture model background subtraction described in [Zivkovic2004](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Zivkovic2004)
+/// and [Zivkovic2006](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Zivkovic2006) .
 pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
 	fn as_raw_BackgroundSubtractorMOG2(&self) -> *mut c_void;
 	/// Returns the number of last frames that affect the background model
@@ -756,7 +756,7 @@ pub trait BackgroundSubtractorMOG2: crate::video::BackgroundSubtractor {
 /// DIS optical flow algorithm.
 /// 
 /// This class implements the Dense Inverse Search (DIS) optical flow algorithm. More
-/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
+/// details about the algorithm can be found at [Kroeger2016](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Kroeger2016) . Includes three presets with preselected
 /// parameters to provide reasonable trade-off between speed and quality. However, even the slowest preset is
 /// still relatively fast, use DeepFlow if you need better quality and don't care about speed.
 /// 
@@ -1054,7 +1054,7 @@ impl dyn FarnebackOpticalFlow + '_ {
 /// Kalman filter class.
 /// 
 /// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-/// [Welch95](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+/// [Welch95](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 /// an extended Kalman filter functionality.
 /// 
 /// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -1240,7 +1240,7 @@ pub trait KalmanFilterTrait {
 /// Kalman filter class.
 /// 
 /// The class implements a standard Kalman filter <http://en.wikipedia.org/wiki/Kalman_filter>,
-/// [Welch95](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
+/// [Welch95](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Welch95) . However, you can modify transitionMatrix, controlMatrix, and measurementMatrix to get
 /// an extended Kalman filter functionality.
 /// 
 /// Note: In C API when CvKalman\* kalmanFilter structure is not needed anymore, it should be released
@@ -1388,7 +1388,7 @@ impl dyn SparsePyrLKOpticalFlow + '_ {
 /// where ![inline formula](https://latex.codecogs.com/png.latex?E%5FI%2CE%5FG%2CE%5FS) are color constancy, gradient constancy and smoothness terms
 /// respectively. ![inline formula](https://latex.codecogs.com/png.latex?%5CPsi%28s%5E2%29%3D%5Csqrt%7Bs%5E2%2B%5Cepsilon%5E2%7D) is a robust penalizer to limit the
 /// influence of outliers. A complete formulation and a description of the minimization
-/// procedure can be found in [Brox2004](https://docs.opencv.org/4.2.0/d0/de3/citelist.html#CITEREF_Brox2004)
+/// procedure can be found in [Brox2004](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_Brox2004)
 pub trait VariationalRefinement: crate::video::DenseOpticalFlow {
 	fn as_raw_VariationalRefinement(&self) -> *mut c_void;
 	/// @ref calc function overload to handle separate horizontal (u) and vertical (v) flow components

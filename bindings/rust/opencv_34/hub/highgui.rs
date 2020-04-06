@@ -13,7 +13,7 @@
 //!    # OpenGL support
 //!    # Qt New Functions
 //! 
-//!    ![image](https://docs.opencv.org/3.4.9/qtgui.png)
+//!    ![image](https://docs.opencv.org/3.4.10/qtgui.png)
 //! 
 //!    This figure explains new functionality implemented with Qt\* GUI. The new GUI provides a statusbar,
 //!    a toolbar, and a control panel. The control panel can have trackbars and buttonbars attached to it.

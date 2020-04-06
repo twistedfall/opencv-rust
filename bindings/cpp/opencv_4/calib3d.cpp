@@ -163,6 +163,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
+	Result<cv::Scalar> cv_estimateChessboardSharpness_const__InputArrayX_Size_const__InputArrayX_float_bool_const__OutputArrayX(const cv::_InputArray* image, const cv::Size* patternSize, const cv::_InputArray* corners, float rise_distance, bool vertical, const cv::_OutputArray* sharpness) {
+		try {
+			cv::Scalar ret = cv::estimateChessboardSharpness(*image, *patternSize, *corners, rise_distance, vertical, *sharpness);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<cv::Scalar>)
+	}
+	
 	Result_void cv_filterHomographyDecompByVisibleRefpoints_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(const cv::_InputArray* rotations, const cv::_InputArray* normals, const cv::_InputArray* beforePoints, const cv::_InputArray* afterPoints, const cv::_OutputArray* possibleSolutions, const cv::_InputArray* pointsMask) {
 		try {
 			cv::filterHomographyDecompByVisibleRefpoints(*rotations, *normals, *beforePoints, *afterPoints, *possibleSolutions, *pointsMask);
@@ -187,6 +194,13 @@ extern "C" {
 	Result<bool> cv_findChessboardCornersSB_const__InputArrayX_Size_const__OutputArrayX_int(const cv::_InputArray* image, const cv::Size* patternSize, const cv::_OutputArray* corners, int flags) {
 		try {
 			bool ret = cv::findChessboardCornersSB(*image, *patternSize, *corners, flags);
+			return Ok(ret);
+		} OCVRS_CATCH(Result<bool>)
+	}
+	
+	Result<bool> cv_findChessboardCornersSB_const__InputArrayX_Size_const__OutputArrayX_int_const__OutputArrayX(const cv::_InputArray* image, const cv::Size* patternSize, const cv::_OutputArray* corners, int flags, const cv::_OutputArray* meta) {
+		try {
+			bool ret = cv::findChessboardCornersSB(*image, *patternSize, *corners, flags, *meta);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<bool>)
 	}
@@ -236,6 +250,13 @@ extern "C" {
 	Result<cv::Mat*> cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX(const cv::_InputArray* points1, const cv::_InputArray* points2, int method, double ransacReprojThreshold, double confidence, const cv::_OutputArray* mask) {
 		try {
 			cv::Mat ret = cv::findFundamentalMat(*points1, *points2, method, ransacReprojThreshold, confidence, *mask);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
+	}
+	
+	Result<cv::Mat*> cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_int_const__OutputArrayX(const cv::_InputArray* points1, const cv::_InputArray* points2, int method, double ransacReprojThreshold, double confidence, int maxIters, const cv::_OutputArray* mask) {
+		try {
+			cv::Mat ret = cv::findFundamentalMat(*points1, *points2, method, ransacReprojThreshold, confidence, maxIters, *mask);
 			return Ok(new cv::Mat(ret));
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
@@ -338,9 +359,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
-	Result<cv::Rect> cv_getValidDisparityROI_Rect_Rect_int_int_int(const cv::Rect* roi1, const cv::Rect* roi2, int minDisparity, int numberOfDisparities, int SADWindowSize) {
+	Result<cv::Rect> cv_getValidDisparityROI_Rect_Rect_int_int_int(const cv::Rect* roi1, const cv::Rect* roi2, int minDisparity, int numberOfDisparities, int blockSize) {
 		try {
-			cv::Rect ret = cv::getValidDisparityROI(*roi1, *roi2, minDisparity, numberOfDisparities, SADWindowSize);
+			cv::Rect ret = cv::getValidDisparityROI(*roi1, *roi2, minDisparity, numberOfDisparities, blockSize);
 			return Ok(ret);
 		} OCVRS_CATCH(Result<cv::Rect>)
 	}

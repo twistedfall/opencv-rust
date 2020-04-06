@@ -58,6 +58,7 @@ template struct Result<double>;
 template struct Result<float>;
 template struct Result<int>;
 template struct Result<long>;
+template struct Result<std::vector<bool>*>;
 template struct Result<std::vector<cv::Mat*>*>;
 template struct Result<std::vector<cv::Mat>*>;
 template struct Result<std::vector<cv::Ptr<cv::dnn::BackendNode>>*>;

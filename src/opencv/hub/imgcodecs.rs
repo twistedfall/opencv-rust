@@ -30,7 +30,7 @@ pub const IMREAD_REDUCED_GRAYSCALE_2: i32 = 16;
 pub const IMREAD_REDUCED_GRAYSCALE_4: i32 = 32;
 /// If set, always convert image to the single channel grayscale image and the image size reduced 1/8.
 pub const IMREAD_REDUCED_GRAYSCALE_8: i32 = 64;
-/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped).
+/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
 pub const IMREAD_UNCHANGED: i32 = -1;
 /// override EXR storage type (FLOAT (FP32) is default)
 pub const IMWRITE_EXR_TYPE: i32 = 48;
@@ -92,7 +92,7 @@ pub const IMWRITE_WEBP_QUALITY: i32 = 64;
 #[repr(C)]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum ImreadModes {
-	/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped).
+	/// If set, return the loaded image as is (with alpha channel, otherwise it gets cropped). Ignore EXIF orientation.
 	IMREAD_UNCHANGED = -1 as isize,
 	/// If set, always convert image to the single channel grayscale image (codec internal conversion).
 	IMREAD_GRAYSCALE = 0 as isize,
@@ -325,8 +325,9 @@ pub fn imencode(ext: &str, img: &dyn core::ToInputArray, buf: &mut types::Vector
 ///    then the [GDAL](http://www.gdal.org) driver will be used in order to decode the image, supporting
 ///    the following formats: [Raster](http://www.gdal.org/formats_list.html),
 ///    [Vector](http://www.gdal.org/ogr_formats.html).
-/// *   If EXIF information are embedded in the image file, the EXIF orientation will be taken into account
-///    and thus the image will be rotated accordingly except if the flag @ref IMREAD_IGNORE_ORIENTATION is passed.
+/// *   If EXIF information is embedded in the image file, the EXIF orientation will be taken into account
+///    and thus the image will be rotated accordingly except if the flags @ref IMREAD_IGNORE_ORIENTATION
+///    or @ref IMREAD_UNCHANGED are passed.
 /// *   Use the IMREAD_UNCHANGED flag to keep the floating point values from PFM image.
 /// *   By default number of pixels must be less than 2^30. Limit can be set using system
 ///    variable OPENCV_IO_MAX_IMAGE_PIXELS

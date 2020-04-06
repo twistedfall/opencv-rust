@@ -1,6 +1,17 @@
 use crate::{mod_prelude_types::*, core};
 
 #[cfg(feature = "contrib")]
+mod alphamat_sys {
+	use super::*;
+
+	extern "C" {
+		pub fn cv_alphamat_infoFlow_const__InputArrayX_const__InputArrayX_const__OutputArrayX(image: *mut c_void, tmap: *mut c_void, result: *mut c_void) -> Result_void;
+	}
+}
+#[cfg(feature = "contrib")]
+pub use alphamat_sys::*;
+
+#[cfg(feature = "contrib")]
 mod aruco_sys {
 	use super::*;
 
@@ -224,7 +235,7 @@ mod bioinspired_sys {
 		pub fn cv_bioinspired_Retina_activateMovingContoursProcessing_bool(instance: *mut c_void, activate: bool) -> Result_void;
 		pub fn cv_bioinspired_Retina_activateContoursProcessing_bool(instance: *mut c_void, activate: bool) -> Result_void;
 		pub fn cv_bioinspired_Retina_create_Size(input_size: *const core::Size) -> Result<*mut c_void>;
-		pub fn cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(input_size: *const core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strenght: f32) -> Result<*mut c_void>;
+		pub fn cv_bioinspired_Retina_create_Size_bool_int_bool_float_float(input_size: *const core::Size, color_mode: bool, color_sampling_method: i32, use_retina_log_sampling: bool, reduction_factor: f32, sampling_strength: f32) -> Result<*mut c_void>;
 		pub fn cv_bioinspired_RetinaFastToneMapping_applyFastToneMapping_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, input_image: *mut c_void, output_tone_mapped_image: *mut c_void) -> Result_void;
 		pub fn cv_bioinspired_RetinaFastToneMapping_setup_float_float_float(instance: *mut c_void, photoreceptors_neighborhood_radius: f32, ganglioncells_neighborhood_radius: f32, mean_luminance_modulator_k: f32) -> Result_void;
 		pub fn cv_bioinspired_RetinaFastToneMapping_create_Size(input_size: *const core::Size) -> Result<*mut c_void>;
@@ -279,10 +290,12 @@ mod calib3d_sys {
 		pub fn cv_estimateAffine2D_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_size_t_double_size_t(from: *mut c_void, to: *mut c_void, inliers: *mut c_void, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<*mut c_void>;
 		pub fn cv_estimateAffine3D_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX_double_double(src: *mut c_void, dst: *mut c_void, out: *mut c_void, inliers: *mut c_void, ransac_threshold: f64, confidence: f64) -> Result<i32>;
 		pub fn cv_estimateAffinePartial2D_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_size_t_double_size_t(from: *mut c_void, to: *mut c_void, inliers: *mut c_void, method: i32, ransac_reproj_threshold: f64, max_iters: size_t, confidence: f64, refine_iters: size_t) -> Result<*mut c_void>;
+		pub fn cv_estimateChessboardSharpness_const__InputArrayX_Size_const__InputArrayX_float_bool_const__OutputArrayX(image: *mut c_void, pattern_size: *const core::Size, corners: *mut c_void, rise_distance: f32, vertical: bool, sharpness: *mut c_void) -> Result<core::Scalar>;
 		pub fn cv_filterHomographyDecompByVisibleRefpoints_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__InputArrayX(rotations: *mut c_void, normals: *mut c_void, before_points: *mut c_void, after_points: *mut c_void, possible_solutions: *mut c_void, points_mask: *mut c_void) -> Result_void;
 		pub fn cv_filterSpeckles_const__InputOutputArrayX_double_int_double_const__InputOutputArrayX(img: *mut c_void, new_val: f64, max_speckle_size: i32, max_diff: f64, buf: *mut c_void) -> Result_void;
 		pub fn cv_find4QuadCornerSubpix_const__InputArrayX_const__InputOutputArrayX_Size(img: *mut c_void, corners: *mut c_void, region_size: *const core::Size) -> Result<bool>;
 		pub fn cv_findChessboardCornersSB_const__InputArrayX_Size_const__OutputArrayX_int(image: *mut c_void, pattern_size: *const core::Size, corners: *mut c_void, flags: i32) -> Result<bool>;
+		pub fn cv_findChessboardCornersSB_const__InputArrayX_Size_const__OutputArrayX_int_const__OutputArrayX(image: *mut c_void, pattern_size: *const core::Size, corners: *mut c_void, flags: i32, meta: *mut c_void) -> Result<bool>;
 		pub fn cv_findChessboardCorners_const__InputArrayX_Size_const__OutputArrayX_int(image: *mut c_void, pattern_size: *const core::Size, corners: *mut c_void, flags: i32) -> Result<bool>;
 		pub fn cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X(image: *mut c_void, pattern_size: *const core::Size, centers: *mut c_void, flags: i32, blob_detector: *mut c_void) -> Result<bool>;
 		pub fn cv_findCirclesGrid_const__InputArrayX_Size_const__OutputArrayX_int_const_Ptr_FeatureDetector_X_const_CirclesGridFinderParametersX(image: *mut c_void, pattern_size: *const core::Size, centers: *mut c_void, flags: i32, blob_detector: *mut c_void, parameters: *const crate::calib3d::CirclesGridFinderParameters) -> Result<bool>;
@@ -290,6 +303,7 @@ mod calib3d_sys {
 		pub fn cv_findEssentialMat_const__InputArrayX_const__InputArrayX_double_Point2d_int_double_double_const__OutputArrayX(points1: *mut c_void, points2: *mut c_void, focal: f64, pp: *const core::Point2d, method: i32, prob: f64, threshold: f64, mask: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double_double(points1: *mut c_void, points2: *mut c_void, mask: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64) -> Result<*mut c_void>;
 		pub fn cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_const__OutputArrayX(points1: *mut c_void, points2: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, mask: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_findFundamentalMat_const__InputArrayX_const__InputArrayX_int_double_double_int_const__OutputArrayX(points1: *mut c_void, points2: *mut c_void, method: i32, ransac_reproj_threshold: f64, confidence: f64, max_iters: i32, mask: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_findHomography_const__InputArrayX_const__InputArrayX_const__OutputArrayX_int_double(src_points: *mut c_void, dst_points: *mut c_void, mask: *mut c_void, method: i32, ransac_reproj_threshold: f64) -> Result<*mut c_void>;
 		pub fn cv_findHomography_const__InputArrayX_const__InputArrayX_int_double_const__OutputArrayX_int_double(src_points: *mut c_void, dst_points: *mut c_void, method: i32, ransac_reproj_threshold: f64, mask: *mut c_void, max_iters: i32, confidence: f64) -> Result<*mut c_void>;
 		pub fn cv_fisheye_calibrate_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria(object_points: *mut c_void, image_points: *mut c_void, image_size: *const core::Size, k: *mut c_void, d: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, flags: i32, criteria: *mut c_void) -> Result<f64>;
@@ -304,7 +318,7 @@ mod calib3d_sys {
 		pub fn cv_fisheye_undistortPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(distorted: *mut c_void, undistorted: *mut c_void, k: *mut c_void, d: *mut c_void, r: *mut c_void, p: *mut c_void) -> Result_void;
 		pub fn cv_getDefaultNewCameraMatrix_const__InputArrayX_Size_bool(camera_matrix: *mut c_void, imgsize: *const core::Size, center_principal_point: bool) -> Result<*mut c_void>;
 		pub fn cv_getOptimalNewCameraMatrix_const__InputArrayX_const__InputArrayX_Size_double_Size_RectX_bool(camera_matrix: *mut c_void, dist_coeffs: *mut c_void, image_size: *const core::Size, alpha: f64, new_img_size: *const core::Size, valid_pix_roi: *mut core::Rect, center_principal_point: bool) -> Result<*mut c_void>;
-		pub fn cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1: *const core::Rect, roi2: *const core::Rect, min_disparity: i32, number_of_disparities: i32, sad_window_size: i32) -> Result<core::Rect>;
+		pub fn cv_getValidDisparityROI_Rect_Rect_int_int_int(roi1: *const core::Rect, roi2: *const core::Rect, min_disparity: i32, number_of_disparities: i32, block_size: i32) -> Result<core::Rect>;
 		pub fn cv_initCameraMatrix2D_const__InputArrayX_const__InputArrayX_Size_double(object_points: *mut c_void, image_points: *mut c_void, image_size: *const core::Size, aspect_ratio: f64) -> Result<*mut c_void>;
 		pub fn cv_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_Size_int_const__OutputArrayX_const__OutputArrayX(camera_matrix: *mut c_void, dist_coeffs: *mut c_void, r: *mut c_void, new_camera_matrix: *mut c_void, size: *const core::Size, m1type: i32, map1: *mut c_void, map2: *mut c_void) -> Result_void;
 		pub fn cv_initWideAngleProjMap_const__InputArrayX_const__InputArrayX_Size_int_int_const__OutputArrayX_const__OutputArrayX_UndistortTypes_double(camera_matrix: *mut c_void, dist_coeffs: *mut c_void, image_size: *const core::Size, dest_image_width: i32, m1type: i32, map1: *mut c_void, map2: *mut c_void, proj_type: crate::calib3d::UndistortTypes, alpha: f64) -> Result<f32>;
@@ -389,7 +403,8 @@ mod ccalib_sys {
 
 	extern "C" {
 		pub fn cv_omnidir_calibrate_const__InputArrayX_const__InputArrayX_Size_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, size: *const core::Size, k: *mut c_void, xi: *mut c_void, d: *mut c_void, rvecs: *mut c_void, tvecs: *mut c_void, flags: i32, criteria: *mut c_void, idx: *mut c_void) -> Result<f64>;
-		pub fn cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(k: *mut c_void, d: *mut c_void, xi: *mut c_void, r: *mut c_void, p: *mut c_void, size: *const core::Size, mltype: i32, map1: *mut c_void, map2: *mut c_void, flags: i32) -> Result_void;
+		pub fn cv_omnidir_initUndistortRectifyMap_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_int_const__OutputArrayX_const__OutputArrayX_int(k: *mut c_void, d: *mut c_void, xi: *mut c_void, r: *mut c_void, p: *mut c_void, size: *const core::Size, m1type: i32, map1: *mut c_void, map2: *mut c_void, flags: i32) -> Result_void;
+		pub fn cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const_Affine3dX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, affine: *const core::Affine3d, k: *mut c_void, xi: f64, d: *mut c_void, jacobian: *mut c_void) -> Result_void;
 		pub fn cv_omnidir_projectPoints_const__InputArrayX_const__OutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_double_const__InputArrayX_const__OutputArrayX(object_points: *mut c_void, image_points: *mut c_void, rvec: *mut c_void, tvec: *mut c_void, k: *mut c_void, xi: f64, d: *mut c_void, jacobian: *mut c_void) -> Result_void;
 		pub fn cv_omnidir_stereoCalibrate_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const_SizeX_const_SizeX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_int_TermCriteria_const__OutputArrayX(object_points: *mut c_void, image_points1: *mut c_void, image_points2: *mut c_void, image_size1: *const core::Size, image_size2: *const core::Size, k1: *mut c_void, xi1: *mut c_void, d1: *mut c_void, k2: *mut c_void, xi2: *mut c_void, d2: *mut c_void, rvec: *mut c_void, tvec: *mut c_void, rvecs_l: *mut c_void, tvecs_l: *mut c_void, flags: i32, criteria: *mut c_void, idx: *mut c_void) -> Result<f64>;
 		pub fn cv_omnidir_stereoReconstruct_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_int_int_int_const__OutputArrayX_const__OutputArrayX_const__OutputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_int(image1: *mut c_void, image2: *mut c_void, k1: *mut c_void, d1: *mut c_void, xi1: *mut c_void, k2: *mut c_void, d2: *mut c_void, xi2: *mut c_void, r: *mut c_void, t: *mut c_void, flag: i32, num_disparities: i32, sad_window_size: i32, disparity: *mut c_void, image1_rec: *mut c_void, image2_rec: *mut c_void, new_size: *const core::Size, knew: *mut c_void, point_cloud: *mut c_void, point_type: i32) -> Result_void;
@@ -502,6 +517,7 @@ mod core_sys {
 		pub fn cv_detail_check_failed_MatType_int_int_const_CheckContextX(v1: i32, v2: i32, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_Size__int__Size__int__const_CheckContextX(v1: *const core::Size_<i32>, v2: *const core::Size_<i32>, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_Size__int__const_CheckContextX(v: *const core::Size_<i32>, ctx: *mut c_void) -> Result_void;
+		pub fn cv_detail_check_failed_auto_const_stringX_const_CheckContextX(v1: *const c_char, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_double_const_CheckContextX(v: f64, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_double_double_const_CheckContextX(v1: f64, v2: f64, ctx: *mut c_void) -> Result_void;
 		pub fn cv_detail_check_failed_auto_float_const_CheckContextX(v: f32, ctx: *mut c_void) -> Result_void;
@@ -1972,6 +1988,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Net_connect_String_String(instance: *mut c_void, out_pin: *mut c_char, inp_pin: *mut c_char) -> Result_void;
 		pub fn cv_dnn_Net_connect_int_int_int_int(instance: *mut c_void, out_layer_id: i32, out_num: i32, inp_layer_id: i32, inp_num: i32) -> Result_void;
 		pub fn cv_dnn_Net_setInputsNames_const_vector_String_X(instance: *mut c_void, input_blob_names: *mut c_void) -> Result_void;
+		pub fn cv_dnn_Net_setInputShape_const_StringX_const_MatShapeX(instance: *mut c_void, input_name: *const c_char, shape: *mut c_void) -> Result_void;
 		pub fn cv_dnn_Net_forward_const_StringX(instance: *mut c_void, output_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_dnn_Net_forwardAsync_const_StringX(instance: *mut c_void, output_name: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_dnn_Net_forward_const__OutputArrayX_const_StringX(instance: *mut c_void, output_blobs: *mut c_void, output_name: *const c_char) -> Result_void;
@@ -2038,6 +2055,8 @@ mod dnn_sys {
 		pub fn cv_dnn_PoolingLayer_setPad_b_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_globalPooling_const(instance: *mut c_void) -> Result<bool>;
 		pub fn cv_dnn_PoolingLayer_setGlobalPooling_bool(instance: *mut c_void, val: bool) -> Result_void;
+		pub fn cv_dnn_PoolingLayer_isGlobalPooling(instance: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_dnn_PoolingLayer_setIsGlobalPooling_vector_bool_(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_computeMaxIdx_const(instance: *mut c_void) -> Result<bool>;
 		pub fn cv_dnn_PoolingLayer_setComputeMaxIdx_bool(instance: *mut c_void, val: bool) -> Result_void;
 		pub fn cv_dnn_PoolingLayer_padMode_const(instance: *mut c_void) -> Result<*mut c_void>;
@@ -2119,11 +2138,12 @@ mod dnn_superres_sys {
 	use super::*;
 
 	extern "C" {
+		pub fn cv_dnn_superres_DnnSuperResImpl_create() -> Result<*mut c_void>;
 		pub fn cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl() -> Result<*mut c_void>;
-		pub fn cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_stringX_int(algo: *const c_char, scale: i32) -> Result<*mut c_void>;
-		pub fn cv_dnn_superres_DnnSuperResImpl_readModel_const_stringX(instance: *mut c_void, path: *const c_char) -> Result_void;
-		pub fn cv_dnn_superres_DnnSuperResImpl_readModel_const_stringX_const_stringX(instance: *mut c_void, weights: *const c_char, definition: *const c_char) -> Result_void;
-		pub fn cv_dnn_superres_DnnSuperResImpl_setModel_const_stringX_int(instance: *mut c_void, algo: *const c_char, scale: i32) -> Result_void;
+		pub fn cv_dnn_superres_DnnSuperResImpl_DnnSuperResImpl_const_StringX_int(algo: *const c_char, scale: i32) -> Result<*mut c_void>;
+		pub fn cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX(instance: *mut c_void, path: *const c_char) -> Result_void;
+		pub fn cv_dnn_superres_DnnSuperResImpl_readModel_const_StringX_const_StringX(instance: *mut c_void, weights: *const c_char, definition: *const c_char) -> Result_void;
+		pub fn cv_dnn_superres_DnnSuperResImpl_setModel_const_StringX_int(instance: *mut c_void, algo: *const c_char, scale: i32) -> Result_void;
 		pub fn cv_dnn_superres_DnnSuperResImpl_upsample_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, result: *mut c_void) -> Result_void;
 		pub fn cv_dnn_superres_DnnSuperResImpl_upsampleMultioutput_const__InputArrayX_vector_Mat_X_const_vector_int_X_const_vector_String_X(instance: *mut c_void, img: *mut c_void, imgs_new: *mut c_void, scale_factors: *mut c_void, node_names: *mut c_void) -> Result_void;
 		pub fn cv_dnn_superres_DnnSuperResImpl_getScale(instance: *mut c_void) -> Result<i32>;
@@ -3065,6 +3085,20 @@ mod imgproc_sys {
 pub use imgproc_sys::*;
 
 #[cfg(feature = "contrib")]
+mod intensity_transform_sys {
+	use super::*;
+
+	extern "C" {
+		pub fn cv_intensity_transform_autoscaling_Mat_MatX(input: *mut c_void, output: *mut c_void) -> Result_void;
+		pub fn cv_intensity_transform_contrastStretching_Mat_MatX_int_int_int_int(input: *mut c_void, output: *mut c_void, r1: i32, s1: i32, r2: i32, s2: i32) -> Result_void;
+		pub fn cv_intensity_transform_gammaCorrection_Mat_MatX_float(input: *mut c_void, output: *mut c_void, gamma: f32) -> Result_void;
+		pub fn cv_intensity_transform_logTransform_Mat_MatX(input: *mut c_void, output: *mut c_void) -> Result_void;
+	}
+}
+#[cfg(feature = "contrib")]
+pub use intensity_transform_sys::*;
+
+#[cfg(feature = "contrib")]
 mod line_descriptor_sys {
 	use super::*;
 
@@ -3532,6 +3566,9 @@ mod objdetect_sys {
 		pub fn cv_QRCodeDetector_detect_const_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void) -> Result<bool>;
 		pub fn cv_QRCodeDetector_decode_const__InputArrayX_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_QRCodeDetector_detectAndDecode_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_QRCodeDetector_detectMulti_const_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void) -> Result<bool>;
+		pub fn cv_QRCodeDetector_decodeMulti_const_const__InputArrayX_const__InputArrayX_vector_string_X_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, points: *mut c_void, decoded_info: *mut c_void, straight_qrcode: *mut c_void) -> Result<bool>;
+		pub fn cv_QRCodeDetector_detectAndDecodeMulti_const_const__InputArrayX_vector_string_X_const__OutputArrayX_const__OutputArrayX(instance: *mut c_void, img: *mut c_void, decoded_info: *mut c_void, points: *mut c_void, straight_qrcode: *mut c_void) -> Result<bool>;
 		pub fn cv_SimilarRects_eps_const(instance: *mut c_void) -> Result<f64>;
 		pub fn cv_SimilarRects_setEps_double(instance: *mut c_void, val: f64) -> Result_void;
 		pub fn cv_SimilarRects_SimilarRects_double(_eps: f64) -> Result<*mut c_void>;
@@ -3544,19 +3581,9 @@ mod phase_unwrapping_sys {
 	use super::*;
 
 	extern "C" {
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(parameters: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_create_const_ParamsX(parameters: *const crate::phase_unwrapping::HistogramPhaseUnwrapping_Params) -> Result<*mut c_void>;
 		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_getInverseReliabilityMap_const__OutputArrayX(instance: *mut c_void, reliability_map: *mut c_void) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_width_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setWidth_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_height_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHeight_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_histThresh_const(instance: *mut c_void) -> Result<f32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setHistThresh_float(instance: *mut c_void, val: f32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfSmallBins_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfSmallBins_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_nbrOfLargeBins_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_setNbrOfLargeBins_int(instance: *mut c_void, val: i32) -> Result_void;
-		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() -> Result<*mut c_void>;
+		pub fn cv_phase_unwrapping_HistogramPhaseUnwrapping_Params_Params() -> Result<crate::phase_unwrapping::HistogramPhaseUnwrapping_Params>;
 		pub fn cv_phase_unwrapping_PhaseUnwrapping_unwrapPhaseMap_const__InputArrayX_const__OutputArrayX_const__InputArrayX(instance: *mut c_void, wrapped_phase_map: *mut c_void, unwrapped_phase_map: *mut c_void, shadow_mask: *mut c_void) -> Result_void;
 	}
 }
@@ -3681,6 +3708,24 @@ mod plot_sys {
 }
 #[cfg(feature = "contrib")]
 pub use plot_sys::*;
+
+#[cfg(feature = "contrib")]
+mod rapid_sys {
+	use super::*;
+
+	extern "C" {
+		pub fn cv_rapid_drawCorrespondencies_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX(bundle: *mut c_void, src_locations: *mut c_void, new_locations: *mut c_void, colors: *mut c_void) -> Result_void;
+		pub fn cv_rapid_drawSearchLines_const__InputOutputArrayX_const__InputArrayX_const_ScalarX(img: *mut c_void, locations: *mut c_void, color: *const core::Scalar) -> Result_void;
+		pub fn cv_rapid_drawWireframe_const__InputOutputArrayX_const__InputArrayX_const__InputArrayX_const_ScalarX_int_bool(img: *mut c_void, pts2d: *mut c_void, tris: *mut c_void, color: *const core::Scalar, typ: i32, cull_backface: bool) -> Result_void;
+		pub fn cv_rapid_extractControlPoints_int_int_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputArrayX_const_SizeX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(num: i32, len: i32, pts3d: *mut c_void, rvec: *mut c_void, tvec: *mut c_void, k: *mut c_void, imsize: *const core::Size, tris: *mut c_void, ctl2d: *mut c_void, ctl3d: *mut c_void) -> Result_void;
+		pub fn cv_rapid_extractLineBundle_int_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(len: i32, ctl2d: *mut c_void, img: *mut c_void, bundle: *mut c_void, src_locations: *mut c_void) -> Result_void;
+		pub fn cv_rapid_filterCorrespondencies_const__InputOutputArrayX_const__InputOutputArrayX_const__InputArrayX(pts2d: *mut c_void, pts3d: *mut c_void, mask: *mut c_void) -> Result_void;
+		pub fn cv_rapid_findCorrespondencies_const__InputArrayX_const__InputArrayX_const__OutputArrayX_const__OutputArrayX(bundle: *mut c_void, src_locations: *mut c_void, new_locations: *mut c_void, response: *mut c_void) -> Result_void;
+		pub fn cv_rapid_rapid_const__InputArrayX_int_int_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX(img: *mut c_void, num: i32, len: i32, pts3d: *mut c_void, tris: *mut c_void, k: *mut c_void, rvec: *mut c_void, tvec: *mut c_void) -> Result<f32>;
+	}
+}
+#[cfg(feature = "contrib")]
+pub use rapid_sys::*;
 
 #[cfg(feature = "contrib")]
 mod sfm_sys {
@@ -4715,7 +4760,7 @@ mod videostab_sys {
 		pub fn cv_videostab_ConsistentMosaicInpainter_inpaint_int_MatX_MatX(instance: *mut c_void, idx: i32, frame: *mut c_void, mask: *mut c_void) -> Result_void;
 		pub fn cv_videostab_DeblurerBase_setRadius_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_videostab_DeblurerBase_radius_const(instance: *mut c_void) -> Result<i32>;
-		pub fn cv_videostab_DeblurerBase_deblur_int_MatX(instance: *mut c_void, idx: i32, frame: *mut c_void) -> Result_void;
+		pub fn cv_videostab_DeblurerBase_deblur_int_MatX_const_RangeX(instance: *mut c_void, idx: i32, frame: *mut c_void, range: *mut c_void) -> Result_void;
 		pub fn cv_videostab_DeblurerBase_setFrames_const_vector_Mat_X(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_videostab_DeblurerBase_frames_const(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_videostab_DeblurerBase_setMotions_const_vector_Mat_X(instance: *mut c_void, val: *mut c_void) -> Result_void;
@@ -4730,10 +4775,12 @@ mod videostab_sys {
 		pub fn cv_videostab_GaussianMotionFilter_setParams_int_float(instance: *mut c_void, radius: i32, stdev: f32) -> Result_void;
 		pub fn cv_videostab_GaussianMotionFilter_radius_const(instance: *mut c_void) -> Result<i32>;
 		pub fn cv_videostab_GaussianMotionFilter_stdev_const(instance: *mut c_void) -> Result<f32>;
+		pub fn cv_videostab_GaussianMotionFilter_stabilize_int_const_vector_Mat_X_const_RangeX(instance: *mut c_void, idx: i32, motions: *mut c_void, range: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_videostab_IDenseOptFlowEstimator_run_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX(instance: *mut c_void, frame0: *mut c_void, frame1: *mut c_void, flow_x: *mut c_void, flow_y: *mut c_void, errors: *mut c_void) -> Result_void;
 		pub fn cv_videostab_IFrameSource_reset(instance: *mut c_void) -> Result_void;
 		pub fn cv_videostab_IFrameSource_nextFrame(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_videostab_ILog_print_const_charX(instance: *mut c_void, format: *const c_char) -> Result_void;
+		pub fn cv_videostab_IMotionStabilizer_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(instance: *mut c_void, size: i32, motions: *mut c_void, range: *mut c_void, stabilization_motions: *mut c_void) -> Result_void;
 		pub fn cv_videostab_IOutlierRejector_process_Size_const__InputArrayX_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, frame_size: *const core::Size, points0: *mut c_void, points1: *mut c_void, mask: *mut c_void) -> Result_void;
 		pub fn cv_videostab_ISparseOptFlowEstimator_run_const__InputArrayX_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__OutputArrayX_const__OutputArrayX(instance: *mut c_void, frame0: *mut c_void, frame1: *mut c_void, points0: *mut c_void, points1: *mut c_void, status: *mut c_void, errors: *mut c_void) -> Result_void;
 		pub fn cv_videostab_ImageMotionEstimatorBase_setMotionModel_MotionModel(instance: *mut c_void, val: crate::videostab::MotionModel) -> Result_void;
@@ -4790,6 +4837,7 @@ mod videostab_sys {
 		pub fn cv_videostab_LpMotionStabilizer_weight3_const(instance: *mut c_void) -> Result<f32>;
 		pub fn cv_videostab_LpMotionStabilizer_setWeight4_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_videostab_LpMotionStabilizer_weight4_const(instance: *mut c_void) -> Result<f32>;
+		pub fn cv_videostab_LpMotionStabilizer_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(instance: *mut c_void, size: i32, motions: *mut c_void, range: *mut c_void, stabilization_motions: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MoreAccurateMotionWobbleSuppressor_suppress_int_const_MatX_MatX(instance: *mut c_void, idx: i32, frame: *mut c_void, result: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MoreAccurateMotionWobbleSuppressorBase_setPeriod_int(instance: *mut c_void, val: i32) -> Result_void;
 		pub fn cv_videostab_MoreAccurateMotionWobbleSuppressorBase_period_const(instance: *mut c_void) -> Result<i32>;
@@ -4804,6 +4852,8 @@ mod videostab_sys {
 		pub fn cv_videostab_MotionEstimatorRansacL2_setMinInlierRatio_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_videostab_MotionEstimatorRansacL2_minInlierRatio_const(instance: *mut c_void) -> Result<f32>;
 		pub fn cv_videostab_MotionEstimatorRansacL2_estimate_const__InputArrayX_const__InputArrayX_boolX(instance: *mut c_void, points0: *mut c_void, points1: *mut c_void, ok: *mut bool) -> Result<*mut c_void>;
+		pub fn cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_X_const_RangeX(instance: *mut c_void, idx: i32, motions: *mut c_void, range: *mut c_void) -> Result<*mut c_void>;
+		pub fn cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(instance: *mut c_void, size: i32, motions: *mut c_void, range: *mut c_void, stabilization_motions: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MotionInpainter_MotionInpainter() -> Result<*mut c_void>;
 		pub fn cv_videostab_MotionInpainter_setOptFlowEstimator_Ptr_IDenseOptFlowEstimator_(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MotionInpainter_optFlowEstimator_const(instance: *mut c_void) -> Result<*mut c_void>;
@@ -4816,7 +4866,8 @@ mod videostab_sys {
 		pub fn cv_videostab_MotionInpainter_inpaint_int_MatX_MatX(instance: *mut c_void, idx: i32, frame: *mut c_void, mask: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MotionStabilizationPipeline_pushBack_Ptr_IMotionStabilizer_(instance: *mut c_void, stabilizer: *mut c_void) -> Result_void;
 		pub fn cv_videostab_MotionStabilizationPipeline_empty_const(instance: *mut c_void) -> Result<bool>;
-		pub fn cv_videostab_NullDeblurer_deblur_int_MatX(instance: *mut c_void, unnamed: i32, unnamed: *mut c_void) -> Result_void;
+		pub fn cv_videostab_MotionStabilizationPipeline_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(instance: *mut c_void, size: i32, motions: *mut c_void, range: *mut c_void, stabilization_motions: *mut c_void) -> Result_void;
+		pub fn cv_videostab_NullDeblurer_deblur_int_MatX_const_RangeX(instance: *mut c_void, unnamed: i32, unnamed: *mut c_void, unnamed: *mut c_void) -> Result_void;
 		pub fn cv_videostab_NullFrameSource_reset(instance: *mut c_void) -> Result_void;
 		pub fn cv_videostab_NullFrameSource_nextFrame(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_videostab_NullInpainter_inpaint_int_MatX_MatX(instance: *mut c_void, unnamed: i32, unnamed: *mut c_void, unnamed: *mut c_void) -> Result_void;
@@ -4896,7 +4947,7 @@ mod videostab_sys {
 		pub fn cv_videostab_WeightingDeblurer_WeightingDeblurer() -> Result<*mut c_void>;
 		pub fn cv_videostab_WeightingDeblurer_setSensitivity_float(instance: *mut c_void, val: f32) -> Result_void;
 		pub fn cv_videostab_WeightingDeblurer_sensitivity_const(instance: *mut c_void) -> Result<f32>;
-		pub fn cv_videostab_WeightingDeblurer_deblur_int_MatX(instance: *mut c_void, idx: i32, frame: *mut c_void) -> Result_void;
+		pub fn cv_videostab_WeightingDeblurer_deblur_int_MatX_const_RangeX(instance: *mut c_void, idx: i32, frame: *mut c_void, range: *mut c_void) -> Result_void;
 		pub fn cv_videostab_WobbleSuppressorBase_setMotionEstimator_Ptr_ImageMotionEstimatorBase_(instance: *mut c_void, val: *mut c_void) -> Result_void;
 		pub fn cv_videostab_WobbleSuppressorBase_motionEstimator_const(instance: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_videostab_WobbleSuppressorBase_suppress_int_const_MatX_MatX(instance: *mut c_void, idx: i32, frame: *mut c_void, result: *mut c_void) -> Result_void;
@@ -5275,7 +5326,7 @@ mod xphoto_sys {
 		pub fn cv_xphoto_createGrayworldWB() -> Result<*mut c_void>;
 		pub fn cv_xphoto_createLearningBasedWB_const_StringX(path_to_model: *const c_char) -> Result<*mut c_void>;
 		pub fn cv_xphoto_createSimpleWB() -> Result<*mut c_void>;
-		pub fn cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma: f32, contrast: f32, saturation: f32, sigma_space: f32, sigma_color: f32) -> Result<*mut c_void>;
+		pub fn cv_xphoto_createTonemapDurand_float_float_float_float_float(gamma: f32, contrast: f32, saturation: f32, sigma_color: f32, sigma_space: f32) -> Result<*mut c_void>;
 		pub fn cv_xphoto_dctDenoising_const_MatX_MatX_double_int(src: *mut c_void, dst: *mut c_void, sigma: f64, psize: i32) -> Result_void;
 		pub fn cv_xphoto_inpaint_const_MatX_const_MatX_MatX_int(src: *mut c_void, mask: *mut c_void, dst: *mut c_void, algorithm_type: i32) -> Result_void;
 		pub fn cv_xphoto_oilPainting_const__InputArrayX_const__OutputArrayX_int_int(src: *mut c_void, dst: *mut c_void, size: i32, dyn_ratio: i32) -> Result_void;

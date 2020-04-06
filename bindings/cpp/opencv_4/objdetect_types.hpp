@@ -26,6 +26,7 @@ template struct Result<std::vector<cv::Rect_<int>>*>;
 template struct Result<std::vector<double>*>;
 template struct Result<std::vector<float>*>;
 template struct Result<std::vector<int>*>;
+template struct Result<std::vector<std::string>*>;
 template struct Result<unsigned long>;
 template struct Result<void*>;
 extern "C" void cv_PtrOfBaseCascadeClassifier_delete(cv::Ptr<cv::BaseCascadeClassifier>* instance) {

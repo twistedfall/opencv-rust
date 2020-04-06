@@ -131,9 +131,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<int>)
 	}
 	
-	Result_void cv_videostab_DeblurerBase_deblur_int_MatX(cv::videostab::DeblurerBase* instance, int idx, cv::Mat* frame) {
+	Result_void cv_videostab_DeblurerBase_deblur_int_MatX_const_RangeX(cv::videostab::DeblurerBase* instance, int idx, cv::Mat* frame, const cv::Range* range) {
 		try {
-			instance->deblur(idx, *frame);
+			instance->deblur(idx, *frame, *range);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -245,6 +245,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<float>)
 	}
 	
+	Result<cv::Mat*> cv_videostab_GaussianMotionFilter_stabilize_int_const_vector_Mat_X_const_RangeX(cv::videostab::GaussianMotionFilter* instance, int idx, const std::vector<cv::Mat>* motions, const cv::Range* range) {
+		try {
+			cv::Mat ret = instance->stabilize(idx, *motions, *range);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
+	}
+	
 	Result_void cv_videostab_IDenseOptFlowEstimator_run_const__InputArrayX_const__InputArrayX_const__InputOutputArrayX_const__InputOutputArrayX_const__OutputArrayX(cv::videostab::IDenseOptFlowEstimator* instance, const cv::_InputArray* frame0, const cv::_InputArray* frame1, const cv::_InputOutputArray* flowX, const cv::_InputOutputArray* flowY, const cv::_OutputArray* errors) {
 		try {
 			instance->run(*frame0, *frame1, *flowX, *flowY, *errors);
@@ -269,6 +276,13 @@ extern "C" {
 	Result_void cv_videostab_ILog_print_const_charX(cv::videostab::ILog* instance, const char* format) {
 		try {
 			instance->print(format);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
+	Result_void cv_videostab_IMotionStabilizer_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(cv::videostab::IMotionStabilizer* instance, int size, const std::vector<cv::Mat>* motions, const cv::Range* range, cv::Mat* stabilizationMotions) {
+		try {
+			instance->stabilize(size, *motions, *range, stabilizationMotions);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -677,6 +691,13 @@ extern "C" {
 		} OCVRS_CATCH(Result<float>)
 	}
 	
+	Result_void cv_videostab_LpMotionStabilizer_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(cv::videostab::LpMotionStabilizer* instance, int size, const std::vector<cv::Mat>* motions, const cv::Range* range, cv::Mat* stabilizationMotions) {
+		try {
+			instance->stabilize(size, *motions, *range, stabilizationMotions);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	void cv_MoreAccurateMotionWobbleSuppressor_delete(cv::videostab::MoreAccurateMotionWobbleSuppressor* instance) {
 		delete instance;
 	}
@@ -784,6 +805,20 @@ extern "C" {
 		} OCVRS_CATCH(Result<cv::Mat*>)
 	}
 	
+	Result<cv::Mat*> cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_X_const_RangeX(cv::videostab::MotionFilterBase* instance, int idx, const std::vector<cv::Mat>* motions, const cv::Range* range) {
+		try {
+			cv::Mat ret = instance->stabilize(idx, *motions, *range);
+			return Ok(new cv::Mat(ret));
+		} OCVRS_CATCH(Result<cv::Mat*>)
+	}
+	
+	Result_void cv_videostab_MotionFilterBase_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(cv::videostab::MotionFilterBase* instance, int size, const std::vector<cv::Mat>* motions, const cv::Range* range, cv::Mat* stabilizationMotions) {
+		try {
+			instance->stabilize(size, *motions, *range, stabilizationMotions);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	void cv_MotionInpainter_delete(cv::videostab::MotionInpainter* instance) {
 		delete instance;
 	}
@@ -874,12 +909,19 @@ extern "C" {
 		} OCVRS_CATCH(Result<bool>)
 	}
 	
+	Result_void cv_videostab_MotionStabilizationPipeline_stabilize_int_const_vector_Mat_X_const_RangeX_MatX(cv::videostab::MotionStabilizationPipeline* instance, int size, const std::vector<cv::Mat>* motions, const cv::Range* range, cv::Mat* stabilizationMotions) {
+		try {
+			instance->stabilize(size, *motions, *range, stabilizationMotions);
+			return Ok();
+		} OCVRS_CATCH(Result_void)
+	}
+	
 	void cv_NullDeblurer_delete(cv::videostab::NullDeblurer* instance) {
 		delete instance;
 	}
-	Result_void cv_videostab_NullDeblurer_deblur_int_MatX(cv::videostab::NullDeblurer* instance, int unnamed, cv::Mat* unnamed_1) {
+	Result_void cv_videostab_NullDeblurer_deblur_int_MatX_const_RangeX(cv::videostab::NullDeblurer* instance, int unnamed, cv::Mat* unnamed_1, const cv::Range* unnamed_2) {
 		try {
-			instance->deblur(unnamed, *unnamed_1);
+			instance->deblur(unnamed, *unnamed_1, *unnamed_2);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}
@@ -1479,9 +1521,9 @@ extern "C" {
 		} OCVRS_CATCH(Result<float>)
 	}
 	
-	Result_void cv_videostab_WeightingDeblurer_deblur_int_MatX(cv::videostab::WeightingDeblurer* instance, int idx, cv::Mat* frame) {
+	Result_void cv_videostab_WeightingDeblurer_deblur_int_MatX_const_RangeX(cv::videostab::WeightingDeblurer* instance, int idx, cv::Mat* frame, const cv::Range* range) {
 		try {
-			instance->deblur(idx, *frame);
+			instance->deblur(idx, *frame, *range);
 			return Ok();
 		} OCVRS_CATCH(Result_void)
 	}

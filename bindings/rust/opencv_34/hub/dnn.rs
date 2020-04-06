@@ -1995,7 +1995,7 @@ pub trait LSTMLayer: crate::dnn::LayerTrait {
 	
 	/// 
 	/// **Deprecated**: Use flag `produce_cell_output` in LayerParams.
-	/// Specifies either interpret first dimension of input blob as timestamp dimenion either as sample.
+	/// Specifies either interpret first dimension of input blob as timestamp dimension either as sample.
 	/// 
 	/// If flag is set to true then shape of input blob will be interpreted as [`T`, `N`, `[data dims]`] where `T` specifies number of timestamps, `N` is number of independent streams.
 	/// In this case each forward() call will iterate through `T` timestamps and update layer's state `T` times.
@@ -2751,6 +2751,12 @@ pub trait NetTrait {
 	/// As any other layer, this layer can label its outputs and this function provides an easy way to do this.
 	fn set_inputs_names(&mut self, input_blob_names: &types::VectorOfString) -> Result<()> {
 		unsafe { sys::cv_dnn_Net_setInputsNames_const_vector_String_X(self.as_raw_Net(), input_blob_names.as_raw_VectorOfString()) }.into_result()
+	}
+	
+	/// Specify shape of network input.
+	fn set_input_shape(&mut self, input_name: &str, shape: &crate::dnn::MatShape) -> Result<()> {
+		string_arg!(input_name);
+		unsafe { sys::cv_dnn_Net_setInputShape_const_StringX_const_MatShapeX(self.as_raw_Net(), input_name.as_ptr(), shape.as_raw_VectorOfi32()) }.into_result()
 	}
 	
 	/// Runs forward pass to compute output of layer with name @p outputName.
@@ -3542,12 +3548,22 @@ pub trait PoolingLayerTrait: crate::dnn::LayerTrait {
 		unsafe { sys::cv_dnn_PoolingLayer_setPad_b_int(self.as_raw_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_pad_b")
 	}
 	
+	/// Flag is true if at least one of the axes is global pooled.
 	fn global_pooling(&self) -> bool {
 		unsafe { sys::cv_dnn_PoolingLayer_globalPooling_const(self.as_raw_PoolingLayer()) }.into_result().expect("Infallible function failed: global_pooling")
 	}
 	
+	/// Flag is true if at least one of the axes is global pooled.
 	fn set_global_pooling(&mut self, val: bool) -> () {
 		unsafe { sys::cv_dnn_PoolingLayer_setGlobalPooling_bool(self.as_raw_PoolingLayer(), val) }.into_result().expect("Infallible function failed: set_global_pooling")
+	}
+	
+	fn is_global_pooling(&mut self) -> types::VectorOfbool {
+		unsafe { sys::cv_dnn_PoolingLayer_isGlobalPooling(self.as_raw_PoolingLayer()) }.into_result().map(|ptr| types::VectorOfbool { ptr }).expect("Infallible function failed: is_global_pooling")
+	}
+	
+	fn set_is_global_pooling(&mut self, val: types::VectorOfbool) -> () {
+		unsafe { sys::cv_dnn_PoolingLayer_setIsGlobalPooling_vector_bool_(self.as_raw_PoolingLayer(), val.as_raw_VectorOfbool()) }.into_result().expect("Infallible function failed: set_is_global_pooling")
 	}
 	
 	fn compute_max_idx(&self) -> bool {
