@@ -1298,7 +1298,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 					if !self.is_generic() && !self.is_void() {
 						out.push(Box::new(if self.is_string() {
 							let type_ref = TypeRef::new(
-								self.gen_env.resolve_type("const char*").expect("Can't resolve const char*"),
+								self.gen_env.resolve_type(&self.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"),
 								self.gen_env,
 							);
 							let def_location = match def_location {

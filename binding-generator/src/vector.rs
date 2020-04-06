@@ -55,13 +55,38 @@ impl<'tu, 'g> Vector<'tu, 'g> {
 
 	pub fn dependent_types(&self) -> Vec<Box<dyn GeneratedElement + 'g>> {
 		let element_type = self.element_type();
-		let needs_ioa = self.is_data_type(&element_type);
-		let needs_char_ptr = element_type.is_string();
+		let is_data_type = self.is_data_type(&element_type);
 		let mut out = element_type.dependent_types_with_mode(DependentTypeMode::ForReturn(DefinitionLocation::Type));
-		out.reserve(2 + if needs_ioa { 3 } else { 0 } + if needs_char_ptr { 1 } else { 0 });
-		out.push(Box::new(ReturnTypeWrapper::new(element_type.canonical_clang(), self.gen_env, DefinitionLocation::Type)));
-		out.push(Box::new(ReturnTypeWrapper::new(self.type_ref().canonical_clang(), self.gen_env, DefinitionLocation::Module)));
-		if needs_ioa {
+		out.reserve(2 + if is_data_type { 3 } else { 0 });
+		if element_type.is_string() {
+			out.push(Box::new(ReturnTypeWrapper::new(
+				TypeRef::new(self.gen_env.resolve_type(&element_type.cpp_extern_return()).expect("Can't resolve string cpp_extern_return()"), self.gen_env),
+				self.gen_env,
+				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
+			)));
+			// We need to generate return wrappers for std::vector<cv::String>, but it has several issues:
+			// * we can't use get_canonical_type() because it resolves into compiler dependent inner type like
+			//   std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char>>
+			// * we can't generate both vector<cv::String> and vector<std::string> because for OpenCV 4
+			//   cv::String is an typedef to std::string and it would lead to duplicate definition error
+			// That's why we try to resolve both types and check if they are the same, if they are we only generate
+			// vector<std::string> if not - both.
+			let vec_cv_string = self.gen_env.resolve_type("std::vector<cv::String>").expect("Can't resolve std::vector<cv::String>");
+			let vec_std_string = self.gen_env.resolve_type("std::vector<std::string>").expect("Can't resolve std::vector<std::string>");
+			if vec_cv_string.get_canonical_type() == vec_std_string.get_canonical_type() {
+				out.push(Box::new(ReturnTypeWrapper::new(
+					TypeRef::new(vec_std_string, self.gen_env),
+					self.gen_env,
+					DefinitionLocation::Module,
+				)));
+			} else {
+				out.push(Box::new(ReturnTypeWrapper::new(self.type_ref(), self.gen_env, DefinitionLocation::Module)));
+			}
+		} else {
+			out.push(Box::new(ReturnTypeWrapper::new(element_type.canonical_clang(), self.gen_env, DefinitionLocation::Type)));
+			out.push(Box::new(ReturnTypeWrapper::new(self.type_ref().canonical_clang(), self.gen_env, DefinitionLocation::Module)));
+		}
+		if is_data_type {
 			out.push(Box::new(ReturnTypeWrapper::new(
 				TypeRef::new(self.gen_env.resolve_type("cv::_InputArray").expect("Can't resolve _InputArray"), self.gen_env),
 				self.gen_env,
@@ -74,13 +99,6 @@ impl<'tu, 'g> Vector<'tu, 'g> {
 			)));
 			out.push(Box::new(ReturnTypeWrapper::new(
 				TypeRef::new(self.gen_env.resolve_type("cv::_InputOutputArray").expect("Can't resolve _InputOutputArray"), self.gen_env),
-				self.gen_env,
-				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
-			)));
-		}
-		if needs_char_ptr {
-			out.push(Box::new(ReturnTypeWrapper::new(
-				TypeRef::new(self.gen_env.resolve_type("const char*").expect("Can't resolve _InputOutputArray"), self.gen_env),
 				self.gen_env,
 				DefinitionLocation::Custom(element_type.rust_module().into_owned()),
 			)));

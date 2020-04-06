@@ -1,4 +1,5 @@
 #include "common.hpp"
+#include <vector>
 
 /* Dummy namespace that contains types that will be used in the bindings generator to resolve clang::Type from
    string. Due to limitations of libclang it's not possible to resolve arbitrary strings. That's why we pre-add
@@ -17,6 +18,12 @@ namespace ocvrs_resolve_types {
 	typedef unsigned int core4;
 	typedef double core5;
 	typedef const char* core6;
+	// return of String
+	typedef void* core7;
+
+	// handling vector of strings
+	typedef std::vector<cv::String> core8;
+	typedef std::vector<std::string> core9;
 
 	// for return of vector<DataType> types
 	typedef cv::_InputArray ioa1;
