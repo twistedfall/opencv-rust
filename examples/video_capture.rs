@@ -24,7 +24,8 @@ fn run() -> opencv::Result<()> {
         if frame.size()?.width > 0 {
             highgui::imshow(window, &mut frame)?;
         }
-        if highgui::wait_key(10)? > 0 {
+        let key = highgui::wait_key(10)?;
+        if key > 0 && key != 255 {
             break;
         }
     }
