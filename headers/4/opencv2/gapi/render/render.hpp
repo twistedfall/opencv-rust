@@ -17,7 +17,6 @@
 #include <opencv2/gapi/opencv_includes.hpp>
 #include <opencv2/gapi/util/variant.hpp>
 #include <opencv2/gapi/own/exports.hpp>
-#include <opencv2/gapi/own/scalar.hpp>
 
 
 /** \defgroup gapi_draw G-API Drawing and composition functionality
@@ -286,7 +285,7 @@ struct Mosaic
      * @brief Mosaic constructor
      *
      * @param mos_    Coordinates of the mosaic
-     * @param cellSz_ Cell size (same for X, Y). Note: mos size must be multiple of cell size
+     * @param cellSz_ Cell size (same for X, Y)
      * @param decim_  Decimation (0 stands for no decimation)
     */
     Mosaic(const cv::Rect& mos_,
@@ -298,7 +297,7 @@ struct Mosaic
 
     /*@{*/
     cv::Rect   mos;    //!< Coordinates of the mosaic
-    int        cellSz; //!< Cell size (same for X, Y). Note: mosaic size must be a multiple of cell size
+    int        cellSz; //!< Cell size (same for X, Y)
     int        decim;  //!< Decimation (0 stands for no decimation)
     /*@{*/
 };

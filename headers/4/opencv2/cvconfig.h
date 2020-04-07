@@ -81,6 +81,7 @@
 #define HAVE_IPP_IW_LL
 
 /* JPEG-2000 codec */
+#define HAVE_OPENJPEG
 /* #undef HAVE_JASPER */
 
 /* IJG JPEG codec */

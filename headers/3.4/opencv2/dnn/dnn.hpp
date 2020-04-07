@@ -47,9 +47,9 @@
 #include "opencv2/core/async.hpp"
 
 #if !defined CV_DOXYGEN && !defined CV_STATIC_ANALYSIS && !defined CV_DNN_DONT_ADD_EXPERIMENTAL_NS
-#define CV__DNN_EXPERIMENTAL_NS_BEGIN namespace experimental_dnn_34_v15 {
+#define CV__DNN_EXPERIMENTAL_NS_BEGIN namespace experimental_dnn_34_v17 {
 #define CV__DNN_EXPERIMENTAL_NS_END }
-namespace cv { namespace dnn { namespace experimental_dnn_34_v15 { } using namespace experimental_dnn_34_v15; }}
+namespace cv { namespace dnn { namespace experimental_dnn_34_v17 { } using namespace experimental_dnn_34_v17; }}
 #else
 #define CV__DNN_EXPERIMENTAL_NS_BEGIN
 #define CV__DNN_EXPERIMENTAL_NS_END
@@ -94,7 +94,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
      */
     enum Target
     {
-        DNN_TARGET_CPU,
+        DNN_TARGET_CPU = 0,
         DNN_TARGET_OPENCL,
         DNN_TARGET_OPENCL_FP16,
         DNN_TARGET_MYRIAD,
@@ -102,7 +102,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
     };
 
     CV_EXPORTS std::vector< std::pair<Backend, Target> > getAvailableBackends();
-    CV_EXPORTS std::vector<Target> getAvailableTargets(Backend be);
+    CV_EXPORTS_W std::vector<Target> getAvailableTargets(dnn::Backend be);
 
     /** @brief This class provides all data needed to initialize layer.
      *
@@ -483,6 +483,10 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
          * As any other layer, this layer can label its outputs and this function provides an easy way to do this.
          */
         CV_WRAP void setInputsNames(const std::vector<String> &inputBlobNames);
+
+        /** @brief Specify shape of network input.
+         */
+        CV_WRAP void setInputShape(const String &inputName, const MatShape& shape);
 
         /** @brief Runs forward pass to compute output of layer with name @p outputName.
          *  @param outputName name for layer which output is needed to get
@@ -1034,7 +1038,7 @@ CV__DNN_EXPERIMENTAL_NS_BEGIN
      * @param eta a coefficient in adaptive threshold formula: \f$nms\_threshold_{i+1}=eta\cdot nms\_threshold_i\f$.
      * @param top_k if `>0`, keep at most @p top_k picked indices.
      */
-    CV_EXPORTS_W void NMSBoxes(const std::vector<Rect>& bboxes, const std::vector<float>& scores,
+    CV_EXPORTS void NMSBoxes(const std::vector<Rect>& bboxes, const std::vector<float>& scores,
                                const float score_threshold, const float nms_threshold,
                                CV_OUT std::vector<int>& indices,
                                const float eta = 1.f, const int top_k = 0);

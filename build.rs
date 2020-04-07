@@ -90,9 +90,9 @@ mod generator {
 		let version = if cfg!(feature = "opencv-32") {
 			"3.2.0"
 		} else if cfg!(feature = "opencv-34") {
-			"3.4.9"
+			"3.4.10"
 		} else if cfg!(feature = "opencv-4") {
-			"4.2.0"
+			"4.3.0"
 		} else {
 			unreachable!();
 		};
