@@ -285,6 +285,17 @@ static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CAR
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 
+static ENV_VARS: [&str; 8] = [
+	"OPENCV_HEADER_DIR",
+	"OPENCV_PACKAGE_NAME",
+	"OPENCV_PKGCONFIG_NAME",
+	"OPENCV_LINK_LIBS",
+	"OPENCV_LINK_PATHS",
+	"OPENCV_INCLUDE_PATHS",
+	"PKG_CONFIG_PATH",
+	"VCPKG_ROOT",
+];
+
 #[derive(Debug)]
 struct Library {
 	pub pkg_name: String,
@@ -615,12 +626,9 @@ fn build_compiler(opencv_header_dir: &Path) -> cc::Build {
 }
 
 fn build_wrapper(opencv_header_dir: &Path) -> Result<()> {
-	println!("cargo:rerun-if-env-changed=OPENCV_HEADER_DIR");
-	println!("cargo:rerun-if-env-changed=OPENCV_PACKAGE_NAME");
-	println!("cargo:rerun-if-env-changed=OPENCV_PKGCONFIG_NAME");
-	println!("cargo:rerun-if-env-changed=OPENCV_LINK_LIBS");
-	println!("cargo:rerun-if-env-changed=OPENCV_LINK_PATHS");
-	println!("cargo:rerun-if-env-changed=OPENCV_INCLUDE_PATHS");
+	for &v in ENV_VARS.iter() {
+		println!("cargo:rerun-if-env-changed={}", v);
+	}
 
 	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
 	for entry in SRC_CPP_DIR.read_dir()?.map(|e| e.unwrap()) {
@@ -689,6 +697,10 @@ fn main() -> Result<()> {
 	let features = [cfg!(feature = "opencv-32"), cfg!(feature = "opencv-34"), cfg!(feature = "opencv-4")].iter().map(|&x| i32::from(x)).sum::<i32>();
 	if features != 1 {
 		panic!("Please select exactly one of the features: opencv-32, opencv-34, opencv-4");
+	}
+	eprintln!("=== Environment configuration:");
+	for &v in ENV_VARS.iter() {
+		eprintln!("===   {} = {:?}", v, env::var_os(v));
 	}
 	let opencv = if cfg!(feature = "docs-only") {
 		Library::probe_from_paths("opencv", "", "", "")?
