@@ -44,7 +44,7 @@ opencv = {version = "0.34", features = ["buildtime-bindgen"]}
 You have several options of getting the OpenCV library:
 
 * install it from the repository, make sure to install `-dev` packages because they contain headers necessary
-  for the crate build (also check that your package contains `pkg_config` files).
+  for the crate build (also check that your package contains `pkg_config` or `cmake` files).
 
 * build OpenCV manually and set up the following environment variables prior to building the project with
   `opencv` crate:
@@ -139,8 +139,8 @@ When reporting an issue please state:
 
 ## Environment variables
 
-The following variables must be set when building without `pkg_config` or `vcpkg`. You can also set them on
-other platforms, then `pkg_config` or `vcpkg` usage will be disabled and the set values will be used.
+The following variables must be set when building without `pkg_config`, `cmake` or `vcpkg`. You can set them
+on any platform, the specified values will override those automatically discovered.
 
 * `OPENCV_LINK_LIBS`
   Comma separated list of library names to link to. `.lib`, `.so` or `.dylib` extension is optional. If you
@@ -156,7 +156,7 @@ other platforms, then `pkg_config` or `vcpkg` usage will be disabled and the set
   "C:\tools\opencv\build\include". One of the directories specified therein must contain
   "opencv2/core/version.hpp" or "core/version.hpp" file, it's used to detect the version of the headers.
 
-The following variables are optional, but you might need to set them under some circumstances:
+The following variables are rarely used, but you might need them under some circumstances:
 
 * `OPENCV_HEADER_DIR`
   During crate build it uses OpenCV headers bundled with the crate. If you want to use your own (system)
@@ -165,10 +165,25 @@ The following variables are optional, but you might need to set them under some 
   OpenCV-3.4.x or `/usr/include/opencv4` for OpenCV-4.x.
 
 * `OPENCV_PACKAGE_NAME`
-  In some cases you might want to override the pkg-config or vcpkg package name, you can use this environment
-  variable for that. If you set it pkg-config will expect to find the file with that name and `.pc` extension
-  in the package directory. And vcpkg will use that name to try to find package in `packages` directory under
-  `VCPKG_ROOT`. For legacy reasons `OPENCV_PKGCONFIG_NAME` is also supported as this variable name.
+  In some cases you might want to override the pkg-config, cmake or vcpkg package name, you can use this
+  environment variable for that. If you set it pkg-config will expect to find the file with that name and `.pc`
+  extension in the package directory. Cmake will look for that file with `.cmake` extension. And vcpkg will use
+  that name to try to find package in `packages` directory under `VCPKG_ROOT`. You can also use separate
+  environment variables to set different package names for different package systems:
+    * `OPENCV_PKGCONFIG_NAME`
+    * `OPENCV_CMAKE_NAME`
+    * `OPENCV_VCPKG_NAME`
+
+* `OPENCV_CMAKE_BIN`
+  Path to cmake binary (used in OpenCV discovery process using cmake). If not set then just "cmake" will be
+  used. For example, you can set something like "/usr/local/bin/cmake" here.
+
+* `OPENCV_DISABLE_PROBES`
+  Comma separated list of OpenCV package auto-discovery systems to exclude from running. Might be useful if
+  one of the higher priority systems is producing incorrect results. Can contain the following values:
+    * pkg_config
+    * cmake
+    * vcpkg
 
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
@@ -179,6 +194,10 @@ The following variables affect the building the of the `opencv` crate, but belon
 * `VCPKG_ROOT` and `VCPKGRS_DYNAMIC`
   The root of `vcpkg` installation and flag allowing use of `*.dll` libraries, see the
   [documentation for `vcpkg` crate](https://docs.rs/vcpkg)
+
+* `OpenCV_DIR`
+  The directory that contains OpenCV package cmake files. Usually there are `OpenCVConfig.cmake`,
+  `OpenCVConfig-version.cmake` and `OpenCVModules.cmake` in it.
 
 * `LD_LIBRARY_PATH`
   On Linux it sets the list of directories to look for the installed `*.so` files during runtime.

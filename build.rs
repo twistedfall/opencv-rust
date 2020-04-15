@@ -1,5 +1,3 @@
-// todo add support for cmake: cmake --find-package -DNAME=OpenCV -DCOMPILER_ID=GNU -DLANGUAGE=CXX -DMODE=COMPILE/LINK
-
 use std::{
 	borrow::Cow,
 	collections::HashSet,
@@ -9,11 +7,13 @@ use std::{
 	io::{BufRead, BufReader},
 	iter::{self, FromIterator},
 	path::{Path, PathBuf},
+	process::Command,
 };
 
 use glob_crate::glob;
 use once_cell::sync::{Lazy, OnceCell};
 use semver::{Version, VersionReq};
+use shlex::Shlex;
 
 #[cfg(feature = "buildtime-bindgen")]
 mod generator {
@@ -285,20 +285,83 @@ static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CAR
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 
-static ENV_VARS: [&str; 8] = [
+static ENV_VARS: [&str; 14] = [
 	"OPENCV_HEADER_DIR",
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
+	"OPENCV_CMAKE_NAME",
+	"OPENCV_CMAKE_BIN",
+	"OPENCV_VCPKG_NAME",
 	"OPENCV_LINK_LIBS",
 	"OPENCV_LINK_PATHS",
 	"OPENCV_INCLUDE_PATHS",
+	"OPENCV_DISABLE_PROBES",
+	"CMAKE_PREFIX_PATH",
+	"OpenCV_DIR",
 	"PKG_CONFIG_PATH",
 	"VCPKG_ROOT",
 ];
 
+struct PackageName {}
+
+impl PackageName {
+	pub fn env() -> Option<Cow<'static, str>> {
+		env::var("OPENCV_PACKAGE_NAME")
+			.ok()
+			.map(|x| x.into())
+	}
+
+	pub fn env_pkg_config() -> Option<Cow<'static, str>> {
+		env::var("OPENCV_PKGCONFIG_NAME")
+			.ok()
+			.map(|x| x.into())
+	}
+
+	pub fn env_cmake() -> Option<Cow<'static, str>> {
+		env::var("OPENCV_CMAKE_NAME")
+			.ok()
+			.map(|x| x.into())
+	}
+
+	pub fn env_vcpkg() -> Option<Cow<'static, str>> {
+		env::var("OPENCV_VCPKG_NAME")
+			.ok()
+			.map(|x| x.into())
+	}
+
+	pub fn pkg_config() -> Cow<'static, str> {
+		Self::env()
+			.or_else(Self::env_pkg_config)
+			.unwrap_or_else(|| if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
+				"opencv".into()
+			} else if cfg!(feature = "opencv-4") {
+				"opencv4".into()
+			} else {
+				unreachable!("Feature flags should have been checked in main()");
+			})
+	}
+
+	pub fn cmake() -> Cow<'static, str> {
+		Self::env()
+			.or_else(Self::env_cmake)
+			.unwrap_or_else(|| "OpenCV".into())
+	}
+
+	pub fn vcpkg() -> Cow<'static, str> {
+		Self::env()
+			.or_else(Self::env_vcpkg)
+			.unwrap_or_else(|| if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
+				"opencv3".into()
+			} else if cfg!(feature = "opencv-4") {
+				"opencv4".into()
+			} else {
+				unreachable!("Feature flags should have been checked in main()");
+			})
+	}
+}
+
 #[derive(Debug)]
 struct Library {
-	pub pkg_name: String,
 	pub include_paths: Vec<PathBuf>,
 	pub version: String,
 	pub cargo_metadata: Vec<String>,
@@ -332,10 +395,18 @@ impl Library {
 			.filter(|&x| !x.is_empty())
 	}
 
+	fn version_from_include_paths(include_paths: impl Iterator<Item=impl AsRef<Path>>) -> Option<String> {
+		include_paths
+			.filter_map(|x| get_version_from_headers(x.as_ref()))
+			.next()
+	}
+
+	#[inline]
 	fn emit_link_search(path: &str, typ: Option<&str>) -> String {
 		format!("cargo:rustc-link-search={}{}", typ.map_or("".to_string(), |t| format!("{}=", t)), path)
 	}
 
+	#[inline]
 	fn emit_link_lib(path: &str, typ: Option<&str>) -> String {
 		format!("cargo:rustc-link-lib={}{}", typ.map_or("".to_string(), |t| format!("{}=", t)), path)
 	}
@@ -365,38 +436,33 @@ impl Library {
 		);
 	}
 
-	pub fn probe_from_paths(pkg_name: &str, link_libs: &str, link_paths: &str, include_paths: &str) -> Result<Self> {
-		eprintln!("=== Setting up OpenCV library from environment:");
-		eprintln!("===   pkg_name: {}", pkg_name);
-		eprintln!("===   link_libs: {}", link_libs);
-		eprintln!("===   link_paths: {}", link_paths);
+	pub fn probe_from_paths(include_paths: &str, link_paths: &str, link_libs: &str) -> Result<Self> {
+		eprintln!("=== Configuring OpenCV library from the environment:");
 		eprintln!("===   include_paths: {}", include_paths);
+		eprintln!("===   link_paths: {}", link_paths);
+		eprintln!("===   link_libs: {}", link_libs);
 		let mut cargo_metadata = Vec::with_capacity(64);
-		Self::process_manual_link_search(&mut cargo_metadata, link_paths);
-		Self::process_manual_link_libs(&mut cargo_metadata, link_libs);
-
 		let include_paths: Vec<_> = Self::list(&include_paths)
 			.map(PathBuf::from)
 			.collect();
 
-		let version = include_paths.iter()
-			.filter_map(get_version_from_headers)
-			.next();
+		let version = Self::version_from_include_paths(include_paths.iter());
+
+		Self::process_manual_link_search(&mut cargo_metadata, link_paths);
+		Self::process_manual_link_libs(&mut cargo_metadata, link_libs);
 
 		Ok(Self {
-			pkg_name: pkg_name.to_owned(),
 			include_paths,
 			version: version.unwrap_or_else(|| "0.0.0".to_owned()),
 			cargo_metadata,
 		})
 	}
 
-	#[cfg(not(target_env = "msvc"))]
-	pub fn probe_system(pkg_name: &str, link_libs: Option<&str>, link_paths: Option<&str>, include_paths: Option<&str>) -> Result<Self> {
-		eprintln!("=== Setting up OpenCV library from pkg_config");
+	pub fn probe_pkg_config(include_paths: Option<&str>, link_paths: Option<&str>, link_libs: Option<&str>) -> Result<Self> {
+		eprintln!("=== Probing OpenCV library using pkg_config");
 		let mut config = pkg_config::Config::new();
 		config.cargo_metadata(false);
-		let opencv = config.probe(pkg_name)?;
+		let opencv = config.probe(&PackageName::pkg_config())?;
 		let mut cargo_metadata = Vec::with_capacity(64);
 		if let Some(link_paths) = link_paths {
 			Self::process_manual_link_search(&mut cargo_metadata, link_paths);
@@ -423,7 +489,7 @@ impl Library {
 			);
 			cargo_metadata.extend(
 				opencv.frameworks.into_iter()
-					.map(|fw| format!("rustc-link-lib=framework={}", fw))
+					.map(|fw| Self::emit_link_lib(&fw, Some("framework")))
 			);
 		}
 		let include_paths = include_paths.map_or(opencv.include_paths, |include_paths| {
@@ -432,60 +498,224 @@ impl Library {
 				.collect()
 		});
 		Ok(Self {
-			pkg_name: pkg_name.to_owned(),
 			include_paths,
 			version: opencv.version,
 			cargo_metadata,
 		})
 	}
 
-	#[cfg(target_env = "msvc")]
-	pub fn probe_system(pkg_name: &str, _link_libs: Option<&str>, _link_paths: Option<&str>, _include_paths: Option<&str>) -> Result<Self> {
-		eprintln!("=== Setting up OpenCV library from vcpkg");
+	pub fn probe_cmake(include_paths: Option<&str>, link_paths: Option<&str>, link_libs: Option<&str>) -> Result<Self> {
+		eprintln!("=== Probing OpenCV library using cmake");
+		let cmake_pkg = PackageName::cmake();
+		let cmake_bin = env::var_os("OPENCV_CMAKE_BIN").unwrap_or_else(|| "cmake".into());
+
+		let include_paths = include_paths
+			.map(|paths| Self::list(paths)
+				.map(PathBuf::from)
+				.collect::<Vec<_>>()
+			)
+			.ok_or_else(|| "Nobody is going to see that")
+			.or_else(|_| Command::new(&cmake_bin)
+				.current_dir(&*OUT_DIR)
+				.args(&[
+					"--find-package",
+					"-DCOMPILER_ID=GNU",
+					"-DLANGUAGE=CXX",
+					"-DMODE=COMPILE",
+				])
+				.arg(format!("-DNAME={}", cmake_pkg))
+				.output()
+				.map_err(Box::<dyn std::error::Error>::from)
+				.and_then(|output| {
+					if output.status.success() {
+						let mut include_paths = Vec::with_capacity(4);
+						for mut arg in Shlex::new(&String::from_utf8(output.stdout)?) {
+							const INCLUDE_PREFIX: &str = "-I";
+							if arg.starts_with(INCLUDE_PREFIX) {
+								arg.drain(..INCLUDE_PREFIX.len());
+								// todo possibly handle leading whitespace
+								include_paths.push(PathBuf::from(arg));
+							} else {
+								eprintln!("=== Unexpected cmake compile argument found: {}", arg);
+							}
+						}
+						Ok(include_paths)
+					} else {
+						Err(format!(
+							"cmake returned an error\n    stdout: {:?}\n    stderr: {:?}",
+							String::from_utf8_lossy(&output.stdout),
+							String::from_utf8_lossy(&output.stderr)
+						).into())
+					}
+				})
+			)?;
+
+		if let Some(version) = Self::version_from_include_paths(include_paths.iter()) {
+			let mut cargo_metadata = Vec::with_capacity(64);
+			link_paths.map(|link_paths| Self::process_manual_link_search(&mut cargo_metadata, link_paths));
+			link_libs.map(|link_libs| Self::process_manual_link_libs(&mut cargo_metadata, link_libs));
+			if link_paths.is_none() || link_libs.is_none() {
+				Command::new(&cmake_bin)
+					.current_dir(&*OUT_DIR)
+					.args(&[
+						"--find-package",
+						"-DCOMPILER_ID=GNU",
+						"-DLANGUAGE=CXX",
+						"-DMODE=LINK",
+					])
+					.arg(format!("-DNAME={}", cmake_pkg))
+					.output()
+					.map_err(Box::<dyn std::error::Error>::from)
+					.and_then(|output| if output.status.success() {
+						let mut cmake_link_paths = if link_paths.is_some() { HashSet::new() } else { HashSet::with_capacity(4) };
+						for mut arg in Shlex::new(&String::from_utf8(output.stdout)?) {
+							const RPATH_PREFIX: &str = "-Wl,-rpath,";
+							if arg.starts_with(RPATH_PREFIX) {
+								arg.drain(..RPATH_PREFIX.len());
+								cmake_link_paths.insert(PathBuf::from(arg));
+							} else if arg.starts_with("-") {
+								eprintln!("=== Unexpected cmake link argument found: {}", arg);
+							} else {
+								let path = PathBuf::from(arg);
+								if link_paths.is_none() {
+									if let Some(parent) = path.parent() {
+										cmake_link_paths.insert(parent.to_owned());
+									}
+								}
+								if link_libs.is_none() {
+									if let Some(mut file) = path.file_name().and_then(OsStr::to_str) {
+										const LIB_PREFIX: &str = "lib";
+										if file.starts_with(LIB_PREFIX) {
+											file = &file[LIB_PREFIX.len()..];
+										}
+										if let Some(idx) = file.find(".so") {
+											file = &file[..idx];
+										}
+										cargo_metadata.push(Self::emit_link_lib(file, None));
+									}
+								}
+							}
+						}
+						cargo_metadata.extend(
+							cmake_link_paths.into_iter()
+								.map(|link_path|
+									Self::emit_link_search(link_path.to_str().expect("Invalid link path"), Some("native"))
+								)
+						);
+						Ok(())
+					} else {
+						Err(format!(
+							"cmake returned an error\n    stdout: {:?}\n    stderr: {:?}",
+							String::from_utf8_lossy(&output.stdout),
+							String::from_utf8_lossy(&output.stderr)
+						).into())
+					})?
+			};
+
+			Ok(Self {
+				include_paths,
+				cargo_metadata,
+				version,
+			})
+		} else {
+			Err(format!("cmake discovery problem: OpenCV version not found in include paths: {:?}", include_paths).into())
+		}
+	}
+
+	pub fn probe_vcpkg() -> Result<Self> {
+		eprintln!("=== Probing OpenCV library using vcpkg");
 		let mut config = vcpkg::Config::new();
 		config.cargo_metadata(false);
-		let opencv = config.find_package(pkg_name)?;
+		let opencv = config.find_package(&PackageName::vcpkg())?;
 
-		let version = opencv.include_paths.iter()
-			.filter_map(get_version_from_headers)
-			.next();
+		let version = Self::version_from_include_paths(opencv.include_paths.iter());
 
 		Ok(Self {
-			pkg_name: pkg_name.to_owned(),
 			include_paths: opencv.include_paths,
-			version: version.unwrap_or("0.0.0".to_owned()),
+			version: version.unwrap_or_else(|| "0.0.0".to_owned()),
 			cargo_metadata: opencv.cargo_metadata,
 		})
 	}
 
+	pub fn probe_system(include_paths: Option<&str>, link_paths: Option<&str>, link_libs: Option<&str>) -> Result<Self> {
+		let probe_pkg_config = || Self::probe_pkg_config(include_paths, link_paths, link_libs);
+		let probe_cmake = || Self::probe_cmake(include_paths, link_paths, link_libs);
+		let probe_vcpkg = || Self::probe_vcpkg();
+
+		let explicit_pkg_config = env::var_os("PKG_CONFIG_PATH").is_some() || env::var_os("OPENCV_PKGCONFIG_NAME").is_some();
+		let explicit_cmake = env::var_os("OpenCV_DIR").is_some()
+			|| env::var_os("OPENCV_CMAKE_NAME").is_some()
+			|| env::var_os("CMAKE_PREFIX_PATH").is_some();
+			|| env::var_os("OPENCV_CMAKE_BIN").is_some();
+		let explicit_vcpkg = env::var_os("VCPKG_ROOT").is_some();
+
+		let disabled_probes = env::var("OPENCV_DISABLE_PROBES");
+		let disabled_probes = disabled_probes.as_ref()
+			.map(|s| HashSet::from_iter(Self::list(s)))
+			.unwrap_or_else(|_| HashSet::new());
+
+		let mut probes = [
+			("pkg_config", &probe_pkg_config as &dyn Fn() -> Result<Self>),
+			("cmake", &probe_cmake),
+			("vcpkg", &probe_vcpkg),
+		];
+
+		if explicit_pkg_config {
+			if explicit_vcpkg {
+				probes.swap(1, 2);
+			}
+		} else if explicit_cmake {
+			probes.swap(0, 1);
+			if explicit_vcpkg {
+				probes.swap(1, 2);
+			}
+		} else if explicit_vcpkg {
+			probes.swap(1, 2);
+			probes.swap(0, 1);
+		}
+
+		let mut out = None;
+		for &(name, probe) in &probes {
+			if !disabled_probes.contains(name) {
+				match probe() {
+					Ok(lib) => {
+						match check_matching_version(&lib.version) {
+							Ok(..) => {
+								out = Some(lib);
+								break;
+							},
+							Err(e) => {
+								eprintln!("=== Wrong version: {} using {}, continuing: {:#?}", e, name, lib);
+							}
+						}
+					}
+					Err(e) => {
+						eprintln!("=== Can't probe using {}, continuing with other methods, error: {}", name, e);
+					}
+				}
+			} else {
+				eprintln!("=== Skipping probe {} because of the environment configuration", name);
+			}
+		}
+		out.ok_or_else(|| {
+			let methods = probes.iter()
+				.map(|&(name, _)| name)
+				.filter(|&name| !disabled_probes.contains(name))
+				.collect::<Vec<_>>()
+				.join(", ");
+			format!("Failed to find OpenCV package using probes: {}", methods).into()
+		})
+	}
+
 	pub fn probe() -> Result<Self> {
-		let link_libs = env::var("OPENCV_LINK_LIBS").ok();
-		let link_paths = env::var("OPENCV_LINK_PATHS").ok();
 		let include_paths = env::var("OPENCV_INCLUDE_PATHS").ok();
-		let pkg_name = if cfg!(feature = "opencv-32") || cfg!(feature = "opencv-34") {
-			let full_override = link_libs.is_some() && link_paths.is_some() && include_paths.is_some();
-			env::var("OPENCV_PACKAGE_NAME")
-				.or_else(|_| env::var("OPENCV_PKGCONFIG_NAME"))
-				.map(Cow::Owned)
-				.unwrap_or_else(|_| if cfg!(target_env = "msvc") && !full_override {
-					// the package name in vcpkg for OpenCV3.x is different: https://github.com/microsoft/vcpkg/tree/master/ports/opencv3
-					"opencv3".into()
-				} else {
-					"opencv".into()
-				})
-		} else if cfg!(feature = "opencv-4") {
-			env::var("OPENCV_PACKAGE_NAME")
-				.or_else(|_| env::var("OPENCV_PKGCONFIG_NAME"))
-				.map(Cow::Owned)
-				.unwrap_or_else(|_| "opencv4".into())
+		let link_paths = env::var("OPENCV_LINK_PATHS").ok();
+		let link_libs = env::var("OPENCV_LINK_LIBS").ok();
+		if let (Some(include_paths), Some(link_paths), Some(link_libs)) = (&include_paths, &link_paths, &link_libs) {
+			Self::probe_from_paths(include_paths, link_paths, link_libs)
 		} else {
-			unreachable!("Feature flags should have been checked in main()");
-		};
-		if let (Some(link_libs), Some(link_paths), Some(include_paths)) = (&link_libs, &link_paths, &include_paths) {
-			Self::probe_from_paths(&pkg_name, link_libs, link_paths, include_paths)
-		} else {
-			Self::probe_system(&pkg_name, link_libs.as_deref(), link_paths.as_deref(), include_paths.as_deref())
-		}.map_err(|e| format!("Package {} is not found, caused by: {}", pkg_name, e).into())
+			Self::probe_system(include_paths.as_deref(), link_paths.as_deref(), link_libs.as_deref())
+		}
 	}
 
 	pub fn emit_cargo_metadata(&self) {
@@ -506,7 +736,7 @@ fn file_copy_to_dir(src_file: &Path, target_dir: &Path) -> Result<PathBuf> {
 	Ok(target_file)
 }
 
-fn get_version_from_headers(header_dir: &PathBuf) -> Option<String> {
+fn get_version_from_headers(header_dir: &Path) -> Option<String> {
 	let version_hpp = {
 		let out = header_dir.join("opencv2/core/version.hpp");
 		if out.is_file() {
@@ -738,7 +968,7 @@ fn main() -> Result<()> {
 		eprintln!("===   {} = {:?}", v, env::var_os(v));
 	}
 	let opencv = if cfg!(feature = "docs-only") {
-		Library::probe_from_paths("opencv", "", "", "")?
+		Library::probe_from_paths("", "", "")?
 	} else {
 		Library::probe()?
 	};
