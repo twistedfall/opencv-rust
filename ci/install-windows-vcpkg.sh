@@ -16,6 +16,6 @@ export VCPKG_DEFAULT_TRIPLET=x64-windows
 #./vcpkg install llvm  # takes very long time
 choco install llvm
 ./vcpkg install "opencv${VCPKG_OPENCV_VERSION}[contrib,nonfree]"
-./vcpkg upgrade
+./vcpkg upgrade --no-dry-run
 popd
 

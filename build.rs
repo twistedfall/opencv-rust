@@ -526,6 +526,7 @@ fn get_version_from_headers(header_dir: &PathBuf) -> Option<String> {
 }
 
 fn check_matching_version(version: &str) -> Result<()> {
+	#![allow(clippy::ifs_same_cond)] // false trigger
 	if cfg!(feature = "opencv-32") && !VersionReq::parse("~3.2")?.matches(&Version::parse(version)?) {
 		Err(format!("OpenCV version: {} must be from 3.2 branch because of the feature: opencv-32", version).into())
 	} else if cfg!(feature = "opencv-34") && !VersionReq::parse("~3.4")?.matches(&Version::parse(version)?) {

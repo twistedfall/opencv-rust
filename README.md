@@ -6,7 +6,7 @@
 
 Experimental Rust bindings for OpenCV 3 and 4.
 
-The API is usable but unstable and not very battle-tested; use at your own risk.
+The API is usable, but unstable and not very battle-tested; use at your own risk.
 
 ## Quickstart
 
@@ -196,9 +196,10 @@ The following variables affect the building the of the `opencv` crate, but belon
 * `opencv-34` - build against OpenCV 3.4.x
 * `opencv-4` (default) - build against OpenCV 4.x
 * `contrib` - enable the usage of OpenCV contrib modules for corresponding OpenCV version
-* `buildtime-bindgen` - regenerate all bindings, requires installed clang/llvm, should only be used during
-  the crate development or when building on Windows or macOS, with this feature enabled the bundled headers
-  are no longer used for the code generation, the ones from the installed OpenCV are used instead
+* `buildtime-bindgen` - regenerate all bindings, requires installed clang/llvm (minimum supported version is
+  6.0), should only be used during the crate development or when building on Windows or macOS, with this
+  feature enabled the bundled headers are no longer used for the code generation, the ones from the installed
+  OpenCV are used instead
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ## API details

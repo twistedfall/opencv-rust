@@ -8,9 +8,10 @@
 // todo implement std::pair wrapper
 // todo prevent generation of vector<std::string> in favor of vector<cv::String>>
 // todo cv_utils_logging_internal_getGlobalLogTag() returns LogTag**, but Rust interprets it as LogTag*, check why it doesn't crash and fix if needed
+// todo almost everything from the manual module must be connected to the binding generator, not the main crate
 // fixme most constructors of Mat have invalid comment "download data from GpuMat"
 // fixme MatConstIterator::m return Mat**, is it handled correctly?
-// todo almost everything from the manual module must be connected to the binding generator, not the main crate
+// fixme docs.rs fails to build crates that have opencv as dependency
 
 // copy-pasted form python generator (may be obsolete):
 // fixme returning MatAllocator (trait) by reference is bad, check knearestneighbour

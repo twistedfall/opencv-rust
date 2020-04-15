@@ -81,6 +81,7 @@ data_type!(core::Vec4s, core::CV_16S, 4);
 data_type!(core::Vec2i, core::CV_32S, 2);
 data_type!(core::Vec3i, core::CV_32S, 3);
 data_type!(core::Vec4i, core::CV_32S, 4);
+data_type!(core::Vec8i, core::CV_32S, 8);
 
 // vec float
 data_type!(core::Vec2f, core::CV_32F, 2);
@@ -151,13 +152,13 @@ impl<T: DataType> MatTrait for Mat_<T> {
 }
 
 #[inline(always)]
-fn convert_ptr<T>(r: &u8) -> &T {
-	unsafe { &*(r as *const _ as *const T) }
+unsafe fn convert_ptr<T>(r: &u8) -> &T {
+	&*(r as *const _ as *const T)
 }
 
 #[inline(always)]
-fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
-	unsafe { &mut *(r as *mut _ as *mut T) }
+unsafe fn convert_ptr_mut<T>(r: &mut u8) -> &mut T {
+	&mut *(r as *mut _ as *mut T)
 }
 
 fn match_format<T: DataType>(mat_type: i32) -> Result<()> {
@@ -353,26 +354,26 @@ pub trait MatTraitManual: MatTrait {
 			(i, i0 - i * mat_size.height)
 		};
 		self.ptr_2d(i, j)
-			.map(convert_ptr)
+			.map(|ptr| convert_ptr(ptr))
 	}
 
 	/// Like `Mat::at_mut()` but performs no bounds or type checks
 	unsafe fn at_unchecked_mut<T: DataType>(&mut self, i0: i32) -> Result<&mut T> {
 		let (i, j) = idx_to_row_col(self, i0)?;
 		self.ptr_2d_mut(i, j)
-			.map(convert_ptr_mut)
+			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
 	/// Like `Mat::at_2d()` but performs no bounds or type checks
 	unsafe fn at_2d_unchecked<T: DataType>(&self, row: i32, col: i32) -> Result<&T> {
 		self.ptr_2d(row, col)
-			.map(convert_ptr)
+			.map(|ptr| convert_ptr(ptr))
 	}
 
 	/// Like `Mat::at_2d_mut()` but performs no bounds or type checks
 	unsafe fn at_2d_unchecked_mut<T: DataType>(&mut self, row: i32, col: i32) -> Result<&mut T> {
 		self.ptr_2d_mut(row, col)
-			.map(convert_ptr_mut)
+			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
 	/// Like `Mat::at_pt()` but performs no bounds or type checks
@@ -388,22 +389,22 @@ pub trait MatTraitManual: MatTrait {
 	/// Return a complete read-only row
 	unsafe fn at_3d_unchecked<T: DataType>(&self, i0: i32, i1: i32, i2: i32) -> Result<&T> {
 		self.ptr_3d(i0, i1, i2)
-			.map(convert_ptr)
+			.map(|ptr| convert_ptr(ptr))
 	}
 
 	unsafe fn at_3d_unchecked_mut<T: DataType>(&mut self, i0: i32, i1: i32, i2: i32) -> Result<&mut T> {
 		self.ptr_3d_mut(i0, i1, i2)
-			.map(convert_ptr_mut)
+			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
 	unsafe fn at_nd_unchecked<T: core::DataType>(&self, idx: &[i32]) -> Result<&T> {
 		self.ptr_nd(idx)
-			.map(convert_ptr)
+			.map(|ptr| convert_ptr(ptr))
 	}
 
 	unsafe fn at_nd_unchecked_mut<T: core::DataType>(&mut self, idx: &[i32]) -> Result<&mut T> {
 		self.ptr_nd_mut(idx)
-			.map(convert_ptr_mut)
+			.map(|ptr| convert_ptr_mut(ptr))
 	}
 
 	fn at_row<T: DataType>(&self, row: i32) -> Result<&[T]> {
@@ -415,7 +416,8 @@ pub trait MatTraitManual: MatTrait {
 	/// Like `Mat::at_row()` but performs no bounds or type checks
 	unsafe fn at_row_unchecked<T: DataType>(&self, row: i32) -> Result<&[T]> {
 		let width = self.size()?.width as usize;
-		self.ptr(row).map(convert_ptr).map(|x| slice::from_raw_parts(x, width))
+		self.ptr(row)
+			.map(|x| slice::from_raw_parts(convert_ptr(x), width))
 	}
 
 	/// Return a complete writeable row
@@ -428,7 +430,8 @@ pub trait MatTraitManual: MatTrait {
 	/// Like `Mat::at_row_mut()` but performs no bounds or type checks
 	unsafe fn at_row_unchecked_mut<T: DataType>(&mut self, row: i32) -> Result<&mut [T]> {
 		let width = self.size()?.width as usize;
-		self.ptr_mut(row).map(convert_ptr_mut).map(|x| slice::from_raw_parts_mut(x, width))
+		self.ptr_mut(row)
+			.map(|x| slice::from_raw_parts_mut(convert_ptr_mut(x), width))
 	}
 
 	fn size(&self) -> Result<core::Size> {
@@ -708,7 +711,7 @@ pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 		extern "C" { fn cv_manual_MatConstIterator_current_unchecked(instance: *mut c_void) -> *const c_uchar; }
 		cv_manual_MatConstIterator_current_unchecked(self.as_raw_MatConstIterator())
 			.as_ref()
-			.map(convert_ptr)
+			.map(|ptr| convert_ptr(ptr))
 			.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))
 	}
 }
