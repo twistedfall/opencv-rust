@@ -61,6 +61,9 @@ Installing OpenCV is easy through the following sources:
   ```
   also set `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` environment variables (see below
   for details).
+  
+  Also, check the user guides [here](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278)
+  and [here](https://github.com/twistedfall/opencv-rust/issues/113#issue-596076777).
 
 * from [vcpkg](https://docs.microsoft.com/en-us/cpp/build/vcpkg), also install `llvm` package,
   necessary for building:
@@ -113,6 +116,13 @@ You need to set up the following environment variables to point to the installed
 
    Also check that if you're using a contrib module that the `contrib` feature is enabled for the crate. 
 
+4. On Windows, you're getting the `(exit code: 0xc0000135, STATUS_DLL_NOT_FOUND)` error when running the
+   compiled binary.
+
+   That often means that Windows can't find the OpenCV library dll. Be sure to set up `PATH` environment
+   variable correctly or copy the dll next to the binary you're trying to run. Check
+   [that](https://github.com/twistedfall/opencv-rust/issues/118#issuecomment-619608278) guide too.
+
 ## Reporting issues
 
 If you still have trouble using the crate after going through the Troubleshooting steps please fill free to
@@ -164,7 +174,7 @@ The following variables affect the building the of the `opencv` crate, but belon
 
 * `PKG_CONFIG_PATH`
   Where to look for `*.pc` files see the [man pkg-config](https://linux.die.net/man/1/pkg-config)
-  Path specified here must contain `opencv.pc` or `opencv4.pc` (for OpenCV 4.x).
+  Path specified here must contain `opencv.pc` (pre OpenCV 4) or `opencv4.pc` (OpenCV 4 and later).
 
 * `VCPKG_ROOT` and `VCPKGRS_DYNAMIC`
   The root of `vcpkg` installation and flag allowing use of `*.dll` libraries, see the

@@ -7,7 +7,9 @@ assignees: ''
 
 ---
 
-When reporting an issue please state:
+Before reporting an issue please first check the
+[troubleshooting guide](https://github.com/twistedfall/opencv-rust/blob/master/README.md#troubleshooting). If
+the issue you're encountering is not solved thereby please state the following in your bugreport:
 1. Operating system
 2. The way you installed OpenCV: package, official binary distribution, manual compilation, etc.
 3. OpenCV version
