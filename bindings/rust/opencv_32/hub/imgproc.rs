@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Image processing
 //!    # Image Filtering
 //! 

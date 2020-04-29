@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Extended object detection
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {

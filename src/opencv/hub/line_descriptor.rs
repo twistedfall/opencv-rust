@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Binary descriptors for lines extracted from an image
 //! 
 //! Introduction

@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # The module brings implementations of different image hashing algorithms.
 //! 
 //! Provide algorithms to extract the hash of images and fast way to figure out most similar images in

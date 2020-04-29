@@ -1,3 +1,11 @@
+* 0.35.0
+  * Add beta-level support for doing OpenCV library discovery using cmake, which is now a recommended method
+    by the upstream.
+  * Add ability to override `OPENCV_LINK_LIBS`, `OPENCV_LINK_PATHS` and `OPENCV_INCLUDE_PATHS` in case of
+    library auto-discovery. This doesn't work for vcpkg yet.
+  * Add ability to introduce to specify package names separately for different auto-discovery systems using
+    `OPENCV_PKGCONFIG_NAME`, `OPENCV_CMAKE_NAME` and `OPENCV_VCPKG_NAME`.
+
 * 0.34.0
   * Bump bindings to OpenCV version 4.3.0 and 3.4.10
   * Mark `Mat::new_*_with_data` functions unsafe because they allow passing arbitrary data pointer

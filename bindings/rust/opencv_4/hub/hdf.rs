@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Hierarchical Data Format I/O routines
 //! 
 //! This module provides storage routines for Hierarchical Data Format objects.

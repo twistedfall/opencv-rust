@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # 2D Features Framework
 //!    # Feature Detection and Description
 //!    # Descriptor Matchers

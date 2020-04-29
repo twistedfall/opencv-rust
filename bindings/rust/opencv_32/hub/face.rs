@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Face Recognition
 //! 
 //! - @ref face_changelog

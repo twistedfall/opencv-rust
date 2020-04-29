@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # High-level GUI
 //! 
 //! While OpenCV was designed for use in full-scale applications and can be used within functionally

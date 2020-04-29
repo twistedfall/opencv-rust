@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # ArUco Marker Detection
 //! This module is dedicated to square fiducial markers (also known as Augmented Reality Markers)
 //! These markers are useful for easy, fast and robust camera pose estimation.ç

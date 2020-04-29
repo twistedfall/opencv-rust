@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Extra 2D Features Framework
 //!    # Experimental 2D Features Algorithms
 //! 

@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Camera Calibration and 3D Reconstruction
 //! 
 //! The functions in this section use a so-called pinhole camera model. The view of a scene

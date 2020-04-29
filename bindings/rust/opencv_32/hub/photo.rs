@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Computational Photography
 //!    # Denoising
 //!    # HDR imaging

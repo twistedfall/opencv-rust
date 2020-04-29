@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Face Analysis
 //! 
 //! - @ref face_changelog

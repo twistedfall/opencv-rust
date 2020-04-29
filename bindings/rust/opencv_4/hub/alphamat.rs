@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Alpha Matting
 //! This module is dedicated to compute alpha matting of images, given the input image and an input trimap.
 //! The samples directory includes easy examples of how to use the module.

@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Video Analysis
 //!   # Motion Analysis
 //!   # Object Tracking

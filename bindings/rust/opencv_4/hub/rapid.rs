@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # silhouette based 3D object tracking
 //! 
 //! implements "RAPID-a video rate object tracker" [harris1990rapid](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_harris1990rapid) with the dynamic control point extraction of [drummond2002real](https://docs.opencv.org/4.3.0/d0/de3/citelist.html#CITEREF_drummond2002real)

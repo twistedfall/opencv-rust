@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # 3D Visualizer
 //! 
 //! This section describes 3D visualization window as well as classes and methods that are used to

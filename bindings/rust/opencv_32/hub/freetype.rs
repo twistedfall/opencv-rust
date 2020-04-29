@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Drawing UTF-8 strings with freetype/harfbuzz
 //! 
 //! This modules is to draw UTF-8 strings with freetype/harfbuzz.

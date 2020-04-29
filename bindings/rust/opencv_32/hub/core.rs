@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Core functionality
 //!    # Basic structures
 //!    # C structures and operations

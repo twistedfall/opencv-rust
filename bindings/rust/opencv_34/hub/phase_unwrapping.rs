@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Phase Unwrapping API
 //! 
 //! Two-dimensional phase unwrapping is found in different applications like terrain elevation estimation

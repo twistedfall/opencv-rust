@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Machine Learning
 //! 
 //! The Machine Learning Library (MLL) is a set of classes and functions for statistical

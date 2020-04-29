@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Improved Background-Foreground Segmentation Methods
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {

@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Custom Calibration Pattern for 3D reconstruction
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {

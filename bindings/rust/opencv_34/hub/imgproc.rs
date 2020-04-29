@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Image Processing
 //! 
 //! This module includes image-processing functions.

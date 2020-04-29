@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Video I/O
 //! 
 //! Read and write video or images sequence with OpenCV

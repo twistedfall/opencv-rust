@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Image file reading and writing
 //!   # C API
 //!   # iOS glue

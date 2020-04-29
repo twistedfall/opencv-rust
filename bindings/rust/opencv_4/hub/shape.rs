@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Shape Distance and Matching
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {

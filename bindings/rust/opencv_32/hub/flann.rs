@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Clustering and Search in Multi-Dimensional Spaces
 //! 
 //! This section documents OpenCV's interface to the FLANN library. FLANN (Fast Library for Approximate

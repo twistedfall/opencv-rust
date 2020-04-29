@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Image processing based on fuzzy mathematics
 //! 
 //! Namespace for all functions is `ft`. The module brings implementation of the last image processing algorithms based on fuzzy mathematics. Method are named based on the pattern `FT`_degree_dimension`_`method.

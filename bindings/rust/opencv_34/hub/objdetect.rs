@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Object Detection
 //! 
 //! Haar Feature-based Cascade Classifier for Object Detection

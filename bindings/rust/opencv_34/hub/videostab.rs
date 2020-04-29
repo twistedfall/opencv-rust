@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Video Stabilization
 //! 
 //! The video stabilization module contains a set of functions and classes that can be used to solve the

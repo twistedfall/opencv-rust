@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # The module brings implementations of intensity transformation algorithms to adjust image contrast.
 //! 
 //! Namespace for all functions is cv::intensity_trasnform.

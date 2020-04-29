@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Images stitching
 //! 
 //! This figure illustrates the stitching module pipeline implemented in the Stitcher class. Using that

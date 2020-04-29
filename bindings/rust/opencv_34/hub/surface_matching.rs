@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Surface Matching
 //! 
 //! Note about the License and Patents

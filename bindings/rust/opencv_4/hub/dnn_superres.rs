@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # DNN used for super resolution
 //! 
 //! This module contains functionality for upscaling an image via convolutional neural networks.

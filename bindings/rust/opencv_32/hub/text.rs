@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Scene Text Detection and Recognition
 //! 
 //! The opencv_text module provides different algorithms for text detection and recognition in natural

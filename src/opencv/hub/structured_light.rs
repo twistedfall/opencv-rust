@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Structured Light API
 //! 
 //! Structured light is considered one of the most effective techniques to acquire 3D models.

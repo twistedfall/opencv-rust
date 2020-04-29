@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Additional photo processing algorithms
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {

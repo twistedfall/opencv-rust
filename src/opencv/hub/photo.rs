@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Computational Photography
 //! 
 //! This module includes photo processing algorithms

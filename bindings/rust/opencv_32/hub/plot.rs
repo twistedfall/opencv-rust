@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Plot function for Mat data
 use crate::{mod_prelude::*, core, sys, types};
 pub mod prelude {

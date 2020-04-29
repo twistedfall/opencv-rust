@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Structure From Motion
 //! 
 //! The opencv_sfm module contains algorithms to perform 3d reconstruction

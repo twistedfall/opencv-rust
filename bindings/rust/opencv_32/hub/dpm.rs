@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Deformable Part-based Models
 //! 
 //! Discriminatively Trained Part Based Models for Object Detection

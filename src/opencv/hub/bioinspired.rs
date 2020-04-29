@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Biologically inspired vision models and derivated tools
 //! 
 //! The module provides biological visual systems models (human visual system and others). It also

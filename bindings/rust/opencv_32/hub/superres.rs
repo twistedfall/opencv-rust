@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Super Resolution
 //! 
 //! The Super Resolution module contains a set of functions and classes that can be used to solve the

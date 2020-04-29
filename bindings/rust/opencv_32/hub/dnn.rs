@@ -1,3 +1,4 @@
+#![allow(unused_parens)]
 //! # Deep Neural Network module
 //!   This module contains:
 //!       - API for new layers creation, layers are building bricks of neural networks;
