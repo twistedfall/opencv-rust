@@ -10,6 +10,7 @@
 // todo cv_utils_logging_internal_getGlobalLogTag() returns LogTag**, but Rust interprets it as LogTag*, check why it doesn't crash and fix if needed
 // todo almost everything from the manual module must be connected to the binding generator, not the main crate
 // todo check that FN_FaceDetector works at all (receiving InputArray, passing as callback)
+// fixme vector<Mat*> get's interpreted as Vector<Mat> which should be wrong (e.g. Layer::forward and Layer::apply_halide_scheduler)
 // fixme most constructors of Mat have invalid comment "download data from GpuMat"
 // fixme MatConstIterator::m return Mat**, is it handled correctly?
 // fixme docs.rs fails to build crates that have opencv as dependency

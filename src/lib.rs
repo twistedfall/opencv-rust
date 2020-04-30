@@ -14,10 +14,9 @@ mod manual;
 pub mod prelude {
 	pub use crate::{
 		core::{DataType, Mat},
-		templ::Vector,
+		hub_prelude::*,
+		manual::prelude::*,
 	};
-	pub use crate::hub_prelude::*;
-	pub use crate::manual::prelude::*;
 }
 
 pub(crate) mod mod_prelude_types {
@@ -36,6 +35,9 @@ pub(crate) mod mod_prelude {
 		mod_prelude_types::*,
 		ptr_extern,
 		Result,
+		vector_copy_non_bool,
+		vector_extern,
+		vector_non_copy_or_bool,
 	};
 }
 

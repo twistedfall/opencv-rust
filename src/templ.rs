@@ -3,10 +3,6 @@ use std::{
 	os::raw::c_char,
 };
 
-pub use vector::*;
-
-mod vector;
-
 macro_rules! string_arg {
 	($name: ident) => {
 		let $name = $crate::templ::cstring_new_infallible($name);

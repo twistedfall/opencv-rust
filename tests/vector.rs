@@ -23,6 +23,7 @@ use opencv::{
 		VectorOfPoint3i,
 		VectorOfString,
 		VectorOfu8,
+		VectorOfVec4i,
 		VectorOfVectorOfPoint3i,
 	},
 };
@@ -391,8 +392,10 @@ fn to_slice() -> Result<()> {
 		assert_eq!(vec.to_slice(), &[1, 2, 3, 4, 5]);
 	}
 	{
-		let vec = VectorOfi32::new();
-		assert_eq!(vec.to_slice(), &[]);
+		let mut vec = VectorOfi32::new();
+		vec.push(5);
+		vec.push(10);
+		assert_eq!(vec.to_slice(), &[5, 10]);
 	}
 	{
 		let vec = VectorOfPoint2d::from_iter(vec![Point2d::new(10., 20.), Point2d::new(60.5, 90.3), Point2d::new(-40.333, 89.)]);
@@ -407,13 +410,26 @@ fn to_slice() -> Result<()> {
 #[test]
 fn to_vec() -> Result<()> {
 	{
-		let vec = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
+		let vec: VectorOfu8 = VectorOfu8::from_iter(vec![1, 2, 3, 4, 5]);
 		assert_eq!(vec.to_vec(), vec![1, 2, 3, 4, 5]);
 	}
 	{
-		let vec = VectorOfu8::new();
+		let vec = VectorOfVec4i::new();
 		assert_eq!(vec.to_vec(), Vec::new());
 	}
+	{
+		let mut vec = VectorOfMat::new();
+		vec.push(Mat::new_rows_cols_with_default(5, 8, u16::typ(), Scalar::all(8.))?);
+		vec.push(Mat::new_rows_cols_with_default(3, 3, u8::typ(), Scalar::all(19.))?);
+		let mat_vec = vec.to_vec();
+		assert_eq!(vec.get(0)?.total()?, mat_vec[0].total()?);
+		assert_eq!(vec.get(0)?.typ()?, mat_vec[0].typ()?);
+		assert_eq!(vec.get(0)?.at_2d::<u16>(2, 2)?, mat_vec[0].at_2d::<u16>(2, 2)?);
+		assert_eq!(vec.get(1)?.total()?, mat_vec[1].total()?);
+		assert_eq!(vec.get(1)?.typ()?, mat_vec[1].typ()?);
+		assert_eq!(vec.get(1)?.at_2d::<u8>(2, 2)?, mat_vec[1].at_2d::<u8>(2, 2)?);
+	}
+
 	Ok(())
 }
 

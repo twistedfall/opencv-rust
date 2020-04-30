@@ -12,6 +12,7 @@ pub use rect::*;
 pub use size::*;
 pub use sized::*;
 pub use vec::*;
+pub use vector::*;
 
 macro_rules! valid_types {
 	($trait: ident, $($rust_type: ty),+) => {
@@ -41,6 +42,7 @@ mod rect;
 mod size;
 mod sized;
 mod vec;
+mod vector;
 
 #[inline(always)]
 pub const fn CV_MAT_DEPTH(flags: i32) -> i32 {

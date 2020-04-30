@@ -812,3 +812,8 @@ pub static NO_SKIP_NAMESPACE_IN_LOCALNAME: Lazy<HashMap<&str, &str>> = Lazy::new
 	"fisheye" => "Fisheye",
 	"superres" => "Superres",
 });
+
+pub static FORCE_VECTOR_TYPEDEF_GENERATION: Lazy<HashSet<&str>> = Lazy::new(|| hashset! {
+	"cv::ppf_match_3d::Pose3DPtr",
+	"cv::dnn::Net::LayerId",
+});

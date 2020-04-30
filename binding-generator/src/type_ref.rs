@@ -861,7 +861,7 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 				inner.rust_safe_id().into_owned() + "_X"
 			}
 			Kind::StdVector(vec) => {
-				vec.rust_localname().into_owned()
+				vec.rust_localalias().into_owned()
 			}
 			Kind::Pointer(inner) => {
 				let mut inner_safe_id: String = inner.rust_safe_id().into_owned();
@@ -1362,7 +1362,17 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		match self.source().kind() {
 			Kind::StdVector(vec) => {
 				out = vec.dependent_types();
-				out.push(Box::new(vec))
+				// implement workaround for race when type with std::string gets generated first
+				// we only want vector<cv::String> because it's more compatible across OpenCV versions
+				if vec.element_type().is_std_string() {
+					let tref = TypeRef::new(
+						self.gen_env.resolve_type("std::vector<cv::String>").expect("Can't resolve std::vector<cv::String>"),
+						self.gen_env,
+					);
+					out.push(Box::new(tref.as_vector().expect("Not possible unless something is terribly broken")));
+				} else {
+					out.push(Box::new(vec))
+				}
 			},
 			Kind::SmartPtr(ptr) => {
 				out = ptr.dependent_types();
