@@ -10,21 +10,21 @@ The API is usable, but unstable and not very battle-tested; use at your own risk
 
 ## Quickstart
 
-Make sure the supported OpenCV version (3.2, 3.4 or 4.2) is installed in your system.
+Make sure the supported OpenCV version (3.2, 3.4 or 4.x) is installed in your system.
 
 Update your Cargo.toml
 ```toml
-opencv = "0.34"
+opencv = "0.35"
 ```
 
-Select OpenCV version if different from default in Cargo.toml:
+Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 ```toml
-opencv = {version = "0.34", default-features = false, features = ["opencv-34"]}
+opencv = {version = "0.35", default-features = false, features = ["opencv-34"]}
 ```
 
-And enable usage of `contrib` modules:
+Or enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.34", features = ["contrib"]}
+opencv = {version = "0.35", features = ["contrib"]}
 ```
 
 Import prelude
@@ -34,7 +34,7 @@ use opencv::prelude::*;
 
 When building on Windows and macOS you must enable `buildtime-bindgen` feature to avoid link errors:
 ```toml
-opencv = {version = "0.34", features = ["buildtime-bindgen"]}
+opencv = {version = "0.35", features = ["buildtime-bindgen"]}
 ```
 
 ## Getting OpenCV
@@ -48,7 +48,7 @@ You have several options of getting the OpenCV library:
 
 * build OpenCV manually and set up the following environment variables prior to building the project with
   `opencv` crate:
-  * `PKG_CONFIG_PATH` for the location of `*.pc` files
+  * `PKG_CONFIG_PATH` for the location of `*.pc` files or `OpenCV_DIR` for the location of `*.cmake` files
   * `LD_LIBRARY_PATH` for where to look for the installed `*.so` files during runtime
 
 ### Windows package
@@ -242,7 +242,7 @@ as well.
 The following OpenCV versions are supported at the moment:
 * 3.2 - enabled by `opencv-32` feature
 * 3.4 - enabled by `opencv-34` feature
-* 4.2 - enabled by the default `opencv-4` feature
+* 4.3 - enabled by the default `opencv-4` feature
 
 If you need support for `contrib` modules, also enable `contrib` feature.
 
@@ -252,7 +252,7 @@ Generally you should use the latest stable rustc to compile this crate.
 
 ### Platform support
 
-Currently the main development and testing of the crate is performed on Linux, but other major platforms are
+Currently, the main development and testing of the crate is performed on Linux, but other major platforms are
 also supported: macOS and Windows.
 
 For some more details please refer to the CI build scripts:
@@ -345,7 +345,7 @@ CUDA is not supported at the moment, but is definitely in the roadmap. You can u
 
 ## The binding strategy
 
-This crate works similar to the the model of python and java's OpenCV wrappers - it uses libclang to parse the
+This crate works similar to the model of python and java's OpenCV wrappers - it uses libclang to parse the
 OpenCV C++ headers, generates a C interface to the C++ API, and wraps the C interface in Rust.
 
 All the major modules in the C++ API are merged together in a huge `cv::` namespace. We instead made one rust
