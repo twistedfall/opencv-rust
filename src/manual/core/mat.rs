@@ -6,7 +6,7 @@ use std::{
 	slice,
 };
 
-use libc::{c_uchar, size_t};
+use libc::size_t;
 
 use crate::{
 	core::{
@@ -700,19 +700,10 @@ pub trait MatConstIteratorTraitManual: MatConstIteratorTrait {
 	fn current<T: DataType>(&self) -> Result<&T> {
 		match_format::<T>(self.typ())?;
 		if self.has_elements() {
-			unsafe { self.current_unchecked() }
+			self.try_deref().map(|ptr| unsafe { convert_ptr(ptr) })
 		} else {
 			Err(Error::new(core::StsOutOfRange, "MatConstIterator doesn't have any more elements".to_owned()))
 		}
-	}
-
-	#[inline]
-	unsafe fn current_unchecked<T: DataType>(&self) -> Result<&T> {
-		extern "C" { fn cv_manual_MatConstIterator_current_unchecked(instance: *mut c_void) -> *const c_uchar; }
-		cv_manual_MatConstIterator_current_unchecked(self.as_raw_MatConstIterator())
-			.as_ref()
-			.map(|ptr| convert_ptr(ptr))
-			.ok_or_else(|| Error::new(core::StsNullPtr, "Function returned Null pointer".to_string()))
 	}
 }
 

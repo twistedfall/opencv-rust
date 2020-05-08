@@ -38,13 +38,34 @@ use crate::{
 pub enum OperatorKind {
 	Unsupported,
 	Index,
+	Add,
+	Sub,
+	Mul,
+	Div,
+	Deref,
 }
 
-impl From<&str> for OperatorKind {
-	fn from(s: &str) -> Self {
-		match s.trim() {
+impl OperatorKind {
+	pub fn new(token: &str, arg_count: usize) -> Self {
+		match token.trim() {
 			"[]" => {
 				OperatorKind::Index
+			}
+			"+" => {
+				OperatorKind::Add
+			}
+			"-" => {
+				OperatorKind::Sub
+			}
+			"*" => {
+				if arg_count == 0 {
+					OperatorKind::Deref
+				} else {
+					OperatorKind::Mul
+				}
+			}
+			"/" => {
+				OperatorKind::Div
 			}
 			_ => {
 				OperatorKind::Unsupported
@@ -110,7 +131,8 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		match self.entity.get_kind() {
 			EntityKind::FunctionDecl => {
 				if let Some(operator) = self.entity.cpp_localname().strip_str_prefix(OPERATOR) {
-					Kind::FunctionOperator(operator.into())
+					let arg_count = self.entity.get_arguments().map_or(0, |v| v.len());
+					Kind::FunctionOperator(OperatorKind::new(operator.trim(), arg_count))
 				} else {
 					Kind::Function
 				}
@@ -130,7 +152,8 @@ impl<'tu, 'g> Func<'tu, 'g> {
 					Kind::StaticMethod(class)
 				} else {
 					if let Some(operator) = self.entity.cpp_localname().strip_str_prefix(OPERATOR) {
-						Kind::InstanceOperator(class, operator.into())
+						let arg_count = self.entity.get_arguments().map_or(0, |v| v.len());
+						Kind::InstanceOperator(class, OperatorKind::new(operator.trim(), arg_count))
 					} else {
 						Kind::InstanceMethod(class)
 					}
@@ -802,6 +825,9 @@ impl Element for Func<'_, '_> {
 		} else if let Some((.., kind)) = self.as_operator() {
 			if cpp_name.starts_with("operator") {
 				match kind {
+					OperatorKind::Unsupported => {
+						cpp_name
+					}
 					OperatorKind::Index => {
 						if self.is_const() {
 							"get".into()
@@ -809,8 +835,24 @@ impl Element for Func<'_, '_> {
 							"get_mut".into()
 						}
 					}
-					OperatorKind::Unsupported => {
-						cpp_name
+					OperatorKind::Add => {
+						"add".into()
+					}
+					OperatorKind::Sub => {
+						"sub".into()
+					}
+					OperatorKind::Mul => {
+						"mul".into()
+					}
+					OperatorKind::Div => {
+						"div".into()
+					}
+					OperatorKind::Deref => {
+						if self.is_const() {
+							"try_deref".into()
+						} else {
+							"try_deref_mut".into()
+						}
 					}
 				}
 			} else {

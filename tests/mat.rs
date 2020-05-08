@@ -30,7 +30,7 @@ fn mat_create() -> Result<()> {
 	let mut mat = Mat::default()?;
 	unsafe { mat.create_rows_cols(10, 10, u16::typ())? };
 	assert!(mat.is_allocated());
-	mat.set(Scalar::all(7.))?;
+	mat.set(Scalar::from(7.))?;
 	assert_eq!(7, *mat.at_2d::<u16>(0, 0)?);
 	assert_eq!(7, *mat.at_2d::<u16>(3, 3)?);
 	assert_eq!(7, *mat.at_2d::<u16>(9, 9)?);
@@ -185,7 +185,7 @@ fn mat_at_1d() -> Result<()> {
 #[test]
 fn mat_2d_i0_is_rows_i1_is_cols() -> Result<()> {
 	// Just a sanity check about which Mat dimension corresponds to which in Size
-	let mat = Mat::new_size_with_default(Size::new(6, 5), f32::typ(), Scalar::all(1.23))?;
+	let mat = Mat::new_size_with_default(Size::new(6, 5), f32::typ(), Scalar::from(1.23))?;
 	let size = mat.size()?;
 	assert_eq!(size.width, 6);
 	assert_eq!(size.height, 5);
@@ -194,7 +194,7 @@ fn mat_2d_i0_is_rows_i1_is_cols() -> Result<()> {
 
 #[test]
 fn mat_at_2d() -> Result<()> {
-	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(1.23))?;
+	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::from(1.23))?;
 	assert_eq!(*mat.at_2d::<f32>(0, 0)?, 1.23);
 	*mat.at_2d_mut::<f32>(0, 0)? = 1.;
 	assert_eq!(*mat.at_2d::<f32>(0, 0)?, 1.);
@@ -226,7 +226,7 @@ fn mat_at_2d_multichannel() -> Result<()> {
 
 #[test]
 fn mat_at_row() -> Result<()> {
-	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::all(1.23))?;
+	let mut mat = Mat::new_rows_cols_with_default(100, 100, f32::typ(), Scalar::from(1.23))?;
 
 	let row = mat.at_row::<f32>(0)?;
 	assert_eq!(row.len(), 100);
@@ -288,7 +288,7 @@ fn mat_vec() -> Result<()> {
 		dims.push(3);
 		dims.push(3);
 		dims.push(3);
-		let mut mat = Mat::new_nd_vec_with_default(&dims, f64::typ(), Scalar::all(2.))?;
+		let mut mat = Mat::new_nd_vec_with_default(&dims, f64::typ(), Scalar::from(2.))?;
 		*mat.at_3d_mut::<f64>(1, 1, 1)? = 10.;
 		assert_eq!(3, mat.dims());
 		if mat.to_vec_2d::<f64>().is_ok() {
@@ -371,8 +371,8 @@ fn mat_continuous() -> Result<()> {
 #[test]
 fn mat_operations() -> Result<()> {
 	let mut src = VectorOfMat::new();
-	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(1.))?);
-	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::all(2.))?);
+	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::from(1.))?);
+	src.push(Mat::new_rows_cols_with_default(1, 3, u8::typ(), Scalar::from(2.))?);
 	let mut merged = Mat::default()?;
 	core::merge(&src, &mut merged)?;
 	assert_eq!(merged.typ()?, Vec2b::typ());
@@ -483,5 +483,36 @@ fn mat_convert() -> Result<()> {
 	assert_eq!(mat.size()?, mat_.size()?);
 	let mat_back = mat_.into_mat();
 	assert_eq!(mat.size()?, mat_back.size()?);
+	Ok(())
+}
+
+#[test]
+fn mat_mul() -> Result<()> {
+	{
+		let expr = Mat::ones(1, 5, f64::typ())?;
+		let res = core::mul_matexpr_f64(&expr, 4.)?.to_mat()?;
+		assert_eq!(res.typ()?, f64::typ());
+		assert_eq!(res.data_typed::<f64>()?, &[4., 4., 4., 4., 4.]);
+	}
+	{
+		let expr = Mat::new_rows_cols_with_default(2, 3, i32::typ(), Scalar::from(9.))?;
+		let res = core::sub_mat_scalar(&expr, Scalar::from(5.))?.to_mat()?;
+		assert_eq!(res.typ()?, i32::typ());
+		assert_eq!(res.data_typed::<i32>()?, &[4, 4, 4, 4, 4, 4]);
+	}
+	{
+		let mat1 = Mat::from_slice_2d(&[[1f32, 2., 3.], [4., 5., 6.]])?;
+		let mat2 = Mat::from_slice_2d(&[[7f32, 8.], [9., 10.], [11., 12.]])?;
+		let res = core::mul_mat_mat(&mat1, &mat2)?.to_mat()?;
+		assert_eq!(res.typ()?, f32::typ());
+		assert_eq!(res.size()?, Size::new(2, 2));
+		assert_eq!(res.data_typed::<f32>()?, &[58., 64., 139., 154.]);
+	}
+	{
+		let mat = Mat::from_slice(&[1u8, 2, 3, 4, 5, 6])?;
+		let res = core::div_mat_f64(&mat, 2.)?.to_mat()?;
+		assert_eq!(res.typ()?, u8::typ());
+		assert_eq!(res.data_typed::<u8>()?, &[0, 1, 2, 2, 2, 3]);
+	}
 	Ok(())
 }

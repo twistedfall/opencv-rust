@@ -80,10 +80,6 @@ extern "C" {
 		return instance->ptr != instance->sliceEnd;
 	}
 
-	const unsigned char* cv_manual_MatConstIterator_current_unchecked(const cv::MatConstIterator* instance) {
-		return instance->ptr;
-	}
-
 	Result<void*> cv_InputArray_input_array(cv::_InputArray* instance) { return ocvrs_input_array(instance); }
 	Result<void*> cv_OutputArray_output_array(cv::_OutputArray* instance) { return ocvrs_output_array(instance); }
 	Result<void*> cv_InputOutputArray_input_output_array(cv::_InputOutputArray* instance) { return ocvrs_input_output_array(instance); }

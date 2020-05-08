@@ -207,6 +207,9 @@ impl StringExt for String {
 		self.replace_in_place("[", "_");
 		self.replace_in_place("]", "_");
 		self.replace_in_place("::", "_");
+		self.replace_in_place("+", "A");
+		self.replace_in_place("-", "S");
+		self.replace_in_place("/", "D");
 	}
 }
 
