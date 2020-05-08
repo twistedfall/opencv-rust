@@ -53,7 +53,7 @@
 
 * 0.30
   * Total rewrite of the binding generator in Rust. It no longer relies on Python, but instead uses libclang
-    to parse the C++ code. Please be sure to install clang/llvm in your system if you're going to to regenerate
+    to parse the C++ code. Please be sure to install clang/llvm in your system if you're going to regenerate
     bindings (mostly macOS and Windows users). You can expect all of the previous functionality to be there
     (sans name changes) and a lot of new functions and classes. Binding generation is now more precise and
     quick.
