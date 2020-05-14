@@ -149,7 +149,7 @@ on any platform, the specified values will override those automatically discover
   E.g. "opencv_world411".
 
 * `OPENCV_LINK_PATHS`
-  Comma separated list of paths to search for libraries to link. E.g. "C:\tools\opencv\build\x64\vc14\lib".
+  Comma separated list of paths to search for libraries to link. E.g. "C:\tools\opencv\build\x64\vc15\lib".
 
 * `OPENCV_INCLUDE_PATHS`
   Comma separated list of paths to search for system include files during compilation. E.g.

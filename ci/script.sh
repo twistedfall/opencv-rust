@@ -6,8 +6,8 @@ if [[ "$OS_FAMILY" == "windows" ]]; then
 	export PATH="/C/Program Files/LLVM/bin:$PATH"
 	if [[ "$CHOCO_OPENCV_VERSION" != "" ]]; then # chocolatey build
 		# missing aruco module that will not allow us to run tests, that's why contrib feature is not enabled
-		export PATH="/C/tools/opencv/build/x64/vc14/bin:$PATH"
-		export OPENCV_LINK_PATHS="/C/tools/opencv/build/x64/vc14/lib"
+		export PATH="/C/tools/opencv/build/x64/vc15/bin:$PATH"
+		export OPENCV_LINK_PATHS="/C/tools/opencv/build/x64/vc15/lib"
 		export OPENCV_LINK_LIBS="opencv_world${CHOCO_OPENCV_VERSION//./}"
 		export OPENCV_INCLUDE_PATHS="/C/tools/opencv/build/include"
 	else # vcpkg build

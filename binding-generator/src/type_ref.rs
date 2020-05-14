@@ -1393,7 +1393,6 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 								DefinitionLocation::Type => DefinitionLocation::Custom(self.rust_module().into_owned()),
 								dl @ _ => dl
 							};
-							// dbg!(&type_ref);
 							ReturnTypeWrapper::new(type_ref, self.gen_env, def_location)
 						} else {
 							ReturnTypeWrapper::new(self.canonical_clang(), self.gen_env, def_location)

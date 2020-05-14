@@ -45,7 +45,7 @@ macro_rules! callback_arg {
 		} else {
 			None
 		};
-	};
+	}
 }
 
 macro_rules! userdata_arg {
