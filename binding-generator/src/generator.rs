@@ -1,4 +1,5 @@
 use std::{
+	borrow::Cow,
 	fmt,
 	fs::File,
 	io::BufReader,
@@ -323,17 +324,22 @@ impl<'m, 'c> Generator<'m, 'c> {
 		}
 	}
 
+	pub fn build_clang_command_line_args(&self) -> Vec<Cow<'static, str>> {
+		let mut args = self.clang_include_dirs.iter()
+			.map(|d| format!("-isystem{}", d.to_str().expect("Incorrect system include path")).into())
+			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter()
+				.map(|d| format!("-I{}", d.to_str().expect("Incorrect include path")).into())
+			)
+			.collect::<Vec<_>>();
+		args.push("-DOCVRS_PARSING_HEADERS".into());
+		args.push("-includeocvrs_resolve_types.hpp".into());
+		args
+	}
+
 	pub fn process_file<V: GeneratorVisitor>(&self, file: &Path, visitor: V) {
 		let index = Index::new(&self.clang, true, false);
-		let args = self.clang_include_dirs.iter()
-			.chain([&self.opencv_include_dir, &self.src_cpp_dir].iter().copied())
-			.map(|d| format!("-I{}", d.to_str().expect("Incorrect include path")))
-			.collect::<Vec<_>>();
-		let mut args = args.iter().map(|x| x.as_str()).collect::<Vec<_>>();
-		args.push("-DOCVRS_PARSING_HEADERS");
-		args.push("-includeocvrs_resolve_types.hpp");
 		let top = index.parser(canonicalize(file).expect("Can't canonicalize file"))
-			.arguments(&args)
+			.arguments(&self.build_clang_command_line_args())
 			.detailed_preprocessing_record(true)
 			.skip_function_bodies(true)
 			.parse().expect("Cannot parse");

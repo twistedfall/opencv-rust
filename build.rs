@@ -22,6 +22,7 @@ mod generator {
 		fs::{self, DirEntry, File, OpenOptions},
 		io::{self, BufRead, BufReader, Write},
 		path::{Path, PathBuf},
+		sync::atomic::{AtomicBool, Ordering},
 		time::Instant,
 	};
 
@@ -98,6 +99,7 @@ mod generator {
 		};
 		let clang = clang::Clang::new().expect("Cannot initialize clang");
 		let start = Instant::now();
+		let shown_args = AtomicBool::new(false);
 		let build_func = |module: &String| {
 			let mut module_file = SRC_CPP_DIR.join(format!("{}.hpp", module));
 			if !module_file.exists() {
@@ -110,8 +112,11 @@ mod generator {
 				version,
 				false,
 			);
-			binding_generator::Generator::new(&opencv_header_dir, &*SRC_CPP_DIR, module, &clang)
-				.process_file(&module_file, bindings_writer);
+			let gen = binding_generator::Generator::new(&opencv_header_dir, &*SRC_CPP_DIR, module, &clang);
+			if !shown_args.compare_and_swap(false, true, Ordering::Relaxed) {
+				eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
+			}
+			gen.process_file(&module_file, bindings_writer);
 			println!("Generated: {}", module);
 		};
 
