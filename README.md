@@ -185,6 +185,11 @@ The following variables are rarely used, but you might need them under some circ
     * cmake
     * vcpkg
 
+* `OPENCV_CLANG_STDLIB_PATH`
+  Path that contains the stdlib headers for parsing with libclang. Should be used only as a workaround for
+  the rare cases where it doesn't get picked up automatically. Should help with issues like
+  [this](https://github.com/twistedfall/opencv-rust/issues/125).
+
 The following variables affect the building the of the `opencv` crate, but belong to external components:
 
 * `PKG_CONFIG_PATH`

@@ -26,6 +26,6 @@ fn main() {
 	}
 	let clang = Clang::new().expect("Cannot initialize clang");
 	let bindings_writer = RustBindingWriter::new(&src_cpp_dir, &out_dir, module, version, debug);
-	Generator::new(&opencv_header_dir, &src_cpp_dir, module, &clang)
+	Generator::new(None, &opencv_header_dir, &src_cpp_dir, module, &clang)
 		.process_file(&module_file, bindings_writer);
 }

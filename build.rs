@@ -18,6 +18,7 @@ use shlex::Shlex;
 #[cfg(feature = "buildtime-bindgen")]
 mod generator {
 	use std::{
+		env,
 		ffi::OsStr,
 		fs::{self, DirEntry, File, OpenOptions},
 		io::{self, BufRead, BufReader, Write},
@@ -112,7 +113,9 @@ mod generator {
 				version,
 				false,
 			);
-			let gen = binding_generator::Generator::new(&opencv_header_dir, &*SRC_CPP_DIR, module, &clang);
+			let clang_stdlib_include_dir = env::var_os("OPENCV_CLANG_STDLIB_PATH")
+				.map(|p| PathBuf::from(p));
+			let gen = binding_generator::Generator::new(clang_stdlib_include_dir.as_deref(), &opencv_header_dir, &*SRC_CPP_DIR, module, &clang);
 			if !shown_args.compare_and_swap(false, true, Ordering::Relaxed) {
 				eprintln!("=== Clang command line args: {:#?}", gen.build_clang_command_line_args());
 			}
@@ -296,7 +299,7 @@ static MANIFEST_DIR: Lazy<PathBuf> = Lazy::new(|| PathBuf::from(env::var_os("CAR
 static SRC_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src"));
 static SRC_CPP_DIR: Lazy<PathBuf> = Lazy::new(|| MANIFEST_DIR.join("src_cpp"));
 
-static ENV_VARS: [&str; 14] = [
+static ENV_VARS: [&str; 15] = [
 	"OPENCV_HEADER_DIR",
 	"OPENCV_PACKAGE_NAME",
 	"OPENCV_PKGCONFIG_NAME",
@@ -307,6 +310,7 @@ static ENV_VARS: [&str; 14] = [
 	"OPENCV_LINK_PATHS",
 	"OPENCV_INCLUDE_PATHS",
 	"OPENCV_DISABLE_PROBES",
+	"OPENCV_CLANG_STDLIB_PATH",
 	"CMAKE_PREFIX_PATH",
 	"OpenCV_DIR",
 	"PKG_CONFIG_PATH",

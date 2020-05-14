@@ -313,10 +313,14 @@ impl<V: GeneratorVisitor> Drop for OpenCVWalker<'_, V> {
 }
 
 impl<'m, 'c> Generator<'m, 'c> {
-	pub fn new(opencv_include_dir: &Path, src_cpp_dir: &Path, module: &'m str, clang: &'c Clang) -> Self {
+	pub fn new(clang_stdlib_include_dir: Option<&Path>, opencv_include_dir: &Path, src_cpp_dir: &Path, module: &'m str, clang: &'c Clang) -> Self {
 		let clang_bin = clang_sys::support::Clang::find(None, &[]).expect("Can't find clang binary");
+		let mut clang_include_dirs = clang_bin.cpp_search_paths.unwrap_or_default();
+		if let Some(clang_stdlib_include_dir) = clang_stdlib_include_dir {
+			clang_include_dirs.push(canonicalize(clang_stdlib_include_dir.to_path_buf()).expect("Cannot canonicalize clang_stdlib_include_dir"))
+		}
 		Self {
-			clang_include_dirs: clang_bin.cpp_search_paths.unwrap_or_default(),
+			clang_include_dirs,
 			opencv_include_dir: canonicalize(opencv_include_dir).expect("Can't canonicalize opencv_include_dir"),
 			src_cpp_dir: canonicalize(src_cpp_dir).expect("Can't canonicalize src_cpp_dir"),
 			module,
