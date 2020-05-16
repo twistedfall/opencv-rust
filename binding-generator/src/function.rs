@@ -56,7 +56,7 @@ impl<'tu, 'g> Function<'tu, 'g> {
 			.map(|a| a.type_ref().rust_extern().into_owned())
 			.join(", ");
 		let ret = self.return_type();
-		format!(r#"Option<extern "C" fn({args}) -> {ret}>"#, args=args, ret=ret.rust_extern()).into()
+		format!(r#"Option<unsafe extern "C" fn({args}) -> {ret}>"#, args=args, ret=ret.rust_extern()).into()
 	}
 }
 

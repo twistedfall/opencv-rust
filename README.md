@@ -296,14 +296,11 @@ for example you pass "123\0456" to the setter, the property will be set to "123"
 
 ### Callbacks
 
-Some API functions accept callbacks, e.g. set_mouse_callback. While currently
-it's possible to successfully use those functions there are some limitations to
-keep in mind. Current implementation of callback handling keeps hold of the
-passed callback argument forever. That means that the closure used as a callback
-will never be freed during the lifetime of a program and moreover Drop will
-not be called for it (they are stored in global static [`Slab`](https://crates.io/crates/slab)).
-There is a plan to implement possibility to be able to free at least some of the
-closures.
+Some API functions accept callbacks, e.g. `set_mouse_callback`. While currently it's possible to successfully
+use those functions there are some limitations to keep in mind. Current implementation of callback handling
+leaks the passed callback argument. That means that the closure used as a callback will never be freed during
+the lifetime of a program and moreover Drop will not be called for it. There is a plan to implement possibility
+to be able to free at least some of the closures.
 
 ### Unsafety
 

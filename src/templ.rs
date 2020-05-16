@@ -31,13 +31,11 @@ macro_rules! string_arg_output_receive {
 
 macro_rules! callback_arg {
 	($tr_name: ident($($tr_arg_name: ident: $tr_arg_type: ty),*) -> $tr_ret: ty => $tr_userdata_name: ident in $callbacks_name: ident => $callback_name: ident($($fw_arg_name: ident: $fw_arg_type: ty),*) -> $fw_ret: ty) => {
-		static $callbacks_name: ::once_cell::sync::Lazy<::std::sync::Mutex<::slab::Slab<Box<dyn FnMut($($fw_arg_type),*) -> $fw_ret + Send + Sync>>>> = ::once_cell::sync::Lazy::new(|| ::std::sync::Mutex::new(::slab::Slab::with_capacity(1)));
-		extern "C" fn trampoline($($tr_arg_name: $tr_arg_type),*) -> $tr_ret {
-			if let Some(callback) = $callbacks_name.lock().unwrap().get_mut($tr_userdata_name as _) {
-				callback($($fw_arg_name),*)
-			} else {
-				panic!("Callback not found!") // really bad, fixme somehow
-			}
+		unsafe extern "C" fn trampoline($($tr_arg_name: $tr_arg_type),*) -> $tr_ret {
+			let mut callback: Box<Box<dyn FnMut($($fw_arg_type),*) -> $fw_ret + Send + Sync>> = Box::from_raw($tr_userdata_name as _);
+			let out = callback($($fw_arg_name),*);
+			Box::into_raw(callback);
+			out
 		}
 
 		let $tr_name = if $callback_name.is_some() {
@@ -51,7 +49,7 @@ macro_rules! callback_arg {
 macro_rules! userdata_arg {
 	($userdata_name: ident in $callbacks_name: ident => $callback_name: ident) => {
 		let $userdata_name = if let Some(callback) = $callback_name {
-			$callbacks_name.lock().unwrap().insert(callback) as *mut ::std::ffi::c_void
+			Box::into_raw(Box::new(callback)) as *mut ::std::ffi::c_void
 		} else {
 			0 as _ // fixme, remove previous callback
 		};

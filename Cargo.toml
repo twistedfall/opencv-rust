@@ -23,7 +23,6 @@ members = ["binding-generator"]
 libc = "0.2"
 num = "0.2"
 once_cell = "1.0"
-slab = "0.4"
 
 [features]
 default = ["opencv-4"]
