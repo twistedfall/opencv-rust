@@ -54,7 +54,7 @@ pub enum PoolingLayer_Type {
 }
 
 /// Each Layer class must provide this function to the factory
-pub type LayerFactory_Constuctor = Option<extern "C" fn(*mut c_void) -> *mut c_void>;
+pub type LayerFactory_Constuctor = Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>;
 /// Container for strings and integers.
 pub type Net_LayerId = crate::dnn::DictValue;
 pub type Shape = crate::dnn::BlobShape;

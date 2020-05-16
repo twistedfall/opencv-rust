@@ -1036,7 +1036,7 @@ pub fn set_window_title(winname: &str, title: &str) -> Result<()> {
 	unsafe { sys::cv_setWindowTitle_const_StringX_const_StringX(winname.as_ptr(), title.as_ptr()) }.into_result()
 }
 
-pub fn start_loop(pt2_func: Option<extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: &mut [&str]) -> Result<i32> {
+pub fn start_loop(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: &mut [&str]) -> Result<i32> {
 	string_array_arg_mut!(argv);
 	unsafe { sys::cv_startLoop_int__X__int__charXX__int_charXX(pt2_func, argc, argv.as_mut_ptr()) }.into_result()
 }

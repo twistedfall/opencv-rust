@@ -14,17 +14,17 @@ Make sure the supported OpenCV version (3.2, 3.4 or 4.x) is installed in your sy
 
 Update your Cargo.toml
 ```toml
-opencv = "0.36"
+opencv = "0.37"
 ```
 
 Select OpenCV version if different from default (opencv-4) in Cargo.toml:
 ```toml
-opencv = {version = "0.36", default-features = false, features = ["opencv-34"]}
+opencv = {version = "0.37", default-features = false, features = ["opencv-34"]}
 ```
 
 Or enable usage of `contrib` modules:
 ```toml
-opencv = {version = "0.36", features = ["contrib"]}
+opencv = {version = "0.37", features = ["contrib"]}
 ```
 
 Import prelude
@@ -34,7 +34,7 @@ use opencv::prelude::*;
 
 When building on Windows and macOS you must enable `buildtime-bindgen` feature to avoid link errors:
 ```toml
-opencv = {version = "0.36", features = ["buildtime-bindgen"]}
+opencv = {version = "0.37", features = ["buildtime-bindgen"]}
 ```
 
 ## Getting OpenCV

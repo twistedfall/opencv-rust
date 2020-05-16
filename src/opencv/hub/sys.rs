@@ -1967,7 +1967,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Layer_Layer() -> Result<*mut c_void>;
 		pub fn cv_dnn_Layer_Layer_const_LayerParamsX(params: *const c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_Layer_setParamsFrom_const_LayerParamsX(instance: *mut c_void, params: *const c_void) -> Result_void;
-		pub fn cv_dnn_LayerFactory_registerLayer_const_StringX_Constructor(typ: *const c_char, constructor: Option<extern "C" fn(*mut c_void) -> *mut c_void>) -> Result_void;
+		pub fn cv_dnn_LayerFactory_registerLayer_const_StringX_Constructor(typ: *const c_char, constructor: Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>) -> Result_void;
 		pub fn cv_dnn_LayerFactory_unregisterLayer_const_StringX(typ: *const c_char) -> Result_void;
 		pub fn cv_dnn_LayerFactory_createLayerInstance_const_StringX_LayerParamsX(typ: *const c_char, params: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_LayerParams_blobs(instance: *mut c_void) -> Result<*mut c_void>;
@@ -2394,7 +2394,7 @@ mod face_sys {
 		pub fn cv_face_FacemarkLBF_Params_write_const_FileStorageX(instance: *const c_void, unnamed: *mut c_void) -> Result_void;
 		pub fn cv_face_FacemarkTrain_addTrainingSample_const__InputArrayX_const__InputArrayX(instance: *mut c_void, image: *const c_void, landmarks: *const c_void) -> Result<bool>;
 		pub fn cv_face_FacemarkTrain_training_voidX(instance: *mut c_void, parameters: *mut c_void) -> Result_void;
-		pub fn cv_face_FacemarkTrain_setFaceDetector_FN_FaceDetector_voidX(instance: *mut c_void, detector: Option<extern "C" fn(*const c_void, *const c_void, *mut c_void) -> bool>, user_data: *mut c_void) -> Result<bool>;
+		pub fn cv_face_FacemarkTrain_setFaceDetector_FN_FaceDetector_voidX(instance: *mut c_void, detector: Option<unsafe extern "C" fn(*const c_void, *const c_void, *mut c_void) -> bool>, user_data: *mut c_void) -> Result<bool>;
 		pub fn cv_face_FacemarkTrain_getFaces_const__InputArrayX_const__OutputArrayX(instance: *mut c_void, image: *const c_void, faces: *const c_void) -> Result<bool>;
 		pub fn cv_face_FacemarkTrain_getData_voidX(instance: *mut c_void, items: *mut c_void) -> Result<bool>;
 		pub fn cv_face_FisherFaceRecognizer_create_int_double(num_components: i32, threshold: f64) -> Result<*mut c_void>;
@@ -2768,8 +2768,8 @@ mod highgui_sys {
 	extern "C" {
 		pub fn cv_addText_const_MatX_const_StringX_Point_const_QtFontX(img: *const c_void, text: *const c_char, org: *const core::Point, font: *const c_void) -> Result_void;
 		pub fn cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(img: *const c_void, text: *const c_char, org: *const core::Point, name_font: *const c_char, point_size: i32, color: *const core::Scalar, weight: i32, style: i32, spacing: i32) -> Result_void;
-		pub fn cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(bar_name: *const c_char, on_change: Option<extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void, typ: i32, initial_button_state: bool) -> Result<i32>;
-		pub fn cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(trackbarname: *const c_char, winname: *const c_char, value: *mut i32, count: i32, on_change: Option<extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result<i32>;
+		pub fn cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(bar_name: *const c_char, on_change: Option<unsafe extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void, typ: i32, initial_button_state: bool) -> Result<i32>;
+		pub fn cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(trackbarname: *const c_char, winname: *const c_char, value: *mut i32, count: i32, on_change: Option<unsafe extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result<i32>;
 		pub fn cv_destroyAllWindows() -> Result_void;
 		pub fn cv_destroyWindow_const_StringX(winname: *const c_char) -> Result_void;
 		pub fn cv_displayOverlay_const_StringX_const_StringX_int(winname: *const c_char, text: *const c_char, delayms: i32) -> Result_void;
@@ -2789,15 +2789,15 @@ mod highgui_sys {
 		pub fn cv_selectROI_const_StringX_const__InputArrayX_bool_bool(window_name: *const c_char, img: *const c_void, show_crosshair: bool, from_center: bool) -> Result<core::Rect>;
 		pub fn cv_selectROI_const__InputArrayX_bool_bool(img: *const c_void, show_crosshair: bool, from_center: bool) -> Result<core::Rect>;
 		pub fn cv_selectROIs_const_StringX_const__InputArrayX_vector_Rect_X_bool_bool(window_name: *const c_char, img: *const c_void, bounding_boxes: *mut c_void, show_crosshair: bool, from_center: bool) -> Result_void;
-		pub fn cv_setMouseCallback_const_StringX_MouseCallback_voidX(winname: *const c_char, on_mouse: Option<extern "C" fn(i32, i32, i32, i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
+		pub fn cv_setMouseCallback_const_StringX_MouseCallback_voidX(winname: *const c_char, on_mouse: Option<unsafe extern "C" fn(i32, i32, i32, i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
 		pub fn cv_setOpenGlContext_const_StringX(winname: *const c_char) -> Result_void;
-		pub fn cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(winname: *const c_char, on_opengl_draw: Option<extern "C" fn(*mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
+		pub fn cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(winname: *const c_char, on_opengl_draw: Option<unsafe extern "C" fn(*mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
 		pub fn cv_setTrackbarMax_const_StringX_const_StringX_int(trackbarname: *const c_char, winname: *const c_char, maxval: i32) -> Result_void;
 		pub fn cv_setTrackbarMin_const_StringX_const_StringX_int(trackbarname: *const c_char, winname: *const c_char, minval: i32) -> Result_void;
 		pub fn cv_setTrackbarPos_const_StringX_const_StringX_int(trackbarname: *const c_char, winname: *const c_char, pos: i32) -> Result_void;
 		pub fn cv_setWindowProperty_const_StringX_int_double(winname: *const c_char, prop_id: i32, prop_value: f64) -> Result_void;
 		pub fn cv_setWindowTitle_const_StringX_const_StringX(winname: *const c_char, title: *const c_char) -> Result_void;
-		pub fn cv_startLoop_int__X__int__charXX__int_charXX(pt2_func: Option<extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: *mut *mut c_char) -> Result<i32>;
+		pub fn cv_startLoop_int__X__int__charXX__int_charXX(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: *mut *mut c_char) -> Result<i32>;
 		pub fn cv_startWindowThread() -> Result<i32>;
 		pub fn cv_stopLoop() -> Result_void;
 		pub fn cv_updateWindow_const_StringX(winname: *const c_char) -> Result_void;
@@ -5132,8 +5132,8 @@ mod viz_sys {
 		pub fn cv_viz_Viz3d_addLight_const_Vec3dX_const_Vec3dX_const_ColorX_const_ColorX_const_ColorX_const_ColorX(instance: *mut c_void, position: *const core::Vec3d, focal_point: *const core::Vec3d, color: *const c_void, diffuse_color: *const c_void, ambient_color: *const c_void, specular_color: *const c_void) -> Result_void;
 		pub fn cv_viz_Viz3d_wasStopped_const(instance: *const c_void) -> Result<bool>;
 		pub fn cv_viz_Viz3d_close(instance: *mut c_void) -> Result_void;
-		pub fn cv_viz_Viz3d_registerKeyboardCallback_KeyboardCallback_voidX(instance: *mut c_void, callback: Option<extern "C" fn(*const c_void, *mut c_void) -> ()>, cookie: *mut c_void) -> Result_void;
-		pub fn cv_viz_Viz3d_registerMouseCallback_MouseCallback_voidX(instance: *mut c_void, callback: Option<extern "C" fn(*const c_void, *mut c_void) -> ()>, cookie: *mut c_void) -> Result_void;
+		pub fn cv_viz_Viz3d_registerKeyboardCallback_KeyboardCallback_voidX(instance: *mut c_void, callback: Option<unsafe extern "C" fn(*const c_void, *mut c_void) -> ()>, cookie: *mut c_void) -> Result_void;
+		pub fn cv_viz_Viz3d_registerMouseCallback_MouseCallback_voidX(instance: *mut c_void, callback: Option<unsafe extern "C" fn(*const c_void, *mut c_void) -> ()>, cookie: *mut c_void) -> Result_void;
 		pub fn cv_viz_Viz3d_setRenderingProperty_const_StringX_int_double(instance: *mut c_void, id: *const c_char, property: i32, value: f64) -> Result_void;
 		pub fn cv_viz_Viz3d_getRenderingProperty_const_StringX_int(instance: *mut c_void, id: *const c_char, property: i32) -> Result<f64>;
 		pub fn cv_viz_Viz3d_setRepresentation_int(instance: *mut c_void, representation: i32) -> Result_void;

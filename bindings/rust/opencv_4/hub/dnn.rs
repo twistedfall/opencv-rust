@@ -84,7 +84,7 @@ pub enum Target {
 }
 
 /// Each Layer class must provide this function to the factory
-pub type LayerFactory_Constructor = Option<extern "C" fn(*mut c_void) -> *mut c_void>;
+pub type LayerFactory_Constructor = Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>;
 pub type MatShape = core::Vector::<i32>;
 /// Container for strings and integers.
 pub type Net_LayerId = crate::dnn::DictValue;

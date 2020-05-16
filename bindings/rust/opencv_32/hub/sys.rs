@@ -1725,7 +1725,7 @@ mod dnn_sys {
 		pub fn cv_dnn_Layer_inputNameToIndex_String(instance: *mut c_void, input_name: *mut c_char) -> Result<i32>;
 		pub fn cv_dnn_Layer_outputNameToIndex_String(instance: *mut c_void, output_name: *mut c_char) -> Result<i32>;
 		pub fn cv_dnn_Layer_setParamsFrom_const_LayerParamsX(instance: *mut c_void, params: *const c_void) -> Result_void;
-		pub fn cv_dnn_LayerFactory_registerLayer_const_StringX_Constuctor(typ: *const c_char, constructor: Option<extern "C" fn(*mut c_void) -> *mut c_void>) -> Result_void;
+		pub fn cv_dnn_LayerFactory_registerLayer_const_StringX_Constuctor(typ: *const c_char, constructor: Option<unsafe extern "C" fn(*mut c_void) -> *mut c_void>) -> Result_void;
 		pub fn cv_dnn_LayerFactory_unregisterLayer_const_StringX(typ: *const c_char) -> Result_void;
 		pub fn cv_dnn_LayerFactory_createLayerInstance_const_StringX_LayerParamsX(typ: *const c_char, params: *mut c_void) -> Result<*mut c_void>;
 		pub fn cv_dnn_LayerParams_blobs(instance: *mut c_void) -> Result<*mut c_void>;
@@ -2199,8 +2199,8 @@ mod highgui_sys {
 	extern "C" {
 		pub fn cv_addText_const_MatX_const_StringX_Point_const_QtFontX(img: *const c_void, text: *const c_char, org: *const core::Point, font: *const c_void) -> Result_void;
 		pub fn cv_addText_const_MatX_const_StringX_Point_const_StringX_int_Scalar_int_int_int(img: *const c_void, text: *const c_char, org: *const core::Point, name_font: *const c_char, point_size: i32, color: *const core::Scalar, weight: i32, style: i32, spacing: i32) -> Result_void;
-		pub fn cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(bar_name: *const c_char, on_change: Option<extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void, typ: i32, initial_button_state: bool) -> Result<i32>;
-		pub fn cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(trackbarname: *const c_char, winname: *const c_char, value: *mut i32, count: i32, on_change: Option<extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result<i32>;
+		pub fn cv_createButton_const_StringX_ButtonCallback_voidX_int_bool(bar_name: *const c_char, on_change: Option<unsafe extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void, typ: i32, initial_button_state: bool) -> Result<i32>;
+		pub fn cv_createTrackbar_const_StringX_const_StringX_intX_int_TrackbarCallback_voidX(trackbarname: *const c_char, winname: *const c_char, value: *mut i32, count: i32, on_change: Option<unsafe extern "C" fn(i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result<i32>;
 		pub fn cv_destroyAllWindows() -> Result_void;
 		pub fn cv_destroyWindow_const_StringX(winname: *const c_char) -> Result_void;
 		pub fn cv_displayOverlay_const_StringX_const_StringX_int(winname: *const c_char, text: *const c_char, delayms: i32) -> Result_void;
@@ -2215,15 +2215,15 @@ mod highgui_sys {
 		pub fn cv_namedWindow_const_StringX_int(winname: *const c_char, flags: i32) -> Result_void;
 		pub fn cv_resizeWindow_const_StringX_int_int(winname: *const c_char, width: i32, height: i32) -> Result_void;
 		pub fn cv_saveWindowParameters_const_StringX(window_name: *const c_char) -> Result_void;
-		pub fn cv_setMouseCallback_const_StringX_MouseCallback_voidX(winname: *const c_char, on_mouse: Option<extern "C" fn(i32, i32, i32, i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
+		pub fn cv_setMouseCallback_const_StringX_MouseCallback_voidX(winname: *const c_char, on_mouse: Option<unsafe extern "C" fn(i32, i32, i32, i32, *mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
 		pub fn cv_setOpenGlContext_const_StringX(winname: *const c_char) -> Result_void;
-		pub fn cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(winname: *const c_char, on_opengl_draw: Option<extern "C" fn(*mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
+		pub fn cv_setOpenGlDrawCallback_const_StringX_OpenGlDrawCallback_voidX(winname: *const c_char, on_opengl_draw: Option<unsafe extern "C" fn(*mut c_void) -> ()>, userdata: *mut c_void) -> Result_void;
 		pub fn cv_setTrackbarMax_const_StringX_const_StringX_int(trackbarname: *const c_char, winname: *const c_char, maxval: i32) -> Result_void;
 		pub fn cv_setTrackbarMin_const_StringX_const_StringX_int(trackbarname: *const c_char, winname: *const c_char, minval: i32) -> Result_void;
 		pub fn cv_setTrackbarPos_const_StringX_const_StringX_int(trackbarname: *const c_char, winname: *const c_char, pos: i32) -> Result_void;
 		pub fn cv_setWindowProperty_const_StringX_int_double(winname: *const c_char, prop_id: i32, prop_value: f64) -> Result_void;
 		pub fn cv_setWindowTitle_const_StringX_const_StringX(winname: *const c_char, title: *const c_char) -> Result_void;
-		pub fn cv_startLoop_int__X__int__charXX__int_charXX(pt2_func: Option<extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: *mut *mut c_char) -> Result<i32>;
+		pub fn cv_startLoop_int__X__int__charXX__int_charXX(pt2_func: Option<unsafe extern "C" fn(i32, *mut *mut c_char) -> i32>, argc: i32, argv: *mut *mut c_char) -> Result<i32>;
 		pub fn cv_startWindowThread() -> Result<i32>;
 		pub fn cv_stopLoop() -> Result_void;
 		pub fn cv_updateWindow_const_StringX(winname: *const c_char) -> Result_void;
