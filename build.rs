@@ -383,16 +383,39 @@ struct Library {
 }
 
 impl Library {
+	fn strip_lib_file_decorations(path: &mut PathBuf) {
+		const LIB_EXTS: [&str; 7] = ["so", "a", "dll", "lib", "dylib", "framework", "tbd"];
+		// same, but with dots therearound
+		const LIB_EXTS_INNER: [&str; 7] = [".so.", ".a.", ".dll.", ".lib.", ".dylib.", ".framework.", ".tbd."];
+		if let Some(extension) = path.extension().and_then(OsStr::to_str) {
+			if LIB_EXTS.iter().any(|e| e.eq_ignore_ascii_case(extension)) {
+				path.set_extension("");
+			}
+		}
+		if let Some(mut file) = path.file_name().and_then(OsStr::to_str).map(str::to_owned) {
+			let orig_len = file.len();
+			const LIB_PREFIX: &str = "lib";
+			if file.starts_with(LIB_PREFIX) {
+				file.drain(..LIB_PREFIX.len());
+			}
+			LIB_EXTS_INNER.iter()
+				.for_each(|&inner_ext| if let Some(inner_ext_idx) = file.find(inner_ext) {
+					file.drain(inner_ext_idx..);
+				});
+			if orig_len != file.len() {
+				path.set_file_name(file);
+			}
+		}
+	}
+
 	fn process_library_list(libs: impl IntoIterator<Item=impl Into<PathBuf>>) -> impl Iterator<Item=String> {
 		libs.into_iter()
 			.map(|x| {
 				let mut path: PathBuf = x.into();
-				let extension = path.extension().and_then(OsStr::to_str).unwrap_or_default();
-				let is_framework = extension.eq_ignore_ascii_case("framework");
-				const LIB_EXTS: [&str; 7] = ["so", "a", "dll", "lib", "dylib", "framework", "tbd"];
-				if is_framework || LIB_EXTS.iter().any(|e| e.eq_ignore_ascii_case(extension)) {
-					path.set_extension("");
-				}
+				let is_framework = path.extension()
+					.and_then(OsStr::to_str)
+					.map_or(false, |e| e.eq_ignore_ascii_case("framework"));
+				Self::strip_lib_file_decorations(&mut path);
 				path.file_name()
 					.and_then(|f| f.to_str()
 						.map(|f| if is_framework {
@@ -591,21 +614,15 @@ impl Library {
 							} else if arg.starts_with("-") {
 								eprintln!("=== Unexpected cmake link argument found: {}", arg);
 							} else {
-								let path = PathBuf::from(arg);
+								let mut path = PathBuf::from(arg);
 								if link_paths.is_none() {
 									if let Some(parent) = path.parent() {
 										cmake_link_paths.insert(parent.to_owned());
 									}
 								}
 								if link_libs.is_none() {
-									if let Some(mut file) = path.file_name().and_then(OsStr::to_str) {
-										const LIB_PREFIX: &str = "lib";
-										if file.starts_with(LIB_PREFIX) {
-											file = &file[LIB_PREFIX.len()..];
-										}
-										if let Some(idx) = file.find(".so") {
-											file = &file[..idx];
-										}
+									Self::strip_lib_file_decorations(&mut path);
+									if let Some(file) = path.file_name().and_then(OsStr::to_str) {
 										cargo_metadata.push(Self::emit_link_lib(file, None));
 									}
 								}
