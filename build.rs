@@ -115,7 +115,7 @@ mod generator {
 			println!("Generated: {}", module);
 		};
 
-		if cfg!("feature = clang-runtime") {
+		if cfg!(feature = "clang-runtime") {
 			modules.iter().for_each(build_func);
 		} else {
 			modules.par_iter().for_each(build_func);
