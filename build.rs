@@ -98,7 +98,7 @@ mod generator {
 		};
 		let clang = clang::Clang::new().expect("Cannot initialize clang");
 		let start = Instant::now();
-		modules.par_iter().for_each(|module| {
+		let build_func = |module: &String| {
 			let mut module_file = SRC_CPP_DIR.join(format!("{}.hpp", module));
 			if !module_file.exists() {
 				module_file = opencv_dir.join(format!("{}.hpp", module));
@@ -113,7 +113,9 @@ mod generator {
 			binding_generator::Generator::new(&opencv_header_dir, &*SRC_CPP_DIR, module, &clang)
 				.process_file(&module_file, bindings_writer);
 			println!("Generated: {}", module);
-		});
+		};
+
+		modules.iter().for_each(build_func);
 		println!("Total binding generation time: {:?}", start.elapsed());
 
 		if !module_dir.exists() {
