@@ -72,3 +72,7 @@ if [[ "$OS_FAMILY" != "windows" ]]; then
 	cargo test -vv --no-default-features --features "$CARGO_FEATURES"
 	cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
 fi
+
+CARGO_FEATURES="$CARGO_FEATURES,clang-runtime"
+cargo test -vv --no-default-features --features "$CARGO_FEATURES"
+cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
