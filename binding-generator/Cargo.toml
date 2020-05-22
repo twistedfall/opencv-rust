@@ -10,7 +10,6 @@ edition = "2018"
 [lib]
 
 [features]
-
 clang-runtime = ["clang/runtime", "clang-sys/runtime"]
 
 [dependencies]

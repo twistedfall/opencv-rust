@@ -65,6 +65,8 @@ CARGO_FEATURES="$CARGO_FEATURES,buildtime-bindgen"
 cargo test -vv --no-default-features --features "$CARGO_FEATURES"
 cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
 
+cargo test --release -vv --no-default-features --features "$CARGO_FEATURES,clang-runtime"
+
 # on windows clang through `cc` crate fails because of -fPIC flag
 if [[ "$OS_FAMILY" != "windows" ]]; then
 	export CXX=clang++
@@ -72,7 +74,3 @@ if [[ "$OS_FAMILY" != "windows" ]]; then
 	cargo test -vv --no-default-features --features "$CARGO_FEATURES"
 	cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"
 fi
-
-CARGO_FEATURES="$CARGO_FEATURES,clang-runtime"
-cargo test -vv --no-default-features --features "$CARGO_FEATURES"
-cargo test --release -vv --no-default-features --features "$CARGO_FEATURES"

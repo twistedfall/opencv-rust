@@ -229,6 +229,10 @@ The following variables affect the building the of the `opencv` crate, but belon
   6.0), should only be used during the crate development or when building on Windows or macOS, with this
   feature enabled the bundled headers are no longer used for the code generation, the ones from the installed
   OpenCV are used instead
+* `clang-runtime` - only useful with the combination with `buildtime-bindgen`, enables the runtime detection
+  of libclang (`runtime` feature of `clang-sys`). This makes the build slower because it impairs the parallel
+  generation of OpenCV modules. Useful as a workaround for when your dependencies (like `bindgen`) pull in
+  `clang-sys` with hard `runtime` feature. See also this [issue](https://github.com/twistedfall/opencv-rust/issues/129).
 * `docs-only` - internal usage, for building docs on [docs.rs](https://docs.rs/opencv)
 
 ## API details
