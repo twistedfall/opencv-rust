@@ -29,6 +29,7 @@ elif [[ "$OS_FAMILY" == "osx" ]]; then
 #	export DYLD_LIBRARY_PATH="$toolchain_path/usr/lib/"
 	if [[ "$BREW_OPENCV_VERSION" != "" ]]; then # brew build
 		if [[ "$BREW_OPENCV_VERSION" == "@3" ]]; then
+			export CMAKE_PREFIX_PATH="/usr/local/Cellar/opencv3@/3.4.10_2"
 			export PKG_CONFIG_PATH="/usr/local/opt/opencv@3/lib/pkgconfig"
 		fi
 	else # framework build
