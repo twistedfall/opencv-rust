@@ -30,7 +30,6 @@ elif [[ "$OS_FAMILY" == "osx" ]]; then
 	if [[ "$BREW_OPENCV_VERSION" != "" ]]; then # brew build
 		if [[ "$BREW_OPENCV_VERSION" == "@3" ]]; then
 			export CMAKE_PREFIX_PATH="/usr/local/Cellar/opencv@3/3.4.10_2"
-			export PKG_CONFIG_PATH="/usr/local/opt/opencv@3/lib/pkgconfig"
 		fi
 	else # framework build
 		clang_dir="$(clang --print-search-dirs | awk -F= '/^libraries: =/ { print $2 }')"
