@@ -999,6 +999,23 @@ fn main() -> Result<()> {
 	for &v in ENV_VARS.iter() {
 		eprintln!("===   {} = {:?}", v, env::var_os(v));
 	}
+	eprintln!("=== Enabled features:");
+	let features = env::vars()
+		.filter_map(|(mut name, val)| {
+			if val != "1" {
+				return None;
+			}
+			const PREFIX: &str = "CARGO_FEATURE_";
+			if name.starts_with(PREFIX) {
+				name.drain(..PREFIX.len());
+				Some(name)
+			} else {
+				None
+			}
+		});
+	for feature in features {
+		eprintln!("===   {}", feature);
+	}
 	let opencv = if cfg!(feature = "docs-only") {
 		Library::probe_from_paths("", "", "")?
 	} else {
