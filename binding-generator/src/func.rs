@@ -627,17 +627,20 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		let forward_args = forward_args.join(", ");
 		let post_call_args = post_call_args.join("\n");
 		let ret_map = return_type.rust_return_map(is_safe);
+		let mut attributes = String::new();
+		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
+			attributes = format!("#[cfg({})]", attrs.0);
+		}
 
 		let tpl = if let Some(tpl) = settings::FUNC_MANUAL.get(identifier.as_ref()) {
 			tpl
-		} else if is_infallible {
-			&TPL_NO_FAIL
 		} else {
 			&TPL
 		};
 		tpl.interpolate(&hashmap! {
 			"doc_comment" => doc_comment.as_str(),
 			"debug" => &debug,
+			"attributes" => &attributes,
 			"visibility" => &visibility,
 			"unsafety_decl" => if is_safe { "" } else { "unsafe " },
 			"name" => name,
@@ -905,6 +908,11 @@ impl GeneratedElement for Func<'_, '_> {
 			return "".to_string()
 		}
 
+		let identifier = self.identifier();
+		let mut attributes = String::new();
+		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
+			attributes = format!("#[cfg({})]", attrs.0);
+		}
 		let mut args = vec![];
 		if let Some(cls) = self.as_instance_method() {
 			args.push(cls.type_ref().rust_extern_self_func_decl(self.is_const()));
@@ -915,8 +923,9 @@ impl GeneratedElement for Func<'_, '_> {
 		let return_type = self.return_type();
 		let return_wrapper_type = return_type.rust_extern_return_wrapper_full();
 		TPL.interpolate(&hashmap! {
-			"debug" => Cow::Owned(get_debug(self)),
-			"identifier" => self.identifier(),
+			"attributes" => attributes.into(),
+			"debug" => get_debug(self).into(),
+			"identifier" => identifier,
 			"args" => args.join(", ").into(),
 			"return_wrapper_type" => return_wrapper_type,
 		})
@@ -931,6 +940,13 @@ impl GeneratedElement for Func<'_, '_> {
 			return "".to_string()
 		}
 
+		let identifier = self.identifier();
+		let mut attributes_begin = String::new();
+		let mut attributes_end = String::new();
+		if let Some(attrs) = settings::FUNC_CFG_ATTR.get(identifier.as_ref()) {
+			attributes_begin = format!("#if {}", attrs.1);
+			attributes_end = "#endif".to_string();
+		}
 		let args = Field::cpp_disambiguate_names(self.arguments()).collect::<Vec<_>>();
 		let mut decl_args = Vec::with_capacity(args.len());
 		let mut pre_call_args = Vec::with_capacity(args.len());
@@ -956,14 +972,16 @@ impl GeneratedElement for Func<'_, '_> {
 		let return_type = self.return_type();
 
 		TPL.interpolate(&hashmap! {
+			"attributes_begin" => attributes_begin.into(),
 			"debug" => get_debug(self).into(),
 			"return_wrapper_type" => return_type.cpp_extern_return_wrapper_full(),
-			"identifier" => self.identifier(),
+			"identifier" => identifier,
 			"decl_args" => decl_args.join(", ").into(),
 			"pre_call_args" => pre_call_args.join("\n").into(),
 			"call" => self.cpp_call_invoke().into(),
 			"post_call_args" => post_call_args.join("\n").into(),
 			"return" => self.cpp_method_return(),
+			"attributes_end" => attributes_end.into(),
 		})
 	}
 }

@@ -1,3 +1,4 @@
+{{attributes_begin}}
 {{debug}}
 {{return_wrapper_type}} {{identifier}}({{decl_args}}) {
 	try {
@@ -7,5 +8,6 @@
 		{{return}}
 	} OCVRS_CATCH({{return_wrapper_type}})
 }
+{{attributes_end}}
 
 

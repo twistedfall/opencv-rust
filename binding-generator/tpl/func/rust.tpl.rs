@@ -1,3 +1,4 @@
+{{attributes}}
 {{doc_comment}}
 {{debug}}
 {{visibility}}{{unsafety_decl}}fn {{name}}{{generic_decl}}({{decl_args}}) -> {{rv_rust_full}} {
