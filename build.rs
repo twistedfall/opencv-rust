@@ -915,9 +915,12 @@ fn build_compiler(opencv_header_dir: &Path) -> cc::Build {
 			.flag_if_supported("-wd5054") // deprecated between enumerations of different types
 			.flag_if_supported("-wd4190") // has C-linkage specified, but returns UDT 'Result<cv::Rect_<int>>' which is incompatible with C
 			.flag_if_supported("-EHsc")
+			.flag_if_supported("-bigobj")
 		;
 	} else {
-		out.flag("-std=c++11");
+		out.flag("-std=c++11")
+			.flag_if_supported("-Wa,-mbig-obj")
+		;
 	}
 	out
 }
