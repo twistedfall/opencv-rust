@@ -1179,6 +1179,10 @@ impl<'tu, 'g> TypeRef<'tu, 'g> {
 		}
 	}
 
+	pub fn rust_return_func_decl_wrapper(&self) -> Cow<str> {
+		format!("Result<{}>", self.rust_return_func_decl()).into()
+	}
+
 	pub fn rust_return_map(&self, is_safe_context: bool) -> Cow<str> {
 		let unsafety_call = if is_safe_context { "unsafe " } else { "" };
 		if self.is_string() {

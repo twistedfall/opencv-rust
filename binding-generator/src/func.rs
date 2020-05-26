@@ -547,10 +547,6 @@ impl<'tu, 'g> Func<'tu, 'g> {
 			|| include_str!("../tpl/func/rust.tpl.rs").compile_interpolation()
 		);
 
-		static TPL_NO_FAIL: Lazy<CompiledInterpolation> = Lazy::new(
-			|| include_str!("../tpl/func/rust_no_fail.tpl.rs").compile_interpolation()
-		);
-
 		let args = Field::rust_disambiguate_names(self.arguments()).collect::<Vec<_>>();
 		let as_instance_method = self.as_instance_method();
 		let is_method_const = self.is_const();
@@ -609,9 +605,17 @@ impl<'tu, 'g> Func<'tu, 'g> {
 		let identifier = self.identifier();
 		let is_safe = !settings::FUNC_UNSAFE.contains(identifier.as_ref());
 		let return_type = self.return_type();
-		let return_type_func_decl = return_type.rust_return_func_decl();
+		let return_type_func_decl = if is_infallible {
+			return_type.rust_return_func_decl()
+		} else {
+			return_type.rust_return_func_decl_wrapper()
+		};
 		let mut prefix = String::new();
-		let mut suffix = String::new();
+		let mut suffix = if is_infallible {
+			format!(".expect(\"Infallible function failed: {name}\")", name=name)
+		} else {
+			String::new()
+		};
 		if !post_call_args.is_empty() {
 			post_call_args.push("out".into());
 			prefix.push_str("let out = ");
